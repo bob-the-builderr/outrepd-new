@@ -3,6 +3,13 @@
 # dependencies
 node_modules/
 
+# Force EAS Build to run a fresh "npm install" on its own Linux servers
+# instead of a strict "npm ci" against a lockfile generated on Windows.
+# The lockfile's dependency tree shape (hoisting/nesting) is not always
+# portable across npm major versions/platforms, which was causing
+# "Missing: X from lock file" failures that don't reproduce locally.
+package-lock.json
+
 # Expo
 .expo/
 dist/
