@@ -88,6 +88,18 @@ config.resolver.resolveRequest = (context, moduleName, platform) => {
     ) {
       return context.resolveRequest(context, moduleName, platform);
     }
+    // Resolve the "@/*" -> "src/*" alias explicitly. It is declared in
+    // tsconfig.json, but Expo silently drops tsconfig `paths` support when the
+    // `typescript` package can't be resolved from the project root — which is
+    // exactly what happens on a clean CI/EAS install. Handling it here keeps
+    // the alias working regardless of what is installed.
+    if (moduleName.startsWith('@/')) {
+      return context.resolveRequest(
+        context,
+        path.resolve(__dirname, 'src', moduleName.slice(2)),
+        platform
+      );
+    }
     // Wildcard alias for Expo Google Fonts
     if (moduleName.startsWith('@expo-google-fonts/') && moduleName !== '@expo-google-fonts/dev') {
       return context.resolveRequest(context, '@expo-google-fonts/dev', platform);

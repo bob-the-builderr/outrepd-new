@@ -111,7 +111,8 @@
     "postcss": "8.5.18",
     "tailwind-scrollbar": "3.1.0",
     "tailwindcss": "3",
-    "tailwindcss-animate": "1.0.7"
+    "tailwindcss-animate": "1.0.7",
+    "typescript": "5.9.3"
   },
   "jest": {
     "preset": "jest-expo"
