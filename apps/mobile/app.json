@@ -1,0 +1,73 @@
+{
+  "expo": {
+    "name": "OUTREPD",
+    "slug": "33bac7a1-3969-40f3-ae6f-015ef0c6ad8d",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "gymrankcompetitivegymbattleapp.33bac7a1-3969-40f3-ae6f-015ef0c6ad8d",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.createinc.33bac7a1396940f3ae6f015ef0c6ad8d",
+      "infoPlist": {
+        "NSCameraUsageDescription": "We need access to your camera to take photos and videos.",
+        "NSContactsUsageDescription": "This app does not use your contacts.",
+        "NSCalendarsUsageDescription": "This app does not use your calendar.",
+        "NSCalendarsFullAccessUsageDescription": "This app does not use your calendar.",
+        "NSRemindersUsageDescription": "This app does not use your reminders.",
+        "NSRemindersFullAccessUsageDescription": "This app does not use your reminders.",
+        "NSMicrophoneUsageDescription": "We need access to your microphone to record audio.",
+        "NSPhotoLibraryUsageDescription": "We need access to your photo library to select photos and videos.",
+        "NSPhotoLibraryAddUsageDescription": "We need access to your photo library to save photos and videos.",
+        "NSLocationWhenInUseUsageDescription": "This app does not use your location.",
+        "NSLocationAlwaysUsageDescription": "This app does not use your location.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "This app does not use your location.",
+        "NSSpeechRecognitionUsageDescription": "This app does not use your speech recognition.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#010308"
+      },
+      "package": "com.createinc.a33bac7a1396940f3ae6f015ef0c6ad8d"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#0D0D0D"
+        }
+      ],
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-3940256099942544~3347511713",
+          "iosAppId": "ca-app-pub-3940256099942544~1458002511"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "7214e37e-1c68-4492-8781-99f5ca5249d9"
+      }
+    },
+    "owner": "lynz"
+  }
+}
