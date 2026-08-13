@@ -12,7 +12,7 @@
     "@expo/vector-icons": "15.0.3",
     "@gorhom/bottom-sheet": "5.2.6",
     "@react-native-async-storage/async-storage": "2.2.0",
-    "@react-native-community/netinfo": "^11.4.1",
+    "@react-native-community/netinfo": "11.4.1",
     "@react-native-community/slider": "5.0.1",
     "@react-native-masked-view/masked-view": "0.3.2",
     "@react-native-picker/picker": "2.11.1",
@@ -117,18 +117,18 @@
   },
   "private": true,
   "overrides": {
-    "@react-navigation/native": "$@react-navigation/native",
-    "@sentry/react-native": "$@sentry/react-native",
-    "expo-location": "$expo-location",
-    "expo-store-review": "$expo-store-review",
-    "react": "$react",
+    "@react-navigation/native": "^7.1.8",
+    "@sentry/react-native": "file:./polyfills/shared/sentry-react-native",
+    "expo-location": "~19.0.8",
+    "expo-store-review": "9.0.9",
+    "react": "19.1.0",
     "@react-navigation/core": "7.17.4",
     "@react-navigation/elements": "2.9.18",
     "@react-navigation/native-stack": "7.3.27",
     "@react-navigation/routers": "7.5.1",
     "@react-navigation/stack": "7.4.7",
     "react-server-dom-webpack": "19.0.4",
-    "react-native-safe-area-context": "$react-native-safe-area-context",
+    "react-native-safe-area-context": "5.6.0",
     "react-native-screens": "4.16.0"
   }
 }
