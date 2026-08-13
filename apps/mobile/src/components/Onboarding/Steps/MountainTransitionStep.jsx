@@ -27,7 +27,7 @@ export const MountainTransitionStep = ({
         }}
       >
         <Image
-          source={{ uri: ONBOARDING_IMAGES.mountain }}
+          source={ONBOARDING_IMAGES.mountain}
           style={{ width: "100%", height: "100%" }}
           contentFit="cover"
           contentPosition="top"
@@ -47,7 +47,7 @@ export const MountainTransitionStep = ({
         }}
       >
         <Image
-          source={{ uri: ONBOARDING_IMAGES.legend }}
+          source={ONBOARDING_IMAGES.legend}
           style={{ width: 200, height: 200 }}
           contentFit="contain"
           cachePolicy="disk"

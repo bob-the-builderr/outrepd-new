@@ -224,9 +224,7 @@ export default function Onboarding() {
                 highest volume to win LP and climb the ranks.
               </Text>
               <Image
-                source={{
-                  uri: ONBOARDING_IMAGES.workoutBattle,
-                }}
+                source={ONBOARDING_IMAGES.workoutBattle}
                 style={{ width: "100%", height: 380 }}
                 contentFit="contain"
                 cachePolicy="disk"
@@ -258,7 +256,7 @@ export default function Onboarding() {
                 }}
               >
                 <Image
-                  source={{ uri: TIER_LIST[0].img }}
+                  source={TIER_LIST[0].img}
                   style={{
                     position: "absolute",
                     width: 150,
@@ -270,7 +268,7 @@ export default function Onboarding() {
                   cachePolicy="disk"
                 />
                 <Image
-                  source={{ uri: TIER_LIST[3].img }}
+                  source={TIER_LIST[3].img}
                   style={{
                     position: "absolute",
                     width: 150,
@@ -282,7 +280,7 @@ export default function Onboarding() {
                   cachePolicy="disk"
                 />
                 <Image
-                  source={{ uri: TIER_LIST[4].img }}
+                  source={TIER_LIST[4].img}
                   style={{
                     position: "absolute",
                     width: 220,
@@ -295,7 +293,7 @@ export default function Onboarding() {
                   cachePolicy="disk"
                 />
                 <Image
-                  source={{ uri: TIER_LIST[2].img }}
+                  source={TIER_LIST[2].img}
                   style={{
                     position: "absolute",
                     width: 150,
@@ -307,7 +305,7 @@ export default function Onboarding() {
                   cachePolicy="disk"
                 />
                 <Image
-                  source={{ uri: TIER_LIST[1].img }}
+                  source={TIER_LIST[1].img}
                   style={{
                     position: "absolute",
                     width: 150,
@@ -352,9 +350,7 @@ export default function Onboarding() {
                 </Text>
               </View>
               <Image
-                source={{
-                  uri: ONBOARDING_IMAGES.challengeFriends,
-                }}
+                source={ONBOARDING_IMAGES.challengeFriends}
                 style={{ width: "100%", height: 380 }}
                 contentFit="contain"
                 cachePolicy="disk"
@@ -376,7 +372,7 @@ export default function Onboarding() {
               {/* Logo */}
               <View style={{ alignItems: "center", marginBottom: 32 }}>
                 <Image
-                  source={{ uri: LOGO_URL }}
+                  source={LOGO_URL}
                   style={{ width: 72, height: 72, marginBottom: 10 }}
                   contentFit="contain"
                   cachePolicy="disk"

@@ -1,16 +1,40 @@
-import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+  Alert,
+} from "react-native";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const LOGO_URL =
-  "https://dtvoeevhaseb5.cloudfront.net/user-uploads/b5e288ee-380e-4304-baca-7a0dd94bf717.png";
+import { ONBOARDING_IMAGES } from "@/constants/onboardingImages";
+import { useAuthStore } from "@/utils/auth/store";
+import { IS_TEST_MODE, signInAsTester } from "@/utils/testMode";
+
+const LOGO = ONBOARDING_IMAGES.logo;
 
 export default function Welcome() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { setAuth } = useAuthStore();
+  const [testLoading, setTestLoading] = useState(false);
+
+  const handleTestSkip = async () => {
+    setTestLoading(true);
+    try {
+      const auth = await signInAsTester();
+      setAuth(auth);
+      router.replace("/");
+    } catch (error) {
+      Alert.alert("Test sign-in failed", error.message);
+    } finally {
+      setTestLoading(false);
+    }
+  };
 
   return (
     <View
@@ -35,7 +59,7 @@ export default function Welcome() {
       >
         {/* App Logo */}
         <Image
-          source={{ uri: LOGO_URL }}
+          source={LOGO}
           style={{ width: 160, height: 160, marginBottom: 28 }}
           contentFit="contain"
         />
@@ -120,6 +144,39 @@ export default function Welcome() {
             I have an account
           </Text>
         </TouchableOpacity>
+
+        {IS_TEST_MODE && (
+          <TouchableOpacity
+            style={{
+              backgroundColor: "rgba(75, 184, 250, 0.12)",
+              paddingVertical: 16,
+              borderRadius: 16,
+              alignItems: "center",
+              borderWidth: 1,
+              borderStyle: "dashed",
+              borderColor: "#4BB8FA",
+              opacity: testLoading ? 0.6 : 1,
+            }}
+            onPress={handleTestSkip}
+            disabled={testLoading}
+            activeOpacity={0.8}
+          >
+            {testLoading ? (
+              <ActivityIndicator color="#4BB8FA" />
+            ) : (
+              <Text
+                style={{
+                  color: "#4BB8FA",
+                  fontSize: 15,
+                  fontWeight: "700",
+                  letterSpacing: 0.5,
+                }}
+              >
+                ⚡ Skip — enter as tester
+              </Text>
+            )}
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );

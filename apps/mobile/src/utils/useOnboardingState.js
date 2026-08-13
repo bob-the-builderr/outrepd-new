@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { Animated } from "react-native";
 import { router } from "expo-router";
 import { authenticatedFetch } from "@/utils/authenticatedFetch";
+import { IS_TEST_MODE } from "@/utils/testMode";
 import {
   SCREEN_WIDTH,
   CONTAINER_WIDTH,
@@ -113,8 +114,9 @@ export const useOnboardingState = () => {
         setLoading(false);
         return;
       }
-      // After onboarding, send to the hard paywall
-      router.replace("/paywall");
+      // After onboarding, send to the hard paywall — except in test builds,
+      // where the paywall has no store products to show.
+      router.replace(IS_TEST_MODE ? "/(tabs)" : "/paywall");
     } catch {
       setError("Connection failed. Please try again.");
       setLoading(false);

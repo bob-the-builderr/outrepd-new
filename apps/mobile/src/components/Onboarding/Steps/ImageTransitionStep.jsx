@@ -67,7 +67,7 @@ export const ImageTransitionStep = ({
         }}
       >
         <Image
-          source={{ uri: imageUrl }}
+          source={imageUrl}
           style={{
             width: SCREEN_WIDTH * 0.72,
             height: SCREEN_WIDTH * 0.72,

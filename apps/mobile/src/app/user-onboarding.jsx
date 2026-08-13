@@ -221,7 +221,7 @@ export default function UserOnboarding() {
             }}
           >
             <Image
-              source={{ uri: ONBOARDING_IMAGES.mountain }}
+              source={ONBOARDING_IMAGES.mountain}
               style={{ width: "100%", height: "100%" }}
               contentFit="cover"
               cachePolicy="disk"
@@ -242,7 +242,7 @@ export default function UserOnboarding() {
             }}
           >
             <Image
-              source={{ uri: ONBOARDING_IMAGES.legend }}
+              source={ONBOARDING_IMAGES.legend}
               style={{ width: 200, height: 200 }}
               contentFit="contain"
               cachePolicy="disk"
@@ -294,7 +294,7 @@ export default function UserOnboarding() {
               step !== 17 && (
                 <View style={{ alignItems: "center", marginBottom: 36 }}>
                   <Image
-                    source={{ uri: LOGO_URL }}
+                    source={LOGO_URL}
                     style={{ width: 64, height: 64 }}
                     contentFit="contain"
                     cachePolicy="disk"

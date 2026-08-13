@@ -28,7 +28,7 @@ export const SuccessStep = ({ loading, onFinish }) => {
         }}
       >
         <Image
-          source={{ uri: ONBOARDING_IMAGES.logo }}
+          source={ONBOARDING_IMAGES.logo}
           style={{ width: 100, height: 100 }}
           contentFit="contain"
           cachePolicy="disk"

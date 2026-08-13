@@ -17,7 +17,8 @@
 				"buildType": "apk"
 			},
 			"env": {
-				"EXPO_USE_PRECOMPILED_MODULES": "0"
+				"EXPO_USE_PRECOMPILED_MODULES": "0",
+				"EXPO_PUBLIC_TEST_MODE": "1"
 			}
 		},
 		"production": {

@@ -119,7 +119,7 @@ export const CommitmentStep = ({
             <ActivityIndicator color="#4BB8FA" size="large" />
           ) : (
             <Image
-              source={{ uri: LOGO_URL }}
+              source={LOGO_URL}
               style={{ width: 80, height: 80 }}
               contentFit="contain"
             />

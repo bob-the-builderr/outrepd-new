@@ -7,8 +7,6 @@ import { useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { QueryClientProvider } from "@tanstack/react-query";
 import queryClient from "@/utils/queryClient";
-import { Image } from "expo-image";
-import { ALL_ONBOARDING_URLS } from "@/constants/onboardingImages";
 
 // Prevent the native splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();
@@ -16,46 +14,20 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const { initiate, isReady, auth } = useAuth();
   const { initiate: initiateIAP } = useInAppPurchase();
-  const [imagesReady, setImagesReady] = useState(false);
 
   useEffect(() => {
     initiate();
   }, [initiate]);
 
-  // Prefetch every onboarding image into expo-image's disk cache
-  // in parallel with auth — so both finish as fast as possible.
+  // Onboarding images ship inside the binary, so there is nothing to download
+  // before the first screen — the splash only waits on auth now.
   useEffect(() => {
-    let cancelled = false;
-    async function prefetchAll() {
-      try {
-        await Promise.all(
-          ALL_ONBOARDING_URLS.map((url) =>
-            Image.prefetch(url, { cachePolicy: "disk" }).catch(() => {
-              // Never let a single failed image block the whole app
-            }),
-          ),
-        );
-      } catch (e) {
-        // Fallback: if anything unexpected throws, still proceed
-        console.warn("[Prefetch] Onboarding images prefetch failed:", e);
-      } finally {
-        if (!cancelled) setImagesReady(true);
-      }
-    }
-    prefetchAll();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  // Hide splash ONLY when auth AND every image are both ready
-  useEffect(() => {
-    if (isReady && imagesReady) {
+    if (isReady) {
       SplashScreen.hideAsync();
     }
-  }, [isReady, imagesReady]);
+  }, [isReady]);
 
-  if (!isReady || !imagesReady) {
+  if (!isReady) {
     return null; // Splash screen stays visible
   }
 

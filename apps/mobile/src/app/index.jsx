@@ -7,6 +7,7 @@ import { authenticatedFetch } from "@/utils/authenticatedFetch";
 import { useQueryClient } from "@tanstack/react-query";
 import LoadingScreen from "@/components/LoadingScreen";
 import { iapStore } from "@/utils/iap";
+import { IS_TEST_MODE } from "@/utils/testMode";
 
 export default function Index() {
   const { auth, isReady } = useAuth();
@@ -82,7 +83,7 @@ export default function Index() {
       onboardingCompleted !== true ||
       prefetchingData ||
       !iapReady ||
-      !isSubscribed
+      (!isSubscribed && !IS_TEST_MODE)
     )
       return;
     prefetchAllTabData();
@@ -223,8 +224,10 @@ export default function Index() {
   if (onboardingCompleted === false)
     return <Redirect href="/user-onboarding" />;
 
-  // Onboarding done — enforce subscription gate
-  if (!isSubscribed) return <Redirect href="/paywall" />;
+  // Onboarding done — enforce subscription gate.
+  // Test builds skip it so the paywall (which needs live store products) can
+  // never block a tester from reaching the app.
+  if (!isSubscribed && !IS_TEST_MODE) return <Redirect href="/paywall" />;
 
   return <Redirect href="/(tabs)" />;
 }

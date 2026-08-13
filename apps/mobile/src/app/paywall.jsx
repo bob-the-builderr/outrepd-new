@@ -16,6 +16,7 @@ import { Image } from "expo-image";
 import { Unlock, Bell, Star } from "lucide-react-native";
 import { useInAppPurchase } from "@/utils/iap";
 import { LinearGradient } from "expo-linear-gradient";
+import { IS_TEST_MODE } from "@/utils/testMode";
 
 function getTrialDays(pkg) {
   const intro = pkg?.product?.introductoryPrice;
@@ -596,6 +597,26 @@ export default function PaywallScreen() {
             )}
           </TouchableOpacity>
         </View>
+
+        {/* Test builds: always leave a way out of the paywall */}
+        {IS_TEST_MODE && (
+          <TouchableOpacity
+            onPress={() => router.replace("/(tabs)")}
+            style={{
+              alignItems: "center",
+              paddingVertical: 10,
+              marginBottom: 6,
+              borderRadius: 12,
+              borderWidth: 1,
+              borderStyle: "dashed",
+              borderColor: "#4BB8FA",
+            }}
+          >
+            <Text style={{ color: "#4BB8FA", fontSize: 13, fontWeight: "700" }}>
+              ⚡ Skip payment (test build)
+            </Text>
+          </TouchableOpacity>
+        )}
 
         {/* Restore + Legal */}
         <TouchableOpacity
