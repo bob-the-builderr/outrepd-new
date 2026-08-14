@@ -1,0 +1,220 @@
+/// Sample data the UI runs on. No network, no accounts — everything here is
+/// held in memory so the whole app is browsable straight after install.
+library;
+
+class Profile {
+  Profile({
+    required this.username,
+    required this.tierIdx,
+    required this.divIdx,
+    required this.lp,
+    required this.wins,
+    required this.losses,
+    required this.winStreak,
+    required this.bestStreak,
+    required this.totalVolumeKg,
+    required this.heightCm,
+    required this.weightKg,
+    required this.age,
+  });
+
+  String username;
+  int tierIdx;
+  int divIdx;
+  int lp;
+  int wins;
+  int losses;
+  int winStreak;
+  int bestStreak;
+  int totalVolumeKg;
+  int heightCm;
+  int weightKg;
+  int age;
+
+  int get totalMatches => wins + losses;
+  double get winRate => totalMatches == 0 ? 0 : wins / totalMatches;
+}
+
+final demoProfile = Profile(
+  username: 'demo_lifter',
+  tierIdx: 3,
+  divIdx: 2,
+  lp: 64,
+  wins: 18,
+  losses: 9,
+  winStreak: 4,
+  bestStreak: 7,
+  totalVolumeKg: 184320,
+  heightCm: 178,
+  weightKg: 82,
+  age: 25,
+);
+
+class MatchRecord {
+  const MatchRecord({
+    required this.muscleGroup,
+    required this.won,
+    required this.userVolume,
+    required this.opponentVolume,
+    required this.opponent,
+    required this.lpChange,
+    required this.daysAgo,
+  });
+
+  final String muscleGroup;
+  final bool won;
+  final int userVolume;
+  final int opponentVolume;
+  final String opponent;
+  final int lpChange;
+  final int daysAgo;
+}
+
+const demoMatches = <MatchRecord>[
+  MatchRecord(
+    muscleGroup: 'Chest',
+    won: true,
+    userVolume: 7420,
+    opponentVolume: 6890,
+    opponent: 'benchgod',
+    lpChange: 18,
+    daysAgo: 1,
+  ),
+  MatchRecord(
+    muscleGroup: 'Back',
+    won: false,
+    userVolume: 8100,
+    opponentVolume: 9240,
+    opponent: 'iron_mike',
+    lpChange: -14,
+    daysAgo: 3,
+  ),
+  MatchRecord(
+    muscleGroup: 'Legs',
+    won: true,
+    userVolume: 12650,
+    opponentVolume: 11020,
+    opponent: 'cardio_hater',
+    lpChange: 21,
+    daysAgo: 6,
+  ),
+  MatchRecord(
+    muscleGroup: 'Shoulders',
+    won: true,
+    userVolume: 4380,
+    opponentVolume: 3910,
+    opponent: 'delt_destroyer',
+    lpChange: 16,
+    daysAgo: 8,
+  ),
+  MatchRecord(
+    muscleGroup: 'Arms',
+    won: false,
+    userVolume: 3260,
+    opponentVolume: 3540,
+    opponent: 'curl_king',
+    lpChange: -12,
+    daysAgo: 11,
+  ),
+];
+
+class LeaderboardEntry {
+  const LeaderboardEntry(
+    this.username,
+    this.tierIdx,
+    this.divIdx,
+    this.lp,
+    this.wins,
+    this.losses,
+  );
+  final String username;
+  final int tierIdx;
+  final int divIdx;
+  final int lp;
+  final int wins;
+  final int losses;
+}
+
+const demoLeaderboard = <LeaderboardEntry>[
+  LeaderboardEntry('iron_mike', 5, 1, 88, 41, 12),
+  LeaderboardEntry('squat_queen', 4, 3, 72, 35, 15),
+  LeaderboardEntry('demo_lifter', 3, 2, 64, 18, 9),
+  LeaderboardEntry('benchgod', 3, 1, 51, 22, 20),
+  LeaderboardEntry('cardio_hater', 2, 4, 39, 14, 17),
+  LeaderboardEntry('delt_destroyer', 2, 2, 33, 11, 14),
+  LeaderboardEntry('newbie_gains', 1, 2, 21, 6, 11),
+];
+
+class Achievement {
+  const Achievement(this.name, this.description, this.earned);
+  final String name;
+  final String description;
+  final bool earned;
+}
+
+const demoAchievements = <Achievement>[
+  Achievement('First Blood', 'Complete your first match', true),
+  Achievement('On a Roll', 'Win 3 matches in a row', true),
+  Achievement('Six Figures', 'Lift 100,000 kg in total', true),
+  Achievement('Rivalry', 'Beat the same opponent 3 times', true),
+  Achievement('Unstoppable', 'Win 10 matches in a row', false),
+  Achievement('Golden Era', 'Reach Gold tier', false),
+  Achievement('Century', 'Complete 100 matches', false),
+];
+
+class Friend {
+  const Friend(this.username, this.tierIdx, this.lp, this.online);
+  final String username;
+  final int tierIdx;
+  final int lp;
+  final bool online;
+}
+
+const demoFriends = <Friend>[
+  Friend('iron_mike', 5, 88, true),
+  Friend('squat_queen', 4, 72, false),
+  Friend('benchgod', 3, 51, true),
+  Friend('newbie_gains', 1, 21, false),
+];
+
+class AppNotification {
+  const AppNotification(this.title, this.body, this.daysAgo, this.unread);
+  final String title;
+  final String body;
+  final int daysAgo;
+  final bool unread;
+}
+
+const demoNotifications = <AppNotification>[
+  AppNotification('You won!', 'You beat benchgod on Chest day', 1, true),
+  AppNotification('New friend request', 'squat_queen wants to connect', 2, true),
+  AppNotification('Achievement unlocked', 'On a Roll — 3 wins in a row', 5, false),
+  AppNotification('Rank up!', 'You reached Gold III', 9, false),
+];
+
+const muscleGroups = <String>[
+  'Chest',
+  'Back',
+  'Legs',
+  'Shoulders',
+  'Arms',
+  'Core',
+];
+
+/// Stand-ins for real players until matchmaking is wired to a server.
+class Opponent {
+  const Opponent(this.username, this.tierIdx, this.divIdx);
+
+  final String username;
+  final int tierIdx;
+  final int divIdx;
+}
+
+const demoOpponents = <Opponent>[
+  Opponent('iron_mike', 5, 1),
+  Opponent('squat_queen', 4, 3),
+  Opponent('benchgod', 3, 1),
+  Opponent('cardio_hater', 2, 4),
+  Opponent('deadlift_dan', 3, 3),
+  Opponent('pr_hunter', 4, 1),
+];

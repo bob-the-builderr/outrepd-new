@@ -1,0 +1,131 @@
+/// Exercise catalogue, mirrored from the original app so the two stay in sync.
+class Exercise {
+  final String name;
+  final String equipment;
+  final bool compound;
+
+  const Exercise(this.name, this.equipment, {this.compound = false});
+}
+
+const exercisesByMuscle = <String, List<Exercise>>{
+  'Chest': [
+    Exercise('Barbell Bench Press', 'Barbell', compound: true),
+    Exercise('Incline Barbell Bench Press', 'Barbell', compound: true),
+    Exercise('Decline Barbell Bench Press', 'Barbell', compound: true),
+    Exercise('Dumbbell Bench Press', 'Dumbbell', compound: true),
+    Exercise('Incline Dumbbell Press', 'Dumbbell', compound: true),
+    Exercise('Decline Dumbbell Press', 'Dumbbell', compound: true),
+    Exercise('Dumbbell Flyes', 'Dumbbell'),
+    Exercise('Incline Dumbbell Flyes', 'Dumbbell'),
+    Exercise('Cable Flyes', 'Cable'),
+    Exercise('Cable Crossovers', 'Cable'),
+    Exercise('Chest Press Machine', 'Machine', compound: true),
+    Exercise('Pec Deck Machine', 'Machine'),
+    Exercise('Push-Ups', 'Bodyweight', compound: true),
+    Exercise('Dips (Chest Focus)', 'Bodyweight', compound: true),
+  ],
+  'Back': [
+    Exercise('Barbell Deadlift', 'Barbell', compound: true),
+    Exercise('Barbell Row', 'Barbell', compound: true),
+    Exercise('T-Bar Row', 'Barbell', compound: true),
+    Exercise('Dumbbell Row', 'Dumbbell', compound: true),
+    Exercise('Pull-Ups', 'Bodyweight', compound: true),
+    Exercise('Chin-Ups', 'Bodyweight', compound: true),
+    Exercise('Lat Pulldown', 'Cable', compound: true),
+    Exercise('Cable Row', 'Cable', compound: true),
+    Exercise('Wide Grip Lat Pulldown', 'Cable', compound: true),
+    Exercise('Close Grip Lat Pulldown', 'Cable', compound: true),
+    Exercise('Face Pulls', 'Cable'),
+    Exercise('Shrugs', 'Dumbbell'),
+    Exercise('Barbell Shrugs', 'Barbell'),
+    Exercise('Machine Row', 'Machine', compound: true),
+    Exercise('Chest Supported Row', 'Machine', compound: true),
+  ],
+  'Legs': [
+    Exercise('Barbell Squat', 'Barbell', compound: true),
+    Exercise('Front Squat', 'Barbell', compound: true),
+    Exercise('Romanian Deadlift', 'Barbell', compound: true),
+    Exercise('Leg Press', 'Machine', compound: true),
+    Exercise('Hack Squat', 'Machine', compound: true),
+    Exercise('Bulgarian Split Squat', 'Dumbbell', compound: true),
+    Exercise('Walking Lunges', 'Dumbbell', compound: true),
+    Exercise('Leg Extension', 'Machine'),
+    Exercise('Leg Curl', 'Machine'),
+    Exercise('Calf Raises', 'Machine'),
+    Exercise('Seated Calf Raises', 'Machine'),
+    Exercise('Goblet Squat', 'Dumbbell', compound: true),
+    Exercise('Leg Press (Single Leg)', 'Machine', compound: true),
+    Exercise('Glute Bridge', 'Bodyweight', compound: true),
+    Exercise('Hip Thrust', 'Barbell', compound: true),
+  ],
+  'Shoulders': [
+    Exercise('Overhead Press', 'Barbell', compound: true),
+    Exercise('Dumbbell Shoulder Press', 'Dumbbell', compound: true),
+    Exercise('Arnold Press', 'Dumbbell', compound: true),
+    Exercise('Lateral Raises', 'Dumbbell'),
+    Exercise('Front Raises', 'Dumbbell'),
+    Exercise('Rear Delt Flyes', 'Dumbbell'),
+    Exercise('Cable Lateral Raises', 'Cable'),
+    Exercise('Cable Front Raises', 'Cable'),
+    Exercise('Face Pulls', 'Cable'),
+    Exercise('Upright Row', 'Barbell'),
+    Exercise('Machine Shoulder Press', 'Machine', compound: true),
+    Exercise('Reverse Pec Deck', 'Machine'),
+  ],
+  'Arms': [
+    Exercise('Barbell Curl', 'Barbell'),
+    Exercise('Dumbbell Curl', 'Dumbbell'),
+    Exercise('Hammer Curl', 'Dumbbell'),
+    Exercise('Preacher Curl', 'Machine'),
+    Exercise('Cable Curl', 'Cable'),
+    Exercise('Concentration Curl', 'Dumbbell'),
+    Exercise('Close Grip Bench Press', 'Barbell', compound: true),
+    Exercise('Tricep Dips', 'Bodyweight', compound: true),
+    Exercise('Skull Crushers', 'Barbell'),
+    Exercise('Overhead Tricep Extension', 'Dumbbell'),
+    Exercise('Cable Tricep Pushdown', 'Cable'),
+    Exercise('Cable Tricep Overhead Extension', 'Cable'),
+    Exercise('Dumbbell Kickbacks', 'Dumbbell'),
+  ],
+  'Core': [
+    Exercise('Plank', 'Bodyweight', compound: true),
+    Exercise('Side Plank', 'Bodyweight', compound: true),
+    Exercise('Crunches', 'Bodyweight'),
+    Exercise('Russian Twists', 'Bodyweight'),
+    Exercise('Leg Raises', 'Bodyweight'),
+    Exercise('Hanging Leg Raises', 'Bodyweight'),
+    Exercise('Cable Crunches', 'Cable'),
+    Exercise('Ab Wheel Rollout', 'Equipment', compound: true),
+    Exercise('Mountain Climbers', 'Bodyweight', compound: true),
+    Exercise('Dead Bug', 'Bodyweight'),
+  ],
+};
+
+List<Exercise> exercisesFor(String muscle) => exercisesByMuscle[muscle] ?? const [];
+
+/// A single logged set inside a match.
+class WorkoutSet {
+  String weight;
+  String reps;
+
+  WorkoutSet({this.weight = '', this.reps = ''});
+
+  double get volume {
+    final w = double.tryParse(weight) ?? 0;
+    final r = double.tryParse(reps) ?? 0;
+    return w * r;
+  }
+
+  bool get isComplete => volume > 0;
+}
+
+/// One exercise being logged, with its sets.
+class WorkoutEntry {
+  final String name;
+  final List<WorkoutSet> sets;
+
+  WorkoutEntry({required this.name, List<WorkoutSet>? sets})
+      : sets = sets ?? [WorkoutSet()];
+
+  double get volume => sets.fold(0.0, (sum, s) => sum + s.volume);
+}
