@@ -8,14 +8,17 @@ import 'train.dart';
 
 /// Bottom-tab container holding the five main sections.
 class AppShell extends StatefulWidget {
-  const AppShell({super.key});
+  const AppShell({super.key, this.initialIndex = 0});
+
+  /// Which tab to open on. Lets callers deep-link straight to a section.
+  final int initialIndex;
 
   @override
   State<AppShell> createState() => _AppShellState();
 }
 
 class _AppShellState extends State<AppShell> {
-  int _index = 0;
+  late int _index = widget.initialIndex;
 
   static const _tabs = <Widget>[
     MatchScreen(),

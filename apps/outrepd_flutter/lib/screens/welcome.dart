@@ -18,13 +18,19 @@ class WelcomeScreen extends StatelessWidget {
               const Spacer(),
               Image.asset('assets/images/logo.png', width: 160, height: 160),
               const SizedBox(height: 28),
-              const Text(
-                'OUTREPD',
-                style: TextStyle(
-                  fontSize: 48,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
-                  letterSpacing: 2,
+              // Shrink rather than wrap: the name must stay on one line even
+              // on narrow screens, where 48px + letter spacing overflows.
+              const FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  'OUTREPD',
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 48,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.white,
+                    letterSpacing: 2,
+                  ),
                 ),
               ),
               const SizedBox(height: 12),

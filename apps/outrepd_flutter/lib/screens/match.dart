@@ -16,6 +16,8 @@ class MatchScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        // Home tab — never show a back arrow, whatever pushed us here.
+        automaticallyImplyLeading: false,
         title: const Text('OUTREPD'),
         actions: [
           Stack(

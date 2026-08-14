@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'screens/onboarding.dart';
+import 'screens/shell.dart';
+import 'screens/user_onboarding.dart';
 import 'screens/welcome.dart';
 import 'theme.dart';
 
@@ -25,7 +28,27 @@ class OutrepdApp extends StatelessWidget {
       title: 'OUTREPD',
       debugShowCheckedModeBanner: false,
       theme: buildTheme(),
-      home: const WelcomeScreen(),
+      // Named routes let the web preview jump straight to a screen
+      // (e.g. /#/home) while reviewing layout, instead of tapping through.
+      initialRoute: '/',
+      routes: {
+        '/': (_) => const WelcomeScreen(),
+        '/onboarding': (_) => const OnboardingScreen(),
+        '/questions': (_) => const UserOnboardingScreen(),
+        '/home': (_) => const AppShell(),
+      },
+      // '/home/2' opens the shell on a specific tab.
+      onGenerateRoute: (settings) {
+        final name = settings.name ?? '';
+        if (name.startsWith('/home/')) {
+          final index = int.tryParse(name.substring(6)) ?? 0;
+          return MaterialPageRoute(
+            settings: settings,
+            builder: (_) => AppShell(initialIndex: index.clamp(0, 4)),
+          );
+        }
+        return null;
+      },
     );
   }
 }

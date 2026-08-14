@@ -748,9 +748,13 @@ class _ResultView extends StatelessWidget {
           const Text('MATCH COMPLETE',
               style: TextStyle(color: AppColors.muted, letterSpacing: 2, fontSize: 13)),
           const SizedBox(height: 8),
-          Text(
-            won ? 'YOU WIN!' : 'DEFEATED',
-            style: TextStyle(color: color, fontSize: 42, fontWeight: FontWeight.w900),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              won ? 'YOU WIN!' : 'DEFEATED',
+              maxLines: 1,
+              style: TextStyle(color: color, fontSize: 42, fontWeight: FontWeight.w900),
+            ),
           ),
           const SizedBox(height: 40),
           Row(

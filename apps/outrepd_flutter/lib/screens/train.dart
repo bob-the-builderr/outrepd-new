@@ -346,9 +346,13 @@ class _WeekStrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const labels = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-    // Sample activity — the last four days were training days.
-    const active = [false, false, true, true, true, true, false];
     final today = DateTime.now().weekday - 1;
+    // Sample activity: the current day plus the three before it. Anchoring to
+    // today keeps future days blank — a day that hasn't happened yet can't be
+    // ticked off.
+    final active = [
+      for (var i = 0; i < 7; i++) i <= today && i > today - 4,
+    ];
 
     return Panel(
       child: Row(

@@ -37,8 +37,12 @@ class ProfileScreen extends StatelessWidget {
             children: [
               TierBadge(tierIdx: p.tierIdx, size: 96),
               const SizedBox(height: 12),
+              // Usernames are free text, so cap them rather than let a long
+              // one push the layout around.
               Text(
                 p.username,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 24,

@@ -96,6 +96,8 @@ class FriendsScreen extends StatelessWidget {
                         children: [
                           Text(
                             f.username,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,

@@ -85,6 +85,8 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                           children: [
                             Text(
                               e.username,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 color: isMe ? AppColors.brand : Colors.white,
                                 fontWeight: FontWeight.w700,
