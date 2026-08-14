@@ -36,6 +36,10 @@ class OutrepdApp extends StatelessWidget {
         '/onboarding': (_) => const OnboardingScreen(),
         '/questions': (_) => const UserOnboardingScreen(),
         '/home': (_) => const AppShell(),
+        '/friends': (_) => const AppShell(initialIndex: 0),
+        '/ranks': (_) => const AppShell(initialIndex: 1),
+        '/train': (_) => const AppShell(initialIndex: 3),
+        '/profile': (_) => const AppShell(initialIndex: 4),
       },
       // '/home/2' opens the shell on a specific tab.
       onGenerateRoute: (settings) {
