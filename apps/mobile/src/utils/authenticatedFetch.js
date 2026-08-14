@@ -1,6 +1,7 @@
 import * as SecureStore from "expo-secure-store";
 import { authKey, secureStoreOptions } from "@/utils/auth/store";
 import { getApiUrl } from "@/utils/getApiUrl";
+import { IS_DEMO_MODE, demoResponse } from "@/utils/demoData";
 
 /**
  * Makes an authenticated fetch request by including the JWT token from SecureStore
@@ -11,6 +12,11 @@ import { getApiUrl } from "@/utils/getApiUrl";
  * @returns {Promise<Response>} - The fetch response
  */
 export async function authenticatedFetch(endpoint, options = {}) {
+  // Demo builds answer their own API calls locally — no server, no account.
+  if (IS_DEMO_MODE) {
+    return demoResponse(endpoint, options);
+  }
+
   try {
     // Get the JWT token from SecureStore
     const authData = await SecureStore.getItemAsync(

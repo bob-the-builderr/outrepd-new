@@ -7,6 +7,11 @@ import { useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { QueryClientProvider } from "@tanstack/react-query";
 import queryClient from "@/utils/queryClient";
+import { installDemoFetch } from "@/utils/demoData";
+
+// In demo builds, serve every API call from local data. Must run before any
+// screen mounts and starts fetching.
+installDemoFetch();
 
 // Prevent the native splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();

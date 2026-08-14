@@ -15,8 +15,12 @@
 import * as SecureStore from "expo-secure-store";
 import { getApiUrl } from "@/utils/getApiUrl";
 import { secureStoreOptions } from "@/utils/auth/store";
+import { IS_DEMO_MODE, DEMO_AUTH } from "@/utils/demoData";
 
-export const IS_TEST_MODE = process.env.EXPO_PUBLIC_TEST_MODE === "1";
+// Demo mode implies test mode: it also skips the paywall and shows the
+// one-tap entry button.
+export const IS_TEST_MODE =
+  process.env.EXPO_PUBLIC_TEST_MODE === "1" || IS_DEMO_MODE;
 
 // Remembers the throwaway credentials so relaunching the app returns to the
 // same tester account (same profile, matches and rank) instead of a new one.
@@ -63,6 +67,11 @@ async function post(path, body) {
  * Returns the auth object to hand to setAuth(), or throws with a readable message.
  */
 export async function signInAsTester() {
+  // Demo builds have no backend to talk to — hand back a local session.
+  if (IS_DEMO_MODE) {
+    return DEMO_AUTH;
+  }
+
   const saved = await readSavedAccount();
 
   if (saved?.email) {

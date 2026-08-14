@@ -25,6 +25,11 @@ export GRADLE_USER_HOME="/d/gradle-home"
 # build a normal, fully gated app.
 export EXPO_PUBLIC_TEST_MODE=1
 
+# Fully offline build: the app serves its own API responses from
+# src/utils/demoData.js, so no backend, account or network is needed. Set to 0
+# (or remove) to talk to the real server again.
+export EXPO_PUBLIC_DEMO_MODE=1
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DEST="$HOME/Desktop/OUTREPD-test.apk"
 START=$SECONDS
