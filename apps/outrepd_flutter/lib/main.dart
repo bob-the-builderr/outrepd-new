@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'data.dart';
 import 'screens/onboarding.dart';
 import 'screens/crew.dart';
+import 'screens/crew_create.dart';
 import 'screens/roadmap.dart';
 import 'screens/shell.dart';
 import 'screens/user_onboarding.dart';

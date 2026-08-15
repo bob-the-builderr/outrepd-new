@@ -242,21 +242,30 @@ const demoCrews = <Crew>[
 class MyCrew {
   MyCrew({
     required this.name,
-    required this.tag,
     required this.country,
     required this.emblemIcon,
     required this.emblemColor,
     required this.inviteCode,
     required this.members,
+    this.description = '',
+    this.privacy = 0,
+    this.minTierIdx = 0,
   });
 
   String name;
-  String tag;
   String country;
   int emblemIcon;
   int emblemColor;
   final String inviteCode;
   final List<CrewMember> members;
+
+  String description;
+
+  /// Index into CrewPrivacy.values.
+  int privacy;
+
+  /// Lowest tier allowed to join; 0 means anyone.
+  int minTierIdx;
 
   static const maxMembers = 20;
 
@@ -276,20 +285,3 @@ class CrewMember {
 
 /// The player's crew, or null when they have not joined one.
 MyCrew? myCrew;
-
-/// Countries offered when creating a crew.
-const kCountries = <String>[
-  'Egypt',
-  'Saudi Arabia',
-  'United Arab Emirates',
-  'Kuwait',
-  'Qatar',
-  'Jordan',
-  'Morocco',
-  'Algeria',
-  'Tunisia',
-  'United Kingdom',
-  'United States',
-  'Germany',
-  'Other',
-];

@@ -1,39 +1,11 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../crew_options.dart';
 import '../data.dart';
 import '../theme.dart';
 import '../widgets.dart';
-
-/// Emblems a crew can pick from. Kept to a fixed set so every crew badge sits
-/// in the same visual family instead of becoming a free-for-all of uploads.
-const kCrewIcons = <IconData>[
-  Icons.shield,
-  Icons.local_fire_department,
-  Icons.bolt,
-  Icons.pets,
-  Icons.diamond,
-  Icons.anchor,
-  Icons.sports_mma,
-  Icons.whatshot,
-  Icons.military_tech,
-  Icons.savings,
-  Icons.rocket_launch,
-  Icons.dark_mode,
-];
-
-const kCrewColors = <Color>[
-  AppColors.brand,
-  Color(0xFFFF4444),
-  Color(0xFFFFD700),
-  Color(0xFF22C55E),
-  Color(0xFF9B59B6),
-  Color(0xFFFF8C00),
-  Color(0xFF00E5FF),
-  Color(0xFFFF5FA2),
-];
+import 'crew_create.dart';
 
 /// Crew tab: either the crew you belong to, or the ways into one.
 class CrewScreen extends StatefulWidget {
@@ -225,7 +197,6 @@ Future<void> _showJoinSheet(BuildContext context, VoidCallback onChanged) {
 /// the rest of the screen can be seen.
 MyCrew _sampleCrewFor(String code) => MyCrew(
       name: 'Iron Temple',
-      tag: 'IRN',
       country: 'Egypt',
       emblemIcon: 0,
       emblemColor: 0,
@@ -276,7 +247,7 @@ class _CrewHomeView extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                '[${crew.tag}] · ${crew.country}',
+                crew.country,
                 style: TextStyle(color: colour, fontSize: 12.5),
               ),
               const SizedBox(height: 16),
@@ -603,229 +574,6 @@ class CrewEmblem extends StatelessWidget {
         kCrewIcons[iconIdx % kCrewIcons.length],
         color: colour,
         size: size * 0.5,
-      ),
-    );
-  }
-}
-
-/// Name, tag, country and emblem — everything a crew needs before it exists.
-class CreateCrewScreen extends StatefulWidget {
-  const CreateCrewScreen({super.key});
-
-  @override
-  State<CreateCrewScreen> createState() => _CreateCrewScreenState();
-}
-
-class _CreateCrewScreenState extends State<CreateCrewScreen> {
-  final _name = TextEditingController();
-  final _tag = TextEditingController();
-  String _country = kCountries.first;
-  int _icon = 0;
-  int _colour = 0;
-
-  @override
-  void dispose() {
-    _name.dispose();
-    _tag.dispose();
-    super.dispose();
-  }
-
-  String _newCode() {
-    // Ambiguous characters are left out so a code read aloud cannot be mistyped.
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    final r = Random();
-    return List.generate(6, (_) => chars[r.nextInt(chars.length)]).join();
-  }
-
-  void _create() {
-    final name = _name.text.trim();
-    final tag = _tag.text.trim().toUpperCase();
-
-    if (name.length < 3) {
-      _complain('Give the crew a name of at least 3 characters');
-      return;
-    }
-    if (tag.length < 2) {
-      _complain('The tag needs 2 to 4 characters');
-      return;
-    }
-
-    myCrew = MyCrew(
-      name: name,
-      tag: tag,
-      country: _country,
-      emblemIcon: _icon,
-      emblemColor: _colour,
-      inviteCode: _newCode(),
-      members: [
-        CrewMember(
-          demoProfile.username,
-          demoProfile.tierIdx,
-          demoProfile.divIdx,
-          demoProfile.totalVolumeKg ~/ 8,
-          isOwner: true,
-        ),
-      ],
-    );
-    Navigator.of(context).pop(true);
-  }
-
-  void _complain(String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Create a crew')),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 28),
-        children: [
-          Center(
-            child: CrewEmblem(iconIdx: _icon, colorIdx: _colour, size: 92),
-          ),
-          const SizedBox(height: 22),
-          const _FieldLabel('Crew name'),
-          TextField(
-            controller: _name,
-            maxLength: 22,
-            style: const TextStyle(color: Colors.white),
-            decoration: const InputDecoration(
-              counterText: '',
-              hintText: 'Iron Temple',
-            ),
-            onChanged: (_) => setState(() {}),
-          ),
-          const SizedBox(height: 18),
-          const _FieldLabel('Tag'),
-          TextField(
-            controller: _tag,
-            maxLength: 4,
-            textCapitalization: TextCapitalization.characters,
-            style: const TextStyle(
-              color: Colors.white,
-              letterSpacing: 3,
-              fontWeight: FontWeight.w700,
-            ),
-            decoration: const InputDecoration(
-              counterText: '',
-              hintText: 'IRN',
-              helperText: '2 to 4 letters, shown next to your crew name',
-              helperStyle: TextStyle(color: AppColors.muted, fontSize: 11),
-            ),
-            onChanged: (_) => setState(() {}),
-          ),
-          const SizedBox(height: 18),
-          const _FieldLabel('Country'),
-          Panel(
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                value: _country,
-                isExpanded: true,
-                dropdownColor: AppColors.surface,
-                style: const TextStyle(color: Colors.white, fontSize: 14),
-                items: [
-                  for (final c in kCountries)
-                    DropdownMenuItem(value: c, child: Text(c)),
-                ],
-                onChanged: (v) => setState(() => _country = v ?? _country),
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          const _FieldLabel('Emblem'),
-          Wrap(
-            spacing: 10,
-            runSpacing: 10,
-            children: [
-              for (var i = 0; i < kCrewIcons.length; i++)
-                GestureDetector(
-                  onTap: () => setState(() => _icon = i),
-                  child: Container(
-                    width: 46,
-                    height: 46,
-                    decoration: BoxDecoration(
-                      color: AppColors.surface,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: i == _icon
-                            ? AppColors.brand
-                            : AppColors.surfaceRaised,
-                        width: i == _icon ? 2 : 1,
-                      ),
-                    ),
-                    child: Icon(
-                      kCrewIcons[i],
-                      color: i == _icon ? AppColors.brand : AppColors.muted,
-                      size: 22,
-                    ),
-                  ),
-                ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          const _FieldLabel('Colour'),
-          Wrap(
-            spacing: 10,
-            runSpacing: 10,
-            children: [
-              for (var i = 0; i < kCrewColors.length; i++)
-                GestureDetector(
-                  onTap: () => setState(() => _colour = i),
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: kCrewColors[i],
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: i == _colour
-                            ? Colors.white
-                            : Colors.transparent,
-                        width: 2.5,
-                      ),
-                    ),
-                  ),
-                ),
-            ],
-          ),
-          const SizedBox(height: 28),
-          FilledButton(
-            onPressed: _create,
-            style: FilledButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-            ),
-            child: const Text('Create crew'),
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            'You will be the owner. Crews hold up to 20 lifters.',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: AppColors.muted, fontSize: 11.5),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _FieldLabel extends StatelessWidget {
-  const _FieldLabel(this.text);
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Text(
-        text,
-        style: const TextStyle(
-          color: AppColors.muted,
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-        ),
       ),
     );
   }

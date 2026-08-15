@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import '../data.dart';
 import '../theme.dart';
 import '../widgets.dart';
-import 'crew.dart';
 import 'match_entry.dart';
+import 'match_history.dart';
 import 'roadmap.dart';
 import 'notifications.dart';
 
@@ -24,6 +24,13 @@ class MatchScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: const Text('OUTREPD'),
         actions: [
+          IconButton(
+            tooltip: 'Match history',
+            icon: const Icon(Icons.history),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const MatchHistoryScreen()),
+            ),
+          ),
           Stack(
             alignment: Alignment.center,
             children: [
@@ -59,18 +66,6 @@ class MatchScreen extends StatelessWidget {
           _RankCard(p: p),
           const SizedBox(height: 24),
           const _StartMatchActions(),
-          const SizedBox(height: 24),
-          SectionHeader(
-            title: 'Recent matches',
-            trailing: Text(
-              '${p.wins}W · ${p.losses}L',
-              style: const TextStyle(color: AppColors.muted, fontSize: 13),
-            ),
-          ),
-          ...demoMatches.map((m) => Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: _MatchRow(m: m),
-              )),
         ],
       ),
     );
@@ -290,26 +285,11 @@ class _StartMatchActions extends StatelessWidget {
           onTap: () => pickMuscle(context, mode: MatchMode.ranked),
         ),
         const SizedBox(height: 12),
-        Row(
-          children: [
-            Expanded(
-              child: _SecondaryAction(
-                icon: Icons.person_add_alt_1,
-                label: 'Challenge friend',
-                onTap: () => showFriendRoomSheet(context),
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: _SecondaryAction(
-                icon: Icons.groups_2,
-                label: 'Crew',
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const CrewScreen()),
-                ),
-              ),
-            ),
-          ],
+        // Crews have their own tab now, so this row is just the friend route.
+        _SecondaryAction(
+          icon: Icons.person_add_alt_1,
+          label: 'Challenge a friend',
+          onTap: () => showFriendRoomSheet(context),
         ),
       ],
     );
@@ -424,69 +404,6 @@ class _SecondaryAction extends StatelessWidget {
               color: Colors.white,
               fontWeight: FontWeight.w700,
               fontSize: 13.5,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _MatchRow extends StatelessWidget {
-  const _MatchRow({required this.m});
-  final MatchRecord m;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = m.won ? AppColors.win : AppColors.loss;
-    return Panel(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-      child: Row(
-        children: [
-          Container(
-            width: 42,
-            height: 42,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Text(
-              m.won ? 'W' : 'L',
-              style: TextStyle(
-                color: color,
-                fontWeight: FontWeight.w900,
-                fontSize: 17,
-              ),
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${m.muscleGroup} vs ${m.opponent}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
-                  ),
-                ),
-                const SizedBox(height: 3),
-                Text(
-                  '${formatVolume(m.userVolume)} · ${formatVolume(m.opponentVolume)} · ${relativeDays(m.daysAgo)}',
-                  style: const TextStyle(color: AppColors.muted, fontSize: 12),
-                ),
-              ],
-            ),
-          ),
-          Text(
-            '${m.lpChange > 0 ? '+' : ''}${m.lpChange}',
-            style: TextStyle(
-              color: color,
-              fontWeight: FontWeight.w800,
-              fontSize: 15,
             ),
           ),
         ],
