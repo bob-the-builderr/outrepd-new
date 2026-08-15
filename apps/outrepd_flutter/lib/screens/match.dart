@@ -86,9 +86,10 @@ class _RankCard extends StatelessWidget {
     // a fixed number. The halo hugs it closely — a wide one washed the glow
     // out into a haze instead of rimming the badge.
     final badge = MediaQuery.of(context).size.width * 0.74;
-    // Room for the blur to bleed past the crest; a tight box would clip it
-    // back into a hard square.
-    final halo = badge * 1.22;
+    // The box only reserves layout space — the glow is free to spill past it
+    // because the stack does not clip. Padding it out just pushed the buttons
+    // below the fold.
+    final halo = badge;
 
     // No card behind it: the badge and its halo sit straight on the page.
     return Padding(
