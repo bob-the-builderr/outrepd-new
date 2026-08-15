@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../data.dart';
 import '../theme.dart';
 import '../widgets.dart';
+import 'crew.dart';
 import 'match_entry.dart';
 import 'roadmap.dart';
 import 'notifications.dart';

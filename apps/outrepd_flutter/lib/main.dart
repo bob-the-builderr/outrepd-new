@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'data.dart';
 import 'screens/onboarding.dart';
+import 'screens/crew.dart';
 import 'screens/roadmap.dart';
 import 'screens/shell.dart';
 import 'screens/user_onboarding.dart';
@@ -40,9 +41,11 @@ class OutrepdApp extends StatelessWidget {
         '/home': (_) => const AppShell(),
         '/friends': (_) => const AppShell(initialIndex: 0),
         '/ranks': (_) => const AppShell(initialIndex: 1),
-        '/train': (_) => const AppShell(initialIndex: 3),
+        '/crewtab': (_) => const AppShell(initialIndex: 3),
         '/profile': (_) => const AppShell(initialIndex: 4),
         '/road': (_) => RoadmapScreen(profile: demoProfile),
+        '/crew': (_) => const CrewScreen(),
+        '/crewnew': (_) => const CreateCrewScreen(),
       },
       // '/home/2' opens the shell on a specific tab.
       onGenerateRoute: (settings) {

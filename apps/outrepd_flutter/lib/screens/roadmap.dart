@@ -19,39 +19,46 @@ class RoadmapScreen extends StatefulWidget {
 }
 
 class _RoadmapScreenState extends State<RoadmapScreen> {
-  final _controller = ScrollController();
+  /// Built on first paint so the opening position is set before anything is
+  /// drawn. Jumping after the first frame was unreliable — the list has not
+  /// measured its full extent yet, so the jump clamped back to the top.
+  ScrollController? _controller;
 
-  /// Rough height of the next-step card plus the section header above the
-  /// strip. Only used to aim the opening scroll, so an estimate is fine.
-  static const _headerHeight = 268.0;
+  /// Height of the section header above the strip. The next-step card is
+  /// pinned outside the scroll view, so it no longer counts here. Only used
+  /// to aim the opening scroll, so an estimate is fine.
+  static const _headerHeight = 44.0;
 
-  @override
-  void initState() {
-    super.initState();
-    // Open on the rank you hold. Landing at Legend and making people scroll
-    // most of the ladder to find themselves is the wrong first impression.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!_controller.hasClients) return;
-      final total = kTiers.length * kDivisions.length;
-      final step = _RoadStrip.stepOf(widget.profile.tierIdx, widget.profile.divIdx);
-      final rowsFromTop = total - 1 - step;
-      final target = _headerHeight +
-          rowsFromTop * _RoadStrip.rowHeight -
-          MediaQuery.of(context).size.height / 2;
-      _controller.jumpTo(
-        target.clamp(0.0, _controller.position.maxScrollExtent),
-      );
-    });
+  /// Roughly how much of the screen the app bar and the pinned card eat, so
+  /// the remainder is the list's own viewport.
+  static const _chromeHeight = 300.0;
+
+  /// Opens on the rank you hold. Landing at Legend and making people scroll
+  /// most of the ladder to find themselves is the wrong first impression.
+  double _openingOffset(BuildContext context) {
+    final total = kTiers.length * kDivisions.length;
+    final step =
+        _RoadStrip.stepOf(widget.profile.tierIdx, widget.profile.divIdx);
+    final rowsFromTop = total - 1 - step;
+    final listViewport =
+        MediaQuery.of(context).size.height - _chromeHeight;
+    final centreOfRow =
+        _headerHeight + rowsFromTop * _RoadStrip.rowHeight + _RoadStrip.rowHeight / 2;
+    return math.max(0, centreOfRow - listViewport / 2);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    _controller ??= ScrollController(
+      initialScrollOffset: _openingOffset(context),
+    );
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -61,22 +68,32 @@ class _RoadmapScreenState extends State<RoadmapScreen> {
       body: Stack(
         children: [
           const _GymBackdrop(),
-          ListView(
-            controller: _controller,
-            padding: EdgeInsets.fromLTRB(
-              16,
-              MediaQuery.of(context).padding.top + kToolbarHeight + 8,
-              16,
-              28,
-            ),
+          Column(
             children: [
-              _NextStepCard(profile: widget.profile),
-              const SizedBox(height: 22),
-              const SectionHeader(title: 'All tiers'),
-              _RoadStrip(
-                currentTier: widget.profile.tierIdx,
-                currentDiv: widget.profile.divIdx,
-                lp: widget.profile.lp,
+              // The next step stays put while the ladder scrolls under it —
+              // it is the one thing you always want in view.
+              Padding(
+                padding: EdgeInsets.fromLTRB(
+                  16,
+                  MediaQuery.of(context).padding.top + kToolbarHeight + 8,
+                  16,
+                  14,
+                ),
+                child: _NextStepCard(profile: widget.profile),
+              ),
+              Expanded(
+                child: ListView(
+                  controller: _controller,
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 28),
+                  children: [
+                    const SectionHeader(title: 'All tiers'),
+                    _RoadStrip(
+                      currentTier: widget.profile.tierIdx,
+                      currentDiv: widget.profile.divIdx,
+                      lp: widget.profile.lp,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -86,9 +103,9 @@ class _RoadmapScreenState extends State<RoadmapScreen> {
   }
 }
 
-/// Gym artwork washed down to near-black so it reads as atmosphere behind the
-/// road rather than competing with the badges. Anchored to the bottom and
-/// blurred, so it never resolves into a picture you try to look at.
+/// Gym artwork behind the road. It is pinned to the viewport rather than the
+/// scrolling strip, so it stays put while 45 rungs slide past it instead of
+/// being stretched down the whole ladder.
 class _GymBackdrop extends StatelessWidget {
   const _GymBackdrop();
 
@@ -98,14 +115,14 @@ class _GymBackdrop extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          ImageFiltered(
-            imageFilter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-            child: Image.asset(
-              'assets/images/training-alone.png',
-              fit: BoxFit.cover,
-              alignment: Alignment.bottomCenter,
-              opacity: const AlwaysStoppedAnimation(0.22),
-            ),
+          // A busy pattern carrying its own words, so it is held well back —
+          // enough to feel like texture, not enough to argue with the rank
+          // labels sitting on top of it.
+          Image.asset(
+            'assets/images/roadmap-bg.jpg',
+            fit: BoxFit.cover,
+            alignment: Alignment.topCenter,
+            opacity: const AlwaysStoppedAnimation(0.85),
           ),
           DecoratedBox(
             decoration: BoxDecoration(
@@ -113,8 +130,8 @@ class _GymBackdrop extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  AppColors.background.withValues(alpha: 0.65),
-                  AppColors.background.withValues(alpha: 0.92),
+                  AppColors.background.withValues(alpha: 0.18),
+                  AppColors.background.withValues(alpha: 0.42),
                 ],
               ),
             ),
@@ -133,9 +150,22 @@ class _NextStepCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final atTop = profile.tierIdx >= kTiers.length - 1;
-    final nextIdx = atTop ? profile.tierIdx : profile.tierIdx + 1;
-    final next = kTiers[nextIdx];
+    // The next step is the next DIVISION, not the next tier — from Gold III
+    // you climb to Gold II, and only reach Platinum after Gold I.
+    final totalSteps = kTiers.length * kDivisions.length;
+    final step = _RoadStrip.stepOf(profile.tierIdx, profile.divIdx);
+    final atTop = step >= totalSteps - 1;
+    final nextStep = atTop ? step : step + 1;
+    final nextTierIdx = nextStep ~/ kDivisions.length;
+    final nextDivIdx = nextStep % kDivisions.length;
+    final next = kTiers[nextTierIdx];
+
+    // The reward belongs to the tier, so point at the next tier you unlock.
+    final rewardTierIdx =
+        (profile.tierIdx + 1).clamp(0, kTiers.length - 1);
+    final rewardTier = kTiers[rewardTierIdx];
+    final atTopTier = profile.tierIdx >= kTiers.length - 1;
+
     final remaining = (100 - profile.lp).clamp(0, 100);
 
     return Panel(
@@ -190,10 +220,10 @@ class _NextStepCard extends StatelessWidget {
               ),
               Column(
                 children: [
-                  TierBadge(tierIdx: nextIdx, size: 62),
+                  TierBadge(tierIdx: nextTierIdx, size: 62),
                   const SizedBox(height: 6),
                   Text(
-                    next.name,
+                    tierLabel(nextTierIdx, nextDivIdx),
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 12,
@@ -210,13 +240,17 @@ class _NextStepCard extends StatelessWidget {
           ),
           Row(
             children: [
-              Icon(Icons.workspace_premium, color: next.color, size: 18),
+              Icon(
+                Icons.workspace_premium,
+                color: atTopTier ? next.color : rewardTier.color,
+                size: 18,
+              ),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  atTop
+                  atTopTier
                       ? 'You have unlocked everything'
-                      : 'Unlocks at ${next.name}: ${next.reward}',
+                      : 'Unlocks at ${rewardTier.name}: ${rewardTier.reward}',
                   style: const TextStyle(color: Colors.white, fontSize: 12.5),
                 ),
               ),
@@ -241,7 +275,7 @@ class _RoadStrip extends StatelessWidget {
   final int currentDiv;
   final int lp;
 
-  static const rowHeight = 104.0;
+  static const rowHeight = 150.0;
 
   /// Flattens tier + division into a single position on the ladder.
   static int stepOf(int tierIdx, int divIdx) =>
@@ -294,7 +328,7 @@ class _RoadPainter extends CustomPainter {
 
   /// Centre of the badge in a row. The label sits below it, which lifts the
   /// badge above the row's midpoint — the path has to follow.
-  static const _badgeCentreOffset = -13.0;
+  static const _badgeCentreOffset = -18.0;
 
   Offset _pointFor(int listIndex, Size size) {
     final y = rowHeight * listIndex + rowHeight / 2 + _badgeCentreOffset;
@@ -400,15 +434,20 @@ class _RoadStop extends StatelessWidget {
     final reached = step <= currentStep;
     // Every fifth rung opens a new tier, so give it the reward and more weight.
     final startsTier = divIdx == 0;
-    final size = isCurrent ? 96.0 : (startsTier ? 80.0 : 70.0);
+    final size = isCurrent ? 138.0 : (startsTier ? 118.0 : 106.0);
 
     final art = reached
         ? TierBadge(tierIdx: tierIdx, size: size)
+        // Locked rungs are desaturated rather than blacked out — you should be
+        // able to make out the crest you are working towards, especially now
+        // there is artwork behind it.
         : ColorFiltered(
-            colorFilter: const ColorFilter.mode(
-              Color(0xFF223040),
-              BlendMode.srcATop,
-            ),
+            colorFilter: const ColorFilter.matrix(<double>[
+              0.26, 0.30, 0.10, 0, 6,
+              0.26, 0.30, 0.10, 0, 10,
+              0.26, 0.30, 0.10, 0, 18,
+              0, 0, 0, 0.75, 0,
+            ]),
             child: TierBadge(tierIdx: tierIdx, size: size),
           );
 
@@ -469,9 +508,9 @@ class _RoadStop extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             Positioned(
-              left: centre - 74,
+              left: centre - 84,
               top: 0,
-              width: 148,
+              width: 168,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -538,6 +577,6 @@ class _RoadStop extends StatelessWidget {
 double roadFraction(int index) {
   // Amplitude is deliberately modest: the badges are large, so a wide swing
   // would push neighbouring stops into each other.
-  final wander = 0.20 * math.sin(index * 1.15) + 0.06 * math.sin(index * 2.7);
-  return (0.5 + wander).clamp(0.28, 0.72);
+  final wander = 0.16 * math.sin(index * 1.15) + 0.05 * math.sin(index * 2.7);
+  return (0.5 + wander).clamp(0.31, 0.69);
 }

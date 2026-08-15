@@ -5,7 +5,7 @@ import 'friends.dart';
 import 'leaderboard.dart';
 import 'match.dart';
 import 'profile.dart';
-import 'train.dart';
+import 'crew.dart';
 
 /// Bottom-tab container holding the five main sections.
 ///
@@ -32,7 +32,7 @@ class _AppShellState extends State<AppShell> {
     FriendsScreen(),
     LeaderboardScreen(),
     MatchScreen(),
-    TrainScreen(),
+    CrewScreen(),
     ProfileScreen(),
   ];
 
@@ -40,7 +40,7 @@ class _AppShellState extends State<AppShell> {
     _TabSpec('Friends', Icons.people_outline, Icons.people),
     _TabSpec('Ranks', Icons.emoji_events_outlined, Icons.emoji_events),
     _TabSpec('Match', Icons.sports_mma, Icons.sports_mma),
-    _TabSpec('Train', Icons.fitness_center_outlined, Icons.fitness_center),
+    _TabSpec('Crew', Icons.groups_2_outlined, Icons.groups_2),
     _TabSpec('Profile', Icons.person_outline, Icons.person),
   ];
 

@@ -236,3 +236,60 @@ const demoCrews = <Crew>[
   Crew('Barbell Bros', 'BBB', 10, 341800),
   Crew('Quiet Reps', 'QRP', 5, 208400),
 ];
+
+/// A crew the player belongs to. Held in memory for now — there is no backend
+/// yet, so a crew lasts for the session.
+class MyCrew {
+  MyCrew({
+    required this.name,
+    required this.tag,
+    required this.country,
+    required this.emblemIcon,
+    required this.emblemColor,
+    required this.inviteCode,
+    required this.members,
+  });
+
+  String name;
+  String tag;
+  String country;
+  int emblemIcon;
+  int emblemColor;
+  final String inviteCode;
+  final List<CrewMember> members;
+
+  static const maxMembers = 20;
+
+  String get inviteLink => 'https://outrepd.app/crew/$inviteCode';
+}
+
+class CrewMember {
+  const CrewMember(this.username, this.tierIdx, this.divIdx, this.weeklyVolume,
+      {this.isOwner = false});
+
+  final String username;
+  final int tierIdx;
+  final int divIdx;
+  final int weeklyVolume;
+  final bool isOwner;
+}
+
+/// The player's crew, or null when they have not joined one.
+MyCrew? myCrew;
+
+/// Countries offered when creating a crew.
+const kCountries = <String>[
+  'Egypt',
+  'Saudi Arabia',
+  'United Arab Emirates',
+  'Kuwait',
+  'Qatar',
+  'Jordan',
+  'Morocco',
+  'Algeria',
+  'Tunisia',
+  'United Kingdom',
+  'United States',
+  'Germany',
+  'Other',
+];
