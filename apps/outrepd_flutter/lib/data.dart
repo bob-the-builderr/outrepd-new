@@ -218,3 +218,21 @@ const demoOpponents = <Opponent>[
   Opponent('deadlift_dan', 3, 3),
   Opponent('pr_hunter', 4, 1),
 ];
+
+class Crew {
+  const Crew(this.name, this.tag, this.members, this.weeklyVolume);
+
+  final String name;
+  /// Short badge shown in lists.
+  final String tag;
+  final int members;
+  /// Combined volume the crew logged this week, in kg.
+  final int weeklyVolume;
+}
+
+const demoCrews = <Crew>[
+  Crew('Iron Temple', 'IRN', 8, 412500),
+  Crew('Night Shift', 'NGT', 6, 366200),
+  Crew('Barbell Bros', 'BBB', 10, 341800),
+  Crew('Quiet Reps', 'QRP', 5, 208400),
+];

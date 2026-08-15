@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../data.dart';
 import '../theme.dart';
 import '../widgets.dart';
-import 'match_flow.dart';
+import 'match_entry.dart';
 import 'notifications.dart';
 
 class MatchScreen extends StatelessWidget {
@@ -54,8 +54,7 @@ class MatchScreen extends StatelessWidget {
         children: [
           _RankCard(p: p),
           const SizedBox(height: 24),
-          const SectionHeader(title: 'Start a match'),
-          const _MuscleGrid(),
+          const _StartMatchActions(),
           const SizedBox(height: 24),
           SectionHeader(
             title: 'Recent matches',
@@ -156,48 +155,170 @@ class _RankCard extends StatelessWidget {
   }
 }
 
-class _MuscleGrid extends StatelessWidget {
-  const _MuscleGrid();
+const muscleIcons = <String, IconData>{
+  'Chest': Icons.fitness_center,
+  'Back': Icons.rowing,
+  'Legs': Icons.directions_run,
+  'Shoulders': Icons.accessibility_new,
+  'Arms': Icons.sports_gymnastics,
+  'Core': Icons.self_improvement,
+};
 
-  static const _icons = <String, IconData>{
-    'Chest': Icons.fitness_center,
-    'Back': Icons.rowing,
-    'Legs': Icons.directions_run,
-    'Shoulders': Icons.accessibility_new,
-    'Arms': Icons.sports_gymnastics,
-    'Core': Icons.self_improvement,
-  };
+/// The three ways into a match: ranked search up top, then the two social
+/// routes side by side beneath it.
+class _StartMatchActions extends StatelessWidget {
+  const _StartMatchActions();
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 2,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      mainAxisSpacing: 10,
-      crossAxisSpacing: 10,
-      childAspectRatio: 2.1,
-      children: muscleGroups.map((g) {
-        return Panel(
-          onTap: () => Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => MatchFlowScreen(muscle: g)),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _PrimaryAction(
+          icon: Icons.search,
+          label: 'Search for opponent',
+          caption: 'Get matched with a lifter at your rank',
+          onTap: () => pickMuscle(context, mode: MatchMode.ranked),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: _SecondaryAction(
+                icon: Icons.person_add_alt_1,
+                label: 'Challenge friend',
+                onTap: () => showFriendRoomSheet(context),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _SecondaryAction(
+                icon: Icons.groups_2,
+                label: 'Crew',
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const CrewScreen()),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _PrimaryAction extends StatelessWidget {
+  const _PrimaryAction({
+    required this.icon,
+    required this.label,
+    required this.caption,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final String caption;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(18),
+        child: Ink(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(18),
+            // Keep both stops bright: mixing towards black turned the button
+            // a muddy grey next to the rest of the blue UI.
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color.lerp(AppColors.brand, Colors.white, 0.12)!,
+                AppColors.brand,
+              ],
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.brand.withValues(alpha: 0.3),
+                blurRadius: 18,
+                offset: const Offset(0, 6),
+              ),
+            ],
           ),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Row(
             children: [
-              Icon(_icons[g], color: AppColors.brand, size: 22),
-              const SizedBox(width: 10),
-              Text(
-                g,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 15,
+              Icon(icon, color: Colors.white, size: 30),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      label,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      caption,
+                      style: TextStyle(
+                        color: Colors.white.withValues(alpha: 0.85),
+                        fontSize: 12.5,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-        );
-      }).toList(),
+        ),
+      ),
+    );
+  }
+}
+
+class _SecondaryAction extends StatelessWidget {
+  const _SecondaryAction({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    // Stacked so both cards keep the same height and weight no matter how
+    // long the label is.
+    return Panel(
+      onTap: onTap,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+      child: Column(
+        children: [
+          Icon(icon, color: AppColors.brand, size: 26),
+          const SizedBox(height: 10),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+              fontSize: 13.5,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
