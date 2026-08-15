@@ -79,76 +79,86 @@ class _RankCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tierColor = kTiers[p.tierIdx.clamp(0, kTiers.length - 1)].color;
+
     return Panel(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.fromLTRB(20, 22, 20, 18),
       child: Column(
         children: [
-          Row(
-            children: [
-              TierBadge(tierIdx: p.tierIdx, size: 64),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      tierLabel(p.tierIdx, p.divIdx),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '${p.lp} LP',
-                      style: const TextStyle(
-                        color: AppColors.brand,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
+          // The badge is the hero, lit by a halo in its own tier colour.
+          Container(
+            width: 104,
+            height: 104,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: RadialGradient(
+                colors: [
+                  tierColor.withValues(alpha: 0.22),
+                  Colors.transparent,
+                ],
+                stops: const [0.0, 0.72],
               ),
-              if (p.winStreak > 0)
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 7,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.win.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    '🔥 ${p.winStreak}',
-                    style: const TextStyle(
-                      color: AppColors.win,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+              boxShadow: [
+                BoxShadow(
+                  color: tierColor.withValues(alpha: 0.28),
+                  blurRadius: 34,
+                  spreadRadius: 4,
                 ),
-            ],
+              ],
+            ),
+            child: TierBadge(tierIdx: p.tierIdx, size: 88),
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: 16),
+          Text(
+            tierLabel(p.tierIdx, p.divIdx),
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          const SizedBox(height: 14),
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: LinearProgressIndicator(
-              value: p.lp / 100,
+              value: (p.lp / 100).clamp(0.0, 1.0),
               minHeight: 8,
               backgroundColor: AppColors.surfaceRaised,
               valueColor: const AlwaysStoppedAnimation(AppColors.brand),
             ),
           ),
           const SizedBox(height: 8),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              '${100 - p.lp} LP to promotion',
-              style: const TextStyle(color: AppColors.muted, fontSize: 12),
-            ),
+          Text(
+            '${p.lp} / 100 LP · ${100 - p.lp} to promotion',
+            style: const TextStyle(color: AppColors.muted, fontSize: 11.5),
           ),
+          if (p.winStreak > 0) ...[
+            const SizedBox(height: 14),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+              decoration: BoxDecoration(
+                color: AppColors.win.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.local_fire_department,
+                      color: AppColors.win, size: 16),
+                  const SizedBox(width: 6),
+                  Text(
+                    '${p.winStreak} win streak',
+                    style: const TextStyle(
+                      color: AppColors.win,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ],
       ),
     );
