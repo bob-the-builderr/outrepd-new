@@ -1,3 +1,5 @@
+import 'dart:ui' show ImageFilter;
+
 import 'package:flutter/material.dart';
 
 import '../data.dart';
@@ -84,34 +86,42 @@ class _RankCard extends StatelessWidget {
     // a fixed number. The halo hugs it closely — a wide one washed the glow
     // out into a haze instead of rimming the badge.
     final badge = MediaQuery.of(context).size.width * 0.74;
-    final halo = badge * 1.04;
+    // Room for the blur to bleed past the crest; a tight box would clip it
+    // back into a hard square.
+    final halo = badge * 1.22;
 
     // No card behind it: the badge and its halo sit straight on the page.
     return Padding(
       padding: const EdgeInsets.only(top: 8, bottom: 4),
       child: Column(
         children: [
-          Container(
+          SizedBox(
             width: halo,
             height: halo,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: RadialGradient(
-                colors: [
-                  tierColor.withValues(alpha: 0.26),
-                  Colors.transparent,
-                ],
-                stops: const [0.55, 1.0],
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: tierColor.withValues(alpha: 0.32),
-                  blurRadius: 28,
+            child: Stack(
+              alignment: Alignment.center,
+              clipBehavior: Clip.none,
+              children: [
+                // Blurred, tinted copies of the badge itself sit behind it, so
+                // the light follows the crest's own silhouette instead of
+                // haloing it with a plain circle.
+                _BadgeGlow(
+                  tierIdx: p.tierIdx,
+                  color: tierColor,
+                  size: badge,
+                  blur: 26,
+                  opacity: 0.5,
                 ),
+                _BadgeGlow(
+                  tierIdx: p.tierIdx,
+                  color: tierColor,
+                  size: badge,
+                  blur: 9,
+                  opacity: 0.65,
+                ),
+                TierBadge(tierIdx: p.tierIdx, size: badge),
               ],
             ),
-            child: TierBadge(tierIdx: p.tierIdx, size: badge),
           ),
           const SizedBox(height: 12),
           Text(
@@ -164,6 +174,39 @@ class _RankCard extends StatelessWidget {
             ),
           ],
         ],
+      ),
+    );
+  }
+}
+
+/// A soft, tinted copy of the tier badge used to light its own edges.
+class _BadgeGlow extends StatelessWidget {
+  const _BadgeGlow({
+    required this.tierIdx,
+    required this.color,
+    required this.size,
+    required this.blur,
+    required this.opacity,
+  });
+
+  final int tierIdx;
+  final Color color;
+  final double size;
+  final double blur;
+  final double opacity;
+
+  @override
+  Widget build(BuildContext context) {
+    return Opacity(
+      opacity: opacity,
+      child: ImageFiltered(
+        imageFilter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
+        child: ColorFiltered(
+          // Paints every opaque pixel of the crest in the tier colour while
+          // keeping its alpha, so the blur spreads the shape, not a box.
+          colorFilter: ColorFilter.mode(color, BlendMode.srcATop),
+          child: TierBadge(tierIdx: tierIdx, size: size),
+        ),
       ),
     );
   }
