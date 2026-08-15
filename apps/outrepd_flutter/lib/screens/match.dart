@@ -6,6 +6,7 @@ import '../data.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'match_entry.dart';
+import 'roadmap.dart';
 import 'notifications.dart';
 
 class MatchScreen extends StatelessWidget {
@@ -91,18 +92,24 @@ class _RankCard extends StatelessWidget {
     // below the fold.
     final halo = badge;
 
+    void openRoad() => Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => RoadmapScreen(profile: p)),
+        );
+
     // No card behind it: the badge and its halo sit straight on the page.
     return Padding(
       padding: const EdgeInsets.only(top: 8, bottom: 4),
       child: Column(
         children: [
-          SizedBox(
-            width: halo,
-            height: halo,
-            child: Stack(
-              alignment: Alignment.center,
-              clipBehavior: Clip.none,
-              children: [
+          GestureDetector(
+            onTap: openRoad,
+            child: SizedBox(
+              width: halo,
+              height: halo,
+              child: Stack(
+                alignment: Alignment.center,
+                clipBehavior: Clip.none,
+                children: [
                 // Blurred, tinted copies of the badge itself sit behind it, so
                 // the light follows the crest's own silhouette instead of
                 // haloing it with a plain circle.
@@ -120,20 +127,63 @@ class _RankCard extends StatelessWidget {
                   blur: 9,
                   opacity: 0.65,
                 ),
-                TierBadge(tierIdx: p.tierIdx, size: badge),
+                  TierBadge(tierIdx: p.tierIdx, size: badge),
+                ],
+              ),
+            ),
+          ),
+          // Pulled up into the crest's own transparent margin, which otherwise
+          // reads as dead space between the artwork and the text.
+          Transform.translate(
+            offset: Offset(0, -badge * 0.12),
+            child: Column(
+              children: [
+                // Without a cue the tappable badge goes undiscovered. It sits
+                // above the rank so the two read as one block, and is itself
+                // tappable — people reach for the words, not just the crest.
+                GestureDetector(
+                  onTap: openRoad,
+                  behavior: HitTestBehavior.opaque,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 4,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'View road',
+                          style: TextStyle(
+                            color: AppColors.brand.withValues(alpha: 0.9),
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Icon(
+                          Icons.chevron_right,
+                          size: 15,
+                          color: AppColors.brand.withValues(alpha: 0.9),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                // Equal air above and below so the rank reads as centred
+                // between the cue and the LP bar.
+                const SizedBox(height: 10),
+                Text(
+                  tierLabel(p.tierIdx, p.divIdx),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(height: 10),
               ],
             ),
           ),
-          const SizedBox(height: 12),
-          Text(
-            tierLabel(p.tierIdx, p.divIdx),
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-          const SizedBox(height: 14),
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: LinearProgressIndicator(

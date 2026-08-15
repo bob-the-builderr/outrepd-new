@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'data.dart';
 import 'screens/onboarding.dart';
+import 'screens/roadmap.dart';
 import 'screens/shell.dart';
 import 'screens/user_onboarding.dart';
 import 'screens/welcome.dart';
@@ -40,6 +42,7 @@ class OutrepdApp extends StatelessWidget {
         '/ranks': (_) => const AppShell(initialIndex: 1),
         '/train': (_) => const AppShell(initialIndex: 3),
         '/profile': (_) => const AppShell(initialIndex: 4),
+        '/road': (_) => RoadmapScreen(profile: demoProfile),
       },
       // '/home/2' opens the shell on a specific tab.
       onGenerateRoute: (settings) {

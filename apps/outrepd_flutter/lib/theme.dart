@@ -16,19 +16,28 @@ abstract final class AppColors {
 
 /// Rank ladder. Index maps to `tierIdx` on a profile.
 class Tier {
-  const Tier(this.name, this.color, this.asset);
+  const Tier(this.name, this.color, this.asset, this.reward);
   final String name;
   final Color color;
   final String? asset;
+
+  /// What reaching this tier unlocks, shown on the roadmap.
+  final String reward;
 }
 
 const kTiers = <Tier>[
-  Tier('Stone', Color(0xFF6B6B6B), null),
-  Tier('Bronze', Color(0xFFCD7F32), 'assets/images/bronze.png'),
-  Tier('Silver', Color(0xFFC0C0C0), 'assets/images/silver.png'),
-  Tier('Gold', Color(0xFFFFD700), 'assets/images/gold.png'),
-  Tier('Master', Color(0xFF9B59B6), 'assets/images/master.png'),
-  Tier('Legend', Color(0xFF4BB8FA), 'assets/images/legend.png'),
+  Tier('Stone', Color(0xFF6B6B6B), 'assets/images/stone.png',
+      'Stone border frame'),
+  Tier('Bronze', Color(0xFFCD7F32), 'assets/images/bronze.png', 'Bronze badge'),
+  Tier('Silver', Color(0xFFC0C0C0), 'assets/images/silver.png', 'Silver badge'),
+  Tier('Gold', Color(0xFFFFD700), 'assets/images/gold.png', 'Gold badge'),
+  Tier('Platinum', Color(0xFFA8D8EA), 'assets/images/platinum.png',
+      'Platinum badge'),
+  Tier('Diamond', Color(0xFF00FFFF), 'assets/images/diamond.png',
+      'Diamond badge'),
+  Tier('Master', Color(0xFFCC2200), 'assets/images/master.png', 'Master badge'),
+  Tier('Mythic', Color(0xFFFF8C00), 'assets/images/mythic.png', 'Mythic badge'),
+  Tier('Legend', Color(0xFF6A0DAD), 'assets/images/legend.png', 'Legend badge'),
 ];
 
 ThemeData buildTheme() {

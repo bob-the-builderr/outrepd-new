@@ -89,10 +89,12 @@ class TierBadge extends StatelessWidget {
   }
 }
 
+/// Divisions climb from V up to I, so a higher [divIdx] is a better division.
+const kDivisions = ['V', 'IV', 'III', 'II', 'I'];
+
 String tierLabel(int tierIdx, int divIdx) {
-  const romans = ['I', 'II', 'III', 'IV'];
   final tier = kTiers[tierIdx.clamp(0, kTiers.length - 1)];
-  return '${tier.name} ${romans[divIdx.clamp(0, 3)]}';
+  return '${tier.name} ${kDivisions[divIdx.clamp(0, kDivisions.length - 1)]}';
 }
 
 String formatVolume(int kg) {
