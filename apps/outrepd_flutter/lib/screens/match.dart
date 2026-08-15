@@ -80,15 +80,18 @@ class _RankCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tierColor = kTiers[p.tierIdx.clamp(0, kTiers.length - 1)].color;
+    // The badge owns roughly half the screen, so size it off the viewport
+    // rather than a fixed number — it stays dominant on any phone.
+    final badge = MediaQuery.of(context).size.width * 0.62;
 
-    return Panel(
-      padding: const EdgeInsets.fromLTRB(20, 22, 20, 18),
+    // No card behind it: the badge and its halo sit straight on the page.
+    return Padding(
+      padding: const EdgeInsets.only(top: 8, bottom: 4),
       child: Column(
         children: [
-          // The badge is the hero, lit by a halo in its own tier colour.
           Container(
-            width: 104,
-            height: 104,
+            width: badge,
+            height: badge,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -101,15 +104,15 @@ class _RankCard extends StatelessWidget {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: tierColor.withValues(alpha: 0.28),
-                  blurRadius: 34,
-                  spreadRadius: 4,
+                  color: tierColor.withValues(alpha: 0.3),
+                  blurRadius: 60,
+                  spreadRadius: 6,
                 ),
               ],
             ),
-            child: TierBadge(tierIdx: p.tierIdx, size: 88),
+            child: TierBadge(tierIdx: p.tierIdx, size: badge * 0.86),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
           Text(
             tierLabel(p.tierIdx, p.divIdx),
             style: const TextStyle(
