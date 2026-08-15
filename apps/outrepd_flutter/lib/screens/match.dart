@@ -80,9 +80,11 @@ class _RankCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tierColor = kTiers[p.tierIdx.clamp(0, kTiers.length - 1)].color;
-    // The badge owns roughly half the screen, so size it off the viewport
-    // rather than a fixed number — it stays dominant on any phone.
-    final badge = MediaQuery.of(context).size.width * 0.62;
+    // The badge dominates the screen, so size it off the viewport rather than
+    // a fixed number. The halo hugs it closely — a wide one washed the glow
+    // out into a haze instead of rimming the badge.
+    final badge = MediaQuery.of(context).size.width * 0.74;
+    final halo = badge * 1.04;
 
     // No card behind it: the badge and its halo sit straight on the page.
     return Padding(
@@ -90,27 +92,26 @@ class _RankCard extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: badge,
-            height: badge,
+            width: halo,
+            height: halo,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: RadialGradient(
                 colors: [
-                  tierColor.withValues(alpha: 0.22),
+                  tierColor.withValues(alpha: 0.26),
                   Colors.transparent,
                 ],
-                stops: const [0.0, 0.72],
+                stops: const [0.55, 1.0],
               ),
               boxShadow: [
                 BoxShadow(
-                  color: tierColor.withValues(alpha: 0.3),
-                  blurRadius: 60,
-                  spreadRadius: 6,
+                  color: tierColor.withValues(alpha: 0.32),
+                  blurRadius: 28,
                 ),
               ],
             ),
-            child: TierBadge(tierIdx: p.tierIdx, size: badge * 0.86),
+            child: TierBadge(tierIdx: p.tierIdx, size: badge),
           ),
           const SizedBox(height: 12),
           Text(
