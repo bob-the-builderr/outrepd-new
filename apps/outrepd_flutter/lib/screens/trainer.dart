@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../reps/exercise.dart';
 import '../reps/pose.dart';
 import '../reps/pose_source.dart';
+import '../reps/recording.dart';
 import '../reps/rep_engine.dart';
 import '../theme.dart';
 
@@ -24,7 +25,7 @@ class TrainerScreen extends StatefulWidget {
   State<TrainerScreen> createState() => _TrainerScreenState();
 }
 
-enum _Stage { setup, ready, calibrating, counting }
+enum _Stage { setup, counting }
 
 class _TrainerScreenState extends State<TrainerScreen> {
   late ExerciseDef _exercise = widget.exercise ?? kExercises.first;
@@ -45,17 +46,11 @@ class _TrainerScreenState extends State<TrainerScreen> {
   /// reveals it.
   bool _showNumbers = false;
 
-  /// Calibration runs for a fixed window rather than ending on the first rep
-  /// it recognises. Stopping at the first one only ever sees the travel the
-  /// default thresholds already covered, which teaches a truncated range —
-  /// and a truncated range makes every later rep look rushed.
-  static const _calibrationWindow = Duration(seconds: 8);
+  /// Every pose of the session, kept so the set can be replayed against a
+  /// changed threshold instead of being performed again.
+  final _recorded = <RecordedFrame>[];
+  String? _savedTo;
 
-  /// Time to get down onto the floor before anything is recorded. Angles
-  /// thrown while settling into position are nothing like the movement, and
-  /// letting them into the calibration is what taught a range the reps only
-  /// travelled the middle of.
-  static const _readyWindow = Duration(seconds: 5);
 
   @override
   void initState() {
@@ -92,10 +87,13 @@ class _TrainerScreenState extends State<TrainerScreen> {
 
     _sub = source.poses.listen(_onPose);
 
+    _recorded.clear();
+    _savedTo = null;
+
     setState(() {
       _source = source;
       _engine = engine;
-      _stage = _Stage.ready;
+      _stage = _Stage.counting;
       _error = null;
     });
   }
@@ -104,19 +102,9 @@ class _TrainerScreenState extends State<TrainerScreen> {
     final engine = _engine;
     if (engine == null || !mounted) return;
 
-    final state = engine.update(pose, _clock.elapsed);
+    _recorded.add(RecordedFrame(_clock.elapsedMilliseconds, pose));
 
-    // The whole warm-up runs on its own clock, so nobody has to reach for the
-    // phone mid-set.
-    if (_stage == _Stage.ready && _clock.elapsed >= _readyWindow) {
-      engine.startCalibration();
-      _stage = _Stage.calibrating;
-    } else if (_stage == _Stage.calibrating &&
-        _clock.elapsed >= _readyWindow + _calibrationWindow) {
-      engine.finishCalibration();
-      engine.reset();
-      _stage = _Stage.counting;
-    }
+    final state = engine.update(pose, _clock.elapsed);
 
     setState(() {
       _pose = pose;
@@ -129,24 +117,35 @@ class _TrainerScreenState extends State<TrainerScreen> {
     setState(() {});
   }
 
-  /// A bad calibration poisons everything after it, and it is not obvious from
-  /// the outside that it went wrong. Being able to redo it without leaving the
-  /// screen is the difference between a fixable session and a wasted one.
+  /// Throws away what the range has learned and starts picking it up again.
+  /// Useful after moving the phone, or switching to a different depth.
   void _recalibrate() {
-    final engine = _engine;
-    if (engine == null) return;
-    engine
-      ..reset()
-      ..startCalibration();
+    _engine?.reset();
     _clock
       ..reset()
       ..start();
-    setState(() => _stage = _Stage.ready);
+    setState(() {});
+  }
+
+  /// Saving must never lose the session it is trying to preserve, so a
+  /// failure here is reported and swallowed rather than thrown.
+  Future<void> _saveRecording() async {
+    if (_recorded.length < 30) return;
+    try {
+      final path = await PoseRecording(
+        exerciseId: _exercise.id,
+        frames: List.of(_recorded),
+      ).save();
+      if (mounted) setState(() => _savedTo = path);
+    } on Object catch (error) {
+      if (mounted) setState(() => _error = 'Could not save the session: $error');
+    }
   }
 
   Future<void> _stop() async {
     await _sub?.cancel();
     await _source?.dispose();
+    await _saveRecording();
     if (!mounted) return;
     setState(() {
       _sub = null;
@@ -232,6 +231,13 @@ class _TrainerScreenState extends State<TrainerScreen> {
             ],
           ),
         ),
+        if (_savedTo != null) ...[
+          const SizedBox(height: 14),
+          Text(
+            'Session saved for tuning:\n$_savedTo',
+            style: const TextStyle(color: _dim, fontSize: 11.5),
+          ),
+        ],
         if (_error != null) ...[
           const SizedBox(height: 14),
           Text(
@@ -300,10 +306,6 @@ class _TrainerScreenState extends State<TrainerScreen> {
             exercise: _exercise,
             state: state,
             holdSeconds: engine.holdSeconds,
-            stage: _stage,
-            countdown: _stage == _Stage.ready
-                ? _readyWindow - _clock.elapsed
-                : _readyWindow + _calibrationWindow - _clock.elapsed,
             demo: !live,
             onStop: _stop,
             onRevealNumbers: () =>
@@ -539,8 +541,6 @@ class _Readout extends StatelessWidget {
     required this.exercise,
     required this.state,
     required this.holdSeconds,
-    required this.stage,
-    required this.countdown,
     required this.demo,
     required this.onStop,
     required this.onRevealNumbers,
@@ -549,8 +549,6 @@ class _Readout extends StatelessWidget {
   final ExerciseDef exercise;
   final RepState? state;
   final double holdSeconds;
-  final _Stage stage;
-  final Duration countdown;
   final bool demo;
   final VoidCallback onStop;
   final VoidCallback onRevealNumbers;
@@ -561,14 +559,8 @@ class _Readout extends StatelessWidget {
     final hold = exercise.mode == ScoreMode.hold;
     final value = hold ? holdSeconds.toStringAsFixed(1) : '${s?.reps ?? 0}';
 
-    final seconds = countdown.inSeconds.clamp(0, 99) + 1;
-    final warmingUp = stage != _Stage.counting;
-    final message = switch (stage) {
-      _Stage.ready => 'Get into position · ${seconds}s',
-      _Stage.calibrating => 'Now do slow reps · ${seconds}s',
-      _ => s?.formMessage ?? s?.rejection?.message,
-    };
-    final bad = !warmingUp && message != null;
+    final message = s?.formMessage ?? s?.rejection?.message;
+    final bad = message != null;
 
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 18, 20, 28),

@@ -109,6 +109,22 @@ class RepEngine {
   /// middle of — so the ball never reaches either zone and nothing counts.
   final _calSamples = <double>[];
 
+  /// A rolling window of recent angles, about twenty seconds of them, from
+  /// which the range is re-derived as the set goes on.
+  ///
+  /// This replaces asking for a calibration ritual first. A warm-up phase
+  /// demands the lifter perform to a script before anything counts, discards
+  /// the reps they do during it, and silently poisons the whole session if
+  /// they stray from it. Learning from the reps themselves has none of those
+  /// problems: counting starts on the first rep, and the range corrects itself
+  /// if they settle into a different depth.
+  final _recent = <double>[];
+  int _sinceAdapt = 0;
+
+  static const _windowFrames = 600;
+  static const _adaptEvery = 30;
+  static const _minSamplesToAdapt = 90;
+
   /// One filter per gate, so form is judged on a steadied reading rather than
   /// a single frame of a depth estimate.
   final _gateFilters = <int, Smoothed>{};
@@ -185,6 +201,8 @@ class RepEngine {
     _rejection = null;
     _lastFrame = null;
     _angle.reset();
+    _recent.clear();
+    _sinceAdapt = 0;
     for (final f in _gateFilters.values) {
       f.reset();
     }
@@ -223,6 +241,15 @@ class RepEngine {
     final angle = _angle.add(raw);
 
     if (_calibrating) _calSamples.add(angle);
+
+    _recent.add(angle);
+    if (_recent.length > _windowFrames) _recent.removeAt(0);
+    // Only between reps: moving the ends underneath a rep in flight could put
+    // the lifter past a zone they never travelled to.
+    if (!_calibrating && !_armed && ++_sinceAdapt >= _adaptEvery) {
+      _sinceAdapt = 0;
+      _adaptRange();
+    }
 
     final progress = _progressOf(angle);
     final broken = _firstBrokenGate(pose, progress);
@@ -292,6 +319,27 @@ class RepEngine {
       countedNow: counted,
       rejection: _rejection,
     );
+  }
+
+  /// Re-derives the ends from the last few seconds of movement. Runs quietly
+  /// while the set goes on, so the first reps count on the definition's own
+  /// thresholds and later ones on this lifter's actual travel.
+  void _adaptRange() {
+    if (_recent.length < _minSamplesToAdapt) return;
+
+    final sorted = List.of(_recent)..sort();
+    double at(double f) =>
+        sorted[(f * (sorted.length - 1)).round().clamp(0, sorted.length - 1)];
+
+    // Trimmed the same way and for the same reason as before: too narrow still
+    // counts, too wide counts nothing.
+    final low = at(0.2);
+    final high = at(0.8);
+    if (high - low < kMinCalibrationRange) return;
+
+    final bottomIsSmaller = exercise.bottomAngle < exercise.topAngle;
+    _calBottom = bottomIsSmaller ? low : high;
+    _calTop = bottomIsSmaller ? high : low;
   }
 
   /// Sorted samples only. Nearest-rank, which is plenty at this sample count.
