@@ -51,9 +51,17 @@ abstract class FormGate {
   final String message;
   final GatePhase phase;
 
-  /// null when the joints needed are not visible — an unmeasurable rule must
-  /// not fail the rep, or a half-framed lifter would score nothing.
-  bool? check(BodyPose pose);
+  /// The quantity this rule watches, or null when the joints it needs are not
+  /// visible — an unmeasurable rule must not fail the rep, or a half-framed
+  /// lifter would score nothing.
+  ///
+  /// Measuring and judging are separate so the engine can smooth the reading
+  /// first. Judged frame by frame off a depth estimate, a perfectly straight
+  /// body dips below the line for a moment and takes the rep with it.
+  double? measure(BodyPose pose);
+
+  /// Whether a reading is acceptable.
+  bool passes(double value);
 }
 
 /// Keeps an angle inside a range, e.g. a straight body line during a push-up.
@@ -71,11 +79,12 @@ class AngleGate extends FormGate {
   final double? max;
 
   @override
-  bool? check(BodyPose pose) {
-    final angle = spec.measure(pose);
-    if (angle == null) return null;
-    if (min != null && angle < min!) return false;
-    if (max != null && angle > max!) return false;
+  double? measure(BodyPose pose) => spec.measure(pose);
+
+  @override
+  bool passes(double value) {
+    if (min != null && value < min!) return false;
+    if (max != null && value > max!) return false;
     return true;
   }
 }
@@ -97,13 +106,18 @@ class AboveGate extends FormGate {
   /// Fraction of the frame the upper joint must clear the lower one by.
   final double margin;
 
+  /// How far the upper joint sits above the lower one, as a fraction of the
+  /// frame. Positive means it has cleared it.
   @override
-  bool? check(BodyPose pose) {
+  double? measure(BodyPose pose) {
     final u = pose.confident(upper);
     final l = pose.confident(lower);
     if (u == null || l == null) return null;
-    return u.y < l.y - margin;
+    return l.y - u.y;
   }
+
+  @override
+  bool passes(double value) => value > margin;
 }
 
 enum ScoreMode {
@@ -175,7 +189,10 @@ const kExercises = <ExerciseDef>[
       AngleGate(
         spec: AngleSpec(_shoulder, _hip, _knee),
         message: 'Keep your body in a straight line',
-        min: 155,
+        // Loose on purpose. Facing the camera the body line points away from
+        // it, which is the hardest thing here to measure; a genuinely straight
+        // body reads well under 180. Tight enough to catch a real sag.
+        min: 140,
       ),
     ],
   ),

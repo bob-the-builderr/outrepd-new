@@ -109,6 +109,14 @@ class RepEngine {
   /// middle of — so the ball never reaches either zone and nothing counts.
   final _calSamples = <double>[];
 
+  /// One filter per gate, so form is judged on a steadied reading rather than
+  /// a single frame of a depth estimate.
+  final _gateFilters = <int, Smoothed>{};
+
+  /// Why reps have been thrown away this session. Two rejected for form and
+  /// two for speed are different problems; the count says which.
+  final rejections = <RepRejection, int>{};
+
   int _reps = 0;
   double _holdSeconds = 0;
 
@@ -177,6 +185,10 @@ class RepEngine {
     _rejection = null;
     _lastFrame = null;
     _angle.reset();
+    for (final f in _gateFilters.values) {
+      f.reset();
+    }
+    rejections.clear();
   }
 
   RepState update(BodyPose pose, Duration now) {
@@ -253,8 +265,10 @@ class RepEngine {
 
       if (took < kMinRepTime) {
         _rejection = RepRejection.tooFast;
+        rejections.update(RepRejection.tooFast, (n) => n + 1, ifAbsent: () => 1);
       } else if (!_formAtBottom || !formOk || _spoiled) {
         _rejection = RepRejection.badForm;
+        rejections.update(RepRejection.badForm, (n) => n + 1, ifAbsent: () => 1);
       } else {
         _reps++;
         counted = true;
@@ -296,17 +310,29 @@ class RepEngine {
 
   /// Only rules that apply where the lifter is right now. Depth is the meter's
   /// job, so a gate never has to restate it.
+  ///
+  /// Every gate is measured and smoothed on every frame, whether or not it is
+  /// being judged, so its filter is already settled by the time the lifter
+  /// reaches the part of the movement where it matters.
   FormGate? _firstBrokenGate(BodyPose pose, double progress) {
-    for (final gate in exercise.gates) {
+    FormGate? broken;
+
+    for (var i = 0; i < exercise.gates.length; i++) {
+      final gate = exercise.gates[i];
+      final reading = gate.measure(pose);
+      if (reading == null) continue;
+
+      final smoothed =
+          (_gateFilters[i] ??= Smoothed(weight: 0.25)).add(reading);
+
       final applies = switch (gate.phase) {
         GatePhase.always => true,
         GatePhase.bottom => progress <= kBottomZone,
         GatePhase.top => progress >= kTopZone,
       };
-      if (!applies) continue;
-      if (gate.check(pose) == false) return gate;
+      if (applies && broken == null && !gate.passes(smoothed)) broken = gate;
     }
-    return null;
+    return broken;
   }
 
   void _trackBadForm(bool formOk, Duration now) {

@@ -40,6 +40,11 @@ class _TrainerScreenState extends State<TrainerScreen> {
   RepState? _state;
   String? _error;
 
+  /// Hidden by default — it is for working out why the counter is misbehaving,
+  /// not something to have on screen while lifting. A long press on the count
+  /// reveals it.
+  bool _showNumbers = false;
+
   /// Calibration runs for a fixed window rather than ending on the first rep
   /// it recognises. Stopping at the first one only ever sees the travel the
   /// default thresholds already covered, which teaches a truncated range —
@@ -280,11 +285,12 @@ class _TrainerScreenState extends State<TrainerScreen> {
         // still, or the calibrated ends can land somewhere unreachable, and
         // from the outside both just look like "it is not counting". One
         // screenshot of this answers which.
-        Positioned(
-          left: 14,
-          top: 110,
-          child: _Diagnostics(state: state, engine: engine),
-        ),
+        if (_showNumbers)
+          Positioned(
+            left: 14,
+            top: 110,
+            child: _Diagnostics(state: state, engine: engine),
+          ),
 
         Positioned(
           left: 0,
@@ -300,6 +306,8 @@ class _TrainerScreenState extends State<TrainerScreen> {
                 : _readyWindow + _calibrationWindow - _clock.elapsed,
             demo: !live,
             onStop: _stop,
+            onRevealNumbers: () =>
+                setState(() => _showNumbers = !_showNumbers),
           ),
         ),
       ],
@@ -492,7 +500,8 @@ class _Diagnostics extends StatelessWidget {
       'ball    ${((s?.progress ?? 0) * 100).round()}%',
       'form    ${s == null ? '—' : (s.formOk ? 'ok' : 'BAD')}',
       'state   ${s?.armed ?? false ? 'going up' : 'waiting'}',
-      if (s?.rejection != null) 'last    ${s!.rejection!.name}',
+      for (final entry in engine.rejections.entries)
+        'lost    ${entry.value} to ${entry.key.name}',
       if (s?.tracked == false) 'lost the body',
     ];
 
@@ -534,6 +543,7 @@ class _Readout extends StatelessWidget {
     required this.countdown,
     required this.demo,
     required this.onStop,
+    required this.onRevealNumbers,
   });
 
   final ExerciseDef exercise;
@@ -543,6 +553,7 @@ class _Readout extends StatelessWidget {
   final Duration countdown;
   final bool demo;
   final VoidCallback onStop;
+  final VoidCallback onRevealNumbers;
 
   @override
   Widget build(BuildContext context) {
@@ -585,13 +596,16 @@ class _Readout extends StatelessWidget {
                 ),
               ),
             ),
-          Text(
-            value,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 76,
-              fontWeight: FontWeight.w900,
-              height: 1,
+          GestureDetector(
+            onLongPress: onRevealNumbers,
+            child: Text(
+              value,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 76,
+                fontWeight: FontWeight.w900,
+                height: 1,
+              ),
             ),
           ),
           Text(
