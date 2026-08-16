@@ -111,6 +111,13 @@ class _GymBackdrop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Same artwork in two inks — the dark plate would turn to mud behind a
+    // light page, so each theme gets the plate drawn for it.
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    final asset = dark
+        ? 'assets/images/roadmap-bg.jpg'
+        : 'assets/images/roadmap-bg-light.jpg';
+
     return Positioned.fill(
       child: Stack(
         fit: StackFit.expand,
@@ -119,7 +126,7 @@ class _GymBackdrop extends StatelessWidget {
           // enough to feel like texture, not enough to argue with the rank
           // labels sitting on top of it.
           Image.asset(
-            'assets/images/roadmap-bg.jpg',
+            asset,
             fit: BoxFit.cover,
             alignment: Alignment.topCenter,
             opacity: const AlwaysStoppedAnimation(0.85),
@@ -129,9 +136,13 @@ class _GymBackdrop extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
+                // The light plate is pale to begin with, so a wash as heavy as
+                // the dark one would bleach it away entirely.
                 colors: [
-                  AppColors.background.withValues(alpha: 0.18),
-                  AppColors.background.withValues(alpha: 0.42),
+                  context.colors.background
+                      .withValues(alpha: dark ? 0.18 : 0.10),
+                  context.colors.background
+                      .withValues(alpha: dark ? 0.42 : 0.30),
                 ],
               ),
             ),
@@ -182,8 +193,8 @@ class _NextStepCard extends StatelessWidget {
                     const SizedBox(height: 6),
                     Text(
                       tierLabel(profile.tierIdx, profile.divIdx),
-                      style: const TextStyle(
-                        color: AppColors.muted,
+                      style: TextStyle(
+                        color: context.colors.muted,
                         fontSize: 11,
                       ),
                     ),
@@ -200,16 +211,16 @@ class _NextStepCard extends StatelessWidget {
                         child: LinearProgressIndicator(
                           value: (profile.lp / 100).clamp(0.0, 1.0),
                           minHeight: 6,
-                          backgroundColor: AppColors.surfaceRaised,
+                          backgroundColor: context.colors.surfaceRaised,
                           valueColor:
-                              const AlwaysStoppedAnimation(AppColors.brand),
+                              AlwaysStoppedAnimation(context.colors.brand),
                         ),
                       ),
                       const SizedBox(height: 6),
                       Text(
                         atTop ? 'Top tier' : '$remaining LP',
-                        style: const TextStyle(
-                          color: AppColors.brand,
+                        style: TextStyle(
+                          color: context.colors.brand,
                           fontSize: 11,
                           fontWeight: FontWeight.w700,
                         ),
@@ -224,8 +235,8 @@ class _NextStepCard extends StatelessWidget {
                   const SizedBox(height: 6),
                   Text(
                     tierLabel(nextTierIdx, nextDivIdx),
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: context.colors.text,
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
                     ),
@@ -234,9 +245,9 @@ class _NextStepCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(vertical: 14),
-            child: Divider(color: AppColors.surfaceRaised, height: 1),
+            child: Divider(color: context.colors.surfaceRaised, height: 1),
           ),
           Row(
             children: [
@@ -251,7 +262,7 @@ class _NextStepCard extends StatelessWidget {
                   atTopTier
                       ? 'You have unlocked everything'
                       : 'Unlocks at ${rewardTier.name}: ${rewardTier.reward}',
-                  style: const TextStyle(color: Colors.white, fontSize: 12.5),
+                  style: TextStyle(color: context.colors.text, fontSize: 12.5),
                 ),
               ),
             ],
@@ -293,6 +304,8 @@ class _RoadStrip extends StatelessWidget {
           count: total,
           currentStep: currentStep,
           rowHeight: rowHeight,
+          roadColor: context.colors.surfaceRaised,
+          walkedColor: context.colors.brand,
         ),
         child: Column(
           children: [
@@ -320,11 +333,17 @@ class _RoadPainter extends CustomPainter {
     required this.count,
     required this.currentStep,
     required this.rowHeight,
+    required this.roadColor,
+    required this.walkedColor,
   });
 
   final int count;
   final int currentStep;
   final double rowHeight;
+
+  /// A painter has no context, so the themed colours are handed in.
+  final Color roadColor;
+  final Color walkedColor;
 
   /// Centre of the badge in a row. The label sits below it, which lifts the
   /// badge above the row's midpoint — the path has to follow.
@@ -372,7 +391,7 @@ class _RoadPainter extends CustomPainter {
     // "done" versus "still to come" at a glance.
     if (aheadPoints.length > 1) {
       final ahead = Paint()
-        ..color = AppColors.surfaceRaised
+        ..color = roadColor
         ..strokeWidth = 7
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.round;
@@ -385,7 +404,7 @@ class _RoadPainter extends CustomPainter {
       canvas.drawPath(
         walkedPath,
         Paint()
-          ..color = AppColors.brand.withValues(alpha: 0.28)
+          ..color = walkedColor.withValues(alpha: 0.28)
           ..strokeWidth = 16
           ..style = PaintingStyle.stroke
           ..strokeCap = StrokeCap.round
@@ -394,7 +413,7 @@ class _RoadPainter extends CustomPainter {
       canvas.drawPath(
         walkedPath,
         Paint()
-          ..color = AppColors.brand
+          ..color = walkedColor
           ..strokeWidth = 7
           ..style = PaintingStyle.stroke
           ..strokeCap = StrokeCap.round,
@@ -404,7 +423,10 @@ class _RoadPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_RoadPainter old) =>
-      old.currentStep != currentStep || old.count != count;
+      old.currentStep != currentStep ||
+      old.count != count ||
+      old.roadColor != roadColor ||
+      old.walkedColor != walkedColor;
 }
 
 /// One rung of the ladder: a single division of a single tier.
@@ -458,10 +480,10 @@ class _RoadStop extends StatelessWidget {
       height: size * 0.82,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: AppColors.background,
+        color: context.colors.background,
         boxShadow: [
           BoxShadow(
-            color: AppColors.background,
+            color: context.colors.background,
             blurRadius: 10,
             spreadRadius: 2,
           ),
@@ -494,8 +516,8 @@ class _RoadStop extends StatelessWidget {
             child: CircularProgressIndicator(
               value: (lp / 100).clamp(0.0, 1.0),
               strokeWidth: 4,
-              backgroundColor: AppColors.surfaceRaised.withValues(alpha: 0.7),
-              valueColor: const AlwaysStoppedAnimation(AppColors.brand),
+              backgroundColor: context.colors.surfaceRaised.withValues(alpha: 0.7),
+              valueColor: AlwaysStoppedAnimation(context.colors.brand),
             ),
           ),
       ],
@@ -523,12 +545,26 @@ class _RoadStop extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: isCurrent
-                          ? tier.color
-                          : (reached ? Colors.white : AppColors.muted),
+                          // Gold on a pale page is barely there, so the tier
+                          // colour is taken down until it reads as text.
+                          ? (Theme.of(context).brightness == Brightness.dark
+                              ? tier.color
+                              : Color.lerp(tier.color, Colors.black, 0.42)!)
+                          : (reached
+                              ? context.colors.text
+                              : context.colors.muted),
                       fontSize: isCurrent ? 13.5 : 12,
                       fontWeight: isCurrent || startsTier
                           ? FontWeight.w800
                           : FontWeight.w500,
+                      // The backdrop is a busy pattern; without a halo in the
+                      // page colour the labels sit inside the artwork rather
+                      // than on top of it.
+                      shadows: [
+                        Shadow(color: context.colors.background, blurRadius: 7),
+                        Shadow(color: context.colors.background, blurRadius: 4),
+                        Shadow(color: context.colors.background, blurRadius: 2),
+                      ],
                     ),
                   ),
                   // Treasure along the road: what this tier hands you.
@@ -552,7 +588,7 @@ class _RoadStop extends StatelessWidget {
                           style: TextStyle(
                             color: reached
                                 ? tier.color
-                                : AppColors.muted.withValues(alpha: 0.8),
+                                : context.colors.muted.withValues(alpha: 0.8),
                             fontSize: 9.5,
                             fontWeight: FontWeight.w600,
                           ),

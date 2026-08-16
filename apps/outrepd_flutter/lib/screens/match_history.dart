@@ -40,7 +40,7 @@ class MatchHistoryScreen extends StatelessWidget {
                   child: _Tally(
                     value: '${(p.winRate * 100).round()}%',
                     label: 'Win rate',
-                    color: Colors.white,
+                    color: context.colors.text,
                   ),
                 ),
               ],
@@ -86,7 +86,7 @@ class _Tally extends StatelessWidget {
         const SizedBox(height: 2),
         Text(
           label,
-          style: const TextStyle(color: AppColors.muted, fontSize: 11.5),
+          style: TextStyle(color: context.colors.muted, fontSize: 11.5),
         ),
       ],
     );
@@ -131,8 +131,8 @@ class MatchRow extends StatelessWidget {
                   '${m.muscleGroup} vs ${m.opponent}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: context.colors.text,
                     fontWeight: FontWeight.w700,
                     fontSize: 14,
                   ),
@@ -140,7 +140,7 @@ class MatchRow extends StatelessWidget {
                 const SizedBox(height: 3),
                 Text(
                   '${formatVolume(m.userVolume)} · ${formatVolume(m.opponentVolume)} · ${relativeDays(m.daysAgo)}',
-                  style: const TextStyle(color: AppColors.muted, fontSize: 12),
+                  style: TextStyle(color: context.colors.muted, fontSize: 12),
                 ),
               ],
             ),

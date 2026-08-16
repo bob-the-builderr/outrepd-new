@@ -103,7 +103,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         actions: [
           TextButton(
             onPressed: _finish,
-            child: const Text('Skip', style: TextStyle(color: AppColors.muted)),
+            child: Text('Skip', style: TextStyle(color: context.colors.muted)),
           ),
         ],
       ),
@@ -227,8 +227,8 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
           controller: _usernameController,
           onChanged: (_) => setState(() {}),
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: context.colors.text,
             fontSize: 22,
             fontWeight: FontWeight.w700,
           ),
@@ -244,15 +244,15 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
-              borderSide: const BorderSide(color: AppColors.brand, width: 2.5),
+              borderSide: BorderSide(color: context.colors.brand, width: 2.5),
             ),
           ),
         ),
         const SizedBox(height: 12),
-        const Text(
+        Text(
           'At least 3 characters. This is what rivals will see.',
           textAlign: TextAlign.center,
-          style: TextStyle(color: AppColors.muted, fontSize: 13),
+          style: TextStyle(color: context.colors.muted, fontSize: 13),
         ),
       ],
     );
@@ -298,19 +298,19 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
               color: const Color(0xFF111111),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                color: selected ? AppColors.brand : const Color(0xFF444444),
+                color: selected ? context.colors.brand : const Color(0xFF444444),
                 width: 2.5,
               ),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(icon, size: 64, color: AppColors.brand),
+                Icon(icon, size: 64, color: context.colors.brand),
                 const SizedBox(height: 12),
                 Text(
                   label,
                   style: TextStyle(
-                    color: selected ? Colors.white : const Color(0xFFBBBBBB),
+                    color: selected ? context.colors.text : const Color(0xFFBBBBBB),
                     fontWeight: FontWeight.w700,
                     fontSize: 16,
                   ),
@@ -365,7 +365,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
                   child: Text(
                     '$value',
                     style: TextStyle(
-                      color: selected ? AppColors.brand : AppColors.muted,
+                      color: selected ? context.colors.brand : context.colors.muted,
                       fontSize: selected ? 42 : 26,
                       fontWeight: selected ? FontWeight.w900 : FontWeight.w600,
                     ),
@@ -385,10 +385,10 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         const SizedBox(height: 24),
         const StepHeading(title: "What's your\ncurrent weight?"),
         const SizedBox(height: 12),
-        const Text(
+        Text(
           'Body weight is essential to calculate your rank.',
           textAlign: TextAlign.center,
-          style: TextStyle(color: AppColors.muted, fontSize: 13),
+          style: TextStyle(color: context.colors.muted, fontSize: 13),
         ),
         const SizedBox(height: 24),
         UnitToggle(
@@ -458,8 +458,8 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
       child: TypewriterText(
         text: text,
         onComplete: () => setState(() => _typingDone = true),
-        style: const TextStyle(
-          color: Colors.white,
+        style: TextStyle(
+          color: context.colors.text,
           fontSize: 28,
           height: 1.35,
           fontWeight: FontWeight.w900,
@@ -514,15 +514,15 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
           width: double.infinity,
           padding: const EdgeInsets.all(22),
           decoration: BoxDecoration(
-            color: AppColors.surface,
+            color: context.colors.surface,
             borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: AppColors.surfaceRaised),
+            border: Border.all(color: context.colors.surfaceRaised),
           ),
           child: Text(
             '"$statement"',
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: context.colors.text,
               fontSize: 19,
               height: 1.45,
               fontWeight: FontWeight.w600,
@@ -533,9 +533,9 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         const SizedBox(height: 32),
         Row(
           children: [
-            answer('Yes', true, AppColors.brand),
+            answer('Yes', true, context.colors.brand),
             const SizedBox(width: 14),
-            answer('No', false, AppColors.muted),
+            answer('No', false, context.colors.muted),
           ],
         ),
       ],
@@ -551,8 +551,8 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         TypewriterText(
           text: headline,
           onComplete: () => setState(() => _typingDone = true),
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: context.colors.text,
             fontSize: 28,
             height: 1.25,
             fontWeight: FontWeight.w900,
@@ -580,11 +580,11 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         children: [
           Image.asset('assets/images/workout-battle.png', height: 220),
           const SizedBox(height: 32),
-          const Text(
+          Text(
             'The grind hits different\nwith a rival',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.white,
+              color: context.colors.text,
               fontSize: 28,
               height: 1.3,
               fontWeight: FontWeight.w900,
@@ -614,11 +614,11 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         children: [
           Image.asset('assets/images/logo.png', height: 140),
           const SizedBox(height: 28),
-          const Text(
+          Text(
             "You're all set!",
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.white,
+              color: context.colors.text,
               fontSize: 32,
               fontWeight: FontWeight.w900,
             ),
@@ -695,9 +695,9 @@ class _CommitmentStepState extends State<_CommitmentStep>
                       child: CircularProgressIndicator(
                         value: _controller.value,
                         strokeWidth: 6,
-                        backgroundColor: AppColors.surfaceRaised,
+                        backgroundColor: context.colors.surfaceRaised,
                         valueColor:
-                            const AlwaysStoppedAnimation(AppColors.brand),
+                            AlwaysStoppedAnimation(context.colors.brand),
                       ),
                     ),
                     Transform.scale(

@@ -94,9 +94,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: _skipAll,
-                child: const Text(
+                child: Text(
                   'Skip',
-                  style: TextStyle(color: AppColors.muted),
+                  style: TextStyle(color: context.colors.muted),
                 ),
               ),
             ),
@@ -121,21 +121,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Text(
                           slide.title,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 30,
                             height: 1.2,
                             fontWeight: FontWeight.w900,
-                            color: Colors.white,
+                            color: context.colors.text,
                           ),
                         ),
                         const SizedBox(height: 16),
                         Text(
                           slide.body,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 16,
                             height: 1.5,
-                            color: AppColors.muted,
+                            color: context.colors.muted,
                           ),
                         ),
                         const SizedBox(height: 24),
@@ -155,7 +155,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   width: active ? 24 : 8,
                   height: 8,
                   decoration: BoxDecoration(
-                    color: active ? AppColors.brand : AppColors.surfaceRaised,
+                    color: active ? context.colors.brand : context.colors.surfaceRaised,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 );

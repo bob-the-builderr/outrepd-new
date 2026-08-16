@@ -1,6 +1,11 @@
 /// Sample data the UI runs on. No network, no accounts — everything here is
 /// held in memory so the whole app is browsable straight after install.
+///
+/// The one exception is the three body measurements a lifter types in: those
+/// are theirs, not sample data, so they survive a restart.
 library;
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile {
   Profile({
@@ -49,6 +54,23 @@ final demoProfile = Profile(
   weightKg: 82,
   age: 25,
 );
+
+/// Restore the measurements the lifter set by hand. Everything else about the
+/// profile is demo data and stays as written above.
+Future<void> loadProfileStats() async {
+  final s = await SharedPreferences.getInstance();
+  demoProfile
+    ..heightCm = s.getInt('profileHeightCm') ?? demoProfile.heightCm
+    ..weightKg = s.getInt('profileWeightKg') ?? demoProfile.weightKg
+    ..age = s.getInt('profileAge') ?? demoProfile.age;
+}
+
+Future<void> saveProfileStats() async {
+  final s = await SharedPreferences.getInstance();
+  await s.setInt('profileHeightCm', demoProfile.heightCm);
+  await s.setInt('profileWeightKg', demoProfile.weightKg);
+  await s.setInt('profileAge', demoProfile.age);
+}
 
 class MatchRecord {
   const MatchRecord({

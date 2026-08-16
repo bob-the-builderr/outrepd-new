@@ -23,17 +23,17 @@ class AchievementsScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
+                    Text(
                       'Unlocked',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: context.colors.text,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     Text(
                       '$earned / ${demoAchievements.length}',
-                      style: const TextStyle(
-                        color: AppColors.brand,
+                      style: TextStyle(
+                        color: context.colors.brand,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
@@ -45,9 +45,9 @@ class AchievementsScreen extends StatelessWidget {
                   child: LinearProgressIndicator(
                     value: earned / demoAchievements.length,
                     minHeight: 8,
-                    backgroundColor: AppColors.surfaceRaised,
+                    backgroundColor: context.colors.surfaceRaised,
                     valueColor:
-                        const AlwaysStoppedAnimation(AppColors.brand),
+                        AlwaysStoppedAnimation(context.colors.brand),
                   ),
                 ),
               ],
@@ -71,13 +71,13 @@ class AchievementsScreen extends StatelessWidget {
                         height: 42,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: (a.earned ? AppColors.gold : AppColors.muted)
+                          color: (a.earned ? AppColors.gold : context.colors.muted)
                               .withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Icon(
                           a.earned ? Icons.emoji_events : Icons.lock_outline,
-                          color: a.earned ? AppColors.gold : AppColors.muted,
+                          color: a.earned ? AppColors.gold : context.colors.muted,
                           size: 21,
                         ),
                       ),
@@ -88,8 +88,8 @@ class AchievementsScreen extends StatelessWidget {
                           children: [
                             Text(
                               a.name,
-                              style: const TextStyle(
-                                color: Colors.white,
+                              style: TextStyle(
+                                color: context.colors.text,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 15,
                               ),
@@ -97,8 +97,8 @@ class AchievementsScreen extends StatelessWidget {
                             const SizedBox(height: 3),
                             Text(
                               a.description,
-                              style: const TextStyle(
-                                color: AppColors.muted,
+                              style: TextStyle(
+                                color: context.colors.muted,
                                 fontSize: 12,
                               ),
                             ),

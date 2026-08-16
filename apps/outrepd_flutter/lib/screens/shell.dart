@@ -55,9 +55,9 @@ class _AppShellState extends State<AppShell> {
         child: Container(
           height: 68,
           decoration: BoxDecoration(
-            color: AppColors.surface,
+            color: context.colors.surface,
             borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: AppColors.surfaceRaised),
+            border: Border.all(color: context.colors.surfaceRaised),
             boxShadow: const [
               BoxShadow(color: Colors.black54, blurRadius: 16, offset: Offset(0, 6)),
             ],
@@ -106,7 +106,7 @@ class _Tab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = selected ? AppColors.brand : AppColors.muted;
+    final color = selected ? context.colors.brand : context.colors.muted;
 
     return InkWell(
       onTap: onTap,
@@ -120,17 +120,17 @@ class _Tab extends StatelessWidget {
               height: 42,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.brand,
+                color: context.colors.brand,
                 boxShadow: selected
                     ? [
                         BoxShadow(
-                          color: AppColors.brand.withValues(alpha: 0.4),
+                          color: context.colors.brand.withValues(alpha: 0.4),
                           blurRadius: 14,
                         ),
                       ]
                     : null,
               ),
-              child: const Icon(Icons.sports_mma, color: Colors.white, size: 22),
+              child: Icon(Icons.sports_mma, color: Colors.white, size: 22),
             )
           else
             Icon(selected ? spec.selectedIcon : spec.icon, color: color, size: 23),
@@ -140,7 +140,7 @@ class _Tab extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              color: primary ? AppColors.brand : color,
+              color: primary ? context.colors.brand : color,
               fontSize: 10.5,
               fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
             ),

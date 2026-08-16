@@ -85,8 +85,8 @@ class StepHeading extends StatelessWidget {
         Text(
           title,
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: context.colors.text,
             fontSize: 30,
             height: 1.2,
             fontWeight: FontWeight.w900,
@@ -132,18 +132,18 @@ class OptionCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
         decoration: BoxDecoration(
           color: selected
-              ? AppColors.brand.withValues(alpha: 0.12)
+              ? context.colors.brand.withValues(alpha: 0.12)
               : const Color(0xFF111111),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: selected ? AppColors.brand : const Color(0xFF444444),
+            color: selected ? context.colors.brand : const Color(0xFF444444),
             width: 2.5,
           ),
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: selected ? Colors.white : const Color(0xFFDDDDDD),
+            color: selected ? context.colors.text : const Color(0xFFDDDDDD),
             fontSize: 16,
             fontWeight: selected ? FontWeight.w800 : FontWeight.w600,
           ),
@@ -205,8 +205,8 @@ class _RulerPickerState extends State<RulerPicker> {
           children: [
             Text(
               '${widget.value}',
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: context.colors.text,
                 fontSize: 56,
                 fontWeight: FontWeight.w900,
               ),
@@ -215,8 +215,8 @@ class _RulerPickerState extends State<RulerPicker> {
               const SizedBox(width: 6),
               Text(
                 widget.unitLabel,
-                style: const TextStyle(
-                  color: AppColors.brand,
+                style: TextStyle(
+                  color: context.colors.brand,
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
                 ),
@@ -254,7 +254,7 @@ class _RulerPickerState extends State<RulerPicker> {
                             width: 2,
                             height: major ? 40 : (mid ? 26 : 16),
                             color: major
-                                ? Colors.white70
+                                ? context.colors.text.withValues(alpha: 0.7)
                                 : const Color(0xFF3A4552),
                           ),
                         );
@@ -266,7 +266,7 @@ class _RulerPickerState extends State<RulerPicker> {
                       width: 3,
                       height: 52,
                       decoration: BoxDecoration(
-                        color: AppColors.brand,
+                        color: context.colors.brand,
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),
@@ -305,13 +305,13 @@ class UnitToggle extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 11),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: active ? AppColors.brand : Colors.transparent,
+                color: active ? context.colors.brand : Colors.transparent,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Text(
                 label,
                 style: TextStyle(
-                  color: active ? Colors.white : AppColors.muted,
+                  color: active ? context.colors.text : context.colors.muted,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -325,7 +325,7 @@ class UnitToggle extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color(0xFF111111),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.surfaceRaised),
+        border: Border.all(color: context.colors.surfaceRaised),
       ),
       child: Row(
         children: [
@@ -369,8 +369,8 @@ class OnboardingFooter extends StatelessWidget {
               child: LinearProgressIndicator(
                 value: (step + 1) / totalSteps,
                 minHeight: 6,
-                backgroundColor: AppColors.surfaceRaised,
-                valueColor: const AlwaysStoppedAnimation(AppColors.brand),
+                backgroundColor: context.colors.surfaceRaised,
+                valueColor: AlwaysStoppedAnimation(context.colors.brand),
               ),
             ),
             const SizedBox(height: 16),
@@ -378,8 +378,8 @@ class OnboardingFooter extends StatelessWidget {
           FilledButton(
             onPressed: canProceed ? onNext : null,
             style: FilledButton.styleFrom(
-              disabledBackgroundColor: AppColors.surfaceRaised,
-              disabledForegroundColor: AppColors.muted,
+              disabledBackgroundColor: context.colors.surfaceRaised,
+              disabledForegroundColor: context.colors.muted,
             ),
             child: Text(label),
           ),

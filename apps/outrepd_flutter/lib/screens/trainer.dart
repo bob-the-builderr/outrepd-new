@@ -1,0 +1,616 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+
+import '../reps/exercise.dart';
+import '../reps/pose.dart';
+import '../reps/pose_source.dart';
+import '../reps/rep_engine.dart';
+import '../theme.dart';
+
+/// Solo counting. No opponent, no server — the whole point of this screen is
+/// to get the counter trustworthy before a match is ever built on top of it.
+class TrainerScreen extends StatefulWidget {
+  const TrainerScreen({super.key, this.exercise, this.autoStart = false});
+
+  final ExerciseDef? exercise;
+
+  /// Skips the picker and opens straight into a session. Used by the web
+  /// preview route, where tapping through the canvas is unreliable.
+  final bool autoStart;
+
+  @override
+  State<TrainerScreen> createState() => _TrainerScreenState();
+}
+
+enum _Stage { setup, calibrating, counting }
+
+class _TrainerScreenState extends State<TrainerScreen> {
+  late ExerciseDef _exercise = widget.exercise ?? kExercises.first;
+
+  PoseSource? _source;
+  StreamSubscription<BodyPose>? _sub;
+  RepEngine? _engine;
+
+  final _clock = Stopwatch();
+
+  _Stage _stage = _Stage.setup;
+  BodyPose _pose = BodyPose.empty;
+  RepState? _state;
+  String? _error;
+
+  /// Calibration runs for a fixed window rather than ending on the first rep
+  /// it recognises. Stopping at the first one only ever sees the travel the
+  /// default thresholds already covered, which teaches a truncated range —
+  /// and a truncated range makes every later rep look rushed.
+  static const _calibrationWindow = Duration(seconds: 8);
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.autoStart) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _begin());
+    }
+  }
+
+  @override
+  void dispose() {
+    _sub?.cancel();
+    _source?.dispose();
+    super.dispose();
+  }
+
+  Future<void> _begin() async {
+    final source = createPoseSource();
+    try {
+      await source.start();
+    } on Object catch (e) {
+      if (mounted) setState(() => _error = e.toString());
+      return;
+    }
+    if (!mounted) {
+      await source.dispose();
+      return;
+    }
+
+    final engine = RepEngine(_exercise)..startCalibration();
+    _clock
+      ..reset()
+      ..start();
+
+    _sub = source.poses.listen(_onPose);
+
+    setState(() {
+      _source = source;
+      _engine = engine;
+      _stage = _Stage.calibrating;
+      _error = null;
+    });
+  }
+
+  void _onPose(BodyPose pose) {
+    final engine = _engine;
+    if (engine == null || !mounted) return;
+
+    final state = engine.update(pose, _clock.elapsed);
+
+    // Calibration ends on its own clock, so nobody has to reach for the phone
+    // mid-set.
+    if (_stage == _Stage.calibrating &&
+        _clock.elapsed >= _calibrationWindow) {
+      engine.finishCalibration();
+      engine.reset();
+      _stage = _Stage.counting;
+    }
+
+    setState(() {
+      _pose = pose;
+      _state = state;
+    });
+  }
+
+  void _restart() {
+    _engine?.reset();
+    setState(() {});
+  }
+
+  Future<void> _stop() async {
+    await _sub?.cancel();
+    await _source?.dispose();
+    if (!mounted) return;
+    setState(() {
+      _sub = null;
+      _source = null;
+      _engine = null;
+      _state = null;
+      _pose = BodyPose.empty;
+      _stage = _Stage.setup;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.white,
+        // The app's own title style is dark in the light theme, and this
+        // screen is always dark behind it.
+        titleTextStyle: const TextStyle(
+          color: Colors.white,
+          fontFamily: 'Inter',
+          fontSize: 22,
+          fontWeight: FontWeight.w800,
+          letterSpacing: 0.5,
+        ),
+        title: Text(_exercise.name),
+        actions: [
+          if (_stage != _Stage.setup)
+            IconButton(
+              tooltip: 'Reset count',
+              icon: const Icon(Icons.refresh),
+              onPressed: _restart,
+            ),
+        ],
+      ),
+      extendBodyBehindAppBar: true,
+      body: _stage == _Stage.setup ? _buildSetup() : _buildSession(),
+    );
+  }
+
+  Widget _buildSetup() {
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(16, 100, 16, 24),
+      children: [
+        const Text(
+          'Pick a movement',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 26,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+        const SizedBox(height: 16),
+        for (final e in kExercises)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: _ExerciseTile(
+              exercise: e,
+              selected: e.id == _exercise.id,
+              onTap: () => setState(() => _exercise = e),
+            ),
+          ),
+        const SizedBox(height: 18),
+        _DarkPanel(
+          child: Row(
+            children: [
+              const Icon(Icons.videocam_outlined, color: _accent),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  _exercise.cue,
+                  style: const TextStyle(color: _dim, fontSize: 13),
+                ),
+              ),
+            ],
+          ),
+        ),
+        if (_error != null) ...[
+          const SizedBox(height: 14),
+          Text(
+            _error!,
+            style: const TextStyle(color: AppColors.loss, fontSize: 12.5),
+          ),
+        ],
+        const SizedBox(height: 22),
+        FilledButton.icon(
+          onPressed: _begin,
+          icon: const Icon(Icons.play_arrow),
+          label: const Text('Start'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSession() {
+    final state = _state;
+    final engine = _engine!;
+    final live = _source?.isLive ?? false;
+    final formOk = state?.formOk ?? false;
+
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        _source?.buildPreview(context) ?? const ColoredBox(color: Colors.black),
+
+        // The skeleton goes over whatever is behind it, green only while the
+        // shape is right — the same condition that lets a rep count.
+        CustomPaint(
+          painter: _SkeletonPainter(
+            pose: _pose,
+            good: formOk,
+            mirror: live,
+          ),
+        ),
+
+        Positioned(
+          right: 18,
+          top: 110,
+          bottom: 130,
+          child: _RomMeter(
+            progress: state?.progress ?? 0,
+            good: formOk,
+          ),
+        ),
+
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: _Readout(
+            exercise: _exercise,
+            state: state,
+            holdSeconds: engine.holdSeconds,
+            calibrating: _stage == _Stage.calibrating,
+            calibrationLeft: _calibrationWindow - _clock.elapsed,
+            demo: !live,
+            onStop: _stop,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// This screen keeps its own dark surfaces rather than the app's themed ones.
+/// It is a viewfinder: a white page behind a camera feed would blind the
+/// lifter and wash out the overlay, whichever theme the rest of the app is in.
+const _accent = Color(0xFF4BB8FA);
+const _dim = Color(0xFF9AA6B4);
+const _panel = Color(0xFF11161C);
+const _panelEdge = Color(0xFF232C36);
+
+class _DarkPanel extends StatelessWidget {
+  const _DarkPanel({required this.child, this.onTap});
+
+  final Widget child;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final content = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        color: _panel,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: _panelEdge),
+      ),
+      child: child,
+    );
+
+    if (onTap == null) return content;
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: content,
+    );
+  }
+}
+
+class _ExerciseTile extends StatelessWidget {
+  const _ExerciseTile({
+    required this.exercise,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final ExerciseDef exercise;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return _DarkPanel(
+      onTap: onTap,
+      child: Row(
+        children: [
+          Icon(
+            exercise.icon,
+            color: selected ? _accent : _dim,
+            size: 24,
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Text(
+              exercise.name,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          Text(
+            exercise.mode == ScoreMode.hold ? 'time' : 'reps',
+            style: const TextStyle(color: _dim, fontSize: 12),
+          ),
+          if (selected) ...[
+            const SizedBox(width: 10),
+            const Icon(Icons.check_circle, color: _accent, size: 20),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// The bar down the side. The ball is the driver angle, and the shaded ends
+/// are the two zones a rep has to travel between.
+class _RomMeter extends StatelessWidget {
+  const _RomMeter({required this.progress, required this.good});
+
+  final double progress;
+  final bool good;
+
+  @override
+  Widget build(BuildContext context) {
+    const width = 46.0;
+    final tint = good ? AppColors.win : AppColors.loss;
+
+    return SizedBox(
+      width: width,
+      child: LayoutBuilder(
+        builder: (context, box) {
+          const ball = 30.0;
+          final travel = box.maxHeight - ball;
+          // Progress runs 0 at the bottom of the movement, and the meter is
+          // drawn the same way up as the body moves.
+          final top = travel * (1 - progress.clamp(0.0, 1.0));
+
+          return Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.black.withValues(alpha: 0.45),
+                  borderRadius: BorderRadius.circular(width / 2),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.18),
+                  ),
+                ),
+              ),
+              _zone(box, top: true),
+              _zone(box, top: false),
+              Positioned(
+                left: (width - ball) / 2,
+                top: top,
+                child: Container(
+                  width: ball,
+                  height: ball,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: tint.withValues(alpha: 0.85),
+                        blurRadius: 16,
+                        spreadRadius: 1,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _zone(BoxConstraints box, {required bool top}) {
+    final height = box.maxHeight * (top ? 1 - kTopZone : kBottomZone);
+    final radius = Radius.circular(box.maxWidth / 2);
+
+    return Positioned(
+      top: top ? 0 : null,
+      bottom: top ? null : 0,
+      left: 0,
+      right: 0,
+      height: height,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: AppColors.win.withValues(alpha: 0.22),
+          borderRadius: BorderRadius.vertical(
+            top: top ? radius : Radius.zero,
+            bottom: top ? Radius.zero : radius,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The count, and the one line telling you why a rep did not land.
+class _Readout extends StatelessWidget {
+  const _Readout({
+    required this.exercise,
+    required this.state,
+    required this.holdSeconds,
+    required this.calibrating,
+    required this.calibrationLeft,
+    required this.demo,
+    required this.onStop,
+  });
+
+  final ExerciseDef exercise;
+  final RepState? state;
+  final double holdSeconds;
+  final bool calibrating;
+  final Duration calibrationLeft;
+  final bool demo;
+  final VoidCallback onStop;
+
+  @override
+  Widget build(BuildContext context) {
+    final s = state;
+    final hold = exercise.mode == ScoreMode.hold;
+    final value = hold ? holdSeconds.toStringAsFixed(1) : '${s?.reps ?? 0}';
+
+    final seconds = calibrationLeft.inSeconds.clamp(0, 99);
+    final message = calibrating
+        ? 'Calibrating — do slow reps · ${seconds}s'
+        : (s?.formMessage ?? s?.rejection?.message);
+    final bad = !calibrating && message != null;
+
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 18, 20, 28),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Colors.transparent,
+            Colors.black.withValues(alpha: 0.75),
+          ],
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (demo)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Text(
+                'Demo body — no camera in the browser',
+                style: TextStyle(
+                  color: Colors.white.withValues(alpha: 0.6),
+                  fontSize: 11.5,
+                ),
+              ),
+            ),
+          Text(
+            value,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 76,
+              fontWeight: FontWeight.w900,
+              height: 1,
+            ),
+          ),
+          Text(
+            hold ? 'seconds held' : 'reps',
+            style: TextStyle(
+              color: Colors.white.withValues(alpha: 0.7),
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 1.5,
+            ),
+          ),
+          const SizedBox(height: 14),
+          // Height is reserved either way so the count does not jump around
+          // every time a cue appears.
+          SizedBox(
+            height: 22,
+            child: message == null
+                ? null
+                : Text(
+                    message,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: bad ? AppColors.loss : Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+          ),
+          const SizedBox(height: 12),
+          OutlinedButton(
+            onPressed: onStop,
+            style: OutlinedButton.styleFrom(
+              foregroundColor: Colors.white,
+              side: BorderSide(color: Colors.white.withValues(alpha: 0.35)),
+              minimumSize: const Size.fromHeight(46),
+            ),
+            child: const Text('Finish'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+const _bones = <List<Joint>>[
+  [Joint.leftShoulder, Joint.rightShoulder],
+  [Joint.leftShoulder, Joint.leftElbow],
+  [Joint.leftElbow, Joint.leftWrist],
+  [Joint.rightShoulder, Joint.rightElbow],
+  [Joint.rightElbow, Joint.rightWrist],
+  [Joint.leftShoulder, Joint.leftHip],
+  [Joint.rightShoulder, Joint.rightHip],
+  [Joint.leftHip, Joint.rightHip],
+  [Joint.leftHip, Joint.leftKnee],
+  [Joint.leftKnee, Joint.leftAnkle],
+  [Joint.rightHip, Joint.rightKnee],
+  [Joint.rightKnee, Joint.rightAnkle],
+];
+
+class _SkeletonPainter extends CustomPainter {
+  _SkeletonPainter({
+    required this.pose,
+    required this.good,
+    required this.mirror,
+  });
+
+  final BodyPose pose;
+  final bool good;
+
+  /// The front camera shows a mirror image, so the overlay has to be flipped
+  /// to land on the body instead of beside it.
+  final bool mirror;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (pose.points.isEmpty) return;
+
+    final colour = good ? AppColors.win : AppColors.loss;
+
+    Offset? at(Joint joint) {
+      final p = pose.confident(joint, min: 0.35);
+      if (p == null) return null;
+      final x = mirror ? 1 - p.x : p.x;
+      return Offset(x * size.width, p.y * size.height);
+    }
+
+    final bone = Paint()
+      ..color = colour.withValues(alpha: 0.85)
+      ..strokeWidth = 5
+      ..strokeCap = StrokeCap.round;
+
+    final glow = Paint()
+      ..color = colour.withValues(alpha: 0.28)
+      ..strokeWidth = 14
+      ..strokeCap = StrokeCap.round;
+
+    for (final pair in _bones) {
+      final a = at(pair[0]);
+      final b = at(pair[1]);
+      if (a == null || b == null) continue;
+      canvas.drawLine(a, b, glow);
+      canvas.drawLine(a, b, bone);
+    }
+
+    final dot = Paint()..color = Colors.white;
+    final ring = Paint()..color = colour;
+
+    for (final joint in Joint.values) {
+      final p = at(joint);
+      if (p == null) continue;
+      canvas.drawCircle(p, 8, ring);
+      canvas.drawCircle(p, 4.5, dot);
+    }
+  }
+
+  @override
+  bool shouldRepaint(_SkeletonPainter old) =>
+      old.pose != pose || old.good != good || old.mirror != mirror;
+}

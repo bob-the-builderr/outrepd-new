@@ -78,7 +78,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
     final picked = await showModalBottomSheet<String>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: AppColors.surface,
+      backgroundColor: context.colors.surface,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
       ),
@@ -101,8 +101,8 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
           Center(
             child: Text(
               _name.text.trim().isEmpty ? 'Your crew' : _name.text.trim(),
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: context.colors.text,
                 fontSize: 17,
                 fontWeight: FontWeight.w800,
               ),
@@ -113,7 +113,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
           TextField(
             controller: _name,
             maxLength: 22,
-            style: const TextStyle(color: Colors.white),
+            style: TextStyle(color: context.colors.text),
             decoration: const InputDecoration(
               counterText: '',
               hintText: 'Iron Temple',
@@ -126,7 +126,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
             controller: _description,
             maxLength: 80,
             maxLines: 2,
-            style: const TextStyle(color: Colors.white, fontSize: 14),
+            style: TextStyle(color: context.colors.text, fontSize: 14),
             decoration: const InputDecoration(
               counterText: '',
               hintText: 'What does this crew stand for?',
@@ -139,15 +139,15 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
             child: Row(
               children: [
-                const Icon(Icons.public, color: AppColors.brand, size: 19),
+                Icon(Icons.public, color: context.colors.brand, size: 19),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
                     _country,
-                    style: const TextStyle(color: Colors.white, fontSize: 14),
+                    style: TextStyle(color: context.colors.text, fontSize: 14),
                   ),
                 ),
-                const Icon(Icons.chevron_right, color: AppColors.muted),
+                Icon(Icons.chevron_right, color: context.colors.muted),
               ],
             ),
           ),
@@ -165,7 +165,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
                     Icon(
                       p.icon,
                       size: 19,
-                      color: _privacy == p ? AppColors.brand : AppColors.muted,
+                      color: _privacy == p ? context.colors.brand : context.colors.muted,
                     ),
                     const SizedBox(width: 12),
                     Expanded(
@@ -176,7 +176,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
                             p.label,
                             style: TextStyle(
                               color:
-                                  _privacy == p ? Colors.white : AppColors.muted,
+                                  _privacy == p ? context.colors.text : context.colors.muted,
                               fontWeight: FontWeight.w700,
                               fontSize: 14,
                             ),
@@ -184,8 +184,8 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
                           const SizedBox(height: 2),
                           Text(
                             p.description,
-                            style: const TextStyle(
-                              color: AppColors.muted,
+                            style: TextStyle(
+                              color: context.colors.muted,
                               fontSize: 11.5,
                             ),
                           ),
@@ -193,8 +193,8 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
                       ),
                     ),
                     if (_privacy == p)
-                      const Icon(Icons.check_circle,
-                          color: AppColors.brand, size: 19),
+                      Icon(Icons.check_circle,
+                          color: context.colors.brand, size: 19),
                   ],
                 ),
               ),
@@ -215,11 +215,11 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
                     width: 74,
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     decoration: BoxDecoration(
-                      color: AppColors.surface,
+                      color: context.colors.surface,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
                         color:
-                            selected ? AppColors.brand : AppColors.surfaceRaised,
+                            selected ? context.colors.brand : context.colors.surfaceRaised,
                         width: selected ? 2 : 1,
                       ),
                     ),
@@ -233,7 +233,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            color: selected ? Colors.white : AppColors.muted,
+                            color: selected ? context.colors.text : context.colors.muted,
                             fontSize: 10.5,
                             fontWeight: FontWeight.w600,
                           ),
@@ -252,8 +252,8 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
               padding: const EdgeInsets.only(top: 4, bottom: 8),
               child: Text(
                 group.label,
-                style: const TextStyle(
-                  color: AppColors.muted,
+                style: TextStyle(
+                  color: context.colors.muted,
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
                 ),
@@ -290,7 +290,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
                       color: kCrewColors[i],
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: i == _colour ? Colors.white : Colors.transparent,
+                        color: i == _colour ? context.colors.text : Colors.transparent,
                         width: 2.5,
                       ),
                     ),
@@ -307,10 +307,10 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
             child: const Text('Create crew'),
           ),
           const SizedBox(height: 10),
-          const Text(
+          Text(
             'You will be the owner. Crews hold up to 20 lifters.',
             textAlign: TextAlign.center,
-            style: TextStyle(color: AppColors.muted, fontSize: 11.5),
+            style: TextStyle(color: context.colors.muted, fontSize: 11.5),
           ),
         ],
       ),
@@ -337,16 +337,16 @@ class _EmblemTile extends StatelessWidget {
         width: 46,
         height: 46,
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: context.colors.surface,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: selected ? AppColors.brand : AppColors.surfaceRaised,
+            color: selected ? context.colors.brand : context.colors.surfaceRaised,
             width: selected ? 2 : 1,
           ),
         ),
         child: Icon(
           icon,
-          color: selected ? AppColors.brand : AppColors.muted,
+          color: selected ? context.colors.brand : context.colors.muted,
           size: 22,
         ),
       ),
@@ -383,20 +383,20 @@ class _CountryPickerState extends State<_CountryPicker> {
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
               child: TextField(
                 autofocus: true,
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
+                style: TextStyle(color: context.colors.text),
+                decoration: InputDecoration(
                   hintText: 'Search countries',
-                  prefixIcon: Icon(Icons.search, color: AppColors.muted),
+                  prefixIcon: Icon(Icons.search, color: context.colors.muted),
                 ),
                 onChanged: (v) => setState(() => _query = v),
               ),
             ),
             Expanded(
               child: matches.isEmpty
-                  ? const Center(
+                  ? Center(
                       child: Text(
                         'No country matches that',
-                        style: TextStyle(color: AppColors.muted),
+                        style: TextStyle(color: context.colors.muted),
                       ),
                     )
                   : ListView.builder(
@@ -404,8 +404,8 @@ class _CountryPickerState extends State<_CountryPicker> {
                       itemBuilder: (context, i) => ListTile(
                         title: Text(
                           matches[i],
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: context.colors.text,
                             fontSize: 14.5,
                           ),
                         ),
@@ -430,8 +430,8 @@ class _FieldLabel extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8),
       child: Text(
         text,
-        style: const TextStyle(
-          color: AppColors.muted,
+        style: TextStyle(
+          color: context.colors.muted,
           fontSize: 12,
           fontWeight: FontWeight.w600,
         ),

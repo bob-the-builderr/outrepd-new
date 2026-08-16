@@ -32,13 +32,13 @@ class FriendsScreen extends StatelessWidget {
             padding: const EdgeInsets.all(18),
             child: Row(
               children: [
-                const Icon(Icons.link, color: AppColors.brand),
+                Icon(Icons.link, color: context.colors.brand),
                 const SizedBox(width: 12),
-                const Expanded(
+                Expanded(
                   child: Text(
                     'Invite a friend to a private match',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: context.colors.text,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -81,7 +81,7 @@ class FriendsScreen extends StatelessWidget {
                                 color: AppColors.win,
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: AppColors.surface,
+                                  color: context.colors.surface,
                                   width: 2,
                                 ),
                               ),
@@ -98,8 +98,8 @@ class FriendsScreen extends StatelessWidget {
                             f.username,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: Colors.white,
+                            style: TextStyle(
+                              color: context.colors.text,
                               fontWeight: FontWeight.w700,
                               fontSize: 15,
                             ),
@@ -107,8 +107,8 @@ class FriendsScreen extends StatelessWidget {
                           const SizedBox(height: 2),
                           Text(
                             '${kTiers[f.tierIdx].name} · ${f.lp} LP',
-                            style: const TextStyle(
-                              color: AppColors.muted,
+                            style: TextStyle(
+                              color: context.colors.muted,
                               fontSize: 12,
                             ),
                           ),
@@ -118,8 +118,8 @@ class FriendsScreen extends StatelessWidget {
                     OutlinedButton(
                       style: OutlinedButton.styleFrom(
                         minimumSize: const Size(84, 36),
-                        side: const BorderSide(color: AppColors.brand),
-                        foregroundColor: AppColors.brand,
+                        side: BorderSide(color: context.colors.brand),
+                        foregroundColor: context.colors.brand,
                         padding: EdgeInsets.zero,
                         textStyle: const TextStyle(
                           fontSize: 13,

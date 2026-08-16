@@ -7,6 +7,7 @@ import '../theme.dart';
 import '../widgets.dart';
 import 'match_entry.dart';
 import 'match_history.dart';
+import 'trainer.dart';
 import 'roadmap.dart';
 import 'notifications.dart';
 
@@ -151,7 +152,7 @@ class _RankCard extends StatelessWidget {
                         Text(
                           'View road',
                           style: TextStyle(
-                            color: AppColors.brand.withValues(alpha: 0.9),
+                            color: context.colors.brand.withValues(alpha: 0.9),
                             fontSize: 11.5,
                             fontWeight: FontWeight.w600,
                           ),
@@ -159,7 +160,7 @@ class _RankCard extends StatelessWidget {
                         Icon(
                           Icons.chevron_right,
                           size: 15,
-                          color: AppColors.brand.withValues(alpha: 0.9),
+                          color: context.colors.brand.withValues(alpha: 0.9),
                         ),
                       ],
                     ),
@@ -170,8 +171,8 @@ class _RankCard extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   tierLabel(p.tierIdx, p.divIdx),
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: context.colors.text,
                     fontSize: 24,
                     fontWeight: FontWeight.w800,
                   ),
@@ -185,14 +186,14 @@ class _RankCard extends StatelessWidget {
             child: LinearProgressIndicator(
               value: (p.lp / 100).clamp(0.0, 1.0),
               minHeight: 8,
-              backgroundColor: AppColors.surfaceRaised,
-              valueColor: const AlwaysStoppedAnimation(AppColors.brand),
+              backgroundColor: context.colors.surfaceRaised,
+              valueColor: AlwaysStoppedAnimation(context.colors.brand),
             ),
           ),
           const SizedBox(height: 8),
           Text(
             '${p.lp} / 100 LP · ${100 - p.lp} to promotion',
-            style: const TextStyle(color: AppColors.muted, fontSize: 11.5),
+            style: TextStyle(color: context.colors.muted, fontSize: 11.5),
           ),
           if (p.winStreak > 0) ...[
             const SizedBox(height: 14),
@@ -291,6 +292,14 @@ class _StartMatchActions extends StatelessWidget {
           label: 'Challenge a friend',
           onTap: () => showFriendRoomSheet(context),
         ),
+        const SizedBox(height: 12),
+        _SecondaryAction(
+          icon: Icons.videocam_outlined,
+          label: 'Train with the camera',
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const TrainerScreen()),
+          ),
+        ),
       ],
     );
   }
@@ -325,13 +334,13 @@ class _PrimaryAction extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Color.lerp(AppColors.brand, Colors.white, 0.12)!,
-                AppColors.brand,
+                Color.lerp(context.colors.brand, Colors.white, 0.12)!,
+                context.colors.brand,
               ],
             ),
             boxShadow: [
               BoxShadow(
-                color: AppColors.brand.withValues(alpha: 0.3),
+                color: context.colors.brand.withValues(alpha: 0.3),
                 blurRadius: 18,
                 offset: const Offset(0, 6),
               ),
@@ -348,7 +357,7 @@ class _PrimaryAction extends StatelessWidget {
                   children: [
                     Text(
                       label,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
                         fontWeight: FontWeight.w800,
@@ -393,15 +402,15 @@ class _SecondaryAction extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
       child: Column(
         children: [
-          Icon(icon, color: AppColors.brand, size: 26),
+          Icon(icon, color: context.colors.brand, size: 26),
           const SizedBox(height: 10),
           Text(
             label,
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: context.colors.text,
               fontWeight: FontWeight.w700,
               fontSize: 13.5,
             ),

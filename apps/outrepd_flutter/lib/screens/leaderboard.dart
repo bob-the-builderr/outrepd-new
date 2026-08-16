@@ -34,11 +34,11 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
               selected: {_global},
               onSelectionChanged: (s) => setState(() => _global = s.first),
               style: SegmentedButton.styleFrom(
-                backgroundColor: AppColors.surface,
-                foregroundColor: AppColors.muted,
-                selectedBackgroundColor: AppColors.brand,
-                selectedForegroundColor: Colors.white,
-                side: const BorderSide(color: AppColors.surfaceRaised),
+                backgroundColor: context.colors.surface,
+                foregroundColor: context.colors.muted,
+                selectedBackgroundColor: context.colors.brand,
+                selectedForegroundColor: context.colors.text,
+                side: BorderSide(color: context.colors.surfaceRaised),
               ),
             ),
           ),
@@ -57,11 +57,11 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                   ),
                   decoration: BoxDecoration(
                     color: isMe
-                        ? AppColors.brand.withValues(alpha: 0.12)
-                        : AppColors.surface,
+                        ? context.colors.brand.withValues(alpha: 0.12)
+                        : context.colors.surface,
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: isMe ? AppColors.brand : AppColors.surfaceRaised,
+                      color: isMe ? context.colors.brand : context.colors.surfaceRaised,
                     ),
                   ),
                   child: Row(
@@ -71,7 +71,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                         child: Text(
                           '${i + 1}',
                           style: TextStyle(
-                            color: i < 3 ? AppColors.gold : AppColors.muted,
+                            color: i < 3 ? AppColors.gold : context.colors.muted,
                             fontWeight: FontWeight.w800,
                             fontSize: 16,
                           ),
@@ -88,7 +88,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                color: isMe ? AppColors.brand : Colors.white,
+                                color: isMe ? context.colors.brand : context.colors.text,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 15,
                               ),
@@ -96,8 +96,8 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                             const SizedBox(height: 2),
                             Text(
                               '${tierLabel(e.tierIdx, e.divIdx)} · ${e.wins}W ${e.losses}L',
-                              style: const TextStyle(
-                                color: AppColors.muted,
+                              style: TextStyle(
+                                color: context.colors.muted,
                                 fontSize: 12,
                               ),
                             ),
@@ -106,8 +106,8 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                       ),
                       Text(
                         '${e.lp} LP',
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: context.colors.text,
                           fontWeight: FontWeight.w800,
                         ),
                       ),

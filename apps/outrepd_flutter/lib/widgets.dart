@@ -20,9 +20,9 @@ class Panel extends StatelessWidget {
     final content = Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.surfaceRaised),
+        border: Border.all(color: context.colors.surfaceRaised),
       ),
       child: child,
     );
@@ -52,7 +52,7 @@ class StatTile extends StatelessWidget {
         Text(
           value,
           style: TextStyle(
-            color: color ?? Colors.white,
+            color: color ?? context.colors.text,
             fontSize: 20,
             fontWeight: FontWeight.w800,
           ),
@@ -60,7 +60,7 @@ class StatTile extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           label,
-          style: const TextStyle(color: AppColors.muted, fontSize: 12),
+          style: TextStyle(color: context.colors.muted, fontSize: 12),
         ),
       ],
     );
@@ -127,8 +127,8 @@ class SectionHeader extends StatelessWidget {
         children: [
           Text(
             title,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: context.colors.text,
               fontSize: 18,
               fontWeight: FontWeight.w800,
             ),

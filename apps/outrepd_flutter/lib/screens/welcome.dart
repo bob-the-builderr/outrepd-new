@@ -20,7 +20,7 @@ class WelcomeScreen extends StatelessWidget {
               const SizedBox(height: 28),
               // Shrink rather than wrap: the name must stay on one line even
               // on narrow screens, where 48px + letter spacing overflows.
-              const FittedBox(
+              FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
                   'OUTREPD',
@@ -28,18 +28,18 @@ class WelcomeScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 48,
                     fontWeight: FontWeight.w900,
-                    color: Colors.white,
+                    color: context.colors.text,
                     letterSpacing: 2,
                   ),
                 ),
               ),
               const SizedBox(height: 12),
-              const Text(
+              Text(
                 "Don't get outrepd!",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.brand,
+                  color: context.colors.brand,
                   letterSpacing: 0.5,
                 ),
               ),

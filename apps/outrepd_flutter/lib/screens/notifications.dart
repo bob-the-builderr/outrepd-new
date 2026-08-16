@@ -27,7 +27,7 @@ class NotificationsScreen extends StatelessWidget {
                   height: 8,
                   margin: const EdgeInsets.only(top: 6, right: 12),
                   decoration: BoxDecoration(
-                    color: n.unread ? AppColors.brand : Colors.transparent,
+                    color: n.unread ? context.colors.brand : Colors.transparent,
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -38,7 +38,7 @@ class NotificationsScreen extends StatelessWidget {
                       Text(
                         n.title,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: context.colors.text,
                           fontWeight:
                               n.unread ? FontWeight.w800 : FontWeight.w600,
                           fontSize: 15,
@@ -47,16 +47,16 @@ class NotificationsScreen extends StatelessWidget {
                       const SizedBox(height: 4),
                       Text(
                         n.body,
-                        style: const TextStyle(
-                          color: AppColors.muted,
+                        style: TextStyle(
+                          color: context.colors.muted,
                           fontSize: 13,
                         ),
                       ),
                       const SizedBox(height: 6),
                       Text(
                         relativeDays(n.daysAgo),
-                        style: const TextStyle(
-                          color: AppColors.muted,
+                        style: TextStyle(
+                          color: context.colors.muted,
                           fontSize: 11,
                         ),
                       ),

@@ -45,22 +45,22 @@ class _NoCrewView extends StatelessWidget {
           padding: const EdgeInsets.all(22),
           child: Column(
             children: [
-              const Icon(Icons.groups_2, color: AppColors.brand, size: 46),
+              Icon(Icons.groups_2, color: context.colors.brand, size: 46),
               const SizedBox(height: 14),
-              const Text(
+              Text(
                 'Start a crew',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: context.colors.text,
                   fontSize: 18,
                   fontWeight: FontWeight.w800,
                 ),
               ),
               const SizedBox(height: 6),
-              const Text(
+              Text(
                 'Up to 20 lifters training under one name. Your combined '
                 'volume puts the crew on the board.',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: AppColors.muted, fontSize: 13),
+                style: TextStyle(color: context.colors.muted, fontSize: 13),
               ),
               const SizedBox(height: 18),
               SizedBox(
@@ -113,7 +113,7 @@ Future<void> _showJoinSheet(BuildContext context, VoidCallback onChanged) {
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
-    backgroundColor: AppColors.surface,
+    backgroundColor: context.colors.surface,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
     ),
@@ -128,18 +128,18 @@ Future<void> _showJoinSheet(BuildContext context, VoidCallback onChanged) {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Join a crew',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: context.colors.text,
                   fontSize: 19,
                   fontWeight: FontWeight.w800,
                 ),
               ),
               const SizedBox(height: 4),
-              const Text(
+              Text(
                 'Paste the invite code a member sent you.',
-                style: TextStyle(color: AppColors.muted, fontSize: 13),
+                style: TextStyle(color: context.colors.muted, fontSize: 13),
               ),
               const SizedBox(height: 16),
               TextField(
@@ -147,17 +147,17 @@ Future<void> _showJoinSheet(BuildContext context, VoidCallback onChanged) {
                 textCapitalization: TextCapitalization.characters,
                 maxLength: 6,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: context.colors.text,
                   fontSize: 20,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 6,
                 ),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   counterText: '',
                   hintText: 'CREW CODE',
                   hintStyle: TextStyle(
-                    color: AppColors.muted,
+                    color: context.colors.muted,
                     letterSpacing: 3,
                     fontSize: 15,
                   ),
@@ -239,8 +239,8 @@ class _CrewHomeView extends StatelessWidget {
                 crew.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: context.colors.text,
                   fontSize: 21,
                   fontWeight: FontWeight.w800,
                 ),
@@ -280,7 +280,7 @@ class _CrewHomeView extends StatelessWidget {
           title: 'Members',
           trailing: Text(
             '${crew.members.length} of ${MyCrew.maxMembers}',
-            style: const TextStyle(color: AppColors.muted, fontSize: 13),
+            style: TextStyle(color: context.colors.muted, fontSize: 13),
           ),
         ),
         for (final m in crew.members)
@@ -316,10 +316,10 @@ class _InviteCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Invite lifters',
             style: TextStyle(
-              color: Colors.white,
+              color: context.colors.text,
               fontSize: 15,
               fontWeight: FontWeight.w700,
             ),
@@ -354,7 +354,7 @@ class _CopyRow extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(14, 10, 6, 10),
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: context.colors.background,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -365,7 +365,7 @@ class _CopyRow extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: const TextStyle(color: AppColors.muted, fontSize: 10.5),
+                  style: TextStyle(color: context.colors.muted, fontSize: 10.5),
                 ),
                 const SizedBox(height: 2),
                 Text(
@@ -373,7 +373,7 @@ class _CopyRow extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: context.colors.text,
                     fontSize: mono ? 17 : 12.5,
                     fontWeight: mono ? FontWeight.w800 : FontWeight.w500,
                     letterSpacing: mono ? 4 : 0,
@@ -383,7 +383,7 @@ class _CopyRow extends StatelessWidget {
             ),
           ),
           IconButton(
-            icon: const Icon(Icons.copy, color: AppColors.brand, size: 19),
+            icon: Icon(Icons.copy, color: context.colors.brand, size: 19),
             onPressed: () {
               Clipboard.setData(ClipboardData(text: value));
               ScaffoldMessenger.of(context).showSnackBar(
@@ -408,8 +408,8 @@ class _Stat extends StatelessWidget {
       children: [
         Text(
           value,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: context.colors.text,
             fontSize: 16,
             fontWeight: FontWeight.w800,
           ),
@@ -417,7 +417,7 @@ class _Stat extends StatelessWidget {
         const SizedBox(height: 2),
         Text(
           label,
-          style: const TextStyle(color: AppColors.muted, fontSize: 11),
+          style: TextStyle(color: context.colors.muted, fontSize: 11),
         ),
       ],
     );
@@ -447,8 +447,8 @@ class _MemberRow extends StatelessWidget {
                         member.username,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: context.colors.text,
                           fontWeight: FontWeight.w700,
                           fontSize: 14.5,
                         ),
@@ -463,15 +463,15 @@ class _MemberRow extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   tierLabel(member.tierIdx, member.divIdx),
-                  style: const TextStyle(color: AppColors.muted, fontSize: 11.5),
+                  style: TextStyle(color: context.colors.muted, fontSize: 11.5),
                 ),
               ],
             ),
           ),
           Text(
             formatVolume(member.weeklyVolume),
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: context.colors.text,
               fontWeight: FontWeight.w700,
               fontSize: 13,
             ),
@@ -497,13 +497,13 @@ class _CrewRow extends StatelessWidget {
             height: 40,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: AppColors.brand.withValues(alpha: 0.15),
+              color: context.colors.brand.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(11),
             ),
             child: Text(
               crew.tag,
-              style: const TextStyle(
-                color: AppColors.brand,
+              style: TextStyle(
+                color: context.colors.brand,
                 fontWeight: FontWeight.w900,
                 fontSize: 13,
               ),
@@ -518,8 +518,8 @@ class _CrewRow extends StatelessWidget {
                   crew.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: context.colors.text,
                     fontWeight: FontWeight.w700,
                     fontSize: 15,
                   ),
@@ -527,15 +527,15 @@ class _CrewRow extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   '${crew.members} members',
-                  style: const TextStyle(color: AppColors.muted, fontSize: 12),
+                  style: TextStyle(color: context.colors.muted, fontSize: 12),
                 ),
               ],
             ),
           ),
           Text(
             formatVolume(crew.weeklyVolume),
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: context.colors.text,
               fontWeight: FontWeight.w800,
               fontSize: 14,
             ),

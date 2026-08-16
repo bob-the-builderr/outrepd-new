@@ -116,7 +116,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
         if (!didPop) _confirmQuit();
       },
       child: Scaffold(
-        backgroundColor: AppColors.background,
+        backgroundColor: context.colors.background,
         body: SafeArea(child: _buildStage()),
       ),
     );
@@ -166,14 +166,14 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     final ok = await showDialog<bool>(
       context: context,
       builder: (c) => AlertDialog(
-        backgroundColor: AppColors.surface,
+        backgroundColor: context.colors.surface,
         title: const Text('Finish match?'),
         content: const Text('Your volume will be locked in and compared with your opponent.'),
         actions: [
           TextButton(onPressed: () => Navigator.pop(c, false), child: const Text('Keep going')),
           TextButton(
             onPressed: () => Navigator.pop(c, true),
-            child: const Text('Finish', style: TextStyle(color: AppColors.brand)),
+            child: Text('Finish', style: TextStyle(color: context.colors.brand)),
           ),
         ],
       ),
@@ -185,7 +185,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     final ok = await showDialog<bool>(
       context: context,
       builder: (c) => AlertDialog(
-        backgroundColor: AppColors.surface,
+        backgroundColor: context.colors.surface,
         title: const Text('Forfeit match?'),
         content: const Text('You will lose LP if you leave now.'),
         actions: [
@@ -239,10 +239,10 @@ class _ExercisePicker extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
                   decoration: BoxDecoration(
-                    color: isOn ? AppColors.brand.withValues(alpha: 0.12) : AppColors.surface,
+                    color: isOn ? context.colors.brand.withValues(alpha: 0.12) : context.colors.surface,
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(
-                      color: isOn ? AppColors.brand : AppColors.surfaceRaised,
+                      color: isOn ? context.colors.brand : context.colors.surfaceRaised,
                       width: isOn ? 1.5 : 1,
                     ),
                   ),
@@ -250,7 +250,7 @@ class _ExercisePicker extends StatelessWidget {
                     children: [
                       Icon(
                         isOn ? Icons.check_circle : Icons.circle_outlined,
-                        color: isOn ? AppColors.brand : AppColors.muted,
+                        color: isOn ? context.colors.brand : context.colors.muted,
                         size: 22,
                       ),
                       const SizedBox(width: 12),
@@ -260,15 +260,15 @@ class _ExercisePicker extends StatelessWidget {
                           children: [
                             Text(
                               ex.name,
-                              style: const TextStyle(
-                                color: AppColors.white,
+                              style: TextStyle(
+                                color: context.colors.text,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
                             const SizedBox(height: 2),
                             Text(
                               ex.equipment + (ex.compound ? ' · Compound' : ''),
-                              style: const TextStyle(color: AppColors.muted, fontSize: 12),
+                              style: TextStyle(color: context.colors.muted, fontSize: 12),
                             ),
                           ],
                         ),
@@ -347,21 +347,21 @@ class _SearchingViewState extends State<_SearchingView>
                           height: 60 + 120 * ((_c.value + i / 3) % 1),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            border: Border.all(color: AppColors.brand, width: 2),
+                            border: Border.all(color: context.colors.brand, width: 2),
                           ),
                         ),
                       ),
-                    const Icon(Icons.sports_mma, color: AppColors.brand, size: 44),
+                    Icon(Icons.sports_mma, color: context.colors.brand, size: 44),
                   ],
                 ),
               );
             },
           ),
           const SizedBox(height: 36),
-          const Text(
+          Text(
             'FINDING OPPONENT',
             style: TextStyle(
-              color: AppColors.white,
+              color: context.colors.text,
               fontSize: 20,
               fontWeight: FontWeight.w900,
               letterSpacing: 1.5,
@@ -370,7 +370,7 @@ class _SearchingViewState extends State<_SearchingView>
           const SizedBox(height: 8),
           Text(
             'Matching you with a lifter at your rank · ${widget.muscle}',
-            style: const TextStyle(color: AppColors.muted, fontSize: 13),
+            style: TextStyle(color: context.colors.muted, fontSize: 13),
           ),
         ],
       ),
@@ -399,8 +399,8 @@ class _VersusView extends StatelessWidget {
       children: [
         Text(
           muscle.toUpperCase(),
-          style: const TextStyle(
-            color: AppColors.muted,
+          style: TextStyle(
+            color: context.colors.muted,
             letterSpacing: 3,
             fontWeight: FontWeight.w700,
           ),
@@ -415,10 +415,10 @@ class _VersusView extends StatelessWidget {
                 subtitle: tierLabel(p.tierIdx, p.divIdx),
               ),
             ),
-            const Text(
+            Text(
               'VS',
               style: TextStyle(
-                color: AppColors.brand,
+                color: context.colors.brand,
                 fontSize: 30,
                 fontWeight: FontWeight.w900,
               ),
@@ -436,13 +436,13 @@ class _VersusView extends StatelessWidget {
         const SizedBox(height: 60),
         Text(
           '$countdown',
-          style: const TextStyle(
-            color: AppColors.white,
+          style: TextStyle(
+            color: context.colors.text,
             fontSize: 72,
             fontWeight: FontWeight.w900,
           ),
         ),
-        const Text('GET READY', style: TextStyle(color: AppColors.muted, letterSpacing: 2)),
+        Text('GET READY', style: TextStyle(color: context.colors.muted, letterSpacing: 2)),
       ],
     );
   }
@@ -463,8 +463,8 @@ class _Fighter extends StatelessWidget {
         const SizedBox(height: 12),
         Text(
           name,
-          style: const TextStyle(
-            color: AppColors.white,
+          style: TextStyle(
+            color: context.colors.text,
             fontWeight: FontWeight.w900,
             fontSize: 16,
           ),
@@ -508,26 +508,26 @@ class _ActiveMatchView extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
-          decoration: const BoxDecoration(
-            color: AppColors.surface,
-            border: Border(bottom: BorderSide(color: AppColors.surfaceRaised)),
+          decoration: BoxDecoration(
+            color: context.colors.surface,
+            border: Border(bottom: BorderSide(color: context.colors.surfaceRaised)),
           ),
           child: Column(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('TIME LEFT',
-                      style: TextStyle(color: AppColors.muted, fontSize: 11, letterSpacing: 1)),
+                  Text('TIME LEFT',
+                      style: TextStyle(color: context.colors.muted, fontSize: 11, letterSpacing: 1)),
                   Text('vs ${opponent.username}',
-                      style: const TextStyle(color: AppColors.muted, fontSize: 11)),
+                      style: TextStyle(color: context.colors.muted, fontSize: 11)),
                 ],
               ),
               const SizedBox(height: 4),
               Text(
                 _clock,
-                style: const TextStyle(
-                  color: AppColors.white,
+                style: TextStyle(
+                  color: context.colors.text,
                   fontSize: 30,
                   fontWeight: FontWeight.w900,
                   fontFeatures: [FontFeature.tabularFigures()],
@@ -541,15 +541,15 @@ class _ActiveMatchView extends StatelessWidget {
                 children: [
                   Text(
                     volume.toStringAsFixed(0),
-                    style: const TextStyle(
-                      color: AppColors.brand,
+                    style: TextStyle(
+                      color: context.colors.brand,
                       fontSize: 26,
                       fontWeight: FontWeight.w900,
                     ),
                   ),
                   const SizedBox(width: 6),
-                  const Text('kg total volume',
-                      style: TextStyle(color: AppColors.muted, fontSize: 12)),
+                  Text('kg total volume',
+                      style: TextStyle(color: context.colors.muted, fontSize: 12)),
                 ],
               ),
             ],
@@ -592,22 +592,22 @@ class _ExerciseCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppColors.surfaceRaised),
+        border: Border.all(color: context.colors.surfaceRaised),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             entry.name,
-            style: const TextStyle(
-              color: AppColors.white,
+            style: TextStyle(
+              color: context.colors.text,
               fontSize: 16,
               fontWeight: FontWeight.w900,
             ),
           ),
-          const Divider(color: AppColors.surfaceRaised, height: 22),
+          Divider(color: context.colors.surfaceRaised, height: 22),
           for (var i = 0; i < entry.sets.length; i++)
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
@@ -617,8 +617,8 @@ class _ExerciseCard extends StatelessWidget {
                     width: 30,
                     child: Text(
                       'S${i + 1}',
-                      style: const TextStyle(
-                        color: AppColors.muted,
+                      style: TextStyle(
+                        color: context.colors.muted,
                         fontWeight: FontWeight.bold,
                         fontSize: 13,
                       ),
@@ -634,9 +634,9 @@ class _ExerciseCard extends StatelessWidget {
                       },
                     ),
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: Text('×', style: TextStyle(color: AppColors.muted)),
+                    child: Text('×', style: TextStyle(color: context.colors.muted)),
                   ),
                   Expanded(
                     child: _NumberField(
@@ -665,9 +665,9 @@ class _ExerciseCard extends StatelessWidget {
               entry.sets.add(WorkoutSet());
               onChanged();
             },
-            icon: const Icon(Icons.add, color: AppColors.brand, size: 20),
-            label: const Text('ADD SET',
-                style: TextStyle(color: AppColors.brand, fontWeight: FontWeight.bold)),
+            icon: Icon(Icons.add, color: context.colors.brand, size: 20),
+            label: Text('ADD SET',
+                style: TextStyle(color: context.colors.brand, fontWeight: FontWeight.bold)),
           ),
         ],
       ),
@@ -700,12 +700,12 @@ class _NumberFieldState extends State<_NumberField> {
     return TextField(
       controller: _c,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      style: const TextStyle(color: AppColors.white, fontWeight: FontWeight.bold),
+      style: TextStyle(color: context.colors.text, fontWeight: FontWeight.bold),
       decoration: InputDecoration(
         hintText: widget.hint,
-        hintStyle: const TextStyle(color: AppColors.muted, fontSize: 12),
+        hintStyle: TextStyle(color: context.colors.muted, fontSize: 12),
         filled: true,
-        fillColor: AppColors.background,
+        fillColor: context.colors.background,
         isDense: true,
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         border: OutlineInputBorder(
@@ -745,8 +745,8 @@ class _ResultView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('MATCH COMPLETE',
-              style: TextStyle(color: AppColors.muted, letterSpacing: 2, fontSize: 13)),
+          Text('MATCH COMPLETE',
+              style: TextStyle(color: context.colors.muted, letterSpacing: 2, fontSize: 13)),
           const SizedBox(height: 8),
           FittedBox(
             fit: BoxFit.scaleDown,
@@ -763,17 +763,17 @@ class _ResultView extends StatelessWidget {
                 child: _ScoreColumn(
                   label: 'YOU',
                   volume: volume,
-                  color: won ? AppColors.brand : AppColors.muted,
+                  color: won ? context.colors.brand : context.colors.muted,
                   tierIdx: demoProfile.tierIdx,
                 ),
               ),
-              const Text('VS',
-                  style: TextStyle(color: AppColors.surfaceRaised, fontSize: 22, fontWeight: FontWeight.w900)),
+              Text('VS',
+                  style: TextStyle(color: context.colors.surfaceRaised, fontSize: 22, fontWeight: FontWeight.w900)),
               Expanded(
                 child: _ScoreColumn(
                   label: opponent.username.toUpperCase(),
                   volume: opponentVolume,
-                  color: won ? AppColors.muted : AppColors.loss,
+                  color: won ? context.colors.muted : AppColors.loss,
                   tierIdx: opponent.tierIdx,
                 ),
               ),
@@ -823,7 +823,7 @@ class _ScoreColumn extends StatelessWidget {
         TierBadge(tierIdx: tierIdx, size: 64),
         const SizedBox(height: 10),
         Text(label,
-            style: const TextStyle(color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 13)),
+            style: TextStyle(color: context.colors.text, fontWeight: FontWeight.bold, fontSize: 13)),
         const SizedBox(height: 4),
         Text(
           '${volume.toStringAsFixed(0)} kg',
@@ -857,9 +857,9 @@ class _FlowHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title,
-                    style: const TextStyle(
-                        color: AppColors.white, fontSize: 18, fontWeight: FontWeight.w900)),
-                Text(subtitle, style: const TextStyle(color: AppColors.muted, fontSize: 12)),
+                    style: TextStyle(
+                        color: context.colors.text, fontSize: 18, fontWeight: FontWeight.w900)),
+                Text(subtitle, style: TextStyle(color: context.colors.muted, fontSize: 12)),
               ],
             ),
           ),

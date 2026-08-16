@@ -17,7 +17,7 @@ enum MatchMode { ranked, room, crew }
 Future<void> pickMuscle(BuildContext context, {required MatchMode mode}) async {
   final muscle = await showModalBottomSheet<String>(
     context: context,
-    backgroundColor: AppColors.surface,
+    backgroundColor: context.colors.surface,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
     ),
@@ -43,18 +43,18 @@ class _MusclePicker extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const _SheetGrip(),
-            const Text(
+            Text(
               "Today's muscle",
               style: TextStyle(
-                color: Colors.white,
+                color: context.colors.text,
                 fontSize: 19,
                 fontWeight: FontWeight.w800,
               ),
             ),
             const SizedBox(height: 4),
-            const Text(
+            Text(
               'You will be matched with someone training the same group.',
-              style: TextStyle(color: AppColors.muted, fontSize: 13),
+              style: TextStyle(color: context.colors.muted, fontSize: 13),
             ),
             const SizedBox(height: 16),
             for (final g in muscleGroups)
@@ -66,20 +66,20 @@ class _MusclePicker extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
                   child: Row(
                     children: [
-                      Icon(muscleIcons[g], color: AppColors.brand, size: 22),
+                      Icon(muscleIcons[g], color: context.colors.brand, size: 22),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
                           g,
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: context.colors.text,
                             fontWeight: FontWeight.w700,
                             fontSize: 15,
                           ),
                         ),
                       ),
-                      const Icon(Icons.chevron_right,
-                          color: AppColors.muted, size: 20),
+                      Icon(Icons.chevron_right,
+                          color: context.colors.muted, size: 20),
                     ],
                   ),
                 ),
@@ -96,7 +96,7 @@ Future<void> showFriendRoomSheet(BuildContext context) {
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
-    backgroundColor: AppColors.surface,
+    backgroundColor: context.colors.surface,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
     ),
@@ -141,18 +141,18 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const _SheetGrip(),
-              const Text(
+              Text(
                 'Challenge a friend',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: context.colors.text,
                   fontSize: 19,
                   fontWeight: FontWeight.w800,
                 ),
               ),
               const SizedBox(height: 4),
-              const Text(
+              Text(
                 'Room matches are friendly — they do not affect your rank.',
-                style: TextStyle(color: AppColors.muted, fontSize: 13),
+                style: TextStyle(color: context.colors.muted, fontSize: 13),
               ),
               const SizedBox(height: 18),
               if (_createdCode == null) ...[
@@ -169,16 +169,16 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const Row(
+                Row(
                   children: [
-                    Expanded(child: Divider(color: AppColors.surfaceRaised)),
+                    Expanded(child: Divider(color: context.colors.surfaceRaised)),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 12),
                       child: Text('or',
                           style:
-                              TextStyle(color: AppColors.muted, fontSize: 12)),
+                              TextStyle(color: context.colors.muted, fontSize: 12)),
                     ),
-                    Expanded(child: Divider(color: AppColors.surfaceRaised)),
+                    Expanded(child: Divider(color: context.colors.surfaceRaised)),
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -186,18 +186,18 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
                   controller: _codeController,
                   textCapitalization: TextCapitalization.characters,
                   maxLength: 6,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: context.colors.text,
                     fontSize: 20,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 6,
                   ),
                   textAlign: TextAlign.center,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     counterText: '',
                     hintText: 'ENTER CODE',
                     hintStyle: TextStyle(
-                      color: AppColors.muted,
+                      color: context.colors.muted,
                       letterSpacing: 3,
                       fontSize: 15,
                     ),
@@ -247,9 +247,9 @@ class _RoomCreated extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Text(
+        Text(
           'Share this code',
-          style: TextStyle(color: AppColors.muted, fontSize: 13),
+          style: TextStyle(color: context.colors.muted, fontSize: 13),
         ),
         const SizedBox(height: 10),
         Panel(
@@ -259,8 +259,8 @@ class _RoomCreated extends StatelessWidget {
             children: [
               Text(
                 code,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: context.colors.text,
                   fontSize: 30,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 8,
@@ -268,7 +268,7 @@ class _RoomCreated extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               IconButton(
-                icon: const Icon(Icons.copy, color: AppColors.brand, size: 20),
+                icon: Icon(Icons.copy, color: context.colors.brand, size: 20),
                 onPressed: () {
                   Clipboard.setData(ClipboardData(text: code));
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -303,7 +303,7 @@ class _SheetGrip extends StatelessWidget {
         height: 4,
         margin: const EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
-          color: AppColors.surfaceRaised,
+          color: context.colors.surfaceRaised,
           borderRadius: BorderRadius.circular(2),
         ),
       ),

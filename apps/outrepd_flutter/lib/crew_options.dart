@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'theme.dart';
 
 /// Emblems a crew can wear. Kept to a curated set so every badge sits in the
 /// same visual family, but wide enough that crews do not all look alike.
@@ -92,7 +91,8 @@ final List<IconData> kCrewIcons = [
 ];
 
 const kCrewColors = <Color>[
-  AppColors.brand,
+  // A crew's colour is its identity, so these stay fixed across themes.
+  Color(0xFF4BB8FA),
   Color(0xFF2E7DFF),
   Color(0xFF00E5FF),
   Color(0xFF22C55E),
