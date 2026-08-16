@@ -19,8 +19,16 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   // Read stored preferences before the first frame, so the app opens in the
   // theme and units the lifter chose instead of flashing the defaults first.
-  await settings.load();
-  await loadProfileStats();
+  //
+  // Guarded because this runs before there is any UI to report a problem with:
+  // if storage is unavailable the app must still open on its defaults rather
+  // than die on the launcher with nothing to show for it.
+  try {
+    await settings.load();
+    await loadProfileStats();
+  } on Object catch (error, stack) {
+    debugPrint('Could not read saved settings: $error\n$stack');
+  }
   runApp(const OutrepdApp());
 }
 

@@ -30,6 +30,20 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
+
+            // Off, and deliberately so. ML Kit pulls in WorkManager, whose Room
+            // database is built by looking up a generated class by name; the
+            // shrinker renamed it and the app died before its first frame, on
+            // the launcher, with nothing to show. The rules below cover what is
+            // known to be reflected, but the app is nowhere near the method
+            // limit and nothing here is worth a crash nobody can read.
+            isMinifyEnabled = false
+            isShrinkResources = false
+
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
         }
     }
 }
