@@ -75,7 +75,11 @@ class BodyPose {
 
   /// A point is only usable if the tracker is reasonably sure of it. Counting
   /// off a guessed joint is how phantom reps happen.
-  PosePoint? confident(Joint joint, {double min = 0.5}) {
+  ///
+  /// The bar is deliberately high for measurement. Drawing the skeleton passes
+  /// a lower one — a limb that flickers out of the picture is better than one
+  /// that flickers out of the score.
+  PosePoint? confident(Joint joint, {double min = 0.7}) {
     final p = points[joint];
     return p != null && p.confidence >= min ? p : null;
   }
