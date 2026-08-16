@@ -7,7 +7,6 @@
 /// from scoring twice.
 library;
 
-import 'dart:math' as math;
 
 import 'exercise.dart';
 import 'pose.dart';
@@ -31,9 +30,12 @@ const kMinRepTime = Duration(milliseconds: 300);
 /// the rep is spoiled even if the shape is right again by the top.
 const kFormGrace = Duration(milliseconds: 300);
 
-/// A calibration rep has to cover at least this much range to be believed,
-/// otherwise someone standing still would teach the engine a range of nothing.
-const kMinCalibrationRange = 25.0;
+/// A sanity floor, not a quality bar: below this the lifter did not really
+/// move, and the definition's own thresholds are a better guess than anything
+/// learned from stillness. Kept low because the trimming above already pulls
+/// the ends in, and refusing a real calibration is worse than accepting a
+/// slightly tight one.
+const kMinCalibrationRange = 15.0;
 
 enum RepRejection { halfRep, tooFast, badForm }
 
@@ -52,10 +54,20 @@ class RepState {
     required this.tracked,
     required this.reps,
     required this.holdSeconds,
+    this.angle,
+    this.armed = false,
     this.formMessage,
     this.countedNow = false,
     this.rejection,
   });
+
+  /// The smoothed driver angle behind the meter, in degrees. Shown on the
+  /// diagnostics panel — when the meter misbehaves, the question is always
+  /// whether the angle is moving and where the calibrated ends landed.
+  final double? angle;
+
+  /// True once the bottom has been reached and a rep is in progress.
+  final bool armed;
 
   /// Where the ball sits, 0 at the bottom of the movement, 1 at the top.
   final double progress;
@@ -90,8 +102,12 @@ class RepEngine {
   double? _calBottom;
   double? _calTop;
   bool _calibrating = false;
-  double _calMin = double.infinity;
-  double _calMax = double.negativeInfinity;
+
+  /// Every angle seen while calibrating, rather than just the two extremes.
+  /// Getting down onto the floor throws angles far outside the movement, and
+  /// a min/max taken over those learns a range the actual reps only travel the
+  /// middle of — so the ball never reaches either zone and nothing counts.
+  final _calSamples = <double>[];
 
   int _reps = 0;
   double _holdSeconds = 0;
@@ -118,8 +134,7 @@ class RepEngine {
   /// reject good reps or accept short ones.
   void startCalibration() {
     _calibrating = true;
-    _calMin = double.infinity;
-    _calMax = double.negativeInfinity;
+    _calSamples.clear();
     _angle.reset();
   }
 
@@ -127,14 +142,22 @@ class RepEngine {
   /// case the definition's own thresholds stay in force.
   bool finishCalibration() {
     _calibrating = false;
-    if (_calMax - _calMin < kMinCalibrationRange) return false;
+    if (_calSamples.length < 10) return false;
 
-    // Pull the ends in slightly: the very extremes of one slow rep are hard to
-    // hit again under fatigue, and a range nobody can reach counts nothing.
-    const trim = 0.08;
-    final span = _calMax - _calMin;
-    final low = _calMin + span * trim;
-    final high = _calMax - span * trim;
+    // Percentiles, not the extremes. Settling into position, a hand crossing
+    // the lens, one bad frame — those all sit outside the movement, and the
+    // extremes would take the range from them rather than from the reps.
+    //
+    // Trimmed hard, and deliberately so: the two failures are not equal. A
+    // range slightly too narrow means the ball saturates at the ends and reps
+    // count anyway. A range too wide means the reps travel only its middle,
+    // the ball never reaches a zone, and nothing counts at all. So when in
+    // doubt, be too narrow.
+    _calSamples.sort();
+    final low = _percentile(0.2);
+    final high = _percentile(0.8);
+
+    if (high - low < kMinCalibrationRange) return false;
 
     // Which end is "bottom" depends on the movement — a push-up folds shut at
     // the bottom, a sit-up folds shut at the top.
@@ -187,10 +210,7 @@ class RepEngine {
 
     final angle = _angle.add(raw);
 
-    if (_calibrating) {
-      _calMin = math.min(_calMin, angle);
-      _calMax = math.max(_calMax, angle);
-    }
+    if (_calibrating) _calSamples.add(angle);
 
     final progress = _progressOf(angle);
     final broken = _firstBrokenGate(pose, progress);
@@ -206,6 +226,7 @@ class RepEngine {
         tracked: true,
         reps: _reps,
         holdSeconds: _holdSeconds,
+        angle: angle,
         formMessage: broken?.message,
       );
     }
@@ -251,10 +272,18 @@ class RepEngine {
       tracked: true,
       reps: _reps,
       holdSeconds: _holdSeconds,
+      angle: angle,
+      armed: _armed,
       formMessage: broken?.message,
       countedNow: counted,
       rejection: _rejection,
     );
+  }
+
+  /// Sorted samples only. Nearest-rank, which is plenty at this sample count.
+  double _percentile(double fraction) {
+    final i = (fraction * (_calSamples.length - 1)).round();
+    return _calSamples[i.clamp(0, _calSamples.length - 1)];
   }
 
   /// Maps the driver angle onto the meter. Written as a ratio between the two

@@ -295,6 +295,33 @@ void main() {
       expect(rig.engine.topAngle, lessThan(pushup.topAngle));
     });
 
+    test('settling into position does not widen the learned range', () {
+      final rig = Rig(pushup);
+      rig.engine.startCalibration();
+
+      // A lurch through the extremes, as when lowering onto the floor.
+      rig.hold(1.0, frames: 4);
+      rig.hold(0.0, frames: 4);
+
+      // Then the reps themselves, over a narrower band than that lurch.
+      for (var i = 0; i < 3; i++) {
+        rig.moveTo(0.3);
+        rig.moveTo(0.7);
+      }
+      expect(rig.engine.finishCalibration(), isTrue);
+
+      // What matters is the outcome: a rep confined to the band the
+      // calibration watched has to register. Taking the range from the lurch
+      // instead would leave the meter spanning the whole sweep, so these reps
+      // would travel only its middle, never reach a zone, and score nothing —
+      // which is exactly what happened on a phone.
+      rig.engine.reset();
+      rig.moveTo(0.3);
+      rig.moveTo(0.7);
+
+      expect(rig.reps, 1);
+    });
+
     test('standing still teaches nothing and is refused', () {
       final rig = Rig(pushup);
       rig.engine.startCalibration();

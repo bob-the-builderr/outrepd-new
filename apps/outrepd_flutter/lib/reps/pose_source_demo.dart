@@ -24,6 +24,10 @@ class DemoPoseSource implements PoseSource {
   @override
   bool get isLive => false;
 
+  /// No picture behind it, so the skeleton simply fills whatever box it gets.
+  @override
+  Size? get sourceSize => null;
+
   @override
   Widget? buildPreview(BuildContext context) => null;
 

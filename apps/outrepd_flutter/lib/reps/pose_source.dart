@@ -12,6 +12,14 @@ import 'pose_source_demo.dart'
 abstract class PoseSource {
   Stream<BodyPose> get poses;
 
+  /// Size of the picture the pose coordinates were measured in, already
+  /// rotated the way it is shown. The overlay needs it to land on the body:
+  /// a 4:3 frame shown on a 20:9 screen is cropped, and the skeleton has to be
+  /// cropped by exactly the same amount or it drifts off the lifter.
+  ///
+  /// Null when there is no real picture behind it, as in the demo.
+  Size? get sourceSize;
+
   /// What to paint behind the skeleton — a camera preview, or nothing.
   Widget? buildPreview(BuildContext context);
 

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class TrainerScreen extends StatefulWidget {
   State<TrainerScreen> createState() => _TrainerScreenState();
 }
 
-enum _Stage { setup, calibrating, counting }
+enum _Stage { setup, ready, calibrating, counting }
 
 class _TrainerScreenState extends State<TrainerScreen> {
   late ExerciseDef _exercise = widget.exercise ?? kExercises.first;
@@ -44,6 +45,12 @@ class _TrainerScreenState extends State<TrainerScreen> {
   /// default thresholds already covered, which teaches a truncated range —
   /// and a truncated range makes every later rep look rushed.
   static const _calibrationWindow = Duration(seconds: 8);
+
+  /// Time to get down onto the floor before anything is recorded. Angles
+  /// thrown while settling into position are nothing like the movement, and
+  /// letting them into the calibration is what taught a range the reps only
+  /// travelled the middle of.
+  static const _readyWindow = Duration(seconds: 5);
 
   @override
   void initState() {
@@ -73,7 +80,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
       return;
     }
 
-    final engine = RepEngine(_exercise)..startCalibration();
+    final engine = RepEngine(_exercise);
     _clock
       ..reset()
       ..start();
@@ -83,7 +90,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
     setState(() {
       _source = source;
       _engine = engine;
-      _stage = _Stage.calibrating;
+      _stage = _Stage.ready;
       _error = null;
     });
   }
@@ -94,10 +101,13 @@ class _TrainerScreenState extends State<TrainerScreen> {
 
     final state = engine.update(pose, _clock.elapsed);
 
-    // Calibration ends on its own clock, so nobody has to reach for the phone
-    // mid-set.
-    if (_stage == _Stage.calibrating &&
-        _clock.elapsed >= _calibrationWindow) {
+    // The whole warm-up runs on its own clock, so nobody has to reach for the
+    // phone mid-set.
+    if (_stage == _Stage.ready && _clock.elapsed >= _readyWindow) {
+      engine.startCalibration();
+      _stage = _Stage.calibrating;
+    } else if (_stage == _Stage.calibrating &&
+        _clock.elapsed >= _readyWindow + _calibrationWindow) {
       engine.finishCalibration();
       engine.reset();
       _stage = _Stage.counting;
@@ -112,6 +122,21 @@ class _TrainerScreenState extends State<TrainerScreen> {
   void _restart() {
     _engine?.reset();
     setState(() {});
+  }
+
+  /// A bad calibration poisons everything after it, and it is not obvious from
+  /// the outside that it went wrong. Being able to redo it without leaving the
+  /// screen is the difference between a fixable session and a wasted one.
+  void _recalibrate() {
+    final engine = _engine;
+    if (engine == null) return;
+    engine
+      ..reset()
+      ..startCalibration();
+    _clock
+      ..reset()
+      ..start();
+    setState(() => _stage = _Stage.ready);
   }
 
   Future<void> _stop() async {
@@ -146,12 +171,18 @@ class _TrainerScreenState extends State<TrainerScreen> {
         ),
         title: Text(_exercise.name),
         actions: [
-          if (_stage != _Stage.setup)
+          if (_stage != _Stage.setup) ...[
+            IconButton(
+              tooltip: 'Recalibrate',
+              icon: const Icon(Icons.straighten),
+              onPressed: _recalibrate,
+            ),
             IconButton(
               tooltip: 'Reset count',
               icon: const Icon(Icons.refresh),
               onPressed: _restart,
             ),
+          ],
         ],
       ),
       extendBodyBehindAppBar: true,
@@ -231,6 +262,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
             pose: _pose,
             good: formOk,
             mirror: live,
+            sourceSize: _source?.sourceSize,
           ),
         ),
 
@@ -244,6 +276,16 @@ class _TrainerScreenState extends State<TrainerScreen> {
           ),
         ),
 
+        // The meter is the part that goes wrong quietly: the angle can sit
+        // still, or the calibrated ends can land somewhere unreachable, and
+        // from the outside both just look like "it is not counting". One
+        // screenshot of this answers which.
+        Positioned(
+          left: 14,
+          top: 110,
+          child: _Diagnostics(state: state, engine: engine),
+        ),
+
         Positioned(
           left: 0,
           right: 0,
@@ -252,8 +294,10 @@ class _TrainerScreenState extends State<TrainerScreen> {
             exercise: _exercise,
             state: state,
             holdSeconds: engine.holdSeconds,
-            calibrating: _stage == _Stage.calibrating,
-            calibrationLeft: _calibrationWindow - _clock.elapsed,
+            stage: _stage,
+            countdown: _stage == _Stage.ready
+                ? _readyWindow - _clock.elapsed
+                : _readyWindow + _calibrationWindow - _clock.elapsed,
             demo: !live,
             onStop: _stop,
           ),
@@ -430,14 +474,64 @@ class _RomMeter extends StatelessWidget {
   }
 }
 
+/// What the counter is actually seeing, in numbers.
+class _Diagnostics extends StatelessWidget {
+  const _Diagnostics({required this.state, required this.engine});
+
+  final RepState? state;
+  final RepEngine engine;
+
+  @override
+  Widget build(BuildContext context) {
+    final s = state;
+    String deg(double? v) => v == null ? '—' : '${v.round()}°';
+
+    final lines = <String>[
+      'angle   ${deg(s?.angle)}',
+      'range   ${deg(engine.bottomAngle)} → ${deg(engine.topAngle)}',
+      'ball    ${((s?.progress ?? 0) * 100).round()}%',
+      'form    ${s == null ? '—' : (s.formOk ? 'ok' : 'BAD')}',
+      'state   ${s?.armed ?? false ? 'going up' : 'waiting'}',
+      if (s?.rejection != null) 'last    ${s!.rejection!.name}',
+      if (s?.tracked == false) 'lost the body',
+    ];
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: Colors.black.withValues(alpha: 0.55),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            for (final line in lines)
+              Text(
+                line,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 11,
+                  height: 1.5,
+                  fontFeatures: [FontFeature.tabularFigures()],
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 /// The count, and the one line telling you why a rep did not land.
 class _Readout extends StatelessWidget {
   const _Readout({
     required this.exercise,
     required this.state,
     required this.holdSeconds,
-    required this.calibrating,
-    required this.calibrationLeft,
+    required this.stage,
+    required this.countdown,
     required this.demo,
     required this.onStop,
   });
@@ -445,8 +539,8 @@ class _Readout extends StatelessWidget {
   final ExerciseDef exercise;
   final RepState? state;
   final double holdSeconds;
-  final bool calibrating;
-  final Duration calibrationLeft;
+  final _Stage stage;
+  final Duration countdown;
   final bool demo;
   final VoidCallback onStop;
 
@@ -456,11 +550,14 @@ class _Readout extends StatelessWidget {
     final hold = exercise.mode == ScoreMode.hold;
     final value = hold ? holdSeconds.toStringAsFixed(1) : '${s?.reps ?? 0}';
 
-    final seconds = calibrationLeft.inSeconds.clamp(0, 99);
-    final message = calibrating
-        ? 'Calibrating — do slow reps · ${seconds}s'
-        : (s?.formMessage ?? s?.rejection?.message);
-    final bad = !calibrating && message != null;
+    final seconds = countdown.inSeconds.clamp(0, 99) + 1;
+    final warmingUp = stage != _Stage.counting;
+    final message = switch (stage) {
+      _Stage.ready => 'Get into position · ${seconds}s',
+      _Stage.calibrating => 'Now do slow reps · ${seconds}s',
+      _ => s?.formMessage ?? s?.rejection?.message,
+    };
+    final bad = !warmingUp && message != null;
 
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 18, 20, 28),
@@ -559,6 +656,7 @@ class _SkeletonPainter extends CustomPainter {
     required this.pose,
     required this.good,
     required this.mirror,
+    required this.sourceSize,
   });
 
   final BodyPose pose;
@@ -568,17 +666,33 @@ class _SkeletonPainter extends CustomPainter {
   /// to land on the body instead of beside it.
   final bool mirror;
 
+  /// Shape of the picture the pose was measured in, or null to fill the box.
+  final Size? sourceSize;
+
   @override
   void paint(Canvas canvas, Size size) {
     if (pose.points.isEmpty) return;
 
     final colour = good ? AppColors.win : AppColors.loss;
 
+    // The preview covers the screen: scaled until it fills, then centred and
+    // clipped. The skeleton has to be put through the very same transform, or
+    // it sits beside the body rather than on it.
+    final source = sourceSize;
+    final scale = source == null
+        ? 1.0
+        : math.max(size.width / source.width, size.height / source.height);
+    final drawn = source == null
+        ? size
+        : Size(source.width * scale, source.height * scale);
+    final dx = (size.width - drawn.width) / 2;
+    final dy = (size.height - drawn.height) / 2;
+
     Offset? at(Joint joint) {
       final p = pose.confident(joint, min: 0.35);
       if (p == null) return null;
       final x = mirror ? 1 - p.x : p.x;
-      return Offset(x * size.width, p.y * size.height);
+      return Offset(x * drawn.width + dx, p.y * drawn.height + dy);
     }
 
     final bone = Paint()
@@ -612,5 +726,8 @@ class _SkeletonPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_SkeletonPainter old) =>
-      old.pose != pose || old.good != good || old.mirror != mirror;
+      old.pose != pose ||
+      old.good != good ||
+      old.mirror != mirror ||
+      old.sourceSize != sourceSize;
 }

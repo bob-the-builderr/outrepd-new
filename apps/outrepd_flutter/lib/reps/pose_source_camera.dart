@@ -51,11 +51,44 @@ class CameraPoseSource implements PoseSource {
   @override
   bool get isLive => true;
 
+  /// True when the sensor is mounted a quarter turn from the way we display
+  /// it, which is the usual case for a phone held upright. Width and height
+  /// swap once the frame is turned upright.
+  bool get _quarterTurned {
+    final o = _camera?.description.sensorOrientation ?? 0;
+    return o == 90 || o == 270;
+  }
+
+  @override
+  Size? get sourceSize {
+    final preview = _camera?.value.previewSize;
+    if (preview == null) return null;
+    return _quarterTurned
+        ? Size(preview.height, preview.width)
+        : preview;
+  }
+
   @override
   Widget? buildPreview(BuildContext context) {
     final camera = _camera;
     if (camera == null || !camera.value.isInitialized) return null;
-    return CameraPreview(camera);
+
+    final size = sourceSize;
+    if (size == null) return CameraPreview(camera);
+
+    // Sized to the frame's own shape and then covered, so a 4:3 camera on a
+    // tall screen is cropped rather than stretched. Letting it fill the screen
+    // directly is what made everyone look pulled sideways.
+    return ClipRect(
+      child: FittedBox(
+        fit: BoxFit.cover,
+        child: SizedBox(
+          width: size.width,
+          height: size.height,
+          child: CameraPreview(camera),
+        ),
+      ),
+    );
   }
 
   @override
@@ -136,9 +169,15 @@ class CameraPoseSource implements PoseSource {
 
   /// ML Kit reports pixels in the frame's own coordinates; the rest of the app
   /// works in 0..1 so nothing downstream cares about resolution.
+  ///
+  /// Those coordinates are in the frame *after* the rotation we handed over,
+  /// so the sides swap with it. Dividing by the raw buffer's width and height
+  /// instead skews the whole skeleton off the body.
   BodyPose _convert(mlkit.Pose pose, CameraImage image) {
-    final w = image.width.toDouble();
-    final h = image.height.toDouble();
+    final w =
+        (_quarterTurned ? image.height : image.width).toDouble();
+    final h =
+        (_quarterTurned ? image.width : image.height).toDouble();
 
     final points = <Joint, PosePoint>{};
     for (final entry in _wanted.entries) {
