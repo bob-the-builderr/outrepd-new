@@ -202,11 +202,11 @@ MyCrew _sampleCrewFor(String code) => MyCrew(
       emblemColor: 0,
       inviteCode: code,
       members: const [
-        CrewMember('iron_mike', 5, 1, 96200, isOwner: true),
-        CrewMember('squat_queen', 4, 3, 88400),
-        CrewMember('benchgod', 3, 1, 71300),
-        CrewMember('demo_lifter', 3, 2, 64100),
-        CrewMember('deadlift_dan', 3, 3, 52700),
+        CrewMember('iron_mike', 5, 1, 96200, isOwner: true, weeklyReps: 1480),
+        CrewMember('squat_queen', 4, 3, 88400, weeklyReps: 1310),
+        CrewMember('benchgod', 3, 1, 71300, weeklyReps: 1055),
+        CrewMember('demo_lifter', 3, 2, 64100, weeklyReps: 940),
+        CrewMember('deadlift_dan', 3, 3, 52700, weeklyReps: 620),
       ],
     );
 

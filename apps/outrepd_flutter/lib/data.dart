@@ -242,7 +242,8 @@ const demoOpponents = <Opponent>[
 ];
 
 class Crew {
-  const Crew(this.name, this.tag, this.members, this.weeklyVolume);
+  const Crew(this.name, this.tag, this.members, this.weeklyVolume,
+      {this.weeklyReps = 0});
 
   final String name;
   /// Short badge shown in lists.
@@ -250,13 +251,21 @@ class Crew {
   final int members;
   /// Combined volume the crew logged this week, in kg.
   final int weeklyVolume;
+
+  /// Reps this week. Crews are ranked on this divided by their size, so a big
+  /// crew cannot coast to the top on numbers alone.
+  final int weeklyReps;
+
+  int get repsPerMember => members == 0 ? 0 : weeklyReps ~/ members;
 }
 
 const demoCrews = <Crew>[
-  Crew('Iron Temple', 'IRN', 8, 412500),
-  Crew('Night Shift', 'NGT', 6, 366200),
-  Crew('Barbell Bros', 'BBB', 10, 341800),
-  Crew('Quiet Reps', 'QRP', 5, 208400),
+  Crew('Iron Temple', 'IRN', 8, 412500, weeklyReps: 6240),
+  Crew('Night Shift', 'NGT', 6, 366200, weeklyReps: 5100),
+  Crew('Barbell Bros', 'BBB', 10, 341800, weeklyReps: 7300),
+  Crew('Quiet Reps', 'QRP', 5, 208400, weeklyReps: 3850),
+  Crew('Dawn Patrol', 'DWN', 12, 455000, weeklyReps: 8400),
+  Crew('Last Set', 'LST', 7, 291000, weeklyReps: 4550),
 ];
 
 /// A crew the player belongs to. Held in memory for now — there is no backend
@@ -291,18 +300,37 @@ class MyCrew {
 
   static const maxMembers = 20;
 
+  /// What the crew is chasing together this week, in reps. A crew without a
+  /// shared target is just a list of names — the goal is what makes anyone
+  /// chase up the member who has not trained since Monday.
+  int weeklyGoal = 8000;
+
+  int get weeklyReps =>
+      members.fold(0, (sum, member) => sum + member.weeklyReps);
+
+  double get goalProgress =>
+      weeklyGoal == 0 ? 0 : (weeklyReps / weeklyGoal).clamp(0.0, 1.0);
+
+  /// Ranking runs on this, not the total. A crew of twenty would beat a crew
+  /// of eight on volume alone however hard the eight worked.
+  int get repsPerMember =>
+      members.isEmpty ? 0 : weeklyReps ~/ members.length;
+
   String get inviteLink => 'https://outrepd.app/crew/$inviteCode';
 }
 
 class CrewMember {
   const CrewMember(this.username, this.tierIdx, this.divIdx, this.weeklyVolume,
-      {this.isOwner = false});
+      {this.isOwner = false, this.weeklyReps = 0});
 
   final String username;
   final int tierIdx;
   final int divIdx;
   final int weeklyVolume;
   final bool isOwner;
+
+  /// Reps this week — what the crew goal and the ranking are both built on.
+  final int weeklyReps;
 }
 
 /// The player's crew, or null when they have not joined one.
