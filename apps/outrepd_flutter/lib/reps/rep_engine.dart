@@ -12,8 +12,12 @@ import 'exercise.dart';
 import 'pose.dart';
 
 /// How much of the travel counts as "all the way down" and "all the way up".
-const kBottomZone = 0.15;
-const kTopZone = 0.85;
+///
+/// Set so a rep needs a clear trip, not a maximal one. Nobody hits their
+/// absolute deepest position on every rep of a working set, and demanding it
+/// threw away most of them. Half a rep still cannot reach both ends.
+const kBottomZone = 0.22;
+const kTopZone = 0.78;
 
 /// Minimum time for the climb out of the bottom zone up to the top one. Timed
 /// from the last moment spent at the bottom, so resting down there does not
@@ -29,6 +33,10 @@ const kMinRepTime = Duration(milliseconds: 300);
 /// Bad form shorter than this is tracker noise and is forgiven. Longer, and
 /// the rep is spoiled even if the shape is right again by the top.
 const kFormGrace = Duration(milliseconds: 300);
+
+/// A rep in progress this long was never a rep. Giving up on it lets the range
+/// re-derive, which is usually what was wrong in the first place.
+const kAbandonedRep = Duration(seconds: 8);
 
 /// A sanity floor, not a quality bar: below this the lifter did not really
 /// move, and the definition's own thresholds are a better guess than anything
@@ -287,6 +295,16 @@ class RepEngine {
         // would hand a rep to anyone who sagged, tidied up, then pushed.
         _repStart = now;
       }
+    } else if (_armed && now - (_repStart ?? now) > kAbandonedRep) {
+      // Went down, never came back up. Whatever that was, it was not a rep —
+      // most likely the range is wrong and the top is out of reach.
+      //
+      // Letting it stay armed was quietly fatal: the range only re-derives
+      // between reps, so one unfinished rep froze the range that caused it and
+      // the rest of the session counted nothing.
+      _armed = false;
+      _repStart = null;
+      _spoiled = false;
     } else if (_armed && progress >= kTopZone) {
       final took = now - (_repStart ?? now);
 
@@ -333,8 +351,8 @@ class RepEngine {
 
     // Trimmed the same way and for the same reason as before: too narrow still
     // counts, too wide counts nothing.
-    final low = at(0.2);
-    final high = at(0.8);
+    final low = at(0.25);
+    final high = at(0.75);
     if (high - low < kMinCalibrationRange) return;
 
     final bottomIsSmaller = exercise.bottomAngle < exercise.topAngle;
