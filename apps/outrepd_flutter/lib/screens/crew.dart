@@ -1,3 +1,5 @@
+import 'dart:ui' show FontFeature;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -511,12 +513,23 @@ class _Contributions extends StatelessWidget {
                                   color: AppColors.gold, size: 13),
                             ],
                             const Spacer(),
-                            Text(
-                              '${member.weeklyReps}',
-                              style: TextStyle(
-                                color: context.colors.text,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 13,
+                            // Fixed column, and digits that all take the same
+                            // width. Proportional figures make 1480 and 940
+                            // start in different places, which reads as a
+                            // scattered column however neatly it is aligned.
+                            SizedBox(
+                              width: 46,
+                              child: Text(
+                                '${member.weeklyReps}',
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  color: context.colors.text,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 13,
+                                  fontFeatures: const [
+                                    FontFeature.tabularFigures(),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
@@ -758,12 +771,17 @@ class _RankRow extends StatelessWidget {
               ],
             ),
           ),
-          Text(
-            '${entry.repsPerMember}',
-            style: TextStyle(
-              color: context.colors.text,
-              fontWeight: FontWeight.w800,
-              fontSize: 15,
+          SizedBox(
+            width: 52,
+            child: Text(
+              '${entry.repsPerMember}',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                color: context.colors.text,
+                fontWeight: FontWeight.w800,
+                fontSize: 15,
+                fontFeatures: const [FontFeature.tabularFigures()],
+              ),
             ),
           ),
         ],
