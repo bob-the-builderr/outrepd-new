@@ -3,7 +3,9 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../exercises.dart';
 import '../reps/exercise.dart';
+import '../reps/exercise_patterns.dart';
 import '../reps/pose.dart';
 import '../reps/driver_finder.dart';
 import '../reps/pose_source.dart';
@@ -307,15 +309,40 @@ class _TrainerScreenState extends State<TrainerScreen> {
           ),
         ),
         const SizedBox(height: 16),
-        for (final e in [...kExercises, kLearnExercise])
+        // Anything the camera has never been told about still works, so it
+        // leads rather than being buried under eighty named movements.
+        Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: _ExerciseTile(
+            exercise: kLearnExercise,
+            selected: kLearnExercise.id == _exercise.id,
+            onTap: () => setState(() => _exercise = kLearnExercise),
+          ),
+        ),
+        for (final group in exercisesByMuscle.entries) ...[
           Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: _ExerciseTile(
-              exercise: e,
-              selected: e.id == _exercise.id,
-              onTap: () => setState(() => _exercise = e),
+            padding: const EdgeInsets.fromLTRB(4, 18, 4, 10),
+            child: Text(
+              group.key.toUpperCase(),
+              style: const TextStyle(
+                color: _dim,
+                fontSize: 11.5,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 1.2,
+              ),
             ),
           ),
+          for (final listed in group.value)
+            if (cameraDefFor(listed.name) case final def?)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: _ExerciseTile(
+                  exercise: def,
+                  selected: def.id == _exercise.id,
+                  onTap: () => setState(() => _exercise = def),
+                ),
+              ),
+        ],
         const SizedBox(height: 18),
         _DarkPanel(
           child: Row(
@@ -487,8 +514,13 @@ class _ExerciseTile extends StatelessWidget {
             ),
           ),
           Text(
-            exercise.mode == ScoreMode.hold ? 'time' : 'reps',
-            style: const TextStyle(color: _dim, fontSize: 12),
+            exercise.gates.isNotEmpty
+                ? 'checks form'
+                : (exercise.mode == ScoreMode.hold ? 'time' : 'counts'),
+            style: TextStyle(
+              color: exercise.gates.isNotEmpty ? _accent : _dim,
+              fontSize: 11.5,
+            ),
           ),
           if (selected) ...[
             const SizedBox(width: 10),
