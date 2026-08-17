@@ -108,8 +108,19 @@ void main() {
       // truth file stays as a fallback for anything recorded before that.
       final expected = int.tryParse(noteOf(file) ?? '') ?? truth[name];
       if (expected is! int) {
+        // No true count means no accuracy can be reported — but the obvious
+        // failures still show without one: the wrong joint picked, nothing
+        // counted at all, or a number no human could have produced. Those are
+        // the faults worth catching first, because a wrong joint takes a whole
+        // pattern of exercises down with it.
+        final unlabelled = PoseRecording.fromJson(
+          jsonDecode(file.readAsStringSync()) as Map<String, dynamic>,
+        );
+        final guess = findDriver([for (final fr in unlabelled.frames) fr.pose]);
         // ignore: avoid_print
-        print('skipping $name — no true count in truth.json');
+        print('$name — counted ${countOf(unlabelled)}, '
+            'joint ${guess?.spec.vertex.name ?? "none found"}, '
+            '${unlabelled.frames.length} frames  (no true count)');
         continue;
       }
 
