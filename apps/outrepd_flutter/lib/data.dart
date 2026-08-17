@@ -268,6 +268,55 @@ const demoCrews = <Crew>[
   Crew('Last Set', 'LST', 7, 291000, weeklyReps: 4550),
 ];
 
+/// A stocked crew, for the web preview and for joining before there is a
+/// server to join against.
+MyCrew demoJoinedCrew() => MyCrew(
+      name: 'Iron Temple',
+      country: 'Egypt',
+      emblemIcon: 0,
+      emblemColor: 0,
+      inviteCode: 'IRN7QX',
+      members: const [
+        CrewMember('iron_mike', 5, 1, 96200, isOwner: true, weeklyReps: 1480),
+        CrewMember('squat_queen', 4, 3, 88400, weeklyReps: 1310),
+        CrewMember('benchgod', 3, 1, 71300, weeklyReps: 1055),
+        CrewMember('demo_lifter', 3, 2, 64100, weeklyReps: 940),
+        CrewMember('deadlift_dan', 3, 3, 52700, weeklyReps: 620),
+        CrewMember('pr_hunter', 4, 1, 41000, weeklyReps: 0),
+      ],
+    );
+
+/// A crew that asked for this lifter by name.
+class CrewInvite {
+  const CrewInvite(this.crewName, this.fromUser);
+  final String crewName;
+  final String fromUser;
+}
+
+const demoInvites = <CrewInvite>[
+  CrewInvite('Night Shift', 'iron_mike'),
+  CrewInvite('Dawn Patrol', 'squat_queen'),
+];
+
+/// Days until the weekly goal resets. Weeks close on Sunday night.
+int daysLeftInWeek() => 8 - DateTime.now().weekday;
+
+/// Seasons run a calendar month. Without a reset the first crew to the top
+/// stays there, and a crew starting later has no reason to bother.
+String seasonName() {
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December',
+  ];
+  return months[DateTime.now().month - 1];
+}
+
+int daysLeftInSeason() {
+  final now = DateTime.now();
+  final nextMonth = DateTime(now.year, now.month + 1, 1);
+  return nextMonth.difference(DateTime(now.year, now.month, now.day)).inDays;
+}
+
 /// A crew the player belongs to. Held in memory for now — there is no backend
 /// yet, so a crew lasts for the session.
 class MyCrew {

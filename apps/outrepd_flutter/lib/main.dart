@@ -97,6 +97,16 @@ class _OutrepdAppState extends State<OutrepdApp> with WidgetsBindingObserver {
         '/profile': (_) => const AppShell(initialIndex: 4),
         '/road': (_) => RoadmapScreen(profile: demoProfile),
         '/crew': (_) => const CrewScreen(),
+        // Opens already in a crew. Tapping through the canvas is unreliable in
+        // the web preview, so the state to inspect gets its own route.
+        '/crewin': (_) {
+          myCrew ??= demoJoinedCrew();
+          return const CrewScreen();
+        },
+        '/crewrank': (_) {
+          myCrew ??= demoJoinedCrew();
+          return const CrewScreen(initialTab: 1);
+        },
         '/crewnew': (_) => const CreateCrewScreen(),
         '/settings': (_) => const SettingsScreen(),
         '/trainer': (_) => const TrainerScreen(),
