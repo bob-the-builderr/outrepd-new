@@ -118,8 +118,22 @@ DriverGuess? _score(AngleSpec spec, List<double> series) {
 
 /// Best self-correlation across plausible rep lengths, 0..1.
 double _periodicity(List<double> series) {
-  final mean = series.reduce((a, b) => a + b) / series.length;
-  final centred = series.map((v) => v - mean).toList();
+  // Against a moving average, not the overall one. Subtracting a single mean
+  // leaves any slow drift in place — a body settling, a camera shifting — and
+  // a drifting signal stays correlated with itself at every lag, so it scores
+  // higher than a joint genuinely swinging back and forth. Measured that way,
+  // every exercise looked like a hip movement, including push-ups.
+  final window = math.min(60, math.max(9, series.length ~/ 6));
+  final centred = <double>[];
+  for (var i = 0; i < series.length; i++) {
+    final from = math.max(0, i - window ~/ 2);
+    final to = math.min(series.length, i + window ~/ 2 + 1);
+    var sum = 0.0;
+    for (var j = from; j < to; j++) {
+      sum += series[j];
+    }
+    centred.add(series[i] - sum / (to - from));
+  }
 
   var energy = 0.0;
   for (final v in centred) {
