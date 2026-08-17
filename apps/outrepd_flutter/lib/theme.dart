@@ -113,6 +113,10 @@ class Tier {
   final Color color;
   final String? asset;
 
+  /// The ring that goes round a profile picture at this tier. Named from the
+  /// tier so a promotion changes it without anything being wired up.
+  String get frame => 'assets/images/frames/${name.toLowerCase()}.png';
+
   /// What reaching this tier unlocks, shown on the roadmap.
   final String reward;
 }

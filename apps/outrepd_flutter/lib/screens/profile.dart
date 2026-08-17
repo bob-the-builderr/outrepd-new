@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../data.dart';
+import '../profile_avatar.dart';
 import '../settings.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'achievements.dart';
+import 'avatar_picker.dart';
 import 'settings.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -57,7 +59,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           Column(
             children: [
-              TierBadge(tierIdx: p.tierIdx, size: 96),
+              ProfileAvatar(
+                tierIdx: p.tierIdx,
+                size: 172,
+                onTap: () async {
+                  await showAvatarPicker(context, p.tierIdx);
+                  if (mounted) setState(() {});
+                },
+              ),
               const SizedBox(height: 12),
               // Usernames are free text, so cap them rather than let a long
               // one push the layout around.

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data.dart';
+import '../profile_avatar.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -69,7 +70,11 @@ class FriendsScreen extends StatelessWidget {
                   children: [
                     Stack(
                       children: [
-                        TierBadge(tierIdx: f.tierIdx, size: 40),
+                        ProfileAvatar(
+                          tierIdx: f.tierIdx,
+                          username: f.username,
+                          size: 54,
+                        ),
                         if (f.online)
                           Positioned(
                             right: 0,

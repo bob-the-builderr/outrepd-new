@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data.dart';
+import '../profile_avatar.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -77,7 +78,11 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                           ),
                         ),
                       ),
-                      TierBadge(tierIdx: e.tierIdx, size: 36),
+                      ProfileAvatar(
+                        tierIdx: e.tierIdx,
+                        username: e.username,
+                        size: 50,
+                      ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Column(

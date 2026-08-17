@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../crew_options.dart';
 import '../data.dart';
+import '../profile_avatar.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'crew_create.dart';
@@ -485,7 +486,11 @@ class _Contributions extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 14),
               child: Row(
                 children: [
-                  TierBadge(tierIdx: member.tierIdx, size: 30),
+                  ProfileAvatar(
+                    tierIdx: member.tierIdx,
+                    username: member.username,
+                    size: 44,
+                  ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(

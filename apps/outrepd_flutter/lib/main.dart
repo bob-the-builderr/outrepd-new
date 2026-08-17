@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'avatar.dart';
 import 'data.dart';
 import 'screens/onboarding.dart';
 import 'screens/crew.dart';
@@ -26,6 +27,7 @@ void main() async {
   try {
     await settings.load();
     await loadProfileStats();
+    await avatar.load();
   } on Object catch (error, stack) {
     debugPrint('Could not read saved settings: $error\n$stack');
   }
