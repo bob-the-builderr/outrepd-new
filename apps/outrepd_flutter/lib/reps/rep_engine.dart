@@ -355,9 +355,26 @@ class RepEngine {
     final high = at(0.75);
     if (high - low < kMinCalibrationRange) return;
 
+    // Refuse a range far narrower than the one in use. Widening is usually the
+    // truth arriving — someone finally going deep — but a sudden narrowing is
+    // almost always the window filling with something that is not the
+    // exercise, and accepting it strands every later rep outside the meter.
+    final current = (topAngle - bottomAngle).abs();
+    if (current > 0 && (high - low) < current * 0.7) return;
+
     final bottomIsSmaller = exercise.bottomAngle < exercise.topAngle;
-    _calBottom = bottomIsSmaller ? low : high;
-    _calTop = bottomIsSmaller ? high : low;
+    final candidateBottom = bottomIsSmaller ? low : high;
+    final candidateTop = bottomIsSmaller ? high : low;
+
+    // Eased towards, never jumped to. A window holding a rest, a walk to the
+    // rack or someone talking to camera describes a range far narrower than
+    // the movement, and taking it outright collapsed the meter around standing
+    // still — after which the reps fell outside it entirely and nothing
+    // counted. Sustained change still moves it; a quiet twenty seconds barely
+    // does.
+    const pull = 0.15;
+    _calBottom = (_calBottom ?? candidateBottom) * (1 - pull) + candidateBottom * pull;
+    _calTop = (_calTop ?? candidateTop) * (1 - pull) + candidateTop * pull;
   }
 
   /// Sorted samples only. Nearest-rank, which is plenty at this sample count.
