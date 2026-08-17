@@ -1,5 +1,3 @@
-import 'dart:ui' show FontFeature;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -495,24 +493,34 @@ class _Contributions extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Flexible(
-                              child: Text(
-                                member.username,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: context.colors.text,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 13.5,
-                                ),
+                            // The name takes all the room that is left, so the
+                            // number lands on the row's right edge whatever the
+                            // name's length. A Flexible name beside a Spacer
+                            // shares the free space with it instead, which put
+                            // every number in a different place.
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      member.username,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        color: context.colors.text,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 13.5,
+                                      ),
+                                    ),
+                                  ),
+                                  if (member.isOwner) ...[
+                                    const SizedBox(width: 6),
+                                    const Icon(Icons.star,
+                                        color: AppColors.gold, size: 13),
+                                  ],
+                                ],
                               ),
                             ),
-                            if (member.isOwner) ...[
-                              const SizedBox(width: 6),
-                              const Icon(Icons.star,
-                                  color: AppColors.gold, size: 13),
-                            ],
-                            const Spacer(),
                             // Fixed column, and digits that all take the same
                             // width. Proportional figures make 1480 and 940
                             // start in different places, which reads as a
