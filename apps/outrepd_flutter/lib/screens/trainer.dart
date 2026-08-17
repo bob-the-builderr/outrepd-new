@@ -177,12 +177,64 @@ class _TrainerScreenState extends State<TrainerScreen> {
 
   /// Saving must never lose the session it is trying to preserve, so a
   /// failure here is reported and swallowed rather than thrown.
+  /// A recording without the real count proves nothing — there is no truth to
+  /// measure the counter against. Asking here, while the set is still in mind,
+  /// is the only moment anyone actually knows the answer.
+  Future<int?> _askTrueCount() async {
+    final field = TextEditingController();
+    final answer = await showDialog<int>(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: _panel,
+        title: const Text(
+          'How many did you really do?',
+          style: TextStyle(color: Colors.white, fontSize: 18),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Your own count, not the app\u2019s. It is what the counter '
+              'gets measured against later.',
+              style: TextStyle(color: _dim, fontSize: 12.5),
+            ),
+            const SizedBox(height: 14),
+            TextField(
+              controller: field,
+              autofocus: true,
+              keyboardType: TextInputType.number,
+              style: const TextStyle(color: Colors.white, fontSize: 20),
+              decoration: const InputDecoration(hintText: 'e.g. 12'),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Skip', style: TextStyle(color: _dim)),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context)
+                .pop(int.tryParse(field.text.trim())),
+            child: const Text('Save', style: TextStyle(color: _accent)),
+          ),
+        ],
+      ),
+    );
+    field.dispose();
+    return answer;
+  }
+
   Future<void> _saveRecording() async {
     if (_recorded.length < 30) return;
+    final trueCount = await _askTrueCount();
+    if (!mounted) return;
     try {
       final path = await PoseRecording(
         exerciseId: _exercise.id,
         frames: List.of(_recorded),
+        note: trueCount?.toString(),
       ).save();
       if (mounted) setState(() => _savedTo = path);
     } on Object catch (error) {

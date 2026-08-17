@@ -75,6 +75,12 @@ int countOf(PoseRecording recording) {
   return engine.reps;
 }
 
+/// The count the lifter reported when they finished the set.
+String? noteOf(File file) {
+  final json = jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
+  return json['note'] as String?;
+}
+
 void main() {
   test('the counter is measured against sets that were actually performed', () {
     final dir = Directory(_folder);
@@ -98,7 +104,9 @@ void main() {
       final name = file.uri.pathSegments.last;
       if (!name.endsWith('.json') || name == 'truth.json') continue;
 
-      final expected = truth[name];
+      // The app writes the real count into the recording itself now; the
+      // truth file stays as a fallback for anything recorded before that.
+      final expected = int.tryParse(noteOf(file) ?? '') ?? truth[name];
       if (expected is! int) {
         // ignore: avoid_print
         print('skipping $name — no true count in truth.json');
