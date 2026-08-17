@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../reps/exercise.dart';
 import '../reps/pose.dart';
+import '../reps/driver_finder.dart';
 import '../reps/pose_source.dart';
 import '../reps/recording.dart';
 import '../reps/rep_engine.dart';
@@ -25,7 +26,20 @@ class TrainerScreen extends StatefulWidget {
   State<TrainerScreen> createState() => _TrainerScreenState();
 }
 
-enum _Stage { setup, counting }
+enum _Stage { setup, learning, counting }
+
+/// Stands in for an exercise the app has never been told about. Picking it
+/// starts a session that works out the movement from the lifter's own reps.
+const kLearnExercise = ExerciseDef(
+  id: 'learn',
+  name: 'Any exercise',
+  icon: Icons.auto_awesome,
+  driver: AngleSpec(Joint.leftShoulder, Joint.leftElbow, Joint.leftWrist),
+  bottomAngle: 90,
+  topAngle: 165,
+  gates: [],
+  cue: 'Start your set — it works the movement out as you go',
+);
 
 class _TrainerScreenState extends State<TrainerScreen> {
   late ExerciseDef _exercise = widget.exercise ?? kExercises.first;
@@ -93,7 +107,8 @@ class _TrainerScreenState extends State<TrainerScreen> {
     setState(() {
       _source = source;
       _engine = engine;
-      _stage = _Stage.counting;
+      _stage =
+          _exercise.id == 'learn' ? _Stage.learning : _Stage.counting;
       _error = null;
     });
   }
@@ -104,11 +119,44 @@ class _TrainerScreenState extends State<TrainerScreen> {
 
     _recorded.add(RecordedFrame(_clock.elapsedMilliseconds, pose));
 
+    if (_stage == _Stage.learning) {
+      _tryToLearn();
+      setState(() => _pose = pose);
+      return;
+    }
+
     final state = engine.update(pose, _clock.elapsed);
 
     setState(() {
       _pose = pose;
       _state = state;
+    });
+  }
+
+  /// Looks for the movement every so often rather than on every frame; the
+  /// search walks the whole buffer and there is nothing to gain from running
+  /// it thirty times a second.
+  void _tryToLearn() {
+    if (_recorded.length % 15 != 0) return;
+
+    final guess = findDriver([for (final f in _recorded) f.pose]);
+    if (guess == null) return;
+
+    final learned = guess.toDefinition(id: 'learn', name: _exercise.name);
+    final engine = RepEngine(learned);
+
+    // Replay everything already buffered, so the reps performed while it was
+    // working the movement out are counted rather than thrown away. The
+    // counter visibly catches up instead of starting from zero.
+    RepState? state;
+    for (final frame in _recorded) {
+      state = engine.update(frame.pose, Duration(milliseconds: frame.atMs));
+    }
+
+    setState(() {
+      _engine = engine;
+      _state = state;
+      _stage = _Stage.counting;
     });
   }
 
@@ -207,7 +255,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
           ),
         ),
         const SizedBox(height: 16),
-        for (final e in kExercises)
+        for (final e in [...kExercises, kLearnExercise])
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: _ExerciseTile(
@@ -306,6 +354,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
             exercise: _exercise,
             state: state,
             holdSeconds: engine.holdSeconds,
+            stage: _stage,
             demo: !live,
             onStop: _stop,
             onRevealNumbers: () =>
@@ -541,6 +590,7 @@ class _Readout extends StatelessWidget {
     required this.exercise,
     required this.state,
     required this.holdSeconds,
+    required this.stage,
     required this.demo,
     required this.onStop,
     required this.onRevealNumbers,
@@ -549,6 +599,7 @@ class _Readout extends StatelessWidget {
   final ExerciseDef exercise;
   final RepState? state;
   final double holdSeconds;
+  final _Stage stage;
   final bool demo;
   final VoidCallback onStop;
   final VoidCallback onRevealNumbers;
@@ -559,8 +610,11 @@ class _Readout extends StatelessWidget {
     final hold = exercise.mode == ScoreMode.hold;
     final value = hold ? holdSeconds.toStringAsFixed(1) : '${s?.reps ?? 0}';
 
-    final message = s?.formMessage ?? s?.rejection?.message;
-    final bad = message != null;
+    final learning = stage == _Stage.learning;
+    final message = learning
+        ? 'Learning your movement — your reps appear in a moment'
+        : (s?.formMessage ?? s?.rejection?.message);
+    final bad = !learning && message != null;
 
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 18, 20, 28),
