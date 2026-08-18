@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../data.dart';
 import '../profile_avatar.dart';
+import '../rewards.dart';
 import '../settings.dart';
 import '../theme.dart';
 import '../widgets.dart';
-import 'achievements.dart';
+import 'awards.dart';
 import 'avatar_picker.dart';
 import 'settings.dart';
 
@@ -80,6 +81,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   fontWeight: FontWeight.w800,
                 ),
               ),
+              if (rewards.worn case final title?) ...[
+                const SizedBox(height: 8),
+                TitleChip(title: title),
+              ],
               const SizedBox(height: 4),
               Text(
                 tierLabel(p.tierIdx, p.divIdx),
@@ -166,7 +171,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Panel(
             padding: EdgeInsets.zero,
             onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const AchievementsScreen()),
+              MaterialPageRoute(builder: (_) => const AwardsScreen()),
             ),
             child: ListTile(
               contentPadding:
@@ -180,7 +185,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               subtitle: Text(
-                '${demoAchievements.where((a) => a.earned).length} of ${demoAchievements.length} unlocked',
+                '${kTitles.where((t) => rewards.has(t.id)).length} of ${kTitles.length} titles · ${rewards.streak} day streak',
                 style: TextStyle(color: context.colors.muted, fontSize: 13),
               ),
               trailing: Icon(Icons.chevron_right, color: context.colors.muted),

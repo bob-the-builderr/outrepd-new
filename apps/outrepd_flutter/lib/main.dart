@@ -3,9 +3,11 @@ import 'package:flutter/services.dart';
 
 import 'avatar.dart';
 import 'data.dart';
+import 'rewards.dart';
 import 'screens/onboarding.dart';
 import 'screens/crew.dart';
 import 'screens/crew_create.dart';
+import 'screens/awards.dart';
 import 'screens/roadmap.dart';
 import 'screens/settings.dart';
 import 'screens/shell.dart';
@@ -28,6 +30,12 @@ void main() async {
     await settings.load();
     await loadProfileStats();
     await avatar.load();
+    await rewards.load();
+    await rewards.syncWithProfile(
+      matches: demoProfile.totalMatches,
+      wins: demoProfile.bestStreak,
+      reps: demoProfile.totalVolumeKg ~/ 60,
+    );
   } on Object catch (error, stack) {
     debugPrint('Could not read saved settings: $error\n$stack');
   }
@@ -110,6 +118,7 @@ class _OutrepdAppState extends State<OutrepdApp> with WidgetsBindingObserver {
           return const CrewScreen(initialTab: 1);
         },
         '/crewnew': (_) => const CreateCrewScreen(),
+        '/awards': (_) => const AwardsScreen(),
         '/settings': (_) => const SettingsScreen(),
         '/trainer': (_) => const TrainerScreen(),
         '/counter': (_) => const TrainerScreen(autoStart: true),
