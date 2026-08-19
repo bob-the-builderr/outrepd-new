@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import '../crew_options.dart';
 import '../data.dart';
 import '../profile_avatar.dart';
+import '../motion.dart';
+import '../l10n/app_localizations.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'crew_create.dart';
@@ -43,7 +45,7 @@ class _CrewScreenState extends State<CrewScreen>
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Crew'),
+        title: Text(L.of(context).crew),
         // The tabs only mean anything once there is a crew to switch away
         // from, so someone with none sees a single, undivided screen.
         bottom: crew == null
@@ -57,9 +59,9 @@ class _CrewScreenState extends State<CrewScreen>
                   fontWeight: FontWeight.w700,
                   fontSize: 14,
                 ),
-                tabs: const [
-                  Tab(text: 'My crew'),
-                  Tab(text: 'Rankings'),
+                tabs: [
+                  Tab(text: L.of(context).myCrew),
+                  Tab(text: L.of(context).rankings),
                 ],
               ),
       ),
@@ -94,7 +96,7 @@ class _NoCrewView extends StatelessWidget {
               Icon(Icons.groups_2, color: context.colors.brand, size: 46),
               const SizedBox(height: 14),
               Text(
-                'Train with a crew',
+                L.of(context).trainWithCrew,
                 style: TextStyle(
                   color: context.colors.text,
                   fontSize: 19,
@@ -103,16 +105,15 @@ class _NoCrewView extends StatelessWidget {
               ),
               const SizedBox(height: 6),
               Text(
-                'Up to 20 lifters under one name, chasing a weekly target '
-                'together and climbing the crew table.',
+                L.of(context).trainWithCrewHint,
                 textAlign: TextAlign.center,
                 style: TextStyle(color: context.colors.muted, fontSize: 13),
               ),
               const SizedBox(height: 22),
               _WayIn(
                 icon: Icons.add_circle_outline,
-                title: 'Create a crew',
-                subtitle: 'Name it, pick a badge, invite your people',
+                title: L.of(context).createCrew,
+                subtitle: L.of(context).createCrewHint,
                 primary: true,
                 onTap: () async {
                   final created = await Navigator.of(context).push<bool>(
@@ -126,30 +127,30 @@ class _NoCrewView extends StatelessWidget {
               const SizedBox(height: 10),
               _WayIn(
                 icon: Icons.public,
-                title: 'Join an open crew',
-                subtitle: 'Crews anyone can walk into',
+                title: L.of(context).joinOpenCrew,
+                subtitle: L.of(context).joinOpenCrewHint,
                 onTap: () => _showOpenCrewsSheet(context, onChanged),
               ),
               const SizedBox(height: 10),
               _WayIn(
                 icon: Icons.mail_outline,
-                title: 'Your invites',
-                subtitle: 'Crews that asked for you',
+                title: L.of(context).yourInvites,
+                subtitle: L.of(context).yourInvitesHint,
                 badge: demoInvites.length,
                 onTap: () => _showInvitesSheet(context, onChanged),
               ),
               const SizedBox(height: 10),
               _WayIn(
                 icon: Icons.tag,
-                title: 'Join with a code',
-                subtitle: 'Six characters from a member',
+                title: L.of(context).joinWithCode,
+                subtitle: L.of(context).joinWithCodeHint,
                 onTap: () => _showJoinSheet(context, onChanged),
               ),
             ],
           ),
         ),
         const SizedBox(height: 24),
-        const SectionHeader(title: 'Top crews this week'),
+        SectionHeader(title: L.of(context).topCrewsThisWeek),
         for (final ranked in rankedCrews(null).take(5))
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
@@ -294,18 +295,18 @@ class _CrewTab extends StatelessWidget {
                 children: [
                   Expanded(
                     child: _Stat(
-                      label: 'Members',
+                      label: L.of(context).members,
                       value: '${crew.members.length}/${MyCrew.maxMembers}',
                     ),
                   ),
                   Expanded(
                     child: _Stat(
-                      label: 'Reps each',
+                      label: L.of(context).repsEach,
                       value: '${crew.repsPerMember}',
                     ),
                   ),
                   Expanded(
-                    child: _Stat(label: 'Rank', value: '#$place'),
+                    child: _Stat(label: L.of(context).rank, value: '#$place'),
                   ),
                 ],
               ),
@@ -318,9 +319,9 @@ class _CrewTab extends StatelessWidget {
         _CrewWarCard(crew: crew),
         const SizedBox(height: 22),
         SectionHeader(
-          title: 'Who is pulling',
+          title: L.of(context).whoIsPulling,
           trailing: Text(
-            'this week',
+            L.of(context).thisWeek,
             style: TextStyle(color: context.colors.muted, fontSize: 13),
           ),
         ),
@@ -329,9 +330,9 @@ class _CrewTab extends StatelessWidget {
         // The whole roster, not only the ones putting numbers up. Somebody
         // joining wants to see who they have joined.
         SectionHeader(
-          title: 'Members',
+          title: L.of(context).members,
           trailing: Text(
-            '${crew.members.length} of ${MyCrew.maxMembers}',
+            L.of(context).xOfY(crew.members.length, MyCrew.maxMembers),
             style: TextStyle(color: context.colors.muted, fontSize: 13),
           ),
         ),
@@ -356,9 +357,9 @@ class _CrewTab extends StatelessWidget {
             onChanged();
           },
           icon: const Icon(Icons.logout, size: 18, color: AppColors.loss),
-          label: const Text(
-            'Leave crew',
-            style: TextStyle(color: AppColors.loss),
+          label: Text(
+            L.of(context).leaveCrew,
+            style: const TextStyle(color: AppColors.loss),
           ),
         ),
       ],
@@ -393,7 +394,7 @@ class _WeeklyGoalCard extends StatelessWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
-                  done ? 'Weekly goal smashed' : 'Weekly goal',
+                  done ? L.of(context).weeklyGoalDone : L.of(context).weeklyGoal,
                   style: TextStyle(
                     color: context.colors.text,
                     fontSize: 15,
@@ -412,22 +413,17 @@ class _WeeklyGoalCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 14),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: LinearProgressIndicator(
-              value: progress,
-              minHeight: 10,
-              backgroundColor: context.colors.surfaceRaised,
-              valueColor: AlwaysStoppedAnimation(
-                done ? AppColors.gold : context.colors.brand,
-              ),
-            ),
+          GrowingBar(
+            value: progress,
+            height: 10,
+            colour: done ? AppColors.gold : context.colors.brand,
+            background: context.colors.surfaceRaised,
           ),
           const SizedBox(height: 10),
           Text(
             done
-                ? 'Everyone gets the badge when the week closes.'
-                : '$left reps to go · ${daysLeftInWeek()} days left',
+                ? L.of(context).goalDoneHint
+                : L.of(context).goalRemaining(left, daysLeftInWeek()),
             style: TextStyle(color: context.colors.muted, fontSize: 12),
           ),
         ],
@@ -465,7 +461,7 @@ class _CrewWarCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Start a crew war',
+                  L.of(context).startCrewWar,
                   style: TextStyle(
                     color: context.colors.text,
                     fontSize: 15,
@@ -474,7 +470,7 @@ class _CrewWarCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'Seven days, both crews counting. Most reps each wins.',
+                  L.of(context).startCrewWarHint,
                   style: TextStyle(color: context.colors.muted, fontSize: 11.5),
                 ),
               ],
@@ -570,18 +566,14 @@ class _Contributions extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 6),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(6),
-                          child: LinearProgressIndicator(
-                            value: member.weeklyReps / best,
-                            minHeight: 6,
-                            backgroundColor: context.colors.surfaceRaised,
-                            valueColor: AlwaysStoppedAnimation(
-                              member.weeklyReps == 0
-                                  ? AppColors.loss
-                                  : context.colors.brand,
-                            ),
-                          ),
+                        GrowingBar(
+                          value: member.weeklyReps / best,
+                          height: 6,
+                          radius: 6,
+                          colour: member.weeklyReps == 0
+                              ? AppColors.loss
+                              : context.colors.brand,
+                          background: context.colors.surfaceRaised,
                         ),
                       ],
                     ),
@@ -635,7 +627,7 @@ class _MemberRow extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  tierLabel(member.tierIdx, member.divIdx),
+                  tierLabel(L.of(context), member.tierIdx, member.divIdx),
                   style: TextStyle(color: context.colors.muted, fontSize: 11.5),
                 ),
               ],
@@ -648,9 +640,9 @@ class _MemberRow extends StatelessWidget {
                 color: AppColors.gold.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: const Text(
-                'Owner',
-                style: TextStyle(
+              child: Text(
+                L.of(context).owner,
+                style: const TextStyle(
                   color: AppColors.gold,
                   fontSize: 10.5,
                   fontWeight: FontWeight.w700,
@@ -687,7 +679,7 @@ class _RankingsTab extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Season ${seasonName()}',
+                      L.of(context).season(seasonName()),
                       style: TextStyle(
                         color: context.colors.text,
                         fontSize: 14.5,
@@ -698,7 +690,7 @@ class _RankingsTab extends StatelessWidget {
                     Text(
                       // Without a reset the first crew to the top stays there
                       // and nobody new has a reason to try.
-                      'Resets in ${daysLeftInSeason()} days — everyone starts level',
+                      L.of(context).seasonResets(daysLeftInSeason()),
                       style:
                           TextStyle(color: context.colors.muted, fontSize: 11.5),
                     ),
@@ -710,9 +702,9 @@ class _RankingsTab extends StatelessWidget {
         ),
         const SizedBox(height: 18),
         SectionHeader(
-          title: 'Crew table',
+          title: L.of(context).crewTable,
           trailing: Text(
-            'reps per member',
+            L.of(context).repsPerMember,
             style: TextStyle(color: context.colors.muted, fontSize: 12),
           ),
         ),
@@ -723,8 +715,7 @@ class _RankingsTab extends StatelessWidget {
           ),
         const SizedBox(height: 8),
         Text(
-          'Crews are ranked on reps per member, not the total — otherwise the '
-          'biggest crew wins by size alone.',
+          L.of(context).rankingExplained,
           style: TextStyle(color: context.colors.muted, fontSize: 11.5),
         ),
       ],
@@ -898,8 +889,8 @@ class _RankRow extends StatelessWidget {
 Future<void> _showOpenCrewsSheet(BuildContext context, VoidCallback onChanged) {
   return _sheet(
     context,
-    title: 'Open crews',
-    subtitle: 'These let anyone in. Pick one and you are in straight away.',
+    title: L.of(context).openCrews,
+    subtitle: L.of(context).openCrewsHint,
     child: Column(
       children: [
         for (final c in demoCrews.take(4))
@@ -943,8 +934,8 @@ Future<void> _showOpenCrewsSheet(BuildContext context, VoidCallback onChanged) {
 Future<void> _showInvitesSheet(BuildContext context, VoidCallback onChanged) {
   return _sheet(
     context,
-    title: 'Your invites',
-    subtitle: 'Crews that asked for you by name.',
+    title: L.of(context).yourInvites,
+    subtitle: L.of(context).yourInvitesSubtitle,
     child: Column(
       children: [
         for (final invite in demoInvites)
@@ -992,7 +983,7 @@ Future<void> _showInvitesSheet(BuildContext context, VoidCallback onChanged) {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    child: const Text('Accept'),
+                    child: Text(L.of(context).accept),
                   ),
                 ],
               ),
@@ -1006,9 +997,8 @@ Future<void> _showInvitesSheet(BuildContext context, VoidCallback onChanged) {
 Future<void> _showWarSheet(BuildContext context, MyCrew crew) {
   return _sheet(
     context,
-    title: 'Pick your opponent',
-    subtitle: 'Seven days from acceptance. Reps per member decides it, so a '
-        'bigger crew is no advantage.',
+    title: L.of(context).pickOpponent,
+    subtitle: L.of(context).startCrewWarHint,
     child: Column(
       children: [
         for (final c in demoCrews.take(4))
@@ -1018,7 +1008,7 @@ Future<void> _showWarSheet(BuildContext context, MyCrew crew) {
               onTap: () {
                 Navigator.of(context).pop();
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Challenge sent to ${c.name}')),
+                  SnackBar(content: Text(L.of(context).challengeSent(c.name))),
                 );
               },
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
@@ -1055,8 +1045,8 @@ Future<void> _showJoinSheet(BuildContext context, VoidCallback onChanged) {
 
   return _sheet(
     context,
-    title: 'Join with a code',
-    subtitle: 'Paste the six characters a member sent you.',
+    title: L.of(context).joinWithCode,
+    subtitle: L.of(context).joinWithCodePaste,
     child: StatefulBuilder(
       builder: (sheetContext, _) => Column(
         children: [
@@ -1089,8 +1079,8 @@ Future<void> _showJoinSheet(BuildContext context, VoidCallback onChanged) {
                 final code = controller.text.trim().toUpperCase();
                 if (code.length != 6) {
                   ScaffoldMessenger.of(sheetContext).showSnackBar(
-                    const SnackBar(
-                      content: Text('Enter the 6-character code'),
+                    SnackBar(
+                      content: Text(L.of(context).enterTheCode),
                     ),
                   );
                   return;
@@ -1102,7 +1092,7 @@ Future<void> _showJoinSheet(BuildContext context, VoidCallback onChanged) {
               style: FilledButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 15),
               ),
-              child: const Text('Join'),
+              child: Text(L.of(context).join),
             ),
           ),
         ],
@@ -1191,7 +1181,7 @@ class _InviteCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Invite lifters',
+            L.of(context).inviteLifters,
             style: TextStyle(
               color: context.colors.text,
               fontSize: 15,
@@ -1199,9 +1189,12 @@ class _InviteCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          _CopyRow(label: 'Referral code', value: crew.inviteCode, mono: true),
+          _CopyRow(
+              label: L.of(context).referralCode,
+              value: crew.inviteCode,
+              mono: true),
           const SizedBox(height: 10),
-          _CopyRow(label: 'Invite link', value: crew.inviteLink),
+          _CopyRow(label: L.of(context).inviteLink, value: crew.inviteLink),
         ],
       ),
     );

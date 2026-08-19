@@ -3,6 +3,8 @@ import 'dart:ui' show ImageFilter;
 import 'package:flutter/material.dart';
 
 import '../data.dart';
+import '../motion.dart';
+import '../l10n/app_localizations.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'match_entry.dart';
@@ -26,7 +28,7 @@ class MatchScreen extends StatelessWidget {
         title: const Text('OUTREPD'),
         actions: [
           IconButton(
-            tooltip: 'Match history',
+            tooltip: L.of(context).matchHistory,
             icon: const Icon(Icons.history),
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const MatchHistoryScreen()),
@@ -124,7 +126,7 @@ class _RankCard extends StatelessWidget {
                   blur: 9,
                   opacity: 0.65,
                 ),
-                  TierBadge(tierIdx: p.tierIdx, size: badge),
+                  Breathe(child: TierBadge(tierIdx: p.tierIdx, size: badge)),
                 ],
               ),
             ),
@@ -150,7 +152,7 @@ class _RankCard extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          'View Roadmap',
+                          L.of(context).viewRoadmap,
                           style: TextStyle(
                             color: context.colors.brand.withValues(alpha: 0.9),
                             fontSize: 11.5,
@@ -170,7 +172,7 @@ class _RankCard extends StatelessWidget {
                 // between the cue and the LP bar.
                 const SizedBox(height: 10),
                 Text(
-                  tierLabel(p.tierIdx, p.divIdx),
+                  tierLabel(L.of(context), p.tierIdx, p.divIdx),
                   style: TextStyle(
                     color: context.colors.text,
                     fontSize: 24,
@@ -181,18 +183,14 @@ class _RankCard extends StatelessWidget {
               ],
             ),
           ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: LinearProgressIndicator(
-              value: (p.lp / 100).clamp(0.0, 1.0),
-              minHeight: 8,
-              backgroundColor: context.colors.surfaceRaised,
-              valueColor: AlwaysStoppedAnimation(context.colors.brand),
-            ),
+          GrowingBar(
+            value: p.lp / 100,
+            colour: context.colors.brand,
+            background: context.colors.surfaceRaised,
           ),
           const SizedBox(height: 8),
           Text(
-            '${p.lp} / 100 LP · ${100 - p.lp} to promotion',
+            L.of(context).lpProgress(p.lp, 100 - p.lp),
             style: TextStyle(color: context.colors.muted, fontSize: 11.5),
           ),
           if (p.winStreak > 0) ...[
@@ -210,7 +208,7 @@ class _RankCard extends StatelessWidget {
                       color: AppColors.win, size: 16),
                   const SizedBox(width: 6),
                   Text(
-                    '${p.winStreak} win streak',
+                    L.of(context).winStreak(p.winStreak),
                     style: const TextStyle(
                       color: AppColors.win,
                       fontWeight: FontWeight.w700,
@@ -281,21 +279,21 @@ class _StartMatchActions extends StatelessWidget {
       children: [
         _PrimaryAction(
           icon: Icons.search,
-          label: 'Search for opponent',
-          caption: 'Get matched with a lifter at your rank',
+          label: L.of(context).searchOpponent,
+          caption: L.of(context).searchOpponentHint,
           onTap: () => pickMuscle(context, mode: MatchMode.ranked),
         ),
         const SizedBox(height: 12),
         // Crews have their own tab now, so this row is just the friend route.
         _SecondaryAction(
           icon: Icons.person_add_alt_1,
-          label: 'Challenge a friend',
+          label: L.of(context).challengeFriend,
           onTap: () => showFriendRoomSheet(context),
         ),
         const SizedBox(height: 12),
         _SecondaryAction(
           icon: Icons.videocam_outlined,
-          label: 'Train with the camera',
+          label: L.of(context).trainWithCamera,
           onTap: () => Navigator.of(context).push(
             MaterialPageRoute(builder: (_) => const TrainerScreen()),
           ),

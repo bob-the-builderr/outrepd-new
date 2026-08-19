@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
 import '../theme.dart';
 import 'onboarding.dart';
 import 'shell.dart';
@@ -35,7 +36,7 @@ class WelcomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                "Don't get outrepd!",
+                L.of(context).dontGetOutrepd,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -48,14 +49,14 @@ class WelcomeScreen extends StatelessWidget {
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => const OnboardingScreen()),
                 ),
-                child: const Text('Get Started'),
+                child: Text(L.of(context).getStarted),
               ),
               const SizedBox(height: 16),
               OutlinedButton(
                 onPressed: () => Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (_) => const AppShell()),
                 ),
-                child: const Text('Skip to the app'),
+                child: Text(L.of(context).skipToApp),
               ),
               const SizedBox(height: 24),
             ],

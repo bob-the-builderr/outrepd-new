@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../data.dart';
 import '../exercises.dart';
+import '../l10n/app_localizations.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -412,7 +413,7 @@ class _VersusView extends StatelessWidget {
               child: _Fighter(
                 name: 'YOU',
                 tierIdx: p.tierIdx,
-                subtitle: tierLabel(p.tierIdx, p.divIdx),
+                subtitle: tierLabel(L.of(context), p.tierIdx, p.divIdx),
               ),
             ),
             Text(
@@ -428,7 +429,8 @@ class _VersusView extends StatelessWidget {
                 name: opponent.username.toUpperCase(),
                 tierIdx: opponent.tierIdx,
                 subtitle:
-                    tierLabel(opponent.tierIdx, opponent.divIdx),
+                    tierLabel(
+                        L.of(context), opponent.tierIdx, opponent.divIdx),
               ),
             ),
           ],

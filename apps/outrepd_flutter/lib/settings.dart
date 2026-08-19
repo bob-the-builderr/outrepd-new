@@ -5,48 +5,109 @@ library;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'l10n/app_localizations.dart';
+
 enum WeightUnit { kg, lb }
 
 enum HeightUnit { cm, ft }
 
 enum ProfileVisibility { everyone, friends, nobody }
 
-enum AppLanguage { english, arabic }
+/// The languages the app ships in. Following the device is the default: most
+/// people never open a language picker, and a phone already knows.
+enum AppLanguage {
+  system,
+  english,
+  arabic,
+  spanish,
+  french,
+  german,
+  portuguese,
+  italian,
+  russian,
+  turkish,
+  indonesian,
+  hindi,
+  japanese,
+  korean,
+  chinese,
+}
 
+// Even the abbreviations are translated: "kg" is كجم in Arabic, 公斤 in
+// Chinese, किग्रा in Hindi. Leaving them in Latin script is the kind of detail
+// that makes a translated app feel half-done.
 extension WeightUnitLabel on WeightUnit {
-  String get label => this == WeightUnit.kg ? 'Kilograms (kg)' : 'Pounds (lb)';
-  String get short => this == WeightUnit.kg ? 'kg' : 'lb';
+  String label(L l) => this == WeightUnit.kg ? l.unitKg : l.unitLb;
+  String short(L l) => this == WeightUnit.kg ? l.shortKg : l.shortLb;
 }
 
 extension HeightUnitLabel on HeightUnit {
-  String get label =>
-      this == HeightUnit.cm ? 'Centimetres (cm)' : 'Feet & inches';
-  String get short => this == HeightUnit.cm ? 'cm' : 'ft';
+  String label(L l) => this == HeightUnit.cm ? l.unitCm : l.unitFt;
+  String short(L l) => this == HeightUnit.cm ? l.shortCm : l.shortFt;
 }
 
 extension ProfileVisibilityLabel on ProfileVisibility {
-  String get label => switch (this) {
-        ProfileVisibility.everyone => 'Everyone',
-        ProfileVisibility.friends => 'Friends only',
-        ProfileVisibility.nobody => 'Nobody',
+  String label(L l) => switch (this) {
+        ProfileVisibility.everyone => l.visEveryone,
+        ProfileVisibility.friends => l.visFriends,
+        ProfileVisibility.nobody => l.visNobody,
       };
 
-  String get description => switch (this) {
-        ProfileVisibility.everyone => 'Anyone can open your profile',
-        ProfileVisibility.friends => 'Only lifters you have added',
-        ProfileVisibility.nobody => 'Your profile stays private',
+  String description(L l) => switch (this) {
+        ProfileVisibility.everyone => l.visEveryoneHint,
+        ProfileVisibility.friends => l.visFriendsHint,
+        ProfileVisibility.nobody => l.visNobodyHint,
       };
 }
 
 extension AppLanguageLabel on AppLanguage {
-  String get label => this == AppLanguage.english ? 'English' : 'العربية';
+  /// Each language names itself. Somebody looking for their own language
+  /// scans for the word they recognise, not for its English translation.
+  /// "Match device" is the exception — it names a setting, not a language, so
+  /// it is read in whatever the app is currently speaking.
+  String label(L l) => switch (this) {
+        AppLanguage.system => l.themeSystem,
+        AppLanguage.english => 'English',
+        AppLanguage.arabic => 'العربية',
+        AppLanguage.spanish => 'Español',
+        AppLanguage.french => 'Français',
+        AppLanguage.german => 'Deutsch',
+        AppLanguage.portuguese => 'Português',
+        AppLanguage.italian => 'Italiano',
+        AppLanguage.russian => 'Русский',
+        AppLanguage.turkish => 'Türkçe',
+        AppLanguage.indonesian => 'Bahasa Indonesia',
+        AppLanguage.hindi => 'हिन्दी',
+        AppLanguage.japanese => '日本語',
+        AppLanguage.korean => '한국어',
+        AppLanguage.chinese => '中文',
+      };
+
+  /// Null follows the device.
+  Locale? get locale => switch (this) {
+        AppLanguage.system => null,
+        AppLanguage.english => const Locale('en'),
+        AppLanguage.arabic => const Locale('ar'),
+        AppLanguage.spanish => const Locale('es'),
+        AppLanguage.french => const Locale('fr'),
+        AppLanguage.german => const Locale('de'),
+        AppLanguage.portuguese => const Locale('pt'),
+        AppLanguage.italian => const Locale('it'),
+        AppLanguage.russian => const Locale('ru'),
+        AppLanguage.turkish => const Locale('tr'),
+        AppLanguage.indonesian => const Locale('id'),
+        AppLanguage.hindi => const Locale('hi'),
+        AppLanguage.japanese => const Locale('ja'),
+        AppLanguage.korean => const Locale('ko'),
+        AppLanguage.chinese => const Locale('zh'),
+      };
 }
 
 extension ThemeModeLabel on ThemeMode {
-  String get label => switch (this) {
-        ThemeMode.system => 'Match device',
-        ThemeMode.light => 'Light',
-        ThemeMode.dark => 'Dark',
+  String label(L l) => switch (this) {
+        ThemeMode.system => l.themeSystem,
+        ThemeMode.light => l.themeLight,
+        ThemeMode.dark => l.themeDark,
       };
 
   IconData get icon => switch (this) {
@@ -59,7 +120,7 @@ extension ThemeModeLabel on ThemeMode {
 class AppSettings extends ChangeNotifier {
   // Appearance
   ThemeMode themeMode = ThemeMode.dark;
-  AppLanguage language = AppLanguage.english;
+  AppLanguage language = AppLanguage.system;
 
   // Units
   WeightUnit weightUnit = WeightUnit.kg;
@@ -169,12 +230,12 @@ class AppSettings extends ChangeNotifier {
 final settings = AppSettings();
 
 /// Body weight in the unit the user picked, rounded — nobody needs grams.
-String formatBodyWeight(int kg) => settings.weightUnit == WeightUnit.kg
-    ? '$kg kg'
-    : '${(kg * 2.20462).round()} lb';
+String formatBodyWeight(L l, int kg) => settings.weightUnit == WeightUnit.kg
+    ? '$kg ${l.shortKg}'
+    : '${(kg * 2.20462).round()} ${l.shortLb}';
 
-String formatHeight(int cm) {
-  if (settings.heightUnit == HeightUnit.cm) return '$cm cm';
+String formatHeight(L l, int cm) {
+  if (settings.heightUnit == HeightUnit.cm) return '$cm ${l.shortCm}';
   final totalInches = cm / 2.54;
   final feet = totalInches ~/ 12;
   final inches = (totalInches % 12).round();

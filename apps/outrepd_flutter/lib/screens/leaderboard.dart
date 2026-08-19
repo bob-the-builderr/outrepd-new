@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data.dart';
 import '../profile_avatar.dart';
+import '../l10n/app_localizations.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -22,15 +23,16 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
         : demoLeaderboard.where((e) => e.tierIdx <= 4).toList();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Leaderboard')),
+      appBar: AppBar(title: Text(L.of(context).leaderboard)),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
             child: SegmentedButton<bool>(
-              segments: const [
-                ButtonSegment(value: true, label: Text('Global')),
-                ButtonSegment(value: false, label: Text('My country')),
+              segments: [
+                ButtonSegment(value: true, label: Text(L.of(context).global)),
+                ButtonSegment(
+                    value: false, label: Text(L.of(context).myCountry)),
               ],
               selected: {_global},
               onSelectionChanged: (s) => setState(() => _global = s.first),
@@ -100,7 +102,8 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              '${tierLabel(e.tierIdx, e.divIdx)} · ${e.wins}W ${e.losses}L',
+                              '${tierLabel(L.of(context), e.tierIdx, e.divIdx)}'
+                              ' · ${L.of(context).winLoss(e.wins, e.losses)}',
                               style: TextStyle(
                                 color: context.colors.muted,
                                 fontSize: 12,

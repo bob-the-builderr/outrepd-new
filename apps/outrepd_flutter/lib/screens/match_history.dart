@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data.dart';
+import '../l10n/app_localizations.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -14,7 +15,7 @@ class MatchHistoryScreen extends StatelessWidget {
     final p = demoProfile;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Match history')),
+      appBar: AppBar(title: Text(L.of(context).matchHistory)),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
         children: [
@@ -25,21 +26,21 @@ class MatchHistoryScreen extends StatelessWidget {
                 Expanded(
                   child: _Tally(
                     value: '${p.wins}',
-                    label: 'Wins',
+                    label: L.of(context).wins,
                     color: AppColors.win,
                   ),
                 ),
                 Expanded(
                   child: _Tally(
                     value: '${p.losses}',
-                    label: 'Losses',
+                    label: L.of(context).losses,
                     color: AppColors.loss,
                   ),
                 ),
                 Expanded(
                   child: _Tally(
                     value: '${(p.winRate * 100).round()}%',
-                    label: 'Win rate',
+                    label: L.of(context).winRate,
                     color: context.colors.text,
                   ),
                 ),
@@ -47,7 +48,7 @@ class MatchHistoryScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 22),
-          const SectionHeader(title: 'All matches'),
+          SectionHeader(title: L.of(context).allMatches),
           ...demoMatches.map(
             (m) => Padding(
               padding: const EdgeInsets.only(bottom: 10),
@@ -139,7 +140,9 @@ class MatchRow extends StatelessWidget {
                 ),
                 const SizedBox(height: 3),
                 Text(
-                  '${formatVolume(m.userVolume)} · ${formatVolume(m.opponentVolume)} · ${relativeDays(m.daysAgo)}',
+                  '${formatVolume(L.of(context), m.userVolume)}'
+                  ' · ${formatVolume(L.of(context), m.opponentVolume)}'
+                  ' · ${relativeDays(m.daysAgo)}',
                   style: TextStyle(color: context.colors.muted, fontSize: 12),
                 ),
               ],

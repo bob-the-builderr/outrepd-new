@@ -4,6 +4,7 @@ import 'dart:ui' show ImageFilter, PathMetric;
 import 'package:flutter/material.dart';
 
 import '../data.dart';
+import '../l10n/app_localizations.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -62,7 +63,7 @@ class _RoadmapScreenState extends State<RoadmapScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Road to Legend'),
+        title: Text(L.of(context).roadTitle),
         backgroundColor: Colors.transparent,
       ),
       body: Stack(
@@ -86,7 +87,7 @@ class _RoadmapScreenState extends State<RoadmapScreen> {
                   controller: _controller,
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 28),
                   children: [
-                    const SectionHeader(title: 'All tiers'),
+                    SectionHeader(title: L.of(context).allTiers),
                     _RoadStrip(
                       currentTier: widget.profile.tierIdx,
                       currentDiv: widget.profile.divIdx,
@@ -192,7 +193,7 @@ class _NextStepCard extends StatelessWidget {
                     TierBadge(tierIdx: profile.tierIdx, size: 46),
                     const SizedBox(height: 6),
                     Text(
-                      tierLabel(profile.tierIdx, profile.divIdx),
+                      tierLabel(L.of(context), profile.tierIdx, profile.divIdx),
                       style: TextStyle(
                         color: context.colors.muted,
                         fontSize: 11,
@@ -218,7 +219,9 @@ class _NextStepCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        atTop ? 'Top tier' : '$remaining LP',
+                        atTop
+                            ? L.of(context).topTier
+                            : L.of(context).lpToGo(remaining),
                         style: TextStyle(
                           color: context.colors.brand,
                           fontSize: 11,
@@ -234,7 +237,7 @@ class _NextStepCard extends StatelessWidget {
                   TierBadge(tierIdx: nextTierIdx, size: 62),
                   const SizedBox(height: 6),
                   Text(
-                    tierLabel(nextTierIdx, nextDivIdx),
+                    tierLabel(L.of(context), nextTierIdx, nextDivIdx),
                     style: TextStyle(
                       color: context.colors.text,
                       fontSize: 12,
@@ -260,8 +263,9 @@ class _NextStepCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   atTopTier
-                      ? 'You have unlocked everything'
-                      : 'Unlocks at ${rewardTier.name}: ${rewardTier.reward}',
+                      ? L.of(context).unlockedEverything
+                      : '${L.of(context).unlocksAt(tierName(L.of(context), rewardTierIdx))}'
+                          ': ${tierReward(L.of(context), rewardTierIdx)}',
                   style: TextStyle(color: context.colors.text, fontSize: 12.5),
                 ),
               ),
@@ -539,7 +543,7 @@ class _RoadStop extends StatelessWidget {
                   marker,
                   const SizedBox(height: 1),
                   Text(
-                    tierLabel(tierIdx, divIdx),
+                    tierLabel(L.of(context), tierIdx, divIdx),
                     textAlign: TextAlign.center,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -582,7 +586,7 @@ class _RoadStop extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Text(
-                          tier.reward,
+                          tierReward(L.of(context), tierIdx),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(

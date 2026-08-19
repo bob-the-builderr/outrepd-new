@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
 import '../theme.dart';
 import 'friends.dart';
 import 'leaderboard.dart';
@@ -36,17 +37,20 @@ class _AppShellState extends State<AppShell> {
     ProfileScreen(),
   ];
 
-  static const _specs = <_TabSpec>[
-    _TabSpec('Friends', Icons.people_outline, Icons.people),
-    _TabSpec('Ranks', Icons.emoji_events_outlined, Icons.emoji_events),
-    _TabSpec('Match', Icons.sports_mma, Icons.sports_mma),
-    _TabSpec('Crew', Icons.groups_2_outlined, Icons.groups_2),
-    _TabSpec('Profile', Icons.person_outline, Icons.person),
-  ];
+  /// Rebuilt per frame rather than held const: the labels follow the chosen
+  /// language, which can change while the shell is on screen.
+  static List<_TabSpec> _specsFor(L l) => [
+        _TabSpec(l.tabFriends, Icons.people_outline, Icons.people),
+        _TabSpec(l.tabRanks, Icons.emoji_events_outlined, Icons.emoji_events),
+        _TabSpec(l.tabMatch, Icons.sports_mma, Icons.sports_mma),
+        _TabSpec(l.tabCrew, Icons.groups_2_outlined, Icons.groups_2),
+        _TabSpec(l.tabProfile, Icons.person_outline, Icons.person),
+      ];
 
   @override
   Widget build(BuildContext context) {
     final bottomInset = MediaQuery.of(context).padding.bottom;
+    final specs = _specsFor(L.of(context));
 
     return Scaffold(
       body: IndexedStack(index: _index, children: _tabs),
@@ -64,10 +68,10 @@ class _AppShellState extends State<AppShell> {
           ),
           child: Row(
             children: [
-              for (var i = 0; i < _specs.length; i++)
+              for (var i = 0; i < specs.length; i++)
                 Expanded(
                   child: _Tab(
-                    spec: _specs[i],
+                    spec: specs[i],
                     selected: _index == i,
                     primary: i == AppShell.matchTabIndex,
                     onTap: () => setState(() => _index = i),
@@ -135,14 +139,22 @@ class _Tab extends StatelessWidget {
           else
             Icon(selected ? spec.selectedIcon : spec.icon, color: color, size: 23),
           const SizedBox(height: 4),
-          Text(
-            spec.label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: primary ? context.colors.brand : color,
-              fontSize: 10.5,
-              fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+          // Five fixed-width tabs have to hold a word in fourteen languages.
+          // Shrinking a long one a point or two reads better than cutting it
+          // off mid-word, which is what an ellipsis does to "プロフィール".
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 3),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                spec.label,
+                maxLines: 1,
+                style: TextStyle(
+                  color: primary ? context.colors.brand : color,
+                  fontSize: 10.5,
+                  fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                ),
+              ),
             ),
           ),
         ],

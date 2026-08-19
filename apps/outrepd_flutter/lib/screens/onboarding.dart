@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
 import '../theme.dart';
 import 'shell.dart';
 import 'user_onboarding.dart';
@@ -7,36 +8,24 @@ import 'user_onboarding.dart';
 class _Slide {
   const _Slide(this.image, this.title, this.body);
   final String image;
-  final String title;
-  final String body;
+
+  /// Read out of the translations at build time, so the slides follow the
+  /// language the same way the rest of the app does.
+  final String Function(L) title;
+  final String Function(L) body;
 }
 
-const _slides = <_Slide>[
-  _Slide(
-    'assets/images/workout-battle.png',
-    'Turn every session\ninto a battle',
-    'Log your workout and go head to head with someone training the same muscle group.',
-  ),
-  _Slide(
-    'assets/images/challenge-friends.png',
-    'Challenge your\nfriends',
-    'Send a private invite and settle who really trains harder.',
-  ),
-  _Slide(
-    'assets/images/mountain.png',
-    'Climb the ranks',
-    'Every win earns LP. Push from Stone all the way to Legend.',
-  ),
-  _Slide(
-    'assets/images/effort-alone.png',
-    'Effort alone\nis hard',
-    'Training with no one watching makes it easy to cut the last set short.',
-  ),
-  _Slide(
-    'assets/images/legend.png',
-    'Become a\nLegend',
-    'Consistency compounds. Show up, out-lift, rank up.',
-  ),
+final _slides = <_Slide>[
+  _Slide('assets/images/workout-battle.png',
+      (l) => l.ob1Title, (l) => l.ob1Body),
+  _Slide('assets/images/challenge-friends.png',
+      (l) => l.ob2Title, (l) => l.ob2Body),
+  _Slide('assets/images/mountain.png',
+      (l) => l.ob3Title, (l) => l.ob3Body),
+  _Slide('assets/images/effort-alone.png',
+      (l) => l.ob4Title, (l) => l.ob4Body),
+  _Slide('assets/images/legend.png',
+      (l) => l.ob5Title, (l) => l.ob5Body),
 ];
 
 class OnboardingScreen extends StatefulWidget {
@@ -95,7 +84,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: TextButton(
                 onPressed: _skipAll,
                 child: Text(
-                  'Skip',
+                  L.of(context).skip,
                   style: TextStyle(color: context.colors.muted),
                 ),
               ),
@@ -119,7 +108,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                         const SizedBox(height: 32),
                         Text(
-                          slide.title,
+                          slide.title(L.of(context)),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 30,
@@ -130,7 +119,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          slide.body,
+                          slide.body(L.of(context)),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 16,
@@ -165,7 +154,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
               child: FilledButton(
                 onPressed: _next,
-                child: Text(isLast ? "Let's go" : 'Continue'),
+                child: Text(isLast
+                    ? L.of(context).letsGo
+                    : L.of(context).continueLabel),
               ),
             ),
           ],

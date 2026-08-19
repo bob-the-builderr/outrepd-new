@@ -39,6 +39,9 @@ dependencies:
   google_mlkit_pose_detection: ^0.15.0
   path_provider: ^2.1.6
   image_picker: ^1.2.3
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -60,6 +63,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  # Turns on the localisation code generator for lib/l10n/*.arb.
+  generate: true
 
   assets:
     - assets/images/

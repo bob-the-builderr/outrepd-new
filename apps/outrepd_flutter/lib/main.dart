@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'l10n/app_localizations.dart';
 
 import 'avatar.dart';
 import 'data.dart';
@@ -87,6 +90,17 @@ class _OutrepdAppState extends State<OutrepdApp> with WidgetsBindingObserver {
     return MaterialApp(
       title: 'OUTREPD',
       debugShowCheckedModeBanner: false,
+      // Null follows the phone. Flutter then picks the nearest language it has
+      // and falls back to English, and lays Arabic out right to left without
+      // anything here asking it to.
+      locale: settings.language.locale,
+      supportedLocales: L.supportedLocales,
+      localizationsDelegates: const [
+        L.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       theme: theme,
       builder: (context, child) => AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle(

@@ -1,0 +1,385 @@
+{
+  "@@locale": "en",
+  "tabFriends": "Friends",
+  "tabRanks": "Ranks",
+  "tabMatch": "Match",
+  "tabCrew": "Crew",
+  "tabProfile": "Profile",
+  "searchOpponent": "Search for opponent",
+  "searchOpponentHint": "Get matched with a lifter at your rank",
+  "challengeFriend": "Challenge a friend",
+  "trainWithCamera": "Train with the camera",
+  "viewRoadmap": "View Roadmap",
+  "lpProgress": "{lp} / 100 LP · {left} to promotion",
+  "@lpProgress": {
+    "placeholders": {
+      "lp": {
+        "type": "int"
+      },
+      "left": {
+        "type": "int"
+      }
+    }
+  },
+  "winStreak": "{count} win streak",
+  "@winStreak": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "matchHistory": "Match history",
+  "allMatches": "All matches",
+  "wins": "Wins",
+  "losses": "Losses",
+  "winRate": "Win rate",
+  "streak": "Streak",
+  "profile": "Profile",
+  "settings": "Settings",
+  "stats": "Stats",
+  "edit": "Edit",
+  "save": "Save",
+  "cancel": "Cancel",
+  "skip": "Skip",
+  "totalMatches": "Total matches",
+  "bestWinStreak": "Best win streak",
+  "totalVolume": "Total volume lifted",
+  "height": "Height",
+  "bodyweight": "Bodyweight",
+  "age": "Age",
+  "editYourStats": "Edit your stats",
+  "editStatsHint": "Wins, volume and rank are earned — they cannot be edited.",
+  "changeName": "Change your name",
+  "changeNameLast": "This is your last change. It cannot be undone.",
+  "changeNameLeft": "You get {total} changes in total. {left} left after this one.",
+  "@changeNameLeft": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      },
+      "left": {
+        "type": "int"
+      }
+    }
+  },
+  "changeNameUsedUp": "You have used both of your name changes",
+  "yourPicture": "Your picture",
+  "yourPictureHint": "The frame comes from your rank and changes as you climb.",
+  "gallery": "Gallery",
+  "camera": "Camera",
+  "orPickOurs": "Or pick one of ours",
+  "awards": "Awards",
+  "yourTitles": "Your titles",
+  "stillToEarn": "Still to earn",
+  "noTitlesYet": "None yet. The first one takes a single match.",
+  "wearHint": "Tap one to wear it. It shows beside your name wherever people see you.",
+  "worn": "worn",
+  "titleUnlocked": "Title unlocked",
+  "wearIt": "Wear it",
+  "wearItLater": "Wear it later",
+  "dayStreak": "day streak",
+  "bestEver": "Best ever",
+  "restDaysLeft": "Rest days left",
+  "restIsTraining": "Rest is part of training. Two days off a week will not break your streak.",
+  "titlesAndStreak": "{owned} of {total} titles · {streak} day streak",
+  "@titlesAndStreak": {
+    "placeholders": {
+      "owned": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "streak": {
+        "type": "int"
+      }
+    }
+  },
+  "crew": "Crew",
+  "myCrew": "My crew",
+  "rankings": "Rankings",
+  "trainWithCrew": "Train with a crew",
+  "trainWithCrewHint": "Up to 20 lifters under one name, chasing a weekly target together and climbing the crew table.",
+  "createCrew": "Create a crew",
+  "createCrewHint": "Name it, pick a badge, invite your people",
+  "joinOpenCrew": "Join an open crew",
+  "joinOpenCrewHint": "Crews anyone can walk into",
+  "yourInvites": "Your invites",
+  "yourInvitesHint": "Crews that asked for you",
+  "joinWithCode": "Join with a code",
+  "joinWithCodeHint": "Six characters from a member",
+  "topCrewsThisWeek": "Top crews this week",
+  "members": "Members",
+  "repsEach": "Reps each",
+  "rank": "Rank",
+  "weeklyGoal": "Weekly goal",
+  "weeklyGoalDone": "Weekly goal smashed",
+  "goalRemaining": "{reps} reps to go · {days} days left",
+  "@goalRemaining": {
+    "placeholders": {
+      "reps": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "goalDoneHint": "Everyone gets the badge when the week closes.",
+  "startCrewWar": "Start a crew war",
+  "startCrewWarHint": "Seven days, both crews counting. Most reps each wins.",
+  "whoIsPulling": "Who is pulling",
+  "thisWeek": "this week",
+  "inviteLifters": "Invite lifters",
+  "referralCode": "Referral code",
+  "inviteLink": "Invite link",
+  "leaveCrew": "Leave crew",
+  "owner": "Owner",
+  "crewTable": "Crew table",
+  "repsPerMember": "reps per member",
+  "seasonResets": "Resets in {days} days — everyone starts level",
+  "@seasonResets": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "rankingExplained": "Crews are ranked on reps per member, not the total — otherwise the biggest crew wins by size alone.",
+  "leaderboard": "Leaderboard",
+  "global": "Global",
+  "myCountry": "My country",
+  "yourFriends": "Your friends ({count})",
+  "@yourFriends": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "challenge": "Challenge",
+  "notifications": "Notifications",
+  "pickMovement": "Pick a movement",
+  "anyExercise": "Any exercise",
+  "anyExerciseHint": "Start your set — it works the movement out as you go",
+  "start": "Start",
+  "finish": "Finish",
+  "reps": "reps",
+  "secondsHeld": "seconds held",
+  "learningMovement": "Learning your movement — your reps appear in a moment",
+  "recalibrate": "Recalibrate",
+  "resetCount": "Reset count",
+  "checksForm": "checks form",
+  "counts": "counts",
+  "time": "time",
+  "howManyReally": "How many did you really do?",
+  "howManyReallyHint": "Your own count, not the app's. It is what the counter gets measured against later.",
+  "appearance": "Appearance",
+  "theme": "Theme",
+  "darkMode": "Dark mode",
+  "language": "Language",
+  "units": "Units",
+  "weight": "Weight",
+  "notificationsSection": "Notifications",
+  "privacy": "Privacy",
+  "matches": "Matches",
+  "data": "Data",
+  "about": "About",
+  "dangerZone": "Danger zone",
+  "themeSystem": "Match device",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "openCrews": "Open crews",
+  "openCrewsHint": "These let anyone in. Pick one and you are in straight away.",
+  "yourInvitesSubtitle": "Crews that asked for you by name.",
+  "pickOpponent": "Pick your opponent",
+  "accept": "Accept",
+  "join": "Join",
+  "copy": "Copy",
+  "copied": "Invite link copied",
+  "season": "Season {name}",
+  "@season": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeSent": "Challenge sent to {name}",
+  "@challengeSent": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "inviteFriendPrivate": "Invite a friend to a private match",
+  "joinWithCodePaste": "Paste the six characters a member sent you.",
+  "enterTheCode": "Enter the 6-character code",
+  "followingDevice": "Following your device right now",
+  "weightUnitTitle": "Weight unit",
+  "heightUnitTitle": "Height unit",
+  "unitKg": "Kilograms (kg)",
+  "unitLb": "Pounds (lb)",
+  "unitCm": "Centimetres (cm)",
+  "unitFt": "Feet & inches",
+  "visEveryone": "Everyone",
+  "visFriends": "Friends only",
+  "visNobody": "Nobody",
+  "visEveryoneHint": "Anyone can open your profile",
+  "visFriendsHint": "Only lifters you have added",
+  "visNobodyHint": "Your profile stays private",
+  "matchInvites": "Match invites",
+  "matchResults": "Match results",
+  "friendRequestsLabel": "Friend requests",
+  "crewActivity": "Crew activity",
+  "rankChanges": "Rank changes",
+  "weeklySummary": "Weekly summary",
+  "soundLabel": "Sound",
+  "vibration": "Vibration",
+  "whoCanSeeProfile": "Who can see my profile",
+  "profileVisibility": "Profile visibility",
+  "showOnLeaderboards": "Show me on leaderboards",
+  "allowMatchInvites": "Allow match invites",
+  "allowFriendRequests": "Allow friend requests",
+  "showHeightWeight": "Show height and weight",
+  "showHeightWeightHint": "Off keeps your body stats to yourself",
+  "autoAcceptFriends": "Auto-accept from friends",
+  "restTimerBetweenSets": "Rest timer between sets",
+  "exportData": "Export my data",
+  "clearCache": "Clear cache",
+  "cacheCleared": "Cache cleared",
+  "version": "Version",
+  "rateApp": "Rate OUTREPD",
+  "contactSupport": "Contact support",
+  "termsOfService": "Terms of service",
+  "privacyPolicy": "Privacy policy",
+  "openSourceLicences": "Open source licences",
+  "resetProgress": "Reset my progress",
+  "resetProgressTitle": "Reset your progress?",
+  "resetProgressBody": "Rank, LP and match history all go back to zero. This cannot be undone.",
+  "actionReset": "Reset",
+  "deleteAccount": "Delete account",
+  "deleteAccountTitle": "Delete your account?",
+  "deleteAccountBody": "Your profile, crews and every match you have lifted are removed for good.",
+  "actionDelete": "Delete",
+  "needsServer": "This needs a server — not wired up yet",
+  "getStarted": "Get Started",
+  "skipToApp": "Skip to the app",
+  "achievements": "Achievements",
+  "unlocked": "Unlocked",
+  "roadTitle": "Road to Legend",
+  "allTiers": "All tiers",
+  "topTier": "Top tier",
+  "lpToGo": "{lp} LP",
+  "@lpToGo": {
+    "placeholders": {
+      "lp": {
+        "type": "int"
+      }
+    }
+  },
+  "unlockedEverything": "You have unlocked everything",
+  "unlocksAt": "Unlocks at {tier}",
+  "@unlocksAt": {
+    "placeholders": {
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
+  "matchedSameGroup": "You will be matched with someone training the same group.",
+  "roomFriendly": "Room matches are friendly — they do not affect your rank.",
+  "createRoom": "Create a room",
+  "enterCode": "ENTER CODE",
+  "joinRoom": "Join room",
+  "shareThisCode": "Share this code",
+  "codeCopied": "Code copied",
+  "pickMuscleAndStart": "Pick muscle and start",
+  "dontGetOutrepd": "Don't get OUTREPD!",
+  "xOfY": "{a} / {b}",
+  "@xOfY": {
+    "placeholders": {
+      "a": {
+        "type": "int"
+      },
+      "b": {
+        "type": "int"
+      }
+    }
+  },
+  "tierStone": "Stone",
+  "tierBronze": "Bronze",
+  "tierSilver": "Silver",
+  "tierGold": "Gold",
+  "tierPlatinum": "Platinum",
+  "tierDiamond": "Diamond",
+  "tierMaster": "Master",
+  "tierMythic": "Mythic",
+  "tierLegend": "Legend",
+  "rewardStone": "Stone border frame",
+  "rewardBronze": "Bronze badge",
+  "rewardSilver": "Silver badge",
+  "rewardGold": "Gold badge",
+  "rewardPlatinum": "Platinum badge",
+  "rewardDiamond": "Diamond badge",
+  "rewardMaster": "Master badge",
+  "rewardMythic": "Mythic badge",
+  "rewardLegend": "Legend badge",
+  "shortKg": "kg",
+  "shortLb": "lb",
+  "shortCm": "cm",
+  "shortFt": "ft",
+  "winLoss": "{w}W {l}L",
+  "@winLoss": {
+    "placeholders": {
+      "w": {
+        "type": "int"
+      },
+      "l": {
+        "type": "int"
+      }
+    }
+  },
+  "yearsSuffix": "years",
+  "yourCrew": "Your crew",
+  "crewName": "Crew name",
+  "motto": "Motto",
+  "mottoHint": "What does this crew stand for?",
+  "country": "Country",
+  "whoCanJoin": "Who can join",
+  "minimumRank": "Minimum rank",
+  "anyone": "Anyone",
+  "emblem": "Emblem",
+  "colour": "Colour",
+  "createCrewButton": "Create crew",
+  "ownerNote": "You will be the owner. Crews hold up to 20 lifters.",
+  "searchCountries": "Search countries",
+  "noCountryMatch": "No country matches that",
+  "nameTooShort": "Give the crew a name of at least 3 characters",
+  "privOpen": "Open",
+  "privRequest": "Request to join",
+  "privInviteOnly": "Invite only",
+  "privOpenHint": "Anyone with the code can walk straight in",
+  "privRequestHint": "People ask, an officer approves",
+  "privInviteOnlyHint": "Members must be invited directly",
+  "embStrength": "Strength",
+  "embCombat": "Combat",
+  "embBeasts": "Beasts",
+  "embElements": "Elements",
+  "embHonours": "Honours",
+  "embSymbols": "Symbols",
+  "ob1Title": "Turn every session\ninto a battle",
+  "ob1Body": "Log your workout and go head to head with someone training the same muscle group.",
+  "ob2Title": "Challenge your\nfriends",
+  "ob2Body": "Send a private invite and settle who really trains harder.",
+  "ob3Title": "Climb the ranks",
+  "ob3Body": "Every win earns LP. Push from Stone all the way to Legend.",
+  "ob4Title": "Effort alone\nis hard",
+  "ob4Body": "Training with no one watching makes it easy to cut the last set short.",
+  "ob5Title": "Become a\nLegend",
+  "ob5Body": "Consistency compounds. Show up, out-lift, rank up.",
+  "letsGo": "Let's go",
+  "continueLabel": "Continue"
+}

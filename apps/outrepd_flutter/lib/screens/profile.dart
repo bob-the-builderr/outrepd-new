@@ -4,6 +4,7 @@ import '../data.dart';
 import '../profile_avatar.dart';
 import '../rewards.dart';
 import '../settings.dart';
+import '../l10n/app_localizations.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'awards.dart';
@@ -32,8 +33,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> _editName() async {
     if (!canChangeName) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('You have used both of your name changes'),
+        SnackBar(
+          content: Text(L.of(context).changeNameUsedUp),
         ),
       );
       return;
@@ -47,7 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       builder: (context) => AlertDialog(
         backgroundColor: context.colors.surface,
         title: Text(
-          'Change your name',
+          L.of(context).changeName,
           style: TextStyle(color: context.colors.text, fontSize: 18),
         ),
         content: Column(
@@ -56,9 +57,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             Text(
               left == 1
-                  ? 'This is your last change. It cannot be undone.'
-                  : 'You get $kNameChangesAllowed changes in total. '
-                      '$left left after this one.',
+                  ? L.of(context).changeNameLast
+                  : L.of(context).changeNameLeft(kNameChangesAllowed, left),
               style: TextStyle(color: context.colors.muted, fontSize: 12.5),
             ),
             const SizedBox(height: 14),
@@ -74,13 +74,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text('Cancel',
+            child: Text(L.of(context).cancel,
                 style: TextStyle(color: context.colors.muted)),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(field.text.trim()),
             child: Text(
-              'Save',
+              L.of(context).save,
               style: TextStyle(
                 color: context.colors.brand,
                 fontWeight: FontWeight.w700,
@@ -116,10 +116,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: Text(L.of(context).profile),
         actions: [
           IconButton(
-            tooltip: 'Settings',
+            tooltip: L.of(context).settings,
             icon: const Icon(Icons.settings_outlined),
             onPressed: _openSettings,
           ),
@@ -176,7 +176,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
               const SizedBox(height: 4),
               Text(
-                tierLabel(p.tierIdx, p.divIdx),
+                tierLabel(L.of(context), p.tierIdx, p.divIdx),
                 style: TextStyle(
                   color: context.colors.brand,
                   fontSize: 15,
@@ -192,32 +192,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 StatTile(
-                  label: 'Wins',
+                  label: L.of(context).wins,
                   value: '${p.wins}',
                   color: AppColors.win,
                 ),
                 StatTile(
-                  label: 'Losses',
+                  label: L.of(context).losses,
                   value: '${p.losses}',
                   color: AppColors.loss,
                 ),
                 StatTile(
-                  label: 'Win rate',
+                  label: L.of(context).winRate,
                   value: '${(p.winRate * 100).round()}%',
                 ),
-                StatTile(label: 'Streak', value: '${p.winStreak}'),
+                StatTile(label: L.of(context).streak, value: '${p.winStreak}'),
               ],
             ),
           ),
           const SizedBox(height: 24),
           SectionHeader(
-            title: 'Stats',
+            title: L.of(context).stats,
             // Only the three body measurements are yours to set; everything
             // else on this list is earned in matches.
             trailing: TextButton.icon(
               onPressed: _editStats,
               icon: const Icon(Icons.edit_outlined, size: 17),
-              label: const Text('Edit'),
+              label: Text(L.of(context).edit),
               style: TextButton.styleFrom(
                 foregroundColor: context.colors.brand,
                 padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -231,24 +231,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Panel(
             child: Column(
               children: [
-                _Row(label: 'Total matches', value: '${p.totalMatches}'),
-                _Row(label: 'Best win streak', value: '${p.bestStreak}'),
+                _Row(label: L.of(context).totalMatches, value: '${p.totalMatches}'),
+                _Row(label: L.of(context).bestWinStreak, value: '${p.bestStreak}'),
                 _Row(
-                  label: 'Total volume lifted',
-                  value: formatVolume(p.totalVolumeKg),
+                  label: L.of(context).totalVolume,
+                  value: formatVolume(L.of(context), p.totalVolumeKg),
                 ),
                 _Row(
-                  label: 'Height',
-                  value: formatHeight(p.heightCm),
+                  label: L.of(context).height,
+                  value: formatHeight(L.of(context), p.heightCm),
                   editable: true,
                 ),
                 _Row(
-                  label: 'Bodyweight',
-                  value: formatBodyWeight(p.weightKg),
+                  label: L.of(context).bodyweight,
+                  value: formatBodyWeight(L.of(context), p.weightKg),
                   editable: true,
                 ),
                 _Row(
-                  label: 'Age',
+                  label: L.of(context).age,
                   value: '${p.age}',
                   editable: true,
                   last: true,
@@ -267,7 +267,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               leading: const Icon(Icons.military_tech, color: AppColors.gold),
               title: Text(
-                'Awards',
+                L.of(context).awards,
                 style: TextStyle(
                   color: context.colors.text,
                   fontWeight: FontWeight.w700,
@@ -417,7 +417,7 @@ class _EditStatsSheetState extends State<_EditStatsSheet> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Edit your stats',
+                L.of(context).editYourStats,
                 style: TextStyle(
                   color: context.colors.text,
                   fontSize: 19,
@@ -426,19 +426,27 @@ class _EditStatsSheetState extends State<_EditStatsSheet> {
               ),
               const SizedBox(height: 4),
               Text(
-                'Wins, volume and rank are earned — they cannot be edited.',
+                L.of(context).editStatsHint,
                 style: TextStyle(color: context.colors.muted, fontSize: 12),
               ),
               const SizedBox(height: 20),
-              _Field(label: 'Height', suffix: 'cm', controller: _height),
+              _Field(
+                label: L.of(context).height,
+                suffix: settings.heightUnit.short(L.of(context)),
+                controller: _height,
+              ),
               const SizedBox(height: 14),
               _Field(
-                label: 'Bodyweight',
-                suffix: settings.weightUnit.short,
+                label: L.of(context).bodyweight,
+                suffix: settings.weightUnit.short(L.of(context)),
                 controller: _weight,
               ),
               const SizedBox(height: 14),
-              _Field(label: 'Age', suffix: 'years', controller: _age),
+              _Field(
+                label: L.of(context).age,
+                suffix: L.of(context).yearsSuffix,
+                controller: _age,
+              ),
               if (_error != null) ...[
                 const SizedBox(height: 14),
                 Text(

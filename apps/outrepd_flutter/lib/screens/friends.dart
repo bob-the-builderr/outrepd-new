@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data.dart';
 import '../profile_avatar.dart';
+import '../l10n/app_localizations.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -12,7 +13,7 @@ class FriendsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Friends'),
+        title: Text(L.of(context).tabFriends),
         actions: [
           IconButton(
             icon: const Icon(Icons.person_add_alt),
@@ -37,7 +38,7 @@ class FriendsScreen extends StatelessWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    'Invite a friend to a private match',
+                    L.of(context).inviteFriendPrivate,
                     style: TextStyle(
                       color: context.colors.text,
                       fontWeight: FontWeight.w600,
@@ -46,18 +47,18 @@ class FriendsScreen extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Invite link copied'),
+                    SnackBar(
+                      content: Text(L.of(context).copied),
                       behavior: SnackBarBehavior.floating,
                     ),
                   ),
-                  child: const Text('Copy'),
+                  child: Text(L.of(context).copy),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 24),
-          SectionHeader(title: 'Your friends (${demoFriends.length})'),
+          SectionHeader(title: L.of(context).yourFriends(demoFriends.length)),
           ...demoFriends.map(
             (f) => Padding(
               padding: const EdgeInsets.only(bottom: 10),
@@ -134,11 +135,11 @@ class FriendsScreen extends StatelessWidget {
                       onPressed: () =>
                           ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Challenge sent to ${f.username}'),
+                          content: Text(L.of(context).challengeSent(f.username)),
                           behavior: SnackBarBehavior.floating,
                         ),
                       ),
-                      child: const Text('Challenge'),
+                      child: Text(L.of(context).challenge),
                     ),
                   ],
                 ),

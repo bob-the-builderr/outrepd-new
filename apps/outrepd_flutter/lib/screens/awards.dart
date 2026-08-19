@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../data.dart';
 import '../rewards.dart';
+import '../motion.dart';
+import '../l10n/app_localizations.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -20,30 +22,29 @@ class _AwardsScreenState extends State<AwardsScreen> {
     final locked = kTitles.where((t) => !rewards.has(t.id)).toList();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Awards')),
+      appBar: AppBar(title: Text(L.of(context).awards)),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 28),
         children: [
           const _StreakCard(),
           const SizedBox(height: 24),
           SectionHeader(
-            title: 'Your titles',
+            title: L.of(context).yourTitles,
             trailing: Text(
-              '${owned.length} of ${kTitles.length}',
+              L.of(context).xOfY(owned.length, kTitles.length),
               style: TextStyle(color: context.colors.muted, fontSize: 13),
             ),
           ),
           if (owned.isEmpty)
             Panel(
               child: Text(
-                'None yet. The first one takes a single match.',
+                L.of(context).noTitlesYet,
                 style: TextStyle(color: context.colors.muted, fontSize: 13),
               ),
             )
           else ...[
             Text(
-              'Tap one to wear it. It shows beside your name wherever people '
-              'see you.',
+              L.of(context).wearHint,
               style: TextStyle(color: context.colors.muted, fontSize: 12),
             ),
             const SizedBox(height: 12),
@@ -66,7 +67,7 @@ class _AwardsScreenState extends State<AwardsScreen> {
               ),
           ],
           const SizedBox(height: 24),
-          const SectionHeader(title: 'Still to earn'),
+          SectionHeader(title: L.of(context).stillToEarn),
           for (final title in locked)
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
@@ -94,23 +95,28 @@ class _StreakCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.local_fire_department,
-                  color: Color(0xFFFF8C00), size: 34),
+              const Breathe(
+                child: Icon(Icons.local_fire_department,
+                    color: Color(0xFFFF8C00), size: 34),
+              ),
               const SizedBox(width: 10),
-              Text(
-                '${rewards.streak}',
-                style: TextStyle(
-                  color: context.colors.text,
-                  fontSize: 46,
-                  fontWeight: FontWeight.w900,
-                  height: 1,
+              PopOnChange(
+                value: rewards.streak,
+                child: Text(
+                  '${rewards.streak}',
+                  style: TextStyle(
+                    color: context.colors.text,
+                    fontSize: 46,
+                    fontWeight: FontWeight.w900,
+                    height: 1,
+                  ),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 6),
           Text(
-            rewards.streak == 1 ? 'day streak' : 'day streak',
+            L.of(context).dayStreak,
             style: TextStyle(
               color: context.colors.muted,
               fontSize: 12.5,
@@ -122,10 +128,10 @@ class _StreakCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _Stat(label: 'Best ever', value: '${rewards.bestStreak}'),
+                child: _Stat(label: L.of(context).bestEver, value: '${rewards.bestStreak}'),
               ),
               Expanded(
-                child: _Stat(label: 'Rest days left', value: '$restLeft'),
+                child: _Stat(label: L.of(context).restDaysLeft, value: '$restLeft'),
               ),
             ],
           ),
@@ -146,8 +152,7 @@ class _StreakCard extends StatelessWidget {
                     // Said out loud because most apps do the opposite, and
                     // someone protecting a long streak needs to know resting
                     // will not cost them it.
-                    'Rest is part of training. Two days off a week will not '
-                    'break your streak.',
+                    L.of(context).restIsTraining,
                     style:
                         TextStyle(color: context.colors.muted, fontSize: 11.5),
                   ),
@@ -267,7 +272,7 @@ class _TitleRow extends StatelessWidget {
                 ),
                 if (worn)
                   Text(
-                    'worn',
+                    L.of(context).worn,
                     style: TextStyle(
                       color: colour,
                       fontSize: 11.5,
@@ -334,7 +339,7 @@ Future<void> celebrate(BuildContext context, List<EarnedTitle> unlocked) async {
       builder: (context) => AlertDialog(
         backgroundColor: context.colors.surface,
         title: Text(
-          'Title unlocked',
+          L.of(context).titleUnlocked,
           style: TextStyle(color: context.colors.text, fontSize: 18),
         ),
         content: Column(
@@ -361,7 +366,7 @@ Future<void> celebrate(BuildContext context, List<EarnedTitle> unlocked) async {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text('Wear it later',
+            child: Text(L.of(context).wearItLater,
                 style: TextStyle(color: context.colors.muted)),
           ),
           TextButton(
@@ -369,7 +374,7 @@ Future<void> celebrate(BuildContext context, List<EarnedTitle> unlocked) async {
               await rewards.wear(title.id);
               if (context.mounted) Navigator.of(context).pop();
             },
-            child: Text('Wear it',
+            child: Text(L.of(context).wearIt,
                 style: TextStyle(
                   color: context.colors.brand,
                   fontWeight: FontWeight.w700,

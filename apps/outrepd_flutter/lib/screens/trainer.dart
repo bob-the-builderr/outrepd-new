@@ -11,6 +11,8 @@ import '../reps/driver_finder.dart';
 import '../reps/pose_source.dart';
 import '../reps/recording.dart';
 import '../reps/rep_engine.dart';
+import '../motion.dart';
+import '../l10n/app_localizations.dart';
 import '../theme.dart';
 
 /// Solo counting. No opponent, no server — the whole point of this screen is
@@ -42,6 +44,11 @@ const kLearnExercise = ExerciseDef(
   gates: [],
   cue: 'Start your set — it works the movement out as you go',
 );
+
+/// Exercise names are gym vocabulary and stay as they are; the catch-all
+/// entry is the one exception, because it is a sentence rather than a name.
+String exerciseLabel(BuildContext context, ExerciseDef e) =>
+    e.id == kLearnExercise.id ? L.of(context).anyExercise : e.name;
 
 class _TrainerScreenState extends State<TrainerScreen> {
   late ExerciseDef _exercise = widget.exercise ?? kExercises.first;
@@ -128,6 +135,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
     }
 
     final state = engine.update(pose, _clock.elapsed);
+    if (state.countedNow) tap(heavy: true);
 
     setState(() {
       _pose = pose;
@@ -188,18 +196,17 @@ class _TrainerScreenState extends State<TrainerScreen> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: _panel,
-        title: const Text(
-          'How many did you really do?',
-          style: TextStyle(color: Colors.white, fontSize: 18),
+        title: Text(
+          L.of(context).howManyReally,
+          style: const TextStyle(color: Colors.white, fontSize: 18),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Your own count, not the app\u2019s. It is what the counter '
-              'gets measured against later.',
-              style: TextStyle(color: _dim, fontSize: 12.5),
+            Text(
+              L.of(context).howManyReallyHint,
+              style: const TextStyle(color: _dim, fontSize: 12.5),
             ),
             const SizedBox(height: 14),
             TextField(
@@ -214,12 +221,14 @@ class _TrainerScreenState extends State<TrainerScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Skip', style: TextStyle(color: _dim)),
+            child: Text(L.of(context).skip,
+                style: const TextStyle(color: _dim)),
           ),
           TextButton(
             onPressed: () => Navigator.of(context)
                 .pop(int.tryParse(field.text.trim())),
-            child: const Text('Save', style: TextStyle(color: _accent)),
+            child: Text(L.of(context).save,
+                style: const TextStyle(color: _accent)),
           ),
         ],
       ),
@@ -270,21 +279,20 @@ class _TrainerScreenState extends State<TrainerScreen> {
         // screen is always dark behind it.
         titleTextStyle: const TextStyle(
           color: Colors.white,
-          fontFamily: 'Inter',
           fontSize: 22,
           fontWeight: FontWeight.w800,
           letterSpacing: 0.5,
         ),
-        title: Text(_exercise.name),
+        title: Text(exerciseLabel(context, _exercise)),
         actions: [
           if (_stage != _Stage.setup) ...[
             IconButton(
-              tooltip: 'Recalibrate',
+              tooltip: L.of(context).recalibrate,
               icon: const Icon(Icons.straighten),
               onPressed: _recalibrate,
             ),
             IconButton(
-              tooltip: 'Reset count',
+              tooltip: L.of(context).resetCount,
               icon: const Icon(Icons.refresh),
               onPressed: _restart,
             ),
@@ -300,9 +308,9 @@ class _TrainerScreenState extends State<TrainerScreen> {
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 100, 16, 24),
       children: [
-        const Text(
-          'Pick a movement',
-          style: TextStyle(
+        Text(
+          L.of(context).pickMovement,
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 26,
             fontWeight: FontWeight.w800,
@@ -376,7 +384,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
         FilledButton.icon(
           onPressed: _begin,
           icon: const Icon(Icons.play_arrow),
-          label: const Text('Start'),
+          label: Text(L.of(context).start),
         ),
       ],
     );
@@ -505,7 +513,7 @@ class _ExerciseTile extends StatelessWidget {
           const SizedBox(width: 14),
           Expanded(
             child: Text(
-              exercise.name,
+              exerciseLabel(context, exercise),
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16,
@@ -515,8 +523,10 @@ class _ExerciseTile extends StatelessWidget {
           ),
           Text(
             exercise.gates.isNotEmpty
-                ? 'checks form'
-                : (exercise.mode == ScoreMode.hold ? 'time' : 'counts'),
+                ? L.of(context).checksForm
+                : (exercise.mode == ScoreMode.hold
+                    ? L.of(context).time
+                    : L.of(context).counts),
             style: TextStyle(
               color: exercise.gates.isNotEmpty ? _accent : _dim,
               fontSize: 11.5,
@@ -696,7 +706,7 @@ class _Readout extends StatelessWidget {
 
     final learning = stage == _Stage.learning;
     final message = learning
-        ? 'Learning your movement — your reps appear in a moment'
+        ? L.of(context).learningMovement
         : (s?.formMessage ?? s?.rejection?.message);
     final bad = !learning && message != null;
 
@@ -728,18 +738,21 @@ class _Readout extends StatelessWidget {
             ),
           GestureDetector(
             onLongPress: onRevealNumbers,
-            child: Text(
-              value,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 76,
-                fontWeight: FontWeight.w900,
-                height: 1,
+            child: PopOnChange(
+              value: value,
+              child: Text(
+                value,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 76,
+                  fontWeight: FontWeight.w900,
+                  height: 1,
+                ),
               ),
             ),
           ),
           Text(
-            hold ? 'seconds held' : 'reps',
+            hold ? L.of(context).secondsHeld : L.of(context).reps,
             style: TextStyle(
               color: Colors.white.withValues(alpha: 0.7),
               fontSize: 13,
@@ -772,7 +785,7 @@ class _Readout extends StatelessWidget {
               side: BorderSide(color: Colors.white.withValues(alpha: 0.35)),
               minimumSize: const Size.fromHeight(46),
             ),
-            child: const Text('Finish'),
+            child: Text(L.of(context).finish),
           ),
         ],
       ),

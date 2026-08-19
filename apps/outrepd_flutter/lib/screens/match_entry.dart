@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../data.dart';
+import '../l10n/app_localizations.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'match.dart';
@@ -53,7 +54,7 @@ class _MusclePicker extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              'You will be matched with someone training the same group.',
+              L.of(context).matchedSameGroup,
               style: TextStyle(color: context.colors.muted, fontSize: 13),
             ),
             const SizedBox(height: 16),
@@ -142,7 +143,7 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
             children: [
               const _SheetGrip(),
               Text(
-                'Challenge a friend',
+                L.of(context).challengeFriend,
                 style: TextStyle(
                   color: context.colors.text,
                   fontSize: 19,
@@ -151,7 +152,7 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
               ),
               const SizedBox(height: 4),
               Text(
-                'Room matches are friendly — they do not affect your rank.',
+                L.of(context).roomFriendly,
                 style: TextStyle(color: context.colors.muted, fontSize: 13),
               ),
               const SizedBox(height: 18),
@@ -162,7 +163,7 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
                     onPressed: () =>
                         setState(() => _createdCode = _newCode()),
                     icon: const Icon(Icons.add),
-                    label: const Text('Create a room'),
+                    label: Text(L.of(context).createRoom),
                     style: FilledButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                     ),
@@ -195,7 +196,7 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
                     counterText: '',
-                    hintText: 'ENTER CODE',
+                    hintText: L.of(context).enterCode,
                     hintStyle: TextStyle(
                       color: context.colors.muted,
                       letterSpacing: 3,
@@ -217,7 +218,7 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 15),
                     ),
-                    child: const Text('Join room'),
+                    child: Text(L.of(context).joinRoom),
                   ),
                 ),
               ] else
@@ -248,7 +249,7 @@ class _RoomCreated extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'Share this code',
+          L.of(context).shareThisCode,
           style: TextStyle(color: context.colors.muted, fontSize: 13),
         ),
         const SizedBox(height: 10),
@@ -272,7 +273,7 @@ class _RoomCreated extends StatelessWidget {
                 onPressed: () {
                   Clipboard.setData(ClipboardData(text: code));
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Code copied')),
+                    SnackBar(content: Text(L.of(context).codeCopied)),
                   );
                 },
               ),
@@ -285,7 +286,7 @@ class _RoomCreated extends StatelessWidget {
           style: FilledButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 16),
           ),
-          child: const Text('Pick muscle and start'),
+          child: Text(L.of(context).pickMuscleAndStart),
         ),
       ],
     );

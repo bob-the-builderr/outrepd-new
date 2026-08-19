@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 
 import '../avatar.dart';
 import '../profile_avatar.dart';
+import '../l10n/app_localizations.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -73,7 +74,7 @@ class _AvatarSheetState extends State<_AvatarSheet> {
               ),
               const SizedBox(height: 18),
               Text(
-                'Your picture',
+                L.of(context).yourPicture,
                 style: TextStyle(
                   color: context.colors.text,
                   fontSize: 19,
@@ -82,7 +83,7 @@ class _AvatarSheetState extends State<_AvatarSheet> {
               ),
               const SizedBox(height: 4),
               Text(
-                'The frame comes from your rank and changes as you climb.',
+                L.of(context).yourPictureHint,
                 style: TextStyle(color: context.colors.muted, fontSize: 12.5),
               ),
               const SizedBox(height: 18),
@@ -92,7 +93,7 @@ class _AvatarSheetState extends State<_AvatarSheet> {
                     child: OutlinedButton.icon(
                       onPressed: () => _pick(ImageSource.gallery),
                       icon: const Icon(Icons.photo_library_outlined, size: 19),
-                      label: const Text('Gallery'),
+                      label: Text(L.of(context).gallery),
                       style: OutlinedButton.styleFrom(
                         minimumSize: const Size.fromHeight(46),
                       ),
@@ -103,7 +104,7 @@ class _AvatarSheetState extends State<_AvatarSheet> {
                     child: OutlinedButton.icon(
                       onPressed: () => _pick(ImageSource.camera),
                       icon: const Icon(Icons.photo_camera_outlined, size: 19),
-                      label: const Text('Camera'),
+                      label: Text(L.of(context).camera),
                       style: OutlinedButton.styleFrom(
                         minimumSize: const Size.fromHeight(46),
                       ),
@@ -119,7 +120,7 @@ class _AvatarSheetState extends State<_AvatarSheet> {
                 ),
               ],
               const SizedBox(height: 22),
-              const SectionHeader(title: 'Or pick one of ours'),
+              SectionHeader(title: L.of(context).orPickOurs),
               _BuiltInGrid(
                 onPicked: (icon, colour) async {
                   await avatar.useBuiltIn(icon, colour);

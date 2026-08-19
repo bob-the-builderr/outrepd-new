@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../crew_options.dart';
 import '../data.dart';
+import '../l10n/app_localizations.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'crew.dart';
@@ -44,7 +45,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
     final name = _name.text.trim();
 
     if (name.length < 3) {
-      _complain('Give the crew a name of at least 3 characters');
+      _complain(L.of(context).nameTooShort);
       return;
     }
     myCrew = MyCrew(
@@ -90,7 +91,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Create a crew')),
+      appBar: AppBar(title: Text(L.of(context).createCrew)),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 28),
         children: [
@@ -100,7 +101,9 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
           const SizedBox(height: 8),
           Center(
             child: Text(
-              _name.text.trim().isEmpty ? 'Your crew' : _name.text.trim(),
+              _name.text.trim().isEmpty
+                  ? L.of(context).yourCrew
+                  : _name.text.trim(),
               style: TextStyle(
                 color: context.colors.text,
                 fontSize: 17,
@@ -109,7 +112,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
             ),
           ),
           const SizedBox(height: 22),
-          const _FieldLabel('Crew name'),
+          _FieldLabel(L.of(context).crewName),
           TextField(
             controller: _name,
             maxLength: 22,
@@ -121,19 +124,19 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
             onChanged: (_) => setState(() {}),
           ),
           const SizedBox(height: 18),
-          const _FieldLabel('Motto'),
+          _FieldLabel(L.of(context).motto),
           TextField(
             controller: _description,
             maxLength: 80,
             maxLines: 2,
             style: TextStyle(color: context.colors.text, fontSize: 14),
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               counterText: '',
-              hintText: 'What does this crew stand for?',
+              hintText: L.of(context).mottoHint,
             ),
           ),
           const SizedBox(height: 18),
-          const _FieldLabel('Country'),
+          _FieldLabel(L.of(context).country),
           Panel(
             onTap: _pickCountry,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
@@ -152,7 +155,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
             ),
           ),
           const SizedBox(height: 20),
-          const _FieldLabel('Who can join'),
+          _FieldLabel(L.of(context).whoCanJoin),
           for (final p in CrewPrivacy.values)
             Padding(
               padding: const EdgeInsets.only(bottom: 8),
@@ -173,7 +176,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            p.label,
+                            p.label(L.of(context)),
                             style: TextStyle(
                               color:
                                   _privacy == p ? context.colors.text : context.colors.muted,
@@ -183,7 +186,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
                           ),
                           const SizedBox(height: 2),
                           Text(
-                            p.description,
+                            p.description(L.of(context)),
                             style: TextStyle(
                               color: context.colors.muted,
                               fontSize: 11.5,
@@ -200,7 +203,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
               ),
             ),
           const SizedBox(height: 14),
-          const _FieldLabel('Minimum rank'),
+          _FieldLabel(L.of(context).minimumRank),
           SizedBox(
             height: 80,
             child: ListView.separated(
@@ -229,7 +232,9 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
                         TierBadge(tierIdx: i, size: 32),
                         const SizedBox(height: 4),
                         Text(
-                          i == 0 ? 'Anyone' : kTiers[i].name,
+                          i == 0
+                              ? L.of(context).anyone
+                              : tierName(L.of(context), i),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -246,12 +251,12 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
             ),
           ),
           const SizedBox(height: 22),
-          const _FieldLabel('Emblem'),
+          _FieldLabel(L.of(context).emblem),
           for (final group in kCrewEmblemGroups) ...[
             Padding(
               padding: const EdgeInsets.only(top: 4, bottom: 8),
               child: Text(
-                group.label,
+                group.label(L.of(context)),
                 style: TextStyle(
                   color: context.colors.muted,
                   fontSize: 11,
@@ -275,7 +280,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
             const SizedBox(height: 10),
           ],
           const SizedBox(height: 10),
-          const _FieldLabel('Colour'),
+          _FieldLabel(L.of(context).colour),
           Wrap(
             spacing: 10,
             runSpacing: 10,
@@ -304,11 +309,11 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
             style: FilledButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 16),
             ),
-            child: const Text('Create crew'),
+            child: Text(L.of(context).createCrewButton),
           ),
           const SizedBox(height: 10),
           Text(
-            'You will be the owner. Crews hold up to 20 lifters.',
+            L.of(context).ownerNote,
             textAlign: TextAlign.center,
             style: TextStyle(color: context.colors.muted, fontSize: 11.5),
           ),
@@ -385,7 +390,7 @@ class _CountryPickerState extends State<_CountryPicker> {
                 autofocus: true,
                 style: TextStyle(color: context.colors.text),
                 decoration: InputDecoration(
-                  hintText: 'Search countries',
+                  hintText: L.of(context).searchCountries,
                   prefixIcon: Icon(Icons.search, color: context.colors.muted),
                 ),
                 onChanged: (v) => setState(() => _query = v),
@@ -395,7 +400,7 @@ class _CountryPickerState extends State<_CountryPicker> {
               child: matches.isEmpty
                   ? Center(
                       child: Text(
-                        'No country matches that',
+                        L.of(context).noCountryMatch,
                         style: TextStyle(color: context.colors.muted),
                       ),
                     )

@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
 
+import 'l10n/app_localizations.dart';
+
 
 /// Emblems a crew can wear. Kept to a curated set so every badge sits in the
 /// same visual family, but wide enough that crews do not all look alike.
 /// Grouped by feel: strength, combat, beasts, elements, honours, symbols.
 class CrewEmblemGroup {
-  const CrewEmblemGroup(this.label, this.icons);
-  final String label;
+  const CrewEmblemGroup(this.id, this.icons);
+
+  /// Stable identifier; the words a person reads come from [label].
+  final String id;
   final List<IconData> icons;
+
+  String label(L l) => switch (id) {
+        'strength' => l.embStrength,
+        'combat' => l.embCombat,
+        'beasts' => l.embBeasts,
+        'elements' => l.embElements,
+        'honours' => l.embHonours,
+        _ => l.embSymbols,
+      };
 }
 
 const kCrewEmblemGroups = <CrewEmblemGroup>[
-  CrewEmblemGroup('Strength', [
+  CrewEmblemGroup('strength', [
     Icons.fitness_center,
     Icons.sports_gymnastics,
     Icons.sports_handball,
@@ -23,7 +36,7 @@ const kCrewEmblemGroups = <CrewEmblemGroup>[
     Icons.sports_score,
     Icons.speed,
   ]),
-  CrewEmblemGroup('Combat', [
+  CrewEmblemGroup('combat', [
     Icons.sports_mma,
     Icons.sports_martial_arts,
     Icons.sports_kabaddi,
@@ -33,7 +46,7 @@ const kCrewEmblemGroups = <CrewEmblemGroup>[
     Icons.gavel,
     Icons.local_police,
   ]),
-  CrewEmblemGroup('Beasts', [
+  CrewEmblemGroup('beasts', [
     Icons.pets,
     Icons.cruelty_free,
     Icons.bug_report,
@@ -41,7 +54,7 @@ const kCrewEmblemGroups = <CrewEmblemGroup>[
     Icons.savings,
     Icons.emoji_nature,
   ]),
-  CrewEmblemGroup('Elements', [
+  CrewEmblemGroup('elements', [
     Icons.local_fire_department,
     Icons.whatshot,
     Icons.bolt,
@@ -58,7 +71,7 @@ const kCrewEmblemGroups = <CrewEmblemGroup>[
     Icons.landscape,
     Icons.volcano,
   ]),
-  CrewEmblemGroup('Honours', [
+  CrewEmblemGroup('honours', [
     Icons.military_tech,
     Icons.workspace_premium,
     Icons.emoji_events,
@@ -69,7 +82,7 @@ const kCrewEmblemGroups = <CrewEmblemGroup>[
     Icons.auto_awesome,
     Icons.local_activity,
   ]),
-  CrewEmblemGroup('Symbols', [
+  CrewEmblemGroup('symbols', [
     Icons.anchor,
     Icons.rocket_launch,
     Icons.hexagon,
@@ -114,16 +127,16 @@ const kCrewColors = <Color>[
 enum CrewPrivacy { open, request, inviteOnly }
 
 extension CrewPrivacyLabel on CrewPrivacy {
-  String get label => switch (this) {
-        CrewPrivacy.open => 'Open',
-        CrewPrivacy.request => 'Request to join',
-        CrewPrivacy.inviteOnly => 'Invite only',
+  String label(L l) => switch (this) {
+        CrewPrivacy.open => l.privOpen,
+        CrewPrivacy.request => l.privRequest,
+        CrewPrivacy.inviteOnly => l.privInviteOnly,
       };
 
-  String get description => switch (this) {
-        CrewPrivacy.open => 'Anyone with the code can walk straight in',
-        CrewPrivacy.request => 'People ask, an officer approves',
-        CrewPrivacy.inviteOnly => 'Members must be invited directly',
+  String description(L l) => switch (this) {
+        CrewPrivacy.open => l.privOpenHint,
+        CrewPrivacy.request => l.privRequestHint,
+        CrewPrivacy.inviteOnly => l.privInviteOnlyHint,
       };
 
   IconData get icon => switch (this) {

@@ -157,7 +157,10 @@ ThemeData buildTheme(Brightness brightness) {
     brightness: brightness,
     colorScheme: scheme,
     scaffoldBackgroundColor: p.background,
-    fontFamily: 'Inter',
+    // No font family is pinned on purpose. The app ships in fourteen
+    // languages, and naming one family stops the engine reaching for a font
+    // that has Arabic, Devanagari or CJK glyphs — those scripts come out as
+    // empty boxes. The platform default already covers all of them.
     extensions: <ThemeExtension<dynamic>>[p],
   );
 
@@ -170,7 +173,6 @@ ThemeData buildTheme(Brightness brightness) {
       centerTitle: false,
       titleTextStyle: TextStyle(
         color: p.text,
-        fontFamily: 'Inter',
         fontSize: 22,
         fontWeight: FontWeight.w800,
         letterSpacing: 0.5,

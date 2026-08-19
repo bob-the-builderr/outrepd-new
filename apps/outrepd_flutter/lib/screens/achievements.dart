@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data.dart';
+import '../l10n/app_localizations.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -12,7 +13,7 @@ class AchievementsScreen extends StatelessWidget {
     final earned = demoAchievements.where((a) => a.earned).length;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Achievements')),
+      appBar: AppBar(title: Text(L.of(context).achievements)),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
         children: [
@@ -24,7 +25,7 @@ class AchievementsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Unlocked',
+                      L.of(context).unlocked,
                       style: TextStyle(
                         color: context.colors.text,
                         fontWeight: FontWeight.w700,

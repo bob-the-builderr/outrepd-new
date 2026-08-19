@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'l10n/app_localizations.dart';
 import 'theme.dart';
 
 /// Rounded dark panel used for most content blocks.
@@ -92,15 +93,41 @@ class TierBadge extends StatelessWidget {
 /// Divisions climb from V up to I, so a higher [divIdx] is a better division.
 const kDivisions = ['V', 'IV', 'III', 'II', 'I'];
 
-String tierLabel(int tierIdx, int divIdx) {
-  final tier = kTiers[tierIdx.clamp(0, kTiers.length - 1)];
-  return '${tier.name} ${kDivisions[divIdx.clamp(0, kDivisions.length - 1)]}';
-}
+/// The tier's display name in the reader's language. [Tier.name] itself stays
+/// English — it doubles as the id that finds the frame and badge assets.
+String tierName(L l, int tierIdx) => switch (tierIdx.clamp(0, 8)) {
+      0 => l.tierStone,
+      1 => l.tierBronze,
+      2 => l.tierSilver,
+      3 => l.tierGold,
+      4 => l.tierPlatinum,
+      5 => l.tierDiamond,
+      6 => l.tierMaster,
+      7 => l.tierMythic,
+      _ => l.tierLegend,
+    };
 
-String formatVolume(int kg) {
-  if (kg >= 1000000) return '${(kg / 1000000).toStringAsFixed(1)}M kg';
-  if (kg >= 1000) return '${(kg / 1000).toStringAsFixed(1)}k kg';
-  return '$kg kg';
+/// What reaching a tier unlocks, shown on the roadmap.
+String tierReward(L l, int tierIdx) => switch (tierIdx.clamp(0, 8)) {
+      0 => l.rewardStone,
+      1 => l.rewardBronze,
+      2 => l.rewardSilver,
+      3 => l.rewardGold,
+      4 => l.rewardPlatinum,
+      5 => l.rewardDiamond,
+      6 => l.rewardMaster,
+      7 => l.rewardMythic,
+      _ => l.rewardLegend,
+    };
+
+String tierLabel(L l, int tierIdx, int divIdx) =>
+    '${tierName(l, tierIdx)} ${kDivisions[divIdx.clamp(0, kDivisions.length - 1)]}';
+
+String formatVolume(L l, int kg) {
+  final unit = l.shortKg;
+  if (kg >= 1000000) return '${(kg / 1000000).toStringAsFixed(1)}M $unit';
+  if (kg >= 1000) return '${(kg / 1000).toStringAsFixed(1)}k $unit';
+  return '$kg $unit';
 }
 
 String relativeDays(int days) {
