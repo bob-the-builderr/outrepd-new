@@ -439,7 +439,7 @@ class _VersusView extends StatelessWidget {
         ),
         const SizedBox(height: 60),
         Text(
-          '$countdown',
+          localNumber(context, countdown),
           style: TextStyle(
             color: context.colors.text,
             fontSize: 72,
@@ -794,7 +794,8 @@ class _ResultView extends StatelessWidget {
               border: Border.all(color: color.withValues(alpha: 0.4)),
             ),
             child: Text(
-              '${lpChange >= 0 ? '+' : ''}$lpChange LP',
+              '${lpChange >= 0 ? '+' : ''}'
+              '${L.of(context).lpAmount(localNumber(context, lpChange))}',
               style: TextStyle(color: color, fontSize: 24, fontWeight: FontWeight.w900),
             ),
           ),
@@ -833,7 +834,7 @@ class _ScoreColumn extends StatelessWidget {
             style: TextStyle(color: context.colors.text, fontWeight: FontWeight.bold, fontSize: 13)),
         const SizedBox(height: 4),
         Text(
-          '${volume.toStringAsFixed(0)} kg',
+          '${localNumber(context, volume.round())} ${L.of(context).shortKg}',
           style: TextStyle(color: color, fontSize: 20, fontWeight: FontWeight.w900),
         ),
       ],

@@ -307,7 +307,7 @@ class LEn extends L {
   String get myCountry => 'My country';
 
   @override
-  String yourFriends(int count) {
+  String yourFriends(String count) {
     return 'Your friends ($count)';
   }
 
@@ -664,7 +664,7 @@ class LEn extends L {
   String get dontGetOutrepd => 'Don\'t get OUTREPD!';
 
   @override
-  String xOfY(int a, int b) {
+  String xOfY(String a, String b) {
     return '$a / $b';
   }
 
@@ -1502,5 +1502,83 @@ class LEn extends L {
   @override
   String nRankBody(String rank) {
     return 'You reached $rank';
+  }
+
+  @override
+  String get nameTooShortInline => 'Pick a name of at least 3 characters';
+
+  @override
+  String get whyName => 'Rivals will see this beside every result';
+
+  @override
+  String get whyExperience => 'We match you against people at your level';
+
+  @override
+  String get whyGoal => 'Your first suggested exercises come from this';
+
+  @override
+  String get whyAge =>
+      'Age affects the strength standards you are measured against';
+
+  @override
+  String get whyWeight =>
+      'Rank compares lifts relative to bodyweight, not raw kilos';
+
+  @override
+  String get whyHeight => 'Used with your weight to set fair standards';
+
+  @override
+  String get whyHabits =>
+      'This shapes the reminders and the weekly target we suggest';
+
+  @override
+  String get transitionPartOfIt =>
+      '...so let\'s make sure you\'re truly part of it!';
+
+  @override
+  String get male => 'Male';
+
+  @override
+  String get female => 'Female';
+
+  @override
+  String get usernamePlaceholder => 'username';
+
+  @override
+  String get stRoutine =>
+      'I don\'t know which body part really needs work so I usually follow the same routine';
+
+  @override
+  String get shortIn => 'in';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get yesterday => 'Yesterday';
+
+  @override
+  String daysAgo(String n) {
+    return '$n days ago';
+  }
+
+  @override
+  String weeksAgo(String n) {
+    return '$n weeks ago';
+  }
+
+  @override
+  String membersCount(String n) {
+    return '$n members';
+  }
+
+  @override
+  String eachCount(String n) {
+    return '$n each';
+  }
+
+  @override
+  String lpAmount(String n) {
+    return '$n LP';
   }
 }

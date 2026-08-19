@@ -154,7 +154,7 @@
   "@yourFriends": {
     "placeholders": {
       "count": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -302,10 +302,10 @@
   "@xOfY": {
     "placeholders": {
       "a": {
-        "type": "int"
+        "type": "String"
       },
       "b": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -646,6 +646,62 @@
   "@nRankBody": {
     "placeholders": {
       "rank": {
+        "type": "String"
+      }
+    }
+  },
+  "nameTooShortInline": "Pick a name of at least 3 characters",
+  "whyName": "Rivals will see this beside every result",
+  "whyExperience": "We match you against people at your level",
+  "whyGoal": "Your first suggested exercises come from this",
+  "whyAge": "Age affects the strength standards you are measured against",
+  "whyWeight": "Rank compares lifts relative to bodyweight, not raw kilos",
+  "whyHeight": "Used with your weight to set fair standards",
+  "whyHabits": "This shapes the reminders and the weekly target we suggest",
+  "transitionPartOfIt": "...so let's make sure you're truly part of it!",
+  "male": "Male",
+  "female": "Female",
+  "usernamePlaceholder": "username",
+  "stRoutine": "I don't know which body part really needs work so I usually follow the same routine",
+  "shortIn": "in",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "daysAgo": "{n} days ago",
+  "weeksAgo": "{n} weeks ago",
+  "@daysAgo": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "@weeksAgo": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "membersCount": "{n} members",
+  "eachCount": "{n} each",
+  "lpAmount": "{n} LP",
+  "@membersCount": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "@eachCount": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "@lpAmount": {
+    "placeholders": {
+      "n": {
         "type": "String"
       }
     }

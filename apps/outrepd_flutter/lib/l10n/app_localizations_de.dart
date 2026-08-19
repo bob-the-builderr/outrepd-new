@@ -309,7 +309,7 @@ class LDe extends L {
   String get myCountry => 'Mein Land';
 
   @override
-  String yourFriends(int count) {
+  String yourFriends(String count) {
     return 'Deine Freunde ($count)';
   }
 
@@ -670,7 +670,7 @@ class LDe extends L {
   String get dontGetOutrepd => 'Don\'t get OUTREPD!';
 
   @override
-  String xOfY(int a, int b) {
+  String xOfY(String a, String b) {
     return '$a / $b';
   }
 
@@ -1512,5 +1512,85 @@ class LDe extends L {
   @override
   String nRankBody(String rank) {
     return 'Du hast $rank erreicht';
+  }
+
+  @override
+  String get nameTooShortInline => 'Wähle einen Namen mit mindestens 3 Zeichen';
+
+  @override
+  String get whyName => 'Gegner sehen ihn neben jedem Ergebnis';
+
+  @override
+  String get whyExperience =>
+      'Wir stellen dich Leuten auf deinem Niveau gegenüber';
+
+  @override
+  String get whyGoal => 'Daraus kommen deine ersten Übungsvorschläge';
+
+  @override
+  String get whyAge =>
+      'Das Alter beeinflusst die Kraftstandards, an denen du gemessen wirst';
+
+  @override
+  String get whyWeight =>
+      'Der Rang vergleicht Lasten im Verhältnis zum Körpergewicht, nicht in reinen Kilo';
+
+  @override
+  String get whyHeight =>
+      'Wird zusammen mit deinem Gewicht für faire Standards genutzt';
+
+  @override
+  String get whyHabits =>
+      'Danach richten sich Erinnerungen und das vorgeschlagene Wochenziel';
+
+  @override
+  String get transitionPartOfIt =>
+      '... also sorgen wir dafür, dass du wirklich dazugehörst.';
+
+  @override
+  String get male => 'Männlich';
+
+  @override
+  String get female => 'Weiblich';
+
+  @override
+  String get usernamePlaceholder => 'Name';
+
+  @override
+  String get stRoutine =>
+      'Ich weiß nicht, welche Partie wirklich Arbeit braucht, also wiederhole ich meist dieselbe Routine';
+
+  @override
+  String get shortIn => 'in';
+
+  @override
+  String get today => 'Heute';
+
+  @override
+  String get yesterday => 'Gestern';
+
+  @override
+  String daysAgo(String n) {
+    return 'vor $n Tagen';
+  }
+
+  @override
+  String weeksAgo(String n) {
+    return 'vor $n Wochen';
+  }
+
+  @override
+  String membersCount(String n) {
+    return '$n Mitglieder';
+  }
+
+  @override
+  String eachCount(String n) {
+    return '$n pro Kopf';
+  }
+
+  @override
+  String lpAmount(String n) {
+    return '$n LP';
   }
 }

@@ -72,7 +72,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                       SizedBox(
                         width: 28,
                         child: Text(
-                          '${i + 1}',
+                          localNumber(context, i + 1),
                           style: TextStyle(
                             color: i < 3 ? AppColors.gold : context.colors.muted,
                             fontWeight: FontWeight.w800,
@@ -113,7 +113,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                         ),
                       ),
                       Text(
-                        '${e.lp} LP',
+                        L.of(context).lpAmount(localNumber(context, e.lp)),
                         style: TextStyle(
                           color: context.colors.text,
                           fontWeight: FontWeight.w800,

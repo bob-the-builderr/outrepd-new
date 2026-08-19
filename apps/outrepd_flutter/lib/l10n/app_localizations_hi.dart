@@ -309,7 +309,7 @@ class LHi extends L {
   String get myCountry => 'मेरा देश';
 
   @override
-  String yourFriends(int count) {
+  String yourFriends(String count) {
     return 'आपके दोस्त ($count)';
   }
 
@@ -668,7 +668,7 @@ class LHi extends L {
   String get dontGetOutrepd => 'Don\'t get OUTREPD!';
 
   @override
-  String xOfY(int a, int b) {
+  String xOfY(String a, String b) {
     return '$a / $b';
   }
 
@@ -1507,5 +1507,84 @@ class LHi extends L {
   @override
   String nRankBody(String rank) {
     return 'आप $rank तक पहुँचे';
+  }
+
+  @override
+  String get nameTooShortInline => 'कम से कम 3 अक्षरों का नाम चुनें';
+
+  @override
+  String get whyName => 'हर नतीजे के साथ प्रतिद्वंद्वी यही देखेंगे';
+
+  @override
+  String get whyExperience => 'हम आपको आपके स्तर के लोगों से मिलाते हैं';
+
+  @override
+  String get whyGoal => 'आपकी पहली सुझाई गई एक्सरसाइज़ इसी से तय होती हैं';
+
+  @override
+  String get whyAge =>
+      'उम्र उन ताक़त के मानकों को प्रभावित करती है जिनसे आपको मापा जाता है';
+
+  @override
+  String get whyWeight =>
+      'रैंक वज़न को शरीर के भार के अनुपात में देखती है, सिर्फ़ किलो में नहीं';
+
+  @override
+  String get whyHeight =>
+      'निष्पक्ष मानक तय करने के लिए आपके वज़न के साथ इस्तेमाल होता है';
+
+  @override
+  String get whyHabits =>
+      'इससे रिमाइंडर और सुझाया गया साप्ताहिक लक्ष्य तय होता है';
+
+  @override
+  String get transitionPartOfIt =>
+      '...तो चलिए पक्का करें कि आप वाक़ई इसका हिस्सा हैं।';
+
+  @override
+  String get male => 'पुरुष';
+
+  @override
+  String get female => 'महिला';
+
+  @override
+  String get usernamePlaceholder => 'नाम';
+
+  @override
+  String get stRoutine =>
+      'मुझे नहीं पता कि किस हिस्से पर सच में काम चाहिए, इसलिए मैं अक्सर वही रूटीन दोहराता हूँ';
+
+  @override
+  String get shortIn => 'इंच';
+
+  @override
+  String get today => 'आज';
+
+  @override
+  String get yesterday => 'कल';
+
+  @override
+  String daysAgo(String n) {
+    return '$n दिन पहले';
+  }
+
+  @override
+  String weeksAgo(String n) {
+    return '$n हफ़्ते पहले';
+  }
+
+  @override
+  String membersCount(String n) {
+    return '$n सदस्य';
+  }
+
+  @override
+  String eachCount(String n) {
+    return 'प्रति व्यक्ति $n';
+  }
+
+  @override
+  String lpAmount(String n) {
+    return '$n LP';
   }
 }

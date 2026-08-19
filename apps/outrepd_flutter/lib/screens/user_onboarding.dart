@@ -4,6 +4,7 @@ import '../data.dart';
 import '../onboarding_widgets.dart';
 import '../l10n/app_localizations.dart';
 import '../theme.dart';
+import '../widgets.dart';
 import 'shell.dart';
 
 /// The personalised setup questionnaire — 18 steps, mirroring the original
@@ -38,6 +39,14 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
   // Steps that reveal their button only after the typing animation ends.
   bool _typingDone = false;
 
+  /// Which way the last move went, so the slide runs the right way round.
+  bool _goingBack = false;
+
+  /// Set when a typed number is outside what a person can be. Cleared the
+  /// moment they edit the field — an error that lingers after the fix reads
+  /// as the app not noticing.
+  String? _error;
+
   @override
   void dispose() {
     _usernameController.dispose();
@@ -45,10 +54,20 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
   }
 
   void _next() {
-    if (_step >= _totalSteps - 1) return _finish();
+    final complaint = _validate(L.of(context));
+    if (complaint != null) {
+      setState(() => _error = complaint);
+      return;
+    }
+    if (_step >= _totalSteps - 1) {
+      _finish();
+      return;
+    }
     setState(() {
       _step++;
       _typingDone = false;
+      _goingBack = false;
+      _error = null;
     });
   }
 
@@ -60,34 +79,74 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
     setState(() {
       _step--;
       _typingDone = true; // going back, don't re-gate on typing
+      _goingBack = true;
+      _error = null;
     });
   }
 
-  void _finish() {
+  /// Age, weight and height come from wheels and rulers with their own limits,
+  /// so nobody can type 700 kg in the first place. The one field a person can
+  /// put anything into is the name, and a Continue button that simply goes
+  /// dead tells them nothing about why.
+  String? _validate(L l) {
+    if (_step != 0) return null;
+    final name = _usernameController.text.trim();
+    return name.length >= 3 ? null : l.nameTooShortInline;
+  }
+
+  Future<void> _finish() async {
     final name = _usernameController.text.trim();
     if (name.isNotEmpty) demoProfile.username = name;
     demoProfile.age = _age;
     demoProfile.weightKg = _weightKg ? _weight : (_weight * 0.4536).round();
     demoProfile.heightCm = _heightCm ? _height : (_height * 2.54).round();
+    await saveProfileStats();
+    // Somebody answered twelve questions about themselves. Throwing that away
+    // the moment the flow ends is the reason people resent onboarding.
+    await saveOnboardingAnswers({
+      'experience': _experience,
+      'goal': _goal,
+      'gender': _gender,
+      'thinkShape': _thinkShape,
+      'energy': _energy,
+      'relateProgress': _relateProgress?.toString(),
+      'relateRoutine': _relateRoutine?.toString(),
+    });
 
+    if (!mounted) return;
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (_) => const AppShell()),
       (_) => false,
     );
   }
 
+  /// What each answer is for. Steps that need no explanation return null and
+  /// the line simply is not drawn.
+  String? _whyWeAsk(L l) => switch (_step) {
+    0 => l.whyName,
+    1 => l.whyExperience,
+    2 => l.whyGoal,
+    5 => l.whyAge,
+    6 => l.whyWeight,
+    7 => l.whyHeight,
+    10 || 11 => l.whyHabits,
+    _ => null,
+  };
+
   bool get _canProceed => switch (_step) {
-        0 => _usernameController.text.trim().length >= 3,
-        1 => _experience != null,
-        2 => _goal != null,
-        4 => _gender != null,
-        8 || 9 || 14 || 15 || 16 => _typingDone,
-        10 => _thinkShape != null,
-        11 => _energy != null,
-        12 => _relateProgress != null,
-        13 => _relateRoutine != null,
-        _ => true,
-      };
+    // Deliberately live: a dead button explains nothing, so the tap is
+    // allowed through and _validate says what is wrong.
+    0 => true,
+    1 => _experience != null,
+    2 => _goal != null,
+    4 => _gender != null,
+    8 || 9 || 14 || 15 || 16 => _typingDone,
+    10 => _thinkShape != null,
+    11 => _energy != null,
+    12 => _relateProgress != null,
+    13 => _relateRoutine != null,
+    _ => true,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -104,8 +163,10 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         actions: [
           TextButton(
             onPressed: _finish,
-            child: Text(L.of(context).skip,
-                style: TextStyle(color: context.colors.muted)),
+            child: Text(
+              L.of(context).skip,
+              style: TextStyle(color: context.colors.muted),
+            ),
           ),
         ],
       ),
@@ -113,14 +174,57 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         top: false,
         child: Column(
           children: [
+            if (showFooter && !hideProgress)
+              OnboardingProgress(step: _step, totalSteps: _totalSteps),
             Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
-                child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 220),
-                  child: KeyedSubtree(
-                    key: ValueKey(_step),
-                    child: _buildStep(),
+              // A question and three answers are shorter than a phone, and
+              // top-anchoring them left the bottom half of every step empty.
+              // Centring costs nothing and the void goes away.
+              child: LayoutBuilder(
+                builder: (context, box) => SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: box.maxHeight - 32),
+                    // Full width, centred vertically. A bare Center would
+                    // shrink-wrap the column to its widest line, and then
+                    // everything narrower than the heading — the logo ring
+                    // most visibly — centres against that line instead of
+                    // against the screen, and sits a few pixels off.
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Center(
+                        // Steps slide in from the leading edge, so moving forward and
+                        // moving back look different — otherwise a wrong answer and
+                        // its correction feel like the same event.
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 260),
+                          transitionBuilder: (child, animation) =>
+                              SlideTransition(
+                                position:
+                                    Tween<Offset>(
+                                      begin: Offset(
+                                        _goingBack ? -0.06 : 0.06,
+                                        0,
+                                      ),
+                                      end: Offset.zero,
+                                    ).animate(
+                                      CurvedAnimation(
+                                        parent: animation,
+                                        curve: Curves.easeOutCubic,
+                                      ),
+                                    ),
+                                child: FadeTransition(
+                                  opacity: animation,
+                                  child: child,
+                                ),
+                              ),
+                          child: KeyedSubtree(
+                            key: ValueKey(_step),
+                            child: _buildStep(),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -130,7 +234,8 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
                 step: _step,
                 totalSteps: _totalSteps,
                 canProceed: _canProceed,
-                showProgress: !hideProgress,
+                showProgress: false,
+                why: _whyWeAsk(L.of(context)),
                 onNext: _next,
                 label: _step == _totalSteps - 2
                     ? L.of(context).finish2
@@ -143,81 +248,81 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
   }
 
   Widget _buildStep() => switch (_step) {
-        0 => _usernameStep(),
-        1 => _choiceStep(
-            L.of(context).qExperience,
-            [
-              ('none', L.of(context).expNone),
-              ('beginner', L.of(context).expBeginner),
-              ('intermediate', L.of(context).expIntermediate),
-              ('advanced', L.of(context).expAdvanced),
-            ],
-            _experience,
-            (v) => setState(() => _experience = v),
-          ),
-        2 => _choiceStep(
-            L.of(context).qGoal,
-            [
-              ('stronger', L.of(context).goalStronger),
-              ('consistent', L.of(context).goalConsistent),
-              ('lean', L.of(context).goalLean),
-              ('mass', L.of(context).goalMass),
-            ],
-            _goal,
-            (v) => setState(() => _goal = v),
-          ),
-        3 => _commitmentStep(),
-        4 => _genderStep(),
-        5 => _ageStep(),
-        6 => _weightStep(),
-        7 => _heightStep(),
-        8 => _transitionStep(L.of(context).aboutYou),
-        9 => _transitionStep("...so let's make sure you're truly part of it!"),
-        10 => _choiceStep(
-            L.of(context).qThinkAbout,
-            [
-              ('never', L.of(context).freqNever),
-              ('sometimes', L.of(context).freqSometimes),
-              ('often', L.of(context).freqOften),
-              ('all_time', L.of(context).freqAllTime),
-            ],
-            _thinkShape,
-            (v) => setState(() => _thinkShape = v),
-          ),
-        11 => _choiceStep(
-            L.of(context).qEnergy,
-            [
-              ('low', L.of(context).energyLow),
-              ('drops', L.of(context).energyDrops),
-              ('hard', L.of(context).energyHard),
-              ('high', L.of(context).energyHigh),
-            ],
-            _energy,
-            (v) => setState(() => _energy = v),
-          ),
-        12 => _statementStep(
-            L.of(context).stProgress,
-            _relateProgress,
-            (v) => setState(() => _relateProgress = v),
-          ),
-        13 => _statementStep(
-            "I don't know which body part really needs work so I usually follow the same routine",
-            _relateRoutine,
-            (v) => setState(() => _relateRoutine = v),
-          ),
-        14 => _imageStep(
-            'assets/images/effort-alone.png',
-            L.of(context).stEffortTitle,
-            L.of(context).stEffortBody,
-          ),
-        15 => _imageStep(
-            'assets/images/training-alone.png',
-            L.of(context).stAloneTitle,
-            L.of(context).stAloneBody,
-          ),
-        16 => _rivalStep(),
-        _ => _successStep(),
-      };
+    0 => _usernameStep(),
+    1 => _choiceStep(
+      L.of(context).qExperience,
+      [
+        ('none', L.of(context).expNone),
+        ('beginner', L.of(context).expBeginner),
+        ('intermediate', L.of(context).expIntermediate),
+        ('advanced', L.of(context).expAdvanced),
+      ],
+      _experience,
+      (v) => setState(() => _experience = v),
+    ),
+    2 => _choiceStep(
+      L.of(context).qGoal,
+      [
+        ('stronger', L.of(context).goalStronger),
+        ('consistent', L.of(context).goalConsistent),
+        ('lean', L.of(context).goalLean),
+        ('mass', L.of(context).goalMass),
+      ],
+      _goal,
+      (v) => setState(() => _goal = v),
+    ),
+    3 => _commitmentStep(),
+    4 => _genderStep(),
+    5 => _ageStep(),
+    6 => _weightStep(),
+    7 => _heightStep(),
+    8 => _transitionStep(L.of(context).aboutYou),
+    9 => _transitionStep(L.of(context).transitionPartOfIt),
+    10 => _choiceStep(
+      L.of(context).qThinkAbout,
+      [
+        ('never', L.of(context).freqNever),
+        ('sometimes', L.of(context).freqSometimes),
+        ('often', L.of(context).freqOften),
+        ('all_time', L.of(context).freqAllTime),
+      ],
+      _thinkShape,
+      (v) => setState(() => _thinkShape = v),
+    ),
+    11 => _choiceStep(
+      L.of(context).qEnergy,
+      [
+        ('low', L.of(context).energyLow),
+        ('drops', L.of(context).energyDrops),
+        ('hard', L.of(context).energyHard),
+        ('high', L.of(context).energyHigh),
+      ],
+      _energy,
+      (v) => setState(() => _energy = v),
+    ),
+    12 => _statementStep(
+      L.of(context).stProgress,
+      _relateProgress,
+      (v) => setState(() => _relateProgress = v),
+    ),
+    13 => _statementStep(
+      L.of(context).stRoutine,
+      _relateRoutine,
+      (v) => setState(() => _relateRoutine = v),
+    ),
+    14 => _imageStep(
+      'assets/images/effort-alone.png',
+      L.of(context).stEffortTitle,
+      L.of(context).stEffortBody,
+    ),
+    15 => _imageStep(
+      'assets/images/training-alone.png',
+      L.of(context).stAloneTitle,
+      L.of(context).stAloneBody,
+    ),
+    16 => _rivalStep(),
+    _ => _successStep(),
+  };
 
   // ---------------------------------------------------------------- steps
 
@@ -229,7 +334,9 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         const SizedBox(height: 40),
         TextField(
           controller: _usernameController,
-          onChanged: (_) => setState(() {}),
+          // Clearing the error on the first keystroke, not on the next tap of
+          // Continue, is what makes it feel like the app is watching.
+          onChanged: (_) => setState(() => _error = null),
           textAlign: TextAlign.center,
           style: TextStyle(
             color: context.colors.text,
@@ -237,7 +344,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
             fontWeight: FontWeight.w700,
           ),
           decoration: InputDecoration(
-            hintText: 'username',
+            hintText: L.of(context).usernamePlaceholder,
             hintStyle: const TextStyle(color: Color(0xFF444444)),
             filled: true,
             fillColor: const Color(0xFF111111),
@@ -254,9 +361,12 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         ),
         const SizedBox(height: 12),
         Text(
-          L.of(context).nameHint,
+          _error ?? L.of(context).nameHint,
           textAlign: TextAlign.center,
-          style: TextStyle(color: context.colors.muted, fontSize: 13),
+          style: TextStyle(
+            color: _error == null ? context.colors.muted : AppColors.loss,
+            fontSize: 13,
+          ),
         ),
       ],
     );
@@ -302,7 +412,9 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
               color: const Color(0xFF111111),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                color: selected ? context.colors.brand : const Color(0xFF444444),
+                color: selected
+                    ? context.colors.brand
+                    : const Color(0xFF444444),
                 width: 2.5,
               ),
             ),
@@ -314,7 +426,9 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
                 Text(
                   label,
                   style: TextStyle(
-                    color: selected ? context.colors.text : const Color(0xFFBBBBBB),
+                    color: selected
+                        ? context.colors.text
+                        : const Color(0xFFBBBBBB),
                     fontWeight: FontWeight.w700,
                     fontSize: 16,
                   ),
@@ -336,9 +450,9 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         const SizedBox(height: 40),
         Row(
           children: [
-            card('male', Icons.male, 'Male'),
+            card('male', Icons.male, L.of(context).male),
             const SizedBox(width: 16),
-            card('female', Icons.female, 'Female'),
+            card('female', Icons.female, L.of(context).female),
           ],
         ),
       ],
@@ -367,9 +481,11 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
                 final selected = value == _age;
                 return Center(
                   child: Text(
-                    '$value',
+                    localNumber(context, value),
                     style: TextStyle(
-                      color: selected ? context.colors.brand : context.colors.muted,
+                      color: selected
+                          ? context.colors.brand
+                          : context.colors.muted,
                       fontSize: selected ? 42 : 26,
                       fontWeight: selected ? FontWeight.w900 : FontWeight.w600,
                     ),
@@ -396,8 +512,8 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         ),
         const SizedBox(height: 24),
         UnitToggle(
-          left: 'kg',
-          right: 'lb',
+          left: L.of(context).shortKg,
+          right: L.of(context).shortLb,
           leftSelected: _weightKg,
           onChanged: (kg) => setState(() {
             if (kg == _weightKg) return;
@@ -413,7 +529,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
           min: _weightKg ? 35 : 77,
           max: _weightKg ? 200 : 440,
           value: _weight,
-          unitLabel: _weightKg ? 'kg' : 'lb',
+          unitLabel: _weightKg ? L.of(context).shortKg : L.of(context).shortLb,
           onChanged: (v) => setState(() => _weight = v),
         ),
         const SizedBox(height: 20),
@@ -433,13 +549,12 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         StepHeading(title: L.of(context).qHeight),
         const SizedBox(height: 24),
         UnitToggle(
-          left: 'cm',
-          right: 'in',
+          left: L.of(context).shortCm,
+          right: L.of(context).shortIn,
           leftSelected: _heightCm,
           onChanged: (cm) => setState(() {
             if (cm == _heightCm) return;
-            _height =
-                cm ? (_height * 2.54).round() : (_height / 2.54).round();
+            _height = cm ? (_height * 2.54).round() : (_height / 2.54).round();
             _heightCm = cm;
           }),
         ),
@@ -449,7 +564,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
           min: _heightCm ? 130 : 51,
           max: _heightCm ? 220 : 87,
           value: _height,
-          unitLabel: _heightCm ? 'cm' : 'in',
+          unitLabel: _heightCm ? L.of(context).shortCm : L.of(context).shortIn,
           onChanged: (v) => setState(() => _height = v),
         ),
       ],
@@ -596,8 +711,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
           ),
           const SizedBox(height: 16),
           TypewriterText(
-            text:
-                L.of(context).grindBody,
+            text: L.of(context).grindBody,
             onComplete: () => setState(() => _typingDone = true),
             style: const TextStyle(
               color: Color(0xFF888888),
@@ -629,11 +743,13 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
           ),
           const SizedBox(height: 12),
           Text(
-            L.of(context).welcomeLifter(
-              _usernameController.text.trim().isEmpty
-                  ? L.of(context).lifter
-                  : _usernameController.text.trim(),
-            ),
+            L
+                .of(context)
+                .welcomeLifter(
+                  _usernameController.text.trim().isEmpty
+                      ? L.of(context).lifter
+                      : _usernameController.text.trim(),
+                ),
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Color(0xFF888888),
@@ -643,8 +759,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
             ),
           ),
           const SizedBox(height: 40),
-          FilledButton(
-              onPressed: _finish, child: Text(L.of(context).enterApp)),
+          FilledButton(onPressed: _finish, child: Text(L.of(context).enterApp)),
         ],
       ),
     );
@@ -662,12 +777,13 @@ class _CommitmentStep extends StatefulWidget {
 
 class _CommitmentStepState extends State<_CommitmentStep>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 1800),
-  )..addStatusListener((status) {
-      if (status == AnimationStatus.completed) widget.onComplete();
-    });
+  late final AnimationController _controller =
+      AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 1800),
+      )..addStatusListener((status) {
+        if (status == AnimationStatus.completed) widget.onComplete();
+      });
 
   @override
   void dispose() {
@@ -680,9 +796,7 @@ class _CommitmentStepState extends State<_CommitmentStep>
     return Column(
       children: [
         const SizedBox(height: 30),
-        StepHeading(
-          title: L.of(context).commitTitle,
-        ),
+        StepHeading(title: L.of(context).commitTitle),
         const SizedBox(height: 56),
         GestureDetector(
           onTapDown: (_) => _controller.forward(),
@@ -704,8 +818,9 @@ class _CommitmentStepState extends State<_CommitmentStep>
                         value: _controller.value,
                         strokeWidth: 6,
                         backgroundColor: context.colors.surfaceRaised,
-                        valueColor:
-                            AlwaysStoppedAnimation(context.colors.brand),
+                        valueColor: AlwaysStoppedAnimation(
+                          context.colors.brand,
+                        ),
                       ),
                     ),
                     Transform.scale(

@@ -683,7 +683,7 @@ abstract class L {
   ///
   /// In en, this message translates to:
   /// **'Your friends ({count})'**
-  String yourFriends(int count);
+  String yourFriends(String count);
 
   /// No description provided for @challenge.
   ///
@@ -1361,7 +1361,7 @@ abstract class L {
   ///
   /// In en, this message translates to:
   /// **'{a} / {b}'**
-  String xOfY(int a, int b);
+  String xOfY(String a, String b);
 
   /// No description provided for @tierStone.
   ///
@@ -2976,6 +2976,132 @@ abstract class L {
   /// In en, this message translates to:
   /// **'You reached {rank}'**
   String nRankBody(String rank);
+
+  /// No description provided for @nameTooShortInline.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a name of at least 3 characters'**
+  String get nameTooShortInline;
+
+  /// No description provided for @whyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Rivals will see this beside every result'**
+  String get whyName;
+
+  /// No description provided for @whyExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'We match you against people at your level'**
+  String get whyExperience;
+
+  /// No description provided for @whyGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first suggested exercises come from this'**
+  String get whyGoal;
+
+  /// No description provided for @whyAge.
+  ///
+  /// In en, this message translates to:
+  /// **'Age affects the strength standards you are measured against'**
+  String get whyAge;
+
+  /// No description provided for @whyWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Rank compares lifts relative to bodyweight, not raw kilos'**
+  String get whyWeight;
+
+  /// No description provided for @whyHeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Used with your weight to set fair standards'**
+  String get whyHeight;
+
+  /// No description provided for @whyHabits.
+  ///
+  /// In en, this message translates to:
+  /// **'This shapes the reminders and the weekly target we suggest'**
+  String get whyHabits;
+
+  /// No description provided for @transitionPartOfIt.
+  ///
+  /// In en, this message translates to:
+  /// **'...so let\'s make sure you\'re truly part of it!'**
+  String get transitionPartOfIt;
+
+  /// No description provided for @male.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get male;
+
+  /// No description provided for @female.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get female;
+
+  /// No description provided for @usernamePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'username'**
+  String get usernamePlaceholder;
+
+  /// No description provided for @stRoutine.
+  ///
+  /// In en, this message translates to:
+  /// **'I don\'t know which body part really needs work so I usually follow the same routine'**
+  String get stRoutine;
+
+  /// No description provided for @shortIn.
+  ///
+  /// In en, this message translates to:
+  /// **'in'**
+  String get shortIn;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @yesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get yesterday;
+
+  /// No description provided for @daysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} days ago'**
+  String daysAgo(String n);
+
+  /// No description provided for @weeksAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} weeks ago'**
+  String weeksAgo(String n);
+
+  /// No description provided for @membersCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} members'**
+  String membersCount(String n);
+
+  /// No description provided for @eachCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} each'**
+  String eachCount(String n);
+
+  /// No description provided for @lpAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} LP'**
+  String lpAmount(String n);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

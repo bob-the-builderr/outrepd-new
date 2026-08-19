@@ -18,8 +18,8 @@ class FriendsScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.person_add_alt),
             onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Invites need accounts — coming later'),
+              SnackBar(
+                content: Text(L.of(context).needsServer),
                 behavior: SnackBarBehavior.floating,
               ),
             ),
@@ -58,7 +58,7 @@ class FriendsScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          SectionHeader(title: L.of(context).yourFriends(demoFriends.length)),
+          SectionHeader(title: L.of(context).yourFriends(localNumber(context, demoFriends.length))),
           ...demoFriends.map(
             (f) => Padding(
               padding: const EdgeInsets.only(bottom: 10),
@@ -112,7 +112,8 @@ class FriendsScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 2),
                           Text(
-                            '${kTiers[f.tierIdx].name} · ${f.lp} LP',
+                            '${tierName(L.of(context), f.tierIdx)}'
+                            ' · ${L.of(context).lpAmount(localNumber(context, f.lp))}',
                             style: TextStyle(
                               color: context.colors.muted,
                               fontSize: 12,

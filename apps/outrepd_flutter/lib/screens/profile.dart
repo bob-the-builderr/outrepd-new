@@ -193,19 +193,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 StatTile(
                   label: L.of(context).wins,
-                  value: '${p.wins}',
+                  value: localNumber(context, p.wins),
                   color: AppColors.win,
                 ),
                 StatTile(
                   label: L.of(context).losses,
-                  value: '${p.losses}',
+                  value: localNumber(context, p.losses),
                   color: AppColors.loss,
                 ),
                 StatTile(
                   label: L.of(context).winRate,
-                  value: '${(p.winRate * 100).round()}%',
+                  value: '${localNumber(context, (p.winRate * 100).round())}%',
                 ),
-                StatTile(label: L.of(context).streak, value: '${p.winStreak}'),
+                StatTile(
+                  label: L.of(context).streak,
+                  value: localNumber(context, p.winStreak),
+                ),
               ],
             ),
           ),
@@ -231,11 +234,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Panel(
             child: Column(
               children: [
-                _Row(label: L.of(context).totalMatches, value: '${p.totalMatches}'),
-                _Row(label: L.of(context).bestWinStreak, value: '${p.bestStreak}'),
+                _Row(
+                  label: L.of(context).totalMatches,
+                  value: localNumber(context, p.totalMatches),
+                ),
+                _Row(
+                  label: L.of(context).bestWinStreak,
+                  value: localNumber(context, p.bestStreak),
+                ),
                 _Row(
                   label: L.of(context).totalVolume,
-                  value: formatVolume(L.of(context), p.totalVolumeKg),
+                  value: formatVolume(context, L.of(context), p.totalVolumeKg),
                 ),
                 _Row(
                   label: L.of(context).height,
@@ -249,7 +258,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 _Row(
                   label: L.of(context).age,
-                  value: '${p.age}',
+                  value: localNumber(context, p.age),
                   editable: true,
                   last: true,
                 ),
@@ -274,7 +283,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               subtitle: Text(
-                '${kTitles.where((t) => rewards.has(t.id)).length} of ${kTitles.length} titles · ${rewards.streak} day streak',
+                L.of(context).titlesAndStreak(
+                  kTitles.where((t) => rewards.has(t.id)).length,
+                  kTitles.length,
+                  rewards.streak,
+                ),
                 style: TextStyle(color: context.colors.muted, fontSize: 13),
               ),
               trailing: Icon(Icons.chevron_right, color: context.colors.muted),
@@ -455,13 +468,16 @@ class _EditStatsSheetState extends State<_EditStatsSheet> {
                 ),
               ],
               const SizedBox(height: 22),
-              FilledButton(onPressed: _save, child: const Text('Save')),
+              FilledButton(
+                onPressed: _save,
+                child: Text(L.of(context).save),
+              ),
               const SizedBox(height: 8),
               Center(
                 child: TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
                   child: Text(
-                    'Cancel',
+                    L.of(context).cancel,
                     style: TextStyle(color: context.colors.muted),
                   ),
                 ),

@@ -17,30 +17,38 @@ import 'theme.dart';
 ///
 /// These were measured from each file's own alpha channel rather than by eye,
 /// by D:/outrepd-tools/measure_frames.py. Rerun it if the artwork changes.
+/// An opening is an **ellipse**, not a circle. Every one of the nine is taller
+/// than it is wide — gold's is 0.537 across and 0.588 down — so a single radius
+/// could only ever fit one axis: set it to the width and the picture fell short
+/// of the ring top and bottom; set it to the height and it spilled over the
+/// metal at the sides. That is what a circle in an oval hole looks like.
 class FrameHole {
-  const FrameHole(this.cx, this.cy, this.diameter);
+  const FrameHole(this.cx, this.cy, this.width, this.height);
   final double cx;
   final double cy;
-  final double diameter;
+  final double width;
+  final double height;
 }
 
 const kFrameHoles = <String, FrameHole>{
-  'bronze': FrameHole(0.500, 0.431, 0.463),
-  'diamond': FrameHole(0.500, 0.496, 0.396),
-  'gold': FrameHole(0.499, 0.492, 0.532),
-  'legend': FrameHole(0.502, 0.509, 0.448),
-  'master': FrameHole(0.500, 0.520, 0.384),
-  'mythic': FrameHole(0.499, 0.545, 0.455),
-  'platinum': FrameHole(0.500, 0.529, 0.451),
-  'silver': FrameHole(0.498, 0.452, 0.466),
-  'stone': FrameHole(0.500, 0.484, 0.528),
+  'bronze': FrameHole(0.501, 0.445, 0.478, 0.491),
+  'diamond': FrameHole(0.500, 0.502, 0.453, 0.482),
+  'gold': FrameHole(0.500, 0.494, 0.537, 0.588),
+  'legend': FrameHole(0.502, 0.504, 0.449, 0.540),
+  'master': FrameHole(0.500, 0.526, 0.426, 0.471),
+  'mythic': FrameHole(0.499, 0.540, 0.467, 0.540),
+  'platinum': FrameHole(0.500, 0.524, 0.514, 0.564),
+  'silver': FrameHole(0.498, 0.464, 0.467, 0.548),
+  'stone': FrameHole(0.500, 0.485, 0.529, 0.641),
 };
 
-/// Grown a touch past the measured opening so the picture tucks under the ring
-/// instead of leaving a hairline of background between the two.
-const _overlap = 1.06;
+/// Grown a hair past the measured opening so the picture tucks under the ring
+/// instead of leaving a hairline of background between the two. Small, because
+/// the shape now matches: the old value had to be generous to cover the gap a
+/// circle left in an oval.
+const _overlap = 1.03;
 
-const _fallbackHole = FrameHole(0.5, 0.5, 0.46);
+const _fallbackHole = FrameHole(0.5, 0.5, 0.46, 0.5);
 
 class ProfileAvatar extends StatelessWidget {
   const ProfileAvatar({
@@ -69,7 +77,8 @@ class ProfileAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     final tier = kTiers[tierIdx.clamp(0, kTiers.length - 1)];
     final measured = kFrameHoles[tier.name.toLowerCase()] ?? _fallbackHole;
-    final hole = size * measured.diameter * _overlap;
+    final holeW = size * measured.width * _overlap;
+    final holeH = size * measured.height * _overlap;
 
     final content = SizedBox(
       width: size,
@@ -81,13 +90,25 @@ class ProfileAvatar extends StatelessWidget {
           // it, which hides the seam a circle-clipped photo would otherwise
           // show against the metal.
           Positioned(
-            left: size * measured.cx - hole / 2,
-            top: size * measured.cy - hole / 2,
+            left: size * measured.cx - holeW / 2,
+            top: size * measured.cy - holeH / 2,
+            // ClipOval on an oblong box gives an ellipse, which is the shape
+            // the opening actually is.
             child: ClipOval(
               child: SizedBox(
-                width: hole,
-                height: hole,
-                child: _AvatarContent(size: hole, username: username),
+                width: holeW,
+                height: holeH,
+                // A face is square; the hole is not. Fill on the long axis and
+                // let the clip trim the sides, so nobody gets stretched.
+                child: FittedBox(
+                  fit: BoxFit.cover,
+                  clipBehavior: Clip.hardEdge,
+                  child: SizedBox(
+                    width: holeW,
+                    height: holeW,
+                    child: _AvatarContent(size: holeW, username: username),
+                  ),
+                ),
               ),
             ),
           ),

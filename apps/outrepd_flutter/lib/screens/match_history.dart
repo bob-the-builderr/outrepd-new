@@ -25,21 +25,22 @@ class MatchHistoryScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: _Tally(
-                    value: '${p.wins}',
+                    value: localNumber(context, p.wins),
                     label: L.of(context).wins,
                     color: AppColors.win,
                   ),
                 ),
                 Expanded(
                   child: _Tally(
-                    value: '${p.losses}',
+                    value: localNumber(context, p.losses),
                     label: L.of(context).losses,
                     color: AppColors.loss,
                   ),
                 ),
                 Expanded(
                   child: _Tally(
-                    value: '${(p.winRate * 100).round()}%',
+                    value:
+                        '${localNumber(context, (p.winRate * 100).round())}%',
                     label: L.of(context).winRate,
                     color: context.colors.text,
                   ),
@@ -141,16 +142,17 @@ class MatchRow extends StatelessWidget {
                 ),
                 const SizedBox(height: 3),
                 Text(
-                  '${formatVolume(L.of(context), m.userVolume)}'
-                  ' · ${formatVolume(L.of(context), m.opponentVolume)}'
-                  ' · ${relativeDays(m.daysAgo)}',
+                  '${formatVolume(context, L.of(context), m.userVolume)}'
+                  ' · ${formatVolume(context, L.of(context), m.opponentVolume)}'
+                  ' · ${relativeDays(context, m.daysAgo)}',
                   style: TextStyle(color: context.colors.muted, fontSize: 12),
                 ),
               ],
             ),
           ),
           Text(
-            '${m.lpChange > 0 ? '+' : ''}${m.lpChange}',
+            '${m.lpChange > 0 ? '+' : ''}'
+            '${localNumber(context, m.lpChange)}',
             style: TextStyle(
               color: color,
               fontWeight: FontWeight.w800,

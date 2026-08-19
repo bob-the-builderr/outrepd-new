@@ -55,7 +55,7 @@ class NotificationsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        relativeDays(n.daysAgo),
+                        relativeDays(context, n.daysAgo),
                         style: TextStyle(
                           color: context.colors.muted,
                           fontSize: 11,

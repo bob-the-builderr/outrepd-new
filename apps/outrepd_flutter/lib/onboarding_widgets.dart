@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'theme.dart';
+import 'widgets.dart';
 
 /// Reveals text one character at a time, then calls [onComplete].
 class TypewriterText extends StatefulWidget {
@@ -204,7 +205,7 @@ class _RulerPickerState extends State<RulerPicker> {
           textBaseline: TextBaseline.alphabetic,
           children: [
             Text(
-              '${widget.value}',
+              localNumber(context, widget.value),
               style: TextStyle(
                 color: context.colors.text,
                 fontSize: 56,
@@ -299,25 +300,25 @@ class UnitToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget seg(String label, bool active, VoidCallback onTap) => Expanded(
-          child: GestureDetector(
-            onTap: onTap,
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 11),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: active ? context.colors.brand : Colors.transparent,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Text(
-                label,
-                style: TextStyle(
-                  color: active ? context.colors.text : context.colors.muted,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 11),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: active ? context.colors.brand : Colors.transparent,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Text(
+            label,
+            style: TextStyle(
+              color: active ? context.colors.text : context.colors.muted,
+              fontWeight: FontWeight.w700,
             ),
           ),
-        );
+        ),
+      ),
+    );
 
     return Container(
       width: 180,
@@ -338,6 +339,89 @@ class UnitToggle extends StatelessWidget {
 }
 
 /// Progress bar + Continue button pinned to the bottom of the flow.
+/// Where you are in the questionnaire, at the top where it is read before the
+/// question rather than after it.
+///
+/// A segment per step instead of one continuous bar: eighteen filled blocks
+/// beside "12 of 18" answers "how much longer" precisely, which a bar that
+/// creeps a few pixels per tap never does.
+class OnboardingProgress extends StatelessWidget {
+  const OnboardingProgress({
+    super.key,
+    required this.step,
+    required this.totalSteps,
+  });
+
+  final int step;
+  final int totalSteps;
+
+  @override
+  Widget build(BuildContext context) {
+    final done = step + 1;
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 0, 24, 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Align(
+            alignment: AlignmentDirectional.centerEnd,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: context.colors.brand.withValues(alpha: 0.35),
+                ),
+              ),
+              // "6 / 18" is a pair of numbers, and a right-to-left paragraph
+              // reorders it to "18 / 6" — which says the opposite. Numbers
+              // separated by a slash read left to right in every language.
+              child: Directionality(
+                textDirection: TextDirection.ltr,
+                child: Text(
+                  // No spaces around the slash, deliberately. A space between
+                  // two Arabic-Indic numbers is a neutral that the bidi
+                  // algorithm resolves as right-to-left, which flips the pair
+                  // to "١٨ / ٥" — the opposite of what it says. Written tight,
+                  // the slash binds the two into one left-to-right run.
+                  '${localNumber(context, done)}/'
+                  '${localNumber(context, totalSteps)}',
+                  style: TextStyle(
+                    color: context.colors.brand,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              for (var i = 0; i < totalSteps; i++) ...[
+                if (i > 0) const SizedBox(width: 3),
+                Expanded(
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 260),
+                    height: 3,
+                    decoration: BoxDecoration(
+                      color: i < done
+                          ? context.colors.brand
+                          : context.colors.surfaceRaised,
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class OnboardingFooter extends StatelessWidget {
   const OnboardingFooter({
     super.key,
@@ -347,6 +431,7 @@ class OnboardingFooter extends StatelessWidget {
     required this.onNext,
     this.label = 'Continue',
     this.showProgress = true,
+    this.why,
   });
 
   final int step;
@@ -356,6 +441,11 @@ class OnboardingFooter extends StatelessWidget {
   final String label;
   final bool showProgress;
 
+  /// One line saying what this answer is for. It fills the space above the
+  /// button with a reason rather than with nothing, and a question you
+  /// understand is a question you answer honestly.
+  final String? why;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -363,17 +453,26 @@ class OnboardingFooter extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (showProgress) ...[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(4),
-              child: LinearProgressIndicator(
-                value: (step + 1) / totalSteps,
-                minHeight: 6,
-                backgroundColor: context.colors.surfaceRaised,
-                valueColor: AlwaysStoppedAnimation(context.colors.brand),
+          // The progress moved to the top of the screen, beside the step
+          // count — down here it read as decoration under the button rather
+          // than as an answer to "how much of this is left?".
+          if (why != null) ...[
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.only(bottom: 14),
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(color: context.colors.surfaceRaised),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: Text(
+                  why!,
+                  style: TextStyle(color: context.colors.muted, fontSize: 11.5),
+                ),
               ),
             ),
-            const SizedBox(height: 16),
           ],
           FilledButton(
             onPressed: canProceed ? onNext : null,

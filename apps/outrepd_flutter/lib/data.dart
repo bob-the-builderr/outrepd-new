@@ -89,6 +89,20 @@ Future<void> loadProfileStats() async {
   nameChangesUsed = s.getInt('nameChanges') ?? 0;
 }
 
+/// What the onboarding questionnaire learned. Nothing reads it yet — the
+/// suggestions it will feed need the match and counter work first — but a
+/// person who answered twelve questions about themselves should not have to
+/// answer them again because the app forgot on the way to the home screen.
+Future<void> saveOnboardingAnswers(Map<String, String?> answers) async {
+  final s = await SharedPreferences.getInstance();
+  for (final entry in answers.entries) {
+    final value = entry.value;
+    if (value == null) continue;
+    await s.setString('onboarding.${entry.key}', value);
+  }
+  await s.setBool('onboarding.done', true);
+}
+
 Future<void> saveProfileStats() async {
   final s = await SharedPreferences.getInstance();
   await s.setInt('profileHeightCm', demoProfile.heightCm);

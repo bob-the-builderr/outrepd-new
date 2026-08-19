@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'l10n/app_localizations.dart';
 import 'theme.dart';
@@ -123,19 +124,23 @@ String tierReward(L l, int tierIdx) => switch (tierIdx.clamp(0, 8)) {
 String tierLabel(L l, int tierIdx, int divIdx) =>
     '${tierName(l, tierIdx)} ${kDivisions[divIdx.clamp(0, kDivisions.length - 1)]}';
 
-String formatVolume(L l, int kg) {
-  final unit = l.shortKg;
-  if (kg >= 1000000) return '${(kg / 1000000).toStringAsFixed(1)}M $unit';
-  if (kg >= 1000) return '${(kg / 1000).toStringAsFixed(1)}k $unit';
-  return '$kg $unit';
+String formatVolume(BuildContext context, L l, int kg) {
+  // "184.3k" is an English shorthand. Every locale has its own — ألف in
+  // Arabic, 万 in Japanese — and compact() knows which.
+  final locale = Localizations.localeOf(context);
+  final short = NumberFormat.compact(locale: locale.toString()).format(kg);
+  final digits =
+      locale.languageCode == 'ar' ? _arabicDigits(short) : short;
+  return '$digits ${l.shortKg}';
 }
 
-String relativeDays(int days) {
-  if (days == 0) return 'Today';
-  if (days == 1) return 'Yesterday';
-  if (days < 7) return '$days days ago';
+String relativeDays(BuildContext context, int days) {
+  final l = L.of(context);
+  if (days == 0) return l.today;
+  if (days == 1) return l.yesterday;
+  if (days < 7) return l.daysAgo(localNumber(context, days));
   final weeks = days ~/ 7;
-  return weeks == 1 ? '1 week ago' : '$weeks weeks ago';
+  return l.weeksAgo(localNumber(context, weeks));
 }
 
 /// Section heading with optional trailing action.
@@ -165,4 +170,25 @@ class SectionHeader extends StatelessWidget {
       ),
     );
   }
+}
+
+/// A number in the reader's own digits.
+///
+/// Grouping and decimal marks come from the locale. The digits themselves only
+/// change for Arabic: ٢٤ rather than 24. Hindi, Japanese, Korean and Chinese
+/// all write numbers in Western digits in practice, whatever their scripts
+/// historically had, and swapping those out would look wrong rather than
+/// localised.
+String localNumber(BuildContext context, num n) {
+  final locale = Localizations.localeOf(context);
+  final text = NumberFormat.decimalPattern(locale.toString()).format(n);
+  return locale.languageCode == 'ar' ? _arabicDigits(text) : text;
+}
+
+String _arabicDigits(String text) {
+  const arabicIndic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+  return text.split('').map((c) {
+    final digit = '0123456789'.indexOf(c);
+    return digit == -1 ? c : arabicIndic[digit];
+  }).join();
 }

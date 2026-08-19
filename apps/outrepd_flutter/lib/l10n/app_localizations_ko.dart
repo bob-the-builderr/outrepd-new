@@ -301,7 +301,7 @@ class LKo extends L {
   String get myCountry => '내 국가';
 
   @override
-  String yourFriends(int count) {
+  String yourFriends(String count) {
     return '친구 ($count)';
   }
 
@@ -651,7 +651,7 @@ class LKo extends L {
   String get dontGetOutrepd => 'Don\'t get OUTREPD!';
 
   @override
-  String xOfY(int a, int b) {
+  String xOfY(String a, String b) {
     return '$a / $b';
   }
 
@@ -1478,5 +1478,78 @@ class LKo extends L {
   @override
   String nRankBody(String rank) {
     return '$rank에 도달했습니다';
+  }
+
+  @override
+  String get nameTooShortInline => '세 글자 이상의 이름을 입력하세요';
+
+  @override
+  String get whyName => '상대는 모든 결과 옆에서 이 이름을 봅니다';
+
+  @override
+  String get whyExperience => '같은 수준의 상대와 매칭해 드립니다';
+
+  @override
+  String get whyGoal => '처음 추천하는 운동이 여기서 정해집니다';
+
+  @override
+  String get whyAge => '나이는 비교 기준이 되는 근력 표준에 영향을 줍니다';
+
+  @override
+  String get whyWeight => '랭크는 체중 대비 중량으로 비교합니다. 절대 수치가 아닙니다';
+
+  @override
+  String get whyHeight => '체중과 함께 공정한 기준을 정하는 데 씁니다';
+
+  @override
+  String get whyHabits => '알림과 추천 주간 목표가 여기서 결정됩니다';
+
+  @override
+  String get transitionPartOfIt => '…그러니 진짜 그 일부가 되어 봅시다.';
+
+  @override
+  String get male => '남성';
+
+  @override
+  String get female => '여성';
+
+  @override
+  String get usernamePlaceholder => '이름';
+
+  @override
+  String get stRoutine => '어느 부위를 정말 보완해야 할지 몰라서 대개 같은 루틴을 반복합니다';
+
+  @override
+  String get shortIn => 'in';
+
+  @override
+  String get today => '오늘';
+
+  @override
+  String get yesterday => '어제';
+
+  @override
+  String daysAgo(String n) {
+    return '$n일 전';
+  }
+
+  @override
+  String weeksAgo(String n) {
+    return '$n주 전';
+  }
+
+  @override
+  String membersCount(String n) {
+    return '$n명';
+  }
+
+  @override
+  String eachCount(String n) {
+    return '1인당 $n';
+  }
+
+  @override
+  String lpAmount(String n) {
+    return '$n LP';
   }
 }

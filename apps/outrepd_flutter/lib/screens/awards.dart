@@ -31,7 +31,8 @@ class _AwardsScreenState extends State<AwardsScreen> {
           SectionHeader(
             title: L.of(context).yourTitles,
             trailing: Text(
-              L.of(context).xOfY(owned.length, kTitles.length),
+              L.of(context).xOfY(localNumber(context, owned.length),
+                  localNumber(context, kTitles.length)),
               style: TextStyle(color: context.colors.muted, fontSize: 13),
             ),
           ),
@@ -103,7 +104,7 @@ class _StreakCard extends StatelessWidget {
               PopOnChange(
                 value: rewards.streak,
                 child: Text(
-                  '${rewards.streak}',
+                  localNumber(context, rewards.streak),
                   style: TextStyle(
                     color: context.colors.text,
                     fontSize: 46,
@@ -128,10 +129,16 @@ class _StreakCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _Stat(label: L.of(context).bestEver, value: '${rewards.bestStreak}'),
+                child: _Stat(
+                  label: L.of(context).bestEver,
+                  value: localNumber(context, rewards.bestStreak),
+                ),
               ),
               Expanded(
-                child: _Stat(label: L.of(context).restDaysLeft, value: '$restLeft'),
+                child: _Stat(
+                  label: L.of(context).restDaysLeft,
+                  value: localNumber(context, restLeft),
+                ),
               ),
             ],
           ),

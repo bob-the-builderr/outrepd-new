@@ -236,7 +236,7 @@ class _WayIn extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    '$badge',
+                    localNumber(context, badge),
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 11,
@@ -302,7 +302,7 @@ class _CrewTab extends StatelessWidget {
                   Expanded(
                     child: _Stat(
                       label: L.of(context).repsEach,
-                      value: '${crew.repsPerMember}',
+                      value: localNumber(context, crew.repsPerMember),
                     ),
                   ),
                   Expanded(
@@ -332,7 +332,8 @@ class _CrewTab extends StatelessWidget {
         SectionHeader(
           title: L.of(context).members,
           trailing: Text(
-            L.of(context).xOfY(crew.members.length, MyCrew.maxMembers),
+            L.of(context).xOfY(localNumber(context, crew.members.length),
+                localNumber(context, MyCrew.maxMembers)),
             style: TextStyle(color: context.colors.muted, fontSize: 13),
           ),
         ),
@@ -403,7 +404,8 @@ class _WeeklyGoalCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '${crew.weeklyReps} / ${crew.weeklyGoal}',
+                L.of(context).xOfY(localNumber(context, crew.weeklyReps),
+                    localNumber(context, crew.weeklyGoal)),
                 style: TextStyle(
                   color: context.colors.muted,
                   fontSize: 12.5,
@@ -551,7 +553,7 @@ class _Contributions extends StatelessWidget {
                             SizedBox(
                               width: 46,
                               child: Text(
-                                '${member.weeklyReps}',
+                                localNumber(context, member.weeklyReps),
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   color: context.colors.text,
@@ -817,7 +819,7 @@ class _RankRow extends StatelessWidget {
           SizedBox(
             width: 26,
             child: Text(
-              '${entry.place}',
+              localNumber(context, entry.place),
               style: TextStyle(
                 color: medal ?? context.colors.muted,
                 fontWeight: FontWeight.w900,
@@ -859,7 +861,7 @@ class _RankRow extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  '${entry.members} members',
+                  L.of(context).membersCount(localNumber(context, entry.members)),
                   style: TextStyle(color: context.colors.muted, fontSize: 11.5),
                 ),
               ],
@@ -868,7 +870,7 @@ class _RankRow extends StatelessWidget {
           SizedBox(
             width: 52,
             child: Text(
-              '${entry.repsPerMember}',
+              localNumber(context, entry.repsPerMember),
               textAlign: TextAlign.right,
               style: TextStyle(
                 color: context.colors.text,
@@ -916,7 +918,7 @@ Future<void> _showOpenCrewsSheet(BuildContext context, VoidCallback onChanged) {
                     ),
                   ),
                   Text(
-                    '${c.members} members',
+                    L.of(context).membersCount(localNumber(context, c.members)),
                     style:
                         TextStyle(color: context.colors.muted, fontSize: 12),
                   ),
@@ -1025,7 +1027,8 @@ Future<void> _showWarSheet(BuildContext context, MyCrew crew) {
                     ),
                   ),
                   Text(
-                    '${c.repsPerMember} each',
+                    L.of(context).eachCount(
+                        localNumber(context, c.repsPerMember)),
                     style:
                         TextStyle(color: context.colors.muted, fontSize: 12),
                   ),

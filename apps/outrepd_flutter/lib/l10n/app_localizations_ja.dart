@@ -301,7 +301,7 @@ class LJa extends L {
   String get myCountry => '自分の国';
 
   @override
-  String yourFriends(int count) {
+  String yourFriends(String count) {
     return 'フレンド ($count)';
   }
 
@@ -650,7 +650,7 @@ class LJa extends L {
   String get dontGetOutrepd => 'Don\'t get OUTREPD!';
 
   @override
-  String xOfY(int a, int b) {
+  String xOfY(String a, String b) {
     return '$a / $b';
   }
 
@@ -1477,5 +1477,78 @@ class LJa extends L {
   @override
   String nRankBody(String rank) {
     return '$rank に到達しました';
+  }
+
+  @override
+  String get nameTooShortInline => '3文字以上の名前を入力してください';
+
+  @override
+  String get whyName => '対戦相手はすべての結果の横でこの名前を見ます';
+
+  @override
+  String get whyExperience => '同じ実力の相手とマッチングします';
+
+  @override
+  String get whyGoal => '最初におすすめする種目はここから決まります';
+
+  @override
+  String get whyAge => '年齢は、比較される筋力基準に影響します';
+
+  @override
+  String get whyWeight => 'ランクは体重に対する挙上重量で比べます。生の数値ではありません';
+
+  @override
+  String get whyHeight => '体重と合わせて、公平な基準を決めるのに使います';
+
+  @override
+  String get whyHabits => 'リマインダーと週の目標の提案がこれで決まります';
+
+  @override
+  String get transitionPartOfIt => '……だからこそ、本当にその一員になりましょう。';
+
+  @override
+  String get male => '男性';
+
+  @override
+  String get female => '女性';
+
+  @override
+  String get usernamePlaceholder => '名前';
+
+  @override
+  String get stRoutine => 'どの部位を本当に鍛えるべきか分からないので、たいてい同じメニューを繰り返しています';
+
+  @override
+  String get shortIn => 'in';
+
+  @override
+  String get today => '今日';
+
+  @override
+  String get yesterday => '昨日';
+
+  @override
+  String daysAgo(String n) {
+    return '$n 日前';
+  }
+
+  @override
+  String weeksAgo(String n) {
+    return '$n 週間前';
+  }
+
+  @override
+  String membersCount(String n) {
+    return 'メンバー $n 人';
+  }
+
+  @override
+  String eachCount(String n) {
+    return '1人あたり $n';
+  }
+
+  @override
+  String lpAmount(String n) {
+    return '$n LP';
   }
 }

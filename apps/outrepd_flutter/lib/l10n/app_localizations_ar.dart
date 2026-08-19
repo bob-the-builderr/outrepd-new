@@ -308,7 +308,7 @@ class LAr extends L {
   String get myCountry => 'بلدي';
 
   @override
-  String yourFriends(int count) {
+  String yourFriends(String count) {
     return 'أصدقاؤك ($count)';
   }
 
@@ -664,8 +664,8 @@ class LAr extends L {
   String get dontGetOutrepd => 'Don\'t get OUTREPD!';
 
   @override
-  String xOfY(int a, int b) {
-    return '$a / $b';
+  String xOfY(String a, String b) {
+    return '$a/$b';
   }
 
   @override
@@ -1496,5 +1496,80 @@ class LAr extends L {
   @override
   String nRankBody(String rank) {
     return 'وصلت إلى $rank';
+  }
+
+  @override
+  String get nameTooShortInline => 'اختر اسمًا من ثلاثة أحرف على الأقل';
+
+  @override
+  String get whyName => 'سيراه منافسوك بجوار كل نتيجة';
+
+  @override
+  String get whyExperience => 'نقابلك بمن هم في مستواك';
+
+  @override
+  String get whyGoal => 'التمارين المقترحة الأولى تُبنى على هذا';
+
+  @override
+  String get whyAge => 'العمر يؤثر في معايير القوة التي تُقاس بها';
+
+  @override
+  String get whyWeight =>
+      'الرتبة تقارن الرفع نسبةً إلى وزن الجسم لا بالكيلوغرامات وحدها';
+
+  @override
+  String get whyHeight => 'يُستخدم مع وزنك لضبط معايير عادلة';
+
+  @override
+  String get whyHabits => 'يحدد التذكيرات والهدف الأسبوعي الذي نقترحه';
+
+  @override
+  String get transitionPartOfIt => '...فلنتأكد أنك جزء منها حقًّا!';
+
+  @override
+  String get male => 'ذكر';
+
+  @override
+  String get female => 'أنثى';
+
+  @override
+  String get usernamePlaceholder => 'اسم اللاعب';
+
+  @override
+  String get stRoutine =>
+      'لا أعرف أي عضلة تحتاج العمل فعلًا، فأكرر البرنامج نفسه غالبًا';
+
+  @override
+  String get shortIn => 'بوصة';
+
+  @override
+  String get today => 'اليوم';
+
+  @override
+  String get yesterday => 'أمس';
+
+  @override
+  String daysAgo(String n) {
+    return 'منذ $n أيام';
+  }
+
+  @override
+  String weeksAgo(String n) {
+    return 'منذ $n أسابيع';
+  }
+
+  @override
+  String membersCount(String n) {
+    return '$n أعضاء';
+  }
+
+  @override
+  String eachCount(String n) {
+    return '$n للفرد';
+  }
+
+  @override
+  String lpAmount(String n) {
+    return '$n نقطة';
   }
 }

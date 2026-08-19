@@ -300,7 +300,7 @@ class LZh extends L {
   String get myCountry => '本国';
 
   @override
-  String yourFriends(int count) {
+  String yourFriends(String count) {
     return '你的好友（$count）';
   }
 
@@ -649,7 +649,7 @@ class LZh extends L {
   String get dontGetOutrepd => 'Don\'t get OUTREPD!';
 
   @override
-  String xOfY(int a, int b) {
+  String xOfY(String a, String b) {
     return '$a / $b';
   }
 
@@ -1476,5 +1476,78 @@ class LZh extends L {
   @override
   String nRankBody(String rank) {
     return '你已达到 $rank';
+  }
+
+  @override
+  String get nameTooShortInline => '请输入至少三个字符的名字';
+
+  @override
+  String get whyName => '对手会在每一个成绩旁看到它';
+
+  @override
+  String get whyExperience => '我们会为你匹配同水平的人';
+
+  @override
+  String get whyGoal => '最初推荐的动作由此决定';
+
+  @override
+  String get whyAge => '年龄会影响用来衡量你的力量标准';
+
+  @override
+  String get whyWeight => '段位比较的是相对体重的重量，而不是绝对公斤数';
+
+  @override
+  String get whyHeight => '与体重一起用来设定公平的标准';
+
+  @override
+  String get whyHabits => '这会决定提醒和我们建议的每周目标';
+
+  @override
+  String get transitionPartOfIt => '……那就让你真正成为其中一员吧。';
+
+  @override
+  String get male => '男';
+
+  @override
+  String get female => '女';
+
+  @override
+  String get usernamePlaceholder => '名字';
+
+  @override
+  String get stRoutine => '我不知道哪个部位真正需要练，所以常常重复同一套动作';
+
+  @override
+  String get shortIn => '英寸';
+
+  @override
+  String get today => '今天';
+
+  @override
+  String get yesterday => '昨天';
+
+  @override
+  String daysAgo(String n) {
+    return '$n 天前';
+  }
+
+  @override
+  String weeksAgo(String n) {
+    return '$n 周前';
+  }
+
+  @override
+  String membersCount(String n) {
+    return '$n 名成员';
+  }
+
+  @override
+  String eachCount(String n) {
+    return '人均 $n';
+  }
+
+  @override
+  String lpAmount(String n) {
+    return '$n LP';
   }
 }

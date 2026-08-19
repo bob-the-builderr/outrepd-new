@@ -307,7 +307,7 @@ class LRu extends L {
   String get myCountry => 'Моя страна';
 
   @override
-  String yourFriends(int count) {
+  String yourFriends(String count) {
     return 'Твои друзья ($count)';
   }
 
@@ -667,7 +667,7 @@ class LRu extends L {
   String get dontGetOutrepd => 'Don\'t get OUTREPD!';
 
   @override
-  String xOfY(int a, int b) {
+  String xOfY(String a, String b) {
     return '$a / $b';
   }
 
@@ -1506,5 +1506,84 @@ class LRu extends L {
   @override
   String nRankBody(String rank) {
     return 'Вы достигли $rank';
+  }
+
+  @override
+  String get nameTooShortInline => 'Выберите имя не короче трёх символов';
+
+  @override
+  String get whyName => 'Соперники увидят его рядом с каждым результатом';
+
+  @override
+  String get whyExperience => 'Мы сводим вас с людьми вашего уровня';
+
+  @override
+  String get whyGoal => 'От этого зависят первые предложенные упражнения';
+
+  @override
+  String get whyAge =>
+      'Возраст влияет на силовые нормативы, с которыми вас сравнивают';
+
+  @override
+  String get whyWeight =>
+      'Ранг сравнивает вес снаряда относительно веса тела, а не голые килограммы';
+
+  @override
+  String get whyHeight =>
+      'Используется вместе с весом, чтобы нормативы были честными';
+
+  @override
+  String get whyHabits =>
+      'От этого зависят напоминания и предлагаемая недельная цель';
+
+  @override
+  String get transitionPartOfIt =>
+      '...так давайте убедимся, что вы действительно её часть.';
+
+  @override
+  String get male => 'Мужской';
+
+  @override
+  String get female => 'Женский';
+
+  @override
+  String get usernamePlaceholder => 'имя';
+
+  @override
+  String get stRoutine =>
+      'Я не знаю, какая группа мышц действительно требует работы, поэтому обычно повторяю одну и ту же программу';
+
+  @override
+  String get shortIn => 'дюйм';
+
+  @override
+  String get today => 'Сегодня';
+
+  @override
+  String get yesterday => 'Вчера';
+
+  @override
+  String daysAgo(String n) {
+    return '$n дней назад';
+  }
+
+  @override
+  String weeksAgo(String n) {
+    return '$n недель назад';
+  }
+
+  @override
+  String membersCount(String n) {
+    return '$n участников';
+  }
+
+  @override
+  String eachCount(String n) {
+    return '$n на человека';
+  }
+
+  @override
+  String lpAmount(String n) {
+    return '$n ОЛ';
   }
 }

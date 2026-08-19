@@ -14,6 +14,7 @@ import '../reps/rep_engine.dart';
 import '../motion.dart';
 import '../l10n/app_localizations.dart';
 import '../theme.dart';
+import '../widgets.dart';
 
 /// Solo counting. No opponent, no server — the whole point of this screen is
 /// to get the counter trustworthy before a match is ever built on top of it.
@@ -702,7 +703,9 @@ class _Readout extends StatelessWidget {
   Widget build(BuildContext context) {
     final s = state;
     final hold = exercise.mode == ScoreMode.hold;
-    final value = hold ? holdSeconds.toStringAsFixed(1) : '${s?.reps ?? 0}';
+    final value = hold
+        ? holdSeconds.toStringAsFixed(1)
+        : localNumber(context, s?.reps ?? 0);
 
     final learning = stage == _Stage.learning;
     final message = learning
