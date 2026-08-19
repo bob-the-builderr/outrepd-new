@@ -88,7 +88,7 @@ class AchievementsScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              a.name,
+                              a.label(L.of(context)),
                               style: TextStyle(
                                 color: context.colors.text,
                                 fontWeight: FontWeight.w700,
@@ -97,7 +97,7 @@ class AchievementsScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 3),
                             Text(
-                              a.description,
+                              a.hint(L.of(context)),
                               style: TextStyle(
                                 color: context.colors.muted,
                                 fontSize: 12,

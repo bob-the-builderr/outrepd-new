@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data.dart';
 import '../onboarding_widgets.dart';
+import '../l10n/app_localizations.dart';
 import '../theme.dart';
 import 'shell.dart';
 
@@ -103,7 +104,8 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         actions: [
           TextButton(
             onPressed: _finish,
-            child: Text('Skip', style: TextStyle(color: context.colors.muted)),
+            child: Text(L.of(context).skip,
+                style: TextStyle(color: context.colors.muted)),
           ),
         ],
       ),
@@ -130,7 +132,9 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
                 canProceed: _canProceed,
                 showProgress: !hideProgress,
                 onNext: _next,
-                label: _step == _totalSteps - 2 ? 'Finish' : 'Continue',
+                label: _step == _totalSteps - 2
+                    ? L.of(context).finish2
+                    : L.of(context).continueLabel,
               ),
           ],
         ),
@@ -141,23 +145,23 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
   Widget _buildStep() => switch (_step) {
         0 => _usernameStep(),
         1 => _choiceStep(
-            'How experienced are you\nwith working out?',
-            const [
-              ("none", "I've never worked out"),
-              ("beginner", 'Beginner – Tried it before'),
-              ("intermediate", 'Intermediate – Regular training'),
-              ("advanced", 'Advanced – Years of experience'),
+            L.of(context).qExperience,
+            [
+              ('none', L.of(context).expNone),
+              ('beginner', L.of(context).expBeginner),
+              ('intermediate', L.of(context).expIntermediate),
+              ('advanced', L.of(context).expAdvanced),
             ],
             _experience,
             (v) => setState(() => _experience = v),
           ),
         2 => _choiceStep(
-            "What's your top\nfitness goal?",
-            const [
-              ('stronger', 'Become stronger'),
-              ('consistent', 'Become more consistent'),
-              ('lean', 'Lose weight and get lean'),
-              ('mass', 'Build muscle mass'),
+            L.of(context).qGoal,
+            [
+              ('stronger', L.of(context).goalStronger),
+              ('consistent', L.of(context).goalConsistent),
+              ('lean', L.of(context).goalLean),
+              ('mass', L.of(context).goalMass),
             ],
             _goal,
             (v) => setState(() => _goal = v),
@@ -167,32 +171,32 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         5 => _ageStep(),
         6 => _weightStep(),
         7 => _heightStep(),
-        8 => _transitionStep('This journey is all about you...'),
+        8 => _transitionStep(L.of(context).aboutYou),
         9 => _transitionStep("...so let's make sure you're truly part of it!"),
         10 => _choiceStep(
-            'How often do you think\nabout getting in shape?',
-            const [
-              ('never', 'Never'),
-              ('sometimes', 'Sometimes'),
-              ('often', 'Often'),
-              ('all_time', 'All The Time'),
+            L.of(context).qThinkAbout,
+            [
+              ('never', L.of(context).freqNever),
+              ('sometimes', L.of(context).freqSometimes),
+              ('often', L.of(context).freqOften),
+              ('all_time', L.of(context).freqAllTime),
             ],
             _thinkShape,
             (v) => setState(() => _thinkShape = v),
           ),
         11 => _choiceStep(
-            'How are your energy levels\nduring workouts?',
-            const [
-              ('low', 'Low energy, I feel drained all day'),
-              ('drops', 'Performance drops mid-session'),
-              ('hard', 'Hard to push through the last set'),
-              ('high', 'High and steady from start to finish'),
+            L.of(context).qEnergy,
+            [
+              ('low', L.of(context).energyLow),
+              ('drops', L.of(context).energyDrops),
+              ('hard', L.of(context).energyHard),
+              ('high', L.of(context).energyHigh),
             ],
             _energy,
             (v) => setState(() => _energy = v),
           ),
         12 => _statementStep(
-            "Sometimes, it's hard to notice progress when I workout",
+            L.of(context).stProgress,
             _relateProgress,
             (v) => setState(() => _relateProgress = v),
           ),
@@ -203,13 +207,13 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
           ),
         14 => _imageStep(
             'assets/images/effort-alone.png',
-            'Effort no one sees\nis easy to quit',
-            "When there's no one to prove yourself against, progress feels slow and effort feels pointless",
+            L.of(context).stEffortTitle,
+            L.of(context).stEffortBody,
           ),
         15 => _imageStep(
             'assets/images/training-alone.png',
-            'Training alone\nis boring',
-            "No one's watching. No one's counting. It's easy to skip a rep, or the whole set",
+            L.of(context).stAloneTitle,
+            L.of(context).stAloneBody,
           ),
         16 => _rivalStep(),
         _ => _successStep(),
@@ -221,7 +225,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
     return Column(
       children: [
         const SizedBox(height: 24),
-        const StepHeading(title: 'What should we\ncall you?'),
+        StepHeading(title: L.of(context).qName),
         const SizedBox(height: 40),
         TextField(
           controller: _usernameController,
@@ -250,7 +254,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         ),
         const SizedBox(height: 12),
         Text(
-          'At least 3 characters. This is what rivals will see.',
+          L.of(context).nameHint,
           textAlign: TextAlign.center,
           style: TextStyle(color: context.colors.muted, fontSize: 13),
         ),
@@ -325,9 +329,9 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
     return Column(
       children: [
         const SizedBox(height: 24),
-        const StepHeading(
-          title: 'Alright! Lets get\nsome basic info',
-          subtitle: 'I am...',
+        StepHeading(
+          title: L.of(context).basicInfo,
+          subtitle: L.of(context).iAm,
         ),
         const SizedBox(height: 40),
         Row(
@@ -345,7 +349,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
     return Column(
       children: [
         const SizedBox(height: 24),
-        const StepHeading(title: 'How old are you?'),
+        StepHeading(title: L.of(context).qAge),
         const SizedBox(height: 32),
         SizedBox(
           height: 240,
@@ -383,10 +387,10 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
     return Column(
       children: [
         const SizedBox(height: 24),
-        const StepHeading(title: "What's your\ncurrent weight?"),
+        StepHeading(title: L.of(context).qWeight),
         const SizedBox(height: 12),
         Text(
-          'Body weight is essential to calculate your rank.',
+          L.of(context).weightWhy,
           textAlign: TextAlign.center,
           style: TextStyle(color: context.colors.muted, fontSize: 13),
         ),
@@ -413,10 +417,10 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
           onChanged: (v) => setState(() => _weight = v),
         ),
         const SizedBox(height: 20),
-        const Text(
-          'Your information is private and will not be shared with anyone.',
+        Text(
+          L.of(context).privateNote,
           textAlign: TextAlign.center,
-          style: TextStyle(color: Color(0xFF556070), fontSize: 12),
+          style: const TextStyle(color: Color(0xFF556070), fontSize: 12),
         ),
       ],
     );
@@ -426,7 +430,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
     return Column(
       children: [
         const SizedBox(height: 24),
-        const StepHeading(title: 'How tall are you?'),
+        StepHeading(title: L.of(context).qHeight),
         const SizedBox(height: 24),
         UnitToggle(
           left: 'cm',
@@ -508,7 +512,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
     return Column(
       children: [
         const SizedBox(height: 24),
-        const StepHeading(title: 'Do you relate to the\nstatement below?'),
+        StepHeading(title: L.of(context).qRelate),
         const SizedBox(height: 32),
         Container(
           width: double.infinity,
@@ -533,9 +537,9 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         const SizedBox(height: 32),
         Row(
           children: [
-            answer('Yes', true, context.colors.brand),
+            answer(L.of(context).yes, true, context.colors.brand),
             const SizedBox(width: 14),
-            answer('No', false, context.colors.muted),
+            answer(L.of(context).no, false, context.colors.muted),
           ],
         ),
       ],
@@ -581,7 +585,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
           Image.asset('assets/images/workout-battle.png', height: 220),
           const SizedBox(height: 32),
           Text(
-            'The grind hits different\nwith a rival',
+            L.of(context).grindTitle,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: context.colors.text,
@@ -593,7 +597,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
           const SizedBox(height: 16),
           TypewriterText(
             text:
-                'Every match puts you against a real opponent, put in the work, and prove who trained harder.',
+                L.of(context).grindBody,
             onComplete: () => setState(() => _typingDone = true),
             style: const TextStyle(
               color: Color(0xFF888888),
@@ -615,7 +619,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
           Image.asset('assets/images/logo.png', height: 140),
           const SizedBox(height: 28),
           Text(
-            "You're all set!",
+            L.of(context).allSet,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: context.colors.text,
@@ -625,8 +629,11 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
           ),
           const SizedBox(height: 12),
           Text(
-            'Welcome, ${_usernameController.text.trim().isEmpty ? 'lifter' : _usernameController.text.trim()}. '
-            'Time to find your first rival.',
+            L.of(context).welcomeLifter(
+              _usernameController.text.trim().isEmpty
+                  ? L.of(context).lifter
+                  : _usernameController.text.trim(),
+            ),
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Color(0xFF888888),
@@ -636,7 +643,8 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
             ),
           ),
           const SizedBox(height: 40),
-          FilledButton(onPressed: _finish, child: const Text('Enter OUTREPD')),
+          FilledButton(
+              onPressed: _finish, child: Text(L.of(context).enterApp)),
         ],
       ),
     );
@@ -672,8 +680,8 @@ class _CommitmentStepState extends State<_CommitmentStep>
     return Column(
       children: [
         const SizedBox(height: 30),
-        const StepHeading(
-          title: "Now let's make a commitment\nto your fitness journey",
+        StepHeading(
+          title: L.of(context).commitTitle,
         ),
         const SizedBox(height: 56),
         GestureDetector(
@@ -715,10 +723,10 @@ class _CommitmentStepState extends State<_CommitmentStep>
           ),
         ),
         const SizedBox(height: 40),
-        const Text(
-          "Hold the logo to confirm you're ready",
+        Text(
+          L.of(context).holdLogo,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             color: Color(0xFF888888),
             fontSize: 16,
             fontWeight: FontWeight.w600,

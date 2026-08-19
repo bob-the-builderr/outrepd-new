@@ -868,4 +868,644 @@ class LHi extends L {
 
   @override
   String get continueLabel => 'आगे बढ़ें';
+
+  @override
+  String get ttl_first_blood => 'पहला वार';
+
+  @override
+  String get tdesc_first_blood => 'अपना पहला मैच पूरा करें';
+
+  @override
+  String get ttl_found_footing => 'पैर जम गए';
+
+  @override
+  String get tdesc_found_footing => 'पाँच मैच पूरे करें';
+
+  @override
+  String get ttl_regular => 'नियमित';
+
+  @override
+  String get tdesc_regular => 'बीस मैच';
+
+  @override
+  String get ttl_fifty => 'पचास पार';
+
+  @override
+  String get tdesc_fifty => 'पचास मैच';
+
+  @override
+  String get ttl_century => 'शतक';
+
+  @override
+  String get tdesc_century => 'सौ मैच';
+
+  @override
+  String get ttl_veteran => 'अनुभवी';
+
+  @override
+  String get tdesc_veteran => 'दो सौ पचास मैच';
+
+  @override
+  String get ttl_thousand_matches => 'पुराना पहरेदार';
+
+  @override
+  String get tdesc_thousand_matches => 'एक हज़ार मैच';
+
+  @override
+  String get ttl_first_win => 'विजेता';
+
+  @override
+  String get tdesc_first_win => 'एक मैच जीतें';
+
+  @override
+  String get ttl_on_a_roll => 'लय में';
+
+  @override
+  String get tdesc_on_a_roll => 'लगातार तीन जीतें';
+
+  @override
+  String get ttl_five_straight => 'लगातार पाँच';
+
+  @override
+  String get tdesc_five_straight => 'लगातार पाँच जीतें';
+
+  @override
+  String get ttl_unstoppable => 'अजेय';
+
+  @override
+  String get tdesc_unstoppable => 'लगातार दस जीतें';
+
+  @override
+  String get ttl_untouchable => 'अछूता';
+
+  @override
+  String get tdesc_untouchable => 'लगातार बीस जीतें';
+
+  @override
+  String get ttl_giant_slayer => 'दानव-विजेता';
+
+  @override
+  String get tdesc_giant_slayer => 'अपने से दो रैंक ऊपर वाले को हराएँ';
+
+  @override
+  String get ttl_comeback => 'वापसी';
+
+  @override
+  String get tdesc_comeback => 'तीन हार के तुरंत बाद जीतें';
+
+  @override
+  String get ttl_nemesis => 'चिर-प्रतिद्वंद्वी';
+
+  @override
+  String get tdesc_nemesis => 'एक ही खिलाड़ी को पाँच बार हराएँ';
+
+  @override
+  String get ttl_hundred_reps => 'शुरुआत';
+
+  @override
+  String get tdesc_hundred_reps => 'सौ गिने गए रेप';
+
+  @override
+  String get ttl_five_hundred => 'वॉर्म-अप पूरा';
+
+  @override
+  String get tdesc_five_hundred => 'पाँच सौ गिने गए रेप';
+
+  @override
+  String get ttl_the_machine => 'मशीन';
+
+  @override
+  String get tdesc_the_machine => 'एक हज़ार गिने गए रेप';
+
+  @override
+  String get ttl_five_thousand => 'अनवरत';
+
+  @override
+  String get tdesc_five_thousand => 'पाँच हज़ार गिने गए रेप';
+
+  @override
+  String get ttl_ten_thousand => 'दस हज़ार';
+
+  @override
+  String get tdesc_ten_thousand => 'दस हज़ार गिने गए रेप';
+
+  @override
+  String get ttl_fifty_thousand => 'गिनती से परे';
+
+  @override
+  String get tdesc_fifty_thousand => 'पचास हज़ार गिने गए रेप';
+
+  @override
+  String get ttl_first_tonne => 'एक टन';
+
+  @override
+  String get tdesc_first_tonne => 'कुल एक हज़ार किलो उठाएँ';
+
+  @override
+  String get ttl_ten_tonnes => 'दस टन';
+
+  @override
+  String get tdesc_ten_tonnes => 'दस हज़ार किलो उठाएँ';
+
+  @override
+  String get ttl_six_figures => 'छह अंक';
+
+  @override
+  String get tdesc_six_figures => 'एक लाख किलो उठाएँ';
+
+  @override
+  String get ttl_half_million => 'आधा मिलियन';
+
+  @override
+  String get tdesc_half_million => 'पाँच लाख किलो उठाएँ';
+
+  @override
+  String get ttl_million_kg => 'मिलियन किलो क्लब';
+
+  @override
+  String get tdesc_million_kg => 'दस लाख किलो उठाएँ';
+
+  @override
+  String get ttl_two_days => 'फिर हाज़िर';
+
+  @override
+  String get tdesc_two_days => 'लगातार दो दिन ट्रेनिंग करें';
+
+  @override
+  String get ttl_no_days_off => 'कोई छुट्टी नहीं';
+
+  @override
+  String get tdesc_no_days_off => 'लगातार सात दिन ट्रेनिंग करें';
+
+  @override
+  String get ttl_fortnight => 'चौदह दिन';
+
+  @override
+  String get tdesc_fortnight => 'चौदह दिन का सिलसिला';
+
+  @override
+  String get ttl_unbroken => 'अटूट';
+
+  @override
+  String get tdesc_unbroken => 'तीस दिन का सिलसिला';
+
+  @override
+  String get ttl_sixty_days => 'आदत';
+
+  @override
+  String get tdesc_sixty_days => 'साठ दिन का सिलसिला';
+
+  @override
+  String get ttl_hundred_days => 'सौ दिन';
+
+  @override
+  String get tdesc_hundred_days => 'सौ दिन का सिलसिला';
+
+  @override
+  String get ttl_year_round => 'साल भर';
+
+  @override
+  String get tdesc_year_round => 'तीन सौ पैंसठ दिन का सिलसिला';
+
+  @override
+  String get ttl_perfect_week => 'परफ़ेक्ट हफ़्ता';
+
+  @override
+  String get tdesc_perfect_week => 'एक हफ़्ते के हर दिन ट्रेनिंग करें';
+
+  @override
+  String get ttl_perfect_month => 'परफ़ेक्ट महीना';
+
+  @override
+  String get tdesc_perfect_month => 'चार परफ़ेक्ट हफ़्ते';
+
+  @override
+  String get ttl_bronze_tier => 'पाषाण से बाहर';
+
+  @override
+  String get tdesc_bronze_tier => 'कांस्य तक पहुँचें';
+
+  @override
+  String get ttl_silver_tier => 'रजतिम';
+
+  @override
+  String get tdesc_silver_tier => 'रजत तक पहुँचें';
+
+  @override
+  String get ttl_golden_era => 'स्वर्ण युग';
+
+  @override
+  String get tdesc_golden_era => 'स्वर्ण तक पहुँचें';
+
+  @override
+  String get ttl_platinum_tier => 'प्लैटिनम';
+
+  @override
+  String get tdesc_platinum_tier => 'प्लैटिनम तक पहुँचें';
+
+  @override
+  String get ttl_diamond_tier => 'हीरे की पकड़';
+
+  @override
+  String get tdesc_diamond_tier => 'हीरा तक पहुँचें';
+
+  @override
+  String get ttl_master_tier => 'मास्टर';
+
+  @override
+  String get tdesc_master_tier => 'मास्टर तक पहुँचें';
+
+  @override
+  String get ttl_mythic_tier => 'पौराणिक';
+
+  @override
+  String get tdesc_mythic_tier => 'पौराणिक रैंक तक पहुँचें';
+
+  @override
+  String get ttl_legend_tier => 'लेजेंड';
+
+  @override
+  String get tdesc_legend_tier => 'लेजेंड तक पहुँचें';
+
+  @override
+  String get ttl_clean_hands => 'साफ़ हाथ';
+
+  @override
+  String get tdesc_clean_hands => 'पूरा सेट, हर रेप गिना हुआ';
+
+  @override
+  String get ttl_spotless => 'बेदाग़';
+
+  @override
+  String get tdesc_spotless => 'दस साफ़ सेट';
+
+  @override
+  String get ttl_textbook => 'किताबी';
+
+  @override
+  String get tdesc_textbook => 'पचास साफ़ सेट';
+
+  @override
+  String get ttl_iron_hold => 'लोहे की पकड़';
+
+  @override
+  String get tdesc_iron_hold => 'दो मिनट प्लैंक रोकें';
+
+  @override
+  String get ttl_statue => 'प्रतिमा';
+
+  @override
+  String get tdesc_statue => 'पाँच मिनट प्लैंक रोकें';
+
+  @override
+  String get ttl_all_rounder => 'हरफ़नमौला';
+
+  @override
+  String get tdesc_all_rounder => 'पाँच अलग-अलग एक्सरसाइज़ गिनें';
+
+  @override
+  String get ttl_explorer => 'खोजी';
+
+  @override
+  String get tdesc_explorer => 'पंद्रह अलग-अलग एक्सरसाइज़ गिनें';
+
+  @override
+  String get ttl_encyclopedia => 'विश्वकोश';
+
+  @override
+  String get tdesc_encyclopedia => 'चालीस अलग-अलग एक्सरसाइज़ गिनें';
+
+  @override
+  String get ttl_early_bird => 'सुबह की पाली';
+
+  @override
+  String get tdesc_early_bird => 'सुबह सात से पहले दस सेशन';
+
+  @override
+  String get ttl_sunrise_club => 'सूर्योदय क्लब';
+
+  @override
+  String get tdesc_sunrise_club => 'सुबह सात से पहले पचास सेशन';
+
+  @override
+  String get ttl_night_owl => 'रात की पाली';
+
+  @override
+  String get tdesc_night_owl => 'रात दस के बाद दस सेशन';
+
+  @override
+  String get ttl_graveyard => 'पिछली रात की पाली';
+
+  @override
+  String get tdesc_graveyard => 'रात दस के बाद पचास सेशन';
+
+  @override
+  String get ttl_joined_up => 'जुड़ गए';
+
+  @override
+  String get tdesc_joined_up => 'किसी क्रू में रहें';
+
+  @override
+  String get ttl_backbone => 'रीढ़';
+
+  @override
+  String get tdesc_backbone => 'लगातार चार हफ़्ते अपने क्रू में शीर्ष पर रहें';
+
+  @override
+  String get ttl_cornerstone => 'आधारशिला';
+
+  @override
+  String get tdesc_cornerstone =>
+      'लगातार बारह हफ़्ते अपने क्रू में शीर्ष पर रहें';
+
+  @override
+  String get ttl_not_alone => 'अकेले नहीं';
+
+  @override
+  String get tdesc_not_alone => 'अपना पहला दोस्त जोड़ें';
+
+  @override
+  String get ttl_well_connected => 'अच्छी पहचान';
+
+  @override
+  String get tdesc_well_connected => 'दस दोस्त';
+
+  @override
+  String get ttl_the_gym_knows => 'जिम आपको जानता है';
+
+  @override
+  String get tdesc_the_gym_knows => 'पचास दोस्त';
+
+  @override
+  String get finish2 => 'समाप्त';
+
+  @override
+  String get qExperience => 'वर्कआउट में आपका\nअनुभव कितना है?';
+
+  @override
+  String get expBeginner => 'शुरुआती – पहले आज़माया है';
+
+  @override
+  String get expIntermediate => 'मध्यम – नियमित ट्रेनिंग करता हूँ';
+
+  @override
+  String get expAdvanced => 'उन्नत – वर्षों का अनुभव';
+
+  @override
+  String get qGoal => 'आपका मुख्य फ़िटनेस\nलक्ष्य क्या है?';
+
+  @override
+  String get goalStronger => 'और मज़बूत बनना';
+
+  @override
+  String get goalConsistent => 'और नियमित बनना';
+
+  @override
+  String get goalLean => 'वज़न घटाकर छरहरा होना';
+
+  @override
+  String get goalMass => 'मसल मास बढ़ाना';
+
+  @override
+  String get aboutYou => 'यह सफ़र पूरी तरह आपके बारे में है...';
+
+  @override
+  String get qThinkAbout => 'फ़िट होने के बारे में आप\nकितनी बार सोचते हैं?';
+
+  @override
+  String get freqNever => 'कभी नहीं';
+
+  @override
+  String get freqSometimes => 'कभी-कभी';
+
+  @override
+  String get freqOften => 'अक्सर';
+
+  @override
+  String get freqAllTime => 'हर समय';
+
+  @override
+  String get qEnergy => 'वर्कआउट के दौरान आपकी\nऊर्जा कैसी रहती है?';
+
+  @override
+  String get energyLow => 'कम, पूरे दिन थकान महसूस होती है';
+
+  @override
+  String get energyDrops => 'सेशन के बीच में प्रदर्शन गिर जाता है';
+
+  @override
+  String get energyHard => 'आख़िरी सेट पूरा करना मुश्किल लगता है';
+
+  @override
+  String get energyHigh => 'शुरू से आख़िर तक ऊँची और स्थिर';
+
+  @override
+  String get stProgress => 'कभी-कभी वर्कआउट करते हुए प्रगति दिखाई ही नहीं देती';
+
+  @override
+  String get stEffortTitle => 'जो मेहनत कोई नहीं देखता\nउसे छोड़ना आसान है';
+
+  @override
+  String get stEffortBody =>
+      'जब ख़ुद को साबित करने के लिए कोई सामने न हो, तो प्रगति धीमी और मेहनत बेकार लगती है';
+
+  @override
+  String get stAloneTitle => 'अकेले ट्रेनिंग करना\nउबाऊ है';
+
+  @override
+  String get stAloneBody =>
+      'कोई देख नहीं रहा। कोई गिन नहीं रहा। एक रेप, या पूरा सेट छोड़ देना आसान हो जाता है';
+
+  @override
+  String get qName => 'हम आपको क्या\nकहकर बुलाएँ?';
+
+  @override
+  String get nameHint => 'कम से कम 3 अक्षर। यही आपके प्रतिद्वंद्वी देखेंगे।';
+
+  @override
+  String get basicInfo => 'बढ़िया! अब कुछ\nबुनियादी जानकारी';
+
+  @override
+  String get qAge => 'आपकी उम्र क्या है?';
+
+  @override
+  String get qWeight => 'आपका मौजूदा\nवज़न कितना है?';
+
+  @override
+  String get weightWhy => 'आपकी रैंक निकालने के लिए शरीर का वज़न ज़रूरी है।';
+
+  @override
+  String get privateNote =>
+      'आपकी जानकारी निजी है और किसी के साथ साझा नहीं की जाएगी।';
+
+  @override
+  String get qHeight => 'आपका कद कितना है?';
+
+  @override
+  String get qRelate => 'क्या नीचे दिया कथन\nआप पर लागू होता है?';
+
+  @override
+  String get yes => 'हाँ';
+
+  @override
+  String get no => 'नहीं';
+
+  @override
+  String get grindTitle => 'प्रतिद्वंद्वी हो तो\nमेहनत का मज़ा ही अलग है';
+
+  @override
+  String get grindBody =>
+      'हर मैच आपको एक असली प्रतिद्वंद्वी के सामने खड़ा करता है: मेहनत कीजिए और साबित कीजिए कि किसने ज़्यादा ट्रेनिंग की।';
+
+  @override
+  String get allSet => 'सब तैयार है!';
+
+  @override
+  String welcomeLifter(String name) {
+    return 'स्वागत है, $name। अब अपना पहला प्रतिद्वंद्वी ढूँढिए।';
+  }
+
+  @override
+  String get lifter => 'खिलाड़ी';
+
+  @override
+  String get enterApp => 'OUTREPD में जाएँ';
+
+  @override
+  String get commitTitle => 'अब अपने फ़िटनेस सफ़र से\nएक वादा कीजिए';
+
+  @override
+  String get holdLogo => 'तैयार होने की पुष्टि के लिए लोगो को दबाए रखें';
+
+  @override
+  String get expNone => 'मैंने कभी वर्कआउट नहीं किया';
+
+  @override
+  String get iAm => 'मैं...';
+
+  @override
+  String get finishMatchQ => 'मैच समाप्त करें?';
+
+  @override
+  String get finishMatchBody =>
+      'आपका कुल वज़न लॉक होकर प्रतिद्वंद्वी से तुलना किया जाएगा।';
+
+  @override
+  String get keepGoing => 'जारी रखें';
+
+  @override
+  String get forfeitQ => 'मैच छोड़ें?';
+
+  @override
+  String get forfeitBody => 'अभी निकले तो आप LP गँवा देंगे।';
+
+  @override
+  String get stay => 'रुकें';
+
+  @override
+  String get forfeit => 'हार मानें';
+
+  @override
+  String get pickExercises => 'वे एक्सरसाइज़ चुनें जो आप करेंगे';
+
+  @override
+  String matchingWith(String muscle) {
+    return 'आपकी रैंक का खिलाड़ी ढूँढा जा रहा है · $muscle';
+  }
+
+  @override
+  String get getReady => 'तैयार हो जाइए';
+
+  @override
+  String get timeLeft => 'शेष समय';
+
+  @override
+  String vsName(String name) {
+    return 'बनाम $name';
+  }
+
+  @override
+  String kgTotalVolume(String unit) {
+    return '$unit कुल वज़न';
+  }
+
+  @override
+  String get finishMatch => 'मैच समाप्त करें';
+
+  @override
+  String get kgHint => 'किग्रा';
+
+  @override
+  String get repsHint => 'रेप';
+
+  @override
+  String get addSet => 'सेट जोड़ें';
+
+  @override
+  String get matchComplete => 'मैच पूरा हुआ';
+
+  @override
+  String get you => 'आप';
+
+  @override
+  String get vs => 'बनाम';
+
+  @override
+  String get backToHome => 'होम पर लौटें';
+
+  @override
+  String get mgChest => 'छाती';
+
+  @override
+  String get mgBack => 'पीठ';
+
+  @override
+  String get mgLegs => 'पैर';
+
+  @override
+  String get mgShoulders => 'कंधे';
+
+  @override
+  String get mgArms => 'बाँहें';
+
+  @override
+  String get mgCore => 'कोर';
+
+  @override
+  String get achRivalry => 'प्रतिद्वंद्विता';
+
+  @override
+  String get achRivalryHint => 'एक ही प्रतिद्वंद्वी को 3 बार हराएँ';
+
+  @override
+  String get nWonTitle => 'आप जीत गए!';
+
+  @override
+  String nWonBody(String name, String muscle) {
+    return '$muscle डे पर आपने $name को हराया';
+  }
+
+  @override
+  String get nFriendTitle => 'नया दोस्ती अनुरोध';
+
+  @override
+  String nFriendBody(String name) {
+    return '$name आपसे जुड़ना चाहता है';
+  }
+
+  @override
+  String get nAchTitle => 'उपलब्धि खुली';
+
+  @override
+  String nAchBody(String title, String hint) {
+    return '$title — $hint';
+  }
+
+  @override
+  String get nRankTitle => 'रैंक बढ़ी!';
+
+  @override
+  String nRankBody(String rank) {
+    return 'आप $rank तक पहुँचे';
+  }
 }

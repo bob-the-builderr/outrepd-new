@@ -37,7 +37,7 @@ class NotificationsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        n.title,
+                        n.heading(L.of(context)),
                         style: TextStyle(
                           color: context.colors.text,
                           fontWeight:
@@ -47,7 +47,7 @@ class NotificationsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        n.body,
+                        n.detail(L.of(context)),
                         style: TextStyle(
                           color: context.colors.muted,
                           fontSize: 13,

@@ -7,6 +7,8 @@ library;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'l10n/app_localizations.dart';
+
 class Profile {
   Profile({
     required this.username,
@@ -197,14 +199,38 @@ class Achievement {
 }
 
 const demoAchievements = <Achievement>[
-  Achievement('First Blood', 'Complete your first match', true),
-  Achievement('On a Roll', 'Win 3 matches in a row', true),
-  Achievement('Six Figures', 'Lift 100,000 kg in total', true),
-  Achievement('Rivalry', 'Beat the same opponent 3 times', true),
-  Achievement('Unstoppable', 'Win 10 matches in a row', false),
-  Achievement('Golden Era', 'Reach Gold tier', false),
-  Achievement('Century', 'Complete 100 matches', false),
+  Achievement('first_blood', '', true),
+  Achievement('on_a_roll', '', true),
+  Achievement('six_figures', '', true),
+  Achievement('rivalry', '', true),
+  Achievement('unstoppable', '', false),
+  Achievement('golden_era', '', false),
+  Achievement('century', '', false),
 ];
+
+/// Most of these are the same milestones the titles list already names, so the
+/// words come from there rather than being written out twice.
+extension AchievementText on Achievement {
+  String label(L l) => switch (name) {
+        'first_blood' => l.ttl_first_blood,
+        'on_a_roll' => l.ttl_on_a_roll,
+        'six_figures' => l.ttl_six_figures,
+        'rivalry' => l.achRivalry,
+        'unstoppable' => l.ttl_unstoppable,
+        'golden_era' => l.ttl_golden_era,
+        _ => l.ttl_century,
+      };
+
+  String hint(L l) => switch (name) {
+        'first_blood' => l.tdesc_first_blood,
+        'on_a_roll' => l.tdesc_on_a_roll,
+        'six_figures' => l.tdesc_six_figures,
+        'rivalry' => l.achRivalryHint,
+        'unstoppable' => l.tdesc_unstoppable,
+        'golden_era' => l.tdesc_golden_era,
+        _ => l.tdesc_century,
+      };
+}
 
 class Friend {
   const Friend(this.username, this.tierIdx, this.lp, this.online);
@@ -230,11 +256,39 @@ class AppNotification {
 }
 
 const demoNotifications = <AppNotification>[
-  AppNotification('You won!', 'You beat benchgod on Chest day', 1, true),
-  AppNotification('New friend request', 'squat_queen wants to connect', 2, true),
-  AppNotification('Achievement unlocked', 'On a Roll — 3 wins in a row', 5, false),
-  AppNotification('Rank up!', 'You reached Gold III', 9, false),
+  AppNotification('won', 'benchgod', 1, true),
+  AppNotification('friend', 'squat_queen', 2, true),
+  AppNotification('achievement', '', 5, false),
+  AppNotification('rank', 'Gold III', 9, false),
 ];
+
+extension AppNotificationText on AppNotification {
+  String heading(L l) => switch (title) {
+        'won' => l.nWonTitle,
+        'friend' => l.nFriendTitle,
+        'achievement' => l.nAchTitle,
+        _ => l.nRankTitle,
+      };
+
+  String detail(L l) => switch (title) {
+        'won' => l.nWonBody(body, l.mgChest),
+        'friend' => l.nFriendBody(body),
+        'achievement' => l.nAchBody(l.ttl_on_a_roll, l.tdesc_on_a_roll),
+        _ => l.nRankBody(body),
+      };
+}
+
+/// The words a person reads. The list below stays English because those
+/// strings are ids: they match recorded matches and exercise definitions.
+String muscleGroupLabel(L l, String group) => switch (group) {
+      'Chest' => l.mgChest,
+      'Back' => l.mgBack,
+      'Legs' => l.mgLegs,
+      'Shoulders' => l.mgShoulders,
+      'Arms' => l.mgArms,
+      'Core' => l.mgCore,
+      _ => group,
+    };
 
 const muscleGroups = <String>[
   'Chest',

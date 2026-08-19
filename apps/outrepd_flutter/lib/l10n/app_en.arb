@@ -381,5 +381,273 @@
   "ob5Title": "Become a\nLegend",
   "ob5Body": "Consistency compounds. Show up, out-lift, rank up.",
   "letsGo": "Let's go",
-  "continueLabel": "Continue"
+  "continueLabel": "Continue",
+  "ttl_first_blood": "First Blood",
+  "tdesc_first_blood": "Finish your first match",
+  "ttl_found_footing": "Found Your Footing",
+  "tdesc_found_footing": "Finish five matches",
+  "ttl_regular": "Regular",
+  "tdesc_regular": "Twenty matches",
+  "ttl_fifty": "Fifty Deep",
+  "tdesc_fifty": "Fifty matches",
+  "ttl_century": "Century",
+  "tdesc_century": "A hundred matches",
+  "ttl_veteran": "Veteran",
+  "tdesc_veteran": "Two hundred and fifty matches",
+  "ttl_thousand_matches": "Old Guard",
+  "tdesc_thousand_matches": "A thousand matches",
+  "ttl_first_win": "Winner",
+  "tdesc_first_win": "Win a match",
+  "ttl_on_a_roll": "On a Roll",
+  "tdesc_on_a_roll": "Win three in a row",
+  "ttl_five_straight": "Five Straight",
+  "tdesc_five_straight": "Win five in a row",
+  "ttl_unstoppable": "Unstoppable",
+  "tdesc_unstoppable": "Win ten in a row",
+  "ttl_untouchable": "Untouchable",
+  "tdesc_untouchable": "Win twenty in a row",
+  "ttl_giant_slayer": "Giant Slayer",
+  "tdesc_giant_slayer": "Beat someone two tiers above you",
+  "ttl_comeback": "Comeback",
+  "tdesc_comeback": "Win straight after three losses",
+  "ttl_nemesis": "Nemesis",
+  "tdesc_nemesis": "Beat the same lifter five times",
+  "ttl_hundred_reps": "Off the Mark",
+  "tdesc_hundred_reps": "A hundred counted reps",
+  "ttl_five_hundred": "Warmed Up",
+  "tdesc_five_hundred": "Five hundred counted reps",
+  "ttl_the_machine": "The Machine",
+  "tdesc_the_machine": "A thousand counted reps",
+  "ttl_five_thousand": "Relentless",
+  "tdesc_five_thousand": "Five thousand counted reps",
+  "ttl_ten_thousand": "Ten Thousand",
+  "tdesc_ten_thousand": "Ten thousand counted reps",
+  "ttl_fifty_thousand": "Beyond Counting",
+  "tdesc_fifty_thousand": "Fifty thousand counted reps",
+  "ttl_first_tonne": "A Tonne",
+  "tdesc_first_tonne": "Move a thousand kilos in total",
+  "ttl_ten_tonnes": "Ten Tonnes",
+  "tdesc_ten_tonnes": "Move ten thousand kilos",
+  "ttl_six_figures": "Six Figures",
+  "tdesc_six_figures": "Move a hundred thousand kilos",
+  "ttl_half_million": "Half a Million",
+  "tdesc_half_million": "Move five hundred thousand kilos",
+  "ttl_million_kg": "Million Kilo Club",
+  "tdesc_million_kg": "Move a million kilos",
+  "ttl_two_days": "Back Again",
+  "tdesc_two_days": "Train two days running",
+  "ttl_no_days_off": "No Days Off",
+  "tdesc_no_days_off": "Train seven days running",
+  "ttl_fortnight": "Fortnight",
+  "tdesc_fortnight": "A fourteen day streak",
+  "ttl_unbroken": "Unbroken",
+  "tdesc_unbroken": "A thirty day streak",
+  "ttl_sixty_days": "Habit",
+  "tdesc_sixty_days": "A sixty day streak",
+  "ttl_hundred_days": "Hundred Days",
+  "tdesc_hundred_days": "A hundred day streak",
+  "ttl_year_round": "Year Round",
+  "tdesc_year_round": "A three hundred and sixty five day streak",
+  "ttl_perfect_week": "Perfect Week",
+  "tdesc_perfect_week": "Train every day of one week",
+  "ttl_perfect_month": "Perfect Month",
+  "tdesc_perfect_month": "Four perfect weeks",
+  "ttl_bronze_tier": "Out of the Stone",
+  "tdesc_bronze_tier": "Reach Bronze",
+  "ttl_silver_tier": "Silverside",
+  "tdesc_silver_tier": "Reach Silver",
+  "ttl_golden_era": "Golden Era",
+  "tdesc_golden_era": "Reach Gold",
+  "ttl_platinum_tier": "Platinum",
+  "tdesc_platinum_tier": "Reach Platinum",
+  "ttl_diamond_tier": "Diamond Hands",
+  "tdesc_diamond_tier": "Reach Diamond",
+  "ttl_master_tier": "Master",
+  "tdesc_master_tier": "Reach Master",
+  "ttl_mythic_tier": "Mythic",
+  "tdesc_mythic_tier": "Reach Mythic",
+  "ttl_legend_tier": "Legend",
+  "tdesc_legend_tier": "Reach Legend",
+  "ttl_clean_hands": "Clean Hands",
+  "tdesc_clean_hands": "A full set with every rep counted",
+  "ttl_spotless": "Spotless",
+  "tdesc_spotless": "Ten clean sets",
+  "ttl_textbook": "Textbook",
+  "tdesc_textbook": "Fifty clean sets",
+  "ttl_iron_hold": "Iron Hold",
+  "tdesc_iron_hold": "Hold a plank for two minutes",
+  "ttl_statue": "Statue",
+  "tdesc_statue": "Hold a plank for five minutes",
+  "ttl_all_rounder": "All Rounder",
+  "tdesc_all_rounder": "Count five different exercises",
+  "ttl_explorer": "Explorer",
+  "tdesc_explorer": "Count fifteen different exercises",
+  "ttl_encyclopedia": "Encyclopedia",
+  "tdesc_encyclopedia": "Count forty different exercises",
+  "ttl_early_bird": "Early Shift",
+  "tdesc_early_bird": "Ten sessions before seven in the morning",
+  "ttl_sunrise_club": "Sunrise Club",
+  "tdesc_sunrise_club": "Fifty sessions before seven",
+  "ttl_night_owl": "Night Shift",
+  "tdesc_night_owl": "Ten sessions after ten at night",
+  "ttl_graveyard": "Graveyard Shift",
+  "tdesc_graveyard": "Fifty sessions after ten",
+  "ttl_joined_up": "Joined Up",
+  "tdesc_joined_up": "Be in a crew",
+  "ttl_backbone": "Backbone",
+  "tdesc_backbone": "Top your crew four weeks running",
+  "ttl_cornerstone": "Cornerstone",
+  "tdesc_cornerstone": "Top your crew twelve weeks running",
+  "ttl_not_alone": "Not Alone",
+  "tdesc_not_alone": "Add your first friend",
+  "ttl_well_connected": "Well Connected",
+  "tdesc_well_connected": "Ten friends",
+  "ttl_the_gym_knows": "The Gym Knows You",
+  "tdesc_the_gym_knows": "Fifty friends",
+  "finish2": "Finish",
+  "qExperience": "How experienced are you\nwith working out?",
+  "expBeginner": "Beginner – Tried it before",
+  "expIntermediate": "Intermediate – Regular training",
+  "expAdvanced": "Advanced – Years of experience",
+  "qGoal": "What's your top\nfitness goal?",
+  "goalStronger": "Become stronger",
+  "goalConsistent": "Become more consistent",
+  "goalLean": "Lose weight and get lean",
+  "goalMass": "Build muscle mass",
+  "aboutYou": "This journey is all about you...",
+  "qThinkAbout": "How often do you think\nabout getting in shape?",
+  "freqNever": "Never",
+  "freqSometimes": "Sometimes",
+  "freqOften": "Often",
+  "freqAllTime": "All The Time",
+  "qEnergy": "How are your energy levels\nduring workouts?",
+  "energyLow": "Low energy, I feel drained all day",
+  "energyDrops": "Performance drops mid-session",
+  "energyHard": "Hard to push through the last set",
+  "energyHigh": "High and steady from start to finish",
+  "stProgress": "Sometimes, it's hard to notice progress when I workout",
+  "stEffortTitle": "Effort no one sees\nis easy to quit",
+  "stEffortBody": "When there's no one to prove yourself against, progress feels slow and effort feels pointless",
+  "stAloneTitle": "Training alone\nis boring",
+  "stAloneBody": "No one's watching. No one's counting. It's easy to skip a rep, or the whole set",
+  "qName": "What should we\ncall you?",
+  "nameHint": "At least 3 characters. This is what rivals will see.",
+  "basicInfo": "Alright! Lets get\nsome basic info",
+  "qAge": "How old are you?",
+  "qWeight": "What's your\ncurrent weight?",
+  "weightWhy": "Body weight is essential to calculate your rank.",
+  "privateNote": "Your information is private and will not be shared with anyone.",
+  "qHeight": "How tall are you?",
+  "qRelate": "Do you relate to the\nstatement below?",
+  "yes": "Yes",
+  "no": "No",
+  "grindTitle": "The grind hits different\nwith a rival",
+  "grindBody": "Every match puts you against a real opponent, put in the work, and prove who trained harder.",
+  "allSet": "You're all set!",
+  "welcomeLifter": "Welcome, {name}. Time to find your first rival.",
+  "lifter": "lifter",
+  "enterApp": "Enter OUTREPD",
+  "commitTitle": "Now let's make a commitment\nto your fitness journey",
+  "holdLogo": "Hold the logo to confirm you're ready",
+  "@welcomeLifter": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "expNone": "I've never worked out",
+  "iAm": "I am...",
+  "finishMatchQ": "Finish match?",
+  "finishMatchBody": "Your volume will be locked in and compared with your opponent.",
+  "keepGoing": "Keep going",
+  "forfeitQ": "Forfeit match?",
+  "forfeitBody": "You will lose LP if you leave now.",
+  "stay": "Stay",
+  "forfeit": "Forfeit",
+  "pickExercises": "Pick the exercises you will train",
+  "matchingWith": "Matching you with a lifter at your rank · {muscle}",
+  "@matchingWith": {
+    "placeholders": {
+      "muscle": {
+        "type": "String"
+      }
+    }
+  },
+  "getReady": "GET READY",
+  "timeLeft": "TIME LEFT",
+  "vsName": "vs {name}",
+  "@vsName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "kgTotalVolume": "{unit} total volume",
+  "@kgTotalVolume": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "finishMatch": "FINISH MATCH",
+  "kgHint": "KG",
+  "repsHint": "REPS",
+  "addSet": "ADD SET",
+  "matchComplete": "MATCH COMPLETE",
+  "you": "YOU",
+  "vs": "VS",
+  "backToHome": "BACK TO HOME",
+  "mgChest": "Chest",
+  "mgBack": "Back",
+  "mgLegs": "Legs",
+  "mgShoulders": "Shoulders",
+  "mgArms": "Arms",
+  "mgCore": "Core",
+  "achRivalry": "Rivalry",
+  "achRivalryHint": "Beat the same opponent 3 times",
+  "nWonTitle": "You won!",
+  "nWonBody": "You beat {name} on {muscle} day",
+  "@nWonBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "muscle": {
+        "type": "String"
+      }
+    }
+  },
+  "nFriendTitle": "New friend request",
+  "nFriendBody": "{name} wants to connect",
+  "@nFriendBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "nAchTitle": "Achievement unlocked",
+  "nAchBody": "{title} — {hint}",
+  "@nAchBody": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "hint": {
+        "type": "String"
+      }
+    }
+  },
+  "nRankTitle": "Rank up!",
+  "nRankBody": "You reached {rank}",
+  "@nRankBody": {
+    "placeholders": {
+      "rank": {
+        "type": "String"
+      }
+    }
+  }
 }

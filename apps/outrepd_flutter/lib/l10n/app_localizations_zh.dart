@@ -843,4 +843,638 @@ class LZh extends L {
 
   @override
   String get continueLabel => '继续';
+
+  @override
+  String get ttl_first_blood => '首胜之血';
+
+  @override
+  String get tdesc_first_blood => '完成你的第一场对战';
+
+  @override
+  String get ttl_found_footing => '站稳脚跟';
+
+  @override
+  String get tdesc_found_footing => '完成五场对战';
+
+  @override
+  String get ttl_regular => '常客';
+
+  @override
+  String get tdesc_regular => '二十场对战';
+
+  @override
+  String get ttl_fifty => '五十场';
+
+  @override
+  String get tdesc_fifty => '五十场对战';
+
+  @override
+  String get ttl_century => '百场';
+
+  @override
+  String get tdesc_century => '一百场对战';
+
+  @override
+  String get ttl_veteran => '老将';
+
+  @override
+  String get tdesc_veteran => '二百五十场对战';
+
+  @override
+  String get ttl_thousand_matches => '元老';
+
+  @override
+  String get tdesc_thousand_matches => '一千场对战';
+
+  @override
+  String get ttl_first_win => '胜者';
+
+  @override
+  String get tdesc_first_win => '赢下一场对战';
+
+  @override
+  String get ttl_on_a_roll => '势头正盛';
+
+  @override
+  String get tdesc_on_a_roll => '连胜三场';
+
+  @override
+  String get ttl_five_straight => '五连胜';
+
+  @override
+  String get tdesc_five_straight => '连胜五场';
+
+  @override
+  String get ttl_unstoppable => '势不可挡';
+
+  @override
+  String get tdesc_unstoppable => '连胜十场';
+
+  @override
+  String get ttl_untouchable => '无人能碰';
+
+  @override
+  String get tdesc_untouchable => '连胜二十场';
+
+  @override
+  String get ttl_giant_slayer => '巨人杀手';
+
+  @override
+  String get tdesc_giant_slayer => '击败高你两个段位的对手';
+
+  @override
+  String get ttl_comeback => '逆风翻盘';
+
+  @override
+  String get tdesc_comeback => '三连败后立刻拿下一胜';
+
+  @override
+  String get ttl_nemesis => '宿敌';
+
+  @override
+  String get tdesc_nemesis => '击败同一名对手五次';
+
+  @override
+  String get ttl_hundred_reps => '开了个头';
+
+  @override
+  String get tdesc_hundred_reps => '累计一百次有效计数';
+
+  @override
+  String get ttl_five_hundred => '热身完毕';
+
+  @override
+  String get tdesc_five_hundred => '累计五百次有效计数';
+
+  @override
+  String get ttl_the_machine => '机器';
+
+  @override
+  String get tdesc_the_machine => '累计一千次有效计数';
+
+  @override
+  String get ttl_five_thousand => '永不停歇';
+
+  @override
+  String get tdesc_five_thousand => '累计五千次有效计数';
+
+  @override
+  String get ttl_ten_thousand => '一万次';
+
+  @override
+  String get tdesc_ten_thousand => '累计一万次有效计数';
+
+  @override
+  String get ttl_fifty_thousand => '数不过来';
+
+  @override
+  String get tdesc_fifty_thousand => '累计五万次有效计数';
+
+  @override
+  String get ttl_first_tonne => '一吨';
+
+  @override
+  String get tdesc_first_tonne => '累计举起一千公斤';
+
+  @override
+  String get ttl_ten_tonnes => '十吨';
+
+  @override
+  String get tdesc_ten_tonnes => '累计举起一万公斤';
+
+  @override
+  String get ttl_six_figures => '六位数';
+
+  @override
+  String get tdesc_six_figures => '累计举起十万公斤';
+
+  @override
+  String get ttl_half_million => '五十万';
+
+  @override
+  String get tdesc_half_million => '累计举起五十万公斤';
+
+  @override
+  String get ttl_million_kg => '百万公斤俱乐部';
+
+  @override
+  String get tdesc_million_kg => '累计举起一百万公斤';
+
+  @override
+  String get ttl_two_days => '又回来了';
+
+  @override
+  String get tdesc_two_days => '连续两天训练';
+
+  @override
+  String get ttl_no_days_off => '全勤';
+
+  @override
+  String get tdesc_no_days_off => '连续七天训练';
+
+  @override
+  String get ttl_fortnight => '两周';
+
+  @override
+  String get tdesc_fortnight => '十四天连续记录';
+
+  @override
+  String get ttl_unbroken => '从未中断';
+
+  @override
+  String get tdesc_unbroken => '三十天连续记录';
+
+  @override
+  String get ttl_sixty_days => '习惯';
+
+  @override
+  String get tdesc_sixty_days => '六十天连续记录';
+
+  @override
+  String get ttl_hundred_days => '一百天';
+
+  @override
+  String get tdesc_hundred_days => '一百天连续记录';
+
+  @override
+  String get ttl_year_round => '全年无休';
+
+  @override
+  String get tdesc_year_round => '三百六十五天连续记录';
+
+  @override
+  String get ttl_perfect_week => '完美一周';
+
+  @override
+  String get tdesc_perfect_week => '一周内每天训练';
+
+  @override
+  String get ttl_perfect_month => '完美一月';
+
+  @override
+  String get tdesc_perfect_month => '四个完美的一周';
+
+  @override
+  String get ttl_bronze_tier => '走出石阶';
+
+  @override
+  String get tdesc_bronze_tier => '达到青铜';
+
+  @override
+  String get ttl_silver_tier => '银色';
+
+  @override
+  String get tdesc_silver_tier => '达到白银';
+
+  @override
+  String get ttl_golden_era => '黄金时代';
+
+  @override
+  String get tdesc_golden_era => '达到黄金';
+
+  @override
+  String get ttl_platinum_tier => '铂金';
+
+  @override
+  String get tdesc_platinum_tier => '达到铂金';
+
+  @override
+  String get ttl_diamond_tier => '钻石之手';
+
+  @override
+  String get tdesc_diamond_tier => '达到钻石';
+
+  @override
+  String get ttl_master_tier => '大师';
+
+  @override
+  String get tdesc_master_tier => '达到大师';
+
+  @override
+  String get ttl_mythic_tier => '神话';
+
+  @override
+  String get tdesc_mythic_tier => '达到神话段位';
+
+  @override
+  String get ttl_legend_tier => '传奇';
+
+  @override
+  String get tdesc_legend_tier => '达到传奇';
+
+  @override
+  String get ttl_clean_hands => '干净利落';
+
+  @override
+  String get tdesc_clean_hands => '整组动作每一次都被计入';
+
+  @override
+  String get ttl_spotless => '毫无瑕疵';
+
+  @override
+  String get tdesc_spotless => '十组干净的训练';
+
+  @override
+  String get ttl_textbook => '教科书级';
+
+  @override
+  String get tdesc_textbook => '五十组干净的训练';
+
+  @override
+  String get ttl_iron_hold => '铁掌';
+
+  @override
+  String get tdesc_iron_hold => '平板支撑坚持两分钟';
+
+  @override
+  String get ttl_statue => '雕像';
+
+  @override
+  String get tdesc_statue => '平板支撑坚持五分钟';
+
+  @override
+  String get ttl_all_rounder => '全能选手';
+
+  @override
+  String get tdesc_all_rounder => '累计五个不同动作';
+
+  @override
+  String get ttl_explorer => '探索者';
+
+  @override
+  String get tdesc_explorer => '累计十五个不同动作';
+
+  @override
+  String get ttl_encyclopedia => '百科全书';
+
+  @override
+  String get tdesc_encyclopedia => '累计四十个不同动作';
+
+  @override
+  String get ttl_early_bird => '早班';
+
+  @override
+  String get tdesc_early_bird => '早上七点前完成十次训练';
+
+  @override
+  String get ttl_sunrise_club => '日出俱乐部';
+
+  @override
+  String get tdesc_sunrise_club => '早上七点前完成五十次训练';
+
+  @override
+  String get ttl_night_owl => '夜班';
+
+  @override
+  String get tdesc_night_owl => '晚上十点后完成十次训练';
+
+  @override
+  String get ttl_graveyard => '通宵班';
+
+  @override
+  String get tdesc_graveyard => '晚上十点后完成五十次训练';
+
+  @override
+  String get ttl_joined_up => '已入队';
+
+  @override
+  String get tdesc_joined_up => '加入一支战队';
+
+  @override
+  String get ttl_backbone => '中流砥柱';
+
+  @override
+  String get tdesc_backbone => '连续四周位居战队榜首';
+
+  @override
+  String get ttl_cornerstone => '基石';
+
+  @override
+  String get tdesc_cornerstone => '连续十二周位居战队榜首';
+
+  @override
+  String get ttl_not_alone => '不再独行';
+
+  @override
+  String get tdesc_not_alone => '添加第一位好友';
+
+  @override
+  String get ttl_well_connected => '人脉广阔';
+
+  @override
+  String get tdesc_well_connected => '十位好友';
+
+  @override
+  String get ttl_the_gym_knows => '整个健身房都认识你';
+
+  @override
+  String get tdesc_the_gym_knows => '五十位好友';
+
+  @override
+  String get finish2 => '完成';
+
+  @override
+  String get qExperience => '你的训练经验\n有多少？';
+
+  @override
+  String get expBeginner => '新手 – 试过几次';
+
+  @override
+  String get expIntermediate => '进阶 – 有规律训练';
+
+  @override
+  String get expAdvanced => '资深 – 多年经验';
+
+  @override
+  String get qGoal => '你最重要的\n健身目标是什么？';
+
+  @override
+  String get goalStronger => '变得更强';
+
+  @override
+  String get goalConsistent => '变得更规律';
+
+  @override
+  String get goalLean => '减重并练出线条';
+
+  @override
+  String get goalMass => '增加肌肉量';
+
+  @override
+  String get aboutYou => '这条路，全都关于你自己……';
+
+  @override
+  String get qThinkAbout => '你多久会想一次\n要把身材练回来？';
+
+  @override
+  String get freqNever => '从不';
+
+  @override
+  String get freqSometimes => '偶尔';
+
+  @override
+  String get freqOften => '经常';
+
+  @override
+  String get freqAllTime => '一直在想';
+
+  @override
+  String get qEnergy => '训练时你的\n状态如何？';
+
+  @override
+  String get energyLow => '很低，整天都觉得被掏空';
+
+  @override
+  String get energyDrops => '练到一半状态就掉下来';
+
+  @override
+  String get energyHard => '最后一组很难顶住';
+
+  @override
+  String get energyHigh => '从头到尾都高且稳定';
+
+  @override
+  String get stProgress => '有时候练着练着，很难看出自己有进步';
+
+  @override
+  String get stEffortTitle => '没人看见的努力\n最容易放弃';
+
+  @override
+  String get stEffortBody => '当没有人可以较劲时，进步显得缓慢，努力也显得没有意义';
+
+  @override
+  String get stAloneTitle => '一个人训练\n很枯燥';
+
+  @override
+  String get stAloneBody => '没人在看，没人在数。少做一次，甚至整组跳过，都太容易了';
+
+  @override
+  String get qName => '我们该怎么\n称呼你？';
+
+  @override
+  String get nameHint => '至少三个字符，这是对手会看到的名字。';
+
+  @override
+  String get basicInfo => '好！接下来是一些\n基本信息';
+
+  @override
+  String get qAge => '你今年多大？';
+
+  @override
+  String get qWeight => '你目前的\n体重是多少？';
+
+  @override
+  String get weightWhy => '计算段位需要用到体重。';
+
+  @override
+  String get privateNote => '你的信息是私密的，不会分享给任何人。';
+
+  @override
+  String get qHeight => '你的身高是多少？';
+
+  @override
+  String get qRelate => '你认同\n下面这句话吗？';
+
+  @override
+  String get yes => '是';
+
+  @override
+  String get no => '否';
+
+  @override
+  String get grindTitle => '有对手在\n这份苦练就不一样了';
+
+  @override
+  String get grindBody => '每场对战都让你面对一个真实的对手：把该做的做完，证明谁练得更狠。';
+
+  @override
+  String get allSet => '一切就绪！';
+
+  @override
+  String welcomeLifter(String name) {
+    return '欢迎你，$name。该去找第一个对手了。';
+  }
+
+  @override
+  String get lifter => '选手';
+
+  @override
+  String get enterApp => '进入 OUTREPD';
+
+  @override
+  String get commitTitle => '现在，为你自己的这条路\n立个约定';
+
+  @override
+  String get holdLogo => '长按标志，确认你已经准备好';
+
+  @override
+  String get expNone => '我从没训练过';
+
+  @override
+  String get iAm => '我……';
+
+  @override
+  String get finishMatchQ => '结束这场对战？';
+
+  @override
+  String get finishMatchBody => '你的总容量将被锁定，并与对手比较。';
+
+  @override
+  String get keepGoing => '继续';
+
+  @override
+  String get forfeitQ => '认输退出？';
+
+  @override
+  String get forfeitBody => '现在离开会扣除 LP。';
+
+  @override
+  String get stay => '留下';
+
+  @override
+  String get forfeit => '认输';
+
+  @override
+  String get pickExercises => '选择你要练的动作';
+
+  @override
+  String matchingWith(String muscle) {
+    return '正在为你匹配同段位的对手 · $muscle';
+  }
+
+  @override
+  String get getReady => '准备';
+
+  @override
+  String get timeLeft => '剩余时间';
+
+  @override
+  String vsName(String name) {
+    return '对阵 $name';
+  }
+
+  @override
+  String kgTotalVolume(String unit) {
+    return '总容量 $unit';
+  }
+
+  @override
+  String get finishMatch => '结束对战';
+
+  @override
+  String get kgHint => '公斤';
+
+  @override
+  String get repsHint => '次数';
+
+  @override
+  String get addSet => '添加一组';
+
+  @override
+  String get matchComplete => '对战结束';
+
+  @override
+  String get you => '你';
+
+  @override
+  String get vs => 'VS';
+
+  @override
+  String get backToHome => '返回首页';
+
+  @override
+  String get mgChest => '胸';
+
+  @override
+  String get mgBack => '背';
+
+  @override
+  String get mgLegs => '腿';
+
+  @override
+  String get mgShoulders => '肩';
+
+  @override
+  String get mgArms => '手臂';
+
+  @override
+  String get mgCore => '核心';
+
+  @override
+  String get achRivalry => '宿敌之争';
+
+  @override
+  String get achRivalryHint => '击败同一名对手 3 次';
+
+  @override
+  String get nWonTitle => '你赢了！';
+
+  @override
+  String nWonBody(String name, String muscle) {
+    return '你在$muscle日击败了 $name';
+  }
+
+  @override
+  String get nFriendTitle => '新的好友申请';
+
+  @override
+  String nFriendBody(String name) {
+    return '$name 想加你为好友';
+  }
+
+  @override
+  String get nAchTitle => '解锁成就';
+
+  @override
+  String nAchBody(String title, String hint) {
+    return '$title — $hint';
+  }
+
+  @override
+  String get nRankTitle => '段位提升！';
+
+  @override
+  String nRankBody(String rank) {
+    return '你已达到 $rank';
+  }
 }

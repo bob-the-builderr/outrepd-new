@@ -867,4 +867,648 @@ class LId extends L {
 
   @override
   String get continueLabel => 'Lanjut';
+
+  @override
+  String get ttl_first_blood => 'Darah Pertama';
+
+  @override
+  String get tdesc_first_blood => 'Selesaikan duel pertama Anda';
+
+  @override
+  String get ttl_found_footing => 'Pijakan Mantap';
+
+  @override
+  String get tdesc_found_footing => 'Selesaikan lima duel';
+
+  @override
+  String get ttl_regular => 'Langganan';
+
+  @override
+  String get tdesc_regular => 'Dua puluh duel';
+
+  @override
+  String get ttl_fifty => 'Lima Puluh';
+
+  @override
+  String get tdesc_fifty => 'Lima puluh duel';
+
+  @override
+  String get ttl_century => 'Seratus';
+
+  @override
+  String get tdesc_century => 'Seratus duel';
+
+  @override
+  String get ttl_veteran => 'Veteran';
+
+  @override
+  String get tdesc_veteran => 'Dua ratus lima puluh duel';
+
+  @override
+  String get ttl_thousand_matches => 'Pengawal Lama';
+
+  @override
+  String get tdesc_thousand_matches => 'Seribu duel';
+
+  @override
+  String get ttl_first_win => 'Pemenang';
+
+  @override
+  String get tdesc_first_win => 'Menangkan satu duel';
+
+  @override
+  String get ttl_on_a_roll => 'Sedang Panas';
+
+  @override
+  String get tdesc_on_a_roll => 'Menang tiga kali beruntun';
+
+  @override
+  String get ttl_five_straight => 'Lima Beruntun';
+
+  @override
+  String get tdesc_five_straight => 'Menang lima kali beruntun';
+
+  @override
+  String get ttl_unstoppable => 'Tak Terhentikan';
+
+  @override
+  String get tdesc_unstoppable => 'Menang sepuluh kali beruntun';
+
+  @override
+  String get ttl_untouchable => 'Tak Tersentuh';
+
+  @override
+  String get tdesc_untouchable => 'Menang dua puluh kali beruntun';
+
+  @override
+  String get ttl_giant_slayer => 'Penakluk Raksasa';
+
+  @override
+  String get tdesc_giant_slayer => 'Kalahkan orang dua peringkat di atas Anda';
+
+  @override
+  String get ttl_comeback => 'Bangkit Kembali';
+
+  @override
+  String get tdesc_comeback => 'Menang tepat setelah tiga kekalahan';
+
+  @override
+  String get ttl_nemesis => 'Nemesis';
+
+  @override
+  String get tdesc_nemesis => 'Kalahkan atlet yang sama lima kali';
+
+  @override
+  String get ttl_hundred_reps => 'Sudah Jalan';
+
+  @override
+  String get tdesc_hundred_reps => 'Seratus rep terhitung';
+
+  @override
+  String get ttl_five_hundred => 'Sudah Panas';
+
+  @override
+  String get tdesc_five_hundred => 'Lima ratus rep terhitung';
+
+  @override
+  String get ttl_the_machine => 'Sang Mesin';
+
+  @override
+  String get tdesc_the_machine => 'Seribu rep terhitung';
+
+  @override
+  String get ttl_five_thousand => 'Tanpa Ampun';
+
+  @override
+  String get tdesc_five_thousand => 'Lima ribu rep terhitung';
+
+  @override
+  String get ttl_ten_thousand => 'Sepuluh Ribu';
+
+  @override
+  String get tdesc_ten_thousand => 'Sepuluh ribu rep terhitung';
+
+  @override
+  String get ttl_fifty_thousand => 'Di Luar Hitungan';
+
+  @override
+  String get tdesc_fifty_thousand => 'Lima puluh ribu rep terhitung';
+
+  @override
+  String get ttl_first_tonne => 'Satu Ton';
+
+  @override
+  String get tdesc_first_tonne => 'Angkat total seribu kilogram';
+
+  @override
+  String get ttl_ten_tonnes => 'Sepuluh Ton';
+
+  @override
+  String get tdesc_ten_tonnes => 'Angkat sepuluh ribu kilogram';
+
+  @override
+  String get ttl_six_figures => 'Enam Digit';
+
+  @override
+  String get tdesc_six_figures => 'Angkat seratus ribu kilogram';
+
+  @override
+  String get ttl_half_million => 'Setengah Juta';
+
+  @override
+  String get tdesc_half_million => 'Angkat lima ratus ribu kilogram';
+
+  @override
+  String get ttl_million_kg => 'Klub Sejuta Kilo';
+
+  @override
+  String get tdesc_million_kg => 'Angkat satu juta kilogram';
+
+  @override
+  String get ttl_two_days => 'Kembali Lagi';
+
+  @override
+  String get tdesc_two_days => 'Berlatih dua hari berturut-turut';
+
+  @override
+  String get ttl_no_days_off => 'Tanpa Libur';
+
+  @override
+  String get tdesc_no_days_off => 'Berlatih tujuh hari berturut-turut';
+
+  @override
+  String get ttl_fortnight => 'Dua Pekan';
+
+  @override
+  String get tdesc_fortnight => 'Rentetan empat belas hari';
+
+  @override
+  String get ttl_unbroken => 'Tak Terputus';
+
+  @override
+  String get tdesc_unbroken => 'Rentetan tiga puluh hari';
+
+  @override
+  String get ttl_sixty_days => 'Kebiasaan';
+
+  @override
+  String get tdesc_sixty_days => 'Rentetan enam puluh hari';
+
+  @override
+  String get ttl_hundred_days => 'Seratus Hari';
+
+  @override
+  String get tdesc_hundred_days => 'Rentetan seratus hari';
+
+  @override
+  String get ttl_year_round => 'Sepanjang Tahun';
+
+  @override
+  String get tdesc_year_round => 'Rentetan tiga ratus enam puluh lima hari';
+
+  @override
+  String get ttl_perfect_week => 'Pekan Sempurna';
+
+  @override
+  String get tdesc_perfect_week => 'Berlatih setiap hari selama sepekan';
+
+  @override
+  String get ttl_perfect_month => 'Bulan Sempurna';
+
+  @override
+  String get tdesc_perfect_month => 'Empat pekan sempurna';
+
+  @override
+  String get ttl_bronze_tier => 'Lepas dari Batu';
+
+  @override
+  String get tdesc_bronze_tier => 'Capai Perunggu';
+
+  @override
+  String get ttl_silver_tier => 'Keperakan';
+
+  @override
+  String get tdesc_silver_tier => 'Capai Perak';
+
+  @override
+  String get ttl_golden_era => 'Era Keemasan';
+
+  @override
+  String get tdesc_golden_era => 'Capai Emas';
+
+  @override
+  String get ttl_platinum_tier => 'Platinum';
+
+  @override
+  String get tdesc_platinum_tier => 'Capai Platinum';
+
+  @override
+  String get ttl_diamond_tier => 'Tangan Berlian';
+
+  @override
+  String get tdesc_diamond_tier => 'Capai Berlian';
+
+  @override
+  String get ttl_master_tier => 'Master';
+
+  @override
+  String get tdesc_master_tier => 'Capai Master';
+
+  @override
+  String get ttl_mythic_tier => 'Mitos';
+
+  @override
+  String get tdesc_mythic_tier => 'Capai peringkat Mitos';
+
+  @override
+  String get ttl_legend_tier => 'Legenda';
+
+  @override
+  String get tdesc_legend_tier => 'Capai Legenda';
+
+  @override
+  String get ttl_clean_hands => 'Tangan Bersih';
+
+  @override
+  String get tdesc_clean_hands => 'Satu set penuh dengan setiap rep terhitung';
+
+  @override
+  String get ttl_spotless => 'Tanpa Cela';
+
+  @override
+  String get tdesc_spotless => 'Sepuluh set bersih';
+
+  @override
+  String get ttl_textbook => 'Sesuai Buku';
+
+  @override
+  String get tdesc_textbook => 'Lima puluh set bersih';
+
+  @override
+  String get ttl_iron_hold => 'Genggaman Besi';
+
+  @override
+  String get tdesc_iron_hold => 'Tahan plank selama dua menit';
+
+  @override
+  String get ttl_statue => 'Patung';
+
+  @override
+  String get tdesc_statue => 'Tahan plank selama lima menit';
+
+  @override
+  String get ttl_all_rounder => 'Serba Bisa';
+
+  @override
+  String get tdesc_all_rounder => 'Hitung lima gerakan berbeda';
+
+  @override
+  String get ttl_explorer => 'Penjelajah';
+
+  @override
+  String get tdesc_explorer => 'Hitung lima belas gerakan berbeda';
+
+  @override
+  String get ttl_encyclopedia => 'Ensiklopedia';
+
+  @override
+  String get tdesc_encyclopedia => 'Hitung empat puluh gerakan berbeda';
+
+  @override
+  String get ttl_early_bird => 'Sif Pagi';
+
+  @override
+  String get tdesc_early_bird => 'Sepuluh sesi sebelum pukul tujuh pagi';
+
+  @override
+  String get ttl_sunrise_club => 'Klub Fajar';
+
+  @override
+  String get tdesc_sunrise_club => 'Lima puluh sesi sebelum pukul tujuh';
+
+  @override
+  String get ttl_night_owl => 'Sif Malam';
+
+  @override
+  String get tdesc_night_owl => 'Sepuluh sesi setelah pukul sepuluh malam';
+
+  @override
+  String get ttl_graveyard => 'Sif Dini Hari';
+
+  @override
+  String get tdesc_graveyard => 'Lima puluh sesi setelah pukul sepuluh';
+
+  @override
+  String get ttl_joined_up => 'Sudah Bergabung';
+
+  @override
+  String get tdesc_joined_up => 'Menjadi anggota kru';
+
+  @override
+  String get ttl_backbone => 'Tulang Punggung';
+
+  @override
+  String get tdesc_backbone => 'Pimpin kru Anda empat pekan berturut-turut';
+
+  @override
+  String get ttl_cornerstone => 'Batu Penjuru';
+
+  @override
+  String get tdesc_cornerstone =>
+      'Pimpin kru Anda dua belas pekan berturut-turut';
+
+  @override
+  String get ttl_not_alone => 'Tidak Sendiri';
+
+  @override
+  String get tdesc_not_alone => 'Tambahkan teman pertama Anda';
+
+  @override
+  String get ttl_well_connected => 'Luas Kenalan';
+
+  @override
+  String get tdesc_well_connected => 'Sepuluh teman';
+
+  @override
+  String get ttl_the_gym_knows => 'Seisi Gym Mengenal Anda';
+
+  @override
+  String get tdesc_the_gym_knows => 'Lima puluh teman';
+
+  @override
+  String get finish2 => 'Selesai';
+
+  @override
+  String get qExperience => 'Seberapa berpengalaman Anda\ndalam berlatih?';
+
+  @override
+  String get expBeginner => 'Pemula – Pernah mencoba';
+
+  @override
+  String get expIntermediate => 'Menengah – Berlatih rutin';
+
+  @override
+  String get expAdvanced => 'Mahir – Bertahun-tahun pengalaman';
+
+  @override
+  String get qGoal => 'Apa tujuan utama\nkebugaran Anda?';
+
+  @override
+  String get goalStronger => 'Menjadi lebih kuat';
+
+  @override
+  String get goalConsistent => 'Menjadi lebih konsisten';
+
+  @override
+  String get goalLean => 'Menurunkan berat dan mengencangkan';
+
+  @override
+  String get goalMass => 'Menambah massa otot';
+
+  @override
+  String get aboutYou => 'Perjalanan ini sepenuhnya tentang Anda...';
+
+  @override
+  String get qThinkAbout =>
+      'Seberapa sering Anda memikirkan\nuntuk kembali bugar?';
+
+  @override
+  String get freqNever => 'Tidak pernah';
+
+  @override
+  String get freqSometimes => 'Kadang-kadang';
+
+  @override
+  String get freqOften => 'Sering';
+
+  @override
+  String get freqAllTime => 'Sepanjang waktu';
+
+  @override
+  String get qEnergy => 'Bagaimana energi Anda\nsaat berlatih?';
+
+  @override
+  String get energyLow => 'Rendah, saya lelah sepanjang hari';
+
+  @override
+  String get energyDrops => 'Performa turun di tengah sesi';
+
+  @override
+  String get energyHard => 'Sulit menuntaskan set terakhir';
+
+  @override
+  String get energyHigh => 'Tinggi dan stabil dari awal sampai akhir';
+
+  @override
+  String get stProgress => 'Kadang sulit melihat kemajuan saat saya berlatih';
+
+  @override
+  String get stEffortTitle =>
+      'Usaha yang tak dilihat siapa pun\nmudah ditinggalkan';
+
+  @override
+  String get stEffortBody =>
+      'Ketika tidak ada yang perlu dibuktikan kepada siapa pun, kemajuan terasa lambat dan usaha terasa sia-sia';
+
+  @override
+  String get stAloneTitle => 'Berlatih sendirian\nitu membosankan';
+
+  @override
+  String get stAloneBody =>
+      'Tidak ada yang melihat. Tidak ada yang menghitung. Mudah melewatkan satu rep, atau seluruh set';
+
+  @override
+  String get qName => 'Kami memanggil Anda\nsiapa?';
+
+  @override
+  String get nameHint => 'Minimal 3 karakter. Inilah yang dilihat para lawan.';
+
+  @override
+  String get basicInfo => 'Baik! Sekarang beberapa\ndata dasar';
+
+  @override
+  String get qAge => 'Berapa usia Anda?';
+
+  @override
+  String get qWeight => 'Berapa berat\nbadan Anda sekarang?';
+
+  @override
+  String get weightWhy =>
+      'Berat badan diperlukan untuk menghitung peringkat Anda.';
+
+  @override
+  String get privateNote =>
+      'Data Anda bersifat pribadi dan tidak akan dibagikan kepada siapa pun.';
+
+  @override
+  String get qHeight => 'Berapa tinggi Anda?';
+
+  @override
+  String get qRelate =>
+      'Apakah Anda merasakan hal\nyang sama dengan kalimat berikut?';
+
+  @override
+  String get yes => 'Ya';
+
+  @override
+  String get no => 'Tidak';
+
+  @override
+  String get grindTitle => 'Kerja keras terasa berbeda\nsaat ada lawan';
+
+  @override
+  String get grindBody =>
+      'Setiap duel mempertemukan Anda dengan lawan sungguhan: kerjakan bagian Anda dan buktikan siapa yang berlatih lebih keras.';
+
+  @override
+  String get allSet => 'Semua siap!';
+
+  @override
+  String welcomeLifter(String name) {
+    return 'Selamat datang, $name. Saatnya mencari lawan pertama Anda.';
+  }
+
+  @override
+  String get lifter => 'atlet';
+
+  @override
+  String get enterApp => 'Masuk ke OUTREPD';
+
+  @override
+  String get commitTitle => 'Sekarang mari berkomitmen\npada perjalanan Anda';
+
+  @override
+  String get holdLogo => 'Tekan dan tahan logo untuk memastikan Anda siap';
+
+  @override
+  String get expNone => 'Saya belum pernah berlatih';
+
+  @override
+  String get iAm => 'Saya...';
+
+  @override
+  String get finishMatchQ => 'Akhiri duel?';
+
+  @override
+  String get finishMatchBody =>
+      'Volume Anda akan dikunci dan dibandingkan dengan lawan.';
+
+  @override
+  String get keepGoing => 'Lanjutkan';
+
+  @override
+  String get forfeitQ => 'Mundur dari duel?';
+
+  @override
+  String get forfeitBody => 'Anda akan kehilangan LP jika keluar sekarang.';
+
+  @override
+  String get stay => 'Tetap';
+
+  @override
+  String get forfeit => 'Mundur';
+
+  @override
+  String get pickExercises => 'Pilih gerakan yang akan Anda latih';
+
+  @override
+  String matchingWith(String muscle) {
+    return 'Mencarikan lawan setingkat Anda · $muscle';
+  }
+
+  @override
+  String get getReady => 'BERSIAP';
+
+  @override
+  String get timeLeft => 'SISA WAKTU';
+
+  @override
+  String vsName(String name) {
+    return 'vs $name';
+  }
+
+  @override
+  String kgTotalVolume(String unit) {
+    return '$unit total volume';
+  }
+
+  @override
+  String get finishMatch => 'AKHIRI DUEL';
+
+  @override
+  String get kgHint => 'KG';
+
+  @override
+  String get repsHint => 'REP';
+
+  @override
+  String get addSet => 'TAMBAH SET';
+
+  @override
+  String get matchComplete => 'DUEL SELESAI';
+
+  @override
+  String get you => 'ANDA';
+
+  @override
+  String get vs => 'VS';
+
+  @override
+  String get backToHome => 'KEMBALI KE BERANDA';
+
+  @override
+  String get mgChest => 'Dada';
+
+  @override
+  String get mgBack => 'Punggung';
+
+  @override
+  String get mgLegs => 'Kaki';
+
+  @override
+  String get mgShoulders => 'Bahu';
+
+  @override
+  String get mgArms => 'Lengan';
+
+  @override
+  String get mgCore => 'Inti tubuh';
+
+  @override
+  String get achRivalry => 'Persaingan';
+
+  @override
+  String get achRivalryHint => 'Kalahkan lawan yang sama 3 kali';
+
+  @override
+  String get nWonTitle => 'Anda menang!';
+
+  @override
+  String nWonBody(String name, String muscle) {
+    return 'Anda mengalahkan $name di hari $muscle';
+  }
+
+  @override
+  String get nFriendTitle => 'Permintaan pertemanan baru';
+
+  @override
+  String nFriendBody(String name) {
+    return '$name ingin terhubung';
+  }
+
+  @override
+  String get nAchTitle => 'Pencapaian terbuka';
+
+  @override
+  String nAchBody(String title, String hint) {
+    return '$title — $hint';
+  }
+
+  @override
+  String get nRankTitle => 'Peringkat naik!';
+
+  @override
+  String nRankBody(String rank) {
+    return 'Anda mencapai $rank';
+  }
 }

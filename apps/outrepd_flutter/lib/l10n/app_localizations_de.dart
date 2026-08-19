@@ -871,4 +871,646 @@ class LDe extends L {
 
   @override
   String get continueLabel => 'Weiter';
+
+  @override
+  String get ttl_first_blood => 'Erstes Blut';
+
+  @override
+  String get tdesc_first_blood => 'Beende dein erstes Duell';
+
+  @override
+  String get ttl_found_footing => 'Fuß Gefasst';
+
+  @override
+  String get tdesc_found_footing => 'Beende fünf Duelle';
+
+  @override
+  String get ttl_regular => 'Stammgast';
+
+  @override
+  String get tdesc_regular => 'Zwanzig Duelle';
+
+  @override
+  String get ttl_fifty => 'Die Fünfzig';
+
+  @override
+  String get tdesc_fifty => 'Fünfzig Duelle';
+
+  @override
+  String get ttl_century => 'Jahrhundert';
+
+  @override
+  String get tdesc_century => 'Hundert Duelle';
+
+  @override
+  String get ttl_veteran => 'Veteran';
+
+  @override
+  String get tdesc_veteran => 'Zweihundertfünfzig Duelle';
+
+  @override
+  String get ttl_thousand_matches => 'Alte Garde';
+
+  @override
+  String get tdesc_thousand_matches => 'Tausend Duelle';
+
+  @override
+  String get ttl_first_win => 'Sieger';
+
+  @override
+  String get tdesc_first_win => 'Gewinne ein Duell';
+
+  @override
+  String get ttl_on_a_roll => 'Im Lauf';
+
+  @override
+  String get tdesc_on_a_roll => 'Gewinne drei in Folge';
+
+  @override
+  String get ttl_five_straight => 'Fünf am Stück';
+
+  @override
+  String get tdesc_five_straight => 'Gewinne fünf in Folge';
+
+  @override
+  String get ttl_unstoppable => 'Unaufhaltsam';
+
+  @override
+  String get tdesc_unstoppable => 'Gewinne zehn in Folge';
+
+  @override
+  String get ttl_untouchable => 'Unantastbar';
+
+  @override
+  String get tdesc_untouchable => 'Gewinne zwanzig in Folge';
+
+  @override
+  String get ttl_giant_slayer => 'Riesentöter';
+
+  @override
+  String get tdesc_giant_slayer => 'Schlage jemanden zwei Ränge über dir';
+
+  @override
+  String get ttl_comeback => 'Comeback';
+
+  @override
+  String get tdesc_comeback => 'Gewinne direkt nach drei Niederlagen';
+
+  @override
+  String get ttl_nemesis => 'Nemesis';
+
+  @override
+  String get tdesc_nemesis => 'Schlage denselben Sportler fünfmal';
+
+  @override
+  String get ttl_hundred_reps => 'Angelaufen';
+
+  @override
+  String get tdesc_hundred_reps => 'Hundert gezählte Wiederholungen';
+
+  @override
+  String get ttl_five_hundred => 'Aufgewärmt';
+
+  @override
+  String get tdesc_five_hundred => 'Fünfhundert gezählte Wiederholungen';
+
+  @override
+  String get ttl_the_machine => 'Die Maschine';
+
+  @override
+  String get tdesc_the_machine => 'Tausend gezählte Wiederholungen';
+
+  @override
+  String get ttl_five_thousand => 'Unerbittlich';
+
+  @override
+  String get tdesc_five_thousand => 'Fünftausend gezählte Wiederholungen';
+
+  @override
+  String get ttl_ten_thousand => 'Zehntausend';
+
+  @override
+  String get tdesc_ten_thousand => 'Zehntausend gezählte Wiederholungen';
+
+  @override
+  String get ttl_fifty_thousand => 'Jenseits des Zählens';
+
+  @override
+  String get tdesc_fifty_thousand => 'Fünfzigtausend gezählte Wiederholungen';
+
+  @override
+  String get ttl_first_tonne => 'Eine Tonne';
+
+  @override
+  String get tdesc_first_tonne => 'Bewege insgesamt tausend Kilo';
+
+  @override
+  String get ttl_ten_tonnes => 'Zehn Tonnen';
+
+  @override
+  String get tdesc_ten_tonnes => 'Bewege zehntausend Kilo';
+
+  @override
+  String get ttl_six_figures => 'Sechsstellig';
+
+  @override
+  String get tdesc_six_figures => 'Bewege hunderttausend Kilo';
+
+  @override
+  String get ttl_half_million => 'Halbe Million';
+
+  @override
+  String get tdesc_half_million => 'Bewege fünfhunderttausend Kilo';
+
+  @override
+  String get ttl_million_kg => 'Millionen-Klub';
+
+  @override
+  String get tdesc_million_kg => 'Bewege eine Million Kilo';
+
+  @override
+  String get ttl_two_days => 'Wieder Da';
+
+  @override
+  String get tdesc_two_days => 'Trainiere zwei Tage hintereinander';
+
+  @override
+  String get ttl_no_days_off => 'Keine Freien Tage';
+
+  @override
+  String get tdesc_no_days_off => 'Trainiere sieben Tage hintereinander';
+
+  @override
+  String get ttl_fortnight => 'Vierzehn Tage';
+
+  @override
+  String get tdesc_fortnight => 'Eine Serie über vierzehn Tage';
+
+  @override
+  String get ttl_unbroken => 'Ungebrochen';
+
+  @override
+  String get tdesc_unbroken => 'Eine Serie über dreißig Tage';
+
+  @override
+  String get ttl_sixty_days => 'Gewohnheit';
+
+  @override
+  String get tdesc_sixty_days => 'Eine Serie über sechzig Tage';
+
+  @override
+  String get ttl_hundred_days => 'Hundert Tage';
+
+  @override
+  String get tdesc_hundred_days => 'Eine Serie über hundert Tage';
+
+  @override
+  String get ttl_year_round => 'Das Ganze Jahr';
+
+  @override
+  String get tdesc_year_round =>
+      'Eine Serie über dreihundertfünfundsechzig Tage';
+
+  @override
+  String get ttl_perfect_week => 'Perfekte Woche';
+
+  @override
+  String get tdesc_perfect_week => 'Trainiere jeden Tag einer Woche';
+
+  @override
+  String get ttl_perfect_month => 'Perfekter Monat';
+
+  @override
+  String get tdesc_perfect_month => 'Vier perfekte Wochen';
+
+  @override
+  String get ttl_bronze_tier => 'Raus aus dem Stein';
+
+  @override
+  String get tdesc_bronze_tier => 'Erreiche Bronze';
+
+  @override
+  String get ttl_silver_tier => 'Silbrig';
+
+  @override
+  String get tdesc_silver_tier => 'Erreiche Silber';
+
+  @override
+  String get ttl_golden_era => 'Goldene Ära';
+
+  @override
+  String get tdesc_golden_era => 'Erreiche Gold';
+
+  @override
+  String get ttl_platinum_tier => 'Platin';
+
+  @override
+  String get tdesc_platinum_tier => 'Erreiche Platin';
+
+  @override
+  String get ttl_diamond_tier => 'Diamanthände';
+
+  @override
+  String get tdesc_diamond_tier => 'Erreiche Diamant';
+
+  @override
+  String get ttl_master_tier => 'Meister';
+
+  @override
+  String get tdesc_master_tier => 'Erreiche Meister';
+
+  @override
+  String get ttl_mythic_tier => 'Mythisch';
+
+  @override
+  String get tdesc_mythic_tier => 'Erreiche Mythisch';
+
+  @override
+  String get ttl_legend_tier => 'Legende';
+
+  @override
+  String get tdesc_legend_tier => 'Erreiche Legende';
+
+  @override
+  String get ttl_clean_hands => 'Saubere Hände';
+
+  @override
+  String get tdesc_clean_hands => 'Ein ganzer Satz, jede Wiederholung gezählt';
+
+  @override
+  String get ttl_spotless => 'Makellos';
+
+  @override
+  String get tdesc_spotless => 'Zehn saubere Sätze';
+
+  @override
+  String get ttl_textbook => 'Lehrbuch';
+
+  @override
+  String get tdesc_textbook => 'Fünfzig saubere Sätze';
+
+  @override
+  String get ttl_iron_hold => 'Eisengriff';
+
+  @override
+  String get tdesc_iron_hold => 'Halte einen Plank zwei Minuten';
+
+  @override
+  String get ttl_statue => 'Statue';
+
+  @override
+  String get tdesc_statue => 'Halte einen Plank fünf Minuten';
+
+  @override
+  String get ttl_all_rounder => 'Allrounder';
+
+  @override
+  String get tdesc_all_rounder => 'Zähle fünf verschiedene Übungen';
+
+  @override
+  String get ttl_explorer => 'Entdecker';
+
+  @override
+  String get tdesc_explorer => 'Zähle fünfzehn verschiedene Übungen';
+
+  @override
+  String get ttl_encyclopedia => 'Enzyklopädie';
+
+  @override
+  String get tdesc_encyclopedia => 'Zähle vierzig verschiedene Übungen';
+
+  @override
+  String get ttl_early_bird => 'Frühschicht';
+
+  @override
+  String get tdesc_early_bird => 'Zehn Einheiten vor sieben Uhr';
+
+  @override
+  String get ttl_sunrise_club => 'Sonnenaufgangsklub';
+
+  @override
+  String get tdesc_sunrise_club => 'Fünfzig Einheiten vor sieben Uhr';
+
+  @override
+  String get ttl_night_owl => 'Nachtschicht';
+
+  @override
+  String get tdesc_night_owl => 'Zehn Einheiten nach zweiundzwanzig Uhr';
+
+  @override
+  String get ttl_graveyard => 'Geisterschicht';
+
+  @override
+  String get tdesc_graveyard => 'Fünfzig Einheiten nach zweiundzwanzig Uhr';
+
+  @override
+  String get ttl_joined_up => 'Dabei';
+
+  @override
+  String get tdesc_joined_up => 'Sei in einer Crew';
+
+  @override
+  String get ttl_backbone => 'Rückgrat';
+
+  @override
+  String get tdesc_backbone => 'Führe deine Crew vier Wochen in Folge an';
+
+  @override
+  String get ttl_cornerstone => 'Eckpfeiler';
+
+  @override
+  String get tdesc_cornerstone => 'Führe deine Crew zwölf Wochen in Folge an';
+
+  @override
+  String get ttl_not_alone => 'Nicht Allein';
+
+  @override
+  String get tdesc_not_alone => 'Füge deinen ersten Freund hinzu';
+
+  @override
+  String get ttl_well_connected => 'Gut Vernetzt';
+
+  @override
+  String get tdesc_well_connected => 'Zehn Freunde';
+
+  @override
+  String get ttl_the_gym_knows => 'Das Studio Kennt Dich';
+
+  @override
+  String get tdesc_the_gym_knows => 'Fünfzig Freunde';
+
+  @override
+  String get finish2 => 'Fertig';
+
+  @override
+  String get qExperience => 'Wie viel Erfahrung hast du\nmit dem Training?';
+
+  @override
+  String get expBeginner => 'Anfänger – Schon mal probiert';
+
+  @override
+  String get expIntermediate => 'Fortgeschritten – Ich trainiere regelmäßig';
+
+  @override
+  String get expAdvanced => 'Erfahren – Seit Jahren dabei';
+
+  @override
+  String get qGoal => 'Was ist dein wichtigstes\nZiel?';
+
+  @override
+  String get goalStronger => 'Stärker werden';
+
+  @override
+  String get goalConsistent => 'Beständiger werden';
+
+  @override
+  String get goalLean => 'Abnehmen und definierter werden';
+
+  @override
+  String get goalMass => 'Muskelmasse aufbauen';
+
+  @override
+  String get aboutYou => 'Auf diesem Weg geht es nur um dich ...';
+
+  @override
+  String get qThinkAbout => 'Wie oft denkst du daran,\nfit zu werden?';
+
+  @override
+  String get freqNever => 'Nie';
+
+  @override
+  String get freqSometimes => 'Manchmal';
+
+  @override
+  String get freqOften => 'Oft';
+
+  @override
+  String get freqAllTime => 'Ständig';
+
+  @override
+  String get qEnergy => 'Wie ist deine Energie\nbeim Training?';
+
+  @override
+  String get energyLow => 'Niedrig, ich fühle mich den ganzen Tag ausgelaugt';
+
+  @override
+  String get energyDrops => 'Meine Leistung fällt mitten in der Einheit ab';
+
+  @override
+  String get energyHard => 'Der letzte Satz fällt mir schwer';
+
+  @override
+  String get energyHigh => 'Hoch und gleichmäßig von Anfang bis Ende';
+
+  @override
+  String get stProgress => 'Manchmal merke ich beim Training kaum Fortschritt';
+
+  @override
+  String get stEffortTitle => 'Aufwand, den keiner sieht,\ngibt man leicht auf';
+
+  @override
+  String get stEffortBody =>
+      'Wenn es niemanden gibt, dem du etwas beweisen musst, wirkt Fortschritt langsam und Mühe sinnlos';
+
+  @override
+  String get stAloneTitle => 'Allein trainieren\nist langweilig';
+
+  @override
+  String get stAloneBody =>
+      'Keiner schaut zu. Keiner zählt mit. Da lässt man leicht eine Wiederholung aus – oder den ganzen Satz';
+
+  @override
+  String get qName => 'Wie sollen wir\ndich nennen?';
+
+  @override
+  String get nameHint => 'Mindestens 3 Zeichen. Das sehen deine Gegner.';
+
+  @override
+  String get basicInfo => 'Gut! Jetzt ein paar\nEckdaten';
+
+  @override
+  String get qAge => 'Wie alt bist du?';
+
+  @override
+  String get qWeight => 'Was ist dein\naktuelles Gewicht?';
+
+  @override
+  String get weightWhy =>
+      'Das Körpergewicht ist nötig, um deinen Rang zu berechnen.';
+
+  @override
+  String get privateNote =>
+      'Deine Angaben bleiben privat und werden mit niemandem geteilt.';
+
+  @override
+  String get qHeight => 'Wie groß bist du?';
+
+  @override
+  String get qRelate => 'Findest du dich in dem\nSatz unten wieder?';
+
+  @override
+  String get yes => 'Ja';
+
+  @override
+  String get no => 'Nein';
+
+  @override
+  String get grindTitle => 'Mit einem Gegner\nfühlt sich die Arbeit anders an';
+
+  @override
+  String get grindBody =>
+      'Jedes Duell stellt dich einem echten Gegner gegenüber: leg los und zeig, wer härter trainiert hat.';
+
+  @override
+  String get allSet => 'Alles bereit!';
+
+  @override
+  String welcomeLifter(String name) {
+    return 'Willkommen, $name. Zeit, deinen ersten Gegner zu finden.';
+  }
+
+  @override
+  String get lifter => 'Sportler';
+
+  @override
+  String get enterApp => 'OUTREPD betreten';
+
+  @override
+  String get commitTitle => 'Und jetzt ein Versprechen\nan deinen eigenen Weg';
+
+  @override
+  String get holdLogo =>
+      'Halte das Logo gedrückt, um zu bestätigen, dass du bereit bist';
+
+  @override
+  String get expNone => 'Ich habe noch nie trainiert';
+
+  @override
+  String get iAm => 'Ich bin ...';
+
+  @override
+  String get finishMatchQ => 'Duell beenden?';
+
+  @override
+  String get finishMatchBody =>
+      'Dein Volumen wird festgeschrieben und mit dem deines Gegners verglichen.';
+
+  @override
+  String get keepGoing => 'Weitermachen';
+
+  @override
+  String get forfeitQ => 'Duell aufgeben?';
+
+  @override
+  String get forfeitBody => 'Du verlierst LP, wenn du jetzt gehst.';
+
+  @override
+  String get stay => 'Bleiben';
+
+  @override
+  String get forfeit => 'Aufgeben';
+
+  @override
+  String get pickExercises => 'Wähle die Übungen, die du trainierst';
+
+  @override
+  String matchingWith(String muscle) {
+    return 'Suche nach jemandem auf deinem Rang · $muscle';
+  }
+
+  @override
+  String get getReady => 'BEREIT MACHEN';
+
+  @override
+  String get timeLeft => 'RESTZEIT';
+
+  @override
+  String vsName(String name) {
+    return 'vs $name';
+  }
+
+  @override
+  String kgTotalVolume(String unit) {
+    return '$unit Gesamtvolumen';
+  }
+
+  @override
+  String get finishMatch => 'DUELL BEENDEN';
+
+  @override
+  String get kgHint => 'KG';
+
+  @override
+  String get repsHint => 'WDH.';
+
+  @override
+  String get addSet => 'SATZ HINZUFÜGEN';
+
+  @override
+  String get matchComplete => 'DUELL ABGESCHLOSSEN';
+
+  @override
+  String get you => 'DU';
+
+  @override
+  String get vs => 'VS';
+
+  @override
+  String get backToHome => 'ZURÜCK ZUM START';
+
+  @override
+  String get mgChest => 'Brust';
+
+  @override
+  String get mgBack => 'Rücken';
+
+  @override
+  String get mgLegs => 'Beine';
+
+  @override
+  String get mgShoulders => 'Schultern';
+
+  @override
+  String get mgArms => 'Arme';
+
+  @override
+  String get mgCore => 'Rumpf';
+
+  @override
+  String get achRivalry => 'Rivalität';
+
+  @override
+  String get achRivalryHint => 'Schlage denselben Gegner 3-mal';
+
+  @override
+  String get nWonTitle => 'Du hast gewonnen!';
+
+  @override
+  String nWonBody(String name, String muscle) {
+    return 'Du hast $name am $muscle-Tag geschlagen';
+  }
+
+  @override
+  String get nFriendTitle => 'Neue Freundschaftsanfrage';
+
+  @override
+  String nFriendBody(String name) {
+    return '$name möchte sich vernetzen';
+  }
+
+  @override
+  String get nAchTitle => 'Erfolg freigeschaltet';
+
+  @override
+  String nAchBody(String title, String hint) {
+    return '$title — $hint';
+  }
+
+  @override
+  String get nRankTitle => 'Rangaufstieg!';
+
+  @override
+  String nRankBody(String rank) {
+    return 'Du hast $rank erreicht';
+  }
 }

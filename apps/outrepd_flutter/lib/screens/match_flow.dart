@@ -168,13 +168,14 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       context: context,
       builder: (c) => AlertDialog(
         backgroundColor: context.colors.surface,
-        title: const Text('Finish match?'),
-        content: const Text('Your volume will be locked in and compared with your opponent.'),
+        title: Text(L.of(context).finishMatchQ),
+        content: Text(L.of(context).finishMatchBody),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(c, false), child: const Text('Keep going')),
+          TextButton(onPressed: () => Navigator.pop(c, false), child: Text(L.of(context).keepGoing)),
           TextButton(
             onPressed: () => Navigator.pop(c, true),
-            child: Text('Finish', style: TextStyle(color: context.colors.brand)),
+            child: Text(L.of(context).finish,
+                style: TextStyle(color: context.colors.brand)),
           ),
         ],
       ),
@@ -187,13 +188,14 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       context: context,
       builder: (c) => AlertDialog(
         backgroundColor: context.colors.surface,
-        title: const Text('Forfeit match?'),
-        content: const Text('You will lose LP if you leave now.'),
+        title: Text(L.of(context).forfeitQ),
+        content: Text(L.of(context).forfeitBody),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(c, false), child: const Text('Stay')),
+          TextButton(onPressed: () => Navigator.pop(c, false), child: Text(L.of(context).stay)),
           TextButton(
             onPressed: () => Navigator.pop(c, true),
-            child: const Text('Forfeit', style: TextStyle(color: AppColors.loss)),
+            child: Text(L.of(context).forfeit,
+                style: const TextStyle(color: AppColors.loss)),
           ),
         ],
       ),
@@ -224,7 +226,7 @@ class _ExercisePicker extends StatelessWidget {
       children: [
         _FlowHeader(
           title: muscle.toUpperCase(),
-          subtitle: 'Pick the exercises you will train',
+          subtitle: L.of(context).pickExercises,
         ),
         Expanded(
           child: ListView.separated(
@@ -370,7 +372,7 @@ class _SearchingViewState extends State<_SearchingView>
           ),
           const SizedBox(height: 8),
           Text(
-            'Matching you with a lifter at your rank · ${widget.muscle}',
+            L.of(context).matchingWith(widget.muscle),
             style: TextStyle(color: context.colors.muted, fontSize: 13),
           ),
         ],
@@ -444,7 +446,8 @@ class _VersusView extends StatelessWidget {
             fontWeight: FontWeight.w900,
           ),
         ),
-        Text('GET READY', style: TextStyle(color: context.colors.muted, letterSpacing: 2)),
+        Text(L.of(context).getReady,
+            style: TextStyle(color: context.colors.muted, letterSpacing: 2)),
       ],
     );
   }
@@ -519,9 +522,9 @@ class _ActiveMatchView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('TIME LEFT',
+                  Text(L.of(context).timeLeft,
                       style: TextStyle(color: context.colors.muted, fontSize: 11, letterSpacing: 1)),
-                  Text('vs ${opponent.username}',
+                  Text(L.of(context).vsName(opponent.username),
                       style: TextStyle(color: context.colors.muted, fontSize: 11)),
                 ],
               ),
@@ -550,7 +553,7 @@ class _ActiveMatchView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 6),
-                  Text('kg total volume',
+                  Text(L.of(context).kgTotalVolume(L.of(context).shortKg),
                       style: TextStyle(color: context.colors.muted, fontSize: 12)),
                 ],
               ),
@@ -573,7 +576,8 @@ class _ActiveMatchView extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: SizedBox(
               width: double.infinity,
-              child: FilledButton(onPressed: onFinish, child: const Text('FINISH MATCH')),
+              child: FilledButton(
+                  onPressed: onFinish, child: Text(L.of(context).finishMatch)),
             ),
           ),
         ),
@@ -628,7 +632,7 @@ class _ExerciseCard extends StatelessWidget {
                   ),
                   Expanded(
                     child: _NumberField(
-                      hint: 'KG',
+                      hint: L.of(context).kgHint,
                       value: entry.sets[i].weight,
                       onChanged: (v) {
                         entry.sets[i].weight = v;
@@ -642,7 +646,7 @@ class _ExerciseCard extends StatelessWidget {
                   ),
                   Expanded(
                     child: _NumberField(
-                      hint: 'REPS',
+                      hint: L.of(context).repsHint,
                       value: entry.sets[i].reps,
                       onChanged: (v) {
                         entry.sets[i].reps = v;
@@ -668,7 +672,7 @@ class _ExerciseCard extends StatelessWidget {
               onChanged();
             },
             icon: Icon(Icons.add, color: context.colors.brand, size: 20),
-            label: Text('ADD SET',
+            label: Text(L.of(context).addSet,
                 style: TextStyle(color: context.colors.brand, fontWeight: FontWeight.bold)),
           ),
         ],
@@ -747,7 +751,7 @@ class _ResultView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('MATCH COMPLETE',
+          Text(L.of(context).matchComplete,
               style: TextStyle(color: context.colors.muted, letterSpacing: 2, fontSize: 13)),
           const SizedBox(height: 8),
           FittedBox(
@@ -763,13 +767,13 @@ class _ResultView extends StatelessWidget {
             children: [
               Expanded(
                 child: _ScoreColumn(
-                  label: 'YOU',
+                  label: L.of(context).you,
                   volume: volume,
                   color: won ? context.colors.brand : context.colors.muted,
                   tierIdx: demoProfile.tierIdx,
                 ),
               ),
-              Text('VS',
+              Text(L.of(context).vs,
                   style: TextStyle(color: context.colors.surfaceRaised, fontSize: 22, fontWeight: FontWeight.w900)),
               Expanded(
                 child: _ScoreColumn(
@@ -797,7 +801,8 @@ class _ResultView extends StatelessWidget {
           const Spacer(),
           SizedBox(
             width: double.infinity,
-            child: FilledButton(onPressed: onDone, child: const Text('BACK TO HOME')),
+            child: FilledButton(
+                onPressed: onDone, child: Text(L.of(context).backToHome)),
           ),
         ],
       ),

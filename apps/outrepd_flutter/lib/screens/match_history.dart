@@ -129,7 +129,8 @@ class MatchRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${m.muscleGroup} vs ${m.opponent}',
+                  '${muscleGroupLabel(L.of(context), m.muscleGroup)}'
+                  ' vs ${m.opponent}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

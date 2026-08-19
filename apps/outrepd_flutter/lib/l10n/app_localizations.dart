@@ -1740,6 +1740,1242 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Continue'**
   String get continueLabel;
+
+  /// No description provided for @ttl_first_blood.
+  ///
+  /// In en, this message translates to:
+  /// **'First Blood'**
+  String get ttl_first_blood;
+
+  /// No description provided for @tdesc_first_blood.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish your first match'**
+  String get tdesc_first_blood;
+
+  /// No description provided for @ttl_found_footing.
+  ///
+  /// In en, this message translates to:
+  /// **'Found Your Footing'**
+  String get ttl_found_footing;
+
+  /// No description provided for @tdesc_found_footing.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish five matches'**
+  String get tdesc_found_footing;
+
+  /// No description provided for @ttl_regular.
+  ///
+  /// In en, this message translates to:
+  /// **'Regular'**
+  String get ttl_regular;
+
+  /// No description provided for @tdesc_regular.
+  ///
+  /// In en, this message translates to:
+  /// **'Twenty matches'**
+  String get tdesc_regular;
+
+  /// No description provided for @ttl_fifty.
+  ///
+  /// In en, this message translates to:
+  /// **'Fifty Deep'**
+  String get ttl_fifty;
+
+  /// No description provided for @tdesc_fifty.
+  ///
+  /// In en, this message translates to:
+  /// **'Fifty matches'**
+  String get tdesc_fifty;
+
+  /// No description provided for @ttl_century.
+  ///
+  /// In en, this message translates to:
+  /// **'Century'**
+  String get ttl_century;
+
+  /// No description provided for @tdesc_century.
+  ///
+  /// In en, this message translates to:
+  /// **'A hundred matches'**
+  String get tdesc_century;
+
+  /// No description provided for @ttl_veteran.
+  ///
+  /// In en, this message translates to:
+  /// **'Veteran'**
+  String get ttl_veteran;
+
+  /// No description provided for @tdesc_veteran.
+  ///
+  /// In en, this message translates to:
+  /// **'Two hundred and fifty matches'**
+  String get tdesc_veteran;
+
+  /// No description provided for @ttl_thousand_matches.
+  ///
+  /// In en, this message translates to:
+  /// **'Old Guard'**
+  String get ttl_thousand_matches;
+
+  /// No description provided for @tdesc_thousand_matches.
+  ///
+  /// In en, this message translates to:
+  /// **'A thousand matches'**
+  String get tdesc_thousand_matches;
+
+  /// No description provided for @ttl_first_win.
+  ///
+  /// In en, this message translates to:
+  /// **'Winner'**
+  String get ttl_first_win;
+
+  /// No description provided for @tdesc_first_win.
+  ///
+  /// In en, this message translates to:
+  /// **'Win a match'**
+  String get tdesc_first_win;
+
+  /// No description provided for @ttl_on_a_roll.
+  ///
+  /// In en, this message translates to:
+  /// **'On a Roll'**
+  String get ttl_on_a_roll;
+
+  /// No description provided for @tdesc_on_a_roll.
+  ///
+  /// In en, this message translates to:
+  /// **'Win three in a row'**
+  String get tdesc_on_a_roll;
+
+  /// No description provided for @ttl_five_straight.
+  ///
+  /// In en, this message translates to:
+  /// **'Five Straight'**
+  String get ttl_five_straight;
+
+  /// No description provided for @tdesc_five_straight.
+  ///
+  /// In en, this message translates to:
+  /// **'Win five in a row'**
+  String get tdesc_five_straight;
+
+  /// No description provided for @ttl_unstoppable.
+  ///
+  /// In en, this message translates to:
+  /// **'Unstoppable'**
+  String get ttl_unstoppable;
+
+  /// No description provided for @tdesc_unstoppable.
+  ///
+  /// In en, this message translates to:
+  /// **'Win ten in a row'**
+  String get tdesc_unstoppable;
+
+  /// No description provided for @ttl_untouchable.
+  ///
+  /// In en, this message translates to:
+  /// **'Untouchable'**
+  String get ttl_untouchable;
+
+  /// No description provided for @tdesc_untouchable.
+  ///
+  /// In en, this message translates to:
+  /// **'Win twenty in a row'**
+  String get tdesc_untouchable;
+
+  /// No description provided for @ttl_giant_slayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Giant Slayer'**
+  String get ttl_giant_slayer;
+
+  /// No description provided for @tdesc_giant_slayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Beat someone two tiers above you'**
+  String get tdesc_giant_slayer;
+
+  /// No description provided for @ttl_comeback.
+  ///
+  /// In en, this message translates to:
+  /// **'Comeback'**
+  String get ttl_comeback;
+
+  /// No description provided for @tdesc_comeback.
+  ///
+  /// In en, this message translates to:
+  /// **'Win straight after three losses'**
+  String get tdesc_comeback;
+
+  /// No description provided for @ttl_nemesis.
+  ///
+  /// In en, this message translates to:
+  /// **'Nemesis'**
+  String get ttl_nemesis;
+
+  /// No description provided for @tdesc_nemesis.
+  ///
+  /// In en, this message translates to:
+  /// **'Beat the same lifter five times'**
+  String get tdesc_nemesis;
+
+  /// No description provided for @ttl_hundred_reps.
+  ///
+  /// In en, this message translates to:
+  /// **'Off the Mark'**
+  String get ttl_hundred_reps;
+
+  /// No description provided for @tdesc_hundred_reps.
+  ///
+  /// In en, this message translates to:
+  /// **'A hundred counted reps'**
+  String get tdesc_hundred_reps;
+
+  /// No description provided for @ttl_five_hundred.
+  ///
+  /// In en, this message translates to:
+  /// **'Warmed Up'**
+  String get ttl_five_hundred;
+
+  /// No description provided for @tdesc_five_hundred.
+  ///
+  /// In en, this message translates to:
+  /// **'Five hundred counted reps'**
+  String get tdesc_five_hundred;
+
+  /// No description provided for @ttl_the_machine.
+  ///
+  /// In en, this message translates to:
+  /// **'The Machine'**
+  String get ttl_the_machine;
+
+  /// No description provided for @tdesc_the_machine.
+  ///
+  /// In en, this message translates to:
+  /// **'A thousand counted reps'**
+  String get tdesc_the_machine;
+
+  /// No description provided for @ttl_five_thousand.
+  ///
+  /// In en, this message translates to:
+  /// **'Relentless'**
+  String get ttl_five_thousand;
+
+  /// No description provided for @tdesc_five_thousand.
+  ///
+  /// In en, this message translates to:
+  /// **'Five thousand counted reps'**
+  String get tdesc_five_thousand;
+
+  /// No description provided for @ttl_ten_thousand.
+  ///
+  /// In en, this message translates to:
+  /// **'Ten Thousand'**
+  String get ttl_ten_thousand;
+
+  /// No description provided for @tdesc_ten_thousand.
+  ///
+  /// In en, this message translates to:
+  /// **'Ten thousand counted reps'**
+  String get tdesc_ten_thousand;
+
+  /// No description provided for @ttl_fifty_thousand.
+  ///
+  /// In en, this message translates to:
+  /// **'Beyond Counting'**
+  String get ttl_fifty_thousand;
+
+  /// No description provided for @tdesc_fifty_thousand.
+  ///
+  /// In en, this message translates to:
+  /// **'Fifty thousand counted reps'**
+  String get tdesc_fifty_thousand;
+
+  /// No description provided for @ttl_first_tonne.
+  ///
+  /// In en, this message translates to:
+  /// **'A Tonne'**
+  String get ttl_first_tonne;
+
+  /// No description provided for @tdesc_first_tonne.
+  ///
+  /// In en, this message translates to:
+  /// **'Move a thousand kilos in total'**
+  String get tdesc_first_tonne;
+
+  /// No description provided for @ttl_ten_tonnes.
+  ///
+  /// In en, this message translates to:
+  /// **'Ten Tonnes'**
+  String get ttl_ten_tonnes;
+
+  /// No description provided for @tdesc_ten_tonnes.
+  ///
+  /// In en, this message translates to:
+  /// **'Move ten thousand kilos'**
+  String get tdesc_ten_tonnes;
+
+  /// No description provided for @ttl_six_figures.
+  ///
+  /// In en, this message translates to:
+  /// **'Six Figures'**
+  String get ttl_six_figures;
+
+  /// No description provided for @tdesc_six_figures.
+  ///
+  /// In en, this message translates to:
+  /// **'Move a hundred thousand kilos'**
+  String get tdesc_six_figures;
+
+  /// No description provided for @ttl_half_million.
+  ///
+  /// In en, this message translates to:
+  /// **'Half a Million'**
+  String get ttl_half_million;
+
+  /// No description provided for @tdesc_half_million.
+  ///
+  /// In en, this message translates to:
+  /// **'Move five hundred thousand kilos'**
+  String get tdesc_half_million;
+
+  /// No description provided for @ttl_million_kg.
+  ///
+  /// In en, this message translates to:
+  /// **'Million Kilo Club'**
+  String get ttl_million_kg;
+
+  /// No description provided for @tdesc_million_kg.
+  ///
+  /// In en, this message translates to:
+  /// **'Move a million kilos'**
+  String get tdesc_million_kg;
+
+  /// No description provided for @ttl_two_days.
+  ///
+  /// In en, this message translates to:
+  /// **'Back Again'**
+  String get ttl_two_days;
+
+  /// No description provided for @tdesc_two_days.
+  ///
+  /// In en, this message translates to:
+  /// **'Train two days running'**
+  String get tdesc_two_days;
+
+  /// No description provided for @ttl_no_days_off.
+  ///
+  /// In en, this message translates to:
+  /// **'No Days Off'**
+  String get ttl_no_days_off;
+
+  /// No description provided for @tdesc_no_days_off.
+  ///
+  /// In en, this message translates to:
+  /// **'Train seven days running'**
+  String get tdesc_no_days_off;
+
+  /// No description provided for @ttl_fortnight.
+  ///
+  /// In en, this message translates to:
+  /// **'Fortnight'**
+  String get ttl_fortnight;
+
+  /// No description provided for @tdesc_fortnight.
+  ///
+  /// In en, this message translates to:
+  /// **'A fourteen day streak'**
+  String get tdesc_fortnight;
+
+  /// No description provided for @ttl_unbroken.
+  ///
+  /// In en, this message translates to:
+  /// **'Unbroken'**
+  String get ttl_unbroken;
+
+  /// No description provided for @tdesc_unbroken.
+  ///
+  /// In en, this message translates to:
+  /// **'A thirty day streak'**
+  String get tdesc_unbroken;
+
+  /// No description provided for @ttl_sixty_days.
+  ///
+  /// In en, this message translates to:
+  /// **'Habit'**
+  String get ttl_sixty_days;
+
+  /// No description provided for @tdesc_sixty_days.
+  ///
+  /// In en, this message translates to:
+  /// **'A sixty day streak'**
+  String get tdesc_sixty_days;
+
+  /// No description provided for @ttl_hundred_days.
+  ///
+  /// In en, this message translates to:
+  /// **'Hundred Days'**
+  String get ttl_hundred_days;
+
+  /// No description provided for @tdesc_hundred_days.
+  ///
+  /// In en, this message translates to:
+  /// **'A hundred day streak'**
+  String get tdesc_hundred_days;
+
+  /// No description provided for @ttl_year_round.
+  ///
+  /// In en, this message translates to:
+  /// **'Year Round'**
+  String get ttl_year_round;
+
+  /// No description provided for @tdesc_year_round.
+  ///
+  /// In en, this message translates to:
+  /// **'A three hundred and sixty five day streak'**
+  String get tdesc_year_round;
+
+  /// No description provided for @ttl_perfect_week.
+  ///
+  /// In en, this message translates to:
+  /// **'Perfect Week'**
+  String get ttl_perfect_week;
+
+  /// No description provided for @tdesc_perfect_week.
+  ///
+  /// In en, this message translates to:
+  /// **'Train every day of one week'**
+  String get tdesc_perfect_week;
+
+  /// No description provided for @ttl_perfect_month.
+  ///
+  /// In en, this message translates to:
+  /// **'Perfect Month'**
+  String get ttl_perfect_month;
+
+  /// No description provided for @tdesc_perfect_month.
+  ///
+  /// In en, this message translates to:
+  /// **'Four perfect weeks'**
+  String get tdesc_perfect_month;
+
+  /// No description provided for @ttl_bronze_tier.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of the Stone'**
+  String get ttl_bronze_tier;
+
+  /// No description provided for @tdesc_bronze_tier.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach Bronze'**
+  String get tdesc_bronze_tier;
+
+  /// No description provided for @ttl_silver_tier.
+  ///
+  /// In en, this message translates to:
+  /// **'Silverside'**
+  String get ttl_silver_tier;
+
+  /// No description provided for @tdesc_silver_tier.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach Silver'**
+  String get tdesc_silver_tier;
+
+  /// No description provided for @ttl_golden_era.
+  ///
+  /// In en, this message translates to:
+  /// **'Golden Era'**
+  String get ttl_golden_era;
+
+  /// No description provided for @tdesc_golden_era.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach Gold'**
+  String get tdesc_golden_era;
+
+  /// No description provided for @ttl_platinum_tier.
+  ///
+  /// In en, this message translates to:
+  /// **'Platinum'**
+  String get ttl_platinum_tier;
+
+  /// No description provided for @tdesc_platinum_tier.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach Platinum'**
+  String get tdesc_platinum_tier;
+
+  /// No description provided for @ttl_diamond_tier.
+  ///
+  /// In en, this message translates to:
+  /// **'Diamond Hands'**
+  String get ttl_diamond_tier;
+
+  /// No description provided for @tdesc_diamond_tier.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach Diamond'**
+  String get tdesc_diamond_tier;
+
+  /// No description provided for @ttl_master_tier.
+  ///
+  /// In en, this message translates to:
+  /// **'Master'**
+  String get ttl_master_tier;
+
+  /// No description provided for @tdesc_master_tier.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach Master'**
+  String get tdesc_master_tier;
+
+  /// No description provided for @ttl_mythic_tier.
+  ///
+  /// In en, this message translates to:
+  /// **'Mythic'**
+  String get ttl_mythic_tier;
+
+  /// No description provided for @tdesc_mythic_tier.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach Mythic'**
+  String get tdesc_mythic_tier;
+
+  /// No description provided for @ttl_legend_tier.
+  ///
+  /// In en, this message translates to:
+  /// **'Legend'**
+  String get ttl_legend_tier;
+
+  /// No description provided for @tdesc_legend_tier.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach Legend'**
+  String get tdesc_legend_tier;
+
+  /// No description provided for @ttl_clean_hands.
+  ///
+  /// In en, this message translates to:
+  /// **'Clean Hands'**
+  String get ttl_clean_hands;
+
+  /// No description provided for @tdesc_clean_hands.
+  ///
+  /// In en, this message translates to:
+  /// **'A full set with every rep counted'**
+  String get tdesc_clean_hands;
+
+  /// No description provided for @ttl_spotless.
+  ///
+  /// In en, this message translates to:
+  /// **'Spotless'**
+  String get ttl_spotless;
+
+  /// No description provided for @tdesc_spotless.
+  ///
+  /// In en, this message translates to:
+  /// **'Ten clean sets'**
+  String get tdesc_spotless;
+
+  /// No description provided for @ttl_textbook.
+  ///
+  /// In en, this message translates to:
+  /// **'Textbook'**
+  String get ttl_textbook;
+
+  /// No description provided for @tdesc_textbook.
+  ///
+  /// In en, this message translates to:
+  /// **'Fifty clean sets'**
+  String get tdesc_textbook;
+
+  /// No description provided for @ttl_iron_hold.
+  ///
+  /// In en, this message translates to:
+  /// **'Iron Hold'**
+  String get ttl_iron_hold;
+
+  /// No description provided for @tdesc_iron_hold.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold a plank for two minutes'**
+  String get tdesc_iron_hold;
+
+  /// No description provided for @ttl_statue.
+  ///
+  /// In en, this message translates to:
+  /// **'Statue'**
+  String get ttl_statue;
+
+  /// No description provided for @tdesc_statue.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold a plank for five minutes'**
+  String get tdesc_statue;
+
+  /// No description provided for @ttl_all_rounder.
+  ///
+  /// In en, this message translates to:
+  /// **'All Rounder'**
+  String get ttl_all_rounder;
+
+  /// No description provided for @tdesc_all_rounder.
+  ///
+  /// In en, this message translates to:
+  /// **'Count five different exercises'**
+  String get tdesc_all_rounder;
+
+  /// No description provided for @ttl_explorer.
+  ///
+  /// In en, this message translates to:
+  /// **'Explorer'**
+  String get ttl_explorer;
+
+  /// No description provided for @tdesc_explorer.
+  ///
+  /// In en, this message translates to:
+  /// **'Count fifteen different exercises'**
+  String get tdesc_explorer;
+
+  /// No description provided for @ttl_encyclopedia.
+  ///
+  /// In en, this message translates to:
+  /// **'Encyclopedia'**
+  String get ttl_encyclopedia;
+
+  /// No description provided for @tdesc_encyclopedia.
+  ///
+  /// In en, this message translates to:
+  /// **'Count forty different exercises'**
+  String get tdesc_encyclopedia;
+
+  /// No description provided for @ttl_early_bird.
+  ///
+  /// In en, this message translates to:
+  /// **'Early Shift'**
+  String get ttl_early_bird;
+
+  /// No description provided for @tdesc_early_bird.
+  ///
+  /// In en, this message translates to:
+  /// **'Ten sessions before seven in the morning'**
+  String get tdesc_early_bird;
+
+  /// No description provided for @ttl_sunrise_club.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunrise Club'**
+  String get ttl_sunrise_club;
+
+  /// No description provided for @tdesc_sunrise_club.
+  ///
+  /// In en, this message translates to:
+  /// **'Fifty sessions before seven'**
+  String get tdesc_sunrise_club;
+
+  /// No description provided for @ttl_night_owl.
+  ///
+  /// In en, this message translates to:
+  /// **'Night Shift'**
+  String get ttl_night_owl;
+
+  /// No description provided for @tdesc_night_owl.
+  ///
+  /// In en, this message translates to:
+  /// **'Ten sessions after ten at night'**
+  String get tdesc_night_owl;
+
+  /// No description provided for @ttl_graveyard.
+  ///
+  /// In en, this message translates to:
+  /// **'Graveyard Shift'**
+  String get ttl_graveyard;
+
+  /// No description provided for @tdesc_graveyard.
+  ///
+  /// In en, this message translates to:
+  /// **'Fifty sessions after ten'**
+  String get tdesc_graveyard;
+
+  /// No description provided for @ttl_joined_up.
+  ///
+  /// In en, this message translates to:
+  /// **'Joined Up'**
+  String get ttl_joined_up;
+
+  /// No description provided for @tdesc_joined_up.
+  ///
+  /// In en, this message translates to:
+  /// **'Be in a crew'**
+  String get tdesc_joined_up;
+
+  /// No description provided for @ttl_backbone.
+  ///
+  /// In en, this message translates to:
+  /// **'Backbone'**
+  String get ttl_backbone;
+
+  /// No description provided for @tdesc_backbone.
+  ///
+  /// In en, this message translates to:
+  /// **'Top your crew four weeks running'**
+  String get tdesc_backbone;
+
+  /// No description provided for @ttl_cornerstone.
+  ///
+  /// In en, this message translates to:
+  /// **'Cornerstone'**
+  String get ttl_cornerstone;
+
+  /// No description provided for @tdesc_cornerstone.
+  ///
+  /// In en, this message translates to:
+  /// **'Top your crew twelve weeks running'**
+  String get tdesc_cornerstone;
+
+  /// No description provided for @ttl_not_alone.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Alone'**
+  String get ttl_not_alone;
+
+  /// No description provided for @tdesc_not_alone.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first friend'**
+  String get tdesc_not_alone;
+
+  /// No description provided for @ttl_well_connected.
+  ///
+  /// In en, this message translates to:
+  /// **'Well Connected'**
+  String get ttl_well_connected;
+
+  /// No description provided for @tdesc_well_connected.
+  ///
+  /// In en, this message translates to:
+  /// **'Ten friends'**
+  String get tdesc_well_connected;
+
+  /// No description provided for @ttl_the_gym_knows.
+  ///
+  /// In en, this message translates to:
+  /// **'The Gym Knows You'**
+  String get ttl_the_gym_knows;
+
+  /// No description provided for @tdesc_the_gym_knows.
+  ///
+  /// In en, this message translates to:
+  /// **'Fifty friends'**
+  String get tdesc_the_gym_knows;
+
+  /// No description provided for @finish2.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get finish2;
+
+  /// No description provided for @qExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'How experienced are you\nwith working out?'**
+  String get qExperience;
+
+  /// No description provided for @expBeginner.
+  ///
+  /// In en, this message translates to:
+  /// **'Beginner – Tried it before'**
+  String get expBeginner;
+
+  /// No description provided for @expIntermediate.
+  ///
+  /// In en, this message translates to:
+  /// **'Intermediate – Regular training'**
+  String get expIntermediate;
+
+  /// No description provided for @expAdvanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced – Years of experience'**
+  String get expAdvanced;
+
+  /// No description provided for @qGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s your top\nfitness goal?'**
+  String get qGoal;
+
+  /// No description provided for @goalStronger.
+  ///
+  /// In en, this message translates to:
+  /// **'Become stronger'**
+  String get goalStronger;
+
+  /// No description provided for @goalConsistent.
+  ///
+  /// In en, this message translates to:
+  /// **'Become more consistent'**
+  String get goalConsistent;
+
+  /// No description provided for @goalLean.
+  ///
+  /// In en, this message translates to:
+  /// **'Lose weight and get lean'**
+  String get goalLean;
+
+  /// No description provided for @goalMass.
+  ///
+  /// In en, this message translates to:
+  /// **'Build muscle mass'**
+  String get goalMass;
+
+  /// No description provided for @aboutYou.
+  ///
+  /// In en, this message translates to:
+  /// **'This journey is all about you...'**
+  String get aboutYou;
+
+  /// No description provided for @qThinkAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'How often do you think\nabout getting in shape?'**
+  String get qThinkAbout;
+
+  /// No description provided for @freqNever.
+  ///
+  /// In en, this message translates to:
+  /// **'Never'**
+  String get freqNever;
+
+  /// No description provided for @freqSometimes.
+  ///
+  /// In en, this message translates to:
+  /// **'Sometimes'**
+  String get freqSometimes;
+
+  /// No description provided for @freqOften.
+  ///
+  /// In en, this message translates to:
+  /// **'Often'**
+  String get freqOften;
+
+  /// No description provided for @freqAllTime.
+  ///
+  /// In en, this message translates to:
+  /// **'All The Time'**
+  String get freqAllTime;
+
+  /// No description provided for @qEnergy.
+  ///
+  /// In en, this message translates to:
+  /// **'How are your energy levels\nduring workouts?'**
+  String get qEnergy;
+
+  /// No description provided for @energyLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low energy, I feel drained all day'**
+  String get energyLow;
+
+  /// No description provided for @energyDrops.
+  ///
+  /// In en, this message translates to:
+  /// **'Performance drops mid-session'**
+  String get energyDrops;
+
+  /// No description provided for @energyHard.
+  ///
+  /// In en, this message translates to:
+  /// **'Hard to push through the last set'**
+  String get energyHard;
+
+  /// No description provided for @energyHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'High and steady from start to finish'**
+  String get energyHigh;
+
+  /// No description provided for @stProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Sometimes, it\'s hard to notice progress when I workout'**
+  String get stProgress;
+
+  /// No description provided for @stEffortTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Effort no one sees\nis easy to quit'**
+  String get stEffortTitle;
+
+  /// No description provided for @stEffortBody.
+  ///
+  /// In en, this message translates to:
+  /// **'When there\'s no one to prove yourself against, progress feels slow and effort feels pointless'**
+  String get stEffortBody;
+
+  /// No description provided for @stAloneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Training alone\nis boring'**
+  String get stAloneTitle;
+
+  /// No description provided for @stAloneBody.
+  ///
+  /// In en, this message translates to:
+  /// **'No one\'s watching. No one\'s counting. It\'s easy to skip a rep, or the whole set'**
+  String get stAloneBody;
+
+  /// No description provided for @qName.
+  ///
+  /// In en, this message translates to:
+  /// **'What should we\ncall you?'**
+  String get qName;
+
+  /// No description provided for @nameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 3 characters. This is what rivals will see.'**
+  String get nameHint;
+
+  /// No description provided for @basicInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Alright! Lets get\nsome basic info'**
+  String get basicInfo;
+
+  /// No description provided for @qAge.
+  ///
+  /// In en, this message translates to:
+  /// **'How old are you?'**
+  String get qAge;
+
+  /// No description provided for @qWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s your\ncurrent weight?'**
+  String get qWeight;
+
+  /// No description provided for @weightWhy.
+  ///
+  /// In en, this message translates to:
+  /// **'Body weight is essential to calculate your rank.'**
+  String get weightWhy;
+
+  /// No description provided for @privateNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Your information is private and will not be shared with anyone.'**
+  String get privateNote;
+
+  /// No description provided for @qHeight.
+  ///
+  /// In en, this message translates to:
+  /// **'How tall are you?'**
+  String get qHeight;
+
+  /// No description provided for @qRelate.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you relate to the\nstatement below?'**
+  String get qRelate;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
+  /// No description provided for @grindTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The grind hits different\nwith a rival'**
+  String get grindTitle;
+
+  /// No description provided for @grindBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Every match puts you against a real opponent, put in the work, and prove who trained harder.'**
+  String get grindBody;
+
+  /// No description provided for @allSet.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re all set!'**
+  String get allSet;
+
+  /// No description provided for @welcomeLifter.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome, {name}. Time to find your first rival.'**
+  String welcomeLifter(String name);
+
+  /// No description provided for @lifter.
+  ///
+  /// In en, this message translates to:
+  /// **'lifter'**
+  String get lifter;
+
+  /// No description provided for @enterApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter OUTREPD'**
+  String get enterApp;
+
+  /// No description provided for @commitTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Now let\'s make a commitment\nto your fitness journey'**
+  String get commitTitle;
+
+  /// No description provided for @holdLogo.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold the logo to confirm you\'re ready'**
+  String get holdLogo;
+
+  /// No description provided for @expNone.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'ve never worked out'**
+  String get expNone;
+
+  /// No description provided for @iAm.
+  ///
+  /// In en, this message translates to:
+  /// **'I am...'**
+  String get iAm;
+
+  /// No description provided for @finishMatchQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish match?'**
+  String get finishMatchQ;
+
+  /// No description provided for @finishMatchBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your volume will be locked in and compared with your opponent.'**
+  String get finishMatchBody;
+
+  /// No description provided for @keepGoing.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep going'**
+  String get keepGoing;
+
+  /// No description provided for @forfeitQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Forfeit match?'**
+  String get forfeitQ;
+
+  /// No description provided for @forfeitBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You will lose LP if you leave now.'**
+  String get forfeitBody;
+
+  /// No description provided for @stay.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay'**
+  String get stay;
+
+  /// No description provided for @forfeit.
+  ///
+  /// In en, this message translates to:
+  /// **'Forfeit'**
+  String get forfeit;
+
+  /// No description provided for @pickExercises.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the exercises you will train'**
+  String get pickExercises;
+
+  /// No description provided for @matchingWith.
+  ///
+  /// In en, this message translates to:
+  /// **'Matching you with a lifter at your rank · {muscle}'**
+  String matchingWith(String muscle);
+
+  /// No description provided for @getReady.
+  ///
+  /// In en, this message translates to:
+  /// **'GET READY'**
+  String get getReady;
+
+  /// No description provided for @timeLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'TIME LEFT'**
+  String get timeLeft;
+
+  /// No description provided for @vsName.
+  ///
+  /// In en, this message translates to:
+  /// **'vs {name}'**
+  String vsName(String name);
+
+  /// No description provided for @kgTotalVolume.
+  ///
+  /// In en, this message translates to:
+  /// **'{unit} total volume'**
+  String kgTotalVolume(String unit);
+
+  /// No description provided for @finishMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'FINISH MATCH'**
+  String get finishMatch;
+
+  /// No description provided for @kgHint.
+  ///
+  /// In en, this message translates to:
+  /// **'KG'**
+  String get kgHint;
+
+  /// No description provided for @repsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'REPS'**
+  String get repsHint;
+
+  /// No description provided for @addSet.
+  ///
+  /// In en, this message translates to:
+  /// **'ADD SET'**
+  String get addSet;
+
+  /// No description provided for @matchComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'MATCH COMPLETE'**
+  String get matchComplete;
+
+  /// No description provided for @you.
+  ///
+  /// In en, this message translates to:
+  /// **'YOU'**
+  String get you;
+
+  /// No description provided for @vs.
+  ///
+  /// In en, this message translates to:
+  /// **'VS'**
+  String get vs;
+
+  /// No description provided for @backToHome.
+  ///
+  /// In en, this message translates to:
+  /// **'BACK TO HOME'**
+  String get backToHome;
+
+  /// No description provided for @mgChest.
+  ///
+  /// In en, this message translates to:
+  /// **'Chest'**
+  String get mgChest;
+
+  /// No description provided for @mgBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get mgBack;
+
+  /// No description provided for @mgLegs.
+  ///
+  /// In en, this message translates to:
+  /// **'Legs'**
+  String get mgLegs;
+
+  /// No description provided for @mgShoulders.
+  ///
+  /// In en, this message translates to:
+  /// **'Shoulders'**
+  String get mgShoulders;
+
+  /// No description provided for @mgArms.
+  ///
+  /// In en, this message translates to:
+  /// **'Arms'**
+  String get mgArms;
+
+  /// No description provided for @mgCore.
+  ///
+  /// In en, this message translates to:
+  /// **'Core'**
+  String get mgCore;
+
+  /// No description provided for @achRivalry.
+  ///
+  /// In en, this message translates to:
+  /// **'Rivalry'**
+  String get achRivalry;
+
+  /// No description provided for @achRivalryHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Beat the same opponent 3 times'**
+  String get achRivalryHint;
+
+  /// No description provided for @nWonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You won!'**
+  String get nWonTitle;
+
+  /// No description provided for @nWonBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You beat {name} on {muscle} day'**
+  String nWonBody(String name, String muscle);
+
+  /// No description provided for @nFriendTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New friend request'**
+  String get nFriendTitle;
+
+  /// No description provided for @nFriendBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} wants to connect'**
+  String nFriendBody(String name);
+
+  /// No description provided for @nAchTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Achievement unlocked'**
+  String get nAchTitle;
+
+  /// No description provided for @nAchBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{title} — {hint}'**
+  String nAchBody(String title, String hint);
+
+  /// No description provided for @nRankTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rank up!'**
+  String get nRankTitle;
+
+  /// No description provided for @nRankBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You reached {rank}'**
+  String nRankBody(String rank);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

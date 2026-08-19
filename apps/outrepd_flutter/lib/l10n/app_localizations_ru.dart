@@ -867,4 +867,644 @@ class LRu extends L {
 
   @override
   String get continueLabel => 'Далее';
+
+  @override
+  String get ttl_first_blood => 'Первая кровь';
+
+  @override
+  String get tdesc_first_blood => 'Завершите первый матч';
+
+  @override
+  String get ttl_found_footing => 'Твёрдая опора';
+
+  @override
+  String get tdesc_found_footing => 'Завершите пять матчей';
+
+  @override
+  String get ttl_regular => 'Завсегдатай';
+
+  @override
+  String get tdesc_regular => 'Двадцать матчей';
+
+  @override
+  String get ttl_fifty => 'Полсотни';
+
+  @override
+  String get tdesc_fifty => 'Пятьдесят матчей';
+
+  @override
+  String get ttl_century => 'Столетие';
+
+  @override
+  String get tdesc_century => 'Сто матчей';
+
+  @override
+  String get ttl_veteran => 'Ветеран';
+
+  @override
+  String get tdesc_veteran => 'Двести пятьдесят матчей';
+
+  @override
+  String get ttl_thousand_matches => 'Старая гвардия';
+
+  @override
+  String get tdesc_thousand_matches => 'Тысяча матчей';
+
+  @override
+  String get ttl_first_win => 'Победитель';
+
+  @override
+  String get tdesc_first_win => 'Выиграйте матч';
+
+  @override
+  String get ttl_on_a_roll => 'На ходу';
+
+  @override
+  String get tdesc_on_a_roll => 'Выиграйте три подряд';
+
+  @override
+  String get ttl_five_straight => 'Пять подряд';
+
+  @override
+  String get tdesc_five_straight => 'Выиграйте пять подряд';
+
+  @override
+  String get ttl_unstoppable => 'Неудержимый';
+
+  @override
+  String get tdesc_unstoppable => 'Выиграйте десять подряд';
+
+  @override
+  String get ttl_untouchable => 'Неприкасаемый';
+
+  @override
+  String get tdesc_untouchable => 'Выиграйте двадцать подряд';
+
+  @override
+  String get ttl_giant_slayer => 'Убийца гигантов';
+
+  @override
+  String get tdesc_giant_slayer => 'Обыграйте соперника на два ранга выше';
+
+  @override
+  String get ttl_comeback => 'Возвращение';
+
+  @override
+  String get tdesc_comeback => 'Выиграйте сразу после трёх поражений';
+
+  @override
+  String get ttl_nemesis => 'Немезида';
+
+  @override
+  String get tdesc_nemesis => 'Обыграйте одного соперника пять раз';
+
+  @override
+  String get ttl_hundred_reps => 'Со старта';
+
+  @override
+  String get tdesc_hundred_reps => 'Сто засчитанных повторов';
+
+  @override
+  String get ttl_five_hundred => 'Разогрет';
+
+  @override
+  String get tdesc_five_hundred => 'Пятьсот засчитанных повторов';
+
+  @override
+  String get ttl_the_machine => 'Машина';
+
+  @override
+  String get tdesc_the_machine => 'Тысяча засчитанных повторов';
+
+  @override
+  String get ttl_five_thousand => 'Неумолимый';
+
+  @override
+  String get tdesc_five_thousand => 'Пять тысяч засчитанных повторов';
+
+  @override
+  String get ttl_ten_thousand => 'Десять тысяч';
+
+  @override
+  String get tdesc_ten_thousand => 'Десять тысяч засчитанных повторов';
+
+  @override
+  String get ttl_fifty_thousand => 'Вне счёта';
+
+  @override
+  String get tdesc_fifty_thousand => 'Пятьдесят тысяч засчитанных повторов';
+
+  @override
+  String get ttl_first_tonne => 'Тонна';
+
+  @override
+  String get tdesc_first_tonne => 'Поднимите тысячу килограммов суммарно';
+
+  @override
+  String get ttl_ten_tonnes => 'Десять тонн';
+
+  @override
+  String get tdesc_ten_tonnes => 'Поднимите десять тысяч килограммов';
+
+  @override
+  String get ttl_six_figures => 'Шесть знаков';
+
+  @override
+  String get tdesc_six_figures => 'Поднимите сто тысяч килограммов';
+
+  @override
+  String get ttl_half_million => 'Полмиллиона';
+
+  @override
+  String get tdesc_half_million => 'Поднимите пятьсот тысяч килограммов';
+
+  @override
+  String get ttl_million_kg => 'Клуб миллиона';
+
+  @override
+  String get tdesc_million_kg => 'Поднимите миллион килограммов';
+
+  @override
+  String get ttl_two_days => 'Снова здесь';
+
+  @override
+  String get tdesc_two_days => 'Тренируйтесь два дня подряд';
+
+  @override
+  String get ttl_no_days_off => 'Без выходных';
+
+  @override
+  String get tdesc_no_days_off => 'Тренируйтесь семь дней подряд';
+
+  @override
+  String get ttl_fortnight => 'Две недели';
+
+  @override
+  String get tdesc_fortnight => 'Серия в четырнадцать дней';
+
+  @override
+  String get ttl_unbroken => 'Непрерывно';
+
+  @override
+  String get tdesc_unbroken => 'Серия в тридцать дней';
+
+  @override
+  String get ttl_sixty_days => 'Привычка';
+
+  @override
+  String get tdesc_sixty_days => 'Серия в шестьдесят дней';
+
+  @override
+  String get ttl_hundred_days => 'Сто дней';
+
+  @override
+  String get tdesc_hundred_days => 'Серия в сто дней';
+
+  @override
+  String get ttl_year_round => 'Круглый год';
+
+  @override
+  String get tdesc_year_round => 'Серия в триста шестьдесят пять дней';
+
+  @override
+  String get ttl_perfect_week => 'Идеальная неделя';
+
+  @override
+  String get tdesc_perfect_week => 'Тренируйтесь каждый день недели';
+
+  @override
+  String get ttl_perfect_month => 'Идеальный месяц';
+
+  @override
+  String get tdesc_perfect_month => 'Четыре идеальные недели';
+
+  @override
+  String get ttl_bronze_tier => 'Из камня';
+
+  @override
+  String get tdesc_bronze_tier => 'Достигните Бронзы';
+
+  @override
+  String get ttl_silver_tier => 'Серебристый';
+
+  @override
+  String get tdesc_silver_tier => 'Достигните Серебра';
+
+  @override
+  String get ttl_golden_era => 'Золотая эра';
+
+  @override
+  String get tdesc_golden_era => 'Достигните Золота';
+
+  @override
+  String get ttl_platinum_tier => 'Платина';
+
+  @override
+  String get tdesc_platinum_tier => 'Достигните Платины';
+
+  @override
+  String get ttl_diamond_tier => 'Алмазная хватка';
+
+  @override
+  String get tdesc_diamond_tier => 'Достигните Алмаза';
+
+  @override
+  String get ttl_master_tier => 'Мастер';
+
+  @override
+  String get tdesc_master_tier => 'Достигните Мастера';
+
+  @override
+  String get ttl_mythic_tier => 'Мифический';
+
+  @override
+  String get tdesc_mythic_tier => 'Достигните Мифического ранга';
+
+  @override
+  String get ttl_legend_tier => 'Легенда';
+
+  @override
+  String get tdesc_legend_tier => 'Достигните Легенды';
+
+  @override
+  String get ttl_clean_hands => 'Чистые руки';
+
+  @override
+  String get tdesc_clean_hands => 'Полный подход, где засчитан каждый повтор';
+
+  @override
+  String get ttl_spotless => 'Безупречно';
+
+  @override
+  String get tdesc_spotless => 'Десять чистых подходов';
+
+  @override
+  String get ttl_textbook => 'По учебнику';
+
+  @override
+  String get tdesc_textbook => 'Пятьдесят чистых подходов';
+
+  @override
+  String get ttl_iron_hold => 'Железная хватка';
+
+  @override
+  String get tdesc_iron_hold => 'Продержите планку две минуты';
+
+  @override
+  String get ttl_statue => 'Статуя';
+
+  @override
+  String get tdesc_statue => 'Продержите планку пять минут';
+
+  @override
+  String get ttl_all_rounder => 'Универсал';
+
+  @override
+  String get tdesc_all_rounder => 'Засчитайте пять разных упражнений';
+
+  @override
+  String get ttl_explorer => 'Исследователь';
+
+  @override
+  String get tdesc_explorer => 'Засчитайте пятнадцать разных упражнений';
+
+  @override
+  String get ttl_encyclopedia => 'Энциклопедия';
+
+  @override
+  String get tdesc_encyclopedia => 'Засчитайте сорок разных упражнений';
+
+  @override
+  String get ttl_early_bird => 'Утренняя смена';
+
+  @override
+  String get tdesc_early_bird => 'Десять тренировок до семи утра';
+
+  @override
+  String get ttl_sunrise_club => 'Клуб рассвета';
+
+  @override
+  String get tdesc_sunrise_club => 'Пятьдесят тренировок до семи утра';
+
+  @override
+  String get ttl_night_owl => 'Ночная смена';
+
+  @override
+  String get tdesc_night_owl => 'Десять тренировок после десяти вечера';
+
+  @override
+  String get ttl_graveyard => 'Смена на рассвете';
+
+  @override
+  String get tdesc_graveyard => 'Пятьдесят тренировок после десяти вечера';
+
+  @override
+  String get ttl_joined_up => 'В составе';
+
+  @override
+  String get tdesc_joined_up => 'Состоите в команде';
+
+  @override
+  String get ttl_backbone => 'Хребет';
+
+  @override
+  String get tdesc_backbone => 'Возглавьте команду четыре недели подряд';
+
+  @override
+  String get ttl_cornerstone => 'Краеугольный камень';
+
+  @override
+  String get tdesc_cornerstone => 'Возглавьте команду двенадцать недель подряд';
+
+  @override
+  String get ttl_not_alone => 'Не один';
+
+  @override
+  String get tdesc_not_alone => 'Добавьте первого друга';
+
+  @override
+  String get ttl_well_connected => 'Со связями';
+
+  @override
+  String get tdesc_well_connected => 'Десять друзей';
+
+  @override
+  String get ttl_the_gym_knows => 'Зал вас знает';
+
+  @override
+  String get tdesc_the_gym_knows => 'Пятьдесят друзей';
+
+  @override
+  String get finish2 => 'Готово';
+
+  @override
+  String get qExperience => 'Какой у вас опыт\nтренировок?';
+
+  @override
+  String get expBeginner => 'Новичок – пробовал раньше';
+
+  @override
+  String get expIntermediate => 'Средний – тренируюсь регулярно';
+
+  @override
+  String get expAdvanced => 'Продвинутый – годы практики';
+
+  @override
+  String get qGoal => 'Какая у вас главная\nцель?';
+
+  @override
+  String get goalStronger => 'Стать сильнее';
+
+  @override
+  String get goalConsistent => 'Стать более последовательным';
+
+  @override
+  String get goalLean => 'Сбросить вес и подсушиться';
+
+  @override
+  String get goalMass => 'Набрать мышечную массу';
+
+  @override
+  String get aboutYou => 'Этот путь — только о вас...';
+
+  @override
+  String get qThinkAbout =>
+      'Как часто вы думаете\nо том, чтобы прийти в форму?';
+
+  @override
+  String get freqNever => 'Никогда';
+
+  @override
+  String get freqSometimes => 'Иногда';
+
+  @override
+  String get freqOften => 'Часто';
+
+  @override
+  String get freqAllTime => 'Постоянно';
+
+  @override
+  String get qEnergy => 'Как у вас с энергией\nво время тренировки?';
+
+  @override
+  String get energyLow => 'Низкая, весь день чувствую себя выжатым';
+
+  @override
+  String get energyDrops => 'Работоспособность падает к середине';
+
+  @override
+  String get energyHard => 'Тяжело дожать последний подход';
+
+  @override
+  String get energyHigh => 'Высокая и ровная от начала до конца';
+
+  @override
+  String get stProgress =>
+      'Иногда трудно заметить прогресс во время тренировок';
+
+  @override
+  String get stEffortTitle => 'Усилие, которого никто не видит,\nлегко бросить';
+
+  @override
+  String get stEffortBody =>
+      'Когда некому ничего доказывать, прогресс кажется медленным, а усилие бессмысленным';
+
+  @override
+  String get stAloneTitle => 'Тренироваться в одиночку\nскучно';
+
+  @override
+  String get stAloneBody =>
+      'Никто не смотрит. Никто не считает. Легко пропустить повтор — или весь подход';
+
+  @override
+  String get qName => 'Как нам вас\nназывать?';
+
+  @override
+  String get nameHint => 'Не меньше трёх символов. Это увидят соперники.';
+
+  @override
+  String get basicInfo => 'Отлично! Теперь\nнесколько базовых данных';
+
+  @override
+  String get qAge => 'Сколько вам лет?';
+
+  @override
+  String get qWeight => 'Какой у вас\nтекущий вес?';
+
+  @override
+  String get weightWhy => 'Вес тела нужен для расчёта вашего ранга.';
+
+  @override
+  String get privateNote => 'Ваши данные закрыты и никому не передаются.';
+
+  @override
+  String get qHeight => 'Какой у вас рост?';
+
+  @override
+  String get qRelate => 'Узнаёте себя\nв утверждении ниже?';
+
+  @override
+  String get yes => 'Да';
+
+  @override
+  String get no => 'Нет';
+
+  @override
+  String get grindTitle => 'С соперником\nработа идёт иначе';
+
+  @override
+  String get grindBody =>
+      'Каждый матч ставит вас против реального соперника: сделайте работу и покажите, кто тренировался усерднее.';
+
+  @override
+  String get allSet => 'Всё готово!';
+
+  @override
+  String welcomeLifter(String name) {
+    return 'Добро пожаловать, $name. Пора найти первого соперника.';
+  }
+
+  @override
+  String get lifter => 'атлет';
+
+  @override
+  String get enterApp => 'Войти в OUTREPD';
+
+  @override
+  String get commitTitle => 'А теперь дадим обещание\nсвоему пути';
+
+  @override
+  String get holdLogo => 'Удерживайте логотип, чтобы подтвердить готовность';
+
+  @override
+  String get expNone => 'Никогда не тренировался';
+
+  @override
+  String get iAm => 'Я...';
+
+  @override
+  String get finishMatchQ => 'Завершить матч?';
+
+  @override
+  String get finishMatchBody =>
+      'Ваш объём будет зафиксирован и сравнён с объёмом соперника.';
+
+  @override
+  String get keepGoing => 'Продолжить';
+
+  @override
+  String get forfeitQ => 'Сдать матч?';
+
+  @override
+  String get forfeitBody => 'Если выйти сейчас, вы потеряете очки.';
+
+  @override
+  String get stay => 'Остаться';
+
+  @override
+  String get forfeit => 'Сдаться';
+
+  @override
+  String get pickExercises => 'Выберите упражнения, которые будете делать';
+
+  @override
+  String matchingWith(String muscle) {
+    return 'Подбираем соперника вашего ранга · $muscle';
+  }
+
+  @override
+  String get getReady => 'ПРИГОТОВЬТЕСЬ';
+
+  @override
+  String get timeLeft => 'ОСТАЛОСЬ';
+
+  @override
+  String vsName(String name) {
+    return 'против $name';
+  }
+
+  @override
+  String kgTotalVolume(String unit) {
+    return '$unit общего объёма';
+  }
+
+  @override
+  String get finishMatch => 'ЗАВЕРШИТЬ МАТЧ';
+
+  @override
+  String get kgHint => 'КГ';
+
+  @override
+  String get repsHint => 'ПОВТ.';
+
+  @override
+  String get addSet => 'ДОБАВИТЬ ПОДХОД';
+
+  @override
+  String get matchComplete => 'МАТЧ ЗАВЕРШЁН';
+
+  @override
+  String get you => 'ВЫ';
+
+  @override
+  String get vs => 'VS';
+
+  @override
+  String get backToHome => 'НА ГЛАВНУЮ';
+
+  @override
+  String get mgChest => 'Грудь';
+
+  @override
+  String get mgBack => 'Спина';
+
+  @override
+  String get mgLegs => 'Ноги';
+
+  @override
+  String get mgShoulders => 'Плечи';
+
+  @override
+  String get mgArms => 'Руки';
+
+  @override
+  String get mgCore => 'Кор';
+
+  @override
+  String get achRivalry => 'Соперничество';
+
+  @override
+  String get achRivalryHint => 'Обыграйте одного соперника 3 раза';
+
+  @override
+  String get nWonTitle => 'Вы победили!';
+
+  @override
+  String nWonBody(String name, String muscle) {
+    return 'Вы обыграли $name в день $muscle';
+  }
+
+  @override
+  String get nFriendTitle => 'Новая заявка в друзья';
+
+  @override
+  String nFriendBody(String name) {
+    return '$name хочет добавить вас';
+  }
+
+  @override
+  String get nAchTitle => 'Достижение открыто';
+
+  @override
+  String nAchBody(String title, String hint) {
+    return '$title — $hint';
+  }
+
+  @override
+  String get nRankTitle => 'Повышение ранга!';
+
+  @override
+  String nRankBody(String rank) {
+    return 'Вы достигли $rank';
+  }
 }

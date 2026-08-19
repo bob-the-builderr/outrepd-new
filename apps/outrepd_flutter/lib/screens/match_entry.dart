@@ -71,7 +71,7 @@ class _MusclePicker extends StatelessWidget {
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          g,
+                          muscleGroupLabel(L.of(context), g),
                           style: TextStyle(
                             color: context.colors.text,
                             fontWeight: FontWeight.w700,

@@ -844,4 +844,638 @@ class LJa extends L {
 
   @override
   String get continueLabel => '次へ';
+
+  @override
+  String get ttl_first_blood => 'ファーストブラッド';
+
+  @override
+  String get tdesc_first_blood => '初めてのマッチを終える';
+
+  @override
+  String get ttl_found_footing => '足場を固めた';
+
+  @override
+  String get tdesc_found_footing => '5マッチを終える';
+
+  @override
+  String get ttl_regular => '常連';
+
+  @override
+  String get tdesc_regular => '20マッチ';
+
+  @override
+  String get ttl_fifty => '50の大台';
+
+  @override
+  String get tdesc_fifty => '50マッチ';
+
+  @override
+  String get ttl_century => 'センチュリー';
+
+  @override
+  String get tdesc_century => '100マッチ';
+
+  @override
+  String get ttl_veteran => 'ベテラン';
+
+  @override
+  String get tdesc_veteran => '250マッチ';
+
+  @override
+  String get ttl_thousand_matches => '古参';
+
+  @override
+  String get tdesc_thousand_matches => '1000マッチ';
+
+  @override
+  String get ttl_first_win => 'ウィナー';
+
+  @override
+  String get tdesc_first_win => 'マッチに勝つ';
+
+  @override
+  String get ttl_on_a_roll => '波に乗る';
+
+  @override
+  String get tdesc_on_a_roll => '3連勝する';
+
+  @override
+  String get ttl_five_straight => '5連勝';
+
+  @override
+  String get tdesc_five_straight => '5連勝する';
+
+  @override
+  String get ttl_unstoppable => '止められない';
+
+  @override
+  String get tdesc_unstoppable => '10連勝する';
+
+  @override
+  String get ttl_untouchable => 'アンタッチャブル';
+
+  @override
+  String get tdesc_untouchable => '20連勝する';
+
+  @override
+  String get ttl_giant_slayer => 'ジャイアントキラー';
+
+  @override
+  String get tdesc_giant_slayer => '2ランク上の相手に勝つ';
+
+  @override
+  String get ttl_comeback => 'カムバック';
+
+  @override
+  String get tdesc_comeback => '3連敗の直後に勝つ';
+
+  @override
+  String get ttl_nemesis => '宿敵';
+
+  @override
+  String get tdesc_nemesis => '同じ相手に5回勝つ';
+
+  @override
+  String get ttl_hundred_reps => '滑り出し';
+
+  @override
+  String get tdesc_hundred_reps => 'カウント100レップ';
+
+  @override
+  String get ttl_five_hundred => 'ウォームアップ完了';
+
+  @override
+  String get tdesc_five_hundred => 'カウント500レップ';
+
+  @override
+  String get ttl_the_machine => 'マシーン';
+
+  @override
+  String get tdesc_the_machine => 'カウント1000レップ';
+
+  @override
+  String get ttl_five_thousand => '容赦なし';
+
+  @override
+  String get tdesc_five_thousand => 'カウント5000レップ';
+
+  @override
+  String get ttl_ten_thousand => '一万レップ';
+
+  @override
+  String get tdesc_ten_thousand => 'カウント10000レップ';
+
+  @override
+  String get ttl_fifty_thousand => '数え切れない';
+
+  @override
+  String get tdesc_fifty_thousand => 'カウント50000レップ';
+
+  @override
+  String get ttl_first_tonne => '1トン';
+
+  @override
+  String get tdesc_first_tonne => '累計1000キロを挙げる';
+
+  @override
+  String get ttl_ten_tonnes => '10トン';
+
+  @override
+  String get tdesc_ten_tonnes => '累計10000キロを挙げる';
+
+  @override
+  String get ttl_six_figures => '6桁';
+
+  @override
+  String get tdesc_six_figures => '累計10万キロを挙げる';
+
+  @override
+  String get ttl_half_million => '50万キロ';
+
+  @override
+  String get tdesc_half_million => '累計50万キロを挙げる';
+
+  @override
+  String get ttl_million_kg => '100万キロクラブ';
+
+  @override
+  String get tdesc_million_kg => '累計100万キロを挙げる';
+
+  @override
+  String get ttl_two_days => 'また来た';
+
+  @override
+  String get tdesc_two_days => '2日続けてトレーニングする';
+
+  @override
+  String get ttl_no_days_off => '休みなし';
+
+  @override
+  String get tdesc_no_days_off => '7日続けてトレーニングする';
+
+  @override
+  String get ttl_fortnight => '2週間';
+
+  @override
+  String get tdesc_fortnight => '14日連続記録';
+
+  @override
+  String get ttl_unbroken => '途切れず';
+
+  @override
+  String get tdesc_unbroken => '30日連続記録';
+
+  @override
+  String get ttl_sixty_days => '習慣';
+
+  @override
+  String get tdesc_sixty_days => '60日連続記録';
+
+  @override
+  String get ttl_hundred_days => '100日';
+
+  @override
+  String get tdesc_hundred_days => '100日連続記録';
+
+  @override
+  String get ttl_year_round => '通年';
+
+  @override
+  String get tdesc_year_round => '365日連続記録';
+
+  @override
+  String get ttl_perfect_week => 'パーフェクトウィーク';
+
+  @override
+  String get tdesc_perfect_week => '1週間毎日トレーニングする';
+
+  @override
+  String get ttl_perfect_month => 'パーフェクトマンス';
+
+  @override
+  String get tdesc_perfect_month => 'パーフェクトウィーク4回';
+
+  @override
+  String get ttl_bronze_tier => '石を脱する';
+
+  @override
+  String get tdesc_bronze_tier => 'ブロンズに到達';
+
+  @override
+  String get ttl_silver_tier => 'シルバーサイド';
+
+  @override
+  String get tdesc_silver_tier => 'シルバーに到達';
+
+  @override
+  String get ttl_golden_era => '黄金時代';
+
+  @override
+  String get tdesc_golden_era => 'ゴールドに到達';
+
+  @override
+  String get ttl_platinum_tier => 'プラチナ';
+
+  @override
+  String get tdesc_platinum_tier => 'プラチナに到達';
+
+  @override
+  String get ttl_diamond_tier => 'ダイヤモンドハンド';
+
+  @override
+  String get tdesc_diamond_tier => 'ダイヤモンドに到達';
+
+  @override
+  String get ttl_master_tier => 'マスター';
+
+  @override
+  String get tdesc_master_tier => 'マスターに到達';
+
+  @override
+  String get ttl_mythic_tier => 'ミシック';
+
+  @override
+  String get tdesc_mythic_tier => 'ミシックに到達';
+
+  @override
+  String get ttl_legend_tier => 'レジェンド';
+
+  @override
+  String get tdesc_legend_tier => 'レジェンドに到達';
+
+  @override
+  String get ttl_clean_hands => 'クリーンハンド';
+
+  @override
+  String get tdesc_clean_hands => '全レップがカウントされた1セット';
+
+  @override
+  String get ttl_spotless => '非の打ちどころなし';
+
+  @override
+  String get tdesc_spotless => 'クリーンなセット10回';
+
+  @override
+  String get ttl_textbook => 'お手本どおり';
+
+  @override
+  String get tdesc_textbook => 'クリーンなセット50回';
+
+  @override
+  String get ttl_iron_hold => 'アイアンホールド';
+
+  @override
+  String get tdesc_iron_hold => 'プランクを2分キープ';
+
+  @override
+  String get ttl_statue => '彫像';
+
+  @override
+  String get tdesc_statue => 'プランクを5分キープ';
+
+  @override
+  String get ttl_all_rounder => 'オールラウンダー';
+
+  @override
+  String get tdesc_all_rounder => '5種目をカウントする';
+
+  @override
+  String get ttl_explorer => 'エクスプローラー';
+
+  @override
+  String get tdesc_explorer => '15種目をカウントする';
+
+  @override
+  String get ttl_encyclopedia => '百科事典';
+
+  @override
+  String get tdesc_encyclopedia => '40種目をカウントする';
+
+  @override
+  String get ttl_early_bird => '早番';
+
+  @override
+  String get tdesc_early_bird => '朝7時前に10セッション';
+
+  @override
+  String get ttl_sunrise_club => 'サンライズクラブ';
+
+  @override
+  String get tdesc_sunrise_club => '朝7時前に50セッション';
+
+  @override
+  String get ttl_night_owl => '夜勤';
+
+  @override
+  String get tdesc_night_owl => '夜10時以降に10セッション';
+
+  @override
+  String get ttl_graveyard => '深夜勤';
+
+  @override
+  String get tdesc_graveyard => '夜10時以降に50セッション';
+
+  @override
+  String get ttl_joined_up => '加入';
+
+  @override
+  String get tdesc_joined_up => 'クルーに所属する';
+
+  @override
+  String get ttl_backbone => '屋台骨';
+
+  @override
+  String get tdesc_backbone => '4週連続でクルーの首位に立つ';
+
+  @override
+  String get ttl_cornerstone => '礎';
+
+  @override
+  String get tdesc_cornerstone => '12週連続でクルーの首位に立つ';
+
+  @override
+  String get ttl_not_alone => 'ひとりじゃない';
+
+  @override
+  String get tdesc_not_alone => '最初のフレンドを追加する';
+
+  @override
+  String get ttl_well_connected => '顔が広い';
+
+  @override
+  String get tdesc_well_connected => 'フレンド10人';
+
+  @override
+  String get ttl_the_gym_knows => 'ジムが君を知っている';
+
+  @override
+  String get tdesc_the_gym_knows => 'フレンド50人';
+
+  @override
+  String get finish2 => '完了';
+
+  @override
+  String get qExperience => 'トレーニングの経験は\nどのくらいですか？';
+
+  @override
+  String get expBeginner => '初心者 – やってみたことがある';
+
+  @override
+  String get expIntermediate => '中級者 – 定期的に鍛えている';
+
+  @override
+  String get expAdvanced => '上級者 – 何年も続けている';
+
+  @override
+  String get qGoal => 'いちばんの目標は\n何ですか？';
+
+  @override
+  String get goalStronger => 'もっと強くなる';
+
+  @override
+  String get goalConsistent => 'もっと継続できるようになる';
+
+  @override
+  String get goalLean => '体重を落として引き締める';
+
+  @override
+  String get goalMass => '筋肉量を増やす';
+
+  @override
+  String get aboutYou => 'この道のりは、あなた自身のものです...';
+
+  @override
+  String get qThinkAbout => '体を鍛えることを\nどのくらい考えますか？';
+
+  @override
+  String get freqNever => 'まったく';
+
+  @override
+  String get freqSometimes => 'ときどき';
+
+  @override
+  String get freqOften => 'よく';
+
+  @override
+  String get freqAllTime => 'いつも';
+
+  @override
+  String get qEnergy => 'トレーニング中の\n調子はどうですか？';
+
+  @override
+  String get energyLow => '低め。一日中だるさが残る';
+
+  @override
+  String get energyDrops => 'セッションの途中でパフォーマンスが落ちる';
+
+  @override
+  String get energyHard => '最後のセットを押し切るのがつらい';
+
+  @override
+  String get energyHigh => '最初から最後まで高く安定している';
+
+  @override
+  String get stProgress => 'トレーニングしていても、伸びを実感しにくいことがある';
+
+  @override
+  String get stEffortTitle => '誰も見ていない努力は\n続かない';
+
+  @override
+  String get stEffortBody => '力を示す相手がいないと、伸びは遅く感じられ、努力は無意味に思えてきます';
+
+  @override
+  String get stAloneTitle => 'ひとりのトレーニングは\n退屈だ';
+
+  @override
+  String get stAloneBody => '誰も見ていない。誰も数えていない。1レップ、いやセットごと飛ばすのは簡単です';
+
+  @override
+  String get qName => 'なんとお呼びすれば\nよいですか？';
+
+  @override
+  String get nameHint => '3文字以上。対戦相手に表示される名前です。';
+
+  @override
+  String get basicInfo => 'では、基本的な情報を\nいくつか教えてください';
+
+  @override
+  String get qAge => '年齢を教えてください';
+
+  @override
+  String get qWeight => '現在の体重は\nどのくらいですか？';
+
+  @override
+  String get weightWhy => 'ランクの算出に体重が必要です。';
+
+  @override
+  String get privateNote => '入力内容は非公開で、誰にも共有されません。';
+
+  @override
+  String get qHeight => '身長を教えてください';
+
+  @override
+  String get qRelate => '下の文にあてはまりますか？';
+
+  @override
+  String get yes => 'はい';
+
+  @override
+  String get no => 'いいえ';
+
+  @override
+  String get grindTitle => 'ライバルがいると\n手応えが変わる';
+
+  @override
+  String get grindBody => 'マッチのたびに実在の相手と向き合います。やるべきことをやって、どちらが鍛えたかを示しましょう。';
+
+  @override
+  String get allSet => '準備完了です！';
+
+  @override
+  String welcomeLifter(String name) {
+    return 'ようこそ、$name さん。最初のライバルを見つけましょう。';
+  }
+
+  @override
+  String get lifter => 'リフター';
+
+  @override
+  String get enterApp => 'OUTREPD をはじめる';
+
+  @override
+  String get commitTitle => 'では、あなた自身の道のりに\n約束をしましょう';
+
+  @override
+  String get holdLogo => 'ロゴを長押しして、準備ができたことを確認してください';
+
+  @override
+  String get expNone => 'トレーニングをしたことがない';
+
+  @override
+  String get iAm => 'わたしは……';
+
+  @override
+  String get finishMatchQ => 'マッチを終了しますか？';
+
+  @override
+  String get finishMatchBody => '総挙上量が確定し、相手と比較されます。';
+
+  @override
+  String get keepGoing => '続ける';
+
+  @override
+  String get forfeitQ => 'マッチを棄権しますか？';
+
+  @override
+  String get forfeitBody => 'いま抜けると LP を失います。';
+
+  @override
+  String get stay => '残る';
+
+  @override
+  String get forfeit => '棄権';
+
+  @override
+  String get pickExercises => '取り組む種目を選んでください';
+
+  @override
+  String matchingWith(String muscle) {
+    return '同じランクの相手を探しています · $muscle';
+  }
+
+  @override
+  String get getReady => '準備';
+
+  @override
+  String get timeLeft => '残り時間';
+
+  @override
+  String vsName(String name) {
+    return 'vs $name';
+  }
+
+  @override
+  String kgTotalVolume(String unit) {
+    return '$unit の総挙上量';
+  }
+
+  @override
+  String get finishMatch => 'マッチを終了';
+
+  @override
+  String get kgHint => 'KG';
+
+  @override
+  String get repsHint => 'レップ';
+
+  @override
+  String get addSet => 'セットを追加';
+
+  @override
+  String get matchComplete => 'マッチ終了';
+
+  @override
+  String get you => 'あなた';
+
+  @override
+  String get vs => 'VS';
+
+  @override
+  String get backToHome => 'ホームに戻る';
+
+  @override
+  String get mgChest => '胸';
+
+  @override
+  String get mgBack => '背中';
+
+  @override
+  String get mgLegs => '脚';
+
+  @override
+  String get mgShoulders => '肩';
+
+  @override
+  String get mgArms => '腕';
+
+  @override
+  String get mgCore => '体幹';
+
+  @override
+  String get achRivalry => 'ライバル関係';
+
+  @override
+  String get achRivalryHint => '同じ相手に3回勝つ';
+
+  @override
+  String get nWonTitle => '勝ちました！';
+
+  @override
+  String nWonBody(String name, String muscle) {
+    return '$muscle の日に $name に勝ちました';
+  }
+
+  @override
+  String get nFriendTitle => '新しいフレンド申請';
+
+  @override
+  String nFriendBody(String name) {
+    return '$name がつながりを希望しています';
+  }
+
+  @override
+  String get nAchTitle => '実績を解放';
+
+  @override
+  String nAchBody(String title, String hint) {
+    return '$title — $hint';
+  }
+
+  @override
+  String get nRankTitle => 'ランクアップ！';
+
+  @override
+  String nRankBody(String rank) {
+    return '$rank に到達しました';
+  }
 }

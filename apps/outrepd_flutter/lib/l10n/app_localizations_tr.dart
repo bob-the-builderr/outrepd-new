@@ -863,4 +863,643 @@ class LTr extends L {
 
   @override
   String get continueLabel => 'Devam';
+
+  @override
+  String get ttl_first_blood => 'İlk Kan';
+
+  @override
+  String get tdesc_first_blood => 'İlk maçını tamamla';
+
+  @override
+  String get ttl_found_footing => 'Sağlam Duruş';
+
+  @override
+  String get tdesc_found_footing => 'Beş maç tamamla';
+
+  @override
+  String get ttl_regular => 'Müdavim';
+
+  @override
+  String get tdesc_regular => 'Yirmi maç';
+
+  @override
+  String get ttl_fifty => 'Ellilik';
+
+  @override
+  String get tdesc_fifty => 'Elli maç';
+
+  @override
+  String get ttl_century => 'Yüzlük';
+
+  @override
+  String get tdesc_century => 'Yüz maç';
+
+  @override
+  String get ttl_veteran => 'Kıdemli';
+
+  @override
+  String get tdesc_veteran => 'İki yüz elli maç';
+
+  @override
+  String get ttl_thousand_matches => 'Eski Muhafız';
+
+  @override
+  String get tdesc_thousand_matches => 'Bin maç';
+
+  @override
+  String get ttl_first_win => 'Galip';
+
+  @override
+  String get tdesc_first_win => 'Bir maç kazan';
+
+  @override
+  String get ttl_on_a_roll => 'Seri Başladı';
+
+  @override
+  String get tdesc_on_a_roll => 'Üst üste üç kazan';
+
+  @override
+  String get ttl_five_straight => 'Beş Üst Üste';
+
+  @override
+  String get tdesc_five_straight => 'Üst üste beş kazan';
+
+  @override
+  String get ttl_unstoppable => 'Durdurulamaz';
+
+  @override
+  String get tdesc_unstoppable => 'Üst üste on kazan';
+
+  @override
+  String get ttl_untouchable => 'Dokunulmaz';
+
+  @override
+  String get tdesc_untouchable => 'Üst üste yirmi kazan';
+
+  @override
+  String get ttl_giant_slayer => 'Dev Avcısı';
+
+  @override
+  String get tdesc_giant_slayer => 'İki rütbe üstündeki birini yen';
+
+  @override
+  String get ttl_comeback => 'Geri Dönüş';
+
+  @override
+  String get tdesc_comeback => 'Üç yenilgiden hemen sonra kazan';
+
+  @override
+  String get ttl_nemesis => 'Ezeli Rakip';
+
+  @override
+  String get tdesc_nemesis => 'Aynı sporcuyu beş kez yen';
+
+  @override
+  String get ttl_hundred_reps => 'Hareket Başladı';
+
+  @override
+  String get tdesc_hundred_reps => 'Yüz sayılan tekrar';
+
+  @override
+  String get ttl_five_hundred => 'Isındı';
+
+  @override
+  String get tdesc_five_hundred => 'Beş yüz sayılan tekrar';
+
+  @override
+  String get ttl_the_machine => 'Makine';
+
+  @override
+  String get tdesc_the_machine => 'Bin sayılan tekrar';
+
+  @override
+  String get ttl_five_thousand => 'Amansız';
+
+  @override
+  String get tdesc_five_thousand => 'Beş bin sayılan tekrar';
+
+  @override
+  String get ttl_ten_thousand => 'On Bin';
+
+  @override
+  String get tdesc_ten_thousand => 'On bin sayılan tekrar';
+
+  @override
+  String get ttl_fifty_thousand => 'Sayının Ötesinde';
+
+  @override
+  String get tdesc_fifty_thousand => 'Elli bin sayılan tekrar';
+
+  @override
+  String get ttl_first_tonne => 'Bir Ton';
+
+  @override
+  String get tdesc_first_tonne => 'Toplamda bin kilo kaldır';
+
+  @override
+  String get ttl_ten_tonnes => 'On Ton';
+
+  @override
+  String get tdesc_ten_tonnes => 'On bin kilo kaldır';
+
+  @override
+  String get ttl_six_figures => 'Altı Hane';
+
+  @override
+  String get tdesc_six_figures => 'Yüz bin kilo kaldır';
+
+  @override
+  String get ttl_half_million => 'Yarım Milyon';
+
+  @override
+  String get tdesc_half_million => 'Beş yüz bin kilo kaldır';
+
+  @override
+  String get ttl_million_kg => 'Milyon Kilo Kulübü';
+
+  @override
+  String get tdesc_million_kg => 'Bir milyon kilo kaldır';
+
+  @override
+  String get ttl_two_days => 'Yine Buradayım';
+
+  @override
+  String get tdesc_two_days => 'Üst üste iki gün çalış';
+
+  @override
+  String get ttl_no_days_off => 'Tatil Yok';
+
+  @override
+  String get tdesc_no_days_off => 'Üst üste yedi gün çalış';
+
+  @override
+  String get ttl_fortnight => 'İki Hafta';
+
+  @override
+  String get tdesc_fortnight => 'On dört günlük seri';
+
+  @override
+  String get ttl_unbroken => 'Kesintisiz';
+
+  @override
+  String get tdesc_unbroken => 'Otuz günlük seri';
+
+  @override
+  String get ttl_sixty_days => 'Alışkanlık';
+
+  @override
+  String get tdesc_sixty_days => 'Altmış günlük seri';
+
+  @override
+  String get ttl_hundred_days => 'Yüz Gün';
+
+  @override
+  String get tdesc_hundred_days => 'Yüz günlük seri';
+
+  @override
+  String get ttl_year_round => 'Yıl Boyu';
+
+  @override
+  String get tdesc_year_round => 'Üç yüz altmış beş günlük seri';
+
+  @override
+  String get ttl_perfect_week => 'Kusursuz Hafta';
+
+  @override
+  String get tdesc_perfect_week => 'Bir haftanın her günü çalış';
+
+  @override
+  String get ttl_perfect_month => 'Kusursuz Ay';
+
+  @override
+  String get tdesc_perfect_month => 'Dört kusursuz hafta';
+
+  @override
+  String get ttl_bronze_tier => 'Taştan Çıkış';
+
+  @override
+  String get tdesc_bronze_tier => 'Bronz\'a ulaş';
+
+  @override
+  String get ttl_silver_tier => 'Gümüşi';
+
+  @override
+  String get tdesc_silver_tier => 'Gümüş\'e ulaş';
+
+  @override
+  String get ttl_golden_era => 'Altın Çağ';
+
+  @override
+  String get tdesc_golden_era => 'Altın\'a ulaş';
+
+  @override
+  String get ttl_platinum_tier => 'Platin';
+
+  @override
+  String get tdesc_platinum_tier => 'Platin\'e ulaş';
+
+  @override
+  String get ttl_diamond_tier => 'Elmas Eller';
+
+  @override
+  String get tdesc_diamond_tier => 'Elmas\'a ulaş';
+
+  @override
+  String get ttl_master_tier => 'Usta';
+
+  @override
+  String get tdesc_master_tier => 'Usta\'ya ulaş';
+
+  @override
+  String get ttl_mythic_tier => 'Efsanevi';
+
+  @override
+  String get tdesc_mythic_tier => 'Efsanevi rütbeye ulaş';
+
+  @override
+  String get ttl_legend_tier => 'Efsane';
+
+  @override
+  String get tdesc_legend_tier => 'Efsane\'ye ulaş';
+
+  @override
+  String get ttl_clean_hands => 'Temiz Eller';
+
+  @override
+  String get tdesc_clean_hands => 'Her tekrarı sayılan tam bir set';
+
+  @override
+  String get ttl_spotless => 'Kusursuz';
+
+  @override
+  String get tdesc_spotless => 'On temiz set';
+
+  @override
+  String get ttl_textbook => 'Kitaba Uygun';
+
+  @override
+  String get tdesc_textbook => 'Elli temiz set';
+
+  @override
+  String get ttl_iron_hold => 'Demir Tutuş';
+
+  @override
+  String get tdesc_iron_hold => 'Plank\'ı iki dakika tut';
+
+  @override
+  String get ttl_statue => 'Heykel';
+
+  @override
+  String get tdesc_statue => 'Plank\'ı beş dakika tut';
+
+  @override
+  String get ttl_all_rounder => 'Her İşe Uygun';
+
+  @override
+  String get tdesc_all_rounder => 'Beş farklı hareket say';
+
+  @override
+  String get ttl_explorer => 'Kâşif';
+
+  @override
+  String get tdesc_explorer => 'On beş farklı hareket say';
+
+  @override
+  String get ttl_encyclopedia => 'Ansiklopedi';
+
+  @override
+  String get tdesc_encyclopedia => 'Kırk farklı hareket say';
+
+  @override
+  String get ttl_early_bird => 'Sabah Vardiyası';
+
+  @override
+  String get tdesc_early_bird => 'Sabah yediden önce on antrenman';
+
+  @override
+  String get ttl_sunrise_club => 'Şafak Kulübü';
+
+  @override
+  String get tdesc_sunrise_club => 'Sabah yediden önce elli antrenman';
+
+  @override
+  String get ttl_night_owl => 'Gece Vardiyası';
+
+  @override
+  String get tdesc_night_owl => 'Gece ondan sonra on antrenman';
+
+  @override
+  String get ttl_graveyard => 'Sabaha Karşı';
+
+  @override
+  String get tdesc_graveyard => 'Gece ondan sonra elli antrenman';
+
+  @override
+  String get ttl_joined_up => 'Katıldı';
+
+  @override
+  String get tdesc_joined_up => 'Bir ekibe ait ol';
+
+  @override
+  String get ttl_backbone => 'Omurga';
+
+  @override
+  String get tdesc_backbone => 'Ekibinin başında dört hafta üst üste kal';
+
+  @override
+  String get ttl_cornerstone => 'Temel Taş';
+
+  @override
+  String get tdesc_cornerstone => 'Ekibinin başında on iki hafta üst üste kal';
+
+  @override
+  String get ttl_not_alone => 'Yalnız Değilsin';
+
+  @override
+  String get tdesc_not_alone => 'İlk arkadaşını ekle';
+
+  @override
+  String get ttl_well_connected => 'Çevresi Geniş';
+
+  @override
+  String get tdesc_well_connected => 'On arkadaş';
+
+  @override
+  String get ttl_the_gym_knows => 'Salon Seni Tanıyor';
+
+  @override
+  String get tdesc_the_gym_knows => 'Elli arkadaş';
+
+  @override
+  String get finish2 => 'Bitir';
+
+  @override
+  String get qExperience => 'Antrenman konusunda\nne kadar deneyimlisiniz?';
+
+  @override
+  String get expBeginner => 'Başlangıç – Daha önce denedim';
+
+  @override
+  String get expIntermediate => 'Orta – Düzenli çalışıyorum';
+
+  @override
+  String get expAdvanced => 'İleri – Yıllardır içindeyim';
+
+  @override
+  String get qGoal => 'En önemli hedefiniz\nnedir?';
+
+  @override
+  String get goalStronger => 'Daha güçlü olmak';
+
+  @override
+  String get goalConsistent => 'Daha istikrarlı olmak';
+
+  @override
+  String get goalLean => 'Kilo verip incelmek';
+
+  @override
+  String get goalMass => 'Kas kütlesi kazanmak';
+
+  @override
+  String get aboutYou => 'Bu yolculuk tamamen sizinle ilgili...';
+
+  @override
+  String get qThinkAbout => 'Forma girmeyi\nne sıklıkta düşünüyorsunuz?';
+
+  @override
+  String get freqNever => 'Hiç';
+
+  @override
+  String get freqSometimes => 'Bazen';
+
+  @override
+  String get freqOften => 'Sık sık';
+
+  @override
+  String get freqAllTime => 'Sürekli';
+
+  @override
+  String get qEnergy => 'Antrenman sırasında\nenerjiniz nasıl?';
+
+  @override
+  String get energyLow => 'Düşük, gün boyu bitkin hissediyorum';
+
+  @override
+  String get energyDrops => 'Performansım seans ortasında düşüyor';
+
+  @override
+  String get energyHard => 'Son seti tamamlamak zor geliyor';
+
+  @override
+  String get energyHigh => 'Baştan sona yüksek ve istikrarlı';
+
+  @override
+  String get stProgress =>
+      'Bazen antrenman yaparken ilerlemeyi fark etmek zor oluyor';
+
+  @override
+  String get stEffortTitle => 'Kimsenin görmediği çaba\nkolay bırakılır';
+
+  @override
+  String get stEffortBody =>
+      'Kendinizi kanıtlayacak kimse yokken ilerleme yavaş, çaba anlamsız görünür';
+
+  @override
+  String get stAloneTitle => 'Tek başına çalışmak\nsıkıcıdır';
+
+  @override
+  String get stAloneBody =>
+      'Kimse bakmıyor. Kimse saymıyor. Bir tekrarı, hatta tüm seti atlamak kolaylaşıyor';
+
+  @override
+  String get qName => 'Size nasıl\nhitap edelim?';
+
+  @override
+  String get nameHint => 'En az 3 karakter. Rakipleriniz bunu görecek.';
+
+  @override
+  String get basicInfo => 'Güzel! Şimdi birkaç\ntemel bilgi';
+
+  @override
+  String get qAge => 'Kaç yaşındasınız?';
+
+  @override
+  String get qWeight => 'Şu anki\nkilonuz nedir?';
+
+  @override
+  String get weightWhy => 'Rütbenizi hesaplamak için vücut ağırlığı gerekli.';
+
+  @override
+  String get privateNote => 'Bilgileriniz gizlidir ve kimseyle paylaşılmaz.';
+
+  @override
+  String get qHeight => 'Boyunuz kaç?';
+
+  @override
+  String get qRelate => 'Aşağıdaki ifadeye\nkatılıyor musunuz?';
+
+  @override
+  String get yes => 'Evet';
+
+  @override
+  String get no => 'Hayır';
+
+  @override
+  String get grindTitle => 'Bir rakip varken\nemek başka türlü ilerler';
+
+  @override
+  String get grindBody =>
+      'Her maç sizi gerçek bir rakibin karşısına çıkarır: işi yapın ve kimin daha sıkı çalıştığını gösterin.';
+
+  @override
+  String get allSet => 'Her şey hazır!';
+
+  @override
+  String welcomeLifter(String name) {
+    return 'Hoş geldiniz $name. İlk rakibinizi bulma vakti.';
+  }
+
+  @override
+  String get lifter => 'sporcu';
+
+  @override
+  String get enterApp => 'OUTREPD\'ye gir';
+
+  @override
+  String get commitTitle => 'Şimdi kendi yolculuğunuza\nbir söz verelim';
+
+  @override
+  String get holdLogo => 'Hazır olduğunuzu onaylamak için logoyu basılı tutun';
+
+  @override
+  String get expNone => 'Hiç antrenman yapmadım';
+
+  @override
+  String get iAm => 'Ben...';
+
+  @override
+  String get finishMatchQ => 'Maç bitirilsin mi?';
+
+  @override
+  String get finishMatchBody =>
+      'Toplam hacminiz sabitlenip rakibinizinkiyle karşılaştırılacak.';
+
+  @override
+  String get keepGoing => 'Devam et';
+
+  @override
+  String get forfeitQ => 'Maçtan çekilinsin mi?';
+
+  @override
+  String get forfeitBody => 'Şimdi çıkarsanız LP kaybedersiniz.';
+
+  @override
+  String get stay => 'Kal';
+
+  @override
+  String get forfeit => 'Çekil';
+
+  @override
+  String get pickExercises => 'Çalışacağınız hareketleri seçin';
+
+  @override
+  String matchingWith(String muscle) {
+    return 'Rütbenizde bir sporcu aranıyor · $muscle';
+  }
+
+  @override
+  String get getReady => 'HAZIR OL';
+
+  @override
+  String get timeLeft => 'KALAN SÜRE';
+
+  @override
+  String vsName(String name) {
+    return '$name karşısında';
+  }
+
+  @override
+  String kgTotalVolume(String unit) {
+    return '$unit toplam hacim';
+  }
+
+  @override
+  String get finishMatch => 'MAÇI BİTİR';
+
+  @override
+  String get kgHint => 'KG';
+
+  @override
+  String get repsHint => 'TEKRAR';
+
+  @override
+  String get addSet => 'SET EKLE';
+
+  @override
+  String get matchComplete => 'MAÇ TAMAMLANDI';
+
+  @override
+  String get you => 'SİZ';
+
+  @override
+  String get vs => 'VS';
+
+  @override
+  String get backToHome => 'ANA SAYFAYA DÖN';
+
+  @override
+  String get mgChest => 'Göğüs';
+
+  @override
+  String get mgBack => 'Sırt';
+
+  @override
+  String get mgLegs => 'Bacak';
+
+  @override
+  String get mgShoulders => 'Omuz';
+
+  @override
+  String get mgArms => 'Kol';
+
+  @override
+  String get mgCore => 'Karın';
+
+  @override
+  String get achRivalry => 'Rekabet';
+
+  @override
+  String get achRivalryHint => 'Aynı rakibi 3 kez yen';
+
+  @override
+  String get nWonTitle => 'Kazandınız!';
+
+  @override
+  String nWonBody(String name, String muscle) {
+    return '$muscle gününde $name kişisini yendiniz';
+  }
+
+  @override
+  String get nFriendTitle => 'Yeni arkadaşlık isteği';
+
+  @override
+  String nFriendBody(String name) {
+    return '$name sizinle bağlantı kurmak istiyor';
+  }
+
+  @override
+  String get nAchTitle => 'Başarım açıldı';
+
+  @override
+  String nAchBody(String title, String hint) {
+    return '$title — $hint';
+  }
+
+  @override
+  String get nRankTitle => 'Rütbe atladınız!';
+
+  @override
+  String nRankBody(String rank) {
+    return '$rank rütbesine ulaştınız';
+  }
 }

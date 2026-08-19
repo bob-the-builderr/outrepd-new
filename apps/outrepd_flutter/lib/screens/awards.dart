@@ -250,7 +250,7 @@ class _TitleRow extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        title.title,
+                        title.name(L.of(context)),
                         style: TextStyle(
                           color: owned
                               ? context.colors.text
@@ -261,7 +261,7 @@ class _TitleRow extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        title.hint,
+                        title.hintText(L.of(context)),
                         style: TextStyle(
                           color: context.colors.muted,
                           fontSize: 11.5,
@@ -316,7 +316,7 @@ class TitleChip extends StatelessWidget {
           Icon(title.icon, size: compact ? 10 : 12, color: colour),
           SizedBox(width: compact ? 4 : 5),
           Text(
-            title.title,
+            title.name(L.of(context)),
             style: TextStyle(
               color: colour,
               fontSize: compact ? 10 : 11.5,
@@ -348,7 +348,7 @@ Future<void> celebrate(BuildContext context, List<EarnedTitle> unlocked) async {
             Icon(title.icon, size: 44, color: title.colour ?? context.colors.brand),
             const SizedBox(height: 14),
             Text(
-              title.title,
+              title.name(L.of(context)),
               style: TextStyle(
                 color: context.colors.text,
                 fontSize: 22,
@@ -357,7 +357,7 @@ Future<void> celebrate(BuildContext context, List<EarnedTitle> unlocked) async {
             ),
             const SizedBox(height: 6),
             Text(
-              title.hint,
+              title.hintText(L.of(context)),
               textAlign: TextAlign.center,
               style: TextStyle(color: context.colors.muted, fontSize: 12.5),
             ),
