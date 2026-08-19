@@ -9,7 +9,9 @@ library;
 
 
 import 'exercise.dart';
+import 'movement_signature.dart';
 import 'pose.dart';
+import 'signature_catalogue.dart';
 
 /// How much of the travel counts as "all the way down" and "all the way up".
 ///
@@ -45,13 +47,15 @@ const kAbandonedRep = Duration(seconds: 8);
 /// slightly tight one.
 const kMinCalibrationRange = 15.0;
 
-enum RepRejection { halfRep, tooFast, badForm }
+enum RepRejection { halfRep, tooFast, badForm, wrongMovement }
 
 extension RepRejectionMessage on RepRejection {
   String get message => switch (this) {
         RepRejection.halfRep => 'Go all the way down',
         RepRejection.tooFast => 'Too fast — control it',
         RepRejection.badForm => 'Form broke — that one did not count',
+        RepRejection.wrongMovement =>
+          'That is not the movement for this round',
       };
 }
 
@@ -101,9 +105,40 @@ class RepState {
 }
 
 class RepEngine {
-  RepEngine(this.exercise);
+  RepEngine(this.exercise, {this.checkMovement = true});
+
+  /// Whether a rep must prove it was the prescribed movement. On for matches,
+  /// where the round is about one exercise. Off for the mechanics tests, whose
+  /// stick figures articulate one joint and were never meant to be a body.
+  final bool checkMovement;
 
   final ExerciseDef exercise;
+
+  /// Judges whether each rep was the movement the round asked for. A round is
+  /// about one exercise, and a meter that fills for any movement bending the
+  /// same joint is a round anyone can farm with whichever one is easiest.
+  late final SignatureVerifier _verifier = SignatureVerifier(
+    signatureFor(exercise.name),
+    kAllSignatures,
+  );
+
+  /// The poses of the rep currently underway, kept so its identity can be
+  /// judged on the whole movement rather than on the single frame that
+  /// happened to finish it.
+  final _repFrames = <BodyPose>[];
+
+  /// Set when the last rep was refused because it was a different exercise,
+  /// so the screen can say which one it looked like.
+  String? lookedLike;
+
+  /// The signature's own words for what was wrong — more useful than the
+  /// generic rejection message, because it names the thing to change.
+  String? _wrongMovementComplaint;
+
+  /// What to tell the lifter about the last refused rep.
+  String? get wrongMovementMessage => lookedLike == null
+      ? _wrongMovementComplaint
+      : 'That looked like a $lookedLike';
 
   final _angle = Smoothed();
 
@@ -280,6 +315,11 @@ class RepEngine {
 
     var counted = false;
 
+    // Everything between the bottom and the top is what the rep was. Capped
+    // so a lifter who stalls at the bottom for a minute cannot grow the
+    // buffer without bound.
+    if (_armed && _repFrames.length < 600) _repFrames.add(pose);
+
     if (progress <= kBottomZone) {
       if (!_armed) {
         // Bottom of a fresh rep: start the clock and remember the shape here,
@@ -289,6 +329,9 @@ class RepEngine {
         _formAtBottom = formOk;
         _spoiled = false;
         _rejection = null;
+        _repFrames
+          ..clear()
+          ..add(pose);
       } else {
         // Still down here. Only the clock restarts: whether the shape was
         // right at the bottom is already decided, and letting it be rewritten
@@ -315,9 +358,25 @@ class RepEngine {
         _rejection = RepRejection.badForm;
         rejections.update(RepRejection.badForm, (n) => n + 1, ifAbsent: () => 1);
       } else {
-        _reps++;
-        counted = true;
-        _rejection = null;
+        // The shape was right. Now: was it the right movement?
+        final verdict = checkMovement
+            ? _verifier.verify(_repFrames)
+            : const SignatureVerdict(accepted: true);
+        if (verdict.accepted) {
+          _reps++;
+          counted = true;
+          _rejection = null;
+          lookedLike = null;
+        } else {
+          _rejection = RepRejection.wrongMovement;
+          _wrongMovementComplaint = verdict.complaint;
+          lookedLike = verdict.lookedLike;
+          rejections.update(
+            RepRejection.wrongMovement,
+            (n) => n + 1,
+            ifAbsent: () => 1,
+          );
+        }
       }
 
       _armed = false;

@@ -52,7 +52,10 @@ BodyPose makePose({
 /// Drives an engine through positions expressed as meter progress: 0 at the
 /// bottom of the movement, 1 at the top.
 class Rig {
-  Rig(this.exercise) : engine = RepEngine(exercise);
+  // These cover the counting mechanics. The rig moves one joint and holds the
+  // rest still, which is not what any real movement looks like, so identity
+  // checking is out of scope here and has its own tests.
+  Rig(this.exercise) : engine = RepEngine(exercise, checkMovement: false);
 
   final ExerciseDef exercise;
   final RepEngine engine;
@@ -261,7 +264,7 @@ void main() {
 
   group('tracking', () {
     test('a body out of frame pauses instead of scoring', () {
-      final engine = RepEngine(pushup);
+      final engine = RepEngine(pushup, checkMovement: false);
       final state = engine.update(BodyPose.empty, const Duration(seconds: 1));
 
       expect(state.tracked, isFalse);
