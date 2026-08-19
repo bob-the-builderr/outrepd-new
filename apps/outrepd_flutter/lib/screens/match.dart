@@ -150,7 +150,7 @@ class _RankCard extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          'View road',
+                          'View Roadmap',
                           style: TextStyle(
                             color: context.colors.brand.withValues(alpha: 0.9),
                             fontSize: 11.5,

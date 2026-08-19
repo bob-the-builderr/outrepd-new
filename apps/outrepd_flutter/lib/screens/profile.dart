@@ -26,6 +26,77 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (mounted) setState(() {});
   }
 
+  /// A name is how people pick you out of a leaderboard, so it does not change
+  /// freely — twice for the life of the account, and the count is shown before
+  /// anyone spends one rather than after.
+  Future<void> _editName() async {
+    if (!canChangeName) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('You have used both of your name changes'),
+        ),
+      );
+      return;
+    }
+
+    final field = TextEditingController(text: demoProfile.username);
+    final left = kNameChangesAllowed - nameChangesUsed;
+
+    final name = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: context.colors.surface,
+        title: Text(
+          'Change your name',
+          style: TextStyle(color: context.colors.text, fontSize: 18),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              left == 1
+                  ? 'This is your last change. It cannot be undone.'
+                  : 'You get $kNameChangesAllowed changes in total. '
+                      '$left left after this one.',
+              style: TextStyle(color: context.colors.muted, fontSize: 12.5),
+            ),
+            const SizedBox(height: 14),
+            TextField(
+              controller: field,
+              autofocus: true,
+              maxLength: 18,
+              style: TextStyle(color: context.colors.text, fontSize: 17),
+              decoration: const InputDecoration(counterText: ''),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('Cancel',
+                style: TextStyle(color: context.colors.muted)),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(field.text.trim()),
+            child: Text(
+              'Save',
+              style: TextStyle(
+                color: context.colors.brand,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+    field.dispose();
+
+    if (name == null || name.length < 3 || name == demoProfile.username) return;
+    await changeUsername(name);
+    if (mounted) setState(() {});
+  }
+
   Future<void> _editStats() async {
     final saved = await showModalBottomSheet<bool>(
       context: context,
@@ -69,16 +140,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 },
               ),
               const SizedBox(height: 12),
-              // Usernames are free text, so cap them rather than let a long
-              // one push the layout around.
-              Text(
-                p.username,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: context.colors.text,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w800,
+              GestureDetector(
+                onTap: _editName,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Usernames are free text, so cap them rather than let a
+                    // long one push the layout around.
+                    Flexible(
+                      child: Text(
+                        p.username,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: context.colors.text,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
+                    if (canChangeName) ...[
+                      const SizedBox(width: 8),
+                      Icon(
+                        Icons.edit_outlined,
+                        size: 17,
+                        color: context.colors.muted,
+                      ),
+                    ],
+                  ],
                 ),
               ),
               if (rewards.worn case final title?) ...[

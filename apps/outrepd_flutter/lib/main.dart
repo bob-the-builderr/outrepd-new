@@ -35,6 +35,9 @@ void main() async {
       matches: demoProfile.totalMatches,
       wins: demoProfile.bestStreak,
       reps: demoProfile.totalVolumeKg ~/ 60,
+      volumeKg: demoProfile.totalVolumeKg,
+      tierIdx: demoProfile.tierIdx,
+      friends: demoFriends.length,
     );
   } on Object catch (error, stack) {
     debugPrint('Could not read saved settings: $error\n$stack');

@@ -55,6 +55,26 @@ final demoProfile = Profile(
   age: 25,
 );
 
+/// How many name changes are left. Two for the life of the account: a name is
+/// how people recognise each other on a leaderboard, and one that changes
+/// every week is worth nothing to anybody. Two is enough to fix a typo and to
+/// change your mind once.
+const kNameChangesAllowed = 2;
+
+int nameChangesUsed = 0;
+
+bool get canChangeName => nameChangesUsed < kNameChangesAllowed;
+
+Future<void> changeUsername(String name) async {
+  if (!canChangeName) return;
+  demoProfile.username = name;
+  nameChangesUsed++;
+
+  final s = await SharedPreferences.getInstance();
+  await s.setString('username', name);
+  await s.setInt('nameChanges', nameChangesUsed);
+}
+
 /// Restore the measurements the lifter set by hand. Everything else about the
 /// profile is demo data and stays as written above.
 Future<void> loadProfileStats() async {
@@ -62,7 +82,9 @@ Future<void> loadProfileStats() async {
   demoProfile
     ..heightCm = s.getInt('profileHeightCm') ?? demoProfile.heightCm
     ..weightKg = s.getInt('profileWeightKg') ?? demoProfile.weightKg
-    ..age = s.getInt('profileAge') ?? demoProfile.age;
+    ..age = s.getInt('profileAge') ?? demoProfile.age
+    ..username = s.getString('username') ?? demoProfile.username;
+  nameChangesUsed = s.getInt('nameChanges') ?? 0;
 }
 
 Future<void> saveProfileStats() async {

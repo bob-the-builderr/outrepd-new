@@ -8,11 +8,39 @@ import 'package:flutter/material.dart';
 import 'avatar.dart';
 import 'theme.dart';
 
-/// Where the frame's opening sits inside its own image. The artwork is square
-/// with the ring's hole a little above centre, so the picture is placed by
-/// these rather than simply filling the box.
-const _holeDiameter = 0.56;
-const _holeCentreY = 0.455;
+/// Where a frame's opening sits inside its own image.
+///
+/// The nine were drawn separately and their openings differ by a lot — the
+/// master ring's hole is barely three quarters the width of the gold one's, and
+/// they sit at different heights. One set of numbers left most pictures either
+/// rattling around inside the ring or spilling over it.
+///
+/// These were measured from each file's own alpha channel rather than by eye,
+/// by D:/outrepd-tools/measure_frames.py. Rerun it if the artwork changes.
+class FrameHole {
+  const FrameHole(this.cx, this.cy, this.diameter);
+  final double cx;
+  final double cy;
+  final double diameter;
+}
+
+const kFrameHoles = <String, FrameHole>{
+  'bronze': FrameHole(0.500, 0.431, 0.463),
+  'diamond': FrameHole(0.500, 0.496, 0.396),
+  'gold': FrameHole(0.499, 0.492, 0.532),
+  'legend': FrameHole(0.502, 0.509, 0.448),
+  'master': FrameHole(0.500, 0.520, 0.384),
+  'mythic': FrameHole(0.499, 0.545, 0.455),
+  'platinum': FrameHole(0.500, 0.529, 0.451),
+  'silver': FrameHole(0.498, 0.452, 0.466),
+  'stone': FrameHole(0.500, 0.484, 0.528),
+};
+
+/// Grown a touch past the measured opening so the picture tucks under the ring
+/// instead of leaving a hairline of background between the two.
+const _overlap = 1.06;
+
+const _fallbackHole = FrameHole(0.5, 0.5, 0.46);
 
 class ProfileAvatar extends StatelessWidget {
   const ProfileAvatar({
@@ -40,7 +68,8 @@ class ProfileAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tier = kTiers[tierIdx.clamp(0, kTiers.length - 1)];
-    final hole = size * _holeDiameter;
+    final measured = kFrameHoles[tier.name.toLowerCase()] ?? _fallbackHole;
+    final hole = size * measured.diameter * _overlap;
 
     final content = SizedBox(
       width: size,
@@ -52,7 +81,8 @@ class ProfileAvatar extends StatelessWidget {
           // it, which hides the seam a circle-clipped photo would otherwise
           // show against the metal.
           Positioned(
-            top: size * _holeCentreY - hole / 2,
+            left: size * measured.cx - hole / 2,
+            top: size * measured.cy - hole / 2,
             child: ClipOval(
               child: SizedBox(
                 width: hole,

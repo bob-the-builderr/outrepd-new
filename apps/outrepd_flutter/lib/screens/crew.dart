@@ -326,6 +326,28 @@ class _CrewTab extends StatelessWidget {
         ),
         _Contributions(crew: crew),
         const SizedBox(height: 22),
+        // The whole roster, not only the ones putting numbers up. Somebody
+        // joining wants to see who they have joined.
+        SectionHeader(
+          title: 'Members',
+          trailing: Text(
+            '${crew.members.length} of ${MyCrew.maxMembers}',
+            style: TextStyle(color: context.colors.muted, fontSize: 13),
+          ),
+        ),
+        Panel(
+          padding: const EdgeInsets.symmetric(horizontal: 14),
+          child: Column(
+            children: [
+              for (var i = 0; i < crew.members.length; i++)
+                _MemberRow(
+                  member: crew.members[i],
+                  last: i == crew.members.length - 1,
+                ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 22),
         _InviteCard(crew: crew),
         const SizedBox(height: 14),
         TextButton.icon(
@@ -565,6 +587,74 @@ class _Contributions extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+/// One name on the roster: their picture, their rank, and whether they run it.
+class _MemberRow extends StatelessWidget {
+  const _MemberRow({required this.member, required this.last});
+
+  final CrewMember member;
+  final bool last;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        border: last
+            ? null
+            : Border(bottom: BorderSide(color: context.colors.surfaceRaised)),
+      ),
+      child: Row(
+        children: [
+          ProfileAvatar(
+            tierIdx: member.tierIdx,
+            username: member.username,
+            size: 46,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  member.username,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: context.colors.text,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  tierLabel(member.tierIdx, member.divIdx),
+                  style: TextStyle(color: context.colors.muted, fontSize: 11.5),
+                ),
+              ],
+            ),
+          ),
+          if (member.isOwner)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 3),
+              decoration: BoxDecoration(
+                color: AppColors.gold.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Text(
+                'Owner',
+                style: TextStyle(
+                  color: AppColors.gold,
+                  fontSize: 10.5,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
         ],

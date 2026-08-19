@@ -17,13 +17,31 @@ enum TitleKind {
   wins,
   reps,
   streakDays,
+  volumeKg,
+  tier,
   crewWeeks,
   cleanSet,
   giantSlayer,
   comeback,
+  earlyBird,
+  nightOwl,
+  exercises,
+  holdSeconds,
+  friends,
+  perfectWeek,
 }
 
 class EarnedTitle {
+  const EarnedTitle.of(
+    this.id,
+    this.title,
+    this.hint,
+    this.kind,
+    this.threshold,
+    this.icon, [
+    this.colour,
+  ]);
+
   const EarnedTitle({
     required this.id,
     required this.title,
@@ -50,102 +68,103 @@ class EarnedTitle {
   final Color? colour;
 }
 
+const gold = Color(0xFFFFD700);
+const cyan = Color(0xFF00E5FF);
+const purple = Color(0xFF9B59B6);
+const orange = Color(0xFFFF8C00);
+const green = Color(0xFF22C55E);
+const red = Color(0xFFFF4444);
+
+/// Shorthand for the list below. Sixty titles written out in full would be
+/// unreadable, and a list nobody can read is a list nobody adds to.
+typedef T = EarnedTitle;
+
 /// Written to be worth wanting. A title people would rather not wear is the
-/// same as no title at all.
+/// same as no title at all, so each one is a small boast: something you would
+/// say out loud about how you train.
 const kTitles = <EarnedTitle>[
-  EarnedTitle(
-    id: 'first_blood',
-    title: 'First Blood',
-    hint: 'Finish your first match',
-    kind: TitleKind.matches,
-    threshold: 1,
-    icon: Icons.flag,
-  ),
-  EarnedTitle(
-    id: 'no_days_off',
-    title: 'No Days Off',
-    hint: 'Train seven days running',
-    kind: TitleKind.streakDays,
-    threshold: 7,
-    icon: Icons.local_fire_department,
-  ),
-  EarnedTitle(
-    id: 'unbroken',
-    title: 'Unbroken',
-    hint: 'Keep a thirty day streak alive',
-    kind: TitleKind.streakDays,
-    threshold: 30,
-    icon: Icons.whatshot,
-    colour: Color(0xFFFF8C00),
-  ),
-  EarnedTitle(
-    id: 'the_machine',
-    title: 'The Machine',
-    hint: 'A thousand counted reps',
-    kind: TitleKind.reps,
-    threshold: 1000,
-    icon: Icons.settings,
-  ),
-  EarnedTitle(
-    id: 'ten_thousand',
-    title: 'Ten Thousand',
-    hint: 'Ten thousand counted reps',
-    kind: TitleKind.reps,
-    threshold: 10000,
-    icon: Icons.all_inclusive,
-    colour: Color(0xFF00E5FF),
-  ),
-  EarnedTitle(
-    id: 'century',
-    title: 'Century',
-    hint: 'A hundred matches',
-    kind: TitleKind.matches,
-    threshold: 100,
-    icon: Icons.emoji_events,
-    colour: Color(0xFFFFD700),
-  ),
-  EarnedTitle(
-    id: 'giant_slayer',
-    title: 'Giant Slayer',
-    hint: 'Beat someone two tiers above you',
-    kind: TitleKind.giantSlayer,
-    threshold: 1,
-    icon: Icons.bolt,
-    colour: Color(0xFF9B59B6),
-  ),
-  EarnedTitle(
-    id: 'comeback',
-    title: 'Comeback',
-    hint: 'Win straight after three losses',
-    kind: TitleKind.comeback,
-    threshold: 1,
-    icon: Icons.replay,
-  ),
-  EarnedTitle(
-    id: 'clean_hands',
-    title: 'Clean Hands',
-    hint: 'A full set with every rep counted',
-    kind: TitleKind.cleanSet,
-    threshold: 1,
-    icon: Icons.verified,
-    colour: Color(0xFF22C55E),
-  ),
-  EarnedTitle(
-    id: 'backbone',
-    title: 'Backbone',
-    hint: 'Top your crew four weeks running',
-    kind: TitleKind.crewWeeks,
-    threshold: 4,
-    icon: Icons.shield,
-  ),
-  EarnedTitle(
-    id: 'on_a_roll',
-    title: 'On a Roll',
-    hint: 'Win ten in a row',
-    kind: TitleKind.wins,
-    threshold: 10,
-    icon: Icons.trending_up,
-  ),
+  // ---- getting started -------------------------------------------------
+  T.of('first_blood', 'First Blood', 'Finish your first match', TitleKind.matches, 1, Icons.flag),
+  T.of('found_footing', 'Found Your Footing', 'Finish five matches', TitleKind.matches, 5, Icons.directions_walk),
+  T.of('regular', 'Regular', 'Twenty matches', TitleKind.matches, 20, Icons.event_repeat),
+  T.of('fifty', 'Fifty Deep', 'Fifty matches', TitleKind.matches, 50, Icons.filter_5),
+  T.of('century', 'Century', 'A hundred matches', TitleKind.matches, 100, Icons.emoji_events, gold),
+  T.of('veteran', 'Veteran', 'Two hundred and fifty matches', TitleKind.matches, 250, Icons.shield_moon, purple),
+  T.of('thousand_matches', 'Old Guard', 'A thousand matches', TitleKind.matches, 1000, Icons.workspace_premium, purple),
+
+  // ---- winning ---------------------------------------------------------
+  T.of('first_win', 'Winner', 'Win a match', TitleKind.wins, 1, Icons.check_circle),
+  T.of('on_a_roll', 'On a Roll', 'Win three in a row', TitleKind.wins, 3, Icons.trending_up),
+  T.of('five_straight', 'Five Straight', 'Win five in a row', TitleKind.wins, 5, Icons.stacked_line_chart),
+  T.of('unstoppable', 'Unstoppable', 'Win ten in a row', TitleKind.wins, 10, Icons.rocket_launch, cyan),
+  T.of('untouchable', 'Untouchable', 'Win twenty in a row', TitleKind.wins, 20, Icons.auto_awesome, gold),
+  T.of('giant_slayer', 'Giant Slayer', 'Beat someone two tiers above you', TitleKind.giantSlayer, 1, Icons.bolt, purple),
+  T.of('comeback', 'Comeback', 'Win straight after three losses', TitleKind.comeback, 1, Icons.replay),
+  T.of('nemesis', 'Nemesis', 'Beat the same lifter five times', TitleKind.comeback, 5, Icons.gps_fixed),
+
+  // ---- reps ------------------------------------------------------------
+  T.of('hundred_reps', 'Off the Mark', 'A hundred counted reps', TitleKind.reps, 100, Icons.play_arrow),
+  T.of('five_hundred', 'Warmed Up', 'Five hundred counted reps', TitleKind.reps, 500, Icons.whatshot),
+  T.of('the_machine', 'The Machine', 'A thousand counted reps', TitleKind.reps, 1000, Icons.settings),
+  T.of('five_thousand', 'Relentless', 'Five thousand counted reps', TitleKind.reps, 5000, Icons.repeat),
+  T.of('ten_thousand', 'Ten Thousand', 'Ten thousand counted reps', TitleKind.reps, 10000, Icons.all_inclusive, cyan),
+  T.of('fifty_thousand', 'Beyond Counting', 'Fifty thousand counted reps', TitleKind.reps, 50000, Icons.blur_on, purple),
+
+  // ---- weight moved ----------------------------------------------------
+  T.of('first_tonne', 'A Tonne', 'Move a thousand kilos in total', TitleKind.volumeKg, 1000, Icons.scale),
+  T.of('ten_tonnes', 'Ten Tonnes', 'Move ten thousand kilos', TitleKind.volumeKg, 10000, Icons.fitness_center),
+  T.of('six_figures', 'Six Figures', 'Move a hundred thousand kilos', TitleKind.volumeKg, 100000, Icons.savings),
+  T.of('half_million', 'Half a Million', 'Move five hundred thousand kilos', TitleKind.volumeKg, 500000, Icons.terrain, cyan),
+  T.of('million_kg', 'Million Kilo Club', 'Move a million kilos', TitleKind.volumeKg, 1000000, Icons.public, gold),
+
+  // ---- showing up ------------------------------------------------------
+  T.of('two_days', 'Back Again', 'Train two days running', TitleKind.streakDays, 2, Icons.replay_circle_filled),
+  T.of('no_days_off', 'No Days Off', 'Train seven days running', TitleKind.streakDays, 7, Icons.local_fire_department),
+  T.of('fortnight', 'Fortnight', 'A fourteen day streak', TitleKind.streakDays, 14, Icons.calendar_view_week),
+  T.of('unbroken', 'Unbroken', 'A thirty day streak', TitleKind.streakDays, 30, Icons.whatshot, orange),
+  T.of('sixty_days', 'Habit', 'A sixty day streak', TitleKind.streakDays, 60, Icons.psychology, orange),
+  T.of('hundred_days', 'Hundred Days', 'A hundred day streak', TitleKind.streakDays, 100, Icons.emoji_flags, gold),
+  T.of('year_round', 'Year Round', 'A three hundred and sixty five day streak', TitleKind.streakDays, 365, Icons.brightness_7, gold),
+  T.of('perfect_week', 'Perfect Week', 'Train every day of one week', TitleKind.perfectWeek, 1, Icons.done_all),
+  T.of('perfect_month', 'Perfect Month', 'Four perfect weeks', TitleKind.perfectWeek, 4, Icons.verified_user, cyan),
+
+  // ---- rank ------------------------------------------------------------
+  T.of('bronze_tier', 'Out of the Stone', 'Reach Bronze', TitleKind.tier, 1, Icons.trending_up),
+  T.of('silver_tier', 'Silverside', 'Reach Silver', TitleKind.tier, 2, Icons.star_border),
+  T.of('golden_era', 'Golden Era', 'Reach Gold', TitleKind.tier, 3, Icons.star, gold),
+  T.of('platinum_tier', 'Platinum', 'Reach Platinum', TitleKind.tier, 4, Icons.ac_unit),
+  T.of('diamond_tier', 'Diamond Hands', 'Reach Diamond', TitleKind.tier, 5, Icons.diamond, cyan),
+  T.of('master_tier', 'Master', 'Reach Master', TitleKind.tier, 6, Icons.local_police, red),
+  T.of('mythic_tier', 'Mythic', 'Reach Mythic', TitleKind.tier, 7, Icons.volcano, orange),
+  T.of('legend_tier', 'Legend', 'Reach Legend', TitleKind.tier, 8, Icons.military_tech, purple),
+
+  // ---- form ------------------------------------------------------------
+  T.of('clean_hands', 'Clean Hands', 'A full set with every rep counted', TitleKind.cleanSet, 1, Icons.verified, green),
+  T.of('spotless', 'Spotless', 'Ten clean sets', TitleKind.cleanSet, 10, Icons.cleaning_services, green),
+  T.of('textbook', 'Textbook', 'Fifty clean sets', TitleKind.cleanSet, 50, Icons.menu_book, green),
+  T.of('iron_hold', 'Iron Hold', 'Hold a plank for two minutes', TitleKind.holdSeconds, 120, Icons.horizontal_rule),
+  T.of('statue', 'Statue', 'Hold a plank for five minutes', TitleKind.holdSeconds, 300, Icons.self_improvement, cyan),
+
+  // ---- range ------------------------------------------------------------
+  T.of('all_rounder', 'All Rounder', 'Count five different exercises', TitleKind.exercises, 5, Icons.grid_view),
+  T.of('explorer', 'Explorer', 'Count fifteen different exercises', TitleKind.exercises, 15, Icons.explore),
+  T.of('encyclopedia', 'Encyclopedia', 'Count forty different exercises', TitleKind.exercises, 40, Icons.library_books, purple),
+
+  // ---- hours -------------------------------------------------------------
+  T.of('early_bird', 'Early Shift', 'Ten sessions before seven in the morning', TitleKind.earlyBird, 10, Icons.wb_twilight),
+  T.of('sunrise_club', 'Sunrise Club', 'Fifty sessions before seven', TitleKind.earlyBird, 50, Icons.wb_sunny, orange),
+  T.of('night_owl', 'Night Shift', 'Ten sessions after ten at night', TitleKind.nightOwl, 10, Icons.nights_stay),
+  T.of('graveyard', 'Graveyard Shift', 'Fifty sessions after ten', TitleKind.nightOwl, 50, Icons.dark_mode, purple),
+
+  // ---- crew --------------------------------------------------------------
+  T.of('joined_up', 'Joined Up', 'Be in a crew', TitleKind.crewWeeks, 1, Icons.groups_2),
+  T.of('backbone', 'Backbone', 'Top your crew four weeks running', TitleKind.crewWeeks, 4, Icons.shield),
+  T.of('cornerstone', 'Cornerstone', 'Top your crew twelve weeks running', TitleKind.crewWeeks, 12, Icons.castle, gold),
+
+  // ---- people ------------------------------------------------------------
+  T.of('not_alone', 'Not Alone', 'Add your first friend', TitleKind.friends, 1, Icons.person_add),
+  T.of('well_connected', 'Well Connected', 'Ten friends', TitleKind.friends, 10, Icons.diversity_3),
+  T.of('the_gym_knows', 'The Gym Knows You', 'Fifty friends', TitleKind.friends, 50, Icons.connect_without_contact, cyan),
 ];
 
 /// A streak that counts training days but does not punish rest.
@@ -205,8 +224,18 @@ class Rewards extends ChangeNotifier {
     required int matches,
     required int wins,
     required int reps,
+    int volumeKg = 0,
+    int tierIdx = 0,
+    int friends = 0,
   }) async {
-    final unlocked = _check(matches: matches, wins: wins, reps: reps);
+    final unlocked = _check(
+      matches: matches,
+      wins: wins,
+      reps: reps,
+      volumeKg: volumeKg,
+      tierIdx: tierIdx,
+      friends: friends,
+    );
     if (unlocked.isNotEmpty) await _save();
     return unlocked;
   }
@@ -217,6 +246,9 @@ class Rewards extends ChangeNotifier {
     required int matches,
     required int wins,
     required int reps,
+    int volumeKg = 0,
+    int tierIdx = 0,
+    int friends = 0,
   }) async {
     final today = DateTime.now();
     final last = lastSession;
@@ -245,7 +277,14 @@ class Rewards extends ChangeNotifier {
     lastSession = today;
     if (streak > bestStreak) bestStreak = streak;
 
-    final unlocked = _check(matches: matches, wins: wins, reps: reps);
+    final unlocked = _check(
+      matches: matches,
+      wins: wins,
+      reps: reps,
+      volumeKg: volumeKg,
+      tierIdx: tierIdx,
+      friends: friends,
+    );
     await _save();
     notifyListeners();
     return unlocked;
@@ -255,6 +294,9 @@ class Rewards extends ChangeNotifier {
     required int matches,
     required int wins,
     required int reps,
+    int volumeKg = 0,
+    int tierIdx = 0,
+    int friends = 0,
   }) {
     final unlocked = <EarnedTitle>[];
 
@@ -266,8 +308,12 @@ class Rewards extends ChangeNotifier {
         TitleKind.wins => wins >= title.threshold,
         TitleKind.reps => reps >= title.threshold,
         TitleKind.streakDays => streak >= title.threshold,
-        // The rest need a match or a set to report them, which the engine and
-        // the crew screen will do once those are wired to real results.
+        TitleKind.volumeKg => volumeKg >= title.threshold,
+        TitleKind.tier => tierIdx >= title.threshold,
+        TitleKind.friends => friends >= title.threshold,
+        // The rest describe a single moment — a clean set, an early start,
+        // beating someone above you. Only the thing that watched it happen can
+        // report it, so those come in through award().
         _ => false,
       };
 
