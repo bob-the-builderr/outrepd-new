@@ -1587,4 +1587,13 @@ class LHi extends L {
   String lpAmount(String n) {
     return '$n LP';
   }
+
+  @override
+  String get countWithCamera => 'कैमरे से गिनें';
+
+  @override
+  String get youWin => 'आप जीते!';
+
+  @override
+  String get defeated => 'हार';
 }

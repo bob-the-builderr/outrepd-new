@@ -496,5 +496,8 @@
   "weeksAgo": "il y a {n} semaines",
   "membersCount": "{n} membres",
   "eachCount": "{n} par personne",
-  "lpAmount": "{n} PL"
+  "lpAmount": "{n} PL",
+  "countWithCamera": "Compter à la caméra",
+  "youWin": "VOUS GAGNEZ !",
+  "defeated": "DÉFAITE"
 }

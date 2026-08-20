@@ -3102,6 +3102,24 @@ abstract class L {
   /// In en, this message translates to:
   /// **'{n} LP'**
   String lpAmount(String n);
+
+  /// No description provided for @countWithCamera.
+  ///
+  /// In en, this message translates to:
+  /// **'Count with camera'**
+  String get countWithCamera;
+
+  /// No description provided for @youWin.
+  ///
+  /// In en, this message translates to:
+  /// **'YOU WIN!'**
+  String get youWin;
+
+  /// No description provided for @defeated.
+  ///
+  /// In en, this message translates to:
+  /// **'DEFEATED'**
+  String get defeated;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

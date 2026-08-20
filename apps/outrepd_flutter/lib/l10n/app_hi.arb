@@ -496,5 +496,8 @@
   "weeksAgo": "{n} हफ़्ते पहले",
   "membersCount": "{n} सदस्य",
   "eachCount": "प्रति व्यक्ति {n}",
-  "lpAmount": "{n} LP"
+  "lpAmount": "{n} LP",
+  "countWithCamera": "कैमरे से गिनें",
+  "youWin": "आप जीते!",
+  "defeated": "हार"
 }

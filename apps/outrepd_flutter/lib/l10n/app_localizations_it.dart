@@ -1587,4 +1587,13 @@ class LIt extends L {
   String lpAmount(String n) {
     return '$n PL';
   }
+
+  @override
+  String get countWithCamera => 'Conta con la fotocamera';
+
+  @override
+  String get youWin => 'HAI VINTO!';
+
+  @override
+  String get defeated => 'SCONFITTA';
 }

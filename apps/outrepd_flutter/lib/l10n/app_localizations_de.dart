@@ -1593,4 +1593,13 @@ class LDe extends L {
   String lpAmount(String n) {
     return '$n LP';
   }
+
+  @override
+  String get countWithCamera => 'Mit der Kamera zählen';
+
+  @override
+  String get youWin => 'GEWONNEN!';
+
+  @override
+  String get defeated => 'VERLOREN';
 }

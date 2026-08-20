@@ -289,16 +289,23 @@ double? _torsoPitch(BodyPose pose) {
 }
 
 /// How far the hands sit above the shoulders, as a fraction of torso length.
-/// Negative is overhead. Scaled by the torso so it reads the same whether the
-/// lifter is close to the phone or across the room.
+/// Negative is above.
+///
+/// Divided by the torso's **full** length, not its vertical extent. The
+/// vertical extent is what a first version used, and it collapses towards zero
+/// the moment the body goes horizontal — which is exactly when a push-up is
+/// happening. Dividing by it turned a hand at shoulder height into a reading
+/// of twenty, and every push-up rep was refused for it.
 double? _wristHeight(BodyPose pose) {
   final shoulder = _midpoint(pose, Joint.leftShoulder, Joint.rightShoulder);
   final hip = _midpoint(pose, Joint.leftHip, Joint.rightHip);
   final wrist = _midpoint(pose, Joint.leftWrist, Joint.rightWrist);
   if (shoulder == null || hip == null || wrist == null) return null;
 
-  final torso = (hip.$2 - shoulder.$2).abs();
-  if (torso < 0.02) return null; // too small to divide by meaningfully
+  final dx = hip.$1 - shoulder.$1;
+  final dy = hip.$2 - shoulder.$2;
+  final torso = math.sqrt(dx * dx + dy * dy);
+  if (torso < 0.02) return null; // whole body too small in frame to trust
   return (wrist.$2 - shoulder.$2) / torso;
 }
 

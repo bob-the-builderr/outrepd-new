@@ -1550,4 +1550,13 @@ class LZh extends L {
   String lpAmount(String n) {
     return '$n LP';
   }
+
+  @override
+  String get countWithCamera => '用摄像头计数';
+
+  @override
+  String get youWin => '你赢了！';
+
+  @override
+  String get defeated => '失败';
 }

@@ -1590,4 +1590,13 @@ class LId extends L {
   String lpAmount(String n) {
     return '$n LP';
   }
+
+  @override
+  String get countWithCamera => 'Hitung pakai kamera';
+
+  @override
+  String get youWin => 'ANDA MENANG!';
+
+  @override
+  String get defeated => 'KALAH';
 }

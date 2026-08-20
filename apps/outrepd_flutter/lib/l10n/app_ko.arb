@@ -496,5 +496,8 @@
   "weeksAgo": "{n}주 전",
   "membersCount": "{n}명",
   "eachCount": "1인당 {n}",
-  "lpAmount": "{n} LP"
+  "lpAmount": "{n} LP",
+  "countWithCamera": "카메라로 세기",
+  "youWin": "승리!",
+  "defeated": "패배"
 }

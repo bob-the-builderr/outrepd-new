@@ -1580,4 +1580,13 @@ class LTr extends L {
   String lpAmount(String n) {
     return '$n LP';
   }
+
+  @override
+  String get countWithCamera => 'Kamerayla say';
+
+  @override
+  String get youWin => 'KAZANDINIZ!';
+
+  @override
+  String get defeated => 'YENİLDİNİZ';
 }

@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 
 import '../data.dart';
 import '../exercises.dart';
+import '../reps/exercise_patterns.dart';
 import '../l10n/app_localizations.dart';
 import '../theme.dart';
+import 'trainer.dart';
 import '../widgets.dart';
 
 /// The full match loop: pick exercises → find an opponent → VS intro →
@@ -225,7 +227,7 @@ class _ExercisePicker extends StatelessWidget {
     return Column(
       children: [
         _FlowHeader(
-          title: muscle.toUpperCase(),
+          title: muscleGroupLabel(L.of(context), muscle).toUpperCase(),
           subtitle: L.of(context).pickExercises,
         ),
         Expanded(
@@ -666,14 +668,51 @@ class _ExerciseCard extends StatelessWidget {
                 ],
               ),
             ),
-          TextButton.icon(
-            onPressed: () {
-              entry.sets.add(WorkoutSet());
-              onChanged();
-            },
-            icon: Icon(Icons.add, color: context.colors.brand, size: 20),
-            label: Text(L.of(context).addSet,
-                style: TextStyle(color: context.colors.brand, fontWeight: FontWeight.bold)),
+          Row(
+            children: [
+              // The reason the match is worth anything: the reps are counted
+              // by the camera against this exercise's own signature, so a
+              // round of presses cannot be filled in with curls.
+              Expanded(
+                child: TextButton.icon(
+                  onPressed: () async {
+                    final def = cameraDefFor(entry.name);
+                    if (def == null) return;
+                    final counted = await Navigator.of(context).push<int>(
+                      MaterialPageRoute(
+                        builder: (_) => TrainerScreen(
+                          exercise: def,
+                          autoStart: true,
+                          forMatch: true,
+                        ),
+                      ),
+                    );
+                    if (counted == null || counted == 0) return;
+                    // The weight is still the lifter's to type — a camera can
+                    // count reps, it cannot read what is on the bar.
+                    entry.sets.add(WorkoutSet(reps: '$counted'));
+                    onChanged();
+                  },
+                  icon: Icon(Icons.videocam,
+                      color: context.colors.brand, size: 20),
+                  label: Text(
+                    L.of(context).countWithCamera,
+                    style: TextStyle(
+                      color: context.colors.brand,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  entry.sets.add(WorkoutSet());
+                  onChanged();
+                },
+                child: Text(L.of(context).addSet,
+                    style: TextStyle(color: context.colors.muted)),
+              ),
+            ],
           ),
         ],
       ),
@@ -757,7 +796,7 @@ class _ResultView extends StatelessWidget {
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
-              won ? 'YOU WIN!' : 'DEFEATED',
+              won ? L.of(context).youWin : L.of(context).defeated,
               maxLines: 1,
               style: TextStyle(color: color, fontSize: 42, fontWeight: FontWeight.w900),
             ),

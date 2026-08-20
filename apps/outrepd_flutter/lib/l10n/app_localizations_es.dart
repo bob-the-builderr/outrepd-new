@@ -1590,4 +1590,13 @@ class LEs extends L {
   String lpAmount(String n) {
     return '$n PL';
   }
+
+  @override
+  String get countWithCamera => 'Contar con la cámara';
+
+  @override
+  String get youWin => '¡GANASTE!';
+
+  @override
+  String get defeated => 'DERROTA';
 }

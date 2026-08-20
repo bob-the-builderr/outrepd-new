@@ -496,5 +496,8 @@
   "weeksAgo": "{n} 周前",
   "membersCount": "{n} 名成员",
   "eachCount": "人均 {n}",
-  "lpAmount": "{n} LP"
+  "lpAmount": "{n} LP",
+  "countWithCamera": "用摄像头计数",
+  "youWin": "你赢了！",
+  "defeated": "失败"
 }

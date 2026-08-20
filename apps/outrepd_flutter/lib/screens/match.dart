@@ -9,7 +9,6 @@ import '../theme.dart';
 import '../widgets.dart';
 import 'match_entry.dart';
 import 'match_history.dart';
-import 'trainer.dart';
 import 'roadmap.dart';
 import 'notifications.dart';
 
@@ -290,14 +289,10 @@ class _StartMatchActions extends StatelessWidget {
           label: L.of(context).challengeFriend,
           onTap: () => showFriendRoomSheet(context),
         ),
-        const SizedBox(height: 12),
-        _SecondaryAction(
-          icon: Icons.videocam_outlined,
-          label: L.of(context).trainWithCamera,
-          onTap: () => Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => const TrainerScreen()),
-          ),
-        ),
+        // No separate "train with the camera" route. The camera is not a mode
+        // you opt into any more — it is how a match is judged, so a button
+        // beside the match button offering the same thing without an opponent
+        // only invited people to practise counting instead of competing.
       ],
     );
   }

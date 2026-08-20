@@ -15,87 +15,108 @@ library;
 
 import 'movement_signature.dart';
 
+/// Every band below comes from  run over the
+/// recorded clips, not from imagination. The first version of this file was
+/// written from what the movements *ought* to measure and it refused every
+/// push-up in the set: it asked the hip to hold within 30 degrees when a real
+/// push-up's hip reads a range of 95, and it put the bench press band at a
+/// torso pitch of 45 when a real bench measures 42.
+///
+/// Where a first guess and a measurement disagree, the measurement is right.
+
 /// Pressing something away from a lying or reclined torso: bench, chest press,
 /// dips, close-grip work.
+///
+/// Told from a push-up by where the hands are: pressing up off a bench puts
+/// them above the chest (measured -0.3 torso lengths), pressing up off the
+/// floor puts them below the shoulders (+1.3). That sign holds at any camera
+/// angle, which nothing about the torso does.
 const kPressHorizontal = MovementSignature('bench press', [
-  Moves(Channel.elbow, 45, 'Bend and straighten the arms fully'),
-  Within(Channel.torsoPitch, 45, 90, 'Lie back — this round is a press'),
-  Holds(Channel.knee, 45, 'Keep the legs out of it'),
+  Moves(Channel.elbow, 40, 'Bend and straighten the arms fully'),
+  Within(Channel.wristHeight, -3.5, 0.4, 'Hands go above your chest'),
 ]);
 
 /// Pressing overhead: shoulder press, push press, military, Arnold.
 const kPressOverhead = MovementSignature('overhead press', [
-  Moves(Channel.elbow, 45, 'Bend and straighten the arms fully'),
-  Moves(Channel.shoulder, 45, 'Take it all the way overhead'),
-  Within(Channel.torsoPitch, 0, 40, 'Stand or sit tall'),
-  Within(Channel.wristHeight, -2.5, 0.2, 'Finish with the hands above you'),
+  Moves(Channel.elbow, 40, 'Bend and straighten the arms fully'),
+  Moves(Channel.shoulder, 40, 'Take it all the way overhead'),
+  Within(Channel.torsoPitch, 0, 50, 'Stand or sit tall'),
+  Within(Channel.wristHeight, -3.5, 0.3, 'Finish with the hands above you'),
 ]);
 
 /// The elbow bending with the upper arm parked: every curl.
+///
+/// The shoulder is the whole test. A bench set moves it through 163 degrees
+/// and a curl cannot, so this one rule is what stops a round of presses being
+/// farmed with curls and the reverse.
 const kCurl = MovementSignature('curl', [
-  Moves(Channel.elbow, 45, 'Bend and straighten the arms fully'),
-  Holds(Channel.shoulder, 35, 'Keep the upper arm still'),
-  Within(Channel.torsoPitch, 0, 45, 'Stand tall'),
-  Within(Channel.wristHeight, -0.3, 1.4, 'Hands stay below the shoulders'),
+  Moves(Channel.elbow, 40, 'Bend and straighten the arms fully'),
+  Holds(Channel.shoulder, 45, 'Keep the upper arm still'),
+  Within(Channel.torsoPitch, 0, 50, 'Stand tall'),
+  Within(Channel.wristHeight, -0.4, 2.5, 'Hands stay below the shoulders'),
 ]);
 
-/// The elbow straightening with the upper arm parked: pushdowns, skullcrushers,
-/// kickbacks, overhead extensions.
+/// The elbow straightening with the upper arm parked: pushdowns,
+/// skullcrushers, kickbacks, overhead extensions.
 const kExtension = MovementSignature('triceps extension', [
-  Moves(Channel.elbow, 45, 'Bend and straighten the arms fully'),
-  Holds(Channel.shoulder, 35, 'Keep the upper arm still'),
+  Moves(Channel.elbow, 40, 'Bend and straighten the arms fully'),
+  Holds(Channel.shoulder, 45, 'Keep the upper arm still'),
 ]);
 
 /// Pulling something towards you with the torso tipped: every row.
 const kRow = MovementSignature('row', [
-  Moves(Channel.elbow, 40, 'Pull all the way in'),
+  Moves(Channel.elbow, 35, 'Pull all the way in'),
   Moves(Channel.shoulder, 25, 'Drive the elbows back'),
-  Within(Channel.torsoPitch, 25, 85, 'Hinge over — this round is a row'),
+  Within(Channel.torsoPitch, 20, 85, 'Hinge over — this round is a row'),
 ]);
 
 /// Pulling down from above: pulldowns, pull-ups, chin-ups.
 const kPulldown = MovementSignature('pulldown', [
-  Moves(Channel.elbow, 45, 'Pull all the way down'),
-  Moves(Channel.shoulder, 40, 'Start with the arms overhead'),
-  Within(Channel.wristHeight, -2.5, 0.1, 'Hands start above your head'),
-  Within(Channel.torsoPitch, 0, 45, 'Hang tall'),
+  Moves(Channel.elbow, 40, 'Pull all the way down'),
+  Moves(Channel.shoulder, 35, 'Start with the arms overhead'),
+  Within(Channel.wristHeight, -3.5, 0.2, 'Hands start above your head'),
 ]);
 
 /// The arm sweeping at the shoulder with the elbow fixed: raises, flyes,
 /// crossovers, pullovers.
 const kRaise = MovementSignature('lateral raise', [
-  Moves(Channel.shoulder, 40, 'Take the arms further out'),
-  Holds(Channel.elbow, 45, 'Keep the elbows fixed'),
-  Within(Channel.torsoPitch, 0, 55, 'Stay tall'),
+  Moves(Channel.shoulder, 35, 'Take the arms further out'),
+  Holds(Channel.elbow, 55, 'Keep the elbows fixed'),
+  Within(Channel.torsoPitch, 0, 60, 'Stay tall'),
 ]);
 
 /// The knee bending under an upright torso: squats, leg press, lunges.
+///
+/// The knee separates this from a hinge cleanly: a squat's knee travels 118
+/// degrees in the recordings, a deadlift's 31.
 const kSquat = MovementSignature('squat', [
   Moves(Channel.knee, 45, 'Go deeper'),
   Moves(Channel.hip, 30, 'Sit back as you descend'),
-  Within(Channel.torsoPitch, 0, 55, 'Keep the chest up'),
+  Within(Channel.torsoPitch, 0, 50, 'Keep the chest up'),
 ]);
 
 /// Folding at the hip with the knees fairly straight: deadlifts, good
 /// mornings, hinges, bridges, most ab work.
 const kHinge = MovementSignature('hinge', [
   Moves(Channel.hip, 40, 'Fold further at the hips'),
-  Holds(Channel.knee, 45, 'Keep the knees mostly straight'),
+  Holds(Channel.knee, 55, 'Keep the knees mostly straight'),
 ]);
 
-/// Body held in a line, elbows bending: push-ups and their variants. Told from
-/// a bench press by the torso being level rather than reclined, and from
-/// everything else by both at once.
+/// Body held in a line, elbows bending: push-ups and their variants.
+///
+/// No rule on the hip. A real push-up's hip angle reads a range near 95 in the
+/// recordings — the estimate is noisy when the body is horizontal and
+/// foreshortened — so asking it to hold still refuses every honest rep.
 const kPushup = MovementSignature('push-up', [
-  Moves(Channel.elbow, 40, 'Go all the way down'),
-  Within(Channel.torsoPitch, 55, 90, 'Get into a push-up position'),
-  Holds(Channel.hip, 30, 'Keep the body in a line'),
+  Moves(Channel.elbow, 35, 'Go all the way down'),
+  Within(Channel.torsoPitch, 35, 90, 'Get into a push-up position'),
+  Within(Channel.wristHeight, 0.4, 3.0, 'Hands go under your shoulders'),
 ]);
 
 /// Rising onto the toes.
 const kCalfRaise = MovementSignature('calf raise', [
-  Holds(Channel.knee, 30, 'Keep the legs straight'),
-  Holds(Channel.hip, 30, 'Only the ankles move'),
+  Holds(Channel.knee, 40, 'Keep the legs straight'),
+  Holds(Channel.hip, 40, 'Only the ankles move'),
 ]);
 
 /// Everything the verifier weighs a rep against. A movement has to fit its own

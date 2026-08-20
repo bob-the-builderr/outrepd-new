@@ -496,5 +496,8 @@
   "weeksAgo": "{n} hafta önce",
   "membersCount": "{n} üye",
   "eachCount": "kişi başı {n}",
-  "lpAmount": "{n} LP"
+  "lpAmount": "{n} LP",
+  "countWithCamera": "Kamerayla say",
+  "youWin": "KAZANDINIZ!",
+  "defeated": "YENİLDİNİZ"
 }

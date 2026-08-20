@@ -19,13 +19,23 @@ import '../widgets.dart';
 /// Solo counting. No opponent, no server — the whole point of this screen is
 /// to get the counter trustworthy before a match is ever built on top of it.
 class TrainerScreen extends StatefulWidget {
-  const TrainerScreen({super.key, this.exercise, this.autoStart = false});
+  const TrainerScreen({
+    super.key,
+    this.exercise,
+    this.autoStart = false,
+    this.forMatch = false,
+  });
 
   final ExerciseDef? exercise;
 
   /// Skips the picker and opens straight into a session. Used by the web
   /// preview route, where tapping through the canvas is unreliable.
   final bool autoStart;
+
+  /// Opened from inside a match. Finishing hands the count back to the round
+  /// rather than returning to the picker, and the exercise is fixed: the round
+  /// decides what is being counted, not the lifter.
+  final bool forMatch;
 
   @override
   State<TrainerScreen> createState() => _TrainerScreenState();
@@ -255,10 +265,20 @@ class _TrainerScreenState extends State<TrainerScreen> {
   }
 
   Future<void> _stop() async {
+    final counted = _engine?.reps ?? 0;
     await _sub?.cancel();
     await _source?.dispose();
     await _saveRecording();
     if (!mounted) return;
+
+    // In a match the screen exists to produce one number. Handing it back and
+    // closing is the whole contract; dropping the lifter on a picker mid-round
+    // would be the app losing the thread of what they were doing.
+    if (widget.forMatch) {
+      Navigator.of(context).pop(counted);
+      return;
+    }
+
     setState(() {
       _sub = null;
       _source = null;

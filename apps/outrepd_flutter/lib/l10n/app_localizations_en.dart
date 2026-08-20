@@ -1581,4 +1581,13 @@ class LEn extends L {
   String lpAmount(String n) {
     return '$n LP';
   }
+
+  @override
+  String get countWithCamera => 'Count with camera';
+
+  @override
+  String get youWin => 'YOU WIN!';
+
+  @override
+  String get defeated => 'DEFEATED';
 }

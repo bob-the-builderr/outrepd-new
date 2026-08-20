@@ -496,5 +496,8 @@
   "weeksAgo": "{n} minggu lalu",
   "membersCount": "{n} anggota",
   "eachCount": "{n} per orang",
-  "lpAmount": "{n} LP"
+  "lpAmount": "{n} LP",
+  "countWithCamera": "Hitung pakai kamera",
+  "youWin": "ANDA MENANG!",
+  "defeated": "KALAH"
 }

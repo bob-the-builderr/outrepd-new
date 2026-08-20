@@ -496,5 +496,8 @@
   "weeksAgo": "منذ {n} أسابيع",
   "membersCount": "{n} أعضاء",
   "eachCount": "{n} للفرد",
-  "lpAmount": "{n} نقطة"
+  "lpAmount": "{n} نقطة",
+  "countWithCamera": "عُدّ بالكاميرا",
+  "youWin": "فزت!",
+  "defeated": "خسرت"
 }

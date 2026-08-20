@@ -1599,4 +1599,13 @@ class LFr extends L {
   String lpAmount(String n) {
     return '$n PL';
   }
+
+  @override
+  String get countWithCamera => 'Compter à la caméra';
+
+  @override
+  String get youWin => 'VOUS GAGNEZ !';
+
+  @override
+  String get defeated => 'DÉFAITE';
 }

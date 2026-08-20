@@ -496,5 +496,8 @@
   "weeksAgo": "{n} недель назад",
   "membersCount": "{n} участников",
   "eachCount": "{n} на человека",
-  "lpAmount": "{n} ОЛ"
+  "lpAmount": "{n} ОЛ",
+  "countWithCamera": "Считать камерой",
+  "youWin": "ПОБЕДА!",
+  "defeated": "ПОРАЖЕНИЕ"
 }

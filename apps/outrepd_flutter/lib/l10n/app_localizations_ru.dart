@@ -1586,4 +1586,13 @@ class LRu extends L {
   String lpAmount(String n) {
     return '$n ОЛ';
   }
+
+  @override
+  String get countWithCamera => 'Считать камерой';
+
+  @override
+  String get youWin => 'ПОБЕДА!';
+
+  @override
+  String get defeated => 'ПОРАЖЕНИЕ';
 }

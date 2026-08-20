@@ -1572,4 +1572,13 @@ class LAr extends L {
   String lpAmount(String n) {
     return '$n نقطة';
   }
+
+  @override
+  String get countWithCamera => 'عُدّ بالكاميرا';
+
+  @override
+  String get youWin => 'فزت!';
+
+  @override
+  String get defeated => 'خسرت';
 }

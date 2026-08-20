@@ -1551,4 +1551,13 @@ class LJa extends L {
   String lpAmount(String n) {
     return '$n LP';
   }
+
+  @override
+  String get countWithCamera => 'カメラで数える';
+
+  @override
+  String get youWin => '勝利！';
+
+  @override
+  String get defeated => '敗北';
 }

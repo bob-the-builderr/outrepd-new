@@ -1589,4 +1589,13 @@ class LPt extends L {
   String lpAmount(String n) {
     return '$n PL';
   }
+
+  @override
+  String get countWithCamera => 'Contar com a câmara';
+
+  @override
+  String get youWin => 'GANHASTE!';
+
+  @override
+  String get defeated => 'DERROTA';
 }

@@ -496,5 +496,8 @@
   "weeksAgo": "{n} 週間前",
   "membersCount": "メンバー {n} 人",
   "eachCount": "1人あたり {n}",
-  "lpAmount": "{n} LP"
+  "lpAmount": "{n} LP",
+  "countWithCamera": "カメラで数える",
+  "youWin": "勝利！",
+  "defeated": "敗北"
 }

@@ -1552,4 +1552,13 @@ class LKo extends L {
   String lpAmount(String n) {
     return '$n LP';
   }
+
+  @override
+  String get countWithCamera => '카메라로 세기';
+
+  @override
+  String get youWin => '승리!';
+
+  @override
+  String get defeated => '패배';
 }

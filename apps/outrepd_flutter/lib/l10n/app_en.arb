@@ -705,5 +705,8 @@
         "type": "String"
       }
     }
-  }
+  },
+  "countWithCamera": "Count with camera",
+  "youWin": "YOU WIN!",
+  "defeated": "DEFEATED"
 }
