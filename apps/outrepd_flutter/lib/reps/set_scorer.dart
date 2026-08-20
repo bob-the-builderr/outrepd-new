@@ -25,9 +25,10 @@ import 'movement_signature.dart';
 import 'pose.dart';
 import 'signature_catalogue.dart';
 
-/// Turns closer together than this are a tracker shivering, not a person
-/// changing direction. About a third of a second at the rate poses arrive.
-const kMinFramesBetweenTurns = 8;
+/// The shortest thing that can be a rep. Around half a second at the rate poses
+/// arrive — faster than that is a shiver, and it is also fewer frames than the
+/// signature verifier needs before it will judge anything at all.
+const kMinFramesPerRep = 14;
 
 /// How much of a typical swing a turn has to travel to count as one. Half,
 /// which is deep enough to throw out a shuffle between reps and shallow enough
@@ -88,7 +89,7 @@ ScoredSet scoreSet(
   // second at half of that. The bar comes from the set itself: a tall lifter
   // pressing through ninety degrees and a stiff one through forty both get
   // judged against their own movement rather than against a table.
-  final rough = _turnsIn(series, 5, 0);
+  final rough = _turnsIn(series, 5);
   if (rough.length < kMinTurnsToJudge) return const ScoredSet(reps: 0, refused: 0);
 
   final swings = <double>[
@@ -98,7 +99,7 @@ ScoredSet scoreSet(
   final typical = swings[swings.length ~/ 2];
   if (typical <= 0) return const ScoredSet(reps: 0, refused: 0);
 
-  final turns = _turnsIn(series, typical * kSwingShare, kMinFramesBetweenTurns);
+  final turns = _turnsIn(series, typical * kSwingShare);
 
   // Two turns make a rep: down and back, or up and back, depending on which
   // end the lifter started from. Pairing them from the first turn means a set
@@ -120,6 +121,19 @@ ScoredSet scoreSet(
     // rather than on whichever frame happened to end it.
     final from = sourceIndex[turns[i].index];
     final to = sourceIndex[turns[i + 2].index];
+
+    // Too brief to be a rep, and — worse — too brief to be judged: the
+    // verifier waves through anything it has fewer than a handful of frames of,
+    // on the principle that a rep must never be refused for want of data. That
+    // principle is right for a rep and wrong for a flicker, and counting cycles
+    // produces flickers by the hundred. So the length test comes first, and
+    // anything under it is thrown out rather than handed to a verifier that
+    // will let it pass.
+    if (to - from < kMinFramesPerRep) {
+      refused++;
+      continue;
+    }
+
     final verdict = verifier.verify(frames.sublist(from, to + 1));
 
     if (verdict.accepted) {
@@ -133,11 +147,16 @@ ScoredSet scoreSet(
   return ScoredSet(reps: reps, refused: refused, lookedLike: lookedLike);
 }
 
-/// Every place the signal changed direction by more than [prominence], with at
-/// least [minGap] samples since the last one.
-List<_Turn> _turnsIn(List<double> series, double prominence, int minGap) {
+/// Every place the signal changed direction by more than [prominence].
+///
+/// No minimum spacing here, deliberately. An earlier version refused a turn
+/// that arrived too soon after the last one — and refusing it left the detector
+/// still looking for a peak while the body was already on its way down, so it
+/// missed not just that turn but the whole of the next descent. A lifter doing
+/// ten reps was scored two. Spacing is a property of a *rep*, so it is judged
+/// on the finished cycle further down, where dropping one costs one.
+List<_Turn> _turnsIn(List<double> series, double prominence) {
   final out = <_Turn>[];
-  var lastTurnAt = -minGap;
   var candidate = series.first;
   var candidateAt = 0;
   var rising = true;
@@ -148,9 +167,8 @@ List<_Turn> _turnsIn(List<double> series, double prominence, int minGap) {
       if (v > candidate) {
         candidate = v;
         candidateAt = i;
-      } else if (candidate - v > prominence && i - lastTurnAt >= minGap) {
+      } else if (candidate - v > prominence) {
         out.add(_Turn(candidate, candidateAt));
-        lastTurnAt = i;
         rising = false;
         candidate = v;
         candidateAt = i;
@@ -159,9 +177,8 @@ List<_Turn> _turnsIn(List<double> series, double prominence, int minGap) {
       if (v < candidate) {
         candidate = v;
         candidateAt = i;
-      } else if (v - candidate > prominence && i - lastTurnAt >= minGap) {
+      } else if (v - candidate > prominence) {
         out.add(_Turn(candidate, candidateAt));
-        lastTurnAt = i;
         rising = true;
         candidate = v;
         candidateAt = i;
