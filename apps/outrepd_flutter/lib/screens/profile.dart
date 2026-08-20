@@ -251,12 +251,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 _Row(
                   label: L.of(context).height,
-                  value: formatHeight(L.of(context), p.heightCm),
+                  value: formatHeight(context, L.of(context), p.heightCm),
                   editable: true,
                 ),
                 _Row(
                   label: L.of(context).bodyweight,
-                  value: formatBodyWeight(L.of(context), p.weightKg),
+                  value: formatBodyWeight(context, L.of(context), p.weightKg),
                   editable: true,
                 ),
                 _Row(

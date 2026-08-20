@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:outrepd/data.dart';
-import 'package:outrepd/l10n/app_localizations.dart';
 import 'package:outrepd/settings.dart';
 
 void main() {
@@ -64,22 +63,17 @@ void main() {
     expect(demoProfile.age, 27);
   });
 
-  test('unit conversions round to something a human would write', () async {
-    // The suffix comes from the translations now, so the test reads English
-    // out of the same place the app does rather than hard-coding "kg".
-    final l = await L.delegate.load(const Locale('en'));
-
+  test('unit conversions round to something a human would write', () {
+    // The maths, not the sentence. Formatting needs a widget tree now, because
+    // the digits are localised — and the rounding is what this is about.
     settings.weightUnit = WeightUnit.lb;
-    expect(formatBodyWeight(l, 82), '181 lb');
+    expect(displayWeight(82), 181);
 
-    settings.heightUnit = HeightUnit.ft;
-    expect(formatHeight(l, 178), "5'10\"");
-    // 5'11.6" must carry to 6'0", never print 5'12".
-    expect(formatHeight(l, 182), "6'0\"");
+    expect(feetInches(178), (5, 10));
+    // 5'11.6" must carry to 6'0", never report 5'12".
+    expect(feetInches(182), (6, 0));
 
     settings.weightUnit = WeightUnit.kg;
-    settings.heightUnit = HeightUnit.cm;
-    expect(formatBodyWeight(l, 82), '82 kg');
-    expect(formatHeight(l, 178), '178 cm');
+    expect(displayWeight(82), 82);
   });
 }

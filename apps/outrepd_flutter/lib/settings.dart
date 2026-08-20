@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'l10n/app_localizations.dart';
+import 'widgets.dart';
 
 enum WeightUnit { kg, lb }
 
@@ -230,15 +231,39 @@ class AppSettings extends ChangeNotifier {
 final settings = AppSettings();
 
 /// Body weight in the unit the user picked, rounded — nobody needs grams.
-String formatBodyWeight(L l, int kg) => settings.weightUnit == WeightUnit.kg
-    ? '$kg ${l.shortKg}'
-    : '${(kg * 2.20462).round()} ${l.shortLb}';
-
-String formatHeight(L l, int cm) {
-  if (settings.heightUnit == HeightUnit.cm) return '$cm ${l.shortCm}';
-  final totalInches = cm / 2.54;
-  final feet = totalInches ~/ 12;
-  final inches = (totalInches % 12).round();
-  // 11.6" rounds to 12" — carry it rather than print 5'12".
-  return inches == 12 ? "${feet + 1}'0\"" : "$feet'$inches\"";
+///
+/// Takes a context as well as the translations, because the digits are
+/// localised too: these two strings were the last place on the profile still
+/// reading 178 and 181 on an Arabic phone while every number around them read
+/// ١٧٨ and ١٨١.
+String formatBodyWeight(BuildContext context, L l, int kg) {
+  final unit = settings.weightUnit == WeightUnit.kg ? l.shortKg : l.shortLb;
+  return '${localNumber(context, displayWeight(kg))} $unit';
 }
+
+String formatHeight(BuildContext context, L l, int cm) {
+  if (settings.heightUnit == HeightUnit.cm) {
+    return '${localNumber(context, cm)} ${l.shortCm}';
+  }
+  final (feet, inches) = feetInches(cm);
+  return "${localNumber(context, feet)}'${localNumber(context, inches)}\"";
+}
+
+/// The conversion on its own, with no widget tree in sight, so the rounding
+/// can be tested without pumping a screen to get at it.
+(int feet, int inches) feetInches(int cm) {
+  final totalInches = cm / 2.54;
+  var feet = totalInches ~/ 12;
+  var inches = (totalInches % 12).round();
+  // 11.6" rounds to 12" — carry it rather than report 5'12".
+  if (inches == 12) {
+    feet += 1;
+    inches = 0;
+  }
+  return (feet, inches);
+}
+
+/// Body weight in the unit on screen, as a number rather than a sentence.
+int displayWeight(int kg) => settings.weightUnit == WeightUnit.kg
+    ? kg
+    : (kg * 2.20462).round();
