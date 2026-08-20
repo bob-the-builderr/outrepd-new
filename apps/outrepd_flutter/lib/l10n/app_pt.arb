@@ -521,5 +521,13 @@
   "theirPick": "Their pick",
   "secondsOfWork": "{n} seconds of work",
   "lpOutOf": "/ {total} PL",
-  "toPromotion": "faltam {n} para subir"
+  "toPromotion": "faltam {n} para subir",
+  "noFriendsTitle": "Ainda sem amigos",
+  "noFriendsBody": "Adiciona alguém e podes desafiá-lo para um duelo privado quando quiseres.",
+  "noMatchesTitle": "Ainda sem duelos",
+  "noMatchesBody": "O primeiro aparece aqui, ganhes ou percas.",
+  "noNotificationsTitle": "Nada de novo",
+  "noNotificationsBody": "Convites, resultados e pedidos de amizade chegam aqui.",
+  "roundDone": "Ronda {n} concluída",
+  "bestRoundYet": "A tua melhor ronda até agora"
 }

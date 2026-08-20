@@ -1682,4 +1682,32 @@ class LEs extends L {
   String toPromotion(String n) {
     return '$n para ascender';
   }
+
+  @override
+  String get noFriendsTitle => 'Aún no tienes amigos';
+
+  @override
+  String get noFriendsBody =>
+      'Añade a alguien y podrás retarle a un duelo privado cuando quieras.';
+
+  @override
+  String get noMatchesTitle => 'Aún no hay duelos';
+
+  @override
+  String get noMatchesBody => 'El primero aparecerá aquí, ganes o pierdas.';
+
+  @override
+  String get noNotificationsTitle => 'Nada nuevo';
+
+  @override
+  String get noNotificationsBody =>
+      'Aquí llegan las invitaciones, los resultados y las solicitudes de amistad.';
+
+  @override
+  String roundDone(String n) {
+    return 'Ronda $n completada';
+  }
+
+  @override
+  String get bestRoundYet => 'Tu mejor ronda hasta ahora';
 }

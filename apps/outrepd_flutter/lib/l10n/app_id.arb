@@ -521,5 +521,13 @@
   "theirPick": "Their pick",
   "secondsOfWork": "{n} seconds of work",
   "lpOutOf": "/ {total} LP",
-  "toPromotion": "{n} lagi untuk naik"
+  "toPromotion": "{n} lagi untuk naik",
+  "noFriendsTitle": "Belum ada teman",
+  "noFriendsBody": "Tambahkan seseorang dan kamu bisa menantangnya duel privat kapan saja.",
+  "noMatchesTitle": "Belum ada duel",
+  "noMatchesBody": "Yang pertama akan muncul di sini, menang atau kalah.",
+  "noNotificationsTitle": "Belum ada yang baru",
+  "noNotificationsBody": "Undangan duel, hasil, dan permintaan pertemanan masuk ke sini.",
+  "roundDone": "Ronde {n} selesai",
+  "bestRoundYet": "Ronde terbaik sejauh ini"
 }

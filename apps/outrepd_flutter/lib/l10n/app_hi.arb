@@ -521,5 +521,13 @@
   "theirPick": "Their pick",
   "secondsOfWork": "{n} seconds of work",
   "lpOutOf": "/ {total} LP",
-  "toPromotion": "प्रमोशन में {n} बाकी"
+  "toPromotion": "प्रमोशन में {n} बाकी",
+  "noFriendsTitle": "अभी कोई दोस्त नहीं",
+  "noFriendsBody": "किसी को जोड़ें और जब चाहें उसे निजी मैच के लिए चुनौती दें।",
+  "noMatchesTitle": "अभी कोई मैच नहीं",
+  "noMatchesBody": "पहला यहीं दिखेगा — जीत हो या हार।",
+  "noNotificationsTitle": "कुछ नया नहीं",
+  "noNotificationsBody": "मैच के न्योते, नतीजे और दोस्ती की रिक्वेस्ट यहाँ आती हैं।",
+  "roundDone": "राउंड {n} पूरा",
+  "bestRoundYet": "अब तक का सबसे अच्छा राउंड"
 }

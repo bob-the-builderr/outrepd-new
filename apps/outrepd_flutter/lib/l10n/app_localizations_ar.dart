@@ -1663,4 +1663,31 @@ class LAr extends L {
   String toPromotion(String n) {
     return 'يتبقى $n للترقية';
   }
+
+  @override
+  String get noFriendsTitle => 'لسه مفيش أصدقاء';
+
+  @override
+  String get noFriendsBody => 'ضيف حد وتقدر تتحداه في ماتش خاص أي وقت.';
+
+  @override
+  String get noMatchesTitle => 'لسه مفيش ماتشات';
+
+  @override
+  String get noMatchesBody => 'أول واحد هيظهر هنا، كسبت أو خسرت.';
+
+  @override
+  String get noNotificationsTitle => 'مفيش جديد';
+
+  @override
+  String get noNotificationsBody =>
+      'دعوات الماتشات ونتايجها وطلبات الصداقة بتيجي هنا.';
+
+  @override
+  String roundDone(String n) {
+    return 'الجولة $n خلصت';
+  }
+
+  @override
+  String get bestRoundYet => 'أحسن جولة لحد دلوقتي';
 }

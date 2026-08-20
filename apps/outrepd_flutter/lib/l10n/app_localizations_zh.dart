@@ -1642,4 +1642,30 @@ class LZh extends L {
   String toPromotion(String n) {
     return '距晋级还差 $n';
   }
+
+  @override
+  String get noFriendsTitle => '还没有好友';
+
+  @override
+  String get noFriendsBody => '添加好友后，随时可以向对方发起私人对战。';
+
+  @override
+  String get noMatchesTitle => '还没有对战';
+
+  @override
+  String get noMatchesBody => '第一场会出现在这里，无论输赢。';
+
+  @override
+  String get noNotificationsTitle => '暂无新消息';
+
+  @override
+  String get noNotificationsBody => '对战邀请、结果和好友申请都会送到这里。';
+
+  @override
+  String roundDone(String n) {
+    return '第 $n 回合结束';
+  }
+
+  @override
+  String get bestRoundYet => '目前最好的一回合';
 }

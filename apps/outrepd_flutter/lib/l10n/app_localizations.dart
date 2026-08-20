@@ -3252,6 +3252,54 @@ abstract class L {
   /// In en, this message translates to:
   /// **'{n} to promotion'**
   String toPromotion(String n);
+
+  /// No description provided for @noFriendsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No friends yet'**
+  String get noFriendsTitle;
+
+  /// No description provided for @noFriendsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add someone and you can challenge them to a private match any time.'**
+  String get noFriendsBody;
+
+  /// No description provided for @noMatchesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No matches yet'**
+  String get noMatchesTitle;
+
+  /// No description provided for @noMatchesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first one shows up here, win or lose.'**
+  String get noMatchesBody;
+
+  /// No description provided for @noNotificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing new'**
+  String get noNotificationsTitle;
+
+  /// No description provided for @noNotificationsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Match invites, results and friend requests land here.'**
+  String get noNotificationsBody;
+
+  /// No description provided for @roundDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Round {n} done'**
+  String roundDone(String n);
+
+  /// No description provided for @bestRoundYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Best round yet'**
+  String get bestRoundYet;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

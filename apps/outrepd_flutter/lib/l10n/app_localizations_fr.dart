@@ -1692,4 +1692,32 @@ class LFr extends L {
   String toPromotion(String n) {
     return '$n avant la promotion';
   }
+
+  @override
+  String get noFriendsTitle => 'Pas encore d\'amis';
+
+  @override
+  String get noFriendsBody =>
+      'Ajoutez quelqu’un et vous pourrez le défier en duel privé quand vous voulez.';
+
+  @override
+  String get noMatchesTitle => 'Pas encore de duels';
+
+  @override
+  String get noMatchesBody => 'Le premier apparaîtra ici, gagné ou perdu.';
+
+  @override
+  String get noNotificationsTitle => 'Rien de neuf';
+
+  @override
+  String get noNotificationsBody =>
+      'Les invitations, les résultats et les demandes d’ami arrivent ici.';
+
+  @override
+  String roundDone(String n) {
+    return 'Round $n terminé';
+  }
+
+  @override
+  String get bestRoundYet => 'Votre meilleur round jusqu’ici';
 }

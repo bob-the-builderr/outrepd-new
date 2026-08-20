@@ -521,5 +521,13 @@
   "theirPick": "اختياره",
   "secondsOfWork": "{n} ثانية شغل",
   "lpOutOf": "/ {total} نقطة",
-  "toPromotion": "يتبقى {n} للترقية"
+  "toPromotion": "يتبقى {n} للترقية",
+  "noFriendsTitle": "لسه مفيش أصدقاء",
+  "noFriendsBody": "ضيف حد وتقدر تتحداه في ماتش خاص أي وقت.",
+  "noMatchesTitle": "لسه مفيش ماتشات",
+  "noMatchesBody": "أول واحد هيظهر هنا، كسبت أو خسرت.",
+  "noNotificationsTitle": "مفيش جديد",
+  "noNotificationsBody": "دعوات الماتشات ونتايجها وطلبات الصداقة بتيجي هنا.",
+  "roundDone": "الجولة {n} خلصت",
+  "bestRoundYet": "أحسن جولة لحد دلوقتي"
 }

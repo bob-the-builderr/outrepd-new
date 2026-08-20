@@ -1644,4 +1644,30 @@ class LKo extends L {
   String toPromotion(String n) {
     return '승급까지 $n';
   }
+
+  @override
+  String get noFriendsTitle => '아직 친구가 없습니다';
+
+  @override
+  String get noFriendsBody => '누군가를 추가하면 언제든 비공개 대결을 신청할 수 있습니다.';
+
+  @override
+  String get noMatchesTitle => '아직 대결이 없습니다';
+
+  @override
+  String get noMatchesBody => '첫 대결은 이기든 지든 여기에 남습니다.';
+
+  @override
+  String get noNotificationsTitle => '새 소식이 없습니다';
+
+  @override
+  String get noNotificationsBody => '대결 초대와 결과, 친구 요청이 여기로 옵니다.';
+
+  @override
+  String roundDone(String n) {
+    return '$n라운드 완료';
+  }
+
+  @override
+  String get bestRoundYet => '지금까지 최고의 라운드';
 }

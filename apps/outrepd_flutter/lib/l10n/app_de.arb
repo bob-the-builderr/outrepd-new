@@ -521,5 +521,13 @@
   "theirPick": "Their pick",
   "secondsOfWork": "{n} seconds of work",
   "lpOutOf": "/ {total} LP",
-  "toPromotion": "noch {n} bis zum Aufstieg"
+  "toPromotion": "noch {n} bis zum Aufstieg",
+  "noFriendsTitle": "Noch keine Freunde",
+  "noFriendsBody": "Füge jemanden hinzu und du kannst ihn jederzeit zu einem privaten Duell fordern.",
+  "noMatchesTitle": "Noch keine Duelle",
+  "noMatchesBody": "Das erste erscheint hier — gewonnen oder verloren.",
+  "noNotificationsTitle": "Nichts Neues",
+  "noNotificationsBody": "Duelleinladungen, Ergebnisse und Freundschaftsanfragen landen hier.",
+  "roundDone": "Runde {n} geschafft",
+  "bestRoundYet": "Beste Runde bisher"
 }

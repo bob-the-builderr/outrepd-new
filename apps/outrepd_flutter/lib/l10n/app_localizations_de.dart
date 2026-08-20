@@ -1685,4 +1685,33 @@ class LDe extends L {
   String toPromotion(String n) {
     return 'noch $n bis zum Aufstieg';
   }
+
+  @override
+  String get noFriendsTitle => 'Noch keine Freunde';
+
+  @override
+  String get noFriendsBody =>
+      'Füge jemanden hinzu und du kannst ihn jederzeit zu einem privaten Duell fordern.';
+
+  @override
+  String get noMatchesTitle => 'Noch keine Duelle';
+
+  @override
+  String get noMatchesBody =>
+      'Das erste erscheint hier — gewonnen oder verloren.';
+
+  @override
+  String get noNotificationsTitle => 'Nichts Neues';
+
+  @override
+  String get noNotificationsBody =>
+      'Duelleinladungen, Ergebnisse und Freundschaftsanfragen landen hier.';
+
+  @override
+  String roundDone(String n) {
+    return 'Runde $n geschafft';
+  }
+
+  @override
+  String get bestRoundYet => 'Beste Runde bisher';
 }

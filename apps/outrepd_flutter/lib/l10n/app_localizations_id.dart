@@ -1682,4 +1682,33 @@ class LId extends L {
   String toPromotion(String n) {
     return '$n lagi untuk naik';
   }
+
+  @override
+  String get noFriendsTitle => 'Belum ada teman';
+
+  @override
+  String get noFriendsBody =>
+      'Tambahkan seseorang dan kamu bisa menantangnya duel privat kapan saja.';
+
+  @override
+  String get noMatchesTitle => 'Belum ada duel';
+
+  @override
+  String get noMatchesBody =>
+      'Yang pertama akan muncul di sini, menang atau kalah.';
+
+  @override
+  String get noNotificationsTitle => 'Belum ada yang baru';
+
+  @override
+  String get noNotificationsBody =>
+      'Undangan duel, hasil, dan permintaan pertemanan masuk ke sini.';
+
+  @override
+  String roundDone(String n) {
+    return 'Ronde $n selesai';
+  }
+
+  @override
+  String get bestRoundYet => 'Ronde terbaik sejauh ini';
 }

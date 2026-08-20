@@ -1673,4 +1673,32 @@ class LEn extends L {
   String toPromotion(String n) {
     return '$n to promotion';
   }
+
+  @override
+  String get noFriendsTitle => 'No friends yet';
+
+  @override
+  String get noFriendsBody =>
+      'Add someone and you can challenge them to a private match any time.';
+
+  @override
+  String get noMatchesTitle => 'No matches yet';
+
+  @override
+  String get noMatchesBody => 'Your first one shows up here, win or lose.';
+
+  @override
+  String get noNotificationsTitle => 'Nothing new';
+
+  @override
+  String get noNotificationsBody =>
+      'Match invites, results and friend requests land here.';
+
+  @override
+  String roundDone(String n) {
+    return 'Round $n done';
+  }
+
+  @override
+  String get bestRoundYet => 'Best round yet';
 }

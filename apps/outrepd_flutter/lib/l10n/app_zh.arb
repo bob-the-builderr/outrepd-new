@@ -521,5 +521,13 @@
   "theirPick": "Their pick",
   "secondsOfWork": "{n} seconds of work",
   "lpOutOf": "/ {total} LP",
-  "toPromotion": "距晋级还差 {n}"
+  "toPromotion": "距晋级还差 {n}",
+  "noFriendsTitle": "还没有好友",
+  "noFriendsBody": "添加好友后，随时可以向对方发起私人对战。",
+  "noMatchesTitle": "还没有对战",
+  "noMatchesBody": "第一场会出现在这里，无论输赢。",
+  "noNotificationsTitle": "暂无新消息",
+  "noNotificationsBody": "对战邀请、结果和好友申请都会送到这里。",
+  "roundDone": "第 {n} 回合结束",
+  "bestRoundYet": "目前最好的一回合"
 }

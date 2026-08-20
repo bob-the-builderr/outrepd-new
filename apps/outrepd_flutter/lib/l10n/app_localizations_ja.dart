@@ -1643,4 +1643,30 @@ class LJa extends L {
   String toPromotion(String n) {
     return '昇格まであと $n';
   }
+
+  @override
+  String get noFriendsTitle => 'フレンドはまだいません';
+
+  @override
+  String get noFriendsBody => '誰かを追加すれば、いつでもプライベートマッチに誘えます。';
+
+  @override
+  String get noMatchesTitle => 'マッチはまだありません';
+
+  @override
+  String get noMatchesBody => '最初の一戦は、勝っても負けてもここに残ります。';
+
+  @override
+  String get noNotificationsTitle => '新しい知らせはありません';
+
+  @override
+  String get noNotificationsBody => 'マッチの招待、結果、フレンド申請がここに届きます。';
+
+  @override
+  String roundDone(String n) {
+    return 'ラウンド $n 終了';
+  }
+
+  @override
+  String get bestRoundYet => 'ここまでで最高のラウンド';
 }

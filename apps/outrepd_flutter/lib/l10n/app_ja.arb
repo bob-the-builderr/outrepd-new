@@ -521,5 +521,13 @@
   "theirPick": "Their pick",
   "secondsOfWork": "{n} seconds of work",
   "lpOutOf": "/ {total} LP",
-  "toPromotion": "昇格まであと {n}"
+  "toPromotion": "昇格まであと {n}",
+  "noFriendsTitle": "フレンドはまだいません",
+  "noFriendsBody": "誰かを追加すれば、いつでもプライベートマッチに誘えます。",
+  "noMatchesTitle": "マッチはまだありません",
+  "noMatchesBody": "最初の一戦は、勝っても負けてもここに残ります。",
+  "noNotificationsTitle": "新しい知らせはありません",
+  "noNotificationsBody": "マッチの招待、結果、フレンド申請がここに届きます。",
+  "roundDone": "ラウンド {n} 終了",
+  "bestRoundYet": "ここまでで最高のラウンド"
 }

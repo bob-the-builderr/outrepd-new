@@ -521,5 +521,13 @@
   "theirPick": "Their pick",
   "secondsOfWork": "{n} seconds of work",
   "lpOutOf": "/ {total} LP",
-  "toPromotion": "yükselmeye {n} kaldı"
+  "toPromotion": "yükselmeye {n} kaldı",
+  "noFriendsTitle": "Henüz arkadaş yok",
+  "noFriendsBody": "Birini ekle, istediğin zaman özel maça çağırabilirsin.",
+  "noMatchesTitle": "Henüz maç yok",
+  "noMatchesBody": "İlki burada görünecek — kazan ya da kaybet.",
+  "noNotificationsTitle": "Yeni bir şey yok",
+  "noNotificationsBody": "Maç davetleri, sonuçlar ve arkadaşlık istekleri buraya gelir.",
+  "roundDone": "{n}. raunt bitti",
+  "bestRoundYet": "Şimdiye kadarki en iyi raunt"
 }

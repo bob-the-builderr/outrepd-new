@@ -1679,4 +1679,32 @@ class LIt extends L {
   String toPromotion(String n) {
     return '$n alla promozione';
   }
+
+  @override
+  String get noFriendsTitle => 'Ancora nessun amico';
+
+  @override
+  String get noFriendsBody =>
+      'Aggiungi qualcuno e potrai sfidarlo in privato quando vuoi.';
+
+  @override
+  String get noMatchesTitle => 'Ancora nessuna sfida';
+
+  @override
+  String get noMatchesBody => 'La prima comparirà qui, vinta o persa.';
+
+  @override
+  String get noNotificationsTitle => 'Niente di nuovo';
+
+  @override
+  String get noNotificationsBody =>
+      'Inviti, risultati e richieste di amicizia arrivano qui.';
+
+  @override
+  String roundDone(String n) {
+    return 'Round $n completato';
+  }
+
+  @override
+  String get bestRoundYet => 'Il miglior round finora';
 }

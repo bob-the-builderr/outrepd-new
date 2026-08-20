@@ -1678,4 +1678,33 @@ class LRu extends L {
   String toPromotion(String n) {
     return 'до повышения $n';
   }
+
+  @override
+  String get noFriendsTitle => 'Друзей пока нет';
+
+  @override
+  String get noFriendsBody =>
+      'Добавьте кого-нибудь — и сможете вызвать его на приватный матч в любой момент.';
+
+  @override
+  String get noMatchesTitle => 'Матчей пока нет';
+
+  @override
+  String get noMatchesBody =>
+      'Первый появится здесь, победа это или поражение.';
+
+  @override
+  String get noNotificationsTitle => 'Ничего нового';
+
+  @override
+  String get noNotificationsBody =>
+      'Приглашения, результаты и заявки в друзья приходят сюда.';
+
+  @override
+  String roundDone(String n) {
+    return 'Раунд $n пройден';
+  }
+
+  @override
+  String get bestRoundYet => 'Лучший раунд пока что';
 }

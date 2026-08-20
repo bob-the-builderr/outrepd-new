@@ -1672,4 +1672,32 @@ class LTr extends L {
   String toPromotion(String n) {
     return 'yükselmeye $n kaldı';
   }
+
+  @override
+  String get noFriendsTitle => 'Henüz arkadaş yok';
+
+  @override
+  String get noFriendsBody =>
+      'Birini ekle, istediğin zaman özel maça çağırabilirsin.';
+
+  @override
+  String get noMatchesTitle => 'Henüz maç yok';
+
+  @override
+  String get noMatchesBody => 'İlki burada görünecek — kazan ya da kaybet.';
+
+  @override
+  String get noNotificationsTitle => 'Yeni bir şey yok';
+
+  @override
+  String get noNotificationsBody =>
+      'Maç davetleri, sonuçlar ve arkadaşlık istekleri buraya gelir.';
+
+  @override
+  String roundDone(String n) {
+    return '$n. raunt bitti';
+  }
+
+  @override
+  String get bestRoundYet => 'Şimdiye kadarki en iyi raunt';
 }

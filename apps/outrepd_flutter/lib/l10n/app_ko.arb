@@ -521,5 +521,13 @@
   "theirPick": "Their pick",
   "secondsOfWork": "{n} seconds of work",
   "lpOutOf": "/ {total} LP",
-  "toPromotion": "승급까지 {n}"
+  "toPromotion": "승급까지 {n}",
+  "noFriendsTitle": "아직 친구가 없습니다",
+  "noFriendsBody": "누군가를 추가하면 언제든 비공개 대결을 신청할 수 있습니다.",
+  "noMatchesTitle": "아직 대결이 없습니다",
+  "noMatchesBody": "첫 대결은 이기든 지든 여기에 남습니다.",
+  "noNotificationsTitle": "새 소식이 없습니다",
+  "noNotificationsBody": "대결 초대와 결과, 친구 요청이 여기로 옵니다.",
+  "roundDone": "{n}라운드 완료",
+  "bestRoundYet": "지금까지 최고의 라운드"
 }

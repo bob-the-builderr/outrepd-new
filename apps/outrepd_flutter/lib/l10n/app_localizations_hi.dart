@@ -1679,4 +1679,32 @@ class LHi extends L {
   String toPromotion(String n) {
     return 'प्रमोशन में $n बाकी';
   }
+
+  @override
+  String get noFriendsTitle => 'अभी कोई दोस्त नहीं';
+
+  @override
+  String get noFriendsBody =>
+      'किसी को जोड़ें और जब चाहें उसे निजी मैच के लिए चुनौती दें।';
+
+  @override
+  String get noMatchesTitle => 'अभी कोई मैच नहीं';
+
+  @override
+  String get noMatchesBody => 'पहला यहीं दिखेगा — जीत हो या हार।';
+
+  @override
+  String get noNotificationsTitle => 'कुछ नया नहीं';
+
+  @override
+  String get noNotificationsBody =>
+      'मैच के न्योते, नतीजे और दोस्ती की रिक्वेस्ट यहाँ आती हैं।';
+
+  @override
+  String roundDone(String n) {
+    return 'राउंड $n पूरा';
+  }
+
+  @override
+  String get bestRoundYet => 'अब तक का सबसे अच्छा राउंड';
 }

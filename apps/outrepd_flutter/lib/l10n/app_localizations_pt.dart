@@ -1681,4 +1681,32 @@ class LPt extends L {
   String toPromotion(String n) {
     return 'faltam $n para subir';
   }
+
+  @override
+  String get noFriendsTitle => 'Ainda sem amigos';
+
+  @override
+  String get noFriendsBody =>
+      'Adiciona alguém e podes desafiá-lo para um duelo privado quando quiseres.';
+
+  @override
+  String get noMatchesTitle => 'Ainda sem duelos';
+
+  @override
+  String get noMatchesBody => 'O primeiro aparece aqui, ganhes ou percas.';
+
+  @override
+  String get noNotificationsTitle => 'Nada de novo';
+
+  @override
+  String get noNotificationsBody =>
+      'Convites, resultados e pedidos de amizade chegam aqui.';
+
+  @override
+  String roundDone(String n) {
+    return 'Ronda $n concluída';
+  }
+
+  @override
+  String get bestRoundYet => 'A tua melhor ronda até agora';
 }

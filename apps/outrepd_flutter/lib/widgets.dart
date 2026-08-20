@@ -205,3 +205,70 @@ String _arabicDigits(String text) {
     return digit == -1 ? c : arabicIndic[digit];
   }).join();
 }
+
+/// What a screen says before it has anything to show.
+///
+/// Every list in the app opened onto demo data, so nobody had seen these
+/// screens the way the first person to install it will: friends with no
+/// friends, a history with no matches, an inbox with nothing in it. A bare
+/// heading over an empty page reads as something failing to load.
+///
+/// So an empty state names what is missing and — this is the part that matters
+/// — says what to do about it. "No matches yet" is a dead end; "your first one
+/// shows up here, win or lose" is an invitation.
+class EmptyState extends StatelessWidget {
+  const EmptyState({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.body,
+    this.action,
+  });
+
+  final IconData icon;
+  final String title;
+  final String body;
+
+  /// An optional way out of the emptiness, when the screen has one to offer.
+  final Widget? action;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
+      child: Column(
+        children: [
+          Container(
+            width: 72,
+            height: 72,
+            decoration: BoxDecoration(
+              color: context.colors.surface,
+              shape: BoxShape.circle,
+              border: Border.all(color: context.colors.surfaceRaised),
+            ),
+            child: Icon(icon, size: 30, color: context.colors.muted),
+          ),
+          const SizedBox(height: 18),
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: context.type.heading.copyWith(color: context.colors.text),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            body,
+            textAlign: TextAlign.center,
+            style: context.type.label.copyWith(
+              color: context.colors.muted,
+              height: 1.5,
+            ),
+          ),
+          if (action case final action?) ...[
+            const SizedBox(height: 20),
+            action,
+          ],
+        ],
+      ),
+    );
+  }
+}

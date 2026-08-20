@@ -67,6 +67,10 @@ class _RoundRunnerState extends State<RoundRunner> {
   Duration _rest = Duration.zero;
   bool _resting = false;
 
+  /// The round whose count is being shown right now, between the camera
+  /// closing and the rest clock starting.
+  MatchRound? _revealed;
+
   MatchRound get _round => widget.rounds[_index];
 
   int get _total => widget.rounds.fold(0, (sum, r) => sum + r.reps);
@@ -90,7 +94,17 @@ class _RoundRunnerState extends State<RoundRunner> {
     setState(() {
       _round.reps = counted ?? 0;
       _round.done = true;
+      _revealed = _round;
     });
+    tap(heavy: true);
+
+    // The number gets a moment of its own before the rest clock takes over.
+    // Ninety seconds of work used to resolve into a row quietly ticking over
+    // in a list at the bottom of the screen, which is no way to land the only
+    // thing the round produced.
+    await Future<void>.delayed(const Duration(milliseconds: 1900));
+    if (!mounted) return;
+    setState(() => _revealed = null);
 
     if (_index >= widget.rounds.length - 1) {
       widget.onFinished();
@@ -144,7 +158,7 @@ class _RoundRunnerState extends State<RoundRunner> {
                   localNumber(context, _index + 1),
                   localNumber(context, widget.rounds.length),
                 ).toUpperCase(),
-                style: context.type.label.copyWith(color: context.colors.muted),
+                style: context.type.micro.copyWith(color: context.colors.muted),
               ),
               const SizedBox(height: 6),
               PopOnChange(
@@ -162,13 +176,22 @@ class _RoundRunnerState extends State<RoundRunner> {
           ),
         ),
         Expanded(
-          child: _resting
-              ? _RestView(
-                  remaining: _rest,
-                  next: widget.rounds[_index + 1],
-                  onSkip: _skipRest,
-                )
-              : _WorkView(round: _round, onStart: _lift),
+          child: switch ((_revealed, _resting)) {
+            (final MatchRound scored, _) => _RevealView(
+                round: scored,
+                number: _index + 1,
+                best: scored.reps >=
+                    widget.rounds
+                        .where((r) => r.done)
+                        .fold(0, (best, r) => r.reps > best ? r.reps : best),
+              ),
+            (_, true) => _RestView(
+                remaining: _rest,
+                next: widget.rounds[_index + 1],
+                onSkip: _skipRest,
+              ),
+            _ => _WorkView(round: _round, onStart: _lift),
+          },
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
@@ -202,7 +225,10 @@ class _RoundRunnerState extends State<RoundRunner> {
                       if (r.done)
                         Text(
                           localNumber(context, r.reps),
-                          style: context.type.label.copyWith(color: context.colors.text),
+                          style: context.type.figure.copyWith(
+                            fontSize: 14,
+                            color: context.colors.text,
+                          ),
                         ),
                     ],
                   ),
@@ -244,7 +270,9 @@ class _WorkView extends StatelessWidget {
               ),
               child: Text(
                 (round.mine ? l.yourPick : l.theirPick).toUpperCase(),
-                style: context.type.label.copyWith(color: round.mine ? context.colors.brand : AppColors.loss),
+                style: context.type.micro.copyWith(
+                  color: round.mine ? context.colors.brand : AppColors.loss,
+                ),
               ),
             ),
             const SizedBox(height: 18),
@@ -301,7 +329,7 @@ class _RestView extends StatelessWidget {
         children: [
           Text(
             l.rest.toUpperCase(),
-            style: context.type.label.copyWith(color: context.colors.muted),
+            style: context.type.micro.copyWith(color: context.colors.muted),
           ),
           const SizedBox(height: 10),
           Text(
@@ -327,6 +355,80 @@ class _RestView extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// What a round produced, held on screen long enough to register.
+class _RevealView extends StatelessWidget {
+  const _RevealView({
+    required this.round,
+    required this.number,
+    required this.best,
+  });
+
+  final MatchRound round;
+  final int number;
+
+  /// Whether this is the biggest round of the match so far. Worth saying: over
+  /// six rounds of different movements, a personal high is the only comparison
+  /// available until the result screen.
+  final bool best;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              l.roundDone(localNumber(context, number)).toUpperCase(),
+              textAlign: TextAlign.center,
+              style: context.type.micro.copyWith(color: context.colors.muted),
+            ),
+            const SizedBox(height: 14),
+            RiseIn(
+              child: Text(
+                localNumber(context, round.reps),
+                style: context.type.display.copyWith(
+                  fontSize: 88,
+                  color: context.colors.brand,
+                ),
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              l.reps,
+              style: context.type.label.copyWith(color: context.colors.muted),
+            ),
+            const SizedBox(height: 18),
+            Text(
+              round.exercise,
+              textAlign: TextAlign.center,
+              style: context.type.heading.copyWith(color: context.colors.text),
+            ),
+            if (best && round.reps > 0) ...[
+              const SizedBox(height: 16),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                decoration: BoxDecoration(
+                  color: AppColors.win.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  l.bestRoundYet.toUpperCase(),
+                  style: context.type.micro.copyWith(color: AppColors.win),
+                ),
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }

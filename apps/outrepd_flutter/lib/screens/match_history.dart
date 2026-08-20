@@ -51,6 +51,12 @@ class MatchHistoryScreen extends StatelessWidget {
           ),
           const SizedBox(height: 22),
           SectionHeader(title: L.of(context).allMatches),
+          if (demoMatches.isEmpty)
+            EmptyState(
+              icon: Icons.sports_mma_outlined,
+              title: L.of(context).noMatchesTitle,
+              body: L.of(context).noMatchesBody,
+            ),
           ...demoMatches.map(
             (m) => Padding(
               padding: const EdgeInsets.only(bottom: 10),

@@ -804,5 +804,20 @@
         "type": "String"
       }
     }
+  },
+  "noFriendsTitle": "No friends yet",
+  "noFriendsBody": "Add someone and you can challenge them to a private match any time.",
+  "noMatchesTitle": "No matches yet",
+  "noMatchesBody": "Your first one shows up here, win or lose.",
+  "noNotificationsTitle": "Nothing new",
+  "noNotificationsBody": "Match invites, results and friend requests land here.",
+  "roundDone": "Round {n} done",
+  "bestRoundYet": "Best round yet",
+  "@roundDone": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
   }
 }

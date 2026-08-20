@@ -60,6 +60,12 @@ class FriendsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           SectionHeader(title: L.of(context).yourFriends(localNumber(context, demoFriends.length))),
+          if (demoFriends.isEmpty)
+            EmptyState(
+              icon: Icons.person_add_alt_1_outlined,
+              title: L.of(context).noFriendsTitle,
+              body: L.of(context).noFriendsBody,
+            ),
           ...demoFriends.map(
             (f) => Padding(
               padding: const EdgeInsets.only(bottom: 10),

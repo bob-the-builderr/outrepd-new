@@ -13,7 +13,13 @@ class NotificationsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(L.of(context).notifications)),
-      body: ListView.separated(
+      body: demoNotifications.isEmpty
+          ? EmptyState(
+              icon: Icons.notifications_none,
+              title: L.of(context).noNotificationsTitle,
+              body: L.of(context).noNotificationsBody,
+            )
+          : ListView.separated(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
         itemCount: demoNotifications.length,
         separatorBuilder: (_, _) => const SizedBox(height: 10),
