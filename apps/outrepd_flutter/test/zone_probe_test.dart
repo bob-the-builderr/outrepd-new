@@ -23,6 +23,11 @@ const _folder = String.fromEnvironment(
 );
 
 const _clips = <String, String>{
+  'row_tbar.json': 'Barbell Row',
+  'ohp_dumbbell.json': 'Overhead Press',
+  'pullup_marine.json': 'Pull-Ups',
+  'pullup_seal.json': 'Pull-Ups',
+  'curl_ezbar.json': 'Barbell Curl',
   'squat_demo.json': 'Barbell Squat',
   'squat_series.json': 'Barbell Squat',
   'deadlift_demo.json': 'Deadlift',
