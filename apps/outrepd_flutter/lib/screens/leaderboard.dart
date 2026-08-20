@@ -103,7 +103,8 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                             const SizedBox(height: 2),
                             Text(
                               '${tierLabel(L.of(context), e.tierIdx, e.divIdx)}'
-                              ' · ${L.of(context).winLoss(e.wins, e.losses)}',
+                              ' · ${L.of(context).winLoss(localNumber(context, e.wins),
+                                  localNumber(context, e.losses))}',
                               style: TextStyle(
                                 color: context.colors.muted,
                                 fontSize: 12,

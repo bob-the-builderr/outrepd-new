@@ -39,12 +39,12 @@ class LRu extends L {
   String get viewRoadmap => 'Посмотреть путь';
 
   @override
-  String lpProgress(int lp, int left) {
+  String lpProgress(String lp, String left) {
     return '$lp / 100 ОЛ · до повышения $left';
   }
 
   @override
-  String winStreak(int count) {
+  String winStreak(String count) {
     return '$count побед подряд';
   }
 
@@ -119,7 +119,7 @@ class LRu extends L {
   String get changeNameLast => 'Это последняя смена. Отменить будет нельзя.';
 
   @override
-  String changeNameLeft(int total, int left) {
+  String changeNameLeft(String total, String left) {
     return 'Всего доступно $total смены. После этой останется $left.';
   }
 
@@ -184,7 +184,7 @@ class LRu extends L {
       'Отдых — часть тренировки. Два выходных в неделю серию не прервут.';
 
   @override
-  String titlesAndStreak(int owned, int total, int streak) {
+  String titlesAndStreak(String owned, String total, String streak) {
     return '$owned из $total титулов · серия $streak дней';
   }
 
@@ -247,7 +247,7 @@ class LRu extends L {
   String get weeklyGoalDone => 'Цель недели взята';
 
   @override
-  String goalRemaining(int reps, int days) {
+  String goalRemaining(String reps, String days) {
     return 'Осталось $reps повторов · $days дней';
   }
 
@@ -289,7 +289,7 @@ class LRu extends L {
   String get repsPerMember => 'повторов на участника';
 
   @override
-  String seasonResets(int days) {
+  String seasonResets(String days) {
     return 'Обнуление через $days дней — все начинают заново';
   }
 
@@ -625,7 +625,7 @@ class LRu extends L {
   String get topTier => 'Высший ранг';
 
   @override
-  String lpToGo(int lp) {
+  String lpToGo(String lp) {
     return '$lp ОЛ';
   }
 
@@ -738,7 +738,7 @@ class LRu extends L {
   String get shortFt => 'фут';
 
   @override
-  String winLoss(int w, int l) {
+  String winLoss(String w, String l) {
     return '$wП $lП';
   }
 

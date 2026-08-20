@@ -58,7 +58,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Text(
               left == 1
                   ? L.of(context).changeNameLast
-                  : L.of(context).changeNameLeft(kNameChangesAllowed, left),
+                  : L.of(context).changeNameLeft(
+                      localNumber(context, kNameChangesAllowed),
+                      localNumber(context, left),
+                    ),
               style: TextStyle(color: context.colors.muted, fontSize: 12.5),
             ),
             const SizedBox(height: 14),
@@ -284,9 +287,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               subtitle: Text(
                 L.of(context).titlesAndStreak(
-                  kTitles.where((t) => rewards.has(t.id)).length,
-                  kTitles.length,
-                  rewards.streak,
+                  localNumber(
+                      context, kTitles.where((t) => rewards.has(t.id)).length),
+                  localNumber(context, kTitles.length),
+                  localNumber(context, rewards.streak),
                 ),
                 style: TextStyle(color: context.colors.muted, fontSize: 13),
               ),

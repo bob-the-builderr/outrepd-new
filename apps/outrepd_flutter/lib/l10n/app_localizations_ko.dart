@@ -39,12 +39,12 @@ class LKo extends L {
   String get viewRoadmap => '로드맵 보기';
 
   @override
-  String lpProgress(int lp, int left) {
+  String lpProgress(String lp, String left) {
     return '$lp / 100 LP · 승급까지 $left';
   }
 
   @override
-  String winStreak(int count) {
+  String winStreak(String count) {
     return '$count연승 중';
   }
 
@@ -118,7 +118,7 @@ class LKo extends L {
   String get changeNameLast => '마지막 변경입니다. 되돌릴 수 없습니다.';
 
   @override
-  String changeNameLeft(int total, int left) {
+  String changeNameLeft(String total, String left) {
     return '변경은 총 $total번까지입니다. 이번 뒤로 $left번 남습니다.';
   }
 
@@ -180,7 +180,7 @@ class LKo extends L {
   String get restIsTraining => '휴식도 훈련입니다. 일주일에 이틀 쉬어도 연속 기록은 끊기지 않습니다.';
 
   @override
-  String titlesAndStreak(int owned, int total, int streak) {
+  String titlesAndStreak(String owned, String total, String streak) {
     return '$total개 중 $owned개 · $streak일 연속';
   }
 
@@ -242,7 +242,7 @@ class LKo extends L {
   String get weeklyGoalDone => '주간 목표 달성';
 
   @override
-  String goalRemaining(int reps, int days) {
+  String goalRemaining(String reps, String days) {
     return '$reps회 남음 · $days일 남음';
   }
 
@@ -283,7 +283,7 @@ class LKo extends L {
   String get repsPerMember => '1인당 횟수';
 
   @override
-  String seasonResets(int days) {
+  String seasonResets(String days) {
     return '$days일 뒤 초기화 — 모두 같은 자리에서 다시 시작';
   }
 
@@ -611,7 +611,7 @@ class LKo extends L {
   String get topTier => '최고 랭크';
 
   @override
-  String lpToGo(int lp) {
+  String lpToGo(String lp) {
     return '$lp LP';
   }
 
@@ -722,7 +722,7 @@ class LKo extends L {
   String get shortFt => 'ft';
 
   @override
-  String winLoss(int w, int l) {
+  String winLoss(String w, String l) {
     return '$w승 $l패';
   }
 

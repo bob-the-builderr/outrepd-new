@@ -39,12 +39,12 @@ class LJa extends L {
   String get viewRoadmap => 'ロードマップを見る';
 
   @override
-  String lpProgress(int lp, int left) {
+  String lpProgress(String lp, String left) {
     return '$lp / 100 LP · 昇格まであと $left';
   }
 
   @override
-  String winStreak(int count) {
+  String winStreak(String count) {
     return '$count 連勝中';
   }
 
@@ -118,7 +118,7 @@ class LJa extends L {
   String get changeNameLast => 'これが最後の変更です。取り消せません。';
 
   @override
-  String changeNameLeft(int total, int left) {
+  String changeNameLeft(String total, String left) {
     return '変更は全部で $total 回まで。今回のあと残り $left 回です。';
   }
 
@@ -180,7 +180,7 @@ class LJa extends L {
   String get restIsTraining => '休養もトレーニングのうち。週に2日休んでも連続記録は途切れません。';
 
   @override
-  String titlesAndStreak(int owned, int total, int streak) {
+  String titlesAndStreak(String owned, String total, String streak) {
     return '$total 個中 $owned 個 · $streak 日連続';
   }
 
@@ -242,7 +242,7 @@ class LJa extends L {
   String get weeklyGoalDone => '週の目標を達成';
 
   @override
-  String goalRemaining(int reps, int days) {
+  String goalRemaining(String reps, String days) {
     return '残り $reps レップ · あと $days 日';
   }
 
@@ -283,7 +283,7 @@ class LJa extends L {
   String get repsPerMember => '1人あたりレップ';
 
   @override
-  String seasonResets(int days) {
+  String seasonResets(String days) {
     return '$days 日後にリセット — 全員が同じ位置から';
   }
 
@@ -610,7 +610,7 @@ class LJa extends L {
   String get topTier => '最上位ランク';
 
   @override
-  String lpToGo(int lp) {
+  String lpToGo(String lp) {
     return '$lp LP';
   }
 
@@ -721,7 +721,7 @@ class LJa extends L {
   String get shortFt => 'ft';
 
   @override
-  String winLoss(int w, int l) {
+  String winLoss(String w, String l) {
     return '$w勝 $l敗';
   }
 

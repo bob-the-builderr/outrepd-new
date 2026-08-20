@@ -221,7 +221,7 @@ class _NextStepCard extends StatelessWidget {
                       Text(
                         atTop
                             ? L.of(context).topTier
-                            : L.of(context).lpToGo(remaining),
+                            : L.of(context).lpToGo(localNumber(context, remaining)),
                         style: TextStyle(
                           color: context.colors.brand,
                           fontSize: 11,

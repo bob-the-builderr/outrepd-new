@@ -185,13 +185,13 @@ abstract class L {
   ///
   /// In en, this message translates to:
   /// **'{lp} / 100 LP · {left} to promotion'**
-  String lpProgress(int lp, int left);
+  String lpProgress(String lp, String left);
 
   /// No description provided for @winStreak.
   ///
   /// In en, this message translates to:
   /// **'{count} win streak'**
-  String winStreak(int count);
+  String winStreak(String count);
 
   /// No description provided for @matchHistory.
   ///
@@ -335,7 +335,7 @@ abstract class L {
   ///
   /// In en, this message translates to:
   /// **'You get {total} changes in total. {left} left after this one.'**
-  String changeNameLeft(int total, int left);
+  String changeNameLeft(String total, String left);
 
   /// No description provided for @changeNameUsedUp.
   ///
@@ -455,7 +455,7 @@ abstract class L {
   ///
   /// In en, this message translates to:
   /// **'{owned} of {total} titles · {streak} day streak'**
-  String titlesAndStreak(int owned, int total, int streak);
+  String titlesAndStreak(String owned, String total, String streak);
 
   /// No description provided for @crew.
   ///
@@ -575,7 +575,7 @@ abstract class L {
   ///
   /// In en, this message translates to:
   /// **'{reps} reps to go · {days} days left'**
-  String goalRemaining(int reps, int days);
+  String goalRemaining(String reps, String days);
 
   /// No description provided for @goalDoneHint.
   ///
@@ -653,7 +653,7 @@ abstract class L {
   ///
   /// In en, this message translates to:
   /// **'Resets in {days} days — everyone starts level'**
-  String seasonResets(int days);
+  String seasonResets(String days);
 
   /// No description provided for @rankingExplained.
   ///
@@ -1289,7 +1289,7 @@ abstract class L {
   ///
   /// In en, this message translates to:
   /// **'{lp} LP'**
-  String lpToGo(int lp);
+  String lpToGo(String lp);
 
   /// No description provided for @unlockedEverything.
   ///
@@ -1499,7 +1499,7 @@ abstract class L {
   ///
   /// In en, this message translates to:
   /// **'{w}W {l}L'**
-  String winLoss(int w, int l);
+  String winLoss(String w, String l);
 
   /// No description provided for @yearsSuffix.
   ///

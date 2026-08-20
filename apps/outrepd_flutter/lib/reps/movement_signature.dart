@@ -58,7 +58,7 @@ sealed class SignatureRule {
   final Channel channel;
 
   /// Whether the observed series satisfies this rule.
-  bool satisfied(_Series s);
+  bool satisfied(ChannelReading s);
 
   /// What to tell the lifter when this is the rule that failed.
   String get complaint;
@@ -72,7 +72,7 @@ class Moves extends SignatureRule {
   final String complaint;
 
   @override
-  bool satisfied(_Series s) => s.range >= minRange;
+  bool satisfied(ChannelReading s) => s.range >= minRange;
 }
 
 /// The channel has to stay put. A curl whose shoulder swings is a cheat curl,
@@ -84,7 +84,7 @@ class Holds extends SignatureRule {
   final String complaint;
 
   @override
-  bool satisfied(_Series s) => s.range <= maxRange;
+  bool satisfied(ChannelReading s) => s.range <= maxRange;
 }
 
 /// The channel has to sit inside a band for most of the rep. Judged on the
@@ -98,7 +98,7 @@ class Within extends SignatureRule {
   final String complaint;
 
   @override
-  bool satisfied(_Series s) => s.median >= min && s.median <= max;
+  bool satisfied(ChannelReading s) => s.median >= min && s.median <= max;
 }
 
 /// Everything that makes a movement itself rather than its neighbour.
@@ -127,9 +127,11 @@ class SignatureVerdict {
   final String? lookedLike;
 }
 
-/// One channel's readings across a single rep.
-class _Series {
-  _Series(List<double> values)
+/// One channel's readings across a single rep. Public because the rules take
+/// it — a rule is a small thing anyone can add, and it should not have to
+/// live in this file to do so.
+class ChannelReading {
+  ChannelReading(List<double> values)
       : range = values.isEmpty
             ? 0
             : values.reduce(math.max) - values.reduce(math.min),
@@ -211,7 +213,7 @@ class SignatureVerifier {
   /// for reasons they cannot see stops using the app.
   static const _margin = 0.15;
 
-  double _score(MovementSignature signature, Map<Channel, _Series> series) {
+  double _score(MovementSignature signature, Map<Channel, ChannelReading> series) {
     final judged =
         signature.rules.where((r) => series.containsKey(r.channel)).toList();
     if (judged.isEmpty) return 0;
@@ -220,7 +222,7 @@ class SignatureVerifier {
     return passed / judged.length;
   }
 
-  String? _bestAlternative(Map<Channel, _Series> series) {
+  String? _bestAlternative(Map<Channel, ChannelReading> series) {
     String? best;
     var bestScore = 0.75; // below this it is not a confident call
     for (final other in alternatives) {
@@ -234,7 +236,7 @@ class SignatureVerifier {
     return best;
   }
 
-  Map<Channel, _Series> _measure(List<BodyPose> frames) {
+  Map<Channel, ChannelReading> _measure(List<BodyPose> frames) {
     final collected = <Channel, List<double>>{};
     for (final pose in frames) {
       for (final channel in Channel.values) {
@@ -246,7 +248,7 @@ class SignatureVerifier {
     }
     return {
       for (final entry in collected.entries)
-        if (entry.value.length >= minFrames) entry.key: _Series(entry.value),
+        if (entry.value.length >= minFrames) entry.key: ChannelReading(entry.value),
     };
   }
 }

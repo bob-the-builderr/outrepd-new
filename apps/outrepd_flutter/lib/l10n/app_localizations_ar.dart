@@ -39,12 +39,12 @@ class LAr extends L {
   String get viewRoadmap => 'اعرض خارطة الطريق';
 
   @override
-  String lpProgress(int lp, int left) {
+  String lpProgress(String lp, String left) {
     return '$lp / 100 نقطة · يتبقى $left للترقية';
   }
 
   @override
-  String winStreak(int count) {
+  String winStreak(String count) {
     return '$count انتصارات متتالية';
   }
 
@@ -120,7 +120,7 @@ class LAr extends L {
       'هذه آخر مرة يمكنك التغيير فيها، ولا رجعة بعدها.';
 
   @override
-  String changeNameLeft(int total, int left) {
+  String changeNameLeft(String total, String left) {
     return 'لديك $total تغييرات إجمالًا، ويتبقى $left بعد هذا التغيير.';
   }
 
@@ -185,7 +185,7 @@ class LAr extends L {
       'الراحة جزء من التدريب، ويوما راحة في الأسبوع لا يقطعان سلسلتك.';
 
   @override
-  String titlesAndStreak(int owned, int total, int streak) {
+  String titlesAndStreak(String owned, String total, String streak) {
     return '$owned من $total لقبًا · سلسلة $streak يومًا';
   }
 
@@ -248,7 +248,7 @@ class LAr extends L {
   String get weeklyGoalDone => 'تحقق الهدف الأسبوعي';
 
   @override
-  String goalRemaining(int reps, int days) {
+  String goalRemaining(String reps, String days) {
     return 'يتبقى $reps تكرارًا · و$days أيام';
   }
 
@@ -290,7 +290,7 @@ class LAr extends L {
   String get repsPerMember => 'تكرارات لكل عضو';
 
   @override
-  String seasonResets(int days) {
+  String seasonResets(String days) {
     return 'يُعاد الضبط بعد $days يومًا، ويبدأ الجميع من النقطة ذاتها';
   }
 
@@ -623,7 +623,7 @@ class LAr extends L {
   String get topTier => 'أعلى رتبة';
 
   @override
-  String lpToGo(int lp) {
+  String lpToGo(String lp) {
     return '$lp نقطة';
   }
 
@@ -735,7 +735,7 @@ class LAr extends L {
   String get shortFt => 'قدم';
 
   @override
-  String winLoss(int w, int l) {
+  String winLoss(String w, String l) {
     return '$w فوز · $l هزيمة';
   }
 

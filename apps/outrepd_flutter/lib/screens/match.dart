@@ -189,7 +189,10 @@ class _RankCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            L.of(context).lpProgress(p.lp, 100 - p.lp),
+            L.of(context).lpProgress(
+              localNumber(context, p.lp),
+              localNumber(context, 100 - p.lp),
+            ),
             style: TextStyle(color: context.colors.muted, fontSize: 11.5),
           ),
           if (p.winStreak > 0) ...[
@@ -207,7 +210,7 @@ class _RankCard extends StatelessWidget {
                       color: AppColors.win, size: 16),
                   const SizedBox(width: 6),
                   Text(
-                    L.of(context).winStreak(p.winStreak),
+                    L.of(context).winStreak(localNumber(context, p.winStreak)),
                     style: const TextStyle(
                       color: AppColors.win,
                       fontWeight: FontWeight.w700,

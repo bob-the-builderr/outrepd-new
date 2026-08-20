@@ -39,12 +39,12 @@ class LZh extends L {
   String get viewRoadmap => '查看晋级路线';
 
   @override
-  String lpProgress(int lp, int left) {
+  String lpProgress(String lp, String left) {
     return '$lp / 100 LP · 距晋级还差 $left';
   }
 
   @override
-  String winStreak(int count) {
+  String winStreak(String count) {
     return '$count 连胜';
   }
 
@@ -118,7 +118,7 @@ class LZh extends L {
   String get changeNameLast => '这是最后一次修改，改完无法撤销。';
 
   @override
-  String changeNameLeft(int total, int left) {
+  String changeNameLeft(String total, String left) {
     return '一共有 $total 次机会，这次之后还剩 $left 次。';
   }
 
@@ -180,7 +180,7 @@ class LZh extends L {
   String get restIsTraining => '休息也是训练的一部分。每周休两天不会中断你的连续记录。';
 
   @override
-  String titlesAndStreak(int owned, int total, int streak) {
+  String titlesAndStreak(String owned, String total, String streak) {
     return '$total 个称号已得 $owned 个 · 连续 $streak 天';
   }
 
@@ -242,7 +242,7 @@ class LZh extends L {
   String get weeklyGoalDone => '本周目标已达成';
 
   @override
-  String goalRemaining(int reps, int days) {
+  String goalRemaining(String reps, String days) {
     return '还差 $reps 次 · 剩 $days 天';
   }
 
@@ -283,7 +283,7 @@ class LZh extends L {
   String get repsPerMember => '人均次数';
 
   @override
-  String seasonResets(int days) {
+  String seasonResets(String days) {
     return '$days 天后清零 —— 所有人重新站在同一起点';
   }
 
@@ -609,7 +609,7 @@ class LZh extends L {
   String get topTier => '最高段位';
 
   @override
-  String lpToGo(int lp) {
+  String lpToGo(String lp) {
     return '$lp LP';
   }
 
@@ -720,7 +720,7 @@ class LZh extends L {
   String get shortFt => '英尺';
 
   @override
-  String winLoss(int w, int l) {
+  String winLoss(String w, String l) {
     return '$w胜 $l负';
   }
 

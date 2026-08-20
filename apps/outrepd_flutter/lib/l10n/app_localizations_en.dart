@@ -39,12 +39,12 @@ class LEn extends L {
   String get viewRoadmap => 'View Roadmap';
 
   @override
-  String lpProgress(int lp, int left) {
+  String lpProgress(String lp, String left) {
     return '$lp / 100 LP · $left to promotion';
   }
 
   @override
-  String winStreak(int count) {
+  String winStreak(String count) {
     return '$count win streak';
   }
 
@@ -119,7 +119,7 @@ class LEn extends L {
   String get changeNameLast => 'This is your last change. It cannot be undone.';
 
   @override
-  String changeNameLeft(int total, int left) {
+  String changeNameLeft(String total, String left) {
     return 'You get $total changes in total. $left left after this one.';
   }
 
@@ -184,7 +184,7 @@ class LEn extends L {
       'Rest is part of training. Two days off a week will not break your streak.';
 
   @override
-  String titlesAndStreak(int owned, int total, int streak) {
+  String titlesAndStreak(String owned, String total, String streak) {
     return '$owned of $total titles · $streak day streak';
   }
 
@@ -247,7 +247,7 @@ class LEn extends L {
   String get weeklyGoalDone => 'Weekly goal smashed';
 
   @override
-  String goalRemaining(int reps, int days) {
+  String goalRemaining(String reps, String days) {
     return '$reps reps to go · $days days left';
   }
 
@@ -289,7 +289,7 @@ class LEn extends L {
   String get repsPerMember => 'reps per member';
 
   @override
-  String seasonResets(int days) {
+  String seasonResets(String days) {
     return 'Resets in $days days — everyone starts level';
   }
 
@@ -622,7 +622,7 @@ class LEn extends L {
   String get topTier => 'Top tier';
 
   @override
-  String lpToGo(int lp) {
+  String lpToGo(String lp) {
     return '$lp LP';
   }
 
@@ -735,7 +735,7 @@ class LEn extends L {
   String get shortFt => 'ft';
 
   @override
-  String winLoss(int w, int l) {
+  String winLoss(String w, String l) {
     return '${w}W ${l}L';
   }
 

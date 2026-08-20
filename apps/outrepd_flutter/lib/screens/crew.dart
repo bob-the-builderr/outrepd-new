@@ -425,7 +425,8 @@ class _WeeklyGoalCard extends StatelessWidget {
           Text(
             done
                 ? L.of(context).goalDoneHint
-                : L.of(context).goalRemaining(left, daysLeftInWeek()),
+                : L.of(context).goalRemaining(localNumber(context, left),
+                    localNumber(context, daysLeftInWeek())),
             style: TextStyle(color: context.colors.muted, fontSize: 12),
           ),
         ],
@@ -692,7 +693,8 @@ class _RankingsTab extends StatelessWidget {
                     Text(
                       // Without a reset the first crew to the top stays there
                       // and nobody new has a reason to try.
-                      L.of(context).seasonResets(daysLeftInSeason()),
+                      L.of(context)
+                          .seasonResets(localNumber(context, daysLeftInSeason())),
                       style:
                           TextStyle(color: context.colors.muted, fontSize: 11.5),
                     ),

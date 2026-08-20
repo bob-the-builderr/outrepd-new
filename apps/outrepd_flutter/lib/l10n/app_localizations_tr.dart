@@ -40,12 +40,12 @@ class LTr extends L {
   String get viewRoadmap => 'Yol haritasını gör';
 
   @override
-  String lpProgress(int lp, int left) {
+  String lpProgress(String lp, String left) {
     return '$lp / 100 LP · yükselmeye $left kaldı';
   }
 
   @override
-  String winStreak(int count) {
+  String winStreak(String count) {
     return 'üst üste $count galibiyet';
   }
 
@@ -119,7 +119,7 @@ class LTr extends L {
   String get changeNameLast => 'Bu son değişikliğin. Geri alınamaz.';
 
   @override
-  String changeNameLeft(int total, int left) {
+  String changeNameLeft(String total, String left) {
     return 'Toplam $total değişiklik hakkın var. Bundan sonra $left kalıyor.';
   }
 
@@ -184,7 +184,7 @@ class LTr extends L {
       'Dinlenmek antrenmanın parçası. Haftada iki gün ara serini bozmaz.';
 
   @override
-  String titlesAndStreak(int owned, int total, int streak) {
+  String titlesAndStreak(String owned, String total, String streak) {
     return '$total unvandan $owned tanesi · $streak günlük seri';
   }
 
@@ -247,7 +247,7 @@ class LTr extends L {
   String get weeklyGoalDone => 'Haftalık hedef tamam';
 
   @override
-  String goalRemaining(int reps, int days) {
+  String goalRemaining(String reps, String days) {
     return '$reps tekrar kaldı · $days gün var';
   }
 
@@ -289,7 +289,7 @@ class LTr extends L {
   String get repsPerMember => 'üye başına tekrar';
 
   @override
-  String seasonResets(int days) {
+  String seasonResets(String days) {
     return '$days gün sonra sıfırlanır — herkes eşit başlar';
   }
 
@@ -624,7 +624,7 @@ class LTr extends L {
   String get topTier => 'En üst rütbe';
 
   @override
-  String lpToGo(int lp) {
+  String lpToGo(String lp) {
     return '$lp LP';
   }
 
@@ -736,7 +736,7 @@ class LTr extends L {
   String get shortFt => 'ft';
 
   @override
-  String winLoss(int w, int l) {
+  String winLoss(String w, String l) {
     return '${w}G ${l}M';
   }
 

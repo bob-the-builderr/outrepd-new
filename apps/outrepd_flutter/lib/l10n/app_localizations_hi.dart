@@ -40,12 +40,12 @@ class LHi extends L {
   String get viewRoadmap => 'रास्ता देखें';
 
   @override
-  String lpProgress(int lp, int left) {
+  String lpProgress(String lp, String left) {
     return '$lp / 100 LP · प्रमोशन में $left बाकी';
   }
 
   @override
-  String winStreak(int count) {
+  String winStreak(String count) {
     return 'लगातार $count जीत';
   }
 
@@ -121,7 +121,7 @@ class LHi extends L {
       'यह आपका आख़िरी बदलाव है। इसे वापस नहीं लिया जा सकता।';
 
   @override
-  String changeNameLeft(int total, int left) {
+  String changeNameLeft(String total, String left) {
     return 'आपको कुल $total बार बदलने का मौक़ा है। इसके बाद $left बचेगा।';
   }
 
@@ -186,7 +186,7 @@ class LHi extends L {
       'आराम भी ट्रेनिंग का हिस्सा है। हफ़्ते में दो छुट्टियाँ आपका सिलसिला नहीं तोड़तीं।';
 
   @override
-  String titlesAndStreak(int owned, int total, int streak) {
+  String titlesAndStreak(String owned, String total, String streak) {
     return '$total में से $owned ख़िताब · $streak दिन का सिलसिला';
   }
 
@@ -249,7 +249,7 @@ class LHi extends L {
   String get weeklyGoalDone => 'साप्ताहिक लक्ष्य पूरा';
 
   @override
-  String goalRemaining(int reps, int days) {
+  String goalRemaining(String reps, String days) {
     return '$reps रेप बाकी · $days दिन बचे';
   }
 
@@ -291,7 +291,7 @@ class LHi extends L {
   String get repsPerMember => 'प्रति सदस्य रेप';
 
   @override
-  String seasonResets(int days) {
+  String seasonResets(String days) {
     return '$days दिन में रीसेट — सब बराबरी से शुरू करेंगे';
   }
 
@@ -626,7 +626,7 @@ class LHi extends L {
   String get topTier => 'सर्वोच्च रैंक';
 
   @override
-  String lpToGo(int lp) {
+  String lpToGo(String lp) {
     return '$lp LP';
   }
 
@@ -739,7 +739,7 @@ class LHi extends L {
   String get shortFt => 'फ़ीट';
 
   @override
-  String winLoss(int w, int l) {
+  String winLoss(String w, String l) {
     return '$w जीत $l हार';
   }
 

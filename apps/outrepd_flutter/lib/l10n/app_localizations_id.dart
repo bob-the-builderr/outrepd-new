@@ -39,12 +39,12 @@ class LId extends L {
   String get viewRoadmap => 'Lihat jalur naik';
 
   @override
-  String lpProgress(int lp, int left) {
+  String lpProgress(String lp, String left) {
     return '$lp / 100 LP · $left lagi untuk naik';
   }
 
   @override
-  String winStreak(int count) {
+  String winStreak(String count) {
     return '$count kemenangan beruntun';
   }
 
@@ -120,7 +120,7 @@ class LId extends L {
       'Ini kesempatan terakhirmu. Tidak bisa dibatalkan.';
 
   @override
-  String changeNameLeft(int total, int left) {
+  String changeNameLeft(String total, String left) {
     return 'Kamu punya $total kali ganti. Sisa $left setelah ini.';
   }
 
@@ -185,7 +185,7 @@ class LId extends L {
       'Istirahat bagian dari latihan. Libur dua hari seminggu tidak memutus rentetanmu.';
 
   @override
-  String titlesAndStreak(int owned, int total, int streak) {
+  String titlesAndStreak(String owned, String total, String streak) {
     return '$owned dari $total gelar · rentetan $streak hari';
   }
 
@@ -248,7 +248,7 @@ class LId extends L {
   String get weeklyGoalDone => 'Target mingguan tercapai';
 
   @override
-  String goalRemaining(int reps, int days) {
+  String goalRemaining(String reps, String days) {
     return 'Kurang $reps rep · sisa $days hari';
   }
 
@@ -290,7 +290,7 @@ class LId extends L {
   String get repsPerMember => 'rep per anggota';
 
   @override
-  String seasonResets(int days) {
+  String seasonResets(String days) {
     return 'Direset dalam $days hari — semua mulai dari titik sama';
   }
 
@@ -625,7 +625,7 @@ class LId extends L {
   String get topTier => 'Peringkat tertinggi';
 
   @override
-  String lpToGo(int lp) {
+  String lpToGo(String lp) {
     return '$lp LP';
   }
 
@@ -738,7 +738,7 @@ class LId extends L {
   String get shortFt => 'kaki';
 
   @override
-  String winLoss(int w, int l) {
+  String winLoss(String w, String l) {
     return '${w}M ${l}K';
   }
 

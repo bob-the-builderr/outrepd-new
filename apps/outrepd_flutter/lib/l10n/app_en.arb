@@ -14,10 +14,10 @@
   "@lpProgress": {
     "placeholders": {
       "lp": {
-        "type": "int"
+        "type": "String"
       },
       "left": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -25,7 +25,7 @@
   "@winStreak": {
     "placeholders": {
       "count": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -56,10 +56,10 @@
   "@changeNameLeft": {
     "placeholders": {
       "total": {
-        "type": "int"
+        "type": "String"
       },
       "left": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -86,13 +86,13 @@
   "@titlesAndStreak": {
     "placeholders": {
       "owned": {
-        "type": "int"
+        "type": "String"
       },
       "total": {
-        "type": "int"
+        "type": "String"
       },
       "streak": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -119,10 +119,10 @@
   "@goalRemaining": {
     "placeholders": {
       "reps": {
-        "type": "int"
+        "type": "String"
       },
       "days": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -142,7 +142,7 @@
   "@seasonResets": {
     "placeholders": {
       "days": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -276,7 +276,7 @@
   "@lpToGo": {
     "placeholders": {
       "lp": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -335,10 +335,10 @@
   "@winLoss": {
     "placeholders": {
       "w": {
-        "type": "int"
+        "type": "String"
       },
       "l": {
-        "type": "int"
+        "type": "String"
       }
     }
   },

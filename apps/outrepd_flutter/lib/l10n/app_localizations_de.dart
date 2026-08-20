@@ -39,12 +39,12 @@ class LDe extends L {
   String get viewRoadmap => 'Aufstiegsweg ansehen';
 
   @override
-  String lpProgress(int lp, int left) {
+  String lpProgress(String lp, String left) {
     return '$lp / 100 LP · $left bis zum Aufstieg';
   }
 
   @override
-  String winStreak(int count) {
+  String winStreak(String count) {
     return '$count Siege in Folge';
   }
 
@@ -120,7 +120,7 @@ class LDe extends L {
       'Das ist deine letzte Änderung. Sie lässt sich nicht rückgängig machen.';
 
   @override
-  String changeNameLeft(int total, int left) {
+  String changeNameLeft(String total, String left) {
     return 'Du hast insgesamt $total Änderungen. Danach bleiben $left.';
   }
 
@@ -185,7 +185,7 @@ class LDe extends L {
       'Erholung gehört zum Training. Zwei freie Tage pro Woche brechen deine Serie nicht.';
 
   @override
-  String titlesAndStreak(int owned, int total, int streak) {
+  String titlesAndStreak(String owned, String total, String streak) {
     return '$owned von $total Titeln · $streak Tage Serie';
   }
 
@@ -249,7 +249,7 @@ class LDe extends L {
   String get weeklyGoalDone => 'Wochenziel geknackt';
 
   @override
-  String goalRemaining(int reps, int days) {
+  String goalRemaining(String reps, String days) {
     return 'Noch $reps Wdh. · $days Tage übrig';
   }
 
@@ -291,7 +291,7 @@ class LDe extends L {
   String get repsPerMember => 'Wdh. pro Mitglied';
 
   @override
-  String seasonResets(int days) {
+  String seasonResets(String days) {
     return 'Zurücksetzung in $days Tagen — alle starten gleich';
   }
 
@@ -628,7 +628,7 @@ class LDe extends L {
   String get topTier => 'Höchster Rang';
 
   @override
-  String lpToGo(int lp) {
+  String lpToGo(String lp) {
     return '$lp LP';
   }
 
@@ -741,7 +741,7 @@ class LDe extends L {
   String get shortFt => 'ft';
 
   @override
-  String winLoss(int w, int l) {
+  String winLoss(String w, String l) {
     return '${w}S ${l}N';
   }
 
