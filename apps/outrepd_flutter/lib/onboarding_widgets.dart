@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'type_scale.dart';
 import 'theme.dart';
 import 'widgets.dart';
 
@@ -86,23 +87,14 @@ class StepHeading extends StatelessWidget {
         Text(
           title,
           textAlign: TextAlign.center,
-          style: TextStyle(
-            color: context.colors.text,
-            fontSize: 30,
-            height: 1.2,
-            fontWeight: FontWeight.w900,
-          ),
+          style: context.type.statValue.copyWith(color: context.colors.text, height: 1.2),
         ),
         if (subtitle != null) ...[
           const SizedBox(height: 10),
           Text(
             subtitle!,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Color(0xFF888888),
-              fontSize: 17,
-              fontWeight: FontWeight.w600,
-            ),
+            style: context.type.heading.copyWith(color: Color(0xFF888888)),
           ),
         ],
       ],
@@ -143,11 +135,7 @@ class OptionCard extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: TextStyle(
-            color: selected ? context.colors.text : const Color(0xFFDDDDDD),
-            fontSize: 16,
-            fontWeight: selected ? FontWeight.w800 : FontWeight.w600,
-          ),
+          style: context.type.heading.copyWith(color: selected ? context.colors.text : const Color(0xFFDDDDDD)),
         ),
       ),
     );
@@ -206,21 +194,13 @@ class _RulerPickerState extends State<RulerPicker> {
           children: [
             Text(
               localNumber(context, widget.value),
-              style: TextStyle(
-                color: context.colors.text,
-                fontSize: 56,
-                fontWeight: FontWeight.w900,
-              ),
+              style: context.type.display.copyWith(color: context.colors.text),
             ),
             if (widget.unitLabel.isNotEmpty) ...[
               const SizedBox(width: 6),
               Text(
                 widget.unitLabel,
-                style: TextStyle(
-                  color: context.colors.brand,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                ),
+                style: context.type.title.copyWith(color: context.colors.brand),
               ),
             ],
           ],
@@ -387,11 +367,7 @@ class OnboardingProgress extends StatelessWidget {
                   // the slash binds the two into one left-to-right run.
                   '${localNumber(context, done)}/'
                   '${localNumber(context, totalSteps)}',
-                  style: TextStyle(
-                    color: context.colors.brand,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: context.type.label.copyWith(color: context.colors.brand),
                 ),
               ),
             ),
@@ -469,7 +445,7 @@ class OnboardingFooter extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 12),
                 child: Text(
                   why!,
-                  style: TextStyle(color: context.colors.muted, fontSize: 11.5),
+                  style: context.type.label.copyWith(color: context.colors.muted),
                 ),
               ),
             ),

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../data.dart';
 import '../exercises.dart';
 import '../l10n/app_localizations.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import 'match_rounds.dart';
 import '../widgets.dart';
@@ -260,7 +261,7 @@ class _ExercisePicker extends StatelessWidget {
                             const SizedBox(height: 2),
                             Text(
                               ex.equipment + (ex.compound ? ' · Compound' : ''),
-                              style: TextStyle(color: context.colors.muted, fontSize: 12),
+                              style: context.type.label.copyWith(color: context.colors.muted),
                             ),
                           ],
                         ),
@@ -352,17 +353,12 @@ class _SearchingViewState extends State<_SearchingView>
           const SizedBox(height: 36),
           Text(
             'FINDING OPPONENT',
-            style: TextStyle(
-              color: context.colors.text,
-              fontSize: 20,
-              fontWeight: FontWeight.w900,
-              letterSpacing: 1.5,
-            ),
+            style: context.type.title.copyWith(color: context.colors.text),
           ),
           const SizedBox(height: 8),
           Text(
             L.of(context).matchingWith(widget.discipline.label(L.of(context))),
-            style: TextStyle(color: context.colors.muted, fontSize: 13),
+            style: context.type.label.copyWith(color: context.colors.muted),
           ),
         ],
       ),
@@ -409,11 +405,7 @@ class _VersusView extends StatelessWidget {
             ),
             Text(
               'VS',
-              style: TextStyle(
-                color: context.colors.brand,
-                fontSize: 30,
-                fontWeight: FontWeight.w900,
-              ),
+              style: context.type.statValue.copyWith(color: context.colors.brand),
             ),
             Expanded(
               child: _Fighter(
@@ -429,11 +421,7 @@ class _VersusView extends StatelessWidget {
         const SizedBox(height: 60),
         Text(
           localNumber(context, countdown),
-          style: TextStyle(
-            color: context.colors.text,
-            fontSize: 72,
-            fontWeight: FontWeight.w900,
-          ),
+          style: context.type.display.copyWith(color: context.colors.text),
         ),
         Text(L.of(context).getReady,
             style: TextStyle(color: context.colors.muted, letterSpacing: 2)),
@@ -457,14 +445,10 @@ class _Fighter extends StatelessWidget {
         const SizedBox(height: 12),
         Text(
           name,
-          style: TextStyle(
-            color: context.colors.text,
-            fontWeight: FontWeight.w900,
-            fontSize: 16,
-          ),
+          style: context.type.heading.copyWith(color: context.colors.text),
         ),
         const SizedBox(height: 2),
-        Text(subtitle, style: TextStyle(color: kTiers[tierIdx.clamp(0, kTiers.length - 1)].color, fontSize: 12)),
+        Text(subtitle, style: context.type.label.copyWith(color: kTiers[tierIdx.clamp(0, kTiers.length - 1)].color)),
       ],
     );
   }
@@ -498,14 +482,14 @@ class _ResultView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(L.of(context).matchComplete,
-              style: TextStyle(color: context.colors.muted, letterSpacing: 2, fontSize: 13)),
+              style: context.type.label.copyWith(color: context.colors.muted)),
           const SizedBox(height: 8),
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
               won ? L.of(context).youWin : L.of(context).defeated,
               maxLines: 1,
-              style: TextStyle(color: color, fontSize: 42, fontWeight: FontWeight.w900),
+              style: context.type.display.copyWith(color: color),
             ),
           ),
           const SizedBox(height: 40),
@@ -520,7 +504,7 @@ class _ResultView extends StatelessWidget {
                 ),
               ),
               Text(L.of(context).vs,
-                  style: TextStyle(color: context.colors.surfaceRaised, fontSize: 22, fontWeight: FontWeight.w900)),
+                  style: context.type.title.copyWith(color: context.colors.surfaceRaised)),
               Expanded(
                 child: _ScoreColumn(
                   label: opponent.username.toUpperCase(),
@@ -542,7 +526,7 @@ class _ResultView extends StatelessWidget {
             child: Text(
               '${lpChange >= 0 ? '+' : ''}'
               '${L.of(context).lpAmount(localNumber(context, lpChange))}',
-              style: TextStyle(color: color, fontSize: 24, fontWeight: FontWeight.w900),
+              style: context.type.title.copyWith(color: color),
             ),
           ),
           const Spacer(),
@@ -577,11 +561,11 @@ class _ScoreColumn extends StatelessWidget {
         TierBadge(tierIdx: tierIdx, size: 64),
         const SizedBox(height: 10),
         Text(label,
-            style: TextStyle(color: context.colors.text, fontWeight: FontWeight.bold, fontSize: 13)),
+            style: context.type.label.copyWith(color: context.colors.text)),
         const SizedBox(height: 4),
         Text(
           '${localNumber(context, volume.round())} ${L.of(context).shortKg}',
-          style: TextStyle(color: color, fontSize: 20, fontWeight: FontWeight.w900),
+          style: context.type.title.copyWith(color: color),
         ),
       ],
     );
@@ -611,9 +595,8 @@ class _FlowHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title,
-                    style: TextStyle(
-                        color: context.colors.text, fontSize: 18, fontWeight: FontWeight.w900)),
-                Text(subtitle, style: TextStyle(color: context.colors.muted, fontSize: 12)),
+                    style: context.type.heading.copyWith(color: context.colors.text)),
+                Text(subtitle, style: context.type.label.copyWith(color: context.colors.muted)),
               ],
             ),
           ),

@@ -1633,4 +1633,14 @@ class LJa extends L {
   String secondsOfWork(String n) {
     return '$n seconds of work';
   }
+
+  @override
+  String lpOutOf(String total) {
+    return '/ $total LP';
+  }
+
+  @override
+  String toPromotion(String n) {
+    return '昇格まであと $n';
+  }
 }

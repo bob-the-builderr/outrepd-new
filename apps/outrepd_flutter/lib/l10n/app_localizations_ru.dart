@@ -1668,4 +1668,14 @@ class LRu extends L {
   String secondsOfWork(String n) {
     return '$n seconds of work';
   }
+
+  @override
+  String lpOutOf(String total) {
+    return '/ $total ОЛ';
+  }
+
+  @override
+  String toPromotion(String n) {
+    return 'до повышения $n';
+  }
 }

@@ -1671,4 +1671,14 @@ class LPt extends L {
   String secondsOfWork(String n) {
     return '$n seconds of work';
   }
+
+  @override
+  String lpOutOf(String total) {
+    return '/ $total PL';
+  }
+
+  @override
+  String toPromotion(String n) {
+    return 'faltam $n para subir';
+  }
 }

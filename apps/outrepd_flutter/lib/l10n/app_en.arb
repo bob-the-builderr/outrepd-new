@@ -788,5 +788,21 @@
         "type": "String"
       }
     }
+  },
+  "lpOutOf": "/ {total} LP",
+  "toPromotion": "{n} to promotion",
+  "@lpOutOf": {
+    "placeholders": {
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "@toPromotion": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
   }
 }

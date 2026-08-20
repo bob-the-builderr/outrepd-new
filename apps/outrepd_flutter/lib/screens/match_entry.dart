@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 
 import '../l10n/app_localizations.dart';
 import '../exercises.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'match_flow.dart';
@@ -45,16 +46,12 @@ class _MusclePicker extends StatelessWidget {
             const _SheetGrip(),
             Text(
               L.of(context).pickYourThree,
-              style: TextStyle(
-                color: context.colors.text,
-                fontSize: 19,
-                fontWeight: FontWeight.w800,
-              ),
+              style: context.type.heading.copyWith(color: context.colors.text),
             ),
             const SizedBox(height: 4),
             Text(
               L.of(context).matchedSameGroup,
-              style: TextStyle(color: context.colors.muted, fontSize: 13),
+              style: context.type.label.copyWith(color: context.colors.muted),
             ),
             const SizedBox(height: 16),
             for (final d in Discipline.values)
@@ -71,11 +68,7 @@ class _MusclePicker extends StatelessWidget {
                       Expanded(
                         child: Text(
                           d.label(L.of(context)),
-                          style: TextStyle(
-                            color: context.colors.text,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 15,
-                          ),
+                          style: context.type.body.copyWith(color: context.colors.text),
                         ),
                       ),
                       Icon(Icons.chevron_right,
@@ -143,16 +136,12 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
               const _SheetGrip(),
               Text(
                 L.of(context).challengeFriend,
-                style: TextStyle(
-                  color: context.colors.text,
-                  fontSize: 19,
-                  fontWeight: FontWeight.w800,
-                ),
+                style: context.type.heading.copyWith(color: context.colors.text),
               ),
               const SizedBox(height: 4),
               Text(
                 L.of(context).roomFriendly,
-                style: TextStyle(color: context.colors.muted, fontSize: 13),
+                style: context.type.label.copyWith(color: context.colors.muted),
               ),
               const SizedBox(height: 18),
               if (_createdCode == null) ...[
@@ -176,7 +165,7 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
                       padding: EdgeInsets.symmetric(horizontal: 12),
                       child: Text('or',
                           style:
-                              TextStyle(color: context.colors.muted, fontSize: 12)),
+                              context.type.label.copyWith(color: context.colors.muted)),
                     ),
                     Expanded(child: Divider(color: context.colors.surfaceRaised)),
                   ],
@@ -186,21 +175,12 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
                   controller: _codeController,
                   textCapitalization: TextCapitalization.characters,
                   maxLength: 6,
-                  style: TextStyle(
-                    color: context.colors.text,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 6,
-                  ),
+                  style: context.type.title.copyWith(color: context.colors.text),
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
                     counterText: '',
                     hintText: L.of(context).enterCode,
-                    hintStyle: TextStyle(
-                      color: context.colors.muted,
-                      letterSpacing: 3,
-                      fontSize: 15,
-                    ),
+                    hintStyle: context.type.body.copyWith(color: context.colors.muted),
                   ),
                   onChanged: (_) => setState(() {}),
                 ),
@@ -249,7 +229,7 @@ class _RoomCreated extends StatelessWidget {
       children: [
         Text(
           L.of(context).shareThisCode,
-          style: TextStyle(color: context.colors.muted, fontSize: 13),
+          style: context.type.label.copyWith(color: context.colors.muted),
         ),
         const SizedBox(height: 10),
         Panel(
@@ -259,12 +239,7 @@ class _RoomCreated extends StatelessWidget {
             children: [
               Text(
                 code,
-                style: TextStyle(
-                  color: context.colors.text,
-                  fontSize: 30,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 8,
-                ),
+                style: context.type.statValue.copyWith(color: context.colors.text),
               ),
               const SizedBox(width: 8),
               IconButton(

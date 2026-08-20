@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import '../avatar.dart';
 import '../profile_avatar.dart';
 import '../l10n/app_localizations.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -75,16 +76,12 @@ class _AvatarSheetState extends State<_AvatarSheet> {
               const SizedBox(height: 18),
               Text(
                 L.of(context).yourPicture,
-                style: TextStyle(
-                  color: context.colors.text,
-                  fontSize: 19,
-                  fontWeight: FontWeight.w800,
-                ),
+                style: context.type.heading.copyWith(color: context.colors.text),
               ),
               const SizedBox(height: 4),
               Text(
                 L.of(context).yourPictureHint,
-                style: TextStyle(color: context.colors.muted, fontSize: 12.5),
+                style: context.type.label.copyWith(color: context.colors.muted),
               ),
               const SizedBox(height: 18),
               Row(
@@ -116,7 +113,7 @@ class _AvatarSheetState extends State<_AvatarSheet> {
                 const SizedBox(height: 12),
                 Text(
                   _error!,
-                  style: const TextStyle(color: AppColors.loss, fontSize: 12),
+                  style: context.type.label.copyWith(color: AppColors.loss),
                 ),
               ],
               const SizedBox(height: 22),

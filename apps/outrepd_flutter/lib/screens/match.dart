@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../data.dart';
 import '../motion.dart';
 import '../l10n/app_localizations.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'match_entry.dart';
@@ -151,11 +152,9 @@ class _RankCard extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          L.of(context).viewRoadmap,
-                          style: TextStyle(
+                          L.of(context).viewRoadmap.toUpperCase(),
+                          style: context.type.micro.copyWith(
                             color: context.colors.brand.withValues(alpha: 0.9),
-                            fontSize: 11.5,
-                            fontWeight: FontWeight.w600,
                           ),
                         ),
                         Icon(
@@ -172,28 +171,46 @@ class _RankCard extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   tierLabel(L.of(context), p.tierIdx, p.divIdx),
-                  style: TextStyle(
-                    color: context.colors.text,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w800,
-                  ),
+                  style: context.type.title.copyWith(color: context.colors.text),
                 ),
                 const SizedBox(height: 10),
               ],
             ),
           ),
+          // The LP number leads rather than trailing the bar as a caption. It
+          // is the one figure this screen is about — how close you are to the
+          // next rank — and it was reading as small print under a progress bar.
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              PopOnChange(
+                value: p.lp,
+                child: Text(
+                  localNumber(context, p.lp),
+                  style: context.type.display.copyWith(
+                    color: context.colors.text,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 6),
+              Text(
+                L.of(context).lpOutOf(localNumber(context, 100)),
+                style: context.type.label.copyWith(color: context.colors.muted),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
           GrowingBar(
             value: p.lp / 100,
             colour: context.colors.brand,
             background: context.colors.surfaceRaised,
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 10),
           Text(
-            L.of(context).lpProgress(
-              localNumber(context, p.lp),
-              localNumber(context, 100 - p.lp),
-            ),
-            style: TextStyle(color: context.colors.muted, fontSize: 11.5),
+            L.of(context).toPromotion(localNumber(context, 100 - p.lp)),
+            style: context.type.label.copyWith(color: context.colors.muted),
           ),
           if (p.winStreak > 0) ...[
             const SizedBox(height: 14),
@@ -211,11 +228,7 @@ class _RankCard extends StatelessWidget {
                   const SizedBox(width: 6),
                   Text(
                     L.of(context).winStreak(localNumber(context, p.winStreak)),
-                    style: const TextStyle(
-                      color: AppColors.win,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12,
-                    ),
+                    style: context.type.label.copyWith(color: AppColors.win),
                   ),
                 ],
               ),
@@ -344,27 +357,31 @@ class _PrimaryAction extends StatelessWidget {
           ),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Row(
+            // Top-aligned, not centred. The caption wraps to two lines in
+            // several of the fourteen languages, and an icon floating in the
+            // middle of a two-line block reads as a layout accident — beside
+            // the first line it reads as a bullet.
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(icon, color: Colors.white, size: 30),
-              const SizedBox(width: 16),
+              Padding(
+                padding: const EdgeInsets.only(top: 2),
+                child: Icon(icon, color: Colors.white, size: 26),
+              ),
+              const SizedBox(width: 14),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       label,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
-                      ),
+                      style: context.type.heading.copyWith(color: Colors.white),
                     ),
-                    const SizedBox(height: 3),
+                    const SizedBox(height: 4),
                     Text(
                       caption,
-                      style: TextStyle(
+                      style: context.type.label.copyWith(
                         color: Colors.white.withValues(alpha: 0.85),
-                        fontSize: 12.5,
+                        height: 1.35,
                       ),
                     ),
                   ],
@@ -405,11 +422,7 @@ class _SecondaryAction extends StatelessWidget {
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: context.colors.text,
-              fontWeight: FontWeight.w700,
-              fontSize: 13.5,
-            ),
+            style: context.type.label.copyWith(color: context.colors.text),
           ),
         ],
       ),

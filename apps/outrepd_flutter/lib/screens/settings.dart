@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../settings.dart';
 import '../l10n/app_localizations.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -309,7 +310,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           Center(
             child: Text(
               'OUTREPD · 1.0.0',
-              style: TextStyle(color: context.colors.muted, fontSize: 11.5),
+              style: context.type.label.copyWith(color: context.colors.muted),
             ),
           ),
         ],
@@ -367,11 +368,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 padding: const EdgeInsets.fromLTRB(20, 20, 20, 6),
                 child: Text(
                   title,
-                  style: TextStyle(
-                    color: context.colors.text,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w800,
-                  ),
+                  style: context.type.heading.copyWith(color: context.colors.text),
                 ),
               ),
               Flexible(
@@ -400,7 +397,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     : Text(
                         caption(v),
                         style:
-                            TextStyle(color: context.colors.muted, fontSize: 12),
+                            context.type.label.copyWith(color: context.colors.muted),
                       ),
                 trailing: v == current
                     ? Icon(Icons.check_circle, color: context.colors.brand)
@@ -525,17 +522,13 @@ class _RowFrame extends StatelessWidget {
                 children: [
                   Text(
                     label,
-                    style: TextStyle(
-                      color: tint,
-                      fontSize: 14.5,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: context.type.body.copyWith(color: tint),
                   ),
                   if (caption != null) ...[
                     const SizedBox(height: 2),
                     Text(
                       caption!,
-                      style: TextStyle(color: context.colors.muted, fontSize: 11.5),
+                      style: context.type.label.copyWith(color: context.colors.muted),
                     ),
                   ],
                 ],
@@ -623,7 +616,7 @@ class _NavRow extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.right,
-                style: TextStyle(color: context.colors.muted, fontSize: 13),
+                style: context.type.label.copyWith(color: context.colors.muted),
               ),
             ),
           if (chevron)

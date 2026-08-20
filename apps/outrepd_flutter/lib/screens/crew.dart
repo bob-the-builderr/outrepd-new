@@ -6,6 +6,7 @@ import '../data.dart';
 import '../profile_avatar.dart';
 import '../motion.dart';
 import '../l10n/app_localizations.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'crew_create.dart';
@@ -55,10 +56,7 @@ class _CrewScreenState extends State<CrewScreen>
                 indicatorColor: context.colors.brand,
                 labelColor: context.colors.text,
                 unselectedLabelColor: context.colors.muted,
-                labelStyle: const TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14,
-                ),
+                labelStyle: context.type.body,
                 tabs: [
                   Tab(text: L.of(context).myCrew),
                   Tab(text: L.of(context).rankings),
@@ -97,17 +95,13 @@ class _NoCrewView extends StatelessWidget {
               const SizedBox(height: 14),
               Text(
                 L.of(context).trainWithCrew,
-                style: TextStyle(
-                  color: context.colors.text,
-                  fontSize: 19,
-                  fontWeight: FontWeight.w800,
-                ),
+                style: context.type.heading.copyWith(color: context.colors.text),
               ),
               const SizedBox(height: 6),
               Text(
                 L.of(context).trainWithCrewHint,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: context.colors.muted, fontSize: 13),
+                style: context.type.label.copyWith(color: context.colors.muted),
               ),
               const SizedBox(height: 22),
               _WayIn(
@@ -208,21 +202,14 @@ class _WayIn extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: TextStyle(
-                        color: primary ? Colors.white : context.colors.text,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      style: context.type.body.copyWith(color: primary ? Colors.white : context.colors.text),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       subtitle,
-                      style: TextStyle(
-                        color: primary
+                      style: context.type.label.copyWith(color: primary
                             ? Colors.white.withValues(alpha: 0.85)
-                            : context.colors.muted,
-                        fontSize: 11.5,
-                      ),
+                            : context.colors.muted),
                     ),
                   ],
                 ),
@@ -237,11 +224,7 @@ class _WayIn extends StatelessWidget {
                   ),
                   child: Text(
                     localNumber(context, badge),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w800,
-                    ),
+                    style: context.type.label.copyWith(color: Colors.white),
                   ),
                 ),
             ],
@@ -282,14 +265,10 @@ class _CrewTab extends StatelessWidget {
                 crew.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: context.colors.text,
-                  fontSize: 21,
-                  fontWeight: FontWeight.w800,
-                ),
+                style: context.type.title.copyWith(color: context.colors.text),
               ),
               const SizedBox(height: 4),
-              Text(crew.country, style: TextStyle(color: colour, fontSize: 12.5)),
+              Text(crew.country, style: context.type.label.copyWith(color: colour)),
               const SizedBox(height: 16),
               Row(
                 children: [
@@ -322,7 +301,7 @@ class _CrewTab extends StatelessWidget {
           title: L.of(context).whoIsPulling,
           trailing: Text(
             L.of(context).thisWeek,
-            style: TextStyle(color: context.colors.muted, fontSize: 13),
+            style: context.type.label.copyWith(color: context.colors.muted),
           ),
         ),
         _Contributions(crew: crew),
@@ -334,7 +313,7 @@ class _CrewTab extends StatelessWidget {
           trailing: Text(
             L.of(context).xOfY(localNumber(context, crew.members.length),
                 localNumber(context, MyCrew.maxMembers)),
-            style: TextStyle(color: context.colors.muted, fontSize: 13),
+            style: context.type.label.copyWith(color: context.colors.muted),
           ),
         ),
         Panel(
@@ -396,21 +375,13 @@ class _WeeklyGoalCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   done ? L.of(context).weeklyGoalDone : L.of(context).weeklyGoal,
-                  style: TextStyle(
-                    color: context.colors.text,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: context.type.body.copyWith(color: context.colors.text),
                 ),
               ),
               Text(
                 L.of(context).xOfY(localNumber(context, crew.weeklyReps),
                     localNumber(context, crew.weeklyGoal)),
-                style: TextStyle(
-                  color: context.colors.muted,
-                  fontSize: 12.5,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: context.type.label.copyWith(color: context.colors.muted),
               ),
             ],
           ),
@@ -427,7 +398,7 @@ class _WeeklyGoalCard extends StatelessWidget {
                 ? L.of(context).goalDoneHint
                 : L.of(context).goalRemaining(localNumber(context, left),
                     localNumber(context, daysLeftInWeek())),
-            style: TextStyle(color: context.colors.muted, fontSize: 12),
+            style: context.type.label.copyWith(color: context.colors.muted),
           ),
         ],
       ),
@@ -465,16 +436,12 @@ class _CrewWarCard extends StatelessWidget {
               children: [
                 Text(
                   L.of(context).startCrewWar,
-                  style: TextStyle(
-                    color: context.colors.text,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: context.type.body.copyWith(color: context.colors.text),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   L.of(context).startCrewWarHint,
-                  style: TextStyle(color: context.colors.muted, fontSize: 11.5),
+                  style: context.type.label.copyWith(color: context.colors.muted),
                 ),
               ],
             ),
@@ -532,11 +499,7 @@ class _Contributions extends StatelessWidget {
                                       member.username,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: context.colors.text,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 13.5,
-                                      ),
+                                      style: context.type.label.copyWith(color: context.colors.text),
                                     ),
                                   ),
                                   if (member.isOwner) ...[
@@ -556,14 +519,9 @@ class _Contributions extends StatelessWidget {
                               child: Text(
                                 localNumber(context, member.weeklyReps),
                                 textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: context.colors.text,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 13,
-                                  fontFeatures: const [
+                                style: context.type.label.copyWith(color: context.colors.text, fontFeatures: const [
                                     FontFeature.tabularFigures(),
-                                  ],
-                                ),
+                                  ]),
                               ),
                             ),
                           ],
@@ -622,16 +580,12 @@ class _MemberRow extends StatelessWidget {
                   member.username,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: context.colors.text,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
-                  ),
+                  style: context.type.body.copyWith(color: context.colors.text),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   tierLabel(L.of(context), member.tierIdx, member.divIdx),
-                  style: TextStyle(color: context.colors.muted, fontSize: 11.5),
+                  style: context.type.label.copyWith(color: context.colors.muted),
                 ),
               ],
             ),
@@ -645,11 +599,7 @@ class _MemberRow extends StatelessWidget {
               ),
               child: Text(
                 L.of(context).owner,
-                style: const TextStyle(
-                  color: AppColors.gold,
-                  fontSize: 10.5,
-                  fontWeight: FontWeight.w700,
-                ),
+                style: context.type.label.copyWith(color: AppColors.gold),
               ),
             ),
         ],
@@ -683,11 +633,7 @@ class _RankingsTab extends StatelessWidget {
                   children: [
                     Text(
                       L.of(context).season(seasonName()),
-                      style: TextStyle(
-                        color: context.colors.text,
-                        fontSize: 14.5,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      style: context.type.body.copyWith(color: context.colors.text),
                     ),
                     const SizedBox(height: 2),
                     Text(
@@ -696,7 +642,7 @@ class _RankingsTab extends StatelessWidget {
                       L.of(context)
                           .seasonResets(localNumber(context, daysLeftInSeason())),
                       style:
-                          TextStyle(color: context.colors.muted, fontSize: 11.5),
+                          context.type.label.copyWith(color: context.colors.muted),
                     ),
                   ],
                 ),
@@ -709,7 +655,7 @@ class _RankingsTab extends StatelessWidget {
           title: L.of(context).crewTable,
           trailing: Text(
             L.of(context).repsPerMember,
-            style: TextStyle(color: context.colors.muted, fontSize: 12),
+            style: context.type.label.copyWith(color: context.colors.muted),
           ),
         ),
         for (final entry in table)
@@ -720,7 +666,7 @@ class _RankingsTab extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           L.of(context).rankingExplained,
-          style: TextStyle(color: context.colors.muted, fontSize: 11.5),
+          style: context.type.label.copyWith(color: context.colors.muted),
         ),
       ],
     );
@@ -822,11 +768,7 @@ class _RankRow extends StatelessWidget {
             width: 26,
             child: Text(
               localNumber(context, entry.place),
-              style: TextStyle(
-                color: medal ?? context.colors.muted,
-                fontWeight: FontWeight.w900,
-                fontSize: 15,
-              ),
+              style: context.type.body.copyWith(color: medal ?? context.colors.muted),
             ),
           ),
           Container(
@@ -839,11 +781,7 @@ class _RankRow extends StatelessWidget {
             ),
             child: Text(
               entry.tag,
-              style: TextStyle(
-                color: brand,
-                fontWeight: FontWeight.w900,
-                fontSize: 12.5,
-              ),
+              style: context.type.label.copyWith(color: brand),
             ),
           ),
           const SizedBox(width: 12),
@@ -855,16 +793,12 @@ class _RankRow extends StatelessWidget {
                   entry.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: context.colors.text,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14.5,
-                  ),
+                  style: context.type.body.copyWith(color: context.colors.text),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   L.of(context).membersCount(localNumber(context, entry.members)),
-                  style: TextStyle(color: context.colors.muted, fontSize: 11.5),
+                  style: context.type.label.copyWith(color: context.colors.muted),
                 ),
               ],
             ),
@@ -874,12 +808,7 @@ class _RankRow extends StatelessWidget {
             child: Text(
               localNumber(context, entry.repsPerMember),
               textAlign: TextAlign.right,
-              style: TextStyle(
-                color: context.colors.text,
-                fontWeight: FontWeight.w800,
-                fontSize: 15,
-                fontFeatures: const [FontFeature.tabularFigures()],
-              ),
+              style: context.type.body.copyWith(color: context.colors.text, fontFeatures: const [FontFeature.tabularFigures()]),
             ),
           ),
         ],
@@ -912,17 +841,13 @@ Future<void> _showOpenCrewsSheet(BuildContext context, VoidCallback onChanged) {
                   Expanded(
                     child: Text(
                       c.name,
-                      style: TextStyle(
-                        color: context.colors.text,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14.5,
-                      ),
+                      style: context.type.body.copyWith(color: context.colors.text),
                     ),
                   ),
                   Text(
                     L.of(context).membersCount(localNumber(context, c.members)),
                     style:
-                        TextStyle(color: context.colors.muted, fontSize: 12),
+                        context.type.label.copyWith(color: context.colors.muted),
                   ),
                   const SizedBox(width: 8),
                   Icon(Icons.chevron_right, color: context.colors.muted),
@@ -955,19 +880,12 @@ Future<void> _showInvitesSheet(BuildContext context, VoidCallback onChanged) {
                       children: [
                         Text(
                           invite.crewName,
-                          style: TextStyle(
-                            color: context.colors.text,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14.5,
-                          ),
+                          style: context.type.body.copyWith(color: context.colors.text),
                         ),
                         const SizedBox(height: 2),
                         Text(
                           'from ${invite.fromUser}',
-                          style: TextStyle(
-                            color: context.colors.muted,
-                            fontSize: 11.5,
-                          ),
+                          style: context.type.label.copyWith(color: context.colors.muted),
                         ),
                       ],
                     ),
@@ -982,10 +900,7 @@ Future<void> _showInvitesSheet(BuildContext context, VoidCallback onChanged) {
                     style: FilledButton.styleFrom(
                       minimumSize: const Size(78, 36),
                       padding: EdgeInsets.zero,
-                      textStyle: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      textStyle: context.type.label,
                     ),
                     child: Text(L.of(context).accept),
                   ),
@@ -1021,18 +936,14 @@ Future<void> _showWarSheet(BuildContext context, MyCrew crew) {
                   Expanded(
                     child: Text(
                       c.name,
-                      style: TextStyle(
-                        color: context.colors.text,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14.5,
-                      ),
+                      style: context.type.body.copyWith(color: context.colors.text),
                     ),
                   ),
                   Text(
                     L.of(context).eachCount(
                         localNumber(context, c.repsPerMember)),
                     style:
-                        TextStyle(color: context.colors.muted, fontSize: 12),
+                        context.type.label.copyWith(color: context.colors.muted),
                   ),
                   const SizedBox(width: 8),
                   Icon(Icons.chevron_right, color: context.colors.muted),
@@ -1060,20 +971,11 @@ Future<void> _showJoinSheet(BuildContext context, VoidCallback onChanged) {
             textCapitalization: TextCapitalization.characters,
             maxLength: 6,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: context.colors.text,
-              fontSize: 20,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 6,
-            ),
+            style: context.type.title.copyWith(color: context.colors.text),
             decoration: InputDecoration(
               counterText: '',
               hintText: 'CREW CODE',
-              hintStyle: TextStyle(
-                color: context.colors.muted,
-                letterSpacing: 3,
-                fontSize: 15,
-              ),
+              hintStyle: context.type.body.copyWith(color: context.colors.muted),
             ),
           ),
           const SizedBox(height: 14),
@@ -1133,16 +1035,12 @@ Future<void> _sheet(
               children: [
                 Text(
                   title,
-                  style: TextStyle(
-                    color: context.colors.text,
-                    fontSize: 19,
-                    fontWeight: FontWeight.w800,
-                  ),
+                  style: context.type.heading.copyWith(color: context.colors.text),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   subtitle,
-                  style: TextStyle(color: context.colors.muted, fontSize: 13),
+                  style: context.type.label.copyWith(color: context.colors.muted),
                 ),
                 const SizedBox(height: 18),
                 child,
@@ -1187,11 +1085,7 @@ class _InviteCard extends StatelessWidget {
         children: [
           Text(
             L.of(context).inviteLifters,
-            style: TextStyle(
-              color: context.colors.text,
-              fontSize: 15,
-              fontWeight: FontWeight.w700,
-            ),
+            style: context.type.body.copyWith(color: context.colors.text),
           ),
           const SizedBox(height: 12),
           _CopyRow(
@@ -1233,7 +1127,7 @@ class _CopyRow extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: TextStyle(color: context.colors.muted, fontSize: 10.5),
+                  style: context.type.label.copyWith(color: context.colors.muted),
                 ),
                 const SizedBox(height: 2),
                 Text(
@@ -1276,16 +1170,12 @@ class _Stat extends StatelessWidget {
       children: [
         Text(
           value,
-          style: TextStyle(
-            color: context.colors.text,
-            fontSize: 16,
-            fontWeight: FontWeight.w800,
-          ),
+          style: context.type.heading.copyWith(color: context.colors.text),
         ),
         const SizedBox(height: 2),
         Text(
           label,
-          style: TextStyle(color: context.colors.muted, fontSize: 11),
+          style: context.type.label.copyWith(color: context.colors.muted),
         ),
       ],
     );

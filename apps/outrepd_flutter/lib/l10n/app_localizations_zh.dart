@@ -1632,4 +1632,14 @@ class LZh extends L {
   String secondsOfWork(String n) {
     return '$n seconds of work';
   }
+
+  @override
+  String lpOutOf(String total) {
+    return '/ $total LP';
+  }
+
+  @override
+  String toPromotion(String n) {
+    return '距晋级还差 $n';
+  }
 }

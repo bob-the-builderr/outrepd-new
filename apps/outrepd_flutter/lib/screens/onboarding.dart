@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import 'shell.dart';
 import 'user_onboarding.dart';
@@ -110,22 +111,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Text(
                           slide.title(L.of(context)),
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 30,
-                            height: 1.2,
-                            fontWeight: FontWeight.w900,
-                            color: context.colors.text,
-                          ),
+                          style: context.type.statValue.copyWith(height: 1.2, color: context.colors.text),
                         ),
                         const SizedBox(height: 16),
                         Text(
                           slide.body(L.of(context)),
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 16,
-                            height: 1.5,
-                            color: context.colors.muted,
-                          ),
+                          style: context.type.heading.copyWith(height: 1.5, color: context.colors.muted),
                         ),
                         const SizedBox(height: 24),
                       ],

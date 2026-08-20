@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../data.dart';
 import '../onboarding_widgets.dart';
 import '../l10n/app_localizations.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'shell.dart';
@@ -338,11 +339,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
           // Continue, is what makes it feel like the app is watching.
           onChanged: (_) => setState(() => _error = null),
           textAlign: TextAlign.center,
-          style: TextStyle(
-            color: context.colors.text,
-            fontSize: 22,
-            fontWeight: FontWeight.w700,
-          ),
+          style: context.type.title.copyWith(color: context.colors.text),
           decoration: InputDecoration(
             hintText: L.of(context).usernamePlaceholder,
             hintStyle: const TextStyle(color: Color(0xFF444444)),
@@ -363,10 +360,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         Text(
           _error ?? L.of(context).nameHint,
           textAlign: TextAlign.center,
-          style: TextStyle(
-            color: _error == null ? context.colors.muted : AppColors.loss,
-            fontSize: 13,
-          ),
+          style: context.type.label.copyWith(color: _error == null ? context.colors.muted : AppColors.loss),
         ),
       ],
     );
@@ -425,13 +419,9 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
                 const SizedBox(height: 12),
                 Text(
                   label,
-                  style: TextStyle(
-                    color: selected
+                  style: context.type.heading.copyWith(color: selected
                         ? context.colors.text
-                        : const Color(0xFFBBBBBB),
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16,
-                  ),
+                        : const Color(0xFFBBBBBB)),
                 ),
               ],
             ),
@@ -508,7 +498,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         Text(
           L.of(context).weightWhy,
           textAlign: TextAlign.center,
-          style: TextStyle(color: context.colors.muted, fontSize: 13),
+          style: context.type.label.copyWith(color: context.colors.muted),
         ),
         const SizedBox(height: 24),
         UnitToggle(
@@ -536,7 +526,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         Text(
           L.of(context).privateNote,
           textAlign: TextAlign.center,
-          style: const TextStyle(color: Color(0xFF556070), fontSize: 12),
+          style: context.type.label.copyWith(color: Color(0xFF556070)),
         ),
       ],
     );
@@ -577,12 +567,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
       child: TypewriterText(
         text: text,
         onComplete: () => setState(() => _typingDone = true),
-        style: TextStyle(
-          color: context.colors.text,
-          fontSize: 28,
-          height: 1.35,
-          fontWeight: FontWeight.w900,
-        ),
+        style: context.type.statValue.copyWith(color: context.colors.text, height: 1.35),
       ),
     );
   }
@@ -613,11 +598,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
             ),
             child: Text(
               label,
-              style: TextStyle(
-                color: active ? color : const Color(0xFFDDDDDD),
-                fontSize: 17,
-                fontWeight: FontWeight.w800,
-              ),
+              style: context.type.heading.copyWith(color: active ? color : const Color(0xFFDDDDDD)),
             ),
           ),
         ),
@@ -640,13 +621,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
           child: Text(
             '"$statement"',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: context.colors.text,
-              fontSize: 19,
-              height: 1.45,
-              fontWeight: FontWeight.w600,
-              fontStyle: FontStyle.italic,
-            ),
+            style: context.type.heading.copyWith(color: context.colors.text, height: 1.45, fontStyle: FontStyle.italic),
           ),
         ),
         const SizedBox(height: 32),
@@ -670,23 +645,13 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
         TypewriterText(
           text: headline,
           onComplete: () => setState(() => _typingDone = true),
-          style: TextStyle(
-            color: context.colors.text,
-            fontSize: 28,
-            height: 1.25,
-            fontWeight: FontWeight.w900,
-          ),
+          style: context.type.statValue.copyWith(color: context.colors.text, height: 1.25),
         ),
         const SizedBox(height: 14),
         Text(
           subtext,
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Color(0xFF888888),
-            fontSize: 16,
-            height: 1.5,
-            fontWeight: FontWeight.w600,
-          ),
+          style: context.type.heading.copyWith(color: Color(0xFF888888), height: 1.5),
         ),
       ],
     );
@@ -702,23 +667,13 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
           Text(
             L.of(context).grindTitle,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: context.colors.text,
-              fontSize: 28,
-              height: 1.3,
-              fontWeight: FontWeight.w900,
-            ),
+            style: context.type.statValue.copyWith(color: context.colors.text, height: 1.3),
           ),
           const SizedBox(height: 16),
           TypewriterText(
             text: L.of(context).grindBody,
             onComplete: () => setState(() => _typingDone = true),
-            style: const TextStyle(
-              color: Color(0xFF888888),
-              fontSize: 16,
-              height: 1.5,
-              fontWeight: FontWeight.w600,
-            ),
+            style: context.type.heading.copyWith(color: Color(0xFF888888), height: 1.5),
           ),
         ],
       ),
@@ -735,11 +690,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
           Text(
             L.of(context).allSet,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: context.colors.text,
-              fontSize: 32,
-              fontWeight: FontWeight.w900,
-            ),
+            style: context.type.statValue.copyWith(color: context.colors.text),
           ),
           const SizedBox(height: 12),
           Text(
@@ -751,12 +702,7 @@ class _UserOnboardingScreenState extends State<UserOnboardingScreen> {
                       : _usernameController.text.trim(),
                 ),
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Color(0xFF888888),
-              fontSize: 16,
-              height: 1.5,
-              fontWeight: FontWeight.w600,
-            ),
+            style: context.type.heading.copyWith(color: Color(0xFF888888), height: 1.5),
           ),
           const SizedBox(height: 40),
           FilledButton(onPressed: _finish, child: Text(L.of(context).enterApp)),
@@ -841,11 +787,7 @@ class _CommitmentStepState extends State<_CommitmentStep>
         Text(
           L.of(context).holdLogo,
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Color(0xFF888888),
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
+          style: context.type.heading.copyWith(color: Color(0xFF888888)),
         ),
       ],
     );

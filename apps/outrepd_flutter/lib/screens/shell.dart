@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import 'friends.dart';
 import 'leaderboard.dart';
@@ -149,11 +150,7 @@ class _Tab extends StatelessWidget {
               child: Text(
                 spec.label,
                 maxLines: 1,
-                style: TextStyle(
-                  color: primary ? context.colors.brand : color,
-                  fontSize: 10.5,
-                  fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-                ),
+                style: context.type.label.copyWith(color: primary ? context.colors.brand : color),
               ),
             ),
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -38,28 +39,17 @@ class NotificationsScreen extends StatelessWidget {
                     children: [
                       Text(
                         n.heading(L.of(context)),
-                        style: TextStyle(
-                          color: context.colors.text,
-                          fontWeight:
-                              n.unread ? FontWeight.w800 : FontWeight.w600,
-                          fontSize: 15,
-                        ),
+                        style: context.type.body.copyWith(color: context.colors.text),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         n.detail(L.of(context)),
-                        style: TextStyle(
-                          color: context.colors.muted,
-                          fontSize: 13,
-                        ),
+                        style: context.type.label.copyWith(color: context.colors.muted),
                       ),
                       const SizedBox(height: 6),
                       Text(
                         relativeDays(context, n.daysAgo),
-                        style: TextStyle(
-                          color: context.colors.muted,
-                          fontSize: 11,
-                        ),
+                        style: context.type.label.copyWith(color: context.colors.muted),
                       ),
                     ],
                   ),

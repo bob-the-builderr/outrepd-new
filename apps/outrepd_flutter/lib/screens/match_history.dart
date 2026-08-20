@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -79,16 +80,12 @@ class _Tally extends StatelessWidget {
       children: [
         Text(
           value,
-          style: TextStyle(
-            color: color,
-            fontSize: 20,
-            fontWeight: FontWeight.w800,
-          ),
+          style: context.type.title.copyWith(color: color),
         ),
         const SizedBox(height: 2),
         Text(
           label,
-          style: TextStyle(color: context.colors.muted, fontSize: 11.5),
+          style: context.type.label.copyWith(color: context.colors.muted),
         ),
       ],
     );
@@ -117,11 +114,7 @@ class MatchRow extends StatelessWidget {
             ),
             child: Text(
               m.won ? 'W' : 'L',
-              style: TextStyle(
-                color: color,
-                fontWeight: FontWeight.w900,
-                fontSize: 17,
-              ),
+              style: context.type.heading.copyWith(color: color),
             ),
           ),
           const SizedBox(width: 12),
@@ -134,18 +127,14 @@ class MatchRow extends StatelessWidget {
                   ' vs ${m.opponent}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: context.colors.text,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
-                  ),
+                  style: context.type.body.copyWith(color: context.colors.text),
                 ),
                 const SizedBox(height: 3),
                 Text(
                   '${formatVolume(context, L.of(context), m.userVolume)}'
                   ' · ${formatVolume(context, L.of(context), m.opponentVolume)}'
                   ' · ${relativeDays(context, m.daysAgo)}',
-                  style: TextStyle(color: context.colors.muted, fontSize: 12),
+                  style: context.type.label.copyWith(color: context.colors.muted),
                 ),
               ],
             ),
@@ -153,11 +142,7 @@ class MatchRow extends StatelessWidget {
           Text(
             '${m.lpChange > 0 ? '+' : ''}'
             '${localNumber(context, m.lpChange)}',
-            style: TextStyle(
-              color: color,
-              fontWeight: FontWeight.w800,
-              fontSize: 15,
-            ),
+            style: context.type.body.copyWith(color: color),
           ),
         ],
       ),

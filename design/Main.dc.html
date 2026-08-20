@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    a { color: #4BB8FA; } a:hover { color: #7BCBFB; }
+  </style>
+</helmet>
+<div style="width: 560px; min-height: 940px; background: #010308; color: #ffffff; padding: 32px 28px; box-sizing: border-box; display: flex; flex-direction: column; gap: 28px">
+
+  <div style="display: flex; flex-direction: column; gap: 6px">
+    <div style="font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #556070">The scale</div>
+    <div style="font-size: 24px; font-weight: 800; letter-spacing: -0.4px">Seven steps, not twenty-five</div>
+    <div style="font-size: 13px; font-weight: 500; color: #556070; line-height: 1.5; text-wrap: pretty">Today the app writes <span style="color:#FF4444">210</span> font sizes by hand across 25 distinct values &mdash; eight of them crammed between 11 and 14.5. Nobody sees 12 against 12.5. Everybody feels the inconsistency.</div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 14px">
+
+    <div style="display: flex; align-items: baseline; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid #1A2630">
+      <div style="width: 92px; flex-shrink: 0; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #4BB8FA">display</div>
+      <div style="flex-grow: 1; font-size: 44px; font-weight: 900; letter-spacing: -1.8px; font-variant-numeric: tabular-nums; line-height: 1">128</div>
+      <div style="width: 108px; flex-shrink: 0; text-align: right; font-size: 11px; font-weight: 500; color: #556070; line-height: 1.4">44 &middot; w900<br>tabular</div>
+    </div>
+
+    <div style="display: flex; align-items: baseline; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid #1A2630">
+      <div style="width: 92px; flex-shrink: 0; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #4BB8FA">title</div>
+      <div style="flex-grow: 1; font-size: 24px; font-weight: 800; letter-spacing: -0.4px">Gold III</div>
+      <div style="width: 108px; flex-shrink: 0; text-align: right; font-size: 11px; font-weight: 500; color: #556070">24 &middot; w800</div>
+    </div>
+
+    <div style="display: flex; align-items: baseline; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid #1A2630">
+      <div style="width: 92px; flex-shrink: 0; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #4BB8FA">heading</div>
+      <div style="flex-grow: 1; font-size: 18px; font-weight: 800; letter-spacing: -0.2px">Barbell Bench Press</div>
+      <div style="width: 108px; flex-shrink: 0; text-align: right; font-size: 11px; font-weight: 500; color: #556070">18 &middot; w800</div>
+    </div>
+
+    <div style="display: flex; align-items: baseline; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid #1A2630">
+      <div style="width: 92px; flex-shrink: 0; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #4BB8FA">body</div>
+      <div style="flex-grow: 1; font-size: 15px; font-weight: 500">Get matched with a lifter at your rank</div>
+      <div style="width: 108px; flex-shrink: 0; text-align: right; font-size: 11px; font-weight: 500; color: #556070">15 &middot; w500</div>
+    </div>
+
+    <div style="display: flex; align-items: baseline; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid #1A2630">
+      <div style="width: 92px; flex-shrink: 0; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #4BB8FA">label</div>
+      <div style="flex-grow: 1; font-size: 13px; font-weight: 600; color: #556070">64 / 100 LP &middot; 36 to promotion</div>
+      <div style="width: 108px; flex-shrink: 0; text-align: right; font-size: 11px; font-weight: 500; color: #556070">13 &middot; w600</div>
+    </div>
+
+    <div style="display: flex; align-items: baseline; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid #1A2630">
+      <div style="width: 92px; flex-shrink: 0; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #4BB8FA">micro</div>
+      <div style="flex-grow: 1; font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #556070">Round 1 of 6</div>
+      <div style="width: 108px; flex-shrink: 0; text-align: right; font-size: 11px; font-weight: 500; color: #556070; line-height: 1.4">11 &middot; w700<br>+1.6 track</div>
+    </div>
+
+  </div>
+
+  <div style="background: #0D1218; border: 1px solid #1A2630; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+    <div style="font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #4BB8FA">Why tabular figures</div>
+    <div style="font-size: 13px; font-weight: 500; color: #556070; line-height: 1.5; text-wrap: pretty">Proportional digits change width as they change value, so a live count shudders sideways every time it ticks. Tabular figures hold one width. In a counting app that is the difference between a scoreboard and a text field.</div>
+    <div style="display: flex; gap: 28px; padding-top: 4px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <div style="font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #FF4444">Proportional</div>
+        <div style="font-size: 30px; font-weight: 900; letter-spacing: -1px">111 &middot; 888</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <div style="font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #22C55E">Tabular</div>
+        <div style="font-size: 30px; font-weight: 900; letter-spacing: -1px; font-variant-numeric: tabular-nums">111 &middot; 888</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

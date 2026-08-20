@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -89,19 +90,12 @@ class AchievementsScreen extends StatelessWidget {
                           children: [
                             Text(
                               a.label(L.of(context)),
-                              style: TextStyle(
-                                color: context.colors.text,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 15,
-                              ),
+                              style: context.type.body.copyWith(color: context.colors.text),
                             ),
                             const SizedBox(height: 3),
                             Text(
                               a.hint(L.of(context)),
-                              style: TextStyle(
-                                color: context.colors.muted,
-                                fontSize: 12,
-                              ),
+                              style: context.type.label.copyWith(color: context.colors.muted),
                             ),
                           ],
                         ),

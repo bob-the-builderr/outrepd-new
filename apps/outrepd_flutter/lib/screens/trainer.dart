@@ -14,6 +14,7 @@ import '../reps/set_scorer.dart';
 import '../reps/rep_engine.dart';
 import '../motion.dart';
 import '../l10n/app_localizations.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -222,7 +223,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
         backgroundColor: _panel,
         title: Text(
           L.of(context).howManyReally,
-          style: const TextStyle(color: Colors.white, fontSize: 18),
+          style: context.type.heading.copyWith(color: Colors.white),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -230,14 +231,14 @@ class _TrainerScreenState extends State<TrainerScreen> {
           children: [
             Text(
               L.of(context).howManyReallyHint,
-              style: const TextStyle(color: _dim, fontSize: 12.5),
+              style: context.type.label.copyWith(color: _dim),
             ),
             const SizedBox(height: 14),
             TextField(
               controller: field,
               autofocus: true,
               keyboardType: TextInputType.number,
-              style: const TextStyle(color: Colors.white, fontSize: 20),
+              style: context.type.title.copyWith(color: Colors.white),
               decoration: const InputDecoration(hintText: 'e.g. 12'),
             ),
           ],
@@ -327,12 +328,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
         foregroundColor: Colors.white,
         // The app's own title style is dark in the light theme, and this
         // screen is always dark behind it.
-        titleTextStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 22,
-          fontWeight: FontWeight.w800,
-          letterSpacing: 0.5,
-        ),
+        titleTextStyle: context.type.title.copyWith(color: Colors.white),
         title: Text(exerciseLabel(context, _exercise)),
         actions: [
           if (_stage != _Stage.setup) ...[
@@ -360,11 +356,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
       children: [
         Text(
           L.of(context).pickMovement,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 26,
-            fontWeight: FontWeight.w800,
-          ),
+          style: context.type.title.copyWith(color: Colors.white),
         ),
         const SizedBox(height: 16),
         // Anything the camera has never been told about still works, so it
@@ -382,12 +374,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
             padding: const EdgeInsets.fromLTRB(4, 18, 4, 10),
             child: Text(
               group.key.toUpperCase(),
-              style: const TextStyle(
-                color: _dim,
-                fontSize: 11.5,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 1.2,
-              ),
+              style: context.type.label.copyWith(color: _dim),
             ),
           ),
           for (final listed in group.value)
@@ -410,7 +397,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
               Expanded(
                 child: Text(
                   _exercise.cue,
-                  style: const TextStyle(color: _dim, fontSize: 13),
+                  style: context.type.label.copyWith(color: _dim),
                 ),
               ),
             ],
@@ -420,14 +407,14 @@ class _TrainerScreenState extends State<TrainerScreen> {
           const SizedBox(height: 14),
           Text(
             'Session saved for tuning:\n$_savedTo',
-            style: const TextStyle(color: _dim, fontSize: 11.5),
+            style: context.type.label.copyWith(color: _dim),
           ),
         ],
         if (_error != null) ...[
           const SizedBox(height: 14),
           Text(
             _error!,
-            style: const TextStyle(color: AppColors.loss, fontSize: 12.5),
+            style: context.type.label.copyWith(color: AppColors.loss),
           ),
         ],
         const SizedBox(height: 22),
@@ -564,11 +551,7 @@ class _ExerciseTile extends StatelessWidget {
           Expanded(
             child: Text(
               exerciseLabel(context, exercise),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-              ),
+              style: context.type.heading.copyWith(color: Colors.white),
             ),
           ),
           Text(
@@ -577,10 +560,7 @@ class _ExerciseTile extends StatelessWidget {
                 : (exercise.mode == ScoreMode.hold
                     ? L.of(context).time
                     : L.of(context).counts),
-            style: TextStyle(
-              color: exercise.gates.isNotEmpty ? _accent : _dim,
-              fontSize: 11.5,
-            ),
+            style: context.type.label.copyWith(color: exercise.gates.isNotEmpty ? _accent : _dim),
           ),
           if (selected) ...[
             const SizedBox(width: 10),
@@ -714,12 +694,7 @@ class _Diagnostics extends StatelessWidget {
             for (final line in lines)
               Text(
                 line,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 11,
-                  height: 1.5,
-                  fontFeatures: [FontFeature.tabularFigures()],
-                ),
+                style: context.type.label.copyWith(color: Colors.white, height: 1.5, fontFeatures: [FontFeature.tabularFigures()]),
               ),
           ],
         ),
@@ -782,10 +757,7 @@ class _Readout extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 10),
               child: Text(
                 'Demo body — no camera in the browser',
-                style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.6),
-                  fontSize: 11.5,
-                ),
+                style: context.type.label.copyWith(color: Colors.white.withValues(alpha: 0.6)),
               ),
             ),
           GestureDetector(
@@ -794,23 +766,13 @@ class _Readout extends StatelessWidget {
               value: value,
               child: Text(
                 value,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 76,
-                  fontWeight: FontWeight.w900,
-                  height: 1,
-                ),
+                style: context.type.display.copyWith(color: Colors.white, height: 1),
               ),
             ),
           ),
           Text(
             hold ? L.of(context).secondsHeld : L.of(context).reps,
-            style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.7),
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 1.5,
-            ),
+            style: context.type.label.copyWith(color: Colors.white.withValues(alpha: 0.7)),
           ),
           const SizedBox(height: 14),
           // Height is reserved either way so the count does not jump around
@@ -822,11 +784,7 @@ class _Readout extends StatelessWidget {
                 : Text(
                     message,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: bad ? AppColors.loss : Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: context.type.body.copyWith(color: bad ? AppColors.loss : Colors.white),
                   ),
           ),
           const SizedBox(height: 12),

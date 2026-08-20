@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -194,10 +195,7 @@ class _NextStepCard extends StatelessWidget {
                     const SizedBox(height: 6),
                     Text(
                       tierLabel(L.of(context), profile.tierIdx, profile.divIdx),
-                      style: TextStyle(
-                        color: context.colors.muted,
-                        fontSize: 11,
-                      ),
+                      style: context.type.label.copyWith(color: context.colors.muted),
                     ),
                   ],
                 ),
@@ -222,11 +220,7 @@ class _NextStepCard extends StatelessWidget {
                         atTop
                             ? L.of(context).topTier
                             : L.of(context).lpToGo(localNumber(context, remaining)),
-                        style: TextStyle(
-                          color: context.colors.brand,
-                          fontSize: 11,
-                          fontWeight: FontWeight.w700,
-                        ),
+                        style: context.type.label.copyWith(color: context.colors.brand),
                       ),
                     ],
                   ),
@@ -238,11 +232,7 @@ class _NextStepCard extends StatelessWidget {
                   const SizedBox(height: 6),
                   Text(
                     tierLabel(L.of(context), nextTierIdx, nextDivIdx),
-                    style: TextStyle(
-                      color: context.colors.text,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: context.type.label.copyWith(color: context.colors.text),
                   ),
                 ],
               ),
@@ -266,7 +256,7 @@ class _NextStepCard extends StatelessWidget {
                       ? L.of(context).unlockedEverything
                       : '${L.of(context).unlocksAt(tierName(L.of(context), rewardTierIdx))}'
                           ': ${tierReward(L.of(context), rewardTierIdx)}',
-                  style: TextStyle(color: context.colors.text, fontSize: 12.5),
+                  style: context.type.label.copyWith(color: context.colors.text),
                 ),
               ),
             ],
@@ -589,13 +579,9 @@ class _RoadStop extends StatelessWidget {
                           tierReward(L.of(context), tierIdx),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: reached
+                          style: context.type.label.copyWith(color: reached
                                 ? tier.color
-                                : context.colors.muted.withValues(alpha: 0.8),
-                            fontSize: 9.5,
-                            fontWeight: FontWeight.w600,
-                          ),
+                                : context.colors.muted.withValues(alpha: 0.8)),
                         ),
                       ),
                     ),

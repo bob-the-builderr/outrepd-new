@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../crew_options.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'crew.dart';
@@ -104,11 +105,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
               _name.text.trim().isEmpty
                   ? L.of(context).yourCrew
                   : _name.text.trim(),
-              style: TextStyle(
-                color: context.colors.text,
-                fontSize: 17,
-                fontWeight: FontWeight.w800,
-              ),
+              style: context.type.heading.copyWith(color: context.colors.text),
             ),
           ),
           const SizedBox(height: 22),
@@ -129,7 +126,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
             controller: _description,
             maxLength: 80,
             maxLines: 2,
-            style: TextStyle(color: context.colors.text, fontSize: 14),
+            style: context.type.body.copyWith(color: context.colors.text),
             decoration: InputDecoration(
               counterText: '',
               hintText: L.of(context).mottoHint,
@@ -147,7 +144,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
                 Expanded(
                   child: Text(
                     _country,
-                    style: TextStyle(color: context.colors.text, fontSize: 14),
+                    style: context.type.body.copyWith(color: context.colors.text),
                   ),
                 ),
                 Icon(Icons.chevron_right, color: context.colors.muted),
@@ -177,20 +174,13 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
                         children: [
                           Text(
                             p.label(L.of(context)),
-                            style: TextStyle(
-                              color:
-                                  _privacy == p ? context.colors.text : context.colors.muted,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14,
-                            ),
+                            style: context.type.body.copyWith(color:
+                                  _privacy == p ? context.colors.text : context.colors.muted),
                           ),
                           const SizedBox(height: 2),
                           Text(
                             p.description(L.of(context)),
-                            style: TextStyle(
-                              color: context.colors.muted,
-                              fontSize: 11.5,
-                            ),
+                            style: context.type.label.copyWith(color: context.colors.muted),
                           ),
                         ],
                       ),
@@ -237,11 +227,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
                               : tierName(L.of(context), i),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: selected ? context.colors.text : context.colors.muted,
-                            fontSize: 10.5,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: context.type.label.copyWith(color: selected ? context.colors.text : context.colors.muted),
                         ),
                       ],
                     ),
@@ -257,11 +243,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
               padding: const EdgeInsets.only(top: 4, bottom: 8),
               child: Text(
                 group.label(L.of(context)),
-                style: TextStyle(
-                  color: context.colors.muted,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: context.type.label.copyWith(color: context.colors.muted),
               ),
             ),
             Wrap(
@@ -315,7 +297,7 @@ class _CreateCrewScreenState extends State<CreateCrewScreen> {
           Text(
             L.of(context).ownerNote,
             textAlign: TextAlign.center,
-            style: TextStyle(color: context.colors.muted, fontSize: 11.5),
+            style: context.type.label.copyWith(color: context.colors.muted),
           ),
         ],
       ),
@@ -409,10 +391,7 @@ class _CountryPickerState extends State<_CountryPicker> {
                       itemBuilder: (context, i) => ListTile(
                         title: Text(
                           matches[i],
-                          style: TextStyle(
-                            color: context.colors.text,
-                            fontSize: 14.5,
-                          ),
+                          style: context.type.body.copyWith(color: context.colors.text),
                         ),
                         onTap: () => Navigator.of(context).pop(matches[i]),
                       ),
@@ -435,11 +414,7 @@ class _FieldLabel extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8),
       child: Text(
         text,
-        style: TextStyle(
-          color: context.colors.muted,
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-        ),
+        style: context.type.label.copyWith(color: context.colors.muted),
       ),
     );
   }

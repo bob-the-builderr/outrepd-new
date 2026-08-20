@@ -3240,6 +3240,18 @@ abstract class L {
   /// In en, this message translates to:
   /// **'{n} seconds of work'**
   String secondsOfWork(String n);
+
+  /// No description provided for @lpOutOf.
+  ///
+  /// In en, this message translates to:
+  /// **'/ {total} LP'**
+  String lpOutOf(String total);
+
+  /// No description provided for @toPromotion.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} to promotion'**
+  String toPromotion(String n);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

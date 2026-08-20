@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import 'onboarding.dart';
 import 'shell.dart';
@@ -26,23 +27,13 @@ class WelcomeScreen extends StatelessWidget {
                 child: Text(
                   'OUTREPD',
                   maxLines: 1,
-                  style: TextStyle(
-                    fontSize: 48,
-                    fontWeight: FontWeight.w900,
-                    color: context.colors.text,
-                    letterSpacing: 2,
-                  ),
+                  style: context.type.display.copyWith(color: context.colors.text),
                 ),
               ),
               const SizedBox(height: 12),
               Text(
                 L.of(context).dontGetOutrepd,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: context.colors.brand,
-                  letterSpacing: 0.5,
-                ),
+                style: context.type.heading.copyWith(color: context.colors.brand),
               ),
               const Spacer(),
               FilledButton(

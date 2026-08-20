@@ -1653,4 +1653,14 @@ class LAr extends L {
   String secondsOfWork(String n) {
     return '$n ثانية شغل';
   }
+
+  @override
+  String lpOutOf(String total) {
+    return '/ $total نقطة';
+  }
+
+  @override
+  String toPromotion(String n) {
+    return 'يتبقى $n للترقية';
+  }
 }

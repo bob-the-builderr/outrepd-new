@@ -4,6 +4,7 @@ import '../data.dart';
 import '../rewards.dart';
 import '../motion.dart';
 import '../l10n/app_localizations.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -33,20 +34,20 @@ class _AwardsScreenState extends State<AwardsScreen> {
             trailing: Text(
               L.of(context).xOfY(localNumber(context, owned.length),
                   localNumber(context, kTitles.length)),
-              style: TextStyle(color: context.colors.muted, fontSize: 13),
+              style: context.type.label.copyWith(color: context.colors.muted),
             ),
           ),
           if (owned.isEmpty)
             Panel(
               child: Text(
                 L.of(context).noTitlesYet,
-                style: TextStyle(color: context.colors.muted, fontSize: 13),
+                style: context.type.label.copyWith(color: context.colors.muted),
               ),
             )
           else ...[
             Text(
               L.of(context).wearHint,
-              style: TextStyle(color: context.colors.muted, fontSize: 12),
+              style: context.type.label.copyWith(color: context.colors.muted),
             ),
             const SizedBox(height: 12),
             for (final title in owned)
@@ -105,12 +106,7 @@ class _StreakCard extends StatelessWidget {
                 value: rewards.streak,
                 child: Text(
                   localNumber(context, rewards.streak),
-                  style: TextStyle(
-                    color: context.colors.text,
-                    fontSize: 46,
-                    fontWeight: FontWeight.w900,
-                    height: 1,
-                  ),
+                  style: context.type.display.copyWith(color: context.colors.text, height: 1),
                 ),
               ),
             ],
@@ -118,12 +114,7 @@ class _StreakCard extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             L.of(context).dayStreak,
-            style: TextStyle(
-              color: context.colors.muted,
-              fontSize: 12.5,
-              letterSpacing: 1.2,
-              fontWeight: FontWeight.w600,
-            ),
+            style: context.type.label.copyWith(color: context.colors.muted),
           ),
           const SizedBox(height: 18),
           Row(
@@ -161,7 +152,7 @@ class _StreakCard extends StatelessWidget {
                     // will not cost them it.
                     L.of(context).restIsTraining,
                     style:
-                        TextStyle(color: context.colors.muted, fontSize: 11.5),
+                        context.type.label.copyWith(color: context.colors.muted),
                   ),
                 ),
               ],
@@ -184,16 +175,12 @@ class _Stat extends StatelessWidget {
       children: [
         Text(
           value,
-          style: TextStyle(
-            color: context.colors.text,
-            fontSize: 19,
-            fontWeight: FontWeight.w800,
-          ),
+          style: context.type.heading.copyWith(color: context.colors.text),
         ),
         const SizedBox(height: 2),
         Text(
           label,
-          style: TextStyle(color: context.colors.muted, fontSize: 11.5),
+          style: context.type.label.copyWith(color: context.colors.muted),
         ),
       ],
     );
@@ -258,21 +245,14 @@ class _TitleRow extends StatelessWidget {
                     children: [
                       Text(
                         title.name(L.of(context)),
-                        style: TextStyle(
-                          color: owned
+                        style: context.type.body.copyWith(color: owned
                               ? context.colors.text
-                              : context.colors.muted,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14.5,
-                        ),
+                              : context.colors.muted),
                       ),
                       const SizedBox(height: 2),
                       Text(
                         title.hintText(L.of(context)),
-                        style: TextStyle(
-                          color: context.colors.muted,
-                          fontSize: 11.5,
-                        ),
+                        style: context.type.label.copyWith(color: context.colors.muted),
                       ),
                     ],
                   ),
@@ -280,11 +260,7 @@ class _TitleRow extends StatelessWidget {
                 if (worn)
                   Text(
                     L.of(context).worn,
-                    style: TextStyle(
-                      color: colour,
-                      fontSize: 11.5,
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: context.type.label.copyWith(color: colour),
                   ),
               ],
             ),
@@ -347,7 +323,7 @@ Future<void> celebrate(BuildContext context, List<EarnedTitle> unlocked) async {
         backgroundColor: context.colors.surface,
         title: Text(
           L.of(context).titleUnlocked,
-          style: TextStyle(color: context.colors.text, fontSize: 18),
+          style: context.type.heading.copyWith(color: context.colors.text),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -356,17 +332,13 @@ Future<void> celebrate(BuildContext context, List<EarnedTitle> unlocked) async {
             const SizedBox(height: 14),
             Text(
               title.name(L.of(context)),
-              style: TextStyle(
-                color: context.colors.text,
-                fontSize: 22,
-                fontWeight: FontWeight.w900,
-              ),
+              style: context.type.title.copyWith(color: context.colors.text),
             ),
             const SizedBox(height: 6),
             Text(
               title.hintText(L.of(context)),
               textAlign: TextAlign.center,
-              style: TextStyle(color: context.colors.muted, fontSize: 12.5),
+              style: context.type.label.copyWith(color: context.colors.muted),
             ),
           ],
         ),

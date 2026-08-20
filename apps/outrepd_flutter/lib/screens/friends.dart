@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../data.dart';
 import '../profile_avatar.dart';
 import '../l10n/app_localizations.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -104,20 +105,13 @@ class FriendsScreen extends StatelessWidget {
                             f.username,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: context.colors.text,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 15,
-                            ),
+                            style: context.type.body.copyWith(color: context.colors.text),
                           ),
                           const SizedBox(height: 2),
                           Text(
                             '${tierName(L.of(context), f.tierIdx)}'
                             ' · ${L.of(context).lpAmount(localNumber(context, f.lp))}',
-                            style: TextStyle(
-                              color: context.colors.muted,
-                              fontSize: 12,
-                            ),
+                            style: context.type.label.copyWith(color: context.colors.muted),
                           ),
                         ],
                       ),
@@ -128,10 +122,7 @@ class FriendsScreen extends StatelessWidget {
                         side: BorderSide(color: context.colors.brand),
                         foregroundColor: context.colors.brand,
                         padding: EdgeInsets.zero,
-                        textStyle: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                        ),
+                        textStyle: context.type.label,
                       ),
                       onPressed: () =>
                           ScaffoldMessenger.of(context).showSnackBar(

@@ -13,6 +13,7 @@ import '../exercises.dart';
 import '../l10n/app_localizations.dart';
 import '../motion.dart';
 import '../reps/exercise_patterns.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'trainer.dart';
@@ -142,29 +143,20 @@ class _RoundRunnerState extends State<RoundRunner> {
                 l.roundOf(
                   localNumber(context, _index + 1),
                   localNumber(context, widget.rounds.length),
-                ),
-                style: TextStyle(
-                  color: context.colors.muted,
-                  fontSize: 12.5,
-                  letterSpacing: 2,
-                  fontWeight: FontWeight.w700,
-                ),
+                ).toUpperCase(),
+                style: context.type.label.copyWith(color: context.colors.muted),
               ),
               const SizedBox(height: 6),
               PopOnChange(
                 value: _total,
                 child: Text(
                   localNumber(context, _total),
-                  style: TextStyle(
-                    color: context.colors.text,
-                    fontSize: 40,
-                    fontWeight: FontWeight.w900,
-                  ),
+                  style: context.type.display.copyWith(color: context.colors.text),
                 ),
               ),
               Text(
                 l.reps,
-                style: TextStyle(color: context.colors.muted, fontSize: 12),
+                style: context.type.label.copyWith(color: context.colors.muted),
               ),
             ],
           ),
@@ -202,22 +194,15 @@ class _RoundRunnerState extends State<RoundRunner> {
                           r.exercise,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: r.done
+                          style: context.type.label.copyWith(color: r.done
                                 ? context.colors.text
-                                : context.colors.muted,
-                            fontSize: 12.5,
-                          ),
+                                : context.colors.muted),
                         ),
                       ),
                       if (r.done)
                         Text(
                           localNumber(context, r.reps),
-                          style: TextStyle(
-                            color: context.colors.text,
-                            fontSize: 12.5,
-                            fontWeight: FontWeight.w800,
-                          ),
+                          style: context.type.label.copyWith(color: context.colors.text),
                         ),
                     ],
                   ),
@@ -258,28 +243,20 @@ class _WorkView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
-                round.mine ? l.yourPick : l.theirPick,
-                style: TextStyle(
-                  color: round.mine ? context.colors.brand : AppColors.loss,
-                  fontSize: 11.5,
-                  fontWeight: FontWeight.w700,
-                ),
+                (round.mine ? l.yourPick : l.theirPick).toUpperCase(),
+                style: context.type.label.copyWith(color: round.mine ? context.colors.brand : AppColors.loss),
               ),
             ),
             const SizedBox(height: 18),
             Text(
               round.exercise,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: context.colors.text,
-                fontSize: 26,
-                fontWeight: FontWeight.w900,
-              ),
+              style: context.type.title.copyWith(color: context.colors.text),
             ),
             const SizedBox(height: 10),
             Text(
               l.secondsOfWork(localNumber(context, kRoundWork.inSeconds)),
-              style: TextStyle(color: context.colors.muted, fontSize: 13),
+              style: context.type.label.copyWith(color: context.colors.muted),
             ),
             const SizedBox(height: 28),
             SizedBox(
@@ -292,10 +269,7 @@ class _WorkView extends StatelessWidget {
                 ),
                 child: Text(
                   l.start,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w800,
-                  ),
+                  style: context.type.heading,
                 ),
               ),
             ),
@@ -327,35 +301,22 @@ class _RestView extends StatelessWidget {
         children: [
           Text(
             l.rest.toUpperCase(),
-            style: TextStyle(
-              color: context.colors.muted,
-              fontSize: 12.5,
-              letterSpacing: 3,
-              fontWeight: FontWeight.w700,
-            ),
+            style: context.type.label.copyWith(color: context.colors.muted),
           ),
           const SizedBox(height: 10),
           Text(
             localNumber(context, remaining.inSeconds),
-            style: TextStyle(
-              color: context.colors.brand,
-              fontSize: 64,
-              fontWeight: FontWeight.w900,
-            ),
+            style: context.type.display.copyWith(color: context.colors.brand),
           ),
           const SizedBox(height: 24),
           Text(
             l.nextUp,
-            style: TextStyle(color: context.colors.muted, fontSize: 12),
+            style: context.type.label.copyWith(color: context.colors.muted),
           ),
           const SizedBox(height: 4),
           Text(
             next.exercise,
-            style: TextStyle(
-              color: context.colors.text,
-              fontSize: 17,
-              fontWeight: FontWeight.w700,
-            ),
+            style: context.type.heading.copyWith(color: context.colors.text),
           ),
           const SizedBox(height: 26),
           TextButton(

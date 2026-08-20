@@ -519,5 +519,7 @@
   "picksLeft": "{n} left to pick",
   "yourPick": "Your pick",
   "theirPick": "Their pick",
-  "secondsOfWork": "{n} seconds of work"
+  "secondsOfWork": "{n} seconds of work",
+  "lpOutOf": "/ {total} PL",
+  "toPromotion": "{n} para ascender"
 }

@@ -1672,4 +1672,14 @@ class LId extends L {
   String secondsOfWork(String n) {
     return '$n seconds of work';
   }
+
+  @override
+  String lpOutOf(String total) {
+    return '/ $total LP';
+  }
+
+  @override
+  String toPromotion(String n) {
+    return '$n lagi untuk naik';
+  }
 }

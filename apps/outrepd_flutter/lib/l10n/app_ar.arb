@@ -519,5 +519,7 @@
   "picksLeft": "فاضل {n} تختارهم",
   "yourPick": "اختيارك",
   "theirPick": "اختياره",
-  "secondsOfWork": "{n} ثانية شغل"
+  "secondsOfWork": "{n} ثانية شغل",
+  "lpOutOf": "/ {total} نقطة",
+  "toPromotion": "يتبقى {n} للترقية"
 }

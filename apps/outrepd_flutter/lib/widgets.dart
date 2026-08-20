@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'l10n/app_localizations.dart';
+import 'type_scale.dart';
 import 'theme.dart';
 
 /// Rounded dark panel used for most content blocks.
@@ -51,18 +52,20 @@ class StatTile extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        // The number is the reason anybody looks at a stat tile, so it gets
+        // the weight — and tabular figures, so a row of tiles keeps its
+        // columns while the values change underneath.
         Text(
           value,
-          style: TextStyle(
+          style: context.type.statValue.copyWith(
             color: color ?? context.colors.text,
-            fontSize: 20,
-            fontWeight: FontWeight.w800,
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 6),
         Text(
-          label,
-          style: TextStyle(color: context.colors.muted, fontSize: 12),
+          label.toUpperCase(),
+          textAlign: TextAlign.center,
+          style: context.type.micro.copyWith(color: context.colors.muted),
         ),
       ],
     );
@@ -159,11 +162,7 @@ class SectionHeader extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(
-              color: context.colors.text,
-              fontSize: 18,
-              fontWeight: FontWeight.w800,
-            ),
+            style: context.type.heading.copyWith(color: context.colors.text),
           ),
           ?trailing,
         ],

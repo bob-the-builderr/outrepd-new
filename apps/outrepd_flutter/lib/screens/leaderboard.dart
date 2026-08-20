@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../data.dart';
 import '../profile_avatar.dart';
 import '../l10n/app_localizations.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -73,11 +74,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                         width: 28,
                         child: Text(
                           localNumber(context, i + 1),
-                          style: TextStyle(
-                            color: i < 3 ? AppColors.gold : context.colors.muted,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16,
-                          ),
+                          style: context.type.heading.copyWith(color: i < 3 ? AppColors.gold : context.colors.muted),
                         ),
                       ),
                       ProfileAvatar(
@@ -94,21 +91,14 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                               e.username,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: isMe ? context.colors.brand : context.colors.text,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 15,
-                              ),
+                              style: context.type.body.copyWith(color: isMe ? context.colors.brand : context.colors.text),
                             ),
                             const SizedBox(height: 2),
                             Text(
                               '${tierLabel(L.of(context), e.tierIdx, e.divIdx)}'
                               ' · ${L.of(context).winLoss(localNumber(context, e.wins),
                                   localNumber(context, e.losses))}',
-                              style: TextStyle(
-                                color: context.colors.muted,
-                                fontSize: 12,
-                              ),
+                              style: context.type.label.copyWith(color: context.colors.muted),
                             ),
                           ],
                         ),

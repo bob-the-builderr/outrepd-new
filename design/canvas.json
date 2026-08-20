@@ -1,0 +1,27 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "title": "The scale", "x": 0, "y": 0, "w": 560, "h": 940 },
+    { "file": "MatchBefore.dc.html", "title": "Match — today", "x": 660, "y": 0, "w": 390, "h": 844 },
+    { "file": "MatchAfter.dc.html", "title": "Match — with the scale", "x": 1110, "y": 0, "w": 390, "h": 844 },
+    { "file": "ProfileBefore.dc.html", "title": "Profile — today", "x": 1560, "y": 0, "w": 390, "h": 844 },
+    { "file": "ProfileAfter.dc.html", "title": "Profile — with the scale", "x": 2010, "y": 0, "w": 390, "h": 844 },
+    { "file": "RoundAfter.dc.html", "title": "Match round — with an opponent", "x": 2460, "y": 0, "w": 390, "h": 844 }
+  ],
+  "annotations": [
+    {
+      "id": "read-me",
+      "x": 0,
+      "y": -180,
+      "w": 560,
+      "text": "Every colour, radius and border here is lifted from lib/theme.dart — brand #4BB8FA, surface #0D1218, raised #1A2630, muted #556070, 16px radii. The only thing that changes between a \"today\" board and its pair is TYPE.\n\nThe crest and avatar are stand-ins for the real artwork."
+    },
+    {
+      "id": "round-note",
+      "x": 2460,
+      "y": -180,
+      "w": 390,
+      "text": "This one is not just type. It puts the opponent's running total on screen during the rounds — which needs a decision from you, since there is no server and their score is simulated up front."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}

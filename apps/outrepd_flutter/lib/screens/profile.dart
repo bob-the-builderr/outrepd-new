@@ -5,6 +5,7 @@ import '../profile_avatar.dart';
 import '../rewards.dart';
 import '../settings.dart';
 import '../l10n/app_localizations.dart';
+import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'awards.dart';
@@ -49,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         backgroundColor: context.colors.surface,
         title: Text(
           L.of(context).changeName,
-          style: TextStyle(color: context.colors.text, fontSize: 18),
+          style: context.type.heading.copyWith(color: context.colors.text),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -62,14 +63,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       localNumber(context, kNameChangesAllowed),
                       localNumber(context, left),
                     ),
-              style: TextStyle(color: context.colors.muted, fontSize: 12.5),
+              style: context.type.label.copyWith(color: context.colors.muted),
             ),
             const SizedBox(height: 14),
             TextField(
               controller: field,
               autofocus: true,
               maxLength: 18,
-              style: TextStyle(color: context.colors.text, fontSize: 17),
+              style: context.type.heading.copyWith(color: context.colors.text),
               decoration: const InputDecoration(counterText: ''),
             ),
           ],
@@ -155,11 +156,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         p.username,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: context.colors.text,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w800,
-                        ),
+                        style: context.type.title.copyWith(color: context.colors.text),
                       ),
                     ),
                     if (canChangeName) ...[
@@ -180,11 +177,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBox(height: 4),
               Text(
                 tierLabel(L.of(context), p.tierIdx, p.divIdx),
-                style: TextStyle(
-                  color: context.colors.brand,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
-                ),
+                style: context.type.body.copyWith(color: context.colors.brand),
               ),
             ],
           ),
@@ -227,10 +220,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               style: TextButton.styleFrom(
                 foregroundColor: context.colors.brand,
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                textStyle: const TextStyle(
-                  fontSize: 13.5,
-                  fontWeight: FontWeight.w700,
-                ),
+                textStyle: context.type.label,
               ),
             ),
           ),
@@ -292,7 +282,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   localNumber(context, kTitles.length),
                   localNumber(context, rewards.streak),
                 ),
-                style: TextStyle(color: context.colors.muted, fontSize: 13),
+                style: context.type.label.copyWith(color: context.colors.muted),
               ),
               trailing: Icon(Icons.chevron_right, color: context.colors.muted),
             ),
@@ -460,16 +450,12 @@ class _EditStatsSheetState extends State<_EditStatsSheet> {
             children: [
               Text(
                 L.of(context).editYourStats,
-                style: TextStyle(
-                  color: context.colors.text,
-                  fontSize: 19,
-                  fontWeight: FontWeight.w800,
-                ),
+                style: context.type.heading.copyWith(color: context.colors.text),
               ),
               const SizedBox(height: 4),
               Text(
                 L.of(context).editStatsHint,
-                style: TextStyle(color: context.colors.muted, fontSize: 12),
+                style: context.type.label.copyWith(color: context.colors.muted),
               ),
               const SizedBox(height: 20),
               _Field(
@@ -493,7 +479,7 @@ class _EditStatsSheetState extends State<_EditStatsSheet> {
                 const SizedBox(height: 14),
                 Text(
                   _error!,
-                  style: const TextStyle(color: AppColors.loss, fontSize: 12.5),
+                  style: context.type.label.copyWith(color: AppColors.loss),
                 ),
               ],
               const SizedBox(height: 22),
@@ -537,11 +523,7 @@ class _Field extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: TextStyle(
-              color: context.colors.muted,
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-            ),
+            style: context.type.body.copyWith(color: context.colors.muted),
           ),
         ),
         SizedBox(
@@ -559,7 +541,7 @@ class _Field extends StatelessWidget {
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               suffixText: suffix,
-              suffixStyle: TextStyle(color: context.colors.muted, fontSize: 12.5),
+              suffixStyle: context.type.label.copyWith(color: context.colors.muted),
             ),
           ),
         ),
