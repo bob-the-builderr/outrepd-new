@@ -366,11 +366,23 @@ class _EditStatsSheet extends StatefulWidget {
 }
 
 class _EditStatsSheetState extends State<_EditStatsSheet> {
-  late final _height = TextEditingController(text: '${demoProfile.heightCm}');
-  late final _weight = TextEditingController(
-    text: '${_toDisplayWeight(demoProfile.weightKg)}',
-  );
-  late final _age = TextEditingController(text: '${demoProfile.age}');
+  // Filled in didChangeDependencies rather than here: the digits depend on
+  // the locale, and there is no context yet at field-initialiser time.
+  final _height = TextEditingController();
+  final _weight = TextEditingController();
+  final _age = TextEditingController();
+  bool _filled = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_filled) return;
+    _filled = true;
+    _height.text = localNumber(context, demoProfile.heightCm);
+    _weight.text =
+        localNumber(context, _toDisplayWeight(demoProfile.weightKg));
+    _age.text = localNumber(context, demoProfile.age);
+  }
 
   String? _error;
 
@@ -389,25 +401,38 @@ class _EditStatsSheetState extends State<_EditStatsSheet> {
   }
 
   void _save() {
-    final height = int.tryParse(_height.text.trim());
-    final shownWeight = int.tryParse(_weight.text.trim());
-    final age = int.tryParse(_age.text.trim());
+    // Accepts ١٧٥ as readily as 175 — the field shows localised digits, so an
+    // Arabic keyboard's own output has to parse.
+    final height = parseLocalNumber(_height.text);
+    final shownWeight = parseLocalNumber(_weight.text);
+    final age = parseLocalNumber(_age.text);
 
     if (height == null || shownWeight == null || age == null) {
-      setState(() => _error = 'Fill all three with whole numbers');
+      setState(() => _error = L.of(context).fillWholeNumbers);
       return;
     }
     if (height < 100 || height > 250) {
-      setState(() => _error = 'Height should be between 100 and 250 cm');
+      setState(() => _error = L.of(context).heightRange(
+            localNumber(context, 100),
+            localNumber(context, 250),
+            L.of(context).shortCm,
+          ));
       return;
     }
     final weightKg = _toKg(shownWeight);
     if (weightKg < 30 || weightKg > 300) {
-      setState(() => _error = 'Bodyweight should be between 30 and 300 kg');
+      setState(() => _error = L.of(context).weightRange(
+            localNumber(context, 30),
+            localNumber(context, 300),
+            L.of(context).shortKg,
+          ));
       return;
     }
     if (age < 13 || age > 100) {
-      setState(() => _error = 'Age should be between 13 and 100');
+      setState(() => _error = L.of(context).ageRange(
+            localNumber(context, 13),
+            localNumber(context, 100),
+          ));
       return;
     }
 

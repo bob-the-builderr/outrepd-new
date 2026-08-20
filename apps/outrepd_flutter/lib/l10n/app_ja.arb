@@ -499,5 +499,9 @@
   "lpAmount": "{n} LP",
   "countWithCamera": "カメラで数える",
   "youWin": "勝利！",
-  "defeated": "敗北"
+  "defeated": "敗北",
+  "fillWholeNumbers": "3つとも整数で入力してください",
+  "heightRange": "身長は {min}〜{max} {unit} の範囲で入力してください",
+  "weightRange": "体重は {min}〜{max} {unit} の範囲で入力してください",
+  "ageRange": "年齢は {min}〜{max} の範囲で入力してください"
 }

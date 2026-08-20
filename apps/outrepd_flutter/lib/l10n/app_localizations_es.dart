@@ -1599,4 +1599,22 @@ class LEs extends L {
 
   @override
   String get defeated => 'DERROTA';
+
+  @override
+  String get fillWholeNumbers => 'Rellena los tres con números enteros';
+
+  @override
+  String heightRange(String min, String max, String unit) {
+    return 'La altura debe estar entre $min y $max $unit';
+  }
+
+  @override
+  String weightRange(String min, String max, String unit) {
+    return 'El peso debe estar entre $min y $max $unit';
+  }
+
+  @override
+  String ageRange(String min, String max) {
+    return 'La edad debe estar entre $min y $max';
+  }
 }

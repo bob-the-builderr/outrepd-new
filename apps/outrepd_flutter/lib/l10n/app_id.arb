@@ -499,5 +499,9 @@
   "lpAmount": "{n} LP",
   "countWithCamera": "Hitung pakai kamera",
   "youWin": "ANDA MENANG!",
-  "defeated": "KALAH"
+  "defeated": "KALAH",
+  "fillWholeNumbers": "Isi ketiganya dengan bilangan bulat",
+  "heightRange": "Tinggi harus antara {min} dan {max} {unit}",
+  "weightRange": "Berat harus antara {min} dan {max} {unit}",
+  "ageRange": "Usia harus antara {min} dan {max}"
 }

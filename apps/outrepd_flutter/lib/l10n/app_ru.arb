@@ -499,5 +499,9 @@
   "lpAmount": "{n} ОЛ",
   "countWithCamera": "Считать камерой",
   "youWin": "ПОБЕДА!",
-  "defeated": "ПОРАЖЕНИЕ"
+  "defeated": "ПОРАЖЕНИЕ",
+  "fillWholeNumbers": "Заполните все три целыми числами",
+  "heightRange": "Рост должен быть от {min} до {max} {unit}",
+  "weightRange": "Вес должен быть от {min} до {max} {unit}",
+  "ageRange": "Возраст должен быть от {min} до {max}"
 }

@@ -1602,4 +1602,22 @@ class LDe extends L {
 
   @override
   String get defeated => 'VERLOREN';
+
+  @override
+  String get fillWholeNumbers => 'Fülle alle drei mit ganzen Zahlen aus';
+
+  @override
+  String heightRange(String min, String max, String unit) {
+    return 'Die Größe sollte zwischen $min und $max $unit liegen';
+  }
+
+  @override
+  String weightRange(String min, String max, String unit) {
+    return 'Das Gewicht sollte zwischen $min und $max $unit liegen';
+  }
+
+  @override
+  String ageRange(String min, String max) {
+    return 'Das Alter sollte zwischen $min und $max liegen';
+  }
 }

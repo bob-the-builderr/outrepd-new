@@ -185,6 +185,20 @@ String localNumber(BuildContext context, num n) {
   return locale.languageCode == 'ar' ? _arabicDigits(text) : text;
 }
 
+/// Reads a whole number a person typed, in whatever digits their keyboard
+/// produces. An Arabic keyboard gives ١٧٥, and `int.tryParse` refuses it — so
+/// showing localised digits in an editable field without this makes every save
+/// fail with "fill all three with whole numbers" while three numbers sit right
+/// there on screen.
+int? parseLocalNumber(String text) {
+  const arabicIndic = '٠١٢٣٤٥٦٧٨٩';
+  final western = text.trim().split('').map((c) {
+    final i = arabicIndic.indexOf(c);
+    return i == -1 ? c : '$i';
+  }).join();
+  return int.tryParse(western);
+}
+
 String _arabicDigits(String text) {
   const arabicIndic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
   return text.split('').map((c) {

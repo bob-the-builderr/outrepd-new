@@ -1608,4 +1608,23 @@ class LFr extends L {
 
   @override
   String get defeated => 'DÉFAITE';
+
+  @override
+  String get fillWholeNumbers =>
+      'Remplissez les trois avec des nombres entiers';
+
+  @override
+  String heightRange(String min, String max, String unit) {
+    return 'La taille doit être entre $min et $max $unit';
+  }
+
+  @override
+  String weightRange(String min, String max, String unit) {
+    return 'Le poids doit être entre $min et $max $unit';
+  }
+
+  @override
+  String ageRange(String min, String max) {
+    return 'L\'âge doit être entre $min et $max';
+  }
 }

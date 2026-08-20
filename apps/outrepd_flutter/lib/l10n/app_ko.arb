@@ -499,5 +499,9 @@
   "lpAmount": "{n} LP",
   "countWithCamera": "카메라로 세기",
   "youWin": "승리!",
-  "defeated": "패배"
+  "defeated": "패배",
+  "fillWholeNumbers": "세 칸 모두 정수로 입력하세요",
+  "heightRange": "키는 {min}~{max} {unit} 사이여야 합니다",
+  "weightRange": "몸무게는 {min}~{max} {unit} 사이여야 합니다",
+  "ageRange": "나이는 {min}~{max} 사이여야 합니다"
 }

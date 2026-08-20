@@ -1560,4 +1560,22 @@ class LJa extends L {
 
   @override
   String get defeated => '敗北';
+
+  @override
+  String get fillWholeNumbers => '3つとも整数で入力してください';
+
+  @override
+  String heightRange(String min, String max, String unit) {
+    return '身長は $min〜$max $unit の範囲で入力してください';
+  }
+
+  @override
+  String weightRange(String min, String max, String unit) {
+    return '体重は $min〜$max $unit の範囲で入力してください';
+  }
+
+  @override
+  String ageRange(String min, String max) {
+    return '年齢は $min〜$max の範囲で入力してください';
+  }
 }

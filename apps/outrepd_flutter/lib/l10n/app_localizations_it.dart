@@ -1596,4 +1596,22 @@ class LIt extends L {
 
   @override
   String get defeated => 'SCONFITTA';
+
+  @override
+  String get fillWholeNumbers => 'Compila tutti e tre con numeri interi';
+
+  @override
+  String heightRange(String min, String max, String unit) {
+    return 'L\'altezza deve essere tra $min e $max $unit';
+  }
+
+  @override
+  String weightRange(String min, String max, String unit) {
+    return 'Il peso deve essere tra $min e $max $unit';
+  }
+
+  @override
+  String ageRange(String min, String max) {
+    return 'L\'età deve essere tra $min e $max';
+  }
 }

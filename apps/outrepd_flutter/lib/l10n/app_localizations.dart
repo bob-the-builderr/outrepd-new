@@ -3120,6 +3120,30 @@ abstract class L {
   /// In en, this message translates to:
   /// **'DEFEATED'**
   String get defeated;
+
+  /// No description provided for @fillWholeNumbers.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill all three with whole numbers'**
+  String get fillWholeNumbers;
+
+  /// No description provided for @heightRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Height should be between {min} and {max} {unit}'**
+  String heightRange(String min, String max, String unit);
+
+  /// No description provided for @weightRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Bodyweight should be between {min} and {max} {unit}'**
+  String weightRange(String min, String max, String unit);
+
+  /// No description provided for @ageRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Age should be between {min} and {max}'**
+  String ageRange(String min, String max);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

@@ -499,5 +499,9 @@
   "lpAmount": "{n} LP",
   "countWithCamera": "कैमरे से गिनें",
   "youWin": "आप जीते!",
-  "defeated": "हार"
+  "defeated": "हार",
+  "fillWholeNumbers": "तीनों में पूर्ण संख्याएँ भरें",
+  "heightRange": "कद {min} और {max} {unit} के बीच होना चाहिए",
+  "weightRange": "वज़न {min} और {max} {unit} के बीच होना चाहिए",
+  "ageRange": "उम्र {min} और {max} के बीच होनी चाहिए"
 }

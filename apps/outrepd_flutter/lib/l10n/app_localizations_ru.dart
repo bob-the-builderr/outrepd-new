@@ -1595,4 +1595,22 @@ class LRu extends L {
 
   @override
   String get defeated => 'ПОРАЖЕНИЕ';
+
+  @override
+  String get fillWholeNumbers => 'Заполните все три целыми числами';
+
+  @override
+  String heightRange(String min, String max, String unit) {
+    return 'Рост должен быть от $min до $max $unit';
+  }
+
+  @override
+  String weightRange(String min, String max, String unit) {
+    return 'Вес должен быть от $min до $max $unit';
+  }
+
+  @override
+  String ageRange(String min, String max) {
+    return 'Возраст должен быть от $min до $max';
+  }
 }

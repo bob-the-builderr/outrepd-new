@@ -111,9 +111,21 @@ class WorkoutSet {
   WorkoutSet({this.weight = '', this.reps = ''});
 
   double get volume {
-    final w = double.tryParse(weight) ?? 0;
-    final r = double.tryParse(reps) ?? 0;
+    final w = _number(weight);
+    final r = _number(reps);
     return w * r;
+  }
+
+  /// Reads whatever digits the keyboard produced. An Arabic keyboard types ١٢
+  /// and `double.tryParse` refuses it, so a set logged on an Arabic phone would
+  /// silently count as zero volume — a lost match nobody could explain.
+  static double _number(String text) {
+    const arabicIndic = '٠١٢٣٤٥٦٧٨٩';
+    final western = text.trim().split('').map((c) {
+      final i = arabicIndic.indexOf(c);
+      return i == -1 ? c : '$i';
+    }).join();
+    return double.tryParse(western) ?? 0;
   }
 
   bool get isComplete => volume > 0;

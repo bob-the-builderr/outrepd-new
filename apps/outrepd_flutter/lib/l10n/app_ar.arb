@@ -10,7 +10,7 @@
   "challengeFriend": "تحدَّ صديقًا",
   "trainWithCamera": "تدرَّب بالكاميرا",
   "viewRoadmap": "اعرض خارطة الطريق",
-  "lpProgress": "{lp} / 100 نقطة · يتبقى {left} للترقية",
+  "lpProgress": "{lp} / ١٠٠ نقطة · يتبقى {left} للترقية",
   "winStreak": "{count} انتصارات متتالية",
   "matchHistory": "سجل المباريات",
   "allMatches": "جميع المباريات",
@@ -499,5 +499,9 @@
   "lpAmount": "{n} نقطة",
   "countWithCamera": "عُدّ بالكاميرا",
   "youWin": "فزت!",
-  "defeated": "خسرت"
+  "defeated": "خسرت",
+  "fillWholeNumbers": "املأ الثلاثة بأرقام صحيحة",
+  "heightRange": "الطول يجب أن يكون بين {min} و{max} {unit}",
+  "weightRange": "الوزن يجب أن يكون بين {min} و{max} {unit}",
+  "ageRange": "العمر يجب أن يكون بين {min} و{max}"
 }

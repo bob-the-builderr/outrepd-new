@@ -499,5 +499,9 @@
   "lpAmount": "{n} LP",
   "countWithCamera": "Kamerayla say",
   "youWin": "KAZANDINIZ!",
-  "defeated": "YENİLDİNİZ"
+  "defeated": "YENİLDİNİZ",
+  "fillWholeNumbers": "Üçünü de tam sayıyla doldurun",
+  "heightRange": "Boy {min} ile {max} {unit} arasında olmalı",
+  "weightRange": "Kilo {min} ile {max} {unit} arasında olmalı",
+  "ageRange": "Yaş {min} ile {max} arasında olmalı"
 }

@@ -1596,4 +1596,22 @@ class LHi extends L {
 
   @override
   String get defeated => 'हार';
+
+  @override
+  String get fillWholeNumbers => 'तीनों में पूर्ण संख्याएँ भरें';
+
+  @override
+  String heightRange(String min, String max, String unit) {
+    return 'कद $min और $max $unit के बीच होना चाहिए';
+  }
+
+  @override
+  String weightRange(String min, String max, String unit) {
+    return 'वज़न $min और $max $unit के बीच होना चाहिए';
+  }
+
+  @override
+  String ageRange(String min, String max) {
+    return 'उम्र $min और $max के बीच होनी चाहिए';
+  }
 }

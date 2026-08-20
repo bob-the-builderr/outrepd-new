@@ -708,5 +708,45 @@
   },
   "countWithCamera": "Count with camera",
   "youWin": "YOU WIN!",
-  "defeated": "DEFEATED"
+  "defeated": "DEFEATED",
+  "fillWholeNumbers": "Fill all three with whole numbers",
+  "heightRange": "Height should be between {min} and {max} {unit}",
+  "@heightRange": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "weightRange": "Bodyweight should be between {min} and {max} {unit}",
+  "@weightRange": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "ageRange": "Age should be between {min} and {max}",
+  "@ageRange": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  }
 }

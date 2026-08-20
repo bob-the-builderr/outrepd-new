@@ -40,7 +40,7 @@ class LAr extends L {
 
   @override
   String lpProgress(String lp, String left) {
-    return '$lp / 100 نقطة · يتبقى $left للترقية';
+    return '$lp / ١٠٠ نقطة · يتبقى $left للترقية';
   }
 
   @override
@@ -1581,4 +1581,22 @@ class LAr extends L {
 
   @override
   String get defeated => 'خسرت';
+
+  @override
+  String get fillWholeNumbers => 'املأ الثلاثة بأرقام صحيحة';
+
+  @override
+  String heightRange(String min, String max, String unit) {
+    return 'الطول يجب أن يكون بين $min و$max $unit';
+  }
+
+  @override
+  String weightRange(String min, String max, String unit) {
+    return 'الوزن يجب أن يكون بين $min و$max $unit';
+  }
+
+  @override
+  String ageRange(String min, String max) {
+    return 'العمر يجب أن يكون بين $min و$max';
+  }
 }

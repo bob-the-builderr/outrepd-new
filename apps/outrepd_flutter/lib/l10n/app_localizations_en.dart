@@ -1590,4 +1590,22 @@ class LEn extends L {
 
   @override
   String get defeated => 'DEFEATED';
+
+  @override
+  String get fillWholeNumbers => 'Fill all three with whole numbers';
+
+  @override
+  String heightRange(String min, String max, String unit) {
+    return 'Height should be between $min and $max $unit';
+  }
+
+  @override
+  String weightRange(String min, String max, String unit) {
+    return 'Bodyweight should be between $min and $max $unit';
+  }
+
+  @override
+  String ageRange(String min, String max) {
+    return 'Age should be between $min and $max';
+  }
 }

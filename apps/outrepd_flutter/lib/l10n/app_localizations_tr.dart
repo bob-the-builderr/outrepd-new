@@ -1589,4 +1589,22 @@ class LTr extends L {
 
   @override
   String get defeated => 'YENİLDİNİZ';
+
+  @override
+  String get fillWholeNumbers => 'Üçünü de tam sayıyla doldurun';
+
+  @override
+  String heightRange(String min, String max, String unit) {
+    return 'Boy $min ile $max $unit arasında olmalı';
+  }
+
+  @override
+  String weightRange(String min, String max, String unit) {
+    return 'Kilo $min ile $max $unit arasında olmalı';
+  }
+
+  @override
+  String ageRange(String min, String max) {
+    return 'Yaş $min ile $max arasında olmalı';
+  }
 }

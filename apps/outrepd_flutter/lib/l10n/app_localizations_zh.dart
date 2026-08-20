@@ -1559,4 +1559,22 @@ class LZh extends L {
 
   @override
   String get defeated => '失败';
+
+  @override
+  String get fillWholeNumbers => '三项都请填写整数';
+
+  @override
+  String heightRange(String min, String max, String unit) {
+    return '身高需在 $min 到 $max $unit 之间';
+  }
+
+  @override
+  String weightRange(String min, String max, String unit) {
+    return '体重需在 $min 到 $max $unit 之间';
+  }
+
+  @override
+  String ageRange(String min, String max) {
+    return '年龄需在 $min 到 $max 之间';
+  }
 }

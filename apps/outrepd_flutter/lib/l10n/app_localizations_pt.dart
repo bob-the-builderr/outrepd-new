@@ -1598,4 +1598,22 @@ class LPt extends L {
 
   @override
   String get defeated => 'DERROTA';
+
+  @override
+  String get fillWholeNumbers => 'Preenche os três com números inteiros';
+
+  @override
+  String heightRange(String min, String max, String unit) {
+    return 'A altura deve estar entre $min e $max $unit';
+  }
+
+  @override
+  String weightRange(String min, String max, String unit) {
+    return 'O peso deve estar entre $min e $max $unit';
+  }
+
+  @override
+  String ageRange(String min, String max) {
+    return 'A idade deve estar entre $min e $max';
+  }
 }

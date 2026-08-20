@@ -1561,4 +1561,22 @@ class LKo extends L {
 
   @override
   String get defeated => '패배';
+
+  @override
+  String get fillWholeNumbers => '세 칸 모두 정수로 입력하세요';
+
+  @override
+  String heightRange(String min, String max, String unit) {
+    return '키는 $min~$max $unit 사이여야 합니다';
+  }
+
+  @override
+  String weightRange(String min, String max, String unit) {
+    return '몸무게는 $min~$max $unit 사이여야 합니다';
+  }
+
+  @override
+  String ageRange(String min, String max) {
+    return '나이는 $min~$max 사이여야 합니다';
+  }
 }

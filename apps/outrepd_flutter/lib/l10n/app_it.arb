@@ -499,5 +499,9 @@
   "lpAmount": "{n} PL",
   "countWithCamera": "Conta con la fotocamera",
   "youWin": "HAI VINTO!",
-  "defeated": "SCONFITTA"
+  "defeated": "SCONFITTA",
+  "fillWholeNumbers": "Compila tutti e tre con numeri interi",
+  "heightRange": "L'altezza deve essere tra {min} e {max} {unit}",
+  "weightRange": "Il peso deve essere tra {min} e {max} {unit}",
+  "ageRange": "L'età deve essere tra {min} e {max}"
 }

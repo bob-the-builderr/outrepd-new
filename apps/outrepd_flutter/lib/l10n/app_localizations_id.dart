@@ -1599,4 +1599,22 @@ class LId extends L {
 
   @override
   String get defeated => 'KALAH';
+
+  @override
+  String get fillWholeNumbers => 'Isi ketiganya dengan bilangan bulat';
+
+  @override
+  String heightRange(String min, String max, String unit) {
+    return 'Tinggi harus antara $min dan $max $unit';
+  }
+
+  @override
+  String weightRange(String min, String max, String unit) {
+    return 'Berat harus antara $min dan $max $unit';
+  }
+
+  @override
+  String ageRange(String min, String max) {
+    return 'Usia harus antara $min dan $max';
+  }
 }
