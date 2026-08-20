@@ -26,10 +26,19 @@ const _folder = String.fromEnvironment(
 
 const _clips = <String, String>{
   'squat_demo.json': 'Barbell Squat',
+  'squat_series.json': 'Barbell Squat',
   'deadlift_demo.json': 'Deadlift',
+  'deadlift_series.json': 'Deadlift',
   'pushup_interval.json': 'Push-Ups',
   'pushup_tcount.json': 'Push-Ups',
   'bench_dumbbell.json': 'Barbell Bench Press',
+  'bench_demo.json': 'Barbell Bench Press',
+  'incline_demo.json': 'Incline Barbell Bench Press',
+  'ohp_demo.json': 'Overhead Press',
+  'row_demo.json': 'Barbell Row',
+  'pullup_demo.json': 'Pull-Ups',
+  'crunch_demo.json': 'Hanging Leg Raises',
+  'legraise_demo.json': 'Hanging Leg Raises',
 };
 
 void main() {

@@ -38,10 +38,19 @@ const _folder = String.fromEnvironment(
 /// an exercise the app does not have measures nothing at all.
 const _clips = <String, (String truth, String impostor)>{
   'squat_demo.json': ('Barbell Squat', 'Deadlift'),
+  'squat_series.json': ('Barbell Squat', 'Deadlift'),
   'deadlift_demo.json': ('Deadlift', 'Barbell Squat'),
+  'deadlift_series.json': ('Deadlift', 'Barbell Squat'),
   'pushup_interval.json': ('Push-Ups', 'Barbell Bench Press'),
   'pushup_tcount.json': ('Push-Ups', 'Barbell Curl'),
   'bench_dumbbell.json': ('Barbell Bench Press', 'Barbell Curl'),
+  'bench_demo.json': ('Barbell Bench Press', 'Barbell Curl'),
+  'incline_demo.json': ('Incline Barbell Bench Press', 'Barbell Curl'),
+  'ohp_demo.json': ('Overhead Press', 'Barbell Curl'),
+  'row_demo.json': ('Barbell Row', 'Barbell Curl'),
+  'pullup_demo.json': ('Pull-Ups', 'Barbell Curl'),
+  'crunch_demo.json': ('Hanging Leg Raises', 'Barbell Squat'),
+  'legraise_demo.json': ('Hanging Leg Raises', 'Barbell Squat'),
 };
 
 ({int reps, String? why}) _countWith(

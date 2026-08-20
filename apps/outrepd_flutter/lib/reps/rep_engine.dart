@@ -182,6 +182,16 @@ class RepEngine {
   /// True once the lifter has reached the bottom zone and is on their way up.
   bool _armed = false;
   Duration? _repStart;
+
+  /// When the lifter last rose out of the bottom zone on this attempt.
+  ///
+  /// Separate from [_repStart], which refreshes on every frame spent at the
+  /// bottom so resting down there cannot buy credit for a jerked rep. Timing
+  /// the abandon window off that refreshing clock meant it never reached eight
+  /// seconds for anyone who kept dipping back down: the engine stayed armed for
+  /// the whole session, and since the range only re-derives between reps, the
+  /// wrong range that caused it could never correct itself.
+  Duration? _leftBottomAt;
   bool _formAtBottom = true;
   bool _spoiled = false;
   Duration? _badSince;
@@ -338,7 +348,10 @@ class RepEngine {
         // would hand a rep to anyone who sagged, tidied up, then pushed.
         _repStart = now;
       }
-    } else if (_armed && now - (_repStart ?? now) > kAbandonedRep) {
+      // Back at the bottom, so the ascent that never arrived is owed no more
+      // patience — the next one starts a fresh window.
+      _leftBottomAt = null;
+    } else if (_armed && now - (_leftBottomAt ??= now) > kAbandonedRep) {
       // Went down, never came back up. Whatever that was, it was not a rep —
       // most likely the range is wrong and the top is out of reach.
       //
@@ -401,17 +414,80 @@ class RepEngine {
   /// Re-derives the ends from the last few seconds of movement. Runs quietly
   /// while the set goes on, so the first reps count on the definition's own
   /// thresholds and later ones on this lifter's actual travel.
+  /// The typical bottom and top of the recent excursions, read from the
+  /// turning points of the signal.
+  ///
+  /// Percentiles of the sample window measure where the body *spends time*,
+  /// which is a different quantity from how far it travels — and for a
+  /// bottom-heavy tempo the two disagree badly. A push-up set that pauses at
+  /// the chest and snaps through the lockout puts four hundred frames near the
+  /// bottom and nine at the top, so the interquartile band reads a fraction of
+  /// the real movement. Adapting to that either collapses the meter or, once
+  /// the narrowing guard refuses the collapse, freezes the range at a guess
+  /// that never fitted. Both were happening, in different clips.
+  ///
+  /// Turning points measure the travel itself, and the median of them ignores
+  /// the one rep somebody bailed out of.
+  (double low, double high)? _excursions() {
+    if (_recent.isEmpty) return null;
+
+    // Below this a wobble counts as a turn; far above it a shallow rep stops
+    // registering at all. It sits nearer tracker noise than rep depth.
+    const prominence = 8.0;
+
+    final troughs = <double>[];
+    final peaks = <double>[];
+    var candidate = _recent.first;
+    var rising = true;
+
+    for (final v in _recent) {
+      if (rising) {
+        if (v > candidate) {
+          candidate = v;
+        } else if (candidate - v > prominence) {
+          peaks.add(candidate);
+          rising = false;
+          candidate = v;
+        }
+      } else {
+        if (v < candidate) {
+          candidate = v;
+        } else if (v - candidate > prominence) {
+          troughs.add(candidate);
+          rising = true;
+          candidate = v;
+        }
+      }
+    }
+
+    // Two of each is a full cycle plus corroboration. One of each could be
+    // somebody lying down.
+    if (troughs.length < 2 || peaks.length < 2) return null;
+    troughs.sort();
+    peaks.sort();
+    return (troughs[troughs.length ~/ 2], peaks[peaks.length ~/ 2]);
+  }
+
   void _adaptRange() {
     if (_recent.length < _minSamplesToAdapt) return;
 
-    final sorted = List.of(_recent)..sort();
-    double at(double f) =>
-        sorted[(f * (sorted.length - 1)).round().clamp(0, sorted.length - 1)];
+    final double low;
+    final double high;
 
-    // Trimmed the same way and for the same reason as before: too narrow still
-    // counts, too wide counts nothing.
-    final low = at(0.25);
-    final high = at(0.75);
+    if (_excursions() case (final l, final h)) {
+      low = l;
+      high = h;
+    } else {
+      // Not enough turning points to read a rhythm — someone setting up, or
+      // resting. Percentiles are the weaker measure, but they are all there is,
+      // and the guard below stops a resting window collapsing the meter.
+      final sorted = List.of(_recent)..sort();
+      double at(double f) =>
+          sorted[(f * (sorted.length - 1)).round().clamp(0, sorted.length - 1)];
+      low = at(0.25);
+      high = at(0.75);
+    }
+
     if (high - low < kMinCalibrationRange) return;
 
     // Refuse a range far narrower than the one in use. Widening is usually the
