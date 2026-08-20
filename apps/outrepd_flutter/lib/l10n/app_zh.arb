@@ -503,5 +503,21 @@
   "fillWholeNumbers": "三项都请填写整数",
   "heightRange": "身高需在 {min} 到 {max} {unit} 之间",
   "weightRange": "体重需在 {min} 到 {max} {unit} 之间",
-  "ageRange": "年龄需在 {min} 到 {max} 之间"
+  "ageRange": "年龄需在 {min} 到 {max} 之间",
+  "discPush": "Push",
+  "discPull": "Pull",
+  "discLegs": "Legs",
+  "discPushHint": "Chest, shoulders and triceps",
+  "discPullHint": "Back and biceps",
+  "discLegsHint": "Quads, hamstrings and core",
+  "pickYourThree": "Pick your three",
+  "pickThreeHint": "Both of you lift all six — your three and theirs",
+  "roundOf": "Round {n} of {total}",
+  "rest": "Rest",
+  "work": "Work",
+  "nextUp": "Next up",
+  "picksLeft": "{n} left to pick",
+  "yourPick": "Your pick",
+  "theirPick": "Their pick",
+  "secondsOfWork": "{n} seconds of work"
 }

@@ -5,10 +5,9 @@ import 'package:flutter/material.dart';
 
 import '../data.dart';
 import '../exercises.dart';
-import '../reps/exercise_patterns.dart';
 import '../l10n/app_localizations.dart';
 import '../theme.dart';
-import 'trainer.dart';
+import 'match_rounds.dart';
 import '../widgets.dart';
 
 /// The full match loop: pick exercises → find an opponent → VS intro →
@@ -17,9 +16,9 @@ import '../widgets.dart';
 /// The opponent is simulated locally: their volume is generated up front from
 /// the player's rank, so the match resolves without a server.
 class MatchFlowScreen extends StatefulWidget {
-  final String muscle;
+  final Discipline discipline;
 
-  const MatchFlowScreen({super.key, required this.muscle});
+  const MatchFlowScreen({super.key, required this.discipline});
 
   @override
   State<MatchFlowScreen> createState() => _MatchFlowScreenState();
@@ -31,13 +30,14 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   _Stage _stage = _Stage.picking;
 
   final _selected = <String>{};
-  final _workout = <WorkoutEntry>[];
+
+  /// The six rounds, built once an opponent is found: your three and theirs,
+  /// alternating.
+  final _rounds = <MatchRound>[];
 
   late final Opponent _opponent;
-  late final double _opponentVolume;
 
   int _countdown = 3;
-  Duration _remaining = const Duration(hours: 2);
   Timer? _timer;
 
   @override
@@ -45,8 +45,9 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     super.initState();
     final rng = Random();
     _opponent = demoOpponents[rng.nextInt(demoOpponents.length)];
-    // Give the opponent a believable target around the player's usual output.
-    _opponentVolume = 5200 + rng.nextDouble() * 5200;
+    // A believable total for six rounds of ninety seconds, rather than a
+    // volume in kilos that nothing on this screen measures any more.
+    _theirReps = 48 + rng.nextInt(42);
   }
 
   @override
@@ -55,21 +56,38 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     super.dispose();
   }
 
-  double get _volume => _workout.fold(0.0, (sum, e) => sum + e.volume);
+  /// Reps, not kilos. A round is a fixed window of one movement, so what it
+  /// produces is a count — and the camera can count reps but cannot read what
+  /// is on the bar.
+  int get _myReps => _rounds.fold(0, (sum, r) => sum + r.reps);
 
-  bool get _won => _volume >= _opponentVolume;
+  /// What the opponent managed on the same six rounds. Simulated locally until
+  /// there is a server to ask.
+  late final int _theirReps;
+
+  bool get _won => _myReps >= _theirReps;
 
   int get _lpChange {
-    if (!_won) return -(12 + (_opponentVolume - _volume).clamp(0, 4000) ~/ 500);
-    return 15 + (_volume - _opponentVolume).clamp(0, 5000) ~/ 400;
+    final margin = (_myReps - _theirReps).abs();
+    return _won ? 15 + (margin.clamp(0, 40) ~/ 4) : -(12 + (margin.clamp(0, 40) ~/ 5));
   }
 
   void _startSearch() {
     setState(() {
       _stage = _Stage.searching;
-      _workout
+      // The opponent's three come from the same discipline, chosen at random
+      // and never one of yours — half a card of duplicates would waste rounds.
+      final pool = widget.discipline.exercises
+          .map((e) => e.name)
+          .where((n) => !_selected.contains(n))
+          .toList()
+        ..shuffle();
+      _rounds
         ..clear()
-        ..addAll(_selected.map((name) => WorkoutEntry(name: name)));
+        ..addAll(buildCard(
+          _selected.toList(),
+          pool.take(kPicksPerPlayer).toList(),
+        ));
     });
     Timer(const Duration(milliseconds: 2600), () {
       if (!mounted) return;
@@ -87,20 +105,6 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       } else {
         t.cancel();
         setState(() => _stage = _Stage.active);
-        _runMatchClock();
-      }
-    });
-  }
-
-  void _runMatchClock() {
-    _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 1), (t) {
-      if (!mounted) return;
-      if (_remaining.inSeconds <= 1) {
-        t.cancel();
-        _finish();
-      } else {
-        setState(() => _remaining -= const Duration(seconds: 1));
       }
     });
   }
@@ -129,60 +133,40 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     switch (_stage) {
       case _Stage.picking:
         return _ExercisePicker(
-          muscle: widget.muscle,
+          discipline: widget.discipline,
           selected: _selected,
           onToggle: (name) => setState(() {
-            _selected.contains(name) ? _selected.remove(name) : _selected.add(name);
+            if (_selected.contains(name)) {
+              _selected.remove(name);
+            } else if (_selected.length < kPicksPerPlayer) {
+              // Silently ignoring a fourth tap would read as a broken button,
+              // so the counter above the list is what says why.
+              _selected.add(name);
+            }
           }),
-          onStart: _selected.isEmpty ? null : _startSearch,
+          onStart:
+              _selected.length == kPicksPerPlayer ? _startSearch : null,
         );
       case _Stage.searching:
-        return _SearchingView(muscle: widget.muscle);
+        return _SearchingView(discipline: widget.discipline);
       case _Stage.versus:
         return _VersusView(
           opponent: _opponent,
-          muscle: widget.muscle,
+          discipline: widget.discipline,
           countdown: _countdown,
         );
       case _Stage.active:
-        return _ActiveMatchView(
-          workout: _workout,
-          remaining: _remaining,
-          volume: _volume,
-          opponent: _opponent,
-          onChanged: () => setState(() {}),
-          onFinish: _confirmFinish,
-        );
+        return RoundRunner(rounds: _rounds, onFinished: _finish);
       case _Stage.result:
         return _ResultView(
           won: _won,
-          volume: _volume,
-          opponentVolume: _opponentVolume,
+          volume: _myReps.toDouble(),
+          opponentVolume: _theirReps.toDouble(),
           opponent: _opponent,
           lpChange: _lpChange,
           onDone: () => Navigator.of(context).pop(),
         );
     }
-  }
-
-  Future<void> _confirmFinish() async {
-    final ok = await showDialog<bool>(
-      context: context,
-      builder: (c) => AlertDialog(
-        backgroundColor: context.colors.surface,
-        title: Text(L.of(context).finishMatchQ),
-        content: Text(L.of(context).finishMatchBody),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(c, false), child: Text(L.of(context).keepGoing)),
-          TextButton(
-            onPressed: () => Navigator.pop(c, true),
-            child: Text(L.of(context).finish,
-                style: TextStyle(color: context.colors.brand)),
-          ),
-        ],
-      ),
-    );
-    if (ok == true) _finish();
   }
 
   Future<void> _confirmQuit() async {
@@ -209,13 +193,13 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
 // ─────────────────────────── stage 1: pick exercises ──────────────────────────
 
 class _ExercisePicker extends StatelessWidget {
-  final String muscle;
+  final Discipline discipline;
   final Set<String> selected;
   final ValueChanged<String> onToggle;
   final VoidCallback? onStart;
 
   const _ExercisePicker({
-    required this.muscle,
+    required this.discipline,
     required this.selected,
     required this.onToggle,
     required this.onStart,
@@ -223,12 +207,15 @@ class _ExercisePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final list = exercisesFor(muscle);
+    final list = discipline.exercises;
     return Column(
       children: [
         _FlowHeader(
-          title: muscleGroupLabel(L.of(context), muscle).toUpperCase(),
-          subtitle: L.of(context).pickExercises,
+          title: discipline.label(L.of(context)).toUpperCase(),
+          subtitle: selected.length == kPicksPerPlayer
+              ? L.of(context).pickThreeHint
+              : L.of(context).picksLeft(
+                  localNumber(context, kPicksPerPlayer - selected.length)),
         ),
         Expanded(
           child: ListView.separated(
@@ -310,9 +297,9 @@ class _ExercisePicker extends StatelessWidget {
 // ─────────────────────────── stage 2: searching ───────────────────────────────
 
 class _SearchingView extends StatefulWidget {
-  final String muscle;
+  final Discipline discipline;
 
-  const _SearchingView({required this.muscle});
+  const _SearchingView({required this.discipline});
 
   @override
   State<_SearchingView> createState() => _SearchingViewState();
@@ -374,7 +361,7 @@ class _SearchingViewState extends State<_SearchingView>
           ),
           const SizedBox(height: 8),
           Text(
-            L.of(context).matchingWith(widget.muscle),
+            L.of(context).matchingWith(widget.discipline.label(L.of(context))),
             style: TextStyle(color: context.colors.muted, fontSize: 13),
           ),
         ],
@@ -387,12 +374,12 @@ class _SearchingViewState extends State<_SearchingView>
 
 class _VersusView extends StatelessWidget {
   final Opponent opponent;
-  final String muscle;
+  final Discipline discipline;
   final int countdown;
 
   const _VersusView({
     required this.opponent,
-    required this.muscle,
+    required this.discipline,
     required this.countdown,
   });
 
@@ -403,7 +390,7 @@ class _VersusView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          muscle.toUpperCase(),
+          discipline.label(L.of(context)).toUpperCase(),
           style: TextStyle(
             color: context.colors.muted,
             letterSpacing: 3,
@@ -479,286 +466,6 @@ class _Fighter extends StatelessWidget {
         const SizedBox(height: 2),
         Text(subtitle, style: TextStyle(color: kTiers[tierIdx.clamp(0, kTiers.length - 1)].color, fontSize: 12)),
       ],
-    );
-  }
-}
-
-// ─────────────────────────── stage 4: active match ────────────────────────────
-
-class _ActiveMatchView extends StatelessWidget {
-  final List<WorkoutEntry> workout;
-  final Duration remaining;
-  final double volume;
-  final Opponent opponent;
-  final VoidCallback onChanged;
-  final VoidCallback onFinish;
-
-  const _ActiveMatchView({
-    required this.workout,
-    required this.remaining,
-    required this.volume,
-    required this.opponent,
-    required this.onChanged,
-    required this.onFinish,
-  });
-
-  String get _clock {
-    final h = remaining.inHours.toString().padLeft(2, '0');
-    final m = (remaining.inMinutes % 60).toString().padLeft(2, '0');
-    final s = (remaining.inSeconds % 60).toString().padLeft(2, '0');
-    return '$h:$m:$s';
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
-          decoration: BoxDecoration(
-            color: context.colors.surface,
-            border: Border(bottom: BorderSide(color: context.colors.surfaceRaised)),
-          ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(L.of(context).timeLeft,
-                      style: TextStyle(color: context.colors.muted, fontSize: 11, letterSpacing: 1)),
-                  Text(L.of(context).vsName(opponent.username),
-                      style: TextStyle(color: context.colors.muted, fontSize: 11)),
-                ],
-              ),
-              const SizedBox(height: 4),
-              Text(
-                _clock,
-                style: TextStyle(
-                  color: context.colors.text,
-                  fontSize: 30,
-                  fontWeight: FontWeight.w900,
-                  fontFeatures: [FontFeature.tabularFigures()],
-                ),
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.baseline,
-                textBaseline: TextBaseline.alphabetic,
-                children: [
-                  Text(
-                    volume.toStringAsFixed(0),
-                    style: TextStyle(
-                      color: context.colors.brand,
-                      fontSize: 26,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  Text(L.of(context).kgTotalVolume(L.of(context).shortKg),
-                      style: TextStyle(color: context.colors.muted, fontSize: 12)),
-                ],
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-            itemCount: workout.length,
-            itemBuilder: (context, i) => _ExerciseCard(
-              entry: workout[i],
-              onChanged: onChanged,
-            ),
-          ),
-        ),
-        SafeArea(
-          top: false,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            child: SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                  onPressed: onFinish, child: Text(L.of(context).finishMatch)),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _ExerciseCard extends StatelessWidget {
-  final WorkoutEntry entry;
-  final VoidCallback onChanged;
-
-  const _ExerciseCard({required this.entry, required this.onChanged});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: context.colors.surface,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: context.colors.surfaceRaised),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            entry.name,
-            style: TextStyle(
-              color: context.colors.text,
-              fontSize: 16,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-          Divider(color: context.colors.surfaceRaised, height: 22),
-          for (var i = 0; i < entry.sets.length; i++)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 30,
-                    child: Text(
-                      'S${i + 1}',
-                      style: TextStyle(
-                        color: context.colors.muted,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: _NumberField(
-                      hint: L.of(context).kgHint,
-                      value: entry.sets[i].weight,
-                      onChanged: (v) {
-                        entry.sets[i].weight = v;
-                        onChanged();
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: Text('×', style: TextStyle(color: context.colors.muted)),
-                  ),
-                  Expanded(
-                    child: _NumberField(
-                      hint: L.of(context).repsHint,
-                      value: entry.sets[i].reps,
-                      onChanged: (v) {
-                        entry.sets[i].reps = v;
-                        onChanged();
-                      },
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.delete_outline, color: AppColors.loss, size: 20),
-                    onPressed: entry.sets.length == 1
-                        ? null
-                        : () {
-                            entry.sets.removeAt(i);
-                            onChanged();
-                          },
-                  ),
-                ],
-              ),
-            ),
-          Row(
-            children: [
-              // The reason the match is worth anything: the reps are counted
-              // by the camera against this exercise's own signature, so a
-              // round of presses cannot be filled in with curls.
-              Expanded(
-                child: TextButton.icon(
-                  onPressed: () async {
-                    final def = cameraDefFor(entry.name);
-                    if (def == null) return;
-                    final counted = await Navigator.of(context).push<int>(
-                      MaterialPageRoute(
-                        builder: (_) => TrainerScreen(
-                          exercise: def,
-                          autoStart: true,
-                          forMatch: true,
-                        ),
-                      ),
-                    );
-                    if (counted == null || counted == 0) return;
-                    // The weight is still the lifter's to type — a camera can
-                    // count reps, it cannot read what is on the bar.
-                    entry.sets.add(WorkoutSet(reps: '$counted'));
-                    onChanged();
-                  },
-                  icon: Icon(Icons.videocam,
-                      color: context.colors.brand, size: 20),
-                  label: Text(
-                    L.of(context).countWithCamera,
-                    style: TextStyle(
-                      color: context.colors.brand,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  entry.sets.add(WorkoutSet());
-                  onChanged();
-                },
-                child: Text(L.of(context).addSet,
-                    style: TextStyle(color: context.colors.muted)),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _NumberField extends StatefulWidget {
-  final String hint;
-  final String value;
-  final ValueChanged<String> onChanged;
-
-  const _NumberField({required this.hint, required this.value, required this.onChanged});
-
-  @override
-  State<_NumberField> createState() => _NumberFieldState();
-}
-
-class _NumberFieldState extends State<_NumberField> {
-  late final TextEditingController _c = TextEditingController(text: widget.value);
-
-  @override
-  void dispose() {
-    _c.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: _c,
-      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      style: TextStyle(color: context.colors.text, fontWeight: FontWeight.bold),
-      decoration: InputDecoration(
-        hintText: widget.hint,
-        hintStyle: TextStyle(color: context.colors.muted, fontSize: 12),
-        filled: true,
-        fillColor: context.colors.background,
-        isDense: true,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
-        ),
-      ),
-      onChanged: widget.onChanged,
     );
   }
 }

@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "outrepd-web",
+      "runtimeExecutable": "D:/Python312/python.exe",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8080",
+        "--directory",
+        "apps/outrepd_flutter/build/web"
+      ],
+      "port": 8080
+    }
+  ]
+}

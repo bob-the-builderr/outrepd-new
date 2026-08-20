@@ -503,5 +503,21 @@
   "fillWholeNumbers": "Üçünü de tam sayıyla doldurun",
   "heightRange": "Boy {min} ile {max} {unit} arasında olmalı",
   "weightRange": "Kilo {min} ile {max} {unit} arasında olmalı",
-  "ageRange": "Yaş {min} ile {max} arasında olmalı"
+  "ageRange": "Yaş {min} ile {max} arasında olmalı",
+  "discPush": "Push",
+  "discPull": "Pull",
+  "discLegs": "Legs",
+  "discPushHint": "Chest, shoulders and triceps",
+  "discPullHint": "Back and biceps",
+  "discLegsHint": "Quads, hamstrings and core",
+  "pickYourThree": "Pick your three",
+  "pickThreeHint": "Both of you lift all six — your three and theirs",
+  "roundOf": "Round {n} of {total}",
+  "rest": "Rest",
+  "work": "Work",
+  "nextUp": "Next up",
+  "picksLeft": "{n} left to pick",
+  "yourPick": "Your pick",
+  "theirPick": "Their pick",
+  "secondsOfWork": "{n} seconds of work"
 }

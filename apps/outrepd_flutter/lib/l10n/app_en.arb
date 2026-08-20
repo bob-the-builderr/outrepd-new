@@ -748,5 +748,45 @@
         "type": "String"
       }
     }
+  },
+  "discPush": "Push",
+  "discPull": "Pull",
+  "discLegs": "Legs",
+  "discPushHint": "Chest, shoulders and triceps",
+  "discPullHint": "Back and biceps",
+  "discLegsHint": "Quads, hamstrings and core",
+  "pickYourThree": "Pick your three",
+  "pickThreeHint": "Both of you lift all six — your three and theirs",
+  "roundOf": "Round {n} of {total}",
+  "rest": "Rest",
+  "work": "Work",
+  "nextUp": "Next up",
+  "picksLeft": "{n} left to pick",
+  "@roundOf": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "@picksLeft": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "yourPick": "Your pick",
+  "theirPick": "Their pick",
+  "secondsOfWork": "{n} seconds of work",
+  "@secondsOfWork": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -1599,4 +1599,58 @@ class LAr extends L {
   String ageRange(String min, String max) {
     return 'العمر يجب أن يكون بين $min و$max';
   }
+
+  @override
+  String get discPush => 'دفع';
+
+  @override
+  String get discPull => 'سحب';
+
+  @override
+  String get discLegs => 'أرجل';
+
+  @override
+  String get discPushHint => 'صدر وأكتاف وترايسبس';
+
+  @override
+  String get discPullHint => 'ظهر وبايسبس';
+
+  @override
+  String get discLegsHint => 'أرجل وبطن';
+
+  @override
+  String get pickYourThree => 'اختار تلاتة';
+
+  @override
+  String get pickThreeHint => 'الاتنين هيرفعوا الستة — تلاتتك وتلاتته';
+
+  @override
+  String roundOf(String n, String total) {
+    return 'الجولة $n من $total';
+  }
+
+  @override
+  String get rest => 'راحة';
+
+  @override
+  String get work => 'شغل';
+
+  @override
+  String get nextUp => 'الجاية';
+
+  @override
+  String picksLeft(String n) {
+    return 'فاضل $n تختارهم';
+  }
+
+  @override
+  String get yourPick => 'اختيارك';
+
+  @override
+  String get theirPick => 'اختياره';
+
+  @override
+  String secondsOfWork(String n) {
+    return '$n ثانية شغل';
+  }
 }

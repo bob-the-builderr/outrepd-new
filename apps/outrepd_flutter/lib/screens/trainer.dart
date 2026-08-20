@@ -25,6 +25,7 @@ class TrainerScreen extends StatefulWidget {
     this.exercise,
     this.autoStart = false,
     this.forMatch = false,
+    this.limit,
   });
 
   final ExerciseDef? exercise;
@@ -37,6 +38,11 @@ class TrainerScreen extends StatefulWidget {
   /// rather than returning to the picker, and the exercise is fixed: the round
   /// decides what is being counted, not the lifter.
   final bool forMatch;
+
+  /// Ends the session by itself after this long. A match round is a fixed
+  /// window — the same question put to both lifters — so it cannot be left to
+  /// whoever remembers to press finish.
+  final Duration? limit;
 
   @override
   State<TrainerScreen> createState() => _TrainerScreenState();
@@ -148,6 +154,12 @@ class _TrainerScreenState extends State<TrainerScreen> {
 
     final state = engine.update(pose, _clock.elapsed);
     if (state.countedNow) tap(heavy: true);
+
+    final limit = widget.limit;
+    if (limit != null && _clock.elapsed >= limit) {
+      _stop();
+      return;
+    }
 
     setState(() {
       _pose = pose;

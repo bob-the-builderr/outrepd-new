@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart' show IconData, Icons;
+
+import 'l10n/app_localizations.dart';
+
 /// Exercise catalogue, mirrored from the original app so the two stay in sync.
 class Exercise {
   final String name;
@@ -102,6 +106,88 @@ const exercisesByMuscle = <String, List<Exercise>>{
 };
 
 List<Exercise> exercisesFor(String muscle) => exercisesByMuscle[muscle] ?? const [];
+
+/// The three ways a body pushes, pulls and stands up, which is how lifters
+/// already talk about their week.
+///
+/// Six muscle groups made a fine catalogue and a poor menu: picking a match by
+/// "Shoulders" or "Arms" leaves an opponent guessing what they are in for, and
+/// half the pairings were lopsided before anyone lifted. Push, pull and legs
+/// are the split most people already train on, so a challenge in one of them
+/// needs no explaining.
+enum Discipline { push, pull, legs }
+
+extension DisciplineLabel on Discipline {
+  String label(L l) => switch (this) {
+        Discipline.push => l.discPush,
+        Discipline.pull => l.discPull,
+        Discipline.legs => l.discLegs,
+      };
+
+  String hint(L l) => switch (this) {
+        Discipline.push => l.discPushHint,
+        Discipline.pull => l.discPullHint,
+        Discipline.legs => l.discLegsHint,
+      };
+
+  IconData get icon => switch (this) {
+        Discipline.push => Icons.fitness_center,
+        Discipline.pull => Icons.rowing,
+        Discipline.legs => Icons.directions_walk,
+      };
+}
+
+extension DisciplineExercises on Discipline {
+  /// The muscle groups this discipline draws from. Arms are split rather than
+  /// given a home: a curl is a pull and a pushdown is a push, and putting both
+  /// under one heading is what made "Arms" a meaningless round to be matched
+  /// on.
+  List<Exercise> get exercises => switch (this) {
+        Discipline.push => [
+            ...exercisesFor('Chest'),
+            ...exercisesFor('Shoulders'),
+            ...exercisesFor('Arms').where(_isPush),
+          ],
+        Discipline.pull => [
+            ...exercisesFor('Back'),
+            ...exercisesFor('Arms').where((e) => !_isPush(e)),
+          ],
+        Discipline.legs => [
+            ...exercisesFor('Legs'),
+            ...exercisesFor('Core'),
+          ],
+      };
+
+  static bool _isPush(Exercise e) {
+    final n = e.name.toLowerCase();
+    return n.contains('tricep') ||
+        n.contains('pushdown') ||
+        n.contains('extension') ||
+        n.contains('skull') ||
+        n.contains('dip') ||
+        n.contains('kickback');
+  }
+}
+
+/// How many exercises each player brings to a match, and how many rounds that
+/// makes once both players' picks are on the card.
+///
+/// Three each rather than six between them: a match where you only ever lift
+/// what you chose is a personal best, not a contest. Half the card being your
+/// opponent's picks is what makes it one.
+const kPicksPerPlayer = 3;
+const kRoundsPerMatch = kPicksPerPlayer * 2;
+
+/// One round of work, then rest before the next.
+///
+/// A fixed window rather than a fixed number of reps, so both players face the
+/// same question — how many can you do in ninety seconds — instead of racing
+/// to a target where the faster lifter simply finishes earlier and waits.
+///
+/// Six rounds at these lengths is about seventeen minutes, which is a real set
+/// of work and still short enough to finish in one visit to the gym.
+const kRoundWork = Duration(seconds: 90);
+const kRoundRest = Duration(seconds: 75);
 
 /// A single logged set inside a match.
 class WorkoutSet {

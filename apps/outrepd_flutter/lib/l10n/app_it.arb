@@ -503,5 +503,21 @@
   "fillWholeNumbers": "Compila tutti e tre con numeri interi",
   "heightRange": "L'altezza deve essere tra {min} e {max} {unit}",
   "weightRange": "Il peso deve essere tra {min} e {max} {unit}",
-  "ageRange": "L'età deve essere tra {min} e {max}"
+  "ageRange": "L'età deve essere tra {min} e {max}",
+  "discPush": "Push",
+  "discPull": "Pull",
+  "discLegs": "Legs",
+  "discPushHint": "Chest, shoulders and triceps",
+  "discPullHint": "Back and biceps",
+  "discLegsHint": "Quads, hamstrings and core",
+  "pickYourThree": "Pick your three",
+  "pickThreeHint": "Both of you lift all six — your three and theirs",
+  "roundOf": "Round {n} of {total}",
+  "rest": "Rest",
+  "work": "Work",
+  "nextUp": "Next up",
+  "picksLeft": "{n} left to pick",
+  "yourPick": "Your pick",
+  "theirPick": "Their pick",
+  "secondsOfWork": "{n} seconds of work"
 }

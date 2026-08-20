@@ -3144,6 +3144,102 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Age should be between {min} and {max}'**
   String ageRange(String min, String max);
+
+  /// No description provided for @discPush.
+  ///
+  /// In en, this message translates to:
+  /// **'Push'**
+  String get discPush;
+
+  /// No description provided for @discPull.
+  ///
+  /// In en, this message translates to:
+  /// **'Pull'**
+  String get discPull;
+
+  /// No description provided for @discLegs.
+  ///
+  /// In en, this message translates to:
+  /// **'Legs'**
+  String get discLegs;
+
+  /// No description provided for @discPushHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Chest, shoulders and triceps'**
+  String get discPushHint;
+
+  /// No description provided for @discPullHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Back and biceps'**
+  String get discPullHint;
+
+  /// No description provided for @discLegsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Quads, hamstrings and core'**
+  String get discLegsHint;
+
+  /// No description provided for @pickYourThree.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick your three'**
+  String get pickYourThree;
+
+  /// No description provided for @pickThreeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Both of you lift all six — your three and theirs'**
+  String get pickThreeHint;
+
+  /// No description provided for @roundOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Round {n} of {total}'**
+  String roundOf(String n, String total);
+
+  /// No description provided for @rest.
+  ///
+  /// In en, this message translates to:
+  /// **'Rest'**
+  String get rest;
+
+  /// No description provided for @work.
+  ///
+  /// In en, this message translates to:
+  /// **'Work'**
+  String get work;
+
+  /// No description provided for @nextUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Next up'**
+  String get nextUp;
+
+  /// No description provided for @picksLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} left to pick'**
+  String picksLeft(String n);
+
+  /// No description provided for @yourPick.
+  ///
+  /// In en, this message translates to:
+  /// **'Your pick'**
+  String get yourPick;
+
+  /// No description provided for @theirPick.
+  ///
+  /// In en, this message translates to:
+  /// **'Their pick'**
+  String get theirPick;
+
+  /// No description provided for @secondsOfWork.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} seconds of work'**
+  String secondsOfWork(String n);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

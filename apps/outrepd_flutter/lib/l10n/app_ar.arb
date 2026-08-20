@@ -503,5 +503,21 @@
   "fillWholeNumbers": "املأ الثلاثة بأرقام صحيحة",
   "heightRange": "الطول يجب أن يكون بين {min} و{max} {unit}",
   "weightRange": "الوزن يجب أن يكون بين {min} و{max} {unit}",
-  "ageRange": "العمر يجب أن يكون بين {min} و{max}"
+  "ageRange": "العمر يجب أن يكون بين {min} و{max}",
+  "discPush": "دفع",
+  "discPull": "سحب",
+  "discLegs": "أرجل",
+  "discPushHint": "صدر وأكتاف وترايسبس",
+  "discPullHint": "ظهر وبايسبس",
+  "discLegsHint": "أرجل وبطن",
+  "pickYourThree": "اختار تلاتة",
+  "pickThreeHint": "الاتنين هيرفعوا الستة — تلاتتك وتلاتته",
+  "roundOf": "الجولة {n} من {total}",
+  "rest": "راحة",
+  "work": "شغل",
+  "nextUp": "الجاية",
+  "picksLeft": "فاضل {n} تختارهم",
+  "yourPick": "اختيارك",
+  "theirPick": "اختياره",
+  "secondsOfWork": "{n} ثانية شغل"
 }

@@ -503,5 +503,21 @@
   "fillWholeNumbers": "Isi ketiganya dengan bilangan bulat",
   "heightRange": "Tinggi harus antara {min} dan {max} {unit}",
   "weightRange": "Berat harus antara {min} dan {max} {unit}",
-  "ageRange": "Usia harus antara {min} dan {max}"
+  "ageRange": "Usia harus antara {min} dan {max}",
+  "discPush": "Push",
+  "discPull": "Pull",
+  "discLegs": "Legs",
+  "discPushHint": "Chest, shoulders and triceps",
+  "discPullHint": "Back and biceps",
+  "discLegsHint": "Quads, hamstrings and core",
+  "pickYourThree": "Pick your three",
+  "pickThreeHint": "Both of you lift all six — your three and theirs",
+  "roundOf": "Round {n} of {total}",
+  "rest": "Rest",
+  "work": "Work",
+  "nextUp": "Next up",
+  "picksLeft": "{n} left to pick",
+  "yourPick": "Your pick",
+  "theirPick": "Their pick",
+  "secondsOfWork": "{n} seconds of work"
 }

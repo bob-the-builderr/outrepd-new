@@ -503,5 +503,21 @@
   "fillWholeNumbers": "3つとも整数で入力してください",
   "heightRange": "身長は {min}〜{max} {unit} の範囲で入力してください",
   "weightRange": "体重は {min}〜{max} {unit} の範囲で入力してください",
-  "ageRange": "年齢は {min}〜{max} の範囲で入力してください"
+  "ageRange": "年齢は {min}〜{max} の範囲で入力してください",
+  "discPush": "Push",
+  "discPull": "Pull",
+  "discLegs": "Legs",
+  "discPushHint": "Chest, shoulders and triceps",
+  "discPullHint": "Back and biceps",
+  "discLegsHint": "Quads, hamstrings and core",
+  "pickYourThree": "Pick your three",
+  "pickThreeHint": "Both of you lift all six — your three and theirs",
+  "roundOf": "Round {n} of {total}",
+  "rest": "Rest",
+  "work": "Work",
+  "nextUp": "Next up",
+  "picksLeft": "{n} left to pick",
+  "yourPick": "Your pick",
+  "theirPick": "Their pick",
+  "secondsOfWork": "{n} seconds of work"
 }

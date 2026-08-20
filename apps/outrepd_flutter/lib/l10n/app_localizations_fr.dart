@@ -1627,4 +1627,59 @@ class LFr extends L {
   String ageRange(String min, String max) {
     return 'L\'âge doit être entre $min et $max';
   }
+
+  @override
+  String get discPush => 'Push';
+
+  @override
+  String get discPull => 'Pull';
+
+  @override
+  String get discLegs => 'Legs';
+
+  @override
+  String get discPushHint => 'Chest, shoulders and triceps';
+
+  @override
+  String get discPullHint => 'Back and biceps';
+
+  @override
+  String get discLegsHint => 'Quads, hamstrings and core';
+
+  @override
+  String get pickYourThree => 'Pick your three';
+
+  @override
+  String get pickThreeHint =>
+      'Both of you lift all six — your three and theirs';
+
+  @override
+  String roundOf(String n, String total) {
+    return 'Round $n of $total';
+  }
+
+  @override
+  String get rest => 'Rest';
+
+  @override
+  String get work => 'Work';
+
+  @override
+  String get nextUp => 'Next up';
+
+  @override
+  String picksLeft(String n) {
+    return '$n left to pick';
+  }
+
+  @override
+  String get yourPick => 'Your pick';
+
+  @override
+  String get theirPick => 'Their pick';
+
+  @override
+  String secondsOfWork(String n) {
+    return '$n seconds of work';
+  }
 }

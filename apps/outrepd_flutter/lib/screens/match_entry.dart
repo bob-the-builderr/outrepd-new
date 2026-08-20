@@ -3,11 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../exercises.dart';
 import '../theme.dart';
 import '../widgets.dart';
-import 'match.dart';
 import 'match_flow.dart';
 
 /// How a match was started. Ranked results move your LP; the social routes
@@ -16,7 +15,7 @@ enum MatchMode { ranked, room, crew }
 
 /// Asks which muscle group the match is for, then starts it.
 Future<void> pickMuscle(BuildContext context, {required MatchMode mode}) async {
-  final muscle = await showModalBottomSheet<String>(
+  final discipline = await showModalBottomSheet<Discipline>(
     context: context,
     backgroundColor: context.colors.surface,
     shape: const RoundedRectangleBorder(
@@ -25,9 +24,9 @@ Future<void> pickMuscle(BuildContext context, {required MatchMode mode}) async {
     builder: (_) => const _MusclePicker(),
   );
 
-  if (muscle == null || !context.mounted) return;
+  if (discipline == null || !context.mounted) return;
   await Navigator.of(context).push(
-    MaterialPageRoute(builder: (_) => MatchFlowScreen(muscle: muscle)),
+    MaterialPageRoute(builder: (_) => MatchFlowScreen(discipline: discipline)),
   );
 }
 
@@ -45,7 +44,7 @@ class _MusclePicker extends StatelessWidget {
           children: [
             const _SheetGrip(),
             Text(
-              "Today's muscle",
+              L.of(context).pickYourThree,
               style: TextStyle(
                 color: context.colors.text,
                 fontSize: 19,
@@ -58,20 +57,20 @@ class _MusclePicker extends StatelessWidget {
               style: TextStyle(color: context.colors.muted, fontSize: 13),
             ),
             const SizedBox(height: 16),
-            for (final g in muscleGroups)
+            for (final d in Discipline.values)
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Panel(
-                  onTap: () => Navigator.of(context).pop(g),
+                  onTap: () => Navigator.of(context).pop(d),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
                   child: Row(
                     children: [
-                      Icon(muscleIcons[g], color: context.colors.brand, size: 22),
+                      Icon(d.icon, color: context.colors.brand, size: 22),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          muscleGroupLabel(L.of(context), g),
+                          d.label(L.of(context)),
                           style: TextStyle(
                             color: context.colors.text,
                             fontWeight: FontWeight.w700,
