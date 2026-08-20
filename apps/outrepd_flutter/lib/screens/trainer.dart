@@ -10,6 +10,7 @@ import '../reps/pose.dart';
 import '../reps/driver_finder.dart';
 import '../reps/pose_source.dart';
 import '../reps/recording.dart';
+import '../reps/set_scorer.dart';
 import '../reps/rep_engine.dart';
 import '../motion.dart';
 import '../l10n/app_localizations.dart';
@@ -265,7 +266,23 @@ class _TrainerScreenState extends State<TrainerScreen> {
   }
 
   Future<void> _stop() async {
-    final counted = _engine?.reps ?? 0;
+    // The number that leaves this screen is scored from the whole set, not
+    // read off the live counter.
+    //
+    // The live count exists to move the meter while somebody lifts, and it
+    // decides each rep knowing only what came before it — which at the start of
+    // a set is nothing, so the opening reps are judged against the catalogue's
+    // guess at a range rather than this lifter's. Where that guess is wide of
+    // them the meter never reaches its own zones and a whole set scores
+    // nothing, which is what the recordings kept showing.
+    //
+    // Once the set is over none of that holds. Every rep can be judged against
+    // the same measured movement as every other, so it is.
+    final exercise = _engine?.exercise;
+    final scored = exercise == null
+        ? null
+        : scoreSet(exercise, [for (final f in _recorded) f.pose]);
+    final counted = scored?.reps ?? _engine?.reps ?? 0;
     await _sub?.cancel();
     await _source?.dispose();
     await _saveRecording();

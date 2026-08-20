@@ -22,6 +22,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:outrepd/reps/exercise_patterns.dart';
 import 'package:outrepd/reps/recording.dart';
+import 'package:outrepd/reps/set_scorer.dart';
 import 'package:outrepd/reps/rep_engine.dart';
 
 const _folder = String.fromEnvironment(
@@ -138,6 +139,8 @@ void main() {
         if (v != null) series.add(v);
       }
       final cycles = cyclesIn(series);
+      final poses = [for (final f in recording.frames) f.pose];
+      final scored = scoreSet(def, poses);
 
       judged++;
       if (engine.reps > 0) zonesCounting++;
@@ -148,7 +151,9 @@ void main() {
       lines.add('${entry.key.replaceAll('.json', '').padRight(18)}'
           '${seconds.toString().padLeft(4)}s'
           '   zones ${engine.reps.toString().padLeft(3)}'
-          '   cycles ${cycles.toString().padLeft(3)}');
+          '   cycles ${cycles.toString().padLeft(3)}'
+          '   scored ${scored.reps.toString().padLeft(3)}'
+          '   refused ${scored.refused.toString().padLeft(3)}');
     }
 
     // ignore: avoid_print
