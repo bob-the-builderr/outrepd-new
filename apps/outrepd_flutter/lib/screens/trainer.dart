@@ -264,7 +264,12 @@ class _TrainerScreenState extends State<TrainerScreen> {
 
   Future<void> _saveRecording() async {
     if (_recorded.length < 30) return;
-    final trueCount = await _askTrueCount();
+
+    // Never in a match. This prompt exists to label recordings for tuning the
+    // counter, and the match already asks the same question in a form built
+    // for a lifter rather than for research — asking twice in one round is how
+    // people learn to dismiss both.
+    final trueCount = widget.forMatch ? null : await _askTrueCount();
     if (!mounted) return;
     try {
       final path = await PoseRecording(
@@ -480,6 +485,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
             holdSeconds: engine.holdSeconds,
             stage: _stage,
             demo: !live,
+            exerciseName: exerciseLabel(context, _exercise),
             onStop: _stop,
             onRevealNumbers: () =>
                 setState(() => _showNumbers = !_showNumbers),
@@ -711,6 +717,7 @@ class _Readout extends StatelessWidget {
     required this.holdSeconds,
     required this.stage,
     required this.demo,
+    required this.exerciseName,
     required this.onStop,
     required this.onRevealNumbers,
   });
@@ -720,6 +727,9 @@ class _Readout extends StatelessWidget {
   final double holdSeconds;
   final _Stage stage;
   final bool demo;
+  /// The movement this round is about, shown over the count.
+  final String exerciseName;
+
   final VoidCallback onStop;
   final VoidCallback onRevealNumbers;
 
@@ -752,6 +762,18 @@ class _Readout extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 6),
+            child: Text(
+              exerciseName.toUpperCase(),
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: context.type.micro.copyWith(
+                color: context.colors.brand,
+              ),
+            ),
+          ),
           if (demo)
             Padding(
               padding: const EdgeInsets.only(bottom: 10),

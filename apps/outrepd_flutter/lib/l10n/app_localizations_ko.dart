@@ -1670,4 +1670,24 @@ class LKo extends L {
 
   @override
   String get bestRoundYet => '지금까지 최고의 라운드';
+
+  @override
+  String get countedThat => '이번 라운드 횟수';
+
+  @override
+  String get thatIsRight => '맞습니다';
+
+  @override
+  String get useMyCount => '내 횟수 사용';
+
+  @override
+  String get confirmHint => '카메라가 틀렸다면 고치세요.';
+
+  @override
+  String pickNMore(String n) {
+    return '$n개 더 고르세요';
+  }
+
+  @override
+  String get findOpponent => '상대 찾기';
 }

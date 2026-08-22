@@ -1701,4 +1701,24 @@ class LEn extends L {
 
   @override
   String get bestRoundYet => 'Best round yet';
+
+  @override
+  String get countedThat => 'Counted that round';
+
+  @override
+  String get thatIsRight => 'That\'s right';
+
+  @override
+  String get useMyCount => 'Use my count';
+
+  @override
+  String get confirmHint => 'Change it if the camera got it wrong.';
+
+  @override
+  String pickNMore(String n) {
+    return 'Pick $n more';
+  }
+
+  @override
+  String get findOpponent => 'Find opponent';
 }

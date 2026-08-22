@@ -17,6 +17,7 @@ import 'screens/shell.dart';
 import 'screens/trainer.dart';
 import 'screens/user_onboarding.dart';
 import 'screens/welcome.dart';
+import 'reps/count_accuracy.dart';
 import 'settings.dart';
 import 'theme.dart';
 
@@ -32,6 +33,7 @@ void main() async {
   try {
     await settings.load();
     await loadProfileStats();
+    await loadCountAccuracy();
     await avatar.load();
     await rewards.load();
     await rewards.syncWithProfile(

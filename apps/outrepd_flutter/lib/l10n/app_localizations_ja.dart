@@ -1669,4 +1669,24 @@ class LJa extends L {
 
   @override
   String get bestRoundYet => 'ここまでで最高のラウンド';
+
+  @override
+  String get countedThat => 'このラウンドの回数';
+
+  @override
+  String get thatIsRight => 'これで合っています';
+
+  @override
+  String get useMyCount => '自分の数を使う';
+
+  @override
+  String get confirmHint => 'カメラが間違っていたら直してください。';
+
+  @override
+  String pickNMore(String n) {
+    return 'あと $n 種目';
+  }
+
+  @override
+  String get findOpponent => '対戦相手を探す';
 }

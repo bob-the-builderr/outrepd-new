@@ -529,5 +529,11 @@
   "noNotificationsTitle": "暂无新消息",
   "noNotificationsBody": "对战邀请、结果和好友申请都会送到这里。",
   "roundDone": "第 {n} 回合结束",
-  "bestRoundYet": "目前最好的一回合"
+  "bestRoundYet": "目前最好的一回合",
+  "countedThat": "本轮计数",
+  "thatIsRight": "没错",
+  "useMyCount": "用我的计数",
+  "confirmHint": "如果摄像头数错了，请修改。",
+  "pickNMore": "再选 {n} 个",
+  "findOpponent": "寻找对手"
 }

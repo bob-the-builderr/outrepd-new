@@ -1700,4 +1700,24 @@ class LTr extends L {
 
   @override
   String get bestRoundYet => 'Şimdiye kadarki en iyi raunt';
+
+  @override
+  String get countedThat => 'Bu turda sayılan';
+
+  @override
+  String get thatIsRight => 'Doğru';
+
+  @override
+  String get useMyCount => 'Benim sayımı kullan';
+
+  @override
+  String get confirmHint => 'Kamera yanıldıysa değiştirin.';
+
+  @override
+  String pickNMore(String n) {
+    return '$n tane daha seçin';
+  }
+
+  @override
+  String get findOpponent => 'Rakip ara';
 }

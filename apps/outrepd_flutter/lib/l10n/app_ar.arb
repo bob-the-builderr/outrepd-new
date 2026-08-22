@@ -529,5 +529,11 @@
   "noNotificationsTitle": "مفيش جديد",
   "noNotificationsBody": "دعوات الماتشات ونتايجها وطلبات الصداقة بتيجي هنا.",
   "roundDone": "الجولة {n} خلصت",
-  "bestRoundYet": "أحسن جولة لحد دلوقتي"
+  "bestRoundYet": "أحسن جولة لحد دلوقتي",
+  "countedThat": "عدّ الجولة دي",
+  "thatIsRight": "مضبوط",
+  "useMyCount": "استخدم رقمي",
+  "confirmHint": "غيّره لو الكاميرا غلطت.",
+  "pickNMore": "اختار {n} كمان",
+  "findOpponent": "دوّر على خصم"
 }

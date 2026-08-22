@@ -101,6 +101,52 @@ class Within extends SignatureRule {
   bool satisfied(ChannelReading s) => s.median >= min && s.median <= max;
 }
 
+/// The channel has to GET somewhere, at some point in the rep.
+///
+/// The rule the others could not express. [Within] judges the median, which
+/// says where a movement spends its time and is silent about where it ends —
+/// and where it ends is frequently the only thing separating two movements. An
+/// overhead press and a curl bend the same elbow through a similar arc; what
+/// tells them apart is that one finishes with the hands above the head. In the
+/// recordings that is a wrist height of -5.1 against -0.4, and no median sees
+/// it.
+class Reaches extends SignatureRule {
+  const Reaches(super.channel, this.value, this.complaint, {this.above = true});
+
+  /// The mark the movement has to pass.
+  final double value;
+
+  /// True when the channel must rise past [value], false when it must fall
+  /// below it.
+  final bool above;
+
+  @override
+  final String complaint;
+
+  @override
+  bool satisfied(ChannelReading s) => above ? s.high >= value : s.low <= value;
+}
+
+/// The channel has to stay inside a band for the WHOLE rep, ends included.
+///
+/// [Within] judges the median and so forgives an excursion; this does not. The
+/// difference is what tells a curl from an overhead press: both spend their
+/// time with the hands around chest height, so both pass a median test, and
+/// only one of them sends the hands past the head on the way. A curl that is
+/// really a press fails this and passes everything else.
+class Bounded extends SignatureRule {
+  const Bounded(super.channel, this.min, this.max, this.complaint);
+
+  final double min;
+  final double max;
+
+  @override
+  final String complaint;
+
+  @override
+  bool satisfied(ChannelReading s) => s.low >= min && s.high <= max;
+}
+
 /// Everything that makes a movement itself rather than its neighbour.
 class MovementSignature {
   const MovementSignature(this.id, this.rules);
@@ -135,14 +181,28 @@ class ChannelReading {
       : range = values.isEmpty
             ? 0
             : values.reduce(math.max) - values.reduce(math.min),
-        median = values.isEmpty ? 0 : _medianOf(values);
+        median = values.isEmpty ? 0 : _medianOf(values),
+        // Trimmed rather than raw. One frame of a hand lost behind a head
+        // throws an extreme that no body produced, and a rule about how far a
+        // movement reaches should not hang on the worst frame in it.
+        low = values.isEmpty ? 0 : _percentile(values, 0.05),
+        high = values.isEmpty ? 0 : _percentile(values, 0.95);
 
   final double range;
   final double median;
 
-  static double _medianOf(List<double> values) {
+  /// The ends of the movement — where it got to, as opposed to where it spent
+  /// its time. A press finishing overhead and a curl finishing at the chest
+  /// have similar medians and completely different ends.
+  final double low;
+  final double high;
+
+  static double _medianOf(List<double> values) => _percentile(values, 0.5);
+
+  static double _percentile(List<double> values, double f) {
     final sorted = [...values]..sort();
-    return sorted[sorted.length ~/ 2];
+    final i = (f * (sorted.length - 1)).round().clamp(0, sorted.length - 1);
+    return sorted[i];
   }
 }
 

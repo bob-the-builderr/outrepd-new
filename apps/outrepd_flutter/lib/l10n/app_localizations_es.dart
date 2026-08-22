@@ -1710,4 +1710,24 @@ class LEs extends L {
 
   @override
   String get bestRoundYet => 'Tu mejor ronda hasta ahora';
+
+  @override
+  String get countedThat => 'Contado en esta ronda';
+
+  @override
+  String get thatIsRight => 'Correcto';
+
+  @override
+  String get useMyCount => 'Usar mi cuenta';
+
+  @override
+  String get confirmHint => 'Cámbialo si la cámara se equivocó.';
+
+  @override
+  String pickNMore(String n) {
+    return 'Elige $n más';
+  }
+
+  @override
+  String get findOpponent => 'Buscar rival';
 }

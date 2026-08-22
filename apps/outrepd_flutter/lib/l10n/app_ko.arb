@@ -529,5 +529,11 @@
   "noNotificationsTitle": "새 소식이 없습니다",
   "noNotificationsBody": "대결 초대와 결과, 친구 요청이 여기로 옵니다.",
   "roundDone": "{n}라운드 완료",
-  "bestRoundYet": "지금까지 최고의 라운드"
+  "bestRoundYet": "지금까지 최고의 라운드",
+  "countedThat": "이번 라운드 횟수",
+  "thatIsRight": "맞습니다",
+  "useMyCount": "내 횟수 사용",
+  "confirmHint": "카메라가 틀렸다면 고치세요.",
+  "pickNMore": "{n}개 더 고르세요",
+  "findOpponent": "상대 찾기"
 }

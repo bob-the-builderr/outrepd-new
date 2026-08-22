@@ -529,5 +529,11 @@
   "noNotificationsTitle": "新しい知らせはありません",
   "noNotificationsBody": "マッチの招待、結果、フレンド申請がここに届きます。",
   "roundDone": "ラウンド {n} 終了",
-  "bestRoundYet": "ここまでで最高のラウンド"
+  "bestRoundYet": "ここまでで最高のラウンド",
+  "countedThat": "このラウンドの回数",
+  "thatIsRight": "これで合っています",
+  "useMyCount": "自分の数を使う",
+  "confirmHint": "カメラが間違っていたら直してください。",
+  "pickNMore": "あと {n} 種目",
+  "findOpponent": "対戦相手を探す"
 }

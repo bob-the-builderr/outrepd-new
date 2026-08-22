@@ -1709,4 +1709,24 @@ class LPt extends L {
 
   @override
   String get bestRoundYet => 'A tua melhor ronda até agora';
+
+  @override
+  String get countedThat => 'Contado nesta ronda';
+
+  @override
+  String get thatIsRight => 'Está certo';
+
+  @override
+  String get useMyCount => 'Usar a minha contagem';
+
+  @override
+  String get confirmHint => 'Muda se a câmara se enganou.';
+
+  @override
+  String pickNMore(String n) {
+    return 'Escolhe mais $n';
+  }
+
+  @override
+  String get findOpponent => 'Procurar adversário';
 }

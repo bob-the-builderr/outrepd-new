@@ -819,5 +819,18 @@
         "type": "String"
       }
     }
+  },
+  "countedThat": "Counted that round",
+  "thatIsRight": "That's right",
+  "useMyCount": "Use my count",
+  "confirmHint": "Change it if the camera got it wrong.",
+  "pickNMore": "Pick {n} more",
+  "findOpponent": "Find opponent",
+  "@pickNMore": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
   }
 }

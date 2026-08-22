@@ -1714,4 +1714,24 @@ class LDe extends L {
 
   @override
   String get bestRoundYet => 'Beste Runde bisher';
+
+  @override
+  String get countedThat => 'In dieser Runde gezählt';
+
+  @override
+  String get thatIsRight => 'Stimmt';
+
+  @override
+  String get useMyCount => 'Meine Zahl nehmen';
+
+  @override
+  String get confirmHint => 'Ändere es, wenn die Kamera danebenlag.';
+
+  @override
+  String pickNMore(String n) {
+    return 'Noch $n wählen';
+  }
+
+  @override
+  String get findOpponent => 'Gegner suchen';
 }

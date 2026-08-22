@@ -529,5 +529,11 @@
   "noNotificationsTitle": "Ничего нового",
   "noNotificationsBody": "Приглашения, результаты и заявки в друзья приходят сюда.",
   "roundDone": "Раунд {n} пройден",
-  "bestRoundYet": "Лучший раунд пока что"
+  "bestRoundYet": "Лучший раунд пока что",
+  "countedThat": "Засчитано за раунд",
+  "thatIsRight": "Верно",
+  "useMyCount": "Взять мой счёт",
+  "confirmHint": "Исправьте, если камера ошиблась.",
+  "pickNMore": "Выберите ещё {n}",
+  "findOpponent": "Найти соперника"
 }

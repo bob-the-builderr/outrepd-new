@@ -281,10 +281,14 @@ class _ExercisePicker extends StatelessWidget {
               width: double.infinity,
               child: FilledButton(
                 onPressed: onStart,
+                // The button says what is missing rather than scolding. A
+                // round needs exactly three, so "pick two more" is the whole
+                // instruction and it counts down as they tap.
                 child: Text(
-                  selected.isEmpty
-                      ? 'SELECT AT LEAST ONE'
-                      : 'FIND OPPONENT (${selected.length})',
+                  selected.length == kPicksPerPlayer
+                      ? L.of(context).findOpponent
+                      : L.of(context).pickNMore(localNumber(
+                          context, kPicksPerPlayer - selected.length)),
                 ),
               ),
             ),

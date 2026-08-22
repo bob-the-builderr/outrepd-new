@@ -1711,4 +1711,24 @@ class LId extends L {
 
   @override
   String get bestRoundYet => 'Ronde terbaik sejauh ini';
+
+  @override
+  String get countedThat => 'Terhitung di ronde ini';
+
+  @override
+  String get thatIsRight => 'Betul';
+
+  @override
+  String get useMyCount => 'Pakai hitungan saya';
+
+  @override
+  String get confirmHint => 'Ubah kalau kameranya salah.';
+
+  @override
+  String pickNMore(String n) {
+    return 'Pilih $n lagi';
+  }
+
+  @override
+  String get findOpponent => 'Cari lawan';
 }

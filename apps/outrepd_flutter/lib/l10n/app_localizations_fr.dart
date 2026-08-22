@@ -1720,4 +1720,24 @@ class LFr extends L {
 
   @override
   String get bestRoundYet => 'Votre meilleur round jusqu’ici';
+
+  @override
+  String get countedThat => 'Compté sur ce round';
+
+  @override
+  String get thatIsRight => 'C\'est bon';
+
+  @override
+  String get useMyCount => 'Utiliser mon compte';
+
+  @override
+  String get confirmHint => 'Corrigez si la caméra s\'est trompée.';
+
+  @override
+  String pickNMore(String n) {
+    return 'Choisissez-en $n de plus';
+  }
+
+  @override
+  String get findOpponent => 'Chercher un adversaire';
 }

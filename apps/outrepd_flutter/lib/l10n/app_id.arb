@@ -529,5 +529,11 @@
   "noNotificationsTitle": "Belum ada yang baru",
   "noNotificationsBody": "Undangan duel, hasil, dan permintaan pertemanan masuk ke sini.",
   "roundDone": "Ronde {n} selesai",
-  "bestRoundYet": "Ronde terbaik sejauh ini"
+  "bestRoundYet": "Ronde terbaik sejauh ini",
+  "countedThat": "Terhitung di ronde ini",
+  "thatIsRight": "Betul",
+  "useMyCount": "Pakai hitungan saya",
+  "confirmHint": "Ubah kalau kameranya salah.",
+  "pickNMore": "Pilih {n} lagi",
+  "findOpponent": "Cari lawan"
 }

@@ -12,10 +12,12 @@ import 'package:flutter/material.dart';
 import '../exercises.dart';
 import '../l10n/app_localizations.dart';
 import '../motion.dart';
+import '../reps/count_accuracy.dart';
 import '../reps/exercise_patterns.dart';
 import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
+import 'confirm_count.dart';
 import 'trainer.dart';
 
 /// One round: the movement, and whose pick put it on the card.
@@ -91,8 +93,26 @@ class _RoundRunnerState extends State<RoundRunner> {
     );
     if (!mounted) return;
 
+    // The camera proposes; the lifter decides. A count that goes into a match
+    // unseen is a score nobody can argue with and nobody can trust — and the
+    // gap between the two numbers is the only measurement of the counter's
+    // accuracy that has ever existed.
+    final agreed = await confirmCount(
+      context,
+      exercise: _round.exercise,
+      counted: counted ?? 0,
+    );
+    if (!mounted) return;
+
+    final settled = agreed ?? counted ?? 0;
+    recordCountCorrection(
+      exercise: _round.exercise,
+      camera: counted ?? 0,
+      lifter: settled,
+    );
+
     setState(() {
-      _round.reps = counted ?? 0;
+      _round.reps = settled;
       _round.done = true;
       _revealed = _round;
     });

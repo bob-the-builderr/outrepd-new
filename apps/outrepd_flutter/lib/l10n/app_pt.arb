@@ -529,5 +529,11 @@
   "noNotificationsTitle": "Nada de novo",
   "noNotificationsBody": "Convites, resultados e pedidos de amizade chegam aqui.",
   "roundDone": "Ronda {n} concluída",
-  "bestRoundYet": "A tua melhor ronda até agora"
+  "bestRoundYet": "A tua melhor ronda até agora",
+  "countedThat": "Contado nesta ronda",
+  "thatIsRight": "Está certo",
+  "useMyCount": "Usar a minha contagem",
+  "confirmHint": "Muda se a câmara se enganou.",
+  "pickNMore": "Escolhe mais {n}",
+  "findOpponent": "Procurar adversário"
 }

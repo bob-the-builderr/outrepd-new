@@ -529,5 +529,11 @@
   "noNotificationsTitle": "Nichts Neues",
   "noNotificationsBody": "Duelleinladungen, Ergebnisse und Freundschaftsanfragen landen hier.",
   "roundDone": "Runde {n} geschafft",
-  "bestRoundYet": "Beste Runde bisher"
+  "bestRoundYet": "Beste Runde bisher",
+  "countedThat": "In dieser Runde gezählt",
+  "thatIsRight": "Stimmt",
+  "useMyCount": "Meine Zahl nehmen",
+  "confirmHint": "Ändere es, wenn die Kamera danebenlag.",
+  "pickNMore": "Noch {n} wählen",
+  "findOpponent": "Gegner suchen"
 }

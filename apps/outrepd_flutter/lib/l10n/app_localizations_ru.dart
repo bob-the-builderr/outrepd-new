@@ -1707,4 +1707,24 @@ class LRu extends L {
 
   @override
   String get bestRoundYet => 'Лучший раунд пока что';
+
+  @override
+  String get countedThat => 'Засчитано за раунд';
+
+  @override
+  String get thatIsRight => 'Верно';
+
+  @override
+  String get useMyCount => 'Взять мой счёт';
+
+  @override
+  String get confirmHint => 'Исправьте, если камера ошиблась.';
+
+  @override
+  String pickNMore(String n) {
+    return 'Выберите ещё $n';
+  }
+
+  @override
+  String get findOpponent => 'Найти соперника';
 }

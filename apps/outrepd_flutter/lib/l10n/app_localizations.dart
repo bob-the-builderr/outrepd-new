@@ -3300,6 +3300,42 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Best round yet'**
   String get bestRoundYet;
+
+  /// No description provided for @countedThat.
+  ///
+  /// In en, this message translates to:
+  /// **'Counted that round'**
+  String get countedThat;
+
+  /// No description provided for @thatIsRight.
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s right'**
+  String get thatIsRight;
+
+  /// No description provided for @useMyCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Use my count'**
+  String get useMyCount;
+
+  /// No description provided for @confirmHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Change it if the camera got it wrong.'**
+  String get confirmHint;
+
+  /// No description provided for @pickNMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick {n} more'**
+  String pickNMore(String n);
+
+  /// No description provided for @findOpponent.
+  ///
+  /// In en, this message translates to:
+  /// **'Find opponent'**
+  String get findOpponent;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

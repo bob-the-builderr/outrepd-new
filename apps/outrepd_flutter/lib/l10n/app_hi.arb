@@ -529,5 +529,11 @@
   "noNotificationsTitle": "कुछ नया नहीं",
   "noNotificationsBody": "मैच के न्योते, नतीजे और दोस्ती की रिक्वेस्ट यहाँ आती हैं।",
   "roundDone": "राउंड {n} पूरा",
-  "bestRoundYet": "अब तक का सबसे अच्छा राउंड"
+  "bestRoundYet": "अब तक का सबसे अच्छा राउंड",
+  "countedThat": "इस राउंड में गिने गए",
+  "thatIsRight": "सही है",
+  "useMyCount": "मेरी गिनती लें",
+  "confirmHint": "कैमरा गलत हो तो बदल दें।",
+  "pickNMore": "{n} और चुनें",
+  "findOpponent": "प्रतिद्वंद्वी ढूँढें"
 }

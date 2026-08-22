@@ -1690,4 +1690,24 @@ class LAr extends L {
 
   @override
   String get bestRoundYet => 'أحسن جولة لحد دلوقتي';
+
+  @override
+  String get countedThat => 'عدّ الجولة دي';
+
+  @override
+  String get thatIsRight => 'مضبوط';
+
+  @override
+  String get useMyCount => 'استخدم رقمي';
+
+  @override
+  String get confirmHint => 'غيّره لو الكاميرا غلطت.';
+
+  @override
+  String pickNMore(String n) {
+    return 'اختار $n كمان';
+  }
+
+  @override
+  String get findOpponent => 'دوّر على خصم';
 }

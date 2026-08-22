@@ -529,5 +529,11 @@
   "noNotificationsTitle": "Yeni bir şey yok",
   "noNotificationsBody": "Maç davetleri, sonuçlar ve arkadaşlık istekleri buraya gelir.",
   "roundDone": "{n}. raunt bitti",
-  "bestRoundYet": "Şimdiye kadarki en iyi raunt"
+  "bestRoundYet": "Şimdiye kadarki en iyi raunt",
+  "countedThat": "Bu turda sayılan",
+  "thatIsRight": "Doğru",
+  "useMyCount": "Benim sayımı kullan",
+  "confirmHint": "Kamera yanıldıysa değiştirin.",
+  "pickNMore": "{n} tane daha seçin",
+  "findOpponent": "Rakip ara"
 }

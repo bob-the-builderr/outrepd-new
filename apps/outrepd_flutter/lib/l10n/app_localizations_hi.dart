@@ -1707,4 +1707,24 @@ class LHi extends L {
 
   @override
   String get bestRoundYet => 'अब तक का सबसे अच्छा राउंड';
+
+  @override
+  String get countedThat => 'इस राउंड में गिने गए';
+
+  @override
+  String get thatIsRight => 'सही है';
+
+  @override
+  String get useMyCount => 'मेरी गिनती लें';
+
+  @override
+  String get confirmHint => 'कैमरा गलत हो तो बदल दें।';
+
+  @override
+  String pickNMore(String n) {
+    return '$n और चुनें';
+  }
+
+  @override
+  String get findOpponent => 'प्रतिद्वंद्वी ढूँढें';
 }

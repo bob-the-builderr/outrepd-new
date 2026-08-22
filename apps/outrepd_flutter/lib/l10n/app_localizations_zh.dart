@@ -1668,4 +1668,24 @@ class LZh extends L {
 
   @override
   String get bestRoundYet => '目前最好的一回合';
+
+  @override
+  String get countedThat => '本轮计数';
+
+  @override
+  String get thatIsRight => '没错';
+
+  @override
+  String get useMyCount => '用我的计数';
+
+  @override
+  String get confirmHint => '如果摄像头数错了，请修改。';
+
+  @override
+  String pickNMore(String n) {
+    return '再选 $n 个';
+  }
+
+  @override
+  String get findOpponent => '寻找对手';
 }

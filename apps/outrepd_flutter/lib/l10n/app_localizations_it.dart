@@ -1707,4 +1707,24 @@ class LIt extends L {
 
   @override
   String get bestRoundYet => 'Il miglior round finora';
+
+  @override
+  String get countedThat => 'Contate in questo round';
+
+  @override
+  String get thatIsRight => 'Esatto';
+
+  @override
+  String get useMyCount => 'Usa il mio conteggio';
+
+  @override
+  String get confirmHint => 'Correggi se la fotocamera ha sbagliato.';
+
+  @override
+  String pickNMore(String n) {
+    return 'Scegline altri $n';
+  }
+
+  @override
+  String get findOpponent => 'Cerca un avversario';
 }
