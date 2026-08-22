@@ -1710,4 +1710,7 @@ class LAr extends L {
 
   @override
   String get findOpponent => 'دوّر على خصم';
+
+  @override
+  String get unsureMovement => 'مش متأكد إن دي الحركة الصح — راجع الرقم.';
 }

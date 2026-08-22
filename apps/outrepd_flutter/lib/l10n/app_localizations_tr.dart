@@ -1720,4 +1720,8 @@ class LTr extends L {
 
   @override
   String get findOpponent => 'Rakip ara';
+
+  @override
+  String get unsureMovement =>
+      'Doğru hareket miydi emin değilim — sayıyı kontrol edin.';
 }

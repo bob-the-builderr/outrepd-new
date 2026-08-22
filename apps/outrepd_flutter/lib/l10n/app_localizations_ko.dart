@@ -1690,4 +1690,7 @@ class LKo extends L {
 
   @override
   String get findOpponent => '상대 찾기';
+
+  @override
+  String get unsureMovement => '올바른 동작인지 확신할 수 없습니다. 숫자를 확인하세요.';
 }

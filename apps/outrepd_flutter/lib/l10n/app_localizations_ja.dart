@@ -1689,4 +1689,7 @@ class LJa extends L {
 
   @override
   String get findOpponent => '対戦相手を探す';
+
+  @override
+  String get unsureMovement => '正しい種目か確信が持てません。数を確認してください。';
 }

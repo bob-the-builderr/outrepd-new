@@ -1721,4 +1721,8 @@ class LEn extends L {
 
   @override
   String get findOpponent => 'Find opponent';
+
+  @override
+  String get unsureMovement =>
+      'Not sure this was the right movement — check the number.';
 }

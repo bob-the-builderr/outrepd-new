@@ -1688,4 +1688,7 @@ class LZh extends L {
 
   @override
   String get findOpponent => '寻找对手';
+
+  @override
+  String get unsureMovement => '不确定这是不是正确的动作，请核对数字。';
 }

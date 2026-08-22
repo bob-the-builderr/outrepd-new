@@ -28,6 +28,7 @@ Future<int?> confirmCount(
   BuildContext context, {
   required String exercise,
   required int counted,
+  bool unverified = false,
 }) {
   return showModalBottomSheet<int>(
     context: context,
@@ -38,15 +39,28 @@ Future<int?> confirmCount(
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
     ),
-    builder: (_) => _ConfirmSheet(exercise: exercise, counted: counted),
+    builder: (_) => _ConfirmSheet(
+      exercise: exercise,
+      counted: counted,
+      unverified: unverified,
+    ),
   );
 }
 
 class _ConfirmSheet extends StatefulWidget {
-  const _ConfirmSheet({required this.exercise, required this.counted});
+  const _ConfirmSheet({
+    required this.exercise,
+    required this.counted,
+    required this.unverified,
+  });
 
   final String exercise;
   final int counted;
+
+  /// True when the count is movement the signature could not vouch for. Saying
+  /// so is the difference between asking somebody to check and quietly hoping
+  /// they do.
+  final bool unverified;
 
   @override
   State<_ConfirmSheet> createState() => _ConfirmSheetState();
@@ -147,9 +161,13 @@ class _ConfirmSheetState extends State<_ConfirmSheet> {
             ),
             const SizedBox(height: 10),
             Text(
-              l.confirmHint,
+              widget.unverified ? l.unsureMovement : l.confirmHint,
               textAlign: TextAlign.center,
-              style: context.type.label.copyWith(color: context.colors.muted),
+              style: context.type.label.copyWith(
+                color: widget.unverified
+                    ? AppColors.gold
+                    : context.colors.muted,
+              ),
             ),
           ],
         ),

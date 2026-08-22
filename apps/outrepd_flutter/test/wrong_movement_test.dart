@@ -97,16 +97,22 @@ void main() {
     print('\n${rows.join('\n')}\n'
         'wrong-movement pairs tested: $pairs   leaked: $leaks\n');
 
-    // A ratchet, not an aspiration. Zero leaks is not reachable from 2D pose
-    // at arbitrary camera angles, and a test that always fails is a test
-    // everyone learns to ignore. This holds the line at what has been achieved
-    // — 21 leaks before the signatures were rewritten from measurement, 12
-    // after — so a change that makes identity worse fails here loudly.
+    // A ratchet, and a deliberately slack one, because it lost an argument to
+    // identity_cost_test.
     //
-    // Some of the 12 are the material rather than the check: the clips are
-    // instructional videos containing walking, gesturing and talking, and a
-    // real 90-second round contains none of that.
-    expect(leaks, lessThanOrEqualTo(12),
+    // Rewriting the signatures from measurement took leaks from 21 to 12. But
+    // the same tightening emptied three honest sets outright — ninety seconds
+    // of real bench press scoring zero — and a lifter who is told they did
+    // nothing has been told the app is broken, because from where they stand
+    // it is. So scoreSet now refuses to return zero while real cycles exist,
+    // and that floor costs exactly this: 29.
+    //
+    // The trade is deliberate and it is revisitable. Cheating matters when
+    // there is a real opponent and a server to arbitrate; today the opponent is
+    // simulated and the lifter confirms their own count, so there is nobody to
+    // cheat but themselves. When a backend arrives this number is the first
+    // thing to bring back down.
+    expect(leaks, lessThanOrEqualTo(29),
         reason: 'identity checking got worse: a movement scored on a round '
             'that did not ask for it');
   });

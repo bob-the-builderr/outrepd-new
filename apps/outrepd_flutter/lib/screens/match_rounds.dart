@@ -14,6 +14,7 @@ import '../l10n/app_localizations.dart';
 import '../motion.dart';
 import '../reps/count_accuracy.dart';
 import '../reps/exercise_patterns.dart';
+import '../reps/set_scorer.dart';
 import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
@@ -81,7 +82,7 @@ class _RoundRunnerState extends State<RoundRunner> {
     final def = cameraDefFor(_round.exercise);
     if (def == null) return;
 
-    final counted = await Navigator.of(context).push<int>(
+    final scored = await Navigator.of(context).push<ScoredSet>(
       MaterialPageRoute(
         builder: (_) => TrainerScreen(
           exercise: def,
@@ -100,14 +101,15 @@ class _RoundRunnerState extends State<RoundRunner> {
     final agreed = await confirmCount(
       context,
       exercise: _round.exercise,
-      counted: counted ?? 0,
+      counted: scored?.reps ?? 0,
+      unverified: scored?.unverified ?? true,
     );
     if (!mounted) return;
 
-    final settled = agreed ?? counted ?? 0;
+    final settled = agreed ?? scored?.reps ?? 0;
     recordCountCorrection(
       exercise: _round.exercise,
-      camera: counted ?? 0,
+      camera: scored?.reps ?? 0,
       lifter: settled,
     );
 

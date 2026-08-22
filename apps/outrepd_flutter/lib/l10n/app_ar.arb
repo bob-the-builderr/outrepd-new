@@ -535,5 +535,6 @@
   "useMyCount": "استخدم رقمي",
   "confirmHint": "غيّره لو الكاميرا غلطت.",
   "pickNMore": "اختار {n} كمان",
-  "findOpponent": "دوّر على خصم"
+  "findOpponent": "دوّر على خصم",
+  "unsureMovement": "مش متأكد إن دي الحركة الصح — راجع الرقم."
 }

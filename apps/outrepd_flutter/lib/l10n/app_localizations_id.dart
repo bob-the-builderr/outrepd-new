@@ -1731,4 +1731,8 @@ class LId extends L {
 
   @override
   String get findOpponent => 'Cari lawan';
+
+  @override
+  String get unsureMovement =>
+      'Belum yakin ini gerakan yang benar — cek angkanya.';
 }

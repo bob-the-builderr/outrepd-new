@@ -1729,4 +1729,8 @@ class LPt extends L {
 
   @override
   String get findOpponent => 'Procurar adversário';
+
+  @override
+  String get unsureMovement =>
+      'Não tenho a certeza de que foi o movimento certo — confere o número.';
 }

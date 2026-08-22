@@ -3336,6 +3336,12 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Find opponent'**
   String get findOpponent;
+
+  /// No description provided for @unsureMovement.
+  ///
+  /// In en, this message translates to:
+  /// **'Not sure this was the right movement — check the number.'**
+  String get unsureMovement;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

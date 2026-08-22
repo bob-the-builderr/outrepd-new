@@ -1727,4 +1727,8 @@ class LRu extends L {
 
   @override
   String get findOpponent => 'Найти соперника';
+
+  @override
+  String get unsureMovement =>
+      'Не уверен, что это было то движение — проверьте число.';
 }

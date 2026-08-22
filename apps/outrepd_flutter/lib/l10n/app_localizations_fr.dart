@@ -1740,4 +1740,8 @@ class LFr extends L {
 
   @override
   String get findOpponent => 'Chercher un adversaire';
+
+  @override
+  String get unsureMovement =>
+      'Pas sûr que ce soit le bon mouvement — vérifiez le nombre.';
 }

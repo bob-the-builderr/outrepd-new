@@ -535,5 +535,6 @@
   "useMyCount": "Benim sayımı kullan",
   "confirmHint": "Kamera yanıldıysa değiştirin.",
   "pickNMore": "{n} tane daha seçin",
-  "findOpponent": "Rakip ara"
+  "findOpponent": "Rakip ara",
+  "unsureMovement": "Doğru hareket miydi emin değilim — sayıyı kontrol edin."
 }

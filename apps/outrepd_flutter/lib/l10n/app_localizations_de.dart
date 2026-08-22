@@ -1734,4 +1734,8 @@ class LDe extends L {
 
   @override
   String get findOpponent => 'Gegner suchen';
+
+  @override
+  String get unsureMovement =>
+      'Nicht sicher, ob das die richtige Übung war — prüfe die Zahl.';
 }

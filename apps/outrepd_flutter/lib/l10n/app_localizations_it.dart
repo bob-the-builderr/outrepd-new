@@ -1727,4 +1727,8 @@ class LIt extends L {
 
   @override
   String get findOpponent => 'Cerca un avversario';
+
+  @override
+  String get unsureMovement =>
+      'Non sono sicuro fosse il movimento giusto — controlla il numero.';
 }

@@ -535,5 +535,6 @@
   "useMyCount": "Utiliser mon compte",
   "confirmHint": "Corrigez si la caméra s'est trompée.",
   "pickNMore": "Choisissez-en {n} de plus",
-  "findOpponent": "Chercher un adversaire"
+  "findOpponent": "Chercher un adversaire",
+  "unsureMovement": "Pas sûr que ce soit le bon mouvement — vérifiez le nombre."
 }

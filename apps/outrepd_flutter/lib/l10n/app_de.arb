@@ -535,5 +535,6 @@
   "useMyCount": "Meine Zahl nehmen",
   "confirmHint": "Ändere es, wenn die Kamera danebenlag.",
   "pickNMore": "Noch {n} wählen",
-  "findOpponent": "Gegner suchen"
+  "findOpponent": "Gegner suchen",
+  "unsureMovement": "Nicht sicher, ob das die richtige Übung war — prüfe die Zahl."
 }

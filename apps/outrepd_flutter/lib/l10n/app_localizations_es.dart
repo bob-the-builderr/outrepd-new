@@ -1730,4 +1730,8 @@ class LEs extends L {
 
   @override
   String get findOpponent => 'Buscar rival';
+
+  @override
+  String get unsureMovement =>
+      'No estoy seguro de que fuera el movimiento correcto: revisa el número.';
 }

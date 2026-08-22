@@ -535,5 +535,6 @@
   "useMyCount": "用我的计数",
   "confirmHint": "如果摄像头数错了，请修改。",
   "pickNMore": "再选 {n} 个",
-  "findOpponent": "寻找对手"
+  "findOpponent": "寻找对手",
+  "unsureMovement": "不确定这是不是正确的动作，请核对数字。"
 }

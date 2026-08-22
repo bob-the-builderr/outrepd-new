@@ -535,5 +535,6 @@
   "useMyCount": "Usar a minha contagem",
   "confirmHint": "Muda se a câmara se enganou.",
   "pickNMore": "Escolhe mais {n}",
-  "findOpponent": "Procurar adversário"
+  "findOpponent": "Procurar adversário",
+  "unsureMovement": "Não tenho a certeza de que foi o movimento certo — confere o número."
 }

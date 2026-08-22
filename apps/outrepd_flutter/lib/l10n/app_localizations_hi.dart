@@ -1727,4 +1727,8 @@ class LHi extends L {
 
   @override
   String get findOpponent => 'प्रतिद्वंद्वी ढूँढें';
+
+  @override
+  String get unsureMovement =>
+      'यकीन नहीं कि यह सही मूवमेंट था — संख्या जाँच लें।';
 }

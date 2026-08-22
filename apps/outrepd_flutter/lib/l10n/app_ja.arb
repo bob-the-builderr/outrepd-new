@@ -535,5 +535,6 @@
   "useMyCount": "自分の数を使う",
   "confirmHint": "カメラが間違っていたら直してください。",
   "pickNMore": "あと {n} 種目",
-  "findOpponent": "対戦相手を探す"
+  "findOpponent": "対戦相手を探す",
+  "unsureMovement": "正しい種目か確信が持てません。数を確認してください。"
 }

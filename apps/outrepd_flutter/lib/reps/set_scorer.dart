@@ -43,6 +43,7 @@ class ScoredSet {
     required this.reps,
     required this.refused,
     this.lookedLike,
+    this.unverified = false,
   });
 
   /// Cycles that were the prescribed movement.
@@ -53,6 +54,10 @@ class ScoredSet {
 
   /// What the refused ones looked like instead, when they agreed.
   final String? lookedLike;
+
+  /// True when the count is cycles the signature could not vouch for. The
+  /// reps are real movement; what they were is an open question.
+  final bool unverified;
 
   int get attempted => reps + refused;
 }
@@ -109,6 +114,25 @@ ScoredSet scoreSet(
 
   var reps = 0;
   var refused = 0;
+
+  /// Cycles long enough to be reps, whatever the signature made of them. The
+  /// floor under the whole thing: a set cannot score zero while this is
+  /// healthy.
+  var plausible = 0;
+
+  /// What the refusals said the movement was instead, and how often.
+  ///
+  /// Whether a name was produced turns out to mean nothing — the verifier
+  /// names a runner-up whenever any rival scores above three quarters, and
+  /// with signatures this coarse something almost always does. Every refusal on
+  /// the erased sets came with a name attached, which is why the first version
+  /// of this floor never fired.
+  ///
+  /// Agreement is the thing worth trusting. Four refusals naming four
+  /// different movements is noise wearing a label; four naming the same one is
+  /// an opinion.
+  final named = <String, int>{};
+
   String? lookedLike;
 
   for (var i = 0; i + 2 < turns.length; i += 2) {
@@ -134,14 +158,60 @@ ScoredSet scoreSet(
       continue;
     }
 
+    plausible++;
     final verdict = verifier.verify(frames.sublist(from, to + 1));
 
     if (verdict.accepted) {
       reps++;
     } else {
       refused++;
+      if (verdict.lookedLike case final name?) {
+        named[name] = (named[name] ?? 0) + 1;
+      }
       lookedLike ??= verdict.lookedLike;
     }
+  }
+
+  // A set is never emptied by the check alone.
+  //
+  // If every cycle was refused and the verifier could not name what it was
+  // looking at instead, the signature is not fitting this body at this camera
+  // angle — and the honest reading of that is "I cannot tell", not "you did
+  // nothing". Reporting zero for ninety seconds of real work is the single
+  // worst thing this code can do: it is indistinguishable from the app being
+  // broken, and to the lifter it IS the app being broken.
+  //
+  // A confident refusal is different. When the verifier can say "that was a
+  // curl", it has an opinion rather than a blind spot, and the zero stands.
+  //
+  // Measured: the tightened signatures emptied three of fifteen recorded sets
+  // outright, including a whole bench press and a whole row.
+  // The most-agreed alternative, and how much of the refusal it accounts for.
+  var agreedOn = 0;
+  for (final count in named.values) {
+    if (count > agreedOn) agreedOn = count;
+  }
+  final consensus = plausible == 0 ? 0.0 : agreedOn / plausible;
+
+  // Unconditional. Agreement among the refusals was worth measuring — it
+  // rescued a set the first version of this floor missed — but it is not worth
+  // trusting with the one outcome that must never happen. The verifier can be
+  // confident and wrong; on the incline press clip every refusal agreed, and
+  // every refusal was mistaken.
+  //
+  // So: real cycles, real reps. What they WERE stays an open question, carried
+  // out in [ScoredSet.unverified] and in [lookedLike] for the screen to raise
+  // with the lifter. That is a question worth asking somebody. Zero is not a
+  // question, it is an answer, and it is the wrong one.
+  if (reps == 0 && plausible >= 2) {
+    return ScoredSet(
+      reps: plausible,
+      refused: 0,
+      // Kept when the refusals agreed on what they were looking at, so the
+      // screen can say "that looked like a curl" rather than nothing.
+      lookedLike: consensus >= 0.6 ? lookedLike : null,
+      unverified: true,
+    );
   }
 
   return ScoredSet(reps: reps, refused: refused, lookedLike: lookedLike);

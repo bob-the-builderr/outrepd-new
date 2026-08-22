@@ -300,7 +300,10 @@ class _TrainerScreenState extends State<TrainerScreen> {
     final scored = exercise == null
         ? null
         : scoreSet(exercise, [for (final f in _recorded) f.pose]);
-    final counted = scored?.reps ?? _engine?.reps ?? 0;
+    // The whole verdict travels back, not just the number: whether the
+    // signature could vouch for it changes what the round asks the lifter.
+    final verdict = scored ??
+        ScoredSet(reps: _engine?.reps ?? 0, refused: 0, unverified: true);
     await _sub?.cancel();
     await _source?.dispose();
     await _saveRecording();
@@ -310,7 +313,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
     // closing is the whole contract; dropping the lifter on a picker mid-round
     // would be the app losing the thread of what they were doing.
     if (widget.forMatch) {
-      Navigator.of(context).pop(counted);
+      Navigator.of(context).pop(verdict);
       return;
     }
 

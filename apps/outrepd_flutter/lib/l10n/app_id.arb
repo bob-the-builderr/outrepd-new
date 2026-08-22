@@ -535,5 +535,6 @@
   "useMyCount": "Pakai hitungan saya",
   "confirmHint": "Ubah kalau kameranya salah.",
   "pickNMore": "Pilih {n} lagi",
-  "findOpponent": "Cari lawan"
+  "findOpponent": "Cari lawan",
+  "unsureMovement": "Belum yakin ini gerakan yang benar — cek angkanya."
 }
