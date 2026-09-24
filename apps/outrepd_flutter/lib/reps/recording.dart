@@ -84,11 +84,61 @@ class PoseRecording {
 
   /// Saved where `adb pull` can reach it without root or permissions.
   Future<String> save() async {
-    final dir = await getExternalStorageDirectory() ??
-        await getApplicationDocumentsDirectory();
+    final dir = await recordingsDirectory();
     final stamp = DateTime.now().millisecondsSinceEpoch;
     final file = File('${dir.path}/rep-$exerciseId-$stamp.json');
     await file.writeAsString(jsonEncode(toJson()));
+    await pruneRecordings();
     return file.path;
+  }
+}
+
+Future<Directory> recordingsDirectory() async =>
+    await getExternalStorageDirectory() ??
+    await getApplicationDocumentsDirectory();
+
+/// How many sessions are kept on the device.
+///
+/// A minute of pose data is a few hundred kilobytes. Twenty is enough to tune
+/// against and small enough that nobody notices it; without a cap this grows
+/// forever on a phone whose owner never asked to store any of it.
+const kRecordingsKept = 20;
+
+/// Writes the true rep count onto a recording that was saved before anybody
+/// knew it.
+///
+/// In a match the count is confirmed a moment after the camera closes, so the
+/// file has to be reopened. It is patched in place rather than rewritten from
+/// memory because the frames are the expensive part and they have not changed.
+Future<void> labelRecording(String path, int trueCount) async {
+  try {
+    final file = File(path);
+    if (!file.existsSync()) return;
+    final json = jsonDecode(await file.readAsString()) as Map<String, dynamic>;
+    json['note'] = trueCount.toString();
+    json['trueCount'] = trueCount;
+    await file.writeAsString(jsonEncode(json));
+  } on Object {
+    // A recording that cannot be labelled is a recording worth less, not a
+    // reason to interrupt somebody who has just finished a set.
+  }
+}
+
+/// Deletes the oldest sessions past [kRecordingsKept].
+Future<void> pruneRecordings() async {
+  try {
+    final dir = await recordingsDirectory();
+    final files = dir
+        .listSync()
+        .whereType<File>()
+        .where((f) => f.path.contains('rep-') && f.path.endsWith('.json'))
+        .toList()
+      ..sort((a, b) => a.path.compareTo(b.path));
+    if (files.length <= kRecordingsKept) return;
+    for (final file in files.take(files.length - kRecordingsKept)) {
+      file.deleteSync();
+    }
+  } on Object {
+    // Housekeeping. Not worth a word to anybody if it fails.
   }
 }

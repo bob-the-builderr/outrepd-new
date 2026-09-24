@@ -8,6 +8,7 @@ library;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'l10n/app_localizations.dart';
+import 'reps/exercise_type.dart';
 
 class Profile {
   Profile({
@@ -18,8 +19,17 @@ class Profile {
     required this.wins,
     required this.losses,
     required this.winStreak,
+    required this.dayStreak,
     required this.bestStreak,
     required this.totalVolumeKg,
+    required this.totalReps,
+    required this.bestSet,
+    this.peakTierIdx = 0,
+    this.placementWins = 0,
+    required this.globalRank,
+    required this.localRank,
+    required this.country,
+    this.placementsDone = kPlacementDuels,
     required this.heightCm,
     required this.weightKg,
     required this.age,
@@ -31,14 +41,71 @@ class Profile {
   int lp;
   int wins;
   int losses;
+
+  /// Duels won in a row.
   int winStreak;
+
+  /// Days trained in a row.
+  ///
+  /// A different number from [winStreak] and it has to stay one: the home
+  /// screen's pill and the profile's STREAK card are both about showing up,
+  /// not about winning, and wiring one of them to the win streak made two
+  /// screens disagree about the same word.
+  int dayStreak;
+
   int bestStreak;
   int totalVolumeKg;
+
+  /// Every push-up ever counted for this account.
+  int totalReps;
+
+  /// The most ever counted in one bout. The number people quote at each other,
+  /// and the only stat here that a single good session can move.
+  int bestSet;
+
+  /// Where this account sits on the whole board, and on its country's.
+  ///
+  /// Both are shown because they answer different questions. Global says how
+  /// far there is to go; local is the one somebody can realistically move, and
+  /// for most people it is the only one that ever feels within reach.
+  int globalRank;
+  int localRank;
+
+  /// The country whose board [localRank] is on, already in the form it should
+  /// be shown in. Country names are not translated — that was settled when the
+  /// rest of the app was.
+  String country;
+
+  /// The highest tier this account has ever held.
+  ///
+  /// The floor rule reads this: a tier once reached is kept, which is what the
+  /// progression screen promises in words. Storing the peak rather than
+  /// deriving it means a bad month cannot quietly erase it.
+  int peakTierIdx;
+
+  /// Placement duels won so far. Only meaningful while [isRanked] is false —
+  /// it is what decides the starting tier.
+  int placementWins;
+
+  /// How many of the placement duels are behind you.
+  ///
+  /// A new account has no tier at all rather than a bad one: being handed the
+  /// bottom rank before anybody has seen you lift is a judgement, and it is the
+  /// judgement people quit over. Until these are done the app says "Unranked",
+  /// which is a statement about the app's knowledge, not about the lifter.
+  int placementsDone;
   int heightCm;
   int weightKg;
   int age;
 
   int get totalMatches => wins + losses;
+
+  /// Whether this account has a tier yet. Everything that shows a rank has to
+  /// ask first — an unranked account's [tierIdx] is a placeholder, not a rank.
+  bool get isRanked => placementsDone >= kPlacementDuels;
+
+  int get placementsLeft =>
+      (kPlacementDuels - placementsDone).clamp(0, kPlacementDuels);
   double get winRate => totalMatches == 0 ? 0 : wins / totalMatches;
 }
 
@@ -50,12 +117,25 @@ final demoProfile = Profile(
   wins: 18,
   losses: 9,
   winStreak: 4,
+  dayStreak: 5,
   bestStreak: 7,
   totalVolumeKg: 184320,
+  totalReps: 412,
+  bestSet: 24,
+  peakTierIdx: 3,
+  globalRank: 1842,
+  localRank: 64,
+  country: 'Egypt',
+  placementsDone: kPlacementDuels,
   heightCm: 178,
   weightKg: 82,
   age: 25,
 );
+
+/// Duels a new account plays before it is given a tier. Five is enough to see
+/// past one bad session and few enough that nobody is grinding for a week to
+/// find out where they stand.
+const kPlacementDuels = 5;
 
 /// How many name changes are left. Two for the life of the account: a name is
 /// how people recognise each other on a leaderboard, and one that changes
@@ -87,6 +167,12 @@ Future<void> loadProfileStats() async {
     ..age = s.getInt('profileAge') ?? demoProfile.age
     ..username = s.getString('username') ?? demoProfile.username;
   nameChangesUsed = s.getInt('nameChanges') ?? 0;
+
+  // A stored career counts as set up even with no flag beside it. The flag
+  // is newer than the installs it has to protect, and reading its absence as
+  // "new account" would send exactly the people with something to lose back
+  // through the screen that clears it.
+  onboarded = s.getBool('onboarded') ?? (s.getString('career.profile') != null);
 }
 
 /// What the onboarding questionnaire learned. Nothing reads it yet — the
@@ -110,73 +196,98 @@ Future<void> saveProfileStats() async {
   await s.setInt('profileAge', demoProfile.age);
 }
 
-class MatchRecord {
-  const MatchRecord({
-    required this.muscleGroup,
-    required this.won,
-    required this.userVolume,
-    required this.opponentVolume,
-    required this.opponent,
-    required this.lpChange,
-    required this.daysAgo,
-  });
+/// Whether this install has been set up already.
+///
+/// Read at launch, and it decides the one thing nothing else may decide:
+/// whether the app opens on onboarding. Onboarding ends by calling
+/// `Career.startFresh()`, which zeroes the rank, the record, the rep total
+/// and the history — correct for a new account, and the loss of everything
+/// for anybody else. Before this flag existed the app opened on onboarding
+/// *every* launch, so finishing it a second time wiped a real career.
+bool onboarded = false;
 
-  final String muscleGroup;
-  final bool won;
-  final int userVolume;
-  final int opponentVolume;
-  final String opponent;
-  final int lpChange;
-  final int daysAgo;
+/// Marks the account as set up. Called once, at the end of onboarding.
+Future<void> markOnboarded() async {
+  onboarded = true;
+  final s = await SharedPreferences.getInstance();
+  await s.setBool('onboarded', true);
 }
 
-const demoMatches = <MatchRecord>[
-  MatchRecord(
-    muscleGroup: 'Chest',
-    won: true,
-    userVolume: 7420,
-    opponentVolume: 6890,
-    opponent: 'benchgod',
-    lpChange: 18,
-    daysAgo: 1,
-  ),
-  MatchRecord(
-    muscleGroup: 'Back',
-    won: false,
-    userVolume: 8100,
-    opponentVolume: 9240,
-    opponent: 'iron_mike',
-    lpChange: -14,
-    daysAgo: 3,
-  ),
-  MatchRecord(
-    muscleGroup: 'Legs',
-    won: true,
-    userVolume: 12650,
-    opponentVolume: 11020,
-    opponent: 'cardio_hater',
-    lpChange: 21,
-    daysAgo: 6,
-  ),
-  MatchRecord(
-    muscleGroup: 'Shoulders',
-    won: true,
-    userVolume: 4380,
-    opponentVolume: 3910,
-    opponent: 'delt_destroyer',
-    lpChange: 16,
-    daysAgo: 8,
-  ),
-  MatchRecord(
-    muscleGroup: 'Arms',
-    won: false,
-    userVolume: 3260,
-    opponentVolume: 3540,
-    opponent: 'curl_king',
-    lpChange: -12,
-    daysAgo: 11,
-  ),
-];
+class MatchRecord {
+  const MatchRecord({
+    this.exerciseType = ExerciseType.pushUp,
+    required this.won,
+    required this.userReps,
+    required this.opponentReps,
+    required this.opponent,
+    required this.lpChange,
+    required this.at,
+  });
+
+  /// What was counted. One value today; stored anyway, because a record that
+  /// does not say what it measured cannot be read once a second movement
+  /// exists.
+  final ExerciseType exerciseType;
+
+  final bool won;
+
+  /// What the duel came down to.
+  final int userReps;
+  final int opponentReps;
+
+  final String opponent;
+  final int lpChange;
+
+  /// When it finished.
+  ///
+  /// An instant, not an age. The old record stored "1 day ago" as the number
+  /// one, which was true on the day it was written and wrong every day after.
+  final DateTime at;
+
+  int get daysAgo {
+    final now = DateTime.now();
+    final then = DateTime(at.year, at.month, at.day);
+    final today = DateTime(now.year, now.month, now.day);
+    return today.difference(then).inDays;
+  }
+
+  /// Hours since it finished, while that is still the more useful unit.
+  int? get hoursAgo {
+    final hours = DateTime.now().difference(at).inHours;
+    return hours < 24 ? hours : null;
+  }
+
+  Map<String, Object?> toJson() => {
+    'exercise': exerciseType.wireName,
+    'won': won,
+    'you': userReps,
+    'them': opponentReps,
+    'opponent': opponent,
+    'lp': lpChange,
+    'at': at.toIso8601String(),
+  };
+
+  static MatchRecord? fromJson(Map<String, Object?> json) {
+    final at = DateTime.tryParse(json['at'] as String? ?? '');
+    if (at == null) return null;
+    return MatchRecord(
+      exerciseType: ExerciseType.fromWireName(
+        json['exercise'] as String? ?? '',
+      ),
+      won: json['won'] as bool? ?? false,
+      userReps: (json['you'] as num?)?.toInt() ?? 0,
+      opponentReps: (json['them'] as num?)?.toInt() ?? 0,
+      opponent: json['opponent'] as String? ?? '',
+      lpChange: (json['lp'] as num?)?.toInt() ?? 0,
+      at: at,
+    );
+  }
+}
+
+/// Every duel this account has finished, newest first.
+///
+/// Mutable and owned by [Career], which is the only thing that appends to it.
+final matchHistory = <MatchRecord>[];
 
 class LeaderboardEntry {
   const LeaderboardEntry(
@@ -185,14 +296,21 @@ class LeaderboardEntry {
     this.divIdx,
     this.lp,
     this.wins,
-    this.losses,
-  );
+    this.losses, {
+    this.id = '',
+    this.avatarUrl,
+  });
+
+  /// Empty for the sample board, which has nobody real behind it to open a
+  /// profile on.
+  final String id;
   final String username;
   final int tierIdx;
   final int divIdx;
   final int lp;
   final int wins;
   final int losses;
+  final String? avatarUrl;
 }
 
 const demoLeaderboard = <LeaderboardEntry>[
@@ -205,60 +323,50 @@ const demoLeaderboard = <LeaderboardEntry>[
   LeaderboardEntry('newbie_gains', 1, 2, 21, 6, 11),
 ];
 
-class Achievement {
-  const Achievement(this.name, this.description, this.earned);
-  final String name;
-  final String description;
-  final bool earned;
-}
-
-const demoAchievements = <Achievement>[
-  Achievement('first_blood', '', true),
-  Achievement('on_a_roll', '', true),
-  Achievement('six_figures', '', true),
-  Achievement('rivalry', '', true),
-  Achievement('unstoppable', '', false),
-  Achievement('golden_era', '', false),
-  Achievement('century', '', false),
-];
-
-/// Most of these are the same milestones the titles list already names, so the
-/// words come from there rather than being written out twice.
-extension AchievementText on Achievement {
-  String label(L l) => switch (name) {
-        'first_blood' => l.ttl_first_blood,
-        'on_a_roll' => l.ttl_on_a_roll,
-        'six_figures' => l.ttl_six_figures,
-        'rivalry' => l.achRivalry,
-        'unstoppable' => l.ttl_unstoppable,
-        'golden_era' => l.ttl_golden_era,
-        _ => l.ttl_century,
-      };
-
-  String hint(L l) => switch (name) {
-        'first_blood' => l.tdesc_first_blood,
-        'on_a_roll' => l.tdesc_on_a_roll,
-        'six_figures' => l.tdesc_six_figures,
-        'rivalry' => l.achRivalryHint,
-        'unstoppable' => l.tdesc_unstoppable,
-        'golden_era' => l.tdesc_golden_era,
-        _ => l.tdesc_century,
-      };
-}
-
 class Friend {
-  const Friend(this.username, this.tierIdx, this.lp, this.online);
+  const Friend(
+    this.username,
+    this.tierIdx,
+    this.divIdx,
+    this.lp,
+    this.online, {
+    this.id = '',
+    this.winsVsYou = 0,
+    this.lossesVsYou = 0,
+    this.avatarUrl,
+  });
+
+  /// Empty for the sample data, which has nobody real behind it to open a
+  /// profile on.
+  final String id;
   final String username;
   final int tierIdx;
+
+  /// Their division within the tier, so a row can say "Gold III" rather than
+  /// just "Gold" — which is five ranks wide and tells you nothing.
+  final int divIdx;
   final int lp;
   final bool online;
+
+  /// What they have done against *you*: [winsVsYou] times they beat you,
+  /// [lossesVsYou] times you beat them.
+  ///
+  /// This pair is the reason anybody taps a row. A rank says how good someone
+  /// is in general; a record says whether there is something to settle.
+  final int winsVsYou;
+  final int lossesVsYou;
+
+  final String? avatarUrl;
+
+  bool get hasPlayedYou => winsVsYou + lossesVsYou > 0;
 }
 
 const demoFriends = <Friend>[
-  Friend('iron_mike', 5, 88, true),
-  Friend('squat_queen', 4, 72, false),
-  Friend('benchgod', 3, 51, true),
-  Friend('newbie_gains', 1, 21, false),
+  Friend('iron_mike', 5, 2, 88, true, winsVsYou: 3, lossesVsYou: 1),
+  Friend('benchgod', 3, 2, 51, true, winsVsYou: 1, lossesVsYou: 2),
+  Friend('squat_queen', 4, 0, 72, false, winsVsYou: 2, lossesVsYou: 2),
+  Friend('newbie_gains', 1, 3, 21, false),
+  Friend('delt_destroyer', 3, 4, 64, false, winsVsYou: 0, lossesVsYou: 4),
 ];
 
 class AppNotification {
@@ -278,31 +386,31 @@ const demoNotifications = <AppNotification>[
 
 extension AppNotificationText on AppNotification {
   String heading(L l) => switch (title) {
-        'won' => l.nWonTitle,
-        'friend' => l.nFriendTitle,
-        'achievement' => l.nAchTitle,
-        _ => l.nRankTitle,
-      };
+    'won' => l.nWonTitle,
+    'friend' => l.nFriendTitle,
+    'achievement' => l.nAchTitle,
+    _ => l.nRankTitle,
+  };
 
   String detail(L l) => switch (title) {
-        'won' => l.nWonBody(body, l.mgChest),
-        'friend' => l.nFriendBody(body),
-        'achievement' => l.nAchBody(l.ttl_on_a_roll, l.tdesc_on_a_roll),
-        _ => l.nRankBody(body),
-      };
+    'won' => l.nWonBody(body, l.mgChest),
+    'friend' => l.nFriendBody(body),
+    'achievement' => l.nAchBody(l.ttl_on_a_roll, l.tdesc_on_a_roll),
+    _ => l.nRankBody(body),
+  };
 }
 
 /// The words a person reads. The list below stays English because those
 /// strings are ids: they match recorded matches and exercise definitions.
 String muscleGroupLabel(L l, String group) => switch (group) {
-      'Chest' => l.mgChest,
-      'Back' => l.mgBack,
-      'Legs' => l.mgLegs,
-      'Shoulders' => l.mgShoulders,
-      'Arms' => l.mgArms,
-      'Core' => l.mgCore,
-      _ => group,
-    };
+  'Chest' => l.mgChest,
+  'Back' => l.mgBack,
+  'Legs' => l.mgLegs,
+  'Shoulders' => l.mgShoulders,
+  'Arms' => l.mgArms,
+  'Core' => l.mgCore,
+  _ => group,
+};
 
 const muscleGroups = <String>[
   'Chest',
@@ -331,146 +439,12 @@ const demoOpponents = <Opponent>[
   Opponent('pr_hunter', 4, 1),
 ];
 
-class Crew {
-  const Crew(this.name, this.tag, this.members, this.weeklyVolume,
-      {this.weeklyReps = 0});
-
-  final String name;
-  /// Short badge shown in lists.
-  final String tag;
-  final int members;
-  /// Combined volume the crew logged this week, in kg.
-  final int weeklyVolume;
-
-  /// Reps this week. Crews are ranked on this divided by their size, so a big
-  /// crew cannot coast to the top on numbers alone.
-  final int weeklyReps;
-
-  int get repsPerMember => members == 0 ? 0 : weeklyReps ~/ members;
-}
-
-const demoCrews = <Crew>[
-  Crew('Iron Temple', 'IRN', 8, 412500, weeklyReps: 6240),
-  Crew('Night Shift', 'NGT', 6, 366200, weeklyReps: 5100),
-  Crew('Barbell Bros', 'BBB', 10, 341800, weeklyReps: 7300),
-  Crew('Quiet Reps', 'QRP', 5, 208400, weeklyReps: 3850),
-  Crew('Dawn Patrol', 'DWN', 12, 455000, weeklyReps: 8400),
-  Crew('Last Set', 'LST', 7, 291000, weeklyReps: 4550),
-];
-
-/// A stocked crew, for the web preview and for joining before there is a
-/// server to join against.
-MyCrew demoJoinedCrew() => MyCrew(
-      name: 'Iron Temple',
-      country: 'Egypt',
-      emblemIcon: 0,
-      emblemColor: 0,
-      inviteCode: 'IRN7QX',
-      members: const [
-        CrewMember('iron_mike', 5, 1, 96200, isOwner: true, weeklyReps: 1480),
-        CrewMember('squat_queen', 4, 3, 88400, weeklyReps: 1310),
-        CrewMember('benchgod', 3, 1, 71300, weeklyReps: 1055),
-        CrewMember('demo_lifter', 3, 2, 64100, weeklyReps: 940),
-        CrewMember('deadlift_dan', 3, 3, 52700, weeklyReps: 620),
-        CrewMember('pr_hunter', 4, 1, 41000, weeklyReps: 0),
-      ],
-    );
-
-/// A crew that asked for this lifter by name.
-class CrewInvite {
-  const CrewInvite(this.crewName, this.fromUser);
-  final String crewName;
-  final String fromUser;
-}
-
-const demoInvites = <CrewInvite>[
-  CrewInvite('Night Shift', 'iron_mike'),
-  CrewInvite('Dawn Patrol', 'squat_queen'),
-];
-
-/// Days until the weekly goal resets. Weeks close on Sunday night.
-int daysLeftInWeek() => 8 - DateTime.now().weekday;
-
-/// Seasons run a calendar month. Without a reset the first crew to the top
-/// stays there, and a crew starting later has no reason to bother.
-String seasonName() {
-  const months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December',
-  ];
-  return months[DateTime.now().month - 1];
-}
-
-int daysLeftInSeason() {
-  final now = DateTime.now();
-  final nextMonth = DateTime(now.year, now.month + 1, 1);
-  return nextMonth.difference(DateTime(now.year, now.month, now.day)).inDays;
-}
-
-/// A crew the player belongs to. Held in memory for now — there is no backend
-/// yet, so a crew lasts for the session.
-class MyCrew {
-  MyCrew({
-    required this.name,
-    required this.country,
-    required this.emblemIcon,
-    required this.emblemColor,
-    required this.inviteCode,
-    required this.members,
-    this.description = '',
-    this.privacy = 0,
-    this.minTierIdx = 0,
-  });
-
-  String name;
-  String country;
-  int emblemIcon;
-  int emblemColor;
-  final String inviteCode;
-  final List<CrewMember> members;
-
-  String description;
-
-  /// Index into CrewPrivacy.values.
-  int privacy;
-
-  /// Lowest tier allowed to join; 0 means anyone.
-  int minTierIdx;
-
-  static const maxMembers = 20;
-
-  /// What the crew is chasing together this week, in reps. A crew without a
-  /// shared target is just a list of names — the goal is what makes anyone
-  /// chase up the member who has not trained since Monday.
-  int weeklyGoal = 8000;
-
-  int get weeklyReps =>
-      members.fold(0, (sum, member) => sum + member.weeklyReps);
-
-  double get goalProgress =>
-      weeklyGoal == 0 ? 0 : (weeklyReps / weeklyGoal).clamp(0.0, 1.0);
-
-  /// Ranking runs on this, not the total. A crew of twenty would beat a crew
-  /// of eight on volume alone however hard the eight worked.
-  int get repsPerMember =>
-      members.isEmpty ? 0 : weeklyReps ~/ members.length;
-
-  String get inviteLink => 'https://outrepd.app/crew/$inviteCode';
-}
-
-class CrewMember {
-  const CrewMember(this.username, this.tierIdx, this.divIdx, this.weeklyVolume,
-      {this.isOwner = false, this.weeklyReps = 0});
-
-  final String username;
-  final int tierIdx;
-  final int divIdx;
-  final int weeklyVolume;
-  final bool isOwner;
-
-  /// Reps this week — what the crew goal and the ranking are both built on.
-  final int weeklyReps;
-}
-
-/// The player's crew, or null when they have not joined one.
-MyCrew? myCrew;
+/// The version shown at the bottom of settings.
+///
+/// A constant rather than a package lookup, because the only two ways to get
+/// it at runtime are a plugin dependency for one string, or reading an asset.
+/// It is kept honest by `test/version_test.dart`, which fails if this and
+/// `pubspec.yaml` ever disagree — a version number that quietly lags the
+/// build is worse than none, since it is the first thing anybody quotes in a
+/// bug report.
+const kAppVersion = '1.0.0+1';

@@ -1,69 +1,259 @@
+/// What happened while you were away.
+///
+/// The one that matters is "your set was raced". A duel here is async — you
+/// race somebody's stored minute and they are not there for it — so without
+/// this screen half of every match is invisible to the person who was in it.
+/// They lifted, somebody beat them or failed to, their rank moved, and the
+/// app never mentioned it.
+///
+/// Opening the screen marks everything read. There is no "mark all as read"
+/// button, because looking at them is what having seen them means.
+library;
+
 import 'package:flutter/material.dart';
 
+import '../backend/backend.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
+import 'match_entry.dart';
+import 'match_flow.dart';
 
-class NotificationsScreen extends StatelessWidget {
+class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
 
   @override
+  State<NotificationsScreen> createState() => _NotificationsScreenState();
+}
+
+class _NotificationsScreenState extends State<NotificationsScreen> {
+  List<Notice> _notices = const [];
+  bool _loading = false;
+  Object? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    if (backend.available) _load();
+  }
+
+  Future<void> _load() async {
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
+    try {
+      final notices = await backend.notices();
+      if (!mounted) return;
+      setState(() {
+        _notices = notices;
+        _loading = false;
+      });
+      // Marked read after they are on screen, not before: a notice cleared
+      // by a fetch that then failed to draw is a notice nobody ever saw.
+      await backend.readNotices();
+    } on Object catch (error) {
+      if (!mounted) return;
+      setState(() {
+        _error = error;
+        _loading = false;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final l = L.of(context);
+
     return Scaffold(
-      appBar: AppBar(title: Text(L.of(context).notifications)),
-      body: demoNotifications.isEmpty
-          ? EmptyState(
-              icon: Icons.notifications_none,
-              title: L.of(context).noNotificationsTitle,
-              body: L.of(context).noNotificationsBody,
-            )
-          : ListView.separated(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-        itemCount: demoNotifications.length,
-        separatorBuilder: (_, _) => const SizedBox(height: 10),
-        itemBuilder: (context, i) {
-          final n = demoNotifications[i];
-          return Panel(
-            padding: const EdgeInsets.all(14),
-            child: Row(
+      appBar: AppBar(title: Text(l.notifications)),
+      body: RefreshIndicator(onRefresh: _load, child: _body(context, l)),
+    );
+  }
+
+  Widget _body(BuildContext context, L l) {
+    if (!backend.available) return const _DemoList();
+
+    if (_loading && _notices.isEmpty) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    // Nothing to report and could not ask are different answers, and only one
+    // of them is about the lifter.
+    if (_error != null && _notices.isEmpty) {
+      return BlockingNotice(
+        icon: Icons.wifi_off,
+        title: l.noConnection,
+        body: l.noConnectionBody,
+        actionLabel: l.retry,
+        onAction: _load,
+      );
+    }
+
+    if (_notices.isEmpty) {
+      return EmptyState(
+        icon: Icons.notifications_none,
+        title: l.noNotificationsTitle,
+        body: l.noNotificationsBody,
+      );
+    }
+
+    return ListView.separated(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+      itemCount: _notices.length,
+      separatorBuilder: (_, _) => const SizedBox(height: 10),
+      itemBuilder: (context, i) => _NoticeTile(notice: _notices[i]),
+    );
+  }
+}
+
+class _NoticeTile extends StatelessWidget {
+  const _NoticeTile({required this.notice});
+
+  final Notice notice;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+
+    final heading = switch (notice.kind) {
+      NoticeKind.raced => l.nRacedTitle,
+      NoticeKind.friendRequest => l.nFriendTitle,
+      NoticeKind.friendAccepted => l.nFriendOkTitle,
+      NoticeKind.challenged => l.nChallengedTitle,
+    };
+
+    final detail = switch (notice.kind) {
+      NoticeKind.raced => _raced(context, l),
+      NoticeKind.friendRequest => l.nFriendBody(notice.actorName),
+      NoticeKind.friendAccepted => l.nFriendOkBody(notice.actorName),
+      NoticeKind.challenged => l.nChallengedBody(notice.actorName),
+    };
+
+    // Only a challenge with somebody still there to race is worth tapping.
+    final onTap = notice.kind == NoticeKind.challenged && notice.actorId != null
+        ? () => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => MatchFlowScreen(
+                mode: MatchMode.challengeAccept,
+                targetId: notice.actorId,
+              ),
+            ),
+          )
+        : null;
+
+    return _Row(
+      heading: heading,
+      detail: detail,
+      // The days since, from the instant it happened rather than a number
+      // that was written down once and never moved.
+      when: relativeDays(context, DateTime.now().difference(notice.at).inDays),
+      unread: notice.unread,
+      onTap: onTap,
+    );
+  }
+
+  /// Both counts, and which way it went. A result with no score is a rumour.
+  String _raced(BuildContext context, L l) {
+    final yours = localNumber(context, notice.yourReps ?? 0);
+    final theirs = localNumber(context, notice.theirReps ?? 0);
+    return (notice.youWon ?? false)
+        ? l.nRacedHeld(notice.actorName, yours, theirs)
+        : l.nRacedBeaten(notice.actorName, yours, theirs);
+  }
+}
+
+/// The sample list, for a build with no server behind it.
+class _DemoList extends StatelessWidget {
+  const _DemoList();
+
+  @override
+  Widget build(BuildContext context) {
+    if (demoNotifications.isEmpty) {
+      return EmptyState(
+        icon: Icons.notifications_none,
+        title: L.of(context).noNotificationsTitle,
+        body: L.of(context).noNotificationsBody,
+      );
+    }
+
+    return ListView.separated(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+      itemCount: demoNotifications.length,
+      separatorBuilder: (_, _) => const SizedBox(height: 10),
+      itemBuilder: (context, i) {
+        final n = demoNotifications[i];
+        return _Row(
+          heading: n.heading(L.of(context)),
+          detail: n.detail(L.of(context)),
+          when: relativeDays(context, n.daysAgo),
+          unread: n.unread,
+        );
+      },
+    );
+  }
+}
+
+class _Row extends StatelessWidget {
+  const _Row({
+    required this.heading,
+    required this.detail,
+    required this.when,
+    required this.unread,
+    this.onTap,
+  });
+
+  final String heading;
+  final String detail;
+  final String when;
+  final bool unread;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Panel(
+      padding: const EdgeInsets.all(14),
+      onTap: onTap,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 8,
+            height: 8,
+            margin: const EdgeInsetsDirectional.only(top: 6, end: 12),
+            decoration: BoxDecoration(
+              color: unread ? context.colors.brand : Colors.transparent,
+              shape: BoxShape.circle,
+            ),
+          ),
+          Expanded(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 8,
-                  height: 8,
-                  margin: const EdgeInsets.only(top: 6, right: 12),
-                  decoration: BoxDecoration(
-                    color: n.unread ? context.colors.brand : Colors.transparent,
-                    shape: BoxShape.circle,
+                Text(
+                  heading,
+                  style: context.type.body.copyWith(color: context.colors.text),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  detail,
+                  style: context.type.label.copyWith(
+                    color: context.colors.muted,
                   ),
                 ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        n.heading(L.of(context)),
-                        style: context.type.body.copyWith(color: context.colors.text),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        n.detail(L.of(context)),
-                        style: context.type.label.copyWith(color: context.colors.muted),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        relativeDays(context, n.daysAgo),
-                        style: context.type.label.copyWith(color: context.colors.muted),
-                      ),
-                    ],
+                const SizedBox(height: 6),
+                Text(
+                  when,
+                  style: context.type.label.copyWith(
+                    color: context.colors.muted,
                   ),
                 ),
               ],
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }

@@ -18,36 +18,10 @@ class LTr extends L {
   String get tabMatch => 'Maç';
 
   @override
-  String get tabCrew => 'Ekip';
-
-  @override
   String get tabProfile => 'Profil';
 
   @override
-  String get searchOpponent => 'Rakip ara';
-
-  @override
-  String get searchOpponentHint =>
-      'Seni kendi rütbendeki biriyle eşleştiriyoruz';
-
-  @override
   String get challengeFriend => 'Bir arkadaşına meydan oku';
-
-  @override
-  String get trainWithCamera => 'Kamerayla çalış';
-
-  @override
-  String get viewRoadmap => 'Yol haritasını gör';
-
-  @override
-  String lpProgress(String lp, String left) {
-    return '$lp / 100 LP · yükselmeye $left kaldı';
-  }
-
-  @override
-  String winStreak(String count) {
-    return 'üst üste $count galibiyet';
-  }
 
   @override
   String get matchHistory => 'Maç geçmişi';
@@ -68,16 +42,347 @@ class LTr extends L {
   String get streak => 'Seri';
 
   @override
-  String get profile => 'Profil';
-
-  @override
   String get settings => 'Ayarlar';
 
   @override
-  String get stats => 'İstatistikler';
+  String get accountSection => 'Hesap';
 
   @override
-  String get edit => 'Düzenle';
+  String get duelSection => 'Düello';
+
+  @override
+  String get hapticsEachRep => 'Her tekrarda titreşim';
+
+  @override
+  String get showSkeleton => 'İskeleti göster';
+
+  @override
+  String get showSkeletonHint => 'Kameranın seni gördüğünü böyle anlarsın';
+
+  @override
+  String get manageNotifications => 'Bildirimleri yönet';
+
+  @override
+  String switchesOn(String on, String all) {
+    return '$all taneden $on tanesi açık';
+  }
+
+  @override
+  String get whoCanChallenge => 'Bana kim meydan okuyabilir';
+
+  @override
+  String get blockedAccounts => 'Engellenen hesaplar';
+
+  @override
+  String get reportProblem => 'Sorun bildir';
+
+  @override
+  String get onDeviceNote =>
+      'Poz algılama bu telefonda çalışır. Hiçbir video veya poz verisi yüklenmez.';
+
+  @override
+  String get visibilitySection => 'Görünürlük';
+
+  @override
+  String get showMyCountry => 'Ülkemi göster';
+
+  @override
+  String get showMyCountryHint => 'Kapalıyken ülke tablosunda yer almazsın';
+
+  @override
+  String get safetySection => 'Güvenlik';
+
+  @override
+  String get socialSection => 'Sosyal';
+
+  @override
+  String get noticeRaced => 'Biri setime meydan okudu';
+
+  @override
+  String get noticeRacedHint => 'Bir düello olduğunu öğrenmenin tek yolu';
+
+  @override
+  String get noticeFriendOk => 'Gönderdiğim istek kabul edildi';
+
+  @override
+  String get noticesStoredNote =>
+      'Kapatmak hiç kaydedilmemesi demektir, gizlenmesi değil.';
+
+  @override
+  String get notSaved => 'Kaydedilmedi';
+
+  @override
+  String get blockedIntro =>
+      'Engellenen hesap sana meydan okuyamaz, seni bulamaz, istek gönderemez. Kendisine bildirilmez.';
+
+  @override
+  String blockedWhen(String when) {
+    return '$when engellendi';
+  }
+
+  @override
+  String get unblock => 'Engeli kaldır';
+
+  @override
+  String get noBlockedTitle => 'Kimse engellenmedi';
+
+  @override
+  String get noBlockedBody =>
+      'Birini profilinden veya bir bildirimden engelleyebilirsin.';
+
+  @override
+  String get whatHappened => 'Ne oldu';
+
+  @override
+  String get reasonCheating => 'Hile veya sahte tekrar';
+
+  @override
+  String get reasonHarassment => 'Taciz veya kötüye kullanım';
+
+  @override
+  String get reasonContent => 'Uygunsuz içerik';
+
+  @override
+  String get reasonImpersonation => 'Kimliğe bürünme';
+
+  @override
+  String get reasonOther => 'Başka bir şey';
+
+  @override
+  String get addDetails => 'Ayrıntı ekle (isteğe bağlı)';
+
+  @override
+  String get alsoBlock => 'Bu hesabı da engelle';
+
+  @override
+  String get sendReport => 'Bildirimi gönder';
+
+  @override
+  String get reportSent => 'Bildirim gönderildi';
+
+  @override
+  String get reportingThisAccount => 'Bu hesap bildiriliyor';
+
+  @override
+  String get exportIntro =>
+      'Sunucunun senin hakkında tuttuğu her şeyi bir dosyada e-postayla gönderiyoruz. Genelde bir dakika sürer.';
+
+  @override
+  String get whatsIncluded => 'Neler var';
+
+  @override
+  String get incProfile => 'Profilin ve rütben';
+
+  @override
+  String get incSets => 'Her set ve tekrar sayısı';
+
+  @override
+  String get incDuels => 'Düello geçmişi ve LP değişimleri';
+
+  @override
+  String get incFriends => 'Arkadaşlar ve engellenenler';
+
+  @override
+  String get incNotices => 'Sana gönderilen bildirimler';
+
+  @override
+  String get noLandmarksNote =>
+      'Poz noktaları içinde yok, hiç olmadı. Kamera onları telefonunda okur ve hiçbir yere gönderilmez.';
+
+  @override
+  String get sendItTo => 'Şuraya gönder';
+
+  @override
+  String get emailHint => 'sen@ornek.com';
+
+  @override
+  String get passwordHint => 'Şifre';
+
+  @override
+  String get codeHint => 'Doğrulama kodu';
+
+  @override
+  String get createAccountTitle => 'Hesap oluştur';
+
+  @override
+  String get createAccountBody =>
+      'Bu hesabın tek bir telefona bağlı kalmaması için bir e-posta ve şifre ekle.';
+
+  @override
+  String get createAccountAction => 'Hesap oluştur';
+
+  @override
+  String get signInTitle => 'Giriş yap';
+
+  @override
+  String get signInBody => 'Hesabının e-postası ve şifresiyle giriş yap.';
+
+  @override
+  String get signInAction => 'Giriş yap';
+
+  @override
+  String get switchToSignIn => 'Zaten hesabın var mı? Giriş yap';
+
+  @override
+  String get switchToSignUp => 'Yeni misin? Hesap oluştur';
+
+  @override
+  String get emailTakenSwitchToSignIn =>
+      'Bu e-postanın zaten bir hesabı var — bunun yerine giriş yap.';
+
+  @override
+  String get emailSignUpInvalid =>
+      'E-postayı ve şifreyi kontrol et — en az altı karakter.';
+
+  @override
+  String get tooManyCodes =>
+      'Çok fazla kod gönderildi — birkaç dakika bekleyip tekrar dene.';
+
+  @override
+  String get authEntryTagline => 'İt. Yarış. Merdiveni tırman.';
+
+  @override
+  String get orDivider => 'veya';
+
+  @override
+  String get signUpWithEmail => 'E-posta ile kaydol';
+
+  @override
+  String get alreadyHaveAccountQuestion => 'Zaten hesabın var mı?';
+
+  @override
+  String get logInAction => 'Giriş yap';
+
+  @override
+  String get createYourAccountTitle => 'Hesabını oluştur';
+
+  @override
+  String get createAccountSubtitle => 'Bir dakikadan az sürer.';
+
+  @override
+  String get usernameHint => 'Kullanıcı adı';
+
+  @override
+  String get passwordMinLength => 'En az 8 karakter';
+
+  @override
+  String get logInSubtitle => 'Rütbeni korumak için giriş yap.';
+
+  @override
+  String get forgotPassword => 'Parolanı mı unuttun?';
+
+  @override
+  String resetPasswordSent(String email) {
+    return '$email için bir hesap varsa, sıfırlama bağlantısı yolda.';
+  }
+
+  @override
+  String get checkYourEmailTitle => 'E-postanı kontrol et';
+
+  @override
+  String codeSentTo(String email) {
+    return '$email adresine 6 haneli bir kod gönderdik.';
+  }
+
+  @override
+  String get didntGetIt => 'Almadın mı?';
+
+  @override
+  String resendInSeconds(String time) {
+    return '$time içinde tekrar gönder';
+  }
+
+  @override
+  String get wrongEmailGoBack => 'Yanlış e-posta mı? Geri dön';
+
+  @override
+  String get usernameTaken => 'Bu kullanıcı adı alınmış.';
+
+  @override
+  String get socialLinkFailed => 'Giriş tamamlanamadı. Tekrar dene.';
+
+  @override
+  String get showLabel => 'Göster';
+
+  @override
+  String get hideLabel => 'Gizle';
+
+  @override
+  String get resetPasswordTitle => 'Yeni parola belirle';
+
+  @override
+  String get resetPasswordBody => 'Hesabın için yeni bir parola seç.';
+
+  @override
+  String get setPasswordAction => 'Parolayı belirle';
+
+  @override
+  String get wrongEmailOrPassword => 'E-posta veya şifre yanlış.';
+
+  @override
+  String get enterCodeTitle => 'Kodu gir';
+
+  @override
+  String codeInstructions(String email) {
+    return '$email adresine gönderdiğimiz kodu gir.';
+  }
+
+  @override
+  String get verifyAction => 'Doğrula';
+
+  @override
+  String get wrongCode => 'Bu kod yanlış veya süresi doldu.';
+
+  @override
+  String get resendCode => 'Kodu tekrar gönder';
+
+  @override
+  String get codeResent => 'Yeni kod gönderildi.';
+
+  @override
+  String signedInAs(String email) {
+    return '$email olarak giriş yapıldı';
+  }
+
+  @override
+  String get addressNotKept =>
+      'Adres bir kez kullanılır ve saklanmaz — bu hesapta e-posta yok.';
+
+  @override
+  String get requestMyData => 'Verilerimi e-postala';
+
+  @override
+  String exportSent(String address) {
+    return '$address adresine gönderildi';
+  }
+
+  @override
+  String get deleteIntro =>
+      'Bu her şeyi kalıcı olarak siler. Geri alınamaz ve kurtarılamaz.';
+
+  @override
+  String get rankLabel => 'Rütbe';
+
+  @override
+  String get wantCopyFirst => 'Önce bir kopya ister misin?';
+
+  @override
+  String get wantCopyBody =>
+      'Silmeden önce verilerini indir. Sonrasında yok olurlar.';
+
+  @override
+  String typeToConfirm(String word) {
+    return 'Onaylamak için $word yaz';
+  }
+
+  @override
+  String get deleteWord => 'SİL';
+
+  @override
+  String get deletePermanently => 'Kalıcı olarak sil';
+
+  @override
+  String get keepMyAccount => 'Hesabımı tut';
 
   @override
   String get save => 'Kaydet';
@@ -89,42 +394,7 @@ class LTr extends L {
   String get skip => 'Atla';
 
   @override
-  String get totalMatches => 'Toplam maç';
-
-  @override
-  String get bestWinStreak => 'En iyi galibiyet serisi';
-
-  @override
-  String get totalVolume => 'Toplam kaldırılan hacim';
-
-  @override
   String get height => 'Boy';
-
-  @override
-  String get bodyweight => 'Vücut ağırlığı';
-
-  @override
-  String get age => 'Yaş';
-
-  @override
-  String get editYourStats => 'Bilgilerini düzenle';
-
-  @override
-  String get editStatsHint => 'Galibiyet, hacim ve rütbe kazanılır — yazılmaz.';
-
-  @override
-  String get changeName => 'Adını değiştir';
-
-  @override
-  String get changeNameLast => 'Bu son değişikliğin. Geri alınamaz.';
-
-  @override
-  String changeNameLeft(String total, String left) {
-    return 'Toplam $total değişiklik hakkın var. Bundan sonra $left kalıyor.';
-  }
-
-  @override
-  String get changeNameUsedUp => 'İki isim değiştirme hakkını da kullandın';
 
   @override
   String get yourPicture => 'Fotoğrafın';
@@ -132,6 +402,34 @@ class LTr extends L {
   @override
   String get yourPictureHint =>
       'Çerçeve rütbenden gelir ve yükseldikçe değişir.';
+
+  @override
+  String get couldNotUsePicture => 'O fotoğraf kullanılamadı';
+
+  @override
+  String get couldNotSyncAvatar =>
+      'Fotoğrafın kaydedildi ama henüz senkronize olmadı';
+
+  @override
+  String get couldNotShareCard => 'Bu kart paylaşılamadı';
+
+  @override
+  String get simulatedOpponent =>
+      'Başka kimse hazır değildi — bu bir antrenman temposu';
+
+  @override
+  String get changeUsername => 'Kullanıcı adını değiştir';
+
+  @override
+  String get usernameInvalidLength =>
+      '4 ile 20 karakter arasında olmalı, yalnızca harf ve rakam';
+
+  @override
+  String get usernameChanged => 'Kullanıcı adı değiştirildi';
+
+  @override
+  String get usernameAlreadyChangedBody =>
+      'Tek kullanıcı adı değişikliğinizi zaten kullandınız — her hesap tam olarak bir hak alır.';
 
   @override
   String get gallery => 'Galeri';
@@ -184,148 +482,13 @@ class LTr extends L {
       'Dinlenmek antrenmanın parçası. Haftada iki gün ara serini bozmaz.';
 
   @override
-  String titlesAndStreak(String owned, String total, String streak) {
-    return '$total unvandan $owned tanesi · $streak günlük seri';
-  }
-
-  @override
-  String get crew => 'Ekip';
-
-  @override
-  String get myCrew => 'Ekibim';
-
-  @override
-  String get rankings => 'Sıralama';
-
-  @override
-  String get trainWithCrew => 'Bir ekiple çalış';
-
-  @override
-  String get trainWithCrewHint =>
-      'Tek isim altında 20 kişiye kadar: ortak bir haftalık hedef ve ekip tablosunda tırmanacak bir sıra.';
-
-  @override
-  String get createCrew => 'Ekip kur';
-
-  @override
-  String get createCrewHint => 'Adını koy, armanı seç, kendi insanlarını çağır';
-
-  @override
-  String get joinOpenCrew => 'Açık bir ekibe katıl';
-
-  @override
-  String get joinOpenCrewHint => 'Herkese açık ekipler';
-
-  @override
-  String get yourInvites => 'Davetlerin';
-
-  @override
-  String get yourInvitesHint => 'Seni isteyen ekipler';
-
-  @override
-  String get joinWithCode => 'Kodla katıl';
-
-  @override
-  String get joinWithCodeHint => 'Bir üyeden alacağın altı karakter';
-
-  @override
-  String get topCrewsThisWeek => 'Bu haftanın en iyi ekipleri';
-
-  @override
-  String get members => 'Üyeler';
-
-  @override
-  String get repsEach => 'Kişi başı tekrar';
-
-  @override
-  String get rank => 'Sıra';
-
-  @override
-  String get weeklyGoal => 'Haftalık hedef';
-
-  @override
-  String get weeklyGoalDone => 'Haftalık hedef tamam';
-
-  @override
-  String goalRemaining(String reps, String days) {
-    return '$reps tekrar kaldı · $days gün var';
-  }
-
-  @override
-  String get goalDoneHint => 'Hafta kapanınca rozeti herkes alıyor.';
-
-  @override
-  String get startCrewWar => 'Ekip savaşı başlat';
-
-  @override
-  String get startCrewWarHint =>
-      'Yedi gün, iki ekip de sayıyor. Kişi başı en çok tekrarı yapan kazanır.';
-
-  @override
-  String get whoIsPulling => 'Ekibi kim taşıyor';
-
-  @override
-  String get thisWeek => 'bu hafta';
-
-  @override
-  String get inviteLifters => 'Sporcu davet et';
-
-  @override
-  String get referralCode => 'Davet kodu';
-
-  @override
-  String get inviteLink => 'Davet bağlantısı';
-
-  @override
-  String get leaveCrew => 'Ekipten ayrıl';
-
-  @override
-  String get owner => 'Kurucu';
-
-  @override
-  String get crewTable => 'Ekip tablosu';
-
-  @override
-  String get repsPerMember => 'üye başına tekrar';
-
-  @override
-  String seasonResets(String days) {
-    return '$days gün sonra sıfırlanır — herkes eşit başlar';
-  }
-
-  @override
-  String get rankingExplained =>
-      'Ekipler toplam tekrara değil, üye başına tekrara göre sıralanır — yoksa en kalabalık ekip sırf kalabalık olduğu için kazanırdı.';
-
-  @override
-  String get leaderboard => 'Sıralama';
-
-  @override
-  String get global => 'Dünya';
-
-  @override
-  String get myCountry => 'Ülkem';
-
-  @override
-  String yourFriends(String count) {
-    return 'Arkadaşların ($count)';
-  }
+  String get global => 'Küresel';
 
   @override
   String get challenge => 'Meydan oku';
 
   @override
   String get notifications => 'Bildirimler';
-
-  @override
-  String get pickMovement => 'Bir hareket seç';
-
-  @override
-  String get anyExercise => 'Herhangi bir hareket';
-
-  @override
-  String get anyExerciseHint =>
-      'Setinize başlayın — hareket siz yaparken tanınır';
 
   @override
   String get start => 'Başla';
@@ -337,26 +500,10 @@ class LTr extends L {
   String get reps => 'tekrar';
 
   @override
-  String get secondsHeld => 'saniye tutuldu';
-
-  @override
-  String get learningMovement =>
-      'Hareketini öğreniyor — tekrarların birazdan görünecek';
-
-  @override
   String get recalibrate => 'Yeniden ayarla';
 
   @override
   String get resetCount => 'Sayacı sıfırla';
-
-  @override
-  String get checksForm => 'formu kontrol ediyor';
-
-  @override
-  String get counts => 'sayıyor';
-
-  @override
-  String get time => 'süre';
 
   @override
   String get howManyReally => 'Gerçekte kaç tekrar yaptınız?';
@@ -372,9 +519,6 @@ class LTr extends L {
   String get theme => 'Tema';
 
   @override
-  String get darkMode => 'Koyu mod';
-
-  @override
   String get language => 'Dil';
 
   @override
@@ -384,22 +528,13 @@ class LTr extends L {
   String get weight => 'Ağırlık';
 
   @override
-  String get notificationsSection => 'Bildirimler';
-
-  @override
   String get privacy => 'Gizlilik';
-
-  @override
-  String get matches => 'Maçlar';
 
   @override
   String get data => 'Veriler';
 
   @override
   String get about => 'Hakkında';
-
-  @override
-  String get dangerZone => 'Tehlikeli bölge';
 
   @override
   String get themeSystem => 'Cihazla aynı';
@@ -411,52 +546,12 @@ class LTr extends L {
   String get themeDark => 'Koyu';
 
   @override
-  String get openCrews => 'Açık ekipler';
-
-  @override
-  String get openCrewsHint =>
-      'Bu ekipler herkesi kabul eder. Birini seçtiğinizde doğrudan katılırsınız.';
-
-  @override
-  String get yourInvitesSubtitle => 'Seni ismen isteyen ekipler.';
-
-  @override
-  String get pickOpponent => 'Rakibini seç';
-
-  @override
   String get accept => 'Kabul et';
-
-  @override
-  String get join => 'Katıl';
-
-  @override
-  String get copy => 'Kopyala';
-
-  @override
-  String get copied => 'Davet bağlantısı kopyalandı';
-
-  @override
-  String season(String name) {
-    return '$name sezonu';
-  }
 
   @override
   String challengeSent(String name) {
     return '$name kişisine meydan okuma gönderildi';
   }
-
-  @override
-  String get inviteFriendPrivate => 'Bir arkadaşını özel maça çağır';
-
-  @override
-  String get joinWithCodePaste =>
-      'Bir üyenin gönderdiği altı karakteri yapıştır.';
-
-  @override
-  String get enterTheCode => '6 karakterlik kodu gir';
-
-  @override
-  String get followingDevice => 'Şu anda cihazını takip ediyor';
 
   @override
   String get weightUnitTitle => 'Ağırlık birimi';
@@ -486,73 +581,13 @@ class LTr extends L {
   String get visNobody => 'Hiç kimse';
 
   @override
-  String get visEveryoneHint => 'Profilini herkes açabilir';
-
-  @override
-  String get visFriendsHint => 'Sadece eklediğin kişiler';
-
-  @override
-  String get visNobodyHint => 'Profilin gizli kalır';
-
-  @override
-  String get matchInvites => 'Maç davetleri';
-
-  @override
-  String get matchResults => 'Maç sonuçları';
-
-  @override
   String get friendRequestsLabel => 'Arkadaşlık istekleri';
-
-  @override
-  String get crewActivity => 'Ekip hareketleri';
-
-  @override
-  String get rankChanges => 'Rütbe değişimleri';
-
-  @override
-  String get weeklySummary => 'Haftalık özet';
-
-  @override
-  String get soundLabel => 'Ses';
-
-  @override
-  String get vibration => 'Titreşim';
-
-  @override
-  String get whoCanSeeProfile => 'Profilimi kim görebilir';
-
-  @override
-  String get profileVisibility => 'Profil görünürlüğü';
 
   @override
   String get showOnLeaderboards => 'Sıralamalarda görün';
 
   @override
-  String get allowMatchInvites => 'Maç davetlerine izin ver';
-
-  @override
-  String get allowFriendRequests => 'Arkadaşlık isteklerine izin ver';
-
-  @override
-  String get showHeightWeight => 'Boy ve kiloyu göster';
-
-  @override
-  String get showHeightWeightHint => 'Kapalıyken vücut bilgilerin sende kalır';
-
-  @override
-  String get autoAcceptFriends => 'Arkadaşlardan otomatik kabul';
-
-  @override
-  String get restTimerBetweenSets => 'Setler arası dinlenme sayacı';
-
-  @override
   String get exportData => 'Verilerimi dışa aktar';
-
-  @override
-  String get clearCache => 'Önbelleği temizle';
-
-  @override
-  String get cacheCleared => 'Önbellek temizlendi';
 
   @override
   String get version => 'Sürüm';
@@ -573,40 +608,11 @@ class LTr extends L {
   String get openSourceLicences => 'Açık kaynak lisansları';
 
   @override
-  String get resetProgress => 'İlerlememi sıfırla';
-
-  @override
-  String get resetProgressTitle => 'İlerlemen sıfırlansın mı?';
-
-  @override
-  String get resetProgressBody =>
-      'Rütbe, LP ve maç geçmişi sıfıra döner. Geri alınamaz.';
-
-  @override
-  String get actionReset => 'Sıfırla';
-
-  @override
   String get deleteAccount => 'Hesabı sil';
-
-  @override
-  String get deleteAccountTitle => 'Hesabın silinsin mi?';
-
-  @override
-  String get deleteAccountBody =>
-      'Profilin, ekiplerin ve kaldırdığın her maç kalıcı olarak siliniyor.';
-
-  @override
-  String get actionDelete => 'Sil';
 
   @override
   String get needsServer =>
       'Bu özellik bir sunucu gerektiriyor ve henüz bağlanmadı';
-
-  @override
-  String get getStarted => 'Hadi başlayalım';
-
-  @override
-  String get skipToApp => 'Doğrudan uygulamaya geç';
 
   @override
   String get achievements => 'Başarımlar';
@@ -615,7 +621,7 @@ class LTr extends L {
   String get unlocked => 'Açıldı';
 
   @override
-  String get roadTitle => 'Efsaneye giden yol';
+  String get roadTitle => 'Ustalığa giden yol';
 
   @override
   String get allTiers => 'Tüm rütbeler';
@@ -635,10 +641,6 @@ class LTr extends L {
   String unlocksAt(String tier) {
     return '$tier rütbesinde açılıyor';
   }
-
-  @override
-  String get matchedSameGroup =>
-      'Aynı kas grubunu çalışan biriyle eşleştirileceksin.';
 
   @override
   String get roomFriendly => 'Oda maçları dostane — rütbeni etkilemiyor.';
@@ -662,15 +664,12 @@ class LTr extends L {
   String get pickMuscleAndStart => 'Kası seç ve başla';
 
   @override
-  String get dontGetOutrepd => 'Don\'t get OUTREPD!';
-
-  @override
   String xOfY(String a, String b) {
     return '$a / $b';
   }
 
   @override
-  String get tierStone => 'Taş';
+  String get tierIron => 'Demir';
 
   @override
   String get tierBronze => 'Bronz';
@@ -691,37 +690,25 @@ class LTr extends L {
   String get tierMaster => 'Usta';
 
   @override
-  String get tierMythic => 'Efsanevi';
+  String get rewardStone => '60 saniyelik düellolar';
 
   @override
-  String get tierLegend => 'Efsane';
+  String get rewardBronze => 'Rövanş düğmesi';
 
   @override
-  String get rewardStone => 'Taş çerçeve';
+  String get rewardSilver => 'Özel süre';
 
   @override
-  String get rewardBronze => 'Bronz rozet';
+  String get rewardGold => '3 maçta 2 galibiyet';
 
   @override
-  String get rewardSilver => 'Gümüş rozet';
+  String get rewardPlatinum => 'Özel turnuvalar';
 
   @override
-  String get rewardGold => 'Altın rozet';
+  String get rewardDiamond => 'Açık lobiler';
 
   @override
-  String get rewardPlatinum => 'Platin rozet';
-
-  @override
-  String get rewardDiamond => 'Elmas rozet';
-
-  @override
-  String get rewardMaster => 'Usta rozeti';
-
-  @override
-  String get rewardMythic => 'Efsanevi rozet';
-
-  @override
-  String get rewardLegend => 'Efsane rozeti';
+  String get rewardMaster => 'Küresel tabloda isim';
 
   @override
   String get shortKg => 'kg';
@@ -739,127 +726,6 @@ class LTr extends L {
   String winLoss(String w, String l) {
     return '${w}G ${l}M';
   }
-
-  @override
-  String get yearsSuffix => 'yaş';
-
-  @override
-  String get yourCrew => 'Ekibiniz';
-
-  @override
-  String get crewName => 'Ekip adı';
-
-  @override
-  String get motto => 'Slogan';
-
-  @override
-  String get mottoHint => 'Bu ekip neyi temsil ediyor?';
-
-  @override
-  String get country => 'Ülke';
-
-  @override
-  String get whoCanJoin => 'Kimler katılabilir';
-
-  @override
-  String get minimumRank => 'Asgari rütbe';
-
-  @override
-  String get anyone => 'Herkes';
-
-  @override
-  String get emblem => 'Arma';
-
-  @override
-  String get colour => 'Renk';
-
-  @override
-  String get createCrewButton => 'Ekibi kur';
-
-  @override
-  String get ownerNote =>
-      'Kurucusu siz olacaksınız. Bir ekip en fazla 20 sporcu alır.';
-
-  @override
-  String get searchCountries => 'Ülke ara';
-
-  @override
-  String get noCountryMatch => 'Eşleşen ülke yok';
-
-  @override
-  String get nameTooShort => 'Ekibe en az 3 karakterlik bir ad verin';
-
-  @override
-  String get privOpen => 'Açık';
-
-  @override
-  String get privRequest => 'Katılma isteği';
-
-  @override
-  String get privInviteOnly => 'Yalnızca davetle';
-
-  @override
-  String get privOpenHint => 'Kodu olan doğrudan katılır';
-
-  @override
-  String get privRequestHint => 'İstek gönderilir, bir yetkili onaylar';
-
-  @override
-  String get privInviteOnlyHint => 'Yalnızca doğrudan davetle katılınır';
-
-  @override
-  String get embStrength => 'Güç';
-
-  @override
-  String get embCombat => 'Dövüş';
-
-  @override
-  String get embBeasts => 'Canavarlar';
-
-  @override
-  String get embElements => 'Elementler';
-
-  @override
-  String get embHonours => 'Nişanlar';
-
-  @override
-  String get embSymbols => 'Semboller';
-
-  @override
-  String get ob1Title => 'Her antrenmanı\nbir mücadeleye çevir';
-
-  @override
-  String get ob1Body =>
-      'Antrenmanınızı kaydedin ve aynı kas grubunu çalışan biriyle karşı karşıya gelin.';
-
-  @override
-  String get ob2Title => 'Arkadaşlarına\nmeydan oku';
-
-  @override
-  String get ob2Body =>
-      'Özel bir davet gönderin ve kimin daha sıkı çalıştığını belirleyin.';
-
-  @override
-  String get ob3Title => 'Rütbelerde yüksel';
-
-  @override
-  String get ob3Body =>
-      'Her galibiyet LP kazandırır. Taş\'tan Efsane\'ye kadar tırmanın.';
-
-  @override
-  String get ob4Title => 'Tek başına çaba\nzordur';
-
-  @override
-  String get ob4Body => 'Kimse bakmazken son seti kısa kesmek kolaylaşır.';
-
-  @override
-  String get ob5Title => 'Bir Efsane\nol';
-
-  @override
-  String get ob5Body => 'Süreklilik birikir. Gelin, geçin, yükselin.';
-
-  @override
-  String get letsGo => 'Başlayalım';
 
   @override
   String get continueLabel => 'Devam';
@@ -1075,7 +941,7 @@ class LTr extends L {
   String get tdesc_perfect_month => 'Dört kusursuz hafta';
 
   @override
-  String get ttl_bronze_tier => 'Taştan Çıkış';
+  String get ttl_bronze_tier => 'Demirden Çıkış';
 
   @override
   String get tdesc_bronze_tier => 'Bronz\'a ulaş';
@@ -1111,18 +977,6 @@ class LTr extends L {
   String get tdesc_master_tier => 'Usta\'ya ulaş';
 
   @override
-  String get ttl_mythic_tier => 'Efsanevi';
-
-  @override
-  String get tdesc_mythic_tier => 'Efsanevi rütbeye ulaş';
-
-  @override
-  String get ttl_legend_tier => 'Efsane';
-
-  @override
-  String get tdesc_legend_tier => 'Efsane\'ye ulaş';
-
-  @override
   String get ttl_clean_hands => 'Temiz Eller';
 
   @override
@@ -1139,18 +993,6 @@ class LTr extends L {
 
   @override
   String get tdesc_textbook => 'Elli temiz set';
-
-  @override
-  String get ttl_iron_hold => 'Demir Tutuş';
-
-  @override
-  String get tdesc_iron_hold => 'Plank\'ı iki dakika tut';
-
-  @override
-  String get ttl_statue => 'Heykel';
-
-  @override
-  String get tdesc_statue => 'Plank\'ı beş dakika tut';
 
   @override
   String get ttl_all_rounder => 'Her İşe Uygun';
@@ -1195,24 +1037,6 @@ class LTr extends L {
   String get tdesc_graveyard => 'Gece ondan sonra elli antrenman';
 
   @override
-  String get ttl_joined_up => 'Katıldı';
-
-  @override
-  String get tdesc_joined_up => 'Bir ekibe ait ol';
-
-  @override
-  String get ttl_backbone => 'Omurga';
-
-  @override
-  String get tdesc_backbone => 'Ekibinin başında dört hafta üst üste kal';
-
-  @override
-  String get ttl_cornerstone => 'Temel Taş';
-
-  @override
-  String get tdesc_cornerstone => 'Ekibinin başında on iki hafta üst üste kal';
-
-  @override
   String get ttl_not_alone => 'Yalnız Değilsin';
 
   @override
@@ -1231,163 +1055,6 @@ class LTr extends L {
   String get tdesc_the_gym_knows => 'Elli arkadaş';
 
   @override
-  String get finish2 => 'Bitir';
-
-  @override
-  String get qExperience => 'Antrenman konusunda\nne kadar deneyimlisiniz?';
-
-  @override
-  String get expBeginner => 'Başlangıç – Daha önce denedim';
-
-  @override
-  String get expIntermediate => 'Orta – Düzenli çalışıyorum';
-
-  @override
-  String get expAdvanced => 'İleri – Yıllardır içindeyim';
-
-  @override
-  String get qGoal => 'En önemli hedefiniz\nnedir?';
-
-  @override
-  String get goalStronger => 'Daha güçlü olmak';
-
-  @override
-  String get goalConsistent => 'Daha istikrarlı olmak';
-
-  @override
-  String get goalLean => 'Kilo verip incelmek';
-
-  @override
-  String get goalMass => 'Kas kütlesi kazanmak';
-
-  @override
-  String get aboutYou => 'Bu yolculuk tamamen sizinle ilgili...';
-
-  @override
-  String get qThinkAbout => 'Forma girmeyi\nne sıklıkta düşünüyorsunuz?';
-
-  @override
-  String get freqNever => 'Hiç';
-
-  @override
-  String get freqSometimes => 'Bazen';
-
-  @override
-  String get freqOften => 'Sık sık';
-
-  @override
-  String get freqAllTime => 'Sürekli';
-
-  @override
-  String get qEnergy => 'Antrenman sırasında\nenerjiniz nasıl?';
-
-  @override
-  String get energyLow => 'Düşük, gün boyu bitkin hissediyorum';
-
-  @override
-  String get energyDrops => 'Performansım seans ortasında düşüyor';
-
-  @override
-  String get energyHard => 'Son seti tamamlamak zor geliyor';
-
-  @override
-  String get energyHigh => 'Baştan sona yüksek ve istikrarlı';
-
-  @override
-  String get stProgress =>
-      'Bazen antrenman yaparken ilerlemeyi fark etmek zor oluyor';
-
-  @override
-  String get stEffortTitle => 'Kimsenin görmediği çaba\nkolay bırakılır';
-
-  @override
-  String get stEffortBody =>
-      'Kendinizi kanıtlayacak kimse yokken ilerleme yavaş, çaba anlamsız görünür';
-
-  @override
-  String get stAloneTitle => 'Tek başına çalışmak\nsıkıcıdır';
-
-  @override
-  String get stAloneBody =>
-      'Kimse bakmıyor. Kimse saymıyor. Bir tekrarı, hatta tüm seti atlamak kolaylaşıyor';
-
-  @override
-  String get qName => 'Size nasıl\nhitap edelim?';
-
-  @override
-  String get nameHint => 'En az 3 karakter. Rakipleriniz bunu görecek.';
-
-  @override
-  String get basicInfo => 'Güzel! Şimdi birkaç\ntemel bilgi';
-
-  @override
-  String get qAge => 'Kaç yaşındasınız?';
-
-  @override
-  String get qWeight => 'Şu anki\nkilonuz nedir?';
-
-  @override
-  String get weightWhy => 'Rütbenizi hesaplamak için vücut ağırlığı gerekli.';
-
-  @override
-  String get privateNote => 'Bilgileriniz gizlidir ve kimseyle paylaşılmaz.';
-
-  @override
-  String get qHeight => 'Boyunuz kaç?';
-
-  @override
-  String get qRelate => 'Aşağıdaki ifadeye\nkatılıyor musunuz?';
-
-  @override
-  String get yes => 'Evet';
-
-  @override
-  String get no => 'Hayır';
-
-  @override
-  String get grindTitle => 'Bir rakip varken\nemek başka türlü ilerler';
-
-  @override
-  String get grindBody =>
-      'Her maç sizi gerçek bir rakibin karşısına çıkarır: işi yapın ve kimin daha sıkı çalıştığını gösterin.';
-
-  @override
-  String get allSet => 'Her şey hazır!';
-
-  @override
-  String welcomeLifter(String name) {
-    return 'Hoş geldiniz $name. İlk rakibinizi bulma vakti.';
-  }
-
-  @override
-  String get lifter => 'sporcu';
-
-  @override
-  String get enterApp => 'OUTREPD\'ye gir';
-
-  @override
-  String get commitTitle => 'Şimdi kendi yolculuğunuza\nbir söz verelim';
-
-  @override
-  String get holdLogo => 'Hazır olduğunuzu onaylamak için logoyu basılı tutun';
-
-  @override
-  String get expNone => 'Hiç antrenman yapmadım';
-
-  @override
-  String get iAm => 'Ben...';
-
-  @override
-  String get finishMatchQ => 'Maç bitirilsin mi?';
-
-  @override
-  String get finishMatchBody =>
-      'Toplam hacminiz sabitlenip rakibinizinkiyle karşılaştırılacak.';
-
-  @override
-  String get keepGoing => 'Devam et';
-
-  @override
   String get forfeitQ => 'Maçtan çekilinsin mi?';
 
   @override
@@ -1400,43 +1067,7 @@ class LTr extends L {
   String get forfeit => 'Çekil';
 
   @override
-  String get pickExercises => 'Çalışacağınız hareketleri seçin';
-
-  @override
-  String matchingWith(String muscle) {
-    return 'Rütbenizde bir sporcu aranıyor · $muscle';
-  }
-
-  @override
   String get getReady => 'HAZIR OL';
-
-  @override
-  String get timeLeft => 'KALAN SÜRE';
-
-  @override
-  String vsName(String name) {
-    return '$name karşısında';
-  }
-
-  @override
-  String kgTotalVolume(String unit) {
-    return '$unit toplam hacim';
-  }
-
-  @override
-  String get finishMatch => 'MAÇI BİTİR';
-
-  @override
-  String get kgHint => 'KG';
-
-  @override
-  String get repsHint => 'TEKRAR';
-
-  @override
-  String get addSet => 'SET EKLE';
-
-  @override
-  String get matchComplete => 'MAÇ TAMAMLANDI';
 
   @override
   String get you => 'SİZ';
@@ -1466,12 +1097,6 @@ class LTr extends L {
   String get mgCore => 'Karın';
 
   @override
-  String get achRivalry => 'Rekabet';
-
-  @override
-  String get achRivalryHint => 'Aynı rakibi 3 kez yen';
-
-  @override
   String get nWonTitle => 'Kazandınız!';
 
   @override
@@ -1483,8 +1108,63 @@ class LTr extends L {
   String get nFriendTitle => 'Yeni arkadaşlık isteği';
 
   @override
+  String get nRacedTitle => 'Setine meydan okundu';
+
+  @override
+  String nRacedHeld(String name, String yours, String theirs) {
+    return '$name setine meydan okudu ve yetişemedi, $yours–$theirs';
+  }
+
+  @override
+  String nRacedBeaten(String name, String theirs, String yours) {
+    return '$name setine meydan okudu ve kazandı, $theirs–$yours';
+  }
+
+  @override
+  String get nFriendOkTitle => 'Arkadaşlık isteği kabul edildi';
+
+  @override
+  String nFriendOkBody(String name) {
+    return '$name isteğini kabul etti';
+  }
+
+  @override
   String nFriendBody(String name) {
     return '$name sizinle bağlantı kurmak istiyor';
+  }
+
+  @override
+  String get nChallengedTitle => 'Rövanş';
+
+  @override
+  String nChallengedBody(String name) {
+    return '$name rövanş istiyor';
+  }
+
+  @override
+  String get challengeSentTitle => 'Meydan okuma gönderildi';
+
+  @override
+  String challengeSentBody(String name) {
+    return '$name kişisine haber vereceğiz. O yarıştıktan sonra geri dön.';
+  }
+
+  @override
+  String get challengeNotSentTitle => 'Gönderilemedi';
+
+  @override
+  String get challengeNotSentBody =>
+      'Bağlantını kontrol et ve Maç sekmesinden tekrar dene.';
+
+  @override
+  String get challengeGoneTitle => 'Meydan okuma artık yok';
+
+  @override
+  String get challengeGoneBody => 'Zaten yarışıldı ya da geri çekildi.';
+
+  @override
+  String repsRecordedLine(String reps) {
+    return '$reps tekrar kaydedildi';
   }
 
   @override
@@ -1504,53 +1184,6 @@ class LTr extends L {
   }
 
   @override
-  String get nameTooShortInline => 'En az 3 karakterlik bir ad seçin';
-
-  @override
-  String get whyName => 'Rakipleriniz bunu her sonucun yanında görecek';
-
-  @override
-  String get whyExperience =>
-      'Sizi kendi seviyenizdeki kişilerle eşleştiriyoruz';
-
-  @override
-  String get whyGoal => 'İlk önerilen hareketleriniz buradan çıkıyor';
-
-  @override
-  String get whyAge => 'Yaş, ölçüldüğünüz kuvvet standartlarını etkiler';
-
-  @override
-  String get whyWeight =>
-      'Rütbe, kaldırdığınızı vücut ağırlığınıza oranlar; ham kiloya değil';
-
-  @override
-  String get whyHeight => 'Adil standartlar için kilonuzla birlikte kullanılır';
-
-  @override
-  String get whyHabits =>
-      'Önerdiğimiz hatırlatmaları ve haftalık hedefi belirler';
-
-  @override
-  String get transitionPartOfIt =>
-      '...o hâlde bunun gerçekten parçası olduğunuzdan emin olalım.';
-
-  @override
-  String get male => 'Erkek';
-
-  @override
-  String get female => 'Kadın';
-
-  @override
-  String get usernamePlaceholder => 'ad';
-
-  @override
-  String get stRoutine =>
-      'Hangi bölgenin gerçekten çalışmaya ihtiyacı olduğunu bilmiyorum, o yüzden genelde aynı programı tekrarlıyorum';
-
-  @override
-  String get shortIn => 'inç';
-
-  @override
   String get today => 'Bugün';
 
   @override
@@ -1567,101 +1200,18 @@ class LTr extends L {
   }
 
   @override
-  String membersCount(String n) {
-    return '$n üye';
-  }
-
-  @override
-  String eachCount(String n) {
-    return 'kişi başı $n';
-  }
-
-  @override
   String lpAmount(String n) {
     return '$n LP';
   }
 
   @override
-  String get countWithCamera => 'Kamerayla say';
+  String get lpUnit => 'LP';
 
   @override
-  String get youWin => 'KAZANDINIZ!';
+  String get trueCountHint => 'örn. 12';
 
   @override
-  String get defeated => 'YENİLDİNİZ';
-
-  @override
-  String get fillWholeNumbers => 'Üçünü de tam sayıyla doldurun';
-
-  @override
-  String heightRange(String min, String max, String unit) {
-    return 'Boy $min ile $max $unit arasında olmalı';
-  }
-
-  @override
-  String weightRange(String min, String max, String unit) {
-    return 'Kilo $min ile $max $unit arasında olmalı';
-  }
-
-  @override
-  String ageRange(String min, String max) {
-    return 'Yaş $min ile $max arasında olmalı';
-  }
-
-  @override
-  String get discPush => 'Push';
-
-  @override
-  String get discPull => 'Pull';
-
-  @override
-  String get discLegs => 'Legs';
-
-  @override
-  String get discPushHint => 'Chest, shoulders and triceps';
-
-  @override
-  String get discPullHint => 'Back and biceps';
-
-  @override
-  String get discLegsHint => 'Quads, hamstrings and core';
-
-  @override
-  String get pickYourThree => 'Pick your three';
-
-  @override
-  String get pickThreeHint =>
-      'Both of you lift all six — your three and theirs';
-
-  @override
-  String roundOf(String n, String total) {
-    return 'Round $n of $total';
-  }
-
-  @override
-  String get rest => 'Rest';
-
-  @override
-  String get work => 'Work';
-
-  @override
-  String get nextUp => 'Next up';
-
-  @override
-  String picksLeft(String n) {
-    return '$n left to pick';
-  }
-
-  @override
-  String get yourPick => 'Your pick';
-
-  @override
-  String get theirPick => 'Their pick';
-
-  @override
-  String secondsOfWork(String n) {
-    return '$n seconds of work';
-  }
+  String get couldNotSaveSession => 'Oturum kaydedilemedi';
 
   @override
   String lpOutOf(String total) {
@@ -1669,16 +1219,29 @@ class LTr extends L {
   }
 
   @override
-  String toPromotion(String n) {
-    return 'yükselmeye $n kaldı';
-  }
-
-  @override
   String get noFriendsTitle => 'Henüz arkadaş yok';
 
   @override
-  String get noFriendsBody =>
-      'Birini ekle, istediğin zaman özel maça çağırabilirsin.';
+  String get noFriendsBody => 'Tanıdığın biriyle düello bambaşka bir şey.';
+
+  @override
+  String get addFriend => 'Ekle';
+
+  @override
+  String get decline => 'Reddet';
+
+  @override
+  String requestSent(String name) {
+    return '$name kişisine istek gönderildi';
+  }
+
+  @override
+  String nowFriends(String name) {
+    return 'Artık $name ile arkadaşsınız';
+  }
+
+  @override
+  String get noOneFound => 'Bu adı kullanan kimse yok';
 
   @override
   String get noMatchesTitle => 'Henüz maç yok';
@@ -1694,14 +1257,6 @@ class LTr extends L {
       'Maç davetleri, sonuçlar ve arkadaşlık istekleri buraya gelir.';
 
   @override
-  String roundDone(String n) {
-    return '$n. raunt bitti';
-  }
-
-  @override
-  String get bestRoundYet => 'Şimdiye kadarki en iyi raunt';
-
-  @override
   String get countedThat => 'Bu turda sayılan';
 
   @override
@@ -1714,14 +1269,715 @@ class LTr extends L {
   String get confirmHint => 'Kamera yanıldıysa değiştirin.';
 
   @override
-  String pickNMore(String n) {
-    return '$n tane daha seçin';
+  String get unsureMovement =>
+      'Doğru hareket miydi emin değilim — sayıyı kontrol edin.';
+
+  @override
+  String get local => 'Local';
+
+  @override
+  String get weekly => 'Weekly';
+
+  @override
+  String get seasonTab => 'Season';
+
+  @override
+  String get allTime => 'All-time';
+
+  @override
+  String get daily => 'Daily';
+
+  @override
+  String get noRanksYet => 'No ranks yet';
+
+  @override
+  String get noRanksYetBody => 'Play a duel and the board fills in.';
+
+  @override
+  String get ranksTitle => 'Ranks';
+
+  @override
+  String get totalReps => 'Total reps';
+
+  @override
+  String get recent => 'Recent';
+
+  @override
+  String wonVs(String name) {
+    return 'Won vs $name';
   }
 
   @override
-  String get findOpponent => 'Rakip ara';
+  String lostVs(String name) {
+    return 'Lost vs $name';
+  }
 
   @override
-  String get unsureMovement =>
-      'Doğru hareket miydi emin değilim — sayıyı kontrol edin.';
+  String hoursAgo(String n) {
+    return '${n}h ago';
+  }
+
+  @override
+  String toNextTier(String n, String tier) {
+    return '$n to $tier';
+  }
+
+  @override
+  String get noMatchesYet => 'No duels yet';
+
+  @override
+  String get noMatchesYetBody => 'Your first one shows up here, win or lose.';
+
+  @override
+  String get searchByUsername => 'Kullanıcı adıyla ara';
+
+  @override
+  String get incomingRequests => 'Gelen istekler';
+
+  @override
+  String onlineNowCount(String count) {
+    return 'Şu an çevrimiçi · $count';
+  }
+
+  @override
+  String offlineCount(String count) {
+    return 'Çevrimdışı · $count';
+  }
+
+  @override
+  String get invite => 'Davet et';
+
+  @override
+  String get headToHeadTitle => 'Karşılıklı skor';
+
+  @override
+  String get vsYouCaption => 'sana karşı';
+
+  @override
+  String get h2hYou => 'sen';
+
+  @override
+  String get h2hThem => 'o';
+
+  @override
+  String headToHead(String wins, String losses) {
+    return 'Sana karşı ${wins}G ${losses}M';
+  }
+
+  @override
+  String get neverPlayedYou => 'Seninle hiç oynamadı';
+
+  @override
+  String noHistoryWithThem(String username) {
+    return '$username ile henüz yarışmadın.';
+  }
+
+  @override
+  String lastDuelScore(String yourReps, String theirReps, String when) {
+    return 'Son sefer: $yourReps–$theirReps, $when.';
+  }
+
+  @override
+  String yourBestVsThemLine(String reps) {
+    return 'Ona karşı en iyi skorun $reps.';
+  }
+
+  @override
+  String get viewFullProfile => 'Tüm profili gör';
+
+  @override
+  String get moreOptions => 'Diğer seçenekler';
+
+  @override
+  String get block => 'Engelle';
+
+  @override
+  String get blockRowBody => 'Sana meydan okuyamaz veya profilini göremez';
+
+  @override
+  String get report => 'Bildir';
+
+  @override
+  String get reportRowBody => '24 saat içinde incelenir';
+
+  @override
+  String muteChallenges(String username) {
+    return '$username kişisinden gelen meydan okumaları sessize al';
+  }
+
+  @override
+  String blockedLifter(String username) {
+    return '$username engellendi';
+  }
+
+  @override
+  String mutedLifter(String username) {
+    return '$username sessize alındı';
+  }
+
+  @override
+  String get addFriendButton => 'Arkadaş ekle';
+
+  @override
+  String get alreadyFriends => 'Arkadaşlar';
+
+  @override
+  String get couldNotLoadProfile => 'Bu profil yüklenemedi';
+
+  @override
+  String get noFriendsMatch => 'Bu isimde kimse yok';
+
+  @override
+  String get yourClimb => 'Tırmanışın';
+
+  @override
+  String lpToUnlock(String lp, String rank, String unlock) {
+    return '$rank için $lp LP · $unlock açılır';
+  }
+
+  @override
+  String floorKept(String tier, String rank) {
+    return '$tier artık senin. $rank altına düşmezsin.';
+  }
+
+  @override
+  String dayStreakCount(String count) {
+    return '$count gün üst üste';
+  }
+
+  @override
+  String get findMatch => 'Maç bul';
+
+  @override
+  String rankedTerms(String seconds) {
+    return '$seconds saniye · dereceli';
+  }
+
+  @override
+  String get practiceTerms => 'Alıştırma — derece yok, rakip yok';
+
+  @override
+  String get practiceComplete => 'ALIŞTIRMA BİTTİ';
+
+  @override
+  String get findPeople => 'Kişi bul';
+
+  @override
+  String get noRankYet => 'Henüz derece yok';
+
+  @override
+  String placementsForFirstTier(String count) {
+    return 'İlk dereceni kazanmak için $count yerleştirme düellosu bitir.';
+  }
+
+  @override
+  String get startPlacements => 'Yerleştirmeye başla';
+
+  @override
+  String get unranked => 'Derecesiz';
+
+  @override
+  String placementsTerms(String done, String total, String seconds) {
+    return '$total maçtan $done · her biri $seconds saniye';
+  }
+
+  @override
+  String placementsLeft(String done, String total, String left) {
+    return '$total maçtan $done · derece için $left tane daha';
+  }
+
+  @override
+  String placementsForTier(String count) {
+    return 'Derecenizi görmek için $count yerleştirme düellosu bitirin.';
+  }
+
+  @override
+  String placementsDoneCount(String done, String total) {
+    return '$total yerleştirmeden $done tanesi tamamlandı';
+  }
+
+  @override
+  String get practiceFirst => 'Önce alıştırma';
+
+  @override
+  String get nextPlacement => 'Sonraki yerleştirme';
+
+  @override
+  String get noConnection => 'Bağlantı yok';
+
+  @override
+  String get practiceOffline => 'Çevrimdışı alıştırma';
+
+  @override
+  String get retry => 'Tekrar dene';
+
+  @override
+  String get youWonPlain => 'Kazandın';
+
+  @override
+  String opponentDisconnected(String name) {
+    return '$name bağlantıyı kaybetti';
+  }
+
+  @override
+  String get forfeitNoMargin => 'Çekilme · fark sayılmaz';
+
+  @override
+  String get findAnotherMatch => 'Başka maç bul';
+
+  @override
+  String get cameraNeededTitle => 'Kamera izni gerekiyor';
+
+  @override
+  String get cameraNeededBody =>
+      'outrepd tekrarlarını vücudunun hareketini izleyerek sayar. İşlem cihazında yapılır ve hiçbir şey yüklenmez.';
+
+  @override
+  String get openSettings => 'Ayarları aç';
+
+  @override
+  String get allowCamera => 'Kameraya izin ver';
+
+  @override
+  String get notNow => 'Şimdi değil';
+
+  @override
+  String get noCameraTitle => 'Kamera bulunamadı';
+
+  @override
+  String get noCameraBody =>
+      'Tekrarlar kameradan sayılır, bu yüzden bu cihaz düello puanlayamaz. Geri kalan her şey çalışır.';
+
+  @override
+  String get noConnectionBody =>
+      'Düello için bağlantı gerekir. Alıştırma çevrimdışı çalışır, tekrarların sonra eşitlenir.';
+
+  @override
+  String get getBackInFrame => 'Kareye geri gir';
+
+  @override
+  String get clockStillRunning => 'Süre işliyor. Tekrarlar sayılmıyor.';
+
+  @override
+  String get giveUp => 'Pes et';
+
+  @override
+  String lpSwing(String gain, String loss) {
+    return '+$gain / −$loss LP';
+  }
+
+  @override
+  String get searchingForOpponent => 'Rakip aranıyor';
+
+  @override
+  String get getIntoPosition => 'Pozisyon al';
+
+  @override
+  String get framingHint => 'Bilekler ve ayak bilekleri karede olmalı';
+
+  @override
+  String get goUp => 'Yukarı';
+
+  @override
+  String get goDown => 'Aşağı';
+
+  @override
+  String get bestSet => 'En iyi set';
+
+  @override
+  String get record => 'Karşilaşmalar';
+
+  @override
+  String get last7Days => 'Son 7 gün';
+
+  @override
+  String repsCount(String count) {
+    return '$count tekrar';
+  }
+
+  @override
+  String get viewAll => 'Tümünü gör';
+
+  @override
+  String get shareProfile => 'Profili paylaş';
+
+  @override
+  String get share => 'Paylaş';
+
+  @override
+  String get duelMeOnOutrepd => 'outrepd\'de bana meydan oku';
+
+  @override
+  String get yourRankCard => 'Derece kartın';
+
+  @override
+  String get shareStory => 'Hikaye';
+
+  @override
+  String get sharePost => 'Gönderi';
+
+  @override
+  String get copyLink => 'Kopyala';
+
+  @override
+  String get linkCopied => 'Bağlantı kopyalandı';
+
+  @override
+  String get currentRankLabel => 'Güncel derece';
+
+  @override
+  String get winInitial => 'G';
+
+  @override
+  String get lossInitial => 'M';
+
+  @override
+  String get dayInitial => 'g';
+
+  @override
+  String rankPosition(String n) {
+    return '#$n';
+  }
+
+  @override
+  String get obTagline =>
+      'Şınav düelloları. Telefonun sayıyor. Karşıda biri de sayıyor.';
+
+  @override
+  String get obGetStarted => 'Başla';
+
+  @override
+  String get obHaveAccount => 'Zaten hesabım var';
+
+  @override
+  String get obHowTitle => 'Üç şey, sonra içeridesin.';
+
+  @override
+  String get obHow1 => 'Telefonu yere yasla';
+
+  @override
+  String get obHow1Body => 'Bir metre önünde, duvara dayat.';
+
+  @override
+  String get obHow2 => 'Kamera tekrarlarını sayar';
+
+  @override
+  String get obHow2Body =>
+      'Her tekrarın derinliği kontrol edilir. Yarım tekrar sayılmaz.';
+
+  @override
+  String get obHow3 => 'Birine karşı altmış saniye';
+
+  @override
+  String get obHow3Body =>
+      'Kazanırsan çıkarsın, kaybedersen düşersin. Kurallar herkes için aynı.';
+
+  @override
+  String get obTwoThings => 'İki kısa şey.';
+
+  @override
+  String get obAgeQuestion => 'Kaç yaşındasın?';
+
+  @override
+  String get obUnder16 => '16’dan küçük';
+
+  @override
+  String get obOver16 => '16 ya da üstü';
+
+  @override
+  String get obHealthConsent =>
+      'outrepd’in tekrar saydığını, tıbbi ya da antrenman tavsiyesi vermediğini anlıyorum. Bir yerim ağrırsa dururum.';
+
+  @override
+  String get obTermsIntro => 'Devam edersen şunları kabul etmiş olursun:';
+
+  @override
+  String get obTerms => 'Koşullar';
+
+  @override
+  String get obAnd => 've';
+
+  @override
+  String get obPrivacy => 'Gizlilik Politikası';
+
+  @override
+  String get obUnder16Blocked =>
+      'outrepd 16 yaş ve üstü için. Oraya gelince uğra — şınavlar burada duruyor.';
+
+  @override
+  String get obCameraTitle => 'outrepd’in kameran gerekiyor';
+
+  @override
+  String get obCameraBody =>
+      'Saymak için vücudunun hareketini izler. Başka yolu yok.';
+
+  @override
+  String get obCameraPrivateTitle => 'Hiçbir şey telefonundan çıkmıyor';
+
+  @override
+  String get obCameraPrivateBody =>
+      'Vücut takibi bu cihazda çalışır. Sen paylaşmadıkça hiçbir video yüklenmez.';
+
+  @override
+  String get obWhyNeeded => 'Bu neden gerekli?';
+
+  @override
+  String get obPlacementTitle => 'Telefonu yere koy';
+
+  @override
+  String get obPlacementBody => 'Yaklaşık bir metre önünde duvara dayat.';
+
+  @override
+  String get obOneMetre => '~1 m';
+
+  @override
+  String get obFullBody => 'tüm vücut karede';
+
+  @override
+  String get obCheckHandsFeet => 'Eller ve ayaklar görünsün';
+
+  @override
+  String get obCheckFacing => 'Yandan değil, telefona dönük';
+
+  @override
+  String get obCheckLight => 'Oda ışığı açık';
+
+  @override
+  String get obImSetUp => 'Hazırım';
+
+  @override
+  String get obFramingTitle => 'Şınav pozisyonuna geç';
+
+  @override
+  String get obFramingShoulders => 'Omuzlar ve kalça';
+
+  @override
+  String get obFramingWrists => 'Bilekler';
+
+  @override
+  String get obFramingAnkles => 'Ayak bilekleri';
+
+  @override
+  String get obLooksGood => 'İyi görünüyor';
+
+  @override
+  String get obCalibrating => 'Ayarlanıyor';
+
+  @override
+  String get obOneMoreRep => 'Menzilini öğrenmek için bir tane daha';
+
+  @override
+  String get obCalibrationHint => 'Normal derinliğinde üç şınav çek';
+
+  @override
+  String get obCalibrated => 'Ayarlandı.';
+
+  @override
+  String get obCalibratedBody =>
+      'outrepd artık menzilini biliyor. Derinlik sabit bir sayıyla değil, seninle ölçülür.';
+
+  @override
+  String get obRepsCounted => 'Sayılan tekrar';
+
+  @override
+  String get obAverageDepth => 'Ortalama derinlik';
+
+  @override
+  String get obForm => 'Form';
+
+  @override
+  String get obFormClean => 'Temiz';
+
+  @override
+  String get obCreateAccountBody =>
+      'Tekrarlarını, rütbeni ve geçmişini saklamak için hesap aç.';
+
+  @override
+  String get obSaveProgress => 'İlerlememi kaydet';
+
+  @override
+  String obSaveYourReps(String count) {
+    return '$count tekrarını kaydet';
+  }
+
+  @override
+  String get obOneTap => 'Sadece bir e-posta ve bir parola.';
+
+  @override
+  String get obContinueApple => 'Apple ile devam et';
+
+  @override
+  String get obContinueGoogle => 'Google ile devam et';
+
+  @override
+  String get obContinueEmail => 'E-posta ile devam et';
+
+  @override
+  String get obSignInFootnote =>
+      'Bunu yalnızca hesabını tutmak için kullanırız. Asla bir şey paylaşmayız.';
+
+  @override
+  String get obPickName => 'Bir ad seç';
+
+  @override
+  String get obPickNameBody =>
+      'Rakiplerin bunu görür. Sonra değiştirebilirsin.';
+
+  @override
+  String get obAvailable => 'Uygun';
+
+  @override
+  String get obTaken => 'Alınmış';
+
+  @override
+  String get obYourAvatar => 'Avatarın';
+
+  @override
+  String get obAddPhoto => 'Fotoğraf ekle';
+
+  @override
+  String get obNotifyTitle => 'Sana meydan okunduğunda haberin olsun';
+
+  @override
+  String get obNotifyChallenged => 'Biri sana meydan okudu';
+
+  @override
+  String get obNotifyStreak => 'Serin kopmak üzere';
+
+  @override
+  String get obNotifyPassed => 'Bir arkadaşın sıralamada seni geçti';
+
+  @override
+  String get obTurnOn => 'Aç';
+
+  @override
+  String get obPlacementsBody =>
+      'Beş düello başlangıç seviyeni belirler. Henüz hiçbir şey aleyhine sayılmıyor.';
+
+  @override
+  String get obFindFirstOpponent => 'İlk rakibimi bul';
+
+  @override
+  String get obGotIt => 'Anladım';
+
+  @override
+  String get obFormMixed => 'Değişken';
+
+  @override
+  String get obWelcomeBack => 'Tekrar hoş geldin';
+
+  @override
+  String get obWelcomeBackBody => 'E-posta ve parolanla giriş yap.';
+
+  @override
+  String get justNow => 'Az önce';
+
+  @override
+  String get counterAccuracy => 'Sayacın doğruluğu';
+
+  @override
+  String get counterAccuracyCaption => 'Kamera ne kadar tutturuyor';
+
+  @override
+  String measuredOverSets(String count) {
+    return '$count set üzerinden ölçüldü';
+  }
+
+  @override
+  String get accExact => 'Tam isabet';
+
+  @override
+  String get accWithinOne => '±1 tekrar';
+
+  @override
+  String get accAverageMiss => 'Ortalama sapma';
+
+  @override
+  String get accTendsTo => 'Eğilimi';
+
+  @override
+  String get accCountsHigh => 'fazla saymak';
+
+  @override
+  String get accCountsLow => 'eksik saymak';
+
+  @override
+  String get accCountsEven => 'ne fazla ne eksik';
+
+  @override
+  String get accWorstMiss => 'En büyük sapma';
+
+  @override
+  String get accNothingYet => 'Henüz ölçülmüş bir şey yok';
+
+  @override
+  String get accNothingYetBody =>
+      'Düellodan sonra sayıyı her onayladığında, o set senin söylediğinle karşılaştırılır. Sonuç burada görünür.';
+
+  @override
+  String accNeedMore(String count) {
+    return 'Daha çok erken. Bu sayının bir anlamı olması için yaklaşık $count set daha gerek.';
+  }
+
+  @override
+  String get accRecentSets => 'Son setler';
+
+  @override
+  String get accCameraSaid => 'Kamera';
+
+  @override
+  String get accYouSaid => 'Sen';
+
+  @override
+  String get accHowItWorks =>
+      'Bunlar senden, bu telefonda. Hiçbir yere gönderilmiyor.';
+
+  @override
+  String levelNumber(String n) {
+    return 'Seviye $n';
+  }
+
+  @override
+  String get youLostPlain => 'Kaybettin';
+
+  @override
+  String get rematch => 'Rövanş';
+
+  @override
+  String get shareAction => 'Paylaş';
+
+  @override
+  String get doneAction => 'Bitti';
+
+  @override
+  String get continueAction => 'Devam';
+
+  @override
+  String get lpRowWin => 'Galibiyet';
+
+  @override
+  String get lpRowLoss => 'Mağlubiyet';
+
+  @override
+  String get lpRowOpponent => 'Rakibin rütbesi';
+
+  @override
+  String get lpRowMargin => 'Fark';
+
+  @override
+  String get lpRowDepth => 'Derinlik';
+
+  @override
+  String get promotedLabel => 'Yükseldin';
+
+  @override
+  String get highestReached => 'Şimdiye kadarki en yükseğin';
+
+  @override
+  String repsOff(String n) {
+    return '$n tekrar geride.';
+  }
+
+  @override
+  String get closestYet => 'Şimdiye kadarki en yakın düello.';
 }

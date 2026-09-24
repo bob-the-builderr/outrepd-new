@@ -5,11 +5,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../avatar.dart';
-import '../profile_avatar.dart';
+import '../backend/backend.dart';
 import '../l10n/app_localizations.dart';
 import '../type_scale.dart';
+import '../data.dart';
+import '../player_avatar.dart';
 import '../theme.dart';
-import '../widgets.dart';
 
 /// Choosing a picture: one from the phone, or one the app provides.
 Future<void> showAvatarPicker(BuildContext context, int tierIdx) {
@@ -48,16 +49,43 @@ class _AvatarSheetState extends State<_AvatarSheet> {
       );
       if (picked == null) return;
 
+      final bytes = await picked.readAsBytes();
       final dir = await getApplicationDocumentsDirectory();
       final target = File(
         '${dir.path}/avatar-${DateTime.now().millisecondsSinceEpoch}.jpg',
       );
-      await target.writeAsBytes(await picked.readAsBytes());
+      await target.writeAsBytes(bytes);
       await avatar.usePhoto(target.path);
 
+      // Captured before the pop below, so a failed upload can still say so
+      // on the screen underneath once the sheet carrying this context is
+      // gone.
+      final messenger = mounted ? ScaffoldMessenger.of(context) : null;
+      final message = mounted ? L.of(context).couldNotSyncAvatar : null;
       if (mounted) Navigator.of(context).pop();
+
+      // Best-effort and after the sheet has already closed: the picture
+      // works locally either way, and a dropped connection should not hold
+      // up a screen that has already done its job. Other people seeing it
+      // is what this call is for, not whether the picker itself succeeded —
+      // so a failure here is worth a quiet word, not a blocked flow.
+      if (backend.available) {
+        try {
+          await backend.uploadAvatar(bytes);
+        } on Object catch (error) {
+          debugPrint('Could not upload the avatar: $error');
+          if (messenger != null && message != null) {
+            messenger.showSnackBar(
+              SnackBar(content: Text(message), behavior: SnackBarBehavior.floating),
+            );
+          }
+        }
+      }
     } on Object catch (error) {
-      if (mounted) setState(() => _error = 'Could not use that picture: $error');
+      debugPrint('Could not use that picture: $error');
+      if (mounted) {
+        setState(() => _error = L.of(context).couldNotUsePicture);
+      }
     }
   }
 
@@ -71,7 +99,14 @@ class _AvatarSheetState extends State<_AvatarSheet> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
-                child: ProfileAvatar(tierIdx: widget.tierIdx, size: 110),
+                child: PlayerAvatar(
+                  name: demoProfile.username,
+                  tierIdx: widget.tierIdx,
+                  image: avatar.hasPhoto
+                      ? FileImage(File(avatar.photoPath!))
+                      : null,
+                  size: 110,
+                ),
               ),
               const SizedBox(height: 18),
               Text(
@@ -116,91 +151,10 @@ class _AvatarSheetState extends State<_AvatarSheet> {
                   style: context.type.label.copyWith(color: AppColors.loss),
                 ),
               ],
-              const SizedBox(height: 22),
-              SectionHeader(title: L.of(context).orPickOurs),
-              _BuiltInGrid(
-                onPicked: (icon, colour) async {
-                  await avatar.useBuiltIn(icon, colour);
-                  if (context.mounted) setState(() {});
-                },
-              ),
-              const SizedBox(height: 8),
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-/// Icons first, then the colour they sit on — two short lists rather than one
-/// enormous grid of every pairing.
-class _BuiltInGrid extends StatelessWidget {
-  const _BuiltInGrid({required this.onPicked});
-  final void Function(int icon, int colour) onPicked;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            for (var i = 0; i < kAvatarIcons.length; i++)
-              GestureDetector(
-                onTap: () => onPicked(i, avatar.colorIdx),
-                child: Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: context.colors.background,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: !avatar.hasPhoto && avatar.iconIdx == i
-                          ? context.colors.brand
-                          : context.colors.surfaceRaised,
-                      width: !avatar.hasPhoto && avatar.iconIdx == i ? 2 : 1,
-                    ),
-                  ),
-                  child: Icon(
-                    kAvatarIcons[i],
-                    color: !avatar.hasPhoto && avatar.iconIdx == i
-                        ? context.colors.brand
-                        : context.colors.muted,
-                    size: 22,
-                  ),
-                ),
-              ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        Wrap(
-          spacing: 10,
-          runSpacing: 10,
-          children: [
-            for (var i = 0; i < kAvatarColors.length; i++)
-              GestureDetector(
-                onTap: () => onPicked(avatar.iconIdx, i),
-                child: Container(
-                  width: 36,
-                  height: 36,
-                  decoration: BoxDecoration(
-                    color: kAvatarColors[i],
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: !avatar.hasPhoto && avatar.colorIdx == i
-                          ? context.colors.text
-                          : Colors.transparent,
-                      width: 2.5,
-                    ),
-                  ),
-                ),
-              ),
-          ],
-        ),
-      ],
     );
   }
 }

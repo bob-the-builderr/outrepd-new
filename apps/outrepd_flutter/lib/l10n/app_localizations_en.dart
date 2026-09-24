@@ -18,35 +18,10 @@ class LEn extends L {
   String get tabMatch => 'Match';
 
   @override
-  String get tabCrew => 'Crew';
-
-  @override
   String get tabProfile => 'Profile';
 
   @override
-  String get searchOpponent => 'Search for opponent';
-
-  @override
-  String get searchOpponentHint => 'Get matched with a lifter at your rank';
-
-  @override
   String get challengeFriend => 'Challenge a friend';
-
-  @override
-  String get trainWithCamera => 'Train with the camera';
-
-  @override
-  String get viewRoadmap => 'View Roadmap';
-
-  @override
-  String lpProgress(String lp, String left) {
-    return '$lp / 100 LP · $left to promotion';
-  }
-
-  @override
-  String winStreak(String count) {
-    return '$count win streak';
-  }
 
   @override
   String get matchHistory => 'Match history';
@@ -67,16 +42,348 @@ class LEn extends L {
   String get streak => 'Streak';
 
   @override
-  String get profile => 'Profile';
-
-  @override
   String get settings => 'Settings';
 
   @override
-  String get stats => 'Stats';
+  String get accountSection => 'Account';
 
   @override
-  String get edit => 'Edit';
+  String get duelSection => 'Duel';
+
+  @override
+  String get hapticsEachRep => 'Haptics on each rep';
+
+  @override
+  String get showSkeleton => 'Show skeleton overlay';
+
+  @override
+  String get showSkeletonHint => 'How you can tell the camera is seeing you';
+
+  @override
+  String get manageNotifications => 'Manage notifications';
+
+  @override
+  String switchesOn(String on, String all) {
+    return '$on of $all on';
+  }
+
+  @override
+  String get whoCanChallenge => 'Who can challenge me';
+
+  @override
+  String get blockedAccounts => 'Blocked accounts';
+
+  @override
+  String get reportProblem => 'Report a problem';
+
+  @override
+  String get onDeviceNote =>
+      'Pose detection runs on this phone. No video or pose data is ever uploaded.';
+
+  @override
+  String get visibilitySection => 'Visibility';
+
+  @override
+  String get showMyCountry => 'Show my country';
+
+  @override
+  String get showMyCountryHint => 'Off takes you off the country board';
+
+  @override
+  String get safetySection => 'Safety';
+
+  @override
+  String get socialSection => 'Social';
+
+  @override
+  String get noticeRaced => 'Someone raced my set';
+
+  @override
+  String get noticeRacedHint => 'The only way to find out a duel happened';
+
+  @override
+  String get noticeFriendOk => 'A request I sent was accepted';
+
+  @override
+  String get noticesStoredNote =>
+      'Turning one off means it is never stored — not stored and hidden.';
+
+  @override
+  String get notSaved => 'Not saved';
+
+  @override
+  String get blockedIntro =>
+      'A blocked account can\'t challenge you, find you, or send you a request. They aren\'t told.';
+
+  @override
+  String blockedWhen(String when) {
+    return 'Blocked $when';
+  }
+
+  @override
+  String get unblock => 'Unblock';
+
+  @override
+  String get noBlockedTitle => 'Nobody blocked';
+
+  @override
+  String get noBlockedBody =>
+      'You can block somebody from their profile or a report.';
+
+  @override
+  String get whatHappened => 'What happened';
+
+  @override
+  String get reasonCheating => 'Cheating or fake reps';
+
+  @override
+  String get reasonHarassment => 'Harassment or abuse';
+
+  @override
+  String get reasonContent => 'Inappropriate content';
+
+  @override
+  String get reasonImpersonation => 'Impersonation';
+
+  @override
+  String get reasonOther => 'Something else';
+
+  @override
+  String get addDetails => 'Add details (optional)';
+
+  @override
+  String get alsoBlock => 'Also block this account';
+
+  @override
+  String get sendReport => 'Send report';
+
+  @override
+  String get reportSent => 'Report sent';
+
+  @override
+  String get reportingThisAccount => 'Reporting this account';
+
+  @override
+  String get exportIntro =>
+      'We\'ll email a file with everything the server holds about you. It usually takes a minute.';
+
+  @override
+  String get whatsIncluded => 'What\'s included';
+
+  @override
+  String get incProfile => 'Your profile and rank';
+
+  @override
+  String get incSets => 'Every set and rep count';
+
+  @override
+  String get incDuels => 'Duel history and LP changes';
+
+  @override
+  String get incFriends => 'Friends and blocked accounts';
+
+  @override
+  String get incNotices => 'Notifications you were sent';
+
+  @override
+  String get noLandmarksNote =>
+      'Pose landmarks are not in it, and never were. The camera reads them on your phone and they are not sent anywhere.';
+
+  @override
+  String get sendItTo => 'Send it to';
+
+  @override
+  String get emailHint => 'you@example.com';
+
+  @override
+  String get passwordHint => 'Password';
+
+  @override
+  String get codeHint => 'Verification code';
+
+  @override
+  String get createAccountTitle => 'Create account';
+
+  @override
+  String get createAccountBody =>
+      'Add an email and password so this account is never just one phone away from gone.';
+
+  @override
+  String get createAccountAction => 'Create account';
+
+  @override
+  String get signInTitle => 'Sign in';
+
+  @override
+  String get signInBody =>
+      'Sign in with the email and password on your account.';
+
+  @override
+  String get signInAction => 'Sign in';
+
+  @override
+  String get switchToSignIn => 'Already have an account? Sign in';
+
+  @override
+  String get switchToSignUp => 'New here? Create an account';
+
+  @override
+  String get emailTakenSwitchToSignIn =>
+      'That email already has an account — sign in instead.';
+
+  @override
+  String get emailSignUpInvalid =>
+      'Check the email and password — six characters minimum.';
+
+  @override
+  String get tooManyCodes =>
+      'Too many codes sent — wait a few minutes and try again.';
+
+  @override
+  String get authEntryTagline => 'Push. Compete. Climb the ladder.';
+
+  @override
+  String get orDivider => 'or';
+
+  @override
+  String get signUpWithEmail => 'Sign up with email';
+
+  @override
+  String get alreadyHaveAccountQuestion => 'Already have an account?';
+
+  @override
+  String get logInAction => 'Log in';
+
+  @override
+  String get createYourAccountTitle => 'Create your account';
+
+  @override
+  String get createAccountSubtitle => 'Takes less than a minute.';
+
+  @override
+  String get usernameHint => 'Username';
+
+  @override
+  String get passwordMinLength => 'At least 8 characters';
+
+  @override
+  String get logInSubtitle => 'Log in to keep your rank.';
+
+  @override
+  String get forgotPassword => 'Forgot password?';
+
+  @override
+  String resetPasswordSent(String email) {
+    return 'If an account exists for $email, a reset link is on its way.';
+  }
+
+  @override
+  String get checkYourEmailTitle => 'Check your email';
+
+  @override
+  String codeSentTo(String email) {
+    return 'We sent a 6-digit code to $email.';
+  }
+
+  @override
+  String get didntGetIt => 'Didn\'t get it?';
+
+  @override
+  String resendInSeconds(String time) {
+    return 'Resend in $time';
+  }
+
+  @override
+  String get wrongEmailGoBack => 'Wrong email? Go back';
+
+  @override
+  String get usernameTaken => 'That username is taken.';
+
+  @override
+  String get socialLinkFailed => 'Couldn\'t finish signing in. Try again.';
+
+  @override
+  String get showLabel => 'Show';
+
+  @override
+  String get hideLabel => 'Hide';
+
+  @override
+  String get resetPasswordTitle => 'Set a new password';
+
+  @override
+  String get resetPasswordBody => 'Choose a new password for your account.';
+
+  @override
+  String get setPasswordAction => 'Set password';
+
+  @override
+  String get wrongEmailOrPassword => 'Wrong email or password.';
+
+  @override
+  String get enterCodeTitle => 'Enter code';
+
+  @override
+  String codeInstructions(String email) {
+    return 'Enter the code we sent to $email.';
+  }
+
+  @override
+  String get verifyAction => 'Verify';
+
+  @override
+  String get wrongCode => 'That code\'s wrong or expired.';
+
+  @override
+  String get resendCode => 'Resend code';
+
+  @override
+  String get codeResent => 'Sent a new code.';
+
+  @override
+  String signedInAs(String email) {
+    return 'Signed in as $email';
+  }
+
+  @override
+  String get addressNotKept =>
+      'The address is used once and not stored — this account has no email on it.';
+
+  @override
+  String get requestMyData => 'Email my data';
+
+  @override
+  String exportSent(String address) {
+    return 'Sent to $address';
+  }
+
+  @override
+  String get deleteIntro =>
+      'This erases everything permanently. It cannot be undone and we cannot restore it.';
+
+  @override
+  String get rankLabel => 'Rank';
+
+  @override
+  String get wantCopyFirst => 'Want a copy first?';
+
+  @override
+  String get wantCopyBody =>
+      'Download your data before deleting. After this, it\'s gone.';
+
+  @override
+  String typeToConfirm(String word) {
+    return 'Type $word to confirm';
+  }
+
+  @override
+  String get deleteWord => 'DELETE';
+
+  @override
+  String get deletePermanently => 'Delete permanently';
+
+  @override
+  String get keepMyAccount => 'Keep my account';
 
   @override
   String get save => 'Save';
@@ -88,43 +395,7 @@ class LEn extends L {
   String get skip => 'Skip';
 
   @override
-  String get totalMatches => 'Total matches';
-
-  @override
-  String get bestWinStreak => 'Best win streak';
-
-  @override
-  String get totalVolume => 'Total volume lifted';
-
-  @override
   String get height => 'Height';
-
-  @override
-  String get bodyweight => 'Bodyweight';
-
-  @override
-  String get age => 'Age';
-
-  @override
-  String get editYourStats => 'Edit your stats';
-
-  @override
-  String get editStatsHint =>
-      'Wins, volume and rank are earned — they cannot be edited.';
-
-  @override
-  String get changeName => 'Change your name';
-
-  @override
-  String get changeNameLast => 'This is your last change. It cannot be undone.';
-
-  @override
-  String changeNameLeft(String total, String left) {
-    return 'You get $total changes in total. $left left after this one.';
-  }
-
-  @override
-  String get changeNameUsedUp => 'You have used both of your name changes';
 
   @override
   String get yourPicture => 'Your picture';
@@ -132,6 +403,34 @@ class LEn extends L {
   @override
   String get yourPictureHint =>
       'The frame comes from your rank and changes as you climb.';
+
+  @override
+  String get couldNotUsePicture => 'Could not use that picture';
+
+  @override
+  String get couldNotSyncAvatar =>
+      'Your picture is saved, but it hasn\'t synced yet';
+
+  @override
+  String get couldNotShareCard => 'Could not share this card';
+
+  @override
+  String get simulatedOpponent =>
+      'No one else was ready — this is a practice pace';
+
+  @override
+  String get changeUsername => 'Change username';
+
+  @override
+  String get usernameInvalidLength =>
+      '4 to 20 characters, letters and numbers only';
+
+  @override
+  String get usernameChanged => 'Username changed';
+
+  @override
+  String get usernameAlreadyChangedBody =>
+      'You\'ve already used your one username change — every account gets exactly one.';
 
   @override
   String get gallery => 'Gallery';
@@ -184,148 +483,13 @@ class LEn extends L {
       'Rest is part of training. Two days off a week will not break your streak.';
 
   @override
-  String titlesAndStreak(String owned, String total, String streak) {
-    return '$owned of $total titles · $streak day streak';
-  }
-
-  @override
-  String get crew => 'Crew';
-
-  @override
-  String get myCrew => 'My crew';
-
-  @override
-  String get rankings => 'Rankings';
-
-  @override
-  String get trainWithCrew => 'Train with a crew';
-
-  @override
-  String get trainWithCrewHint =>
-      'Up to 20 lifters under one name, chasing a weekly target together and climbing the crew table.';
-
-  @override
-  String get createCrew => 'Create a crew';
-
-  @override
-  String get createCrewHint => 'Name it, pick a badge, invite your people';
-
-  @override
-  String get joinOpenCrew => 'Join an open crew';
-
-  @override
-  String get joinOpenCrewHint => 'Crews anyone can walk into';
-
-  @override
-  String get yourInvites => 'Your invites';
-
-  @override
-  String get yourInvitesHint => 'Crews that asked for you';
-
-  @override
-  String get joinWithCode => 'Join with a code';
-
-  @override
-  String get joinWithCodeHint => 'Six characters from a member';
-
-  @override
-  String get topCrewsThisWeek => 'Top crews this week';
-
-  @override
-  String get members => 'Members';
-
-  @override
-  String get repsEach => 'Reps each';
-
-  @override
-  String get rank => 'Rank';
-
-  @override
-  String get weeklyGoal => 'Weekly goal';
-
-  @override
-  String get weeklyGoalDone => 'Weekly goal smashed';
-
-  @override
-  String goalRemaining(String reps, String days) {
-    return '$reps reps to go · $days days left';
-  }
-
-  @override
-  String get goalDoneHint => 'Everyone gets the badge when the week closes.';
-
-  @override
-  String get startCrewWar => 'Start a crew war';
-
-  @override
-  String get startCrewWarHint =>
-      'Seven days, both crews counting. Most reps each wins.';
-
-  @override
-  String get whoIsPulling => 'Who is pulling';
-
-  @override
-  String get thisWeek => 'this week';
-
-  @override
-  String get inviteLifters => 'Invite lifters';
-
-  @override
-  String get referralCode => 'Referral code';
-
-  @override
-  String get inviteLink => 'Invite link';
-
-  @override
-  String get leaveCrew => 'Leave crew';
-
-  @override
-  String get owner => 'Owner';
-
-  @override
-  String get crewTable => 'Crew table';
-
-  @override
-  String get repsPerMember => 'reps per member';
-
-  @override
-  String seasonResets(String days) {
-    return 'Resets in $days days — everyone starts level';
-  }
-
-  @override
-  String get rankingExplained =>
-      'Crews are ranked on reps per member, not the total — otherwise the biggest crew wins by size alone.';
-
-  @override
-  String get leaderboard => 'Leaderboard';
-
-  @override
   String get global => 'Global';
-
-  @override
-  String get myCountry => 'My country';
-
-  @override
-  String yourFriends(String count) {
-    return 'Your friends ($count)';
-  }
 
   @override
   String get challenge => 'Challenge';
 
   @override
   String get notifications => 'Notifications';
-
-  @override
-  String get pickMovement => 'Pick a movement';
-
-  @override
-  String get anyExercise => 'Any exercise';
-
-  @override
-  String get anyExerciseHint =>
-      'Start your set — it works the movement out as you go';
 
   @override
   String get start => 'Start';
@@ -337,26 +501,10 @@ class LEn extends L {
   String get reps => 'reps';
 
   @override
-  String get secondsHeld => 'seconds held';
-
-  @override
-  String get learningMovement =>
-      'Learning your movement — your reps appear in a moment';
-
-  @override
   String get recalibrate => 'Recalibrate';
 
   @override
   String get resetCount => 'Reset count';
-
-  @override
-  String get checksForm => 'checks form';
-
-  @override
-  String get counts => 'counts';
-
-  @override
-  String get time => 'time';
 
   @override
   String get howManyReally => 'How many did you really do?';
@@ -372,9 +520,6 @@ class LEn extends L {
   String get theme => 'Theme';
 
   @override
-  String get darkMode => 'Dark mode';
-
-  @override
   String get language => 'Language';
 
   @override
@@ -384,22 +529,13 @@ class LEn extends L {
   String get weight => 'Weight';
 
   @override
-  String get notificationsSection => 'Notifications';
-
-  @override
   String get privacy => 'Privacy';
-
-  @override
-  String get matches => 'Matches';
 
   @override
   String get data => 'Data';
 
   @override
   String get about => 'About';
-
-  @override
-  String get dangerZone => 'Danger zone';
 
   @override
   String get themeSystem => 'Match device';
@@ -411,51 +547,12 @@ class LEn extends L {
   String get themeDark => 'Dark';
 
   @override
-  String get openCrews => 'Open crews';
-
-  @override
-  String get openCrewsHint =>
-      'These let anyone in. Pick one and you are in straight away.';
-
-  @override
-  String get yourInvitesSubtitle => 'Crews that asked for you by name.';
-
-  @override
-  String get pickOpponent => 'Pick your opponent';
-
-  @override
   String get accept => 'Accept';
-
-  @override
-  String get join => 'Join';
-
-  @override
-  String get copy => 'Copy';
-
-  @override
-  String get copied => 'Invite link copied';
-
-  @override
-  String season(String name) {
-    return 'Season $name';
-  }
 
   @override
   String challengeSent(String name) {
     return 'Challenge sent to $name';
   }
-
-  @override
-  String get inviteFriendPrivate => 'Invite a friend to a private match';
-
-  @override
-  String get joinWithCodePaste => 'Paste the six characters a member sent you.';
-
-  @override
-  String get enterTheCode => 'Enter the 6-character code';
-
-  @override
-  String get followingDevice => 'Following your device right now';
 
   @override
   String get weightUnitTitle => 'Weight unit';
@@ -485,73 +582,13 @@ class LEn extends L {
   String get visNobody => 'Nobody';
 
   @override
-  String get visEveryoneHint => 'Anyone can open your profile';
-
-  @override
-  String get visFriendsHint => 'Only lifters you have added';
-
-  @override
-  String get visNobodyHint => 'Your profile stays private';
-
-  @override
-  String get matchInvites => 'Match invites';
-
-  @override
-  String get matchResults => 'Match results';
-
-  @override
   String get friendRequestsLabel => 'Friend requests';
-
-  @override
-  String get crewActivity => 'Crew activity';
-
-  @override
-  String get rankChanges => 'Rank changes';
-
-  @override
-  String get weeklySummary => 'Weekly summary';
-
-  @override
-  String get soundLabel => 'Sound';
-
-  @override
-  String get vibration => 'Vibration';
-
-  @override
-  String get whoCanSeeProfile => 'Who can see my profile';
-
-  @override
-  String get profileVisibility => 'Profile visibility';
 
   @override
   String get showOnLeaderboards => 'Show me on leaderboards';
 
   @override
-  String get allowMatchInvites => 'Allow match invites';
-
-  @override
-  String get allowFriendRequests => 'Allow friend requests';
-
-  @override
-  String get showHeightWeight => 'Show height and weight';
-
-  @override
-  String get showHeightWeightHint => 'Off keeps your body stats to yourself';
-
-  @override
-  String get autoAcceptFriends => 'Auto-accept from friends';
-
-  @override
-  String get restTimerBetweenSets => 'Rest timer between sets';
-
-  @override
   String get exportData => 'Export my data';
-
-  @override
-  String get clearCache => 'Clear cache';
-
-  @override
-  String get cacheCleared => 'Cache cleared';
 
   @override
   String get version => 'Version';
@@ -572,39 +609,10 @@ class LEn extends L {
   String get openSourceLicences => 'Open source licences';
 
   @override
-  String get resetProgress => 'Reset my progress';
-
-  @override
-  String get resetProgressTitle => 'Reset your progress?';
-
-  @override
-  String get resetProgressBody =>
-      'Rank, LP and match history all go back to zero. This cannot be undone.';
-
-  @override
-  String get actionReset => 'Reset';
-
-  @override
   String get deleteAccount => 'Delete account';
 
   @override
-  String get deleteAccountTitle => 'Delete your account?';
-
-  @override
-  String get deleteAccountBody =>
-      'Your profile, crews and every match you have lifted are removed for good.';
-
-  @override
-  String get actionDelete => 'Delete';
-
-  @override
   String get needsServer => 'This needs a server — not wired up yet';
-
-  @override
-  String get getStarted => 'Get Started';
-
-  @override
-  String get skipToApp => 'Skip to the app';
 
   @override
   String get achievements => 'Achievements';
@@ -613,7 +621,7 @@ class LEn extends L {
   String get unlocked => 'Unlocked';
 
   @override
-  String get roadTitle => 'Road to Legend';
+  String get roadTitle => 'Road to Master';
 
   @override
   String get allTiers => 'All tiers';
@@ -633,10 +641,6 @@ class LEn extends L {
   String unlocksAt(String tier) {
     return 'Unlocks at $tier';
   }
-
-  @override
-  String get matchedSameGroup =>
-      'You will be matched with someone training the same group.';
 
   @override
   String get roomFriendly =>
@@ -661,15 +665,12 @@ class LEn extends L {
   String get pickMuscleAndStart => 'Pick muscle and start';
 
   @override
-  String get dontGetOutrepd => 'Don\'t get OUTREPD!';
-
-  @override
   String xOfY(String a, String b) {
     return '$a / $b';
   }
 
   @override
-  String get tierStone => 'Stone';
+  String get tierIron => 'Iron';
 
   @override
   String get tierBronze => 'Bronze';
@@ -690,37 +691,25 @@ class LEn extends L {
   String get tierMaster => 'Master';
 
   @override
-  String get tierMythic => 'Mythic';
+  String get rewardStone => '60s duels';
 
   @override
-  String get tierLegend => 'Legend';
+  String get rewardBronze => 'Rematch button';
 
   @override
-  String get rewardStone => 'Stone border frame';
+  String get rewardSilver => 'Custom duration';
 
   @override
-  String get rewardBronze => 'Bronze badge';
+  String get rewardGold => 'Best-of-3';
 
   @override
-  String get rewardSilver => 'Silver badge';
+  String get rewardPlatinum => 'Private tournaments';
 
   @override
-  String get rewardGold => 'Gold badge';
+  String get rewardDiamond => 'Open lobbies';
 
   @override
-  String get rewardPlatinum => 'Platinum badge';
-
-  @override
-  String get rewardDiamond => 'Diamond badge';
-
-  @override
-  String get rewardMaster => 'Master badge';
-
-  @override
-  String get rewardMythic => 'Mythic badge';
-
-  @override
-  String get rewardLegend => 'Legend badge';
+  String get rewardMaster => 'Named on the global board';
 
   @override
   String get shortKg => 'kg';
@@ -738,127 +727,6 @@ class LEn extends L {
   String winLoss(String w, String l) {
     return '${w}W ${l}L';
   }
-
-  @override
-  String get yearsSuffix => 'years';
-
-  @override
-  String get yourCrew => 'Your crew';
-
-  @override
-  String get crewName => 'Crew name';
-
-  @override
-  String get motto => 'Motto';
-
-  @override
-  String get mottoHint => 'What does this crew stand for?';
-
-  @override
-  String get country => 'Country';
-
-  @override
-  String get whoCanJoin => 'Who can join';
-
-  @override
-  String get minimumRank => 'Minimum rank';
-
-  @override
-  String get anyone => 'Anyone';
-
-  @override
-  String get emblem => 'Emblem';
-
-  @override
-  String get colour => 'Colour';
-
-  @override
-  String get createCrewButton => 'Create crew';
-
-  @override
-  String get ownerNote => 'You will be the owner. Crews hold up to 20 lifters.';
-
-  @override
-  String get searchCountries => 'Search countries';
-
-  @override
-  String get noCountryMatch => 'No country matches that';
-
-  @override
-  String get nameTooShort => 'Give the crew a name of at least 3 characters';
-
-  @override
-  String get privOpen => 'Open';
-
-  @override
-  String get privRequest => 'Request to join';
-
-  @override
-  String get privInviteOnly => 'Invite only';
-
-  @override
-  String get privOpenHint => 'Anyone with the code can walk straight in';
-
-  @override
-  String get privRequestHint => 'People ask, an officer approves';
-
-  @override
-  String get privInviteOnlyHint => 'Members must be invited directly';
-
-  @override
-  String get embStrength => 'Strength';
-
-  @override
-  String get embCombat => 'Combat';
-
-  @override
-  String get embBeasts => 'Beasts';
-
-  @override
-  String get embElements => 'Elements';
-
-  @override
-  String get embHonours => 'Honours';
-
-  @override
-  String get embSymbols => 'Symbols';
-
-  @override
-  String get ob1Title => 'Turn every session\ninto a battle';
-
-  @override
-  String get ob1Body =>
-      'Log your workout and go head to head with someone training the same muscle group.';
-
-  @override
-  String get ob2Title => 'Challenge your\nfriends';
-
-  @override
-  String get ob2Body =>
-      'Send a private invite and settle who really trains harder.';
-
-  @override
-  String get ob3Title => 'Climb the ranks';
-
-  @override
-  String get ob3Body =>
-      'Every win earns LP. Push from Stone all the way to Legend.';
-
-  @override
-  String get ob4Title => 'Effort alone\nis hard';
-
-  @override
-  String get ob4Body =>
-      'Training with no one watching makes it easy to cut the last set short.';
-
-  @override
-  String get ob5Title => 'Become a\nLegend';
-
-  @override
-  String get ob5Body => 'Consistency compounds. Show up, out-lift, rank up.';
-
-  @override
-  String get letsGo => 'Let\'s go';
 
   @override
   String get continueLabel => 'Continue';
@@ -1074,7 +942,7 @@ class LEn extends L {
   String get tdesc_perfect_month => 'Four perfect weeks';
 
   @override
-  String get ttl_bronze_tier => 'Out of the Stone';
+  String get ttl_bronze_tier => 'Out of the Iron';
 
   @override
   String get tdesc_bronze_tier => 'Reach Bronze';
@@ -1110,18 +978,6 @@ class LEn extends L {
   String get tdesc_master_tier => 'Reach Master';
 
   @override
-  String get ttl_mythic_tier => 'Mythic';
-
-  @override
-  String get tdesc_mythic_tier => 'Reach Mythic';
-
-  @override
-  String get ttl_legend_tier => 'Legend';
-
-  @override
-  String get tdesc_legend_tier => 'Reach Legend';
-
-  @override
   String get ttl_clean_hands => 'Clean Hands';
 
   @override
@@ -1138,18 +994,6 @@ class LEn extends L {
 
   @override
   String get tdesc_textbook => 'Fifty clean sets';
-
-  @override
-  String get ttl_iron_hold => 'Iron Hold';
-
-  @override
-  String get tdesc_iron_hold => 'Hold a plank for two minutes';
-
-  @override
-  String get ttl_statue => 'Statue';
-
-  @override
-  String get tdesc_statue => 'Hold a plank for five minutes';
 
   @override
   String get ttl_all_rounder => 'All Rounder';
@@ -1194,24 +1038,6 @@ class LEn extends L {
   String get tdesc_graveyard => 'Fifty sessions after ten';
 
   @override
-  String get ttl_joined_up => 'Joined Up';
-
-  @override
-  String get tdesc_joined_up => 'Be in a crew';
-
-  @override
-  String get ttl_backbone => 'Backbone';
-
-  @override
-  String get tdesc_backbone => 'Top your crew four weeks running';
-
-  @override
-  String get ttl_cornerstone => 'Cornerstone';
-
-  @override
-  String get tdesc_cornerstone => 'Top your crew twelve weeks running';
-
-  @override
   String get ttl_not_alone => 'Not Alone';
 
   @override
@@ -1230,165 +1056,6 @@ class LEn extends L {
   String get tdesc_the_gym_knows => 'Fifty friends';
 
   @override
-  String get finish2 => 'Finish';
-
-  @override
-  String get qExperience => 'How experienced are you\nwith working out?';
-
-  @override
-  String get expBeginner => 'Beginner – Tried it before';
-
-  @override
-  String get expIntermediate => 'Intermediate – Regular training';
-
-  @override
-  String get expAdvanced => 'Advanced – Years of experience';
-
-  @override
-  String get qGoal => 'What\'s your top\nfitness goal?';
-
-  @override
-  String get goalStronger => 'Become stronger';
-
-  @override
-  String get goalConsistent => 'Become more consistent';
-
-  @override
-  String get goalLean => 'Lose weight and get lean';
-
-  @override
-  String get goalMass => 'Build muscle mass';
-
-  @override
-  String get aboutYou => 'This journey is all about you...';
-
-  @override
-  String get qThinkAbout => 'How often do you think\nabout getting in shape?';
-
-  @override
-  String get freqNever => 'Never';
-
-  @override
-  String get freqSometimes => 'Sometimes';
-
-  @override
-  String get freqOften => 'Often';
-
-  @override
-  String get freqAllTime => 'All The Time';
-
-  @override
-  String get qEnergy => 'How are your energy levels\nduring workouts?';
-
-  @override
-  String get energyLow => 'Low energy, I feel drained all day';
-
-  @override
-  String get energyDrops => 'Performance drops mid-session';
-
-  @override
-  String get energyHard => 'Hard to push through the last set';
-
-  @override
-  String get energyHigh => 'High and steady from start to finish';
-
-  @override
-  String get stProgress =>
-      'Sometimes, it\'s hard to notice progress when I workout';
-
-  @override
-  String get stEffortTitle => 'Effort no one sees\nis easy to quit';
-
-  @override
-  String get stEffortBody =>
-      'When there\'s no one to prove yourself against, progress feels slow and effort feels pointless';
-
-  @override
-  String get stAloneTitle => 'Training alone\nis boring';
-
-  @override
-  String get stAloneBody =>
-      'No one\'s watching. No one\'s counting. It\'s easy to skip a rep, or the whole set';
-
-  @override
-  String get qName => 'What should we\ncall you?';
-
-  @override
-  String get nameHint => 'At least 3 characters. This is what rivals will see.';
-
-  @override
-  String get basicInfo => 'Alright! Lets get\nsome basic info';
-
-  @override
-  String get qAge => 'How old are you?';
-
-  @override
-  String get qWeight => 'What\'s your\ncurrent weight?';
-
-  @override
-  String get weightWhy => 'Body weight is essential to calculate your rank.';
-
-  @override
-  String get privateNote =>
-      'Your information is private and will not be shared with anyone.';
-
-  @override
-  String get qHeight => 'How tall are you?';
-
-  @override
-  String get qRelate => 'Do you relate to the\nstatement below?';
-
-  @override
-  String get yes => 'Yes';
-
-  @override
-  String get no => 'No';
-
-  @override
-  String get grindTitle => 'The grind hits different\nwith a rival';
-
-  @override
-  String get grindBody =>
-      'Every match puts you against a real opponent, put in the work, and prove who trained harder.';
-
-  @override
-  String get allSet => 'You\'re all set!';
-
-  @override
-  String welcomeLifter(String name) {
-    return 'Welcome, $name. Time to find your first rival.';
-  }
-
-  @override
-  String get lifter => 'lifter';
-
-  @override
-  String get enterApp => 'Enter OUTREPD';
-
-  @override
-  String get commitTitle =>
-      'Now let\'s make a commitment\nto your fitness journey';
-
-  @override
-  String get holdLogo => 'Hold the logo to confirm you\'re ready';
-
-  @override
-  String get expNone => 'I\'ve never worked out';
-
-  @override
-  String get iAm => 'I am...';
-
-  @override
-  String get finishMatchQ => 'Finish match?';
-
-  @override
-  String get finishMatchBody =>
-      'Your volume will be locked in and compared with your opponent.';
-
-  @override
-  String get keepGoing => 'Keep going';
-
-  @override
   String get forfeitQ => 'Forfeit match?';
 
   @override
@@ -1401,46 +1068,10 @@ class LEn extends L {
   String get forfeit => 'Forfeit';
 
   @override
-  String get pickExercises => 'Pick the exercises you will train';
-
-  @override
-  String matchingWith(String muscle) {
-    return 'Matching you with a lifter at your rank · $muscle';
-  }
-
-  @override
   String get getReady => 'GET READY';
 
   @override
-  String get timeLeft => 'TIME LEFT';
-
-  @override
-  String vsName(String name) {
-    return 'vs $name';
-  }
-
-  @override
-  String kgTotalVolume(String unit) {
-    return '$unit total volume';
-  }
-
-  @override
-  String get finishMatch => 'FINISH MATCH';
-
-  @override
-  String get kgHint => 'KG';
-
-  @override
-  String get repsHint => 'REPS';
-
-  @override
-  String get addSet => 'ADD SET';
-
-  @override
-  String get matchComplete => 'MATCH COMPLETE';
-
-  @override
-  String get you => 'YOU';
+  String get you => 'You';
 
   @override
   String get vs => 'VS';
@@ -1467,12 +1098,6 @@ class LEn extends L {
   String get mgCore => 'Core';
 
   @override
-  String get achRivalry => 'Rivalry';
-
-  @override
-  String get achRivalryHint => 'Beat the same opponent 3 times';
-
-  @override
   String get nWonTitle => 'You won!';
 
   @override
@@ -1484,8 +1109,64 @@ class LEn extends L {
   String get nFriendTitle => 'New friend request';
 
   @override
+  String get nRacedTitle => 'Your set was raced';
+
+  @override
+  String nRacedHeld(String name, String yours, String theirs) {
+    return '$name raced your set and fell short, $yours–$theirs';
+  }
+
+  @override
+  String nRacedBeaten(String name, String theirs, String yours) {
+    return '$name raced your set and won, $theirs–$yours';
+  }
+
+  @override
+  String get nFriendOkTitle => 'Friend request accepted';
+
+  @override
+  String nFriendOkBody(String name) {
+    return '$name accepted your request';
+  }
+
+  @override
   String nFriendBody(String name) {
     return '$name wants to connect';
+  }
+
+  @override
+  String get nChallengedTitle => 'Rematch';
+
+  @override
+  String nChallengedBody(String name) {
+    return '$name wants a rematch';
+  }
+
+  @override
+  String get challengeSentTitle => 'Challenge sent';
+
+  @override
+  String challengeSentBody(String name) {
+    return 'We\'ll let $name know. Come back once they\'ve raced it.';
+  }
+
+  @override
+  String get challengeNotSentTitle => 'Couldn\'t send that';
+
+  @override
+  String get challengeNotSentBody =>
+      'Check your connection and try again from the match tab.';
+
+  @override
+  String get challengeGoneTitle => 'Challenge is gone';
+
+  @override
+  String get challengeGoneBody =>
+      'It\'s already been raced, or it was withdrawn.';
+
+  @override
+  String repsRecordedLine(String reps) {
+    return '$reps reps recorded';
   }
 
   @override
@@ -1505,53 +1186,6 @@ class LEn extends L {
   }
 
   @override
-  String get nameTooShortInline => 'Pick a name of at least 3 characters';
-
-  @override
-  String get whyName => 'Rivals will see this beside every result';
-
-  @override
-  String get whyExperience => 'We match you against people at your level';
-
-  @override
-  String get whyGoal => 'Your first suggested exercises come from this';
-
-  @override
-  String get whyAge =>
-      'Age affects the strength standards you are measured against';
-
-  @override
-  String get whyWeight =>
-      'Rank compares lifts relative to bodyweight, not raw kilos';
-
-  @override
-  String get whyHeight => 'Used with your weight to set fair standards';
-
-  @override
-  String get whyHabits =>
-      'This shapes the reminders and the weekly target we suggest';
-
-  @override
-  String get transitionPartOfIt =>
-      '...so let\'s make sure you\'re truly part of it!';
-
-  @override
-  String get male => 'Male';
-
-  @override
-  String get female => 'Female';
-
-  @override
-  String get usernamePlaceholder => 'username';
-
-  @override
-  String get stRoutine =>
-      'I don\'t know which body part really needs work so I usually follow the same routine';
-
-  @override
-  String get shortIn => 'in';
-
-  @override
   String get today => 'Today';
 
   @override
@@ -1559,7 +1193,7 @@ class LEn extends L {
 
   @override
   String daysAgo(String n) {
-    return '$n days ago';
+    return '${n}d ago';
   }
 
   @override
@@ -1568,101 +1202,18 @@ class LEn extends L {
   }
 
   @override
-  String membersCount(String n) {
-    return '$n members';
-  }
-
-  @override
-  String eachCount(String n) {
-    return '$n each';
-  }
-
-  @override
   String lpAmount(String n) {
     return '$n LP';
   }
 
   @override
-  String get countWithCamera => 'Count with camera';
+  String get lpUnit => 'LP';
 
   @override
-  String get youWin => 'YOU WIN!';
+  String get trueCountHint => 'e.g. 12';
 
   @override
-  String get defeated => 'DEFEATED';
-
-  @override
-  String get fillWholeNumbers => 'Fill all three with whole numbers';
-
-  @override
-  String heightRange(String min, String max, String unit) {
-    return 'Height should be between $min and $max $unit';
-  }
-
-  @override
-  String weightRange(String min, String max, String unit) {
-    return 'Bodyweight should be between $min and $max $unit';
-  }
-
-  @override
-  String ageRange(String min, String max) {
-    return 'Age should be between $min and $max';
-  }
-
-  @override
-  String get discPush => 'Push';
-
-  @override
-  String get discPull => 'Pull';
-
-  @override
-  String get discLegs => 'Legs';
-
-  @override
-  String get discPushHint => 'Chest, shoulders and triceps';
-
-  @override
-  String get discPullHint => 'Back and biceps';
-
-  @override
-  String get discLegsHint => 'Quads, hamstrings and core';
-
-  @override
-  String get pickYourThree => 'Pick your three';
-
-  @override
-  String get pickThreeHint =>
-      'Both of you lift all six — your three and theirs';
-
-  @override
-  String roundOf(String n, String total) {
-    return 'Round $n of $total';
-  }
-
-  @override
-  String get rest => 'Rest';
-
-  @override
-  String get work => 'Work';
-
-  @override
-  String get nextUp => 'Next up';
-
-  @override
-  String picksLeft(String n) {
-    return '$n left to pick';
-  }
-
-  @override
-  String get yourPick => 'Your pick';
-
-  @override
-  String get theirPick => 'Their pick';
-
-  @override
-  String secondsOfWork(String n) {
-    return '$n seconds of work';
-  }
+  String get couldNotSaveSession => 'Could not save the session';
 
   @override
   String lpOutOf(String total) {
@@ -1670,16 +1221,29 @@ class LEn extends L {
   }
 
   @override
-  String toPromotion(String n) {
-    return '$n to promotion';
-  }
-
-  @override
   String get noFriendsTitle => 'No friends yet';
 
   @override
-  String get noFriendsBody =>
-      'Add someone and you can challenge them to a private match any time.';
+  String get noFriendsBody => 'Duels hit different against someone you know.';
+
+  @override
+  String get addFriend => 'Add';
+
+  @override
+  String get decline => 'Decline';
+
+  @override
+  String requestSent(String name) {
+    return 'Request sent to $name';
+  }
+
+  @override
+  String nowFriends(String name) {
+    return 'You and $name are friends now';
+  }
+
+  @override
+  String get noOneFound => 'Nobody goes by that name';
 
   @override
   String get noMatchesTitle => 'No matches yet';
@@ -1695,14 +1259,6 @@ class LEn extends L {
       'Match invites, results and friend requests land here.';
 
   @override
-  String roundDone(String n) {
-    return 'Round $n done';
-  }
-
-  @override
-  String get bestRoundYet => 'Best round yet';
-
-  @override
   String get countedThat => 'Counted that round';
 
   @override
@@ -1715,14 +1271,717 @@ class LEn extends L {
   String get confirmHint => 'Change it if the camera got it wrong.';
 
   @override
-  String pickNMore(String n) {
-    return 'Pick $n more';
+  String get unsureMovement =>
+      'Not sure this was the right movement — check the number.';
+
+  @override
+  String get local => 'Local';
+
+  @override
+  String get weekly => 'Weekly';
+
+  @override
+  String get seasonTab => 'Season';
+
+  @override
+  String get allTime => 'All-time';
+
+  @override
+  String get daily => 'Daily';
+
+  @override
+  String get noRanksYet => 'No ranks yet';
+
+  @override
+  String get noRanksYetBody => 'Play a duel and the board fills in.';
+
+  @override
+  String get ranksTitle => 'Ranks';
+
+  @override
+  String get totalReps => 'Total reps';
+
+  @override
+  String get recent => 'Recent';
+
+  @override
+  String wonVs(String name) {
+    return 'Won vs $name';
   }
 
   @override
-  String get findOpponent => 'Find opponent';
+  String lostVs(String name) {
+    return 'Lost vs $name';
+  }
 
   @override
-  String get unsureMovement =>
-      'Not sure this was the right movement — check the number.';
+  String hoursAgo(String n) {
+    return '${n}h ago';
+  }
+
+  @override
+  String toNextTier(String n, String tier) {
+    return '$n to $tier';
+  }
+
+  @override
+  String get noMatchesYet => 'No duels yet';
+
+  @override
+  String get noMatchesYetBody => 'Your first one shows up here, win or lose.';
+
+  @override
+  String get searchByUsername => 'Search by username';
+
+  @override
+  String get incomingRequests => 'Incoming requests';
+
+  @override
+  String onlineNowCount(String count) {
+    return 'Online now · $count';
+  }
+
+  @override
+  String offlineCount(String count) {
+    return 'Offline · $count';
+  }
+
+  @override
+  String get invite => 'Invite';
+
+  @override
+  String get headToHeadTitle => 'Head to head';
+
+  @override
+  String get vsYouCaption => 'vs you';
+
+  @override
+  String get h2hYou => 'you';
+
+  @override
+  String get h2hThem => 'them';
+
+  @override
+  String headToHead(String wins, String losses) {
+    return '${wins}W ${losses}L vs you';
+  }
+
+  @override
+  String get neverPlayedYou => 'Never played you';
+
+  @override
+  String noHistoryWithThem(String username) {
+    return 'You haven\'t raced $username yet.';
+  }
+
+  @override
+  String lastDuelScore(String yourReps, String theirReps, String when) {
+    return 'Last time: $yourReps–$theirReps, $when.';
+  }
+
+  @override
+  String yourBestVsThemLine(String reps) {
+    return 'Your best against them is $reps.';
+  }
+
+  @override
+  String get viewFullProfile => 'View full profile';
+
+  @override
+  String get moreOptions => 'More options';
+
+  @override
+  String get block => 'Block';
+
+  @override
+  String get blockRowBody => 'They can\'t challenge you or see your profile';
+
+  @override
+  String get report => 'Report';
+
+  @override
+  String get reportRowBody => 'Reviewed within 24 hours';
+
+  @override
+  String muteChallenges(String username) {
+    return 'Mute challenges from $username';
+  }
+
+  @override
+  String blockedLifter(String username) {
+    return 'Blocked $username';
+  }
+
+  @override
+  String mutedLifter(String username) {
+    return 'Muted $username';
+  }
+
+  @override
+  String get addFriendButton => 'Add friend';
+
+  @override
+  String get alreadyFriends => 'Friends';
+
+  @override
+  String get couldNotLoadProfile => 'Couldn\'t load this profile';
+
+  @override
+  String get noFriendsMatch => 'Nobody by that name';
+
+  @override
+  String get yourClimb => 'Your climb';
+
+  @override
+  String lpToUnlock(String lp, String rank, String unlock) {
+    return '$lp LP to $rank · unlocks $unlock';
+  }
+
+  @override
+  String floorKept(String tier, String rank) {
+    return '$tier is yours. You can\'t drop below $rank.';
+  }
+
+  @override
+  String dayStreakCount(String count) {
+    return '$count day streak';
+  }
+
+  @override
+  String get findMatch => 'Find a match';
+
+  @override
+  String rankedTerms(String seconds) {
+    return '$seconds seconds · ranked';
+  }
+
+  @override
+  String get practiceTerms => 'Practice — no rank, no opponent';
+
+  @override
+  String get practiceComplete => 'PRACTICE COMPLETE';
+
+  @override
+  String get findPeople => 'Find people';
+
+  @override
+  String get noRankYet => 'No rank yet';
+
+  @override
+  String placementsForFirstTier(String count) {
+    return 'Finish $count placement duels to earn your first tier.';
+  }
+
+  @override
+  String get startPlacements => 'Start placements';
+
+  @override
+  String get unranked => 'Unranked';
+
+  @override
+  String placementsTerms(String done, String total, String seconds) {
+    return '$done of $total · $seconds seconds each';
+  }
+
+  @override
+  String placementsLeft(String done, String total, String left) {
+    return '$done of $total · $left more to get your tier';
+  }
+
+  @override
+  String placementsForTier(String count) {
+    return 'Finish $count placement duels to see where you land.';
+  }
+
+  @override
+  String placementsDoneCount(String done, String total) {
+    return '$done of $total done';
+  }
+
+  @override
+  String get practiceFirst => 'Practice first';
+
+  @override
+  String get nextPlacement => 'Next placement';
+
+  @override
+  String get noConnection => 'No connection';
+
+  @override
+  String get practiceOffline => 'Practice offline';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get youWonPlain => 'You won';
+
+  @override
+  String opponentDisconnected(String name) {
+    return '$name disconnected';
+  }
+
+  @override
+  String get forfeitNoMargin => 'Forfeit · margin not counted';
+
+  @override
+  String get findAnotherMatch => 'Find another match';
+
+  @override
+  String get cameraNeededTitle => 'Camera access needed';
+
+  @override
+  String get cameraNeededBody =>
+      'outrepd counts your reps by watching your body move. Pose detection runs on your device and nothing is uploaded.';
+
+  @override
+  String get openSettings => 'Open settings';
+
+  @override
+  String get allowCamera => 'Allow camera';
+
+  @override
+  String get notNow => 'Not now';
+
+  @override
+  String get noCameraTitle => 'No camera found';
+
+  @override
+  String get noCameraBody =>
+      'Reps are counted from the camera, so this device cannot score a duel. Everything else still works.';
+
+  @override
+  String get noConnectionBody =>
+      'You need a connection to duel. Practice still works offline and your reps will sync later.';
+
+  @override
+  String get getBackInFrame => 'Get back in frame';
+
+  @override
+  String get clockStillRunning =>
+      'The clock is still running. Reps are not counting.';
+
+  @override
+  String get giveUp => 'Give up';
+
+  @override
+  String lpSwing(String gain, String loss) {
+    return '+$gain / −$loss LP';
+  }
+
+  @override
+  String get searchingForOpponent => 'Searching for an opponent';
+
+  @override
+  String get getIntoPosition => 'Get into position';
+
+  @override
+  String get framingHint => 'Wrists and ankles must be in frame';
+
+  @override
+  String get goUp => 'Go up';
+
+  @override
+  String get goDown => 'Go down';
+
+  @override
+  String get bestSet => 'Best set';
+
+  @override
+  String get record => 'Record';
+
+  @override
+  String get last7Days => 'Last 7 days';
+
+  @override
+  String repsCount(String count) {
+    return '$count reps';
+  }
+
+  @override
+  String get viewAll => 'View all';
+
+  @override
+  String get shareProfile => 'Share profile';
+
+  @override
+  String get share => 'Share';
+
+  @override
+  String get duelMeOnOutrepd => 'Duel me on outrepd';
+
+  @override
+  String get yourRankCard => 'Your rank card';
+
+  @override
+  String get shareStory => 'Story';
+
+  @override
+  String get sharePost => 'Post';
+
+  @override
+  String get copyLink => 'Copy';
+
+  @override
+  String get linkCopied => 'Link copied';
+
+  @override
+  String get currentRankLabel => 'Current rank';
+
+  @override
+  String get winInitial => 'W';
+
+  @override
+  String get lossInitial => 'L';
+
+  @override
+  String get dayInitial => 'd';
+
+  @override
+  String rankPosition(String n) {
+    return '#$n';
+  }
+
+  @override
+  String get obTagline =>
+      'Push-up battles. Your phone counts. Someone else is counting too.';
+
+  @override
+  String get obGetStarted => 'Get started';
+
+  @override
+  String get obHaveAccount => 'I already have an account';
+
+  @override
+  String get obHowTitle => 'Three things, then you’re in.';
+
+  @override
+  String get obHow1 => 'Prop your phone on the floor';
+
+  @override
+  String get obHow1Body => 'Lean it against a wall, a metre in front of you.';
+
+  @override
+  String get obHow2 => 'The camera counts your reps';
+
+  @override
+  String get obHow2Body =>
+      'Every rep is checked for depth. Half reps don’t count.';
+
+  @override
+  String get obHow3 => 'Sixty seconds against someone';
+
+  @override
+  String get obHow3Body =>
+      'Win to climb. Lose and you drop. Same rules for everyone.';
+
+  @override
+  String get obTwoThings => 'Two quick things.';
+
+  @override
+  String get obAgeQuestion => 'How old are you?';
+
+  @override
+  String get obUnder16 => 'Under 16';
+
+  @override
+  String get obOver16 => '16 or over';
+
+  @override
+  String get obHealthConsent =>
+      'I understand outrepd counts reps and does not give medical or training advice. I’ll stop if something hurts.';
+
+  @override
+  String get obTermsIntro => 'By continuing you agree to the';
+
+  @override
+  String get obTerms => 'Terms';
+
+  @override
+  String get obAnd => 'and';
+
+  @override
+  String get obPrivacy => 'Privacy Policy';
+
+  @override
+  String get obUnder16Blocked =>
+      'outrepd is for 16 and over. Come back when you get there — the push-ups will still be here.';
+
+  @override
+  String get obCameraTitle => 'outrepd needs your camera';
+
+  @override
+  String get obCameraBody =>
+      'It watches your body move to count reps. There is no other way to do it.';
+
+  @override
+  String get obCameraPrivateTitle => 'Nothing leaves your phone';
+
+  @override
+  String get obCameraPrivateBody =>
+      'Body tracking runs on this device. No video is uploaded unless you choose to post it.';
+
+  @override
+  String get obWhyNeeded => 'Why is this needed?';
+
+  @override
+  String get obPlacementTitle => 'Set your phone on the floor';
+
+  @override
+  String get obPlacementBody =>
+      'Lean it against a wall about a metre in front of you.';
+
+  @override
+  String get obOneMetre => '~1 m';
+
+  @override
+  String get obFullBody => 'full body in frame';
+
+  @override
+  String get obCheckHandsFeet => 'Hands and feet both visible';
+
+  @override
+  String get obCheckFacing => 'Facing the phone, not sideways';
+
+  @override
+  String get obCheckLight => 'Room light on';
+
+  @override
+  String get obImSetUp => 'I’m set up';
+
+  @override
+  String get obFramingTitle => 'Get into a push-up position';
+
+  @override
+  String get obFramingShoulders => 'Shoulders and hips';
+
+  @override
+  String get obFramingWrists => 'Wrists';
+
+  @override
+  String get obFramingAnkles => 'Ankles';
+
+  @override
+  String get obLooksGood => 'Looks good';
+
+  @override
+  String get obCalibrating => 'Calibrating';
+
+  @override
+  String get obOneMoreRep => 'One more to learn your range';
+
+  @override
+  String get obCalibrationHint => 'Do three push-ups at your normal depth';
+
+  @override
+  String get obCalibrated => 'Calibrated.';
+
+  @override
+  String get obCalibratedBody =>
+      'outrepd knows your range now. Depth is measured against you, not a fixed number.';
+
+  @override
+  String get obRepsCounted => 'Reps counted';
+
+  @override
+  String get obAverageDepth => 'Average depth';
+
+  @override
+  String get obForm => 'Form';
+
+  @override
+  String get obFormClean => 'Clean';
+
+  @override
+  String get obCreateAccountBody =>
+      'Create an account to keep your reps, your rank and your record.';
+
+  @override
+  String get obSaveProgress => 'Save my progress';
+
+  @override
+  String obSaveYourReps(String count) {
+    return 'Save your $count reps';
+  }
+
+  @override
+  String get obOneTap => 'An email and a password — that\'s all it takes.';
+
+  @override
+  String get obContinueApple => 'Continue with Apple';
+
+  @override
+  String get obContinueGoogle => 'Continue with Google';
+
+  @override
+  String get obContinueEmail => 'Continue with email';
+
+  @override
+  String get obSignInFootnote =>
+      'We only use this to keep your account. We never post anything.';
+
+  @override
+  String get obPickName => 'Pick a name';
+
+  @override
+  String get obPickNameBody =>
+      'This is what opponents see. You can change it later.';
+
+  @override
+  String get obAvailable => 'Available';
+
+  @override
+  String get obTaken => 'Taken';
+
+  @override
+  String get obYourAvatar => 'Your avatar';
+
+  @override
+  String get obAddPhoto => 'Add a photo';
+
+  @override
+  String get obNotifyTitle => 'Know when you’re challenged';
+
+  @override
+  String get obNotifyChallenged => 'Someone challenged you';
+
+  @override
+  String get obNotifyStreak => 'Your streak is about to break';
+
+  @override
+  String get obNotifyPassed => 'A friend passed you on the board';
+
+  @override
+  String get obTurnOn => 'Turn on';
+
+  @override
+  String get obPlacementsBody =>
+      'Five duels decide your starting tier. Nothing counts against you yet.';
+
+  @override
+  String get obFindFirstOpponent => 'Find my first opponent';
+
+  @override
+  String get obGotIt => 'Got it';
+
+  @override
+  String get obFormMixed => 'Mixed';
+
+  @override
+  String get obWelcomeBack => 'Welcome back';
+
+  @override
+  String get obWelcomeBackBody => 'Sign in with your email and password.';
+
+  @override
+  String get justNow => 'Just now';
+
+  @override
+  String get counterAccuracy => 'Counter accuracy';
+
+  @override
+  String get counterAccuracyCaption => 'How close the camera gets';
+
+  @override
+  String measuredOverSets(String count) {
+    return 'Measured over $count sets';
+  }
+
+  @override
+  String get accExact => 'Exact';
+
+  @override
+  String get accWithinOne => 'Within 1 rep';
+
+  @override
+  String get accAverageMiss => 'Average miss';
+
+  @override
+  String get accTendsTo => 'Tends to';
+
+  @override
+  String get accCountsHigh => 'count high';
+
+  @override
+  String get accCountsLow => 'count low';
+
+  @override
+  String get accCountsEven => 'neither high nor low';
+
+  @override
+  String get accWorstMiss => 'Worst miss';
+
+  @override
+  String get accNothingYet => 'Nothing measured yet';
+
+  @override
+  String get accNothingYetBody =>
+      'Every time you confirm a count after a duel, that set is measured against what you said it was. The number appears here.';
+
+  @override
+  String accNeedMore(String count) {
+    return 'Early days. About $count more sets before this number means much.';
+  }
+
+  @override
+  String get accRecentSets => 'Recent sets';
+
+  @override
+  String get accCameraSaid => 'Camera';
+
+  @override
+  String get accYouSaid => 'You';
+
+  @override
+  String get accHowItWorks =>
+      'These come from you, on this phone. Nothing is sent anywhere.';
+
+  @override
+  String levelNumber(String n) {
+    return 'Level $n';
+  }
+
+  @override
+  String get youLostPlain => 'You lost';
+
+  @override
+  String get rematch => 'Rematch';
+
+  @override
+  String get shareAction => 'Share';
+
+  @override
+  String get doneAction => 'Done';
+
+  @override
+  String get continueAction => 'Continue';
+
+  @override
+  String get lpRowWin => 'Win';
+
+  @override
+  String get lpRowLoss => 'Loss';
+
+  @override
+  String get lpRowOpponent => 'Opponent\'s rank';
+
+  @override
+  String get lpRowMargin => 'Margin';
+
+  @override
+  String get lpRowDepth => 'Depth';
+
+  @override
+  String get promotedLabel => 'Promoted';
+
+  @override
+  String get highestReached => 'Highest you\'ve reached';
+
+  @override
+  String repsOff(String n) {
+    return '$n reps off.';
+  }
+
+  @override
+  String get closestYet => 'Closest match yet.';
 }

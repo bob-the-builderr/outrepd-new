@@ -18,9 +18,8 @@ void main() {
       before.themeMode = ThemeMode.light;
       before.weightUnit = WeightUnit.lb;
       before.heightUnit = HeightUnit.ft;
-      before.visibility = ProfileVisibility.friends;
-      before.sound = false;
-      before.notifyWeeklySummary = true;
+      before.vibration = false;
+      before.showSkeleton = false;
     });
 
     // A second instance stands in for the next launch of the app.
@@ -30,9 +29,8 @@ void main() {
     expect(after.themeMode, ThemeMode.light);
     expect(after.weightUnit, WeightUnit.lb);
     expect(after.heightUnit, HeightUnit.ft);
-    expect(after.visibility, ProfileVisibility.friends);
-    expect(after.sound, isFalse);
-    expect(after.notifyWeeklySummary, isTrue);
+    expect(after.vibration, isFalse);
+    expect(after.showSkeleton, isFalse);
   });
 
   test('untouched settings keep their defaults', () async {
@@ -41,7 +39,7 @@ void main() {
 
     expect(fresh.themeMode, ThemeMode.dark);
     expect(fresh.weightUnit, WeightUnit.kg);
-    expect(fresh.allowFriendRequests, isTrue);
+    expect(fresh.showSkeleton, isTrue);
   });
 
   test('body measurements survive a restart', () async {

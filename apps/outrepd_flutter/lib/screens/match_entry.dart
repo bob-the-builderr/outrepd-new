@@ -1,90 +1,70 @@
-import 'dart:math';
+/// The ways into a duel.
+///
+/// There used to be a muscle picker here: three disciplines, then a list of
+/// eighty exercises to choose three from. All of it is gone. The app counts
+/// push-ups, so there is nothing to disambiguate and nothing worth asking —
+/// the fastest route from wanting a duel to being in one is no questions at
+/// all.
+library;
+
+import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
+import '../backend/backend.dart';
+import '../data.dart';
 import '../l10n/app_localizations.dart';
-import '../exercises.dart';
-import '../type_scale.dart';
 import '../theme.dart';
+import '../type_scale.dart';
 import '../widgets.dart';
 import 'match_flow.dart';
 
 /// How a match was started. Ranked results move your LP; the social routes
 /// are for bragging rights only.
-enum MatchMode { ranked, room, crew }
+enum MatchMode {
+  ranked,
 
-/// Asks which muscle group the match is for, then starts it.
-Future<void> pickMuscle(BuildContext context, {required MatchMode mode}) async {
-  final discipline = await showModalBottomSheet<Discipline>(
-    context: context,
-    backgroundColor: context.colors.surface,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
-    ),
-    builder: (_) => const _MusclePicker(),
-  );
+  /// No opponent, no rank, no LP. The camera still counts, so it is the one
+  /// way to find out whether your form reads before a loss is riding on it.
+  practice,
 
-  if (discipline == null || !context.mounted) return;
+  /// Sending a rematch: record a set that names a specific lifter instead of
+  /// joining the open pool. See [MatchFlowScreen.isChallenge].
+  challenge,
+
+  /// Racing a rematch that was sent to this account. See
+  /// [MatchFlowScreen.isChallengeAccept].
+  challengeAccept,
+}
+
+/// Straight into the duel.
+Future<void> startMatch(
+  BuildContext context, {
+  required MatchMode mode,
+  String? targetId,
+  String? targetUsername,
+  int? targetTierIdx,
+  int? targetDivIdx,
+}) async {
   await Navigator.of(context).push(
-    MaterialPageRoute(builder: (_) => MatchFlowScreen(discipline: discipline)),
+    MaterialPageRoute(
+      builder: (_) => MatchFlowScreen(
+        mode: mode,
+        targetId: targetId,
+        targetUsername: targetUsername,
+        targetTierIdx: targetTierIdx,
+        targetDivIdx: targetDivIdx,
+      ),
+    ),
   );
 }
 
-class _MusclePicker extends StatelessWidget {
-  const _MusclePicker();
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 14, 16, 20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const _SheetGrip(),
-            Text(
-              L.of(context).pickYourThree,
-              style: context.type.heading.copyWith(color: context.colors.text),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              L.of(context).matchedSameGroup,
-              style: context.type.label.copyWith(color: context.colors.muted),
-            ),
-            const SizedBox(height: 16),
-            for (final d in Discipline.values)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Panel(
-                  onTap: () => Navigator.of(context).pop(d),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
-                  child: Row(
-                    children: [
-                      Icon(d.icon, color: context.colors.brand, size: 22),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          d.label(L.of(context)),
-                          style: context.type.body.copyWith(color: context.colors.text),
-                        ),
-                      ),
-                      Icon(Icons.chevron_right,
-                          color: context.colors.muted, size: 20),
-                    ],
-                  ),
-                ),
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// Create or join a private room to face a friend.
+/// Find somebody by username and send them a real challenge — the same
+/// reserved-set mechanism a rematch uses, reached here for anybody, friend
+/// or not. There used to be a room code here instead, generated on the
+/// phone and never checked against anything: two people "sharing" it could
+/// never actually have been paired by it. A username the server can look up
+/// is a code that already works.
 Future<void> showFriendRoomSheet(BuildContext context) {
   return showModalBottomSheet<void>(
     context: context,
@@ -105,23 +85,59 @@ class _FriendRoomSheet extends StatefulWidget {
 }
 
 class _FriendRoomSheetState extends State<_FriendRoomSheet> {
-  final _codeController = TextEditingController();
-  String? _createdCode;
+  final _search = TextEditingController();
+  List<FoundLifter> _found = const [];
+  bool _searching = false;
+  Timer? _debounce;
 
   @override
   void dispose() {
-    _codeController.dispose();
+    _debounce?.cancel();
+    _search.dispose();
     super.dispose();
   }
 
-  String _newCode() {
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    final r = Random();
-    return List.generate(6, (_) => chars[r.nextInt(chars.length)]).join();
+  void _onChanged(String query) {
+    _debounce?.cancel();
+    if (query.trim().length < 2) {
+      setState(() => _found = const []);
+      return;
+    }
+    _debounce = Timer(const Duration(milliseconds: 350), () => _lookUp(query));
+  }
+
+  Future<void> _lookUp(String query) async {
+    if (!backend.available) return;
+    setState(() => _searching = true);
+    try {
+      final found = await backend.findLifters(query.trim());
+      if (!mounted) return;
+      setState(() {
+        _found = found;
+        _searching = false;
+      });
+    } on Object catch (_) {
+      if (!mounted) return;
+      setState(() => _searching = false);
+    }
+  }
+
+  void _challenge(FoundLifter lifter) {
+    Navigator.of(context).pop();
+    startMatch(
+      context,
+      mode: MatchMode.challenge,
+      targetId: lifter.id,
+      targetUsername: lifter.username,
+      targetTierIdx: lifter.tierIdx,
+      targetDivIdx: lifter.divIdx,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final l = L.of(context);
+
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -135,79 +151,68 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
             children: [
               const _SheetGrip(),
               Text(
-                L.of(context).challengeFriend,
+                l.challengeFriend,
                 style: context.type.heading.copyWith(color: context.colors.text),
               ),
               const SizedBox(height: 4),
               Text(
-                L.of(context).roomFriendly,
+                l.roomFriendly,
                 style: context.type.label.copyWith(color: context.colors.muted),
               ),
               const SizedBox(height: 18),
-              if (_createdCode == null) ...[
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton.icon(
-                    onPressed: () =>
-                        setState(() => _createdCode = _newCode()),
-                    icon: const Icon(Icons.add),
-                    label: Text(L.of(context).createRoom),
-                    style: FilledButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                    ),
+              TextField(
+                controller: _search,
+                autofocus: true,
+                autocorrect: false,
+                style: context.type.body.copyWith(color: context.colors.text),
+                cursorColor: context.colors.brand,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.search, color: context.colors.muted),
+                  hintText: l.searchByUsername,
+                  hintStyle: context.type.body.copyWith(color: context.colors.muted),
+                  filled: true,
+                  fillColor: context.colors.surface,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(13),
+                    borderSide: BorderSide(color: context.colors.border),
                   ),
                 ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(child: Divider(color: context.colors.surfaceRaised)),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12),
-                      child: Text('or',
-                          style:
-                              context.type.label.copyWith(color: context.colors.muted)),
-                    ),
-                    Expanded(child: Divider(color: context.colors.surfaceRaised)),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: _codeController,
-                  textCapitalization: TextCapitalization.characters,
-                  maxLength: 6,
-                  style: context.type.title.copyWith(color: context.colors.text),
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    counterText: '',
-                    hintText: L.of(context).enterCode,
-                    hintStyle: context.type.body.copyWith(color: context.colors.muted),
-                  ),
-                  onChanged: (_) => setState(() {}),
-                ),
-                const SizedBox(height: 12),
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton(
-                    onPressed: _codeController.text.trim().length == 6
-                        ? () {
-                            Navigator.of(context).pop();
-                            pickMuscle(context, mode: MatchMode.room);
-                          }
-                        : null,
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                    ),
-                    child: Text(L.of(context).joinRoom),
-                  ),
-                ),
-              ] else
-                _RoomCreated(
-                  code: _createdCode!,
-                  onStart: () {
-                    Navigator.of(context).pop();
-                    pickMuscle(context, mode: MatchMode.room);
-                  },
-                ),
+                onChanged: _onChanged,
+              ),
+              const SizedBox(height: 14),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxHeight: 320),
+                child: _searching
+                    ? const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 24),
+                        child: Center(child: CircularProgressIndicator()),
+                      )
+                    : _found.isEmpty
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 24),
+                        child: Center(
+                          child: Text(
+                            _search.text.trim().length < 2
+                                ? l.roomFriendly
+                                : l.noOneFound,
+                            textAlign: TextAlign.center,
+                            style: context.type.label.copyWith(
+                              color: context.colors.muted,
+                            ),
+                          ),
+                        ),
+                      )
+                    : ListView(
+                        shrinkWrap: true,
+                        children: [
+                          for (final lifter in _found)
+                            _FoundLifterRow(
+                              lifter: lifter,
+                              onChallenge: () => _challenge(lifter),
+                            ),
+                        ],
+                      ),
+              ),
             ],
           ),
         ),
@@ -216,53 +221,51 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
   }
 }
 
-class _RoomCreated extends StatelessWidget {
-  const _RoomCreated({required this.code, required this.onStart});
+class _FoundLifterRow extends StatelessWidget {
+  const _FoundLifterRow({required this.lifter, required this.onChallenge});
 
-  final String code;
-  final VoidCallback onStart;
+  final FoundLifter lifter;
+  final VoidCallback onChallenge;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          L.of(context).shareThisCode,
-          style: context.type.label.copyWith(color: context.colors.muted),
+    final l = L.of(context);
+    final rank = lifter.placementsDone >= kPlacementDuels
+        ? tierLabel(l, lifter.tierIdx, lifter.divIdx)
+        : l.unranked;
+
+    return InkWell(
+      onTap: onChallenge,
+      borderRadius: BorderRadius.circular(13),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        decoration: BoxDecoration(
+          color: context.colors.surface,
+          borderRadius: BorderRadius.circular(13),
+          border: Border.all(color: context.colors.border, width: 0.5),
         ),
-        const SizedBox(height: 10),
-        Panel(
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                code,
-                style: context.type.statValue.copyWith(color: context.colors.text),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    lifter.username,
+                    style: context.type.body.copyWith(color: context.colors.text),
+                  ),
+                  Text(
+                    rank,
+                    style: context.type.micro.copyWith(color: context.colors.muted),
+                  ),
+                ],
               ),
-              const SizedBox(width: 8),
-              IconButton(
-                icon: Icon(Icons.copy, color: context.colors.brand, size: 20),
-                onPressed: () {
-                  Clipboard.setData(ClipboardData(text: code));
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(L.of(context).codeCopied)),
-                  );
-                },
-              ),
-            ],
-          ),
+            ),
+            Icon(Icons.sports_mma, color: context.colors.brand, size: 18),
+          ],
         ),
-        const SizedBox(height: 16),
-        FilledButton(
-          onPressed: onStart,
-          style: FilledButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-          ),
-          child: Text(L.of(context).pickMuscleAndStart),
-        ),
-      ],
+      ),
     );
   }
 }

@@ -18,35 +18,10 @@ class LKo extends L {
   String get tabMatch => '대결';
 
   @override
-  String get tabCrew => '크루';
-
-  @override
   String get tabProfile => '프로필';
 
   @override
-  String get searchOpponent => '상대 찾기';
-
-  @override
-  String get searchOpponentHint => '같은 랭크의 상대와 매칭해 드립니다';
-
-  @override
   String get challengeFriend => '친구에게 도전';
-
-  @override
-  String get trainWithCamera => '카메라로 훈련';
-
-  @override
-  String get viewRoadmap => '로드맵 보기';
-
-  @override
-  String lpProgress(String lp, String left) {
-    return '$lp / 100 LP · 승급까지 $left';
-  }
-
-  @override
-  String winStreak(String count) {
-    return '$count연승 중';
-  }
 
   @override
   String get matchHistory => '대결 기록';
@@ -67,16 +42,337 @@ class LKo extends L {
   String get streak => '연속 기록';
 
   @override
-  String get profile => '프로필';
-
-  @override
   String get settings => '설정';
 
   @override
-  String get stats => '기록';
+  String get accountSection => '계정';
 
   @override
-  String get edit => '수정';
+  String get duelSection => '대결';
+
+  @override
+  String get hapticsEachRep => '렙마다 진동';
+
+  @override
+  String get showSkeleton => '스켈레톤 표시';
+
+  @override
+  String get showSkeletonHint => '카메라가 인식 중인지 알 수 있습니다';
+
+  @override
+  String get manageNotifications => '알림 관리';
+
+  @override
+  String switchesOn(String on, String all) {
+    return '$all개 중 $on개 켜짐';
+  }
+
+  @override
+  String get whoCanChallenge => '누가 나에게 도전할 수 있는지';
+
+  @override
+  String get blockedAccounts => '차단한 계정';
+
+  @override
+  String get reportProblem => '문제 신고';
+
+  @override
+  String get onDeviceNote => '자세 인식은 이 휴대폰에서 실행됩니다. 영상이나 자세 데이터는 업로드되지 않습니다.';
+
+  @override
+  String get visibilitySection => '공개 범위';
+
+  @override
+  String get showMyCountry => '내 국가 표시';
+
+  @override
+  String get showMyCountryHint => '끄면 국가 순위표에서 빠집니다';
+
+  @override
+  String get safetySection => '안전';
+
+  @override
+  String get socialSection => '소셜';
+
+  @override
+  String get noticeRaced => '누군가 내 세트에 도전함';
+
+  @override
+  String get noticeRacedHint => '대결이 있었는지 알 수 있는 유일한 방법';
+
+  @override
+  String get noticeFriendOk => '보낸 요청이 수락됨';
+
+  @override
+  String get noticesStoredNote => '끄면 저장 자체가 되지 않습니다. 숨기는 것이 아닙니다.';
+
+  @override
+  String get notSaved => '저장되지 않았습니다';
+
+  @override
+  String get blockedIntro => '차단한 계정은 도전도, 검색도, 요청도 할 수 없습니다. 상대는 알 수 없습니다.';
+
+  @override
+  String blockedWhen(String when) {
+    return '$when 차단함';
+  }
+
+  @override
+  String get unblock => '차단 해제';
+
+  @override
+  String get noBlockedTitle => '차단한 사람 없음';
+
+  @override
+  String get noBlockedBody => '프로필이나 신고 화면에서 차단할 수 있습니다.';
+
+  @override
+  String get whatHappened => '무슨 일이 있었나요';
+
+  @override
+  String get reasonCheating => '부정 행위 또는 가짜 렙';
+
+  @override
+  String get reasonHarassment => '괴롭힘 또는 폭언';
+
+  @override
+  String get reasonContent => '부적절한 콘텐츠';
+
+  @override
+  String get reasonImpersonation => '사칭';
+
+  @override
+  String get reasonOther => '기타';
+
+  @override
+  String get addDetails => '상세 내용 (선택)';
+
+  @override
+  String get alsoBlock => '이 계정도 차단';
+
+  @override
+  String get sendReport => '신고 보내기';
+
+  @override
+  String get reportSent => '신고를 보냈습니다';
+
+  @override
+  String get reportingThisAccount => '이 계정을 신고합니다';
+
+  @override
+  String get exportIntro =>
+      '서버가 보관 중인 회원님의 모든 정보를 파일로 이메일에 보내드립니다. 보통 1분 정도 걸립니다.';
+
+  @override
+  String get whatsIncluded => '포함되는 항목';
+
+  @override
+  String get incProfile => '프로필과 등급';
+
+  @override
+  String get incSets => '모든 세트와 렙 수';
+
+  @override
+  String get incDuels => '대결 기록과 LP 변화';
+
+  @override
+  String get incFriends => '친구와 차단한 계정';
+
+  @override
+  String get incNotices => '받은 알림';
+
+  @override
+  String get noLandmarksNote =>
+      '자세 랜드마크는 포함되어 있지 않으며, 애초에 없습니다. 카메라가 휴대폰에서 읽고 어디로도 전송되지 않습니다.';
+
+  @override
+  String get sendItTo => '받을 주소';
+
+  @override
+  String get emailHint => 'you@example.com';
+
+  @override
+  String get passwordHint => '비밀번호';
+
+  @override
+  String get codeHint => '인증 코드';
+
+  @override
+  String get createAccountTitle => '계정 만들기';
+
+  @override
+  String get createAccountBody =>
+      '이메일과 비밀번호를 추가해서 이 계정이 휴대폰 하나에만 의존하지 않도록 하세요.';
+
+  @override
+  String get createAccountAction => '계정 만들기';
+
+  @override
+  String get signInTitle => '로그인';
+
+  @override
+  String get signInBody => '계정의 이메일과 비밀번호로 로그인하세요.';
+
+  @override
+  String get signInAction => '로그인';
+
+  @override
+  String get switchToSignIn => '이미 계정이 있으신가요? 로그인';
+
+  @override
+  String get switchToSignUp => '처음이신가요? 계정 만들기';
+
+  @override
+  String get emailTakenSwitchToSignIn => '이 이메일은 이미 계정이 있습니다 — 대신 로그인하세요.';
+
+  @override
+  String get emailSignUpInvalid => '이메일과 비밀번호를 확인하세요 — 최소 6자.';
+
+  @override
+  String get tooManyCodes => '코드를 너무 많이 보냈습니다 — 몇 분 후 다시 시도하세요.';
+
+  @override
+  String get authEntryTagline => '푸시업하고, 겨루고, 랭크를 올려라.';
+
+  @override
+  String get orDivider => '또는';
+
+  @override
+  String get signUpWithEmail => '이메일로 가입하기';
+
+  @override
+  String get alreadyHaveAccountQuestion => '이미 계정이 있으신가요?';
+
+  @override
+  String get logInAction => '로그인';
+
+  @override
+  String get createYourAccountTitle => '계정 만들기';
+
+  @override
+  String get createAccountSubtitle => '1분도 안 걸려요.';
+
+  @override
+  String get usernameHint => '사용자 이름';
+
+  @override
+  String get passwordMinLength => '최소 8자';
+
+  @override
+  String get logInSubtitle => '랭크를 유지하려면 로그인하세요.';
+
+  @override
+  String get forgotPassword => '비밀번호를 잊으셨나요?';
+
+  @override
+  String resetPasswordSent(String email) {
+    return '$email에 해당하는 계정이 있다면 재설정 링크를 보냈습니다.';
+  }
+
+  @override
+  String get checkYourEmailTitle => '이메일을 확인하세요';
+
+  @override
+  String codeSentTo(String email) {
+    return '$email로 6자리 코드를 보냈습니다.';
+  }
+
+  @override
+  String get didntGetIt => '받지 못하셨나요?';
+
+  @override
+  String resendInSeconds(String time) {
+    return '$time 후 재전송';
+  }
+
+  @override
+  String get wrongEmailGoBack => '이메일이 잘못됐나요? 뒤로 가기';
+
+  @override
+  String get usernameTaken => '이미 사용 중인 사용자 이름입니다.';
+
+  @override
+  String get socialLinkFailed => '로그인을 완료하지 못했습니다. 다시 시도하세요.';
+
+  @override
+  String get showLabel => '표시';
+
+  @override
+  String get hideLabel => '숨기기';
+
+  @override
+  String get resetPasswordTitle => '새 비밀번호 설정';
+
+  @override
+  String get resetPasswordBody => '계정의 새 비밀번호를 선택하세요.';
+
+  @override
+  String get setPasswordAction => '비밀번호 설정';
+
+  @override
+  String get wrongEmailOrPassword => '이메일 또는 비밀번호가 틀렸습니다.';
+
+  @override
+  String get enterCodeTitle => '코드 입력';
+
+  @override
+  String codeInstructions(String email) {
+    return '$email로 보낸 코드를 입력하세요.';
+  }
+
+  @override
+  String get verifyAction => '확인';
+
+  @override
+  String get wrongCode => '코드가 틀리거나 만료되었습니다.';
+
+  @override
+  String get resendCode => '코드 다시 보내기';
+
+  @override
+  String get codeResent => '새 코드를 보냈습니다.';
+
+  @override
+  String signedInAs(String email) {
+    return '$email(으)로 로그인됨';
+  }
+
+  @override
+  String get addressNotKept => '주소는 한 번만 사용되고 저장되지 않습니다. 이 계정에는 이메일이 없습니다.';
+
+  @override
+  String get requestMyData => '내 데이터 메일로 받기';
+
+  @override
+  String exportSent(String address) {
+    return '$address 로 보냈습니다';
+  }
+
+  @override
+  String get deleteIntro => '모든 것이 영구적으로 삭제됩니다. 되돌리거나 복구할 수 없습니다.';
+
+  @override
+  String get rankLabel => '등급';
+
+  @override
+  String get wantCopyFirst => '먼저 사본이 필요하신가요?';
+
+  @override
+  String get wantCopyBody => '삭제하기 전에 데이터를 받아두세요. 이후에는 사라집니다.';
+
+  @override
+  String typeToConfirm(String word) {
+    return '확인하려면 $word 를 입력하세요';
+  }
+
+  @override
+  String get deleteWord => '삭제';
+
+  @override
+  String get deletePermanently => '영구 삭제';
+
+  @override
+  String get keepMyAccount => '계정 유지';
 
   @override
   String get save => '저장';
@@ -88,48 +384,38 @@ class LKo extends L {
   String get skip => '건너뛰기';
 
   @override
-  String get totalMatches => '총 대결 수';
-
-  @override
-  String get bestWinStreak => '최고 연승';
-
-  @override
-  String get totalVolume => '총 든 무게';
-
-  @override
   String get height => '키';
-
-  @override
-  String get bodyweight => '몸무게';
-
-  @override
-  String get age => '나이';
-
-  @override
-  String get editYourStats => '내 정보 수정';
-
-  @override
-  String get editStatsHint => '승리와 볼륨, 랭크는 얻는 것이지 적는 것이 아닙니다.';
-
-  @override
-  String get changeName => '이름 변경';
-
-  @override
-  String get changeNameLast => '마지막 변경입니다. 되돌릴 수 없습니다.';
-
-  @override
-  String changeNameLeft(String total, String left) {
-    return '변경은 총 $total번까지입니다. 이번 뒤로 $left번 남습니다.';
-  }
-
-  @override
-  String get changeNameUsedUp => '이름 변경 기회를 모두 사용했습니다';
 
   @override
   String get yourPicture => '내 사진';
 
   @override
   String get yourPictureHint => '테두리는 랭크에 따라 정해지고, 올라갈 때마다 바뀝니다.';
+
+  @override
+  String get couldNotUsePicture => '그 사진을 사용할 수 없습니다';
+
+  @override
+  String get couldNotSyncAvatar => '사진은 저장됐지만 아직 동기화되지 않았어요';
+
+  @override
+  String get couldNotShareCard => '이 카드를 공유할 수 없었어요';
+
+  @override
+  String get simulatedOpponent => '다른 상대가 준비되지 않아 연습 페이스로 진행돼요';
+
+  @override
+  String get changeUsername => '사용자 이름 변경';
+
+  @override
+  String get usernameInvalidLength => '4자에서 20자 사이의 영문자와 숫자만 사용할 수 있습니다';
+
+  @override
+  String get usernameChanged => '사용자 이름이 변경되었습니다';
+
+  @override
+  String get usernameAlreadyChangedBody =>
+      '이미 단 한 번뿐인 사용자 이름 변경을 사용하셨습니다 — 모든 계정은 정확히 한 번만 변경할 수 있습니다.';
 
   @override
   String get gallery => '갤러리';
@@ -180,145 +466,13 @@ class LKo extends L {
   String get restIsTraining => '휴식도 훈련입니다. 일주일에 이틀 쉬어도 연속 기록은 끊기지 않습니다.';
 
   @override
-  String titlesAndStreak(String owned, String total, String streak) {
-    return '$total개 중 $owned개 · $streak일 연속';
-  }
-
-  @override
-  String get crew => '크루';
-
-  @override
-  String get myCrew => '내 크루';
-
-  @override
-  String get rankings => '순위';
-
-  @override
-  String get trainWithCrew => '크루와 함께 훈련';
-
-  @override
-  String get trainWithCrewHint => '한 이름 아래 최대 20명이 주간 목표를 함께 쫓고 크루 순위표를 올라갑니다.';
-
-  @override
-  String get createCrew => '크루 만들기';
-
-  @override
-  String get createCrewHint => '이름을 짓고, 엠블럼을 고르고, 사람들을 부르세요';
-
-  @override
-  String get joinOpenCrew => '공개 크루 가입';
-
-  @override
-  String get joinOpenCrewHint => '누구나 참여할 수 있는 크루입니다';
-
-  @override
-  String get yourInvites => '받은 초대';
-
-  @override
-  String get yourInvitesHint => '당신을 부른 크루';
-
-  @override
-  String get joinWithCode => '코드로 가입';
-
-  @override
-  String get joinWithCodeHint => '크루원에게 받은 여섯 자리';
-
-  @override
-  String get topCrewsThisWeek => '이번 주 상위 크루';
-
-  @override
-  String get members => '인원';
-
-  @override
-  String get repsEach => '1인당 횟수';
-
-  @override
-  String get rank => '순위';
-
-  @override
-  String get weeklyGoal => '주간 목표';
-
-  @override
-  String get weeklyGoalDone => '주간 목표 달성';
-
-  @override
-  String goalRemaining(String reps, String days) {
-    return '$reps회 남음 · $days일 남음';
-  }
-
-  @override
-  String get goalDoneHint => '주가 끝나면 배지는 전원에게 지급됩니다.';
-
-  @override
-  String get startCrewWar => '크루전 시작';
-
-  @override
-  String get startCrewWarHint => '7일 동안 두 크루가 함께 셉니다. 1인당 횟수가 많은 쪽이 이깁니다.';
-
-  @override
-  String get whoIsPulling => '크루를 이끄는 사람';
-
-  @override
-  String get thisWeek => '이번 주';
-
-  @override
-  String get inviteLifters => '선수 초대';
-
-  @override
-  String get referralCode => '초대 코드';
-
-  @override
-  String get inviteLink => '초대 링크';
-
-  @override
-  String get leaveCrew => '크루 나가기';
-
-  @override
-  String get owner => '크루장';
-
-  @override
-  String get crewTable => '크루 순위표';
-
-  @override
-  String get repsPerMember => '1인당 횟수';
-
-  @override
-  String seasonResets(String days) {
-    return '$days일 뒤 초기화 — 모두 같은 자리에서 다시 시작';
-  }
-
-  @override
-  String get rankingExplained =>
-      '크루 순위는 총합이 아니라 1인당 횟수로 매깁니다. 총합으로 하면 인원이 많은 크루가 숫자만으로 이기기 때문입니다.';
-
-  @override
-  String get leaderboard => '리더보드';
-
-  @override
   String get global => '글로벌';
-
-  @override
-  String get myCountry => '내 국가';
-
-  @override
-  String yourFriends(String count) {
-    return '친구 ($count)';
-  }
 
   @override
   String get challenge => '도전';
 
   @override
   String get notifications => '알림';
-
-  @override
-  String get pickMovement => '동작 선택';
-
-  @override
-  String get anyExercise => '아무 운동';
-
-  @override
-  String get anyExerciseHint => '세트를 시작하세요. 동작은 수행 중에 인식됩니다';
 
   @override
   String get start => '시작';
@@ -330,25 +484,10 @@ class LKo extends L {
   String get reps => '회';
 
   @override
-  String get secondsHeld => '초 버팀';
-
-  @override
-  String get learningMovement => '동작을 익히는 중 — 곧 횟수가 표시됩니다';
-
-  @override
   String get recalibrate => '재보정';
 
   @override
   String get resetCount => '횟수 초기화';
-
-  @override
-  String get checksForm => '자세 확인';
-
-  @override
-  String get counts => '카운트';
-
-  @override
-  String get time => '시간';
 
   @override
   String get howManyReally => '실제로 몇 개 했나요?';
@@ -364,9 +503,6 @@ class LKo extends L {
   String get theme => '테마';
 
   @override
-  String get darkMode => '다크 모드';
-
-  @override
   String get language => '언어';
 
   @override
@@ -376,22 +512,13 @@ class LKo extends L {
   String get weight => '무게';
 
   @override
-  String get notificationsSection => '알림';
-
-  @override
   String get privacy => '개인정보';
-
-  @override
-  String get matches => '대결';
 
   @override
   String get data => '데이터';
 
   @override
   String get about => '앱 정보';
-
-  @override
-  String get dangerZone => '위험 구역';
 
   @override
   String get themeSystem => '기기 설정 따르기';
@@ -403,50 +530,12 @@ class LKo extends L {
   String get themeDark => '어둡게';
 
   @override
-  String get openCrews => '공개 크루';
-
-  @override
-  String get openCrewsHint => '여긴 누구나 들어갈 수 있습니다. 고르면 바로 가입됩니다.';
-
-  @override
-  String get yourInvitesSubtitle => '당신을 콕 집어 부른 크루입니다.';
-
-  @override
-  String get pickOpponent => '상대를 고르세요';
-
-  @override
   String get accept => '수락';
-
-  @override
-  String get join => '가입';
-
-  @override
-  String get copy => '복사';
-
-  @override
-  String get copied => '초대 링크를 복사했습니다';
-
-  @override
-  String season(String name) {
-    return '$name 시즌';
-  }
 
   @override
   String challengeSent(String name) {
     return '$name에게 도전장을 보냈습니다';
   }
-
-  @override
-  String get inviteFriendPrivate => '친구를 비공개 대결에 초대하기';
-
-  @override
-  String get joinWithCodePaste => '크루원이 보낸 여섯 자리를 붙여넣으세요.';
-
-  @override
-  String get enterTheCode => '6자리 코드를 입력하세요';
-
-  @override
-  String get followingDevice => '지금은 기기 설정을 따릅니다';
 
   @override
   String get weightUnitTitle => '무게 단위';
@@ -476,73 +565,13 @@ class LKo extends L {
   String get visNobody => '아무도';
 
   @override
-  String get visEveryoneHint => '누구나 프로필을 열 수 있습니다';
-
-  @override
-  String get visFriendsHint => '추가한 사람만';
-
-  @override
-  String get visNobodyHint => '프로필이 비공개로 유지됩니다';
-
-  @override
-  String get matchInvites => '대결 초대';
-
-  @override
-  String get matchResults => '대결 결과';
-
-  @override
   String get friendRequestsLabel => '친구 요청';
-
-  @override
-  String get crewActivity => '크루 활동';
-
-  @override
-  String get rankChanges => '랭크 변동';
-
-  @override
-  String get weeklySummary => '주간 요약';
-
-  @override
-  String get soundLabel => '소리';
-
-  @override
-  String get vibration => '진동';
-
-  @override
-  String get whoCanSeeProfile => '내 프로필을 볼 수 있는 사람';
-
-  @override
-  String get profileVisibility => '프로필 공개 범위';
 
   @override
   String get showOnLeaderboards => '리더보드에 표시';
 
   @override
-  String get allowMatchInvites => '대결 초대 허용';
-
-  @override
-  String get allowFriendRequests => '친구 요청 허용';
-
-  @override
-  String get showHeightWeight => '키와 몸무게 표시';
-
-  @override
-  String get showHeightWeightHint => '끄면 신체 정보는 나만 봅니다';
-
-  @override
-  String get autoAcceptFriends => '친구 요청은 자동 수락';
-
-  @override
-  String get restTimerBetweenSets => '세트 사이 휴식 타이머';
-
-  @override
   String get exportData => '내 데이터 내보내기';
-
-  @override
-  String get clearCache => '캐시 지우기';
-
-  @override
-  String get cacheCleared => '캐시를 지웠습니다';
 
   @override
   String get version => '버전';
@@ -563,37 +592,10 @@ class LKo extends L {
   String get openSourceLicences => '오픈소스 라이선스';
 
   @override
-  String get resetProgress => '진행도 초기화';
-
-  @override
-  String get resetProgressTitle => '진행도를 초기화할까요?';
-
-  @override
-  String get resetProgressBody => '랭크와 LP, 대결 기록이 전부 0으로 돌아갑니다. 되돌릴 수 없습니다.';
-
-  @override
-  String get actionReset => '초기화';
-
-  @override
   String get deleteAccount => '계정 삭제';
 
   @override
-  String get deleteAccountTitle => '계정을 삭제할까요?';
-
-  @override
-  String get deleteAccountBody => '프로필과 크루, 지금까지 치른 모든 대결이 영구히 사라집니다.';
-
-  @override
-  String get actionDelete => '삭제';
-
-  @override
   String get needsServer => '이 기능에는 서버가 필요하며 아직 연결되지 않았습니다';
-
-  @override
-  String get getStarted => '시작하기';
-
-  @override
-  String get skipToApp => '바로 앱으로';
 
   @override
   String get achievements => '업적';
@@ -602,7 +604,7 @@ class LKo extends L {
   String get unlocked => '해금됨';
 
   @override
-  String get roadTitle => '레전드로 가는 길';
+  String get roadTitle => '마스터로 가는 길';
 
   @override
   String get allTiers => '모든 랭크';
@@ -622,9 +624,6 @@ class LKo extends L {
   String unlocksAt(String tier) {
     return '$tier에서 해금';
   }
-
-  @override
-  String get matchedSameGroup => '같은 부위를 훈련하는 상대와 매칭됩니다.';
 
   @override
   String get roomFriendly => '룸 대결은 친선전입니다. 랭크에는 반영되지 않습니다.';
@@ -648,15 +647,12 @@ class LKo extends L {
   String get pickMuscleAndStart => '부위를 고르고 시작';
 
   @override
-  String get dontGetOutrepd => 'Don\'t get OUTREPD!';
-
-  @override
   String xOfY(String a, String b) {
     return '$a / $b';
   }
 
   @override
-  String get tierStone => '스톤';
+  String get tierIron => '아이언';
 
   @override
   String get tierBronze => '브론즈';
@@ -677,37 +673,25 @@ class LKo extends L {
   String get tierMaster => '마스터';
 
   @override
-  String get tierMythic => '미시크';
+  String get rewardStone => '60초 대결';
 
   @override
-  String get tierLegend => '레전드';
+  String get rewardBronze => '재대결 버튼';
 
   @override
-  String get rewardStone => '스톤 테두리';
+  String get rewardSilver => '시간 직접 설정';
 
   @override
-  String get rewardBronze => '브론즈 배지';
+  String get rewardGold => '3판 2선승';
 
   @override
-  String get rewardSilver => '실버 배지';
+  String get rewardPlatinum => '비공개 토너먼트';
 
   @override
-  String get rewardGold => '골드 배지';
+  String get rewardDiamond => '공개 로비';
 
   @override
-  String get rewardPlatinum => '플래티넘 배지';
-
-  @override
-  String get rewardDiamond => '다이아몬드 배지';
-
-  @override
-  String get rewardMaster => '마스터 배지';
-
-  @override
-  String get rewardMythic => '미시크 배지';
-
-  @override
-  String get rewardLegend => '레전드 배지';
+  String get rewardMaster => '글로벌 보드에 이름 등재';
 
   @override
   String get shortKg => 'kg';
@@ -725,123 +709,6 @@ class LKo extends L {
   String winLoss(String w, String l) {
     return '$w승 $l패';
   }
-
-  @override
-  String get yearsSuffix => '세';
-
-  @override
-  String get yourCrew => '당신의 크루';
-
-  @override
-  String get crewName => '크루 이름';
-
-  @override
-  String get motto => '모토';
-
-  @override
-  String get mottoHint => '이 크루는 무엇을 내세우나요?';
-
-  @override
-  String get country => '국가';
-
-  @override
-  String get whoCanJoin => '가입 가능 대상';
-
-  @override
-  String get minimumRank => '최소 랭크';
-
-  @override
-  String get anyone => '누구나';
-
-  @override
-  String get emblem => '엠블럼';
-
-  @override
-  String get colour => '색상';
-
-  @override
-  String get createCrewButton => '크루 만들기';
-
-  @override
-  String get ownerNote => '당신이 크루장이 됩니다. 크루는 최대 20명까지입니다.';
-
-  @override
-  String get searchCountries => '국가 검색';
-
-  @override
-  String get noCountryMatch => '일치하는 국가가 없습니다';
-
-  @override
-  String get nameTooShort => '크루 이름은 세 글자 이상이어야 합니다';
-
-  @override
-  String get privOpen => '공개';
-
-  @override
-  String get privRequest => '가입 신청';
-
-  @override
-  String get privInviteOnly => '초대 전용';
-
-  @override
-  String get privOpenHint => '코드를 가진 사람은 바로 참여합니다';
-
-  @override
-  String get privRequestHint => '신청하면 관리자가 승인합니다';
-
-  @override
-  String get privInviteOnlyHint => '직접 초대를 받아야 가입할 수 있습니다';
-
-  @override
-  String get embStrength => '힘';
-
-  @override
-  String get embCombat => '전투';
-
-  @override
-  String get embBeasts => '야수';
-
-  @override
-  String get embElements => '원소';
-
-  @override
-  String get embHonours => '훈장';
-
-  @override
-  String get embSymbols => '상징';
-
-  @override
-  String get ob1Title => '모든 훈련을\n승부로 바꾸세요';
-
-  @override
-  String get ob1Body => '운동을 기록하고 같은 부위를 훈련하는 상대와 정면으로 겨루세요.';
-
-  @override
-  String get ob2Title => '친구에게\n도전하세요';
-
-  @override
-  String get ob2Body => '비공개 초대를 보내 누가 정말 더 열심히 하는지 가려 보세요.';
-
-  @override
-  String get ob3Title => '랭크를 올리세요';
-
-  @override
-  String get ob3Body => '이길 때마다 LP를 얻습니다. 스톤에서 레전드까지 올라가세요.';
-
-  @override
-  String get ob4Title => '혼자 하는 노력은\n버겁습니다';
-
-  @override
-  String get ob4Body => '아무도 보지 않으면 마지막 세트를 줄이기 쉬워집니다.';
-
-  @override
-  String get ob5Title => '레전드가\n되세요';
-
-  @override
-  String get ob5Body => '꾸준함은 쌓입니다. 나오고, 넘어서고, 올라가세요.';
-
-  @override
-  String get letsGo => '시작하기';
 
   @override
   String get continueLabel => '계속';
@@ -1057,7 +924,7 @@ class LKo extends L {
   String get tdesc_perfect_month => '완벽한 한 주 4회';
 
   @override
-  String get ttl_bronze_tier => '돌에서 벗어나다';
+  String get ttl_bronze_tier => '아이언에서 벗어나다';
 
   @override
   String get tdesc_bronze_tier => '브론즈 도달';
@@ -1093,18 +960,6 @@ class LKo extends L {
   String get tdesc_master_tier => '마스터 도달';
 
   @override
-  String get ttl_mythic_tier => '미시크';
-
-  @override
-  String get tdesc_mythic_tier => '미시크 도달';
-
-  @override
-  String get ttl_legend_tier => '레전드';
-
-  @override
-  String get tdesc_legend_tier => '레전드 도달';
-
-  @override
   String get ttl_clean_hands => '깨끗한 손';
 
   @override
@@ -1121,18 +976,6 @@ class LKo extends L {
 
   @override
   String get tdesc_textbook => '깨끗한 세트 50회';
-
-  @override
-  String get ttl_iron_hold => '철의 버티기';
-
-  @override
-  String get tdesc_iron_hold => '플랭크를 2분 버티세요';
-
-  @override
-  String get ttl_statue => '조각상';
-
-  @override
-  String get tdesc_statue => '플랭크를 5분 버티세요';
 
   @override
   String get ttl_all_rounder => '만능';
@@ -1177,24 +1020,6 @@ class LKo extends L {
   String get tdesc_graveyard => '밤 10시 이후 50세션';
 
   @override
-  String get ttl_joined_up => '합류';
-
-  @override
-  String get tdesc_joined_up => '크루에 소속되세요';
-
-  @override
-  String get ttl_backbone => '대들보';
-
-  @override
-  String get tdesc_backbone => '4주 연속 크루 1위를 지키세요';
-
-  @override
-  String get ttl_cornerstone => '주춧돌';
-
-  @override
-  String get tdesc_cornerstone => '12주 연속 크루 1위를 지키세요';
-
-  @override
   String get ttl_not_alone => '혼자가 아니다';
 
   @override
@@ -1213,158 +1038,6 @@ class LKo extends L {
   String get tdesc_the_gym_knows => '친구 50명';
 
   @override
-  String get finish2 => '완료';
-
-  @override
-  String get qExperience => '운동 경험이\n어느 정도인가요?';
-
-  @override
-  String get expBeginner => '초보 – 해 본 적 있음';
-
-  @override
-  String get expIntermediate => '중급 – 꾸준히 훈련 중';
-
-  @override
-  String get expAdvanced => '상급 – 수년간의 경험';
-
-  @override
-  String get qGoal => '가장 중요한 목표는\n무엇인가요?';
-
-  @override
-  String get goalStronger => '더 강해지기';
-
-  @override
-  String get goalConsistent => '더 꾸준해지기';
-
-  @override
-  String get goalLean => '체중을 줄이고 탄탄해지기';
-
-  @override
-  String get goalMass => '근육량 늘리기';
-
-  @override
-  String get aboutYou => '이 여정은 온전히 당신에 관한 것입니다...';
-
-  @override
-  String get qThinkAbout => '몸을 만드는 일을\n얼마나 자주 생각하나요?';
-
-  @override
-  String get freqNever => '전혀';
-
-  @override
-  String get freqSometimes => '가끔';
-
-  @override
-  String get freqOften => '자주';
-
-  @override
-  String get freqAllTime => '항상';
-
-  @override
-  String get qEnergy => '운동 중 에너지는\n어떤가요?';
-
-  @override
-  String get energyLow => '낮습니다. 하루 종일 지쳐 있어요';
-
-  @override
-  String get energyDrops => '중반부터 수행력이 떨어져요';
-
-  @override
-  String get energyHard => '마지막 세트를 밀어붙이기 힘들어요';
-
-  @override
-  String get energyHigh => '처음부터 끝까지 높고 안정적이에요';
-
-  @override
-  String get stProgress => '운동하다 보면 진전이 눈에 잘 안 보일 때가 있어요';
-
-  @override
-  String get stEffortTitle => '아무도 보지 않는 노력은\n놓기 쉽습니다';
-
-  @override
-  String get stEffortBody => '증명할 상대가 없으면 진전은 더디게 느껴지고 노력은 무의미해 보입니다';
-
-  @override
-  String get stAloneTitle => '혼자 하는 훈련은\n지루합니다';
-
-  @override
-  String get stAloneBody => '아무도 보지 않고, 아무도 세지 않습니다. 한 개, 아니 한 세트를 통째로 건너뛰기 쉽죠';
-
-  @override
-  String get qName => '뭐라고 불러\n드릴까요?';
-
-  @override
-  String get nameHint => '세 글자 이상. 상대에게 보이는 이름입니다.';
-
-  @override
-  String get basicInfo => '좋습니다! 이제 기본 정보를\n조금만 받을게요';
-
-  @override
-  String get qAge => '나이가 어떻게 되시나요?';
-
-  @override
-  String get qWeight => '현재 체중은\n어떻게 되시나요?';
-
-  @override
-  String get weightWhy => '랭크를 계산하려면 체중이 필요합니다.';
-
-  @override
-  String get privateNote => '입력하신 정보는 비공개이며 누구와도 공유되지 않습니다.';
-
-  @override
-  String get qHeight => '키가 어떻게 되시나요?';
-
-  @override
-  String get qRelate => '아래 문장에\n공감하시나요?';
-
-  @override
-  String get yes => '예';
-
-  @override
-  String get no => '아니오';
-
-  @override
-  String get grindTitle => '라이벌이 있으면\n노력의 무게가 달라집니다';
-
-  @override
-  String get grindBody => '대결마다 실제 상대와 마주합니다. 할 일을 하고 누가 더 훈련했는지 보여 주세요.';
-
-  @override
-  String get allSet => '준비 완료!';
-
-  @override
-  String welcomeLifter(String name) {
-    return '환영합니다, $name님. 첫 라이벌을 찾아볼 시간입니다.';
-  }
-
-  @override
-  String get lifter => '리프터';
-
-  @override
-  String get enterApp => 'OUTREPD 시작하기';
-
-  @override
-  String get commitTitle => '이제 당신의 여정에\n약속을 남겨 주세요';
-
-  @override
-  String get holdLogo => '준비되었다면 로고를 길게 눌러 확인하세요';
-
-  @override
-  String get expNone => '운동을 해 본 적이 없습니다';
-
-  @override
-  String get iAm => '저는…';
-
-  @override
-  String get finishMatchQ => '대결을 끝낼까요?';
-
-  @override
-  String get finishMatchBody => '총 볼륨이 확정되어 상대와 비교됩니다.';
-
-  @override
-  String get keepGoing => '계속하기';
-
-  @override
   String get forfeitQ => '대결을 기권할까요?';
 
   @override
@@ -1377,43 +1050,7 @@ class LKo extends L {
   String get forfeit => '기권';
 
   @override
-  String get pickExercises => '수행할 운동을 고르세요';
-
-  @override
-  String matchingWith(String muscle) {
-    return '같은 랭크의 상대를 찾는 중 · $muscle';
-  }
-
-  @override
   String get getReady => '준비';
-
-  @override
-  String get timeLeft => '남은 시간';
-
-  @override
-  String vsName(String name) {
-    return 'vs $name';
-  }
-
-  @override
-  String kgTotalVolume(String unit) {
-    return '총 볼륨 $unit';
-  }
-
-  @override
-  String get finishMatch => '대결 종료';
-
-  @override
-  String get kgHint => 'KG';
-
-  @override
-  String get repsHint => '회';
-
-  @override
-  String get addSet => '세트 추가';
-
-  @override
-  String get matchComplete => '대결 완료';
 
   @override
   String get you => '나';
@@ -1443,12 +1080,6 @@ class LKo extends L {
   String get mgCore => '코어';
 
   @override
-  String get achRivalry => '라이벌';
-
-  @override
-  String get achRivalryHint => '같은 상대를 3번 이기기';
-
-  @override
   String get nWonTitle => '승리했습니다!';
 
   @override
@@ -1460,8 +1091,62 @@ class LKo extends L {
   String get nFriendTitle => '새 친구 요청';
 
   @override
+  String get nRacedTitle => '당신의 세트에 도전이 있었습니다';
+
+  @override
+  String nRacedHeld(String name, String yours, String theirs) {
+    return '$name 님이 당신의 세트에 도전했지만 못 미쳤습니다, $yours–$theirs';
+  }
+
+  @override
+  String nRacedBeaten(String name, String theirs, String yours) {
+    return '$name 님이 당신의 세트에 도전해 이겼습니다, $theirs–$yours';
+  }
+
+  @override
+  String get nFriendOkTitle => '친구 요청이 수락되었습니다';
+
+  @override
+  String nFriendOkBody(String name) {
+    return '$name 님이 요청을 수락했습니다';
+  }
+
+  @override
   String nFriendBody(String name) {
     return '$name님이 친구를 맺고 싶어 합니다';
+  }
+
+  @override
+  String get nChallengedTitle => '재대결';
+
+  @override
+  String nChallengedBody(String name) {
+    return '$name님이 재대결을 원합니다';
+  }
+
+  @override
+  String get challengeSentTitle => '도전을 보냈습니다';
+
+  @override
+  String challengeSentBody(String name) {
+    return '$name님에게 알려드릴게요. 상대가 도전하면 다시 확인하세요.';
+  }
+
+  @override
+  String get challengeNotSentTitle => '보내지 못했습니다';
+
+  @override
+  String get challengeNotSentBody => '연결 상태를 확인하고 매치 탭에서 다시 시도하세요.';
+
+  @override
+  String get challengeGoneTitle => '도전이 사라졌습니다';
+
+  @override
+  String get challengeGoneBody => '이미 진행되었거나 철회되었습니다.';
+
+  @override
+  String repsRecordedLine(String reps) {
+    return '$reps회 기록됨';
   }
 
   @override
@@ -1481,48 +1166,6 @@ class LKo extends L {
   }
 
   @override
-  String get nameTooShortInline => '세 글자 이상의 이름을 입력하세요';
-
-  @override
-  String get whyName => '상대는 모든 결과 옆에서 이 이름을 봅니다';
-
-  @override
-  String get whyExperience => '같은 수준의 상대와 매칭해 드립니다';
-
-  @override
-  String get whyGoal => '처음 추천하는 운동이 여기서 정해집니다';
-
-  @override
-  String get whyAge => '나이는 비교 기준이 되는 근력 표준에 영향을 줍니다';
-
-  @override
-  String get whyWeight => '랭크는 체중 대비 중량으로 비교합니다. 절대 수치가 아닙니다';
-
-  @override
-  String get whyHeight => '체중과 함께 공정한 기준을 정하는 데 씁니다';
-
-  @override
-  String get whyHabits => '알림과 추천 주간 목표가 여기서 결정됩니다';
-
-  @override
-  String get transitionPartOfIt => '…그러니 진짜 그 일부가 되어 봅시다.';
-
-  @override
-  String get male => '남성';
-
-  @override
-  String get female => '여성';
-
-  @override
-  String get usernamePlaceholder => '이름';
-
-  @override
-  String get stRoutine => '어느 부위를 정말 보완해야 할지 몰라서 대개 같은 루틴을 반복합니다';
-
-  @override
-  String get shortIn => 'in';
-
-  @override
   String get today => '오늘';
 
   @override
@@ -1539,101 +1182,18 @@ class LKo extends L {
   }
 
   @override
-  String membersCount(String n) {
-    return '$n명';
-  }
-
-  @override
-  String eachCount(String n) {
-    return '1인당 $n';
-  }
-
-  @override
   String lpAmount(String n) {
     return '$n LP';
   }
 
   @override
-  String get countWithCamera => '카메라로 세기';
+  String get lpUnit => 'LP';
 
   @override
-  String get youWin => '승리!';
+  String get trueCountHint => '예: 12';
 
   @override
-  String get defeated => '패배';
-
-  @override
-  String get fillWholeNumbers => '세 칸 모두 정수로 입력하세요';
-
-  @override
-  String heightRange(String min, String max, String unit) {
-    return '키는 $min~$max $unit 사이여야 합니다';
-  }
-
-  @override
-  String weightRange(String min, String max, String unit) {
-    return '몸무게는 $min~$max $unit 사이여야 합니다';
-  }
-
-  @override
-  String ageRange(String min, String max) {
-    return '나이는 $min~$max 사이여야 합니다';
-  }
-
-  @override
-  String get discPush => 'Push';
-
-  @override
-  String get discPull => 'Pull';
-
-  @override
-  String get discLegs => 'Legs';
-
-  @override
-  String get discPushHint => 'Chest, shoulders and triceps';
-
-  @override
-  String get discPullHint => 'Back and biceps';
-
-  @override
-  String get discLegsHint => 'Quads, hamstrings and core';
-
-  @override
-  String get pickYourThree => 'Pick your three';
-
-  @override
-  String get pickThreeHint =>
-      'Both of you lift all six — your three and theirs';
-
-  @override
-  String roundOf(String n, String total) {
-    return 'Round $n of $total';
-  }
-
-  @override
-  String get rest => 'Rest';
-
-  @override
-  String get work => 'Work';
-
-  @override
-  String get nextUp => 'Next up';
-
-  @override
-  String picksLeft(String n) {
-    return '$n left to pick';
-  }
-
-  @override
-  String get yourPick => 'Your pick';
-
-  @override
-  String get theirPick => 'Their pick';
-
-  @override
-  String secondsOfWork(String n) {
-    return '$n seconds of work';
-  }
+  String get couldNotSaveSession => '세션을 저장할 수 없습니다';
 
   @override
   String lpOutOf(String total) {
@@ -1641,15 +1201,29 @@ class LKo extends L {
   }
 
   @override
-  String toPromotion(String n) {
-    return '승급까지 $n';
-  }
-
-  @override
   String get noFriendsTitle => '아직 친구가 없습니다';
 
   @override
-  String get noFriendsBody => '누군가를 추가하면 언제든 비공개 대결을 신청할 수 있습니다.';
+  String get noFriendsBody => '아는 사람과의 대결은 느낌이 다릅니다.';
+
+  @override
+  String get addFriend => '추가';
+
+  @override
+  String get decline => '거절';
+
+  @override
+  String requestSent(String name) {
+    return '$name 님에게 요청을 보냈습니다';
+  }
+
+  @override
+  String nowFriends(String name) {
+    return '이제 $name 님과 친구입니다';
+  }
+
+  @override
+  String get noOneFound => '그런 이름을 쓰는 사람이 없습니다';
 
   @override
   String get noMatchesTitle => '아직 대결이 없습니다';
@@ -1664,14 +1238,6 @@ class LKo extends L {
   String get noNotificationsBody => '대결 초대와 결과, 친구 요청이 여기로 옵니다.';
 
   @override
-  String roundDone(String n) {
-    return '$n라운드 완료';
-  }
-
-  @override
-  String get bestRoundYet => '지금까지 최고의 라운드';
-
-  @override
   String get countedThat => '이번 라운드 횟수';
 
   @override
@@ -1684,13 +1250,706 @@ class LKo extends L {
   String get confirmHint => '카메라가 틀렸다면 고치세요.';
 
   @override
-  String pickNMore(String n) {
-    return '$n개 더 고르세요';
+  String get unsureMovement => '올바른 동작인지 확신할 수 없습니다. 숫자를 확인하세요.';
+
+  @override
+  String get local => 'Local';
+
+  @override
+  String get weekly => 'Weekly';
+
+  @override
+  String get seasonTab => 'Season';
+
+  @override
+  String get allTime => 'All-time';
+
+  @override
+  String get daily => 'Daily';
+
+  @override
+  String get noRanksYet => 'No ranks yet';
+
+  @override
+  String get noRanksYetBody => 'Play a duel and the board fills in.';
+
+  @override
+  String get ranksTitle => 'Ranks';
+
+  @override
+  String get totalReps => 'Total reps';
+
+  @override
+  String get recent => 'Recent';
+
+  @override
+  String wonVs(String name) {
+    return 'Won vs $name';
   }
 
   @override
-  String get findOpponent => '상대 찾기';
+  String lostVs(String name) {
+    return 'Lost vs $name';
+  }
 
   @override
-  String get unsureMovement => '올바른 동작인지 확신할 수 없습니다. 숫자를 확인하세요.';
+  String hoursAgo(String n) {
+    return '${n}h ago';
+  }
+
+  @override
+  String toNextTier(String n, String tier) {
+    return '$n to $tier';
+  }
+
+  @override
+  String get noMatchesYet => 'No duels yet';
+
+  @override
+  String get noMatchesYetBody => 'Your first one shows up here, win or lose.';
+
+  @override
+  String get searchByUsername => '사용자 이름으로 검색';
+
+  @override
+  String get incomingRequests => '받은 요청';
+
+  @override
+  String onlineNowCount(String count) {
+    return '접속 중 · $count';
+  }
+
+  @override
+  String offlineCount(String count) {
+    return '오프라인 · $count';
+  }
+
+  @override
+  String get invite => '초대';
+
+  @override
+  String get headToHeadTitle => '상대 전적';
+
+  @override
+  String get vsYouCaption => '당신과의 전적';
+
+  @override
+  String get h2hYou => '나';
+
+  @override
+  String get h2hThem => '상대';
+
+  @override
+  String headToHead(String wins, String losses) {
+    return '당신에게 $wins승 $losses패';
+  }
+
+  @override
+  String get neverPlayedYou => '아직 겨룬 적 없음';
+
+  @override
+  String noHistoryWithThem(String username) {
+    return '아직 $username님과 겨루지 않았습니다.';
+  }
+
+  @override
+  String lastDuelScore(String yourReps, String theirReps, String when) {
+    return '지난번: $yourReps–$theirReps, $when.';
+  }
+
+  @override
+  String yourBestVsThemLine(String reps) {
+    return '상대에 대한 당신의 최고 기록은 $reps입니다.';
+  }
+
+  @override
+  String get viewFullProfile => '전체 프로필 보기';
+
+  @override
+  String get moreOptions => '더 보기';
+
+  @override
+  String get block => '차단';
+
+  @override
+  String get blockRowBody => '도전도, 프로필 열람도 할 수 없게 됩니다';
+
+  @override
+  String get report => '신고';
+
+  @override
+  String get reportRowBody => '24시간 이내에 검토됩니다';
+
+  @override
+  String muteChallenges(String username) {
+    return '$username의 도전 알림 끄기';
+  }
+
+  @override
+  String blockedLifter(String username) {
+    return '$username님을 차단했습니다';
+  }
+
+  @override
+  String mutedLifter(String username) {
+    return '$username님을 음소거했습니다';
+  }
+
+  @override
+  String get addFriendButton => '친구 추가';
+
+  @override
+  String get alreadyFriends => '친구';
+
+  @override
+  String get couldNotLoadProfile => '프로필을 불러올 수 없습니다';
+
+  @override
+  String get noFriendsMatch => '그런 이름은 없습니다';
+
+  @override
+  String get yourClimb => '당신의 등반';
+
+  @override
+  String lpToUnlock(String lp, String rank, String unlock) {
+    return '$rank까지 $lp LP · $unlock 해금';
+  }
+
+  @override
+  String floorKept(String tier, String rank) {
+    return '$tier은(는) 당신의 것입니다. $rank 아래로 떨어지지 않습니다.';
+  }
+
+  @override
+  String dayStreakCount(String count) {
+    return '$count일 연속';
+  }
+
+  @override
+  String get findMatch => '대전 찾기';
+
+  @override
+  String rankedTerms(String seconds) {
+    return '$seconds초 · 랭크전';
+  }
+
+  @override
+  String get practiceTerms => '연습 — 랭크 없음, 상대 없음';
+
+  @override
+  String get practiceComplete => '연습 완료';
+
+  @override
+  String get findPeople => '사람 찾기';
+
+  @override
+  String get noRankYet => '아직 랭크 없음';
+
+  @override
+  String placementsForFirstTier(String count) {
+    return '첫 랭크를 얻으려면 배치 대결 $count판을 끝내세요.';
+  }
+
+  @override
+  String get startPlacements => '배치 시작';
+
+  @override
+  String get unranked => '랭크 없음';
+
+  @override
+  String placementsTerms(String done, String total, String seconds) {
+    return '$total판 중 $done판 · 판당 $seconds초';
+  }
+
+  @override
+  String placementsLeft(String done, String total, String left) {
+    return '$total판 중 $done판 · 랭크까지 $left판';
+  }
+
+  @override
+  String placementsForTier(String count) {
+    return '내 랭크를 알아보려면 배치 대결 $count판을 끝내세요.';
+  }
+
+  @override
+  String placementsDoneCount(String done, String total) {
+    return '배치 $total판 중 $done판 완료';
+  }
+
+  @override
+  String get practiceFirst => '먼저 연습';
+
+  @override
+  String get nextPlacement => '다음 배치';
+
+  @override
+  String get noConnection => '연결 없음';
+
+  @override
+  String get practiceOffline => '오프라인 연습';
+
+  @override
+  String get retry => '다시 시도';
+
+  @override
+  String get youWonPlain => '승리';
+
+  @override
+  String opponentDisconnected(String name) {
+    return '$name 연결이 끊겼습니다';
+  }
+
+  @override
+  String get forfeitNoMargin => '기권 · 점수 차는 반영 안 됨';
+
+  @override
+  String get findAnotherMatch => '다른 대전 찾기';
+
+  @override
+  String get cameraNeededTitle => '카메라 권한이 필요해요';
+
+  @override
+  String get cameraNeededBody =>
+      'outrepd는 몸의 움직임을 보고 횟수를 셉니다. 분석은 기기에서 이뤄지며 아무것도 업로드되지 않습니다.';
+
+  @override
+  String get openSettings => '설정 열기';
+
+  @override
+  String get allowCamera => '카메라 허용';
+
+  @override
+  String get notNow => '나중에';
+
+  @override
+  String get noCameraTitle => '카메라가 없어요';
+
+  @override
+  String get noCameraBody =>
+      '횟수는 카메라로 세기 때문에 이 기기로는 대결을 채점할 수 없습니다. 나머지는 그대로 작동합니다.';
+
+  @override
+  String get noConnectionBody =>
+      '대결하려면 연결이 필요해요. 연습은 오프라인에서도 도에 기록은 나중에 동기화됩니다.';
+
+  @override
+  String get getBackInFrame => '화면 안으로 돌아오세요';
+
+  @override
+  String get clockStillRunning => '시계는 계속 가고 있어요. 카운트는 멈췄습니다.';
+
+  @override
+  String get giveUp => '포기';
+
+  @override
+  String lpSwing(String gain, String loss) {
+    return '+$gain / −$loss LP';
+  }
+
+  @override
+  String get searchingForOpponent => '상대를 찾는 중';
+
+  @override
+  String get getIntoPosition => '자세를 잡으세요';
+
+  @override
+  String get framingHint => '손목과 발목이 화면에 들어와야 해요';
+
+  @override
+  String get goUp => '올리세요';
+
+  @override
+  String get goDown => '내리세요';
+
+  @override
+  String get bestSet => '최고 세트';
+
+  @override
+  String get record => '전적';
+
+  @override
+  String get last7Days => '최근 7일';
+
+  @override
+  String repsCount(String count) {
+    return '$count회';
+  }
+
+  @override
+  String get viewAll => '전체 보기';
+
+  @override
+  String get shareProfile => '프로필 공유';
+
+  @override
+  String get share => '공유';
+
+  @override
+  String get duelMeOnOutrepd => 'outrepd에서 나와 붙자';
+
+  @override
+  String get yourRankCard => '내 랭크 카드';
+
+  @override
+  String get shareStory => '스토리';
+
+  @override
+  String get sharePost => '포스트';
+
+  @override
+  String get copyLink => '복사';
+
+  @override
+  String get linkCopied => '링크 복사됨';
+
+  @override
+  String get currentRankLabel => '현재 랭크';
+
+  @override
+  String get winInitial => '승';
+
+  @override
+  String get lossInitial => '패';
+
+  @override
+  String get dayInitial => '일';
+
+  @override
+  String rankPosition(String n) {
+    return '#$n';
+  }
+
+  @override
+  String get obTagline => '푸시업 대결. 폰이 센다. 다른 누군가도 세고 있다.';
+
+  @override
+  String get obGetStarted => '시작하기';
+
+  @override
+  String get obHaveAccount => '이미 계정이 있어요';
+
+  @override
+  String get obHowTitle => '세 가지만 보면 끝.';
+
+  @override
+  String get obHow1 => '폰을 바닥에 세워 두기';
+
+  @override
+  String get obHow1Body => '1미터 앞 벽에 기대 놓으세요.';
+
+  @override
+  String get obHow2 => '카메라가 횟수를 셉니다';
+
+  @override
+  String get obHow2Body => '매 개마다 깊이를 확인합니다. 반만 내려가면 세지 않습니다.';
+
+  @override
+  String get obHow3 => '누군가와 60초';
+
+  @override
+  String get obHow3Body => '이기면 오르고 지면 내려갑니다. 규칙은 모두에게 같습니다.';
+
+  @override
+  String get obTwoThings => '빠르게 두 가지만.';
+
+  @override
+  String get obAgeQuestion => '나이가 어떻게 되나요?';
+
+  @override
+  String get obUnder16 => '16세 미만';
+
+  @override
+  String get obOver16 => '16세 이상';
+
+  @override
+  String get obHealthConsent =>
+      'outrepd는 횟수만 세고 의학적·운동 조언은 하지 않는다는 것을 이해합니다. 아프면 멈추겠습니다.';
+
+  @override
+  String get obTermsIntro => '계속하면 다음에 동의하는 것으로 봅니다:';
+
+  @override
+  String get obTerms => '이용약관';
+
+  @override
+  String get obAnd => '및';
+
+  @override
+  String get obPrivacy => '개인정보 처리방침';
+
+  @override
+  String get obUnder16Blocked =>
+      'outrepd는 16세 이상을 위한 앱입니다. 그때 다시 오세요 — 푸시업은 어디 안 갑니다.';
+
+  @override
+  String get obCameraTitle => 'outrepd에는 카메라가 필요합니다';
+
+  @override
+  String get obCameraBody => '몸의 움직임을 보고 셉니다. 다른 방법은 없습니다.';
+
+  @override
+  String get obCameraPrivateTitle => '폰 밖으로 나가는 건 없습니다';
+
+  @override
+  String get obCameraPrivateBody =>
+      '동작 인식은 이 기기에서 돌아갑니다. 직접 올리지 않는 한 영상은 전송되지 않습니다.';
+
+  @override
+  String get obWhyNeeded => '왜 필요한가요?';
+
+  @override
+  String get obPlacementTitle => '폰을 바닥에 두세요';
+
+  @override
+  String get obPlacementBody => '약 1미터 앞 벽에 기대 놓으세요.';
+
+  @override
+  String get obOneMetre => '약 1m';
+
+  @override
+  String get obFullBody => '전신이 화면에';
+
+  @override
+  String get obCheckHandsFeet => '손과 발이 모두 보이기';
+
+  @override
+  String get obCheckFacing => '옆이 아니라 폰을 향하기';
+
+  @override
+  String get obCheckLight => '방 불 켜기';
+
+  @override
+  String get obImSetUp => '준비됐어요';
+
+  @override
+  String get obFramingTitle => '푸시업 자세를 잡으세요';
+
+  @override
+  String get obFramingShoulders => '어깨와 엉덩이';
+
+  @override
+  String get obFramingWrists => '손목';
+
+  @override
+  String get obFramingAnkles => '발목';
+
+  @override
+  String get obLooksGood => '좋습니다';
+
+  @override
+  String get obCalibrating => '보정 중';
+
+  @override
+  String get obOneMoreRep => '가동 범위를 알기 위해 한 개만 더';
+
+  @override
+  String get obCalibrationHint => '평소 깊이로 세 개만 해 보세요';
+
+  @override
+  String get obCalibrated => '보정 완료.';
+
+  @override
+  String get obCalibratedBody =>
+      '이제 outrepd가 당신의 가동 범위를 압니다. 깊이는 고정된 수치가 아니라 당신을 기준으로 측정됩니다.';
+
+  @override
+  String get obRepsCounted => '센 횟수';
+
+  @override
+  String get obAverageDepth => '평균 깊이';
+
+  @override
+  String get obForm => '자세';
+
+  @override
+  String get obFormClean => '깔끔함';
+
+  @override
+  String get obCreateAccountBody => '횟수와 등급, 전적을 남기려면 계정을 만드세요.';
+
+  @override
+  String get obSaveProgress => '내 기록 저장';
+
+  @override
+  String obSaveYourReps(String count) {
+    return '$count개를 저장하기';
+  }
+
+  @override
+  String get obOneTap => '이메일과 비밀번호만 있으면 됩니다.';
+
+  @override
+  String get obContinueApple => 'Apple로 계속하기';
+
+  @override
+  String get obContinueGoogle => 'Google로 계속하기';
+
+  @override
+  String get obContinueEmail => '이메일로 계속하기';
+
+  @override
+  String get obSignInFootnote => '계정 유지에만 사용합니다. 무엇도 대신 게시하지 않습니다.';
+
+  @override
+  String get obPickName => '이름 정하기';
+
+  @override
+  String get obPickNameBody => '상대에게 보이는 이름입니다. 나중에 바꿀 수 있습니다.';
+
+  @override
+  String get obAvailable => '사용 가능';
+
+  @override
+  String get obTaken => '이미 사용 중';
+
+  @override
+  String get obYourAvatar => '프로필 사진';
+
+  @override
+  String get obAddPhoto => '사진 추가';
+
+  @override
+  String get obNotifyTitle => '도전받으면 바로 알기';
+
+  @override
+  String get obNotifyChallenged => '누군가 당신에게 도전했습니다';
+
+  @override
+  String get obNotifyStreak => '연속 기록이 끊기기 직전입니다';
+
+  @override
+  String get obNotifyPassed => '친구가 순위에서 당신을 앞질렀습니다';
+
+  @override
+  String get obTurnOn => '켜기';
+
+  @override
+  String get obPlacementsBody =>
+      '다섯 번의 대결로 시작 등급이 정해집니다. 아직 지는 것이 기록에 남지 않습니다.';
+
+  @override
+  String get obFindFirstOpponent => '첫 상대 찾기';
+
+  @override
+  String get obGotIt => '알겠어요';
+
+  @override
+  String get obFormMixed => '들쭉날쭉';
+
+  @override
+  String get obWelcomeBack => '다시 오셨네요';
+
+  @override
+  String get obWelcomeBackBody => '이메일과 비밀번호로 로그인하세요.';
+
+  @override
+  String get justNow => '방금';
+
+  @override
+  String get counterAccuracy => '카운터 정확도';
+
+  @override
+  String get counterAccuracyCaption => '카메라가 얼마나 맞히는지';
+
+  @override
+  String measuredOverSets(String count) {
+    return '$count세트로 측정';
+  }
+
+  @override
+  String get accExact => '정확';
+
+  @override
+  String get accWithinOne => '±1개';
+
+  @override
+  String get accAverageMiss => '평균 오차';
+
+  @override
+  String get accTendsTo => '경향';
+
+  @override
+  String get accCountsHigh => '많이 셈';
+
+  @override
+  String get accCountsLow => '적게 셈';
+
+  @override
+  String get accCountsEven => '어느 쪽도 아님';
+
+  @override
+  String get accWorstMiss => '최대 오차';
+
+  @override
+  String get accNothingYet => '아직 측정된 것이 없습니다';
+
+  @override
+  String get accNothingYetBody =>
+      '대결이 끝나고 횟수를 확인할 때마다, 그 세트가 당신이 말한 숫자와 비교됩니다. 결과가 여기에 나옵니다.';
+
+  @override
+  String accNeedMore(String count) {
+    return '아직 초반입니다. 이 숫자가 의미를 가지려면 $count세트쯤 더 필요합니다.';
+  }
+
+  @override
+  String get accRecentSets => '최근 세트';
+
+  @override
+  String get accCameraSaid => '카메라';
+
+  @override
+  String get accYouSaid => '나';
+
+  @override
+  String get accHowItWorks => '모두 이 폰에서, 당신에게서 나온 것입니다. 어디에도 전송되지 않습니다.';
+
+  @override
+  String levelNumber(String n) {
+    return '레벨 $n';
+  }
+
+  @override
+  String get youLostPlain => '패배';
+
+  @override
+  String get rematch => '재대결';
+
+  @override
+  String get shareAction => '공유';
+
+  @override
+  String get doneAction => '완료';
+
+  @override
+  String get continueAction => '계속';
+
+  @override
+  String get lpRowWin => '승리';
+
+  @override
+  String get lpRowLoss => '패배';
+
+  @override
+  String get lpRowOpponent => '상대 등급';
+
+  @override
+  String get lpRowMargin => '격차';
+
+  @override
+  String get lpRowDepth => '깊이';
+
+  @override
+  String get promotedLabel => '승급';
+
+  @override
+  String get highestReached => '지금까지의 최고 기록';
+
+  @override
+  String repsOff(String n) {
+    return '$n개 차이.';
+  }
+
+  @override
+  String get closestYet => '지금까지 가장 근소한 대결.';
 }

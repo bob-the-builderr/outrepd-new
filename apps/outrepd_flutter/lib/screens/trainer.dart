@@ -2,42 +2,91 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart'
+    show openAppSettings;
 
-import '../exercises.dart';
-import '../reps/exercise.dart';
-import '../reps/exercise_patterns.dart';
+import '../reps/exercise_type.dart';
 import '../reps/pose.dart';
-import '../reps/driver_finder.dart';
 import '../reps/pose_source.dart';
+import '../reps/posture.dart';
+import '../reps/skeleton.dart';
+import '../reps/pushup_counter.dart';
 import '../reps/recording.dart';
-import '../reps/set_scorer.dart';
-import '../reps/rep_engine.dart';
+import '../data.dart';
 import '../motion.dart';
+import '../settings.dart';
+import '../ranking.dart';
+import '../player_avatar.dart';
 import '../l10n/app_localizations.dart';
 import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
-/// Solo counting. No opponent, no server — the whole point of this screen is
-/// to get the counter trustworthy before a match is ever built on top of it.
+/// Everything the camera screen needs to know about the duel it is part of.
+///
+/// Null for practice. The opponent's count is their *final* number: it is paced
+/// out across the clock so the bar moves, because a rival score that appears
+/// all at once at the end is not something anybody can race.
+class DuelContext {
+  const DuelContext({
+    required this.opponentName,
+    required this.opponentReps,
+    this.opponentRepTimes = const [],
+    required this.opponentTierIdx,
+    required this.opponentDivIdx,
+    required this.rankLabel,
+    required this.lpGain,
+    required this.lpRisk,
+  });
+
+  final String opponentName;
+  final int opponentReps;
+
+  /// When each of the opponent's reps actually landed, milliseconds from the
+  /// start of their set — read straight off their stored set. Empty when the
+  /// opponent came from somewhere that never recorded it (a demo bout, or a
+  /// set uploaded before this column existed), in which case the bar falls
+  /// back to spreading the total evenly.
+  final List<int> opponentRepTimes;
+
+  /// Where they stand on the ladder, for the badge and the level on the score
+  /// card. A label alone cannot draw a badge.
+  final int opponentTierIdx;
+  final int opponentDivIdx;
+
+  final String rankLabel;
+  final int lpGain;
+  final int lpRisk;
+}
+
+/// The camera. Counts push-ups, and — when it is part of a duel — carries the
+/// score, the clock and what is riding on them.
 class TrainerScreen extends StatefulWidget {
   const TrainerScreen({
     super.key,
-    this.exercise,
     this.autoStart = false,
     this.forMatch = false,
     this.limit,
+    this.duel,
+    this.poseSource,
   });
 
-  final ExerciseDef? exercise;
+  /// Where poses come from. Defaults to the camera; a test hands in a scripted
+  /// stream, which is the only way to reach the stages that live behind a
+  /// working camera — the framing gate, the countdown and the live HUD.
+  final PoseSource Function()? poseSource;
 
-  /// Skips the picker and opens straight into a session. Used by the web
-  /// preview route, where tapping through the canvas is unreliable.
+  /// The duel this session belongs to, or null when nobody is on the other
+  /// side.
+  final DuelContext? duel;
+
+  /// Opens straight into a session rather than waiting for a tap. There is no
+  /// longer a picker to skip; what is left is whether the lifter gets a moment
+  /// to prop the phone up first.
   final bool autoStart;
 
-  /// Opened from inside a match. Finishing hands the count back to the round
-  /// rather than returning to the picker, and the exercise is fixed: the round
-  /// decides what is being counted, not the lifter.
+  /// Opened from inside a duel. Finishing hands the count back to the match
+  /// rather than returning here.
   final bool forMatch;
 
   /// Ends the session by itself after this long. A match round is a fixed
@@ -49,39 +98,39 @@ class TrainerScreen extends StatefulWidget {
   State<TrainerScreen> createState() => _TrainerScreenState();
 }
 
-enum _Stage { setup, learning, counting }
+enum _Stage {
+  setup,
 
-/// Stands in for an exercise the app has never been told about. Picking it
-/// starts a session that works out the movement from the lifter's own reps.
-const kLearnExercise = ExerciseDef(
-  id: 'learn',
-  name: 'Any exercise',
-  icon: Icons.auto_awesome,
-  driver: AngleSpec(Joint.leftShoulder, Joint.leftElbow, Joint.leftWrist),
-  bottomAngle: 90,
-  topAngle: 165,
-  gates: [],
-  cue: 'Start your set — it works the movement out as you go',
-);
+  /// Camera open, clock not started. Nothing counts until the lifter is
+  /// actually in shot — starting a 60 second duel while somebody is still
+  /// propping their phone against a water bottle loses them the match before
+  /// they have touched the floor.
+  positioning,
 
-/// Exercise names are gym vocabulary and stay as they are; the catch-all
-/// entry is the one exception, because it is a sentence rather than a name.
-String exerciseLabel(BuildContext context, ExerciseDef e) =>
-    e.id == kLearnExercise.id ? L.of(context).anyExercise : e.name;
+  /// Three seconds, so the start is a moment rather than an ambush.
+  countdown,
+
+  counting,
+}
 
 class _TrainerScreenState extends State<TrainerScreen> {
-  late ExerciseDef _exercise = widget.exercise ?? kExercises.first;
-
   PoseSource? _source;
   StreamSubscription<BodyPose>? _sub;
-  RepEngine? _engine;
 
   final _clock = Stopwatch();
+  Timer? _watchdog;
 
   _Stage _stage = _Stage.setup;
   BodyPose _pose = BodyPose.empty;
-  RepState? _state;
   String? _error;
+  PoseSourceFailure? _failure;
+
+  /// Drives the bar and the cue, off the same signal the count is scored from.
+  PushupMeter? _meter;
+
+  /// How far through a rep the body is, 1 at the top. Null until the set has
+  /// covered enough ground for a fraction of it to mean anything.
+  double? _progress;
 
   /// Hidden by default — it is for working out why the counter is misbehaving,
   /// not something to have on screen while lifting. A long press on the count
@@ -91,8 +140,6 @@ class _TrainerScreenState extends State<TrainerScreen> {
   /// Every pose of the session, kept so the set can be replayed against a
   /// changed threshold instead of being performed again.
   final _recorded = <RecordedFrame>[];
-  String? _savedTo;
-
 
   @override
   void initState() {
@@ -104,17 +151,25 @@ class _TrainerScreenState extends State<TrainerScreen> {
 
   @override
   void dispose() {
+    _countdownTimer?.cancel();
+    _graceTimer?.cancel();
+    _watchdog?.cancel();
     _sub?.cancel();
     _source?.dispose();
     super.dispose();
   }
 
   Future<void> _begin() async {
-    final source = createPoseSource();
+    final source = widget.poseSource?.call() ?? createPoseSource();
     try {
       await source.start();
     } on Object catch (e) {
-      if (mounted) setState(() => _error = e.toString());
+      if (mounted) {
+        setState(() {
+          _error = e.toString();
+          _failure = e is PoseSourceError ? e.kind : PoseSourceFailure.unknown;
+        });
+      }
       return;
     }
     if (!mounted) {
@@ -122,39 +177,254 @@ class _TrainerScreenState extends State<TrainerScreen> {
       return;
     }
 
-    final engine = RepEngine(_exercise);
-    _clock
-      ..reset()
-      ..start();
+    final meter = PushupMeter();
+    // Reset but not started: the clock belongs to the bout, and the bout has
+    // not begun.
+    _clock.reset();
 
     _sub = source.poses.listen(_onPose);
+    _watchdog?.cancel();
+    _watchdog = Timer.periodic(const Duration(milliseconds: 250), (_) {
+      _watchForLostBody();
+      // Redraws the clock and the opponent between poses. Without this the
+      // timer only moves when the lifter does, which stops dead at the top
+      // of a rep.
+      if (_stage == _Stage.counting && mounted) setState(() {});
+    });
 
     _recorded.clear();
-    _savedTo = null;
+    _recent.clear();
+    _graceTimer?.cancel();
+    _graceTimer = null;
+    _liveReps = 0;
 
     setState(() {
       _source = source;
-      _engine = engine;
-      _stage =
-          _exercise.id == 'learn' ? _Stage.learning : _Stage.counting;
+      _meter = meter;
+      _progress = null;
+      _stage = _Stage.positioning;
       _error = null;
+      _failure = null;
+      _lastPoseAt = DateTime.now();
     });
   }
 
+  /// What the meter shows, and where it comes from.
+  ///
+  /// The same function that scores the finished set, re-run over everything
+  /// recorded so far. Two counters — one for the screen, one for the record —
+  /// is how a lifter ends a round watching one number and is handed another.
+  int _liveReps = 0;
+
+  /// Poses per recount. A rep is about thirty frames, so every eighth is four
+  /// updates a second: fast enough that the number lands with the rep, cheap
+  /// enough to sit behind pose detection.
+  static const _recountEvery = 8;
+
+  /// How many poses a second the phone is actually delivering.
+  ///
+  /// Everything that judges the length of a rep is counted in frames, so the
+  /// rate is the conversion between those numbers and seconds. It is not the
+  /// same on every phone and there is no way to know it from here — so it goes
+  /// on the diagnostics panel, where somebody with the phone can read it.
+  double? get _framesPerSecond {
+    if (_recorded.length < 20) return null;
+    final last = _recorded.last.atMs;
+    final first = _recorded[_recorded.length - 20].atMs;
+    final span = last - first;
+    return span <= 0 ? null : 19 * 1000 / span;
+  }
+
+  void _recount() {
+    if (_recorded.length % _recountEvery != 0) return;
+    final counted = countPushups([for (final f in _recorded) f.pose]);
+
+    // Never downwards. The count is recomputed from scratch each time, and a
+    // shifting threshold can take a rep back off the end — which on screen
+    // reads as the app forgetting one you just did. The honest number is the
+    // one scored at the end, where the confirm screen can raise it.
+    if (counted.reps > _liveReps) {
+      _liveReps = counted.reps;
+      tap(heavy: true);
+    }
+  }
+
+  /// When a usable pose last arrived. The stream keeps delivering frames when
+  /// somebody steps out of shot — they just have nothing in them — so silence
+  /// is not the signal. Absence of a *body* is.
+  DateTime? _lastPoseAt;
+  bool _lostBody = false;
+
+  /// Long enough that turning to reach a towel does not put a banner on the
+  /// screen, short enough that somebody who has walked off is told before they
+  /// lose a round to it.
+  static const _lostAfter = Duration(milliseconds: 1200);
+
+  void _watchForLostBody() {
+    final last = _lastPoseAt;
+    if (last == null || _stage != _Stage.counting) return;
+    final lost = DateTime.now().difference(last) > _lostAfter;
+    if (lost != _lostBody && mounted) setState(() => _lostBody = lost);
+  }
+
+  /// Whether the camera can see what the count is read from.
+  ///
+  /// Wrists, shoulders and hips — **not ankles**. Ankles were the test until a
+  /// lifter filmed their own set: with the phone on the floor a metre away and
+  /// the body pointing at it, the tracker saw their knees in 26% of frames and
+  /// their ankles in 18%, while every joint the counter actually reads was
+  /// there in 100%. The old gate was asking for the one part of the body that
+  /// a correct setup hides.
+  ///
+  /// Either side of each pair will do — a body turned slightly to the camera
+  /// hides one wrist and is still perfectly countable.
+  bool _framed(BodyPose pose) {
+    final wrist =
+        pose.confident(Joint.leftWrist) ?? pose.confident(Joint.rightWrist);
+    final shoulder =
+        pose.confident(Joint.leftShoulder) ??
+        pose.confident(Joint.rightShoulder);
+    final hip = pose.confident(Joint.leftHip) ?? pose.confident(Joint.rightHip);
+    return wrist != null && shoulder != null && hip != null;
+  }
+
+  /// The last second or so of poses, for the checks that need more than one
+  /// frame — chiefly whether the hands are staying planted, which is what
+  /// separates a push-up from any other movement up and down.
+  final _recent = <BodyPose>[];
+  static const _recentKeep = 40;
+
+  /// Whether the lifter is down in position right now.
+  ///
+  /// A majority of the last few frames rather than the latest one: a single
+  /// frame the tracker fumbled should not flick the skeleton's colour, and a
+  /// colour that flickers is worse than one that is slightly late.
+  bool get _inPosition {
+    if (_recent.length < kPlantWindow + 5) return false;
+    final marks = inPushUpPosition(_recent);
+    final from = math.max(0, marks.length - 10);
+    var yes = 0;
+    for (var i = from; i < marks.length; i++) {
+      if (marks[i]) yes++;
+    }
+    return yes >= (marks.length - from) * 0.6;
+  }
+
+  /// Running while a whole body is in shot but not yet in position.
+  Timer? _graceTimer;
+
+  /// How long a framed body waits for the position check before the round
+  /// starts regardless.
+  static const _positionGrace = Duration(seconds: 8);
+
+  int _countdown = 3;
+  Timer? _countdownTimer;
+
+  void _startCountdown() {
+    if (_stage != _Stage.positioning) return;
+    setState(() {
+      _stage = _Stage.countdown;
+      _countdown = 3;
+    });
+    _countdownTimer?.cancel();
+    _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) return;
+      if (_countdown > 1) {
+        setState(() => _countdown--);
+        tap();
+        return;
+      }
+      timer.cancel();
+      setState(() => _stage = _Stage.counting);
+      // The bout starts here, and not one frame earlier.
+      _clock.start();
+      _lastPoseAt = DateTime.now();
+      tap(heavy: true);
+    });
+  }
+
+  /// How many the opponent is supposed to have by now.
+  ///
+  /// Real timings when their set has them: however many of their reps landed
+  /// at or before this point on the clock, so the bar moves the way they
+  /// actually moved — pausing where they paused, surging where they surged.
+  ///
+  /// Otherwise their final count spread evenly across the clock. Evenly is a
+  /// lie — no lifter is metronomic, and the last ten seconds of a minute of
+  /// push-ups are nothing like the first — but it is the only fallback for a
+  /// set that never recorded when its reps landed, and a rival number that
+  /// only appears at the end is not something anybody can race.
+  int get _opponentReps {
+    final duel = widget.duel;
+    final limit = widget.limit;
+    if (duel == null || limit == null || limit.inMilliseconds == 0) return 0;
+    final elapsed = _clock.elapsedMilliseconds;
+
+    final times = duel.opponentRepTimes;
+    if (times.isNotEmpty) {
+      var done = 0;
+      for (final t in times) {
+        if (t > elapsed) break;
+        done++;
+      }
+      return done;
+    }
+
+    final share = elapsed / limit.inMilliseconds;
+    return (duel.opponentReps * share.clamp(0.0, 1.0)).floor();
+  }
+
+  Duration get _remaining {
+    final limit = widget.limit;
+    if (limit == null) return Duration.zero;
+    final left = limit - _clock.elapsed;
+    return left.isNegative ? Duration.zero : left;
+  }
+
   void _onPose(BodyPose pose) {
-    final engine = _engine;
-    if (engine == null || !mounted) return;
+    final meter = _meter;
+    if (meter == null || !mounted) return;
 
-    _recorded.add(RecordedFrame(_clock.elapsedMilliseconds, pose));
+    _lastPoseAt = DateTime.now();
+    if (_lostBody) setState(() => _lostBody = false);
 
-    if (_stage == _Stage.learning) {
-      _tryToLearn();
+    _recent.add(pose);
+    if (_recent.length > _recentKeep) _recent.removeAt(0);
+
+    if (_stage == _Stage.positioning) {
+      setState(() => _pose = pose);
+      if (!_framed(pose)) {
+        _graceTimer?.cancel();
+        _graceTimer = null;
+        return;
+      }
+
+      // The clock waits for somebody to actually be down in position. Whole
+      // body in shot is not the same thing — a person standing in front of
+      // the phone passes it — and starting a sixty second round while they
+      // are still walking to the floor costs them the seconds it takes to
+      // get there.
+      //
+      // With an escape hatch. If the position never registers on somebody's
+      // camera angle, being unable to start a match at all is a far worse
+      // failure than a few seconds lost, so a framed body is counted in
+      // anyway once it has waited.
+      _graceTimer ??= Timer(_positionGrace, () {
+        if (mounted && _stage == _Stage.positioning) _startCountdown();
+      });
+
+      if (_inPosition) _startCountdown();
+      return;
+    }
+    if (_stage == _Stage.countdown) {
       setState(() => _pose = pose);
       return;
     }
 
-    final state = engine.update(pose, _clock.elapsed);
-    if (state.countedNow) tap(heavy: true);
+    _recorded.add(RecordedFrame(_clock.elapsedMilliseconds, pose));
+
+    final progress = meter.add(pose);
+    _recount();
 
     final limit = widget.limit;
     if (limit != null && _clock.elapsed >= limit) {
@@ -164,46 +434,27 @@ class _TrainerScreenState extends State<TrainerScreen> {
 
     setState(() {
       _pose = pose;
-      _state = state;
-    });
-  }
-
-  /// Looks for the movement every so often rather than on every frame; the
-  /// search walks the whole buffer and there is nothing to gain from running
-  /// it thirty times a second.
-  void _tryToLearn() {
-    if (_recorded.length % 15 != 0) return;
-
-    final guess = findDriver([for (final f in _recorded) f.pose]);
-    if (guess == null) return;
-
-    final learned = guess.toDefinition(id: 'learn', name: _exercise.name);
-    final engine = RepEngine(learned);
-
-    // Replay everything already buffered, so the reps performed while it was
-    // working the movement out are counted rather than thrown away. The
-    // counter visibly catches up instead of starting from zero.
-    RepState? state;
-    for (final frame in _recorded) {
-      state = engine.update(frame.pose, Duration(milliseconds: frame.atMs));
-    }
-
-    setState(() {
-      _engine = engine;
-      _state = state;
-      _stage = _Stage.counting;
+      if (progress != null) _progress = progress;
     });
   }
 
   void _restart() {
-    _engine?.reset();
+    _meter?.reset();
+    _progress = null;
+    // The frames go too. They are what the count is scored from, so leaving
+    // them behind would restart the clock and keep the old set's reps.
+    _recorded.clear();
+    _liveReps = 0;
     setState(() {});
   }
 
   /// Throws away what the range has learned and starts picking it up again.
   /// Useful after moving the phone, or switching to a different depth.
   void _recalibrate() {
-    _engine?.reset();
+    _meter?.reset();
+    _progress = null;
+    _recorded.clear();
+    _liveReps = 0;
     _clock
       ..reset()
       ..start();
@@ -239,21 +490,25 @@ class _TrainerScreenState extends State<TrainerScreen> {
               autofocus: true,
               keyboardType: TextInputType.number,
               style: context.type.title.copyWith(color: Colors.white),
-              decoration: const InputDecoration(hintText: 'e.g. 12'),
+              decoration: InputDecoration(hintText: L.of(context).trueCountHint),
             ),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(L.of(context).skip,
-                style: const TextStyle(color: _dim)),
+            child: Text(
+              L.of(context).skip,
+              style: const TextStyle(color: _dim),
+            ),
           ),
           TextButton(
-            onPressed: () => Navigator.of(context)
-                .pop(int.tryParse(field.text.trim())),
-            child: Text(L.of(context).save,
-                style: const TextStyle(color: _accent)),
+            onPressed: () =>
+                Navigator.of(context).pop(int.tryParse(field.text.trim())),
+            child: Text(
+              L.of(context).save,
+              style: const TextStyle(color: _accent),
+            ),
           ),
         ],
       ),
@@ -262,28 +517,43 @@ class _TrainerScreenState extends State<TrainerScreen> {
     return answer;
   }
 
-  Future<void> _saveRecording() async {
-    if (_recorded.length < 30) return;
+  /// Saves the session and returns where it went, so the confirmed count can
+  /// be written onto it once somebody has given one.
+  Future<String?> _saveRecording() async {
+    if (_recorded.length < 30) return null;
 
     // Never in a match. This prompt exists to label recordings for tuning the
     // counter, and the match already asks the same question in a form built
     // for a lifter rather than for research — asking twice in one round is how
     // people learn to dismiss both.
     final trueCount = widget.forMatch ? null : await _askTrueCount();
-    if (!mounted) return;
+    if (!mounted) return null;
     try {
       final path = await PoseRecording(
-        exerciseId: _exercise.id,
+        exerciseId: ExerciseType.pushUp.wireName,
         frames: List.of(_recorded),
         note: trueCount?.toString(),
       ).save();
-      if (mounted) setState(() => _savedTo = path);
+      return path;
     } on Object catch (error) {
-      if (mounted) setState(() => _error = 'Could not save the session: $error');
+      // The path and the raw exception are for whoever pulls this recording
+      // off the device to look at later, not for the lifter staring at this
+      // screen — they get told plainly that saving failed, nothing more.
+      debugPrint('Could not save the session: $error');
+      if (mounted) {
+        setState(() => _error = L.of(context).couldNotSaveSession);
+      }
+      return null;
     }
   }
 
-  Future<void> _stop() async {
+  /// True when the lifter pressed Give up rather than finishing the round.
+  /// It travels back with the count, because a duel that ends this way is a
+  /// loss whatever the count says.
+  bool _gaveUp = false;
+
+  Future<void> _stop({bool gaveUp = false}) async {
+    _gaveUp = gaveUp;
     // The number that leaves this screen is scored from the whole set, not
     // read off the live counter.
     //
@@ -296,32 +566,33 @@ class _TrainerScreenState extends State<TrainerScreen> {
     //
     // Once the set is over none of that holds. Every rep can be judged against
     // the same measured movement as every other, so it is.
-    final exercise = _engine?.exercise;
-    final scored = exercise == null
-        ? null
-        : scoreSet(exercise, [for (final f in _recorded) f.pose]);
-    // The whole verdict travels back, not just the number: whether the
-    // signature could vouch for it changes what the round asks the lifter.
-    final verdict = scored ??
-        ScoredSet(reps: _engine?.reps ?? 0, refused: 0, unverified: true);
+    final counted = countPushups([
+      for (final f in _recorded) f.pose,
+    ]).withTimes(repTimes(_recorded), durationMs: _clock.elapsedMilliseconds);
+
+    // The whole verdict travels back, not just the number. Three body signals
+    // are read independently and the median taken; when they disagree by more
+    // than a rep the set goes back marked unverified, and the confirm screen
+    // says so rather than presenting a guess as a fact.
+    final verdict = counted.surrendered(_gaveUp);
     await _sub?.cancel();
     await _source?.dispose();
-    await _saveRecording();
+    final recording = await _saveRecording();
     if (!mounted) return;
 
     // In a match the screen exists to produce one number. Handing it back and
     // closing is the whole contract; dropping the lifter on a picker mid-round
     // would be the app losing the thread of what they were doing.
     if (widget.forMatch) {
-      Navigator.of(context).pop(verdict);
+      Navigator.of(context).pop(verdict.withRecording(recording));
       return;
     }
 
     setState(() {
       _sub = null;
       _source = null;
-      _engine = null;
-      _state = null;
+      _meter = null;
+      _progress = null;
       _pose = BodyPose.empty;
       _stage = _Stage.setup;
     });
@@ -334,10 +605,9 @@ class _TrainerScreenState extends State<TrainerScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.white,
-        // The app's own title style is dark in the light theme, and this
-        // screen is always dark behind it.
+        // No title. There is one movement, so naming it over a camera
+        // already pointed at somebody doing it says nothing.
         titleTextStyle: context.type.title.copyWith(color: Colors.white),
-        title: Text(exerciseLabel(context, _exercise)),
         actions: [
           if (_stage != _Stage.setup) ...[
             IconButton(
@@ -354,49 +624,52 @@ class _TrainerScreenState extends State<TrainerScreen> {
         ],
       ),
       extendBodyBehindAppBar: true,
-      body: _stage == _Stage.setup ? _buildSetup() : _buildSession(),
+      body: switch (_failure) {
+        // A refused camera is not an error message to print at the bottom of a
+        // form — it is the whole screen, because nothing on that form works
+        // until it is resolved.
+        PoseSourceFailure.permissionDenied => _cameraRefused(),
+        PoseSourceFailure.noCamera => _noCamera(),
+        _ => _stage == _Stage.setup ? _buildSetup() : _buildSession(),
+      },
     );
   }
 
+  Widget _cameraRefused() => BlockingNotice(
+    icon: Icons.videocam_off_outlined,
+    title: L.of(context).cameraNeededTitle,
+    // Says where the video goes before asking for it. "Nothing is
+    // uploaded" is the answer to the question everyone actually has when
+    // an app wants their camera, and it is true here.
+    body: L.of(context).cameraNeededBody,
+    actionLabel: L.of(context).openSettings,
+    onAction: () async {
+      await openAppSettings();
+      if (mounted) setState(() => _failure = null);
+    },
+    secondaryLabel: L.of(context).notNow,
+    onSecondary: () => Navigator.of(context).maybePop(),
+  );
+
+  Widget _noCamera() => BlockingNotice(
+    icon: Icons.videocam_off_outlined,
+    title: L.of(context).noCameraTitle,
+    // No settings to open and nothing to retry, so the only honest button
+    // is the way back out.
+    body: L.of(context).noCameraBody,
+    actionLabel: L.of(context).backToHome,
+    onAction: () => Navigator.of(context).maybePop(),
+  );
+
+  /// What is on screen before the camera opens: the framing hint, anything
+  /// that went wrong last time, and the way in.
+  ///
+  /// This used to be the picker — a catch-all "any exercise" tile, then eighty
+  /// named movements under six muscle headings. All of it is gone.
   Widget _buildSetup() {
     return ListView(
-      padding: const EdgeInsets.fromLTRB(16, 100, 16, 24),
+      padding: const EdgeInsets.fromLTRB(16, 110, 16, 24),
       children: [
-        Text(
-          L.of(context).pickMovement,
-          style: context.type.title.copyWith(color: Colors.white),
-        ),
-        const SizedBox(height: 16),
-        // Anything the camera has never been told about still works, so it
-        // leads rather than being buried under eighty named movements.
-        Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: _ExerciseTile(
-            exercise: kLearnExercise,
-            selected: kLearnExercise.id == _exercise.id,
-            onTap: () => setState(() => _exercise = kLearnExercise),
-          ),
-        ),
-        for (final group in exercisesByMuscle.entries) ...[
-          Padding(
-            padding: const EdgeInsets.fromLTRB(4, 18, 4, 10),
-            child: Text(
-              group.key.toUpperCase(),
-              style: context.type.label.copyWith(color: _dim),
-            ),
-          ),
-          for (final listed in group.value)
-            if (cameraDefFor(listed.name) case final def?)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: _ExerciseTile(
-                  exercise: def,
-                  selected: def.id == _exercise.id,
-                  onTap: () => setState(() => _exercise = def),
-                ),
-              ),
-        ],
-        const SizedBox(height: 18),
         _DarkPanel(
           child: Row(
             children: [
@@ -404,20 +677,13 @@ class _TrainerScreenState extends State<TrainerScreen> {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  _exercise.cue,
+                  L.of(context).framingHint,
                   style: context.type.label.copyWith(color: _dim),
                 ),
               ),
             ],
           ),
         ),
-        if (_savedTo != null) ...[
-          const SizedBox(height: 14),
-          Text(
-            'Session saved for tuning:\n$_savedTo',
-            style: context.type.label.copyWith(color: _dim),
-          ),
-        ],
         if (_error != null) ...[
           const SizedBox(height: 14),
           Text(
@@ -436,65 +702,311 @@ class _TrainerScreenState extends State<TrainerScreen> {
   }
 
   Widget _buildSession() {
-    final state = _state;
-    final engine = _engine!;
     final live = _source?.isLive ?? false;
-    final formOk = state?.formOk ?? false;
 
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        _source?.buildPreview(context) ?? const ColoredBox(color: Colors.black),
+    // Green means "you are down in position and counting". It used to mean
+    // "your body is in a straight line", which a person standing in front of
+    // the phone satisfies perfectly — so it went green before anybody had got
+    // onto the floor, and told them reps were being watched for when they
+    // were not.
+    final ready = _inPosition;
 
-        // The skeleton goes over whatever is behind it, green only while the
-        // shape is right — the same condition that lets a rep count.
-        CustomPaint(
-          painter: _SkeletonPainter(
-            pose: _pose,
-            good: formOk,
-            mirror: live,
-            sourceSize: _source?.sourceSize,
-          ),
-        ),
+    // A long press anywhere shows the numbers behind the position check.
+    // It used to be a hidden sixty-pixel box in the corner of practice mode,
+    // which is no use to somebody on the floor wondering why the skeleton is
+    // not green — and that question is the one this panel exists to answer.
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onLongPress: () => setState(() => _showNumbers = !_showNumbers),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          _source?.buildPreview(context) ??
+              const ColoredBox(color: Colors.black),
 
-        Positioned(
-          right: 18,
-          top: 110,
-          bottom: 130,
-          child: _RomMeter(
-            progress: state?.progress ?? 0,
-            good: formOk,
-          ),
-        ),
+          // The skeleton goes over whatever is behind it, green while the body
+          // holds a straight line. It is feedback on form, not a gate on the
+          // count: a rep with a sagging hip is still a rep somebody did, and a
+          // count that silently withheld it would be the app calling them a liar.
+          //
+          // Half strength until the bout starts. Getting into position is the
+          // one moment the overlay is the subject rather than the decoration —
+          // it is how you know the camera can see you — and a faint one asks to
+          // be looked at without claiming anything is being counted yet.
+          //
+          // Hidden when the lifter has turned it off in settings. The count
+          // does not change either way — this is the picture, not the
+          // reading — but some people find it easier to lift without a
+          // figure drawn over them.
+          if (settings.showSkeleton)
+            Opacity(
+              opacity: _stage == _Stage.positioning ? 0.5 : 1,
+              child: CustomPaint(
+                painter: SkeletonPainter(
+                  pose: _pose,
+                  good: ready,
+                  mirror: live,
+                  sourceSize: _source?.sourceSize,
+                ),
+              ),
+            ),
 
-        // The meter is the part that goes wrong quietly: the angle can sit
-        // still, or the calibrated ends can land somewhere unreachable, and
-        // from the outside both just look like "it is not counting". One
-        // screenshot of this answers which.
-        if (_showNumbers)
+          // The score, the clock, and the rival — pinned to the top from the
+          // moment the camera opens, so the numbers are in the same place before
+          // and during the bout instead of appearing when it starts.
           Positioned(
             left: 14,
-            top: 110,
-            child: _Diagnostics(state: state, engine: engine),
+            right: 14,
+            top: 36,
+            child: _ScoreCard(
+              yours: _liveReps,
+              theirs: _opponentReps,
+              remaining: _remaining,
+              duel: widget.duel,
+              live: _stage == _Stage.counting,
+            ),
           ),
 
-        Positioned(
-          left: 0,
-          right: 0,
-          bottom: 0,
-          child: _Readout(
-            exercise: _exercise,
-            state: state,
-            holdSeconds: engine.holdSeconds,
-            stage: _stage,
-            demo: !live,
-            exerciseName: exerciseLabel(context, _exercise),
-            onStop: _stop,
-            onRevealNumbers: () =>
-                setState(() => _showNumbers = !_showNumbers),
+          if (_stage == _Stage.positioning)
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 60,
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 18,
+                      vertical: 9,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF121110).withValues(alpha: 0.7),
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    child: Text(
+                      L.of(context).getIntoPosition,
+                      style: const TextStyle(color: Colors.white, fontSize: 15),
+                    ),
+                  ),
+                  const SizedBox(height: 9),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 26),
+                    child: Text(
+                      L.of(context).framingHint,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Color(0xFFC9C1B6),
+                        fontSize: 11,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+          if (_stage == _Stage.countdown) ...[
+            Positioned.fill(
+              child: ColoredBox(
+                color: const Color(0xFF121110).withValues(alpha: 0.55),
+              ),
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              top: MediaQuery.of(context).size.height * 0.34,
+              child: Column(
+                children: [
+                  Text(
+                    L.of(context).getReady,
+                    style: const TextStyle(
+                      color: Color(0xFFC9C1B6),
+                      fontSize: 10,
+                      letterSpacing: 3,
+                    ),
+                  ),
+                  Text(
+                    localNumber(context, _countdown),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 74,
+                      fontWeight: FontWeight.w500,
+                      height: 1.1,
+                      fontFeatures: [FontFeature.tabularFigures()],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+
+          // Over everything, because it is the only thing worth reading while
+          // it is up. The scrim lifts the camera image so white text on a bright
+          // gym wall stays legible.
+          if (_lostBody)
+            Positioned.fill(
+              child: ColoredBox(
+                color: const Color(0xFF2E2A26).withValues(alpha: 0.82),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.person_off_outlined,
+                          size: 28,
+                          color: Colors.white,
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          L.of(context).getBackInFrame,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        // Says the cost out loud. Somebody who thinks the app
+                        // paused when they stepped away comes back to a round
+                        // they have already lost and blames the counter.
+                        Text(
+                          L.of(context).clockStillRunning,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Color(0xFFC9C1B6),
+                            fontSize: 11,
+                            height: 1.6,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+          // How deep this rep is, as a bar that fills from the bottom. On the
+          // left, and low: the phone is on the floor and the lifter is looking
+          // down the screen at it from a push-up, so the middle of the left edge
+          // is where a glance actually lands. Wide enough to read at that angle
+          // without turning the head.
+          if (_stage == _Stage.counting)
+            Positioned(
+              left: 11,
+              top: 260,
+              child: _DepthBar(
+                key: const Key('depthBar'),
+                progress: _progress ?? 0,
+                good: ready,
+              ),
+            ),
+
+          // The meter is the part that goes wrong quietly: the angle can sit
+          // still, or the calibrated ends can land somewhere unreachable, and
+          // from the outside both just look like "it is not counting". One
+          // screenshot of this answers which.
+          if (_showNumbers)
+            Positioned(
+              left: 14,
+              top: 110,
+              child: _Diagnostics(
+                recent: _recent,
+                inPosition: ready,
+                framesPerSecond: _framesPerSecond,
+                progress: _progress,
+                reps: _liveReps,
+              ),
+            ),
+
+          // One line at a time, and only when there is something to say. The
+          // count moved to the top card, so what is left down here is the thing
+          // the lifter should do differently — a broken form rule if there is
+          // one, otherwise which way to move next.
+          if (_stage == _Stage.counting)
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 44,
+              child: Center(child: _Cue(progress: _progress)),
+            ),
+
+          if (!live)
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 82,
+              child: Center(
+                // Not translated on purpose: this only ever appears in the
+                // web preview, where there is no camera to open. Nobody who
+                // installs the app can reach it.
+                child: const Text(
+                  'Demo body — no camera in the browser',
+                  style: TextStyle(color: Color(0xFFC9C1B6), fontSize: 11),
+                ),
+              ),
+            ),
+
+          // What is riding on this, and the way out of it. Both small: neither
+          // is what anybody is here for, and the stop button in particular
+          // should take a deliberate press rather than a panicked one.
+          Positioned(
+            left: 12,
+            right: 12,
+            bottom: 12,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (widget.duel case final duel?)
+                  // Flexible, because the rank and the two LP figures run long
+                  // in several of the fourteen languages and this row also has
+                  // to hold the way out.
+                  Flexible(
+                    child: Text(
+                      '${duel.rankLabel} \u00b7 '
+                      '${L.of(context).lpSwing(localNumber(context, duel.lpGain), localNumber(context, duel.lpRisk))}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(color: Colors.white, fontSize: 10),
+                    ),
+                  )
+                else
+                  // Practice has nothing at stake, so the corner holds the way
+                  // into the diagnostics instead.
+                  GestureDetector(
+                    onLongPress: () =>
+                        setState(() => _showNumbers = !_showNumbers),
+                    child: const SizedBox(width: 60, height: 20),
+                  ),
+                GestureDetector(
+                  // In a duel this button is Give up, and giving up is a loss.
+                  onTap: () => _stop(gaveUp: widget.duel != null),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 11,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.3),
+                        width: 0.5,
+                      ),
+                    ),
+                    child: Text(
+                      widget.duel == null
+                          ? L.of(context).finish
+                          : L.of(context).giveUp,
+                      style: const TextStyle(color: Colors.white, fontSize: 10),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -508,10 +1020,9 @@ const _panel = Color(0xFF11161C);
 const _panelEdge = Color(0xFF232C36);
 
 class _DarkPanel extends StatelessWidget {
-  const _DarkPanel({required this.child, this.onTap});
+  const _DarkPanel({required this.child});
 
   final Widget child;
-  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -524,169 +1035,51 @@ class _DarkPanel extends StatelessWidget {
       ),
       child: child,
     );
-
-    if (onTap == null) return content;
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
-      child: content,
-    );
-  }
-}
-
-class _ExerciseTile extends StatelessWidget {
-  const _ExerciseTile({
-    required this.exercise,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final ExerciseDef exercise;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return _DarkPanel(
-      onTap: onTap,
-      child: Row(
-        children: [
-          Icon(
-            exercise.icon,
-            color: selected ? _accent : _dim,
-            size: 24,
-          ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Text(
-              exerciseLabel(context, exercise),
-              style: context.type.heading.copyWith(color: Colors.white),
-            ),
-          ),
-          Text(
-            exercise.gates.isNotEmpty
-                ? L.of(context).checksForm
-                : (exercise.mode == ScoreMode.hold
-                    ? L.of(context).time
-                    : L.of(context).counts),
-            style: context.type.label.copyWith(color: exercise.gates.isNotEmpty ? _accent : _dim),
-          ),
-          if (selected) ...[
-            const SizedBox(width: 10),
-            const Icon(Icons.check_circle, color: _accent, size: 20),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-/// The bar down the side. The ball is the driver angle, and the shaded ends
-/// are the two zones a rep has to travel between.
-class _RomMeter extends StatelessWidget {
-  const _RomMeter({required this.progress, required this.good});
-
-  final double progress;
-  final bool good;
-
-  @override
-  Widget build(BuildContext context) {
-    const width = 46.0;
-    final tint = good ? AppColors.win : AppColors.loss;
-
-    return SizedBox(
-      width: width,
-      child: LayoutBuilder(
-        builder: (context, box) {
-          const ball = 30.0;
-          final travel = box.maxHeight - ball;
-          // Progress runs 0 at the bottom of the movement, and the meter is
-          // drawn the same way up as the body moves.
-          final top = travel * (1 - progress.clamp(0.0, 1.0));
-
-          return Stack(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.45),
-                  borderRadius: BorderRadius.circular(width / 2),
-                  border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.18),
-                  ),
-                ),
-              ),
-              _zone(box, top: true),
-              _zone(box, top: false),
-              Positioned(
-                left: (width - ball) / 2,
-                top: top,
-                child: Container(
-                  width: ball,
-                  height: ball,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: tint.withValues(alpha: 0.85),
-                        blurRadius: 16,
-                        spreadRadius: 1,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _zone(BoxConstraints box, {required bool top}) {
-    final height = box.maxHeight * (top ? 1 - kTopZone : kBottomZone);
-    final radius = Radius.circular(box.maxWidth / 2);
-
-    return Positioned(
-      top: top ? 0 : null,
-      bottom: top ? null : 0,
-      left: 0,
-      right: 0,
-      height: height,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: AppColors.win.withValues(alpha: 0.22),
-          borderRadius: BorderRadius.vertical(
-            top: top ? radius : Radius.zero,
-            bottom: top ? Radius.zero : radius,
-          ),
-        ),
-      ),
-    );
+    return content;
   }
 }
 
 /// What the counter is actually seeing, in numbers.
 class _Diagnostics extends StatelessWidget {
-  const _Diagnostics({required this.state, required this.engine});
+  const _Diagnostics({
+    required this.recent,
+    required this.inPosition,
+    required this.framesPerSecond,
+    required this.progress,
+    required this.reps,
+  });
 
-  final RepState? state;
-  final RepEngine engine;
+  /// Poses a second, measured. The frame counts everything else is judged in
+  /// only mean something against this.
+  final double? framesPerSecond;
+
+  /// The last second of poses, so the position checks can be shown with the
+  /// numbers behind them rather than as a yes or no.
+  final List<BodyPose> recent;
+  final bool inPosition;
+  final double? progress;
+  final int reps;
 
   @override
   Widget build(BuildContext context) {
-    final s = state;
-    String deg(double? v) => v == null ? '—' : '${v.round()}°';
+    // Why the position check says what it says. This is the panel to read out
+    // when the skeleton will not go green: it shows which of the two tests is
+    // failing and by how much, which is the difference between tuning a
+    // threshold and guessing at one.
+    final hands = _handTravel(recent);
+    final shape = _torsoOverShoulders(recent.isEmpty ? null : recent.last);
+    final tracked = recent.isNotEmpty && recent.last.isTracked;
 
     final lines = <String>[
-      'angle   ${deg(s?.angle)}',
-      'range   ${deg(engine.bottomAngle)} → ${deg(engine.topAngle)}',
-      'ball    ${((s?.progress ?? 0) * 100).round()}%',
-      'form    ${s == null ? '—' : (s.formOk ? 'ok' : 'BAD')}',
-      'state   ${s?.armed ?? false ? 'going up' : 'waiting'}',
-      for (final entry in engine.rejections.entries)
-        'lost    ${entry.value} to ${entry.key.name}',
-      if (s?.tracked == false) 'lost the body',
+      'position ${inPosition ? 'IN' : 'no'}',
+      'hands    ${hands == null ? '—' : hands.toStringAsFixed(2)}'
+          '  (needs ${kPlantedHands.toStringAsFixed(2)} or less)',
+      'torso    ${shape == null ? '—' : shape.toStringAsFixed(2)}'
+          '  (needs ${kUprightTorso.toStringAsFixed(2)} or less)',
+      'fps      ${framesPerSecond == null ? '—' : framesPerSecond!.toStringAsFixed(1)}',
+      'depth    ${progress == null ? '—' : '${(progress! * 100).round()}%'}',
+      'reps     $reps',
+      if (!tracked) 'lost the body',
     ];
 
     return DecoratedBox(
@@ -703,7 +1096,11 @@ class _Diagnostics extends StatelessWidget {
             for (final line in lines)
               Text(
                 line,
-                style: context.type.label.copyWith(color: Colors.white, height: 1.5, fontFeatures: [FontFeature.tabularFigures()]),
+                style: context.type.label.copyWith(
+                  color: Colors.white,
+                  height: 1.5,
+                  fontFeatures: [FontFeature.tabularFigures()],
+                ),
               ),
           ],
         ),
@@ -712,214 +1109,265 @@ class _Diagnostics extends StatelessWidget {
   }
 }
 
-/// The count, and the one line telling you why a rep did not land.
-class _Readout extends StatelessWidget {
-  const _Readout({
-    required this.exercise,
-    required this.state,
-    required this.holdSeconds,
-    required this.stage,
-    required this.demo,
-    required this.exerciseName,
-    required this.onStop,
-    required this.onRevealNumbers,
+/// How far the hands have moved over the recent window, in shoulder widths.
+double? _handTravel(List<BodyPose> recent) {
+  if (recent.length < 2) return null;
+  return handTravel(
+    [for (final p in recent) midpoint(p, Joint.leftWrist, Joint.rightWrist)],
+    [for (final p in recent) shoulderWidth(p)],
+    recent.length - 1,
+  );
+}
+
+/// Torso length over shoulder width: under the threshold the body is pointing
+/// away from the lens, which is what a push-up looks like head-on.
+double? _torsoOverShoulders(BodyPose? pose) {
+  if (pose == null) return null;
+  final shoulder = midpoint(pose, Joint.leftShoulder, Joint.rightShoulder);
+  final hip = midpoint(pose, Joint.leftHip, Joint.rightHip);
+  final width = shoulderWidth(pose);
+  if (shoulder == null || hip == null || width == null) return null;
+  return math.sqrt(
+        math.pow(shoulder.$1 - hip.$1, 2) + math.pow(shoulder.$2 - hip.$2, 2),
+      ) /
+      width;
+}
+
+class _ScoreCard extends StatelessWidget {
+  const _ScoreCard({
+    required this.yours,
+    required this.theirs,
+    required this.remaining,
+    required this.duel,
+    required this.live,
   });
 
-  final ExerciseDef exercise;
-  final RepState? state;
-  final double holdSeconds;
-  final _Stage stage;
-  final bool demo;
-  /// The movement this round is about, shown over the count.
-  final String exerciseName;
+  final int yours;
+  final int theirs;
+  final Duration remaining;
+  final DuelContext? duel;
 
-  final VoidCallback onStop;
-  final VoidCallback onRevealNumbers;
+  /// Whether the bout has started. The bar only appears once there is a real
+  /// share to draw.
+  final bool live;
 
   @override
   Widget build(BuildContext context) {
-    final s = state;
-    final hold = exercise.mode == ScoreMode.hold;
-    final value = hold
-        ? holdSeconds.toStringAsFixed(1)
-        : localNumber(context, s?.reps ?? 0);
-
-    final learning = stage == _Stage.learning;
-    final message = learning
-        ? L.of(context).learningMovement
-        : (s?.formMessage ?? s?.rejection?.message);
-    final bad = !learning && message != null;
+    final l = L.of(context);
+    final duel = this.duel;
 
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 18, 20, 28),
+      padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Colors.transparent,
-            Colors.black.withValues(alpha: 0.75),
-          ],
-        ),
+        color: const Color(0xFF121110),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: context.colors.border, width: 0.5),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 6),
-            child: Text(
-              exerciseName.toUpperCase(),
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: context.type.micro.copyWith(
-                color: context.colors.brand,
+          // No IntrinsicHeight: the two sides are built from the same pieces
+          // in the same order, so they come out the same height on their own —
+          // and measuring them would mean asking a ShrinkText for an intrinsic
+          // height, which a LayoutBuilder cannot answer.
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: _Fighter(
+                  name: l.you,
+                  reps: yours,
+                  tierIdx: demoProfile.tierIdx,
+                  divIdx: demoProfile.divIdx,
+                  colour: Colors.white,
+                ),
               ),
-            ),
-          ),
-          if (demo)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Text(
-                'Demo body — no camera in the browser',
-                style: context.type.label.copyWith(color: Colors.white.withValues(alpha: 0.6)),
-              ),
-            ),
-          GestureDetector(
-            onLongPress: onRevealNumbers,
-            child: PopOnChange(
-              value: value,
-              child: Text(
-                value,
-                style: context.type.display.copyWith(color: Colors.white, height: 1),
-              ),
-            ),
-          ),
-          Text(
-            hold ? L.of(context).secondsHeld : L.of(context).reps,
-            style: context.type.label.copyWith(color: Colors.white.withValues(alpha: 0.7)),
-          ),
-          const SizedBox(height: 14),
-          // Height is reserved either way so the count does not jump around
-          // every time a cue appears.
-          SizedBox(
-            height: 22,
-            child: message == null
-                ? null
-                : Text(
-                    message,
-                    textAlign: TextAlign.center,
-                    style: context.type.body.copyWith(color: bad ? AppColors.loss : Colors.white),
+              // The clock takes only what it needs; the two lifters either
+              // side share what is left. A fixed width here is what put a
+              // long username through the edge of the card.
+              Padding(
+                padding: const EdgeInsets.only(top: 16, left: 4, right: 4),
+                child: Text(
+                  formatClock(context, remaining.inSeconds),
+                  style: TextStyle(
+                    color: live ? Colors.white : context.colors.muted,
+                    fontSize: 22,
+                    fontFeatures: const [FontFeature.tabularFigures()],
                   ),
+                ),
+              ),
+              Expanded(
+                child: duel == null
+                    // Keeps the clock centred when there is nobody there.
+                    ? const SizedBox.shrink()
+                    : _Fighter(
+                        name: duel.opponentName,
+                        reps: theirs,
+                        tierIdx: duel.opponentTierIdx,
+                        divIdx: duel.opponentDivIdx,
+                        colour: context.colors.rival,
+                      ),
+              ),
+            ],
           ),
-          const SizedBox(height: 12),
-          OutlinedButton(
-            onPressed: onStop,
-            style: OutlinedButton.styleFrom(
-              foregroundColor: Colors.white,
-              side: BorderSide(color: Colors.white.withValues(alpha: 0.35)),
-              minimumSize: const Size.fromHeight(46),
+          if (duel != null && live) ...[
+            const SizedBox(height: 10),
+            // One bar, two counts: your share of the reps done so far. It is
+            // the same information as the two numbers above and it is the one
+            // anybody actually reads while moving.
+            ClipRRect(
+              borderRadius: BorderRadius.circular(5),
+              child: SizedBox(
+                height: 9,
+                child: Row(
+                  // Stretch, not the default centre: a ColoredBox with no
+                  // child has no height of its own, so a centred one collapses
+                  // to nothing and the bar draws at zero pixels tall.
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      flex: yours + theirs == 0 ? 1 : yours,
+                      child: ColoredBox(color: context.colors.brand),
+                    ),
+                    Expanded(
+                      flex: yours + theirs == 0 ? 1 : theirs,
+                      child: ColoredBox(color: context.colors.rival),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            child: Text(L.of(context).finish),
-          ),
+          ],
         ],
       ),
     );
   }
 }
 
-const _bones = <List<Joint>>[
-  [Joint.leftShoulder, Joint.rightShoulder],
-  [Joint.leftShoulder, Joint.leftElbow],
-  [Joint.leftElbow, Joint.leftWrist],
-  [Joint.rightShoulder, Joint.rightElbow],
-  [Joint.rightElbow, Joint.rightWrist],
-  [Joint.leftShoulder, Joint.leftHip],
-  [Joint.rightShoulder, Joint.rightHip],
-  [Joint.leftHip, Joint.rightHip],
-  [Joint.leftHip, Joint.leftKnee],
-  [Joint.leftKnee, Joint.leftAnkle],
-  [Joint.rightHip, Joint.rightKnee],
-  [Joint.rightKnee, Joint.rightAnkle],
-];
-
-class _SkeletonPainter extends CustomPainter {
-  _SkeletonPainter({
-    required this.pose,
-    required this.good,
-    required this.mirror,
-    required this.sourceSize,
+/// One side of the card: who they are, where they stand, and their count.
+///
+/// The picture and the badge are the same pairing the profile screen uses —
+/// the badge hangs off the picture rather than sitting in a chip of its own,
+/// because it belongs to the person.
+class _Fighter extends StatelessWidget {
+  const _Fighter({
+    required this.name,
+    required this.reps,
+    required this.tierIdx,
+    required this.divIdx,
+    required this.colour,
   });
 
-  final BodyPose pose;
+  final String name;
+  final int reps;
+  final int tierIdx;
+  final int divIdx;
+  final Color colour;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // One treatment everywhere somebody's picture appears.
+        PlayerAvatar(
+          name: name,
+          tierIdx: tierIdx,
+          size: 48,
+          textColour: colour,
+          // The card has its own background, so the badge is ringed with that
+          // rather than the page behind it.
+          ringColour: const Color(0xFF121110),
+        ),
+        const SizedBox(height: 6),
+        ShrinkText(
+          name,
+          maxLines: 1,
+          style: TextStyle(color: colour, fontSize: 12),
+        ),
+        ShrinkText(
+          l.levelNumber(localNumber(context, ladderLevel(tierIdx, divIdx))),
+          maxLines: 1,
+          style: TextStyle(color: context.colors.muted, fontSize: 11),
+        ),
+        const SizedBox(height: 4),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            localNumber(context, reps),
+            style: TextStyle(
+              color: colour,
+              fontSize: 34,
+              height: 1.05,
+              fontFeatures: const [FontFeature.tabularFigures()],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _DepthBar extends StatelessWidget {
+  const _DepthBar({super.key, required this.progress, required this.good});
+
+  final double progress;
   final bool good;
 
-  /// The front camera shows a mirror image, so the overlay has to be flipped
-  /// to land on the body instead of beside it.
-  final bool mirror;
-
-  /// Shape of the picture the pose was measured in, or null to fill the box.
-  final Size? sourceSize;
-
   @override
-  void paint(Canvas canvas, Size size) {
-    if (pose.points.isEmpty) return;
-
-    final colour = good ? AppColors.win : AppColors.loss;
-
-    // The preview covers the screen: scaled until it fills, then centred and
-    // clipped. The skeleton has to be put through the very same transform, or
-    // it sits beside the body rather than on it.
-    final source = sourceSize;
-    final scale = source == null
-        ? 1.0
-        : math.max(size.width / source.width, size.height / source.height);
-    final drawn = source == null
-        ? size
-        : Size(source.width * scale, source.height * scale);
-    final dx = (size.width - drawn.width) / 2;
-    final dy = (size.height - drawn.height) / 2;
-
-    Offset? at(Joint joint) {
-      final p = pose.confident(joint, min: 0.35);
-      if (p == null) return null;
-      final x = mirror ? 1 - p.x : p.x;
-      return Offset(x * drawn.width + dx, p.y * drawn.height + dy);
-    }
-
-    final bone = Paint()
-      ..color = colour.withValues(alpha: 0.85)
-      ..strokeWidth = 5
-      ..strokeCap = StrokeCap.round;
-
-    final glow = Paint()
-      ..color = colour.withValues(alpha: 0.28)
-      ..strokeWidth = 14
-      ..strokeCap = StrokeCap.round;
-
-    for (final pair in _bones) {
-      final a = at(pair[0]);
-      final b = at(pair[1]);
-      if (a == null || b == null) continue;
-      canvas.drawLine(a, b, glow);
-      canvas.drawLine(a, b, bone);
-    }
-
-    final dot = Paint()..color = Colors.white;
-    final ring = Paint()..color = colour;
-
-    for (final joint in Joint.values) {
-      final p = at(joint);
-      if (p == null) continue;
-      canvas.drawCircle(p, 8, ring);
-      canvas.drawCircle(p, 4.5, dot);
-    }
+  Widget build(BuildContext context) {
+    return Container(
+      width: 16,
+      height: 250,
+      decoration: BoxDecoration(
+        color: const Color(0xFF121110).withValues(alpha: 0.45),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: FractionallySizedBox(
+          heightFactor: progress.clamp(0.0, 1.0),
+          child: Container(
+            decoration: BoxDecoration(
+              // Same colour rule as the skeleton: it goes off when the shape
+              // is wrong, so the two never disagree about whether this rep is
+              // going to count.
+              color: good ? context.colors.brand : context.colors.rival,
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+        ),
+      ),
+    );
   }
+}
+
+/// The one thing to do differently, or which way to move next.
+class _Cue extends StatelessWidget {
+  const _Cue({required this.progress});
+
+  /// How far through a rep the body is, 1 at the top.
+  final double? progress;
 
   @override
-  bool shouldRepaint(_SkeletonPainter old) =>
-      old.pose != pose ||
-      old.good != good ||
-      old.mirror != mirror ||
-      old.sourceSize != sourceSize;
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    // Below halfway the lifter is on the way down or at the bottom, so the
+    // next thing they owe the rep is the push.
+    final text = (progress ?? 1) < 0.5 ? l.goUp : l.goDown;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 7),
+      decoration: BoxDecoration(
+        color: const Color(0xFF121110).withValues(alpha: 0.6),
+        borderRadius: BorderRadius.circular(17),
+      ),
+      child: Text(
+        text,
+        style: const TextStyle(color: Colors.white, fontSize: 13),
+      ),
+    );
+  }
 }

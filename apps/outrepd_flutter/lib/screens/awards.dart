@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../data.dart';
 import '../rewards.dart';
 import '../motion.dart';
 import '../l10n/app_localizations.dart';
@@ -364,6 +363,3 @@ Future<void> celebrate(BuildContext context, List<EarnedTitle> unlocked) async {
     );
   }
 }
-
-/// Kept so the old achievement list still has a home while it is folded in.
-List<Achievement> get legacyAchievements => demoAchievements;

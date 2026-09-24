@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -5,18 +7,29 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'l10n/app_localizations.dart';
 
 import 'avatar.dart';
+import 'backend/backend.dart';
+import 'backend/supabase_backend.dart';
+import 'career.dart';
+import 'connection.dart';
 import 'data.dart';
 import 'rewards.dart';
+import 'screens/auth_entry.dart';
+import 'screens/avatar_picker.dart';
+import 'screens/match_flow.dart';
 import 'screens/onboarding.dart';
-import 'screens/crew.dart';
-import 'screens/crew_create.dart';
+import 'screens/post_match.dart';
 import 'screens/awards.dart';
-import 'screens/roadmap.dart';
+import 'screens/counter_accuracy.dart';
+import 'screens/other_profile.dart';
+import 'screens/progression.dart';
 import 'screens/settings.dart';
+import 'screens/settings_account.dart';
+import 'screens/settings_notices.dart';
+import 'screens/settings_privacy.dart';
+import 'screens/share_card.dart';
 import 'screens/shell.dart';
+import 'screens/tier_gallery.dart';
 import 'screens/trainer.dart';
-import 'screens/user_onboarding.dart';
-import 'screens/welcome.dart';
 import 'reps/count_accuracy.dart';
 import 'settings.dart';
 import 'theme.dart';
@@ -24,6 +37,10 @@ import 'theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  // Not awaited: the first frame can open on the default "online" guess,
+  // and this corrects it within a moment rather than delaying startup for a
+  // network check nothing else here depends on.
+  unawaited(Connection.instance.start());
   // Read stored preferences before the first frame, so the app opens in the
   // theme and units the lifter chose instead of flashing the defaults first.
   //
@@ -31,16 +48,49 @@ void main() async {
   // if storage is unavailable the app must still open on its defaults rather
   // than die on the launcher with nothing to show for it.
   try {
+    // With keys supplied this opens the connection; without them the app
+    // runs exactly as it did — on this phone, against nobody.
+    await startBackend();
     await settings.load();
     await loadProfileStats();
+
+    // Signs in once the username above has been read back, so a returning
+    // lifter's account is found rather than a fresh one made under the
+    // 'demo_lifter' default. Kept out of the try this call sits inside would
+    // otherwise be part of: a lost connection here is routine, not a reason
+    // to skip loading everything that follows.
+    RemoteProfile? me;
+    if (backend.available) {
+      try {
+        me = await backend.signIn(username: demoProfile.username);
+        // Says this account is around, which is the whole of what the online
+        // dot on a friends list means. Not awaited in the sense that matters:
+        // if it fails, the worst outcome is a friend seeing us as offline.
+        await backend.touch();
+      } on Object catch (error) {
+        debugPrint('Could not sign in: $error');
+      }
+    }
+
     await loadCountAccuracy();
     await avatar.load();
     await rewards.load();
+    // After rewards, because the career copies the streak out of it, and
+    // before the title sync below, which reads the totals it restores.
+    await Career.instance.load();
+    // After Career, on purpose: local storage just restored whatever this
+    // device saved from its own last session, and the server's row is what
+    // overwrites it, not the other way round — the one place a fresh
+    // install or a second phone gets back to the ladder it has actually
+    // been racing on.
+    if (me case final signedIn?) applyServerProfile(signedIn);
     await rewards.syncWithProfile(
       matches: demoProfile.totalMatches,
       wins: demoProfile.bestStreak,
-      reps: demoProfile.totalVolumeKg ~/ 60,
-      volumeKg: demoProfile.totalVolumeKg,
+      // The real count, not a guess divided out of a weight total. Reps are
+      // what this app actually records, so a rep title is now the only kind
+      // that can be earned honestly.
+      reps: demoProfile.totalReps,
       tierIdx: demoProfile.tierIdx,
       friends: demoFriends.length,
     );
@@ -58,15 +108,27 @@ class OutrepdApp extends StatefulWidget {
 }
 
 class _OutrepdAppState extends State<OutrepdApp> with WidgetsBindingObserver {
+  // A global key rather than a local Navigator, because the reset screen is
+  // pushed from a stream listener that has no BuildContext of its own — the
+  // link that triggers it can be tapped from wherever the app happens to be.
+  final _navigatorKey = GlobalKey<NavigatorState>();
+  StreamSubscription<void>? _recoverySub;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     settings.addListener(_refresh);
+    _recoverySub = backend.passwordRecoveryRequested.listen((_) {
+      _navigatorKey.currentState?.push(
+        MaterialPageRoute(builder: (_) => const ResetPasswordScreen()),
+      );
+    });
   }
 
   @override
   void dispose() {
+    _recoverySub?.cancel();
     settings.removeListener(_refresh);
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
@@ -90,6 +152,7 @@ class _OutrepdAppState extends State<OutrepdApp> with WidgetsBindingObserver {
     final dark = brightness == Brightness.dark;
 
     return MaterialApp(
+      navigatorKey: _navigatorKey,
       title: 'OUTREPD',
       debugShowCheckedModeBanner: false,
       // Null follows the phone. Flutter then picks the nearest language it has
@@ -114,33 +177,126 @@ class _OutrepdAppState extends State<OutrepdApp> with WidgetsBindingObserver {
       ),
       // Named routes let the web preview jump straight to a screen
       // (e.g. /#/home) while reviewing layout, instead of tapping through.
-      initialRoute: '/',
+      // No initialRoute: naming one here overrides the URL, which silently
+      // sends every /#/… preview link back to onboarding.
       routes: {
-        '/': (_) => const WelcomeScreen(),
-        '/onboarding': (_) => const OnboardingScreen(),
-        '/questions': (_) => const UserOnboardingScreen(),
+        // Onboarding is for accounts that do not exist yet. Anybody who has
+        // been here before goes straight in — finishing onboarding calls
+        // startFresh(), so showing it to them again is how a career gets
+        // erased on the way to the home screen.
+        '/': (_) => onboarded ? const AppShell() : const OnboardingScreen(),
         '/home': (_) => const AppShell(),
-        '/friends': (_) => const AppShell(initialIndex: 0),
-        '/ranks': (_) => const AppShell(initialIndex: 1),
-        '/crewtab': (_) => const AppShell(initialIndex: 3),
-        '/profile': (_) => const AppShell(initialIndex: 4),
-        '/road': (_) => RoadmapScreen(profile: demoProfile),
-        '/crew': (_) => const CrewScreen(),
-        // Opens already in a crew. Tapping through the canvas is unreliable in
-        // the web preview, so the state to inspect gets its own route.
-        '/crewin': (_) {
-          myCrew ??= demoJoinedCrew();
-          return const CrewScreen();
-        },
-        '/crewrank': (_) {
-          myCrew ??= demoJoinedCrew();
-          return const CrewScreen(initialTab: 1);
-        },
-        '/crewnew': (_) => const CreateCrewScreen(),
+        '/friends': (_) => const AppShell(initialIndex: 1),
+        '/ranks': (_) => const AppShell(initialIndex: 2),
+        '/profile': (_) => const AppShell(initialIndex: 3),
+        '/road': (_) => ProgressionScreen(profile: demoProfile),
         '/awards': (_) => const AwardsScreen(),
         '/settings': (_) => const SettingsScreen(),
+        '/auth': (_) => const AuthEntryScreen(),
+        // The settings tree, one route per screen. They are reached by
+        // tapping through in the app; the preview cannot tap, so each gets
+        // a name.
+        '/notices': (_) => const NoticeSettingsScreen(),
+        '/privacy': (_) => const PrivacyScreen(),
+        '/blocked': (_) => const BlockedScreen(),
+        '/report': (_) => const ReportScreen(),
+        '/download': (_) => const DownloadDataScreen(),
+        '/deleteme': (_) => const DeleteAccountScreen(),
         '/trainer': (_) => const TrainerScreen(),
         '/counter': (_) => const TrainerScreen(autoStart: true),
+        // The camera screen as it looks inside a duel: two lifters on the
+        // score card rather than one. Clicks do not reach the canvas in the
+        // web preview, so the state worth inspecting gets its own route.
+        '/duel': (_) => TrainerScreen(
+          autoStart: true,
+          limit: kDuelLength,
+          duel: DuelContext(
+            opponentName: demoOpponents.first.username,
+            opponentReps: 14,
+            opponentTierIdx: demoOpponents.first.tierIdx,
+            opponentDivIdx: demoOpponents.first.divIdx,
+            rankLabel: 'Gold III',
+            lpGain: 24,
+            lpRisk: 18,
+          ),
+        ),
+        // The three screens a duel can end on. Each needs an outcome that
+        // only a finished match produces, so the preview builds one.
+        '/won': (_) => Scaffold(
+          backgroundColor: buildTheme(Brightness.dark).colorScheme.surface,
+          body: DuelResultView(
+            won: true,
+            yourReps: 18,
+            theirReps: 11,
+            opponent: demoOpponents.first,
+            outcome: demoOutcome(won: true),
+            onRematch: () {},
+            onDone: () {},
+          ),
+        ),
+        '/lost': (_) => Scaffold(
+          backgroundColor: buildTheme(Brightness.dark).colorScheme.surface,
+          body: DuelResultView(
+            won: false,
+            yourReps: 14,
+            theirReps: 19,
+            opponent: demoOpponents[1],
+            outcome: demoOutcome(won: false),
+            onRematch: () {},
+            onDone: () {},
+            closestYet: true,
+          ),
+        ),
+        '/promoted': (_) => Scaffold(
+          backgroundColor: buildTheme(Brightness.dark).colorScheme.surface,
+          body: PromotionView(
+            tierIdx: demoProfile.tierIdx,
+            divIdx: demoProfile.divIdx,
+            highest: true,
+            onContinue: () {},
+          ),
+        ),
+        // Every rank badge at once, for checking the drawing.
+        '/tiers': (_) => const TierGalleryScreen(),
+        '/accuracy': (_) => const CounterAccuracyScreen(),
+        // The screen is only worth looking at once it has sets in it, and a
+        // browser has never done a push-up.
+        '/accuracydemo': (_) =>
+            CounterAccuracyScreen(samples: demoAccuracySamples()),
+        // Somebody else's card, with a history to show — the preview cannot
+        // reach this by tapping a friend row, because the demo data behind
+        // those rows has no real id to fetch a profile with.
+        '/otherprofile': (_) => OtherProfileScreen(
+          id: 'preview',
+          username: demoOpponents.first.username,
+          initial: LifterProfile(
+            id: 'preview',
+            username: demoOpponents.first.username,
+            tierIdx: demoOpponents.first.tierIdx,
+            divIdx: demoOpponents.first.divIdx,
+            lp: 72,
+            placementsDone: 5,
+            totalReps: 3140,
+            bestSet: 31,
+            wins: 41,
+            losses: 12,
+            winStreak: 22,
+            globalPlace: 3,
+            country: 'EG',
+            countryPlace: 1,
+            isFriend: false,
+            winsVsYou: 3,
+            lossesVsYou: 1,
+            yourBestVsThem: 16,
+            lastDuelAt: DateTime.now().subtract(const Duration(days: 2)),
+            lastYourReps: 14,
+            lastTheirReps: 19,
+          ),
+        ),
+        // A bottom sheet has to sit over a page, so this one opens itself as
+        // soon as the page beneath it exists.
+        '/sharecard': (_) => _SharePreviewScreen(),
+        '/avatarpicker': (_) => _AvatarPickerPreviewScreen(),
       },
       // '/home/2' opens the shell on a specific tab.
       onGenerateRoute: (settings) {
@@ -149,11 +305,71 @@ class _OutrepdAppState extends State<OutrepdApp> with WidgetsBindingObserver {
           final index = int.tryParse(name.substring(6)) ?? 0;
           return MaterialPageRoute(
             settings: settings,
-            builder: (_) => AppShell(initialIndex: index.clamp(0, 4)),
+            builder: (_) => AppShell(initialIndex: index),
           );
         }
         return null;
       },
     );
   }
+}
+
+/// Opens the share sheet over a plain scaffold, for the preview — the app
+/// itself only ever opens it from a page that is already showing.
+class _SharePreviewScreen extends StatefulWidget {
+  @override
+  State<_SharePreviewScreen> createState() => _SharePreviewScreenState();
+}
+
+class _SharePreviewScreenState extends State<_SharePreviewScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      showShareCardSheet(
+        context,
+        data: ShareCardData(
+          username: demoProfile.username,
+          tierIdx: demoProfile.tierIdx,
+          divIdx: demoProfile.divIdx,
+          lp: demoProfile.lp,
+          wins: demoProfile.wins,
+          losses: demoProfile.losses,
+          bestSet: demoProfile.bestSet,
+          winStreak: demoProfile.winStreak,
+          globalPlace: demoProfile.globalRank,
+          country: demoProfile.country,
+          countryPlace: demoProfile.localRank,
+        ),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) => const Scaffold();
+}
+
+/// Opens the avatar picker sheet over a plain scaffold, for the preview — the
+/// app itself only ever opens it from the profile page that is already
+/// showing.
+class _AvatarPickerPreviewScreen extends StatefulWidget {
+  @override
+  State<_AvatarPickerPreviewScreen> createState() =>
+      _AvatarPickerPreviewScreenState();
+}
+
+class _AvatarPickerPreviewScreenState
+    extends State<_AvatarPickerPreviewScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      showAvatarPicker(context, demoProfile.tierIdx);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) => const Scaffold();
 }

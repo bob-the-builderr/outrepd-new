@@ -3,69 +3,198 @@
   "tabFriends": "Friends",
   "tabRanks": "Ranks",
   "tabMatch": "Match",
-  "tabCrew": "Crew",
   "tabProfile": "Profile",
-  "searchOpponent": "Search for opponent",
-  "searchOpponentHint": "Get matched with a lifter at your rank",
   "challengeFriend": "Challenge a friend",
-  "trainWithCamera": "Train with the camera",
-  "viewRoadmap": "View Roadmap",
-  "lpProgress": "{lp} / 100 LP · {left} to promotion",
-  "@lpProgress": {
-    "placeholders": {
-      "lp": {
-        "type": "String"
-      },
-      "left": {
-        "type": "String"
-      }
-    }
-  },
-  "winStreak": "{count} win streak",
-  "@winStreak": {
-    "placeholders": {
-      "count": {
-        "type": "String"
-      }
-    }
-  },
   "matchHistory": "Match history",
   "allMatches": "All matches",
   "wins": "Wins",
   "losses": "Losses",
   "winRate": "Win rate",
   "streak": "Streak",
-  "profile": "Profile",
   "settings": "Settings",
-  "stats": "Stats",
-  "edit": "Edit",
-  "save": "Save",
-  "cancel": "Cancel",
-  "skip": "Skip",
-  "totalMatches": "Total matches",
-  "bestWinStreak": "Best win streak",
-  "totalVolume": "Total volume lifted",
-  "height": "Height",
-  "bodyweight": "Bodyweight",
-  "age": "Age",
-  "editYourStats": "Edit your stats",
-  "editStatsHint": "Wins, volume and rank are earned — they cannot be edited.",
-  "changeName": "Change your name",
-  "changeNameLast": "This is your last change. It cannot be undone.",
-  "changeNameLeft": "You get {total} changes in total. {left} left after this one.",
-  "@changeNameLeft": {
+  "accountSection": "Account",
+  "duelSection": "Duel",
+  "hapticsEachRep": "Haptics on each rep",
+  "showSkeleton": "Show skeleton overlay",
+  "showSkeletonHint": "How you can tell the camera is seeing you",
+  "manageNotifications": "Manage notifications",
+  "switchesOn": "{on} of {all} on",
+  "@switchesOn": {
     "placeholders": {
-      "total": {
+      "on": {
         "type": "String"
       },
-      "left": {
+      "all": {
         "type": "String"
       }
     }
   },
-  "changeNameUsedUp": "You have used both of your name changes",
+  "whoCanChallenge": "Who can challenge me",
+  "blockedAccounts": "Blocked accounts",
+  "reportProblem": "Report a problem",
+  "onDeviceNote": "Pose detection runs on this phone. No video or pose data is ever uploaded.",
+  "visibilitySection": "Visibility",
+  "showMyCountry": "Show my country",
+  "showMyCountryHint": "Off takes you off the country board",
+  "safetySection": "Safety",
+  "socialSection": "Social",
+  "noticeRaced": "Someone raced my set",
+  "noticeRacedHint": "The only way to find out a duel happened",
+  "noticeFriendOk": "A request I sent was accepted",
+  "noticesStoredNote": "Turning one off means it is never stored — not stored and hidden.",
+  "notSaved": "Not saved",
+  "blockedIntro": "A blocked account can't challenge you, find you, or send you a request. They aren't told.",
+  "blockedWhen": "Blocked {when}",
+  "@blockedWhen": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "unblock": "Unblock",
+  "noBlockedTitle": "Nobody blocked",
+  "noBlockedBody": "You can block somebody from their profile or a report.",
+  "whatHappened": "What happened",
+  "reasonCheating": "Cheating or fake reps",
+  "reasonHarassment": "Harassment or abuse",
+  "reasonContent": "Inappropriate content",
+  "reasonImpersonation": "Impersonation",
+  "reasonOther": "Something else",
+  "addDetails": "Add details (optional)",
+  "alsoBlock": "Also block this account",
+  "sendReport": "Send report",
+  "reportSent": "Report sent",
+  "reportingThisAccount": "Reporting this account",
+  "exportIntro": "We'll email a file with everything the server holds about you. It usually takes a minute.",
+  "whatsIncluded": "What's included",
+  "incProfile": "Your profile and rank",
+  "incSets": "Every set and rep count",
+  "incDuels": "Duel history and LP changes",
+  "incFriends": "Friends and blocked accounts",
+  "incNotices": "Notifications you were sent",
+  "noLandmarksNote": "Pose landmarks are not in it, and never were. The camera reads them on your phone and they are not sent anywhere.",
+  "sendItTo": "Send it to",
+  "emailHint": "you@example.com",
+  "passwordHint": "Password",
+  "codeHint": "Verification code",
+  "createAccountTitle": "Create account",
+  "createAccountBody": "Add an email and password so this account is never just one phone away from gone.",
+  "createAccountAction": "Create account",
+  "signInTitle": "Sign in",
+  "signInBody": "Sign in with the email and password on your account.",
+  "signInAction": "Sign in",
+  "switchToSignIn": "Already have an account? Sign in",
+  "switchToSignUp": "New here? Create an account",
+  "emailTakenSwitchToSignIn": "That email already has an account — sign in instead.",
+  "emailSignUpInvalid": "Check the email and password — six characters minimum.",
+  "tooManyCodes": "Too many codes sent — wait a few minutes and try again.",
+  "authEntryTagline": "Push. Compete. Climb the ladder.",
+  "orDivider": "or",
+  "signUpWithEmail": "Sign up with email",
+  "alreadyHaveAccountQuestion": "Already have an account?",
+  "logInAction": "Log in",
+  "createYourAccountTitle": "Create your account",
+  "createAccountSubtitle": "Takes less than a minute.",
+  "usernameHint": "Username",
+  "passwordMinLength": "At least 8 characters",
+  "logInSubtitle": "Log in to keep your rank.",
+  "forgotPassword": "Forgot password?",
+  "resetPasswordSent": "If an account exists for {email}, a reset link is on its way.",
+  "@resetPasswordSent": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "checkYourEmailTitle": "Check your email",
+  "codeSentTo": "We sent a 6-digit code to {email}.",
+  "@codeSentTo": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "didntGetIt": "Didn't get it?",
+  "resendInSeconds": "Resend in {time}",
+  "@resendInSeconds": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "wrongEmailGoBack": "Wrong email? Go back",
+  "usernameTaken": "That username is taken.",
+  "socialLinkFailed": "Couldn't finish signing in. Try again.",
+  "showLabel": "Show",
+  "hideLabel": "Hide",
+  "resetPasswordTitle": "Set a new password",
+  "resetPasswordBody": "Choose a new password for your account.",
+  "setPasswordAction": "Set password",
+  "wrongEmailOrPassword": "Wrong email or password.",
+  "enterCodeTitle": "Enter code",
+  "codeInstructions": "Enter the code we sent to {email}.",
+  "@codeInstructions": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "verifyAction": "Verify",
+  "wrongCode": "That code's wrong or expired.",
+  "resendCode": "Resend code",
+  "codeResent": "Sent a new code.",
+  "signedInAs": "Signed in as {email}",
+  "@signedInAs": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "addressNotKept": "The address is used once and not stored — this account has no email on it.",
+  "requestMyData": "Email my data",
+  "exportSent": "Sent to {address}",
+  "@exportSent": {
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteIntro": "This erases everything permanently. It cannot be undone and we cannot restore it.",
+  "rankLabel": "Rank",
+  "wantCopyFirst": "Want a copy first?",
+  "wantCopyBody": "Download your data before deleting. After this, it's gone.",
+  "typeToConfirm": "Type {word} to confirm",
+  "@typeToConfirm": {
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteWord": "DELETE",
+  "deletePermanently": "Delete permanently",
+  "keepMyAccount": "Keep my account",
+  "save": "Save",
+  "cancel": "Cancel",
+  "skip": "Skip",
+  "height": "Height",
   "yourPicture": "Your picture",
   "yourPictureHint": "The frame comes from your rank and changes as you climb.",
+  "couldNotUsePicture": "Could not use that picture",
+  "couldNotSyncAvatar": "Your picture is saved, but it hasn't synced yet",
+  "couldNotShareCard": "Could not share this card",
+  "simulatedOpponent": "No one else was ready — this is a practice pace",
+  "changeUsername": "Change username",
+  "usernameInvalidLength": "4 to 20 characters, letters and numbers only",
+  "usernameChanged": "Username changed",
+  "usernameAlreadyChangedBody": "You've already used your one username change — every account gets exactly one.",
   "gallery": "Gallery",
   "camera": "Camera",
   "orPickOurs": "Or pick one of ours",
@@ -82,130 +211,28 @@
   "bestEver": "Best ever",
   "restDaysLeft": "Rest days left",
   "restIsTraining": "Rest is part of training. Two days off a week will not break your streak.",
-  "titlesAndStreak": "{owned} of {total} titles · {streak} day streak",
-  "@titlesAndStreak": {
-    "placeholders": {
-      "owned": {
-        "type": "String"
-      },
-      "total": {
-        "type": "String"
-      },
-      "streak": {
-        "type": "String"
-      }
-    }
-  },
-  "crew": "Crew",
-  "myCrew": "My crew",
-  "rankings": "Rankings",
-  "trainWithCrew": "Train with a crew",
-  "trainWithCrewHint": "Up to 20 lifters under one name, chasing a weekly target together and climbing the crew table.",
-  "createCrew": "Create a crew",
-  "createCrewHint": "Name it, pick a badge, invite your people",
-  "joinOpenCrew": "Join an open crew",
-  "joinOpenCrewHint": "Crews anyone can walk into",
-  "yourInvites": "Your invites",
-  "yourInvitesHint": "Crews that asked for you",
-  "joinWithCode": "Join with a code",
-  "joinWithCodeHint": "Six characters from a member",
-  "topCrewsThisWeek": "Top crews this week",
-  "members": "Members",
-  "repsEach": "Reps each",
-  "rank": "Rank",
-  "weeklyGoal": "Weekly goal",
-  "weeklyGoalDone": "Weekly goal smashed",
-  "goalRemaining": "{reps} reps to go · {days} days left",
-  "@goalRemaining": {
-    "placeholders": {
-      "reps": {
-        "type": "String"
-      },
-      "days": {
-        "type": "String"
-      }
-    }
-  },
-  "goalDoneHint": "Everyone gets the badge when the week closes.",
-  "startCrewWar": "Start a crew war",
-  "startCrewWarHint": "Seven days, both crews counting. Most reps each wins.",
-  "whoIsPulling": "Who is pulling",
-  "thisWeek": "this week",
-  "inviteLifters": "Invite lifters",
-  "referralCode": "Referral code",
-  "inviteLink": "Invite link",
-  "leaveCrew": "Leave crew",
-  "owner": "Owner",
-  "crewTable": "Crew table",
-  "repsPerMember": "reps per member",
-  "seasonResets": "Resets in {days} days — everyone starts level",
-  "@seasonResets": {
-    "placeholders": {
-      "days": {
-        "type": "String"
-      }
-    }
-  },
-  "rankingExplained": "Crews are ranked on reps per member, not the total — otherwise the biggest crew wins by size alone.",
-  "leaderboard": "Leaderboard",
   "global": "Global",
-  "myCountry": "My country",
-  "yourFriends": "Your friends ({count})",
-  "@yourFriends": {
-    "placeholders": {
-      "count": {
-        "type": "String"
-      }
-    }
-  },
   "challenge": "Challenge",
   "notifications": "Notifications",
-  "pickMovement": "Pick a movement",
-  "anyExercise": "Any exercise",
-  "anyExerciseHint": "Start your set — it works the movement out as you go",
   "start": "Start",
   "finish": "Finish",
   "reps": "reps",
-  "secondsHeld": "seconds held",
-  "learningMovement": "Learning your movement — your reps appear in a moment",
   "recalibrate": "Recalibrate",
   "resetCount": "Reset count",
-  "checksForm": "checks form",
-  "counts": "counts",
-  "time": "time",
   "howManyReally": "How many did you really do?",
   "howManyReallyHint": "Your own count, not the app's. It is what the counter gets measured against later.",
   "appearance": "Appearance",
   "theme": "Theme",
-  "darkMode": "Dark mode",
   "language": "Language",
   "units": "Units",
   "weight": "Weight",
-  "notificationsSection": "Notifications",
   "privacy": "Privacy",
-  "matches": "Matches",
   "data": "Data",
   "about": "About",
-  "dangerZone": "Danger zone",
   "themeSystem": "Match device",
   "themeLight": "Light",
   "themeDark": "Dark",
-  "openCrews": "Open crews",
-  "openCrewsHint": "These let anyone in. Pick one and you are in straight away.",
-  "yourInvitesSubtitle": "Crews that asked for you by name.",
-  "pickOpponent": "Pick your opponent",
   "accept": "Accept",
-  "join": "Join",
-  "copy": "Copy",
-  "copied": "Invite link copied",
-  "season": "Season {name}",
-  "@season": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
   "challengeSent": "Challenge sent to {name}",
   "@challengeSent": {
     "placeholders": {
@@ -214,10 +241,6 @@
       }
     }
   },
-  "inviteFriendPrivate": "Invite a friend to a private match",
-  "joinWithCodePaste": "Paste the six characters a member sent you.",
-  "enterTheCode": "Enter the 6-character code",
-  "followingDevice": "Following your device right now",
   "weightUnitTitle": "Weight unit",
   "heightUnitTitle": "Height unit",
   "unitKg": "Kilograms (kg)",
@@ -227,49 +250,20 @@
   "visEveryone": "Everyone",
   "visFriends": "Friends only",
   "visNobody": "Nobody",
-  "visEveryoneHint": "Anyone can open your profile",
-  "visFriendsHint": "Only lifters you have added",
-  "visNobodyHint": "Your profile stays private",
-  "matchInvites": "Match invites",
-  "matchResults": "Match results",
   "friendRequestsLabel": "Friend requests",
-  "crewActivity": "Crew activity",
-  "rankChanges": "Rank changes",
-  "weeklySummary": "Weekly summary",
-  "soundLabel": "Sound",
-  "vibration": "Vibration",
-  "whoCanSeeProfile": "Who can see my profile",
-  "profileVisibility": "Profile visibility",
   "showOnLeaderboards": "Show me on leaderboards",
-  "allowMatchInvites": "Allow match invites",
-  "allowFriendRequests": "Allow friend requests",
-  "showHeightWeight": "Show height and weight",
-  "showHeightWeightHint": "Off keeps your body stats to yourself",
-  "autoAcceptFriends": "Auto-accept from friends",
-  "restTimerBetweenSets": "Rest timer between sets",
   "exportData": "Export my data",
-  "clearCache": "Clear cache",
-  "cacheCleared": "Cache cleared",
   "version": "Version",
   "rateApp": "Rate OUTREPD",
   "contactSupport": "Contact support",
   "termsOfService": "Terms of service",
   "privacyPolicy": "Privacy policy",
   "openSourceLicences": "Open source licences",
-  "resetProgress": "Reset my progress",
-  "resetProgressTitle": "Reset your progress?",
-  "resetProgressBody": "Rank, LP and match history all go back to zero. This cannot be undone.",
-  "actionReset": "Reset",
   "deleteAccount": "Delete account",
-  "deleteAccountTitle": "Delete your account?",
-  "deleteAccountBody": "Your profile, crews and every match you have lifted are removed for good.",
-  "actionDelete": "Delete",
   "needsServer": "This needs a server — not wired up yet",
-  "getStarted": "Get Started",
-  "skipToApp": "Skip to the app",
   "achievements": "Achievements",
   "unlocked": "Unlocked",
-  "roadTitle": "Road to Legend",
+  "roadTitle": "Road to Master",
   "allTiers": "All tiers",
   "topTier": "Top tier",
   "lpToGo": "{lp} LP",
@@ -289,7 +283,6 @@
       }
     }
   },
-  "matchedSameGroup": "You will be matched with someone training the same group.",
   "roomFriendly": "Room matches are friendly — they do not affect your rank.",
   "createRoom": "Create a room",
   "enterCode": "ENTER CODE",
@@ -297,7 +290,6 @@
   "shareThisCode": "Share this code",
   "codeCopied": "Code copied",
   "pickMuscleAndStart": "Pick muscle and start",
-  "dontGetOutrepd": "Don't get OUTREPD!",
   "xOfY": "{a} / {b}",
   "@xOfY": {
     "placeholders": {
@@ -309,24 +301,20 @@
       }
     }
   },
-  "tierStone": "Stone",
+  "tierIron": "Iron",
   "tierBronze": "Bronze",
   "tierSilver": "Silver",
   "tierGold": "Gold",
   "tierPlatinum": "Platinum",
   "tierDiamond": "Diamond",
   "tierMaster": "Master",
-  "tierMythic": "Mythic",
-  "tierLegend": "Legend",
-  "rewardStone": "Stone border frame",
-  "rewardBronze": "Bronze badge",
-  "rewardSilver": "Silver badge",
-  "rewardGold": "Gold badge",
-  "rewardPlatinum": "Platinum badge",
-  "rewardDiamond": "Diamond badge",
-  "rewardMaster": "Master badge",
-  "rewardMythic": "Mythic badge",
-  "rewardLegend": "Legend badge",
+  "rewardStone": "60s duels",
+  "rewardBronze": "Rematch button",
+  "rewardSilver": "Custom duration",
+  "rewardGold": "Best-of-3",
+  "rewardPlatinum": "Private tournaments",
+  "rewardDiamond": "Open lobbies",
+  "rewardMaster": "Named on the global board",
   "shortKg": "kg",
   "shortLb": "lb",
   "shortCm": "cm",
@@ -342,45 +330,6 @@
       }
     }
   },
-  "yearsSuffix": "years",
-  "yourCrew": "Your crew",
-  "crewName": "Crew name",
-  "motto": "Motto",
-  "mottoHint": "What does this crew stand for?",
-  "country": "Country",
-  "whoCanJoin": "Who can join",
-  "minimumRank": "Minimum rank",
-  "anyone": "Anyone",
-  "emblem": "Emblem",
-  "colour": "Colour",
-  "createCrewButton": "Create crew",
-  "ownerNote": "You will be the owner. Crews hold up to 20 lifters.",
-  "searchCountries": "Search countries",
-  "noCountryMatch": "No country matches that",
-  "nameTooShort": "Give the crew a name of at least 3 characters",
-  "privOpen": "Open",
-  "privRequest": "Request to join",
-  "privInviteOnly": "Invite only",
-  "privOpenHint": "Anyone with the code can walk straight in",
-  "privRequestHint": "People ask, an officer approves",
-  "privInviteOnlyHint": "Members must be invited directly",
-  "embStrength": "Strength",
-  "embCombat": "Combat",
-  "embBeasts": "Beasts",
-  "embElements": "Elements",
-  "embHonours": "Honours",
-  "embSymbols": "Symbols",
-  "ob1Title": "Turn every session\ninto a battle",
-  "ob1Body": "Log your workout and go head to head with someone training the same muscle group.",
-  "ob2Title": "Challenge your\nfriends",
-  "ob2Body": "Send a private invite and settle who really trains harder.",
-  "ob3Title": "Climb the ranks",
-  "ob3Body": "Every win earns LP. Push from Stone all the way to Legend.",
-  "ob4Title": "Effort alone\nis hard",
-  "ob4Body": "Training with no one watching makes it easy to cut the last set short.",
-  "ob5Title": "Become a\nLegend",
-  "ob5Body": "Consistency compounds. Show up, out-lift, rank up.",
-  "letsGo": "Let's go",
   "continueLabel": "Continue",
   "ttl_first_blood": "First Blood",
   "tdesc_first_blood": "Finish your first match",
@@ -452,7 +401,7 @@
   "tdesc_perfect_week": "Train every day of one week",
   "ttl_perfect_month": "Perfect Month",
   "tdesc_perfect_month": "Four perfect weeks",
-  "ttl_bronze_tier": "Out of the Stone",
+  "ttl_bronze_tier": "Out of the Iron",
   "tdesc_bronze_tier": "Reach Bronze",
   "ttl_silver_tier": "Silverside",
   "tdesc_silver_tier": "Reach Silver",
@@ -464,20 +413,12 @@
   "tdesc_diamond_tier": "Reach Diamond",
   "ttl_master_tier": "Master",
   "tdesc_master_tier": "Reach Master",
-  "ttl_mythic_tier": "Mythic",
-  "tdesc_mythic_tier": "Reach Mythic",
-  "ttl_legend_tier": "Legend",
-  "tdesc_legend_tier": "Reach Legend",
   "ttl_clean_hands": "Clean Hands",
   "tdesc_clean_hands": "A full set with every rep counted",
   "ttl_spotless": "Spotless",
   "tdesc_spotless": "Ten clean sets",
   "ttl_textbook": "Textbook",
   "tdesc_textbook": "Fifty clean sets",
-  "ttl_iron_hold": "Iron Hold",
-  "tdesc_iron_hold": "Hold a plank for two minutes",
-  "ttl_statue": "Statue",
-  "tdesc_statue": "Hold a plank for five minutes",
   "ttl_all_rounder": "All Rounder",
   "tdesc_all_rounder": "Count five different exercises",
   "ttl_explorer": "Explorer",
@@ -492,112 +433,18 @@
   "tdesc_night_owl": "Ten sessions after ten at night",
   "ttl_graveyard": "Graveyard Shift",
   "tdesc_graveyard": "Fifty sessions after ten",
-  "ttl_joined_up": "Joined Up",
-  "tdesc_joined_up": "Be in a crew",
-  "ttl_backbone": "Backbone",
-  "tdesc_backbone": "Top your crew four weeks running",
-  "ttl_cornerstone": "Cornerstone",
-  "tdesc_cornerstone": "Top your crew twelve weeks running",
   "ttl_not_alone": "Not Alone",
   "tdesc_not_alone": "Add your first friend",
   "ttl_well_connected": "Well Connected",
   "tdesc_well_connected": "Ten friends",
   "ttl_the_gym_knows": "The Gym Knows You",
   "tdesc_the_gym_knows": "Fifty friends",
-  "finish2": "Finish",
-  "qExperience": "How experienced are you\nwith working out?",
-  "expBeginner": "Beginner – Tried it before",
-  "expIntermediate": "Intermediate – Regular training",
-  "expAdvanced": "Advanced – Years of experience",
-  "qGoal": "What's your top\nfitness goal?",
-  "goalStronger": "Become stronger",
-  "goalConsistent": "Become more consistent",
-  "goalLean": "Lose weight and get lean",
-  "goalMass": "Build muscle mass",
-  "aboutYou": "This journey is all about you...",
-  "qThinkAbout": "How often do you think\nabout getting in shape?",
-  "freqNever": "Never",
-  "freqSometimes": "Sometimes",
-  "freqOften": "Often",
-  "freqAllTime": "All The Time",
-  "qEnergy": "How are your energy levels\nduring workouts?",
-  "energyLow": "Low energy, I feel drained all day",
-  "energyDrops": "Performance drops mid-session",
-  "energyHard": "Hard to push through the last set",
-  "energyHigh": "High and steady from start to finish",
-  "stProgress": "Sometimes, it's hard to notice progress when I workout",
-  "stEffortTitle": "Effort no one sees\nis easy to quit",
-  "stEffortBody": "When there's no one to prove yourself against, progress feels slow and effort feels pointless",
-  "stAloneTitle": "Training alone\nis boring",
-  "stAloneBody": "No one's watching. No one's counting. It's easy to skip a rep, or the whole set",
-  "qName": "What should we\ncall you?",
-  "nameHint": "At least 3 characters. This is what rivals will see.",
-  "basicInfo": "Alright! Lets get\nsome basic info",
-  "qAge": "How old are you?",
-  "qWeight": "What's your\ncurrent weight?",
-  "weightWhy": "Body weight is essential to calculate your rank.",
-  "privateNote": "Your information is private and will not be shared with anyone.",
-  "qHeight": "How tall are you?",
-  "qRelate": "Do you relate to the\nstatement below?",
-  "yes": "Yes",
-  "no": "No",
-  "grindTitle": "The grind hits different\nwith a rival",
-  "grindBody": "Every match puts you against a real opponent, put in the work, and prove who trained harder.",
-  "allSet": "You're all set!",
-  "welcomeLifter": "Welcome, {name}. Time to find your first rival.",
-  "lifter": "lifter",
-  "enterApp": "Enter OUTREPD",
-  "commitTitle": "Now let's make a commitment\nto your fitness journey",
-  "holdLogo": "Hold the logo to confirm you're ready",
-  "@welcomeLifter": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "expNone": "I've never worked out",
-  "iAm": "I am...",
-  "finishMatchQ": "Finish match?",
-  "finishMatchBody": "Your volume will be locked in and compared with your opponent.",
-  "keepGoing": "Keep going",
   "forfeitQ": "Forfeit match?",
   "forfeitBody": "You will lose LP if you leave now.",
   "stay": "Stay",
   "forfeit": "Forfeit",
-  "pickExercises": "Pick the exercises you will train",
-  "matchingWith": "Matching you with a lifter at your rank · {muscle}",
-  "@matchingWith": {
-    "placeholders": {
-      "muscle": {
-        "type": "String"
-      }
-    }
-  },
   "getReady": "GET READY",
-  "timeLeft": "TIME LEFT",
-  "vsName": "vs {name}",
-  "@vsName": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "kgTotalVolume": "{unit} total volume",
-  "@kgTotalVolume": {
-    "placeholders": {
-      "unit": {
-        "type": "String"
-      }
-    }
-  },
-  "finishMatch": "FINISH MATCH",
-  "kgHint": "KG",
-  "repsHint": "REPS",
-  "addSet": "ADD SET",
-  "matchComplete": "MATCH COMPLETE",
-  "you": "YOU",
+  "you": "You",
   "vs": "VS",
   "backToHome": "BACK TO HOME",
   "mgChest": "Chest",
@@ -606,8 +453,6 @@
   "mgShoulders": "Shoulders",
   "mgArms": "Arms",
   "mgCore": "Core",
-  "achRivalry": "Rivalry",
-  "achRivalryHint": "Beat the same opponent 3 times",
   "nWonTitle": "You won!",
   "nWonBody": "You beat {name} on {muscle} day",
   "@nWonBody": {
@@ -621,10 +466,78 @@
     }
   },
   "nFriendTitle": "New friend request",
+  "nRacedTitle": "Your set was raced",
+  "nRacedHeld": "{name} raced your set and fell short, {yours}–{theirs}",
+  "@nRacedHeld": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "yours": {
+        "type": "String"
+      },
+      "theirs": {
+        "type": "String"
+      }
+    }
+  },
+  "nRacedBeaten": "{name} raced your set and won, {theirs}–{yours}",
+  "@nRacedBeaten": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "theirs": {
+        "type": "String"
+      },
+      "yours": {
+        "type": "String"
+      }
+    }
+  },
+  "nFriendOkTitle": "Friend request accepted",
+  "nFriendOkBody": "{name} accepted your request",
+  "@nFriendOkBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "nFriendBody": "{name} wants to connect",
   "@nFriendBody": {
     "placeholders": {
       "name": {
+        "type": "String"
+      }
+    }
+  },
+  "nChallengedTitle": "Rematch",
+  "nChallengedBody": "{name} wants a rematch",
+  "@nChallengedBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeSentTitle": "Challenge sent",
+  "challengeSentBody": "We'll let {name} know. Come back once they've raced it.",
+  "@challengeSentBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeNotSentTitle": "Couldn't send that",
+  "challengeNotSentBody": "Check your connection and try again from the match tab.",
+  "challengeGoneTitle": "Challenge is gone",
+  "challengeGoneBody": "It's already been raced, or it was withdrawn.",
+  "repsRecordedLine": "{reps} reps recorded",
+  "@repsRecordedLine": {
+    "placeholders": {
+      "reps": {
         "type": "String"
       }
     }
@@ -650,24 +563,9 @@
       }
     }
   },
-  "nameTooShortInline": "Pick a name of at least 3 characters",
-  "whyName": "Rivals will see this beside every result",
-  "whyExperience": "We match you against people at your level",
-  "whyGoal": "Your first suggested exercises come from this",
-  "whyAge": "Age affects the strength standards you are measured against",
-  "whyWeight": "Rank compares lifts relative to bodyweight, not raw kilos",
-  "whyHeight": "Used with your weight to set fair standards",
-  "whyHabits": "This shapes the reminders and the weekly target we suggest",
-  "transitionPartOfIt": "...so let's make sure you're truly part of it!",
-  "male": "Male",
-  "female": "Female",
-  "usernamePlaceholder": "username",
-  "stRoutine": "I don't know which body part really needs work so I usually follow the same routine",
-  "shortIn": "in",
   "today": "Today",
   "yesterday": "Yesterday",
-  "daysAgo": "{n} days ago",
-  "weeksAgo": "{n} weeks ago",
+  "daysAgo": "{n}d ago",
   "@daysAgo": {
     "placeholders": {
       "n": {
@@ -675,6 +573,7 @@
       }
     }
   },
+  "weeksAgo": "{n} weeks ago",
   "@weeksAgo": {
     "placeholders": {
       "n": {
@@ -682,23 +581,10 @@
       }
     }
   },
-  "membersCount": "{n} members",
-  "eachCount": "{n} each",
   "lpAmount": "{n} LP",
-  "@membersCount": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
-  "@eachCount": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
+  "lpUnit": "LP",
+  "trueCountHint": "e.g. 12",
+  "couldNotSaveSession": "Could not save the session",
   "@lpAmount": {
     "placeholders": {
       "n": {
@@ -706,91 +592,7 @@
       }
     }
   },
-  "countWithCamera": "Count with camera",
-  "youWin": "YOU WIN!",
-  "defeated": "DEFEATED",
-  "fillWholeNumbers": "Fill all three with whole numbers",
-  "heightRange": "Height should be between {min} and {max} {unit}",
-  "@heightRange": {
-    "placeholders": {
-      "min": {
-        "type": "String"
-      },
-      "max": {
-        "type": "String"
-      },
-      "unit": {
-        "type": "String"
-      }
-    }
-  },
-  "weightRange": "Bodyweight should be between {min} and {max} {unit}",
-  "@weightRange": {
-    "placeholders": {
-      "min": {
-        "type": "String"
-      },
-      "max": {
-        "type": "String"
-      },
-      "unit": {
-        "type": "String"
-      }
-    }
-  },
-  "ageRange": "Age should be between {min} and {max}",
-  "@ageRange": {
-    "placeholders": {
-      "min": {
-        "type": "String"
-      },
-      "max": {
-        "type": "String"
-      }
-    }
-  },
-  "discPush": "Push",
-  "discPull": "Pull",
-  "discLegs": "Legs",
-  "discPushHint": "Chest, shoulders and triceps",
-  "discPullHint": "Back and biceps",
-  "discLegsHint": "Quads, hamstrings and core",
-  "pickYourThree": "Pick your three",
-  "pickThreeHint": "Both of you lift all six — your three and theirs",
-  "roundOf": "Round {n} of {total}",
-  "rest": "Rest",
-  "work": "Work",
-  "nextUp": "Next up",
-  "picksLeft": "{n} left to pick",
-  "@roundOf": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      },
-      "total": {
-        "type": "String"
-      }
-    }
-  },
-  "@picksLeft": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
-  "yourPick": "Your pick",
-  "theirPick": "Their pick",
-  "secondsOfWork": "{n} seconds of work",
-  "@secondsOfWork": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "lpOutOf": "/ {total} LP",
-  "toPromotion": "{n} to promotion",
   "@lpOutOf": {
     "placeholders": {
       "total": {
@@ -798,40 +600,500 @@
       }
     }
   },
-  "@toPromotion": {
+  "noFriendsTitle": "No friends yet",
+  "noFriendsBody": "Duels hit different against someone you know.",
+  "addFriend": "Add",
+  "decline": "Decline",
+  "requestSent": "Request sent to {name}",
+  "@requestSent": {
     "placeholders": {
-      "n": {
+      "name": {
         "type": "String"
       }
     }
   },
-  "noFriendsTitle": "No friends yet",
-  "noFriendsBody": "Add someone and you can challenge them to a private match any time.",
+  "nowFriends": "You and {name} are friends now",
+  "@nowFriends": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "noOneFound": "Nobody goes by that name",
   "noMatchesTitle": "No matches yet",
   "noMatchesBody": "Your first one shows up here, win or lose.",
   "noNotificationsTitle": "Nothing new",
   "noNotificationsBody": "Match invites, results and friend requests land here.",
-  "roundDone": "Round {n} done",
-  "bestRoundYet": "Best round yet",
-  "@roundDone": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "countedThat": "Counted that round",
   "thatIsRight": "That's right",
   "useMyCount": "Use my count",
   "confirmHint": "Change it if the camera got it wrong.",
-  "pickNMore": "Pick {n} more",
-  "findOpponent": "Find opponent",
-  "@pickNMore": {
+  "unsureMovement": "Not sure this was the right movement — check the number.",
+  "local": "Local",
+  "weekly": "Weekly",
+  "seasonTab": "Season",
+  "allTime": "All-time",
+  "daily": "Daily",
+  "noRanksYet": "No ranks yet",
+  "noRanksYetBody": "Play a duel and the board fills in.",
+  "ranksTitle": "Ranks",
+  "totalReps": "Total reps",
+  "recent": "Recent",
+  "wonVs": "Won vs {name}",
+  "@wonVs": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "lostVs": "Lost vs {name}",
+  "@lostVs": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hoursAgo": "{n}h ago",
+  "@hoursAgo": {
     "placeholders": {
       "n": {
         "type": "String"
       }
     }
   },
-  "unsureMovement": "Not sure this was the right movement — check the number."
+  "toNextTier": "{n} to {tier}",
+  "@toNextTier": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
+  "noMatchesYet": "No duels yet",
+  "noMatchesYetBody": "Your first one shows up here, win or lose.",
+  "searchByUsername": "Search by username",
+  "incomingRequests": "Incoming requests",
+  "onlineNowCount": "Online now · {count}",
+  "@onlineNowCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "offlineCount": "Offline · {count}",
+  "@offlineCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "invite": "Invite",
+  "headToHeadTitle": "Head to head",
+  "vsYouCaption": "vs you",
+  "h2hYou": "you",
+  "h2hThem": "them",
+  "headToHead": "{wins}W {losses}L vs you",
+  "@headToHead": {
+    "placeholders": {
+      "wins": {
+        "type": "String"
+      },
+      "losses": {
+        "type": "String"
+      }
+    }
+  },
+  "neverPlayedYou": "Never played you",
+  "noHistoryWithThem": "You haven't raced {username} yet.",
+  "@noHistoryWithThem": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "lastDuelScore": "Last time: {yourReps}–{theirReps}, {when}.",
+  "@lastDuelScore": {
+    "placeholders": {
+      "yourReps": {
+        "type": "String"
+      },
+      "theirReps": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "yourBestVsThemLine": "Your best against them is {reps}.",
+  "@yourBestVsThemLine": {
+    "placeholders": {
+      "reps": {
+        "type": "String"
+      }
+    }
+  },
+  "viewFullProfile": "View full profile",
+  "moreOptions": "More options",
+  "block": "Block",
+  "blockRowBody": "They can't challenge you or see your profile",
+  "report": "Report",
+  "reportRowBody": "Reviewed within 24 hours",
+  "muteChallenges": "Mute challenges from {username}",
+  "@muteChallenges": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "blockedLifter": "Blocked {username}",
+  "@blockedLifter": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "mutedLifter": "Muted {username}",
+  "@mutedLifter": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "addFriendButton": "Add friend",
+  "alreadyFriends": "Friends",
+  "couldNotLoadProfile": "Couldn't load this profile",
+  "noFriendsMatch": "Nobody by that name",
+  "yourClimb": "Your climb",
+  "lpToUnlock": "{lp} LP to {rank} · unlocks {unlock}",
+  "@lpToUnlock": {
+    "placeholders": {
+      "lp": {
+        "type": "String"
+      },
+      "rank": {
+        "type": "String"
+      },
+      "unlock": {
+        "type": "String"
+      }
+    }
+  },
+  "floorKept": "{tier} is yours. You can't drop below {rank}.",
+  "@floorKept": {
+    "placeholders": {
+      "tier": {
+        "type": "String"
+      },
+      "rank": {
+        "type": "String"
+      }
+    }
+  },
+  "dayStreakCount": "{count} day streak",
+  "@dayStreakCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "findMatch": "Find a match",
+  "rankedTerms": "{seconds} seconds · ranked",
+  "@rankedTerms": {
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "practiceTerms": "Practice — no rank, no opponent",
+  "practiceComplete": "PRACTICE COMPLETE",
+  "findPeople": "Find people",
+  "noRankYet": "No rank yet",
+  "placementsForFirstTier": "Finish {count} placement duels to earn your first tier.",
+  "@placementsForFirstTier": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "startPlacements": "Start placements",
+  "unranked": "Unranked",
+  "placementsTerms": "{done} of {total} · {seconds} seconds each",
+  "@placementsTerms": {
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "placementsLeft": "{done} of {total} · {left} more to get your tier",
+  "@placementsLeft": {
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      },
+      "left": {
+        "type": "String"
+      }
+    }
+  },
+  "placementsForTier": "Finish {count} placement duels to see where you land.",
+  "@placementsForTier": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "placementsDoneCount": "{done} of {total} done",
+  "@placementsDoneCount": {
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "practiceFirst": "Practice first",
+  "nextPlacement": "Next placement",
+  "noConnection": "No connection",
+  "practiceOffline": "Practice offline",
+  "retry": "Retry",
+  "youWonPlain": "You won",
+  "opponentDisconnected": "{name} disconnected",
+  "@opponentDisconnected": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "forfeitNoMargin": "Forfeit · margin not counted",
+  "findAnotherMatch": "Find another match",
+  "cameraNeededTitle": "Camera access needed",
+  "cameraNeededBody": "outrepd counts your reps by watching your body move. Pose detection runs on your device and nothing is uploaded.",
+  "openSettings": "Open settings",
+  "allowCamera": "Allow camera",
+  "notNow": "Not now",
+  "noCameraTitle": "No camera found",
+  "noCameraBody": "Reps are counted from the camera, so this device cannot score a duel. Everything else still works.",
+  "noConnectionBody": "You need a connection to duel. Practice still works offline and your reps will sync later.",
+  "getBackInFrame": "Get back in frame",
+  "clockStillRunning": "The clock is still running. Reps are not counting.",
+  "giveUp": "Give up",
+  "lpSwing": "+{gain} / −{loss} LP",
+  "@lpSwing": {
+    "placeholders": {
+      "gain": {
+        "type": "String"
+      },
+      "loss": {
+        "type": "String"
+      }
+    }
+  },
+  "searchingForOpponent": "Searching for an opponent",
+  "getIntoPosition": "Get into position",
+  "framingHint": "Wrists and ankles must be in frame",
+  "goUp": "Go up",
+  "goDown": "Go down",
+  "bestSet": "Best set",
+  "record": "Record",
+  "last7Days": "Last 7 days",
+  "repsCount": "{count} reps",
+  "@repsCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "viewAll": "View all",
+  "shareProfile": "Share profile",
+  "share": "Share",
+  "duelMeOnOutrepd": "Duel me on outrepd",
+  "yourRankCard": "Your rank card",
+  "shareStory": "Story",
+  "sharePost": "Post",
+  "copyLink": "Copy",
+  "linkCopied": "Link copied",
+  "currentRankLabel": "Current rank",
+  "winInitial": "W",
+  "lossInitial": "L",
+  "dayInitial": "d",
+  "rankPosition": "#{n}",
+  "@rankPosition": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "obTagline": "Push-up battles. Your phone counts. Someone else is counting too.",
+  "obGetStarted": "Get started",
+  "obHaveAccount": "I already have an account",
+  "obHowTitle": "Three things, then you’re in.",
+  "obHow1": "Prop your phone on the floor",
+  "obHow1Body": "Lean it against a wall, a metre in front of you.",
+  "obHow2": "The camera counts your reps",
+  "obHow2Body": "Every rep is checked for depth. Half reps don’t count.",
+  "obHow3": "Sixty seconds against someone",
+  "obHow3Body": "Win to climb. Lose and you drop. Same rules for everyone.",
+  "obTwoThings": "Two quick things.",
+  "obAgeQuestion": "How old are you?",
+  "obUnder16": "Under 16",
+  "obOver16": "16 or over",
+  "obHealthConsent": "I understand outrepd counts reps and does not give medical or training advice. I’ll stop if something hurts.",
+  "obTermsIntro": "By continuing you agree to the",
+  "obTerms": "Terms",
+  "obAnd": "and",
+  "obPrivacy": "Privacy Policy",
+  "obUnder16Blocked": "outrepd is for 16 and over. Come back when you get there — the push-ups will still be here.",
+  "obCameraTitle": "outrepd needs your camera",
+  "obCameraBody": "It watches your body move to count reps. There is no other way to do it.",
+  "obCameraPrivateTitle": "Nothing leaves your phone",
+  "obCameraPrivateBody": "Body tracking runs on this device. No video is uploaded unless you choose to post it.",
+  "obWhyNeeded": "Why is this needed?",
+  "obPlacementTitle": "Set your phone on the floor",
+  "obPlacementBody": "Lean it against a wall about a metre in front of you.",
+  "obOneMetre": "~1 m",
+  "obFullBody": "full body in frame",
+  "obCheckHandsFeet": "Hands and feet both visible",
+  "obCheckFacing": "Facing the phone, not sideways",
+  "obCheckLight": "Room light on",
+  "obImSetUp": "I’m set up",
+  "obFramingTitle": "Get into a push-up position",
+  "obFramingShoulders": "Shoulders and hips",
+  "obFramingWrists": "Wrists",
+  "obFramingAnkles": "Ankles",
+  "obLooksGood": "Looks good",
+  "obCalibrating": "Calibrating",
+  "obOneMoreRep": "One more to learn your range",
+  "obCalibrationHint": "Do three push-ups at your normal depth",
+  "obCalibrated": "Calibrated.",
+  "obCalibratedBody": "outrepd knows your range now. Depth is measured against you, not a fixed number.",
+  "obRepsCounted": "Reps counted",
+  "obAverageDepth": "Average depth",
+  "obForm": "Form",
+  "obFormClean": "Clean",
+  "obCreateAccountBody": "Create an account to keep your reps, your rank and your record.",
+  "obSaveProgress": "Save my progress",
+  "obSaveYourReps": "Save your {count} reps",
+  "@obSaveYourReps": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "obOneTap": "An email and a password — that's all it takes.",
+  "obContinueApple": "Continue with Apple",
+  "obContinueGoogle": "Continue with Google",
+  "obContinueEmail": "Continue with email",
+  "obSignInFootnote": "We only use this to keep your account. We never post anything.",
+  "obPickName": "Pick a name",
+  "obPickNameBody": "This is what opponents see. You can change it later.",
+  "obAvailable": "Available",
+  "obTaken": "Taken",
+  "obYourAvatar": "Your avatar",
+  "obAddPhoto": "Add a photo",
+  "obNotifyTitle": "Know when you’re challenged",
+  "obNotifyChallenged": "Someone challenged you",
+  "obNotifyStreak": "Your streak is about to break",
+  "obNotifyPassed": "A friend passed you on the board",
+  "obTurnOn": "Turn on",
+  "obPlacementsBody": "Five duels decide your starting tier. Nothing counts against you yet.",
+  "obFindFirstOpponent": "Find my first opponent",
+  "obGotIt": "Got it",
+  "obFormMixed": "Mixed",
+  "obWelcomeBack": "Welcome back",
+  "obWelcomeBackBody": "Sign in with your email and password.",
+  "justNow": "Just now",
+  "counterAccuracy": "Counter accuracy",
+  "counterAccuracyCaption": "How close the camera gets",
+  "measuredOverSets": "Measured over {count} sets",
+  "@measuredOverSets": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "accExact": "Exact",
+  "accWithinOne": "Within 1 rep",
+  "accAverageMiss": "Average miss",
+  "accTendsTo": "Tends to",
+  "accCountsHigh": "count high",
+  "accCountsLow": "count low",
+  "accCountsEven": "neither high nor low",
+  "accWorstMiss": "Worst miss",
+  "accNothingYet": "Nothing measured yet",
+  "accNothingYetBody": "Every time you confirm a count after a duel, that set is measured against what you said it was. The number appears here.",
+  "accNeedMore": "Early days. About {count} more sets before this number means much.",
+  "@accNeedMore": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "accRecentSets": "Recent sets",
+  "accCameraSaid": "Camera",
+  "accYouSaid": "You",
+  "accHowItWorks": "These come from you, on this phone. Nothing is sent anywhere.",
+  "levelNumber": "Level {n}",
+  "@levelNumber": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "youLostPlain": "You lost",
+  "rematch": "Rematch",
+  "shareAction": "Share",
+  "doneAction": "Done",
+  "continueAction": "Continue",
+  "lpRowWin": "Win",
+  "lpRowLoss": "Loss",
+  "lpRowOpponent": "Opponent's rank",
+  "lpRowMargin": "Margin",
+  "lpRowDepth": "Depth",
+  "promotedLabel": "Promoted",
+  "highestReached": "Highest you've reached",
+  "repsOff": "{n} reps off.",
+  "@repsOff": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "closestYet": "Closest match yet."
 }

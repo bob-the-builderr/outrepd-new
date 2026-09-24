@@ -93,9 +93,15 @@ class CameraPoseSource implements PoseSource {
 
   @override
   Future<void> start() async {
-    final cameras = await availableCameras();
+    final List<CameraDescription> cameras;
+    try {
+      cameras = await availableCameras();
+    } on CameraException catch (e) {
+      throw PoseSourceError(e.description ?? e.code, poseFailureFor(e.code));
+    }
     if (cameras.isEmpty) {
-      throw PoseSourceError('No camera on this device');
+      throw PoseSourceError(
+          'No camera on this device', PoseSourceFailure.noCamera);
     }
 
     // Front facing, so the lifter can see the overlay while they work.
@@ -114,7 +120,14 @@ class CameraPoseSource implements PoseSource {
           Platform.isAndroid ? ImageFormatGroup.nv21 : ImageFormatGroup.bgra8888,
     );
 
-    await controller.initialize();
+    try {
+      await controller.initialize();
+    } on CameraException catch (e) {
+      // Denial arrives here, not from availableCameras: the OS only asks once
+      // something tries to open a lens.
+      await controller.dispose();
+      throw PoseSourceError(e.description ?? e.code, poseFailureFor(e.code));
+    }
     if (_stopped) {
       await controller.dispose();
       return;

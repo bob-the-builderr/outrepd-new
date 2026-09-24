@@ -51,13 +51,13 @@ class MatchHistoryScreen extends StatelessWidget {
           ),
           const SizedBox(height: 22),
           SectionHeader(title: L.of(context).allMatches),
-          if (demoMatches.isEmpty)
+          if (matchHistory.isEmpty)
             EmptyState(
               icon: Icons.sports_mma_outlined,
               title: L.of(context).noMatchesTitle,
               body: L.of(context).noMatchesBody,
             ),
-          ...demoMatches.map(
+          ...matchHistory.map(
             (m) => Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: MatchRow(m: m),
@@ -129,16 +129,19 @@ class MatchRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${muscleGroupLabel(L.of(context), m.muscleGroup)}'
-                  ' vs ${m.opponent}',
+                  m.won
+                      ? L.of(context).wonVs(m.opponent)
+                      : L.of(context).lostVs(m.opponent),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: context.type.body.copyWith(color: context.colors.text),
                 ),
                 const SizedBox(height: 3),
+                // Reps, not kilos. The kilo pair outlived the weights it was
+                // measuring by several months.
                 Text(
-                  '${formatVolume(context, L.of(context), m.userVolume)}'
-                  ' · ${formatVolume(context, L.of(context), m.opponentVolume)}'
+                  '${localNumber(context, m.userReps)} – '
+                  '${localNumber(context, m.opponentReps)}'
                   ' · ${relativeDays(context, m.daysAgo)}',
                   style: context.type.label.copyWith(color: context.colors.muted),
                 ),

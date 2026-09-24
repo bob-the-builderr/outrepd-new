@@ -1,0 +1,518 @@
+-- OUTREPD — the smallest schema that makes a duel real.
+--
+-- Three tables. A profile is who somebody is on the ladder; a set is one
+-- minute of push-ups with the evidence behind the count; a duel is two sets
+-- compared. Everything else the app shows — history, the board, the accuracy
+-- record — is a query over these.
+--
+-- Two rules run through the whole file, and both exist because the client is
+-- a phone in somebody else's hands:
+--
+--   1. **Nobody writes their own rank.** Not the tier, not the LP, not the
+--      win count. Those columns are written by `settle_duel` and by nothing
+--      else. A client that could write them could type itself to the top.
+--   2. **A score carries its evidence.** Every set stores what the camera
+--      counted *and* what the lifter confirmed, because today the lifter has
+--      the last word and one day a server may need to check. Evidence cannot
+--      be added to matches that are already over, so it is stored from the
+--      first row.
+
+-- ─────────────────────────────── profiles ────────────────────────────────────
+
+create table if not exists profiles (
+  id            uuid primary key references auth.users on delete cascade,
+  username      text not null unique
+                check (char_length(username) between 2 and 20),
+  -- Null until `set_my_username` has been called once. Every account gets
+  -- exactly one rename, and this is what `set_my_username` checks to know
+  -- whether that one has already been spent.
+  username_changed_at timestamptz,
+  -- Points into the `avatars` storage bucket. Null means the drawn initial
+  -- every screen already falls back to, not a broken image.
+  avatar_url    text,
+  country       text,
+  created_at    timestamptz not null default now(),
+
+  -- The ladder. Seven tiers of five divisions; LP runs 0..99 inside a
+  -- division. `top_tier()` in ladder.sql is the same number.
+  tier_idx      int  not null default 0 check (tier_idx between 0 and 6),
+  div_idx       int  not null default 0 check (div_idx  between 0 and 4),
+  lp            int  not null default 0 check (lp between 0 and 99),
+
+  -- The floor: the highest tier ever held. A tier once reached is kept, so a
+  -- losing streak can cost divisions and never the tier itself.
+  peak_tier_idx int  not null default 0 check (peak_tier_idx between 0 and 6),
+
+  -- Placements. Until these are done there is no rank at all, which is the
+  -- point of them.
+  placements_done int not null default 0 check (placements_done between 0 and 5),
+  placement_wins  int not null default 0 check (placement_wins  between 0 and 5),
+
+  wins          int not null default 0 check (wins   >= 0),
+  losses        int not null default 0 check (losses >= 0),
+  win_streak    int not null default 0 check (win_streak  >= 0),
+  best_streak   int not null default 0 check (best_streak >= 0),
+
+  total_reps    int not null default 0 check (total_reps >= 0),
+  best_set      int not null default 0 check (best_set   >= 0),
+
+  -- ── what this lifter has asked for ──────────────────────────────────────
+  --
+  -- Preferences, not ladder state, so the guard below leaves them alone: a
+  -- client may write these and only these about itself.
+
+  -- Who may be handed this account's stored sets to race.
+  challengeable text not null default 'everyone'
+                check (challengeable in ('everyone', 'friends', 'nobody')),
+
+  -- Whether to appear on the boards at all, and whether the country board is
+  -- one of them. Enforced in `leaderboard()` rather than filtered on the
+  -- phone, because a preference a client can skip is not a preference.
+  show_on_board bool not null default true,
+  show_country  bool not null default true,
+
+  -- Which of the three things that actually happen are worth being told
+  -- about. Checked by the triggers in notify.sql, so a notice somebody said
+  -- they did not want is never written down in the first place.
+  notify_raced          bool not null default true,
+  notify_friend_request bool not null default true,
+  notify_friend_ok      bool not null default true,
+  notify_challenged     bool not null default true,
+
+  updated_at    timestamptz not null default now()
+);
+
+-- For a project created before the preferences above existed.
+alter table profiles add column if not exists challengeable text not null
+  default 'everyone';
+alter table profiles drop constraint if exists profiles_challengeable_check;
+alter table profiles add constraint profiles_challengeable_check
+  check (challengeable in ('everyone', 'friends', 'nobody'));
+alter table profiles add column if not exists show_on_board bool not null
+  default true;
+alter table profiles add column if not exists show_country bool not null
+  default true;
+alter table profiles add column if not exists notify_raced bool not null
+  default true;
+alter table profiles add column if not exists notify_friend_request bool
+  not null default true;
+alter table profiles add column if not exists notify_friend_ok bool not null
+  default true;
+alter table profiles add column if not exists notify_challenged bool not null
+  default true;
+alter table profiles add column if not exists avatar_url text;
+alter table profiles add column if not exists username_changed_at timestamptz;
+
+comment on column profiles.lp is
+  'Written by settle_duel only. The client cannot move its own rank.';
+
+-- For a project created when the ladder had nine tiers.
+--
+-- `create table if not exists` above does nothing to a table that already
+-- exists, so the narrower checks have to be applied by hand. Any account
+-- sitting on a rung that no longer exists comes down to Master first — there
+-- is nowhere else for it to be, and a row that violates its own constraint
+-- cannot be written again by anything.
+--
+-- The guard trigger refuses writes to these columns, including this one, so
+-- it is opened for the length of the transaction exactly the way settle_duel
+-- does it.
+do $$
+begin
+  perform set_config('outrepd.settling', 'on', true);
+  update profiles
+     set tier_idx      = least(tier_idx, 6),
+         peak_tier_idx = least(peak_tier_idx, 6)
+   where tier_idx > 6 or peak_tier_idx > 6;
+  perform set_config('outrepd.settling', 'off', true);
+end $$;
+
+alter table profiles drop constraint if exists profiles_tier_idx_check;
+alter table profiles add constraint profiles_tier_idx_check
+  check (tier_idx between 0 and 6);
+alter table profiles drop constraint if exists profiles_peak_tier_idx_check;
+alter table profiles add constraint profiles_peak_tier_idx_check
+  check (peak_tier_idx between 0 and 6);
+
+-- The board reads this constantly, and always in the same order.
+create index if not exists profiles_ladder_idx
+  on profiles (tier_idx desc, div_idx desc, lp desc);
+
+-- ──────────────────────────────── sets ───────────────────────────────────────
+
+create table if not exists sets (
+  id            uuid primary key default gen_random_uuid(),
+  profile_id    uuid not null references profiles on delete cascade,
+  created_at    timestamptz not null default now(),
+
+  -- The two numbers, kept apart on purpose.
+  --
+  -- `reps_camera` is what the counter scored. `reps` is what the lifter
+  -- confirmed, and it is the one that plays. Storing only the second would
+  -- throw away the only measurement of the counter this project will ever
+  -- have; storing only the first would mean the app had overruled somebody
+  -- about their own set.
+  reps          int  not null check (reps between 0 and 300),
+  reps_camera   int  not null check (reps_camera between 0 and 300),
+
+  -- How far a typical rep travelled against this lifter's own deepest, and
+  -- whether the counter's three signals agreed. Both come out of the counter
+  -- and both feed the LP.
+  depth         real not null default 0 check (depth between 0 and 1),
+  confident     bool not null default false,
+
+  duration_ms   int  not null check (duration_ms > 0),
+
+  -- Set when the lifter walked out mid-round. A duel that ends this way is a
+  -- loss whatever the count said at the moment they left.
+  gave_up       bool not null default false,
+
+  -- When each rep landed, in milliseconds from the start of the set.
+  --
+  -- This is what lets an opponent's bar move at their own pace instead of
+  -- their total spread evenly across the minute. Evenly is a lie — nobody is
+  -- metronomic, and the last ten seconds of a minute of push-ups are nothing
+  -- like the first — and racing a lie feels like racing a progress bar.
+  --
+  -- Small: a hundred reps is a hundred integers, a few hundred bytes. The
+  -- pose recording it is read from is nine hundred kilobytes, which is why
+  -- that one is not always kept and this one always is.
+  rep_times     int[] not null default '{}'
+                check (array_length(rep_times, 1) is null
+                       or array_length(rep_times, 1) <= 300),
+
+  -- The pose recording, when there is one. Deliberately not always: a minute
+  -- of frames is about 900 KB, so the free tier holds roughly a thousand of
+  -- them. Uploaded when the counter was unsure, or when the lifter offers it.
+  recording_path text,
+
+  -- Which duel consumed this set, if any. A set is faced once.
+  claimed_by    uuid,
+
+  -- Set only for a rematch: this set is not for the open pool, it is
+  -- reserved for exactly this one lifter to find with `find_targeted_set`.
+  -- Null is the ordinary case and means "anyone find_opponent_set matches".
+  challenge_target uuid references profiles on delete set null
+);
+
+-- For a project that already has the table from an earlier paste.
+alter table sets add column if not exists rep_times int[] not null default '{}';
+alter table sets add column if not exists challenge_target uuid
+  references profiles on delete set null;
+
+create index if not exists sets_open_idx
+  on sets (profile_id, created_at desc)
+  where claimed_by is null;
+
+-- Reps are counted when the set is stored, not when it is raced.
+--
+-- A set is push-ups somebody did. Counting them at settle time meant the
+-- challenger's reps landed and the defender's never did — their set was raced
+-- *by* somebody, and nothing ever added it to their own total.
+create or replace function count_reps_of_set()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  perform set_config('outrepd.settling', 'on', true);
+  update profiles set
+    total_reps = total_reps + new.reps,
+    best_set   = greatest(best_set, new.reps)
+  where id = new.profile_id;
+  perform set_config('outrepd.settling', 'off', true);
+  return new;
+end;
+$$;
+
+drop trigger if exists sets_count_reps on sets;
+create trigger sets_count_reps
+  after insert on sets
+  for each row execute function count_reps_of_set();
+
+-- ──────────────────────────────── duels ──────────────────────────────────────
+
+create table if not exists duels (
+  id            uuid primary key default gen_random_uuid(),
+  created_at    timestamptz not null default now(),
+
+  challenger    uuid not null references profiles on delete cascade,
+  defender      uuid not null references profiles on delete cascade,
+  challenger_set uuid not null references sets on delete cascade,
+  defender_set   uuid not null references sets on delete cascade,
+
+  -- Null on a draw, which the reps allow and the ladder has to survive.
+  winner        uuid references profiles on delete set null,
+
+  -- A friend room is a real duel and not a rung. Unranked duels are recorded
+  -- and pay nothing: not LP, not the win record the ladder is built on.
+  ranked        bool not null default true,
+
+  lp_challenger int not null default 0,
+  lp_defender   int not null default 0,
+
+  check (challenger <> defender)
+);
+
+create index if not exists duels_for_profile_idx
+  on duels (challenger, created_at desc);
+create index if not exists duels_against_profile_idx
+  on duels (defender, created_at desc);
+
+-- ───────────────────────────── row level security ────────────────────────────
+
+alter table profiles enable row level security;
+alter table sets     enable row level security;
+alter table duels    enable row level security;
+
+-- Anyone signed in can read any profile: that is what a leaderboard is.
+drop policy if exists "profiles are public to signed-in lifters" on profiles;
+create policy "profiles are public to signed-in lifters"
+  on profiles for select
+  to authenticated
+  using (true);
+
+drop policy if exists "a lifter creates their own profile" on profiles;
+create policy "a lifter creates their own profile"
+  on profiles for insert
+  to authenticated
+  with check (auth.uid() = id);
+
+-- The only columns a lifter may change about themselves are the ones that are
+-- about them rather than about their standing. The ladder columns are locked
+-- by the trigger below, because a column list in a policy cannot express
+-- "these may change and those may not".
+drop policy if exists "a lifter edits their own profile" on profiles;
+create policy "a lifter edits their own profile"
+  on profiles for update
+  to authenticated
+  using (auth.uid() = id)
+  with check (auth.uid() = id);
+
+create or replace function guard_ladder_columns()
+returns trigger
+language plpgsql
+as $$
+begin
+  -- settle_duel runs as the definer and sets this for the length of its
+  -- transaction. Anything else touching these columns is a client trying to
+  -- write its own rank.
+  if current_setting('outrepd.settling', true) = 'on' then
+    return new;
+  end if;
+
+  if new.tier_idx        is distinct from old.tier_idx
+  or new.div_idx         is distinct from old.div_idx
+  or new.lp              is distinct from old.lp
+  or new.peak_tier_idx   is distinct from old.peak_tier_idx
+  or new.wins            is distinct from old.wins
+  or new.losses          is distinct from old.losses
+  or new.win_streak      is distinct from old.win_streak
+  or new.best_streak     is distinct from old.best_streak
+  or new.placements_done is distinct from old.placements_done
+  or new.placement_wins  is distinct from old.placement_wins
+  or new.total_reps      is distinct from old.total_reps
+  or new.best_set        is distinct from old.best_set then
+    raise exception 'rank and record are settled by the server, not the client';
+  end if;
+
+  new.updated_at := now();
+  return new;
+end;
+$$;
+
+drop trigger if exists profiles_guard_ladder on profiles;
+create trigger profiles_guard_ladder
+  before update on profiles
+  for each row execute function guard_ladder_columns();
+
+-- A set belongs to the lifter who did it. They may write it once and read
+-- their own; everyone can read a set that a duel has already joined them to.
+drop policy if exists "a lifter writes their own sets" on sets;
+create policy "a lifter writes their own sets"
+  on sets for insert
+  to authenticated
+  with check (auth.uid() = profile_id);
+
+drop policy if exists "a lifter reads their own sets" on sets;
+create policy "a lifter reads their own sets"
+  on sets for select
+  to authenticated
+  using (auth.uid() = profile_id);
+
+-- Duels are readable by the two people in them, and by nobody else.
+drop policy if exists "a lifter reads their own duels" on duels;
+create policy "a lifter reads their own duels"
+  on duels for select
+  to authenticated
+  using (auth.uid() = challenger or auth.uid() = defender);
+
+-- Nothing inserts into duels directly. settle_duel does it, as the definer.
+
+-- ──────────────────────────────── blocks ─────────────────────────────────────
+
+-- Somebody you want nothing further to do with.
+--
+-- One row, one direction: you blocked them. It is read from both ends
+-- wherever it is enforced, because blocking has to work whichever of the two
+-- opens the app — but only one of you gets to undo it, and they are not told
+-- it happened.
+create table if not exists blocks (
+  blocker    uuid not null references profiles on delete cascade,
+  blocked    uuid not null references profiles on delete cascade,
+  created_at timestamptz not null default now(),
+  primary key (blocker, blocked),
+  check (blocker <> blocked)
+);
+
+create index if not exists blocks_blocked_idx on blocks (blocked);
+
+alter table blocks enable row level security;
+
+-- Only the blocker sees the row. Showing it to the blocked person would
+-- tell them, which is the one thing a block must not do.
+drop policy if exists "a lifter reads their own blocks" on blocks;
+create policy "a lifter reads their own blocks"
+  on blocks for select
+  to authenticated
+  using (auth.uid() = blocker);
+
+drop policy if exists "a lifter blocks in their own name" on blocks;
+create policy "a lifter blocks in their own name"
+  on blocks for insert
+  to authenticated
+  with check (auth.uid() = blocker);
+
+drop policy if exists "a lifter unblocks their own" on blocks;
+create policy "a lifter unblocks their own"
+  on blocks for delete
+  to authenticated
+  using (auth.uid() = blocker);
+
+-- ──────────────────────────────────── mutes ───────────────────────────────────
+
+-- Somebody whose stored sets you would rather not be offered.
+--
+-- Lighter than a block: it says nothing to the friendship, the profile is
+-- still visible, and they are never told. One row, one direction, checked
+-- only from the muter's own side — muting somebody stops them turning up as
+-- an opponent for you; it says nothing about whether your own sets still
+-- turn up for them.
+create table if not exists mutes (
+  muter      uuid not null references profiles on delete cascade,
+  muted      uuid not null references profiles on delete cascade,
+  created_at timestamptz not null default now(),
+  primary key (muter, muted),
+  check (muter <> muted)
+);
+
+create index if not exists mutes_muted_idx on mutes (muted);
+
+alter table mutes enable row level security;
+
+-- Only the muter sees the row, same as a block: it must not be a way to find
+-- out somebody muted you.
+drop policy if exists "a lifter reads their own mutes" on mutes;
+create policy "a lifter reads their own mutes"
+  on mutes for select
+  to authenticated
+  using (auth.uid() = muter);
+
+drop policy if exists "a lifter mutes in their own name" on mutes;
+create policy "a lifter mutes in their own name"
+  on mutes for insert
+  to authenticated
+  with check (auth.uid() = muter);
+
+drop policy if exists "a lifter unmutes their own" on mutes;
+create policy "a lifter unmutes their own"
+  on mutes for delete
+  to authenticated
+  using (auth.uid() = muter);
+
+-- ──────────────────────────────── reports ────────────────────────────────────
+
+-- Somebody saying something is wrong.
+--
+-- Write-only from the app's side: a reporter may file one and can never read
+-- the pile back, because the pile is about other people. Nothing in the app
+-- reads this table at all — it is read by whoever is looking at reports, in
+-- the dashboard.
+create table if not exists reports (
+  id          uuid primary key default gen_random_uuid(),
+  reporter    uuid not null references profiles on delete cascade,
+  reported    uuid references profiles on delete set null,
+  created_at  timestamptz not null default now(),
+
+  reason text not null
+         check (reason in ('cheating', 'harassment', 'content',
+                           'impersonation', 'other')),
+
+  -- Optional, and capped: a free text box with no limit is a free text box
+  -- somebody will paste a novel into.
+  details text not null default '' check (char_length(details) <= 1000)
+);
+
+create index if not exists reports_reported_idx
+  on reports (reported, created_at desc);
+
+alter table reports enable row level security;
+
+drop policy if exists "a lifter files their own reports" on reports;
+create policy "a lifter files their own reports"
+  on reports for insert
+  to authenticated
+  with check (auth.uid() = reporter);
+
+-- Deliberately no select policy. Filing a report does not entitle anybody to
+-- read reports, including their own — there is nothing useful in reading it
+-- back, and a readable pile is one more thing to leak.
+
+-- ──────────────────────────────── avatars ─────────────────────────────────────
+
+-- The photo behind `profiles.avatar_url`.
+--
+-- Public read, because an avatar is drawn on everyone else's screen too — the
+-- leaderboard, a stranger's profile, a shared card. Public storage is not
+-- public data: nothing here is a photo unless a lifter chose to upload one,
+-- and the path convention below is what keeps one account from overwriting
+-- another's.
+--
+-- Path convention: `<account id>/photo`. `storage.foldername(name)` splits
+-- that on `/`, so its first element is the id a write has to match.
+insert into storage.buckets (id, name, public)
+values ('avatars', 'avatars', true)
+on conflict (id) do nothing;
+
+drop policy if exists "avatars are public to read" on storage.objects;
+create policy "avatars are public to read"
+  on storage.objects for select
+  using (bucket_id = 'avatars');
+
+drop policy if exists "a lifter uploads their own avatar" on storage.objects;
+create policy "a lifter uploads their own avatar"
+  on storage.objects for insert
+  to authenticated
+  with check (
+    bucket_id = 'avatars'
+    and (storage.foldername(name))[1] = auth.uid()::text
+  );
+
+drop policy if exists "a lifter replaces their own avatar" on storage.objects;
+create policy "a lifter replaces their own avatar"
+  on storage.objects for update
+  to authenticated
+  using (
+    bucket_id = 'avatars'
+    and (storage.foldername(name))[1] = auth.uid()::text
+  );
+
+drop policy if exists "a lifter deletes their own avatar" on storage.objects;
+create policy "a lifter deletes their own avatar"
+  on storage.objects for delete
+  to authenticated
+  using (
+    bucket_id = 'avatars'
+    and (storage.foldername(name))[1] = auth.uid()::text
+  );

@@ -1,17 +1,28 @@
-import 'dart:ui' show ImageFilter;
+/// Home: your rank, and the three ways to start something.
+///
+/// Stripped back to what the screen is for. It used to open on a 280dp painted
+/// crest wrapped in two blurred copies of itself, with the LP number set at
+/// display size — a trophy cabinet you had to scroll past to reach the button
+/// that starts a match.
+///
+/// Now the badge is the drawn polygon every other screen uses, at a size that
+/// leaves the primary action above the fold, and the rank reads as one block:
+/// shape, name, bar, one line of numbers.
+library;
 
 import 'package:flutter/material.dart';
 
+import '../connection.dart';
+import '../backend/backend.dart';
 import '../data.dart';
-import '../motion.dart';
 import '../l10n/app_localizations.dart';
-import '../type_scale.dart';
 import '../theme.dart';
+import '../tier_badge.dart';
 import '../widgets.dart';
 import 'match_entry.dart';
-import 'match_history.dart';
-import 'roadmap.dart';
+import 'match_flow.dart';
 import 'notifications.dart';
+import 'progression.dart';
 
 class MatchScreen extends StatelessWidget {
   const MatchScreen({super.key});
@@ -19,375 +30,516 @@ class MatchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = demoProfile;
-    final unread = demoNotifications.where((n) => n.unread).length;
 
+    // The screen has one job in three situations, and the rank block and the
+    // buttons both change with it: an account with no tier yet is doing
+    // placements, an account with no network can still practise, and everyone
+    // else is looking for a match.
     return Scaffold(
-      appBar: AppBar(
-        // Home tab — never show a back arrow, whatever pushed us here.
-        automaticallyImplyLeading: false,
-        title: const Text('OUTREPD'),
-        actions: [
-          IconButton(
-            tooltip: L.of(context).matchHistory,
-            icon: const Icon(Icons.history),
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const MatchHistoryScreen()),
-            ),
-          ),
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.notifications_none),
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => const NotificationsScreen(),
-                  ),
-                ),
-              ),
-              if (unread > 0)
-                Positioned(
-                  top: 10,
-                  right: 10,
-                  child: Container(
-                    width: 9,
-                    height: 9,
-                    decoration: const BoxDecoration(
-                      color: AppColors.loss,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ),
-            ],
-          ),
-          const SizedBox(width: 4),
-        ],
-      ),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-        children: [
-          _RankCard(p: p),
-          const SizedBox(height: 24),
-          const _StartMatchActions(),
-        ],
-      ),
-    );
-  }
-}
+      backgroundColor: context.colors.background,
+      body: SafeArea(
+        bottom: false,
+        child: ListenableBuilder(
+          listenable: Connection.instance,
+          builder: (context, _) {
+            final offline = !Connection.instance.online;
 
-class _RankCard extends StatelessWidget {
-  const _RankCard({required this.p});
-  final Profile p;
-
-  @override
-  Widget build(BuildContext context) {
-    final tierColor = kTiers[p.tierIdx.clamp(0, kTiers.length - 1)].color;
-    // The badge dominates the screen, so size it off the viewport rather than
-    // a fixed number. The halo hugs it closely — a wide one washed the glow
-    // out into a haze instead of rimming the badge.
-    final badge = MediaQuery.of(context).size.width * 0.74;
-    // The box only reserves layout space — the glow is free to spill past it
-    // because the stack does not clip. Padding it out just pushed the buttons
-    // below the fold.
-    final halo = badge;
-
-    void openRoad() => Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => RoadmapScreen(profile: p)),
-        );
-
-    // No card behind it: the badge and its halo sit straight on the page.
-    return Padding(
-      padding: const EdgeInsets.only(top: 8, bottom: 4),
-      child: Column(
-        children: [
-          GestureDetector(
-            onTap: openRoad,
-            child: SizedBox(
-              width: halo,
-              height: halo,
-              child: Stack(
-                alignment: Alignment.center,
-                clipBehavior: Clip.none,
-                children: [
-                // Blurred, tinted copies of the badge itself sit behind it, so
-                // the light follows the crest's own silhouette instead of
-                // haloing it with a plain circle.
-                _BadgeGlow(
-                  tierIdx: p.tierIdx,
-                  color: tierColor,
-                  size: badge,
-                  blur: 26,
-                  opacity: 0.5,
-                ),
-                _BadgeGlow(
-                  tierIdx: p.tierIdx,
-                  color: tierColor,
-                  size: badge,
-                  blur: 9,
-                  opacity: 0.65,
-                ),
-                  Breathe(child: TierBadge(tierIdx: p.tierIdx, size: badge)),
-                ],
-              ),
-            ),
-          ),
-          // Pulled up into the crest's own transparent margin, which otherwise
-          // reads as dead space between the artwork and the text.
-          Transform.translate(
-            offset: Offset(0, -badge * 0.12),
-            child: Column(
+            return ListView(
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
               children: [
-                // Without a cue the tappable badge goes undiscovered. It sits
-                // above the rank so the two read as one block, and is itself
-                // tappable — people reach for the words, not just the crest.
-                GestureDetector(
-                  onTap: openRoad,
-                  behavior: HitTestBehavior.opaque,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 4,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          L.of(context).viewRoadmap.toUpperCase(),
-                          style: context.type.micro.copyWith(
-                            color: context.colors.brand.withValues(alpha: 0.9),
-                          ),
-                        ),
-                        Icon(
-                          Icons.chevron_right,
-                          size: 15,
-                          color: context.colors.brand.withValues(alpha: 0.9),
-                        ),
-                      ],
-                    ),
+                _TopRow(profile: p),
+                const SizedBox(height: 18),
+                if (!p.isRanked)
+                  _Unranked(profile: p)
+                else
+                  // Offline the rank is still true, it just cannot change, so
+                  // it steps back rather than disappearing.
+                  Opacity(
+                    opacity: offline ? 0.45 : 1,
+                    child: _Rank(profile: p),
                   ),
-                ),
-                // Equal air above and below so the rank reads as centred
-                // between the cue and the LP bar.
-                const SizedBox(height: 10),
-                Text(
-                  tierLabel(L.of(context), p.tierIdx, p.divIdx),
-                  style: context.type.title.copyWith(color: context.colors.text),
-                ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 26),
+                if (offline)
+                  const _OfflineActions()
+                else if (!p.isRanked)
+                  _PlacementActions(profile: p)
+                else
+                  const _Actions(),
               ],
-            ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+// ─────────────────────────────── unranked ────────────────────────────────────
+
+/// A new account: no tier, a dashed outline where the badge goes, and either
+/// an invitation to start placements or how far through them you are.
+class _Unranked extends StatelessWidget {
+  const _Unranked({required this.profile});
+
+  final Profile profile;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final started = profile.placementsDone > 0;
+
+    return Column(
+      children: [
+        TierBadge.unranked(
+          size: (MediaQuery.of(context).size.width * 0.32).clamp(76.0, 110.0),
+        ),
+        const SizedBox(height: 9),
+        Text(
+          l.unranked,
+          style: TextStyle(
+            color: context.colors.text,
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
           ),
-          // The LP number leads rather than trailing the bar as a caption. It
-          // is the one figure this screen is about — how close you are to the
-          // next rank — and it was reading as small print under a progress bar.
+        ),
+        const SizedBox(height: 6),
+
+        if (!started)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 34),
+            child: Text(
+              l.placementsForFirstTier(localNumber(context, kPlacementDuels)),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: context.colors.muted,
+                fontSize: 11,
+                height: 1.6,
+              ),
+            ),
+          )
+        else ...[
+          // One pip per duel. A bar would say "some progress"; five pips say
+          // exactly how many are left, which is the number people want.
+          const SizedBox(height: 6),
           Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            textBaseline: TextBaseline.alphabetic,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              PopOnChange(
-                value: p.lp,
-                child: Text(
-                  localNumber(context, p.lp),
-                  style: context.type.display.copyWith(
-                    color: context.colors.text,
+              for (var i = 0; i < kPlacementDuels; i++) ...[
+                if (i > 0) const SizedBox(width: 6),
+                Container(
+                  width: 26,
+                  height: 5,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(3),
+                    color: i < profile.placementsDone
+                        ? context.colors.brand
+                        : context.colors.surfaceRaised,
                   ),
                 ),
-              ),
-              const SizedBox(width: 6),
-              Text(
-                L.of(context).lpOutOf(localNumber(context, 100)),
-                style: context.type.label.copyWith(color: context.colors.muted),
-              ),
+              ],
             ],
           ),
-          const SizedBox(height: 14),
-          GrowingBar(
-            value: p.lp / 100,
-            colour: context.colors.brand,
-            background: context.colors.surfaceRaised,
-          ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 9),
           Text(
-            L.of(context).toPromotion(localNumber(context, 100 - p.lp)),
-            style: context.type.label.copyWith(color: context.colors.muted),
-          ),
-          if (p.winStreak > 0) ...[
-            const SizedBox(height: 14),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-              decoration: BoxDecoration(
-                color: AppColors.win.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.local_fire_department,
-                      color: AppColors.win, size: 16),
-                  const SizedBox(width: 6),
-                  Text(
-                    L.of(context).winStreak(localNumber(context, p.winStreak)),
-                    style: context.type.label.copyWith(color: AppColors.win),
-                  ),
-                ],
-              ),
+            l.placementsLeft(
+              localNumber(context, profile.placementsDone),
+              localNumber(context, kPlacementDuels),
+              localNumber(context, profile.placementsLeft),
             ),
-          ],
+            style: TextStyle(color: context.colors.muted, fontSize: 11),
+          ),
         ],
-      ),
-    );
-  }
-}
-
-/// A soft, tinted copy of the tier badge used to light its own edges.
-class _BadgeGlow extends StatelessWidget {
-  const _BadgeGlow({
-    required this.tierIdx,
-    required this.color,
-    required this.size,
-    required this.blur,
-    required this.opacity,
-  });
-
-  final int tierIdx;
-  final Color color;
-  final double size;
-  final double blur;
-  final double opacity;
-
-  @override
-  Widget build(BuildContext context) {
-    return Opacity(
-      opacity: opacity,
-      child: ImageFiltered(
-        imageFilter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
-        child: ColorFiltered(
-          // Paints every opaque pixel of the crest in the tier colour while
-          // keeping its alpha, so the blur spreads the shape, not a box.
-          colorFilter: ColorFilter.mode(color, BlendMode.srcATop),
-          child: TierBadge(tierIdx: tierIdx, size: size),
-        ),
-      ),
-    );
-  }
-}
-
-const muscleIcons = <String, IconData>{
-  'Chest': Icons.fitness_center,
-  'Back': Icons.rowing,
-  'Legs': Icons.directions_run,
-  'Shoulders': Icons.accessibility_new,
-  'Arms': Icons.sports_gymnastics,
-  'Core': Icons.self_improvement,
-};
-
-/// The three ways into a match: ranked search up top, then the two social
-/// routes side by side beneath it.
-class _StartMatchActions extends StatelessWidget {
-  const _StartMatchActions();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _PrimaryAction(
-          icon: Icons.search,
-          label: L.of(context).searchOpponent,
-          caption: L.of(context).searchOpponentHint,
-          onTap: () => pickMuscle(context, mode: MatchMode.ranked),
-        ),
-        const SizedBox(height: 12),
-        // Crews have their own tab now, so this row is just the friend route.
-        _SecondaryAction(
-          icon: Icons.person_add_alt_1,
-          label: L.of(context).challengeFriend,
-          onTap: () => showFriendRoomSheet(context),
-        ),
-        // No separate "train with the camera" route. The camera is not a mode
-        // you opt into any more — it is how a match is judged, so a button
-        // beside the match button offering the same thing without an opponent
-        // only invited people to practise counting instead of competing.
       ],
     );
   }
 }
 
-class _PrimaryAction extends StatelessWidget {
-  const _PrimaryAction({
-    required this.icon,
-    required this.label,
-    required this.caption,
-    required this.onTap,
-  });
+class _PlacementActions extends StatelessWidget {
+  const _PlacementActions({required this.profile});
 
-  final IconData icon;
+  final Profile profile;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final started = profile.placementsDone > 0;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _FilledAction(
+          label: started ? l.nextPlacement : l.startPlacements,
+          onTap: () => startMatch(context, mode: MatchMode.ranked),
+        ),
+
+        if (!started) ...[
+          const SizedBox(height: 8),
+          Text(
+            l.placementsTerms(
+              localNumber(context, profile.placementsDone),
+              localNumber(context, kPlacementDuels),
+              localNumber(context, kDuelLength.inSeconds),
+            ),
+            textAlign: TextAlign.center,
+            style: TextStyle(color: context.colors.muted, fontSize: 11),
+          ),
+          const SizedBox(height: 18),
+          // Before the first duel the useful second option is a dry run, not
+          // another ranked game.
+          Center(
+            child: InkWell(
+              onTap: () => startMatch(context, mode: MatchMode.practice),
+              borderRadius: BorderRadius.circular(8),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+                child: Text(
+                  l.practiceFirst,
+                  style: TextStyle(color: context.colors.muted, fontSize: 12),
+                ),
+              ),
+            ),
+          ),
+        ] else ...[
+          const SizedBox(height: 12),
+          _OutlinedAction(
+            label: l.challengeFriend,
+            onTap: () => showFriendRoomSheet(context),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+// ──────────────────────────────── offline ────────────────────────────────────
+
+/// With no network there is no opponent, so the ranked button is dead and
+/// practice is promoted to the filled one. The camera does not need a server.
+class _OfflineActions extends StatelessWidget {
+  const _OfflineActions();
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: context.colors.surface,
+            borderRadius: BorderRadius.circular(13),
+            border: Border.all(color: context.colors.border, width: 0.5),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.wifi_off, size: 14, color: context.colors.muted),
+              const SizedBox(width: 7),
+              Text(
+                l.noConnection,
+                style: TextStyle(color: context.colors.muted, fontSize: 12),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 11),
+        // Visibly dead rather than hidden: a button that vanishes reads as the
+        // app losing a feature, and this one is coming back.
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          decoration: BoxDecoration(
+            color: context.colors.surfaceRaised,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Center(
+            child: Text(
+              l.findMatch,
+              style: TextStyle(
+                color: context.colors.faint,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 11),
+        _FilledAction(
+          label: l.practiceOffline,
+          onTap: () => startMatch(context, mode: MatchMode.practice),
+        ),
+        const SizedBox(height: 14),
+        Center(
+          child: InkWell(
+            onTap: () => Connection.instance.refresh(),
+            borderRadius: BorderRadius.circular(8),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Text(
+                l.retry,
+                style: TextStyle(color: context.colors.muted, fontSize: 12),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// ──────────────────────────────── top row ────────────────────────────────────
+
+/// The streak on the left, notifications on the right, and no title.
+///
+/// The app's name sat here for a while. It is the one thing on the screen the
+/// reader already knows — they opened it — so it was spending the best line on
+/// the page to say nothing.
+class _TopRow extends StatefulWidget {
+  const _TopRow({required this.profile});
+
+  final Profile profile;
+
+  @override
+  State<_TopRow> createState() => _TopRowState();
+}
+
+class _TopRowState extends State<_TopRow> {
+  /// How many things the server has to tell this lifter. Asked for here
+  /// rather than on the notifications screen, because the whole job of the
+  /// dot is to be the reason somebody opens that screen at all.
+  int _unread = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _countUnread();
+  }
+
+  Future<void> _countUnread() async {
+    if (!backend.available) return;
+    try {
+      final unread = await backend.unreadNotices();
+      if (mounted) setState(() => _unread = unread);
+    } on Object catch (error) {
+      // No dot rather than a wrong one.
+      debugPrint('Could not count notifications: $error');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final profile = widget.profile;
+    final unread = backend.available
+        ? _unread
+        : demoNotifications.where((n) => n.unread).length;
+
+    return Row(
+      children: [
+        if (profile.dayStreak > 0)
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: context.colors.border, width: 0.5),
+            ),
+            child: Text(
+              l.dayStreakCount(localNumber(context, profile.dayStreak)),
+              style: TextStyle(color: context.colors.text, fontSize: 12),
+            ),
+          ),
+        const Spacer(),
+        Stack(
+          alignment: Alignment.center,
+          clipBehavior: Clip.none,
+          children: [
+            InkWell(
+              // The screen marks them read, so the dot has to be asked
+              // again on the way back rather than left burning.
+              onTap: () async {
+                await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const NotificationsScreen(),
+                  ),
+                );
+                await _countUnread();
+              },
+              customBorder: const CircleBorder(),
+              child: Padding(
+                padding: const EdgeInsets.all(6),
+                child: Icon(
+                  Icons.notifications_none,
+                  size: 21,
+                  color: context.colors.text,
+                ),
+              ),
+            ),
+            if (unread > 0)
+              Positioned(
+                top: 4,
+                right: 4,
+                child: Container(
+                  width: 7,
+                  height: 7,
+                  decoration: BoxDecoration(
+                    color: context.colors.rival,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+// ────────────────────────────────── rank ─────────────────────────────────────
+
+class _Rank extends StatelessWidget {
+  const _Rank({required this.profile});
+
+  final Profile profile;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final toNext = (100 - profile.lp).clamp(0, 100);
+
+    return Column(
+      children: [
+        // Sized off the viewport so it holds its proportion on a small phone,
+        // but capped — past about 140dp it starts pushing the buttons under
+        // the fold, which is the one thing this screen must not do.
+        GestureDetector(
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => ProgressionScreen(profile: profile),
+            ),
+          ),
+          child: TierBadge(
+            tierIndex: profile.tierIdx,
+            size: (MediaQuery.of(context).size.width * 0.32).clamp(96.0, 132.0),
+          ),
+        ),
+        const SizedBox(height: 18),
+        Text(
+          tierLabel(l, profile.tierIdx, profile.divIdx),
+          style: TextStyle(
+            color: context.colors.text,
+            fontSize: 26,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 16),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(3),
+          child: LinearProgressIndicator(
+            value: profile.lp / 100,
+            minHeight: 5,
+            backgroundColor: context.colors.surfaceRaised,
+            valueColor: AlwaysStoppedAnimation(context.colors.brand),
+          ),
+        ),
+        const SizedBox(height: 8),
+        // One line, not three. It used to be an LP number at display size, a
+        // bar, and a separate "36 to promotion" caption underneath — three
+        // pieces of furniture for one fact.
+        Text(
+          '${localNumber(context, profile.lp)} / '
+          '${localNumber(context, 100)} LP · '
+          '${l.toNextTier(localNumber(context, toNext), nextRankName(l, profile.tierIdx, profile.divIdx))}',
+          style: TextStyle(color: context.colors.muted, fontSize: 12),
+        ),
+      ],
+    );
+  }
+}
+
+// ──────────────────────────────── actions ────────────────────────────────────
+
+/// Three ways in, weighted. One filled button for the thing most people came
+/// to do, one outlined for the social route, and practice as plain text —
+/// available to anyone looking for it, and not competing with the match.
+class _Actions extends StatelessWidget {
+  const _Actions();
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _FilledAction(
+          label: l.findMatch,
+          onTap: () => startMatch(context, mode: MatchMode.ranked),
+        ),
+        const SizedBox(height: 10),
+        // The terms of the thing you just agreed to, under the button rather
+        // than inside it.
+        Text(
+          l.rankedTerms(localNumber(context, kDuelLength.inSeconds)),
+          textAlign: TextAlign.center,
+          style: TextStyle(color: context.colors.muted, fontSize: 12),
+        ),
+
+        const SizedBox(height: 20),
+        _OutlinedAction(
+          label: l.challengeFriend,
+          onTap: () => showFriendRoomSheet(context),
+        ),
+
+        const SizedBox(height: 18),
+        Center(
+          child: InkWell(
+            onTap: () => startMatch(context, mode: MatchMode.practice),
+            borderRadius: BorderRadius.circular(8),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              child: Text(
+                l.practiceTerms,
+                style: TextStyle(color: context.colors.faint, fontSize: 13),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _FilledAction extends StatelessWidget {
+  const _FilledAction({required this.label, required this.onTap});
+
   final String label;
-  final String caption;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: context.colors.brand,
+      borderRadius: BorderRadius.circular(14),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(18),
-        child: Ink(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18),
-            // Keep both stops bright: mixing towards black turned the button
-            // a muddy grey next to the rest of the blue UI.
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color.lerp(context.colors.brand, Colors.white, 0.12)!,
-                context.colors.brand,
-              ],
+        borderRadius: BorderRadius.circular(14),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 18),
+          child: Center(
+            child: Text(
+              label,
+              style: TextStyle(
+                // The page background is the only colour dark enough to read
+                // on `brand`.
+                color: context.colors.background,
+                fontSize: 17,
+                fontWeight: FontWeight.w500,
+              ),
             ),
-            boxShadow: [
-              BoxShadow(
-                color: context.colors.brand.withValues(alpha: 0.3),
-                blurRadius: 18,
-                offset: const Offset(0, 6),
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Row(
-            // Top-aligned, not centred. The caption wraps to two lines in
-            // several of the fourteen languages, and an icon floating in the
-            // middle of a two-line block reads as a layout accident — beside
-            // the first line it reads as a bullet.
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 2),
-                child: Icon(icon, color: Colors.white, size: 26),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      label,
-                      style: context.type.heading.copyWith(color: Colors.white),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      caption,
-                      style: context.type.label.copyWith(
-                        color: Colors.white.withValues(alpha: 0.85),
-                        height: 1.35,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
           ),
         ),
       ),
@@ -395,36 +547,33 @@ class _PrimaryAction extends StatelessWidget {
   }
 }
 
-class _SecondaryAction extends StatelessWidget {
-  const _SecondaryAction({
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  });
+class _OutlinedAction extends StatelessWidget {
+  const _OutlinedAction({required this.label, required this.onTap});
 
-  final IconData icon;
   final String label;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    // Stacked so both cards keep the same height and weight no matter how
-    // long the label is.
-    return Panel(
+    return InkWell(
       onTap: onTap,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-      child: Column(
-        children: [
-          Icon(icon, color: context.colors.brand, size: 26),
-          const SizedBox(height: 10),
-          Text(
+      borderRadius: BorderRadius.circular(14),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 17),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: context.colors.border),
+        ),
+        child: Center(
+          child: Text(
             label,
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: context.type.label.copyWith(color: context.colors.text),
+            style: TextStyle(
+              color: context.colors.text,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
           ),
-        ],
+        ),
       ),
     );
   }

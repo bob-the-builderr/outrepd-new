@@ -14,7 +14,10 @@ class AppPalette extends ThemeExtension<AppPalette> {
     required this.background,
     required this.surface,
     required this.surfaceRaised,
+    required this.border,
     required this.muted,
+    required this.faint,
+    required this.rival,
     required this.text,
   });
 
@@ -26,11 +29,23 @@ class AppPalette extends ThemeExtension<AppPalette> {
   /// Cards and sheets.
   final Color surface;
 
-  /// Inputs, chips, dividers.
+  /// Inputs, chips, avatars, track fills.
   final Color surfaceRaised;
+
+  /// Hairlines. Drawn at half a pixel, so it reads as an edge rather than a
+  /// line — on a warm dark ground a full pixel looks drawn on.
+  final Color border;
 
   /// Secondary text.
   final Color muted;
+
+  /// Third-rank text: the description under a locked achievement, a caption
+  /// that must be present without competing.
+  final Color faint;
+
+  /// The opponent. Deliberately the one warm-but-not-yours colour in the set,
+  /// so a loss is legible at a glance without shouting.
+  final Color rival;
 
   /// Primary text and icons.
   final Color text;
@@ -41,7 +56,10 @@ class AppPalette extends ThemeExtension<AppPalette> {
     Color? background,
     Color? surface,
     Color? surfaceRaised,
+    Color? border,
     Color? muted,
+    Color? faint,
+    Color? rival,
     Color? text,
   }) {
     return AppPalette(
@@ -49,7 +67,10 @@ class AppPalette extends ThemeExtension<AppPalette> {
       background: background ?? this.background,
       surface: surface ?? this.surface,
       surfaceRaised: surfaceRaised ?? this.surfaceRaised,
+      border: border ?? this.border,
       muted: muted ?? this.muted,
+      faint: faint ?? this.faint,
+      rival: rival ?? this.rival,
       text: text ?? this.text,
     );
   }
@@ -62,7 +83,10 @@ class AppPalette extends ThemeExtension<AppPalette> {
       background: Color.lerp(background, other.background, t)!,
       surface: Color.lerp(surface, other.surface, t)!,
       surfaceRaised: Color.lerp(surfaceRaised, other.surfaceRaised, t)!,
+      border: Color.lerp(border, other.border, t)!,
       muted: Color.lerp(muted, other.muted, t)!,
+      faint: Color.lerp(faint, other.faint, t)!,
+      rival: Color.lerp(rival, other.rival, t)!,
       text: Color.lerp(text, other.text, t)!,
     );
   }
@@ -75,24 +99,37 @@ extension AppPaletteAccess on BuildContext {
 
 /// Colours lifted from the existing OUTREPD app so the two look like the
 /// same product.
+/// Warm dark. Every value is from the build spec and none of them are
+/// negotiable: a screen that mixes these with the old cool blues reads as two
+/// apps stitched together.
 const kDarkPalette = AppPalette(
-  brand: Color(0xFF4BB8FA), // signature blue
-  background: Color(0xFF010308), // near-black page background
-  surface: Color(0xFF0D1218),
-  surfaceRaised: Color(0xFF1A2630),
-  muted: Color(0xFF556070),
-  text: Colors.white,
+  brand: Color(0xFFE8DCC8), // "you" — the user, and every primary action
+  background: Color(0xFF121110),
+  surface: Color(0xFF1C1A18), // cards and list rows
+  surfaceRaised: Color(0xFF262320), // avatars, track fills, chips
+  border: Color(0xFF2C2926), // hairlines, drawn at half a pixel
+  muted: Color(0xFF8F8880),
+  faint: Color(0xFF5A544E),
+  rival: Color(0xFFE8846B), // the opponent
+  text: Color(0xFFF5EFE4),
 );
 
 /// The signature blue is too light to read as text on white, so the light
 /// theme uses a deeper version of the same hue. Everything else inverts.
+/// The same warmth inverted. The spec covers the dark theme only, so this is
+/// derived from it rather than invented: the same hues at the other end of the
+/// lightness range, with the accent darkened until it holds its own as text on
+/// a pale ground.
 const kLightPalette = AppPalette(
-  brand: Color(0xFF0B7FC7),
-  background: Color(0xFFF2F5F9),
+  brand: Color(0xFF8A6D3B),
+  background: Color(0xFFF7F3EC),
   surface: Color(0xFFFFFFFF),
-  surfaceRaised: Color(0xFFE2E8F0),
-  muted: Color(0xFF6B7684),
-  text: Color(0xFF0B1017),
+  surfaceRaised: Color(0xFFEDE7DC),
+  border: Color(0xFFDDD5C7),
+  muted: Color(0xFF6E665C),
+  faint: Color(0xFF9C948A),
+  rival: Color(0xFFC25B3F),
+  text: Color(0xFF1A1714),
 );
 
 AppPalette paletteFor(Brightness brightness) =>
@@ -102,38 +139,48 @@ AppPalette paletteFor(Brightness brightness) =>
 abstract final class AppColors {
   static const win = Color(0xFF22C55E);
   static const loss = Color(0xFFFF4444);
-  static const gold = Color(0xFFFFD700);
   static const white = Colors.white;
+
+  /// Podium metals, for the top three places on a board.
+  static const gold = Color(0xFFD9A94A);
+  static const silver = Color(0xFFA39C93);
+  static const bronze = Color(0xFFB4744A);
+
+  /// The online dot on a friend row.
+  ///
+  /// The spec calls for `success` and does not give it a value, so it is
+  /// derived: the same green as [win], pulled warmer and darker to sit in this
+  /// palette rather than on top of it. Worth confirming.
+  static const success = Color(0xFF6FA35C);
 }
 
 /// Rank ladder. Index maps to `tierIdx` on a profile.
 class Tier {
-  const Tier(this.name, this.color, this.asset, this.reward);
+  const Tier(this.name, this.color, this.reward);
   final String name;
   final Color color;
-  final String? asset;
-
-  /// The ring that goes round a profile picture at this tier. Named from the
-  /// tier so a promotion changes it without anything being wired up.
-  String get frame => 'assets/images/frames/${name.toLowerCase()}.png';
 
   /// What reaching this tier unlocks, shown on the roadmap.
   final String reward;
 }
 
+/// The ladder: seven tiers, Iron to Master.
+///
+/// Each colour is its crest's shield — the body of the badge in
+/// `tier_badge.dart`, not a token from anywhere else — so a tier's name
+/// written in text and its badge drawn beside it are the same colour.
+///
+/// There were nine. Mythic and Legend sat above Master as this app's own
+/// additions, and the crest artwork stops at seven: the wings run out at five
+/// feathers and a crown, and two more rungs past that had nothing left to say.
 const kTiers = <Tier>[
-  Tier('Stone', Color(0xFF6B6B6B), 'assets/images/stone.png',
-      'Stone border frame'),
-  Tier('Bronze', Color(0xFFCD7F32), 'assets/images/bronze.png', 'Bronze badge'),
-  Tier('Silver', Color(0xFFC0C0C0), 'assets/images/silver.png', 'Silver badge'),
-  Tier('Gold', Color(0xFFFFD700), 'assets/images/gold.png', 'Gold badge'),
-  Tier('Platinum', Color(0xFFA8D8EA), 'assets/images/platinum.png',
-      'Platinum badge'),
-  Tier('Diamond', Color(0xFF00FFFF), 'assets/images/diamond.png',
-      'Diamond badge'),
-  Tier('Master', Color(0xFFCC2200), 'assets/images/master.png', 'Master badge'),
-  Tier('Mythic', Color(0xFFFF8C00), 'assets/images/mythic.png', 'Mythic badge'),
-  Tier('Legend', Color(0xFF6A0DAD), 'assets/images/legend.png', 'Legend badge'),
+  Tier('Iron', Color(0xFF5E5E5B), 'Iron crest'),
+  Tier('Bronze', Color(0xFFA8663A), 'Bronze crest, one feather'),
+  Tier('Silver', Color(0xFF8894A0), 'Silver crest, two feathers'),
+  Tier('Gold', Color(0xFFB8912F), 'Gold crest, three feathers'),
+  Tier('Platinum', Color(0xFF8794A0), 'Platinum crest, four feathers, a gem'),
+  Tier('Diamond', Color(0xFF2F8F88), 'Diamond crest, five feathers and a gem'),
+  Tier('Master', Color(0xFFCFC3B0), 'Master crest, crowned'),
 ];
 
 ThemeData buildTheme(Brightness brightness) {
@@ -195,29 +242,19 @@ ThemeData buildTheme(Brightness brightness) {
           fontWeight: FontWeight.w700,
           letterSpacing: 0.5,
         ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         foregroundColor: p.text,
         minimumSize: const Size.fromHeight(56),
-        side: BorderSide(
-          color: p.text.withValues(alpha: 0.2),
-          width: 2,
-        ),
+        side: BorderSide(color: p.text.withValues(alpha: 0.2), width: 2),
         textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
     ),
-    listTileTheme: ListTileThemeData(
-      textColor: p.text,
-      iconColor: p.muted,
-    ),
+    listTileTheme: ListTileThemeData(textColor: p.text, iconColor: p.muted),
     dividerTheme: DividerThemeData(color: p.surfaceRaised),
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: dark ? const Color(0xFF1A1A1A) : p.surface,
@@ -227,16 +264,12 @@ ThemeData buildTheme(Brightness brightness) {
         (states) => TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w600,
-          color: states.contains(WidgetState.selected)
-              ? p.brand
-              : p.muted,
+          color: states.contains(WidgetState.selected) ? p.brand : p.muted,
         ),
       ),
       iconTheme: WidgetStateProperty.resolveWith(
         (states) => IconThemeData(
-          color: states.contains(WidgetState.selected)
-              ? p.brand
-              : p.muted,
+          color: states.contains(WidgetState.selected) ? p.brand : p.muted,
         ),
       ),
     ),

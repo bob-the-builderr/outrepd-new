@@ -1,0 +1,295 @@
+-- OUTREPD — telling people what happened while they were away.
+--
+-- This is the half of the async duel that was missing. You race somebody's
+-- stored minute and see the result immediately; *they* were not there. Until
+-- this file, nothing ever told them — their set was raced, their rank moved,
+-- their record changed, and the app said nothing the next time they opened
+-- it. A ladder people cannot feel themselves moving on is a ladder nobody
+-- plays twice.
+--
+-- Written by triggers rather than by the app, for the same reason the ladder
+-- is: the person being told is not the person holding the phone. A client
+-- cannot be asked to notify somebody else, because a client that can write
+-- into somebody else's notifications can write anything it likes there.
+--
+-- Nothing here notifies you about your own actions. You were present for
+-- those, and the screen already said so.
+
+create table if not exists notifications (
+  id          uuid primary key default gen_random_uuid(),
+
+  -- Who it is for.
+  profile_id  uuid not null references profiles on delete cascade,
+  created_at  timestamptz not null default now(),
+  read_at     timestamptz,
+
+  kind text not null
+       check (kind in ('raced', 'friend_request', 'friend_accepted', 'challenged')),
+
+  -- Who caused it. The id can go — accounts get deleted — so the name is
+  -- kept beside it: a notification that has forgotten who it was about is
+  -- worse than no notification.
+  actor       uuid references profiles on delete set null,
+  actor_name  text not null default '',
+
+  -- Only for 'raced'. The counts are stored rather than looked up, because
+  -- the sets they came from are the other half of a duel that is over, and
+  -- this row has to still make sense in a year.
+  duel_id     uuid references duels on delete cascade,
+  you_won     bool,
+  your_reps   int,
+  their_reps  int
+);
+
+-- For a project that already has the table from before 'challenged' existed.
+alter table notifications drop constraint if exists notifications_kind_check;
+alter table notifications add constraint notifications_kind_check
+  check (kind in ('raced', 'friend_request', 'friend_accepted', 'challenged'));
+
+-- Everything reads "mine, newest first", and the badge counts the unread.
+create index if not exists notifications_for_profile_idx
+  on notifications (profile_id, created_at desc);
+create index if not exists notifications_unread_idx
+  on notifications (profile_id) where read_at is null;
+
+alter table notifications enable row level security;
+
+-- Yours and nobody else's. There is deliberately no insert policy: every row
+-- here is written by a trigger below, and a client that could insert one
+-- could tell somebody they had been beaten by anyone it liked.
+drop policy if exists "a lifter reads their own notifications" on notifications;
+create policy "a lifter reads their own notifications"
+  on notifications for select
+  to authenticated
+  using (auth.uid() = profile_id);
+
+drop policy if exists "a lifter clears their own notifications" on notifications;
+create policy "a lifter clears their own notifications"
+  on notifications for delete
+  to authenticated
+  using (auth.uid() = profile_id);
+
+-- ──────────────────────────── being raced ────────────────────────────────────
+
+-- The defender finds out.
+--
+-- `settle_duel` inserts the duel, so this fires inside it. The challenger is
+-- not told: they are the one who just watched it happen.
+create or replace function notify_defender()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  challenger_name text;
+  mine int;
+  theirs int;
+begin
+  if not exists (
+    select 1 from profiles
+     where id = new.defender and notify_raced
+  ) then
+    return new;
+  end if;
+
+  select username into challenger_name from profiles where id = new.challenger;
+  select reps into theirs from sets where id = new.challenger_set;
+  select reps into mine   from sets where id = new.defender_set;
+
+  insert into notifications (
+    profile_id, kind, actor, actor_name,
+    duel_id, you_won, your_reps, their_reps
+  ) values (
+    new.defender, 'raced', new.challenger, coalesce(challenger_name, ''),
+    new.id, new.winner = new.defender, mine, theirs
+  );
+
+  return new;
+end;
+$$;
+
+drop trigger if exists duels_notify_defender on duels;
+create trigger duels_notify_defender
+  after insert on duels
+  for each row execute function notify_defender();
+
+-- ─────────────────────────── friend requests ─────────────────────────────────
+
+-- Somebody asked. A request nobody is told about is a request that sits
+-- unanswered forever, which is how the friends screen ends up looking broken.
+create or replace function notify_friend_request()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  asker text;
+begin
+  -- Only a real invitation. A row that arrives already accepted came from
+  -- somebody asking back, and that case is handled below.
+  if new.accepted_at is not null then
+    return new;
+  end if;
+
+  if not exists (
+    select 1 from profiles
+     where id = new.addressee and notify_friend_request
+  ) then
+    return new;
+  end if;
+
+  select username into asker from profiles where id = new.requester;
+  insert into notifications (profile_id, kind, actor, actor_name)
+  values (new.addressee, 'friend_request', new.requester, coalesce(asker, ''));
+  return new;
+end;
+$$;
+
+drop trigger if exists friendships_notify_request on friendships;
+create trigger friendships_notify_request
+  after insert on friendships
+  for each row execute function notify_friend_request();
+
+-- And they said yes.
+create or replace function notify_friend_accepted()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  accepter text;
+begin
+  -- Only on the moment it is accepted, not on every later write to the row.
+  if old.accepted_at is not null or new.accepted_at is null then
+    return new;
+  end if;
+
+  if not exists (
+    select 1 from profiles
+     where id = new.requester and notify_friend_ok
+  ) then
+    return new;
+  end if;
+
+  select username into accepter from profiles where id = new.addressee;
+  insert into notifications (profile_id, kind, actor, actor_name)
+  values (new.requester, 'friend_accepted', new.addressee,
+          coalesce(accepter, ''));
+  return new;
+end;
+$$;
+
+drop trigger if exists friendships_notify_accepted on friendships;
+create trigger friendships_notify_accepted
+  after update on friendships
+  for each row execute function notify_friend_accepted();
+
+-- ────────────────────────────── being challenged ──────────────────────────────
+
+-- Somebody reserved a set naming this account — a rematch. Fires from `sets`
+-- rather than `duels`: a challenge is not a duel yet, it is one set waiting
+-- for the other half, which is exactly the moment the target has to be told.
+create or replace function notify_challenged()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  challenger_name text;
+begin
+  if new.challenge_target is null then
+    return new;
+  end if;
+
+  if not exists (
+    select 1 from profiles
+     where id = new.challenge_target and notify_challenged
+  ) then
+    return new;
+  end if;
+
+  select username into challenger_name from profiles where id = new.profile_id;
+  insert into notifications (profile_id, kind, actor, actor_name)
+  values (new.challenge_target, 'challenged', new.profile_id,
+          coalesce(challenger_name, ''));
+  return new;
+end;
+$$;
+
+drop trigger if exists sets_notify_challenged on sets;
+create trigger sets_notify_challenged
+  after insert on sets
+  for each row execute function notify_challenged();
+
+-- ──────────────────────────────── reading ────────────────────────────────────
+
+-- Mine, newest first.
+--
+-- Dropped first: Postgres refuses `create or replace` when a table-returning
+-- function's column set changes shape (adding `actor` did), and fails with a
+-- "cannot change return type" error that names DROP as the fix.
+drop function if exists my_notifications(int);
+create or replace function my_notifications(limit_to int default 50)
+returns table (
+  id uuid,
+  kind text,
+  created_at timestamptz,
+  unread boolean,
+  actor uuid,
+  actor_name text,
+  you_won boolean,
+  your_reps int,
+  their_reps int
+)
+language sql
+stable
+as $$
+  select n.id, n.kind, n.created_at, n.read_at is null,
+         n.actor, n.actor_name, n.you_won, n.your_reps, n.their_reps
+    from notifications n
+   where n.profile_id = auth.uid()
+   order by n.created_at desc
+   limit least(greatest(limit_to, 1), 200);
+$$;
+
+-- What the dot on the bell is counting.
+create or replace function unread_notifications()
+returns int
+language sql
+stable
+as $$
+  select count(*)::int from notifications
+   where profile_id = auth.uid() and read_at is null;
+$$;
+
+-- Marks the lot as read, which is what opening the screen means.
+--
+-- A function rather than an update policy: the only thing anybody may change
+-- about a notification is whether they have seen it, and a policy broad
+-- enough to allow that is broad enough to let somebody rewrite what it says.
+create or replace function read_notifications()
+returns int
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  touched int;
+begin
+  update notifications set read_at = now()
+   where profile_id = auth.uid() and read_at is null;
+  get diagnostics touched = row_count;
+  return touched;
+end;
+$$;
+
+revoke all on function my_notifications(int) from public;
+grant execute on function my_notifications(int) to authenticated;
+revoke all on function unread_notifications() from public;
+grant execute on function unread_notifications() to authenticated;
+revoke all on function read_notifications() from public;
+grant execute on function read_notifications() to authenticated;

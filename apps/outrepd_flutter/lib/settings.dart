@@ -5,14 +5,13 @@ library;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'backend/backend.dart' show Challengeable;
 import 'l10n/app_localizations.dart';
 import 'widgets.dart';
 
 enum WeightUnit { kg, lb }
 
 enum HeightUnit { cm, ft }
-
-enum ProfileVisibility { everyone, friends, nobody }
 
 /// The languages the app ships in. Following the device is the default: most
 /// people never open a language picker, and a phone already knows.
@@ -47,18 +46,12 @@ extension HeightUnitLabel on HeightUnit {
   String short(L l) => this == HeightUnit.cm ? l.shortCm : l.shortFt;
 }
 
-extension ProfileVisibilityLabel on ProfileVisibility {
+extension ChallengeableLabel on Challengeable {
   String label(L l) => switch (this) {
-        ProfileVisibility.everyone => l.visEveryone,
-        ProfileVisibility.friends => l.visFriends,
-        ProfileVisibility.nobody => l.visNobody,
-      };
-
-  String description(L l) => switch (this) {
-        ProfileVisibility.everyone => l.visEveryoneHint,
-        ProfileVisibility.friends => l.visFriendsHint,
-        ProfileVisibility.nobody => l.visNobodyHint,
-      };
+    Challengeable.everyone => l.visEveryone,
+    Challengeable.friends => l.visFriends,
+    Challengeable.nobody => l.visNobody,
+  };
 }
 
 extension AppLanguageLabel on AppLanguage {
@@ -67,55 +60,55 @@ extension AppLanguageLabel on AppLanguage {
   /// "Match device" is the exception — it names a setting, not a language, so
   /// it is read in whatever the app is currently speaking.
   String label(L l) => switch (this) {
-        AppLanguage.system => l.themeSystem,
-        AppLanguage.english => 'English',
-        AppLanguage.arabic => 'العربية',
-        AppLanguage.spanish => 'Español',
-        AppLanguage.french => 'Français',
-        AppLanguage.german => 'Deutsch',
-        AppLanguage.portuguese => 'Português',
-        AppLanguage.italian => 'Italiano',
-        AppLanguage.russian => 'Русский',
-        AppLanguage.turkish => 'Türkçe',
-        AppLanguage.indonesian => 'Bahasa Indonesia',
-        AppLanguage.hindi => 'हिन्दी',
-        AppLanguage.japanese => '日本語',
-        AppLanguage.korean => '한국어',
-        AppLanguage.chinese => '中文',
-      };
+    AppLanguage.system => l.themeSystem,
+    AppLanguage.english => 'English',
+    AppLanguage.arabic => 'العربية',
+    AppLanguage.spanish => 'Español',
+    AppLanguage.french => 'Français',
+    AppLanguage.german => 'Deutsch',
+    AppLanguage.portuguese => 'Português',
+    AppLanguage.italian => 'Italiano',
+    AppLanguage.russian => 'Русский',
+    AppLanguage.turkish => 'Türkçe',
+    AppLanguage.indonesian => 'Bahasa Indonesia',
+    AppLanguage.hindi => 'हिन्दी',
+    AppLanguage.japanese => '日本語',
+    AppLanguage.korean => '한국어',
+    AppLanguage.chinese => '中文',
+  };
 
   /// Null follows the device.
   Locale? get locale => switch (this) {
-        AppLanguage.system => null,
-        AppLanguage.english => const Locale('en'),
-        AppLanguage.arabic => const Locale('ar'),
-        AppLanguage.spanish => const Locale('es'),
-        AppLanguage.french => const Locale('fr'),
-        AppLanguage.german => const Locale('de'),
-        AppLanguage.portuguese => const Locale('pt'),
-        AppLanguage.italian => const Locale('it'),
-        AppLanguage.russian => const Locale('ru'),
-        AppLanguage.turkish => const Locale('tr'),
-        AppLanguage.indonesian => const Locale('id'),
-        AppLanguage.hindi => const Locale('hi'),
-        AppLanguage.japanese => const Locale('ja'),
-        AppLanguage.korean => const Locale('ko'),
-        AppLanguage.chinese => const Locale('zh'),
-      };
+    AppLanguage.system => null,
+    AppLanguage.english => const Locale('en'),
+    AppLanguage.arabic => const Locale('ar'),
+    AppLanguage.spanish => const Locale('es'),
+    AppLanguage.french => const Locale('fr'),
+    AppLanguage.german => const Locale('de'),
+    AppLanguage.portuguese => const Locale('pt'),
+    AppLanguage.italian => const Locale('it'),
+    AppLanguage.russian => const Locale('ru'),
+    AppLanguage.turkish => const Locale('tr'),
+    AppLanguage.indonesian => const Locale('id'),
+    AppLanguage.hindi => const Locale('hi'),
+    AppLanguage.japanese => const Locale('ja'),
+    AppLanguage.korean => const Locale('ko'),
+    AppLanguage.chinese => const Locale('zh'),
+  };
 }
 
 extension ThemeModeLabel on ThemeMode {
   String label(L l) => switch (this) {
-        ThemeMode.system => l.themeSystem,
-        ThemeMode.light => l.themeLight,
-        ThemeMode.dark => l.themeDark,
-      };
+    ThemeMode.system => l.themeSystem,
+    ThemeMode.light => l.themeLight,
+    ThemeMode.dark => l.themeDark,
+  };
 
   IconData get icon => switch (this) {
-        ThemeMode.system => Icons.brightness_auto_outlined,
-        ThemeMode.light => Icons.light_mode_outlined,
-        ThemeMode.dark => Icons.dark_mode_outlined,
-      };
+    ThemeMode.system => Icons.brightness_auto_outlined,
+    ThemeMode.light => Icons.light_mode_outlined,
+    ThemeMode.dark => Icons.dark_mode_outlined,
+  };
 }
 
 class AppSettings extends ChangeNotifier {
@@ -127,26 +120,32 @@ class AppSettings extends ChangeNotifier {
   WeightUnit weightUnit = WeightUnit.kg;
   HeightUnit heightUnit = HeightUnit.cm;
 
-  // Notifications
-  bool notifyMatchInvites = true;
-  bool notifyMatchResults = true;
-  bool notifyFriendRequests = true;
-  bool notifyCrewActivity = true;
-  bool notifyRankChanges = true;
-  bool notifyWeeklySummary = false;
-  bool sound = true;
+  // The duel, as it behaves on this phone.
+  //
+  // Only two things here, and both of them do something. The settings mock
+  // also drew a default duration, a camera choice and a "count out loud":
+  //
+  //   * every duel is sixty seconds because that is what makes two stored
+  //     sets comparable. A ninety-second set against a sixty-second one is
+  //     not a duel, so this is a rule rather than a preference;
+  //   * the counter is tuned for the front camera with the phone propped in
+  //     front of the lifter — that is the footage every threshold in
+  //     `lib/reps/` was measured from. A rear-camera option would be a
+  //     switch that quietly makes the count worse;
+  //   * counting out loud needs speech this app does not have.
+  //
+  // Each of those is a row that would have looked like a setting and
+  // behaved like nothing.
+
+  /// A tap of haptic feedback as each rep lands.
   bool vibration = true;
 
-  // Privacy
-  ProfileVisibility visibility = ProfileVisibility.everyone;
-  bool showOnLeaderboard = true;
-  bool allowMatchInvites = true;
-  bool allowFriendRequests = true;
-  bool showBodyStats = false;
-
-  // Matches
-  bool autoAcceptFriendMatches = false;
-  bool restTimer = true;
+  /// Draw the tracked skeleton over the camera.
+  ///
+  /// On by default: it is how somebody can tell the counter is seeing them
+  /// before they trust the number, and it is the first thing to look at
+  /// when a rep does not count.
+  bool showSkeleton = true;
 
   SharedPreferences? _store;
 
@@ -164,25 +163,11 @@ class AppSettings extends ChangeNotifier {
     language = pickEnum('language', AppLanguage.values, language);
     weightUnit = pickEnum('weightUnit', WeightUnit.values, weightUnit);
     heightUnit = pickEnum('heightUnit', HeightUnit.values, heightUnit);
-    visibility = pickEnum('visibility', ProfileVisibility.values, visibility);
 
     bool flag(String key, bool fallback) => s.getBool(key) ?? fallback;
 
-    notifyMatchInvites = flag('notifyMatchInvites', notifyMatchInvites);
-    notifyMatchResults = flag('notifyMatchResults', notifyMatchResults);
-    notifyFriendRequests = flag('notifyFriendRequests', notifyFriendRequests);
-    notifyCrewActivity = flag('notifyCrewActivity', notifyCrewActivity);
-    notifyRankChanges = flag('notifyRankChanges', notifyRankChanges);
-    notifyWeeklySummary = flag('notifyWeeklySummary', notifyWeeklySummary);
-    sound = flag('sound', sound);
     vibration = flag('vibration', vibration);
-    showOnLeaderboard = flag('showOnLeaderboard', showOnLeaderboard);
-    allowMatchInvites = flag('allowMatchInvites', allowMatchInvites);
-    allowFriendRequests = flag('allowFriendRequests', allowFriendRequests);
-    showBodyStats = flag('showBodyStats', showBodyStats);
-    autoAcceptFriendMatches =
-        flag('autoAcceptFriendMatches', autoAcceptFriendMatches);
-    restTimer = flag('restTimer', restTimer);
+    showSkeleton = flag('showSkeleton', showSkeleton);
   }
 
   /// Mutate settings through this so listeners rebuild and the change sticks.
@@ -202,30 +187,17 @@ class AppSettings extends ChangeNotifier {
     s.setInt('language', language.index);
     s.setInt('weightUnit', weightUnit.index);
     s.setInt('heightUnit', heightUnit.index);
-    s.setInt('visibility', visibility.index);
 
-    s.setBool('notifyMatchInvites', notifyMatchInvites);
-    s.setBool('notifyMatchResults', notifyMatchResults);
-    s.setBool('notifyFriendRequests', notifyFriendRequests);
-    s.setBool('notifyCrewActivity', notifyCrewActivity);
-    s.setBool('notifyRankChanges', notifyRankChanges);
-    s.setBool('notifyWeeklySummary', notifyWeeklySummary);
-    s.setBool('sound', sound);
     s.setBool('vibration', vibration);
-    s.setBool('showOnLeaderboard', showOnLeaderboard);
-    s.setBool('allowMatchInvites', allowMatchInvites);
-    s.setBool('allowFriendRequests', allowFriendRequests);
-    s.setBool('showBodyStats', showBodyStats);
-    s.setBool('autoAcceptFriendMatches', autoAcceptFriendMatches);
-    s.setBool('restTimer', restTimer);
+    s.setBool('showSkeleton', showSkeleton);
   }
 
   /// What [themeMode] means right now, given the device setting.
   Brightness resolveBrightness(Brightness platform) => switch (themeMode) {
-        ThemeMode.system => platform,
-        ThemeMode.light => Brightness.light,
-        ThemeMode.dark => Brightness.dark,
-      };
+    ThemeMode.system => platform,
+    ThemeMode.light => Brightness.light,
+    ThemeMode.dark => Brightness.dark,
+  };
 }
 
 final settings = AppSettings();
@@ -264,6 +236,5 @@ String formatHeight(BuildContext context, L l, int cm) {
 }
 
 /// Body weight in the unit on screen, as a number rather than a sentence.
-int displayWeight(int kg) => settings.weightUnit == WeightUnit.kg
-    ? kg
-    : (kg * 2.20462).round();
+int displayWeight(int kg) =>
+    settings.weightUnit == WeightUnit.kg ? kg : (kg * 2.20462).round();

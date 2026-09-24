@@ -26,7 +26,6 @@ import '../widgets.dart';
 /// caller should read as "keep what the camera said" rather than as zero.
 Future<int?> confirmCount(
   BuildContext context, {
-  required String exercise,
   required int counted,
   bool unverified = false,
 }) {
@@ -40,7 +39,6 @@ Future<int?> confirmCount(
       borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
     ),
     builder: (_) => _ConfirmSheet(
-      exercise: exercise,
       counted: counted,
       unverified: unverified,
     ),
@@ -49,12 +47,10 @@ Future<int?> confirmCount(
 
 class _ConfirmSheet extends StatefulWidget {
   const _ConfirmSheet({
-    required this.exercise,
     required this.counted,
     required this.unverified,
   });
 
-  final String exercise;
   final int counted;
 
   /// True when the count is movement the signature could not vouch for. Saying
@@ -97,15 +93,9 @@ class _ConfirmSheetState extends State<_ConfirmSheet> {
             ),
             const SizedBox(height: 20),
 
-            // The movement is named here and nowhere else on this sheet, so
-            // there is never a moment where a number is on screen without the
-            // exercise it belongs to.
-            Text(
-              widget.exercise.toUpperCase(),
-              textAlign: TextAlign.center,
-              style: context.type.micro.copyWith(color: context.colors.brand),
-            ),
-            const SizedBox(height: 6),
+            // No movement named. There is one, everybody doing this knows
+            // which, and a label saying PUSH-UPS over a push-up count is
+            // furniture.
             Text(
               l.countedThat,
               textAlign: TextAlign.center,
