@@ -45,7 +45,7 @@ class AppBottomNav extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(12, 0, 12, 10),
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: context.colors.background,
+            color: context.colors.surface,
             borderRadius: BorderRadius.circular(14),
             border: Border.all(color: context.colors.border, width: 0.5),
           ),

@@ -5,8 +5,10 @@
 /// are theirs, not sample data, so they survive a restart.
 library;
 
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'backend/backend.dart';
 import 'l10n/app_localizations.dart';
 import 'reps/exercise_type.dart';
 
@@ -33,9 +35,15 @@ class Profile {
     required this.heightCm,
     required this.weightKg,
     required this.age,
+    this.friendCode = '000000',
   });
 
   String username;
+
+  /// A short number that names this account without being the name shown on
+  /// the ladder — see the comment on `friend_code` in schema.sql. Assigned by
+  /// the server; the sample value here is never a real account's.
+  String friendCode;
   int tierIdx;
   int divIdx;
   int lp;
@@ -130,32 +138,13 @@ final demoProfile = Profile(
   heightCm: 178,
   weightKg: 82,
   age: 25,
+  friendCode: '482910',
 );
 
 /// Duels a new account plays before it is given a tier. Five is enough to see
 /// past one bad session and few enough that nobody is grinding for a week to
 /// find out where they stand.
 const kPlacementDuels = 5;
-
-/// How many name changes are left. Two for the life of the account: a name is
-/// how people recognise each other on a leaderboard, and one that changes
-/// every week is worth nothing to anybody. Two is enough to fix a typo and to
-/// change your mind once.
-const kNameChangesAllowed = 2;
-
-int nameChangesUsed = 0;
-
-bool get canChangeName => nameChangesUsed < kNameChangesAllowed;
-
-Future<void> changeUsername(String name) async {
-  if (!canChangeName) return;
-  demoProfile.username = name;
-  nameChangesUsed++;
-
-  final s = await SharedPreferences.getInstance();
-  await s.setString('username', name);
-  await s.setInt('nameChanges', nameChangesUsed);
-}
 
 /// Restore the measurements the lifter set by hand. Everything else about the
 /// profile is demo data and stays as written above.
@@ -166,7 +155,6 @@ Future<void> loadProfileStats() async {
     ..weightKg = s.getInt('profileWeightKg') ?? demoProfile.weightKg
     ..age = s.getInt('profileAge') ?? demoProfile.age
     ..username = s.getString('username') ?? demoProfile.username;
-  nameChangesUsed = s.getInt('nameChanges') ?? 0;
 
   // A stored career counts as set up even with no flag beside it. The flag
   // is newer than the installs it has to protect, and reading its absence as
@@ -313,11 +301,15 @@ class LeaderboardEntry {
   final String? avatarUrl;
 }
 
+// Other lifters only. "You" already has a pinned row of your own at the
+// bottom of the board (see ranks.dart's _myPosition) — a demo account also
+// appearing as an ordinary row here, at a rank that disagrees with that
+// pinned number, said two different things about the same lifter on one
+// screen.
 const demoLeaderboard = <LeaderboardEntry>[
   LeaderboardEntry('iron_mike', 5, 1, 88, 41, 12),
   LeaderboardEntry('squat_queen', 4, 3, 72, 35, 15),
-  LeaderboardEntry('demo_lifter', 3, 2, 64, 18, 9),
-  LeaderboardEntry('benchgod', 3, 1, 51, 22, 20),
+  LeaderboardEntry('benchgod', 3, 2, 51, 22, 20),
   LeaderboardEntry('cardio_hater', 2, 4, 39, 14, 17),
   LeaderboardEntry('delt_destroyer', 2, 2, 33, 11, 14),
   LeaderboardEntry('newbie_gains', 1, 2, 21, 6, 11),
@@ -368,6 +360,21 @@ const demoFriends = <Friend>[
   Friend('newbie_gains', 1, 3, 21, false),
   Friend('delt_destroyer', 3, 4, 64, false, winsVsYou: 0, lossesVsYou: 4),
 ];
+
+/// How many friends this account actually has, for the friend-count awards
+/// in [Rewards]. [demoFriends] is sample data for browsing the Friends tab
+/// offline — a signed-in account's real count has to come from the server,
+/// or the "Not Alone" title unlocks for everybody's first session regardless
+/// of whether they have ever added anybody.
+Future<int> currentFriendCount() async {
+  if (!backend.available) return demoFriends.length;
+  try {
+    return (await backend.friends()).length;
+  } on Object catch (error) {
+    debugPrint('Could not read friend count for awards: $error');
+    return 0;
+  }
+}
 
 class AppNotification {
   const AppNotification(this.title, this.body, this.daysAgo, this.unread);

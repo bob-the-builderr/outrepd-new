@@ -402,6 +402,12 @@ class LKo extends L {
   String get couldNotShareCard => '이 카드를 공유할 수 없었어요';
 
   @override
+  String get couldNotOpenLink => '이 링크를 열 수 없었어요';
+
+  @override
+  String get couldNotCheckUsername => '그 이름을 확인할 수 없었어요 — 다시 시도해 주세요';
+
+  @override
   String get simulatedOpponent => '다른 상대가 준비되지 않아 연습 페이스로 진행돼요';
 
   @override
@@ -467,6 +473,12 @@ class LKo extends L {
 
   @override
   String get global => '글로벌';
+
+  @override
+  String get topPlayers => '톱 플레이어';
+
+  @override
+  String get yourTier => '내 티어';
 
   @override
   String get challenge => '도전';
@@ -1315,6 +1327,21 @@ class LKo extends L {
   String get incomingRequests => '받은 요청';
 
   @override
+  String get noRequestsWaiting => '지금은 대기 중인 요청이 없어요';
+
+  @override
+  String get addFriendAction => '친구 추가';
+
+  @override
+  String get addFriendHint => '상대방의 사용자 이름이나 프로필의 #코드를 입력하세요.';
+
+  @override
+  String get usernameOrCode => '사용자 이름 또는 #코드';
+
+  @override
+  String get sendRequest => '요청 보내기';
+
+  @override
   String onlineNowCount(String count) {
     return '접속 중 · $count';
   }
@@ -1545,6 +1572,9 @@ class LKo extends L {
   String lpSwing(String gain, String loss) {
     return '+$gain / −$loss LP';
   }
+
+  @override
+  String get lpMovesWithGap => 'LP는 렙 차이만큼 움직여요 — 더 크게 이기면 더 많이 얻어요';
 
   @override
   String get searchingForOpponent => '상대를 찾는 중';

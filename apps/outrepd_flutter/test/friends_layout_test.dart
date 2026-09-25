@@ -117,6 +117,8 @@ void main() {
     await tester.enterText(find.byType(TextField), 'zzzz');
     await tester.pumpAndSettle();
 
+    // A pure filter over the friends already on the list now — no server
+    // search hides behind it any more, so this never depends on a backend.
     expect(find.text('Nobody by that name'), findsOneWidget);
     // Not the "no friends yet" empty state — the friends are still there.
     expect(find.text('No friends yet'), findsNothing);

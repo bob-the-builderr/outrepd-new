@@ -399,6 +399,12 @@ class LZh extends L {
   String get couldNotShareCard => '无法分享这张卡片';
 
   @override
+  String get couldNotOpenLink => '无法打开该链接';
+
+  @override
+  String get couldNotCheckUsername => '无法检查该名称——请重试';
+
+  @override
   String get simulatedOpponent => '没有其他人准备好——这是练习节奏';
 
   @override
@@ -463,6 +469,12 @@ class LZh extends L {
 
   @override
   String get global => '全球';
+
+  @override
+  String get topPlayers => '顶尖玩家';
+
+  @override
+  String get yourTier => '你的段位';
 
   @override
   String get challenge => '挑战';
@@ -1310,6 +1322,21 @@ class LZh extends L {
   String get incomingRequests => '收到的请求';
 
   @override
+  String get noRequestsWaiting => '目前没有待处理的请求';
+
+  @override
+  String get addFriendAction => '添加好友';
+
+  @override
+  String get addFriendHint => '输入对方的用户名，或其个人资料上的 # 代码。';
+
+  @override
+  String get usernameOrCode => '用户名或 # 代码';
+
+  @override
+  String get sendRequest => '发送请求';
+
+  @override
   String onlineNowCount(String count) {
     return '在线 · $count';
   }
@@ -1537,6 +1564,9 @@ class LZh extends L {
   String lpSwing(String gain, String loss) {
     return '+$gain / −$loss LP';
   }
+
+  @override
+  String get lpMovesWithGap => '积分根据次数差变化——领先越多，获得越多';
 
   @override
   String get searchingForOpponent => '正在寻找对手';

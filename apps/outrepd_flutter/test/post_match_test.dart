@@ -1,8 +1,9 @@
 /// The three screens a duel ends on.
 ///
 /// The one thing that must never be wrong here is the arithmetic on the LP
-/// card: a breakdown that does not add up to the number beside it turns the
-/// most-read screen in the app into a reason to distrust the rest of it.
+/// card: the headline is the only number it shows now, and it has to be
+/// exactly the rank change or the most-read screen in the app is lying about
+/// the one thing it exists to report.
 library;
 
 import 'package:flutter/material.dart';
@@ -10,10 +11,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:outrepd/career.dart';
 import 'package:outrepd/data.dart';
 import 'package:outrepd/l10n/app_localizations.dart';
-import 'package:outrepd/ranking.dart';
 import 'package:outrepd/screens/post_match.dart';
 import 'package:outrepd/theme.dart';
 
@@ -76,82 +75,30 @@ void main() {
       );
 
   group('the LP card', () {
-    testWidgets('the rows add up to the total', (tester) async {
+    testWidgets('the headline is exactly the rank change', (tester) async {
       phone(tester);
       await tester.pumpWidget(_app(view(won: true)));
       await tester.pumpAndSettle();
 
       final outcome = demoOutcome(won: true);
       final total = outcome.rank!.lpDelta;
-      final parts = outcome.breakdown!;
 
-      // The header, then every non-zero row.
+      // There is nothing left to itemise into rows — LP is exactly the rep
+      // gap now, which the two scores above the card already say — so the
+      // headline is the only signed number this card ever shows.
       final numbers = _signedNumbers(tester);
-      expect(numbers.first.abs(), total.abs(),
-          reason: 'the headline is not the total');
-
-      final rows = numbers.skip(1).toList();
-      expect(rows.fold<int>(0, (a, b) => a + b), total,
-          reason: 'the rows on screen sum to something else: $rows');
-      expect(rows.length, [parts.result, parts.tierGap, parts.margin, parts.form]
-          .where((p) => p != 0)
-          .length);
+      expect(numbers, [total]);
     });
 
-    test('a loss is itemised the same way', () {
-      final outcome = demoOutcome(won: false);
-      final parts = outcome.breakdown!;
-      expect(parts.total, outcome.rank!.lpDelta);
-      expect(parts.result, lessThan(0));
-    });
-
-    testWidgets('rows that did nothing are not shown', (tester) async {
+    testWidgets('a loss reads the same way', (tester) async {
       phone(tester);
-      // Level opponent, one rep in it, depth not held: only the result itself
-      // moved. Three rows of zero would read as three rules broken.
-      final parts = lpFor(
-        won: true,
-        yourTier: 3,
-        theirTier: 3,
-        yourReps: 11,
-        theirReps: 10,
-        clean: false,
-      );
-      expect(parts.tierGap, 0);
-      expect(parts.margin, 0);
-      expect(parts.form, 0);
-
-      await tester.pumpWidget(_app(DuelResultView(
-        won: true,
-        yourReps: 11,
-        theirReps: 10,
-        opponent: demoOpponents.first,
-        outcome: DuelOutcome(
-          won: true,
-          rank: applyLp(
-            const Rank(tierIdx: 3, divIdx: 2, lp: 40),
-            parts.total,
-            floorTierIdx: 3,
-          ),
-          breakdown: parts,
-          record: MatchRecord(
-            won: true,
-            userReps: 11,
-            opponentReps: 10,
-            opponent: 'x',
-            lpChange: parts.total,
-            at: DateTime.now(),
-          ),
-          placementsFinished: false,
-          newBest: false,
-        ),
-        onRematch: () {},
-        onDone: () {},
-      )));
+      await tester.pumpWidget(_app(view(won: false)));
       await tester.pumpAndSettle();
 
-      // The headline and one row.
-      expect(_signedNumbers(tester).length, 2);
+      final outcome = demoOutcome(won: false);
+      final total = outcome.rank!.lpDelta;
+      expect(total, lessThan(0));
+      expect(_signedNumbers(tester), [total]);
     });
   });
 

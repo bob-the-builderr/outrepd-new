@@ -14,6 +14,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../backend/backend.dart';
 import '../data.dart';
@@ -254,12 +255,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               NavRow(
                 icon: Icons.policy_outlined,
                 label: l.privacyPolicy,
-                onTap: _needsSite,
+                onTap: () => _openUrl('https://www.outrepd.com/privacy'),
               ),
               NavRow(
                 icon: Icons.description_outlined,
                 label: l.termsOfService,
-                onTap: _needsSite,
+                onTap: () => _openUrl('https://www.outrepd.com/terms'),
               ),
               NavRow(
                 icon: Icons.support_agent,
@@ -294,9 +295,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  /// The four About rows all need somewhere to point at and there is no site
-  /// yet. One honest message rather than four rows that look tappable and
-  /// are not.
+  /// Contact support and the store listing still have nowhere to point at.
+  /// One honest message rather than a row that looks tappable and is not.
   void _needsSite() {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -304,6 +304,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
         behavior: SnackBarBehavior.floating,
       ),
     );
+  }
+
+  Future<void> _openUrl(String url) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final l = L.of(context);
+    try {
+      final opened = await launchUrl(
+        Uri.parse(url),
+        mode: LaunchMode.externalApplication,
+      );
+      if (!opened) throw StateError('launchUrl returned false');
+    } on Object catch (error) {
+      debugPrint('Could not open $url: $error');
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(l.couldNotOpenLink),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
   }
 }
 

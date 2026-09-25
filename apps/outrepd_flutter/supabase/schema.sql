@@ -138,6 +138,54 @@ alter table profiles add constraint profiles_peak_tier_idx_check
 create index if not exists profiles_ladder_idx
   on profiles (tier_idx desc, div_idx desc, lp desc);
 
+-- ──────────────────────────────── friend code ─────────────────────────────────
+
+-- A short number that names an account the way a username does, without
+-- being one. Usernames are already unique, so this is not for telling two
+-- lifters apart — it is for adding one without having to hand over the name
+-- shown on the ladder to do it.
+create or replace function generate_friend_code()
+returns text
+language plpgsql
+as $$
+declare
+  candidate text;
+begin
+  loop
+    candidate := lpad(floor(random() * 1000000)::int::text, 6, '0');
+    exit when not exists (
+      select 1 from profiles where friend_code = candidate
+    );
+  end loop;
+  return candidate;
+end;
+$$;
+
+alter table profiles add column if not exists friend_code text unique;
+
+-- Backfills any row from before this column existed, one at a time — an
+-- ordinary multi-row UPDATE would hand every row the same snapshot of "codes
+-- already taken" and could mint the same candidate for two rows in one go,
+-- which the unique constraint would then simply refuse outright. A loop asks
+-- fresh each time, the same reason settle_duel never batches a ladder change.
+--
+-- Guarded like the tier migration above: the guard trigger below refuses any
+-- write to this column once it exists, and on a project where this has
+-- already run once, it does.
+do $$
+declare
+  r record;
+begin
+  perform set_config('outrepd.settling', 'on', true);
+  for r in select id from profiles where friend_code is null loop
+    update profiles set friend_code = generate_friend_code() where id = r.id;
+  end loop;
+  perform set_config('outrepd.settling', 'off', true);
+end $$;
+
+alter table profiles alter column friend_code set not null;
+alter table profiles alter column friend_code set default generate_friend_code();
+
 -- ──────────────────────────────── sets ───────────────────────────────────────
 
 create table if not exists sets (
@@ -315,6 +363,13 @@ begin
   or new.total_reps      is distinct from old.total_reps
   or new.best_set        is distinct from old.best_set then
     raise exception 'rank and record are settled by the server, not the client';
+  end if;
+
+  -- A code that a lifter could rewrite is a code somebody could hand out,
+  -- have declined, and then mint a fresh one to try again under. It is
+  -- assigned once, the same way an id is.
+  if new.friend_code is distinct from old.friend_code then
+    raise exception 'friend_code is assigned by the server, not the client';
   end if;
 
   new.updated_at := now();

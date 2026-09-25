@@ -417,6 +417,13 @@ class LPt extends L {
   String get couldNotShareCard => 'Não foi possível compartilhar este cartão';
 
   @override
+  String get couldNotOpenLink => 'Não foi possível abrir esse link';
+
+  @override
+  String get couldNotCheckUsername =>
+      'Não foi possível verificar esse nome — tente novamente';
+
+  @override
   String get simulatedOpponent =>
       'Ninguém mais estava pronto — este é um ritmo de treino';
 
@@ -486,6 +493,12 @@ class LPt extends L {
 
   @override
   String get global => 'Global';
+
+  @override
+  String get topPlayers => 'Melhores jogadores';
+
+  @override
+  String get yourTier => 'Seu nível';
 
   @override
   String get challenge => 'Desafiar';
@@ -1342,6 +1355,22 @@ class LPt extends L {
   String get incomingRequests => 'Pedidos recebidos';
 
   @override
+  String get noRequestsWaiting => 'Nenhum pedido pendente no momento';
+
+  @override
+  String get addFriendAction => 'Adicionar amigo';
+
+  @override
+  String get addFriendHint =>
+      'Digite o nome de usuário deles, ou o código # do perfil.';
+
+  @override
+  String get usernameOrCode => 'Usuário ou código #';
+
+  @override
+  String get sendRequest => 'Enviar pedido';
+
+  @override
   String onlineNowCount(String count) {
     return 'Online agora · $count';
   }
@@ -1573,6 +1602,10 @@ class LPt extends L {
   String lpSwing(String gain, String loss) {
     return '+$gain / −$loss LP';
   }
+
+  @override
+  String get lpMovesWithGap =>
+      'O LP muda conforme a diferença de repetições — vença por mais, ganhe mais';
 
   @override
   String get searchingForOpponent => 'Procurando adversário';

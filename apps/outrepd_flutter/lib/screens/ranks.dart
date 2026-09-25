@@ -18,9 +18,14 @@ import '../widgets.dart';
 import 'other_profile.dart';
 import 'shell.dart';
 
-enum _Scope { global, local }
+enum _Scope {
+  /// Everyone, ranked by LP alone — the whole ladder in one list.
+  topPlayers,
 
-enum _Period { weekly, season, allTime, daily }
+  /// Only the lifters currently sharing this account's own tier and
+  /// division, ranked against just each other rather than the whole game.
+  yourTier,
+}
 
 class RanksScreen extends StatefulWidget {
   const RanksScreen({super.key});
@@ -30,8 +35,7 @@ class RanksScreen extends StatefulWidget {
 }
 
 class _RanksScreenState extends State<RanksScreen> {
-  _Scope _scope = _Scope.global;
-  _Period _period = _Period.weekly;
+  _Scope _scope = _Scope.topPlayers;
 
   /// Rows per scope, kept once fetched so flipping the toggle does not
   /// re-query a board that does not change minute to minute.
@@ -48,13 +52,15 @@ class _RanksScreenState extends State<RanksScreen> {
   Future<void> _load() async {
     if (!backend.available) return;
     final scope = _scope;
+    final me = demoProfile;
     setState(() {
       _loading = true;
       _error = null;
     });
     try {
       final rows = await backend.leaderboard(
-        country: scope == _Scope.local ? backend.me?.country : null,
+        tierIdx: scope == _Scope.yourTier ? me.tierIdx : null,
+        divIdx: scope == _Scope.yourTier ? me.divIdx : null,
       );
       if (!mounted) return;
       setState(() {
@@ -82,9 +88,12 @@ class _RanksScreenState extends State<RanksScreen> {
   /// before there is anybody real to put on it.
   List<LeaderboardEntry> get _entries {
     if (!backend.available) {
-      return _scope == _Scope.global
+      final me = demoProfile;
+      return _scope == _Scope.topPlayers
           ? demoLeaderboard
-          : demoLeaderboard.where((e) => e.tierIdx <= 4).toList();
+          : demoLeaderboard
+              .where((e) => e.tierIdx == me.tierIdx && e.divIdx == me.divIdx)
+              .toList();
     }
     return [
       for (final row in _boards[_scope] ?? const <BoardRow>[])
@@ -104,18 +113,16 @@ class _RanksScreenState extends State<RanksScreen> {
   /// Where this account sits, or null when that is not known.
   ///
   /// Known exactly whenever the account appears in the page that was
-  /// fetched. Below that the honest answer is nothing at all: the number
-  /// that used to sit here was 1842, written into the source regardless of
-  /// which board was even showing, and a made-up position on the one row
-  /// somebody looks for themselves on is worse than no position. Offline,
-  /// the sample profile's own rank stands in — the same fallback every
-  /// other screen already reads for it — and follows the toggle instead of
-  /// answering "global" for a "local" question.
+  /// fetched. Below that the honest answer is nothing at all: a made-up
+  /// position on the one row somebody looks for themselves on is worse than
+  /// no position. Offline, the sample profile's own global rank stands in for
+  /// Top Players — the same fallback every other screen already reads for it
+  /// — but Your Tier has no equivalent sample number to stand in with, since
+  /// the demo board it lists from was never really the one this account was
+  /// on, so it stays honestly unknown there too.
   int? get _myPosition {
     if (!backend.available) {
-      return _scope == _Scope.global
-          ? demoProfile.globalRank
-          : demoProfile.localRank;
+      return _scope == _Scope.topPlayers ? demoProfile.globalRank : null;
     }
     final id = backend.me?.id;
     final rows = _boards[_scope];
@@ -153,12 +160,6 @@ class _RanksScreenState extends State<RanksScreen> {
 
             const SizedBox(height: 14),
             _ScopeToggle(scope: _scope, onChanged: _switchTo),
-
-            const SizedBox(height: 14),
-            _PeriodTabs(
-              period: _period,
-              onChanged: (p) => setState(() => _period = p),
-            ),
 
             const SizedBox(height: 14),
             Expanded(
@@ -285,67 +286,10 @@ class _ScopeToggle extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: [
-          pill(_Scope.global, L.of(context).global),
+          pill(_Scope.topPlayers, L.of(context).topPlayers),
           const SizedBox(width: 8),
-          pill(_Scope.local, L.of(context).local),
+          pill(_Scope.yourTier, L.of(context).yourTier),
         ],
-      ),
-    );
-  }
-}
-
-class _PeriodTabs extends StatelessWidget {
-  const _PeriodTabs({required this.period, required this.onChanged});
-
-  final _Period period;
-  final ValueChanged<_Period> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = L.of(context);
-    final labels = <_Period, String>{
-      _Period.weekly: l.weekly,
-      _Period.season: l.seasonTab,
-      _Period.allTime: l.allTime,
-      _Period.daily: l.daily,
-    };
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            for (final entry in labels.entries) ...[
-              InkWell(
-                onTap: () => onChanged(entry.key),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      entry.value,
-                      style: TextStyle(
-                        color: period == entry.key
-                            ? context.colors.text
-                            : context.colors.muted,
-                        fontSize: 12,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Container(
-                      height: 1.5,
-                      width: 34,
-                      color: period == entry.key
-                          ? context.colors.brand
-                          : Colors.transparent,
-                    ),
-                  ],
-                ),
-              ),
-              if (entry.key != _Period.daily) const SizedBox(width: 16),
-            ],
-          ],
-        ),
       ),
     );
   }

@@ -92,7 +92,7 @@ void main() async {
       // that can be earned honestly.
       reps: demoProfile.totalReps,
       tierIdx: demoProfile.tierIdx,
-      friends: demoFriends.length,
+      friends: await currentFriendCount(),
     );
   } on Object catch (error, stack) {
     debugPrint('Could not read saved settings: $error\n$stack');
@@ -216,8 +216,6 @@ class _OutrepdAppState extends State<OutrepdApp> with WidgetsBindingObserver {
             opponentTierIdx: demoOpponents.first.tierIdx,
             opponentDivIdx: demoOpponents.first.divIdx,
             rankLabel: 'Gold III',
-            lpGain: 24,
-            lpRisk: 18,
           ),
         ),
         // The three screens a duel can end on. Each needs an outcome that

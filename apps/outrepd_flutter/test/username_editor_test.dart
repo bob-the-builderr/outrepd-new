@@ -38,6 +38,7 @@ class _FakeBackend extends NoBackend {
     tierIdx: 0,
     divIdx: 0,
     lp: 0,
+    friendCode: '000000',
     usernameChangedAt: alreadyChanged ? DateTime(2026, 1, 1) : null,
   );
 

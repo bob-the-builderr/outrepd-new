@@ -319,44 +319,35 @@ void main() {
     });
   });
 
-  group('the promise matches the payout', () {
-    test('what a win pays is what the account receives', () async {
+  group('LP is exactly the gap in reps', () {
+    test('a win pays exactly what it won by', () async {
       await place();
-      const theirTier = 6;
-      final promised = lpForWin(demoProfile.tierIdx, theirTier);
 
       final outcome = await career.recordDuel(
         yourReps: 20,
         theirReps: 10,
         opponent: 'above',
-        opponentTier: theirTier,
+        opponentTier: 6,
       );
 
-      // The VS card shows this number before a rep is done, and it cannot
-      // know the margin or the depth yet. So the promise is a floor: what is
-      // paid is the promise plus what the round itself earned, never less.
-      expect(outcome.rank!.lpDelta, greaterThanOrEqualTo(promised));
-      expect(outcome.breakdown!.total, outcome.rank!.lpDelta);
-      expect(outcome.breakdown!.result + outcome.breakdown!.tierGap, promised);
+      expect(outcome.rank!.lpDelta, 10);
     });
 
-    test('what a loss risks is what the account loses', () async {
+    test('a loss costs exactly what it lost by, whatever the opponent\'s tier',
+        () async {
       await place();
-      const theirTier = 0;
-      final risked = lpForLoss(demoProfile.tierIdx, theirTier);
 
+      // Tier 0 here on purpose: the old formula paid more for beating tiers
+      // above you and less for losing to tiers below — this loss is against
+      // the softest possible opponent, where that would have cost the most.
       final outcome = await career.recordDuel(
         yourReps: 2,
         theirReps: 40,
         opponent: 'below',
-        opponentTier: theirTier,
+        opponentTier: 0,
       );
 
-      // The same promise from the other side: a loss never costs more than
-      // the card said it risked. Margin only ever refunds part of it.
-      expect(outcome.rank!.lpDelta, greaterThanOrEqualTo(risked));
-      expect(outcome.breakdown!.total, outcome.rank!.lpDelta);
-      expect(outcome.breakdown!.result + outcome.breakdown!.tierGap, risked);
+      expect(outcome.rank!.lpDelta, -38);
     });
   });
 
@@ -399,10 +390,15 @@ void main() {
       expect(outcome.rank!.lpDelta, lessThan(0));
     });
 
-    test('giving up forfeits the closeness refund', () async {
+    test('quitting early costs more than fighting to a close finish',
+        () async {
       await place(wins: 3);
+      // Walking out records whatever was counted before the quit — here,
+      // nothing yet — rather than the near-tie a few more seconds might have
+      // reached. No separate rule has to take a refund away: fewer of your
+      // own reps on the board already costs more on its own.
       final quit = await career.recordDuel(
-        yourReps: 19,
+        yourReps: 0,
         theirReps: 20,
         opponent: 'a',
         opponentTier: demoProfile.tierIdx,
@@ -418,10 +414,7 @@ void main() {
         opponentTier: demoProfile.tierIdx,
       );
 
-      // Quitting one rep down must not be cheaper than fighting to the end
-      // and losing by one.
       expect(quit.rank!.lpDelta, lessThan(fought.rank!.lpDelta));
-      expect(quit.breakdown!.margin, 0);
     });
 
     test('a friend match moves nothing but the reps', () async {
@@ -634,9 +627,6 @@ void main() {
       expect(outcome.rank, isNotNull);
       expect(outcome.rank!.lpDelta, 27);
       expect(outcome.rank!.after.tierIdx, settled.tierIdx);
-      // No itemised breakdown — the server does not send one, and this must
-      // not invent one to fill the card.
-      expect(outcome.breakdown, isNull);
 
       // Reps still count locally, same as every other path.
       expect(demoProfile.totalReps, reps + 25);
@@ -779,6 +769,7 @@ void main() {
         tierIdx: 4,
         divIdx: 2,
         lp: 55,
+        friendCode: '918273',
         peakTierIdx: 5,
         wins: 30,
         losses: 12,
@@ -804,6 +795,7 @@ void main() {
       expect(demoProfile.totalReps, 980);
       expect(demoProfile.bestSet, 41);
       expect(demoProfile.country, 'EG');
+      expect(demoProfile.friendCode, '918273');
     });
 
     test('a phone that would not say the country keeps the one it had', () {
@@ -814,6 +806,7 @@ void main() {
         tierIdx: demoProfile.tierIdx,
         divIdx: demoProfile.divIdx,
         lp: demoProfile.lp,
+        friendCode: demoProfile.friendCode,
       ));
       expect(demoProfile.country, 'US');
     });

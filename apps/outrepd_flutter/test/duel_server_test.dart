@@ -138,17 +138,10 @@ void main() {
       final theirs = await b.uploadSet(reps: 12, depth: 0.5);
       final settled = await a.settle(mine, theirs);
 
-      final ours = lpFor(
-        won: true,
-        yourTier: placedA['tier_idx'] as int,
-        theirTier: placedB['tier_idx'] as int,
-        yourReps: 25,
-        theirReps: 12,
-        clean: true,
-      );
+      final ours = lpFor(won: true, yourReps: 25, theirReps: 12);
       expect(
         settled['lp_delta'],
-        ours.total,
+        ours,
         reason: 'the server paid something the app would not have shown',
       );
 
@@ -158,7 +151,7 @@ void main() {
           divIdx: placedA['div_idx'] as int,
           lp: placedA['lp'] as int,
         ),
-        ours.total,
+        ours,
         floorTierIdx: placedA['peak_tier_idx'] as int,
       );
       expect(settled['tier_idx'], after.after.tierIdx);

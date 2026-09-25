@@ -203,9 +203,7 @@ declare
   them profiles;
   me_after profiles;
   i_won boolean;
-  pay record;
   after record;
-  their_pay record;
   their_after record;
   d_id uuid;
   is_ranked boolean := coalesce(ranked, true);
@@ -242,19 +240,6 @@ begin
              else mine.reps >= theirs.reps
            end;
 
-  select * into pay from lp_for(
-    i_won, me.tier_idx, them.tier_idx,
-    mine.reps, theirs.reps,
-    mine.depth >= 0.8,
-    mine.gave_up
-  );
-  select * into their_pay from lp_for(
-    not i_won, them.tier_idx, me.tier_idx,
-    theirs.reps, mine.reps,
-    theirs.depth >= 0.8,
-    theirs.gave_up
-  );
-
   -- The guard on profiles lets these two updates through, and only these.
   perform set_config('outrepd.settling', 'on', true);
 
@@ -279,7 +264,7 @@ begin
       me.tier_idx, me.div_idx, me.lp
     );
   else
-    my_delta := pay.total;
+    my_delta := lp_for(i_won, mine.reps, theirs.reps);
     select * into after from apply_lp(
       me.tier_idx, me.div_idx, me.lp, my_delta, me.peak_tier_idx
     );
@@ -293,7 +278,7 @@ begin
       them.tier_idx, them.div_idx, them.lp
     );
   elsif is_ranked then
-    their_delta := their_pay.total;
+    their_delta := lp_for(not i_won, theirs.reps, mine.reps);
     select * into their_after from apply_lp(
       them.tier_idx, them.div_idx, them.lp, their_delta, them.peak_tier_idx
     );

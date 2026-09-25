@@ -32,17 +32,12 @@ $$;
 
 with cases as (
   select * from vectors, jsonb_to_recordset(data -> 'lp_for') as c(
-    won boolean, your_tier int, their_tier int,
-    your_reps int, their_reps int, clean boolean, surrendered boolean,
-    result int, tier_gap int, margin int, form int, total int
+    won boolean, your_reps int, their_reps int, total int
   )
 ),
 computed as (
-  select c.*, f.result as got_result, f.tier_gap as got_tier_gap,
-         f.margin as got_margin, f.form as got_form, f.total as got_total
-  from cases c,
-  lateral lp_for(c.won, c.your_tier, c.their_tier,
-                 c.your_reps, c.their_reps, c.clean, c.surrendered) f
+  select c.*, lp_for(c.won, c.your_reps, c.their_reps) as got_total
+  from cases c
 )
 select
   case when count(*) = 0 then 'lp_for: agrees on every case'
@@ -50,9 +45,7 @@ select
     (raise_disagreement('lp_for', count(*)))
   end
 from computed
-where (result, tier_gap, margin, form, total)
-   is distinct from
-      (got_result, got_tier_gap, got_margin, got_form, got_total);
+where total is distinct from got_total;
 
 -- ── applying it to a rank ────────────────────────────────────────────────────
 

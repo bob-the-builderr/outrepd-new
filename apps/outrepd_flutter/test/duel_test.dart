@@ -149,8 +149,6 @@ void main() {
       opponentTierIdx: 2,
       opponentDivIdx: 3,
       rankLabel: 'Gold III',
-      lpGain: 24,
-      lpRisk: 18,
     );
 
     testWidgets('waits for the whole body before counting anything',
@@ -217,7 +215,7 @@ void main() {
       expect(find.text('1:00'), findsNothing);
     });
 
-    testWidgets('shows the clock, both counts and the stake', (tester) async {
+    testWidgets('shows the clock, both counts and the rank', (tester) async {
       await open(tester, duel: duel);
 
       // The card is up before the bout starts, showing zeroes and the full
@@ -226,8 +224,9 @@ void main() {
       expect(find.text('1:00'), findsOneWidget);
       expect(find.text('You'), findsOneWidget);
       expect(find.text('kickk'), findsOneWidget);
-      expect(find.textContaining('Gold III'), findsOneWidget);
-      expect(find.textContaining('+24 / \u2212\u0031\u0038 LP'), findsOneWidget);
+      // No LP promise any more — nothing about the score is known yet, so
+      // there is nothing here to promise a number for.
+      expect(find.text('Gold III'), findsOneWidget);
       expect(find.text('Give up'), findsOneWidget);
     });
 
@@ -290,8 +289,6 @@ void main() {
             opponentTierIdx: 3,
             opponentDivIdx: 2,
             rankLabel: 'Gold III',
-            lpGain: 24,
-            lpRisk: 18,
           ),
           locale: Locale(code),
           scale: 1.3,

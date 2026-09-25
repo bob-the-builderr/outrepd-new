@@ -45,6 +45,7 @@ void applyServerProfile(RemoteProfile me) {
     ..tierIdx = me.tierIdx
     ..divIdx = me.divIdx
     ..lp = me.lp
+    ..friendCode = me.friendCode
     ..peakTierIdx = me.peakTierIdx
     ..wins = me.wins
     ..losses = me.losses
@@ -65,12 +66,7 @@ class DuelOutcome {
     required this.record,
     required this.placementsFinished,
     required this.newBest,
-    this.breakdown,
   });
-
-  /// What the LP was made of. Null for a forfeit, which pays flat, and during
-  /// placements, where nothing is paid at all.
-  final LpBreakdown? breakdown;
 
   final bool won;
 
@@ -140,8 +136,10 @@ class Career extends ChangeNotifier {
 
   /// Records a finished duel and returns what it changed.
   ///
-  /// [opponentTier] decides what the result is worth; it is the opponent's
-  /// tier, not their score. [forfeit] means they left rather than lost.
+  /// [opponentTier] no longer prices the result — LP is exactly the gap in
+  /// reps now — but it still decides titles like Giant Slayer, which are
+  /// about who was raced rather than by how much. [forfeit] means they left
+  /// rather than lost.
   Future<DuelOutcome> recordDuel({
     required int yourReps,
     required int theirReps,
@@ -165,7 +163,6 @@ class Career extends ChangeNotifier {
 
     // ── the rank ────────────────────────────────────────────────────────
     RankChange? change;
-    LpBreakdown? breakdown;
     var placementsFinished = false;
 
     // A friend room is a real opponent and a real result, and it moves
@@ -221,30 +218,14 @@ class Career extends ChangeNotifier {
         placementsFinished = true;
       }
     } else {
-      // A forfeit has no score to read, so it pays flat; everything else is
-      // itemised, and the total the rank moves by is the itemisation's own
-      // sum. Nothing adds a number the breakdown cannot account for.
-      if (!forfeit) {
-        final parts = lpFor(
-          won: won,
-          yourTier: p.tierIdx,
-          theirTier: opponentTier,
-          yourReps: yourReps,
-          theirReps: theirReps,
-          clean: clean,
-        );
-        // Surrendering forfeits the closeness refund. Otherwise quitting one
-        // rep down would cost less than fighting to the end and losing by one.
-        breakdown = surrendered
-            ? LpBreakdown(
-                result: parts.result,
-                tierGap: parts.tierGap,
-                margin: 0,
-                form: parts.form,
-              )
-            : parts;
-      }
-      final delta = breakdown?.total ?? kForfeitLp;
+      // A forfeit has no reps to compare, so it pays flat. Everything else is
+      // exactly the gap in reps, signed by [won] rather than by the reps
+      // alone — walking out while still ahead must stay a loss, and quitting
+      // early already costs more of its own accord besides, since it means
+      // fewer reps of your own on the board.
+      final delta = forfeit
+          ? kForfeitLp
+          : lpFor(won: won, yourReps: yourReps, theirReps: theirReps);
 
       change = applyLp(rank, delta, floorTierIdx: p.peakTierIdx);
       p
@@ -292,7 +273,6 @@ class Career extends ChangeNotifier {
     return DuelOutcome(
       won: won,
       rank: change,
-      breakdown: breakdown,
       record: record,
       placementsFinished: placementsFinished,
       newBest: newBest,
@@ -451,7 +431,7 @@ class Career extends ChangeNotifier {
       wins: p.wins,
       reps: p.totalReps,
       tierIdx: p.tierIdx,
-      friends: demoFriends.length,
+      friends: await currentFriendCount(),
       clean: clean,
     );
     // One streak, one owner. The profile's card and the home screen's pill

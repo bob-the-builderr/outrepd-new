@@ -412,6 +412,12 @@ class LAr extends L {
   String get couldNotShareCard => 'مقدرش يشارك الكارت ده';
 
   @override
+  String get couldNotOpenLink => 'مقدرش يفتح اللينك ده';
+
+  @override
+  String get couldNotCheckUsername => 'مقدرش يتأكد من الاسم ده — جرب تاني';
+
+  @override
   String get simulatedOpponent => 'محدش تاني كان جاهز — دي وتيرة تمرين';
 
   @override
@@ -481,6 +487,12 @@ class LAr extends L {
 
   @override
   String get global => 'عالمي';
+
+  @override
+  String get topPlayers => 'أفضل اللاعبين';
+
+  @override
+  String get yourTier => 'مستواك';
 
   @override
   String get challenge => 'تحدٍّ';
@@ -1332,6 +1344,22 @@ class LAr extends L {
   String get incomingRequests => 'طلبات واردة';
 
   @override
+  String get noRequestsWaiting => 'مفيش طلبات مستنية دلوقتي';
+
+  @override
+  String get addFriendAction => 'إضافة صديق';
+
+  @override
+  String get addFriendHint =>
+      'اكتب اليوزر نيم بتاعهم، أو الكود اللي رقمه # من البروفايل بتاعهم.';
+
+  @override
+  String get usernameOrCode => 'اليوزر نيم أو #الكود';
+
+  @override
+  String get sendRequest => 'إرسال الطلب';
+
+  @override
   String onlineNowCount(String count) {
     return 'متصل الآن · $count';
   }
@@ -1562,6 +1590,10 @@ class LAr extends L {
   String lpSwing(String gain, String loss) {
     return '+$gain / −$loss نقطة';
   }
+
+  @override
+  String get lpMovesWithGap =>
+      'النقط بتتحرك مع فرق العدات — كل ما تفوز بفرق أكبر تكسب أكتر';
 
   @override
   String get searchingForOpponent => 'جارٍ البحث عن منافس';

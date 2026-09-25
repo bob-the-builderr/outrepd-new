@@ -414,6 +414,12 @@ class LTr extends L {
   String get couldNotShareCard => 'Bu kart paylaşılamadı';
 
   @override
+  String get couldNotOpenLink => 'O bağlantı açılamadı';
+
+  @override
+  String get couldNotCheckUsername => 'O ad kontrol edilemedi — tekrar deneyin';
+
+  @override
   String get simulatedOpponent =>
       'Başka kimse hazır değildi — bu bir antrenman temposu';
 
@@ -483,6 +489,12 @@ class LTr extends L {
 
   @override
   String get global => 'Küresel';
+
+  @override
+  String get topPlayers => 'En İyi Oyuncular';
+
+  @override
+  String get yourTier => 'Seviyen';
 
   @override
   String get challenge => 'Meydan oku';
@@ -1335,6 +1347,22 @@ class LTr extends L {
   String get incomingRequests => 'Gelen istekler';
 
   @override
+  String get noRequestsWaiting => 'Şu anda bekleyen istek yok';
+
+  @override
+  String get addFriendAction => 'Arkadaş ekle';
+
+  @override
+  String get addFriendHint =>
+      'Kullanıcı adlarını veya profillerindeki #kodu girin.';
+
+  @override
+  String get usernameOrCode => 'Kullanıcı adı veya #kod';
+
+  @override
+  String get sendRequest => 'İstek gönder';
+
+  @override
   String onlineNowCount(String count) {
     return 'Şu an çevrimiçi · $count';
   }
@@ -1565,6 +1593,10 @@ class LTr extends L {
   String lpSwing(String gain, String loss) {
     return '+$gain / −$loss LP';
   }
+
+  @override
+  String get lpMovesWithGap =>
+      'LP, tekrar farkına göre değişir — ne kadar farklı kazanırsan o kadar çok kazanırsın';
 
   @override
   String get searchingForOpponent => 'Rakip aranıyor';

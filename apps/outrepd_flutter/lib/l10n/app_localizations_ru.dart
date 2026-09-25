@@ -414,6 +414,13 @@ class LRu extends L {
   String get couldNotShareCard => 'Не удалось поделиться карточкой';
 
   @override
+  String get couldNotOpenLink => 'Не удалось открыть эту ссылку';
+
+  @override
+  String get couldNotCheckUsername =>
+      'Не удалось проверить это имя — попробуйте снова';
+
+  @override
   String get simulatedOpponent =>
       'Больше никого не было — это тренировочный темп';
 
@@ -483,6 +490,12 @@ class LRu extends L {
 
   @override
   String get global => 'Глобальный';
+
+  @override
+  String get topPlayers => 'Лучшие игроки';
+
+  @override
+  String get yourTier => 'Ваш уровень';
 
   @override
   String get challenge => 'Вызов';
@@ -1337,6 +1350,22 @@ class LRu extends L {
   String get incomingRequests => 'Входящие заявки';
 
   @override
+  String get noRequestsWaiting => 'Сейчас нет ожидающих запросов';
+
+  @override
+  String get addFriendAction => 'Добавить друга';
+
+  @override
+  String get addFriendHint =>
+      'Введите их имя пользователя или #код из их профиля.';
+
+  @override
+  String get usernameOrCode => 'Имя пользователя или #код';
+
+  @override
+  String get sendRequest => 'Отправить запрос';
+
+  @override
   String onlineNowCount(String count) {
     return 'Сейчас в сети · $count';
   }
@@ -1567,6 +1596,10 @@ class LRu extends L {
   String lpSwing(String gain, String loss) {
     return '+$gain / −$loss LP';
   }
+
+  @override
+  String get lpMovesWithGap =>
+      'LP меняется в зависимости от разницы повторений — чем больше отрыв, тем больше очков';
 
   @override
   String get searchingForOpponent => 'Ищем соперника';

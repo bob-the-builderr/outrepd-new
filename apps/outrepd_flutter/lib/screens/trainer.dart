@@ -35,8 +35,6 @@ class DuelContext {
     required this.opponentTierIdx,
     required this.opponentDivIdx,
     required this.rankLabel,
-    required this.lpGain,
-    required this.lpRisk,
   });
 
   final String opponentName;
@@ -55,8 +53,6 @@ class DuelContext {
   final int opponentDivIdx;
 
   final String rankLabel;
-  final int lpGain;
-  final int lpRisk;
 }
 
 /// The camera. Counts push-ups, and — when it is part of a duel — carries the
@@ -959,13 +955,12 @@ class _TrainerScreenState extends State<TrainerScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 if (widget.duel case final duel?)
-                  // Flexible, because the rank and the two LP figures run long
-                  // in several of the fourteen languages and this row also has
-                  // to hold the way out.
+                  // Flexible, because the rank label runs long in several of
+                  // the fourteen languages and this row also has to hold the
+                  // way out.
                   Flexible(
                     child: Text(
-                      '${duel.rankLabel} \u00b7 '
-                      '${L.of(context).lpSwing(localNumber(context, duel.lpGain), localNumber(context, duel.lpRisk))}',
+                      duel.rankLabel,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(color: Colors.white, fontSize: 10),

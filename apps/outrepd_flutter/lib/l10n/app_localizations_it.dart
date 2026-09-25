@@ -416,6 +416,13 @@ class LIt extends L {
   String get couldNotShareCard => 'Impossibile condividere questa card';
 
   @override
+  String get couldNotOpenLink => 'Impossibile aprire quel link';
+
+  @override
+  String get couldNotCheckUsername =>
+      'Impossibile verificare quel nome: riprova';
+
+  @override
   String get simulatedOpponent =>
       'Nessun altro era pronto: questo è un ritmo di allenamento';
 
@@ -485,6 +492,12 @@ class LIt extends L {
 
   @override
   String get global => 'Globale';
+
+  @override
+  String get topPlayers => 'Migliori giocatori';
+
+  @override
+  String get yourTier => 'Il tuo livello';
 
   @override
   String get challenge => 'Sfida';
@@ -1341,6 +1354,22 @@ class LIt extends L {
   String get incomingRequests => 'Richieste ricevute';
 
   @override
+  String get noRequestsWaiting => 'Nessuna richiesta in attesa al momento';
+
+  @override
+  String get addFriendAction => 'Aggiungi amico';
+
+  @override
+  String get addFriendHint =>
+      'Inserisci il loro nome utente, oppure il codice # dal loro profilo.';
+
+  @override
+  String get usernameOrCode => 'Nome utente o codice #';
+
+  @override
+  String get sendRequest => 'Invia richiesta';
+
+  @override
   String onlineNowCount(String count) {
     return 'Online ora · $count';
   }
@@ -1572,6 +1601,10 @@ class LIt extends L {
   String lpSwing(String gain, String loss) {
     return '+$gain / −$loss LP';
   }
+
+  @override
+  String get lpMovesWithGap =>
+      'I PL si muovono in base al distacco nelle ripetizioni: vinci con più margine, guadagni di più';
 
   @override
   String get searchingForOpponent => 'Ricerca avversario';

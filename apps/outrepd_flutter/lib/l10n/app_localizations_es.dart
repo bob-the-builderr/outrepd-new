@@ -418,6 +418,13 @@ class LEs extends L {
   String get couldNotShareCard => 'No se pudo compartir esta tarjeta';
 
   @override
+  String get couldNotOpenLink => 'No se pudo abrir ese enlace';
+
+  @override
+  String get couldNotCheckUsername =>
+      'No se pudo comprobar ese nombre: inténtalo de nuevo';
+
+  @override
   String get simulatedOpponent =>
       'Nadie más estaba listo: este es un ritmo de práctica';
 
@@ -487,6 +494,12 @@ class LEs extends L {
 
   @override
   String get global => 'Global';
+
+  @override
+  String get topPlayers => 'Mejores jugadores';
+
+  @override
+  String get yourTier => 'Tu nivel';
 
   @override
   String get challenge => 'Retar';
@@ -1342,6 +1355,22 @@ class LEs extends L {
   String get incomingRequests => 'Solicitudes recibidas';
 
   @override
+  String get noRequestsWaiting => 'No hay solicitudes pendientes ahora mismo';
+
+  @override
+  String get addFriendAction => 'Añadir amigo';
+
+  @override
+  String get addFriendHint =>
+      'Escribe su nombre de usuario o el código # de su perfil.';
+
+  @override
+  String get usernameOrCode => 'Usuario o código #';
+
+  @override
+  String get sendRequest => 'Enviar solicitud';
+
+  @override
   String onlineNowCount(String count) {
     return 'En línea · $count';
   }
@@ -1573,6 +1602,10 @@ class LEs extends L {
   String lpSwing(String gain, String loss) {
     return '+$gain / −$loss LP';
   }
+
+  @override
+  String get lpMovesWithGap =>
+      'Los PL se mueven según la diferencia de repeticiones: gana por más, suma más';
 
   @override
   String get searchingForOpponent => 'Buscando rival';

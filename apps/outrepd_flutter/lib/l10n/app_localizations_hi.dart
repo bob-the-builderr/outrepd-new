@@ -414,6 +414,13 @@ class LHi extends L {
   String get couldNotShareCard => 'यह कार्ड शेयर नहीं हो सका';
 
   @override
+  String get couldNotOpenLink => 'यह लिंक नहीं खुल सका';
+
+  @override
+  String get couldNotCheckUsername =>
+      'यह नाम जाँचा नहीं जा सका — फिर कोशिश करें';
+
+  @override
   String get simulatedOpponent =>
       'कोई और तैयार नहीं था — यह अभ्यास की रफ़्तार है';
 
@@ -483,6 +490,12 @@ class LHi extends L {
 
   @override
   String get global => 'वैश्विक';
+
+  @override
+  String get topPlayers => 'टॉप खिलाड़ी';
+
+  @override
+  String get yourTier => 'आपका टियर';
 
   @override
   String get challenge => 'चुनौती';
@@ -1338,6 +1351,22 @@ class LHi extends L {
   String get incomingRequests => 'आई हुई रिक्वेस्ट';
 
   @override
+  String get noRequestsWaiting => 'अभी कोई अनुरोध बाकी नहीं है';
+
+  @override
+  String get addFriendAction => 'दोस्त जोड़ें';
+
+  @override
+  String get addFriendHint =>
+      'उनका यूज़रनेम डालें, या उनकी प्रोफ़ाइल वाला #कोड।';
+
+  @override
+  String get usernameOrCode => 'यूज़रनेम या #कोड';
+
+  @override
+  String get sendRequest => 'अनुरोध भेजें';
+
+  @override
   String onlineNowCount(String count) {
     return 'अभी ऑनलाइन · $count';
   }
@@ -1569,6 +1598,10 @@ class LHi extends L {
   String lpSwing(String gain, String loss) {
     return '+$gain / −$loss LP';
   }
+
+  @override
+  String get lpMovesWithGap =>
+      'LP रेप्स के अंतर के साथ बदलते हैं — जितने ज़्यादा अंतर से जीतें, उतना ज़्यादा मिलता है';
 
   @override
   String get searchingForOpponent => 'विरोधी ढूँढ रहे हैं';

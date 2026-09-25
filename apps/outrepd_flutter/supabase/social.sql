@@ -92,30 +92,25 @@ create policy "either side may end it"
 
 -- ──────────────────────────────── asking ─────────────────────────────────────
 
--- Send a friend request, by name.
---
--- By name because that is what somebody has: you know what your friend calls
--- themselves, not their uuid. Returns the state the pair ended up in, so the
--- app can tell "asked" from "you are now friends" without asking again.
+-- Everything asking somebody shares once the target's id is known — only how
+-- that id was found (by name, by code) differs between the two functions
+-- below. Kept as one body so a rule about asking (blocked, already asked you,
+-- already friends) is a rule in one place instead of two copies drifting
+-- apart the next time either changes.
 --
 -- `security definer`, for one reason: it has to see a block made *against*
 -- the caller, and the blocks policy deliberately shows a row only to whoever
 -- made it. Every write below still names `auth.uid()` explicitly, so the
 -- extra rights buy the check and nothing else.
-create or replace function request_friend(their_name text)
+create or replace function request_friend_with(them uuid)
 returns text
 language plpgsql
 security definer
 set search_path = public
 as $$
 declare
-  them uuid;
   theirs friendships;
 begin
-  select id into them from profiles where username = their_name;
-  if them is null then
-    return 'no such lifter';
-  end if;
   if them = auth.uid() then
     return 'that is you';
   end if;
@@ -155,6 +150,52 @@ begin
   on conflict (requester, addressee) do nothing;
 
   return 'asked';
+end;
+$$;
+
+-- Send a friend request, by name.
+--
+-- By name because that is what somebody has: you know what your friend calls
+-- themselves, not their uuid. Returns the state the pair ended up in, so the
+-- app can tell "asked" from "you are now friends" without asking again.
+create or replace function request_friend(their_name text)
+returns text
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  them uuid;
+begin
+  select id into them from profiles where username = their_name;
+  if them is null then
+    return 'no such lifter';
+  end if;
+  return request_friend_with(them);
+end;
+$$;
+
+-- Send a friend request, by their #code instead of their name.
+--
+-- The code exists so adding somebody never requires the name shown on the
+-- ladder — see the comment on the friend_code column in schema.sql. A
+-- leading '#' is accepted and stripped rather than required, since the
+-- client shows the code with one but the stored value never has it.
+create or replace function request_friend_by_code(code text)
+returns text
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  them uuid;
+  cleaned text := trim(leading '#' from trim(code));
+begin
+  select id into them from profiles where friend_code = cleaned;
+  if them is null then
+    return 'no such lifter';
+  end if;
+  return request_friend_with(them);
 end;
 $$;
 
@@ -261,6 +302,16 @@ as $$
    order by f.created_at;
 $$;
 
+-- Usernames keep whoever's case they were typed in (see set_my_username), so
+-- finding one by name is always a case-insensitive comparison. A plain index
+-- on `username` cannot serve that — Postgres only uses a btree for LIKE-style
+-- matching when the indexed expression matches the comparison byte-for-byte,
+-- collation included. This is the expression find_lifters() below actually
+-- compares against, so it is the one that keeps every search a fast prefix
+-- lookup instead of a sequential scan once there are many accounts to scan.
+create index if not exists profiles_username_prefix_idx
+  on profiles (lower(username) text_pattern_ops);
+
 -- Find somebody to add, by the start of their name.
 --
 -- Capped hard and never open-ended: this is the one call that hands back
@@ -289,7 +340,10 @@ as $$
     from profiles p
    where length(trim(query)) >= 2
      and p.id <> auth.uid()
-     and p.username ilike trim(query) || '%'
+     -- Same comparison as profiles_username_prefix_idx above, on purpose:
+     -- ilike would read identically but plans as a sequential scan, because
+     -- nothing ties it back to that index.
+     and lower(p.username) like lower(trim(query)) || '%'
      -- Somebody blocked, in either direction, is simply not there. A search
      -- that still turns them up is a block that only half works.
      and not exists (
@@ -415,10 +469,15 @@ $$;
 -- is a column with something in it, not a rank it earned.
 --
 -- See the comment on my_friends() above — same reason, same fix.
+-- [in_tier_idx]/[in_div_idx] narrow the board to one rung of the ladder — the
+-- "ranked within your tier" list, where everybody on it is already level
+-- with everybody else, and lp is what is left to tell them apart.
 drop function if exists leaderboard(text, int);
 create or replace function leaderboard(
   in_country text default null,
-  limit_to int default 100
+  limit_to int default 100,
+  in_tier_idx int default null,
+  in_div_idx int default null
 )
 returns table (
   id uuid,
@@ -440,6 +499,8 @@ as $$
      and p.show_on_board
      and (in_country is null
           or (p.country = in_country and p.show_country))
+     and (in_tier_idx is null or p.tier_idx = in_tier_idx)
+     and (in_div_idx is null or p.div_idx = in_div_idx)
    order by p.tier_idx desc, p.div_idx desc, p.lp desc
    limit least(greatest(limit_to, 1), 500);
 $$;
@@ -631,8 +692,12 @@ begin
 end;
 $$;
 
+revoke all on function request_friend_with(uuid) from public;
+grant execute on function request_friend_with(uuid) to authenticated;
 revoke all on function request_friend(text) from public;
 grant execute on function request_friend(text) to authenticated;
+revoke all on function request_friend_by_code(text) from public;
+grant execute on function request_friend_by_code(text) to authenticated;
 revoke all on function answer_friend(uuid, boolean) from public;
 grant execute on function answer_friend(uuid, boolean) to authenticated;
 revoke all on function my_friends() from public;
@@ -647,8 +712,8 @@ revoke all on function unblock_lifter(uuid) from public;
 grant execute on function unblock_lifter(uuid) to authenticated;
 revoke all on function my_blocks() from public;
 grant execute on function my_blocks() to authenticated;
-revoke all on function leaderboard(text, int) from public;
-grant execute on function leaderboard(text, int) to authenticated;
+revoke all on function leaderboard(text, int, int, int) from public;
+grant execute on function leaderboard(text, int, int, int) to authenticated;
 revoke all on function my_board_place(text) from public;
 grant execute on function my_board_place(text) to authenticated;
 revoke all on function board_place(uuid, text) from public;

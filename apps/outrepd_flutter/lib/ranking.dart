@@ -12,8 +12,6 @@
 /// hands out a rank the app cannot draw.
 library;
 
-import 'package:flutter/foundation.dart';
-
 import 'data.dart' show kPlacementDuels;
 import 'theme.dart' show kTiers;
 import 'widgets.dart' show kDivisions;
@@ -166,102 +164,21 @@ RankChange applyLp(Rank from, int delta, {required int floorTierIdx}) {
   );
 }
 
-/// One duel's LP, itemised.
+/// What a duel pays: exactly the gap in reps, signed by who actually won.
 ///
-/// A single number tells somebody what happened to them and nothing about why.
-/// These are the reasons, and they are added up rather than decorated onto a
-/// total — so the screen cannot show a breakdown that does not sum to what the
-/// account actually moved by.
-@immutable
-class LpBreakdown {
-  const LpBreakdown({
-    required this.result,
-    required this.tierGap,
-    required this.margin,
-    required this.form,
-  });
-
-  /// The win or the loss itself, before anything about how it went.
-  final int result;
-
-  /// Who was on the other side. Beating somebody above you is worth more;
-  /// losing to somebody below you costs more.
-  final int tierGap;
-
-  /// How far apart it finished.
-  ///
-  /// ⚠️ Two things constrain this, and both are load-bearing.
-  ///
-  /// It used to be deliberately absent: paying for margin pays for picking on
-  /// people. So it is capped hard — five LP at the very most against a base of
-  /// fifteen — and a blowout is worth a third of a win, which farming a weak
-  /// opponent can never make up against facing a strong one.
-  ///
-  /// And it never makes a loss worse. The card before the round promises a
-  /// number, and margin is not knowable then; if a heavy defeat cost more than
-  /// the card said, the app would have quietly risked more of somebody's rank
-  /// than it told them it would. So on a loss this only ever softens — a
-  /// narrow defeat costs less — which leaves the promise a worst case rather
-  /// than a guess.
-  final int margin;
-
-  /// A set of full-depth reps, measured against the lifter's own deepest.
-  final int form;
-
-  int get total => result + tierGap + margin + form;
+/// [won] and the reps normally agree — more reps than the other side is a
+/// win — so this only matters in the one place they can split: walking out
+/// while still ahead is a loss regardless of the count at the moment of
+/// quitting, and a loss must never pay a gain. Elsewhere this is nothing more
+/// than the rep gap: no tier, no form, no cap, no promise the card could make
+/// before the round is over.
+int lpFor({required bool won, required int yourReps, required int theirReps}) {
+  final gap = (yourReps - theirReps).abs();
+  return won ? gap : -gap;
 }
 
-/// The most margin can move a result, either way.
-const kMarginCap = 5;
-
-/// Reps of difference each point of margin is worth.
-const kRepsPerMarginPoint = 3;
-
-/// What a duel pays, itemised.
-///
-/// [clean] is whether the reps held their depth — the counter measures it
-/// against the lifter's own deepest rep, not a table of angles, so it means
-/// "you did not shorten them as you tired" rather than "you match a model".
-LpBreakdown lpFor({
-  required bool won,
-  required int yourTier,
-  required int theirTier,
-  required int yourReps,
-  required int theirReps,
-  required bool clean,
-}) {
-  final apart = (yourReps - theirReps).abs();
-  final gap = apart ~/ kRepsPerMarginPoint;
-  return LpBreakdown(
-    result: won ? 15 : -12,
-    tierGap: won
-        ? (theirTier - yourTier).clamp(0, 6) * 2
-        : -(yourTier - theirTier).clamp(0, 6) * 2,
-    // A win pays for the gap it opened. A loss is *refunded* for how close it
-    // was, so the worst case is the number the lifter was shown beforehand.
-    margin: won
-        ? gap.clamp(0, kMarginCap)
-        : (kMarginCap - 1 - gap).clamp(0, kMarginCap - 1),
-    // Paid on a loss too. A lifter who went all the way down on every rep and
-    // still lost did the work, and the screen that tells them they lost is the
-    // wrong place to also tell them it counted for nothing.
-    form: clean ? 2 : 0,
-  );
-}
-
-/// What a win pays and what a loss costs, from the gap in rank alone.
-///
-/// Beating somebody far above you is worth more than beating somebody level.
-/// These are [lpFor] without the parts that need a score, kept for the places
-/// that have no score to read — a forfeit, and the tests that predate margin.
-int lpForWin(int yourTier, int theirTier) =>
-    15 + (theirTier - yourTier).clamp(0, 6) * 2;
-
-int lpForLoss(int yourTier, int theirTier) =>
-    -(12 + (yourTier - theirTier).clamp(0, 6) * 2);
-
-/// A forfeit is a flat win. You did not have to close the gap, so the gap
-/// pays nothing.
+/// A forfeit has no reps to compare, so it cannot be paid the way an ordinary
+/// duel is — there is no gap to be exactly. A flat win, same as before.
 const kForfeitLp = 20;
 
 /// Where an account starts once its placement duels are done.

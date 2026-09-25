@@ -402,6 +402,12 @@ class LJa extends L {
   String get couldNotShareCard => 'このカードを共有できませんでした';
 
   @override
+  String get couldNotOpenLink => 'そのリンクを開けませんでした';
+
+  @override
+  String get couldNotCheckUsername => 'その名前を確認できませんでした。もう一度お試しください';
+
+  @override
   String get simulatedOpponent => '他に対戦相手がいなかったため、これは練習ペースです';
 
   @override
@@ -466,6 +472,12 @@ class LJa extends L {
 
   @override
   String get global => 'グローバル';
+
+  @override
+  String get topPlayers => 'トッププレイヤー';
+
+  @override
+  String get yourTier => '自分のティア';
 
   @override
   String get challenge => '挑む';
@@ -1313,6 +1325,21 @@ class LJa extends L {
   String get incomingRequests => '受信した申請';
 
   @override
+  String get noRequestsWaiting => '今のところ保留中のリクエストはありません';
+
+  @override
+  String get addFriendAction => '友達を追加';
+
+  @override
+  String get addFriendHint => '相手のユーザー名か、プロフィールにある#コードを入力してください。';
+
+  @override
+  String get usernameOrCode => 'ユーザー名または#コード';
+
+  @override
+  String get sendRequest => 'リクエストを送信';
+
+  @override
   String onlineNowCount(String count) {
     return 'オンライン · $count';
   }
@@ -1541,6 +1568,9 @@ class LJa extends L {
   String lpSwing(String gain, String loss) {
     return '+$gain / −$loss LP';
   }
+
+  @override
+  String get lpMovesWithGap => 'LPはレップ差で変動します。差が大きいほど獲得LPも増えます';
 
   @override
   String get searchingForOpponent => '対戦相手を探しています';

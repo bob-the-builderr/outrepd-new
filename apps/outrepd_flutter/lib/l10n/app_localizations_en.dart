@@ -415,6 +415,12 @@ class LEn extends L {
   String get couldNotShareCard => 'Could not share this card';
 
   @override
+  String get couldNotOpenLink => 'Could not open that link';
+
+  @override
+  String get couldNotCheckUsername => 'Couldn\'t check that name — try again';
+
+  @override
   String get simulatedOpponent =>
       'No one else was ready — this is a practice pace';
 
@@ -484,6 +490,12 @@ class LEn extends L {
 
   @override
   String get global => 'Global';
+
+  @override
+  String get topPlayers => 'Top Players';
+
+  @override
+  String get yourTier => 'Your Tier';
 
   @override
   String get challenge => 'Challenge';
@@ -1337,6 +1349,22 @@ class LEn extends L {
   String get incomingRequests => 'Incoming requests';
 
   @override
+  String get noRequestsWaiting => 'No requests waiting right now';
+
+  @override
+  String get addFriendAction => 'Add Friend';
+
+  @override
+  String get addFriendHint =>
+      'Enter their username, or the #code from their profile.';
+
+  @override
+  String get usernameOrCode => 'Username or #code';
+
+  @override
+  String get sendRequest => 'Send request';
+
+  @override
   String onlineNowCount(String count) {
     return 'Online now · $count';
   }
@@ -1568,6 +1596,10 @@ class LEn extends L {
   String lpSwing(String gain, String loss) {
     return '+$gain / −$loss LP';
   }
+
+  @override
+  String get lpMovesWithGap =>
+      'LP moves with the rep gap — win by more, gain more';
 
   @override
   String get searchingForOpponent => 'Searching for an opponent';

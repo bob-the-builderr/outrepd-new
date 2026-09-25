@@ -190,6 +190,8 @@
   "couldNotUsePicture": "Could not use that picture",
   "couldNotSyncAvatar": "Your picture is saved, but it hasn't synced yet",
   "couldNotShareCard": "Could not share this card",
+  "couldNotOpenLink": "Could not open that link",
+  "couldNotCheckUsername": "Couldn't check that name — try again",
   "simulatedOpponent": "No one else was ready — this is a practice pace",
   "changeUsername": "Change username",
   "usernameInvalidLength": "4 to 20 characters, letters and numbers only",
@@ -212,6 +214,8 @@
   "restDaysLeft": "Rest days left",
   "restIsTraining": "Rest is part of training. Two days off a week will not break your streak.",
   "global": "Global",
+  "topPlayers": "Top Players",
+  "yourTier": "Your Tier",
   "challenge": "Challenge",
   "notifications": "Notifications",
   "start": "Start",
@@ -679,6 +683,11 @@
   "noMatchesYetBody": "Your first one shows up here, win or lose.",
   "searchByUsername": "Search by username",
   "incomingRequests": "Incoming requests",
+  "noRequestsWaiting": "No requests waiting right now",
+  "addFriendAction": "Add Friend",
+  "addFriendHint": "Enter their username, or the #code from their profile.",
+  "usernameOrCode": "Username or #code",
+  "sendRequest": "Send request",
   "onlineNowCount": "Online now · {count}",
   "@onlineNowCount": {
     "placeholders": {
@@ -908,6 +917,7 @@
   "clockStillRunning": "The clock is still running. Reps are not counting.",
   "giveUp": "Give up",
   "lpSwing": "+{gain} / −{loss} LP",
+  "lpMovesWithGap": "LP moves with the rep gap — win by more, gain more",
   "@lpSwing": {
     "placeholders": {
       "gain": {

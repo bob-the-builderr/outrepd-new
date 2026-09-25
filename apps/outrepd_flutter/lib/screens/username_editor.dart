@@ -94,8 +94,14 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
             _checking = false;
           });
         }
-      } on Object catch (_) {
-        if (mounted) setState(() => _checking = false);
+      } on Object catch (error) {
+        debugPrint('Could not check username availability: $error');
+        if (mounted && _controller.text.trim() == checking) {
+          setState(() {
+            _checking = false;
+            _error = L.of(context).couldNotCheckUsername;
+          });
+        }
       }
     });
   }

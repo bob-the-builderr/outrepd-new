@@ -88,6 +88,11 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
   final _search = TextEditingController();
   List<FoundLifter> _found = const [];
   bool _searching = false;
+
+  /// Distinct from an empty [_found]: nobody matching that name is a real
+  /// answer, but never having been able to ask the server is not — the two
+  /// must not read the same way.
+  bool _searchFailed = false;
   Timer? _debounce;
 
   @override
@@ -100,15 +105,27 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
   void _onChanged(String query) {
     _debounce?.cancel();
     if (query.trim().length < 2) {
-      setState(() => _found = const []);
+      setState(() {
+        _found = const [];
+        _searchFailed = false;
+      });
       return;
     }
     _debounce = Timer(const Duration(milliseconds: 350), () => _lookUp(query));
   }
 
   Future<void> _lookUp(String query) async {
-    if (!backend.available) return;
-    setState(() => _searching = true);
+    if (!backend.available) {
+      setState(() {
+        _found = const [];
+        _searchFailed = true;
+      });
+      return;
+    }
+    setState(() {
+      _searching = true;
+      _searchFailed = false;
+    });
     try {
       final found = await backend.findLifters(query.trim());
       if (!mounted) return;
@@ -116,9 +133,13 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
         _found = found;
         _searching = false;
       });
-    } on Object catch (_) {
+    } on Object catch (error) {
+      debugPrint('Could not search for lifters: $error');
       if (!mounted) return;
-      setState(() => _searching = false);
+      setState(() {
+        _searching = false;
+        _searchFailed = true;
+      });
     }
   }
 
@@ -192,7 +213,9 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
                         padding: const EdgeInsets.symmetric(vertical: 24),
                         child: Center(
                           child: Text(
-                            _search.text.trim().length < 2
+                            _searchFailed
+                                ? l.needsServer
+                                : _search.text.trim().length < 2
                                 ? l.roomFriendly
                                 : l.noOneFound,
                             textAlign: TextAlign.center,

@@ -418,6 +418,13 @@ class LDe extends L {
   String get couldNotShareCard => 'Diese Karte konnte nicht geteilt werden';
 
   @override
+  String get couldNotOpenLink => 'Der Link konnte nicht geöffnet werden';
+
+  @override
+  String get couldNotCheckUsername =>
+      'Der Name konnte nicht geprüft werden — versuch es noch mal';
+
+  @override
   String get simulatedOpponent =>
       'Niemand sonst war bereit – das ist ein Übungstempo';
 
@@ -487,6 +494,12 @@ class LDe extends L {
 
   @override
   String get global => 'Global';
+
+  @override
+  String get topPlayers => 'Top-Spieler';
+
+  @override
+  String get yourTier => 'Deine Stufe';
 
   @override
   String get challenge => 'Fordern';
@@ -1344,6 +1357,22 @@ class LDe extends L {
   String get incomingRequests => 'Offene Anfragen';
 
   @override
+  String get noRequestsWaiting => 'Gerade keine Anfragen offen';
+
+  @override
+  String get addFriendAction => 'Freund hinzufügen';
+
+  @override
+  String get addFriendHint =>
+      'Gib ihren Benutzernamen ein oder den #Code aus ihrem Profil.';
+
+  @override
+  String get usernameOrCode => 'Benutzername oder #Code';
+
+  @override
+  String get sendRequest => 'Anfrage senden';
+
+  @override
   String onlineNowCount(String count) {
     return 'Jetzt online · $count';
   }
@@ -1576,6 +1605,10 @@ class LDe extends L {
   String lpSwing(String gain, String loss) {
     return '+$gain / −$loss LP';
   }
+
+  @override
+  String get lpMovesWithGap =>
+      'LP bewegt sich mit dem Wiederholungsunterschied — je größer dein Vorsprung, desto mehr gewinnst du';
 
   @override
   String get searchingForOpponent => 'Gegner wird gesucht';

@@ -419,6 +419,13 @@ class LFr extends L {
   String get couldNotShareCard => 'Impossible de partager cette carte';
 
   @override
+  String get couldNotOpenLink => 'Impossible d\'ouvrir ce lien';
+
+  @override
+  String get couldNotCheckUsername =>
+      'Impossible de vérifier ce nom — réessayez';
+
+  @override
   String get simulatedOpponent =>
       'Personne d\'autre n\'était prêt — c\'est un rythme d\'entraînement';
 
@@ -489,6 +496,12 @@ class LFr extends L {
 
   @override
   String get global => 'Mondial';
+
+  @override
+  String get topPlayers => 'Meilleurs joueurs';
+
+  @override
+  String get yourTier => 'Votre palier';
 
   @override
   String get challenge => 'Défier';
@@ -1344,6 +1357,22 @@ class LFr extends L {
   String get incomingRequests => 'Demandes reçues';
 
   @override
+  String get noRequestsWaiting => 'Aucune demande en attente pour l\'instant';
+
+  @override
+  String get addFriendAction => 'Ajouter un ami';
+
+  @override
+  String get addFriendHint =>
+      'Saisissez leur nom d\'utilisateur ou le code # de leur profil.';
+
+  @override
+  String get usernameOrCode => 'Nom d\'utilisateur ou code #';
+
+  @override
+  String get sendRequest => 'Envoyer la demande';
+
+  @override
   String onlineNowCount(String count) {
     return 'En ligne · $count';
   }
@@ -1575,6 +1604,10 @@ class LFr extends L {
   String lpSwing(String gain, String loss) {
     return '+$gain / −$loss LP';
   }
+
+  @override
+  String get lpMovesWithGap =>
+      'Les PL évoluent selon l\'écart de répétitions — gagnez avec plus d\'écart, gagnez plus de points';
 
   @override
   String get searchingForOpponent => 'Recherche d’un adversaire';

@@ -157,6 +157,54 @@ alter table profiles add constraint profiles_peak_tier_idx_check
 create index if not exists profiles_ladder_idx
   on profiles (tier_idx desc, div_idx desc, lp desc);
 
+-- ──────────────────────────────── friend code ─────────────────────────────────
+
+-- A short number that names an account the way a username does, without
+-- being one. Usernames are already unique, so this is not for telling two
+-- lifters apart — it is for adding one without having to hand over the name
+-- shown on the ladder to do it.
+create or replace function generate_friend_code()
+returns text
+language plpgsql
+as $$
+declare
+  candidate text;
+begin
+  loop
+    candidate := lpad(floor(random() * 1000000)::int::text, 6, '0');
+    exit when not exists (
+      select 1 from profiles where friend_code = candidate
+    );
+  end loop;
+  return candidate;
+end;
+$$;
+
+alter table profiles add column if not exists friend_code text unique;
+
+-- Backfills any row from before this column existed, one at a time — an
+-- ordinary multi-row UPDATE would hand every row the same snapshot of "codes
+-- already taken" and could mint the same candidate for two rows in one go,
+-- which the unique constraint would then simply refuse outright. A loop asks
+-- fresh each time, the same reason settle_duel never batches a ladder change.
+--
+-- Guarded like the tier migration above: the guard trigger below refuses any
+-- write to this column once it exists, and on a project where this has
+-- already run once, it does.
+do $$
+declare
+  r record;
+begin
+  perform set_config('outrepd.settling', 'on', true);
+  for r in select id from profiles where friend_code is null loop
+    update profiles set friend_code = generate_friend_code() where id = r.id;
+  end loop;
+  perform set_config('outrepd.settling', 'off', true);
+end $$;
+
+alter table profiles alter column friend_code set not null;
+alter table profiles alter column friend_code set default generate_friend_code();
+
 -- ──────────────────────────────── sets ───────────────────────────────────────
 
 create table if not exists sets (
@@ -334,6 +382,13 @@ begin
   or new.total_reps      is distinct from old.total_reps
   or new.best_set        is distinct from old.best_set then
     raise exception 'rank and record are settled by the server, not the client';
+  end if;
+
+  -- A code that a lifter could rewrite is a code somebody could hand out,
+  -- have declined, and then mint a fresh one to try again under. It is
+  -- assigned once, the same way an id is.
+  if new.friend_code is distinct from old.friend_code then
+    raise exception 'friend_code is assigned by the server, not the client';
   end if;
 
   new.updated_at := now();
@@ -578,49 +633,18 @@ $$;
 
 -- ───────────────────────────── what a duel pays ──────────────────────────────
 
--- Itemised, and the total is the sum of the items. The app shows these rows on
--- the screen after a duel, so a total that is not their sum would be the app
--- visibly lying about arithmetic.
-create or replace function lp_for(
-  won boolean,
-  your_tier int,
-  their_tier int,
-  your_reps int,
-  their_reps int,
-  clean boolean,
-  surrendered boolean default false
-)
-returns table (result int, tier_gap int, margin int, form int, total int)
-language plpgsql
+-- Exactly the gap in reps, signed by who actually won. `won` and the reps
+-- normally agree; they can only split when somebody walks out while still
+-- ahead, which stays a loss regardless of the count at the moment of
+-- quitting — a loss must never pay a gain. No tier, no form, no cap
+-- otherwise: a blowout is worth exactly what it was.
+create or replace function lp_for(won boolean, your_reps int, their_reps int)
+returns int
+language sql
 immutable
 as $$
-declare
-  gap int := abs(your_reps - their_reps) / 3;   -- integer division, as in Dart
-  r int; t int; m int; f int;
-begin
-  r := case when won then 15 else -12 end;
-
-  t := case
-         when won then least(greatest(their_tier - your_tier, 0), 6) * 2
-         else      -(least(greatest(your_tier - their_tier, 0), 6) * 2)
-       end;
-
-  -- A win pays for the gap it opened. A loss is refunded for how close it was,
-  -- so the number shown before the round is the worst case rather than a
-  -- guess — margin can never deepen a defeat.
-  m := case
-         when won then least(gap, 5)
-         else greatest(least(4 - gap, 4), 0)
-       end;
-
-  -- Walking out forfeits the closeness refund. Otherwise quitting one rep down
-  -- would cost less than fighting to the end and losing by one.
-  if surrendered then m := 0; end if;
-
-  f := case when clean then 2 else 0 end;
-
-  return query select r, t, m, f, r + t + m + f;
-end;
+  select case when won then abs(your_reps - their_reps)
+              else -abs(your_reps - their_reps) end;
 $$;
 
 -- ───────────────────────── applying it to a rank ─────────────────────────────
@@ -800,30 +824,25 @@ create policy "either side may end it"
 
 -- ──────────────────────────────── asking ─────────────────────────────────────
 
--- Send a friend request, by name.
---
--- By name because that is what somebody has: you know what your friend calls
--- themselves, not their uuid. Returns the state the pair ended up in, so the
--- app can tell "asked" from "you are now friends" without asking again.
+-- Everything asking somebody shares once the target's id is known — only how
+-- that id was found (by name, by code) differs between the two functions
+-- below. Kept as one body so a rule about asking (blocked, already asked you,
+-- already friends) is a rule in one place instead of two copies drifting
+-- apart the next time either changes.
 --
 -- `security definer`, for one reason: it has to see a block made *against*
 -- the caller, and the blocks policy deliberately shows a row only to whoever
 -- made it. Every write below still names `auth.uid()` explicitly, so the
 -- extra rights buy the check and nothing else.
-create or replace function request_friend(their_name text)
+create or replace function request_friend_with(them uuid)
 returns text
 language plpgsql
 security definer
 set search_path = public
 as $$
 declare
-  them uuid;
   theirs friendships;
 begin
-  select id into them from profiles where username = their_name;
-  if them is null then
-    return 'no such lifter';
-  end if;
   if them = auth.uid() then
     return 'that is you';
   end if;
@@ -863,6 +882,52 @@ begin
   on conflict (requester, addressee) do nothing;
 
   return 'asked';
+end;
+$$;
+
+-- Send a friend request, by name.
+--
+-- By name because that is what somebody has: you know what your friend calls
+-- themselves, not their uuid. Returns the state the pair ended up in, so the
+-- app can tell "asked" from "you are now friends" without asking again.
+create or replace function request_friend(their_name text)
+returns text
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  them uuid;
+begin
+  select id into them from profiles where username = their_name;
+  if them is null then
+    return 'no such lifter';
+  end if;
+  return request_friend_with(them);
+end;
+$$;
+
+-- Send a friend request, by their #code instead of their name.
+--
+-- The code exists so adding somebody never requires the name shown on the
+-- ladder — see the comment on the friend_code column in schema.sql. A
+-- leading '#' is accepted and stripped rather than required, since the
+-- client shows the code with one but the stored value never has it.
+create or replace function request_friend_by_code(code text)
+returns text
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  them uuid;
+  cleaned text := trim(leading '#' from trim(code));
+begin
+  select id into them from profiles where friend_code = cleaned;
+  if them is null then
+    return 'no such lifter';
+  end if;
+  return request_friend_with(them);
 end;
 $$;
 
@@ -969,6 +1034,16 @@ as $$
    order by f.created_at;
 $$;
 
+-- Usernames keep whoever's case they were typed in (see set_my_username), so
+-- finding one by name is always a case-insensitive comparison. A plain index
+-- on `username` cannot serve that — Postgres only uses a btree for LIKE-style
+-- matching when the indexed expression matches the comparison byte-for-byte,
+-- collation included. This is the expression find_lifters() below actually
+-- compares against, so it is the one that keeps every search a fast prefix
+-- lookup instead of a sequential scan once there are many accounts to scan.
+create index if not exists profiles_username_prefix_idx
+  on profiles (lower(username) text_pattern_ops);
+
 -- Find somebody to add, by the start of their name.
 --
 -- Capped hard and never open-ended: this is the one call that hands back
@@ -997,7 +1072,10 @@ as $$
     from profiles p
    where length(trim(query)) >= 2
      and p.id <> auth.uid()
-     and p.username ilike trim(query) || '%'
+     -- Same comparison as profiles_username_prefix_idx above, on purpose:
+     -- ilike would read identically but plans as a sequential scan, because
+     -- nothing ties it back to that index.
+     and lower(p.username) like lower(trim(query)) || '%'
      -- Somebody blocked, in either direction, is simply not there. A search
      -- that still turns them up is a block that only half works.
      and not exists (
@@ -1123,10 +1201,15 @@ $$;
 -- is a column with something in it, not a rank it earned.
 --
 -- See the comment on my_friends() above — same reason, same fix.
+-- [in_tier_idx]/[in_div_idx] narrow the board to one rung of the ladder — the
+-- "ranked within your tier" list, where everybody on it is already level
+-- with everybody else, and lp is what is left to tell them apart.
 drop function if exists leaderboard(text, int);
 create or replace function leaderboard(
   in_country text default null,
-  limit_to int default 100
+  limit_to int default 100,
+  in_tier_idx int default null,
+  in_div_idx int default null
 )
 returns table (
   id uuid,
@@ -1148,6 +1231,8 @@ as $$
      and p.show_on_board
      and (in_country is null
           or (p.country = in_country and p.show_country))
+     and (in_tier_idx is null or p.tier_idx = in_tier_idx)
+     and (in_div_idx is null or p.div_idx = in_div_idx)
    order by p.tier_idx desc, p.div_idx desc, p.lp desc
    limit least(greatest(limit_to, 1), 500);
 $$;
@@ -1339,8 +1424,12 @@ begin
 end;
 $$;
 
+revoke all on function request_friend_with(uuid) from public;
+grant execute on function request_friend_with(uuid) to authenticated;
 revoke all on function request_friend(text) from public;
 grant execute on function request_friend(text) to authenticated;
+revoke all on function request_friend_by_code(text) from public;
+grant execute on function request_friend_by_code(text) to authenticated;
 revoke all on function answer_friend(uuid, boolean) from public;
 grant execute on function answer_friend(uuid, boolean) to authenticated;
 revoke all on function my_friends() from public;
@@ -1355,8 +1444,8 @@ revoke all on function unblock_lifter(uuid) from public;
 grant execute on function unblock_lifter(uuid) to authenticated;
 revoke all on function my_blocks() from public;
 grant execute on function my_blocks() to authenticated;
-revoke all on function leaderboard(text, int) from public;
-grant execute on function leaderboard(text, int) to authenticated;
+revoke all on function leaderboard(text, int, int, int) from public;
+grant execute on function leaderboard(text, int, int, int) to authenticated;
 revoke all on function my_board_place(text) from public;
 grant execute on function my_board_place(text) to authenticated;
 revoke all on function board_place(uuid, text) from public;
@@ -1584,9 +1673,7 @@ declare
   them profiles;
   me_after profiles;
   i_won boolean;
-  pay record;
   after record;
-  their_pay record;
   their_after record;
   d_id uuid;
   is_ranked boolean := coalesce(ranked, true);
@@ -1623,19 +1710,6 @@ begin
              else mine.reps >= theirs.reps
            end;
 
-  select * into pay from lp_for(
-    i_won, me.tier_idx, them.tier_idx,
-    mine.reps, theirs.reps,
-    mine.depth >= 0.8,
-    mine.gave_up
-  );
-  select * into their_pay from lp_for(
-    not i_won, them.tier_idx, me.tier_idx,
-    theirs.reps, mine.reps,
-    theirs.depth >= 0.8,
-    theirs.gave_up
-  );
-
   -- The guard on profiles lets these two updates through, and only these.
   perform set_config('outrepd.settling', 'on', true);
 
@@ -1660,7 +1734,7 @@ begin
       me.tier_idx, me.div_idx, me.lp
     );
   else
-    my_delta := pay.total;
+    my_delta := lp_for(i_won, mine.reps, theirs.reps);
     select * into after from apply_lp(
       me.tier_idx, me.div_idx, me.lp, my_delta, me.peak_tier_idx
     );
@@ -1674,7 +1748,7 @@ begin
       them.tier_idx, them.div_idx, them.lp
     );
   elsif is_ranked then
-    their_delta := their_pay.total;
+    their_delta := lp_for(not i_won, theirs.reps, mine.reps);
     select * into their_after from apply_lp(
       them.tier_idx, them.div_idx, them.lp, their_delta, them.peak_tier_idx
     );

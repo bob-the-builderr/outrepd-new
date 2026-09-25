@@ -22,74 +22,22 @@ const _vectors = 'supabase/ladder_vectors.json';
 
 void main() {
   test('the ladder writes down what it does', () {
-    final pay = <Map<String, Object?>>[];
-
-    for (final won in [true, false]) {
-      for (final yourTier in [0, 3, kTopTier]) {
-        for (final theirTier in [0, 3, kTopTier]) {
-          for (final reps in [
-            (0, 0),
-            (11, 10),
-            (20, 10),
-            (10, 20),
-            (40, 2),
-            (2, 40),
-            (19, 20),
-          ]) {
-            for (final clean in [true, false]) {
-              final b = lpFor(
-                won: won,
-                yourTier: yourTier,
-                theirTier: theirTier,
-                yourReps: reps.$1,
-                theirReps: reps.$2,
-                clean: clean,
-              );
-              pay.add({
-                'won': won,
-                'your_tier': yourTier,
-                'their_tier': theirTier,
-                'your_reps': reps.$1,
-                'their_reps': reps.$2,
-                'clean': clean,
-                'surrendered': false,
-                'result': b.result,
-                'tier_gap': b.tierGap,
-                'margin': b.margin,
-                'form': b.form,
-                'total': b.total,
-              });
-            }
-          }
-        }
-      }
-    }
-
-    // Surrender: the same rule with the closeness refund taken away.
-    for (final reps in [(19, 20), (2, 40)]) {
-      final b = lpFor(
-        won: false,
-        yourTier: 3,
-        theirTier: 3,
-        yourReps: reps.$1,
-        theirReps: reps.$2,
-        clean: false,
-      );
-      pay.add({
-        'won': false,
-        'your_tier': 3,
-        'their_tier': 3,
-        'your_reps': reps.$1,
-        'their_reps': reps.$2,
-        'clean': false,
-        'surrendered': true,
-        'result': b.result,
-        'tier_gap': b.tierGap,
-        'margin': 0,
-        'form': b.form,
-        'total': b.result + b.tierGap + b.form,
-      });
-    }
+    // Every rep pair in the grid, crossed with both values of [won] — lp_for
+    // only has the one branch left where they can disagree (walking out
+    // while still ahead), and this is what makes sure the grid actually
+    // covers it rather than only ever pairing `won` with the reps that agree
+    // with it.
+    final pay = <Map<String, Object?>>[
+      for (final won in [true, false])
+        for (var yourReps = 0; yourReps <= 40; yourReps += 2)
+          for (var theirReps = 0; theirReps <= 40; theirReps += 4)
+            {
+              'won': won,
+              'your_reps': yourReps,
+              'their_reps': theirReps,
+              'total': lpFor(won: won, yourReps: yourReps, theirReps: theirReps),
+            },
+    ];
 
     final applied = <Map<String, Object?>>[];
     for (final from in [
@@ -151,24 +99,16 @@ void main() {
     expect(levels.length, kLadderLevels);
     expect(placements.length, 6);
 
-    // The properties the server must preserve, stated here so the vectors
+    // The property the server must preserve, stated here so the vectors
     // cannot be regenerated from a broken implementation without this failing.
     for (final row in pay) {
+      final gap =
+          ((row['your_reps']! as int) - (row['their_reps']! as int)).abs();
       expect(
         row['total'],
-        (row['result']! as int) +
-            (row['tier_gap']! as int) +
-            (row['margin']! as int) +
-            (row['form']! as int),
-        reason: 'a row does not add up: $row',
+        (row['won']! as bool) ? gap : -gap,
+        reason: 'a row is not the signed rep gap: $row',
       );
-      if (row['won'] == false) {
-        expect(
-          row['margin'],
-          greaterThanOrEqualTo(0),
-          reason: 'margin deepened a loss: $row',
-        );
-      }
     }
     for (final row in applied) {
       expect(row['lp'], inInclusiveRange(0, 99));

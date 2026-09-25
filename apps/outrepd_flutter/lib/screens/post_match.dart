@@ -6,11 +6,9 @@
 /// is always the same two things in the same order: did I win, and what did it
 /// cost or pay.
 ///
-/// The LP card itemises. A single "+33 LP" tells somebody what happened to
-/// them and nothing about why, and the why is the part that changes what they
-/// do next: face somebody higher, finish stronger, hold the depth. Every row
-/// comes out of [LpBreakdown], so the rows cannot add up to anything other
-/// than what the account actually moved by.
+/// The LP card used to itemise a "+33 LP" into the reasons behind it — tier
+/// gap, margin, form. There is only one reason now: LP is exactly the gap in
+/// reps, which the two scores above the card already say in full.
 library;
 
 import 'package:flutter/material.dart';
@@ -292,20 +290,6 @@ class LpCard extends StatelessWidget {
             maxLines: 1,
             style: TextStyle(color: context.colors.muted, fontSize: 11),
           ),
-          if (outcome.breakdown case final parts?) ...[
-            const SizedBox(height: 13),
-            Divider(height: 1, thickness: 0.5, color: context.colors.border),
-            const SizedBox(height: 11),
-            // Only the rows that did something. A column of zeroes reads as
-            // four rules the lifter failed rather than four that did not apply.
-            for (final row in [
-              (outcome.won ? l.lpRowWin : l.lpRowLoss, parts.result),
-              (l.lpRowOpponent, parts.tierGap),
-              (l.lpRowMargin, parts.margin),
-              (l.lpRowDepth, parts.form),
-            ])
-              if (row.$2 != 0) _LpRow(label: row.$1, amount: row.$2),
-          ],
         ],
       ),
     );
@@ -361,40 +345,6 @@ class _LpBar extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _LpRow extends StatelessWidget {
-  const _LpRow({required this.label, required this.amount});
-
-  final String label;
-  final int amount;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
-      child: Row(
-        children: [
-          Expanded(
-            child: ShrinkText(
-              label,
-              maxLines: 1,
-              style: TextStyle(color: context.colors.muted, fontSize: 12),
-            ),
-          ),
-          Text(
-            '${amount > 0 ? '+' : '−'}'
-            '${localNumber(context, amount.abs())}',
-            style: TextStyle(
-              color: context.colors.text,
-              fontSize: 12,
-              fontFeatures: const [FontFeature.tabularFigures()],
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -530,14 +480,9 @@ class PromotionView extends StatelessWidget {
 /// Built from the real arithmetic rather than hand-written numbers, so what
 /// the preview shows is what a lifter would be shown for the same result.
 DuelOutcome demoOutcome({required bool won}) {
-  final parts = lpFor(
-    won: won,
-    yourTier: demoProfile.tierIdx,
-    theirTier: demoProfile.tierIdx + (won ? 2 : -1),
-    yourReps: won ? 18 : 14,
-    theirReps: won ? 11 : 19,
-    clean: won,
-  );
+  final yourReps = won ? 18 : 14;
+  final theirReps = won ? 11 : 19;
+  final delta = lpFor(won: won, yourReps: yourReps, theirReps: theirReps);
   final before = Rank(
     tierIdx: demoProfile.tierIdx,
     divIdx: demoProfile.divIdx,
@@ -546,14 +491,13 @@ DuelOutcome demoOutcome({required bool won}) {
 
   return DuelOutcome(
     won: won,
-    rank: applyLp(before, parts.total, floorTierIdx: demoProfile.peakTierIdx),
-    breakdown: parts,
+    rank: applyLp(before, delta, floorTierIdx: demoProfile.peakTierIdx),
     record: MatchRecord(
       won: won,
-      userReps: won ? 18 : 14,
-      opponentReps: won ? 11 : 19,
+      userReps: yourReps,
+      opponentReps: theirReps,
       opponent: demoOpponents.first.username,
-      lpChange: parts.total,
+      lpChange: delta,
       at: DateTime.now(),
     ),
     placementsFinished: false,

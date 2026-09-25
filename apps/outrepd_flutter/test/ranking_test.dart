@@ -129,26 +129,32 @@ void main() {
   });
 
   group('what a result is worth', () {
-    test('beating somebody above you pays more', () {
-      expect(lpForWin(3, 5), greaterThan(lpForWin(3, 3)));
+    test('a win pays exactly what it won by', () {
+      expect(lpFor(won: true, yourReps: 20, theirReps: 12), 8);
     });
 
-    test('beating somebody below you pays no less than level', () {
-      // No penalty for who you drew — you do not choose your opponent.
-      expect(lpForWin(5, 3), lpForWin(5, 5));
+    test('a loss costs exactly what it lost by', () {
+      expect(lpFor(won: false, yourReps: 12, theirReps: 20), -8);
     });
 
-    test('losing to somebody below you costs more', () {
-      expect(lpForLoss(5, 3), lessThan(lpForLoss(5, 5)));
+    test('a tie moves nothing', () {
+      expect(lpFor(won: true, yourReps: 15, theirReps: 15), 0);
     });
 
-    test('a loss is always a loss and a win always a win', () {
-      for (var mine = 0; mine < kTiers.length; mine++) {
-        for (var theirs = 0; theirs < kTiers.length; theirs++) {
-          expect(lpForWin(mine, theirs), greaterThan(0));
-          expect(lpForLoss(mine, theirs), lessThan(0));
-        }
+    test('tier plays no part in it — the two sides of the same duel mirror',
+        () {
+      for (final reps in [(20, 12), (0, 40), (40, 0), (5, 5)]) {
+        final mine = lpFor(won: true, yourReps: reps.$1, theirReps: reps.$2);
+        final theirs = lpFor(won: false, yourReps: reps.$2, theirReps: reps.$1);
+        expect(mine, -theirs, reason: '$reps did not mirror');
       }
+    });
+
+    test('walking out while still ahead stays a loss', () {
+      // The rare case where [won] and the reps disagree: the count says one
+      // thing, quitting says another, and quitting is what actually happened.
+      // A loss must never pay a gain just because the reps looked like a win.
+      expect(lpFor(won: false, yourReps: 30, theirReps: 4), lessThan(0));
     });
 
     test('a forfeit pays a flat win with no margin in it', () {
@@ -204,8 +210,8 @@ void main() {
       // nothing ever escapes the ladder on the way.
       for (var i = 0; i < 1000; i++) {
         final delta = i % 3 == 0
-            ? lpForLoss(rank.tierIdx, rank.tierIdx)
-            : lpForWin(rank.tierIdx, rank.tierIdx);
+            ? lpFor(won: false, yourReps: 10, theirReps: 20)
+            : lpFor(won: true, yourReps: 20, theirReps: 10);
         rank = applyLp(rank, delta, floorTierIdx: floor).after;
         if (rank.tierIdx > floor) floor = rank.tierIdx;
 
@@ -251,73 +257,29 @@ void main() {
     });
   });
 
-  group('what a duel pays, itemised', () {
-    LpBreakdown pay({
-      bool won = true,
-      int yourTier = 3,
-      int theirTier = 3,
-      int yourReps = 20,
-      int theirReps = 10,
-      bool clean = false,
-    }) =>
-        lpFor(
-          won: won,
-          yourTier: yourTier,
-          theirTier: theirTier,
-          yourReps: yourReps,
-          theirReps: theirReps,
-          clean: clean,
-        );
-
-    test('the parts add up to the total', () {
-      final b = pay(theirTier: 6, clean: true);
-      expect(b.total, b.result + b.tierGap + b.margin + b.form);
-    });
-
-    test('the base is what the card promised', () {
-      // The screen before the round shows result + tierGap and nothing else,
-      // because margin and form have not happened yet.
-      final b = pay(theirTier: 6);
-      expect(b.result + b.tierGap, lpForWin(3, 6));
-
-      final lost = pay(won: false, theirTier: 0, yourReps: 5, theirReps: 30);
-      expect(lost.result + lost.tierGap, lpForLoss(3, 0));
-    });
-
-    test('a loss never costs more than it risked', () {
-      // Margin can only refund a loss. If it could deepen one, the card would
-      // have understated the risk — which is the one direction that is not
-      // allowed to be a surprise.
-      for (var apart = 0; apart < 60; apart++) {
-        final b = pay(won: false, yourReps: 0, theirReps: apart);
-        expect(b.margin, greaterThanOrEqualTo(0),
-            reason: '$apart reps behind cost extra');
-        expect(b.total, greaterThanOrEqualTo(lpForLoss(3, 3)),
-            reason: '$apart reps behind cost more than the card said');
-      }
+  group('what a duel pays', () {
+    test('it is exactly the rep gap, nothing added and nothing taken away',
+        () {
+      expect(lpFor(won: true, yourReps: 20, theirReps: 10), 10);
+      expect(lpFor(won: true, yourReps: 500, theirReps: 0), 500);
+      expect(lpFor(won: false, yourReps: 0, theirReps: 500), -500);
     });
 
     test('a narrow loss costs less than a thrashing', () {
-      final close = pay(won: false, yourReps: 19, theirReps: 20);
-      final thrashed = pay(won: false, yourReps: 2, theirReps: 40);
-      expect(close.total, greaterThan(thrashed.total));
+      final close = lpFor(won: false, yourReps: 19, theirReps: 20);
+      final thrashed = lpFor(won: false, yourReps: 2, theirReps: 40);
+      expect(close, greaterThan(thrashed));
     });
 
-    test('margin is capped, so a blowout cannot outweigh the ladder', () {
-      final huge = pay(yourReps: 500, theirReps: 0);
-      expect(huge.margin, kMarginCap);
-
-      // Beating somebody six tiers up, narrowly, still beats thrashing a
-      // lifter of your own rank. Otherwise the way to climb is to pick on
-      // people.
-      final upward = pay(theirTier: 9, yourReps: 11, theirReps: 10);
-      expect(upward.total, greaterThan(huge.total));
-    });
-
-    test('depth pays the same either way', () {
-      // A lifter who held their depth and still lost did the work.
-      expect(pay(clean: true).form, greaterThan(pay().form));
-      expect(pay(won: false, clean: true).form, pay(clean: true).form);
+    test('nothing caps a blowout — the ladder itself absorbs it', () {
+      // The old margin bonus was capped so farming a weak opponent could
+      // never outweigh facing a strong one. There is no cap to test for any
+      // more: a blowout is worth exactly what it was, and applyLp is what
+      // keeps a huge swing inside the ladder's own rails (see 'the ceiling'
+      // and 'a very large gain' above).
+      final huge = lpFor(won: true, yourReps: 500, theirReps: 0);
+      final narrow = lpFor(won: true, yourReps: 11, theirReps: 10);
+      expect(huge, greaterThan(narrow));
     });
   });
 }

@@ -74,6 +74,7 @@ class RemoteProfile {
     required this.tierIdx,
     required this.divIdx,
     required this.lp,
+    required this.friendCode,
     this.country,
     this.prefs = const RemotePrefs(),
     this.avatarUrl,
@@ -94,6 +95,10 @@ class RemoteProfile {
   final int tierIdx;
   final int divIdx;
   final int lp;
+
+  /// Assigned by the server once, at sign-up — see the comment on the
+  /// friend_code column in schema.sql.
+  final String friendCode;
 
   /// The highest tier this account has ever held — the floor a losing streak
   /// cannot cost it.
@@ -155,6 +160,7 @@ class RemoteProfile {
     tierIdx: tierIdx ?? this.tierIdx,
     divIdx: divIdx ?? this.divIdx,
     lp: lp ?? this.lp,
+    friendCode: friendCode,
     country: country ?? this.country,
     prefs: prefs ?? this.prefs,
     avatarUrl: avatarUrl ?? this.avatarUrl,
@@ -646,8 +652,15 @@ abstract interface class Backend {
   });
 
   /// The board, best first. [country] limits it to one country's board, which
-  /// is the only one most people can realistically move.
-  Future<List<BoardRow>> leaderboard({int limit = 100, String? country});
+  /// is the only one most people can realistically move. [tierIdx]/[divIdx]
+  /// limit it to one rung of the ladder instead — everybody who currently
+  /// shares it, ranked against each other rather than the whole game.
+  Future<List<BoardRow>> leaderboard({
+    int limit = 100,
+    String? country,
+    int? tierIdx,
+    int? divIdx,
+  });
 
   /// Where this account sits on that board, counting from 1.
   ///
@@ -670,8 +683,9 @@ abstract interface class Backend {
   /// returns nothing rather than most of the userbase.
   Future<List<FoundLifter>> findLifters(String query);
 
-  /// Ask somebody, by the name they go by.
-  Future<AskResult> askFriend(String username);
+  /// Ask somebody, by the name they go by or by their `#`-prefixed friend
+  /// code.
+  Future<AskResult> askFriend(String identifier);
 
   /// Answer a request waiting on this account. Declining forgets it, so they
   /// are free to ask again.
@@ -853,6 +867,8 @@ class NoBackend implements Backend {
   Future<List<BoardRow>> leaderboard({
     int limit = 100,
     String? country,
+    int? tierIdx,
+    int? divIdx,
   }) async => const [];
 
   @override

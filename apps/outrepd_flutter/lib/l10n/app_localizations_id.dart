@@ -413,6 +413,13 @@ class LId extends L {
   String get couldNotShareCard => 'Kartu ini tidak bisa dibagikan';
 
   @override
+  String get couldNotOpenLink => 'Tautan itu tidak bisa dibuka';
+
+  @override
+  String get couldNotCheckUsername =>
+      'Nama itu tidak bisa diperiksa — coba lagi';
+
+  @override
   String get simulatedOpponent =>
       'Tidak ada orang lain yang siap — ini kecepatan latihan';
 
@@ -482,6 +489,12 @@ class LId extends L {
 
   @override
   String get global => 'Global';
+
+  @override
+  String get topPlayers => 'Pemain Teratas';
+
+  @override
+  String get yourTier => 'Tingkatanmu';
 
   @override
   String get challenge => 'Tantang';
@@ -1335,6 +1348,22 @@ class LId extends L {
   String get incomingRequests => 'Permintaan masuk';
 
   @override
+  String get noRequestsWaiting => 'Tidak ada permintaan yang menunggu saat ini';
+
+  @override
+  String get addFriendAction => 'Tambah Teman';
+
+  @override
+  String get addFriendHint =>
+      'Masukkan nama pengguna mereka, atau kode # dari profil mereka.';
+
+  @override
+  String get usernameOrCode => 'Nama pengguna atau kode #';
+
+  @override
+  String get sendRequest => 'Kirim permintaan';
+
+  @override
   String onlineNowCount(String count) {
     return 'Online sekarang · $count';
   }
@@ -1567,6 +1596,10 @@ class LId extends L {
   String lpSwing(String gain, String loss) {
     return '+$gain / −$loss LP';
   }
+
+  @override
+  String get lpMovesWithGap =>
+      'LP bergerak sesuai selisih repetisi — menang lebih banyak, dapat lebih banyak';
 
   @override
   String get searchingForOpponent => 'Mencari lawan';

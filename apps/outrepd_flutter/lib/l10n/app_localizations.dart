@@ -865,6 +865,18 @@ abstract class L {
   /// **'Could not share this card'**
   String get couldNotShareCard;
 
+  /// No description provided for @couldNotOpenLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open that link'**
+  String get couldNotOpenLink;
+
+  /// No description provided for @couldNotCheckUsername.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t check that name — try again'**
+  String get couldNotCheckUsername;
+
   /// No description provided for @simulatedOpponent.
   ///
   /// In en, this message translates to:
@@ -996,6 +1008,18 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Global'**
   String get global;
+
+  /// No description provided for @topPlayers.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Players'**
+  String get topPlayers;
+
+  /// No description provided for @yourTier.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Tier'**
+  String get yourTier;
 
   /// No description provided for @challenge.
   ///
@@ -2587,6 +2611,36 @@ abstract class L {
   /// **'Incoming requests'**
   String get incomingRequests;
 
+  /// No description provided for @noRequestsWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'No requests waiting right now'**
+  String get noRequestsWaiting;
+
+  /// No description provided for @addFriendAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Friend'**
+  String get addFriendAction;
+
+  /// No description provided for @addFriendHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter their username, or the #code from their profile.'**
+  String get addFriendHint;
+
+  /// No description provided for @usernameOrCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Username or #code'**
+  String get usernameOrCode;
+
+  /// No description provided for @sendRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Send request'**
+  String get sendRequest;
+
   /// No description provided for @onlineNowCount.
   ///
   /// In en, this message translates to:
@@ -2964,6 +3018,12 @@ abstract class L {
   /// In en, this message translates to:
   /// **'+{gain} / −{loss} LP'**
   String lpSwing(String gain, String loss);
+
+  /// No description provided for @lpMovesWithGap.
+  ///
+  /// In en, this message translates to:
+  /// **'LP moves with the rep gap — win by more, gain more'**
+  String get lpMovesWithGap;
 
   /// No description provided for @searchingForOpponent.
   ///

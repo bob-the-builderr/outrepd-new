@@ -226,13 +226,23 @@ class SupabaseBackend implements Backend {
   }
 
   @override
-  Future<List<BoardRow>> leaderboard({int limit = 100, String? country}) async {
+  Future<List<BoardRow>> leaderboard({
+    int limit = 100,
+    String? country,
+    int? tierIdx,
+    int? divIdx,
+  }) async {
     // Through the function rather than the table. It is the one place that
     // knows who asked to be left off a board, and a filter the client adds
     // is a filter the client can drop.
     final rows = await _db.rpc<List<dynamic>>(
       'leaderboard',
-      params: {'in_country': country, 'limit_to': limit},
+      params: {
+        'in_country': country,
+        'limit_to': limit,
+        'in_tier_idx': tierIdx,
+        'in_div_idx': divIdx,
+      },
     );
 
     return [
@@ -355,11 +365,17 @@ class SupabaseBackend implements Backend {
   }
 
   @override
-  Future<AskResult> askFriend(String username) async {
-    final answer = await _db.rpc<String>(
-      'request_friend',
-      params: {'their_name': username},
-    );
+  Future<AskResult> askFriend(String identifier) async {
+    final trimmed = identifier.trim();
+    final answer = trimmed.startsWith('#')
+        ? await _db.rpc<String>(
+            'request_friend_by_code',
+            params: {'code': trimmed.substring(1)},
+          )
+        : await _db.rpc<String>(
+            'request_friend',
+            params: {'their_name': trimmed},
+          );
     return switch (answer) {
       'friends' => AskResult.friends,
       'no such lifter' => AskResult.noSuchLifter,
@@ -753,6 +769,7 @@ class SupabaseBackend implements Backend {
     tierIdx: (row['tier_idx'] as num?)?.toInt() ?? 0,
     divIdx: (row['div_idx'] as num?)?.toInt() ?? 0,
     lp: (row['lp'] as num?)?.toInt() ?? 0,
+    friendCode: row['friend_code'] as String,
     country: row['country'] as String?,
     prefs: _prefsFrom(row),
     avatarUrl: row['avatar_url'] as String?,

@@ -14,7 +14,6 @@ import 'package:flutter/material.dart';
 
 import '../backend/backend.dart';
 import '../career.dart';
-import '../ranking.dart';
 import '../connection.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
@@ -182,18 +181,6 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   bool get _won =>
       widget.practice || (_outcome?.won ?? (_myReps >= _theirReps));
 
-  /// A forfeit is a flat win: you did not have to close the gap, so the gap
-  /// pays nothing.
-  /// What a win pays and what a loss costs, before either has happened.
-  ///
-  /// The same two functions the result is paid out of. They used to be
-  /// written twice — once here for the promise and once for the payment — and
-  /// two copies of a rule is two rules. The card says what the account will
-  /// actually receive because it is asking the thing that will pay it.
-  int get _lpOnOffer => lpForWin(demoProfile.tierIdx, _opponent.tierIdx);
-
-  int get _lpAtRisk => lpForLoss(demoProfile.tierIdx, _opponent.tierIdx).abs();
-
   Future<void> _search() async {
     _timer?.cancel();
 
@@ -311,8 +298,6 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
                     demoProfile.tierIdx,
                     demoProfile.divIdx,
                   ),
-                  lpGain: _lpOnOffer,
-                  lpRisk: _lpAtRisk,
                 ),
         ),
       ),
@@ -574,12 +559,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
         return _SearchingView(onCancel: _confirmQuit);
 
       case _Stage.versus:
-        return _VersusView(
-          opponent: _opponent,
-          lpGain: _lpOnOffer,
-          lpRisk: _lpAtRisk,
-          simulated: _simulated,
-        );
+        return _VersusView(opponent: _opponent, simulated: _simulated);
 
       // The camera is a pushed route, so this stage has nothing of its own on
       // screen underneath it.
@@ -806,16 +786,9 @@ class _SearchingViewState extends State<_SearchingView> {
 /// Who you drew, and what it is worth. On screen for a second and a half, so
 /// it carries three facts and no more.
 class _VersusView extends StatelessWidget {
-  const _VersusView({
-    required this.opponent,
-    required this.lpGain,
-    required this.lpRisk,
-    required this.simulated,
-  });
+  const _VersusView({required this.opponent, required this.simulated});
 
   final Opponent opponent;
-  final int lpGain;
-  final int lpRisk;
   final bool simulated;
 
   @override
@@ -864,8 +837,9 @@ class _VersusView extends StatelessWidget {
           ),
         ],
         const SizedBox(height: 24),
-        // What is at stake, before it is at stake. Seeing the downside up
-        // front is what makes the upside mean anything.
+        // No number to promise any more — LP is exactly the rep gap, which
+        // nothing about the round has decided yet. What can be said now is
+        // the rule itself.
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
           decoration: BoxDecoration(
@@ -873,15 +847,9 @@ class _VersusView extends StatelessWidget {
             border: Border.all(color: context.colors.border, width: 0.5),
           ),
           child: Text(
-            l.lpSwing(
-              localNumber(context, lpGain),
-              localNumber(context, lpRisk),
-            ),
-            style: TextStyle(
-              color: context.colors.text,
-              fontSize: 12,
-              fontFeatures: const [FontFeature.tabularFigures()],
-            ),
+            l.lpMovesWithGap,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: context.colors.text, fontSize: 12),
           ),
         ),
         const SizedBox(height: 9),

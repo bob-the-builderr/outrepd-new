@@ -16,6 +16,7 @@ library;
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 import '../avatar.dart';
@@ -240,6 +241,36 @@ class _Identity extends StatelessWidget {
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
               ),
+            ),
+          ),
+        ),
+
+        // The code a friend adds this account by without ever needing the
+        // name above — see the comment on friend_code in schema.sql. Shown
+        // with the '#' the stored value never has, and copied the same way.
+        InkWell(
+          onTap: () {
+            Clipboard.setData(ClipboardData(text: '#${profile.friendCode}'));
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(l.codeCopied),
+                behavior: SnackBarBehavior.floating,
+              ),
+            );
+          },
+          borderRadius: BorderRadius.circular(6),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  '#${profile.friendCode}',
+                  style: TextStyle(color: context.colors.muted, fontSize: 12),
+                ),
+                const SizedBox(width: 4),
+                Icon(Icons.copy, size: 11, color: context.colors.faint),
+              ],
             ),
           ),
         ),

@@ -16,6 +16,7 @@ import '../backend/backend.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../theme.dart';
+import '../type_scale.dart';
 import '../widgets.dart';
 import 'match_entry.dart';
 import 'other_profile.dart';
@@ -32,11 +33,6 @@ class _FriendsScreenState extends State<FriendsScreen> {
 
   List<Friend> _friends = const [];
   List<FriendRequest> _requests = const [];
-
-  /// People found on the server by name, for the search that is not just a
-  /// filter over people already on the list.
-  List<FoundLifter> _found = const [];
-  bool _searching = false;
 
   bool _loading = false;
   Object? _error;
@@ -94,65 +90,31 @@ class _FriendsScreenState extends State<FriendsScreen> {
     }
   }
 
-  /// Looks for people who are not already on the list.
-  ///
-  /// Only once there is enough to go on: the server refuses a query under two
-  /// characters, because "a" is not a search, it is a request for the
-  /// userbase.
-  Future<void> _lookUp(String query) async {
-    if (!backend.available || query.trim().length < 2) {
-      setState(() => _found = const []);
-      return;
-    }
-    setState(() => _searching = true);
-    try {
-      final found = await backend.findLifters(query.trim());
-      if (!mounted) return;
-      final known = {for (final f in _friends) f.username};
-      setState(() {
-        _found = [
-          for (final f in found)
-            if (!known.contains(f.username)) f,
-        ];
-        _searching = false;
-      });
-    } on Object catch (_) {
-      if (!mounted) return;
-      setState(() => _searching = false);
-    }
-  }
-
-  Future<void> _ask(String username) async {
+  /// Opens the add-by-identifier sheet and reports whatever it did, on this
+  /// screen's own context — the sheet's is already gone by the time an
+  /// answer comes back, since it pops itself the moment the server answers.
+  Future<void> _openAddFriend() async {
+    final outcome = await showModalBottomSheet<_AddFriendOutcome>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: context.colors.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+      ),
+      builder: (_) => const _AddFriendSheet(),
+    );
+    if (!mounted || outcome == null) return;
     final l = L.of(context);
-    final messenger = ScaffoldMessenger.of(context);
-    try {
-      final result = await backend.askFriend(username);
-      if (!mounted) return;
-      final said = switch (result) {
-        AskResult.asked => l.requestSent(username),
-        AskResult.friends => l.nowFriends(username),
-        AskResult.noSuchLifter => l.noOneFound,
-        AskResult.thatIsYou => l.noOneFound,
-      };
-      messenger.showSnackBar(
-        SnackBar(content: Text(said), behavior: SnackBarBehavior.floating),
-      );
-      setState(
-        () => _found = [
-          for (final f in _found)
-            if (f.username != username) f,
-        ],
-      );
-      if (result == AskResult.friends) await _load();
-    } on Object catch (_) {
-      if (!mounted) return;
-      messenger.showSnackBar(
-        SnackBar(
-          content: Text(l.needsServer),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
-    }
+    final said = switch (outcome.result) {
+      AskResult.asked => l.requestSent(outcome.identifier),
+      AskResult.friends => l.nowFriends(outcome.identifier),
+      AskResult.noSuchLifter => l.noOneFound,
+      AskResult.thatIsYou => l.noOneFound,
+    };
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(said), behavior: SnackBarBehavior.floating),
+    );
+    if (outcome.result == AskResult.friends) await _load();
   }
 
   Future<void> _openRequests() async {
@@ -216,15 +178,12 @@ class _FriendsScreenState extends State<FriendsScreen> {
         icon: Icons.people_outline,
         title: l.noFriendsTitle,
         body: l.noFriendsBody,
-        action: PillButton(
-          label: l.findPeople,
-          // The search field above is the way to find somebody, so this
-          // points at it rather than opening a second one.
-          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-        ),
+        action: PillButton(label: l.addFriendAction, onTap: _openAddFriend),
       );
-    } else if (matching.isEmpty && _found.isEmpty && !_searching) {
-      // Searching into an empty result is not the same as having no friends.
+    } else if (matching.isEmpty) {
+      // A pure filter over friends already on the list — no server search
+      // hides behind this field any more, so an empty result only ever means
+      // one thing.
       specialState = Padding(
         padding: const EdgeInsets.only(top: 40),
         child: Text(
@@ -251,35 +210,41 @@ class _FriendsScreenState extends State<FriendsScreen> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 4),
-                        child: Text(
-                          l.tabFriends.toUpperCase(),
-                          style: TextStyle(
-                            color: context.colors.text,
-                            fontSize: 22,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 0.5,
-                          ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                l.tabFriends.toUpperCase(),
+                                style: TextStyle(
+                                  color: context.colors.text,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ),
+                            _AddFriendButton(onTap: _openAddFriend),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 14),
+                      // A filter over the list below, and only that now —
+                      // finding somebody new to add is Add Friend's job,
+                      // above, so an empty result here can only ever mean
+                      // one thing: nobody on the list matches.
                       _SearchField(
                         controller: _search,
-                        onChanged: (query) {
-                          setState(() {});
-                          _lookUp(query);
-                        },
+                        onChanged: (query) => setState(() {}),
                       ),
-                      // Hidden at zero: a row reading "Incoming requests 0"
-                      // is a control that leads nowhere, and it sits at the
-                      // top of the screen where the most useful thing
-                      // should be.
-                      if (_requests.isNotEmpty) ...[
-                        const SizedBox(height: 9),
-                        _RequestsRow(
-                          count: _requests.length,
-                          onTap: _openRequests,
-                        ),
-                      ],
+                      // Always here, not just when something is waiting: a
+                      // busy app gets requests often enough that "check for
+                      // them" needs a fixed address, not a row that only
+                      // exists once there is something to see.
+                      const SizedBox(height: 9),
+                      _RequestsRow(
+                        count: _requests.length,
+                        onTap: _openRequests,
+                      ),
                     ],
                   ),
                 ),
@@ -310,16 +275,6 @@ class _FriendsScreenState extends State<FriendsScreen> {
                         for (final friend in offline)
                           _FriendRow(friend: friend),
                       ],
-                      // People who are not friends yet, kept below the list
-                      // so a search never buries the people already on it.
-                      if (_found.isNotEmpty) ...[
-                        _SectionLabel(l.findPeople),
-                        for (final lifter in _found)
-                          _FoundRow(
-                            lifter: lifter,
-                            onAdd: () => _ask(lifter.username),
-                          ),
-                      ],
                     ]),
                   ),
                 ),
@@ -331,107 +286,159 @@ class _FriendsScreenState extends State<FriendsScreen> {
   }
 }
 
-/// A person the search turned up who is not a friend yet.
-class _FoundRow extends StatelessWidget {
-  const _FoundRow({required this.lifter, required this.onAdd});
+// ──────────────────────────────── add friend ──────────────────────────────────
 
-  final FoundLifter lifter;
-  final VoidCallback onAdd;
+class _AddFriendButton extends StatelessWidget {
+  const _AddFriendButton({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: L.of(context).addFriendAction,
+      child: InkWell(
+        onTap: onTap,
+        customBorder: const CircleBorder(),
+        child: Padding(
+          padding: const EdgeInsets.all(6),
+          child: Icon(
+            Icons.person_add_alt_1_outlined,
+            size: 21,
+            color: context.colors.text,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// What [_AddFriendSheet] did, reported once it has already popped itself —
+/// the identifier is carried back with it so the snackbar can name whoever
+/// was just asked without the caller needing to remember what was typed.
+class _AddFriendOutcome {
+  const _AddFriendOutcome(this.result, this.identifier);
+
+  final AskResult result;
+  final String identifier;
+}
+
+/// One field, either a username or a `#code`, and one button. Not a live
+/// search: unlike the friend-room sheet in match_entry.dart, this is meant to
+/// work from a code alone, which nothing about the person to add can be
+/// shown for until the server has already resolved it.
+class _AddFriendSheet extends StatefulWidget {
+  const _AddFriendSheet();
+
+  @override
+  State<_AddFriendSheet> createState() => _AddFriendSheetState();
+}
+
+class _AddFriendSheetState extends State<_AddFriendSheet> {
+  final _controller = TextEditingController();
+  bool _sending = false;
+  String? _error;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _send() async {
+    final identifier = _controller.text.trim();
+    if (identifier.isEmpty) return;
+    final l = L.of(context);
+    setState(() {
+      _sending = true;
+      _error = null;
+    });
+    try {
+      final result = await backend.askFriend(identifier);
+      if (!mounted) return;
+      Navigator.of(context).pop(_AddFriendOutcome(result, identifier));
+    } on Object catch (error) {
+      debugPrint('Could not send a friend request: $error');
+      if (!mounted) return;
+      setState(() {
+        _sending = false;
+        _error = l.needsServer;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
-    // Below five placements they have no rank, and their tier column is a
-    // default rather than something they earned.
-    final rank = lifter.placementsDone >= kPlacementDuels
-        ? tierLabel(l, lifter.tierIdx, lifter.divIdx)
-        : l.unranked;
+    final canSend = _controller.text.trim().isNotEmpty && !_sending;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 7),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        decoration: BoxDecoration(
-          color: context.colors.surface,
-          borderRadius: BorderRadius.circular(13),
-          border: Border.all(color: context.colors.border, width: 0.5),
-        ),
-        child: Row(
-          children: [
-            Builder(
-              builder: (context) {
-                final fallback = Container(
-                  width: 32,
-                  height: 32,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: context.colors.surfaceRaised,
-                  ),
-                  child: Text(
-                    lifter.username.isEmpty
-                        ? '?'
-                        : lifter.username.characters.first.toUpperCase(),
-                    style: TextStyle(color: context.colors.text, fontSize: 13),
-                  ),
-                );
-                if (lifter.avatarUrl == null) return fallback;
-                return ClipOval(
-                  child: Image.network(
-                    lifter.avatarUrl!,
-                    width: 32,
-                    height: 32,
-                    fit: BoxFit.cover,
-                    loadingBuilder: (context, child, progress) =>
-                        progress == null ? child : fallback,
-                    errorBuilder: (context, error, stack) => fallback,
-                  ),
-                );
-              },
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    lifter.username,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: context.colors.text, fontSize: 13),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    rank,
-                    style: TextStyle(color: context.colors.muted, fontSize: 10),
-                  ),
-                ],
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                l.addFriendAction,
+                style: context.type.heading.copyWith(color: context.colors.text),
               ),
-            ),
-            const SizedBox(width: 10),
-            InkWell(
-              onTap: onAdd,
-              borderRadius: BorderRadius.circular(11),
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
+              const SizedBox(height: 6),
+              Text(
+                l.addFriendHint,
+                style: context.type.label.copyWith(color: context.colors.muted),
+              ),
+              const SizedBox(height: 16),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 14),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(11),
-                  color: context.colors.brand,
+                  color: context.colors.background,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: context.colors.border),
                 ),
-                child: Text(
-                  l.addFriend,
-                  style: TextStyle(
-                    color: context.colors.background,
-                    fontSize: 11,
+                child: TextField(
+                  controller: _controller,
+                  autofocus: true,
+                  autocorrect: false,
+                  onChanged: (_) => setState(() {}),
+                  onSubmitted: (_) => _send(),
+                  style: TextStyle(color: context.colors.text, fontSize: 16),
+                  cursorColor: context.colors.brand,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                    hintText: l.usernameOrCode,
                   ),
                 ),
               ),
-            ),
-          ],
+              const SizedBox(height: 8),
+              Text(
+                _error ?? '',
+                style: TextStyle(color: AppColors.loss, fontSize: 12),
+              ),
+              const SizedBox(height: 8),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: canSend ? _send : null,
+                  style: FilledButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                  ),
+                  child: _sending
+                      ? const SizedBox(
+                          width: 18,
+                          height: 18,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : Text(l.sendRequest),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -463,6 +470,14 @@ class _RequestsSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
+          if (requests.isEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Text(
+                l.noRequestsWaiting,
+                style: TextStyle(color: context.colors.muted, fontSize: 13),
+              ),
+            ),
           for (final request in requests)
             Padding(
               padding: const EdgeInsets.only(bottom: 8),
@@ -602,21 +617,26 @@ class _RequestsRow extends StatelessWidget {
                 style: TextStyle(color: context.colors.text, fontSize: 13),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              decoration: BoxDecoration(
-                color: context.colors.brand,
-                borderRadius: BorderRadius.circular(9),
-              ),
-              child: Text(
-                localNumber(context, count),
-                style: TextStyle(
-                  color: context.colors.background,
-                  fontSize: 11,
+            // A row that is always here to check needs no badge to justify
+            // its own presence — the pill is only for saying something is
+            // actually waiting.
+            if (count > 0) ...[
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                decoration: BoxDecoration(
+                  color: context.colors.brand,
+                  borderRadius: BorderRadius.circular(9),
+                ),
+                child: Text(
+                  localNumber(context, count),
+                  style: TextStyle(
+                    color: context.colors.background,
+                    fontSize: 11,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(width: 8),
+              const SizedBox(width: 8),
+            ],
             Icon(Icons.chevron_right, size: 15, color: context.colors.muted),
           ],
         ),

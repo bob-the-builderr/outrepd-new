@@ -3,3559 +3,2775 @@
   "lp_for": [
     {
       "won": true,
-      "your_tier": 0,
-      "their_tier": 0,
       "your_reps": 0,
       "their_reps": 0,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": 17
+      "total": 0
     },
     {
       "won": true,
-      "your_tier": 0,
-      "their_tier": 0,
       "your_reps": 0,
-      "their_reps": 0,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": 15
+      "their_reps": 4,
+      "total": 4
     },
     {
       "won": true,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": 17
+      "your_reps": 0,
+      "their_reps": 8,
+      "total": 8
     },
     {
       "won": true,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": 15
+      "your_reps": 0,
+      "their_reps": 12,
+      "total": 12
     },
     {
       "won": true,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 2,
+      "your_reps": 0,
+      "their_reps": 16,
+      "total": 16
+    },
+    {
+      "won": true,
+      "your_reps": 0,
+      "their_reps": 20,
       "total": 20
     },
     {
       "won": true,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 0,
-      "total": 18
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 2,
-      "total": 20
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 0,
-      "total": 18
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 2,
-      "total": 22
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 0,
-      "total": 20
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 2,
-      "total": 22
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 0,
-      "total": 20
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": 17
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": 15
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 3,
       "your_reps": 0,
-      "their_reps": 0,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 0,
-      "form": 2,
-      "total": 23
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 0,
-      "form": 0,
-      "total": 21
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 0,
-      "form": 2,
-      "total": 23
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 0,
-      "form": 0,
-      "total": 21
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 3,
-      "form": 2,
-      "total": 26
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 3,
-      "form": 0,
+      "their_reps": 24,
       "total": 24
     },
     {
       "won": true,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 3,
-      "form": 2,
-      "total": 26
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 3,
-      "form": 0,
-      "total": 24
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 5,
-      "form": 2,
+      "your_reps": 0,
+      "their_reps": 28,
       "total": 28
     },
     {
       "won": true,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 5,
-      "form": 0,
-      "total": 26
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 5,
-      "form": 2,
-      "total": 28
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 5,
-      "form": 0,
-      "total": 26
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 0,
-      "form": 2,
-      "total": 23
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 0,
-      "form": 0,
-      "total": 21
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 6,
       "your_reps": 0,
-      "their_reps": 0,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 12,
-      "margin": 0,
-      "form": 2,
-      "total": 29
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 12,
-      "margin": 0,
-      "form": 0,
-      "total": 27
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 12,
-      "margin": 0,
-      "form": 2,
-      "total": 29
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 12,
-      "margin": 0,
-      "form": 0,
-      "total": 27
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 12,
-      "margin": 3,
-      "form": 2,
+      "their_reps": 32,
       "total": 32
     },
     {
       "won": true,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 12,
-      "margin": 3,
-      "form": 0,
+      "your_reps": 0,
+      "their_reps": 36,
+      "total": 36
+    },
+    {
+      "won": true,
+      "your_reps": 0,
+      "their_reps": 40,
+      "total": 40
+    },
+    {
+      "won": true,
+      "your_reps": 2,
+      "their_reps": 0,
+      "total": 2
+    },
+    {
+      "won": true,
+      "your_reps": 2,
+      "their_reps": 4,
+      "total": 2
+    },
+    {
+      "won": true,
+      "your_reps": 2,
+      "their_reps": 8,
+      "total": 6
+    },
+    {
+      "won": true,
+      "your_reps": 2,
+      "their_reps": 12,
+      "total": 10
+    },
+    {
+      "won": true,
+      "your_reps": 2,
+      "their_reps": 16,
+      "total": 14
+    },
+    {
+      "won": true,
+      "your_reps": 2,
+      "their_reps": 20,
+      "total": 18
+    },
+    {
+      "won": true,
+      "your_reps": 2,
+      "their_reps": 24,
+      "total": 22
+    },
+    {
+      "won": true,
+      "your_reps": 2,
+      "their_reps": 28,
+      "total": 26
+    },
+    {
+      "won": true,
+      "your_reps": 2,
+      "their_reps": 32,
       "total": 30
     },
     {
       "won": true,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 10,
+      "your_reps": 2,
+      "their_reps": 36,
+      "total": 34
+    },
+    {
+      "won": true,
+      "your_reps": 2,
+      "their_reps": 40,
+      "total": 38
+    },
+    {
+      "won": true,
+      "your_reps": 4,
+      "their_reps": 0,
+      "total": 4
+    },
+    {
+      "won": true,
+      "your_reps": 4,
+      "their_reps": 4,
+      "total": 0
+    },
+    {
+      "won": true,
+      "your_reps": 4,
+      "their_reps": 8,
+      "total": 4
+    },
+    {
+      "won": true,
+      "your_reps": 4,
+      "their_reps": 12,
+      "total": 8
+    },
+    {
+      "won": true,
+      "your_reps": 4,
+      "their_reps": 16,
+      "total": 12
+    },
+    {
+      "won": true,
+      "your_reps": 4,
       "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 12,
-      "margin": 3,
-      "form": 2,
+      "total": 16
+    },
+    {
+      "won": true,
+      "your_reps": 4,
+      "their_reps": 24,
+      "total": 20
+    },
+    {
+      "won": true,
+      "your_reps": 4,
+      "their_reps": 28,
+      "total": 24
+    },
+    {
+      "won": true,
+      "your_reps": 4,
+      "their_reps": 32,
+      "total": 28
+    },
+    {
+      "won": true,
+      "your_reps": 4,
+      "their_reps": 36,
       "total": 32
     },
     {
       "won": true,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 10,
+      "your_reps": 4,
+      "their_reps": 40,
+      "total": 36
+    },
+    {
+      "won": true,
+      "your_reps": 6,
+      "their_reps": 0,
+      "total": 6
+    },
+    {
+      "won": true,
+      "your_reps": 6,
+      "their_reps": 4,
+      "total": 2
+    },
+    {
+      "won": true,
+      "your_reps": 6,
+      "their_reps": 8,
+      "total": 2
+    },
+    {
+      "won": true,
+      "your_reps": 6,
+      "their_reps": 12,
+      "total": 6
+    },
+    {
+      "won": true,
+      "your_reps": 6,
+      "their_reps": 16,
+      "total": 10
+    },
+    {
+      "won": true,
+      "your_reps": 6,
       "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 12,
-      "margin": 3,
-      "form": 0,
+      "total": 14
+    },
+    {
+      "won": true,
+      "your_reps": 6,
+      "their_reps": 24,
+      "total": 18
+    },
+    {
+      "won": true,
+      "your_reps": 6,
+      "their_reps": 28,
+      "total": 22
+    },
+    {
+      "won": true,
+      "your_reps": 6,
+      "their_reps": 32,
+      "total": 26
+    },
+    {
+      "won": true,
+      "your_reps": 6,
+      "their_reps": 36,
       "total": 30
     },
     {
       "won": true,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 12,
-      "margin": 5,
-      "form": 2,
+      "your_reps": 6,
+      "their_reps": 40,
       "total": 34
     },
     {
       "won": true,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 12,
-      "margin": 5,
-      "form": 0,
+      "your_reps": 8,
+      "their_reps": 0,
+      "total": 8
+    },
+    {
+      "won": true,
+      "your_reps": 8,
+      "their_reps": 4,
+      "total": 4
+    },
+    {
+      "won": true,
+      "your_reps": 8,
+      "their_reps": 8,
+      "total": 0
+    },
+    {
+      "won": true,
+      "your_reps": 8,
+      "their_reps": 12,
+      "total": 4
+    },
+    {
+      "won": true,
+      "your_reps": 8,
+      "their_reps": 16,
+      "total": 8
+    },
+    {
+      "won": true,
+      "your_reps": 8,
+      "their_reps": 20,
+      "total": 12
+    },
+    {
+      "won": true,
+      "your_reps": 8,
+      "their_reps": 24,
+      "total": 16
+    },
+    {
+      "won": true,
+      "your_reps": 8,
+      "their_reps": 28,
+      "total": 20
+    },
+    {
+      "won": true,
+      "your_reps": 8,
+      "their_reps": 32,
+      "total": 24
+    },
+    {
+      "won": true,
+      "your_reps": 8,
+      "their_reps": 36,
+      "total": 28
+    },
+    {
+      "won": true,
+      "your_reps": 8,
+      "their_reps": 40,
       "total": 32
     },
     {
       "won": true,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 2,
+      "your_reps": 10,
+      "their_reps": 0,
+      "total": 10
+    },
+    {
+      "won": true,
+      "your_reps": 10,
+      "their_reps": 4,
+      "total": 6
+    },
+    {
+      "won": true,
+      "your_reps": 10,
+      "their_reps": 8,
+      "total": 2
+    },
+    {
+      "won": true,
+      "your_reps": 10,
+      "their_reps": 12,
+      "total": 2
+    },
+    {
+      "won": true,
+      "your_reps": 10,
+      "their_reps": 16,
+      "total": 6
+    },
+    {
+      "won": true,
+      "your_reps": 10,
+      "their_reps": 20,
+      "total": 10
+    },
+    {
+      "won": true,
+      "your_reps": 10,
+      "their_reps": 24,
+      "total": 14
+    },
+    {
+      "won": true,
+      "your_reps": 10,
+      "their_reps": 28,
+      "total": 18
+    },
+    {
+      "won": true,
+      "your_reps": 10,
+      "their_reps": 32,
+      "total": 22
+    },
+    {
+      "won": true,
+      "your_reps": 10,
+      "their_reps": 36,
+      "total": 26
+    },
+    {
+      "won": true,
+      "your_reps": 10,
       "their_reps": 40,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 12,
-      "margin": 5,
-      "form": 2,
+      "total": 30
+    },
+    {
+      "won": true,
+      "your_reps": 12,
+      "their_reps": 0,
+      "total": 12
+    },
+    {
+      "won": true,
+      "your_reps": 12,
+      "their_reps": 4,
+      "total": 8
+    },
+    {
+      "won": true,
+      "your_reps": 12,
+      "their_reps": 8,
+      "total": 4
+    },
+    {
+      "won": true,
+      "your_reps": 12,
+      "their_reps": 12,
+      "total": 0
+    },
+    {
+      "won": true,
+      "your_reps": 12,
+      "their_reps": 16,
+      "total": 4
+    },
+    {
+      "won": true,
+      "your_reps": 12,
+      "their_reps": 20,
+      "total": 8
+    },
+    {
+      "won": true,
+      "your_reps": 12,
+      "their_reps": 24,
+      "total": 12
+    },
+    {
+      "won": true,
+      "your_reps": 12,
+      "their_reps": 28,
+      "total": 16
+    },
+    {
+      "won": true,
+      "your_reps": 12,
+      "their_reps": 32,
+      "total": 20
+    },
+    {
+      "won": true,
+      "your_reps": 12,
+      "their_reps": 36,
+      "total": 24
+    },
+    {
+      "won": true,
+      "your_reps": 12,
+      "their_reps": 40,
+      "total": 28
+    },
+    {
+      "won": true,
+      "your_reps": 14,
+      "their_reps": 0,
+      "total": 14
+    },
+    {
+      "won": true,
+      "your_reps": 14,
+      "their_reps": 4,
+      "total": 10
+    },
+    {
+      "won": true,
+      "your_reps": 14,
+      "their_reps": 8,
+      "total": 6
+    },
+    {
+      "won": true,
+      "your_reps": 14,
+      "their_reps": 12,
+      "total": 2
+    },
+    {
+      "won": true,
+      "your_reps": 14,
+      "their_reps": 16,
+      "total": 2
+    },
+    {
+      "won": true,
+      "your_reps": 14,
+      "their_reps": 20,
+      "total": 6
+    },
+    {
+      "won": true,
+      "your_reps": 14,
+      "their_reps": 24,
+      "total": 10
+    },
+    {
+      "won": true,
+      "your_reps": 14,
+      "their_reps": 28,
+      "total": 14
+    },
+    {
+      "won": true,
+      "your_reps": 14,
+      "their_reps": 32,
+      "total": 18
+    },
+    {
+      "won": true,
+      "your_reps": 14,
+      "their_reps": 36,
+      "total": 22
+    },
+    {
+      "won": true,
+      "your_reps": 14,
+      "their_reps": 40,
+      "total": 26
+    },
+    {
+      "won": true,
+      "your_reps": 16,
+      "their_reps": 0,
+      "total": 16
+    },
+    {
+      "won": true,
+      "your_reps": 16,
+      "their_reps": 4,
+      "total": 12
+    },
+    {
+      "won": true,
+      "your_reps": 16,
+      "their_reps": 8,
+      "total": 8
+    },
+    {
+      "won": true,
+      "your_reps": 16,
+      "their_reps": 12,
+      "total": 4
+    },
+    {
+      "won": true,
+      "your_reps": 16,
+      "their_reps": 16,
+      "total": 0
+    },
+    {
+      "won": true,
+      "your_reps": 16,
+      "their_reps": 20,
+      "total": 4
+    },
+    {
+      "won": true,
+      "your_reps": 16,
+      "their_reps": 24,
+      "total": 8
+    },
+    {
+      "won": true,
+      "your_reps": 16,
+      "their_reps": 28,
+      "total": 12
+    },
+    {
+      "won": true,
+      "your_reps": 16,
+      "their_reps": 32,
+      "total": 16
+    },
+    {
+      "won": true,
+      "your_reps": 16,
+      "their_reps": 36,
+      "total": 20
+    },
+    {
+      "won": true,
+      "your_reps": 16,
+      "their_reps": 40,
+      "total": 24
+    },
+    {
+      "won": true,
+      "your_reps": 18,
+      "their_reps": 0,
+      "total": 18
+    },
+    {
+      "won": true,
+      "your_reps": 18,
+      "their_reps": 4,
+      "total": 14
+    },
+    {
+      "won": true,
+      "your_reps": 18,
+      "their_reps": 8,
+      "total": 10
+    },
+    {
+      "won": true,
+      "your_reps": 18,
+      "their_reps": 12,
+      "total": 6
+    },
+    {
+      "won": true,
+      "your_reps": 18,
+      "their_reps": 16,
+      "total": 2
+    },
+    {
+      "won": true,
+      "your_reps": 18,
+      "their_reps": 20,
+      "total": 2
+    },
+    {
+      "won": true,
+      "your_reps": 18,
+      "their_reps": 24,
+      "total": 6
+    },
+    {
+      "won": true,
+      "your_reps": 18,
+      "their_reps": 28,
+      "total": 10
+    },
+    {
+      "won": true,
+      "your_reps": 18,
+      "their_reps": 32,
+      "total": 14
+    },
+    {
+      "won": true,
+      "your_reps": 18,
+      "their_reps": 36,
+      "total": 18
+    },
+    {
+      "won": true,
+      "your_reps": 18,
+      "their_reps": 40,
+      "total": 22
+    },
+    {
+      "won": true,
+      "your_reps": 20,
+      "their_reps": 0,
+      "total": 20
+    },
+    {
+      "won": true,
+      "your_reps": 20,
+      "their_reps": 4,
+      "total": 16
+    },
+    {
+      "won": true,
+      "your_reps": 20,
+      "their_reps": 8,
+      "total": 12
+    },
+    {
+      "won": true,
+      "your_reps": 20,
+      "their_reps": 12,
+      "total": 8
+    },
+    {
+      "won": true,
+      "your_reps": 20,
+      "their_reps": 16,
+      "total": 4
+    },
+    {
+      "won": true,
+      "your_reps": 20,
+      "their_reps": 20,
+      "total": 0
+    },
+    {
+      "won": true,
+      "your_reps": 20,
+      "their_reps": 24,
+      "total": 4
+    },
+    {
+      "won": true,
+      "your_reps": 20,
+      "their_reps": 28,
+      "total": 8
+    },
+    {
+      "won": true,
+      "your_reps": 20,
+      "their_reps": 32,
+      "total": 12
+    },
+    {
+      "won": true,
+      "your_reps": 20,
+      "their_reps": 36,
+      "total": 16
+    },
+    {
+      "won": true,
+      "your_reps": 20,
+      "their_reps": 40,
+      "total": 20
+    },
+    {
+      "won": true,
+      "your_reps": 22,
+      "their_reps": 0,
+      "total": 22
+    },
+    {
+      "won": true,
+      "your_reps": 22,
+      "their_reps": 4,
+      "total": 18
+    },
+    {
+      "won": true,
+      "your_reps": 22,
+      "their_reps": 8,
+      "total": 14
+    },
+    {
+      "won": true,
+      "your_reps": 22,
+      "their_reps": 12,
+      "total": 10
+    },
+    {
+      "won": true,
+      "your_reps": 22,
+      "their_reps": 16,
+      "total": 6
+    },
+    {
+      "won": true,
+      "your_reps": 22,
+      "their_reps": 20,
+      "total": 2
+    },
+    {
+      "won": true,
+      "your_reps": 22,
+      "their_reps": 24,
+      "total": 2
+    },
+    {
+      "won": true,
+      "your_reps": 22,
+      "their_reps": 28,
+      "total": 6
+    },
+    {
+      "won": true,
+      "your_reps": 22,
+      "their_reps": 32,
+      "total": 10
+    },
+    {
+      "won": true,
+      "your_reps": 22,
+      "their_reps": 36,
+      "total": 14
+    },
+    {
+      "won": true,
+      "your_reps": 22,
+      "their_reps": 40,
+      "total": 18
+    },
+    {
+      "won": true,
+      "your_reps": 24,
+      "their_reps": 0,
+      "total": 24
+    },
+    {
+      "won": true,
+      "your_reps": 24,
+      "their_reps": 4,
+      "total": 20
+    },
+    {
+      "won": true,
+      "your_reps": 24,
+      "their_reps": 8,
+      "total": 16
+    },
+    {
+      "won": true,
+      "your_reps": 24,
+      "their_reps": 12,
+      "total": 12
+    },
+    {
+      "won": true,
+      "your_reps": 24,
+      "their_reps": 16,
+      "total": 8
+    },
+    {
+      "won": true,
+      "your_reps": 24,
+      "their_reps": 20,
+      "total": 4
+    },
+    {
+      "won": true,
+      "your_reps": 24,
+      "their_reps": 24,
+      "total": 0
+    },
+    {
+      "won": true,
+      "your_reps": 24,
+      "their_reps": 28,
+      "total": 4
+    },
+    {
+      "won": true,
+      "your_reps": 24,
+      "their_reps": 32,
+      "total": 8
+    },
+    {
+      "won": true,
+      "your_reps": 24,
+      "their_reps": 36,
+      "total": 12
+    },
+    {
+      "won": true,
+      "your_reps": 24,
+      "their_reps": 40,
+      "total": 16
+    },
+    {
+      "won": true,
+      "your_reps": 26,
+      "their_reps": 0,
+      "total": 26
+    },
+    {
+      "won": true,
+      "your_reps": 26,
+      "their_reps": 4,
+      "total": 22
+    },
+    {
+      "won": true,
+      "your_reps": 26,
+      "their_reps": 8,
+      "total": 18
+    },
+    {
+      "won": true,
+      "your_reps": 26,
+      "their_reps": 12,
+      "total": 14
+    },
+    {
+      "won": true,
+      "your_reps": 26,
+      "their_reps": 16,
+      "total": 10
+    },
+    {
+      "won": true,
+      "your_reps": 26,
+      "their_reps": 20,
+      "total": 6
+    },
+    {
+      "won": true,
+      "your_reps": 26,
+      "their_reps": 24,
+      "total": 2
+    },
+    {
+      "won": true,
+      "your_reps": 26,
+      "their_reps": 28,
+      "total": 2
+    },
+    {
+      "won": true,
+      "your_reps": 26,
+      "their_reps": 32,
+      "total": 6
+    },
+    {
+      "won": true,
+      "your_reps": 26,
+      "their_reps": 36,
+      "total": 10
+    },
+    {
+      "won": true,
+      "your_reps": 26,
+      "their_reps": 40,
+      "total": 14
+    },
+    {
+      "won": true,
+      "your_reps": 28,
+      "their_reps": 0,
+      "total": 28
+    },
+    {
+      "won": true,
+      "your_reps": 28,
+      "their_reps": 4,
+      "total": 24
+    },
+    {
+      "won": true,
+      "your_reps": 28,
+      "their_reps": 8,
+      "total": 20
+    },
+    {
+      "won": true,
+      "your_reps": 28,
+      "their_reps": 12,
+      "total": 16
+    },
+    {
+      "won": true,
+      "your_reps": 28,
+      "their_reps": 16,
+      "total": 12
+    },
+    {
+      "won": true,
+      "your_reps": 28,
+      "their_reps": 20,
+      "total": 8
+    },
+    {
+      "won": true,
+      "your_reps": 28,
+      "their_reps": 24,
+      "total": 4
+    },
+    {
+      "won": true,
+      "your_reps": 28,
+      "their_reps": 28,
+      "total": 0
+    },
+    {
+      "won": true,
+      "your_reps": 28,
+      "their_reps": 32,
+      "total": 4
+    },
+    {
+      "won": true,
+      "your_reps": 28,
+      "their_reps": 36,
+      "total": 8
+    },
+    {
+      "won": true,
+      "your_reps": 28,
+      "their_reps": 40,
+      "total": 12
+    },
+    {
+      "won": true,
+      "your_reps": 30,
+      "their_reps": 0,
+      "total": 30
+    },
+    {
+      "won": true,
+      "your_reps": 30,
+      "their_reps": 4,
+      "total": 26
+    },
+    {
+      "won": true,
+      "your_reps": 30,
+      "their_reps": 8,
+      "total": 22
+    },
+    {
+      "won": true,
+      "your_reps": 30,
+      "their_reps": 12,
+      "total": 18
+    },
+    {
+      "won": true,
+      "your_reps": 30,
+      "their_reps": 16,
+      "total": 14
+    },
+    {
+      "won": true,
+      "your_reps": 30,
+      "their_reps": 20,
+      "total": 10
+    },
+    {
+      "won": true,
+      "your_reps": 30,
+      "their_reps": 24,
+      "total": 6
+    },
+    {
+      "won": true,
+      "your_reps": 30,
+      "their_reps": 28,
+      "total": 2
+    },
+    {
+      "won": true,
+      "your_reps": 30,
+      "their_reps": 32,
+      "total": 2
+    },
+    {
+      "won": true,
+      "your_reps": 30,
+      "their_reps": 36,
+      "total": 6
+    },
+    {
+      "won": true,
+      "your_reps": 30,
+      "their_reps": 40,
+      "total": 10
+    },
+    {
+      "won": true,
+      "your_reps": 32,
+      "their_reps": 0,
+      "total": 32
+    },
+    {
+      "won": true,
+      "your_reps": 32,
+      "their_reps": 4,
+      "total": 28
+    },
+    {
+      "won": true,
+      "your_reps": 32,
+      "their_reps": 8,
+      "total": 24
+    },
+    {
+      "won": true,
+      "your_reps": 32,
+      "their_reps": 12,
+      "total": 20
+    },
+    {
+      "won": true,
+      "your_reps": 32,
+      "their_reps": 16,
+      "total": 16
+    },
+    {
+      "won": true,
+      "your_reps": 32,
+      "their_reps": 20,
+      "total": 12
+    },
+    {
+      "won": true,
+      "your_reps": 32,
+      "their_reps": 24,
+      "total": 8
+    },
+    {
+      "won": true,
+      "your_reps": 32,
+      "their_reps": 28,
+      "total": 4
+    },
+    {
+      "won": true,
+      "your_reps": 32,
+      "their_reps": 32,
+      "total": 0
+    },
+    {
+      "won": true,
+      "your_reps": 32,
+      "their_reps": 36,
+      "total": 4
+    },
+    {
+      "won": true,
+      "your_reps": 32,
+      "their_reps": 40,
+      "total": 8
+    },
+    {
+      "won": true,
+      "your_reps": 34,
+      "their_reps": 0,
       "total": 34
     },
     {
       "won": true,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 2,
+      "your_reps": 34,
+      "their_reps": 4,
+      "total": 30
+    },
+    {
+      "won": true,
+      "your_reps": 34,
+      "their_reps": 8,
+      "total": 26
+    },
+    {
+      "won": true,
+      "your_reps": 34,
+      "their_reps": 12,
+      "total": 22
+    },
+    {
+      "won": true,
+      "your_reps": 34,
+      "their_reps": 16,
+      "total": 18
+    },
+    {
+      "won": true,
+      "your_reps": 34,
+      "their_reps": 20,
+      "total": 14
+    },
+    {
+      "won": true,
+      "your_reps": 34,
+      "their_reps": 24,
+      "total": 10
+    },
+    {
+      "won": true,
+      "your_reps": 34,
+      "their_reps": 28,
+      "total": 6
+    },
+    {
+      "won": true,
+      "your_reps": 34,
+      "their_reps": 32,
+      "total": 2
+    },
+    {
+      "won": true,
+      "your_reps": 34,
+      "their_reps": 36,
+      "total": 2
+    },
+    {
+      "won": true,
+      "your_reps": 34,
       "their_reps": 40,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 12,
-      "margin": 5,
-      "form": 0,
+      "total": 6
+    },
+    {
+      "won": true,
+      "your_reps": 36,
+      "their_reps": 0,
+      "total": 36
+    },
+    {
+      "won": true,
+      "your_reps": 36,
+      "their_reps": 4,
       "total": 32
     },
     {
       "won": true,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 12,
-      "margin": 0,
-      "form": 2,
-      "total": 29
-    },
-    {
-      "won": true,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 12,
-      "margin": 0,
-      "form": 0,
-      "total": 27
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": 17
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": 15
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": 17
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": 15
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 2,
-      "total": 20
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 0,
-      "total": 18
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 2,
-      "total": 20
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 0,
-      "total": 18
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 2,
-      "total": 22
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 0,
-      "total": 20
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 2,
-      "total": 22
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 0,
-      "total": 20
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": 17
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": 15
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": 17
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": 15
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": 17
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": 15
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 2,
-      "total": 20
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 0,
-      "total": 18
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 2,
-      "total": 20
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 0,
-      "total": 18
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 2,
-      "total": 22
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 0,
-      "total": 20
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 2,
-      "total": 22
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 0,
-      "total": 20
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": 17
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": 15
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 0,
-      "form": 2,
-      "total": 23
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 0,
-      "form": 0,
-      "total": 21
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 0,
-      "form": 2,
-      "total": 23
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 0,
-      "form": 0,
-      "total": 21
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 3,
-      "form": 2,
-      "total": 26
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 3,
-      "form": 0,
-      "total": 24
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 3,
-      "form": 2,
-      "total": 26
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 3,
-      "form": 0,
-      "total": 24
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 5,
-      "form": 2,
+      "your_reps": 36,
+      "their_reps": 8,
       "total": 28
     },
     {
       "won": true,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 5,
-      "form": 0,
+      "your_reps": 36,
+      "their_reps": 12,
+      "total": 24
+    },
+    {
+      "won": true,
+      "your_reps": 36,
+      "their_reps": 16,
+      "total": 20
+    },
+    {
+      "won": true,
+      "your_reps": 36,
+      "their_reps": 20,
+      "total": 16
+    },
+    {
+      "won": true,
+      "your_reps": 36,
+      "their_reps": 24,
+      "total": 12
+    },
+    {
+      "won": true,
+      "your_reps": 36,
+      "their_reps": 28,
+      "total": 8
+    },
+    {
+      "won": true,
+      "your_reps": 36,
+      "their_reps": 32,
+      "total": 4
+    },
+    {
+      "won": true,
+      "your_reps": 36,
+      "their_reps": 36,
+      "total": 0
+    },
+    {
+      "won": true,
+      "your_reps": 36,
+      "their_reps": 40,
+      "total": 4
+    },
+    {
+      "won": true,
+      "your_reps": 38,
+      "their_reps": 0,
+      "total": 38
+    },
+    {
+      "won": true,
+      "your_reps": 38,
+      "their_reps": 4,
+      "total": 34
+    },
+    {
+      "won": true,
+      "your_reps": 38,
+      "their_reps": 8,
+      "total": 30
+    },
+    {
+      "won": true,
+      "your_reps": 38,
+      "their_reps": 12,
       "total": 26
     },
     {
       "won": true,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 2,
+      "your_reps": 38,
+      "their_reps": 16,
+      "total": 22
+    },
+    {
+      "won": true,
+      "your_reps": 38,
+      "their_reps": 20,
+      "total": 18
+    },
+    {
+      "won": true,
+      "your_reps": 38,
+      "their_reps": 24,
+      "total": 14
+    },
+    {
+      "won": true,
+      "your_reps": 38,
+      "their_reps": 28,
+      "total": 10
+    },
+    {
+      "won": true,
+      "your_reps": 38,
+      "their_reps": 32,
+      "total": 6
+    },
+    {
+      "won": true,
+      "your_reps": 38,
+      "their_reps": 36,
+      "total": 2
+    },
+    {
+      "won": true,
+      "your_reps": 38,
       "their_reps": 40,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 5,
-      "form": 2,
+      "total": 2
+    },
+    {
+      "won": true,
+      "your_reps": 40,
+      "their_reps": 0,
+      "total": 40
+    },
+    {
+      "won": true,
+      "your_reps": 40,
+      "their_reps": 4,
+      "total": 36
+    },
+    {
+      "won": true,
+      "your_reps": 40,
+      "their_reps": 8,
+      "total": 32
+    },
+    {
+      "won": true,
+      "your_reps": 40,
+      "their_reps": 12,
       "total": 28
     },
     {
       "won": true,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 5,
-      "form": 0,
-      "total": 26
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 0,
-      "form": 2,
-      "total": 23
-    },
-    {
-      "won": true,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 6,
-      "margin": 0,
-      "form": 0,
-      "total": 21
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": 17
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": 15
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": 17
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": 15
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 2,
-      "total": 20
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 0,
-      "total": 18
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 2,
-      "total": 20
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 0,
-      "total": 18
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 0,
       "your_reps": 40,
-      "their_reps": 2,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 2,
-      "total": 22
+      "their_reps": 16,
+      "total": 24
     },
     {
       "won": true,
-      "your_tier": 6,
-      "their_tier": 0,
       "your_reps": 40,
-      "their_reps": 2,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 0,
+      "their_reps": 20,
       "total": 20
     },
     {
       "won": true,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 2,
-      "total": 22
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 0,
-      "total": 20
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": 17
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": 15
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": 17
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": 15
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": 17
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": 15
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 2,
-      "total": 20
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 0,
-      "total": 18
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 2,
-      "total": 20
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 0,
-      "total": 18
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 3,
       "your_reps": 40,
-      "their_reps": 2,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 2,
-      "total": 22
+      "their_reps": 24,
+      "total": 16
     },
     {
       "won": true,
-      "your_tier": 6,
-      "their_tier": 3,
       "your_reps": 40,
-      "their_reps": 2,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 0,
-      "total": 20
+      "their_reps": 28,
+      "total": 12
     },
     {
       "won": true,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 2,
-      "total": 22
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 0,
-      "total": 20
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": 17
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": 15
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": 17
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": 15
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": 17
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": 15
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 2,
-      "total": 20
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 0,
-      "total": 18
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 2,
-      "total": 20
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 3,
-      "form": 0,
-      "total": 18
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 6,
       "your_reps": 40,
-      "their_reps": 2,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 2,
-      "total": 22
+      "their_reps": 32,
+      "total": 8
     },
     {
       "won": true,
-      "your_tier": 6,
-      "their_tier": 6,
       "your_reps": 40,
-      "their_reps": 2,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 0,
-      "total": 20
+      "their_reps": 36,
+      "total": 4
     },
     {
       "won": true,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 2,
+      "your_reps": 40,
       "their_reps": 40,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 2,
-      "total": 22
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 5,
-      "form": 0,
-      "total": 20
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": 17
-    },
-    {
-      "won": true,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": 15,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": 15
+      "total": 0
     },
     {
       "won": false,
-      "your_tier": 0,
-      "their_tier": 0,
       "your_reps": 0,
       "their_reps": 0,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 2,
-      "total": -6
+      "total": 0
     },
     {
       "won": false,
-      "your_tier": 0,
-      "their_tier": 0,
       "your_reps": 0,
-      "their_reps": 0,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 0,
+      "their_reps": 4,
+      "total": -4
+    },
+    {
+      "won": false,
+      "your_reps": 0,
+      "their_reps": 8,
       "total": -8
     },
     {
       "won": false,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 2,
-      "total": -6
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 0,
-      "total": -8
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 2,
-      "total": -9
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 0,
-      "total": -11
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 2,
-      "total": -9
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 0,
-      "total": -11
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": -10
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
+      "your_reps": 0,
+      "their_reps": 12,
       "total": -12
     },
     {
       "won": false,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": -10
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": -12
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 2,
-      "total": -6
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 0,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 0,
-      "total": -8
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 3,
       "your_reps": 0,
-      "their_reps": 0,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 2,
-      "total": -6
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 0,
-      "total": -8
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 2,
-      "total": -6
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 0,
-      "total": -8
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 2,
-      "total": -9
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 0,
-      "total": -11
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 2,
-      "total": -9
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 0,
-      "total": -11
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": -10
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": -12
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": -10
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": -12
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 2,
-      "total": -6
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 3,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 0,
-      "total": -8
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 2,
-      "total": -6
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 0,
-      "total": -8
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 2,
-      "total": -6
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 0,
-      "total": -8
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 2,
-      "total": -9
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 0,
-      "total": -11
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 2,
-      "total": -9
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 0,
-      "total": -11
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": -10
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": -12
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": -10
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": -12
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 2,
-      "total": -6
-    },
-    {
-      "won": false,
-      "your_tier": 0,
-      "their_tier": 6,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 0,
-      "total": -8
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 4,
-      "form": 2,
-      "total": -12
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 4,
-      "form": 0,
-      "total": -14
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 4,
-      "form": 2,
-      "total": -12
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 4,
-      "form": 0,
-      "total": -14
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 1,
-      "form": 2,
-      "total": -15
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 1,
-      "form": 0,
-      "total": -17
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 1,
-      "form": 2,
-      "total": -15
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 1,
-      "form": 0,
-      "total": -17
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 0,
-      "form": 2,
+      "their_reps": 16,
       "total": -16
     },
     {
       "won": false,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 0,
-      "form": 0,
-      "total": -18
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 0,
-      "form": 2,
-      "total": -16
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 0,
-      "form": 0,
-      "total": -18
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 4,
-      "form": 2,
-      "total": -12
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 0,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 4,
-      "form": 0,
-      "total": -14
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 3,
       "your_reps": 0,
-      "their_reps": 0,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 2,
-      "total": -6
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 0,
-      "total": -8
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 2,
-      "total": -6
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 0,
-      "total": -8
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 2,
-      "total": -9
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 0,
-      "total": -11
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 10,
       "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 2,
-      "total": -9
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 0,
-      "total": -11
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": -10
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": -12
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": -10
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": -12
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 2,
-      "total": -6
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 0,
-      "total": -8
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 2,
-      "total": -6
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 0,
-      "total": -8
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 2,
-      "total": -6
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 0,
-      "total": -8
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 2,
-      "total": -9
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 0,
-      "total": -11
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 2,
-      "total": -9
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 0,
-      "total": -11
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": -10
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": -12
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": -10
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": -12
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 2,
-      "total": -6
-    },
-    {
-      "won": false,
-      "your_tier": 3,
-      "their_tier": 6,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 0,
-      "total": -8
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -12,
-      "margin": 4,
-      "form": 2,
-      "total": -18
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -12,
-      "margin": 4,
-      "form": 0,
       "total": -20
     },
     {
       "won": false,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -12,
-      "margin": 4,
-      "form": 2,
-      "total": -18
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -12,
-      "margin": 4,
-      "form": 0,
-      "total": -20
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -12,
-      "margin": 1,
-      "form": 2,
-      "total": -21
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -12,
-      "margin": 1,
-      "form": 0,
-      "total": -23
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -12,
-      "margin": 1,
-      "form": 2,
-      "total": -21
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -12,
-      "margin": 1,
-      "form": 0,
-      "total": -23
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -12,
-      "margin": 0,
-      "form": 2,
-      "total": -22
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -12,
-      "margin": 0,
-      "form": 0,
+      "your_reps": 0,
+      "their_reps": 24,
       "total": -24
     },
     {
       "won": false,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 2,
+      "your_reps": 0,
+      "their_reps": 28,
+      "total": -28
+    },
+    {
+      "won": false,
+      "your_reps": 0,
+      "their_reps": 32,
+      "total": -32
+    },
+    {
+      "won": false,
+      "your_reps": 0,
+      "their_reps": 36,
+      "total": -36
+    },
+    {
+      "won": false,
+      "your_reps": 0,
       "their_reps": 40,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -12,
-      "margin": 0,
-      "form": 2,
+      "total": -40
+    },
+    {
+      "won": false,
+      "your_reps": 2,
+      "their_reps": 0,
+      "total": -2
+    },
+    {
+      "won": false,
+      "your_reps": 2,
+      "their_reps": 4,
+      "total": -2
+    },
+    {
+      "won": false,
+      "your_reps": 2,
+      "their_reps": 8,
+      "total": -6
+    },
+    {
+      "won": false,
+      "your_reps": 2,
+      "their_reps": 12,
+      "total": -10
+    },
+    {
+      "won": false,
+      "your_reps": 2,
+      "their_reps": 16,
+      "total": -14
+    },
+    {
+      "won": false,
+      "your_reps": 2,
+      "their_reps": 20,
+      "total": -18
+    },
+    {
+      "won": false,
+      "your_reps": 2,
+      "their_reps": 24,
       "total": -22
     },
     {
       "won": false,
-      "your_tier": 6,
-      "their_tier": 0,
+      "your_reps": 2,
+      "their_reps": 28,
+      "total": -26
+    },
+    {
+      "won": false,
+      "your_reps": 2,
+      "their_reps": 32,
+      "total": -30
+    },
+    {
+      "won": false,
+      "your_reps": 2,
+      "their_reps": 36,
+      "total": -34
+    },
+    {
+      "won": false,
       "your_reps": 2,
       "their_reps": 40,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -12,
-      "margin": 0,
-      "form": 0,
-      "total": -24
+      "total": -38
     },
     {
       "won": false,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -12,
-      "margin": 4,
-      "form": 2,
-      "total": -18
+      "your_reps": 4,
+      "their_reps": 0,
+      "total": -4
     },
     {
       "won": false,
-      "your_tier": 6,
-      "their_tier": 0,
-      "your_reps": 19,
+      "your_reps": 4,
+      "their_reps": 4,
+      "total": 0
+    },
+    {
+      "won": false,
+      "your_reps": 4,
+      "their_reps": 8,
+      "total": -4
+    },
+    {
+      "won": false,
+      "your_reps": 4,
+      "their_reps": 12,
+      "total": -8
+    },
+    {
+      "won": false,
+      "your_reps": 4,
+      "their_reps": 16,
+      "total": -12
+    },
+    {
+      "won": false,
+      "your_reps": 4,
       "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -12,
-      "margin": 4,
-      "form": 0,
+      "total": -16
+    },
+    {
+      "won": false,
+      "your_reps": 4,
+      "their_reps": 24,
       "total": -20
     },
     {
       "won": false,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 4,
-      "form": 2,
-      "total": -12
+      "your_reps": 4,
+      "their_reps": 28,
+      "total": -24
     },
     {
       "won": false,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 4,
-      "form": 0,
-      "total": -14
+      "your_reps": 4,
+      "their_reps": 32,
+      "total": -28
     },
     {
       "won": false,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 4,
-      "form": 2,
-      "total": -12
+      "your_reps": 4,
+      "their_reps": 36,
+      "total": -32
     },
     {
       "won": false,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 4,
-      "form": 0,
-      "total": -14
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 1,
-      "form": 2,
-      "total": -15
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 1,
-      "form": 0,
-      "total": -17
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 1,
-      "form": 2,
-      "total": -15
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 1,
-      "form": 0,
-      "total": -17
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 0,
-      "form": 2,
-      "total": -16
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 0,
-      "form": 0,
-      "total": -18
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 2,
+      "your_reps": 4,
       "their_reps": 40,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 0,
-      "form": 2,
-      "total": -16
+      "total": -36
     },
     {
       "won": false,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 0,
-      "form": 0,
-      "total": -18
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 4,
-      "form": 2,
-      "total": -12
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 3,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": -6,
-      "margin": 4,
-      "form": 0,
-      "total": -14
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 0,
+      "your_reps": 6,
       "their_reps": 0,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 2,
       "total": -6
     },
     {
       "won": false,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 0,
-      "their_reps": 0,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 0,
-      "total": -8
+      "your_reps": 6,
+      "their_reps": 4,
+      "total": -2
     },
     {
       "won": false,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 2,
+      "your_reps": 6,
+      "their_reps": 8,
+      "total": -2
+    },
+    {
+      "won": false,
+      "your_reps": 6,
+      "their_reps": 12,
       "total": -6
     },
     {
       "won": false,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 11,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 0,
-      "total": -8
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 2,
-      "total": -9
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 20,
-      "their_reps": 10,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 0,
-      "total": -11
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 2,
-      "total": -9
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 10,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 1,
-      "form": 0,
-      "total": -11
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
+      "your_reps": 6,
+      "their_reps": 16,
       "total": -10
     },
     {
       "won": false,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 40,
-      "their_reps": 2,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": -12
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 2,
-      "total": -10
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 2,
-      "their_reps": 40,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
-      "total": -12
-    },
-    {
-      "won": false,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 19,
+      "your_reps": 6,
       "their_reps": 20,
-      "clean": true,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 2,
-      "total": -6
+      "total": -14
     },
     {
       "won": false,
-      "your_tier": 6,
-      "their_tier": 6,
-      "your_reps": 19,
-      "their_reps": 20,
-      "clean": false,
-      "surrendered": false,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 4,
-      "form": 0,
+      "your_reps": 6,
+      "their_reps": 24,
+      "total": -18
+    },
+    {
+      "won": false,
+      "your_reps": 6,
+      "their_reps": 28,
+      "total": -22
+    },
+    {
+      "won": false,
+      "your_reps": 6,
+      "their_reps": 32,
+      "total": -26
+    },
+    {
+      "won": false,
+      "your_reps": 6,
+      "their_reps": 36,
+      "total": -30
+    },
+    {
+      "won": false,
+      "your_reps": 6,
+      "their_reps": 40,
+      "total": -34
+    },
+    {
+      "won": false,
+      "your_reps": 8,
+      "their_reps": 0,
       "total": -8
     },
     {
       "won": false,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 19,
+      "your_reps": 8,
+      "their_reps": 4,
+      "total": -4
+    },
+    {
+      "won": false,
+      "your_reps": 8,
+      "their_reps": 8,
+      "total": 0
+    },
+    {
+      "won": false,
+      "your_reps": 8,
+      "their_reps": 12,
+      "total": -4
+    },
+    {
+      "won": false,
+      "your_reps": 8,
+      "their_reps": 16,
+      "total": -8
+    },
+    {
+      "won": false,
+      "your_reps": 8,
       "their_reps": 20,
-      "clean": false,
-      "surrendered": true,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
       "total": -12
     },
     {
       "won": false,
-      "your_tier": 3,
-      "their_tier": 3,
-      "your_reps": 2,
+      "your_reps": 8,
+      "their_reps": 24,
+      "total": -16
+    },
+    {
+      "won": false,
+      "your_reps": 8,
+      "their_reps": 28,
+      "total": -20
+    },
+    {
+      "won": false,
+      "your_reps": 8,
+      "their_reps": 32,
+      "total": -24
+    },
+    {
+      "won": false,
+      "your_reps": 8,
+      "their_reps": 36,
+      "total": -28
+    },
+    {
+      "won": false,
+      "your_reps": 8,
       "their_reps": 40,
-      "clean": false,
-      "surrendered": true,
-      "result": -12,
-      "tier_gap": 0,
-      "margin": 0,
-      "form": 0,
+      "total": -32
+    },
+    {
+      "won": false,
+      "your_reps": 10,
+      "their_reps": 0,
+      "total": -10
+    },
+    {
+      "won": false,
+      "your_reps": 10,
+      "their_reps": 4,
+      "total": -6
+    },
+    {
+      "won": false,
+      "your_reps": 10,
+      "their_reps": 8,
+      "total": -2
+    },
+    {
+      "won": false,
+      "your_reps": 10,
+      "their_reps": 12,
+      "total": -2
+    },
+    {
+      "won": false,
+      "your_reps": 10,
+      "their_reps": 16,
+      "total": -6
+    },
+    {
+      "won": false,
+      "your_reps": 10,
+      "their_reps": 20,
+      "total": -10
+    },
+    {
+      "won": false,
+      "your_reps": 10,
+      "their_reps": 24,
+      "total": -14
+    },
+    {
+      "won": false,
+      "your_reps": 10,
+      "their_reps": 28,
+      "total": -18
+    },
+    {
+      "won": false,
+      "your_reps": 10,
+      "their_reps": 32,
+      "total": -22
+    },
+    {
+      "won": false,
+      "your_reps": 10,
+      "their_reps": 36,
+      "total": -26
+    },
+    {
+      "won": false,
+      "your_reps": 10,
+      "their_reps": 40,
+      "total": -30
+    },
+    {
+      "won": false,
+      "your_reps": 12,
+      "their_reps": 0,
       "total": -12
+    },
+    {
+      "won": false,
+      "your_reps": 12,
+      "their_reps": 4,
+      "total": -8
+    },
+    {
+      "won": false,
+      "your_reps": 12,
+      "their_reps": 8,
+      "total": -4
+    },
+    {
+      "won": false,
+      "your_reps": 12,
+      "their_reps": 12,
+      "total": 0
+    },
+    {
+      "won": false,
+      "your_reps": 12,
+      "their_reps": 16,
+      "total": -4
+    },
+    {
+      "won": false,
+      "your_reps": 12,
+      "their_reps": 20,
+      "total": -8
+    },
+    {
+      "won": false,
+      "your_reps": 12,
+      "their_reps": 24,
+      "total": -12
+    },
+    {
+      "won": false,
+      "your_reps": 12,
+      "their_reps": 28,
+      "total": -16
+    },
+    {
+      "won": false,
+      "your_reps": 12,
+      "their_reps": 32,
+      "total": -20
+    },
+    {
+      "won": false,
+      "your_reps": 12,
+      "their_reps": 36,
+      "total": -24
+    },
+    {
+      "won": false,
+      "your_reps": 12,
+      "their_reps": 40,
+      "total": -28
+    },
+    {
+      "won": false,
+      "your_reps": 14,
+      "their_reps": 0,
+      "total": -14
+    },
+    {
+      "won": false,
+      "your_reps": 14,
+      "their_reps": 4,
+      "total": -10
+    },
+    {
+      "won": false,
+      "your_reps": 14,
+      "their_reps": 8,
+      "total": -6
+    },
+    {
+      "won": false,
+      "your_reps": 14,
+      "their_reps": 12,
+      "total": -2
+    },
+    {
+      "won": false,
+      "your_reps": 14,
+      "their_reps": 16,
+      "total": -2
+    },
+    {
+      "won": false,
+      "your_reps": 14,
+      "their_reps": 20,
+      "total": -6
+    },
+    {
+      "won": false,
+      "your_reps": 14,
+      "their_reps": 24,
+      "total": -10
+    },
+    {
+      "won": false,
+      "your_reps": 14,
+      "their_reps": 28,
+      "total": -14
+    },
+    {
+      "won": false,
+      "your_reps": 14,
+      "their_reps": 32,
+      "total": -18
+    },
+    {
+      "won": false,
+      "your_reps": 14,
+      "their_reps": 36,
+      "total": -22
+    },
+    {
+      "won": false,
+      "your_reps": 14,
+      "their_reps": 40,
+      "total": -26
+    },
+    {
+      "won": false,
+      "your_reps": 16,
+      "their_reps": 0,
+      "total": -16
+    },
+    {
+      "won": false,
+      "your_reps": 16,
+      "their_reps": 4,
+      "total": -12
+    },
+    {
+      "won": false,
+      "your_reps": 16,
+      "their_reps": 8,
+      "total": -8
+    },
+    {
+      "won": false,
+      "your_reps": 16,
+      "their_reps": 12,
+      "total": -4
+    },
+    {
+      "won": false,
+      "your_reps": 16,
+      "their_reps": 16,
+      "total": 0
+    },
+    {
+      "won": false,
+      "your_reps": 16,
+      "their_reps": 20,
+      "total": -4
+    },
+    {
+      "won": false,
+      "your_reps": 16,
+      "their_reps": 24,
+      "total": -8
+    },
+    {
+      "won": false,
+      "your_reps": 16,
+      "their_reps": 28,
+      "total": -12
+    },
+    {
+      "won": false,
+      "your_reps": 16,
+      "their_reps": 32,
+      "total": -16
+    },
+    {
+      "won": false,
+      "your_reps": 16,
+      "their_reps": 36,
+      "total": -20
+    },
+    {
+      "won": false,
+      "your_reps": 16,
+      "their_reps": 40,
+      "total": -24
+    },
+    {
+      "won": false,
+      "your_reps": 18,
+      "their_reps": 0,
+      "total": -18
+    },
+    {
+      "won": false,
+      "your_reps": 18,
+      "their_reps": 4,
+      "total": -14
+    },
+    {
+      "won": false,
+      "your_reps": 18,
+      "their_reps": 8,
+      "total": -10
+    },
+    {
+      "won": false,
+      "your_reps": 18,
+      "their_reps": 12,
+      "total": -6
+    },
+    {
+      "won": false,
+      "your_reps": 18,
+      "their_reps": 16,
+      "total": -2
+    },
+    {
+      "won": false,
+      "your_reps": 18,
+      "their_reps": 20,
+      "total": -2
+    },
+    {
+      "won": false,
+      "your_reps": 18,
+      "their_reps": 24,
+      "total": -6
+    },
+    {
+      "won": false,
+      "your_reps": 18,
+      "their_reps": 28,
+      "total": -10
+    },
+    {
+      "won": false,
+      "your_reps": 18,
+      "their_reps": 32,
+      "total": -14
+    },
+    {
+      "won": false,
+      "your_reps": 18,
+      "their_reps": 36,
+      "total": -18
+    },
+    {
+      "won": false,
+      "your_reps": 18,
+      "their_reps": 40,
+      "total": -22
+    },
+    {
+      "won": false,
+      "your_reps": 20,
+      "their_reps": 0,
+      "total": -20
+    },
+    {
+      "won": false,
+      "your_reps": 20,
+      "their_reps": 4,
+      "total": -16
+    },
+    {
+      "won": false,
+      "your_reps": 20,
+      "their_reps": 8,
+      "total": -12
+    },
+    {
+      "won": false,
+      "your_reps": 20,
+      "their_reps": 12,
+      "total": -8
+    },
+    {
+      "won": false,
+      "your_reps": 20,
+      "their_reps": 16,
+      "total": -4
+    },
+    {
+      "won": false,
+      "your_reps": 20,
+      "their_reps": 20,
+      "total": 0
+    },
+    {
+      "won": false,
+      "your_reps": 20,
+      "their_reps": 24,
+      "total": -4
+    },
+    {
+      "won": false,
+      "your_reps": 20,
+      "their_reps": 28,
+      "total": -8
+    },
+    {
+      "won": false,
+      "your_reps": 20,
+      "their_reps": 32,
+      "total": -12
+    },
+    {
+      "won": false,
+      "your_reps": 20,
+      "their_reps": 36,
+      "total": -16
+    },
+    {
+      "won": false,
+      "your_reps": 20,
+      "their_reps": 40,
+      "total": -20
+    },
+    {
+      "won": false,
+      "your_reps": 22,
+      "their_reps": 0,
+      "total": -22
+    },
+    {
+      "won": false,
+      "your_reps": 22,
+      "their_reps": 4,
+      "total": -18
+    },
+    {
+      "won": false,
+      "your_reps": 22,
+      "their_reps": 8,
+      "total": -14
+    },
+    {
+      "won": false,
+      "your_reps": 22,
+      "their_reps": 12,
+      "total": -10
+    },
+    {
+      "won": false,
+      "your_reps": 22,
+      "their_reps": 16,
+      "total": -6
+    },
+    {
+      "won": false,
+      "your_reps": 22,
+      "their_reps": 20,
+      "total": -2
+    },
+    {
+      "won": false,
+      "your_reps": 22,
+      "their_reps": 24,
+      "total": -2
+    },
+    {
+      "won": false,
+      "your_reps": 22,
+      "their_reps": 28,
+      "total": -6
+    },
+    {
+      "won": false,
+      "your_reps": 22,
+      "their_reps": 32,
+      "total": -10
+    },
+    {
+      "won": false,
+      "your_reps": 22,
+      "their_reps": 36,
+      "total": -14
+    },
+    {
+      "won": false,
+      "your_reps": 22,
+      "their_reps": 40,
+      "total": -18
+    },
+    {
+      "won": false,
+      "your_reps": 24,
+      "their_reps": 0,
+      "total": -24
+    },
+    {
+      "won": false,
+      "your_reps": 24,
+      "their_reps": 4,
+      "total": -20
+    },
+    {
+      "won": false,
+      "your_reps": 24,
+      "their_reps": 8,
+      "total": -16
+    },
+    {
+      "won": false,
+      "your_reps": 24,
+      "their_reps": 12,
+      "total": -12
+    },
+    {
+      "won": false,
+      "your_reps": 24,
+      "their_reps": 16,
+      "total": -8
+    },
+    {
+      "won": false,
+      "your_reps": 24,
+      "their_reps": 20,
+      "total": -4
+    },
+    {
+      "won": false,
+      "your_reps": 24,
+      "their_reps": 24,
+      "total": 0
+    },
+    {
+      "won": false,
+      "your_reps": 24,
+      "their_reps": 28,
+      "total": -4
+    },
+    {
+      "won": false,
+      "your_reps": 24,
+      "their_reps": 32,
+      "total": -8
+    },
+    {
+      "won": false,
+      "your_reps": 24,
+      "their_reps": 36,
+      "total": -12
+    },
+    {
+      "won": false,
+      "your_reps": 24,
+      "their_reps": 40,
+      "total": -16
+    },
+    {
+      "won": false,
+      "your_reps": 26,
+      "their_reps": 0,
+      "total": -26
+    },
+    {
+      "won": false,
+      "your_reps": 26,
+      "their_reps": 4,
+      "total": -22
+    },
+    {
+      "won": false,
+      "your_reps": 26,
+      "their_reps": 8,
+      "total": -18
+    },
+    {
+      "won": false,
+      "your_reps": 26,
+      "their_reps": 12,
+      "total": -14
+    },
+    {
+      "won": false,
+      "your_reps": 26,
+      "their_reps": 16,
+      "total": -10
+    },
+    {
+      "won": false,
+      "your_reps": 26,
+      "their_reps": 20,
+      "total": -6
+    },
+    {
+      "won": false,
+      "your_reps": 26,
+      "their_reps": 24,
+      "total": -2
+    },
+    {
+      "won": false,
+      "your_reps": 26,
+      "their_reps": 28,
+      "total": -2
+    },
+    {
+      "won": false,
+      "your_reps": 26,
+      "their_reps": 32,
+      "total": -6
+    },
+    {
+      "won": false,
+      "your_reps": 26,
+      "their_reps": 36,
+      "total": -10
+    },
+    {
+      "won": false,
+      "your_reps": 26,
+      "their_reps": 40,
+      "total": -14
+    },
+    {
+      "won": false,
+      "your_reps": 28,
+      "their_reps": 0,
+      "total": -28
+    },
+    {
+      "won": false,
+      "your_reps": 28,
+      "their_reps": 4,
+      "total": -24
+    },
+    {
+      "won": false,
+      "your_reps": 28,
+      "their_reps": 8,
+      "total": -20
+    },
+    {
+      "won": false,
+      "your_reps": 28,
+      "their_reps": 12,
+      "total": -16
+    },
+    {
+      "won": false,
+      "your_reps": 28,
+      "their_reps": 16,
+      "total": -12
+    },
+    {
+      "won": false,
+      "your_reps": 28,
+      "their_reps": 20,
+      "total": -8
+    },
+    {
+      "won": false,
+      "your_reps": 28,
+      "their_reps": 24,
+      "total": -4
+    },
+    {
+      "won": false,
+      "your_reps": 28,
+      "their_reps": 28,
+      "total": 0
+    },
+    {
+      "won": false,
+      "your_reps": 28,
+      "their_reps": 32,
+      "total": -4
+    },
+    {
+      "won": false,
+      "your_reps": 28,
+      "their_reps": 36,
+      "total": -8
+    },
+    {
+      "won": false,
+      "your_reps": 28,
+      "their_reps": 40,
+      "total": -12
+    },
+    {
+      "won": false,
+      "your_reps": 30,
+      "their_reps": 0,
+      "total": -30
+    },
+    {
+      "won": false,
+      "your_reps": 30,
+      "their_reps": 4,
+      "total": -26
+    },
+    {
+      "won": false,
+      "your_reps": 30,
+      "their_reps": 8,
+      "total": -22
+    },
+    {
+      "won": false,
+      "your_reps": 30,
+      "their_reps": 12,
+      "total": -18
+    },
+    {
+      "won": false,
+      "your_reps": 30,
+      "their_reps": 16,
+      "total": -14
+    },
+    {
+      "won": false,
+      "your_reps": 30,
+      "their_reps": 20,
+      "total": -10
+    },
+    {
+      "won": false,
+      "your_reps": 30,
+      "their_reps": 24,
+      "total": -6
+    },
+    {
+      "won": false,
+      "your_reps": 30,
+      "their_reps": 28,
+      "total": -2
+    },
+    {
+      "won": false,
+      "your_reps": 30,
+      "their_reps": 32,
+      "total": -2
+    },
+    {
+      "won": false,
+      "your_reps": 30,
+      "their_reps": 36,
+      "total": -6
+    },
+    {
+      "won": false,
+      "your_reps": 30,
+      "their_reps": 40,
+      "total": -10
+    },
+    {
+      "won": false,
+      "your_reps": 32,
+      "their_reps": 0,
+      "total": -32
+    },
+    {
+      "won": false,
+      "your_reps": 32,
+      "their_reps": 4,
+      "total": -28
+    },
+    {
+      "won": false,
+      "your_reps": 32,
+      "their_reps": 8,
+      "total": -24
+    },
+    {
+      "won": false,
+      "your_reps": 32,
+      "their_reps": 12,
+      "total": -20
+    },
+    {
+      "won": false,
+      "your_reps": 32,
+      "their_reps": 16,
+      "total": -16
+    },
+    {
+      "won": false,
+      "your_reps": 32,
+      "their_reps": 20,
+      "total": -12
+    },
+    {
+      "won": false,
+      "your_reps": 32,
+      "their_reps": 24,
+      "total": -8
+    },
+    {
+      "won": false,
+      "your_reps": 32,
+      "their_reps": 28,
+      "total": -4
+    },
+    {
+      "won": false,
+      "your_reps": 32,
+      "their_reps": 32,
+      "total": 0
+    },
+    {
+      "won": false,
+      "your_reps": 32,
+      "their_reps": 36,
+      "total": -4
+    },
+    {
+      "won": false,
+      "your_reps": 32,
+      "their_reps": 40,
+      "total": -8
+    },
+    {
+      "won": false,
+      "your_reps": 34,
+      "their_reps": 0,
+      "total": -34
+    },
+    {
+      "won": false,
+      "your_reps": 34,
+      "their_reps": 4,
+      "total": -30
+    },
+    {
+      "won": false,
+      "your_reps": 34,
+      "their_reps": 8,
+      "total": -26
+    },
+    {
+      "won": false,
+      "your_reps": 34,
+      "their_reps": 12,
+      "total": -22
+    },
+    {
+      "won": false,
+      "your_reps": 34,
+      "their_reps": 16,
+      "total": -18
+    },
+    {
+      "won": false,
+      "your_reps": 34,
+      "their_reps": 20,
+      "total": -14
+    },
+    {
+      "won": false,
+      "your_reps": 34,
+      "their_reps": 24,
+      "total": -10
+    },
+    {
+      "won": false,
+      "your_reps": 34,
+      "their_reps": 28,
+      "total": -6
+    },
+    {
+      "won": false,
+      "your_reps": 34,
+      "their_reps": 32,
+      "total": -2
+    },
+    {
+      "won": false,
+      "your_reps": 34,
+      "their_reps": 36,
+      "total": -2
+    },
+    {
+      "won": false,
+      "your_reps": 34,
+      "their_reps": 40,
+      "total": -6
+    },
+    {
+      "won": false,
+      "your_reps": 36,
+      "their_reps": 0,
+      "total": -36
+    },
+    {
+      "won": false,
+      "your_reps": 36,
+      "their_reps": 4,
+      "total": -32
+    },
+    {
+      "won": false,
+      "your_reps": 36,
+      "their_reps": 8,
+      "total": -28
+    },
+    {
+      "won": false,
+      "your_reps": 36,
+      "their_reps": 12,
+      "total": -24
+    },
+    {
+      "won": false,
+      "your_reps": 36,
+      "their_reps": 16,
+      "total": -20
+    },
+    {
+      "won": false,
+      "your_reps": 36,
+      "their_reps": 20,
+      "total": -16
+    },
+    {
+      "won": false,
+      "your_reps": 36,
+      "their_reps": 24,
+      "total": -12
+    },
+    {
+      "won": false,
+      "your_reps": 36,
+      "their_reps": 28,
+      "total": -8
+    },
+    {
+      "won": false,
+      "your_reps": 36,
+      "their_reps": 32,
+      "total": -4
+    },
+    {
+      "won": false,
+      "your_reps": 36,
+      "their_reps": 36,
+      "total": 0
+    },
+    {
+      "won": false,
+      "your_reps": 36,
+      "their_reps": 40,
+      "total": -4
+    },
+    {
+      "won": false,
+      "your_reps": 38,
+      "their_reps": 0,
+      "total": -38
+    },
+    {
+      "won": false,
+      "your_reps": 38,
+      "their_reps": 4,
+      "total": -34
+    },
+    {
+      "won": false,
+      "your_reps": 38,
+      "their_reps": 8,
+      "total": -30
+    },
+    {
+      "won": false,
+      "your_reps": 38,
+      "their_reps": 12,
+      "total": -26
+    },
+    {
+      "won": false,
+      "your_reps": 38,
+      "their_reps": 16,
+      "total": -22
+    },
+    {
+      "won": false,
+      "your_reps": 38,
+      "their_reps": 20,
+      "total": -18
+    },
+    {
+      "won": false,
+      "your_reps": 38,
+      "their_reps": 24,
+      "total": -14
+    },
+    {
+      "won": false,
+      "your_reps": 38,
+      "their_reps": 28,
+      "total": -10
+    },
+    {
+      "won": false,
+      "your_reps": 38,
+      "their_reps": 32,
+      "total": -6
+    },
+    {
+      "won": false,
+      "your_reps": 38,
+      "their_reps": 36,
+      "total": -2
+    },
+    {
+      "won": false,
+      "your_reps": 38,
+      "their_reps": 40,
+      "total": -2
+    },
+    {
+      "won": false,
+      "your_reps": 40,
+      "their_reps": 0,
+      "total": -40
+    },
+    {
+      "won": false,
+      "your_reps": 40,
+      "their_reps": 4,
+      "total": -36
+    },
+    {
+      "won": false,
+      "your_reps": 40,
+      "their_reps": 8,
+      "total": -32
+    },
+    {
+      "won": false,
+      "your_reps": 40,
+      "their_reps": 12,
+      "total": -28
+    },
+    {
+      "won": false,
+      "your_reps": 40,
+      "their_reps": 16,
+      "total": -24
+    },
+    {
+      "won": false,
+      "your_reps": 40,
+      "their_reps": 20,
+      "total": -20
+    },
+    {
+      "won": false,
+      "your_reps": 40,
+      "their_reps": 24,
+      "total": -16
+    },
+    {
+      "won": false,
+      "your_reps": 40,
+      "their_reps": 28,
+      "total": -12
+    },
+    {
+      "won": false,
+      "your_reps": 40,
+      "their_reps": 32,
+      "total": -8
+    },
+    {
+      "won": false,
+      "your_reps": 40,
+      "their_reps": 36,
+      "total": -4
+    },
+    {
+      "won": false,
+      "your_reps": 40,
+      "their_reps": 40,
+      "total": 0
     }
   ],
   "apply_lp": [

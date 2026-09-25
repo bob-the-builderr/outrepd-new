@@ -36,49 +36,18 @@ $$;
 
 -- ───────────────────────────── what a duel pays ──────────────────────────────
 
--- Itemised, and the total is the sum of the items. The app shows these rows on
--- the screen after a duel, so a total that is not their sum would be the app
--- visibly lying about arithmetic.
-create or replace function lp_for(
-  won boolean,
-  your_tier int,
-  their_tier int,
-  your_reps int,
-  their_reps int,
-  clean boolean,
-  surrendered boolean default false
-)
-returns table (result int, tier_gap int, margin int, form int, total int)
-language plpgsql
+-- Exactly the gap in reps, signed by who actually won. `won` and the reps
+-- normally agree; they can only split when somebody walks out while still
+-- ahead, which stays a loss regardless of the count at the moment of
+-- quitting — a loss must never pay a gain. No tier, no form, no cap
+-- otherwise: a blowout is worth exactly what it was.
+create or replace function lp_for(won boolean, your_reps int, their_reps int)
+returns int
+language sql
 immutable
 as $$
-declare
-  gap int := abs(your_reps - their_reps) / 3;   -- integer division, as in Dart
-  r int; t int; m int; f int;
-begin
-  r := case when won then 15 else -12 end;
-
-  t := case
-         when won then least(greatest(their_tier - your_tier, 0), 6) * 2
-         else      -(least(greatest(your_tier - their_tier, 0), 6) * 2)
-       end;
-
-  -- A win pays for the gap it opened. A loss is refunded for how close it was,
-  -- so the number shown before the round is the worst case rather than a
-  -- guess — margin can never deepen a defeat.
-  m := case
-         when won then least(gap, 5)
-         else greatest(least(4 - gap, 4), 0)
-       end;
-
-  -- Walking out forfeits the closeness refund. Otherwise quitting one rep down
-  -- would cost less than fighting to the end and losing by one.
-  if surrendered then m := 0; end if;
-
-  f := case when clean then 2 else 0 end;
-
-  return query select r, t, m, f, r + t + m + f;
-end;
+  select case when won then abs(your_reps - their_reps)
+              else -abs(your_reps - their_reps) end;
 $$;
 
 -- ───────────────────────── applying it to a rank ─────────────────────────────
