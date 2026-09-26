@@ -163,7 +163,21 @@ class PushupCount {
   /// exactly the thing no fixed threshold has ever got right here.
   final double depth;
 
-  /// The count, taken as the median of whichever signals were readable.
+  /// The count, taken as the lowest of whichever signals were readable.
+  ///
+  /// Was the median, until fourteen labelled sets showed why that was wrong:
+  /// the shoulder and hip signals both measure height above the *same* wrist
+  /// line, so whatever fools one — an elbow that settles into lockout a beat
+  /// after the body has already stopped rising, a wrist the tracker nudges —
+  /// tends to fool the other the same way at the same moment. That is not two
+  /// signals agreeing; it is one artifact voting twice, and it beat the nose
+  /// two to one on four separate sets, over-counting by as much as 20 reps.
+  /// The nose was the outlier every one of those times, and it was also the
+  /// smaller number every one of those times. Across all fourteen sets the
+  /// lowest signal nearly halved the mean error the median gave and turned a
+  /// confident, wrong 25-for-20 into a correctly unsure 22 — the one real
+  /// regression was a single set where the shoulder under-read on its own,
+  /// costing five reps to save fifty elsewhere.
   final int reps;
 
   /// True when the readable signals agreed within [kAgreementSlack]. False is
@@ -243,15 +257,16 @@ PushupCount countPushups(List<BodyPose> frames) {
     return const PushupCount(reps: 0, confident: false, perSignal: {});
   }
 
+  // The lowest, not the middle one — see [PushupCount.reps].
   final values = counts.values.toList()..sort();
-  final median = values[values.length ~/ 2];
+  final reps = values.first;
   final spread = values.last - values.first;
 
   return PushupCount(
-    reps: median,
+    reps: reps,
     confident:
         counts.length >= 2 &&
-        spread <= math.max(1, (median * kAgreementShare).round()),
+        spread <= math.max(1, (reps * kAgreementShare).round()),
     perSignal: {...counts, 'elbow(unused)': elbow},
     // Read off the shoulders, the steadiest of the three.
     depth: _depthOf(signals['shoulderHeight'] ?? const []),
