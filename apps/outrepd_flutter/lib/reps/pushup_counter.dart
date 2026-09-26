@@ -97,6 +97,7 @@ class PushupCount {
     required this.reps,
     required this.confident,
     required this.perSignal,
+    this.live = 0,
     this.depth = 0,
     this.gaveUp = false,
     this.recordingPath,
@@ -135,6 +136,7 @@ class PushupCount {
     reps: reps,
     confident: confident,
     perSignal: perSignal,
+    live: live,
     depth: depth,
     gaveUp: gaveUp,
     recordingPath: path,
@@ -153,6 +155,7 @@ class PushupCount {
         reps: reps,
         confident: confident,
         perSignal: perSignal,
+        live: live,
         depth: depth,
         gaveUp: gaveUp,
         recordingPath: recordingPath,
@@ -165,6 +168,7 @@ class PushupCount {
     reps: reps,
     confident: confident,
     perSignal: perSignal,
+    live: live,
     depth: depth,
     gaveUp: gaveUp,
     recordingPath: recordingPath,
@@ -197,6 +201,21 @@ class PushupCount {
   /// regression was a single set where the shoulder under-read on its own,
   /// costing five reps to save fifty elsewhere.
   final int reps;
+
+  /// The count a moment ago, for the number on screen while the set is still
+  /// running — the median of whichever signals were readable, not the lowest.
+  ///
+  /// A live counter only ever sees part of a set, and each signal confirms
+  /// its own turns at its own pace: waiting on the slowest of three to agree
+  /// before the number moves, measured on a real 27-rep set, meant it sat
+  /// still for up to a hundred frames — three seconds — after a rep had
+  /// plainly landed, on the same recording where the *final* lowest-of-three
+  /// score was exactly right. [reps] is correct because it can afford to
+  /// wait for the whole set; a lifter mid-set cannot, so this reads the
+  /// screen wants speed and [reps] wants to be right, and a live number
+  /// three seconds behind a rep somebody just felt land is its own kind of
+  /// wrong.
+  final int live;
 
   /// True when the readable signals agreed within [kAgreementSlack]. False is
   /// not a failure — it is the counter saying so, which is worth more to the
@@ -282,6 +301,9 @@ PushupCount countPushups(List<BodyPose> frames) {
 
   return PushupCount(
     reps: reps,
+    // The middle one — see [PushupCount.live]. Deliberately not [reps]: the
+    // screen wants whichever signal just moved, not whichever is slowest.
+    live: values[values.length ~/ 2],
     confident:
         counts.length >= 2 &&
         spread <= math.max(1, (reps * kAgreementShare).round()),
@@ -299,20 +321,25 @@ PushupCount countPushups(List<BodyPose> frames) {
 /// is the thing a lifter can act on.
 const kCleanDepth = 0.8;
 
-/// How fast the meter's remembered top and bottom ease back toward what it
-/// is actually seeing, once nothing new has stretched them further.
-///
-/// The bar used to track an all-time low and an all-time high that only ever
-/// grew. Measured on a clean 28-rep set filmed the way the app is actually
-/// used: the top crept from 2.36 to 3.17 over the set — the moment the
-/// lifter stood up at the very end, held forever after — so every rep in
-/// between read as barely reaching the top even though it was, by its own
-/// standard, a full one. Swept against three real multi-rep sets and two
-/// adversarial recordings (a single rep held for fifteen seconds, and
-/// someone bobbing on their feet): 0.006 roughly triples how often the bar
-/// actually reaches its own ends on a real set, and is the highest rate that
-/// does not also make it swing on the held single rep — 0.01 does.
-const kRangeDecay = 0.006;
+/// Reverted. The idea was to let the meter's low/high ease back toward
+/// recent values instead of only ever growing — measured as an improvement
+/// against recorded clips replayed frame by frame, and shipped on that
+/// basis. Live on a phone it was a regression bad enough to be reported as
+/// the bar "not working at all": decaying toward *whatever the current
+/// frame reads*, on every frame, pulls the reference toward the middle of
+/// the range continuously, because most of a rep is spent away from its own
+/// top and bottom. Only the rare frame that lands on a genuine new extreme
+/// resets it; every other one erodes it. Over a real multi-rep set the span
+/// this divides by collapses, and a collapsed span turns small, ordinary
+/// movement into a bar that swings end to end — which reads as broken,
+/// because it is. The recorded-clip metric this was measured against
+/// (how often the bar reads near 0 or 1) could not tell that apart from the
+/// bar genuinely tracking the real top and bottom, since a collapsed span
+/// produces the same reading either way. Fixing the original problem — an
+/// all-time high inflated once by the lifter standing up at the end — needs
+/// something that only moves on an actual new extreme, not on every frame
+/// that isn't one; nothing here does that safely yet, so this reverts to
+/// the plain all-time low/high rather than ship a meter proven broken live.
 
 /// How far through a rep the body is, right now.
 ///
@@ -339,13 +366,8 @@ class PushupMeter {
     if (raw == null) return null;
 
     final value = _filter.add(raw);
-    if (_low == null || _high == null) {
-      _low = value;
-      _high = value;
-    } else {
-      _low = value < _low! ? value : _low! + (value - _low!) * kRangeDecay;
-      _high = value > _high! ? value : _high! - (_high! - value) * kRangeDecay;
-    }
+    _low = _low == null ? value : math.min(_low!, value);
+    _high = _high == null ? value : math.max(_high!, value);
 
     final span = _high! - _low!;
     // Under a tenth of the body's height above its hands, nobody has moved

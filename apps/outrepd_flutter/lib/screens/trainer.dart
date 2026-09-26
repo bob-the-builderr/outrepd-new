@@ -239,8 +239,12 @@ class _TrainerScreenState extends State<TrainerScreen> {
     // shifting threshold can take a rep back off the end — which on screen
     // reads as the app forgetting one you just did. The honest number is the
     // one scored at the end, where the confirm screen can raise it.
-    if (counted.reps > _liveReps) {
-      _liveReps = counted.reps;
+    //
+    // Reads [live], not [reps]: the final score waits for the slowest signal
+    // on purpose, and a lifter mid-set felt that as the number sitting still
+    // for whole seconds after a rep plainly landed.
+    if (counted.live > _liveReps) {
+      _liveReps = counted.live;
       tap(heavy: true);
     }
   }
