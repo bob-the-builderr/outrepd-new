@@ -434,29 +434,6 @@ class _TrainerScreenState extends State<TrainerScreen> {
     });
   }
 
-  void _restart() {
-    _meter?.reset();
-    _progress = null;
-    // The frames go too. They are what the count is scored from, so leaving
-    // them behind would restart the clock and keep the old set's reps.
-    _recorded.clear();
-    _liveReps = 0;
-    setState(() {});
-  }
-
-  /// Throws away what the range has learned and starts picking it up again.
-  /// Useful after moving the phone, or switching to a different depth.
-  void _recalibrate() {
-    _meter?.reset();
-    _progress = null;
-    _recorded.clear();
-    _liveReps = 0;
-    _clock
-      ..reset()
-      ..start();
-    setState(() {});
-  }
-
   /// Saving must never lose the session it is trying to preserve, so a
   /// failure here is reported and swallowed rather than thrown.
   /// A recording without the real count proves nothing — there is no truth to
@@ -604,20 +581,12 @@ class _TrainerScreenState extends State<TrainerScreen> {
         // No title. There is one movement, so naming it over a camera
         // already pointed at somebody doing it says nothing.
         titleTextStyle: context.type.title.copyWith(color: Colors.white),
-        actions: [
-          if (_stage != _Stage.setup) ...[
-            IconButton(
-              tooltip: L.of(context).recalibrate,
-              icon: const Icon(Icons.straighten),
-              onPressed: _recalibrate,
-            ),
-            IconButton(
-              tooltip: L.of(context).resetCount,
-              icon: const Icon(Icons.refresh),
-              onPressed: _restart,
-            ),
-          ],
-        ],
+        // Recalibrate and reset used to live here, and so did the back
+        // button by default — three controls stacked over a screen meant to
+        // hold nothing above the score card once the camera is actually
+        // tracking somebody. Setup keeps its own way out; live tracking's
+        // only way out is Give up, on the card itself.
+        automaticallyImplyLeading: _stage == _Stage.setup,
       ),
       extendBodyBehindAppBar: true,
       body: switch (_failure) {

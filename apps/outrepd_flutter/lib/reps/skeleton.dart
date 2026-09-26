@@ -97,6 +97,10 @@ class SkeletonPainter extends CustomPainter {
     final ring = Paint()..color = colour;
 
     for (final joint in Joint.values) {
+      // The nose feeds the counter but has no bone drawn to it — no line
+      // ever reaches it — so its own dot would float on the face with
+      // nothing connecting it to the body the rest of the skeleton draws.
+      if (joint == Joint.nose) continue;
       final p = at(joint);
       if (p == null) continue;
       canvas.drawCircle(p, 8, ring);
