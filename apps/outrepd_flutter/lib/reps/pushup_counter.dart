@@ -37,9 +37,16 @@ import 'recording.dart';
 /// judged against themselves.
 const kSwingShare = 0.5;
 
-/// Under this many frames a cycle is a tracker shiver, not a person. About half
-/// a second at the rate poses arrive.
-const kMinFramesPerRep = 14;
+/// Under this many frames a cycle is a tracker shiver, not a person.
+///
+/// Was 14 (about half a second) until a max-effort set of 100 measured real
+/// push-ups landing faster than that — a lifter speeding up mid-set had
+/// individual reps as short as 10-odd frames, and the old floor silently
+/// merged them into their neighbour. Lowered against the full labelled set in
+/// `test/recordings/`: 10 recovers those reps and does not admit a single
+/// extra false one on any other recording, real or synthetic. 8 recovered
+/// nothing further, so this is the lowest floor the evidence asks for.
+const kMinFramesPerRep = 10;
 
 /// A signal needs this many turns before its rhythm means anything.
 const kMinTurns = 4;
@@ -259,6 +266,21 @@ PushupCount countPushups(List<BodyPose> frames) {
 /// is the thing a lifter can act on.
 const kCleanDepth = 0.8;
 
+/// How fast the meter's remembered top and bottom ease back toward what it
+/// is actually seeing, once nothing new has stretched them further.
+///
+/// The bar used to track an all-time low and an all-time high that only ever
+/// grew. Measured on a clean 28-rep set filmed the way the app is actually
+/// used: the top crept from 2.36 to 3.17 over the set — the moment the
+/// lifter stood up at the very end, held forever after — so every rep in
+/// between read as barely reaching the top even though it was, by its own
+/// standard, a full one. Swept against three real multi-rep sets and two
+/// adversarial recordings (a single rep held for fifteen seconds, and
+/// someone bobbing on their feet): 0.006 roughly triples how often the bar
+/// actually reaches its own ends on a real set, and is the highest rate that
+/// does not also make it swing on the held single rep — 0.01 does.
+const kRangeDecay = 0.006;
+
 /// How far through a rep the body is, right now.
 ///
 /// The meter on screen and the bar beside it used to be driven by a separate
@@ -284,8 +306,13 @@ class PushupMeter {
     if (raw == null) return null;
 
     final value = _filter.add(raw);
-    _low = _low == null ? value : math.min(_low!, value);
-    _high = _high == null ? value : math.max(_high!, value);
+    if (_low == null || _high == null) {
+      _low = value;
+      _high = value;
+    } else {
+      _low = value < _low! ? value : _low! + (value - _low!) * kRangeDecay;
+      _high = value > _high! ? value : _high! - (_high! - value) * kRangeDecay;
+    }
 
     final span = _high! - _low!;
     // Under a tenth of the body's height above its hands, nobody has moved
