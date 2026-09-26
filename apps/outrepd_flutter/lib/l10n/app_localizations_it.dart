@@ -240,6 +240,13 @@ class LIt extends L {
       'Troppi codici inviati — aspetta qualche minuto e riprova.';
 
   @override
+  String get sendCodeAction => 'Invia codice';
+
+  @override
+  String get noAccountForEmail =>
+      'Non abbiamo trovato nessun account con questa email.';
+
+  @override
   String get authEntryTagline => 'Spingi. Sfida. Sali di livello.';
 
   @override
@@ -262,6 +269,15 @@ class LIt extends L {
 
   @override
   String get usernameHint => 'Nome utente';
+
+  @override
+  String get usernameLabel => 'Nome utente';
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get passwordLabel => 'Password';
 
   @override
   String get passwordMinLength => 'Almeno 8 caratteri';

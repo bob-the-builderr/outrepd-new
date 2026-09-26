@@ -229,6 +229,12 @@ class LZh extends L {
   String get tooManyCodes => '发送的验证码太多——请等几分钟后再试。';
 
   @override
+  String get sendCodeAction => '发送验证码';
+
+  @override
+  String get noAccountForEmail => '找不到使用该邮箱的账户。';
+
+  @override
   String get authEntryTagline => '俯卧撑。对决。冲上排行榜。';
 
   @override
@@ -251,6 +257,15 @@ class LZh extends L {
 
   @override
   String get usernameHint => '用户名';
+
+  @override
+  String get usernameLabel => '用户名';
+
+  @override
+  String get emailLabel => '电子邮箱';
+
+  @override
+  String get passwordLabel => '密码';
 
   @override
   String get passwordMinLength => '至少8个字符';

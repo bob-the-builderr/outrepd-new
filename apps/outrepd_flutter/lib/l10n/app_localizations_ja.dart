@@ -232,6 +232,12 @@ class LJa extends L {
   String get tooManyCodes => 'コードの送信回数が多すぎます。数分待ってからもう一度お試しください。';
 
   @override
+  String get sendCodeAction => 'コードを送信';
+
+  @override
+  String get noAccountForEmail => 'そのメールアドレスのアカウントが見つかりませんでした。';
+
+  @override
   String get authEntryTagline => '腕立てして、競って、駆け上がれ。';
 
   @override
@@ -254,6 +260,15 @@ class LJa extends L {
 
   @override
   String get usernameHint => 'ユーザー名';
+
+  @override
+  String get usernameLabel => 'ユーザー名';
+
+  @override
+  String get emailLabel => 'メールアドレス';
+
+  @override
+  String get passwordLabel => 'パスワード';
 
   @override
   String get passwordMinLength => '8文字以上';

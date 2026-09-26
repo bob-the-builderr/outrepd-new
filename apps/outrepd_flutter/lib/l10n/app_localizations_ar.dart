@@ -239,6 +239,12 @@ class LAr extends L {
       'تم إرسال رموز كثيرة — انتظر بضع دقائق وحاول مرة أخرى.';
 
   @override
+  String get sendCodeAction => 'ابعت الكود';
+
+  @override
+  String get noAccountForEmail => 'معندناش حساب بالإيميل ده.';
+
+  @override
   String get authEntryTagline => 'ادفع. نافس. اصعد السلم.';
 
   @override
@@ -261,6 +267,15 @@ class LAr extends L {
 
   @override
   String get usernameHint => 'اسم المستخدم';
+
+  @override
+  String get usernameLabel => 'اليوزر نيم';
+
+  @override
+  String get emailLabel => 'الإيميل';
+
+  @override
+  String get passwordLabel => 'كلمة السر';
 
   @override
   String get passwordMinLength => '8 أحرف على الأقل';

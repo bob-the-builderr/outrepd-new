@@ -31,7 +31,6 @@ class _FakeBackend extends NoBackend {
   @override
   Future<EmailSignUpResult> startEmailSignUp({
     required String email,
-    required String password,
   }) async => EmailSignUpResult.ok;
 
   @override
@@ -242,7 +241,7 @@ void main() {
 
     expect(find.text('Welcome back'), findsOneWidget);
     expect(find.text('Log in to keep your rank.'), findsOneWidget);
-    expect(find.text('Log in'), findsOneWidget);
+    expect(find.text('Send code'), findsOneWidget);
     expect(find.text('Allow camera'), findsNothing);
   });
 
@@ -304,7 +303,6 @@ void main() {
 
     await tester.enterText(find.byType(TextField).at(0), 'lifter_one');
     await tester.enterText(find.byType(TextField).at(1), 'lifter@example.com');
-    await tester.enterText(find.byType(TextField).at(2), 'a-password');
     await tester.pump();
     await tester.tap(find.byType(FilledButton));
     await tester.pumpAndSettle();

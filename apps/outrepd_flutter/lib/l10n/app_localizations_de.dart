@@ -241,6 +241,13 @@ class LDe extends L {
       'Zu viele Codes gesendet — warte ein paar Minuten und versuche es erneut.';
 
   @override
+  String get sendCodeAction => 'Code senden';
+
+  @override
+  String get noAccountForEmail =>
+      'Wir konnten kein Konto mit dieser E-Mail finden.';
+
+  @override
   String get authEntryTagline => 'Drücken. Antreten. Aufsteigen.';
 
   @override
@@ -263,6 +270,15 @@ class LDe extends L {
 
   @override
   String get usernameHint => 'Benutzername';
+
+  @override
+  String get usernameLabel => 'Benutzername';
+
+  @override
+  String get emailLabel => 'E-Mail';
+
+  @override
+  String get passwordLabel => 'Passwort';
 
   @override
   String get passwordMinLength => 'Mindestens 8 Zeichen';

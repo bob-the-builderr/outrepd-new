@@ -19,7 +19,6 @@ import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../theme.dart';
 import '../type_scale.dart';
-import 'shell.dart';
 
 /// What this whole gate finished with, popped back to whoever opened
 /// [AuthEntryScreen]. Signing up keeps going with whatever was next —
@@ -40,69 +39,6 @@ class AuthEntryScreen extends StatefulWidget {
 }
 
 class _AuthEntryScreenState extends State<AuthEntryScreen> {
-  bool _busy = false;
-  String? _error;
-  StreamSubscription<void>? _sub;
-
-  @override
-  void dispose() {
-    _sub?.cancel();
-    super.dispose();
-  }
-
-  Future<void> _social(SocialProvider provider) async {
-    if (_busy) return;
-    final l = L.of(context);
-    setState(() {
-      _busy = true;
-      _error = null;
-    });
-
-    final done = Completer<bool>();
-    await _sub?.cancel();
-    _sub = backend.authStateChanges.listen((_) {
-      if (backend.hasRealAccount && !done.isCompleted) done.complete(true);
-    });
-
-    try {
-      final opened = await backend.linkSocial(provider);
-      if (!opened) {
-        if (mounted) {
-          setState(() {
-            _busy = false;
-            _error = l.socialLinkFailed;
-          });
-        }
-        return;
-      }
-      // [linkSocial]'s own return only confirms the browser opened — the
-      // actual result comes later, off a deep link back into the app, which
-      // is the only place [authStateChanges] has to report it from.
-      final linked = await done.future.timeout(
-        const Duration(minutes: 5),
-        onTimeout: () => false,
-      );
-      if (!mounted) return;
-      if (linked) {
-        Navigator.of(context).pop(AuthOutcome.signedUp);
-      } else {
-        setState(() {
-          _busy = false;
-          _error = l.socialLinkFailed;
-        });
-      }
-    } on Object catch (_) {
-      if (!mounted) return;
-      setState(() {
-        _busy = false;
-        _error = l.socialLinkFailed;
-      });
-    } finally {
-      await _sub?.cancel();
-      _sub = null;
-    }
-  }
-
   Future<void> _openSignUp() async {
     final outcome = await Navigator.of(
       context,
@@ -150,56 +86,19 @@ class _AuthEntryScreenState extends State<AuthEntryScreen> {
                   ),
                 ),
               ),
-              if (_error != null) ...[
-                Text(
-                  _error!,
-                  textAlign: TextAlign.center,
-                  style: context.type.label.copyWith(color: AppColors.loss),
-                ),
-                const SizedBox(height: 12),
-              ],
-              _SocialButton(
-                icon: Icons.apple,
-                label: l.obContinueApple,
-                filled: true,
-                busy: _busy,
-                onTap: () => _social(SocialProvider.apple),
-              ),
-              const SizedBox(height: 10),
-              _SocialButton(
-                icon: Icons.g_mobiledata,
-                label: l.obContinueGoogle,
-                busy: _busy,
-                onTap: () => _social(SocialProvider.google),
-              ),
-              const SizedBox(height: 18),
-              Row(
-                children: [
-                  Expanded(child: Divider(color: context.colors.border)),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Text(
-                      l.orDivider,
-                      style: TextStyle(color: context.colors.faint, fontSize: 12),
-                    ),
-                  ),
-                  Expanded(child: Divider(color: context.colors.border)),
-                ],
-              ),
-              const SizedBox(height: 18),
               SizedBox(
                 width: double.infinity,
                 child: FilledButton(
                   style: FilledButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 15),
                   ),
-                  onPressed: _busy ? null : _openSignUp,
+                  onPressed: _openSignUp,
                   child: Text(l.signUpWithEmail),
                 ),
               ),
               const SizedBox(height: 14),
               TextButton(
-                onPressed: _busy ? null : _openLogin,
+                onPressed: _openLogin,
                 child: Text.rich(
                   TextSpan(
                     text: '${l.alreadyHaveAccountQuestion} ',
@@ -244,65 +143,6 @@ class _AuthEntryScreenState extends State<AuthEntryScreen> {
   }
 }
 
-class _SocialButton extends StatelessWidget {
-  const _SocialButton({
-    required this.icon,
-    required this.label,
-    required this.busy,
-    required this.onTap,
-    this.filled = false,
-  });
-
-  final IconData icon;
-  final String label;
-  final bool busy;
-  final VoidCallback onTap;
-  final bool filled;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: busy ? null : onTap,
-      borderRadius: BorderRadius.circular(14),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 14),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(14),
-          color: filled ? context.colors.brand : null,
-          border: filled
-              ? null
-              : Border.all(color: context.colors.border, width: 0.5),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              size: 18,
-              color: filled ? context.colors.background : context.colors.text,
-            ),
-            const SizedBox(width: 9),
-            Flexible(
-              child: Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: filled
-                      ? context.colors.background
-                      : context.colors.text,
-                  fontSize: 14,
-                  fontWeight: filled ? FontWeight.w600 : null,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 // ─────────────────────────────── sign up ───────────────────────────────────
 
 class SignUpScreen extends StatefulWidget {
@@ -315,8 +155,6 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _username = TextEditingController();
   final _email = TextEditingController();
-  final _password = TextEditingController();
-  bool _obscure = true;
   bool _busy = false;
   String? _error;
 
@@ -324,14 +162,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void dispose() {
     _username.dispose();
     _email.dispose();
-    _password.dispose();
     super.dispose();
   }
 
   bool get _canSubmit =>
       _username.text.trim().length >= 4 &&
       _email.text.trim().isNotEmpty &&
-      _password.text.length >= 8 &&
       !_busy;
 
   Future<void> _submit() async {
@@ -339,7 +175,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final l = L.of(context);
     final username = _username.text.trim();
     final email = _email.text.trim();
-    final password = _password.text;
 
     setState(() {
       _busy = true;
@@ -372,10 +207,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         // account is still this session's own.
       }
 
-      final result = await backend.startEmailSignUp(
-        email: email,
-        password: password,
-      );
+      final result = await backend.startEmailSignUp(email: email);
       if (!mounted) return;
       switch (result) {
         case EmailSignUpResult.ok:
@@ -417,43 +249,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     return Scaffold(
       backgroundColor: context.colors.background,
-      appBar: AppBar(title: Text(l.createYourAccountTitle)),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                l.createAccountSubtitle,
-                style: context.type.body.copyWith(color: context.colors.muted),
+              _BackHeader(
+                title: l.createYourAccountTitle,
+                subtitle: l.createAccountSubtitle,
               ),
-              const SizedBox(height: 22),
+              const SizedBox(height: 26),
               _Field(
                 controller: _username,
-                hint: l.usernameHint,
+                label: l.usernameLabel,
                 onChanged: (_) => setState(() => _error = null),
               ),
               const SizedBox(height: 12),
               _Field(
                 controller: _email,
+                label: l.emailLabel,
                 hint: l.emailHint,
                 keyboardType: TextInputType.emailAddress,
                 onChanged: (_) => setState(() => _error = null),
-              ),
-              const SizedBox(height: 12),
-              _Field(
-                controller: _password,
-                hint: l.passwordHint,
-                obscure: _obscure,
-                onToggleObscure: () => setState(() => _obscure = !_obscure),
-                onChanged: (_) => setState(() => _error = null),
                 onSubmitted: (_) => _submit(),
-              ),
-              const SizedBox(height: 7),
-              Text(
-                l.passwordMinLength,
-                style: TextStyle(color: context.colors.faint, fontSize: 11),
               ),
               if (_error != null) ...[
                 const SizedBox(height: 10),
@@ -515,25 +334,21 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _email = TextEditingController();
-  final _password = TextEditingController();
-  bool _obscure = true;
   bool _busy = false;
   String? _error;
-  String? _resetSentTo;
 
   @override
   void dispose() {
     _email.dispose();
-    _password.dispose();
     super.dispose();
   }
 
-  bool get _canSubmit =>
-      _email.text.trim().isNotEmpty && _password.text.isNotEmpty && !_busy;
+  bool get _canSubmit => _email.text.trim().isNotEmpty && !_busy;
 
   Future<void> _submit() async {
     if (!_canSubmit) return;
     final l = L.of(context);
+    final email = _email.text.trim();
 
     setState(() {
       _busy = true;
@@ -541,22 +356,26 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     try {
-      final result = await backend.signInWithEmail(
-        email: _email.text.trim(),
-        password: _password.text,
-      );
+      final result = await backend.requestLoginCode(email);
       if (!mounted) return;
       switch (result) {
-        case EmailSignInResult.ok:
-          // A different account than whatever this device held before —
-          // its own local history is not this account's to show.
-          await Career.instance.adoptServerProfile(backend.me!);
-          if (!mounted) return;
-          Navigator.of(context).pop(AuthOutcome.signedIn);
-        case EmailSignInResult.wrongCredentials:
+        case EmailLoginCodeResult.ok:
+          final outcome = await Navigator.of(context).push<AuthOutcome>(
+            MaterialPageRoute(
+              builder: (_) => VerifyCodeScreen(email: email, forSignIn: true),
+            ),
+          );
+          if (outcome != null && mounted) Navigator.of(context).pop(outcome);
+          if (mounted) setState(() => _busy = false);
+        case EmailLoginCodeResult.notFound:
           setState(() {
             _busy = false;
-            _error = l.wrongEmailOrPassword;
+            _error = l.noAccountForEmail;
+          });
+        case EmailLoginCodeResult.rateLimited:
+          setState(() {
+            _busy = false;
+            _error = l.tooManyCodes;
           });
       }
     } on Object catch (_) {
@@ -568,92 +387,36 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  Future<void> _forgotPassword() async {
-    final email = _email.text.trim();
-    if (email.isEmpty) return;
-    final l = L.of(context);
-    try {
-      await backend.requestPasswordReset(email);
-    } on Object catch (_) {
-      // Answered the same either way — see [resetSentTo]'s note below.
-    }
-    if (!mounted) return;
-    setState(() => _resetSentTo = email);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(l.resetPasswordSent(email)),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
 
     return Scaffold(
       backgroundColor: context.colors.background,
-      appBar: AppBar(title: Text(l.obWelcomeBack)),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                l.logInSubtitle,
-                style: context.type.body.copyWith(color: context.colors.muted),
-              ),
-              const SizedBox(height: 22),
+              _BackHeader(title: l.obWelcomeBack, subtitle: l.logInSubtitle),
+              const SizedBox(height: 26),
               _Field(
                 controller: _email,
+                label: l.emailLabel,
                 hint: l.emailHint,
                 keyboardType: TextInputType.emailAddress,
-                onChanged: (_) => setState(() {
-                  _error = null;
-                  _resetSentTo = null;
-                }),
-              ),
-              const SizedBox(height: 12),
-              _Field(
-                controller: _password,
-                hint: l.passwordHint,
-                obscure: _obscure,
-                onToggleObscure: () => setState(() => _obscure = !_obscure),
                 onChanged: (_) => setState(() => _error = null),
                 onSubmitted: (_) => _submit(),
               ),
-              const SizedBox(height: 10),
-              Align(
-                alignment: AlignmentDirectional.centerEnd,
-                child: TextButton(
-                  onPressed: _email.text.trim().isEmpty ? null : _forgotPassword,
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    minimumSize: Size.zero,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  child: Text(
-                    l.forgotPassword,
-                    style: TextStyle(color: context.colors.muted, fontSize: 12),
-                  ),
-                ),
-              ),
               if (_error != null) ...[
-                const SizedBox(height: 4),
+                const SizedBox(height: 10),
                 Text(
                   _error!,
                   style: context.type.label.copyWith(color: AppColors.loss),
                 ),
               ],
-              if (_resetSentTo != null) ...[
-                const SizedBox(height: 4),
-                Text(
-                  l.resetPasswordSent(_resetSentTo!),
-                  style: context.type.label.copyWith(color: context.colors.muted),
-                ),
-              ],
-              const SizedBox(height: 18),
+              const SizedBox(height: 22),
               FilledButton(
                 onPressed: _canSubmit ? _submit : null,
                 style: FilledButton.styleFrom(
@@ -665,7 +428,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 18,
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
-                    : Text(l.logInAction),
+                    : Text(l.sendCodeAction),
               ),
             ],
           ),
@@ -678,9 +441,18 @@ class _LoginScreenState extends State<LoginScreen> {
 // ──────────────────────────────── verify ───────────────────────────────────
 
 class VerifyCodeScreen extends StatefulWidget {
-  const VerifyCodeScreen({super.key, required this.email});
+  const VerifyCodeScreen({
+    super.key,
+    required this.email,
+    this.forSignIn = false,
+  });
 
   final String email;
+
+  /// True from [LoginScreen]'s code, confirming a different account than
+  /// whatever this device held before. False from [SignUpScreen]'s,
+  /// confirming an email on the account this device already has.
+  final bool forSignIn;
 
   @override
   State<VerifyCodeScreen> createState() => _VerifyCodeScreenState();
@@ -769,10 +541,20 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
 
     final l = L.of(context);
     try {
-      final ok = await backend.verifyEmailCode(email: widget.email, code: _code);
+      final ok = widget.forSignIn
+          ? await backend.verifyLoginCode(email: widget.email, code: _code)
+          : await backend.verifyEmailCode(email: widget.email, code: _code);
       if (!mounted) return;
       if (ok) {
-        Navigator.of(context).pop(AuthOutcome.signedUp);
+        if (widget.forSignIn) {
+          // A different account than whatever this device held before —
+          // its own local history is not this account's to show.
+          await Career.instance.adoptServerProfile(backend.me!);
+          if (!mounted) return;
+          Navigator.of(context).pop(AuthOutcome.signedIn);
+        } else {
+          Navigator.of(context).pop(AuthOutcome.signedUp);
+        }
         return;
       }
       setState(() {
@@ -798,7 +580,11 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
     final l = L.of(context);
     final messenger = ScaffoldMessenger.of(context);
     try {
-      await backend.resendEmailCode(widget.email);
+      if (widget.forSignIn) {
+        await backend.requestLoginCode(widget.email);
+      } else {
+        await backend.resendEmailCode(widget.email);
+      }
       messenger.showSnackBar(
         SnackBar(content: Text(l.codeResent), behavior: SnackBarBehavior.floating),
       );
@@ -825,16 +611,15 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
 
     return Scaffold(
       backgroundColor: context.colors.background,
-      appBar: AppBar(title: Text(l.checkYourEmailTitle)),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                l.codeSentTo(widget.email),
-                style: context.type.body.copyWith(color: context.colors.muted),
+              _BackHeader(
+                title: l.checkYourEmailTitle,
+                subtitle: l.codeSentTo(widget.email),
               ),
               const SizedBox(height: 26),
               Row(
@@ -981,177 +766,118 @@ class _CodeBox extends StatelessWidget {
   }
 }
 
-// ──────────────────────────── password recovery ─────────────────────────────
-
-/// Where a password-reset email's link lands once the app exchanges it for
-/// a session — pushed by the global listener in `main.dart` on
-/// [Backend.passwordRecoveryRequested], not by anything on screen, since
-/// the link can be tapped from anywhere the app happens to be.
-class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
-
-  @override
-  State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
-}
-
-class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
-  final _password = TextEditingController();
-  bool _obscure = true;
-  bool _busy = false;
-  String? _error;
-
-  @override
-  void dispose() {
-    _password.dispose();
-    super.dispose();
-  }
-
-  bool get _canSubmit => _password.text.length >= 8 && !_busy;
-
-  Future<void> _submit() async {
-    if (!_canSubmit) return;
-    final l = L.of(context);
-    setState(() {
-      _busy = true;
-      _error = null;
-    });
-
-    try {
-      await backend.setNewPassword(_password.text);
-      // The recovery link's own session may belong to a different account
-      // than whatever this device held before — same as any other sign in.
-      await Career.instance.adoptServerProfile(backend.me!);
-      await markOnboarded();
-      if (!mounted) return;
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => const AppShell()),
-        (route) => false,
-      );
-    } on Object catch (_) {
-      if (!mounted) return;
-      setState(() {
-        _busy = false;
-        _error = l.needsServer;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l = L.of(context);
-
-    return Scaffold(
-      backgroundColor: context.colors.background,
-      appBar: AppBar(title: Text(l.resetPasswordTitle)),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                l.resetPasswordBody,
-                style: context.type.body.copyWith(color: context.colors.muted),
-              ),
-              const SizedBox(height: 22),
-              _Field(
-                controller: _password,
-                hint: l.passwordHint,
-                obscure: _obscure,
-                onToggleObscure: () => setState(() => _obscure = !_obscure),
-                onChanged: (_) => setState(() => _error = null),
-                onSubmitted: (_) => _submit(),
-              ),
-              const SizedBox(height: 7),
-              Text(
-                l.passwordMinLength,
-                style: TextStyle(color: context.colors.faint, fontSize: 11),
-              ),
-              if (_error != null) ...[
-                const SizedBox(height: 10),
-                Text(
-                  _error!,
-                  style: context.type.label.copyWith(color: AppColors.loss),
-                ),
-              ],
-              const SizedBox(height: 22),
-              FilledButton(
-                onPressed: _canSubmit ? _submit : null,
-                style: FilledButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                ),
-                child: _busy
-                    ? const SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : Text(l.setPasswordAction),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 // ─────────────────────────────── shared field ───────────────────────────────
 
 class _Field extends StatelessWidget {
   const _Field({
     required this.controller,
-    required this.hint,
-    this.obscure = false,
-    this.onToggleObscure,
+    this.label,
+    this.hint,
     this.keyboardType,
     this.onChanged,
     this.onSubmitted,
   });
 
+  /// Shown above the field and stays there — unlike a hint, it does not
+  /// disappear the moment somebody starts typing, so what the field is for
+  /// is still on screen once it is full.
+  final String? label;
+
   final TextEditingController controller;
-  final String hint;
-  final bool obscure;
-  final VoidCallback? onToggleObscure;
+  final String? hint;
   final TextInputType? keyboardType;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      obscureText: obscure,
-      autocorrect: false,
-      keyboardType: keyboardType,
-      onChanged: onChanged,
-      onSubmitted: onSubmitted,
-      style: TextStyle(color: context.colors.text, fontSize: 16),
-      cursorColor: context.colors.brand,
-      decoration: InputDecoration(
-        hintText: hint,
-        hintStyle: TextStyle(color: context.colors.faint, fontSize: 16),
-        filled: true,
-        fillColor: context.colors.surface,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(13),
-          borderSide: BorderSide(color: context.colors.border),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (label case final label?) ...[
+          Text(
+            label,
+            style: context.type.label.copyWith(color: context.colors.muted),
+          ),
+          const SizedBox(height: 6),
+        ],
+        TextField(
+          controller: controller,
+          autocorrect: false,
+          keyboardType: keyboardType,
+          onChanged: onChanged,
+          onSubmitted: onSubmitted,
+          style: TextStyle(color: context.colors.text, fontSize: 16),
+          cursorColor: context.colors.brand,
+          decoration: InputDecoration(
+            hintText: hint,
+            hintStyle: TextStyle(color: context.colors.faint, fontSize: 16),
+            filled: true,
+            fillColor: context.colors.surface,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 14,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(13),
+              borderSide: BorderSide(color: context.colors.border),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(13),
+              borderSide: BorderSide(color: context.colors.brand),
+            ),
+          ),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(13),
-          borderSide: BorderSide(color: context.colors.brand),
+      ],
+    );
+  }
+}
+
+// ─────────────────────────────── shared header ──────────────────────────────
+
+/// The back button, the screen's own name, and what it is for — replacing an
+/// [AppBar] so the name reads as the page's own heading rather than a small
+/// title stamped into a bar above it.
+class _BackHeader extends StatelessWidget {
+  const _BackHeader({required this.title, required this.subtitle});
+
+  final String title;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        InkWell(
+          onTap: () => Navigator.of(context).pop(),
+          customBorder: const CircleBorder(),
+          child: Container(
+            width: 36,
+            height: 36,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: context.colors.surfaceRaised,
+            ),
+            child: Icon(
+              Icons.arrow_back,
+              size: 18,
+              color: context.colors.text,
+            ),
+          ),
         ),
-        suffixIcon: onToggleObscure == null
-            ? null
-            : TextButton(
-                onPressed: onToggleObscure,
-                child: Text(
-                  obscure ? L.of(context).showLabel : L.of(context).hideLabel,
-                  style: TextStyle(color: context.colors.muted, fontSize: 12),
-                ),
-              ),
-      ),
+        const SizedBox(height: 22),
+        Text(
+          title,
+          style: context.type.title.copyWith(color: context.colors.text),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          subtitle,
+          style: context.type.body.copyWith(color: context.colors.muted),
+        ),
+      ],
     );
   }
 }

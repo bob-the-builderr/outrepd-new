@@ -232,6 +232,12 @@ class LKo extends L {
   String get tooManyCodes => '코드를 너무 많이 보냈습니다 — 몇 분 후 다시 시도하세요.';
 
   @override
+  String get sendCodeAction => '코드 보내기';
+
+  @override
+  String get noAccountForEmail => '해당 이메일로 된 계정을 찾을 수 없어요.';
+
+  @override
   String get authEntryTagline => '푸시업하고, 겨루고, 랭크를 올려라.';
 
   @override
@@ -254,6 +260,15 @@ class LKo extends L {
 
   @override
   String get usernameHint => '사용자 이름';
+
+  @override
+  String get usernameLabel => '사용자 이름';
+
+  @override
+  String get emailLabel => '이메일';
+
+  @override
+  String get passwordLabel => '비밀번호';
 
   @override
   String get passwordMinLength => '최소 8자';

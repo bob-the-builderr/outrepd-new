@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -112,23 +110,16 @@ class _OutrepdAppState extends State<OutrepdApp> with WidgetsBindingObserver {
   // pushed from a stream listener that has no BuildContext of its own — the
   // link that triggers it can be tapped from wherever the app happens to be.
   final _navigatorKey = GlobalKey<NavigatorState>();
-  StreamSubscription<void>? _recoverySub;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     settings.addListener(_refresh);
-    _recoverySub = backend.passwordRecoveryRequested.listen((_) {
-      _navigatorKey.currentState?.push(
-        MaterialPageRoute(builder: (_) => const ResetPasswordScreen()),
-      );
-    });
   }
 
   @override
   void dispose() {
-    _recoverySub?.cancel();
     settings.removeListener(_refresh);
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();

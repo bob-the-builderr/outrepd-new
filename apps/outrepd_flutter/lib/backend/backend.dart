@@ -486,7 +486,7 @@ enum RenameResult {
   alreadyChanged,
 }
 
-/// What happened trying to attach an email and password to this account.
+/// What happened trying to attach an email to this account.
 enum EmailSignUpResult {
   ok,
 
@@ -494,7 +494,7 @@ enum EmailSignUpResult {
   /// might just be a different device that reached it first.
   taken,
 
-  /// Not a real address, or a password Supabase judged too weak.
+  /// Not a real address.
   invalid,
 
   /// Too many codes sent to this address too quickly. Not a mistake in
@@ -502,18 +502,18 @@ enum EmailSignUpResult {
   rateLimited,
 }
 
-/// What happened trying to sign into an email-and-password account.
-enum EmailSignInResult {
+/// What happened trying to send a sign-in code to an email.
+enum EmailLoginCodeResult {
   ok,
 
-  /// The email or the password was wrong. Kept as one answer rather than
-  /// two — a screen that says which one was wrong is a lookup service for
-  /// anybody's email.
-  wrongCredentials,
-}
+  /// No account holds this email. Unlike [EmailSignUpResult], signing in
+  /// never creates one, so an address nobody owns is its own answer rather
+  /// than a code sent into the void.
+  notFound,
 
-/// An identity provider a session can be linked to.
-enum SocialProvider { apple, google }
+  /// Too many codes sent to this address too quickly.
+  rateLimited,
+}
 
 /// Somebody else's minute, waiting to be raced.
 class OpponentSet {
@@ -755,14 +755,11 @@ abstract interface class Backend {
   /// then.
   String? get accountEmail;
 
-  /// Attaches [email] and [password] to the current session without losing
-  /// anything already on it — same id, same profile, same progress. A code
-  /// is sent to [email]; nothing about the account changes until
-  /// [verifyEmailCode] confirms it.
-  Future<EmailSignUpResult> startEmailSignUp({
-    required String email,
-    required String password,
-  });
+  /// Attaches [email] to the current session without losing anything
+  /// already on it — same id, same profile, same progress. A code is sent
+  /// to [email]; nothing about the account changes until [verifyEmailCode]
+  /// confirms it.
+  Future<EmailSignUpResult> startEmailSignUp({required String email});
 
   /// Confirms the code [startEmailSignUp] or [resendEmailCode] sent. True
   /// once the account genuinely has this email; false for a wrong or
@@ -772,43 +769,16 @@ abstract interface class Backend {
   /// Sends a new code, for when the first one expired or never arrived.
   Future<void> resendEmailCode(String email);
 
-  /// Signs into an existing email-and-password account — a different
-  /// account than whatever this device held before, if any.
-  Future<EmailSignInResult> signInWithEmail({
-    required String email,
-    required String password,
-  });
+  /// Sends a sign-in code to an existing account's email — a different
+  /// account than whatever this device held before, if any. Unlike
+  /// [startEmailSignUp], this never creates one:
+  /// [EmailLoginCodeResult.notFound] answers an address with nothing
+  /// behind it.
+  Future<EmailLoginCodeResult> requestLoginCode(String email);
 
-  /// Opens the browser to attach [provider] to the current session, same
-  /// account either way — a real identity linked to an anonymous session
-  /// that already has a rank and a record, not a fresh one that would lose
-  /// them. True once the browser was actually launched; the link itself
-  /// finishes later, off a deep link back into the app, reported through
-  /// [authStateChanges].
-  Future<bool> linkSocial(SocialProvider provider);
-
-  /// Sends a password-reset email if [email] has an account. Answers the
-  /// same either way — confirming or denying an account exists for an
-  /// address is not this screen's business. The link inside completes in
-  /// the app, reported through [passwordRecoveryRequested].
-  Future<void> requestPasswordReset(String email);
-
-  /// Fires once a password-reset link has been tapped and the app has
-  /// exchanged it for a session — the signal to show whatever asks for the
-  /// new password, regardless of what the app happened to be showing when
-  /// the link was tapped.
-  Stream<void> get passwordRecoveryRequested;
-
-  /// Sets the password on the session [passwordRecoveryRequested] just
-  /// opened. Signed into that account from here on, same as any other sign
-  /// in — a recovery link is proof of the address, which is what a sign in
-  /// is proof of too.
-  Future<void> setNewPassword(String password);
-
-  /// Fires whenever the session changes — including the moment a browser
-  /// hand-off from [linkSocial] completes and comes back as a deep link,
-  /// which is the only way that moment is knowable.
-  Stream<void> get authStateChanges;
+  /// Confirms the code [requestLoginCode] sent and signs into that
+  /// account. True once signed in; false for a wrong or expired code.
+  Future<bool> verifyLoginCode({required String email, required String code});
 
   /// What deleting this account would cost, read from the server rather
   /// than from whatever the phone happens to be showing.
@@ -963,10 +933,8 @@ class NoBackend implements Backend {
   String? get accountEmail => null;
 
   @override
-  Future<EmailSignUpResult> startEmailSignUp({
-    required String email,
-    required String password,
-  }) => throw StateError('no server configured');
+  Future<EmailSignUpResult> startEmailSignUp({required String email}) =>
+      throw StateError('no server configured');
 
   @override
   Future<bool> verifyEmailCode({required String email, required String code}) =>
@@ -977,28 +945,12 @@ class NoBackend implements Backend {
       throw StateError('no server configured');
 
   @override
-  Future<EmailSignInResult> signInWithEmail({
-    required String email,
-    required String password,
-  }) => throw StateError('no server configured');
-
-  @override
-  Future<bool> linkSocial(SocialProvider provider) =>
+  Future<EmailLoginCodeResult> requestLoginCode(String email) =>
       throw StateError('no server configured');
 
   @override
-  Future<void> requestPasswordReset(String email) =>
+  Future<bool> verifyLoginCode({required String email, required String code}) =>
       throw StateError('no server configured');
-
-  @override
-  Stream<void> get passwordRecoveryRequested => const Stream.empty();
-
-  @override
-  Future<void> setNewPassword(String password) =>
-      throw StateError('no server configured');
-
-  @override
-  Stream<void> get authStateChanges => const Stream.empty();
 
   @override
   Future<AccountSummary?> accountSummary() async => null;

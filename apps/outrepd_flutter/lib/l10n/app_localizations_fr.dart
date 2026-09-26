@@ -242,6 +242,13 @@ class LFr extends L {
       'Trop de codes envoyés — attends quelques minutes puis réessaie.';
 
   @override
+  String get sendCodeAction => 'Envoyer le code';
+
+  @override
+  String get noAccountForEmail =>
+      'Nous n\'avons trouvé aucun compte avec cet e-mail.';
+
+  @override
   String get authEntryTagline => 'Pousse. Affronte. Grimpe.';
 
   @override
@@ -264,6 +271,15 @@ class LFr extends L {
 
   @override
   String get usernameHint => 'Nom d\'utilisateur';
+
+  @override
+  String get usernameLabel => 'Nom d\'utilisateur';
+
+  @override
+  String get emailLabel => 'E-mail';
+
+  @override
+  String get passwordLabel => 'Mot de passe';
 
   @override
   String get passwordMinLength => 'Au moins 8 caractères';

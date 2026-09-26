@@ -242,6 +242,13 @@ class LEs extends L {
       'Se enviaron demasiados códigos — espera unos minutos e inténtalo de nuevo.';
 
   @override
+  String get sendCodeAction => 'Enviar código';
+
+  @override
+  String get noAccountForEmail =>
+      'No encontramos ninguna cuenta con ese correo.';
+
+  @override
   String get authEntryTagline => 'Empuja. Compite. Sube de nivel.';
 
   @override
@@ -264,6 +271,15 @@ class LEs extends L {
 
   @override
   String get usernameHint => 'Nombre de usuario';
+
+  @override
+  String get usernameLabel => 'Usuario';
+
+  @override
+  String get emailLabel => 'Correo electrónico';
+
+  @override
+  String get passwordLabel => 'Contraseña';
 
   @override
   String get passwordMinLength => 'Al menos 8 caracteres';

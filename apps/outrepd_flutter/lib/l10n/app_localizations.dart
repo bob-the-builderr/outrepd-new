@@ -553,6 +553,18 @@ abstract class L {
   /// **'Too many codes sent — wait a few minutes and try again.'**
   String get tooManyCodes;
 
+  /// No description provided for @sendCodeAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Send code'**
+  String get sendCodeAction;
+
+  /// No description provided for @noAccountForEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t find an account with that email.'**
+  String get noAccountForEmail;
+
   /// No description provided for @authEntryTagline.
   ///
   /// In en, this message translates to:
@@ -600,6 +612,24 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Username'**
   String get usernameHint;
+
+  /// No description provided for @usernameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get usernameLabel;
+
+  /// No description provided for @emailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get emailLabel;
+
+  /// No description provided for @passwordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get passwordLabel;
 
   /// No description provided for @passwordMinLength.
   ///

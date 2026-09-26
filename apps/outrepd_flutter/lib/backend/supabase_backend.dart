@@ -18,16 +18,6 @@ import 'backend.dart';
 const kSupabaseUrl = String.fromEnvironment('SUPABASE_URL');
 const kSupabaseAnonKey = String.fromEnvironment('SUPABASE_ANON_KEY');
 
-/// Where Supabase sends the browser back to once an Apple or Google
-/// identity-link, or a password-reset email's link, finishes. Registered
-/// three places at once, or the hand-off never completes: this app's own
-/// manifest (the OS has to know to reopen the app on it), Supabase's
-/// dashboard (it refuses to redirect anywhere unlisted), and the identity
-/// provider's own console for the OAuth case specifically (the redirect it
-/// is told to send the browser to is Supabase's callback, not this one, but
-/// the provider still has to be told which app it is signing into).
-const kAuthCallback = 'outrepd://login-callback';
-
 /// Starts the backend if keys were supplied, and leaves the app on
 /// [NoBackend] if they were not.
 ///
@@ -64,8 +54,8 @@ class SupabaseBackend implements Backend {
   @override
   Future<RemoteProfile> signIn({required String username}) async {
     // Anonymous to begin with: a lifter who has just done three push-ups has
-    // not yet been given a reason to hand over an email. Supabase can link
-    // this account to Apple or Google later without losing what it earned.
+    // not yet been given a reason to hand over an email. Supabase can attach
+    // one later, on the same account, without losing what it earned.
     var user = _db.auth.currentUser;
     user ??= (await _db.auth.signInAnonymously()).user;
     if (user == null) throw StateError('sign-in returned no user');
@@ -614,19 +604,18 @@ class SupabaseBackend implements Backend {
   }
 
   @override
-  Future<EmailSignUpResult> startEmailSignUp({
-    required String email,
-    required String password,
-  }) async {
+  Future<EmailSignUpResult> startEmailSignUp({required String email}) async {
     try {
       // Updates the session already signed in, anonymous or not — never a
       // fresh account. Doing this as a second `signUp` would leave the
       // reps already counted on the account nobody is looking at any more.
-      await _db.auth.updateUser(
-        UserAttributes(email: email, password: password),
-      );
+      await _db.auth.updateUser(UserAttributes(email: email));
       return EmailSignUpResult.ok;
     } on AuthException catch (error) {
+      debugPrint(
+        'startEmailSignUp failed: code=${error.code} status=${error.statusCode} '
+        'message=${error.message}',
+      );
       if (error.code == 'email_exists' || error.code == 'user_already_exists') {
         return EmailSignUpResult.taken;
       }
@@ -663,55 +652,47 @@ class SupabaseBackend implements Backend {
   }
 
   @override
-  Future<EmailSignInResult> signInWithEmail({
+  Future<EmailLoginCodeResult> requestLoginCode(String email) async {
+    try {
+      // Never creates an account — signing in needs one to already exist,
+      // unlike [startEmailSignUp].
+      await _db.auth.signInWithOtp(email: email, shouldCreateUser: false);
+      return EmailLoginCodeResult.ok;
+    } on AuthException catch (error) {
+      if (error.code == 'over_email_send_rate_limit') {
+        return EmailLoginCodeResult.rateLimited;
+      }
+      return EmailLoginCodeResult.notFound;
+    }
+  }
+
+  @override
+  Future<bool> verifyLoginCode({
     required String email,
-    required String password,
+    required String code,
   }) async {
     try {
-      final response = await _db.auth.signInWithPassword(
+      final response = await _db.auth.verifyOTP(
+        type: OtpType.email,
         email: email,
-        password: password,
+        token: code,
       );
       final user = response.user;
-      if (user == null) return EmailSignInResult.wrongCredentials;
+      if (user == null) return false;
 
-      // A real account always passed through anonymous sign-in first, so
-      // the row already exists — this is a lookup, never an insert.
+      // A different account than whatever this device held before, if
+      // any — a fresh session, not one this row was already read for.
       final row = await _db
           .from('profiles')
           .select()
           .eq('id', user.id)
           .single();
       _me = _profileFrom(row);
-      return EmailSignInResult.ok;
+      return true;
     } on AuthException catch (_) {
-      return EmailSignInResult.wrongCredentials;
+      return false;
     }
   }
-
-  @override
-  Future<bool> linkSocial(SocialProvider provider) {
-    final oauth = switch (provider) {
-      SocialProvider.apple => OAuthProvider.apple,
-      SocialProvider.google => OAuthProvider.google,
-    };
-    return _db.auth.linkIdentity(oauth, redirectTo: kAuthCallback);
-  }
-
-  @override
-  Stream<void> get authStateChanges => _db.auth.onAuthStateChange;
-
-  @override
-  Future<void> requestPasswordReset(String email) =>
-      _db.auth.resetPasswordForEmail(email, redirectTo: kAuthCallback);
-
-  @override
-  Stream<void> get passwordRecoveryRequested => _db.auth.onAuthStateChange
-      .where((state) => state.event == AuthChangeEvent.passwordRecovery);
-
-  @override
-  Future<void> setNewPassword(String password) =>
-      _db.auth.updateUser(UserAttributes(password: password));
 
   @override
   Future<AccountSummary?> accountSummary() async {

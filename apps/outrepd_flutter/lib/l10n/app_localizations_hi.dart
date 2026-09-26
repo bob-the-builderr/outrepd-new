@@ -239,6 +239,12 @@ class LHi extends L {
       'बहुत सारे कोड भेजे जा चुके हैं — कुछ मिनट रुककर फिर से कोशिश करें।';
 
   @override
+  String get sendCodeAction => 'कोड भेजें';
+
+  @override
+  String get noAccountForEmail => 'हमें उस ईमेल से कोई खाता नहीं मिला।';
+
+  @override
   String get authEntryTagline => 'पुश करो। मुक़ाबला करो। सीढ़ी चढ़ो।';
 
   @override
@@ -261,6 +267,15 @@ class LHi extends L {
 
   @override
   String get usernameHint => 'यूज़रनेम';
+
+  @override
+  String get usernameLabel => 'यूज़रनेम';
+
+  @override
+  String get emailLabel => 'ईमेल';
+
+  @override
+  String get passwordLabel => 'पासवर्ड';
 
   @override
   String get passwordMinLength => 'कम से कम 8 अक्षर';

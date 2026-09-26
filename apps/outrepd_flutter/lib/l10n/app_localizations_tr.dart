@@ -239,6 +239,12 @@ class LTr extends L {
       'Çok fazla kod gönderildi — birkaç dakika bekleyip tekrar dene.';
 
   @override
+  String get sendCodeAction => 'Kodu gönder';
+
+  @override
+  String get noAccountForEmail => 'Bu e-postaya sahip bir hesap bulamadık.';
+
+  @override
   String get authEntryTagline => 'İt. Yarış. Merdiveni tırman.';
 
   @override
@@ -261,6 +267,15 @@ class LTr extends L {
 
   @override
   String get usernameHint => 'Kullanıcı adı';
+
+  @override
+  String get usernameLabel => 'Kullanıcı adı';
+
+  @override
+  String get emailLabel => 'E-posta';
+
+  @override
+  String get passwordLabel => 'Şifre';
 
   @override
   String get passwordMinLength => 'En az 8 karakter';

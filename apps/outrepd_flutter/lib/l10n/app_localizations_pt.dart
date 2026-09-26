@@ -240,6 +240,13 @@ class LPt extends L {
       'Demasiados códigos enviados — espera alguns minutos e tenta novamente.';
 
   @override
+  String get sendCodeAction => 'Enviar código';
+
+  @override
+  String get noAccountForEmail =>
+      'Não encontrámos nenhuma conta com esse email.';
+
+  @override
   String get authEntryTagline => 'Empurra. Compete. Sobe de nível.';
 
   @override
@@ -262,6 +269,15 @@ class LPt extends L {
 
   @override
   String get usernameHint => 'Nome de utilizador';
+
+  @override
+  String get usernameLabel => 'Usuário';
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get passwordLabel => 'Senha';
 
   @override
   String get passwordMinLength => 'Pelo menos 8 caracteres';

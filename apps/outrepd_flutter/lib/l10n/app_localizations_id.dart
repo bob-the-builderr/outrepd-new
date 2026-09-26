@@ -239,6 +239,12 @@ class LId extends L {
       'Terlalu banyak kode terkirim — tunggu beberapa menit lalu coba lagi.';
 
   @override
+  String get sendCodeAction => 'Kirim kode';
+
+  @override
+  String get noAccountForEmail => 'Kami tidak menemukan akun dengan email itu.';
+
+  @override
   String get authEntryTagline => 'Push-up. Bertanding. Naik peringkat.';
 
   @override
@@ -261,6 +267,15 @@ class LId extends L {
 
   @override
   String get usernameHint => 'Nama pengguna';
+
+  @override
+  String get usernameLabel => 'Nama pengguna';
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get passwordLabel => 'Kata sandi';
 
   @override
   String get passwordMinLength => 'Minimal 8 karakter';

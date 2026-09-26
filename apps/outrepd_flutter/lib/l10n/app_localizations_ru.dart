@@ -238,6 +238,12 @@ class LRu extends L {
       'Слишком много кодов отправлено — подождите пару минут и попробуйте снова.';
 
   @override
+  String get sendCodeAction => 'Отправить код';
+
+  @override
+  String get noAccountForEmail => 'Мы не нашли аккаунт с таким email.';
+
+  @override
   String get authEntryTagline =>
       'Отжимайся. Соревнуйся. Поднимайся по лестнице.';
 
@@ -261,6 +267,15 @@ class LRu extends L {
 
   @override
   String get usernameHint => 'Имя пользователя';
+
+  @override
+  String get usernameLabel => 'Имя пользователя';
+
+  @override
+  String get emailLabel => 'Эл. почта';
+
+  @override
+  String get passwordLabel => 'Пароль';
 
   @override
   String get passwordMinLength => 'Минимум 8 символов';

@@ -240,6 +240,13 @@ class LEn extends L {
       'Too many codes sent — wait a few minutes and try again.';
 
   @override
+  String get sendCodeAction => 'Send code';
+
+  @override
+  String get noAccountForEmail =>
+      'We couldn\'t find an account with that email.';
+
+  @override
   String get authEntryTagline => 'Push. Compete. Climb the ladder.';
 
   @override
@@ -262,6 +269,15 @@ class LEn extends L {
 
   @override
   String get usernameHint => 'Username';
+
+  @override
+  String get usernameLabel => 'Username';
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get passwordLabel => 'Password';
 
   @override
   String get passwordMinLength => 'At least 8 characters';
