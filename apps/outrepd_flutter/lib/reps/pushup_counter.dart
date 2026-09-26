@@ -72,7 +72,25 @@ const kMinRelativeSpread = 0.44;
 
 /// How close to the typical candidate's own depth a rep has to travel,
 /// against the other candidates in the same set rather than a table.
-const kMinCycleDepth = 0.5;
+///
+/// Was 0.5. Swept from 0.3 to 0.6 against all fourteen labelled sets: lower
+/// recovers real reps the old line was cutting, pulling the bias from a
+/// steady -0.46 under-count toward centred and mean error down; 0.6 was
+/// markedly worse across the board. The floor is not 0.3, though, and the
+/// reason is a single adversarial recording — one real rep held for fifteen
+/// seconds, which the counter has always gotten wrong. At 0.5 it says so:
+/// three signals scatter across 4-7 and the set comes back correctly
+/// unsure. Anything below 0.45 lets that same scatter tighten enough to look
+/// like agreement, so a wrong answer starts leaving as a confident one — the
+/// one outcome this whole counter exists to avoid. 0.45 is the lowest value
+/// that still catches that scatter: bias -0.08, mean error down from 2.00,
+/// and the held rep stays flagged unsure rather than becoming confidently
+/// wrong. This is the depth-*consistency* check, not the position gate that
+/// decides a rep happened at all — a shallow set still has to clear
+/// [kMinTurns] real turns and [kMinFramesPerRep] frames first; this only
+/// decides which of those turns count as the same kind of rep as the rest of
+/// the set.
+const kMinCycleDepth = 0.45;
 
 class PushupCount {
   const PushupCount({
