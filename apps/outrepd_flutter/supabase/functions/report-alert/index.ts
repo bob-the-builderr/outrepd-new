@@ -15,14 +15,42 @@
 //      RESEND_API_KEY and EXPORT_FROM are shared with `email-my-data`, so if
 //      that function already works they are set.
 //
-//   3. Database → Webhooks → Create a new hook:
-//        Table            reports
-//        Events           Insert
-//        Type             Supabase Edge Functions → report-alert, method POST
-//        HTTP Headers     Add auth header with service key, and add
-//                         x-alert-secret = the same REPORT_ALERT_SECRET
+//   3. Edge Functions → report-alert → turn off "Enforce JWT Verification".
+//      The secret header below is what keeps other callers out.
 //
-// The secrets are set in those screens and nowhere else. They must not be
+//   4. SQL Editor, with the secret in place of PUT-YOUR-SECRET-HERE. This
+//      calls the function from a trigger through pg_net, which works whether
+//      or not the dashboard's Database Webhooks screen has been enabled:
+//
+//        create extension if not exists pg_net;
+//
+//        create or replace function public.send_report_alert()
+//        returns trigger language plpgsql security definer
+//        set search_path = public as $$
+//        begin
+//          perform net.http_post(
+//            url := 'https://<project ref>.supabase.co/functions/v1/report-alert',
+//            headers := jsonb_build_object(
+//              'Content-Type', 'application/json',
+//              'x-alert-secret', 'PUT-YOUR-SECRET-HERE'),
+//            body := jsonb_build_object(
+//              'type', 'INSERT', 'table', 'reports', 'schema', 'public',
+//              'record', to_jsonb(new)));
+//          return new;
+//        end; $$;
+//
+//        revoke all on function public.send_report_alert()
+//          from public, anon, authenticated;
+//
+//        drop trigger if exists "report-alert" on public.reports;
+//        create trigger "report-alert" after insert on public.reports
+//          for each row execute function public.send_report_alert();
+//
+//      Changing REPORT_ALERT_SECRET later means running this again with the
+//      new value, since Supabase never shows a saved secret back.
+//
+// The secrets are set in those screens and in that one SQL statement, and
+// nowhere else. They must not be
 // written into this file, the repository, or a chat window.
 
 import { createClient } from 'jsr:@supabase/supabase-js@2';
