@@ -687,21 +687,16 @@ class _FriendRow extends StatelessWidget {
         opacity: friend.online ? 1 : 0.6,
         child: InkWell(
           borderRadius: BorderRadius.circular(13),
-          // A demo row has no real id to fetch a profile for — same reason
-          // the Challenge button beside it explains itself instead of doing
-          // nothing, rather than opening a sheet that can only show an error.
-          onTap: friend.id.isEmpty
-              ? () => ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(l.needsServer),
-                    behavior: SnackBarBehavior.floating,
-                  ),
-                )
-              : () => showLifterPeek(
-                  context,
-                  id: friend.id,
-                  username: friend.username,
-                ),
+          // A demo row has no real id to fetch a profile for, so it opens a
+          // sample card instead of a sheet that can only show an error.
+          onTap: () => showLifterPeek(
+            context,
+            id: friend.id,
+            username: friend.username,
+            initial: friend.id.isEmpty
+                ? demoLifterProfile(friend.username)
+                : null,
+          ),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             decoration: BoxDecoration(

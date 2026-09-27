@@ -26,6 +26,7 @@ Future<void> showLifterPeek(
   BuildContext context, {
   required String id,
   required String username,
+  LifterProfile? initial,
 }) {
   return showModalBottomSheet<void>(
     context: context,
@@ -34,7 +35,8 @@ Future<void> showLifterPeek(
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
-    builder: (_) => _LifterPeekSheet(id: id, username: username),
+    builder: (_) =>
+        _LifterPeekSheet(id: id, username: username, initial: initial),
   );
 }
 
@@ -70,10 +72,18 @@ mixin _LifterFetch<T extends StatefulWidget> on State<T> {
 // ──────────────────────────────── quick peek ───────────────────────────────
 
 class _LifterPeekSheet extends StatefulWidget {
-  const _LifterPeekSheet({required this.id, required this.username});
+  const _LifterPeekSheet({
+    required this.id,
+    required this.username,
+    this.initial,
+  });
 
   final String id;
   final String username;
+
+  /// Already known, so nothing is fetched — the sample rows, which have no
+  /// server to ask.
+  final LifterProfile? initial;
 
   @override
   State<_LifterPeekSheet> createState() => _LifterPeekSheetState();
@@ -87,7 +97,12 @@ class _LifterPeekSheetState extends State<_LifterPeekSheet>
   @override
   void initState() {
     super.initState();
-    load();
+    if (widget.initial case final seeded?) {
+      profile = seeded;
+      loading = false;
+    } else {
+      load();
+    }
   }
 
   void _openFullProfile() {
@@ -668,6 +683,17 @@ Color _tierColour(int tierIdx) =>
 /// what [MatchMode.challenge] does, ending on its own confirmation screen
 /// once that upload actually happens — nothing here needs to say so first.
 void _challenge(BuildContext context, LifterProfile profile) {
+  // A sample card has nobody behind it to send a challenge to — the same
+  // answer the Challenge button on a sample friend row gives.
+  if (profile.id.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(L.of(context).needsServer),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+    return;
+  }
   startMatch(
     context,
     mode: MatchMode.challenge,

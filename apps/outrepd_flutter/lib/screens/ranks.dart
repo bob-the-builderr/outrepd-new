@@ -307,13 +307,13 @@ class _RankRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
-      onTap: entry.id.isEmpty
-          ? null
-          : () => showLifterPeek(
-              context,
-              id: entry.id,
-              username: entry.username,
-            ),
+      // A sample row has no id to fetch with, so it opens a sample card.
+      onTap: () => showLifterPeek(
+        context,
+        id: entry.id,
+        username: entry.username,
+        initial: entry.id.isEmpty ? demoLifterProfile(entry.username) : null,
+      ),
       child: _RowCard(
         child: Row(
           children: [

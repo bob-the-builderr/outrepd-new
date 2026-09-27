@@ -361,6 +361,42 @@ const demoFriends = <Friend>[
   Friend('delt_destroyer', 3, 4, 64, false, winsVsYou: 0, lossesVsYou: 4),
 ];
 
+/// The card a sample row opens, so the profile peek can be tried without a
+/// server. Built from whatever the sample board and friends list already say
+/// about [username]; the numbers neither of them carries are made up from
+/// those, never random, so the same row always opens the same card.
+LifterProfile demoLifterProfile(String username) {
+  final board = demoLeaderboard.where((e) => e.username == username).firstOrNull;
+  final friend = demoFriends.where((f) => f.username == username).firstOrNull;
+  final wins = board?.wins ?? 10;
+  final losses = board?.losses ?? 10;
+  final played = friend?.hasPlayedYou ?? false;
+  final place = board == null ? null : demoLeaderboard.indexOf(board) + 1;
+  return LifterProfile(
+    id: '',
+    username: username,
+    tierIdx: board?.tierIdx ?? friend?.tierIdx ?? 1,
+    divIdx: board?.divIdx ?? friend?.divIdx ?? 0,
+    lp: board?.lp ?? friend?.lp ?? 0,
+    placementsDone: 5,
+    totalReps: (wins + losses) * 45,
+    bestSet: 12 + wins ~/ 2,
+    wins: wins,
+    losses: losses,
+    winStreak: wins ~/ 4,
+    globalPlace: place,
+    country: 'EG',
+    countryPlace: place,
+    isFriend: friend != null,
+    winsVsYou: friend?.winsVsYou ?? 0,
+    lossesVsYou: friend?.lossesVsYou ?? 0,
+    yourBestVsThem: played ? 18 : null,
+    lastDuelAt: played ? DateTime.now().subtract(const Duration(days: 2)) : null,
+    lastYourReps: played ? 15 : null,
+    lastTheirReps: played ? 17 : null,
+  );
+}
+
 /// How many friends this account actually has, for the friend-count awards
 /// in [Rewards]. [demoFriends] is sample data for browsing the Friends tab
 /// offline — a signed-in account's real count has to come from the server,

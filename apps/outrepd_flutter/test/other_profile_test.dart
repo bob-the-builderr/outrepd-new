@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:outrepd/backend/backend.dart';
+import 'package:outrepd/data.dart';
 import 'package:outrepd/l10n/app_localizations.dart';
 import 'package:outrepd/screens/other_profile.dart';
 import 'package:outrepd/screens/settings_privacy.dart';
@@ -203,6 +204,71 @@ void main() {
 
       expect(find.byType(OtherProfileScreen), findsOneWidget);
       expect(find.text('HEAD TO HEAD'), findsOneWidget);
+    });
+  });
+
+  group('sample rows', () {
+    Widget appWithSamplePeek(String username) => MaterialApp(
+      theme: buildTheme(Brightness.dark),
+      localizationsDelegates: const [
+        L.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: L.supportedLocales,
+      home: Scaffold(
+        body: Builder(
+          builder: (context) => Center(
+            child: ElevatedButton(
+              onPressed: () => showLifterPeek(
+                context,
+                id: '',
+                username: username,
+                initial: demoLifterProfile(username),
+              ),
+              child: const Text('open'),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    testWidgets('a sample friend opens a card with the record against you', (
+      tester,
+    ) async {
+      phone(tester);
+      await tester.pumpWidget(appWithSamplePeek('iron_mike'));
+      await tester.tap(find.text('open'));
+      await tester.pumpAndSettle();
+
+      expect(find.text("Couldn't load this profile"), findsNothing);
+      expect(find.text('3W 1L'), findsOneWidget);
+      expect(find.text('Challenge'), findsOneWidget);
+    });
+
+    testWidgets('a sample stranger opens a card without one', (tester) async {
+      phone(tester);
+      await tester.pumpWidget(appWithSamplePeek('cardio_hater'));
+      await tester.tap(find.text('open'));
+      await tester.pumpAndSettle();
+
+      expect(find.text("Couldn't load this profile"), findsNothing);
+      expect(find.textContaining('W '), findsNothing);
+      expect(find.text('View full profile'), findsOneWidget);
+    });
+
+    testWidgets('challenging a sample card says it needs a server', (
+      tester,
+    ) async {
+      phone(tester);
+      await tester.pumpWidget(appWithSamplePeek('iron_mike'));
+      await tester.tap(find.text('open'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Challenge'));
+      await tester.pump();
+
+      expect(find.text('This needs a server — not wired up yet'), findsOneWidget);
     });
   });
 
