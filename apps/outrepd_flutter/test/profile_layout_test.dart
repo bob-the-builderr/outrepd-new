@@ -89,7 +89,7 @@ void main() {
     expect(find.text('#1,842'), findsOneWidget);
     expect(find.text('#64'), findsOneWidget);
     expect(find.text('GLOBAL'), findsOneWidget);
-    expect(find.text('EGYPT'), findsOneWidget);
+    expect(find.text('UNITED STATES'), findsOneWidget);
 
     final global = tester.getRect(find.text('#1,842'));
     final local = tester.getRect(find.text('#64'));
