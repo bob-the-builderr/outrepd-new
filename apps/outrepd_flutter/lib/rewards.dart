@@ -9,6 +9,8 @@ library;
 
 import 'package:flutter/material.dart';
 
+import 'backend/backend.dart';
+
 import 'l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -80,6 +82,16 @@ typedef T = EarnedTitle;
 /// Written to be worth wanting. A title people would rather not wear is the
 /// same as no title at all, so each one is a small boast: something you would
 /// say out loud about how you train.
+/// The title with this id, or null for none or one this build does not know
+/// (a newer version of the app may have added it).
+EarnedTitle? titleById(String? id) {
+  if (id == null) return null;
+  for (final title in kTitles) {
+    if (title.id == id) return title;
+  }
+  return null;
+}
+
 const kTitles = <EarnedTitle>[
   // ---- getting started -------------------------------------------------
   T.of(
@@ -537,12 +549,24 @@ class Rewards extends ChangeNotifier {
   final Set<String> earned = {};
   String? wearing;
 
-  EarnedTitle? get worn {
-    if (wearing == null) return null;
-    for (final title in kTitles) {
-      if (title.id == wearing) return title;
-    }
-    return null;
+  EarnedTitle? get worn => titleById(wearing);
+
+  /// What [wearing] the server last heard. Kept so every save does not turn
+  /// into a network write, since most saves do not change the title.
+  String? _pushedWearing;
+  bool _pushedOnce = false;
+
+  /// Tells the server which title this account wears, so it shows beside the
+  /// name on other people's screens too. Best effort: a failure only means
+  /// they see the old one until the next save.
+  void _pushWorn() {
+    if (!backend.available) return;
+    if (_pushedOnce && _pushedWearing == wearing) return;
+    final id = wearing;
+    backend.setTitle(id).then((_) {
+      _pushedWearing = id;
+      _pushedOnce = true;
+    }, onError: (Object error) => debugPrint('Could not share title: $error'));
   }
 
   bool has(String id) => earned.contains(id);
@@ -567,6 +591,10 @@ class Rewards extends ChangeNotifier {
     earned
       ..clear()
       ..addAll(store.getStringList('earnedTitles') ?? const []);
+
+    // Once per launch, after sign-in: the server may be behind this phone,
+    // from a title picked while offline or on an account just signed into.
+    _pushWorn();
   }
 
   /// Titles are a statement about what you have already done, so they are
@@ -723,6 +751,7 @@ class Rewards extends ChangeNotifier {
   }
 
   Future<void> _save() async {
+    _pushWorn();
     final store = await SharedPreferences.getInstance();
     await store.setInt('streak', streak);
     await store.setInt('bestStreak', bestStreak);

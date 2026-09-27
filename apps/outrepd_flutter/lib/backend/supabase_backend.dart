@@ -294,6 +294,7 @@ class SupabaseBackend implements Backend {
       lastYourReps: (row['last_your_reps'] as num?)?.toInt(),
       lastTheirReps: (row['last_their_reps'] as num?)?.toInt(),
       avatarUrl: row['avatar_url'] as String?,
+      title: row['title'] as String?,
     );
   }
 
@@ -417,6 +418,13 @@ class SupabaseBackend implements Backend {
   @override
   Future<void> readNotices() async {
     await _db.rpc<int>('read_notifications');
+  }
+
+  @override
+  Future<void> setTitle(String? id) async {
+    final user = _db.auth.currentUser;
+    if (user == null) return;
+    await _db.from('profiles').update({'title': id}).eq('id', user.id);
   }
 
   @override

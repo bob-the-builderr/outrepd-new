@@ -286,6 +286,7 @@ class LifterProfile {
     this.lastYourReps,
     this.lastTheirReps,
     this.avatarUrl,
+    this.title,
   });
 
   final String id;
@@ -321,6 +322,9 @@ class LifterProfile {
   final int? lastTheirReps;
 
   final String? avatarUrl;
+
+  /// The id of the title they wear, or null for none.
+  final String? title;
 
   bool get ranked => placementsDone >= 5;
   bool get hasPlayedThem => lastDuelAt != null;
@@ -702,6 +706,10 @@ abstract interface class Backend {
   /// online dot on a friends list.
   Future<void> touch();
 
+  /// The title this account wears, by id, for other people to see. Null
+  /// takes it off.
+  Future<void> setTitle(String? id);
+
   /// What happened while this lifter was away, newest first.
   Future<List<Notice>> notices();
 
@@ -876,6 +884,9 @@ class NoBackend implements Backend {
 
   @override
   Future<void> touch() async {}
+
+  @override
+  Future<void> setTitle(String? id) async {}
 
   @override
   Future<List<Notice>> notices() async => const [];

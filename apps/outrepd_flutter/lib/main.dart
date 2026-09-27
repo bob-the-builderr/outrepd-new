@@ -280,6 +280,7 @@ class _OutrepdAppState extends State<OutrepdApp> with WidgetsBindingObserver {
             lastDuelAt: DateTime.now().subtract(const Duration(days: 2)),
             lastYourReps: 14,
             lastTheirReps: 19,
+            title: 'giant_slayer',
           ),
         ),
         // A bottom sheet has to sit over a page, so this one opens itself as

@@ -393,8 +393,18 @@ LifterProfile demoLifterProfile(String username) {
     lastDuelAt: played ? DateTime.now().subtract(const Duration(days: 2)) : null,
     lastYourReps: played ? 15 : null,
     lastTheirReps: played ? 17 : null,
+    title: _demoTitles[username],
   );
 }
+
+/// What the sample lifters wear, so the title beside a name can be seen
+/// without a server. Not everyone wears one, and neither do real accounts.
+const _demoTitles = <String, String>{
+  'iron_mike': 'giant_slayer',
+  'squat_queen': 'unstoppable',
+  'benchgod': 'the_machine',
+  'cardio_hater': 'night_owl',
+};
 
 /// How many friends this account actually has, for the friend-count awards
 /// in [Rewards]. [demoFriends] is sample data for browsing the Friends tab

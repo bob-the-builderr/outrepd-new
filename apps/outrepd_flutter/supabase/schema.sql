@@ -103,6 +103,14 @@ alter table profiles add column if not exists notify_challenged bool not null
 alter table profiles add column if not exists avatar_url text;
 alter table profiles add column if not exists username_changed_at timestamptz;
 
+-- The title this lifter wears beside their name, by its id in the app's list
+-- (`first_blood`). Titles are earned on the phone, so all the server can check
+-- is that it looks like an id; null is wearing nothing.
+alter table profiles add column if not exists title text;
+alter table profiles drop constraint if exists profiles_title_check;
+alter table profiles add constraint profiles_title_check
+  check (title is null or title ~ '^[a-z0-9_]{1,40}$');
+
 comment on column profiles.lp is
   'Written by settle_duel only. The client cannot move its own rank.';
 

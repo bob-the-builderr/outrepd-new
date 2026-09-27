@@ -587,7 +587,8 @@ returns table (
   last_duel_at timestamptz,
   last_your_reps int,
   last_their_reps int,
-  avatar_url text
+  avatar_url text,
+  title text
 )
 language plpgsql
 security definer
@@ -637,7 +638,8 @@ begin
     (select created_at from last),
     (select your_reps from last),
     (select their_reps from last),
-    p.avatar_url
+    p.avatar_url,
+    p.title
   from profiles p
   where p.id = their_id;
 end;

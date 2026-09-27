@@ -29,6 +29,7 @@ import '../rewards.dart';
 import '../player_avatar.dart';
 import '../theme.dart';
 import '../widgets.dart';
+import '../worn_title.dart';
 import 'avatar_picker.dart';
 import 'awards.dart';
 import 'match_history.dart';
@@ -282,21 +283,7 @@ class _Identity extends StatelessWidget {
         // account with nothing unlocked yet.
         if (rewards.worn case final title?) ...[
           const SizedBox(height: 1),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(title.icon, size: 12, color: title.colour ?? context.colors.brand),
-              const SizedBox(width: 4),
-              Text(
-                title.name(l),
-                style: TextStyle(
-                  color: title.colour ?? context.colors.brand,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
+          WornTitle(title: title),
         ],
 
         const SizedBox(height: 3),

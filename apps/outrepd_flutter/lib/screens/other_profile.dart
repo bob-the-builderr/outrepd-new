@@ -13,9 +13,11 @@ import '../backend/backend.dart';
 import '../l10n/app_localizations.dart';
 import '../country_names.dart';
 import '../player_avatar.dart';
+import '../rewards.dart';
 import '../theme.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
+import '../worn_title.dart';
 import 'match_entry.dart';
 import 'settings_privacy.dart';
 import 'share_card.dart';
@@ -155,6 +157,8 @@ class _LifterPeekSheetState extends State<_LifterPeekSheet>
                           color: context.colors.text,
                         ),
                       ),
+                      if (titleById(p?.title) case final title?)
+                        WornTitle(title: title),
                       const SizedBox(height: 2),
                       Text(
                         p == null
@@ -419,6 +423,11 @@ class _Body extends StatelessWidget {
           textAlign: TextAlign.center,
           style: context.type.title.copyWith(color: context.colors.text),
         ),
+        // Beside the name, the same as on your own profile.
+        if (titleById(p.title) case final title?) ...[
+          const SizedBox(height: 2),
+          WornTitle(title: title),
+        ],
         const SizedBox(height: 3),
         Text(
           p.ranked
