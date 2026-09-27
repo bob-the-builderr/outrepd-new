@@ -185,4 +185,4 @@ The first release of outrepd.
 **ناقص صورة للعداد وهو شغال**، ودي لازم تتاخد من موبايل حقيقي. المفروض تبقى
 أول صورة، لأنها أهم حاجة في الأب.
 
-Google Play كمان بيطلب **Feature graphic** مقاس 1024×500.
+Google Play كمان بيطلب **Feature graphic** مقاس 1024×500، وهي جاهزة في `docs/store/feature-graphic.png` (PNG من غير شفافية).
