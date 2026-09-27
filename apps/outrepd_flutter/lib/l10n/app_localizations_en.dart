@@ -719,27 +719,6 @@ class LEn extends L {
   String get tierMaster => 'Master';
 
   @override
-  String get rewardStone => '60s duels';
-
-  @override
-  String get rewardBronze => 'Rematch button';
-
-  @override
-  String get rewardSilver => 'Custom duration';
-
-  @override
-  String get rewardGold => 'Best-of-3';
-
-  @override
-  String get rewardPlatinum => 'Private tournaments';
-
-  @override
-  String get rewardDiamond => 'Open lobbies';
-
-  @override
-  String get rewardMaster => 'Named on the global board';
-
-  @override
   String get shortKg => 'kg';
 
   @override

@@ -726,27 +726,6 @@ class LFr extends L {
   String get tierMaster => 'Maître';
 
   @override
-  String get rewardStone => 'Duels de 60 s';
-
-  @override
-  String get rewardBronze => 'Bouton revanche';
-
-  @override
-  String get rewardSilver => 'Durée personnalisée';
-
-  @override
-  String get rewardGold => 'Au meilleur des 3';
-
-  @override
-  String get rewardPlatinum => 'Tournois privés';
-
-  @override
-  String get rewardDiamond => 'Salons ouverts';
-
-  @override
-  String get rewardMaster => 'Ton nom au tableau mondial';
-
-  @override
   String get shortKg => 'kg';
 
   @override

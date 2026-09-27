@@ -111,18 +111,6 @@ String tierName(L l, int tierIdx) =>
       _ => l.tierMaster,
     };
 
-/// What reaching a tier unlocks, shown on the roadmap.
-String tierReward(L l, int tierIdx) =>
-    switch (tierIdx.clamp(0, kTiers.length - 1)) {
-      0 => l.rewardStone,
-      1 => l.rewardBronze,
-      2 => l.rewardSilver,
-      3 => l.rewardGold,
-      4 => l.rewardPlatinum,
-      5 => l.rewardDiamond,
-      _ => l.rewardMaster,
-    };
-
 /// The rank one step up: the next division of this tier, or the first
 /// division of the next tier when this one is nearly done.
 ///

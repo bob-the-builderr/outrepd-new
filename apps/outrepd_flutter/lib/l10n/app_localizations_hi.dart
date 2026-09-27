@@ -719,27 +719,6 @@ class LHi extends L {
   String get tierMaster => 'मास्टर';
 
   @override
-  String get rewardStone => '60 सेकंड के मुक़ाबले';
-
-  @override
-  String get rewardBronze => 'रीमैच बटन';
-
-  @override
-  String get rewardSilver => 'अपनी अवधि';
-
-  @override
-  String get rewardGold => 'तीन में से दो';
-
-  @override
-  String get rewardPlatinum => 'निजी टूर्नामेंट';
-
-  @override
-  String get rewardDiamond => 'खुली लॉबी';
-
-  @override
-  String get rewardMaster => 'ग्लोबल बोर्ड पर नाम';
-
-  @override
   String get shortKg => 'किग्रा';
 
   @override

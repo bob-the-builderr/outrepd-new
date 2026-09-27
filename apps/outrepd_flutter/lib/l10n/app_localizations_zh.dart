@@ -695,27 +695,6 @@ class LZh extends L {
   String get tierMaster => '大师';
 
   @override
-  String get rewardStone => '60 秒对决';
-
-  @override
-  String get rewardBronze => '再战按钮';
-
-  @override
-  String get rewardSilver => '自定义时长';
-
-  @override
-  String get rewardGold => '三局两胜';
-
-  @override
-  String get rewardPlatinum => '私人锦标赛';
-
-  @override
-  String get rewardDiamond => '公开房间';
-
-  @override
-  String get rewardMaster => '名字登上全球榜';
-
-  @override
   String get shortKg => '公斤';
 
   @override

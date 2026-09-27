@@ -719,27 +719,6 @@ class LRu extends L {
   String get tierMaster => 'Мастер';
 
   @override
-  String get rewardStone => 'Дуэли по 60 секунд';
-
-  @override
-  String get rewardBronze => 'Кнопка реванша';
-
-  @override
-  String get rewardSilver => 'Своя длительность';
-
-  @override
-  String get rewardGold => 'До двух побед';
-
-  @override
-  String get rewardPlatinum => 'Закрытые турниры';
-
-  @override
-  String get rewardDiamond => 'Открытые лобби';
-
-  @override
-  String get rewardMaster => 'Имя на мировой доске';
-
-  @override
   String get shortKg => 'кг';
 
   @override

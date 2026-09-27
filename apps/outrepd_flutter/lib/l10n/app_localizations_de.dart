@@ -724,27 +724,6 @@ class LDe extends L {
   String get tierMaster => 'Meister';
 
   @override
-  String get rewardStone => '60-Sekunden-Duelle';
-
-  @override
-  String get rewardBronze => 'Revanche-Taste';
-
-  @override
-  String get rewardSilver => 'Eigene Dauer';
-
-  @override
-  String get rewardGold => 'Best-of-3';
-
-  @override
-  String get rewardPlatinum => 'Private Turniere';
-
-  @override
-  String get rewardDiamond => 'Offene Lobbys';
-
-  @override
-  String get rewardMaster => 'Namentlich auf dem Weltboard';
-
-  @override
   String get shortKg => 'kg';
 
   @override

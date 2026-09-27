@@ -698,27 +698,6 @@ class LJa extends L {
   String get tierMaster => 'マスター';
 
   @override
-  String get rewardStone => '60秒デュエル';
-
-  @override
-  String get rewardBronze => '再戦ボタン';
-
-  @override
-  String get rewardSilver => '時間のカスタム設定';
-
-  @override
-  String get rewardGold => '3本勝負';
-
-  @override
-  String get rewardPlatinum => 'プライベート大会';
-
-  @override
-  String get rewardDiamond => 'オープンロビー';
-
-  @override
-  String get rewardMaster => '世界ボードに名前が載る';
-
-  @override
   String get shortKg => 'kg';
 
   @override

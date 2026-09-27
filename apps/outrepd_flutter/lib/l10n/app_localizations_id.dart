@@ -717,27 +717,6 @@ class LId extends L {
   String get tierMaster => 'Master';
 
   @override
-  String get rewardStone => 'Duel 60 detik';
-
-  @override
-  String get rewardBronze => 'Tombol tanding ulang';
-
-  @override
-  String get rewardSilver => 'Durasi sendiri';
-
-  @override
-  String get rewardGold => 'Best-of-3';
-
-  @override
-  String get rewardPlatinum => 'Turnamen privat';
-
-  @override
-  String get rewardDiamond => 'Lobi terbuka';
-
-  @override
-  String get rewardMaster => 'Nama di papan global';
-
-  @override
   String get shortKg => 'kg';
 
   @override

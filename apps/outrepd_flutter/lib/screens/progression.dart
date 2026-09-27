@@ -4,13 +4,12 @@
 /// you and the ones ahead stack above, so scrolling up is climbing. A list that
 /// runs top-down turns the same data into a table of things you have not done.
 ///
-/// Two rules here are about people rather than layout:
+/// Each rung is the tier alone. There are no per-tier unlocks in the app, so
+/// the ladder promises none.
 ///
-///   * a locked tier shows the unlock it grants. The shape and the name alone
-///     say only that something exists and you cannot have it;
-///   * the floor message is never phrased as a failure. "Gold is yours" is the
-///     same fact as "you cannot fall out of Gold", and only one of them reads
-///     like a reward.
+/// The floor message is never phrased as a failure. "Gold is yours" is the
+/// same fact as "you cannot fall out of Gold", and only one of them reads like
+/// a reward.
 library;
 
 import 'package:flutter/material.dart';
@@ -130,15 +129,6 @@ class ProgressionScreen extends StatelessWidget {
                                     fontSize: 15,
                                     fontWeight: FontWeight.w600,
                                   ),
-                                ),
-                                const SizedBox(height: 2),
-                                ShrinkText(
-                                  tierReward(l, tierIdx),
-                                  style: TextStyle(
-                                    color: context.colors.muted,
-                                    fontSize: 12,
-                                  ),
-                                  maxLines: 1,
                                 ),
                               ],
                             ),

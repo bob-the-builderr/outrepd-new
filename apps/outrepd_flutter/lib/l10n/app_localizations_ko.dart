@@ -700,27 +700,6 @@ class LKo extends L {
   String get tierMaster => '마스터';
 
   @override
-  String get rewardStone => '60초 대결';
-
-  @override
-  String get rewardBronze => '재대결 버튼';
-
-  @override
-  String get rewardSilver => '시간 직접 설정';
-
-  @override
-  String get rewardGold => '3판 2선승';
-
-  @override
-  String get rewardPlatinum => '비공개 토너먼트';
-
-  @override
-  String get rewardDiamond => '공개 로비';
-
-  @override
-  String get rewardMaster => '글로벌 보드에 이름 등재';
-
-  @override
   String get shortKg => 'kg';
 
   @override

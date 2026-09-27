@@ -717,27 +717,6 @@ class LTr extends L {
   String get tierMaster => 'Usta';
 
   @override
-  String get rewardStone => '60 saniyelik düellolar';
-
-  @override
-  String get rewardBronze => 'Rövanş düğmesi';
-
-  @override
-  String get rewardSilver => 'Özel süre';
-
-  @override
-  String get rewardGold => '3 maçta 2 galibiyet';
-
-  @override
-  String get rewardPlatinum => 'Özel turnuvalar';
-
-  @override
-  String get rewardDiamond => 'Açık lobiler';
-
-  @override
-  String get rewardMaster => 'Küresel tabloda isim';
-
-  @override
   String get shortKg => 'kg';
 
   @override

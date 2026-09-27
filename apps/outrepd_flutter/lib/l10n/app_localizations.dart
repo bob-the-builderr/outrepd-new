@@ -1441,48 +1441,6 @@ abstract class L {
   /// **'Master'**
   String get tierMaster;
 
-  /// No description provided for @rewardStone.
-  ///
-  /// In en, this message translates to:
-  /// **'60s duels'**
-  String get rewardStone;
-
-  /// No description provided for @rewardBronze.
-  ///
-  /// In en, this message translates to:
-  /// **'Rematch button'**
-  String get rewardBronze;
-
-  /// No description provided for @rewardSilver.
-  ///
-  /// In en, this message translates to:
-  /// **'Custom duration'**
-  String get rewardSilver;
-
-  /// No description provided for @rewardGold.
-  ///
-  /// In en, this message translates to:
-  /// **'Best-of-3'**
-  String get rewardGold;
-
-  /// No description provided for @rewardPlatinum.
-  ///
-  /// In en, this message translates to:
-  /// **'Private tournaments'**
-  String get rewardPlatinum;
-
-  /// No description provided for @rewardDiamond.
-  ///
-  /// In en, this message translates to:
-  /// **'Open lobbies'**
-  String get rewardDiamond;
-
-  /// No description provided for @rewardMaster.
-  ///
-  /// In en, this message translates to:
-  /// **'Named on the global board'**
-  String get rewardMaster;
-
   /// No description provided for @shortKg.
   ///
   /// In en, this message translates to:

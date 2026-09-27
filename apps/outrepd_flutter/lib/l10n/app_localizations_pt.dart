@@ -723,27 +723,6 @@ class LPt extends L {
   String get tierMaster => 'Mestre';
 
   @override
-  String get rewardStone => 'Duelos de 60 s';
-
-  @override
-  String get rewardBronze => 'Botão de revanche';
-
-  @override
-  String get rewardSilver => 'Duração personalizada';
-
-  @override
-  String get rewardGold => 'Melhor de 3';
-
-  @override
-  String get rewardPlatinum => 'Torneios privados';
-
-  @override
-  String get rewardDiamond => 'Salas abertas';
-
-  @override
-  String get rewardMaster => 'Nome no quadro global';
-
-  @override
   String get shortKg => 'kg';
 
   @override

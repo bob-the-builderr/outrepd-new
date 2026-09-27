@@ -714,27 +714,6 @@ class LAr extends L {
   String get tierMaster => 'المُعلِّم';
 
   @override
-  String get rewardStone => 'مواجهات ٦٠ ثانية';
-
-  @override
-  String get rewardBronze => 'زر إعادة المباراة';
-
-  @override
-  String get rewardSilver => 'مدة مخصصة';
-
-  @override
-  String get rewardGold => 'أفضل من ٣';
-
-  @override
-  String get rewardPlatinum => 'بطولات خاصة';
-
-  @override
-  String get rewardDiamond => 'غرف مفتوحة';
-
-  @override
-  String get rewardMaster => 'اسمك على اللوحة العالمية';
-
-  @override
   String get shortKg => 'كجم';
 
   @override

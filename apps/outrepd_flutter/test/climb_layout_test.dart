@@ -1,8 +1,8 @@
 /// The progression ladder and the home screen.
 ///
 /// Both are mostly one column of text over a drawn badge, so the thing that
-/// breaks them is length: a tier unlock like "Named on the global board" in
-/// German, at 1.6x, in a row that also holds a 34dp badge and a tick.
+/// breaks them is length: a long tier name in German, at 1.6x, in a row that
+/// also holds a 34dp badge and a tick.
 library;
 
 import 'package:flutter/material.dart';
@@ -86,19 +86,17 @@ void main() {
     });
   }
 
-  testWidgets('every rung names the unlock it grants', (tester) async {
+  testWidgets('a rung promises no unlock', (tester) async {
     phone(tester);
     await tester.pumpWidget(
       _app(ProgressionScreen(profile: demoProfile), 1.0, const Locale('en')),
     );
     await tester.pumpAndSettle();
 
-    // A locked rung that will not say what it grants is just a wall, so the
-    // ones above the player have to carry their text too.
-    expect(find.text('Open lobbies'), findsOneWidget);
-    expect(find.text('Named on the global board'), findsOneWidget);
-    // And a reached one still shows what it gave you.
-    expect(find.text('Rematch button'), findsOneWidget);
+    // Nothing in the app is gated on a tier, so the ladder names none.
+    expect(find.text('Open lobbies'), findsNothing);
+    expect(find.text('Named on the global board'), findsNothing);
+    expect(find.text('Rematch button'), findsNothing);
   });
 
   testWidgets('the ladder is ordered bottom to top', (tester) async {

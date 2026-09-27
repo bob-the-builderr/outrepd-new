@@ -722,27 +722,6 @@ class LIt extends L {
   String get tierMaster => 'Maestro';
 
   @override
-  String get rewardStone => 'Duelli da 60 s';
-
-  @override
-  String get rewardBronze => 'Pulsante rivincita';
-
-  @override
-  String get rewardSilver => 'Durata personalizzata';
-
-  @override
-  String get rewardGold => 'Al meglio di 3';
-
-  @override
-  String get rewardPlatinum => 'Tornei privati';
-
-  @override
-  String get rewardDiamond => 'Lobby aperte';
-
-  @override
-  String get rewardMaster => 'Nome sulla classifica globale';
-
-  @override
   String get shortKg => 'kg';
 
   @override

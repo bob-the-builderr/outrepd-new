@@ -724,27 +724,6 @@ class LEs extends L {
   String get tierMaster => 'Maestro';
 
   @override
-  String get rewardStone => 'Duelos de 60 s';
-
-  @override
-  String get rewardBronze => 'Botón de revancha';
-
-  @override
-  String get rewardSilver => 'Duración personalizada';
-
-  @override
-  String get rewardGold => 'Al mejor de 3';
-
-  @override
-  String get rewardPlatinum => 'Torneos privados';
-
-  @override
-  String get rewardDiamond => 'Salas abiertas';
-
-  @override
-  String get rewardMaster => 'Tu nombre en el tablero global';
-
-  @override
   String get shortKg => 'kg';
 
   @override
