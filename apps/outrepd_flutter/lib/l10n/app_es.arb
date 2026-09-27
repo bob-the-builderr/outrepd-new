@@ -645,5 +645,8 @@
   "promotedLabel": "Ascendido",
   "highestReached": "Lo más alto que has llegado",
   "repsOff": "A {n} repeticiones.",
-  "closestYet": "El duelo más ajustado hasta ahora."
+  "closestYet": "El duelo más ajustado hasta ahora.",
+  "repsAhead": "{n} repeticiones de ventaja.",
+  "winnerLabel": "Ganador",
+  "newPersonalBest": "Nuevo récord personal"
 }

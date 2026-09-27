@@ -20,24 +20,23 @@ Widget _app(
   Widget home, {
   Locale locale = const Locale('en'),
   double scale = 1.0,
-}) =>
-    MaterialApp(
-      theme: buildTheme(Brightness.dark),
-      locale: locale,
-      localizationsDelegates: const [
-        L.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: L.supportedLocales,
-      builder: (context, child) => MediaQuery.withClampedTextScaling(
-        minScaleFactor: scale,
-        maxScaleFactor: scale,
-        child: child!,
-      ),
-      home: Scaffold(body: home),
-    );
+}) => MaterialApp(
+  theme: buildTheme(Brightness.dark),
+  locale: locale,
+  localizationsDelegates: const [
+    L.delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ],
+  supportedLocales: L.supportedLocales,
+  builder: (context, child) => MediaQuery.withClampedTextScaling(
+    minScaleFactor: scale,
+    maxScaleFactor: scale,
+    child: child!,
+  ),
+  home: Scaffold(body: home),
+);
 
 /// Every number on screen that could be an LP row or a total.
 List<int> _signedNumbers(WidgetTester tester) {
@@ -64,15 +63,20 @@ void main() {
     addTearDown(tester.view.reset);
   }
 
-  DuelResultView view({required bool won}) => DuelResultView(
-        won: won,
-        yourReps: won ? 18 : 14,
-        theirReps: won ? 11 : 19,
-        opponent: demoOpponents.first,
-        outcome: demoOutcome(won: won),
-        onRematch: () {},
-        onDone: () {},
-      );
+  DuelResultView view({
+    required bool won,
+    bool newBest = false,
+    bool closestYet = false,
+  }) => DuelResultView(
+    won: won,
+    yourReps: won ? 18 : 14,
+    theirReps: won ? 11 : 19,
+    opponent: demoOpponents.first,
+    outcome: demoOutcome(won: won, newBest: newBest),
+    onRematch: () {},
+    onDone: () {},
+    closestYet: closestYet,
+  );
 
   group('the LP card', () {
     testWidgets('the headline is exactly the rank change', (tester) async {
@@ -127,16 +131,18 @@ void main() {
 
     testWidgets('a promotion, in Arabic at 1.6x', (tester) async {
       phone(tester, size: const Size(360, 640));
-      await tester.pumpWidget(_app(
-        PromotionView(
-          tierIdx: 3,
-          divIdx: 2,
-          highest: true,
-          onContinue: () {},
+      await tester.pumpWidget(
+        _app(
+          PromotionView(
+            tierIdx: 3,
+            divIdx: 2,
+            highest: true,
+            onContinue: () {},
+          ),
+          locale: const Locale('ar'),
+          scale: 1.6,
         ),
-        locale: const Locale('ar'),
-        scale: 1.6,
-      ));
+      );
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
     });
@@ -156,6 +162,46 @@ void main() {
       await tester.pumpAndSettle();
       // Nothing in the history to be closer than, so the app does not say it.
       expect(find.textContaining('Closest'), findsNothing);
+    });
+  });
+
+  group('the scoreboard', () {
+    testWidgets('a win says the margin and marks you the winner', (
+      tester,
+    ) async {
+      phone(tester);
+      await tester.pumpWidget(_app(view(won: true)));
+      await tester.pumpAndSettle();
+
+      expect(find.text('7 reps ahead.'), findsOneWidget);
+      expect(find.text('18'), findsOneWidget);
+      expect(find.text('11'), findsOneWidget);
+      // Both halves carry the label so the scores stay level; only the
+      // winner's is shown.
+      final shown = tester
+          .widgetList<Visibility>(find.byType(Visibility))
+          .where((v) => v.visible)
+          .length;
+      expect(shown, 1);
+    });
+
+    testWidgets('a new best gets its chip, and only then', (tester) async {
+      phone(tester);
+      await tester.pumpWidget(_app(view(won: true)));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('New personal best'), findsNothing);
+
+      await tester.pumpWidget(_app(view(won: true, newBest: true)));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('New personal best'), findsOneWidget);
+    });
+
+    testWidgets('the closest loss is a chip under the scores', (tester) async {
+      phone(tester);
+      await tester.pumpWidget(_app(view(won: false, closestYet: true)));
+      await tester.pumpAndSettle();
+      expect(find.text('5 reps off.'), findsOneWidget);
+      expect(find.text('Closest match yet.'), findsOneWidget);
     });
   });
 }

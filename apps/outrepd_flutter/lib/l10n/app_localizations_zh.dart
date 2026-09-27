@@ -1983,4 +1983,15 @@ class LZh extends L {
 
   @override
   String get closestYet => '目前最接近的一场。';
+
+  @override
+  String repsAhead(String n) {
+    return '领先 $n 次。';
+  }
+
+  @override
+  String get winnerLabel => '胜者';
+
+  @override
+  String get newPersonalBest => '个人新纪录';
 }

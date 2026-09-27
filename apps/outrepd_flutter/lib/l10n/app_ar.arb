@@ -645,5 +645,8 @@
   "promotedLabel": "ترقية",
   "highestReached": "أعلى ما بلغته",
   "repsOff": "بفارق {n} تكرارًا.",
-  "closestYet": "أقرب مباراة حتى الآن."
+  "closestYet": "أقرب مباراة حتى الآن.",
+  "repsAhead": "بفارق {n} تكرارًا.",
+  "winnerLabel": "الفائز",
+  "newPersonalBest": "رقمك القياسي الجديد"
 }

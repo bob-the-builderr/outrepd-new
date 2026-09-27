@@ -218,7 +218,7 @@ class _OutrepdAppState extends State<OutrepdApp> with WidgetsBindingObserver {
             yourReps: 18,
             theirReps: 11,
             opponent: demoOpponents.first,
-            outcome: demoOutcome(won: true),
+            outcome: demoOutcome(won: true, newBest: true),
             onRematch: () {},
             onDone: () {},
           ),

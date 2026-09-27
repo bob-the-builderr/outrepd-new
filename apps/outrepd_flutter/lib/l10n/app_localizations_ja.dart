@@ -1991,4 +1991,15 @@ class LJa extends L {
 
   @override
   String get closestYet => 'これまでで最も僅差。';
+
+  @override
+  String repsAhead(String n) {
+    return '$n回差で勝利。';
+  }
+
+  @override
+  String get winnerLabel => '勝者';
+
+  @override
+  String get newPersonalBest => '自己ベスト更新';
 }

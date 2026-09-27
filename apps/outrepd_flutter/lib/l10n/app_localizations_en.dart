@@ -2032,4 +2032,15 @@ class LEn extends L {
 
   @override
   String get closestYet => 'Closest match yet.';
+
+  @override
+  String repsAhead(String n) {
+    return '$n reps ahead.';
+  }
+
+  @override
+  String get winnerLabel => 'Winner';
+
+  @override
+  String get newPersonalBest => 'New personal best';
 }

@@ -645,5 +645,8 @@
   "promotedLabel": "昇格",
   "highestReached": "自己最高",
   "repsOff": "{n} 回差。",
-  "closestYet": "これまでで最も僅差。"
+  "closestYet": "これまでで最も僅差。",
+  "repsAhead": "{n}回差で勝利。",
+  "winnerLabel": "勝者",
+  "newPersonalBest": "自己ベスト更新"
 }

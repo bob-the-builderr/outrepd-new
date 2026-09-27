@@ -2038,4 +2038,15 @@ class LIt extends L {
 
   @override
   String get closestYet => 'La sfida più combattuta finora.';
+
+  @override
+  String repsAhead(String n) {
+    return '$n ripetizioni di vantaggio.';
+  }
+
+  @override
+  String get winnerLabel => 'Vincitore';
+
+  @override
+  String get newPersonalBest => 'Nuovo record personale';
 }

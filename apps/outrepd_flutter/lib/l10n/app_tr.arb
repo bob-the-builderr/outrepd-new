@@ -645,5 +645,8 @@
   "promotedLabel": "Yükseldin",
   "highestReached": "Şimdiye kadarki en yükseğin",
   "repsOff": "{n} tekrar geride.",
-  "closestYet": "Şimdiye kadarki en yakın düello."
+  "closestYet": "Şimdiye kadarki en yakın düello.",
+  "repsAhead": "{n} tekrar önde.",
+  "winnerLabel": "Kazanan",
+  "newPersonalBest": "Yeni kişisel rekor"
 }

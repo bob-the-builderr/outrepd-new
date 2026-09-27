@@ -11,12 +11,16 @@
 /// reps, which the two scores above the card already say in full.
 library;
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
+import '../avatar.dart';
 import '../backend/backend.dart';
 import '../career.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../player_avatar.dart';
 import '../ranking.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
@@ -78,6 +82,13 @@ class DuelResultView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
+    final margin = (yourReps - theirReps).abs();
+    // Only what is true about this set. [DuelOutcome.newBest] is judged on
+    // the set alone, so a best set in a loss still says so.
+    final chips = [
+      if (outcome?.newBest ?? false) '★ ${l.newPersonalBest}',
+      if (!won && closestYet) l.closestYet,
+    ];
 
     return SafeArea(
       child: Column(
@@ -92,29 +103,38 @@ class DuelResultView extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: context.type.title.copyWith(
                       color: context.colors.text,
-                      fontSize: 30,
+                      fontSize: 34,
                     ),
                   ),
-                  const SizedBox(height: 22),
-                  _Scores(
+                  const SizedBox(height: 4),
+                  Text(
+                    won
+                        ? l.repsAhead(localNumber(context, margin))
+                        : l.repsOff(localNumber(context, margin)),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: context.colors.muted,
+                      fontSize: 12.5,
+                      height: 1.4,
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+                  _Scoreboard(
+                    won: won,
                     yourReps: yourReps,
                     theirReps: theirReps,
-                    opponent: opponent.username,
+                    opponent: opponent,
+                    yourTierIdx:
+                        outcome?.rank?.after.tierIdx ??
+                        (demoProfile.isRanked ? demoProfile.tierIdx : null),
                   ),
-                  if (!won) ...[
+                  if (chips.isNotEmpty) ...[
                     const SizedBox(height: 14),
-                    Text(
-                      [
-                        l.repsOff(localNumber(
-                            context, (theirReps - yourReps).abs())),
-                        if (closestYet) l.closestYet,
-                      ].join(' '),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: context.colors.muted,
-                        fontSize: 12,
-                        height: 1.5,
-                      ),
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: 6,
+                      runSpacing: 6,
+                      children: [for (final c in chips) _Chip(label: c)],
                     ),
                   ],
                   const SizedBox(height: 24),
@@ -161,61 +181,180 @@ class DuelResultView extends StatelessWidget {
   }
 }
 
-/// The two counts, side by side, with a dash between them.
-class _Scores extends StatelessWidget {
-  const _Scores({
+/// The two lifters side by side — avatar, name, count — with the winner's
+/// half set off in their own colour, the way a match screen in a game shows
+/// who took it.
+class _Scoreboard extends StatelessWidget {
+  const _Scoreboard({
+    required this.won,
     required this.yourReps,
     required this.theirReps,
     required this.opponent,
+    required this.yourTierIdx,
   });
 
+  final bool won;
   final int yourReps;
   final int theirReps;
-  final String opponent;
+  final Opponent opponent;
+  final int? yourTierIdx;
 
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
 
-    Widget side(String name, int reps, Color colour) => Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ShrinkText(
-                name,
-                maxLines: 1,
-                style: TextStyle(color: context.colors.muted, fontSize: 11),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+      decoration: BoxDecoration(
+        color: context.colors.surface,
+        border: Border.all(color: context.colors.border, width: 0.5),
+        borderRadius: BorderRadius.circular(18),
+      ),
+      // Both halves are built the same way — the winner label is kept in
+      // the layout on both — so they come out the same height on their own.
+      child: Row(
+        children: [
+          Expanded(
+            child: _Side(
+              avatar: PlayerAvatar(
+                name: demoProfile.username,
+                tierIdx: yourTierIdx,
+                image: avatar.hasPhoto
+                    ? FileImage(File(avatar.photoPath!))
+                    : null,
+                size: 46,
+                ringColour: context.colors.surface,
               ),
-              const SizedBox(height: 2),
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  localNumber(context, reps),
-                  style: TextStyle(
-                    color: colour,
-                    fontSize: 46,
-                    height: 1.05,
-                    fontFeatures: const [FontFeature.tabularFigures()],
-                  ),
-                ),
-              ),
-            ],
+              name: l.you,
+              reps: yourReps,
+              colour: context.colors.text,
+              accent: context.colors.brand,
+              winner: won,
+            ),
           ),
-        );
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6),
+            child: Text(
+              '–',
+              style: TextStyle(color: context.colors.faint, fontSize: 15),
+            ),
+          ),
+          Expanded(
+            child: _Side(
+              avatar: PlayerAvatar(
+                name: opponent.username,
+                tierIdx: opponent.tierIdx,
+                size: 46,
+                ringColour: context.colors.surface,
+              ),
+              name: opponent.username,
+              reps: theirReps,
+              colour: context.colors.rival,
+              accent: context.colors.rival,
+              winner: !won,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        side(l.you, yourReps, context.colors.text),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 13),
-          child: Text(
-            '–',
-            style: TextStyle(color: context.colors.faint, fontSize: 15),
-          ),
+class _Side extends StatelessWidget {
+  const _Side({
+    required this.avatar,
+    required this.name,
+    required this.reps,
+    required this.colour,
+    required this.accent,
+    required this.winner,
+  });
+
+  final Widget avatar;
+  final String name;
+  final int reps;
+  final Color colour;
+  final Color accent;
+  final bool winner;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+      decoration: BoxDecoration(
+        color: winner ? accent.withValues(alpha: 0.07) : null,
+        border: Border.all(
+          color: winner ? accent.withValues(alpha: 0.4) : Colors.transparent,
         ),
-        side(opponent, theirReps, context.colors.rival),
-      ],
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          avatar,
+          const SizedBox(height: 6),
+          ShrinkText(
+            name,
+            maxLines: 1,
+            style: TextStyle(color: context.colors.muted, fontSize: 11.5),
+          ),
+          const SizedBox(height: 2),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              localNumber(context, reps),
+              style: TextStyle(
+                color: colour,
+                fontSize: 48,
+                fontWeight: FontWeight.w600,
+                height: 1.05,
+                fontFeatures: const [FontFeature.tabularFigures()],
+              ),
+            ),
+          ),
+          const SizedBox(height: 4),
+          // Kept in the layout on the losing side too, invisible, so both
+          // halves stay the same height and the scores stay level.
+          Visibility(
+            visible: winner,
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
+            child: ShrinkText(
+              l.winnerLabel,
+              maxLines: 1,
+              style: TextStyle(
+                color: accent,
+                fontSize: 10.5,
+                letterSpacing: 0.6,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Chip extends StatelessWidget {
+  const _Chip({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        color: context.colors.surfaceRaised,
+        borderRadius: BorderRadius.circular(99),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(color: context.colors.text, fontSize: 11.5),
+      ),
     );
   }
 }
@@ -337,8 +476,9 @@ class _LpBar extends StatelessWidget {
                 child: FractionallySizedBox(
                   widthFactor: high == 0 ? 0 : (high - low) / high,
                   child: ColoredBox(
-                    color: (gained ? context.colors.brand : context.colors.rival)
-                        .withValues(alpha: 0.45),
+                    color:
+                        (gained ? context.colors.brand : context.colors.rival)
+                            .withValues(alpha: 0.45),
                   ),
                 ),
               ),
@@ -409,8 +549,10 @@ class PromotionView extends StatelessWidget {
                     Text(
                       l.highestReached,
                       textAlign: TextAlign.center,
-                      style:
-                          TextStyle(color: context.colors.muted, fontSize: 12),
+                      style: TextStyle(
+                        color: context.colors.muted,
+                        fontSize: 12,
+                      ),
                     ),
                   ],
                   const SizedBox(height: 24),
@@ -418,15 +560,20 @@ class PromotionView extends StatelessWidget {
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
                       color: context.colors.surface,
-                      border:
-                          Border.all(color: context.colors.border, width: 0.5),
+                      border: Border.all(
+                        color: context.colors.border,
+                        width: 0.5,
+                      ),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(Icons.lock_open_outlined,
-                            size: 17, color: context.colors.brand),
+                        Icon(
+                          Icons.lock_open_outlined,
+                          size: 17,
+                          color: context.colors.brand,
+                        ),
                         const SizedBox(width: 11),
                         Expanded(
                           child: Text(
@@ -479,7 +626,7 @@ class PromotionView extends StatelessWidget {
 ///
 /// Built from the real arithmetic rather than hand-written numbers, so what
 /// the preview shows is what a lifter would be shown for the same result.
-DuelOutcome demoOutcome({required bool won}) {
+DuelOutcome demoOutcome({required bool won, bool newBest = false}) {
   final yourReps = won ? 18 : 14;
   final theirReps = won ? 11 : 19;
   final delta = lpFor(won: won, yourReps: yourReps, theirReps: theirReps);
@@ -501,6 +648,6 @@ DuelOutcome demoOutcome({required bool won}) {
       at: DateTime.now(),
     ),
     placementsFinished: false,
-    newBest: false,
+    newBest: newBest,
   );
 }

@@ -2039,4 +2039,15 @@ class LPt extends L {
 
   @override
   String get closestYet => 'O duelo mais renhido até agora.';
+
+  @override
+  String repsAhead(String n) {
+    return '$n repetições à frente.';
+  }
+
+  @override
+  String get winnerLabel => 'Vencedor';
+
+  @override
+  String get newPersonalBest => 'Novo recorde pessoal';
 }

@@ -645,5 +645,8 @@
   "promotedLabel": "Subiste",
   "highestReached": "O mais alto que já chegaste",
   "repsOff": "A {n} repetições.",
-  "closestYet": "O duelo mais renhido até agora."
+  "closestYet": "O duelo mais renhido até agora.",
+  "repsAhead": "{n} repetições à frente.",
+  "winnerLabel": "Vencedor",
+  "newPersonalBest": "Novo recorde pessoal"
 }

@@ -2031,4 +2031,15 @@ class LRu extends L {
 
   @override
   String get closestYet => 'Самая близкая дуэль пока что.';
+
+  @override
+  String repsAhead(String n) {
+    return 'Отрыв: $n повт.';
+  }
+
+  @override
+  String get winnerLabel => 'Победитель';
+
+  @override
+  String get newPersonalBest => 'Новый личный рекорд';
 }

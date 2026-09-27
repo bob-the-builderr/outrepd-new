@@ -645,5 +645,8 @@
   "promotedLabel": "Promosso",
   "highestReached": "Il punto più alto che hai raggiunto",
   "repsOff": "A {n} ripetizioni.",
-  "closestYet": "La sfida più combattuta finora."
+  "closestYet": "La sfida più combattuta finora.",
+  "repsAhead": "{n} ripetizioni di vantaggio.",
+  "winnerLabel": "Vincitore",
+  "newPersonalBest": "Nuovo record personale"
 }

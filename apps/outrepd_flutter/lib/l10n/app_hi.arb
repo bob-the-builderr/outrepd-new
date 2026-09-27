@@ -645,5 +645,8 @@
   "promotedLabel": "पदोन्नति",
   "highestReached": "तुम्हारी अब तक की सबसे ऊँचाई",
   "repsOff": "{n} रेप्स पीछे।",
-  "closestYet": "अब तक का सबसे क़रीबी मुक़ाबला।"
+  "closestYet": "अब तक का सबसे क़रीबी मुक़ाबला।",
+  "repsAhead": "{n} रेप्स से आगे।",
+  "winnerLabel": "विजेता",
+  "newPersonalBest": "नया व्यक्तिगत रिकॉर्ड"
 }

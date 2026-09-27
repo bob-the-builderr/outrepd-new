@@ -2044,4 +2044,15 @@ class LDe extends L {
 
   @override
   String get closestYet => 'Bisher das knappste Duell.';
+
+  @override
+  String repsAhead(String n) {
+    return '$n Wiederholungen vorn.';
+  }
+
+  @override
+  String get winnerLabel => 'Sieger';
+
+  @override
+  String get newPersonalBest => 'Neue Bestleistung';
 }

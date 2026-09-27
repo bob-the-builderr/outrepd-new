@@ -645,5 +645,8 @@
   "promotedLabel": "晋级",
   "highestReached": "你的历史最高",
   "repsOff": "差 {n} 次。",
-  "closestYet": "目前最接近的一场。"
+  "closestYet": "目前最接近的一场。",
+  "repsAhead": "领先 {n} 次。",
+  "winnerLabel": "胜者",
+  "newPersonalBest": "个人新纪录"
 }

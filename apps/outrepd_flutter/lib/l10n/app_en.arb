@@ -1110,5 +1110,15 @@
       }
     }
   },
-  "closestYet": "Closest match yet."
+  "closestYet": "Closest match yet.",
+  "repsAhead": "{n} reps ahead.",
+  "@repsAhead": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "winnerLabel": "Winner",
+  "newPersonalBest": "New personal best"
 }

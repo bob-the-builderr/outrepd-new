@@ -2031,4 +2031,15 @@ class LId extends L {
 
   @override
   String get closestYet => 'Duel terketat sejauh ini.';
+
+  @override
+  String repsAhead(String n) {
+    return 'Unggul $n repetisi.';
+  }
+
+  @override
+  String get winnerLabel => 'Pemenang';
+
+  @override
+  String get newPersonalBest => 'Rekor pribadi baru';
 }

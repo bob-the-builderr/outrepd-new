@@ -645,5 +645,8 @@
   "promotedLabel": "Naik tingkat",
   "highestReached": "Tertinggi yang pernah kamu capai",
   "repsOff": "Selisih {n} repetisi.",
-  "closestYet": "Duel terketat sejauh ini."
+  "closestYet": "Duel terketat sejauh ini.",
+  "repsAhead": "Unggul {n} repetisi.",
+  "winnerLabel": "Pemenang",
+  "newPersonalBest": "Rekor pribadi baru"
 }

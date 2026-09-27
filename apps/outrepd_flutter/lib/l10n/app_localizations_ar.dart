@@ -2019,4 +2019,15 @@ class LAr extends L {
 
   @override
   String get closestYet => 'أقرب مباراة حتى الآن.';
+
+  @override
+  String repsAhead(String n) {
+    return 'بفارق $n تكرارًا.';
+  }
+
+  @override
+  String get winnerLabel => 'الفائز';
+
+  @override
+  String get newPersonalBest => 'رقمك القياسي الجديد';
 }

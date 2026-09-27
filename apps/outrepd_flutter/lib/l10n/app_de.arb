@@ -645,5 +645,8 @@
   "promotedLabel": "Aufgestiegen",
   "highestReached": "Dein höchster Stand",
   "repsOff": "{n} Wiederholungen dahinter.",
-  "closestYet": "Bisher das knappste Duell."
+  "closestYet": "Bisher das knappste Duell.",
+  "repsAhead": "{n} Wiederholungen vorn.",
+  "winnerLabel": "Sieger",
+  "newPersonalBest": "Neue Bestleistung"
 }

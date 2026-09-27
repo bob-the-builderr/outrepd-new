@@ -1997,4 +1997,15 @@ class LKo extends L {
 
   @override
   String get closestYet => '지금까지 가장 근소한 대결.';
+
+  @override
+  String repsAhead(String n) {
+    return '$n회 차이로 승리.';
+  }
+
+  @override
+  String get winnerLabel => '승자';
+
+  @override
+  String get newPersonalBest => '개인 최고 기록 경신';
 }

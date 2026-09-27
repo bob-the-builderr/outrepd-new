@@ -645,5 +645,8 @@
   "promotedLabel": "승급",
   "highestReached": "지금까지의 최고 기록",
   "repsOff": "{n}개 차이.",
-  "closestYet": "지금까지 가장 근소한 대결."
+  "closestYet": "지금까지 가장 근소한 대결.",
+  "repsAhead": "{n}회 차이로 승리.",
+  "winnerLabel": "승자",
+  "newPersonalBest": "개인 최고 기록 경신"
 }

@@ -645,5 +645,8 @@
   "promotedLabel": "Повышение",
   "highestReached": "Твой максимум",
   "repsOff": "Отставание {n} повторов.",
-  "closestYet": "Самая близкая дуэль пока что."
+  "closestYet": "Самая близкая дуэль пока что.",
+  "repsAhead": "Отрыв: {n} повт.",
+  "winnerLabel": "Победитель",
+  "newPersonalBest": "Новый личный рекорд"
 }

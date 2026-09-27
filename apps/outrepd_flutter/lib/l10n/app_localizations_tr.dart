@@ -2027,4 +2027,15 @@ class LTr extends L {
 
   @override
   String get closestYet => 'Şimdiye kadarki en yakın düello.';
+
+  @override
+  String repsAhead(String n) {
+    return '$n tekrar önde.';
+  }
+
+  @override
+  String get winnerLabel => 'Kazanan';
+
+  @override
+  String get newPersonalBest => 'Yeni kişisel rekor';
 }

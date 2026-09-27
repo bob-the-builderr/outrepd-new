@@ -2040,4 +2040,15 @@ class LEs extends L {
 
   @override
   String get closestYet => 'El duelo más ajustado hasta ahora.';
+
+  @override
+  String repsAhead(String n) {
+    return '$n repeticiones de ventaja.';
+  }
+
+  @override
+  String get winnerLabel => 'Ganador';
+
+  @override
+  String get newPersonalBest => 'Nuevo récord personal';
 }

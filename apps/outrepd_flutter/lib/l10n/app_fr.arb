@@ -645,5 +645,8 @@
   "promotedLabel": "Promu",
   "highestReached": "Ton plus haut niveau atteint",
   "repsOff": "À {n} répétitions près.",
-  "closestYet": "Le duel le plus serré jusqu’ici."
+  "closestYet": "Le duel le plus serré jusqu’ici.",
+  "repsAhead": "{n} répétitions d'avance.",
+  "winnerLabel": "Vainqueur",
+  "newPersonalBest": "Nouveau record personnel"
 }

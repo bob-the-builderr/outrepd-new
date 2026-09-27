@@ -2042,4 +2042,15 @@ class LFr extends L {
 
   @override
   String get closestYet => 'Le duel le plus serré jusqu’ici.';
+
+  @override
+  String repsAhead(String n) {
+    return '$n répétitions d\'avance.';
+  }
+
+  @override
+  String get winnerLabel => 'Vainqueur';
+
+  @override
+  String get newPersonalBest => 'Nouveau record personnel';
 }

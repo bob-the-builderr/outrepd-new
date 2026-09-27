@@ -3828,6 +3828,24 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Closest match yet.'**
   String get closestYet;
+
+  /// No description provided for @repsAhead.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} reps ahead.'**
+  String repsAhead(String n);
+
+  /// No description provided for @winnerLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Winner'**
+  String get winnerLabel;
+
+  /// No description provided for @newPersonalBest.
+  ///
+  /// In en, this message translates to:
+  /// **'New personal best'**
+  String get newPersonalBest;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

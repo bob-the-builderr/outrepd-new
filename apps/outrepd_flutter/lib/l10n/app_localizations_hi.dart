@@ -2031,4 +2031,15 @@ class LHi extends L {
 
   @override
   String get closestYet => 'अब तक का सबसे क़रीबी मुक़ाबला।';
+
+  @override
+  String repsAhead(String n) {
+    return '$n रेप्स से आगे।';
+  }
+
+  @override
+  String get winnerLabel => 'विजेता';
+
+  @override
+  String get newPersonalBest => 'नया व्यक्तिगत रिकॉर्ड';
 }
