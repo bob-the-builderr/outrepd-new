@@ -24,6 +24,7 @@ import '../backend/backend.dart';
 import '../career.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../country_names.dart';
 import '../rewards.dart';
 import '../player_avatar.dart';
 import '../theme.dart';
@@ -417,7 +418,7 @@ class _RankCards extends StatelessWidget {
             const SizedBox(width: 7),
             Expanded(
               child: _RankCard(
-                label: profile.country,
+                label: countryName(context, profile.country),
                 position: onServer ? local : profile.localRank,
               ),
             ),

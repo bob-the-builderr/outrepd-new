@@ -79,9 +79,8 @@ class Profile {
   int globalRank;
   int localRank;
 
-  /// The country whose board [localRank] is on, already in the form it should
-  /// be shown in. Country names are not translated — that was settled when the
-  /// rest of the app was.
+  /// The country whose board [localRank] is on, as its two-letter code.
+  /// Screens turn it into a name in the reader's language with countryName().
   String country;
 
   /// The highest tier this account has ever held.
@@ -133,7 +132,7 @@ final demoProfile = Profile(
   peakTierIdx: 3,
   globalRank: 1842,
   localRank: 64,
-  country: 'Egypt',
+  country: 'EG',
   placementsDone: kPlacementDuels,
   heightCm: 178,
   weightKg: 82,

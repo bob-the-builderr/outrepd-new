@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 
 import '../backend/backend.dart';
 import '../l10n/app_localizations.dart';
+import '../country_names.dart';
 import '../player_avatar.dart';
 import '../theme.dart';
 import '../type_scale.dart';
@@ -499,7 +500,8 @@ class _Body extends StatelessWidget {
         '${l.global} ${l.rankPosition(localNumber(context, g))}',
       if (p.countryPlace case final c?)
         if (p.country case final code?)
-          '$code ${l.rankPosition(localNumber(context, c))}',
+          '${countryName(context, code)} '
+              '${l.rankPosition(localNumber(context, c))}',
     ];
     return parts.join(' · ');
   }

@@ -16,6 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../l10n/app_localizations.dart';
+import '../country_names.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
 import '../type_scale.dart';
@@ -536,7 +537,8 @@ class _IdentityRow extends StatelessWidget {
         '${l.global} ${l.rankPosition(localNumber(context, g))}',
       if (data.countryPlace case final c?)
         if (data.country case final code?)
-          '$code ${l.rankPosition(localNumber(context, c))}',
+          '${countryName(context, code)} '
+              '${l.rankPosition(localNumber(context, c))}',
     ].join(' · ');
 
     return Row(
