@@ -151,48 +151,6 @@ double? handTravel(
   return furthest;
 }
 
-/// Where the set starts: the first frame of the first stretch of somebody
-/// being down in position.
-///
-/// A **start line**, not a filter. Judging every frame was measured and
-/// rejected — on a clip of twenty-two known push-ups it threw away seven of
-/// them, because a real set dips below any line constantly: a shoulder is
-/// occluded for a moment, the tracker loses a wrist. Cutting those frames cuts
-/// holes in the middle of the signal, and holes make and destroy cycles.
-///
-/// What actually goes wrong is all at the front. Walking up to the phone and
-/// lowering onto the hands is one enormous descent, bigger than any rep, and
-/// it was scored as one before the lifter had started.
-///
-/// Null when nobody was ever down in position. That is not the same as zero —
-/// the count goes back marked unverified and the lifter is asked for the
-/// number, because a fallback of "count everything" is exactly what let
-/// somebody standing in front of the camera moving up and down be scored.
-int? setStartsAt(
-  List<BodyPose> frames, {
-  int window = 30,
-  double share = 0.6,
-}) {
-  if (frames.length <= window) return null;
-
-  final inPosition = [for (final ok in inPushUpPosition(frames)) ok ? 1 : 0];
-
-  var votes = 0;
-  for (var i = 0; i < window; i++) {
-    votes += inPosition[i];
-  }
-  if (votes >= window * share) return 0;
-
-  // A majority over a window rather than an unbroken run: a set dips out of
-  // the check now and then, and demanding consecutive frames pushed the start
-  // line into the middle of a set.
-  for (var i = window; i < frames.length; i++) {
-    votes += inPosition[i] - inPosition[i - window];
-    if (votes >= window * share) return i - window + 1;
-  }
-  return null;
-}
-
 /// The point between two joints, or whichever one of them can be seen.
 ///
 /// Midpoints rather than single landmarks throughout: a body turned slightly

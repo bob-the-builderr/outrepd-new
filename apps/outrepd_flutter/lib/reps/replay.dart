@@ -126,11 +126,11 @@ class ReplayReport {
 
 /// Replays every labelled recording in [directory].
 ///
-/// Scored with [countPushups] — the same function the app scores a finished
-/// set with. A bench that measures something else measures nothing: the
-/// counter wired into the screen used to be a different one, and it scored a
-/// clip of twenty-two known push-ups as one while this bench reported on code
-/// no lifter was running.
+/// Scored with [countPushups] — the same tracker the screen runs live. A
+/// bench that measures something else measures nothing: the counter wired
+/// into the screen used to be a different one, and it scored a clip of
+/// twenty-two known push-ups as one while this bench reported on code no
+/// lifter was running.
 ReplayReport replayDirectory(Directory directory) {
   if (!directory.existsSync()) return const ReplayReport([]);
 
@@ -147,16 +147,19 @@ ReplayReport replayDirectory(Directory directory) {
     final labelled = readLabelled(file);
     if (labelled == null) continue;
 
-    final poses = [for (final f in labelled.recording.frames) f.pose];
-    if (poses.isEmpty) continue;
+    final frames = labelled.recording.frames;
+    if (frames.isEmpty) continue;
 
-    final counted = countPushups(poses);
+    final counted = countPushups(
+      frames,
+      startMs: labelled.recording.startMs,
+    );
     results.add(ReplayResult(
       name: file.uri.pathSegments.last,
       trueCount: labelled.trueCount,
       counted: counted.reps,
       confident: counted.confident,
-      frames: poses.length,
+      frames: frames.length,
     ));
   }
 

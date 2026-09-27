@@ -12,7 +12,6 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:outrepd/reps/pose.dart';
 import 'package:outrepd/reps/pushup_counter.dart';
 import 'package:outrepd/reps/recording.dart';
 
@@ -53,9 +52,8 @@ void main() {
         jsonDecode(file.readAsStringSync()) as Map<String, dynamic>,
       );
       final frames = recording.frames;
-      final poses = <BodyPose>[for (final f in frames) f.pose];
 
-      final result = countPushups(poses);
+      final result = countPushups(frames);
       final seconds = frames.isEmpty ? 0 : frames.last.atMs ~/ 1000;
 
       out.writeln('');
@@ -64,17 +62,17 @@ void main() {
       out.writeln('  D:/pushup-videos/${entry.value}');
       out.writeln('');
       out.writeln('  I counted: ${result.reps}'
-          '${result.confident ? '   (signals agree)' : '   (signals disagree — treat as a guess)'}');
+          '${result.confident ? '   (sure)' : '   (a close call in the set — treat as a guess)'}');
       out.writeln('  per signal: ${result.perSignal}');
 
-      // The times of the body's low points — the bottom of each rep — which is
-      // the easiest moment to recognise when scrubbing.
-      final times = repTimes(frames);
+      // When each rep completed — the body back up at the top — which is the
+      // moment to scrub to.
+      final times = result.repTimes;
       if (times.isNotEmpty) {
         final pretty = times
             .map((ms) => '${(ms / 1000).toStringAsFixed(1)}s')
             .join(', ');
-        out.writeln('  bottom of each rep at: $pretty');
+        out.writeln('  each rep completed at: $pretty');
       }
     }
 

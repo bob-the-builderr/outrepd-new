@@ -19,7 +19,6 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:outrepd/reps/posture.dart';
 import 'package:outrepd/reps/pushup_counter.dart';
 import 'package:outrepd/reps/recording.dart';
 
@@ -57,16 +56,13 @@ void main() {
       final recording = PoseRecording.fromJson(
         jsonDecode(file.readAsStringSync()) as Map<String, dynamic>,
       );
-      final poses = [for (final f in recording.frames) f.pose];
-      final counted = countPushups(poses);
-      final start = setStartsAt(poses);
+      final counted = countPushups(recording.frames);
 
       rows.add('${entry.key.padRight(22)}'
-          'frames ${poses.length.toString().padLeft(5)}   '
+          'frames ${recording.frames.length.toString().padLeft(5)}   '
           'truth ${(entry.value?.toString() ?? '?').padLeft(3)}   '
           'counted ${counted.reps.toString().padLeft(3)}'
           '${counted.confident ? ' ' : '?'}  '
-          'starts ${start?.toString() ?? 'never in position'}   '
           '${counted.perSignal}');
     }
 

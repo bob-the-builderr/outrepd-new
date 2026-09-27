@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart'
     show openAppSettings;
@@ -113,7 +114,17 @@ class _TrainerScreenState extends State<TrainerScreen> {
   PoseSource? _source;
   StreamSubscription<BodyPose>? _sub;
 
-  final _clock = Stopwatch();
+  /// The bout's clock: stopped until the countdown ends.
+  final _clock = clock.stopwatch();
+
+  /// Time since the camera opened, which is what the counter is fed. Poses
+  /// carry no timestamp, and the counter judges everything in milliseconds —
+  /// phones deliver poses at whatever rate they manage.
+  final _poseClock = clock.stopwatch();
+
+  /// Where on [_poseClock] the round began. Null before it has.
+  int? _boutStartMs;
+
   Timer? _watchdog;
 
   _Stage _stage = _Stage.setup;
@@ -121,11 +132,15 @@ class _TrainerScreenState extends State<TrainerScreen> {
   String? _error;
   PoseSourceFailure? _failure;
 
-  /// Drives the bar and the cue, off the same signal the count is scored from.
-  PushupMeter? _meter;
+  /// The count, the bar and the cue — one tracker for all three, so the bar
+  /// reaching the top and the number moving are the same event. It runs from
+  /// the moment the camera opens, so by the time the round starts it already
+  /// knows where the hands are and how high this lifter's lockout is; the
+  /// count itself restarts from zero when the countdown ends.
+  PushupTracker? _tracker;
 
-  /// How far through a rep the body is, 1 at the top. Null until the set has
-  /// covered enough ground for a fraction of it to mean anything.
+  /// How far through a rep the body is, 1 at the top. Null until the tracker
+  /// has a floor and a head to measure between.
   double? _progress;
 
   /// Hidden by default — it is for working out why the counter is misbehaving,
@@ -134,8 +149,14 @@ class _TrainerScreenState extends State<TrainerScreen> {
   bool _showNumbers = false;
 
   /// Every pose of the session, kept so the set can be replayed against a
-  /// changed threshold instead of being performed again.
+  /// changed threshold instead of being performed again — the round, and the
+  /// last few seconds before it that the tracker warmed up on.
   final _recorded = <RecordedFrame>[];
+
+  /// How much of the time before the round is kept in the recording, ms. The
+  /// tracker's longest memory is three seconds of shoulder width; this is
+  /// comfortably more, and bounded however long somebody takes to get down.
+  static const _warmupKeptMs = 8000;
 
   @override
   void initState() {
@@ -173,10 +194,16 @@ class _TrainerScreenState extends State<TrainerScreen> {
       return;
     }
 
-    final meter = PushupMeter();
+    final tracker = PushupTracker();
     // Reset but not started: the clock belongs to the bout, and the bout has
     // not begun.
-    _clock.reset();
+    _clock
+      ..stop()
+      ..reset();
+    _poseClock
+      ..reset()
+      ..start();
+    _boutStartMs = null;
 
     _sub = source.poses.listen(_onPose);
     _watchdog?.cancel();
@@ -196,7 +223,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
 
     setState(() {
       _source = source;
-      _meter = meter;
+      _tracker = tracker;
       _progress = null;
       _stage = _Stage.positioning;
       _error = null;
@@ -205,24 +232,14 @@ class _TrainerScreenState extends State<TrainerScreen> {
     });
   }
 
-  /// What the meter shows, and where it comes from.
-  ///
-  /// The same function that scores the finished set, re-run over everything
-  /// recorded so far. Two counters — one for the screen, one for the record —
-  /// is how a lifter ends a round watching one number and is handed another.
+  /// The number on the card: the tracker's count, moved on the frame the rep
+  /// completes. It is the same number the round ends with — the verdict is
+  /// read off this tracker, not re-scored afterwards.
   int _liveReps = 0;
 
-  /// Poses per recount. A rep is about thirty frames, so every eighth is four
-  /// updates a second: fast enough that the number lands with the rep, cheap
-  /// enough to sit behind pose detection.
-  static const _recountEvery = 8;
-
-  /// How many poses a second the phone is actually delivering.
-  ///
-  /// Everything that judges the length of a rep is counted in frames, so the
-  /// rate is the conversion between those numbers and seconds. It is not the
-  /// same on every phone and there is no way to know it from here — so it goes
-  /// on the diagnostics panel, where somebody with the phone can read it.
+  /// How many poses a second the phone is actually delivering. The counter
+  /// works in milliseconds and does not need it; it goes on the diagnostics
+  /// panel because a slow phone is worth knowing about.
   double? get _framesPerSecond {
     if (_recorded.length < 20) return null;
     final last = _recorded.last.atMs;
@@ -231,22 +248,15 @@ class _TrainerScreenState extends State<TrainerScreen> {
     return span <= 0 ? null : 19 * 1000 / span;
   }
 
-  void _recount() {
-    if (_recorded.length % _recountEvery != 0) return;
-    final counted = countPushups([for (final f in _recorded) f.pose]);
-
-    // Never downwards. The count is recomputed from scratch each time, and a
-    // shifting threshold can take a rep back off the end — which on screen
-    // reads as the app forgetting one you just did. The honest number is the
-    // one scored at the end, where the confirm screen can raise it.
-    //
-    // Reads [live], not [reps]: the final score waits for the slowest signal
-    // on purpose, and a lifter mid-set felt that as the number sitting still
-    // for whole seconds after a rep plainly landed.
-    if (counted.live > _liveReps) {
-      _liveReps = counted.live;
-      tap(heavy: true);
+  void _record(int atMs, BodyPose pose) {
+    _recorded.add(RecordedFrame(atMs, pose));
+    if (_boutStartMs != null) return;
+    var drop = 0;
+    while (drop < _recorded.length &&
+        atMs - _recorded[drop].atMs > _warmupKeptMs) {
+      drop++;
     }
+    if (drop > 0) _recorded.removeRange(0, drop);
   }
 
   /// When a usable pose last arrived. The stream keeps delivering frames when
@@ -335,8 +345,16 @@ class _TrainerScreenState extends State<TrainerScreen> {
         return;
       }
       timer.cancel();
-      setState(() => _stage = _Stage.counting);
-      // The bout starts here, and not one frame earlier.
+      // The bout starts here, and not one frame earlier. The tracker keeps
+      // what it learned while the lifter got into position and starts its
+      // count from nothing.
+      final startMs = _poseClock.elapsedMilliseconds;
+      _boutStartMs = startMs;
+      _tracker?.restartCount(startMs);
+      setState(() {
+        _stage = _Stage.counting;
+        _liveReps = 0;
+      });
       _clock.start();
       _lastPoseAt = DateTime.now();
       tap(heavy: true);
@@ -382,14 +400,22 @@ class _TrainerScreenState extends State<TrainerScreen> {
   }
 
   void _onPose(BodyPose pose) {
-    final meter = _meter;
-    if (meter == null || !mounted) return;
+    final tracker = _tracker;
+    if (tracker == null || !mounted) return;
 
     _lastPoseAt = DateTime.now();
     if (_lostBody) setState(() => _lostBody = false);
 
     _recent.add(pose);
     if (_recent.length > _recentKeep) _recent.removeAt(0);
+
+    // Every frame, from the moment the camera opens: the seconds spent
+    // getting down are when the tracker learns where the hands are planted
+    // and how high this lifter's lockout is, so the first rep of the round is
+    // judged against them rather than against a guess.
+    final atMs = _poseClock.elapsedMilliseconds;
+    final reading = tracker.add(atMs, pose);
+    _record(atMs, pose);
 
     if (_stage == _Stage.positioning) {
       setState(() => _pose = pose);
@@ -421,10 +447,12 @@ class _TrainerScreenState extends State<TrainerScreen> {
       return;
     }
 
-    _recorded.add(RecordedFrame(_clock.elapsedMilliseconds, pose));
-
-    final progress = meter.add(pose);
-    _recount();
+    // The number moves on the frame the rep completes — the frame the bar
+    // gets back up to the top line — and never otherwise.
+    if (reading.counted) {
+      _liveReps = reading.reps;
+      tap(heavy: true);
+    }
 
     final limit = widget.limit;
     if (limit != null && _clock.elapsed >= limit) {
@@ -434,7 +462,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
 
     setState(() {
       _pose = pose;
-      if (progress != null) _progress = progress;
+      if (reading.progress != null) _progress = reading.progress;
     });
   }
 
@@ -509,6 +537,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
       final path = await PoseRecording(
         exerciseId: ExerciseType.pushUp.wireName,
         frames: List.of(_recorded),
+        startMs: _boutStartMs,
         note: trueCount?.toString(),
       ).save();
       return path;
@@ -531,26 +560,20 @@ class _TrainerScreenState extends State<TrainerScreen> {
 
   Future<void> _stop({bool gaveUp = false}) async {
     _gaveUp = gaveUp;
-    // The number that leaves this screen is scored from the whole set, not
-    // read off the live counter.
+    // The number that leaves this screen is the number that was on it. The
+    // old design re-scored the whole set at the end with a different counter,
+    // and lifters watched one number all round and were handed another.
     //
-    // The live count exists to move the meter while somebody lifts, and it
-    // decides each rep knowing only what came before it — which at the start of
-    // a set is nothing, so the opening reps are judged against the catalogue's
-    // guess at a range rather than this lifter's. Where that guess is wide of
-    // them the meter never reaches its own zones and a whole set scores
-    // nothing, which is what the recordings kept showing.
-    //
-    // Once the set is over none of that holds. Every rep can be judged against
-    // the same measured movement as every other, so it is.
-    final counted = countPushups([
-      for (final f in _recorded) f.pose,
-    ]).withTimes(repTimes(_recorded), durationMs: _clock.elapsedMilliseconds);
+    // Stopped before the countdown finished, nothing was done in the round.
+    final tracker = _tracker;
+    final counted = tracker == null || _boutStartMs == null
+        ? const PushupCount(reps: 0, confident: false)
+        : PushupCount.from(tracker, durationMs: _clock.elapsedMilliseconds);
 
-    // The whole verdict travels back, not just the number. Three body signals
-    // are read independently and the median taken; when they disagree by more
-    // than a rep the set goes back marked unverified, and the confirm screen
-    // says so rather than presenting a guess as a fact.
+    // The whole verdict travels back, not just the number: a set with a close
+    // call in it — a rep only just deep enough, a dip only just short — goes
+    // back marked unsure, and the confirm screen asks rather than presenting
+    // a guess as a fact.
     final verdict = counted.surrendered(_gaveUp);
     await _sub?.cancel();
     await _source?.dispose();
@@ -568,7 +591,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
     setState(() {
       _sub = null;
       _source = null;
-      _meter = null;
+      _tracker = null;
       _progress = null;
       _pose = BodyPose.empty;
       _stage = _Stage.setup;
@@ -678,7 +701,15 @@ class _TrainerScreenState extends State<TrainerScreen> {
     // the phone satisfies perfectly — so it went green before anybody had got
     // onto the floor, and told them reps were being watched for when they
     // were not.
-    final ready = _inPosition;
+    //
+    // Once the round is on, it is the one thing the count itself requires:
+    // the hands on the floor. A body-shape check here used to turn the bar
+    // red through reps that were counting — at the bottom of a rep filmed
+    // head-on the torso reads as upright — and a colour that disagrees with
+    // the number is worse than none.
+    final ready = _stage == _Stage.counting
+        ? (_tracker?.planted ?? false)
+        : _inPosition;
 
     // A long press anywhere shows the numbers behind the position check.
     // It used to be a hidden sixty-pixel box in the corner of practice mode,
@@ -882,7 +913,9 @@ class _TrainerScreenState extends State<TrainerScreen> {
               top: 110,
               child: _Diagnostics(
                 recent: _recent,
-                inPosition: ready,
+                inPosition: _inPosition,
+                planted: _tracker?.planted ?? false,
+                lockout: _tracker?.lockout,
                 framesPerSecond: _framesPerSecond,
                 progress: _progress,
                 reps: _liveReps,
@@ -1012,40 +1045,52 @@ class _Diagnostics extends StatelessWidget {
   const _Diagnostics({
     required this.recent,
     required this.inPosition,
+    required this.planted,
+    required this.lockout,
     required this.framesPerSecond,
     required this.progress,
     required this.reps,
   });
 
-  /// Poses a second, measured. The frame counts everything else is judged in
-  /// only mean something against this.
+  /// Poses a second, measured. A slow phone is worth knowing about.
   final double? framesPerSecond;
 
-  /// The last second of poses, so the position checks can be shown with the
-  /// numbers behind them rather than as a yes or no.
+  /// The last second of poses, so the position check can be shown with the
+  /// number behind it rather than as a yes or no.
   final List<BodyPose> recent;
+
+  /// The check that starts the countdown.
   final bool inPosition;
+
+  /// Whether the counter has the hands on the floor — without it, nothing
+  /// counts.
+  final bool planted;
+
+  /// What a full bar means: the nose's height above the hands at lockout, in
+  /// shoulder widths. Near 1.0 on every set measured.
+  final double? lockout;
+
   final double? progress;
   final int reps;
 
   @override
   Widget build(BuildContext context) {
-    // Why the position check says what it says. This is the panel to read out
-    // when the skeleton will not go green: it shows which of the two tests is
-    // failing and by how much, which is the difference between tuning a
-    // threshold and guessing at one.
-    final hands = _handTravel(recent);
+    // Why the screen says what it says. This is the panel to read out when
+    // the skeleton will not go green or a rep did not count: it shows which
+    // check is failing and by how much, which is the difference between
+    // tuning a threshold and guessing at one.
     final shape = _torsoOverShoulders(recent.isEmpty ? null : recent.last);
     final tracked = recent.isNotEmpty && recent.last.isTracked;
 
     final lines = <String>[
       'position ${inPosition ? 'IN' : 'no'}',
-      'hands    ${hands == null ? '—' : hands.toStringAsFixed(2)}'
-          '  (needs ${kPlantedHands.toStringAsFixed(2)} or less)',
+      'hands    ${planted ? 'planted' : 'moving'}',
       'torso    ${shape == null ? '—' : shape.toStringAsFixed(2)}'
           '  (needs ${kUprightTorso.toStringAsFixed(2)} or less)',
       'fps      ${framesPerSecond == null ? '—' : framesPerSecond!.toStringAsFixed(1)}',
-      'depth    ${progress == null ? '—' : '${(progress! * 100).round()}%'}',
+      'bar      ${progress == null ? '—' : '${(progress! * 100).round()}%'}'
+          '  (down ${(kBottomShare * 100).round()}%, up ${(kTopShare * 100).round()}%)',
+      'lockout  ${lockout == null ? '—' : lockout!.toStringAsFixed(2)}',
       'reps     $reps',
       if (!tracked) 'lost the body',
     ];
@@ -1075,16 +1120,6 @@ class _Diagnostics extends StatelessWidget {
       ),
     );
   }
-}
-
-/// How far the hands have moved over the recent window, in shoulder widths.
-double? _handTravel(List<BodyPose> recent) {
-  if (recent.length < 2) return null;
-  return handTravel(
-    [for (final p in recent) midpoint(p, Joint.leftWrist, Joint.rightWrist)],
-    [for (final p in recent) shoulderWidth(p)],
-    recent.length - 1,
-  );
 }
 
 /// Torso length over shoulder width: under the threshold the body is pointing

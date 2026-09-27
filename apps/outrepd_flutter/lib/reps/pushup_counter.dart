@@ -1,103 +1,521 @@
-/// A counter built for one movement.
+/// The push-up counter, and the bar beside it — one thing, not two.
 ///
-/// Everything else in this folder is general: eighty exercises, a signature
-/// apparatus to tell them apart, thresholds that have to hold for a curl and a
-/// deadlift at once. That generality is what made it hard, and measuring it is
-/// what showed how hard — twelve of fifty-two wrong-movement pairs still score,
-/// and honest sets were being emptied until a floor went in under them.
+/// It reads a single quantity: how high the nose is above the hands on the
+/// floor, in shoulder widths. Across fourteen labelled sets, filmed on a dozen
+/// cameras from floor level and at angles, that reading sits near **1.0 at
+/// lockout** and near the floor at the bottom of a real rep, whoever is
+/// lifting. It is a measure of the body, not of the set, so it can say
+/// something the old counter never could: whether a rep went *far enough*.
 ///
-/// A push-up is one movement, and that changes the problem completely. There is
-/// nothing to tell it apart from, so no signature is needed. Better: several
-/// independent things about a push-up all oscillate together, and a general
-/// counter cannot lean on any of them because they mean nothing for a squat.
+/// A rep is that height falling to **half** the lifter's own lockout height
+/// or lower, and coming back to three quarters of it, with the hands still on
+/// the floor. The bar is the same height as a share of lockout. The number
+/// and the bar come off the same reading at the same moment, so the bar
+/// reaching the top is exactly when the number moves, and a dip that never
+/// reached the bottom line never counts.
 ///
-/// So this counts THREE signals and makes them agree:
+/// Everything is timed in seconds, not frames. A clip filmed at 120 frames a
+/// second counted six push-ups as twenty under the old counter, whose every
+/// window was a fixed number of frames; phones deliver poses at whatever
+/// rate they manage.
 ///
-///   1. the elbow bending and straightening,
-///   2. the shoulder's height above the wrist line — the body actually rising,
-///   3. the nose's distance from the floor line through the wrists.
-///
-/// Three readings of the same event, from different joints. Where they agree
-/// the count is solid; where they disagree the disagreement is itself the
-/// signal, and the set is flagged rather than guessed at. One camera angle can
-/// ruin any one of them — an elbow pointing at the lens, a shoulder occluded —
-/// and it is unlikely to ruin all three.
+/// What each piece is for, and what it was measured against, is on it.
 library;
 
+import 'dart:collection';
 import 'dart:math' as math;
 
 import 'pose.dart';
-import 'posture.dart';
 import 'recording.dart';
 
-/// How far below the median swing a turn has to travel to count as one.
+/// The bottom line: at or below this share of lockout height, the lifter has
+/// gone at least halfway down to their hands.
 ///
-/// Half, measured against this set's own swings rather than a table, so a tall
-/// lifter travelling ninety degrees and a stiff one travelling forty are each
-/// judged against themselves.
-const kSwingShare = 0.5;
+/// Half, because a half-way dip is a half rep. Measured: every labelled rep in
+/// the fourteen sets bottomed at 0.05–0.44 of lockout but one (0.50), and the
+/// lifter's own recorded half reps — filmed on purpose to test exactly this —
+/// stopped at 0.59–0.79. Roughly where "upper arms parallel to the floor"
+/// puts the head, the usual standard for a push-up that counts.
+const kBottomShare = 0.5;
 
-/// Under this many frames a cycle is a tracker shiver, not a person.
+/// The top line: back up to this share of lockout height completes the rep.
 ///
-/// Was 14 (about half a second) until a max-effort set of 100 measured real
-/// push-ups landing faster than that — a lifter speeding up mid-set had
-/// individual reps as short as 10-odd frames, and the old floor silently
-/// merged them into their neighbour. Lowered against the full labelled set in
-/// `test/recordings/`: 10 recovers those reps and does not admit a single
-/// extra false one on any other recording, real or synthetic. 8 recovered
-/// nothing further, so this is the lowest floor the evidence asks for.
-const kMinFramesPerRep = 10;
+/// Below lockout on purpose. Tired arms stop short of locking out, and a rep
+/// that went all the way down and most of the way up was a rep.
+const kTopShare = 0.75;
 
-/// A signal needs this many turns before its rhythm means anything.
-const kMinTurns = 4;
-
-/// How far apart the signals may fall before the set is called uncertain,
-/// as a share of the count.
+/// Time constant of the smoothing on the reading, seconds.
 ///
-/// Relative, not absolute, because the same gap means different things at
-/// different sizes: two reps apart on a set of twenty-two is close agreement,
-/// and two apart on a set of four is the signals telling entirely different
-/// stories. A floor of one rep keeps short sets from being held to an
-/// impossible standard.
-const kAgreementShare = 0.15;
+/// Short, because fast sets are fast: a hundred-rep set runs at 1.9 reps a
+/// second, and anything slower than this starts rounding the bottoms off.
+const kSmoothingSeconds = 0.05;
 
-/// How little a signal may travel, against the widest-travelling signal in
-/// the same set, before it is dropped from the vote rather than trusted.
-///
-/// A camera angle that flattens one landmark's motion does not flatten the
-/// others equally, so the widest signal in a given set is the one closest to
-/// seeing the real thing — and a signal that barely moved next to it is
-/// reading tracker noise, not push-ups.
-const kMinRelativeSpread = 0.44;
+/// How long the nose's position is taken the median of, seconds. Removes a
+/// single frame the tracker throws somewhere wrong without delaying anything.
+const kHeadMedianSeconds = 0.12;
 
-/// How close to the typical candidate's own depth a rep has to travel,
-/// against the other candidates in the same set rather than a table.
+/// A full push-up cannot be quicker than this, seconds. A second count inside
+/// it is the tracker shivering on the line, not a person.
+const kMinRepSeconds = 0.35;
+
+/// Shoulder width is taken as this percentile of this many seconds of it.
 ///
-/// Was 0.5. Swept from 0.3 to 0.6 against all fourteen labelled sets: lower
-/// recovers real reps the old line was cutting, pulling the bias from a
-/// steady -0.46 under-count toward centred and mean error down; 0.6 was
-/// markedly worse across the board. The floor is not 0.3, though, and the
-/// reason is a single adversarial recording — one real rep held for fifteen
-/// seconds, which the counter has always gotten wrong. At 0.5 it says so:
-/// three signals scatter across 4-7 and the set comes back correctly
-/// unsure. Anything below 0.45 lets that same scatter tighten enough to look
-/// like agreement, so a wrong answer starts leaving as a confident one — the
-/// one outcome this whole counter exists to avoid. 0.45 is the lowest value
-/// that still catches that scatter: bias -0.08, mean error down from 2.00,
-/// and the held rep stays flagged unsure rather than becoming confidently
-/// wrong. This is the depth-*consistency* check, not the position gate that
-/// decides a rep happened at all — a shallow set still has to clear
-/// [kMinTurns] real turns and [kMinFramesPerRep] frames first; this only
-/// decides which of those turns count as the same kind of rep as the rest of
-/// the set.
-const kMinCycleDepth = 0.45;
+/// A high percentile, because shoulder width only ever reads *wrong* low: at
+/// the bottom of a rep filmed at an angle one shoulder hides behind the other
+/// and the width collapses from 0.45 to 0.05 for a moment.
+const kShoulderWidthSeconds = 3.0;
+const kShoulderWidthPercentile = 80;
+
+/// Lockout height is the median of this many recent tops, starting from
+/// [kLockoutSeeds] priors of [kLockoutPrior] shoulder widths so one bad
+/// reading while somebody gets into position cannot become the reference.
+const kLockoutKeep = 5;
+const kLockoutSeeds = 2;
+const kLockoutPrior = 1.0;
+
+/// A top outside this band of the current reference is not a lockout
+/// reading — crouching on the way in, or standing up — and is ignored.
+const kLockoutBandLow = 0.6;
+const kLockoutBandHigh = 1.8;
+
+/// The depth share at which a set counts as clean: the typical rep travelled
+/// at least eighty per cent of what the deepest one did.
+const kCleanDepth = 0.8;
+
+/// A counted rep that bottomed within this much of the bottom line is
+/// borderline, and a dip that stopped within [kNearMissBand] above it is a
+/// near miss. Either makes the set unsure — see [PushupCount.confident].
+///
+/// About the tracker's own wobble on the reading, so "close" means "could
+/// have gone the other way on a different frame", not a judgement of form.
+const kBorderlineBand = 0.05;
+const kNearMissBand = 0.05;
+
+// ─────────────────────────────── the hands ───────────────────────────────
+
+/// A wrist this close to where its hand is planted is on it, in shoulder
+/// widths. Real reps: 0.01–0.11. Standing up, flexing an arm: well over half.
+const kHandNear = 0.35;
+
+/// A floor point is the median of its hand's readings over this long, seconds.
+const kFloorPointSeconds = 1.5;
+
+/// A hand out of sight this long is re-planted where it reappears, seconds,
+/// instead of being judged against a point nobody has confirmed since.
+const kHandUnseenSeconds = 1.0;
+
+/// Only floor points confirmed this recently set the floor line, seconds.
+const kFloorFreshSeconds = 1.0;
+
+/// A hand that has settled somewhere new for this long has been re-planted
+/// there, seconds — "settled" meaning within [kReplantSettle] shoulder widths.
+const kReplantSeconds = 0.8;
+const kReplantSettle = 0.12;
+
+/// The hands are judged over this long, seconds, and count as planted while
+/// no more than [kHandsAwayShare] of it had a hand off its point.
+///
+/// A share rather than every frame: at the bottom of a rep the tracker loses
+/// or swaps a hand for a moment, and that is not a hand leaving the floor.
+const kHandsWindowSeconds = 0.4;
+const kHandsAwayShare = 0.35;
+
+enum _Hand { left, right }
+
+class _Stamped {
+  const _Stamped(this.atMs, this.x, this.y);
+  final int atMs;
+  final double x;
+  final double y;
+}
+
+/// Where each hand is planted on the floor.
+///
+/// A reading of one hand that lands on the *other* hand's point is tolerated:
+/// filmed at an angle, the head hides a hand at the bottom of every rep and
+/// the tracker swaps or merges the two. Measured on such a set: the right
+/// wrist was below the confidence floor 29% of the time, and the "left" one
+/// jumped onto the right hand at every bottom. A label swap is not a move.
+class _Hands {
+  final _points = <_Hand, (double, double)?>{_Hand.left: null, _Hand.right: null};
+  final _history = <_Hand, Queue<_Stamped>>{
+    _Hand.left: Queue(),
+    _Hand.right: Queue(),
+  };
+  final _stray = <_Hand, Queue<_Stamped>>{
+    _Hand.left: Queue(),
+    _Hand.right: Queue(),
+  };
+  final _lastSeen = <_Hand, int?>{_Hand.left: null, _Hand.right: null};
+  final _lastOnPoint = <_Hand, int?>{_Hand.left: null, _Hand.right: null};
+  final _away = Queue<(int, bool)>();
+  int _now = 0;
+
+  void add(int atMs, PosePoint? left, PosePoint? right, double width) {
+    _now = atMs;
+    final near = kHandNear * width;
+    var anyAway = false;
+
+    for (final (hand, p) in [(_Hand.left, left), (_Hand.right, right)]) {
+      if (p == null) continue;
+      final other = hand == _Hand.left ? _Hand.right : _Hand.left;
+      final own = _points[hand];
+      final theirs = _points[other];
+      final dOwn = own == null ? double.infinity : _dist(p.x, p.y, own);
+      final dTheirs = theirs == null ? double.infinity : _dist(p.x, p.y, theirs);
+      final seen = _lastSeen[hand];
+      final unseen = seen == null || atMs - seen > kHandUnseenSeconds * 1000;
+
+      if (dOwn <= near) {
+        _history[hand]!.add(_Stamped(atMs, p.x, p.y));
+        _lastOnPoint[hand] = atMs;
+      } else if (dTheirs <= near) {
+        // Swapped or merged with the other hand.
+      } else if (own == null || unseen) {
+        _plant(hand, atMs, p.x, p.y);
+      } else {
+        anyAway = true;
+        _stray[hand]!.add(_Stamped(atMs, p.x, p.y));
+      }
+      _lastSeen[hand] = atMs;
+    }
+
+    for (final hand in _Hand.values) {
+      final history = _history[hand]!;
+      while (history.isNotEmpty &&
+          atMs - history.first.atMs > kFloorPointSeconds * 1000) {
+        history.removeFirst();
+      }
+      if (history.isNotEmpty) {
+        _points[hand] = (
+          _median(history.map((s) => s.x)),
+          _median(history.map((s) => s.y)),
+        );
+      }
+
+      final stray = _stray[hand]!;
+      while (stray.isNotEmpty &&
+          atMs - stray.first.atMs > kReplantSeconds * 1000) {
+        stray.removeFirst();
+      }
+      if (stray.length >= 5 &&
+          atMs - stray.first.atMs >= kReplantSeconds * 800) {
+        final mx = _median(stray.map((s) => s.x));
+        final my = _median(stray.map((s) => s.y));
+        final spread = _percentile(
+          [for (final s in stray) _dist(s.x, s.y, (mx, my))],
+          80,
+        );
+        if (spread <= kReplantSettle * width) {
+          _points[hand] = (mx, my);
+          _history[hand] = Queue.of(stray);
+          _lastOnPoint[hand] = atMs;
+          stray.clear();
+        }
+      }
+    }
+
+    _away.add((atMs, anyAway));
+    while (_away.isNotEmpty &&
+        atMs - _away.first.$1 > kHandsWindowSeconds * 1000) {
+      _away.removeFirst();
+    }
+  }
+
+  void _plant(_Hand hand, int atMs, double x, double y) {
+    _points[hand] = (x, y);
+    _history[hand] = Queue.of([_Stamped(atMs, x, y)]);
+    _lastOnPoint[hand] = atMs;
+    _stray[hand]!.clear();
+  }
+
+  bool get planted {
+    if (_points.values.every((p) => p == null) || _away.isEmpty) return false;
+    final away = _away.where((a) => a.$2).length;
+    return away / _away.length <= kHandsAwayShare;
+  }
+
+  /// The floor line: where the hands are planted, from points confirmed
+  /// recently. A hand out of sight for a while says nothing current about
+  /// where the floor is.
+  double? get floorY {
+    final fresh = [
+      for (final hand in _Hand.values)
+        if (_points[hand] != null &&
+            _lastOnPoint[hand] != null &&
+            _now - _lastOnPoint[hand]! <= kFloorFreshSeconds * 1000)
+          _points[hand]!.$2,
+    ];
+    if (fresh.isNotEmpty) return fresh.reduce((a, b) => a + b) / fresh.length;
+    _Hand? latest;
+    for (final hand in _Hand.values) {
+      if (_points[hand] == null) continue;
+      if (latest == null ||
+          (_lastOnPoint[hand] ?? -1) > (_lastOnPoint[latest] ?? -1)) {
+        latest = hand;
+      }
+    }
+    return latest == null ? null : _points[latest]!.$2;
+  }
+}
+
+// ─────────────────────────────── the tracker ─────────────────────────────
+
+enum _Phase {
+  /// Not yet seen at the top with the hands down. Nothing counts from here:
+  /// lowering yourself onto the floor is one big descent and is not a rep.
+  idle,
+
+  /// At or through the top, watching for the way down.
+  up,
+
+  /// Past the bottom line, watching for the way back up.
+  down,
+}
+
+/// What the tracker makes of one frame.
+class PushupReading {
+  const PushupReading({
+    required this.progress,
+    required this.counted,
+    required this.reps,
+    required this.planted,
+  });
+
+  /// The bar: the nose's height above the hands as a share of lockout, 0 at
+  /// the floor and 1 at the top. Null until there is a floor and a head.
+  final double? progress;
+
+  /// A rep landed on this frame.
+  final bool counted;
+
+  final int reps;
+
+  /// The hands are on the floor — the one thing a push-up cannot do without.
+  final bool planted;
+}
+
+/// Counts push-ups one frame at a time, and drives the bar.
+///
+/// The same object is the live number on the screen and the final score: a
+/// lifter watching one number and being handed another at the end is how the
+/// old two-counter design lost people's trust.
+class PushupTracker {
+  final _hands = _Hands();
+  final _heads = Queue<(int, double)>();
+  final _widths = Queue<(int, double)>();
+  final _tops = Queue<double>.of(List.filled(kLockoutSeeds, kLockoutPrior));
+
+  double? _smooth;
+  int? _lastAt;
+  _Phase _phase = _Phase.idle;
+  double? _excursionTop;
+  double? _dipLow;
+  int? _lastRepAt;
+  int _reps = 0;
+  final _repTimes = <int>[];
+  final _repBottoms = <double>[];
+  final _refusedAt = <int>[];
+  final _nearMissAt = <int>[];
+  int _origin = 0;
+  double? _progress;
+  bool _planted = false;
+
+  int get reps => _reps;
+
+  /// When each rep completed, milliseconds from the start of the count.
+  List<int> get repTimes => List.unmodifiable(_repTimes);
+
+  /// The bar as of the last frame.
+  double? get progress => _progress;
+
+  bool get planted => _planted;
+
+  /// How deep the typical rep went against the deepest one, 0..1.
+  double get depth {
+    if (_repBottoms.isEmpty) return 0;
+    final travel = [for (final b in _repBottoms) (1 - b).clamp(0.0, 1.0)];
+    final deepest = travel.reduce(math.max);
+    if (deepest <= 0) return 0;
+    return (_median(travel) / deepest).clamp(0.0, 1.0);
+  }
+
+  /// Reps counted with the head only just past the bottom line.
+  int get borderline =>
+      _repBottoms.where((b) => b > kBottomShare - kBorderlineBand).length;
+
+  /// Dips inside the set that stopped just short of the bottom line and came
+  /// back up.
+  int get nearMisses => _insideSet(_nearMissAt);
+
+  /// Full swings inside the set that finished with a hand off the floor, and
+  /// were refused.
+  int get refused => _insideSet(_refusedAt);
+
+  /// Only between the first rep and the last: a close call before the first
+  /// is somebody getting into position, and after the last, getting up —
+  /// on the recorded sets, exactly where those two turned up.
+  int _insideSet(List<int> times) {
+    if (_repTimes.isEmpty) return 0;
+    final first = _repTimes.first;
+    final last = _repTimes.last;
+    return times.where((t) => t > first && t < last).length;
+  }
+
+  /// True when nothing about the set was a close call. See
+  /// [PushupCount.confident].
+  bool get confident =>
+      _reps > 0 && refused == 0 && nearMisses == 0 && borderline == 0;
+
+  /// Starts the count over from [atMs], keeping everything learned about the
+  /// hands, the floor and this lifter's lockout — for the moment a countdown
+  /// ends and the round begins.
+  ///
+  /// A rep already on its way back up when the clock starts went down before
+  /// it, so it is not this round's: the lifter has to be seen at the top again
+  /// first.
+  void restartCount(int atMs) {
+    _reps = 0;
+    _repTimes.clear();
+    _repBottoms.clear();
+    _refusedAt.clear();
+    _nearMissAt.clear();
+    _lastRepAt = null;
+    _origin = atMs;
+    if (_phase == _Phase.down) _phase = _Phase.idle;
+  }
+
+  /// Lockout height in shoulder widths — what a full bar means. For the
+  /// diagnostics panel.
+  double get lockout => _lockout;
+
+  double get _lockout => _median(_tops);
+
+  PushupReading add(int atMs, BodyPose pose) {
+    final head = pose.confident(Joint.nose);
+    if (head != null) _heads.add((atMs, head.y));
+    final width = _shoulderWidth(pose);
+    if (width != null) _widths.add((atMs, width));
+    while (_heads.isNotEmpty && atMs - _heads.first.$1 > kHeadMedianSeconds * 1000) {
+      _heads.removeFirst();
+    }
+    while (_widths.isNotEmpty &&
+        atMs - _widths.first.$1 > kShoulderWidthSeconds * 1000) {
+      _widths.removeFirst();
+    }
+    if (_widths.isEmpty) return _reading(false);
+    final scale = _percentile([for (final w in _widths) w.$2], kShoulderWidthPercentile);
+
+    _hands.add(
+      atMs,
+      pose.confident(Joint.leftWrist),
+      pose.confident(Joint.rightWrist),
+      scale,
+    );
+    _planted = _hands.planted;
+    final floor = _hands.floorY;
+    if (floor == null || _heads.isEmpty) return _reading(false);
+
+    final raw = (floor - _median(_heads.map((h) => h.$2))) / scale;
+    final last = _lastAt;
+    if (_smooth == null || last == null) {
+      _smooth = raw;
+    } else {
+      final dt = (atMs - last) / 1000;
+      final a = 1 - math.exp(-dt / kSmoothingSeconds);
+      _smooth = _smooth! + (raw - _smooth!) * a;
+    }
+    _lastAt = atMs;
+    final h = _smooth!;
+    final share = h / _lockout;
+    _progress = share.clamp(0.0, 1.0);
+
+    var counted = false;
+    _dipLow = _dipLow == null ? share : math.min(_dipLow!, share);
+    switch (_phase) {
+      case _Phase.idle || _Phase.up:
+        _excursionTop = _excursionTop == null ? h : math.max(_excursionTop!, h);
+        if (_phase == _Phase.up && share >= kTopShare) {
+          // Back at the top without ever crossing the bottom line.
+          final dip = _dipLow!;
+          if (dip > kBottomShare && dip <= kBottomShare + kNearMissBand) {
+            _nearMissAt.add(atMs - _origin);
+          }
+          _dipLow = share;
+        }
+        // Armed by the top with the hands down — or by the hands settling
+        // after the body has already been at the top, as long as it has not
+        // yet reached the bottom. Hands finish settling a moment after
+        // somebody gets down, and a lifter who starts straight away is
+        // already on the way down by then: that first rep was being lost.
+        final top = _excursionTop;
+        final seenTop = share >= kTopShare ||
+            (share > kBottomShare &&
+                top != null &&
+                top / _lockout >= kTopShare);
+        if (_phase == _Phase.idle && seenTop && _planted) {
+          _phase = _Phase.up;
+          _dipLow = share;
+        }
+        if (share <= kBottomShare) {
+          // Whatever this excursion topped out at is a lockout reading,
+          // recorded whether or not it cleared the top line — a wrong
+          // reference then corrects itself instead of locking the count
+          // out. Only plausible ones: an excursion that never came near
+          // lockout, crouching on the way in, is not a top.
+          final top = _excursionTop;
+          final ref = _lockout;
+          if (top != null &&
+              top >= kLockoutBandLow * ref &&
+              top <= kLockoutBandHigh * ref) {
+            _tops.addLast(top);
+            while (_tops.length > kLockoutKeep) {
+              _tops.removeFirst();
+            }
+          }
+          _excursionTop = null;
+          if (_phase == _Phase.up) _phase = _Phase.down;
+        }
+      case _Phase.down:
+        if (share >= kTopShare) {
+          final lastRep = _lastRepAt;
+          final quickEnough =
+              lastRep == null || atMs - lastRep >= kMinRepSeconds * 1000;
+          if (_planted && quickEnough) {
+            _reps++;
+            _repTimes.add(atMs - _origin);
+            _repBottoms.add(_dipLow!);
+            _lastRepAt = atMs;
+            counted = true;
+          } else if (!_planted) {
+            // A full swing that finished with a hand off the floor: standing
+            // up at the end of a set, or an arm lifted to flex. Not a rep —
+            // and nothing to build the next one on.
+            _refusedAt.add(atMs - _origin);
+          }
+          _phase = _planted ? _Phase.up : _Phase.idle;
+          _excursionTop = h;
+          _dipLow = share;
+        }
+    }
+    return _reading(counted);
+  }
+
+  PushupReading _reading(bool counted) => PushupReading(
+    progress: _progress,
+    counted: counted,
+    reps: _reps,
+    planted: _planted,
+  );
+}
+
+// ─────────────────────────────── the verdict ─────────────────────────────
 
 class PushupCount {
   const PushupCount({
     required this.reps,
     required this.confident,
-    required this.perSignal,
-    this.live = 0,
+    this.perSignal = const {},
     this.depth = 0,
     this.gaveUp = false,
     this.recordingPath,
@@ -105,8 +523,23 @@ class PushupCount {
     this.durationMs = 0,
   });
 
-  /// When each rep bottomed out, milliseconds from the start of the set. Fed
-  /// to the backend on upload, and what lets a future opponent's bar move at
+  /// The verdict of a tracker that watched the whole set.
+  factory PushupCount.from(PushupTracker tracker, {int durationMs = 0}) =>
+      PushupCount(
+        reps: tracker.reps,
+        confident: tracker.confident,
+        perSignal: {
+          'refused': tracker.refused,
+          'nearMisses': tracker.nearMisses,
+          'borderline': tracker.borderline,
+        },
+        depth: tracker.depth,
+        repTimes: tracker.repTimes,
+        durationMs: durationMs,
+      );
+
+  /// When each rep completed, milliseconds from the start of the set. Fed to
+  /// the backend on upload, and what lets a future opponent's bar move at
   /// this lifter's actual pace instead of their total spread evenly across
   /// the clock.
   final List<int> repTimes;
@@ -136,7 +569,6 @@ class PushupCount {
     reps: reps,
     confident: confident,
     perSignal: perSignal,
-    live: live,
     depth: depth,
     gaveUp: gaveUp,
     recordingPath: path,
@@ -144,31 +576,11 @@ class PushupCount {
     durationMs: durationMs,
   );
 
-  /// The same verdict, with when each rep landed and how long the set ran
-  /// attached.
-  ///
-  /// Kept separate from the constructor call in [countPushups] because that
-  /// function only ever sees bare poses — no timestamps — while the timings
-  /// are read off the recorded frames themselves, by [repTimes].
-  PushupCount withTimes(List<int> times, {required int durationMs}) =>
-      PushupCount(
-        reps: reps,
-        confident: confident,
-        perSignal: perSignal,
-        live: live,
-        depth: depth,
-        gaveUp: gaveUp,
-        recordingPath: recordingPath,
-        repTimes: times,
-        durationMs: durationMs,
-      );
-
   /// The same verdict, remembering that it was abandoned.
   PushupCount surrendered(bool gaveUp) => PushupCount(
     reps: reps,
     confident: confident,
     perSignal: perSignal,
-    live: live,
     depth: depth,
     gaveUp: gaveUp,
     recordingPath: recordingPath,
@@ -180,513 +592,71 @@ class PushupCount {
   ///
   /// Against the lifter rather than against a table of angles: 1 means every
   /// rep travelled as far as their best one, and 0.6 means the typical rep
-  /// stopped well short of it. A number measured in degrees would need to know
-  /// what a full push-up is for this body at this camera angle, which is
-  /// exactly the thing no fixed threshold has ever got right here.
+  /// stopped well short of it.
   final double depth;
 
-  /// The count, taken as the lowest of whichever signals were readable.
-  ///
-  /// Was the median, until fourteen labelled sets showed why that was wrong:
-  /// the shoulder and hip signals both measure height above the *same* wrist
-  /// line, so whatever fools one — an elbow that settles into lockout a beat
-  /// after the body has already stopped rising, a wrist the tracker nudges —
-  /// tends to fool the other the same way at the same moment. That is not two
-  /// signals agreeing; it is one artifact voting twice, and it beat the nose
-  /// two to one on four separate sets, over-counting by as much as 20 reps.
-  /// The nose was the outlier every one of those times, and it was also the
-  /// smaller number every one of those times. Across all fourteen sets the
-  /// lowest signal nearly halved the mean error the median gave and turned a
-  /// confident, wrong 25-for-20 into a correctly unsure 22 — the one real
-  /// regression was a single set where the shoulder under-read on its own,
-  /// costing five reps to save fifty elsewhere.
   final int reps;
 
-  /// The count a moment ago, for the number on screen while the set is still
-  /// running — the median of whichever signals were readable, not the lowest.
-  ///
-  /// A live counter only ever sees part of a set, and each signal confirms
-  /// its own turns at its own pace: waiting on the slowest of three to agree
-  /// before the number moves, measured on a real 27-rep set, meant it sat
-  /// still for up to a hundred frames — three seconds — after a rep had
-  /// plainly landed, on the same recording where the *final* lowest-of-three
-  /// score was exactly right. [reps] is correct because it can afford to
-  /// wait for the whole set; a lifter mid-set cannot, so this reads the
-  /// screen wants speed and [reps] wants to be right, and a live number
-  /// three seconds behind a rep somebody just felt land is its own kind of
-  /// wrong.
-  final int live;
-
-  /// True when the readable signals agreed within [kAgreementSlack]. False is
-  /// not a failure — it is the counter saying so, which is worth more to the
-  /// person than a confident wrong number.
+  /// False when the set had a close call in it: a rep counted with the head
+  /// only just past the bottom line, a dip that stopped just short of it, or
+  /// a full swing refused because a hand was off the floor. Each is a place
+  /// the count could honestly have gone the other way, and the confirm screen
+  /// asks the lifter rather than presenting a guess as a fact.
   final bool confident;
 
-  /// What each signal made of it, for diagnostics and for the accuracy
-  /// harness. Keys are stable names.
+  /// What went into [confident], for diagnostics and the accuracy harness.
   final Map<String, int> perSignal;
 }
 
-/// Counts a whole set of push-ups from its recorded poses.
+/// Counts a whole recorded set, with the same tracker the screen runs live.
 ///
-/// Scored at the end rather than live, deliberately. A live counter decides
-/// each rep knowing only what came before it, and at the start of a set that is
-/// nothing — which is how a range learned on the fly ends up refusing the reps
-/// that would have taught it. With the set in hand, every rep is judged against
-/// the same evidence as every other.
-PushupCount countPushups(List<BodyPose> frames) {
-  if (frames.length < 20) {
-    return const PushupCount(reps: 0, confident: false, perSignal: {});
-  }
-
-  // The set starts when the lifter is down in position, not when the camera
-  // opened. What comes before is them walking up and lowering onto their
-  // hands — one descent, bigger than any rep, and scored as one until this
-  // line existed. Reported from a phone: "it counted one and I hadn't got
-  // down yet."
-  //
-  // And if nobody was ever down in position, nothing here is a push-up. The
-  // count goes back as zero and *unsure*, not as zero and certain: the confirm
-  // screen asks the lifter for the number, which is the right way to end a set
-  // the camera could not read.
-  final start = setStartsAt(frames);
-  if (start == null) {
-    return const PushupCount(reps: 0, confident: false, perSignal: {});
-  }
-  final set = frames.sublist(start);
-  if (set.length < 20) {
-    return const PushupCount(reps: 0, confident: false, perSignal: {});
-  }
-
-  // Three readings of the body's height above its own hands, from three
-  // different landmarks. The elbow is measured too but deliberately kept OUT
-  // of the count — see [_elbowAngle].
-  final signals = <String, List<double>>{
-    'shoulderHeight': _series(set, _shoulderAboveWrists),
-    'noseHeight': _series(set, _noseAboveWrists),
-    'hipHeight': _series(set, _hipAboveWrists),
-  };
-
-  // Against each other rather than a table: a camera angle that leaves the
-  // shoulders and hips barely rising above the wrists — the rest of the body
-  // still reads the set fine, this landmark just is not moving on this
-  // camera angle — turns that flat line's own tracker noise into turns of
-  // its own, well short of the range the readable signals actually saw. A
-  // signal is trusted only once it has covered a real share of whatever the
-  // best-travelled signal covered.
-  final spreads = signals.map((name, s) => MapEntry(name, _spread(s)));
-  final widestSpread = spreads.values.fold(0.0, math.max);
-
-  final counts = <String, int>{};
-  signals.forEach((name, series) {
-    if (widestSpread > 0 &&
-        spreads[name]! < widestSpread * kMinRelativeSpread) {
-      return;
-    }
-    final n = _cyclesIn(series);
-    if (n > 0) counts[name] = n;
-  });
-
-  // Reported for diagnostics, never counted.
-  final elbow = _cyclesIn(_series(set, _elbowAngle));
-
-  if (counts.isEmpty) {
-    return const PushupCount(reps: 0, confident: false, perSignal: {});
-  }
-
-  // The lowest, not the middle one — see [PushupCount.reps].
-  final values = counts.values.toList()..sort();
-  final reps = values.first;
-  final spread = values.last - values.first;
-
-  return PushupCount(
-    reps: reps,
-    // The middle one — see [PushupCount.live]. Deliberately not [reps]: the
-    // screen wants whichever signal just moved, not whichever is slowest.
-    live: values[values.length ~/ 2],
-    confident:
-        counts.length >= 2 &&
-        spread <= math.max(1, (reps * kAgreementShare).round()),
-    perSignal: {...counts, 'elbow(unused)': elbow},
-    // Read off the shoulders, the steadiest of the three.
-    depth: _depthOf(signals['shoulderHeight'] ?? const []),
-  );
-}
-
-/// The depth share at which a set counts as clean.
-///
-/// Eight tenths: the typical rep travelled at least eighty per cent of what
-/// the deepest one did. Not a verdict on technique — the camera cannot give
-/// one — but it can see a set getting shallower as the minute wears on, which
-/// is the thing a lifter can act on.
-const kCleanDepth = 0.8;
-
-/// Reverted. The idea was to let the meter's low/high ease back toward
-/// recent values instead of only ever growing — measured as an improvement
-/// against recorded clips replayed frame by frame, and shipped on that
-/// basis. Live on a phone it was a regression bad enough to be reported as
-/// the bar "not working at all": decaying toward *whatever the current
-/// frame reads*, on every frame, pulls the reference toward the middle of
-/// the range continuously, because most of a rep is spent away from its own
-/// top and bottom. Only the rare frame that lands on a genuine new extreme
-/// resets it; every other one erodes it. Over a real multi-rep set the span
-/// this divides by collapses, and a collapsed span turns small, ordinary
-/// movement into a bar that swings end to end — which reads as broken,
-/// because it is. The recorded-clip metric this was measured against
-/// (how often the bar reads near 0 or 1) could not tell that apart from the
-/// bar genuinely tracking the real top and bottom, since a collapsed span
-/// produces the same reading either way. Fixing the original problem — an
-/// all-time high inflated once by the lifter standing up at the end — needs
-/// something that only moves on an actual new extreme, not on every frame
-/// that isn't one; nothing here does that safely yet, so this reverts to
-/// the plain all-time low/high rather than ship a meter proven broken live.
-
-/// How far through a rep the body is, right now.
-///
-/// The meter on screen and the bar beside it used to be driven by a separate
-/// engine reading the elbow angle against a calibrated range — a second
-/// opinion that disagreed with the count constantly, and on a phone propped on
-/// the floor was reading a joint it could barely see. This reads the same
-/// signal the count is scored from, so the bar and the number can no longer
-/// tell the lifter different things.
-///
-/// The range is the set's own: whatever this body has covered so far, rather
-/// than a table of angles it might never reach.
-class PushupMeter {
-  final _filter = Smoothed(weight: kSmoothing);
-
-  double? _low;
-  double? _high;
-
-  /// 1 at the top of the range seen so far, 0 at the bottom, or null until
-  /// there is enough travel to mean anything.
-  double? add(BodyPose pose) {
-    if (!pose.isTracked) return null;
-    final raw = _shoulderAboveWrists(pose);
-    if (raw == null) return null;
-
-    final value = _filter.add(raw);
-    _low = _low == null ? value : math.min(_low!, value);
-    _high = _high == null ? value : math.max(_high!, value);
-
-    final span = _high! - _low!;
-    // Under a tenth of the body's height above its hands, nobody has moved
-    // enough for a fraction of it to mean anything.
-    if (span < 0.1) return null;
-    return ((value - _low!) / span).clamp(0.0, 1.0);
-  }
-
-  /// Forgets the range. For a restart, where the last set's travel says
-  /// nothing about this one.
-  void reset() {
-    _low = null;
-    _high = null;
-  }
-}
-
-/// How far a typical rep travelled, against the furthest one in the set.
-///
-/// The set is its own yardstick. A lifter who goes all the way down every time
-/// reads 1; one whose reps get shallower as they tire reads lower, and the
-/// number says something true about the set rather than about a threshold
-/// somebody guessed at.
-double _depthOf(List<double> series) {
-  if (series.length < 20) return 0;
-
-  final rough = _turns(series, _spread(series) * 0.08);
-  if (rough.length < kMinTurns) return 0;
-
-  final swings = <double>[
-    for (var i = 1; i < rough.length; i++)
-      (rough[i].value - rough[i - 1].value).abs(),
-  ]..sort();
-  if (swings.isEmpty) return 0;
-
-  final deepest = swings.last;
-  if (deepest <= 0) return 0;
-  return (swings[swings.length ~/ 2] / deepest).clamp(0.0, 1.0);
-}
-
-/// When each rep bottomed out, in milliseconds from the start of the set.
-///
-/// Read off the shoulder-height signal, which is the steadiest of the three and
-/// the one whose low point lands exactly where a person would say "that is the
-/// bottom of a press-up". Used by the report so somebody checking the count can
-/// scrub a video to a named second rather than counting it from the beginning.
-List<int> repTimes(List<RecordedFrame> frames) {
-  final kept = <RecordedFrame>[];
-  final series = <double>[];
-  final filter = Smoothed(weight: kSmoothing);
-
-  // The same start line the count uses, so the times line up with the reps.
-  final from = setStartsAt([for (final f in frames) f.pose]);
-  if (from == null) return const [];
-  for (var i = from; i < frames.length; i++) {
-    final f = frames[i];
-    if (!f.pose.isTracked) continue;
-    final v = _shoulderAboveWrists(f.pose);
-    if (v == null) continue;
-    series.add(filter.add(v));
-    kept.add(f);
-  }
-  if (series.length < 20) return const [];
-
-  final rough = _turns(series, _spread(series) * 0.08);
-  if (rough.length < kMinTurns) return const [];
-
-  final swings = <double>[
-    for (var i = 1; i < rough.length; i++)
-      (rough[i].value - rough[i - 1].value).abs(),
-  ]..sort();
-  final typical = swings[swings.length ~/ 2];
-  if (typical <= 0) return const [];
-
-  final turns = _turns(series, typical * kSwingShare);
-
-  // Only the troughs — the body at its lowest — and only those belonging to a
-  // cycle long enough to have been a rep.
-  final out = <int>[];
-  for (var i = 0; i + 2 < turns.length; i += 2) {
-    if (turns[i + 2].index - turns[i].index < kMinFramesPerRep) continue;
-    final a = turns[i], b = turns[i + 1];
-    final low = a.value <= b.value ? a : b;
-    out.add(kept[low.index].atMs);
-  }
-  return out;
-}
-
-// ─────────────────────────────── the three signals ───────────────────────────
-
-/// Shoulder–elbow–wrist, averaged over whichever arms are visible.
-///
-/// **Measured but not counted**, and that is the finding this file exists to
-/// record. The elbow is the obvious signal for a push-up and it is the worst
-/// one by a distance: across eight clips it over-counted every time, twenty-five
-/// against six on an army fitness test, forty-two against twelve on a SEAL
-/// training clip. The arms are the most foreshortened and most self-occluded
-/// part of a body in a push-up position, and the angle jitters accordingly.
-///
-/// It stays in the diagnostics because a huge gap between it and the body
-/// signals is informative — but it never touches the number.
-double? _elbowAngle(BodyPose pose) {
-  double? side(Joint s, Joint e, Joint w) {
-    final a = pose.confident(s), b = pose.confident(e), c = pose.confident(w);
-    if (a == null || b == null || c == null) return null;
-    return angleBetween(a, b, c);
-  }
-
-  final left = side(Joint.leftShoulder, Joint.leftElbow, Joint.leftWrist);
-  final right = side(Joint.rightShoulder, Joint.rightElbow, Joint.rightWrist);
-  if (left != null && right != null) return (left + right) / 2;
-  return left ?? right;
-}
-
-/// How far the shoulders sit above the hands, scaled by the torso.
-///
-/// This is the push-up as a bystander sees it: the body goes down, the body
-/// comes up. It survives the camera angle that ruins the elbow, because it
-/// measures the thing that actually moves rather than the joint that bends —
-/// and the hands are planted, so they make a stable line to measure from.
-double? _shoulderAboveWrists(BodyPose pose) {
-  final shoulder = _mid(pose, Joint.leftShoulder, Joint.rightShoulder);
-  final wrist = _mid(pose, Joint.leftWrist, Joint.rightWrist);
-  final hip = _mid(pose, Joint.leftHip, Joint.rightHip);
-  if (shoulder == null || wrist == null || hip == null) return null;
-
-  final torso = _distance(shoulder, hip);
-  if (torso < 0.02) return null;
-
-  // Image y grows downward, so a shoulder above the wrists is a negative
-  // difference; negated here so the signal rises as the body rises, which
-  // makes every reading in this file read the same way round.
-  return -(shoulder.$2 - wrist.$2) / torso;
-}
-
-/// The head's height above the hand line, scaled the same way.
-///
-/// The third opinion, and the one that holds up when the shoulders are hidden
-/// behind the arms — which is exactly what a camera placed in front of someone
-/// doing push-ups sees. The nose is a single landmark rather than a midpoint,
-/// so it is noisier; it earns its place by failing in different circumstances
-/// from the other two.
-double? _noseAboveWrists(BodyPose pose) {
-  final nose = pose.confident(Joint.nose);
-  final wrist = _mid(pose, Joint.leftWrist, Joint.rightWrist);
-  final shoulder = _mid(pose, Joint.leftShoulder, Joint.rightShoulder);
-  final hip = _mid(pose, Joint.leftHip, Joint.rightHip);
-  if (nose == null || wrist == null || shoulder == null || hip == null) {
-    return null;
-  }
-
-  final torso = _distance(shoulder, hip);
-  if (torso < 0.02) return null;
-  return -(nose.y - wrist.$2) / torso;
-}
-
-/// The hips' height above the hand line.
-///
-/// The third body reading. The hips are the best-tracked landmarks in a
-/// push-up — big, central, rarely occluded — and they rise and fall with the
-/// whole body. Where the shoulders vanish behind the arms and the nose turns
-/// away from the lens, the hips are usually still there.
-double? _hipAboveWrists(BodyPose pose) {
-  final hip = _mid(pose, Joint.leftHip, Joint.rightHip);
-  final wrist = _mid(pose, Joint.leftWrist, Joint.rightWrist);
-  final shoulder = _mid(pose, Joint.leftShoulder, Joint.rightShoulder);
-  if (hip == null || wrist == null || shoulder == null) return null;
-
-  final torso = _distance(shoulder, hip);
-  if (torso < 0.02) return null;
-  return -(hip.$2 - wrist.$2) / torso;
-}
-
-// ──────────────────────────────── the counting ───────────────────────────────
-
-/// How much of each new reading the filter takes. Higher is more responsive.
-double kSmoothing = 0.4;
-
-List<double> _series(List<BodyPose> frames, double? Function(BodyPose) read) {
-  final out = <double>[];
-  final filter = Smoothed(weight: kSmoothing);
+/// [startMs] is when the round began, for a recording that also holds the
+/// seconds before it: those frames teach the tracker the lifter's hands and
+/// lockout, exactly as they did on the phone, and nothing in them counts.
+PushupCount countPushups(List<RecordedFrame> frames, {int? startMs}) {
+  final tracker = PushupTracker();
+  var started = startMs == null;
   for (final f in frames) {
-    if (!f.isTracked) continue;
-    final v = read(f);
-    if (v == null) continue;
-    out.add(filter.add(v));
-  }
-  return out;
-}
-
-/// Full swings of a signal.
-///
-/// A rep is one cycle — a turn and a turn back — not a journey between two
-/// angles that have to be known in advance. Nothing is looked up: the ends of a
-/// cycle are wherever the signal turns around. Depth is kept by asking a turn
-/// to travel half of what this set's turns usually travel.
-int _cyclesIn(List<double> series) {
-  if (series.length < 20) return 0;
-
-  // A generous first pass to learn the scale of this person's movement, and a
-  // second at half of it. The threshold comes from the set, never from a table.
-  final rough = _turns(series, _spread(series) * 0.08);
-  if (rough.length < kMinTurns) return 0;
-
-  final swings = <double>[
-    for (var i = 1; i < rough.length; i++)
-      (rough[i].value - rough[i - 1].value).abs(),
-  ]..sort();
-  final typical = swings[swings.length ~/ 2];
-  if (typical <= 0) return 0;
-
-  final turns = _turns(series, typical * kSwingShare);
-
-  // Pairs of turns, each pair long enough to be a person rather than a shiver.
-  // Length is judged on the finished cycle rather than between turns: an
-  // earlier version refused turns that arrived too soon and, in doing so, left
-  // the detector hunting for a peak while the body was already descending —
-  // losing not just that turn but the whole of the next descent. Ten reps came
-  // out as two.
-  final candidates = <int>[]; // indices into `turns`, each i is one candidate
-  for (var i = 0; i + 2 < turns.length; i += 2) {
-    if (turns[i + 2].index - turns[i].index >= kMinFramesPerRep) {
-      candidates.add(i);
+    if (!started && f.atMs >= startMs!) {
+      tracker.restartCount(startMs);
+      started = true;
     }
+    tracker.add(f.atMs, f.pose);
   }
-  if (candidates.isEmpty) return 0;
-
-  // And a real way down, judged against the other candidates in this same
-  // set rather than against the raw swings the threshold above was set
-  // from — those include the half-turns either side of a rep as well as the
-  // rep itself, and a hand settling into place at the very start can swing
-  // wider than any push-up that follows. The candidates that already made it
-  // this far are cleaner company: mostly real reps, so the one among them
-  // that barely moved is the one worth doubting.
-  final depths = [
-    for (final i in candidates) (turns[i + 1].value - turns[i].value).abs(),
-  ]..sort();
-  final typicalDepth = depths[depths.length ~/ 2];
-
-  return candidates
-      .where(
-        (i) =>
-            (turns[i + 1].value - turns[i].value).abs() >=
-            typicalDepth * kMinCycleDepth,
-      )
-      .length;
+  // Stopped before the round began: nothing counts.
+  if (!started) tracker.restartCount(startMs!);
+  final from = startMs ?? (frames.isEmpty ? 0 : frames.first.atMs);
+  final duration = frames.isEmpty ? 0 : math.max(0, frames.last.atMs - from);
+  return PushupCount.from(tracker, durationMs: duration);
 }
 
-class _Turn {
-  const _Turn(this.value, this.index);
-  final double value;
-  final int index;
+// ─────────────────────────────── helpers ─────────────────────────────────
+
+double? _shoulderWidth(BodyPose pose) {
+  final l = pose.confident(Joint.leftShoulder);
+  final r = pose.confident(Joint.rightShoulder);
+  if (l == null || r == null) return null;
+  final w = math.sqrt(math.pow(l.x - r.x, 2) + math.pow(l.y - r.y, 2));
+  return w < 0.02 ? null : w;
 }
 
-List<_Turn> _turns(List<double> series, double prominence) {
-  final out = <_Turn>[];
-  if (series.isEmpty || prominence <= 0) return out;
+double _dist(double x, double y, (double, double) p) =>
+    math.sqrt(math.pow(x - p.$1, 2) + math.pow(y - p.$2, 2));
 
-  var candidate = series.first;
-  var candidateAt = 0;
-  var rising = true;
-
-  for (var i = 0; i < series.length; i++) {
-    final v = series[i];
-    if (rising) {
-      if (v > candidate) {
-        candidate = v;
-        candidateAt = i;
-      } else if (candidate - v > prominence) {
-        out.add(_Turn(candidate, candidateAt));
-        rising = false;
-        candidate = v;
-        candidateAt = i;
-      }
-    } else {
-      if (v < candidate) {
-        candidate = v;
-        candidateAt = i;
-      } else if (v - candidate > prominence) {
-        out.add(_Turn(candidate, candidateAt));
-        rising = true;
-        candidate = v;
-        candidateAt = i;
-      }
-    }
-  }
-
-  // The turn the set ends on.
-  //
-  // A turn is only emitted above once the signal has reversed away from it,
-  // and the last one never gets that — the set stops. So the closing extreme
-  // sits in `candidate` and is thrown away, taking the last rep with it.
-  //
-  // Conditional on the signal having actually travelled to reach it: somebody
-  // who stops halfway down has not finished a rep, and the same prominence
-  // that judged every other turn judges this one.
-  if (out.isEmpty || (candidate - out.last.value).abs() > prominence) {
-    out.add(_Turn(candidate, candidateAt));
-  }
-
-  return out;
+double _median(Iterable<double> values) {
+  final s = values.toList()..sort();
+  final n = s.length;
+  if (n == 0) return double.nan;
+  return n.isOdd ? s[n ~/ 2] : (s[n ~/ 2 - 1] + s[n ~/ 2]) / 2;
 }
 
-/// The signal's range, trimmed at both ends so one lost frame cannot set it.
-double _spread(List<double> series) {
-  final sorted = [...series]..sort();
-  double at(double f) =>
-      sorted[(f * (sorted.length - 1)).round().clamp(0, sorted.length - 1)];
-  return at(0.95) - at(0.05);
+/// Linear-interpolated percentile, the same definition numpy uses, so the
+/// numbers measured on the bench and the ones the phone computes agree.
+double _percentile(List<double> values, int q) {
+  final s = [...values]..sort();
+  if (s.length == 1) return s.first;
+  final pos = (s.length - 1) * q / 100;
+  final lo = pos.floor();
+  final hi = pos.ceil();
+  return s[lo] + (s[hi] - s[lo]) * (pos - lo);
 }
-
-(double, double)? _mid(BodyPose pose, Joint a, Joint b) {
-  final pa = pose.confident(a);
-  final pb = pose.confident(b);
-  if (pa != null && pb != null) {
-    return ((pa.x + pb.x) / 2, (pa.y + pb.y) / 2);
-  }
-  final one = pa ?? pb;
-  return one == null ? null : (one.x, one.y);
-}
-
-double _distance((double, double) a, (double, double) b) =>
-    math.sqrt(math.pow(a.$1 - b.$1, 2) + math.pow(a.$2 - b.$2, 2));

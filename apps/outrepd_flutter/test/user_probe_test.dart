@@ -43,7 +43,7 @@ void main() {
       );
       final poses = [for (final f in recording.frames) f.pose];
       final marks = inPushUpPosition(poses);
-      final counted = countPushups(poses);
+      final counted = countPushups(recording.frames);
 
       final lines = <String>[];
       // A row a second: 25 frames per second in these recordings.
@@ -113,8 +113,7 @@ void main() {
       ].join('  ')}\n'
           '${lines.join('\n')}\n'
           '  counted ${counted.reps}  confident ${counted.confident}  '
-          '${counted.perSignal}\n'
-          '  start line ${setStartsAt(poses)}\n');
+          '${counted.perSignal}\n');
     }
   });
 }

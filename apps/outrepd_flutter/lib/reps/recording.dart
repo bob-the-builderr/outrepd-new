@@ -58,10 +58,22 @@ class RecordedFrame {
 }
 
 class PoseRecording {
-  PoseRecording({required this.exerciseId, required this.frames, this.note});
+  PoseRecording({
+    required this.exerciseId,
+    required this.frames,
+    this.note,
+    this.startMs,
+  });
 
   final String exerciseId;
   final List<RecordedFrame> frames;
+
+  /// When the round began, on the same clock as the frames. The frames before
+  /// it are the lifter getting into position, kept because the live counter
+  /// learned their hands and lockout from them — a replay that skipped them
+  /// would be scoring a different set from the one the phone scored. Null on
+  /// recordings that start with the round.
+  final int? startMs;
 
   /// What actually happened, written by whoever recorded it — "10 push-ups".
   /// Without it a recording proves nothing, because there is no truth to
@@ -71,12 +83,14 @@ class PoseRecording {
   Map<String, dynamic> toJson() => {
         'exercise': exerciseId,
         if (note != null) 'note': note,
+        if (startMs != null) 'start': startMs,
         'frames': frames.map((f) => f.toJson()).toList(),
       };
 
   static PoseRecording fromJson(Map<String, dynamic> json) => PoseRecording(
         exerciseId: json['exercise'] as String,
         note: json['note'] as String?,
+        startMs: (json['start'] as num?)?.toInt(),
         frames: (json['frames'] as List)
             .map((f) => RecordedFrame.fromJson(f as Map<String, dynamic>))
             .toList(),

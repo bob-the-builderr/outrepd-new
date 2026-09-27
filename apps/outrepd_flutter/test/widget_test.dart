@@ -7,7 +7,6 @@
 library;
 
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -20,6 +19,8 @@ import 'package:outrepd/reps/pose.dart';
 import 'package:outrepd/reps/pose_source.dart';
 import 'package:outrepd/screens/onboarding.dart';
 import 'package:outrepd/theme.dart';
+
+import 'support/synthetic_poses.dart';
 
 /// Answers the email flow the way a real server would for a brand new
 /// address: the code is always accepted, since these tests are about the
@@ -211,16 +212,10 @@ void main() {
     await tap(tester, 'Looks good');
     expect(find.text('CALIBRATING'), findsOneWidget);
 
-    // Four unhurried push-ups. The step asks for three.
-    for (var rep = 0; rep < 4; rep++) {
-      for (var f = 0; f < 30; f++) {
-        sources.last.emit(_pushUpAt((1 + math.cos(f / 30 * 2 * math.pi)) / 2));
-        await tester.pump();
-      }
-    }
-    for (var i = 0; i < 10; i++) {
-      sources.last.emit(_pushUpAt(1));
-      await tester.pump();
+    // Four unhurried push-ups, thirty poses a second. The step asks for three.
+    for (final pose in pushUpSet(4)) {
+      sources.last.emit(pose);
+      await tester.pump(const Duration(milliseconds: kFrameMs));
     }
     await tester.pumpAndSettle();
 
@@ -277,15 +272,9 @@ void main() {
     await tester.pump();
     await tap(tester, 'Looks good');
 
-    for (var rep = 0; rep < 4; rep++) {
-      for (var f = 0; f < 30; f++) {
-        sources.last.emit(_pushUpAt((1 + math.cos(f / 30 * 2 * math.pi)) / 2));
-        await tester.pump();
-      }
-    }
-    for (var i = 0; i < 10; i++) {
-      sources.last.emit(_pushUpAt(1));
-      await tester.pump();
+    for (final pose in pushUpSet(4)) {
+      sources.last.emit(pose);
+      await tester.pump(const Duration(milliseconds: kFrameMs));
     }
     await tester.pumpAndSettle();
 
@@ -406,32 +395,6 @@ BodyPose _framedBody() {
     Joint.rightKnee: at(270, 440),
     Joint.leftAnkle: at(210, 540),
     Joint.rightAnkle: at(270, 540),
-  });
-}
-
-/// A body mid push-up: [up] is 1 at the top and 0 at the bottom.
-///
-/// Laid out as a camera on the floor sees one — the body across the frame, the
-/// hands planted under the shoulders. A standing body, however straight, is
-/// not a push-up and no longer counts as one.
-BodyPose _pushUpAt(double up) {
-  PosePoint at(double x, double y) => PosePoint(x, y, 0.95);
-  final drop = (1 - up) * 90;
-
-  return BodyPose({
-    Joint.nose: at(150, 190 + drop),
-    Joint.leftShoulder: at(200, 200 + drop),
-    Joint.rightShoulder: at(205, 215 + drop),
-    Joint.leftElbow: at(175, 265 + drop * 0.4),
-    Joint.rightElbow: at(180, 275 + drop * 0.4),
-    Joint.leftWrist: at(190, 330),
-    Joint.rightWrist: at(195, 336),
-    Joint.leftHip: at(330, 214 + drop * 0.7),
-    Joint.rightHip: at(335, 228 + drop * 0.7),
-    Joint.leftKnee: at(430, 218 + drop * 0.4),
-    Joint.rightKnee: at(435, 232 + drop * 0.4),
-    Joint.leftAnkle: at(520, 222),
-    Joint.rightAnkle: at(525, 236),
   });
 }
 

@@ -15,13 +15,13 @@ library;
 
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math' as math;
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:outrepd/reps/pose.dart';
 import 'package:outrepd/reps/recording.dart';
 import 'package:outrepd/reps/replay.dart';
+
+import 'support/synthetic_poses.dart';
 
 void main() {
   group('the bench measures what it is given', () {
@@ -139,13 +139,32 @@ void main() {
         return;
       }
 
-      // Once there is evidence, this is the floor. It is deliberately low: the
-      // first honest number is whatever it is, and the job of this line is to
-      // catch a change that makes things worse, not to assert a target nobody
-      // has measured yet.
-      expect(report.withinOneRate, greaterThan(0.5),
-          reason: 'the counter is more than one rep out on over half of the '
-              'recorded sets:\n${report.describe()}');
+      // The floor, set from what the counter measured when it was rebuilt:
+      // fourteen labelled sets, thirteen exact and the last one out by one.
+      // The old counter managed half of them exact. A change that drops below
+      // this has made the counter worse on sets somebody actually did.
+      expect(report.withinOneRate, 1.0,
+          reason: 'a labelled set is now more than one rep out:\n'
+              '${report.describe()}');
+      expect(report.exactRate, greaterThanOrEqualTo(0.9),
+          reason: 'fewer than nine in ten labelled sets are exact:\n'
+              '${report.describe()}');
+    });
+
+    test('a set the counter gets wrong, it says it is unsure of', () {
+      // The one miss on the bench — 28 for 27, two counts while the lifter
+      // was still setting the camera up — was flagged, so the confirm screen
+      // asked instead of recording 28 as fact. A confident miss is the worst
+      // thing this counter can produce: nobody checks a number presented as
+      // certain.
+      final report = replayDirectory(Directory('test/recordings'));
+      for (final r in report.results) {
+        if (!r.exact) {
+          expect(r.confident, isFalse,
+              reason: '${r.name}: counted ${r.counted} for ${r.trueCount}, '
+                  'and said it was sure');
+        }
+      }
     });
 
     test('the lifter\'s own two sessions still score right', () {
@@ -178,83 +197,20 @@ void main() {
   });
 }
 
-/// Writes a session the way the app writes one.
-///
-/// The body is horizontal with the elbow sweeping the range a push-up covers,
-/// which is what the counter reads. Everything else is held still so the only
-/// thing moving is the thing being measured.
+/// Writes a session the way the app writes one: a moment at the top, the
+/// set, a moment at the top afterwards, thirty poses a second.
 void _writeSession(
   Directory dir, {
   required String name,
   required int cycles,
   required int? trueCount,
 }) {
-  const framesPerCycle = 30;
-  final frames = <RecordedFrame>[];
-  var at = 0;
-
-  void add(double up) {
-    frames.add(RecordedFrame(at, _pushUpPose(up)));
-    at += 33;
-  }
-
-  // Half a second of lead-in at the top. The camera is running before anybody
-  // starts, and a signal that begins exactly on an extreme gives the detector
-  // nothing to recognise that extreme against. It also gives the position
-  // check the frames it needs to see that the hands are staying put.
-  for (var i = 0; i < 15; i++) {
-    add(1);
-  }
-
-  for (var cycle = 0; cycle < cycles; cycle++) {
-    for (var i = 0; i < framesPerCycle; i++) {
-      // Starts at the top, like a push-up: down, then back up. Smooth, so
-      // turning points are turning points rather than a sawtooth the
-      // smoothing would round off.
-      add((1 + math.cos(i / framesPerCycle * 2 * math.pi)) / 2);
-    }
-  }
-
-  // And a moment at the top afterwards, the same way.
-  for (var i = 0; i < 10; i++) {
-    add(1);
-  }
-
   final json = PoseRecording(
     exerciseId: 'pushup',
-    frames: frames,
+    frames: timed(pushUpSet(cycles)),
     note: trueCount?.toString(),
   ).toJson();
   if (trueCount != null) json['trueCount'] = trueCount;
 
   File('${dir.path}/rep-pushup-$name.json').writeAsStringSync(jsonEncode(json));
-}
-
-/// A body in a push-up, [up] running 1 at the top to 0 at the bottom.
-///
-/// The body travels and the hands stay where they were put. An earlier version
-/// swung the wrist around a fixed shoulder, which is not a push-up — it is a
-/// person waving — and the position check was right to refuse it.
-BodyPose _pushUpPose(double up) {
-  PosePoint at(double x, double y) => PosePoint(x, y, 0.95);
-  final drop = (1 - up) * 90;
-
-  return BodyPose({
-    Joint.nose: at(150, 190 + drop),
-    Joint.leftShoulder: at(200, 200 + drop),
-    Joint.rightShoulder: at(205, 215 + drop),
-    Joint.leftElbow: at(175, 265 + drop * 0.4),
-    Joint.rightElbow: at(180, 275 + drop * 0.4),
-    // Planted on the floor.
-    Joint.leftWrist: at(190, 330),
-    Joint.rightWrist: at(195, 336),
-    // A body in a plank: hips, knees and ankles behind the shoulders and
-    // level with them, travelling less the further they are from the hands.
-    Joint.leftHip: at(330, 214 + drop * 0.7),
-    Joint.rightHip: at(335, 228 + drop * 0.7),
-    Joint.leftKnee: at(430, 218 + drop * 0.4),
-    Joint.rightKnee: at(435, 232 + drop * 0.4),
-    Joint.leftAnkle: at(520, 222),
-    Joint.rightAnkle: at(525, 236),
-  });
 }

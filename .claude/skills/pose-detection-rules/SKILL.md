@@ -1,25 +1,27 @@
 ---
 name: pose-detection-rules
-description: Rules that any camera rep counter in OUTREPD must obey — landmark mapping, angle maths, confidence floor, and the checks a repetition has to pass before it scores. Load before touching anything under lib/reps/, adding an exercise definition, or changing how reps are counted or judged.
+description: Rules that any camera rep counter in OUTREPD must obey — landmark mapping, the push-up signal, confidence floor, and the checks a repetition has to pass before it scores. Load before touching anything under lib/reps/, or changing how reps are counted, judged, or drawn on the bar.
 ---
 
 # Counting reps from a camera
 
-The failure this exists to prevent: **a counter that scores any movement.**
-Every rule below is one that a naive counter gets wrong, and each is locked by
-a test in `apps/outrepd_flutter/test/rep_engine_test.dart`. Change a rule,
-change its test, and never delete a test to make a change pass.
+The failure this exists to prevent: **a counter that scores any movement** —
+and its twin, **a counter that misses real reps**. Every rule below is one that
+a naive counter gets wrong. They are locked by tests in
+`apps/outrepd_flutter/test/counting_test.dart` (synthetic, through the actual
+screen) and `test/replay_test.dart` (fourteen labelled real sets). Change a
+rule, change its test, and never delete a test to make a change pass.
 
 ## What this project actually uses
 
 ML Kit (`google_mlkit_pose_detection`), addressed by **name**, not index:
 `PoseLandmarkType.leftShoulder`. Landmarks are mapped once, in
 `lib/reps/pose_source_camera.dart`, into the app's own `Joint` enum. Nothing
-downstream touches ML Kit types — that boundary is what lets the engine be
+downstream touches ML Kit types — that boundary is what lets the counter be
 driven by test data and by the browser demo.
 
 ML Kit and MediaPipe BlazePose share the same 33-landmark topology, so the
-MediaPipe indices carry over if a reference ever needs them:
+MediaPipe indices carry over (the offline bench extracts poses with MediaPipe):
 
 | Index | Landmark | `Joint` |
 |---|---|---|
@@ -37,102 +39,91 @@ indices into app code; add to the `Joint` enum and the mapping instead.
 ## Coordinates
 
 Normalised to 0..1 across the frame, so resolution and letterboxing never
-reach the maths. `z` is depth in the same units as `x`, measured from the
-hips, negative toward the camera.
+reach the maths.
 
-Depth is not optional. The phone stands **in front of** the lifter, because in
-a match they have to see their own count and their opponent. Facing the lens,
-a pressing arm moves mostly toward it, and a flat picture squashes that motion
-to nearly nothing — a 2D angle would barely move through a full push-up.
-
-Depth is estimated from one lens. It is good enough to keep an angle honest
-and too noisy to measure with; never build a rule that needs precise `z`.
-
-## The angle
-
-Angle at `vertex`, between the limbs reaching to `a` and `b`, in three
-dimensions:
-
-```
-u = a - vertex        v = b - vertex
-angle = acos( (u · v) / (|u| · |v|) ) in degrees
-```
-
-180° is a straight limb, 0° is folded shut. Clamp the cosine to [-1, 1] before
-`acos` — floating point drifts outside it and returns NaN, which silently
-poisons every downstream comparison.
-
-Measure both sides where visible and average them; a body turned slightly off
-square still reads correctly. Fall back to whichever side is visible.
+The phone stands **in front of** the lifter, on the floor, because in a match
+they have to see their own count and their opponent. Head-on, the arm and the
+torso project onto nearly the same line — an arm-to-body angle reads 3–6°
+through real push-ups — and the ankles are hidden in most frames. Never build
+a rule on an angle, on the ankles, or on precise `z`.
 
 ## Confidence floor
 
 **0.7 for anything that feeds a measurement or a rule.** A joint the tracker
-is guessing at must not move the meter, satisfy a form gate, or complete a
-rep. Guessed joints are the direct cause of phantom reps.
+is guessing at must not move the bar or complete a rep. Guessed joints are the
+direct cause of phantom reps.
 
 Drawing the skeleton uses a lower floor (0.35) on purpose: a limb vanishing
 from the picture is a smaller problem than a limb vanishing from the score.
 
-If too little of the body clears the floor, **pause** — do not guess and do
-not score. A bad camera angle must never cost someone a match.
+## The signal — one, and the bar is it
+
+`lib/reps/pushup_counter.dart`, `PushupTracker`. **The nose's height above the
+planted hands, in shoulder widths.** On all fourteen labelled sets, across
+cameras and angles, it sits near **1.0 at lockout** and near the floor at the
+bottom of a full rep.
+
+- **The bar** is that height as a share of *this lifter's* lockout (median of
+  the last five tops, seeded with two priors of 1.0; tops outside 0.6–1.8× the
+  reference are not tops). 0 on the floor, 1 at the top.
+- **The number and the bar come from the same tracker on the same frame.**
+  Never add a second counter for the screen, and never re-score the set at the
+  end with something else: a lifter watching one number and being handed
+  another is how this app lost trust before.
+- **Everything is timed in milliseconds**, never in frames. A 120 fps clip
+  once counted six push-ups as twenty because every window was a frame count.
+  Poses carry no timestamp: the screen stamps them with `clock.stopwatch()`
+  (package:clock), which also follows a widget test's fake clock.
+- Shoulder width is the 80th percentile of the last 3 s — it only ever reads
+  wrong *low* (one shoulder hides behind the other at an angle).
 
 ## A repetition scores only if all of these hold
 
-1. The meter entered the **bottom zone** (≤ 0.15 of travel), and
-2. then reached the **top zone** (≥ 0.85), and
-3. form was good **at the bottom** and **at the top**, and
-4. no continuous stretch of bad form longer than **300 ms** in between, and
-5. the climb took at least **300 ms**.
+1. The bar went **down to 0.5 or lower** (the bottom line), and
+2. then came **back up to 0.75 or higher** (the top line), and
+3. the **hands were planted** at that moment (at most 35% of the last 0.4 s
+   with a hand off its floor point), and
+4. at least **0.35 s** since the last rep, and
+5. the tracker was armed: it had seen the body at the top with the hands
+   down (or the hands settled after a top, before the bottom line).
 
 Notes that are easy to get wrong:
 
-- **Two zones, not one threshold.** One line means a shiver on it counts twice.
-- **Form at the bottom is decided once.** Do not let a later frame in the
-  bottom zone overwrite it, or anyone who sags, tidies up, then presses gets a
-  free rep.
-- **Time the climb, from the last moment at the bottom.** Resting down there
-  must not buy credit for a rep that was then jerked up.
-- **Keep the minimum time low.** A competitive push-up test runs near a rep a
-  second, so an honest climb can be half of that. The full-range requirement,
-  not the clock, is what stops cheating.
-- **Brief bad form is forgiven.** Under 300 ms is tracker noise, not a person.
-
-## Calibration
-
-Watch a **fixed window** (8 s of slow reps), then take the range from what was
-seen, trimmed 8% at each end.
-
-Do not end calibration on the first rep the default thresholds recognise. That
-only ever sees the travel those thresholds already covered, so it learns a
-truncated range, which compresses the meter and makes every later rep look
-rushed. This bug shipped once; do not reintroduce it.
-
-Refuse a range under 25° and keep the definition's own thresholds — standing
-still must not teach a range of nothing.
-
-## Adding an exercise
-
-Add a definition to `kExercises` in `lib/reps/exercise.dart`. Never write
-counting logic for a specific movement.
-
-A definition names the driving angle, the bottom and top of the travel, and
-the form gates. Bottom may be the larger number — a push-up folds shut at the
-bottom, a sit-up at the top — so map between the two ends rather than assuming
-an order.
-
-Gates carry a phase (`always`, `bottom`, `top`) and a message a lifter can act
-on. Depth is the meter's job; a gate never restates it. A gate that cannot be
-measured returns null and must **pass** — a half-framed lifter should be
-paused, not failed.
+- **Two lines, not one.** One line means a shiver on it counts twice.
+- **Half means half.** Every real rep bottomed at 0.05–0.44 of lockout (one at
+  0.50); deliberate half reps stopped at 0.59–0.79. Do not loosen the bottom
+  line to rescue a set; find out why the reading was wrong.
+- **The top line is below lockout on purpose** — tired arms stop short of
+  locking out, and the count lands the moment the bar crosses it.
+- **Hands, not body shape.** A push-up is the one movement where the hands
+  stay planted and the body travels to them. Floor points are per hand,
+  tolerate a label swap onto the other hand's point, re-plant a hand unseen
+  for 1 s, and re-plant a hand settled somewhere new for 0.8 s. Getting up at
+  the end is refused because the hands leave the floor before the head gets
+  back to the top line.
+- **The round restarts the count, not the tracker.** The screen runs the
+  tracker from the moment the camera opens so it already knows the hands and
+  lockout when the countdown ends (`restartCount`). A rep already on its way
+  up at the whistle does not count.
+- **Unsure, not wrong.** A rep that bottomed within 0.05 under the line, a dip
+  that stopped within 0.05 above it, or a swing refused for a hand off the
+  floor — *between the first and last rep* — marks the set unsure, and the
+  confirm screen asks. A miss must never be reported as certain.
 
 ## Before claiming it works
 
 Accuracy is the whole product. A counter that is wrong once is not trusted
 again, and no amount of surrounding features recovers that.
 
-The engine is pure Dart and driven by synthetic poses, so counting rules are
-testable without a camera — write the test. But a green suite proves the rules
-hold, not that detection works on a real body: lighting, clothing, camera
-angle and phone speed only show up on a device. Say plainly which of the two
-has actually been checked.
+1. **Replay the labelled sets**: `flutter test test/replay_test.dart` (floor:
+   every set within one, nine in ten exact).
+2. **Keep the Python reference in step**: `D:/outrepd-tools/bench/counter.py`
+   mirrors the Dart line for line and must print the same counts; `sweep.py`
+   checks each setting sits on a plateau, not a knife edge.
+3. **Synthetic bodies must have real proportions** — nose about 1.0 shoulder
+   width above the hands at lockout (`test/support/synthetic_poses.dart`). A
+   body drawn any other way tests a counter against nobody.
+
+A green suite proves the rules hold on recordings, not that detection works on
+a real body: lighting, clothing, camera angle and phone speed only show up on
+a device. Say plainly which of the two has actually been checked.

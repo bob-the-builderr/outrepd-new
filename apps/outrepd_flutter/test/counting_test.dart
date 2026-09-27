@@ -1,13 +1,18 @@
-/// Does the number on the screen move when somebody does push-ups?
+/// Does the number on the screen move when somebody does push-ups — and only
+/// when they do a whole one?
 ///
-/// Nothing in this suite asked that until a lifter did four and was shown
-/// zero. Every counting test scored a list of poses through a function; the
-/// screen was wired to a different function, and no test crossed the gap. So
-/// this one drives poses into the actual screen and reads the actual meter.
+/// Nothing in this suite asked the first question until a lifter did four and
+/// was shown zero: every counting test scored a list of poses through a
+/// function, the screen was wired to a different function, and no test
+/// crossed the gap. So these drive poses into the actual screen, stamped at a
+/// phone's thirty a second, and read the actual number and the actual bar.
+///
+/// The second question is the one a lifter asked from the floor: the bar did
+/// not follow the body, most reps landed late, and getting up at the end
+/// scored one more.
 library;
 
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -22,107 +27,131 @@ import 'package:outrepd/reps/pushup_counter.dart';
 import 'package:outrepd/screens/trainer.dart';
 import 'package:outrepd/theme.dart';
 
+import 'support/synthetic_poses.dart';
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
-  testWidgets('the meter moves when the body does', (tester) async {
-    tester.view.physicalSize = const Size(400, 880);
-    tester.view.devicePixelRatio = 1.0;
-    addTearDown(tester.view.reset);
+  group('the screen', () {
+    testWidgets('shows every push-up, and only those', (tester) async {
+      final source = await _startRound(tester);
 
-    final source = _ScriptedSource();
-    addTearDown(source.dispose);
+      // Eight push-ups at a rep a second. The number on the screen is the
+      // number the round ends with — one tracker for both — so this pins it
+      // exactly: a screen that shows seven while the verdict says eight is
+      // the bug this design exists to remove.
+      await _emitAll(tester, source, pushUpSet(8, lead: 0));
+      expect(_count(tester), 8);
+    });
 
-    await tester.pumpWidget(_app(source));
-    await tester.pumpAndSettle();
+    testWidgets('the number moves on the rep, not a rep later',
+        (tester) async {
+      // Reported from a phone: "most reps are counted late". The old count
+      // was re-scored every eighth frame and waited on its slowest signal.
+      final source = await _startRound(tester);
 
-    // Into position and held there. One frame cannot say whether the hands
-    // are staying planted, and that is the test that separates a push-up from
-    // any other movement — so the screen waits for a few.
-    await _settle(tester, source);
-    for (var i = 0; i < 4; i++) {
-      await tester.pump(const Duration(seconds: 1));
-    }
+      for (var rep = 1; rep <= 3; rep++) {
+        await _emitAll(tester, source, [
+          for (var f = 0; f < 30; f++) pushUpPose(repShape(f / 30)),
+        ]);
+        // Straight after the rep's last frame — the body back at the top —
+        // with nothing after it.
+        expect(_count(tester), rep,
+            reason: 'rep $rep had finished and the screen still said '
+                '${_count(tester)}');
+      }
+    });
 
-    // Eight push-ups, thirty frames each — an unhurried tempo, and the shape
-    // the three body signals are read from.
-    await _emitSet(tester, source, reps: 8);
+    testWidgets('the bar goes down and up with the body', (tester) async {
+      // Reported from a phone: "the bar is completely broken". It is the
+      // nose's height above the hands as a share of lockout, so it has to sit
+      // near the bottom at the bottom of a rep and full at the top — a frame
+      // or two behind the body, not drifting toward it over seconds.
+      final source = await _startRound(tester);
 
-    // The meter carries a number a person would recognise as their set. Not
-    // exact: this is a screen test, and demanding an exact count here would
-    // make it a counter test that breaks whenever the counter is tuned. What
-    // it guards is the thing that was broken — a screen that shows nothing
-    // while somebody works.
-    // Measured at exactly 8 when this was written. The band is deliberately
-    // wider than that: this is a screen test, and pinning it to the exact
-    // number would turn it into a counter test that breaks on every tuning
-    // pass. What it guards is the thing that was actually broken — a meter
-    // that sat at zero while somebody worked.
-    expect(_meter(tester), greaterThanOrEqualTo(6),
-        reason: 'eight push-ups went in and the screen showed ${_meter(tester)}');
-    expect(_meter(tester), lessThanOrEqualTo(10));
-  });
+      final bottoms = <double>[];
+      final tops = <double>[];
+      for (var rep = 0; rep < 3; rep++) {
+        for (var f = 0; f < 30; f++) {
+          await _emit(tester, source, pushUpPose(repShape(f / 30)));
+          // The body is lowest at frame 15 and back at the top by frame 0 of
+          // the next rep; one frame after each is where the bar should be.
+          if (f == 16) bottoms.add(_bar(tester));
+          if (f == 1) tops.add(_bar(tester));
+        }
+      }
+      await _emit(tester, source, pushUpPose(1));
+      await _emit(tester, source, pushUpPose(1));
+      tops.add(_bar(tester));
+      for (final b in bottoms) {
+        expect(b, lessThan(0.25), reason: 'at the bottom the bar read $b');
+      }
+      for (final t in tops) {
+        expect(t, greaterThan(0.9), reason: 'at the top the bar read $t');
+      }
+    });
 
-  testWidgets('the depth bar is big enough to read from the floor',
-      (tester) async {
-    // The phone is on the floor and the lifter is looking down the screen at
-    // it from a push-up. The bar used to be 6 pixels wide, high up under the
-    // score card — legible sitting at a desk, and not from down there.
-    tester.view.physicalSize = const Size(400, 880);
-    tester.view.devicePixelRatio = 1.0;
-    addTearDown(tester.view.reset);
+    testWidgets('half reps move the bar and not the number', (tester) async {
+      final source = await _startRound(tester);
 
-    final source = _ScriptedSource();
-    addTearDown(source.dispose);
+      // Down to just over halfway, eight times.
+      var lowest = 1.0;
+      for (final pose in pushUpSet(8, depth: 0.45, lead: 0)) {
+        await _emit(tester, source, pose);
+        final bar = _bar(tester);
+        if (bar < lowest) lowest = bar;
+      }
+      expect(_count(tester), 0);
+      // And the bar showed the dip, so the lifter can see why.
+      expect(lowest, lessThan(0.7));
+      expect(lowest, greaterThan(0.5));
+    });
 
-    await tester.pumpWidget(_app(source));
-    await tester.pumpAndSettle();
-    await _settle(tester, source);
-    for (var i = 0; i < 4; i++) {
-      await tester.pump(const Duration(seconds: 1));
-    }
-    await _emit(tester, source, _pushUp(1));
+    testWidgets('getting up at the end does not add one', (tester) async {
+      // Reported from a phone: "when I finish and get up, it counts a rep".
+      final source = await _startRound(tester);
 
-    final bar = find.byKey(const Key('depthBar'));
-    expect(bar, findsOneWidget);
+      await _emitAll(tester, source, pushUpSet(5, lead: 0));
+      expect(_count(tester), 5);
+      await _emitAll(tester, source, gettingUp());
+      expect(_count(tester), 5);
+    });
 
-    final size = tester.getSize(bar);
-    expect(size.width, greaterThanOrEqualTo(12));
-    expect(size.height, greaterThanOrEqualTo(200));
+    testWidgets('stays at zero when nobody is moving', (tester) async {
+      final source = await _startRound(tester);
 
-    // Low on the left, not tucked under the clock.
-    final corner = tester.getTopLeft(bar);
-    expect(corner.dx, lessThan(40));
-    expect(corner.dy, greaterThanOrEqualTo(200));
-    // And still on screen at the bottom.
-    expect(corner.dy + size.height, lessThanOrEqualTo(880));
-  });
+      // Held at the top for the length of a set. A counter that counts this
+      // is worse than one that counts nothing.
+      await _emitAll(tester, source, [
+        for (var i = 0; i < 200; i++) pushUpPose(1),
+      ]);
+      expect(_count(tester), 0);
+    });
 
-  testWidgets('and stays at zero when nobody is moving', (tester) async {
-    tester.view.physicalSize = const Size(400, 880);
-    tester.view.devicePixelRatio = 1.0;
-    addTearDown(tester.view.reset);
+    testWidgets('the depth bar is big enough to read from the floor',
+        (tester) async {
+      // The phone is on the floor and the lifter is looking down the screen
+      // at it from a push-up. The bar used to be 6 pixels wide, high up under
+      // the score card — legible sitting at a desk, and not from down there.
+      final source = await _startRound(tester);
+      await _emit(tester, source, pushUpPose(1));
 
-    final source = _ScriptedSource();
-    addTearDown(source.dispose);
+      final bar = find.byKey(const Key('depthBar'));
+      expect(bar, findsOneWidget);
 
-    await tester.pumpWidget(_app(source));
-    await tester.pumpAndSettle();
+      final size = tester.getSize(bar);
+      expect(size.width, greaterThanOrEqualTo(12));
+      expect(size.height, greaterThanOrEqualTo(200));
 
-    await _settle(tester, source);
-    for (var i = 0; i < 4; i++) {
-      await tester.pump(const Duration(seconds: 1));
-    }
-
-    // Held at the top for the length of a set. A counter that counts this is
-    // worse than one that counts nothing.
-    for (var i = 0; i < 200; i++) {
-      await _emit(tester, source, _pushUp(1));
-    }
-
-    expect(_meter(tester), 0);
+      // Low on the left, not tucked under the clock.
+      final corner = tester.getTopLeft(bar);
+      expect(corner.dx, lessThan(40));
+      expect(corner.dy, greaterThanOrEqualTo(200));
+      // And still on screen at the bottom.
+      expect(corner.dy + size.height, lessThanOrEqualTo(880));
+    });
   });
 
   group('getting into position', () {
@@ -130,83 +159,139 @@ void main() {
       // The old rule asked whether the body was in a straight line, and a
       // person standing up answers yes. That is why the skeleton went green
       // before anybody had got onto the floor.
-      expect(isPushUpPosition(_standing()), isFalse);
-      expect(isPushUpPosition(_pushUp(1)), isTrue);
-      expect(isPushUpPosition(_pushUp(0)), isTrue);
+      expect(isPushUpPosition(standingPose()), isFalse);
+      expect(isPushUpPosition(pushUpPose(1)), isTrue);
+      expect(isPushUpPosition(pushUpPose(0)), isTrue);
     });
 
     test('lowering yourself onto the floor does not score a rep', () {
       // Reported from a phone: "it counted one and I hadn't got down yet."
-      // Standing, then the descent onto the hands, then five real push-ups.
       // The descent is a bigger fall than any rep in the set, which is
-      // exactly why a counter reading the whole stream scores it.
-      final frames = <BodyPose>[
-        for (var i = 0; i < 40; i++) _standing(),
-        for (var i = 0; i < 25; i++) _gettingDown(i / 24),
-        for (var i = 0; i < 10; i++) _pushUp(1),
-        for (var rep = 0; rep < 5; rep++)
-          for (var f = 0; f < 30; f++)
-            _pushUp((1 + math.cos(f / 30 * 2 * math.pi)) / 2),
-        for (var i = 0; i < 10; i++) _pushUp(1),
-      ];
-
+      // exactly why a counter reading the whole stream scored it.
+      final frames = timed([
+        for (var i = 0; i < 40; i++) standingPose(),
+        ...gettingDown(),
+        ...pushUpSet(5),
+      ]);
       expect(countPushups(frames).reps, 5);
     });
 
+    test('starting the moment you are down loses nothing', () {
+      // The hands take most of a second to read as settled after the walk
+      // down. Somebody who starts straight away is already on the way down
+      // by then, and that first rep used to be dropped — at a half-second
+      // pause, one rep in five.
+      for (final pause in [0, 5, 10, 15, 20, 30]) {
+        final frames = timed([
+          for (var i = 0; i < 40; i++) standingPose(),
+          ...gettingDown(),
+          ...pushUpSet(5, lead: pause),
+        ]);
+        expect(countPushups(frames).reps, 5,
+            reason: 'a pause of $pause frames after getting down');
+      }
+    });
+
     test('a set of nothing but standing scores nothing', () {
-      final frames = [for (var i = 0; i < 200; i++) _standing()];
+      final frames = timed([for (var i = 0; i < 200; i++) standingPose()]);
       expect(countPushups(frames).reps, 0);
     });
 
     test('bobbing up and down on your feet is not a push-up', () {
       // Reported from a phone: "it counts going up and down in any position,
-      // not a push-up." With the arms held out — which is how anybody tries
-      // this — the arm-to-body angle alone is satisfied, and squatting is a
-      // perfectly good oscillation. What it is not is a movement with the
-      // hands planted: they go up and down with you.
-      final frames = <BodyPose>[
+      // not a push-up." The hands go up and down with you.
+      final poses = [
         for (var rep = 0; rep < 8; rep++)
-          for (var f = 0; f < 30; f++)
-            _squat((1 + math.cos(f / 30 * 2 * math.pi)) / 2),
+          for (var f = 0; f < 30; f++) squatPose(repShape(f / 30)),
       ];
-
-      expect(inPushUpPosition(frames).any((ok) => ok), isFalse,
+      expect(inPushUpPosition(poses).any((ok) => ok), isFalse,
           reason: 'a body on its feet read as a push-up position');
-      expect(countPushups(frames).reps, 0);
+      expect(countPushups(timed(poses)).reps, 0);
     });
 
     test('a set that begins already in position loses nothing off the front',
         () {
-      // The app starts recording once the lifter is down, so the first frame
-      // is usually already in position. The start line must not trim a set
-      // that has nothing in front of it — that would cost a rep to fix a
-      // problem this session does not have.
-      final frames = <BodyPose>[
-        for (var rep = 0; rep < 6; rep++)
-          for (var f = 0; f < 30; f++)
-            _pushUp((1 + math.cos(f / 30 * 2 * math.pi)) / 2),
-        for (var i = 0; i < 10; i++) _pushUp(1),
-      ];
+      // The round starts once the lifter is down, so the first frame is
+      // usually already at the top.
+      expect(countPushups(timed(pushUpSet(6, lead: 0))).reps, 6);
+    });
 
-      expect(setStartsAt(frames), 0);
-      expect(countPushups(frames).reps, 6);
+    test('reps before the round starts do not count', () {
+      // The screen runs the tracker from the moment the camera opens, so it
+      // knows the lifter's hands and lockout before the clock starts. A rep
+      // done while the countdown runs is not in the round.
+      final frames = timed([...pushUpSet(3, tail: 0), ...pushUpSet(4)]);
+      final start = frames[15 + 3 * 30].atMs;
+      final counted = countPushups(frames, startMs: start);
+      expect(counted.reps, 4);
+      expect(counted.repTimes.first, greaterThan(0));
     });
   });
 
-  test('the same poses score the same through the counter alone', () {
-    // The screen and the bench must agree, because the accuracy record
-    // compares one against the other. Same set, both paths.
-    final frames = <BodyPose>[
-      for (var i = 0; i < 10; i++) _pushUp(1),
-      for (var rep = 0; rep < 8; rep++)
-        for (var f = 0; f < 30; f++)
-          _pushUp((1 + math.cos(f / 30 * 2 * math.pi)) / 2),
-      for (var i = 0; i < 10; i++) _pushUp(1),
-    ];
+  group('whole reps, not half reps', () {
+    test('a set of half reps scores nothing', () {
+      expect(countPushups(timed(pushUpSet(10, depth: 0.45))).reps, 0);
+    });
 
-    final counted = countPushups(frames);
-    expect(counted.reps, 8);
-    expect(counted.confident, isTrue);
+    test('half reps in the middle of a set are left out of it', () {
+      final frames = timed([
+        ...pushUpSet(3, tail: 0),
+        ...pushUpSet(3, depth: 0.45, lead: 0, tail: 0),
+        ...pushUpSet(3, lead: 0),
+      ]);
+      expect(countPushups(frames).reps, 6);
+    });
+
+    test('a dip that only just stops short makes the set unsure', () {
+      // Not counted — the line is the line — but close enough that a frame
+      // either way would have changed it, so the confirm screen asks.
+      final frames = timed([
+        ...pushUpSet(3, tail: 0),
+        ...pushUpSet(1, depth: 0.53, lead: 0, tail: 0),
+        ...pushUpSet(3, lead: 0),
+      ]);
+      final counted = countPushups(frames);
+      expect(counted.reps, 6);
+      expect(counted.confident, isFalse);
+      expect(counted.perSignal['nearMisses'], 1);
+    });
+
+    test('a clean set is a confident one', () {
+      final counted = countPushups(timed(pushUpSet(8)));
+      expect(counted.reps, 8);
+      expect(counted.confident, isTrue);
+    });
+
+    test('getting up off the floor after the set is not a rep', () {
+      final counted = countPushups(timed([...pushUpSet(5), ...gettingUp()]));
+      expect(counted.reps, 5);
+      // It happened after the last rep, so it is not a doubt about the set.
+      expect(counted.confident, isTrue);
+    });
+
+    test('fast reps count', () {
+      // The hundred-rep clip runs at 0.53 s a rep; sixteen frames.
+      expect(countPushups(timed(pushUpSet(20, framesPerRep: 16))).reps, 20);
+    });
+  });
+
+  group('the frame rate does not change the count', () {
+    // A clip filmed at 120 frames a second counted six push-ups as twenty
+    // under the old counter, whose every window was a fixed number of frames.
+    for (final (fps, frameMs) in [(15, 66), (30, 33), (60, 16), (120, 8)]) {
+      test('$fps frames a second', () {
+        final perRep = 1000 ~/ frameMs;
+        final set = pushUpSet(
+          6,
+          framesPerRep: perRep,
+          lead: perRep ~/ 2,
+          tail: perRep ~/ 3,
+        );
+        final counted = countPushups(timed(set, frameMs: frameMs));
+        expect(counted.reps, 6);
+        expect(counted.confident, isTrue);
+      });
+    }
   });
 }
 
@@ -223,8 +308,32 @@ Widget _app(PoseSource source) => MaterialApp(
       home: TrainerScreen(autoStart: true, poseSource: () => source),
     );
 
+/// Opens the screen, gets into position at the top of a push-up, and waits
+/// out the countdown. Returns with the round running.
+Future<_ScriptedSource> _startRound(WidgetTester tester) async {
+  tester.view.physicalSize = const Size(400, 880);
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.reset);
+
+  final source = _ScriptedSource();
+  addTearDown(source.dispose);
+
+  await tester.pumpWidget(_app(source));
+  await tester.pumpAndSettle();
+
+  // Into position and held there, through the three second countdown, the
+  // way somebody waits for a start: at the top, still.
+  for (var i = 0; i < 4000 ~/ kFrameMs; i++) {
+    await _emit(tester, source, pushUpPose(1));
+  }
+  expect(find.text('GET READY'), findsNothing,
+      reason: 'the round never started');
+  expect(find.byKey(const Key('depthBar')), findsOneWidget);
+  return source;
+}
+
 /// The biggest number on the HUD, which is the lifter's own count.
-int _meter(WidgetTester tester) {
+int _count(WidgetTester tester) {
   var best = 0;
   for (final text in tester.widgetList<Text>(find.byType(Text))) {
     final n = int.tryParse(text.data ?? '');
@@ -233,142 +342,34 @@ int _meter(WidgetTester tester) {
   return best;
 }
 
+/// How full the depth bar is drawn, 0..1.
+double _bar(WidgetTester tester) => tester
+    .widget<FractionallySizedBox>(
+      find.descendant(
+        of: find.byKey(const Key('depthBar')),
+        matching: find.byType(FractionallySizedBox),
+      ),
+    )
+    .heightFactor!;
+
+/// One pose, and a frame's worth of time for the screen to take it in.
 Future<void> _emit(
   WidgetTester tester,
   _ScriptedSource source,
   BodyPose pose,
 ) async {
   source.emit(pose);
-  await tester.pump();
+  await tester.pump(const Duration(milliseconds: kFrameMs));
 }
 
-/// Held at the top of a push-up long enough for the screen to see that the
-/// hands are planted.
-Future<void> _settle(WidgetTester tester, _ScriptedSource source) async {
-  for (var i = 0; i < 25; i++) {
-    await _emit(tester, source, _pushUp(1));
-  }
-}
-
-Future<void> _emitSet(
+Future<void> _emitAll(
   WidgetTester tester,
-  _ScriptedSource source, {
-  required int reps,
-  int framesPerRep = 30,
-}) async {
-  for (var rep = 0; rep < reps; rep++) {
-    for (var f = 0; f < framesPerRep; f++) {
-      // Starts at the top and comes back to it, the way a push-up does.
-      await _emit(
-        tester,
-        source,
-        _pushUp((1 + math.cos(f / framesPerRep * 2 * math.pi)) / 2),
-      );
-    }
+  _ScriptedSource source,
+  List<BodyPose> poses,
+) async {
+  for (final pose in poses) {
+    await _emit(tester, source, pose);
   }
-  // A moment at the top afterwards, as anybody finishing a set does.
-  for (var i = 0; i < 10; i++) {
-    await _emit(tester, source, _pushUp(1));
-  }
-}
-
-/// A body in a push-up, [up] running 0 at the bottom to 1 at the top.
-///
-/// Laid out the way a camera on the floor sees one: the body runs across the
-/// frame from the shoulders to the ankles, and the hands are planted under the
-/// shoulders — so the arm crosses the body line rather than lying along it.
-/// A body drawn standing up, however straight, is not a push-up, and the
-/// position check is there to say so.
-BodyPose _pushUp(double up) {
-  PosePoint at(double x, double y) => PosePoint(x, y, 0.95);
-  final drop = (1 - up) * 90;
-
-  return BodyPose({
-    Joint.nose: at(150, 190 + drop),
-    Joint.leftShoulder: at(200, 200 + drop),
-    Joint.rightShoulder: at(205, 215 + drop),
-    // The forearm folds as the body drops, which is what an elbow does.
-    Joint.leftElbow: at(175, 265 + drop * 0.4),
-    Joint.rightElbow: at(180, 275 + drop * 0.4),
-    // Planted on the floor, wherever the body goes.
-    Joint.leftWrist: at(190, 330),
-    Joint.rightWrist: at(195, 336),
-    // The hips travel less than the shoulders, the feet not at all.
-    Joint.leftHip: at(330, 214 + drop * 0.7),
-    Joint.rightHip: at(335, 228 + drop * 0.7),
-    Joint.leftKnee: at(430, 218 + drop * 0.4),
-    Joint.rightKnee: at(435, 232 + drop * 0.4),
-    Joint.leftAnkle: at(520, 222),
-    Joint.rightAnkle: at(525, 236),
-  });
-}
-
-/// Somebody stood in front of the phone, arms at their sides.
-BodyPose _standing() {
-  PosePoint at(double x, double y) => PosePoint(x, y, 0.95);
-  return BodyPose({
-    Joint.nose: at(240, 60),
-    Joint.leftShoulder: at(210, 120),
-    Joint.rightShoulder: at(270, 120),
-    Joint.leftElbow: at(205, 185),
-    Joint.rightElbow: at(275, 185),
-    Joint.leftWrist: at(200, 245),
-    Joint.rightWrist: at(280, 245),
-    Joint.leftHip: at(215, 250),
-    Joint.rightHip: at(265, 250),
-    Joint.leftKnee: at(215, 380),
-    Joint.rightKnee: at(265, 380),
-    Joint.leftAnkle: at(215, 500),
-    Joint.rightAnkle: at(265, 500),
-  });
-}
-
-/// On their feet, arms held out in front, going up and down — a squat, a bob,
-/// or somebody trying to see what the app will count. [up] is 1 standing tall
-/// and 0 at the bottom.
-///
-/// The arms are out rather than at the sides on purpose: that satisfies the
-/// arm-to-body angle, so nothing but the planted hands separates this from a
-/// push-up.
-BodyPose _squat(double up) {
-  PosePoint at(double x, double y) => PosePoint(x, y, 0.95);
-  final drop = (1 - up) * 120;
-
-  return BodyPose({
-    Joint.nose: at(240, 60 + drop),
-    Joint.leftShoulder: at(210, 120 + drop),
-    Joint.rightShoulder: at(270, 120 + drop),
-    // Arms forward: elbows and wrists ahead of the body, not along it.
-    Joint.leftElbow: at(160, 130 + drop),
-    Joint.rightElbow: at(320, 130 + drop),
-    Joint.leftWrist: at(110, 140 + drop),
-    Joint.rightWrist: at(370, 140 + drop),
-    Joint.leftHip: at(215, 250 + drop),
-    Joint.rightHip: at(265, 250 + drop),
-    Joint.leftKnee: at(215, 380 + drop * 0.3),
-    Joint.rightKnee: at(265, 380 + drop * 0.3),
-    Joint.leftAnkle: at(215, 500),
-    Joint.rightAnkle: at(265, 500),
-  });
-}
-
-/// The walk down onto the hands, [t] running 0 (standing) to 1 (in position).
-///
-/// Every landmark travels between the two, which makes it the largest single
-/// movement in a session — bigger than any rep, and the reason it used to be
-/// scored as one.
-BodyPose _gettingDown(double t) {
-  final from = _standing().points;
-  final to = _pushUp(1).points;
-  return BodyPose({
-    for (final joint in from.keys)
-      if (to[joint] case final end?)
-        joint: PosePoint(
-          from[joint]!.x + (end.x - from[joint]!.x) * t,
-          from[joint]!.y + (end.y - from[joint]!.y) * t,
-          0.95,
-        ),
-  });
 }
 
 /// A pose source the test drives by hand.

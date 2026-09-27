@@ -19,6 +19,7 @@ library;
 
 import 'dart:async';
 
+import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -1195,14 +1196,15 @@ class _Calibration extends StatefulWidget {
 }
 
 class _CalibrationState extends State<_Calibration> {
-  /// The same meter the camera screen shows, off the same signal the count is
-  /// scored from. Counting live from an elbow angle is what left this step
-  /// impossible to finish: three push-ups in front of a phone on the floor,
-  /// and the number never moved.
-  final _meter = PushupMeter();
+  /// The same tracker the camera screen runs, for the count and the bar both.
+  /// One counter for the whole app: a calibration that counted differently
+  /// from the match would be teaching the lifter the wrong thing about their
+  /// own reps before they ever got to one.
+  final _tracker = PushupTracker();
 
-  /// Every pose of the set, because the count is scored from all of them.
-  final _frames = <BodyPose>[];
+  /// Time since the camera opened. Poses carry no timestamp of their own, and
+  /// the tracker judges everything in milliseconds, not frames.
+  final _clock = clock.stopwatch()..start();
 
   int _reps = 0;
   double _depth = 0;
@@ -1213,22 +1215,13 @@ class _CalibrationState extends State<_Calibration> {
     if (_done) return;
     if (!mounted) return;
 
-    final progress = _meter.add(pose);
-    _frames.add(pose);
-
-    // The same function that scores a duel, over everything so far. One
-    // counter for the whole app: a calibration that counted differently from
-    // the match would be teaching the lifter the wrong thing about their own
-    // reps before they ever got to one.
-    if (_frames.length % 8 == 0) {
-      final counted = countPushups(_frames);
-      if (counted.reps > _reps) {
-        _reps = counted.reps;
-        _depth = counted.depth;
-      }
+    final reading = _tracker.add(_clock.elapsedMilliseconds, pose);
+    if (reading.counted) {
+      _reps = reading.reps;
+      _depth = _tracker.depth;
     }
 
-    setState(() => _progress = progress ?? _progress);
+    setState(() => _progress = reading.progress ?? _progress);
 
     if (_reps >= kCalibrationReps) {
       _done = true;
