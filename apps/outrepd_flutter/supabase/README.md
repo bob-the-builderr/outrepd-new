@@ -14,6 +14,8 @@
 | `ladder_test.sql` | بيشغّل `ladder_vectors.json` على دوال السيرفر ويقارن |
 | `ladder_vectors.json` | **متولّد** من دارت: `flutter test test/ladder_vectors_test.dart` |
 | `install.sql` | **متولّد**: `python tool/build_install.py` — التلات ملفات فوق مربوطين في ملف واحد يتلصق مرة واحدة |
+| `functions/email-my-data` | بيبعت للاعب ملف بياناته بالإيميل. طريقة التركيب مكتوبة في أول الملف |
+| `functions/report-alert` | بيبعتلك إيميل مع كل بلاغ جديد، عشان الشروط بتوعد بالرد خلال ٢٤ ساعة. طريقة التركيب (الـ function والـ webhook) مكتوبة في أول الملف |
 
 ## التنفيذ على مشروع جديد
 
