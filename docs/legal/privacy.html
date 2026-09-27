@@ -5,143 +5,102 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacy Policy · outrepd</title>
 <!--
-  Before publishing, replace {{CONTACT_EMAIL}} with the address that answers
-  privacy and deletion requests. Google Play links to #delete for deletion
-  requests made outside the app, so keep that id.
+  Publish at https://www.outrepd.com/privacy (the app links there).
+  Before publishing, replace every {{…}}:
+    {{OWNER}}          the person or company that runs outrepd
+    {{CONTACT_EMAIL}}  an address that answers privacy and deletion requests
+  Google Play's account deletion form takes https://www.outrepd.com/privacy#delete,
+  so keep that id. Keep the page public, not behind a login, and not a PDF.
 -->
 <style>
-  :root { color-scheme: dark; --bg:#121110; --card:#1c1a18; --text:#f5efe4; --muted:#8f8880; --brand:#e8dcc8; --rival:#e8846b; --line:#2c2926; }
+  :root { color-scheme: dark; --bg:#121110; --text:#f5efe4; --muted:#8f8880; --rival:#e8846b; --line:#2c2926; }
   * { box-sizing: border-box; }
-  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Arabic",sans-serif; padding:32px 16px 64px; }
+  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; padding:32px 16px 64px; }
   main { max-width: 720px; margin: 0 auto; }
   h1 { font-size: 30px; margin: 0 0 4px; }
   h2 { font-size: 20px; margin: 36px 0 8px; }
-  p, li { color: var(--text); }
+  h3 { font-size: 17px; margin: 20px 0 4px; }
   .muted { color: var(--muted); font-size: 14px; }
   a { color: var(--rival); }
-  nav { display:flex; gap:12px; margin: 16px 0 32px; }
-  nav a { padding:6px 14px; border:1px solid var(--line); border-radius:99px; text-decoration:none; color:var(--brand); }
   table { width:100%; border-collapse: collapse; font-size: 15px; }
-  th, td { text-align:start; vertical-align: top; padding:8px 10px; border-bottom:1px solid var(--line); }
+  th, td { text-align:left; vertical-align: top; padding:8px 10px; border-bottom:1px solid var(--line); }
   th { color: var(--muted); font-weight: 600; }
   .scroll { overflow-x:auto; }
-  section[lang="ar"] { direction: rtl; }
-  hr { border:0; border-top:1px solid var(--line); margin:56px 0; }
 </style>
 </head>
 <body>
 <main>
-<nav><a href="#en">English</a><a href="#ar" lang="ar">العربية</a></nav>
-
-<section id="en" lang="en">
 <h1>Privacy Policy</h1>
-<p class="muted">outrepd · Effective 27 September 2026</p>
+<p class="muted">outrepd · Last updated 27 September 2026</p>
 
-<p>outrepd is a push-up app: your phone's camera counts your reps, and your set races other people's. This page says what the app keeps about you, where, and what you can do about it.</p>
+<p>This policy explains what the outrepd app ("outrepd", "we", "us") collects, why, who can see it, how long it is kept, and how to get a copy or delete it. outrepd is run by {{OWNER}}. Questions go to <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a>.</p>
 
-<h2>The camera stays on your phone</h2>
-<p>Pose detection runs on your device. No video and no body-position data is ever uploaded. The app may keep a recording of body positions (not video) on your phone to check the counter's accuracy; it never leaves the phone and is removed when you delete the app.</p>
-<p>Pose detection uses Google's ML Kit library, which runs on the device. Google's ML Kit terms describe what the library itself may report to Google: <a href="https://developers.google.com/ml-kit/terms">developers.google.com/ml-kit/terms</a>.</p>
+<p>outrepd is a push-up game: your phone's camera counts your reps, and your set is raced against other people's sets.</p>
 
-<h2>What we keep on our servers</h2>
+<h2>The camera never leaves your phone</h2>
+<p>The camera is used only to count reps. Pose detection runs on your device. No video, image or body-position data from the camera is sent to us or to anyone else.</p>
+<p>To check the counter's accuracy, the app may keep a recording of body positions (points on a skeleton, not video) on your phone. It stays on the phone and is removed when you uninstall the app.</p>
+<p>Pose detection uses Google's ML Kit library, which runs on the device. Google describes what ML Kit itself may send to Google in its terms: <a href="https://developers.google.com/ml-kit/terms">developers.google.com/ml-kit/terms</a>.</p>
+
+<h2>What we collect</h2>
 <div class="scroll"><table>
-<tr><th>What</th><th>Why</th></tr>
-<tr><td>Your username</td><td>Shown on the leaderboards, to friends and to opponents.</td></tr>
-<tr><td>Your email address, if you add one</td><td>Signing in and getting your account back. Never shown to anyone.</td></tr>
-<tr><td>Your country</td><td>The country leaderboard. Taken from your phone's language and region settings, not from your location. You can hide it.</td></tr>
-<tr><td>Your profile photo, if you add one</td><td>Shown to other people. Stored publicly, so anyone with its link can open it.</td></tr>
-<tr><td>Your sets: rep count, the time of each rep, depth, duration, date</td><td>Racing you against other people and settling your rank.</td></tr>
-<tr><td>Your matches, results, rank and record</td><td>The ladder and your profile.</td></tr>
-<tr><td>Friends, blocks and mutes</td><td>The social features you use.</td></tr>
-<tr><td>Reports you file, and their text</td><td>Reviewing cheating and abuse.</td></tr>
-<tr><td>In-app notifications, the title you wear, when you were last active, your settings</td><td>Showing you what happened, showing friends that you are around, and applying your choices.</td></tr>
+<tr><th>Data</th><th>Required?</th><th>Why we use it</th></tr>
+<tr><td>Username</td><td>Yes</td><td>Identifies you on leaderboards, to friends and to opponents.</td></tr>
+<tr><td>Email address</td><td>Only if you create an account with one</td><td>Signing in, and getting your account back on a new phone. Never shown to other people.</td></tr>
+<tr><td>Country</td><td>No</td><td>The country leaderboard. Taken from your phone's language and region settings, not from your location. You can hide it.</td></tr>
+<tr><td>Profile photo</td><td>No</td><td>Shown to other people next to your name.</td></tr>
+<tr><td>Your sets: the rep count the camera scored, the count you confirmed, the time of each rep, rep depth, duration and date</td><td>Yes, to play matches</td><td>Racing your set against other people's, settling results and rank, and measuring the counter's accuracy.</td></tr>
+<tr><td>Matches, results, rank, record and streaks</td><td>Yes</td><td>The ladder and your profile.</td></tr>
+<tr><td>Friends, blocks and mutes</td><td>No</td><td>The social features you choose to use.</td></tr>
+<tr><td>Reports you file, including any text you write</td><td>No</td><td>Reviewing cheating and abuse.</td></tr>
+<tr><td>In-app notifications, the title you wear, when you were last active, and your settings</td><td>Yes</td><td>Showing you what happened, showing friends you are around, and applying your choices.</td></tr>
 </table></div>
+<p>We do not collect your location, contacts, device identifiers, advertising identifiers, or payment details.</p>
+
+<h2>How we use it</h2>
+<p>Only to run outrepd: matches, rankings, friends, notifications, your profile, keeping the game fair, and answering you when you contact us. We do not use your data for advertising, we do not build profiles of you for anyone else, and we do not use analytics or tracking tools.</p>
 
 <h2>What other people can see</h2>
-<p>Your username, photo, rank, record, best set, streak, title and leaderboard places, unless you hide yourself from the boards in Settings. Anyone with your share link can see your share card without signing in. Your email address is never shown.</p>
+<p>Other players can see your username, photo, rank, record, best set, streak, the title you wear, and your leaderboard places. You can hide yourself from the leaderboards, and hide your country, in Settings → Privacy. Anyone with your share link can see your share card without signing in. Your email address is never shown to anyone.</p>
 
-<h2>What we do not do</h2>
-<p>No ads, no analytics, no tracking across apps or websites, no selling or sharing of your data, no location, no contacts, no device identifiers.</p>
-
-<h2>Who holds the data</h2>
-<p>The app's server, database and photos are run on Supabase. When you ask for a copy of your data, it is emailed through Resend. Both process the data only to run the service.</p>
-
-<h2>Your data is yours</h2>
+<h2>Sharing</h2>
+<p>We do not sell your data or share it for advertising. We use two service providers who process data only on our behalf, to run the service:</p>
 <ul>
-<li><strong>Get a copy:</strong> Settings → Data → Export my data.</li>
-<li><strong>Change what is shown:</strong> Settings → Privacy.</li>
-<li><strong>Delete everything:</strong> see below.</li>
+<li><strong>Supabase</strong> hosts the app's server, database and profile photos.</li>
+<li><strong>Resend</strong> sends the email with your data when you ask for a copy.</li>
 </ul>
+<p>We may disclose data if the law requires it, or to protect players from fraud or abuse. Your data may be processed in countries other than yours.</p>
+
+<h2>How we protect it</h2>
+<p>All data is sent over encrypted connections (HTTPS). Our hosting provider encrypts stored data. Database rules let each account read and change only what it is allowed to, and rank and results can only be changed by the server, not by the app on your phone.</p>
+
+<h2>How long we keep it</h2>
+<p>We keep your data while your account exists. When you delete your account, it is removed from our database straight away (see <a href="#delete">Deleting your account</a>). Copies in routine backups are removed as those backups expire. Reports other players filed about you are kept after your account is deleted, with your account removed from them, so abuse can still be dealt with.</p>
+
+<h2>Your choices and rights</h2>
+<ul>
+<li><strong>Get a copy of your data:</strong> Settings → Data → Export my data. It is emailed to you.</li>
+<li><strong>Change what others see:</strong> Settings → Privacy.</li>
+<li><strong>Correct your data:</strong> change your username once from your profile, and your photo and settings at any time. For anything else, email us.</li>
+<li><strong>Delete your data:</strong> delete your account, below.</li>
+</ul>
+<p>Depending on where you live (for example under the GDPR in Europe or the CCPA in California), you may have further rights, such as to object to or restrict processing, or to complain to a data protection authority. Email <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a> and we will answer within 30 days. We process your data to provide the service you asked for. We do not sell or share personal information as those laws define it.</p>
 
 <h2 id="delete">Deleting your account</h2>
-<p>In the app: <strong>Settings → Data → Delete account</strong>. This deletes your account, profile, photo, sets, matches, friends, blocks, reports and notifications. It cannot be undone. Opponents keep the rank points they won against you, but the match disappears from their history.</p>
-<p>If you no longer have the app, email <strong>{{CONTACT_EMAIL}}</strong> from the address on your account, or with your username, and we will delete it within 30 days.</p>
+<p><strong>In the app:</strong> open outrepd, go to Settings → Data → Delete account, and confirm.</p>
+<p><strong>Without the app:</strong> email <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a> from the email address on your account, or tell us your username, with the subject "Delete my outrepd account". We will delete it within 30 days and confirm by email.</p>
+<p><strong>What is deleted:</strong> your account, email address, username, profile photo, sets, matches, friends, blocks, mutes, reports you filed, notifications and settings.</p>
+<p><strong>What is kept:</strong> opponents keep the rank points they won or lost against you, because those are part of their own records, but the match is removed from their history. Reports other players filed about you are kept with your account removed from them.</p>
+<p>Deletion cannot be undone.</p>
 
-<h2>Age</h2>
-<p>outrepd is for people aged 16 and over. The app turns away anyone who says they are younger.</p>
+<h2>Children</h2>
+<p>outrepd is only for people aged 16 and over, and the app turns away anyone who says they are younger. We do not knowingly collect data from children. If you believe a child has an account, email us and we will delete it.</p>
 
-<h2>Changes</h2>
-<p>If this policy changes, the new version will be posted here with a new date.</p>
+<h2>Changes to this policy</h2>
+<p>If we change this policy, we will post the new version here and update the date at the top.</p>
 
 <h2>Contact</h2>
-<p>{{CONTACT_EMAIL}}</p>
-</section>
-
-<hr>
-
-<section id="ar" lang="ar">
-<h1>سياسة الخصوصية</h1>
-<p class="muted">outrepd · سارية من ٢٧ سبتمبر ٢٠٢٦</p>
-
-<p>outrepd تطبيق ضغط: كاميرا موبايلك بتعدّ عدّاتك، والسِت بتاعك بيتسابق مع سِتّات ناس تانية. الصفحة دي بتقول التطبيق بيحتفظ بإيه عنك، وفين، وتقدر تعمل إيه فيه.</p>
-
-<h2>الكاميرا مابتخرجش من موبايلك</h2>
-<p>قراءة حركة الجسم بتحصل على جهازك. مفيش أي فيديو ولا بيانات عن وضع جسمك بتترفع خالص. التطبيق ممكن يحتفظ على موبايلك بتسجيل لنقط الجسم (مش فيديو) عشان يراجع دقة العداد، والتسجيل ده عمره ما بيخرج من الموبايل وبيتمسح لما تمسح التطبيق.</p>
-<p>قراءة الحركة بتستخدم مكتبة Google ML Kit، وهي بتشتغل على الجهاز. شروط Google بتوضح المكتبة نفسها ممكن تبعت إيه لجوجل: <a href="https://developers.google.com/ml-kit/terms">developers.google.com/ml-kit/terms</a>.</p>
-
-<h2>اللي بنحتفظ بيه على السيرفر</h2>
-<div class="scroll"><table>
-<tr><th>إيه</th><th>ليه</th></tr>
-<tr><td>اسم المستخدم</td><td>بيظهر في لوحات الترتيب وللصحاب والخصوم.</td></tr>
-<tr><td>الإيميل، لو ضفته</td><td>الدخول واسترجاع الحساب. مابيظهرش لأي حد.</td></tr>
-<tr><td>الدولة</td><td>لوحة ترتيب الدولة. بتتاخد من إعدادات اللغة والمنطقة في موبايلك، مش من موقعك. وتقدر تخفيها.</td></tr>
-<tr><td>صورة البروفايل، لو ضفتها</td><td>بتظهر للناس التانية. متخزّنة بشكل عام، يعني أي حد معاه اللينك بتاعها يقدر يفتحها.</td></tr>
-<tr><td>السِتّات: عدد العدّات، وتوقيت كل عدّة، والعمق، والمدة، والتاريخ</td><td>عشان تتسابق مع الناس وتتحسب رتبتك.</td></tr>
-<tr><td>الماتشات والنتايج والرتبة والسجل</td><td>الترتيب وبروفايلك.</td></tr>
-<tr><td>الصحاب والبلوك والكتم</td><td>الميزات الاجتماعية اللي بتستخدمها.</td></tr>
-<tr><td>البلاغات اللي بتبعتها والكلام اللي فيها</td><td>مراجعة الغش والإساءة.</td></tr>
-<tr><td>الإشعارات جوه التطبيق، واللقب اللي لابسه، وآخر ظهور ليك، وإعداداتك</td><td>عشان تعرف اللي حصل، وصحابك يعرفوا إنك موجود، واختياراتك تتنفّذ.</td></tr>
-</table></div>
-
-<h2>الناس التانية بتشوف إيه</h2>
-<p>اسم المستخدم، والصورة، والرتبة، والسجل، وأحسن سِت، والأيام المتتالية، واللقب، ومكانك في لوحات الترتيب، إلا لو خبّيت نفسك من اللوحات من الإعدادات. وأي حد معاه لينك المشاركة بتاعك يقدر يشوف كارت المشاركة من غير ما يسجّل دخول. الإيميل مابيظهرش أبدًا.</p>
-
-<h2>اللي مابنعملوش</h2>
-<p>مفيش إعلانات، ولا تحليلات، ولا تتبع بين التطبيقات أو المواقع، ولا بيع أو مشاركة لبياناتك، ولا موقع، ولا جهات اتصال، ولا معرّفات للجهاز.</p>
-
-<h2>مين شايل البيانات</h2>
-<p>السيرفر وقاعدة البيانات والصور شغالين على Supabase. ولما تطلب نسخة من بياناتك، بتتبعتلك بالإيميل عن طريق Resend. الاتنين بيستخدموا البيانات بس عشان الخدمة تشتغل.</p>
-
-<h2>بياناتك بتاعتك</h2>
-<ul>
-<li><strong>خد نسخة:</strong> الإعدادات ← البيانات ← تصدير بياناتي.</li>
-<li><strong>غيّر اللي بيظهر:</strong> الإعدادات ← الخصوصية.</li>
-<li><strong>امسح كل حاجة:</strong> شوف تحت.</li>
-</ul>
-
-<h2 id="delete-ar">مسح الحساب</h2>
-<p>من جوه التطبيق: <strong>الإعدادات ← البيانات ← حذف الحساب</strong>. ده بيمسح حسابك وبروفايلك وصورتك وسِتّاتك وماتشاتك وصحابك والبلوك والبلاغات والإشعارات، ومش بيرجع. الخصوم بيفضلوا محتفظين بالنقط اللي كسبوها قصادك، بس الماتش بيختفي من سجلهم.</p>
-<p>لو التطبيق مابقاش معاك، ابعت إيميل لـ <strong>{{CONTACT_EMAIL}}</strong> من الإيميل اللي على حسابك، أو مع اسم المستخدم بتاعك، وهنمسحه خلال ٣٠ يوم.</p>
-
-<h2>السن</h2>
-<p>outrepd للي عندهم ١٦ سنة أو أكبر. التطبيق بيرفض أي حد بيقول إنه أصغر.</p>
-
-<h2>التغييرات</h2>
-<p>لو السياسة دي اتغيّرت، النسخة الجديدة هتتنشر هنا بتاريخ جديد.</p>
-
-<h2>التواصل</h2>
-<p>{{CONTACT_EMAIL}}</p>
-</section>
+<p>{{OWNER}}<br><a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a></p>
 </main>
 </body>
 </html>
