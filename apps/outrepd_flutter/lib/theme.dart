@@ -156,12 +156,13 @@ abstract final class AppColors {
 
 /// Rank ladder. Index maps to `tierIdx` on a profile.
 class Tier {
-  const Tier(this.name, this.color, this.reward);
+  const Tier(this.name, this.color, this.crest);
   final String name;
   final Color color;
 
-  /// What reaching this tier unlocks, shown on the roadmap.
-  final String reward;
+  /// How the crest is drawn, for the preview-only tier gallery. English on
+  /// purpose: nobody but a developer checking the drawing ever sees it.
+  final String crest;
 }
 
 /// The ladder: seven tiers, Iron to Master.

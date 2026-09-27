@@ -59,7 +59,7 @@ class TierGalleryScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          kTiers[tier].reward,
+                          kTiers[tier].crest,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: context.colors.muted,
