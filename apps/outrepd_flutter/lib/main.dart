@@ -273,7 +273,7 @@ class _OutrepdAppState extends State<OutrepdApp> with WidgetsBindingObserver {
             globalPlace: 3,
             country: 'EG',
             countryPlace: 1,
-            isFriend: false,
+            isFriend: true,
             winsVsYou: 3,
             lossesVsYou: 1,
             yourBestVsThem: 16,

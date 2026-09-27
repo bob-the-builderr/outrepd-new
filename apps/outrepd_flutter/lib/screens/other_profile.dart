@@ -188,14 +188,17 @@ class _LifterPeekSheetState extends State<_LifterPeekSheet>
             else ...[
               Row(
                 children: [
-                  Expanded(
-                    child: StatTile(
-                      label: l.vsYouCaption,
-                      value: p.hasPlayedThem
-                          ? '${localNumber(context, p.winsVsYou)}${l.winInitial} ${localNumber(context, p.lossesVsYou)}${l.lossInitial}'
-                          : '—',
+                  // A record between the two of you is for friends — a
+                  // stranger off the board gets their numbers, not yours.
+                  if (p.isFriend)
+                    Expanded(
+                      child: StatTile(
+                        label: l.vsYouCaption,
+                        value: p.hasPlayedThem
+                            ? '${localNumber(context, p.winsVsYou)}${l.winInitial} ${localNumber(context, p.lossesVsYou)}${l.lossInitial}'
+                            : '—',
+                      ),
                     ),
-                  ),
                   Expanded(
                     child: StatTile(
                       label: l.bestSet,
@@ -418,9 +421,11 @@ class _Body extends StatelessWidget {
         ],
 
         const SizedBox(height: 18),
-        _HeadToHead(profile: p, username: username),
-
-        const SizedBox(height: 11),
+        // Friends only, same as the peek's "vs you" tile.
+        if (p.isFriend) ...[
+          _HeadToHead(profile: p, username: username),
+          const SizedBox(height: 11),
+        ],
         GridView.count(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),

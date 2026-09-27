@@ -72,7 +72,8 @@ const _unplayed = LifterProfile(
   wins: 3,
   losses: 2,
   winStreak: 1,
-  isFriend: false,
+  // A friend you have not raced yet — the record only shows for friends.
+  isFriend: true,
   winsVsYou: 0,
   lossesVsYou: 0,
 );
@@ -130,7 +131,7 @@ void main() {
     testWidgets('shows the record, best set and win rate once loaded', (
       tester,
     ) async {
-      backend = _FakeBackend(_played());
+      backend = _FakeBackend(_played(isFriend: true));
       phone(tester);
       await tester.pumpWidget(_appWithPeekButton());
       await tester.tap(find.text('open'));
@@ -145,6 +146,20 @@ void main() {
       expect(find.text('77%'), findsOneWidget);
       expect(find.text('Challenge'), findsOneWidget);
       expect(find.text('View full profile'), findsOneWidget);
+    });
+
+    testWidgets('a stranger\'s peek leaves out the record against you', (
+      tester,
+    ) async {
+      backend = _FakeBackend(_played());
+      phone(tester);
+      await tester.pumpWidget(_appWithPeekButton());
+      await tester.tap(find.text('open'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('3W 1L'), findsNothing);
+      expect(find.text('31'), findsOneWidget);
+      expect(find.text('77%'), findsOneWidget);
     });
 
     testWidgets('an unranked account reads unranked, not tier zero', (
@@ -177,7 +192,7 @@ void main() {
     });
 
     testWidgets('view full profile opens the full screen', (tester) async {
-      backend = _FakeBackend(_played());
+      backend = _FakeBackend(_played(isFriend: true));
       phone(tester);
       await tester.pumpWidget(_appWithPeekButton());
       await tester.tap(find.text('open'));
@@ -195,7 +210,7 @@ void main() {
     testWidgets('shows the head-to-head, stat grid and last score', (
       tester,
     ) async {
-      backend = _FakeBackend(_played());
+      backend = _FakeBackend(_played(isFriend: true));
       phone(tester);
       await tester.pumpWidget(
         _appDirect(const OtherProfileScreen(id: 'ayaan99-id', username: 'ayaan99')),
@@ -219,11 +234,6 @@ void main() {
         }
       }
 
-      // The buttons sit below the fold on a phone-sized viewport, so the
-      // list has to be scrolled before a finder can see them at all.
-      await tester.drag(find.byType(ListView), const Offset(0, -300));
-      await tester.pumpAndSettle();
-      expect(find.text('Add friend'), findsOneWidget);
     });
 
     testWidgets('an account already friends shows Friends, not Add friend', (
@@ -255,6 +265,28 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.textContaining("haven't raced newcomer yet"), findsOneWidget);
+    });
+
+    testWidgets('a stranger shows no head-to-head, only their own numbers', (
+      tester,
+    ) async {
+      backend = _FakeBackend(_played());
+      phone(tester);
+      await tester.pumpWidget(
+        _appDirect(const OtherProfileScreen(id: 'ayaan99-id', username: 'ayaan99')),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('HEAD TO HEAD'), findsNothing);
+      expect(find.textContaining('Last time: 14–19'), findsNothing);
+      expect(find.text('31'), findsOneWidget); // best set
+      expect(find.text('3,140'), findsOneWidget); // total reps
+
+      // The buttons sit below the fold on a phone-sized viewport, so the
+      // list has to be scrolled before a finder can see them at all.
+      await tester.drag(find.byType(ListView), const Offset(0, -300));
+      await tester.pumpAndSettle();
+      expect(find.text('Add friend'), findsOneWidget);
     });
 
     for (final scale in [1.0, 1.3, 1.6]) {
