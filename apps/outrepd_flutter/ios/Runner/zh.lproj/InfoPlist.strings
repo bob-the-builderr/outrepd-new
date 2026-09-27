@@ -1,0 +1,3 @@
+/* Permission prompts. The camera text is cameraNeededBody from lib/l10n. */
+"NSCameraUsageDescription" = "outrepd 通过观察你的身体动作来计数。识别在你的设备上进行，不会上传任何内容。";
+"NSPhotoLibraryUsageDescription" = "从相册中选择一张照片作为头像。";

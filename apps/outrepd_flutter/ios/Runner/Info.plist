@@ -58,7 +58,7 @@
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>NSCameraUsageDescription</key>
-	<string>outrepd watches your push-ups through the camera to count every rep. Video stays on your phone and is never uploaded.</string>
+	<string>outrepd counts your reps by watching your body move. Pose detection runs on your device and nothing is uploaded.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Pick a photo from your library for your profile picture.</string>
 	<key>CFBundleLocalizations</key>

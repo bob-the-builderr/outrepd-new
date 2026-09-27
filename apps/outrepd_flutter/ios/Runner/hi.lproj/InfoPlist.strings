@@ -1,0 +1,3 @@
+/* Permission prompts. The camera text is cameraNeededBody from lib/l10n. */
+"NSCameraUsageDescription" = "outrepd आपके शरीर की हरकत देखकर रेप्स गिनता है। यह सब आपके डिवाइस पर होता है, कुछ अपलोड नहीं होता।";
+"NSPhotoLibraryUsageDescription" = "अपनी प्रोफ़ाइल फ़ोटो के लिए अपनी लाइब्रेरी से एक फ़ोटो चुनें।";

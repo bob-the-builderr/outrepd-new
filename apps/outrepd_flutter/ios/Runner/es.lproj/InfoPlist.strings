@@ -1,0 +1,3 @@
+/* Permission prompts. The camera text is cameraNeededBody from lib/l10n. */
+"NSCameraUsageDescription" = "outrepd cuenta tus repeticiones mirando cómo se mueve tu cuerpo. La detección ocurre en tu dispositivo y no se sube nada.";
+"NSPhotoLibraryUsageDescription" = "Elige una foto de tu galería para tu foto de perfil.";

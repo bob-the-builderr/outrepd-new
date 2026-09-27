@@ -1,0 +1,3 @@
+/* Permission prompts. The camera text is cameraNeededBody from lib/l10n. */
+"NSCameraUsageDescription" = "outrepd считает повторы, наблюдая за движением тела. Распознавание работает на вашем устройстве, ничего не отправляется.";
+"NSPhotoLibraryUsageDescription" = "Выберите фото из медиатеки для аватара профиля.";
