@@ -29,6 +29,7 @@ import 'screens/shell.dart';
 import 'screens/tier_gallery.dart';
 import 'screens/trainer.dart';
 import 'reps/count_accuracy.dart';
+import 'preview_seed.dart';
 import 'settings.dart';
 import 'theme.dart';
 
@@ -49,6 +50,7 @@ void main() async {
     // With keys supplied this opens the connection; without them the app
     // runs exactly as it did — on this phone, against nobody.
     await startBackend();
+    if (kSeedPreview && !backend.available) await seedPreviewHistory();
     await settings.load();
     await loadProfileStats();
 
