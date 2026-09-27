@@ -15,6 +15,38 @@ flutter build apk --release --no-tree-shake-icons \
 
 المفاتيح في `supabase/keys.env`، والملف ده مش في git.
 
+## التوقيع لـ Google Play
+
+نسخة الـ release بتتوقّع بمفتاح الرفع لو لقت `android/key.properties`، ولو
+مش موجود بتتوقّع بمفتاح التطوير. نسخة متوقّعة بمفتاح التطوير بتشتغل على
+الموبايل عادي، بس Google Play بيرفضها.
+
+اعمل المفتاح مرة واحدة بس، وخلّيه برّه الريبو:
+
+```bash
+keytool -genkey -v -keystore ~/outrepd-upload.jks -keyalg RSA \
+  -keysize 2048 -validity 10000 -alias upload
+```
+
+وبعدين اعمل `android/key.properties` (الملف ده في `.gitignore`):
+
+```properties
+storeFile=/المسار/الكامل/outrepd-upload.jks
+storePassword=...
+keyAlias=upload
+keyPassword=...
+```
+
+خد نسخة احتياطي من الـ `.jks` والباسوردات في مكان آمن. لو اتفعّل Play App
+Signing، Google بيقدر يغيّرلك مفتاح الرفع لو ضاع، بس ده بياخد وقت.
+
+للرفع على Play اعمل bundle مش APK:
+
+```bash
+flutter build appbundle --release --no-tree-shake-icons \
+  --dart-define=SUPABASE_URL=... --dart-define=SUPABASE_ANON_KEY=...
+```
+
 ## ليه `--no-tree-shake-icons`
 
 فلاتر بيقلّص خط الأيقونات من ١.٦ ميجا لـ٢٩ كيلو بإنه يشيل الأيقونات اللي
