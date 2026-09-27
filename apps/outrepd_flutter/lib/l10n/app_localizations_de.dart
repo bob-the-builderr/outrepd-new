@@ -2018,4 +2018,8 @@ class LDe extends L {
 
   @override
   String get newPersonalBest => 'Neue Bestleistung';
+
+  @override
+  String get cantReachServer =>
+      'Server nicht erreichbar. Prüf deine Verbindung und versuch es noch mal.';
 }

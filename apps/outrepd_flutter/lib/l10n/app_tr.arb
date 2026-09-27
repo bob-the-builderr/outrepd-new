@@ -637,5 +637,6 @@
   "closestYet": "Şimdiye kadarki en yakın düello.",
   "repsAhead": "{n} tekrar önde.",
   "winnerLabel": "Kazanan",
-  "newPersonalBest": "Yeni kişisel rekor"
+  "newPersonalBest": "Yeni kişisel rekor",
+  "cantReachServer": "Sunucuya ulaşılamadı. Bağlantını kontrol edip tekrar dene."
 }

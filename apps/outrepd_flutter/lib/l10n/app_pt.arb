@@ -637,5 +637,6 @@
   "closestYet": "O duelo mais renhido até agora.",
   "repsAhead": "{n} repetições à frente.",
   "winnerLabel": "Vencedor",
-  "newPersonalBest": "Novo recorde pessoal"
+  "newPersonalBest": "Novo recorde pessoal",
+  "cantReachServer": "Não foi possível conectar ao servidor. Verifique sua conexão e tente de novo."
 }

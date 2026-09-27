@@ -500,6 +500,9 @@ enum EmailSignUpResult {
   /// Too many codes sent to this address too quickly. Not a mistake in
   /// what was typed, so it earns its own message rather than [invalid]'s.
   rateLimited,
+  /// The server could not be reached. Nothing is wrong with the address, so
+  /// this must never read as [invalid].
+  offline,
 }
 
 /// What happened trying to send a sign-in code to an email.
@@ -513,6 +516,10 @@ enum EmailLoginCodeResult {
 
   /// Too many codes sent to this address too quickly.
   rateLimited,
+  /// The server could not be reached. Said as such, never as [notFound]:
+  /// telling somebody with no signal that their account does not exist is
+  /// how people end up making a second one.
+  offline,
 }
 
 /// Somebody else's minute, waiting to be raced.

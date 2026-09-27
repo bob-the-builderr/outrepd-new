@@ -2001,4 +2001,8 @@ class LTr extends L {
 
   @override
   String get newPersonalBest => 'Yeni kişisel rekor';
+
+  @override
+  String get cantReachServer =>
+      'Sunucuya ulaşılamadı. Bağlantını kontrol edip tekrar dene.';
 }

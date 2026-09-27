@@ -2016,4 +2016,8 @@ class LFr extends L {
 
   @override
   String get newPersonalBest => 'Nouveau record personnel';
+
+  @override
+  String get cantReachServer =>
+      'Impossible de joindre le serveur. Vérifie ta connexion et réessaie.';
 }

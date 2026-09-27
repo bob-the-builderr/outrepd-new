@@ -1971,4 +1971,7 @@ class LKo extends L {
 
   @override
   String get newPersonalBest => '개인 최고 기록 경신';
+
+  @override
+  String get cantReachServer => '서버에 연결할 수 없습니다. 연결을 확인하고 다시 시도하세요.';
 }

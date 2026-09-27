@@ -2012,4 +2012,8 @@ class LIt extends L {
 
   @override
   String get newPersonalBest => 'Nuovo record personale';
+
+  @override
+  String get cantReachServer =>
+      'Impossibile raggiungere il server. Controlla la connessione e riprova.';
 }

@@ -1993,4 +1993,8 @@ class LAr extends L {
 
   @override
   String get newPersonalBest => 'رقمك القياسي الجديد';
+
+  @override
+  String get cantReachServer =>
+      'تعذّر الوصول إلى الخادم. تأكد من اتصالك وحاول مرة أخرى.';
 }

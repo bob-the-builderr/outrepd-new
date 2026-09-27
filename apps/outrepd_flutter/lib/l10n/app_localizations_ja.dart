@@ -1965,4 +1965,7 @@ class LJa extends L {
 
   @override
   String get newPersonalBest => '自己ベスト更新';
+
+  @override
+  String get cantReachServer => 'サーバーに接続できませんでした。接続を確認して、もう一度お試しください。';
 }

@@ -637,5 +637,6 @@
   "closestYet": "El duelo más ajustado hasta ahora.",
   "repsAhead": "{n} repeticiones de ventaja.",
   "winnerLabel": "Ganador",
-  "newPersonalBest": "Nuevo récord personal"
+  "newPersonalBest": "Nuevo récord personal",
+  "cantReachServer": "No se pudo conectar con el servidor. Revisa tu conexión e inténtalo de nuevo."
 }

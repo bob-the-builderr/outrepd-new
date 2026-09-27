@@ -1089,5 +1089,6 @@
     }
   },
   "winnerLabel": "Winner",
-  "newPersonalBest": "New personal best"
+  "newPersonalBest": "New personal best",
+  "cantReachServer": "Couldn't reach the server. Check your connection and try again."
 }

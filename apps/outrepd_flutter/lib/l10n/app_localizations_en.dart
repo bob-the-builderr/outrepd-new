@@ -2006,4 +2006,8 @@ class LEn extends L {
 
   @override
   String get newPersonalBest => 'New personal best';
+
+  @override
+  String get cantReachServer =>
+      'Couldn\'t reach the server. Check your connection and try again.';
 }

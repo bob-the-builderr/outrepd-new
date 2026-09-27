@@ -2005,4 +2005,8 @@ class LRu extends L {
 
   @override
   String get newPersonalBest => 'Новый личный рекорд';
+
+  @override
+  String get cantReachServer =>
+      'Не удалось связаться с сервером. Проверьте подключение и попробуйте снова.';
 }

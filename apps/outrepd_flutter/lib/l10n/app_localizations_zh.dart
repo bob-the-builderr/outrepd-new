@@ -1957,4 +1957,7 @@ class LZh extends L {
 
   @override
   String get newPersonalBest => '个人新纪录';
+
+  @override
+  String get cantReachServer => '无法连接服务器。请检查网络后重试。';
 }

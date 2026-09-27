@@ -637,5 +637,6 @@
   "closestYet": "目前最接近的一场。",
   "repsAhead": "领先 {n} 次。",
   "winnerLabel": "胜者",
-  "newPersonalBest": "个人新纪录"
+  "newPersonalBest": "个人新纪录",
+  "cantReachServer": "无法连接服务器。请检查网络后重试。"
 }

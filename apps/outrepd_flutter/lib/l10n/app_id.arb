@@ -637,5 +637,6 @@
   "closestYet": "Duel terketat sejauh ini.",
   "repsAhead": "Unggul {n} repetisi.",
   "winnerLabel": "Pemenang",
-  "newPersonalBest": "Rekor pribadi baru"
+  "newPersonalBest": "Rekor pribadi baru",
+  "cantReachServer": "Tidak dapat terhubung ke server. Periksa koneksimu dan coba lagi."
 }

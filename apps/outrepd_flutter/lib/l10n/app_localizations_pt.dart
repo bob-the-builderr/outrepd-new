@@ -2013,4 +2013,8 @@ class LPt extends L {
 
   @override
   String get newPersonalBest => 'Novo recorde pessoal';
+
+  @override
+  String get cantReachServer =>
+      'Não foi possível conectar ao servidor. Verifique sua conexão e tente de novo.';
 }

@@ -96,9 +96,9 @@ $$;
 -- the auth user is therefore the whole of it, and doing it in one place means
 -- there is no list of tables to keep in step with the schema.
 --
--- Sets the caller's rows loose from other people's duels as it goes: their
--- opponent keeps the duel and the LP it paid, because that happened, and the
--- name on it becomes nobody.
+-- Duels go too: `duels.challenger` and `duels.defender` cascade, so the
+-- opponent loses the row from their history. The LP it paid them stays, since
+-- that lives on their own profile.
 create or replace function delete_my_account()
 returns void
 language plpgsql

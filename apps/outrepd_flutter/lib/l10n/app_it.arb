@@ -637,5 +637,6 @@
   "closestYet": "La sfida più combattuta finora.",
   "repsAhead": "{n} ripetizioni di vantaggio.",
   "winnerLabel": "Vincitore",
-  "newPersonalBest": "Nuovo record personale"
+  "newPersonalBest": "Nuovo record personale",
+  "cantReachServer": "Impossibile raggiungere il server. Controlla la connessione e riprova."
 }

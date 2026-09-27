@@ -3780,6 +3780,12 @@ abstract class L {
   /// In en, this message translates to:
   /// **'New personal best'**
   String get newPersonalBest;
+
+  /// No description provided for @cantReachServer.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t reach the server. Check your connection and try again.'**
+  String get cantReachServer;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

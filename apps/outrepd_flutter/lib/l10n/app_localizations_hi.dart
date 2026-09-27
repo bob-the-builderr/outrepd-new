@@ -2005,4 +2005,8 @@ class LHi extends L {
 
   @override
   String get newPersonalBest => 'नया व्यक्तिगत रिकॉर्ड';
+
+  @override
+  String get cantReachServer =>
+      'सर्वर से कनेक्ट नहीं हो सका। अपना कनेक्शन जांचें और फिर से कोशिश करें।';
 }

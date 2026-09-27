@@ -232,13 +232,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
           setState(() {
             _busy = false;
             _error = l.tooManyCodes;
+          });        case EmailSignUpResult.offline:
+          setState(() {
+            _busy = false;
+            _error = l.cantReachServer;
           });
       }
     } on Object catch (_) {
       if (!mounted) return;
       setState(() {
         _busy = false;
-        _error = l.needsServer;
+        _error = l.cantReachServer;
       });
     }
   }
@@ -376,13 +380,17 @@ class _LoginScreenState extends State<LoginScreen> {
           setState(() {
             _busy = false;
             _error = l.tooManyCodes;
+          });        case EmailLoginCodeResult.offline:
+          setState(() {
+            _busy = false;
+            _error = l.cantReachServer;
           });
       }
     } on Object catch (_) {
       if (!mounted) return;
       setState(() {
         _busy = false;
-        _error = l.needsServer;
+        _error = l.cantReachServer;
       });
     }
   }
@@ -563,13 +571,11 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
       });
     } on Object catch (_) {
       if (!mounted) return;
-      setState(() {
-        _busy = false;
-        _wrong = true;
-      });
+      // The code was never checked, so it is not marked wrong.
+      setState(() => _busy = false);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(l.needsServer),
+          content: Text(l.cantReachServer),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -581,7 +587,16 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
     final messenger = ScaffoldMessenger.of(context);
     try {
       if (widget.forSignIn) {
-        await backend.requestLoginCode(widget.email);
+        final result = await backend.requestLoginCode(widget.email);
+        if (result == EmailLoginCodeResult.offline) {
+          messenger.showSnackBar(
+            SnackBar(
+              content: Text(l.cantReachServer),
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+          return;
+        }
       } else {
         await backend.resendEmailCode(widget.email);
       }
@@ -590,7 +605,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
       );
     } on Object catch (_) {
       messenger.showSnackBar(
-        SnackBar(content: Text(l.needsServer), behavior: SnackBarBehavior.floating),
+        SnackBar(content: Text(l.cantReachServer), behavior: SnackBarBehavior.floating),
       );
     }
     if (!mounted) return;

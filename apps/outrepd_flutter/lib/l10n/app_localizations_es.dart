@@ -2014,4 +2014,8 @@ class LEs extends L {
 
   @override
   String get newPersonalBest => 'Nuevo récord personal';
+
+  @override
+  String get cantReachServer =>
+      'No se pudo conectar con el servidor. Revisa tu conexión e inténtalo de nuevo.';
 }

@@ -611,6 +611,8 @@ class SupabaseBackend implements Backend {
       // reps already counted on the account nobody is looking at any more.
       await _db.auth.updateUser(UserAttributes(email: email));
       return EmailSignUpResult.ok;
+    } on AuthRetryableFetchException catch (_) {
+      return EmailSignUpResult.offline;
     } on AuthException catch (error) {
       debugPrint(
         'startEmailSignUp failed: code=${error.code} status=${error.statusCode} '
@@ -641,6 +643,9 @@ class SupabaseBackend implements Backend {
         token: code,
       );
       return true;
+    } on AuthRetryableFetchException {
+      // Not a wrong code: the screen says the server could not be reached.
+      rethrow;
     } on AuthException catch (_) {
       return false;
     }
@@ -658,6 +663,8 @@ class SupabaseBackend implements Backend {
       // unlike [startEmailSignUp].
       await _db.auth.signInWithOtp(email: email, shouldCreateUser: false);
       return EmailLoginCodeResult.ok;
+    } on AuthRetryableFetchException catch (_) {
+      return EmailLoginCodeResult.offline;
     } on AuthException catch (error) {
       if (error.code == 'over_email_send_rate_limit') {
         return EmailLoginCodeResult.rateLimited;
@@ -689,6 +696,9 @@ class SupabaseBackend implements Backend {
           .single();
       _me = _profileFrom(row);
       return true;
+    } on AuthRetryableFetchException {
+      // Not a wrong code: the screen says the server could not be reached.
+      rethrow;
     } on AuthException catch (_) {
       return false;
     }
@@ -723,6 +733,20 @@ class SupabaseBackend implements Backend {
 
   @override
   Future<void> deleteAccount() async {
+    // The photo first, while this session can still prove it owns the file.
+    // Deleting the account does not reach storage, and the bucket is public,
+    // so a photo left behind stays readable by anyone with its URL. Storage
+    // refuses deletes from SQL, which is why this is not in the function.
+    final id = _db.auth.currentUser?.id;
+    if (id != null) {
+      try {
+        await _db.storage.from('avatars').remove(['$id/photo.jpg']);
+      } on Object catch (error) {
+        // No photo to remove is the usual case, not a reason to keep an
+        // account its owner asked to delete.
+        debugPrint('Could not remove avatar: $error');
+      }
+    }
     await _db.rpc<void>('delete_my_account');
     await _db.auth.signOut();
     _me = null;

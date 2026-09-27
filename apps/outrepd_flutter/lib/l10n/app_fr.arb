@@ -637,5 +637,6 @@
   "closestYet": "Le duel le plus serré jusqu’ici.",
   "repsAhead": "{n} répétitions d'avance.",
   "winnerLabel": "Vainqueur",
-  "newPersonalBest": "Nouveau record personnel"
+  "newPersonalBest": "Nouveau record personnel",
+  "cantReachServer": "Impossible de joindre le serveur. Vérifie ta connexion et réessaie."
 }

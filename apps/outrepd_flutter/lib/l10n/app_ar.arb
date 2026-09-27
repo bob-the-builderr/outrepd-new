@@ -637,5 +637,6 @@
   "closestYet": "أقرب مباراة حتى الآن.",
   "repsAhead": "بفارق {n} تكرارًا.",
   "winnerLabel": "الفائز",
-  "newPersonalBest": "رقمك القياسي الجديد"
+  "newPersonalBest": "رقمك القياسي الجديد",
+  "cantReachServer": "تعذّر الوصول إلى الخادم. تأكد من اتصالك وحاول مرة أخرى."
 }

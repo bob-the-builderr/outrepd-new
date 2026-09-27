@@ -637,5 +637,6 @@
   "closestYet": "지금까지 가장 근소한 대결.",
   "repsAhead": "{n}회 차이로 승리.",
   "winnerLabel": "승자",
-  "newPersonalBest": "개인 최고 기록 경신"
+  "newPersonalBest": "개인 최고 기록 경신",
+  "cantReachServer": "서버에 연결할 수 없습니다. 연결을 확인하고 다시 시도하세요."
 }

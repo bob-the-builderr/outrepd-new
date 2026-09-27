@@ -2005,4 +2005,8 @@ class LId extends L {
 
   @override
   String get newPersonalBest => 'Rekor pribadi baru';
+
+  @override
+  String get cantReachServer =>
+      'Tidak dapat terhubung ke server. Periksa koneksimu dan coba lagi.';
 }
