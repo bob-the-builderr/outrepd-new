@@ -646,9 +646,6 @@ class LRu extends L {
   String get achievements => 'Достижения';
 
   @override
-  String get unlocked => 'Открыто';
-
-  @override
   String get roadTitle => 'Путь к Мастеру';
 
   @override
@@ -660,14 +657,6 @@ class LRu extends L {
   @override
   String lpToGo(String lp) {
     return '$lp ОЛ';
-  }
-
-  @override
-  String get unlockedEverything => 'Ты открыл всё';
-
-  @override
-  String unlocksAt(String tier) {
-    return 'Откроется на ранге $tier';
   }
 
   @override
@@ -1454,11 +1443,6 @@ class LRu extends L {
 
   @override
   String get yourClimb => 'Ваш подъём';
-
-  @override
-  String lpToUnlock(String lp, String rank, String unlock) {
-    return '$lp LP до $rank · открывает $unlock';
-  }
 
   @override
   String floorKept(String tier, String rank) {

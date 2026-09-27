@@ -271,7 +271,6 @@
   "deleteAccount": "Delete account",
   "needsServer": "This needs a server — not wired up yet",
   "achievements": "Achievements",
-  "unlocked": "Unlocked",
   "roadTitle": "Road to Master",
   "allTiers": "All tiers",
   "topTier": "Top tier",
@@ -279,15 +278,6 @@
   "@lpToGo": {
     "placeholders": {
       "lp": {
-        "type": "String"
-      }
-    }
-  },
-  "unlockedEverything": "You have unlocked everything",
-  "unlocksAt": "Unlocks at {tier}",
-  "@unlocksAt": {
-    "placeholders": {
-      "tier": {
         "type": "String"
       }
     }
@@ -784,20 +774,6 @@
   "couldNotLoadProfile": "Couldn't load this profile",
   "noFriendsMatch": "Nobody by that name",
   "yourClimb": "Your climb",
-  "lpToUnlock": "{lp} LP to {rank} · unlocks {unlock}",
-  "@lpToUnlock": {
-    "placeholders": {
-      "lp": {
-        "type": "String"
-      },
-      "rank": {
-        "type": "String"
-      },
-      "unlock": {
-        "type": "String"
-      }
-    }
-  },
   "floorKept": "{tier} is yours. You can't drop below {rank}.",
   "@floorKept": {
     "placeholders": {

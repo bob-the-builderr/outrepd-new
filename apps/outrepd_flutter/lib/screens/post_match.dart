@@ -459,12 +459,15 @@ class _LpBar extends StatelessWidget {
       borderRadius: BorderRadius.circular(4),
       child: SizedBox(
         height: 8,
+        // Expand, so every layer is handed the bar's full 8dp. A Stack's
+        // default loose height lets a childless ColoredBox shrink to nothing,
+        // which is how the fill went missing.
         child: Stack(
+          fit: StackFit.expand,
           children: [
-            Positioned.fill(
-              child: ColoredBox(color: context.colors.surfaceRaised),
-            ),
+            ColoredBox(color: context.colors.surfaceRaised),
             FractionallySizedBox(
+              alignment: AlignmentDirectional.centerStart,
               widthFactor: low,
               child: ColoredBox(color: context.colors.brand),
             ),
@@ -475,6 +478,7 @@ class _LpBar extends StatelessWidget {
                 alignment: AlignmentDirectional.centerEnd,
                 child: FractionallySizedBox(
                   widthFactor: high == 0 ? 0 : (high - low) / high,
+                  heightFactor: 1,
                   child: ColoredBox(
                     color:
                         (gained ? context.colors.brand : context.colors.rival)

@@ -204,4 +204,59 @@ void main() {
       expect(find.text('Closest match yet.'), findsOneWidget);
     });
   });
+
+  group('the LP bar', () {
+    testWidgets('every layer is drawn at the bar\'s full height', (
+      tester,
+    ) async {
+      phone(tester);
+      await tester.pumpWidget(_app(view(won: true)));
+      await tester.pumpAndSettle();
+
+      final layers = find.descendant(
+        of: find.byType(LpCard),
+        matching: find.byType(ColoredBox),
+      );
+      // Track, fill, and the stretch this win added.
+      expect(layers, findsNWidgets(3));
+      for (final el in layers.evaluate()) {
+        expect((el.renderObject! as RenderBox).size.height, 8);
+      }
+    });
+
+    testWidgets('the fill starts where the bar starts', (tester) async {
+      phone(tester);
+      await tester.pumpWidget(_app(view(won: true)));
+      await tester.pumpAndSettle();
+
+      final layers = find
+          .descendant(
+            of: find.byType(LpCard),
+            matching: find.byType(ColoredBox),
+          )
+          .evaluate()
+          .toList();
+      final track = tester.getTopLeft(find.byWidget(layers[0].widget));
+      final fill = tester.getTopLeft(find.byWidget(layers[1].widget));
+      expect(fill.dx, track.dx);
+    });
+  });
+
+  testWidgets('the primary button text can be read on its fill', (
+    tester,
+  ) async {
+    phone(tester);
+    await tester.pumpWidget(_app(view(won: true)));
+    await tester.pumpAndSettle();
+
+    final context = tester.element(find.text('Rematch'));
+    final style = Theme.of(context).filledButtonTheme.style!;
+    final fg = style.foregroundColor!.resolve({})!;
+    final bg = style.backgroundColor!.resolve({})!;
+    double lum(Color c) => c.computeLuminance();
+    final hi = lum(fg) > lum(bg) ? lum(fg) : lum(bg);
+    final lo = lum(fg) > lum(bg) ? lum(bg) : lum(fg);
+    // WCAG AA for large bold text.
+    expect((hi + 0.05) / (lo + 0.05), greaterThanOrEqualTo(3));
+  });
 }

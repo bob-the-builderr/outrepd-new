@@ -650,9 +650,6 @@ class LPt extends L {
   String get achievements => 'Conquistas';
 
   @override
-  String get unlocked => 'Desbloqueado';
-
-  @override
   String get roadTitle => 'Caminho para Mestre';
 
   @override
@@ -664,14 +661,6 @@ class LPt extends L {
   @override
   String lpToGo(String lp) {
     return '$lp PL';
-  }
-
-  @override
-  String get unlockedEverything => 'Já desbloqueaste tudo';
-
-  @override
-  String unlocksAt(String tier) {
-    return 'Desbloqueia em $tier';
   }
 
   @override
@@ -1460,11 +1449,6 @@ class LPt extends L {
 
   @override
   String get yourClimb => 'Sua escalada';
-
-  @override
-  String lpToUnlock(String lp, String rank, String unlock) {
-    return '$lp LP até $rank · desbloqueia $unlock';
-  }
 
   @override
   String floorKept(String tier, String rank) {

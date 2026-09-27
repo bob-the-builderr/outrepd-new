@@ -646,9 +646,6 @@ class LEn extends L {
   String get achievements => 'Achievements';
 
   @override
-  String get unlocked => 'Unlocked';
-
-  @override
   String get roadTitle => 'Road to Master';
 
   @override
@@ -660,14 +657,6 @@ class LEn extends L {
   @override
   String lpToGo(String lp) {
     return '$lp LP';
-  }
-
-  @override
-  String get unlockedEverything => 'You have unlocked everything';
-
-  @override
-  String unlocksAt(String tier) {
-    return 'Unlocks at $tier';
   }
 
   @override
@@ -1454,11 +1443,6 @@ class LEn extends L {
 
   @override
   String get yourClimb => 'Your climb';
-
-  @override
-  String lpToUnlock(String lp, String rank, String unlock) {
-    return '$lp LP to $rank · unlocks $unlock';
-  }
 
   @override
   String floorKept(String tier, String rank) {

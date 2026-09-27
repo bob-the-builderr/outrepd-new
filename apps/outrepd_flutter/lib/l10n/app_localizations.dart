@@ -1309,12 +1309,6 @@ abstract class L {
   /// **'Achievements'**
   String get achievements;
 
-  /// No description provided for @unlocked.
-  ///
-  /// In en, this message translates to:
-  /// **'Unlocked'**
-  String get unlocked;
-
   /// No description provided for @roadTitle.
   ///
   /// In en, this message translates to:
@@ -1338,18 +1332,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'{lp} LP'**
   String lpToGo(String lp);
-
-  /// No description provided for @unlockedEverything.
-  ///
-  /// In en, this message translates to:
-  /// **'You have unlocked everything'**
-  String get unlockedEverything;
-
-  /// No description provided for @unlocksAt.
-  ///
-  /// In en, this message translates to:
-  /// **'Unlocks at {tier}'**
-  String unlocksAt(String tier);
 
   /// No description provided for @roomFriendly.
   ///
@@ -2784,12 +2766,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Your climb'**
   String get yourClimb;
-
-  /// No description provided for @lpToUnlock.
-  ///
-  /// In en, this message translates to:
-  /// **'{lp} LP to {rank} · unlocks {unlock}'**
-  String lpToUnlock(String lp, String rank, String unlock);
 
   /// No description provided for @floorKept.
   ///

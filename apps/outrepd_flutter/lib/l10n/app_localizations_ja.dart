@@ -626,9 +626,6 @@ class LJa extends L {
   String get achievements => '実績';
 
   @override
-  String get unlocked => '解放済み';
-
-  @override
   String get roadTitle => 'マスターへの道';
 
   @override
@@ -640,14 +637,6 @@ class LJa extends L {
   @override
   String lpToGo(String lp) {
     return '$lp LP';
-  }
-
-  @override
-  String get unlockedEverything => 'すべて解放済みです';
-
-  @override
-  String unlocksAt(String tier) {
-    return '$tier で解放';
   }
 
   @override
@@ -1428,11 +1417,6 @@ class LJa extends L {
 
   @override
   String get yourClimb => 'あなたの登り';
-
-  @override
-  String lpToUnlock(String lp, String rank, String unlock) {
-    return '$rank まで $lp LP · $unlock が解放';
-  }
 
   @override
   String floorKept(String tier, String rank) {

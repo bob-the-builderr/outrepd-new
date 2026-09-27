@@ -623,9 +623,6 @@ class LZh extends L {
   String get achievements => '成就';
 
   @override
-  String get unlocked => '已解锁';
-
-  @override
   String get roadTitle => '大师之路';
 
   @override
@@ -637,14 +634,6 @@ class LZh extends L {
   @override
   String lpToGo(String lp) {
     return '$lp LP';
-  }
-
-  @override
-  String get unlockedEverything => '你已经全部解锁';
-
-  @override
-  String unlocksAt(String tier) {
-    return '$tier 解锁';
   }
 
   @override
@@ -1425,11 +1414,6 @@ class LZh extends L {
 
   @override
   String get yourClimb => '你的攀登';
-
-  @override
-  String lpToUnlock(String lp, String rank, String unlock) {
-    return '距 $rank 还差 $lp LP · 解锁$unlock';
-  }
 
   @override
   String floorKept(String tier, String rank) {

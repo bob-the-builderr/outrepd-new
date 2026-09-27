@@ -186,13 +186,17 @@ const kTiers = <Tier>[
 ThemeData buildTheme(Brightness brightness) {
   final p = paletteFor(brightness);
   final dark = brightness == Brightness.dark;
+  // Text on a brand fill. The dark palette's brand is a pale cream, which
+  // white text disappears into; the light palette's is a deep gold that
+  // carries white.
+  final onBrand = dark ? p.background : Colors.white;
 
   final scheme = ColorScheme(
     brightness: brightness,
     primary: p.brand,
-    onPrimary: Colors.white,
+    onPrimary: onBrand,
     secondary: p.brand,
-    onSecondary: Colors.white,
+    onSecondary: onBrand,
     surface: p.surface,
     onSurface: p.text,
     error: AppColors.loss,
@@ -234,8 +238,7 @@ ThemeData buildTheme(Brightness brightness) {
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
         backgroundColor: p.brand,
-        // The brand blue is dark enough in both palettes to carry white text.
-        foregroundColor: Colors.white,
+        foregroundColor: onBrand,
         minimumSize: const Size.fromHeight(56),
         textStyle: const TextStyle(
           fontSize: 17,

@@ -651,9 +651,6 @@ class LEs extends L {
   String get achievements => 'Logros';
 
   @override
-  String get unlocked => 'Desbloqueado';
-
-  @override
   String get roadTitle => 'Camino a Maestro';
 
   @override
@@ -665,14 +662,6 @@ class LEs extends L {
   @override
   String lpToGo(String lp) {
     return '$lp PL';
-  }
-
-  @override
-  String get unlockedEverything => 'Ya lo has desbloqueado todo';
-
-  @override
-  String unlocksAt(String tier) {
-    return 'Se desbloquea en $tier';
   }
 
   @override
@@ -1460,11 +1449,6 @@ class LEs extends L {
 
   @override
   String get yourClimb => 'Tu ascenso';
-
-  @override
-  String lpToUnlock(String lp, String rank, String unlock) {
-    return '$lp LP para $rank · desbloquea $unlock';
-  }
 
   @override
   String floorKept(String tier, String rank) {

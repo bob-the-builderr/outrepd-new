@@ -651,9 +651,6 @@ class LDe extends L {
   String get achievements => 'Erfolge';
 
   @override
-  String get unlocked => 'Freigeschaltet';
-
-  @override
   String get roadTitle => 'Der Weg zum Meister';
 
   @override
@@ -665,14 +662,6 @@ class LDe extends L {
   @override
   String lpToGo(String lp) {
     return '$lp LP';
-  }
-
-  @override
-  String get unlockedEverything => 'Du hast alles freigeschaltet';
-
-  @override
-  String unlocksAt(String tier) {
-    return 'Freigeschaltet bei $tier';
   }
 
   @override
@@ -1463,11 +1452,6 @@ class LDe extends L {
 
   @override
   String get yourClimb => 'Dein Aufstieg';
-
-  @override
-  String lpToUnlock(String lp, String rank, String unlock) {
-    return '$lp LP bis $rank · schaltet $unlock frei';
-  }
 
   @override
   String floorKept(String tier, String rank) {

@@ -642,9 +642,6 @@ class LAr extends L {
   String get achievements => 'الإنجازات';
 
   @override
-  String get unlocked => 'مفتوحة';
-
-  @override
   String get roadTitle => 'الطريق إلى المُعلِّم';
 
   @override
@@ -656,14 +653,6 @@ class LAr extends L {
   @override
   String lpToGo(String lp) {
     return '$lp نقطة';
-  }
-
-  @override
-  String get unlockedEverything => 'لقد فتحت كل شيء';
-
-  @override
-  String unlocksAt(String tier) {
-    return 'يُفتح عند رتبة $tier';
   }
 
   @override
@@ -1448,11 +1437,6 @@ class LAr extends L {
 
   @override
   String get yourClimb => 'صعودك';
-
-  @override
-  String lpToUnlock(String lp, String rank, String unlock) {
-    return '$lp نقطة للوصول إلى $rank · يفتح $unlock';
-  }
 
   @override
   String floorKept(String tier, String rank) {

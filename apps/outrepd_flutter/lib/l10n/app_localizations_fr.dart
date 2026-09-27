@@ -653,9 +653,6 @@ class LFr extends L {
   String get achievements => 'Succès';
 
   @override
-  String get unlocked => 'Débloqué';
-
-  @override
   String get roadTitle => 'La route vers Maître';
 
   @override
@@ -667,14 +664,6 @@ class LFr extends L {
   @override
   String lpToGo(String lp) {
     return '$lp PL';
-  }
-
-  @override
-  String get unlockedEverything => 'Vous avez tout débloqué';
-
-  @override
-  String unlocksAt(String tier) {
-    return 'Se débloque à $tier';
   }
 
   @override
@@ -1462,11 +1451,6 @@ class LFr extends L {
 
   @override
   String get yourClimb => 'Ton ascension';
-
-  @override
-  String lpToUnlock(String lp, String rank, String unlock) {
-    return '$lp LP avant $rank · débloque $unlock';
-  }
 
   @override
   String floorKept(String tier, String rank) {

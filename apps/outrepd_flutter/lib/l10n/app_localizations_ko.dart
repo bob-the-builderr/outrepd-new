@@ -628,9 +628,6 @@ class LKo extends L {
   String get achievements => '업적';
 
   @override
-  String get unlocked => '해금됨';
-
-  @override
   String get roadTitle => '마스터로 가는 길';
 
   @override
@@ -642,14 +639,6 @@ class LKo extends L {
   @override
   String lpToGo(String lp) {
     return '$lp LP';
-  }
-
-  @override
-  String get unlockedEverything => '전부 해금했습니다';
-
-  @override
-  String unlocksAt(String tier) {
-    return '$tier에서 해금';
   }
 
   @override
@@ -1430,11 +1419,6 @@ class LKo extends L {
 
   @override
   String get yourClimb => '당신의 등반';
-
-  @override
-  String lpToUnlock(String lp, String rank, String unlock) {
-    return '$rank까지 $lp LP · $unlock 해금';
-  }
 
   @override
   String floorKept(String tier, String rank) {

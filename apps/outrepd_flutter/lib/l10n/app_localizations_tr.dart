@@ -645,9 +645,6 @@ class LTr extends L {
   String get achievements => 'Başarımlar';
 
   @override
-  String get unlocked => 'Açıldı';
-
-  @override
   String get roadTitle => 'Ustalığa giden yol';
 
   @override
@@ -659,14 +656,6 @@ class LTr extends L {
   @override
   String lpToGo(String lp) {
     return '$lp LP';
-  }
-
-  @override
-  String get unlockedEverything => 'Her şeyi açtın';
-
-  @override
-  String unlocksAt(String tier) {
-    return '$tier rütbesinde açılıyor';
   }
 
   @override
@@ -1451,11 +1440,6 @@ class LTr extends L {
 
   @override
   String get yourClimb => 'Tırmanışın';
-
-  @override
-  String lpToUnlock(String lp, String rank, String unlock) {
-    return '$rank için $lp LP · $unlock açılır';
-  }
 
   @override
   String floorKept(String tier, String rank) {

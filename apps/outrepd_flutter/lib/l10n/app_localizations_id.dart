@@ -644,9 +644,6 @@ class LId extends L {
   String get achievements => 'Pencapaian';
 
   @override
-  String get unlocked => 'Terbuka';
-
-  @override
   String get roadTitle => 'Jalan menuju Master';
 
   @override
@@ -658,14 +655,6 @@ class LId extends L {
   @override
   String lpToGo(String lp) {
     return '$lp LP';
-  }
-
-  @override
-  String get unlockedEverything => 'Kamu sudah membuka semuanya';
-
-  @override
-  String unlocksAt(String tier) {
-    return 'Terbuka di $tier';
   }
 
   @override
@@ -1453,11 +1442,6 @@ class LId extends L {
 
   @override
   String get yourClimb => 'Pendakianmu';
-
-  @override
-  String lpToUnlock(String lp, String rank, String unlock) {
-    return '$lp LP menuju $rank · membuka $unlock';
-  }
 
   @override
   String floorKept(String tier, String rank) {

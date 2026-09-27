@@ -649,9 +649,6 @@ class LIt extends L {
   String get achievements => 'Obiettivi';
 
   @override
-  String get unlocked => 'Sbloccato';
-
-  @override
   String get roadTitle => 'La strada per Maestro';
 
   @override
@@ -663,14 +660,6 @@ class LIt extends L {
   @override
   String lpToGo(String lp) {
     return '$lp PL';
-  }
-
-  @override
-  String get unlockedEverything => 'Hai sbloccato tutto';
-
-  @override
-  String unlocksAt(String tier) {
-    return 'Si sblocca a $tier';
   }
 
   @override
@@ -1459,11 +1448,6 @@ class LIt extends L {
 
   @override
   String get yourClimb => 'La tua scalata';
-
-  @override
-  String lpToUnlock(String lp, String rank, String unlock) {
-    return '$lp LP a $rank · sblocca $unlock';
-  }
 
   @override
   String floorKept(String tier, String rank) {

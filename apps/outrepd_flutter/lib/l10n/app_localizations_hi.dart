@@ -646,9 +646,6 @@ class LHi extends L {
   String get achievements => 'उपलब्धियाँ';
 
   @override
-  String get unlocked => 'खुल गया';
-
-  @override
   String get roadTitle => 'मास्टर तक का रास्ता';
 
   @override
@@ -660,14 +657,6 @@ class LHi extends L {
   @override
   String lpToGo(String lp) {
     return '$lp LP';
-  }
-
-  @override
-  String get unlockedEverything => 'आपने सब कुछ खोल लिया है';
-
-  @override
-  String unlocksAt(String tier) {
-    return '$tier पर खुलेगा';
   }
 
   @override
@@ -1456,11 +1445,6 @@ class LHi extends L {
 
   @override
   String get yourClimb => 'आपकी चढ़ाई';
-
-  @override
-  String lpToUnlock(String lp, String rank, String unlock) {
-    return '$rank तक $lp LP · $unlock खुलेगा';
-  }
 
   @override
   String floorKept(String tier, String rank) {
