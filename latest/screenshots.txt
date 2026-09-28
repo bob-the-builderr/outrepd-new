@@ -1,7 +1,9 @@
 
 ::group::✅ Passing tests
-✅ paywall small
-✅ paywall tall
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_ar_test.dart: paywall ar small
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_ar_test.dart: paywall ar tall
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_en_test.dart: paywall en small
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_en_test.dart: paywall en tall
 ::endgroup::
 
-🎉 2 tests passed.
+🎉 4 tests passed.
