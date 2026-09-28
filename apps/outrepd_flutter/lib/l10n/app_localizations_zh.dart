@@ -1949,4 +1949,41 @@ class LZh extends L {
 
   @override
   String get obWelcomeBack => '欢迎回来';
+
+  @override
+  String get obDuelTitle => '你和真人的一分钟比拼';
+
+  @override
+  String get obDuelBody => '对方的那一组是逐次记录下来的。你做自己这组时，能实时看到它的进度。';
+
+  @override
+  String obDuelWinBy(String count) {
+    return '领先 $count 次获胜';
+  }
+
+  @override
+  String get obDuelLpRule => '段位积分就是次数差。赢得越多，升得越快。';
+
+  @override
+  String get obLadderTitle => '七个段位等你攀登';
+
+  @override
+  String get obLadderBody => '五场定级对决决定你的起点。赢了就升段，达到的段位会一直保留。';
+
+  @override
+  String obTitlesHeading(String count) {
+    return '$count 个称号等你获得';
+  }
+
+  @override
+  String get obTitlesBody => '赢得胜利、连胜、标准动作、早起训练等都能获得。可以选一个显示在你的名字下方。';
+
+  @override
+  String get obFriendsHeading => '和朋友一决高下';
+
+  @override
+  String get obFriendsBody => '朋友可以用这个代码添加你。随时向他们发起挑战，你们之间的战绩会一直保留。';
+
+  @override
+  String get obLetsGo => '出发';
 }

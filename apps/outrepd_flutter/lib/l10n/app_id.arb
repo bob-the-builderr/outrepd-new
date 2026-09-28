@@ -632,5 +632,16 @@
   "setInPoolTitle": "Set-mu sudah masuk antrean",
   "setInPoolBody": "Atlet berikutnya di dekat peringkatmu akan melawannya. Kamu akan melihat siapa yang menang di Notifikasi, dan peringkatmu berubah saat itu.",
   "obWhyNeededBody": "Setiap repetisi dinilai dari seberapa jauh bahumu turun dan naik, dan hanya kamera yang bisa melihatnya. Tanpa kamera tidak ada hitungan, dan tanpa hitungan tidak ada duel. Kamera hanya menyala saat satu set berlangsung.",
-  "obWelcomeBack": "Selamat datang kembali"
+  "obWelcomeBack": "Selamat datang kembali",
+  "obDuelTitle": "Kamu berlomba dengan satu menit milik orang sungguhan",
+  "obDuelBody": "Set mereka direkam per repetisi. Kamu melihatnya berjalan langsung saat kamu melakukan set-mu.",
+  "obDuelWinBy": "Menang selisih {count} repetisi",
+  "obDuelLpRule": "Poin peringkat adalah selisih repetisi. Menang telak, naik cepat.",
+  "obLadderTitle": "Tujuh tingkat untuk didaki",
+  "obLadderBody": "Lima duel penempatan menentukan titik awalmu. Menang untuk naik, dan tingkat yang sudah dicapai tetap milikmu.",
+  "obTitlesHeading": "{count} gelar untuk diraih",
+  "obTitlesBody": "Untuk kemenangan, beruntun, set bersih, pagi buta, dan lainnya. Pakai satu di bawah namamu.",
+  "obFriendsHeading": "Selesaikan dengan teman",
+  "obFriendsBody": "Teman menambahkanmu dengan kode ini. Tantang mereka kapan saja, dan skor di antara kalian tersimpan.",
+  "obLetsGo": "Ayo mulai"
 }

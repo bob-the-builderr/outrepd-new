@@ -3750,6 +3750,72 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Welcome back'**
   String get obWelcomeBack;
+
+  /// No description provided for @obDuelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You race a real person’s minute'**
+  String get obDuelTitle;
+
+  /// No description provided for @obDuelBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Their set was recorded rep by rep. You see it happen live while you do yours.'**
+  String get obDuelBody;
+
+  /// No description provided for @obDuelWinBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Win by {count} reps'**
+  String obDuelWinBy(String count);
+
+  /// No description provided for @obDuelLpRule.
+  ///
+  /// In en, this message translates to:
+  /// **'Rank points are the gap in reps. Win big, climb fast.'**
+  String get obDuelLpRule;
+
+  /// No description provided for @obLadderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Seven tiers to climb'**
+  String get obLadderTitle;
+
+  /// No description provided for @obLadderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Five placement duels set where you start. Win to climb, and once you reach a tier, you keep it.'**
+  String get obLadderBody;
+
+  /// No description provided for @obTitlesHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} titles to earn'**
+  String obTitlesHeading(String count);
+
+  /// No description provided for @obTitlesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'For wins, streaks, clean sets, early mornings and more. Wear one under your name.'**
+  String get obTitlesBody;
+
+  /// No description provided for @obFriendsHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Settle it with friends'**
+  String get obFriendsHeading;
+
+  /// No description provided for @obFriendsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Friends add you with this code. Challenge them whenever you like, and the score between you is kept.'**
+  String get obFriendsBody;
+
+  /// No description provided for @obLetsGo.
+  ///
+  /// In en, this message translates to:
+  /// **'Let’s go'**
+  String get obLetsGo;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

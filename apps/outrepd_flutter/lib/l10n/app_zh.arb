@@ -632,5 +632,16 @@
   "setInPoolTitle": "你的成绩已进入匹配池",
   "setInPoolBody": "下一位段位相近的玩家会挑战这组成绩。谁赢了会在通知里显示，届时你的段位才会变动。",
   "obWhyNeededBody": "每一次都根据你肩膀下降和抬起的幅度来判定，而只有摄像头能看到这些。没有摄像头就无法计数，没有计数就没有对决。摄像头只在做组时开启。",
-  "obWelcomeBack": "欢迎回来"
+  "obWelcomeBack": "欢迎回来",
+  "obDuelTitle": "你和真人的一分钟比拼",
+  "obDuelBody": "对方的那一组是逐次记录下来的。你做自己这组时，能实时看到它的进度。",
+  "obDuelWinBy": "领先 {count} 次获胜",
+  "obDuelLpRule": "段位积分就是次数差。赢得越多，升得越快。",
+  "obLadderTitle": "七个段位等你攀登",
+  "obLadderBody": "五场定级对决决定你的起点。赢了就升段，达到的段位会一直保留。",
+  "obTitlesHeading": "{count} 个称号等你获得",
+  "obTitlesBody": "赢得胜利、连胜、标准动作、早起训练等都能获得。可以选一个显示在你的名字下方。",
+  "obFriendsHeading": "和朋友一决高下",
+  "obFriendsBody": "朋友可以用这个代码添加你。随时向他们发起挑战，你们之间的战绩会一直保留。",
+  "obLetsGo": "出发"
 }

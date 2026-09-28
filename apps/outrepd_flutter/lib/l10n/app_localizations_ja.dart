@@ -1959,4 +1959,41 @@ class LJa extends L {
 
   @override
   String get obWelcomeBack => 'おかえり';
+
+  @override
+  String get obDuelTitle => '本物の誰かの1分間と勝負します';
+
+  @override
+  String get obDuelBody => '相手のセットは1回ごとに記録されています。自分のセット中に、それがリアルタイムで進むのが見えます。';
+
+  @override
+  String obDuelWinBy(String count) {
+    return '$count回差で勝利';
+  }
+
+  @override
+  String get obDuelLpRule => 'ランクポイントは回数の差です。大差で勝てば早く上がれます。';
+
+  @override
+  String get obLadderTitle => '登るべき7つのティア';
+
+  @override
+  String get obLadderBody => '最初の5回の対戦でスタート位置が決まります。勝てば上がり、一度到達したティアからは落ちません。';
+
+  @override
+  String obTitlesHeading(String count) {
+    return '獲得できる称号は$count個';
+  }
+
+  @override
+  String get obTitlesBody => '勝利、連勝、きれいなセット、早朝トレーニングなどでもらえます。名前の下に1つ表示できます。';
+
+  @override
+  String get obFriendsHeading => '友達と決着をつけよう';
+
+  @override
+  String get obFriendsBody => '友達はこのコードであなたを追加できます。いつでも挑戦でき、2人の対戦成績は記録されます。';
+
+  @override
+  String get obLetsGo => '始めよう';
 }

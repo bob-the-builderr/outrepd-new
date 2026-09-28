@@ -632,5 +632,16 @@
   "setInPoolTitle": "Dein Satz ist im Pool",
   "setInPoolBody": "Der nächste Sportler in deiner Nähe im Ranking tritt dagegen an. Wer gewonnen hat, siehst du in den Mitteilungen, und dann bewegt sich dein Rang.",
   "obWhyNeededBody": "Jede Wiederholung wird danach bewertet, wie weit deine Schultern sinken und steigen, und das sieht nur die Kamera. Ohne sie gibt es keine Zählung und ohne Zählung kein Duell. Die Kamera ist nur während eines Satzes an.",
-  "obWelcomeBack": "Willkommen zurück"
+  "obWelcomeBack": "Willkommen zurück",
+  "obDuelTitle": "Du trittst gegen die Minute eines echten Menschen an",
+  "obDuelBody": "Sein Satz wurde Wiederholung für Wiederholung aufgezeichnet. Du siehst ihn live, während du deinen machst.",
+  "obDuelWinBy": "Mit {count} Wiederholungen Vorsprung gewinnen",
+  "obDuelLpRule": "Ranglistenpunkte sind der Abstand in Wiederholungen. Hoch gewinnen heißt schnell aufsteigen.",
+  "obLadderTitle": "Sieben Stufen zum Aufsteigen",
+  "obLadderBody": "Fünf Einstufungsduelle legen fest, wo du startest. Gewinne, um aufzusteigen – eine erreichte Stufe behältst du.",
+  "obTitlesHeading": "{count} Titel zu verdienen",
+  "obTitlesBody": "Für Siege, Serien, saubere Sätze, frühe Morgen und mehr. Trag einen unter deinem Namen.",
+  "obFriendsHeading": "Macht es unter Freunden aus",
+  "obFriendsBody": "Freunde fügen dich mit diesem Code hinzu. Fordere sie heraus, wann du willst – der Stand zwischen euch wird gespeichert.",
+  "obLetsGo": "Auf geht’s"
 }

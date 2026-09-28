@@ -2009,4 +2009,47 @@ class LDe extends L {
 
   @override
   String get obWelcomeBack => 'Willkommen zurück';
+
+  @override
+  String get obDuelTitle =>
+      'Du trittst gegen die Minute eines echten Menschen an';
+
+  @override
+  String get obDuelBody =>
+      'Sein Satz wurde Wiederholung für Wiederholung aufgezeichnet. Du siehst ihn live, während du deinen machst.';
+
+  @override
+  String obDuelWinBy(String count) {
+    return 'Mit $count Wiederholungen Vorsprung gewinnen';
+  }
+
+  @override
+  String get obDuelLpRule =>
+      'Ranglistenpunkte sind der Abstand in Wiederholungen. Hoch gewinnen heißt schnell aufsteigen.';
+
+  @override
+  String get obLadderTitle => 'Sieben Stufen zum Aufsteigen';
+
+  @override
+  String get obLadderBody =>
+      'Fünf Einstufungsduelle legen fest, wo du startest. Gewinne, um aufzusteigen – eine erreichte Stufe behältst du.';
+
+  @override
+  String obTitlesHeading(String count) {
+    return '$count Titel zu verdienen';
+  }
+
+  @override
+  String get obTitlesBody =>
+      'Für Siege, Serien, saubere Sätze, frühe Morgen und mehr. Trag einen unter deinem Namen.';
+
+  @override
+  String get obFriendsHeading => 'Macht es unter Freunden aus';
+
+  @override
+  String get obFriendsBody =>
+      'Freunde fügen dich mit diesem Code hinzu. Fordere sie heraus, wann du willst – der Stand zwischen euch wird gespeichert.';
+
+  @override
+  String get obLetsGo => 'Auf geht’s';
 }

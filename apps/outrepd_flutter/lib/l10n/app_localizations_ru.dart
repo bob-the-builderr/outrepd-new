@@ -1999,4 +1999,46 @@ class LRu extends L {
 
   @override
   String get obWelcomeBack => 'С возвращением';
+
+  @override
+  String get obDuelTitle => 'Вы соревнуетесь с минутой живого человека';
+
+  @override
+  String get obDuelBody =>
+      'Их подход записан по каждому повтору. Вы видите его вживую, пока делаете свой.';
+
+  @override
+  String obDuelWinBy(String count) {
+    return 'Победа с отрывом в $count повт.';
+  }
+
+  @override
+  String get obDuelLpRule =>
+      'Очки ранга — это разница в повторах. Побеждайте с отрывом и растите быстрее.';
+
+  @override
+  String get obLadderTitle => 'Семь ступеней наверх';
+
+  @override
+  String get obLadderBody =>
+      'Пять отборочных дуэлей определяют стартовую ступень. Побеждайте, чтобы расти; достигнутая ступень остаётся за вами.';
+
+  @override
+  String obTitlesHeading(String count) {
+    return '$count титулов, которые можно получить';
+  }
+
+  @override
+  String get obTitlesBody =>
+      'За победы, серии, чистые подходы, ранние утра и многое другое. Носите один под своим именем.';
+
+  @override
+  String get obFriendsHeading => 'Выясните всё с друзьями';
+
+  @override
+  String get obFriendsBody =>
+      'Друзья добавляют вас по этому коду. Вызывайте их когда угодно — счёт между вами сохраняется.';
+
+  @override
+  String get obLetsGo => 'Поехали';
 }

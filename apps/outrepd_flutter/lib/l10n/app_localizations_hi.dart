@@ -1998,4 +1998,46 @@ class LHi extends L {
 
   @override
   String get obWelcomeBack => 'वापसी पर स्वागत है';
+
+  @override
+  String get obDuelTitle => 'आप एक असली इंसान के मिनट से मुकाबला करते हैं';
+
+  @override
+  String get obDuelBody =>
+      'उनका सेट हर रेप के साथ रिकॉर्ड हुआ था। आप अपना सेट करते हुए उसे लाइव होते देखते हैं।';
+
+  @override
+  String obDuelWinBy(String count) {
+    return '$count रेप से जीतें';
+  }
+
+  @override
+  String get obDuelLpRule =>
+      'रैंक पॉइंट रेप के अंतर के बराबर होते हैं। बड़े अंतर से जीतें, तेज़ी से ऊपर जाएँ।';
+
+  @override
+  String get obLadderTitle => 'चढ़ने के लिए सात टियर';
+
+  @override
+  String get obLadderBody =>
+      'पाँच प्लेसमेंट मुकाबले तय करते हैं कि आप कहाँ से शुरू करेंगे। जीतकर ऊपर जाएँ, और जो टियर पा लिया वह आपका रहता है।';
+
+  @override
+  String obTitlesHeading(String count) {
+    return 'कमाने के लिए $count टाइटल';
+  }
+
+  @override
+  String get obTitlesBody =>
+      'जीत, लगातार दिनों, साफ़ सेट, सुबह जल्दी और बहुत कुछ के लिए। एक को अपने नाम के नीचे पहनें।';
+
+  @override
+  String get obFriendsHeading => 'दोस्तों के साथ फ़ैसला करें';
+
+  @override
+  String get obFriendsBody =>
+      'दोस्त इस कोड से आपको जोड़ते हैं। जब चाहें उन्हें चुनौती दें, और आपके बीच का स्कोर सहेजा रहता है।';
+
+  @override
+  String get obLetsGo => 'चलिए शुरू करें';
 }

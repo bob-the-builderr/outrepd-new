@@ -632,5 +632,16 @@
   "setInPoolTitle": "Tu serie está en la cola",
   "setInPoolBody": "El próximo atleta cerca de tu rango competirá contra ella. Verás quién ganó en Notificaciones y entonces cambiará tu rango.",
   "obWhyNeededBody": "Cada repetición se valora por cuánto bajan y suben tus hombros, y solo la cámara puede verlo. Sin ella no hay conteo, y sin conteo no hay duelo. La cámara solo se enciende durante una serie.",
-  "obWelcomeBack": "Bienvenido de nuevo"
+  "obWelcomeBack": "Bienvenido de nuevo",
+  "obDuelTitle": "Compites contra el minuto de una persona real",
+  "obDuelBody": "Su serie se grabó repetición a repetición. La ves en directo mientras haces la tuya.",
+  "obDuelWinBy": "Gana por {count} repeticiones",
+  "obDuelLpRule": "Los puntos de rango son la diferencia en repeticiones. Gana por mucho y sube rápido.",
+  "obLadderTitle": "Siete rangos por escalar",
+  "obLadderBody": "Cinco duelos de clasificación deciden dónde empiezas. Gana para subir; el rango que alcances es tuyo para siempre.",
+  "obTitlesHeading": "{count} títulos por ganar",
+  "obTitlesBody": "Por victorias, rachas, series limpias, madrugones y más. Lleva uno bajo tu nombre.",
+  "obFriendsHeading": "Resuélvelo con tus amigos",
+  "obFriendsBody": "Tus amigos te añaden con este código. Rétalos cuando quieras y el marcador entre vosotros queda guardado.",
+  "obLetsGo": "Vamos"
 }

@@ -1998,4 +1998,46 @@ class LEn extends L {
 
   @override
   String get obWelcomeBack => 'Welcome back';
+
+  @override
+  String get obDuelTitle => 'You race a real person’s minute';
+
+  @override
+  String get obDuelBody =>
+      'Their set was recorded rep by rep. You see it happen live while you do yours.';
+
+  @override
+  String obDuelWinBy(String count) {
+    return 'Win by $count reps';
+  }
+
+  @override
+  String get obDuelLpRule =>
+      'Rank points are the gap in reps. Win big, climb fast.';
+
+  @override
+  String get obLadderTitle => 'Seven tiers to climb';
+
+  @override
+  String get obLadderBody =>
+      'Five placement duels set where you start. Win to climb, and once you reach a tier, you keep it.';
+
+  @override
+  String obTitlesHeading(String count) {
+    return '$count titles to earn';
+  }
+
+  @override
+  String get obTitlesBody =>
+      'For wins, streaks, clean sets, early mornings and more. Wear one under your name.';
+
+  @override
+  String get obFriendsHeading => 'Settle it with friends';
+
+  @override
+  String get obFriendsBody =>
+      'Friends add you with this code. Challenge them whenever you like, and the score between you is kept.';
+
+  @override
+  String get obLetsGo => 'Let’s go';
 }

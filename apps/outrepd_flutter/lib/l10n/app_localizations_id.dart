@@ -1998,4 +1998,47 @@ class LId extends L {
 
   @override
   String get obWelcomeBack => 'Selamat datang kembali';
+
+  @override
+  String get obDuelTitle =>
+      'Kamu berlomba dengan satu menit milik orang sungguhan';
+
+  @override
+  String get obDuelBody =>
+      'Set mereka direkam per repetisi. Kamu melihatnya berjalan langsung saat kamu melakukan set-mu.';
+
+  @override
+  String obDuelWinBy(String count) {
+    return 'Menang selisih $count repetisi';
+  }
+
+  @override
+  String get obDuelLpRule =>
+      'Poin peringkat adalah selisih repetisi. Menang telak, naik cepat.';
+
+  @override
+  String get obLadderTitle => 'Tujuh tingkat untuk didaki';
+
+  @override
+  String get obLadderBody =>
+      'Lima duel penempatan menentukan titik awalmu. Menang untuk naik, dan tingkat yang sudah dicapai tetap milikmu.';
+
+  @override
+  String obTitlesHeading(String count) {
+    return '$count gelar untuk diraih';
+  }
+
+  @override
+  String get obTitlesBody =>
+      'Untuk kemenangan, beruntun, set bersih, pagi buta, dan lainnya. Pakai satu di bawah namamu.';
+
+  @override
+  String get obFriendsHeading => 'Selesaikan dengan teman';
+
+  @override
+  String get obFriendsBody =>
+      'Teman menambahkanmu dengan kode ini. Tantang mereka kapan saja, dan skor di antara kalian tersimpan.';
+
+  @override
+  String get obLetsGo => 'Ayo mulai';
 }

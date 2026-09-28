@@ -1987,4 +1987,46 @@ class LAr extends L {
 
   @override
   String get obWelcomeBack => 'أهلًا بعودتك';
+
+  @override
+  String get obDuelTitle => 'بتتسابق مع دقيقة لشخص حقيقي';
+
+  @override
+  String get obDuelBody =>
+      'السِت بتاعه اتسجّل عدّة بعدّة. وإنت بتلعب بتشوفه بيحصل قدامك لحظة بلحظة.';
+
+  @override
+  String obDuelWinBy(String count) {
+    return 'تكسب بفرق $count عدّات';
+  }
+
+  @override
+  String get obDuelLpRule =>
+      'نقط الرتبة هي الفرق في العدّات. اكسب بفرق كبير، تطلع بسرعة.';
+
+  @override
+  String get obLadderTitle => 'سبع رتب تطلعهم';
+
+  @override
+  String get obLadderBody =>
+      'خمس ماتشات تحديد مستوى بيحددوا هتبدأ منين. اكسب عشان تطلع، وأي رتبة توصلها بتفضل بتاعتك.';
+
+  @override
+  String obTitlesHeading(String count) {
+    return '$count لقب تكسبهم';
+  }
+
+  @override
+  String get obTitlesBody =>
+      'على الفوز، والأيام المتتالية، والسِتّات النضيفة، والتمرين بدري الصبح، وغيرهم. البس واحد يظهر تحت اسمك.';
+
+  @override
+  String get obFriendsHeading => 'خلّصوها بينكم يا صحاب';
+
+  @override
+  String get obFriendsBody =>
+      'صحابك يضيفوك بالكود ده. اتحداهم وقت ما تحب، والنتيجة بينكم بتفضل محفوظة.';
+
+  @override
+  String get obLetsGo => 'يلا بينا';
 }

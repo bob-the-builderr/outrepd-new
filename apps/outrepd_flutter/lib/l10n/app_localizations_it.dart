@@ -2005,4 +2005,46 @@ class LIt extends L {
 
   @override
   String get obWelcomeBack => 'Bentornato';
+
+  @override
+  String get obDuelTitle => 'Sfidi il minuto di una persona reale';
+
+  @override
+  String get obDuelBody =>
+      'La sua serie è stata registrata ripetizione per ripetizione. La vedi scorrere dal vivo mentre fai la tua.';
+
+  @override
+  String obDuelWinBy(String count) {
+    return 'Vinci di $count ripetizioni';
+  }
+
+  @override
+  String get obDuelLpRule =>
+      'I punti grado sono la differenza di ripetizioni. Vinci con margine, sali in fretta.';
+
+  @override
+  String get obLadderTitle => 'Sette gradi da scalare';
+
+  @override
+  String get obLadderBody =>
+      'Cinque sfide di piazzamento decidono da dove parti. Vinci per salire: un grado raggiunto resta tuo.';
+
+  @override
+  String obTitlesHeading(String count) {
+    return '$count titoli da conquistare';
+  }
+
+  @override
+  String get obTitlesBody =>
+      'Per vittorie, serie, serie pulite, mattine presto e altro. Indossane uno sotto il tuo nome.';
+
+  @override
+  String get obFriendsHeading => 'Regolate i conti tra amici';
+
+  @override
+  String get obFriendsBody =>
+      'Gli amici ti aggiungono con questo codice. Sfidali quando vuoi: il punteggio tra voi viene salvato.';
+
+  @override
+  String get obLetsGo => 'Andiamo';
 }

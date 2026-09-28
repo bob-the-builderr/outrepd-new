@@ -1994,4 +1994,46 @@ class LTr extends L {
 
   @override
   String get obWelcomeBack => 'Tekrar hoş geldin';
+
+  @override
+  String get obDuelTitle => 'Gerçek birinin dakikasıyla yarışırsın';
+
+  @override
+  String get obDuelBody =>
+      'Onun seti tekrar tekrar kaydedildi. Sen kendi setini yaparken onu canlı görürsün.';
+
+  @override
+  String obDuelWinBy(String count) {
+    return '$count tekrar farkla kazan';
+  }
+
+  @override
+  String get obDuelLpRule =>
+      'Rütbe puanı tekrar farkı kadardır. Farklı kazan, hızlı yüksel.';
+
+  @override
+  String get obLadderTitle => 'Tırmanılacak yedi kademe';
+
+  @override
+  String get obLadderBody =>
+      'Beş yerleştirme düellosu nereden başlayacağını belirler. Kazanarak yüksel; ulaştığın kademe senin kalır.';
+
+  @override
+  String obTitlesHeading(String count) {
+    return 'Kazanılacak $count unvan';
+  }
+
+  @override
+  String get obTitlesBody =>
+      'Galibiyetler, seriler, temiz setler, sabah erken antrenmanlar ve daha fazlası için. Birini adının altında taşı.';
+
+  @override
+  String get obFriendsHeading => 'Arkadaşlarınla hesaplaş';
+
+  @override
+  String get obFriendsBody =>
+      'Arkadaşların seni bu kodla ekler. İstediğin zaman meydan oku, aranızdaki skor saklanır.';
+
+  @override
+  String get obLetsGo => 'Hadi başlayalım';
 }

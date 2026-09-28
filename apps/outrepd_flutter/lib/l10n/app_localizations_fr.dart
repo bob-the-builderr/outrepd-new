@@ -2008,4 +2008,46 @@ class LFr extends L {
 
   @override
   String get obWelcomeBack => 'Content de te revoir';
+
+  @override
+  String get obDuelTitle => 'Tu affrontes la minute d\'une vraie personne';
+
+  @override
+  String get obDuelBody =>
+      'Sa série a été enregistrée répétition par répétition. Tu la vois se dérouler en direct pendant la tienne.';
+
+  @override
+  String obDuelWinBy(String count) {
+    return 'Gagne avec $count répétitions d\'avance';
+  }
+
+  @override
+  String get obDuelLpRule =>
+      'Les points de rang sont l\'écart en répétitions. Gagne largement, grimpe vite.';
+
+  @override
+  String get obLadderTitle => 'Sept rangs à gravir';
+
+  @override
+  String get obLadderBody =>
+      'Cinq duels de placement fixent ton point de départ. Gagne pour grimper, et un rang atteint reste acquis.';
+
+  @override
+  String obTitlesHeading(String count) {
+    return '$count titres à gagner';
+  }
+
+  @override
+  String get obTitlesBody =>
+      'Pour les victoires, les séries, les séries propres, les matins tôt et plus. Porte-en un sous ton nom.';
+
+  @override
+  String get obFriendsHeading => 'Réglez ça entre amis';
+
+  @override
+  String get obFriendsBody =>
+      'Tes amis t\'ajoutent avec ce code. Défie-les quand tu veux, et le score entre vous est gardé.';
+
+  @override
+  String get obLetsGo => 'C\'est parti';
 }

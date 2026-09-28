@@ -632,5 +632,16 @@
   "setInPoolTitle": "Sua série está na fila",
   "setInPoolBody": "O próximo atleta perto do seu rank vai disputar contra ela. Você verá quem venceu em Notificações, e seu rank muda nessa hora.",
   "obWhyNeededBody": "Cada repetição é avaliada por quanto seus ombros descem e sobem, e só a câmera consegue ver isso. Sem ela não há contagem, e sem contagem não há duelo. A câmera só fica ligada durante uma série.",
-  "obWelcomeBack": "Bem-vindo de volta"
+  "obWelcomeBack": "Bem-vindo de volta",
+  "obDuelTitle": "Você disputa contra o minuto de uma pessoa real",
+  "obDuelBody": "A série da pessoa foi gravada repetição por repetição. Você vê acontecer ao vivo enquanto faz a sua.",
+  "obDuelWinBy": "Vença por {count} repetições",
+  "obDuelLpRule": "Os pontos de rank são a diferença de repetições. Vença por muito e suba rápido.",
+  "obLadderTitle": "Sete níveis para subir",
+  "obLadderBody": "Cinco duelos de classificação definem onde você começa. Vença para subir; um nível alcançado é seu para sempre.",
+  "obTitlesHeading": "{count} títulos para conquistar",
+  "obTitlesBody": "Por vitórias, sequências, séries limpas, madrugadas e mais. Use um abaixo do seu nome.",
+  "obFriendsHeading": "Resolva com os amigos",
+  "obFriendsBody": "Seus amigos te adicionam com este código. Desafie quando quiser, e o placar entre vocês fica salvo.",
+  "obLetsGo": "Vamos lá"
 }

@@ -2004,4 +2004,46 @@ class LPt extends L {
 
   @override
   String get obWelcomeBack => 'Bem-vindo de volta';
+
+  @override
+  String get obDuelTitle => 'Você disputa contra o minuto de uma pessoa real';
+
+  @override
+  String get obDuelBody =>
+      'A série da pessoa foi gravada repetição por repetição. Você vê acontecer ao vivo enquanto faz a sua.';
+
+  @override
+  String obDuelWinBy(String count) {
+    return 'Vença por $count repetições';
+  }
+
+  @override
+  String get obDuelLpRule =>
+      'Os pontos de rank são a diferença de repetições. Vença por muito e suba rápido.';
+
+  @override
+  String get obLadderTitle => 'Sete níveis para subir';
+
+  @override
+  String get obLadderBody =>
+      'Cinco duelos de classificação definem onde você começa. Vença para subir; um nível alcançado é seu para sempre.';
+
+  @override
+  String obTitlesHeading(String count) {
+    return '$count títulos para conquistar';
+  }
+
+  @override
+  String get obTitlesBody =>
+      'Por vitórias, sequências, séries limpas, madrugadas e mais. Use um abaixo do seu nome.';
+
+  @override
+  String get obFriendsHeading => 'Resolva com os amigos';
+
+  @override
+  String get obFriendsBody =>
+      'Seus amigos te adicionam com este código. Desafie quando quiser, e o placar entre vocês fica salvo.';
+
+  @override
+  String get obLetsGo => 'Vamos lá';
 }

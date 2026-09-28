@@ -632,5 +632,16 @@
   "setInPoolTitle": "La tua serie è in coda",
   "setInPoolBody": "Il prossimo atleta vicino al tuo grado la sfiderà. Vedrai chi ha vinto nelle notifiche, e allora il tuo grado cambierà.",
   "obWhyNeededBody": "Ogni ripetizione è valutata da quanto scendono e salgono le spalle, e solo la fotocamera può vederlo. Senza, niente conteggio, e senza conteggio niente sfida. La fotocamera è accesa solo durante una serie.",
-  "obWelcomeBack": "Bentornato"
+  "obWelcomeBack": "Bentornato",
+  "obDuelTitle": "Sfidi il minuto di una persona reale",
+  "obDuelBody": "La sua serie è stata registrata ripetizione per ripetizione. La vedi scorrere dal vivo mentre fai la tua.",
+  "obDuelWinBy": "Vinci di {count} ripetizioni",
+  "obDuelLpRule": "I punti grado sono la differenza di ripetizioni. Vinci con margine, sali in fretta.",
+  "obLadderTitle": "Sette gradi da scalare",
+  "obLadderBody": "Cinque sfide di piazzamento decidono da dove parti. Vinci per salire: un grado raggiunto resta tuo.",
+  "obTitlesHeading": "{count} titoli da conquistare",
+  "obTitlesBody": "Per vittorie, serie, serie pulite, mattine presto e altro. Indossane uno sotto il tuo nome.",
+  "obFriendsHeading": "Regolate i conti tra amici",
+  "obFriendsBody": "Gli amici ti aggiungono con questo codice. Sfidali quando vuoi: il punteggio tra voi viene salvato.",
+  "obLetsGo": "Andiamo"
 }

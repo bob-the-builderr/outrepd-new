@@ -1966,4 +1966,44 @@ class LKo extends L {
 
   @override
   String get obWelcomeBack => '다시 오셨네요';
+
+  @override
+  String get obDuelTitle => '진짜 사람의 1분과 겨뤄요';
+
+  @override
+  String get obDuelBody =>
+      '상대의 세트는 한 번 한 번 기록되어 있어요. 내 세트를 하는 동안 그게 실시간으로 진행되는 걸 봐요.';
+
+  @override
+  String obDuelWinBy(String count) {
+    return '$count개 차이로 승리';
+  }
+
+  @override
+  String get obDuelLpRule => '랭크 포인트는 개수 차이예요. 크게 이기면 빨리 올라가요.';
+
+  @override
+  String get obLadderTitle => '올라갈 7개의 티어';
+
+  @override
+  String get obLadderBody =>
+      '배치 대결 5번으로 시작 위치가 정해져요. 이기면 올라가고, 한 번 도달한 티어는 유지돼요.';
+
+  @override
+  String obTitlesHeading(String count) {
+    return '얻을 수 있는 칭호 $count개';
+  }
+
+  @override
+  String get obTitlesBody =>
+      '승리, 연속 기록, 깔끔한 세트, 이른 아침 운동 등으로 얻어요. 하나를 골라 이름 아래에 달 수 있어요.';
+
+  @override
+  String get obFriendsHeading => '친구와 승부를 가려요';
+
+  @override
+  String get obFriendsBody => '친구는 이 코드로 나를 추가해요. 언제든 도전하고, 둘 사이의 전적이 기록돼요.';
+
+  @override
+  String get obLetsGo => '시작하기';
 }

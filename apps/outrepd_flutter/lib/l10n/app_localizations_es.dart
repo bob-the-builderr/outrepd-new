@@ -2006,4 +2006,46 @@ class LEs extends L {
 
   @override
   String get obWelcomeBack => 'Bienvenido de nuevo';
+
+  @override
+  String get obDuelTitle => 'Compites contra el minuto de una persona real';
+
+  @override
+  String get obDuelBody =>
+      'Su serie se grabó repetición a repetición. La ves en directo mientras haces la tuya.';
+
+  @override
+  String obDuelWinBy(String count) {
+    return 'Gana por $count repeticiones';
+  }
+
+  @override
+  String get obDuelLpRule =>
+      'Los puntos de rango son la diferencia en repeticiones. Gana por mucho y sube rápido.';
+
+  @override
+  String get obLadderTitle => 'Siete rangos por escalar';
+
+  @override
+  String get obLadderBody =>
+      'Cinco duelos de clasificación deciden dónde empiezas. Gana para subir; el rango que alcances es tuyo para siempre.';
+
+  @override
+  String obTitlesHeading(String count) {
+    return '$count títulos por ganar';
+  }
+
+  @override
+  String get obTitlesBody =>
+      'Por victorias, rachas, series limpias, madrugones y más. Lleva uno bajo tu nombre.';
+
+  @override
+  String get obFriendsHeading => 'Resuélvelo con tus amigos';
+
+  @override
+  String get obFriendsBody =>
+      'Tus amigos te añaden con este código. Rétalos cuando quieras y el marcador entre vosotros queda guardado.';
+
+  @override
+  String get obLetsGo => 'Vamos';
 }
