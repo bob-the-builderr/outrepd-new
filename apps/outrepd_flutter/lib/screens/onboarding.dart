@@ -79,6 +79,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void _go(_Step next) => setState(() => _step = next);
 
+  /// The bar is for the steps a lifter reads. The welcome screen has not
+  /// started anything yet, and the two camera steps need the whole screen
+  /// for the body being framed and counted.
+  bool get _showsProgress =>
+      _step != _Step.welcome &&
+      _step != _Step.framing &&
+      _step != _Step.calibration;
+
   /// The step before this one, for the system back gesture. Without it, back
   /// on any step closed the app, and opening it again started over at the
   /// welcome screen.
@@ -162,41 +170,61 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Scaffold(
         backgroundColor: context.colors.background,
         body: SafeArea(
-          child: switch (_step) {
-            _Step.welcome => _Welcome(
-              onStart: () => _go(_Step.howItWorks),
-              onSignIn: _directLogIn,
-            ),
-            _Step.howItWorks => _HowItWorks(onNext: () => _go(_Step.before)),
-            _Step.before => _BeforeYouStart(
-              over16: _over16,
-              healthAccepted: _healthAccepted,
-              onAge: (v) => setState(() => _over16 = v),
-              onHealth: (v) => setState(() => _healthAccepted = v),
-              onNext: () => _go(_Step.camera),
-            ),
-            _Step.camera => _CameraAsk(onNext: () => _go(_Step.placement)),
-            _Step.placement => _Placement(onNext: () => _go(_Step.framing)),
-            _Step.framing => _FramingCheck(
-              poseSource: widget.poseSource,
-              onNext: () => _go(_Step.calibration),
-            ),
-            _Step.calibration => _Calibration(
-              poseSource: widget.poseSource,
-              onDone: (result) {
-                setState(() => _calibration = result);
-                _go(_Step.calibrated);
-              },
-            ),
-            _Step.calibrated => _Calibrated(
-              result: _calibration,
-              onNext: () => _go(_Step.placements),
-            ),
-            _Step.placements => _Placements(
-              onStart: _openAuthGate,
-              onPractice: _openAuthGate,
-            ),
-          },
+          child: Column(
+            children: [
+              if (_showsProgress)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                  child: _Progress(
+                    done: _step.index,
+                    of: _Step.values.length - 1,
+                  ),
+                ),
+              Expanded(
+                child: switch (_step) {
+                  _Step.welcome => _Welcome(
+                    onStart: () => _go(_Step.howItWorks),
+                    onSignIn: _directLogIn,
+                  ),
+                  _Step.howItWorks => _HowItWorks(
+                    onNext: () => _go(_Step.before),
+                  ),
+                  _Step.before => _BeforeYouStart(
+                    over16: _over16,
+                    healthAccepted: _healthAccepted,
+                    onAge: (v) => setState(() => _over16 = v),
+                    onHealth: (v) => setState(() => _healthAccepted = v),
+                    onNext: () => _go(_Step.camera),
+                  ),
+                  _Step.camera => _CameraAsk(
+                    onNext: () => _go(_Step.placement),
+                  ),
+                  _Step.placement => _Placement(
+                    onNext: () => _go(_Step.framing),
+                  ),
+                  _Step.framing => _FramingCheck(
+                    poseSource: widget.poseSource,
+                    onNext: () => _go(_Step.calibration),
+                  ),
+                  _Step.calibration => _Calibration(
+                    poseSource: widget.poseSource,
+                    onDone: (result) {
+                      setState(() => _calibration = result);
+                      _go(_Step.calibrated);
+                    },
+                  ),
+                  _Step.calibrated => _Calibrated(
+                    result: _calibration,
+                    onNext: () => _go(_Step.placements),
+                  ),
+                  _Step.placements => _Placements(
+                    onStart: _openAuthGate,
+                    onPractice: _openAuthGate,
+                  ),
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -204,6 +232,40 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 }
 
 // ───────────────────────────── shared furniture ──────────────────────────────
+
+/// How far through the steps this is: one thin segment per step, lit up to
+/// and including the current one.
+class _Progress extends StatelessWidget {
+  const _Progress({required this.done, required this.of});
+
+  final int done;
+  final int of;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: '$done / $of',
+      child: Row(
+        children: [
+          for (var i = 1; i <= of; i++) ...[
+            if (i > 1) const SizedBox(width: 4),
+            Expanded(
+              child: Container(
+                height: 3,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(2),
+                  color: i <= done
+                      ? context.colors.brand
+                      : context.colors.border,
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
 
 /// The filled button every step ends on.
 class _Primary extends StatelessWidget {
@@ -274,16 +336,37 @@ class _Secondary extends StatelessWidget {
 /// steps is taller than a phone, and a Continue button that has to be scrolled
 /// to reads as a dead end.
 class _Step0 extends StatelessWidget {
-  const _Step0({required this.body, required this.actions});
+  const _Step0({
+    required this.body,
+    required this.actions,
+    this.centred = false,
+  });
 
   final Widget body;
   final Widget actions;
+
+  /// Sits in the middle of the space above the buttons instead of at the
+  /// top. For the steps with little to say, which otherwise left two thirds
+  /// of the screen empty under a few lines. Still scrolls when a large text
+  /// size makes it taller than the screen.
+  final bool centred;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Expanded(child: SingleChildScrollView(child: body)),
+        Expanded(
+          child: centred
+              ? LayoutBuilder(
+                  builder: (context, box) => SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(minHeight: box.maxHeight),
+                      child: Center(child: body),
+                    ),
+                  ),
+                )
+              : SingleChildScrollView(child: body),
+        ),
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 22),
           child: actions,
@@ -388,8 +471,9 @@ class _Welcome extends StatelessWidget {
     final l = L.of(context);
 
     return _Step0(
+      centred: true,
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(34, 60, 34, 0),
+        padding: const EdgeInsets.fromLTRB(34, 24, 34, 24),
         child: Column(
           children: [
             // The brand asset, mark and wordmark together, rather than a
@@ -397,16 +481,16 @@ class _Welcome extends StatelessWidget {
             // either theme rather than carrying its own black square.
             Image.asset(
               'assets/images/logo-wordmark.png',
-              width: 210,
+              width: 240,
               fit: BoxFit.contain,
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 18),
             Text(
               l.obTagline,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: context.colors.muted,
-                fontSize: 13,
+                fontSize: 15,
                 height: 1.6,
               ),
             ),
@@ -436,13 +520,22 @@ class _HowItWorks extends StatelessWidget {
     final l = L.of(context);
 
     return _Step0(
+      centred: true,
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(22, 22, 22, 0),
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _Title(l.obHowTitle),
-            const SizedBox(height: 26),
+            Text(
+              l.obHowTitle,
+              style: TextStyle(
+                color: context.colors.text,
+                fontSize: 24,
+                height: 1.3,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 30),
             _Numbered(1, l.obHow1, l.obHow1Body),
             _Numbered(2, l.obHow2, l.obHow2Body),
             _Numbered(3, l.obHow3, l.obHow3Body),
@@ -464,13 +557,13 @@ class _Numbered extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(bottom: 24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 24,
-            height: 24,
+            width: 30,
+            height: 30,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -478,25 +571,29 @@ class _Numbered extends StatelessWidget {
             ),
             child: Text(
               localNumber(context, n),
-              style: TextStyle(color: context.colors.text, fontSize: 11),
+              style: TextStyle(color: context.colors.text, fontSize: 13),
             ),
           ),
-          const SizedBox(width: 13),
+          const SizedBox(width: 14),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: TextStyle(color: context.colors.text, fontSize: 14),
+                  style: TextStyle(
+                    color: context.colors.text,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(height: 4),
                 Text(
                   body,
                   style: TextStyle(
                     color: context.colors.muted,
-                    fontSize: 11,
-                    height: 1.55,
+                    fontSize: 13,
+                    height: 1.5,
                   ),
                 ),
               ],
