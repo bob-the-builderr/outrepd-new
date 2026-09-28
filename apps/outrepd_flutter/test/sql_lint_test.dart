@@ -249,6 +249,7 @@ void main() {
     // checks the result and is run on its own, so it is deliberately not in
     // there.
     const installed = [
+      'subscriptions.sql',
       'schema.sql',
       'ladder.sql',
       'duel.sql',

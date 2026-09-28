@@ -33,6 +33,8 @@ as $$
 declare
   me profiles;
 begin
+  -- Only a subscriber plays (see subscriptions.sql; off until switched on).
+  perform require_pro();
   select * into me from profiles where id = auth.uid();
   if me is null then
     raise exception 'no profile for this account';
@@ -115,6 +117,8 @@ security definer
 set search_path = public
 as $$
 begin
+  -- Only a subscriber plays (see subscriptions.sql; off until switched on).
+  perform require_pro();
   return query
   select s.id, p.id, p.username, p.tier_idx, p.div_idx, s.reps, s.rep_times
   from sets s
@@ -212,6 +216,8 @@ declare
   my_delta int;
   their_delta int;
 begin
+  -- Only a subscriber plays (see subscriptions.sql; off until switched on).
+  perform require_pro();
   select * into mine   from sets where id = my_set    for update;
   select * into theirs from sets where id = their_set for update;
 

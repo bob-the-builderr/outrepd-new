@@ -1,13 +1,14 @@
 /// Screenshots of the paywall, for looking at rather than for asserting.
 ///
-/// Not part of `flutter test` (it lives outside test/). CI runs it with
-/// `--update-goldens`, which writes the PNGs to `goldens/` beside this file,
-/// and publishes them with the test results — the way to see a screen when
-/// no machine with Flutter on it is to hand.
+/// Not part of `flutter test` (they live outside test/). CI runs the
+/// `*_test.dart` files here with `--update-goldens`, which writes the PNGs to
+/// `goldens/`, and publishes them with the test results — the way to see a
+/// screen when no machine with Flutter on it is to hand.
 ///
-/// Real fonts are loaded when they are there — `SHOT_FONTS` for the text,
-/// the Flutter SDK's own icon font — because the test engine otherwise draws
-/// every glyph as a box.
+/// Each language is its own file because fonts are loaded once per test
+/// process, and each file gets its own. Real fonts are loaded when they are
+/// there — `SHOT_FONTS` for the text, the Flutter SDK's own icon font —
+/// because the test engine otherwise draws every glyph as a box.
 library;
 
 import 'dart:io';
@@ -63,11 +64,16 @@ Future<void> _font(String family, String path) async {
   await loader.load();
 }
 
-void main() {
+/// Screenshots of the paywall in [locale], drawn with [fontFile] from
+/// `SHOT_FONTS`, on a small phone and a tall one.
+void paywallShots(String locale, String fontFile) {
   setUpAll(() async {
     final fonts = Platform.environment['SHOT_FONTS'] ?? 'tool/screenshots/fonts';
-    // The theme names no font, so on Android it asks for Roboto.
-    await _font('Roboto', '$fonts/NotoSans.ttf');
+    // The theme names no font, so on Android it asks for Roboto — and a
+    // style that sets no family at all (the button theme's) gets the test
+    // engine's own, which draws boxes unless it is replaced too.
+    await _font('Roboto', '$fonts/$fontFile');
+    await _font('FlutterTest', '$fonts/$fontFile');
     final root = Platform.environment['FLUTTER_ROOT'];
     if (root != null) {
       await _font(
@@ -83,7 +89,7 @@ void main() {
     ('small', const Size(360, 720)),
     ('tall', const Size(412, 915)),
   ]) {
-    testWidgets('paywall $name', (tester) async {
+    testWidgets('paywall $locale $name', (tester) async {
       tester.view.physicalSize = size * 2;
       tester.view.devicePixelRatio = 2;
       addTearDown(tester.view.reset);
@@ -93,7 +99,7 @@ void main() {
         MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: buildTheme(Brightness.dark),
-          locale: const Locale('en'),
+          locale: Locale(locale),
           localizationsDelegates: const [
             L.delegate,
             GlobalMaterialLocalizations.delegate,
@@ -110,7 +116,7 @@ void main() {
 
       await expectLater(
         find.byType(MaterialApp),
-        matchesGoldenFile('goldens/paywall_$name.png'),
+        matchesGoldenFile('goldens/paywall_${locale}_$name.png'),
       );
     });
   }

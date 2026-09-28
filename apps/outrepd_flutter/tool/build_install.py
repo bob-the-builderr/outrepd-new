@@ -15,10 +15,12 @@ import io
 import os
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# The order they depend on each other. social.sql comes before duel.sql
-# because find_opponent_set has to check friendships to honour 'friends only'.
-PARTS = ['schema.sql', 'ladder.sql', 'social.sql', 'duel.sql',
-         'notify.sql', 'account.sql']
+# The order they depend on each other. subscriptions.sql comes first because
+# the sets policy in schema.sql calls has_pro(); social.sql comes before
+# duel.sql because find_opponent_set has to check friendships to honour
+# 'friends only'.
+PARTS = ['subscriptions.sql', 'schema.sql', 'ladder.sql', 'social.sql',
+         'duel.sql', 'notify.sql', 'account.sql']
 
 HEADER = """-- OUTREPD — everything the server needs, in one paste.
 --

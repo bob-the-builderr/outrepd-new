@@ -483,11 +483,13 @@ create trigger profiles_guard_new
 
 -- A set belongs to the lifter who did it. They may write it once and read
 -- their own; everyone can read a set that a duel has already joined them to.
+-- Only a subscriber writes one (has_pro, in subscriptions.sql — always true
+-- until enforcement is switched on there).
 drop policy if exists "a lifter writes their own sets" on sets;
 create policy "a lifter writes their own sets"
   on sets for insert
   to authenticated
-  with check (auth.uid() = profile_id);
+  with check (auth.uid() = profile_id and has_pro(auth.uid()));
 
 drop policy if exists "a lifter reads their own sets" on sets;
 create policy "a lifter reads their own sets"

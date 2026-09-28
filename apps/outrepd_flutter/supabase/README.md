@@ -7,6 +7,7 @@
 
 | الملف | فيه إيه |
 |---|---|
+| `subscriptions.sql` | جدول الاشتراكات + `has_pro()`. **أول ملف**، لأن باقي الملفات بتسأله. الحماية مقفولة لحد ما الـ webhook يشتغل — الخطوات في `functions/revenuecat-webhook` |
 | `schema.sql` | التلات جداول + صلاحيات الصفوف (RLS) + الحارس اللي بيمنع أي عميل من كتابة رتبته |
 | `ladder.sql` | حساب النقاط والرتبة على السيرفر — توأم `lib/ranking.dart` |
 | `duel.sql` | `find_opponent_set` و`settle_duel` — المكان الوحيد اللي بيحرّك رتبة |
@@ -15,6 +16,7 @@
 | `ladder_vectors.json` | **متولّد** من دارت: `flutter test test/ladder_vectors_test.dart` |
 | `install.sql` | **متولّد**: `python tool/build_install.py` — التلات ملفات فوق مربوطين في ملف واحد يتلصق مرة واحدة |
 | `functions/email-my-data` | بيبعت للاعب ملف بياناته بالإيميل. طريقة التركيب مكتوبة في أول الملف |
+| `functions/revenuecat-webhook` | بيكتب في `subscriptions` كل ما RevenueCat يبلّغ عن شراء أو تجديد أو إلغاء. طريقة التركيب وتشغيل الحماية مكتوبة في أول الملف |
 | `functions/report-alert` | بيبعتلك إيميل مع كل بلاغ جديد، عشان الشروط بتوعد بالرد خلال ٢٤ ساعة. طريقة التركيب (الـ function والـ webhook) مكتوبة في أول الملف |
 
 ## التنفيذ على مشروع جديد

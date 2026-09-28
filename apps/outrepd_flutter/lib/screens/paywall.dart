@@ -7,6 +7,7 @@
 /// price and how it renews, and a way to delete the account without paying.
 library;
 
+import 'dart:math' as math;
 import 'dart:ui' show ImageFilter;
 
 import 'package:flutter/foundation.dart';
@@ -277,40 +278,26 @@ class _PaywallScreenState extends State<PaywallScreen> {
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
-    final colors = context.colors;
 
     return Scaffold(
-      backgroundColor: colors.background,
+      backgroundColor: context.colors.background,
       body: SafeArea(
         child: Column(
           children: [
             // The pitch scrolls on a short phone; the way to pay never does.
+            // On a tall one it sits in the middle of the space it has, not at
+            // the top of it with a gap underneath.
             Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(20, 30, 20, 12),
-                child: Column(
-                  children: [
-                    const _TierArc(),
-                    const SizedBox(height: 28),
-                    Text(
-                      l.paywallTitle,
-                      key: const Key('paywallTitle'),
-                      textAlign: TextAlign.center,
-                      style: context.type.title.copyWith(
-                        fontSize: 32,
-                        height: 1.12,
-                        color: colors.text,
-                      ),
+              child: LayoutBuilder(
+                builder: (context, viewport) => SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(20, 30, 20, 12),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      // Less the scroll padding above and below.
+                      minHeight: math.max(0.0, viewport.maxHeight - 42),
                     ),
-                    const SizedBox(height: 26),
-                    _Perk(icon: Icons.videocam_outlined, text: l.paywallPerkDuels),
-                    _Perk(
-                      icon: Icons.emoji_events_outlined,
-                      text: l.paywallPerkLadder,
-                    ),
-                    _Perk(icon: Icons.group_outlined, text: l.paywallPerkFriends),
-                    _Perk(icon: Icons.insights_outlined, text: l.paywallPerkHistory),
-                  ],
+                    child: Center(child: _pitch(context, l)),
+                  ),
                 ),
               ),
             ),
@@ -321,6 +308,32 @@ class _PaywallScreenState extends State<PaywallScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  /// The crests, the promise, and what it buys.
+  Widget _pitch(BuildContext context, L l) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const _TierArc(),
+        const SizedBox(height: 28),
+        Text(
+          l.paywallTitle,
+          key: const Key('paywallTitle'),
+          textAlign: TextAlign.center,
+          style: context.type.title.copyWith(
+            fontSize: 32,
+            height: 1.12,
+            color: context.colors.text,
+          ),
+        ),
+        const SizedBox(height: 26),
+        _Perk(icon: Icons.videocam_outlined, text: l.paywallPerkDuels),
+        _Perk(icon: Icons.emoji_events_outlined, text: l.paywallPerkLadder),
+        _Perk(icon: Icons.group_outlined, text: l.paywallPerkFriends),
+        _Perk(icon: Icons.insights_outlined, text: l.paywallPerkHistory),
+      ],
     );
   }
 

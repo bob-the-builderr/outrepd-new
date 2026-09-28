@@ -20,6 +20,7 @@
 | آخر ظهور | السيرفر | أيوه | علامة "أونلاين" عند الصحاب |
 | اللقب اللي لابسه | السيرفر | لأ | يظهر تحت اسمك |
 | الإعدادات (مين يتحداك، الظهور في اللوحة، الإشعارات) | السيرفر | أيوه | تنفيذ اختياراتك |
+| الاشتراك: الخطة، البداية والتجديد أو الانتهاء، والمتجر | السيرفر (`subscriptions`) و RevenueCat | أيوه | الأب كله ورا اشتراك. الدفع نفسه عند Google Play/App Store، والأب ماعندوش بيانات كارت |
 
 **اللي مابيخرجش من الموبايل خالص:** فيديو الكاميرا، ونقط الجسم (pose). تسجيل
 نقط الجسم بيتحفظ على الموبايل بس عشان مقارنة دقة العداد. في جدول `sets` فيه
@@ -31,6 +32,7 @@
 **جهات بتشيل البيانات بالنيابة عنك (service providers، مش "مشاركة"):**
 - Supabase: السيرفر وقاعدة البيانات والصور.
 - Resend: بيبعت ملف بياناتك بالإيميل لما تطلبه من الإعدادات.
+- RevenueCat: بيدير الاشتراكات. بياخد الـ user ID وسجل الشراء من المتجر.
 
 **Google ML Kit:** قراءة حركة الجسم بتحصل على الموبايل بمكتبة Google ML Kit.
 شروط Google بتقول إن المكتبة ممكن تبعت لجوجل معلومات استخدام وأداء عن المكتبة
@@ -63,6 +65,7 @@
 | Health and fitness | Fitness info (rep counts, sets) | Required | App functionality |
 | App activity | In-app actions (duels, friends, blocks) | Required | App functionality |
 | App activity | Other user-generated content (reports) | Optional | App functionality |
+| Financial info | Purchase history (subscription) | Required | App functionality |
 
 كلها **Processed ephemerally: No**، و **not used for** advertising or
 analytics.
@@ -86,6 +89,7 @@ for tracking or advertising):
 | User Content | Photos or Videos (profile picture only) |
 | User Content | Other User Content (reports) |
 | Usage Data | Product Interaction |
+| Purchases | Purchase History (subscription) |
 
 **Data not linked to the user:** None
 
@@ -97,5 +101,5 @@ for tracking or advertising):
 - **Users can interact:** Yes. فيه أسماء مستخدمين وصور بروفايل وبلاغات، بس
   مفيش شات.
 - **Shares location:** No.
-- **Digital purchases:** No.
+- **Digital purchases:** Yes — اشتراك أسبوعي وسنوي، جوه المتجر.
 - الأب نفسه بيرفض أي حد أقل من ١٦ سنة.
