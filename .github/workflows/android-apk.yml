@@ -74,9 +74,10 @@ jobs:
           cp "$apk" "$RUNNER_TEMP/OUTREPD.apk"
           echo "Server address found in the APK."
 
+      # Named after the commit, so a downloaded APK says which code it is.
       - uses: actions/upload-artifact@v4
         with:
-          name: OUTREPD-apk
+          name: OUTREPD-apk-${{ github.sha }}
           path: ${{ runner.temp }}/OUTREPD.apk
           retention-days: 30
 
