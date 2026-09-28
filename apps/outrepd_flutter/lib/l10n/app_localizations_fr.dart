@@ -1734,7 +1734,7 @@ class LFr extends L {
 
   @override
   String get obCameraPrivateBody =>
-      'Le suivi du corps tourne sur cet appareil. Aucune vidéo n’est envoyée, sauf si tu la publies.';
+      'Le suivi du corps se fait sur cet appareil. Aucune vidéo n\'est jamais enregistrée ni envoyée.';
 
   @override
   String get obWhyNeeded => 'Pourquoi c’est nécessaire ?';
@@ -1809,51 +1809,10 @@ class LFr extends L {
   String get obFormClean => 'Propre';
 
   @override
-  String get obCreateAccountBody =>
-      'Crée un compte pour garder tes répétitions, ton rang et ton palmarès.';
-
-  @override
-  String get obSaveProgress => 'Sauvegarder ma progression';
-
-  @override
-  String obSaveYourReps(String count) {
-    return 'Sauvegarde tes $count répétitions';
-  }
-
-  @override
-  String get obOneTap => 'Un e-mail et un mot de passe, rien de plus.';
-
-  @override
-  String get obContinueApple => 'Continuer avec Apple';
-
-  @override
-  String get obContinueGoogle => 'Continuer avec Google';
-
-  @override
-  String get obContinueEmail => 'Continuer avec l’e-mail';
-
-  @override
-  String get obSignInFootnote =>
-      'On s’en sert uniquement pour garder ton compte. On ne publie jamais rien.';
-
-  @override
-  String get obPickName => 'Choisis un nom';
-
-  @override
-  String get obPickNameBody =>
-      'C’est ce que voient tes adversaires. Tu pourras le changer plus tard.';
-
-  @override
   String get obAvailable => 'Disponible';
 
   @override
   String get obTaken => 'Pris';
-
-  @override
-  String get obYourAvatar => 'Ton avatar';
-
-  @override
-  String get obAddPhoto => 'Ajouter une photo';
 
   @override
   String get obPlacementsBody =>
@@ -1867,13 +1826,6 @@ class LFr extends L {
 
   @override
   String get obFormMixed => 'Irrégulière';
-
-  @override
-  String get obWelcomeBack => 'Content de te revoir';
-
-  @override
-  String get obWelcomeBackBody =>
-      'Connecte-toi avec ton e-mail et ton mot de passe.';
 
   @override
   String get justNow => 'À l’instant';
@@ -2049,4 +2001,11 @@ class LFr extends L {
   @override
   String get setInPoolBody =>
       'Le prochain athlète de ton niveau l\'affrontera. Tu verras qui a gagné dans les notifications, et ton rang bougera à ce moment-là.';
+
+  @override
+  String get obWhyNeededBody =>
+      'Chaque répétition est jugée sur la descente et la remontée de tes épaules, et seule la caméra peut le voir. Sans elle, pas de comptage, et sans comptage, pas de duel. La caméra n\'est allumée que pendant une série.';
+
+  @override
+  String get obWelcomeBack => 'Content de te revoir';
 }

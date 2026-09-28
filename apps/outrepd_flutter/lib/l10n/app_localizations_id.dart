@@ -1725,7 +1725,7 @@ class LId extends L {
 
   @override
   String get obCameraPrivateBody =>
-      'Pelacakan tubuh berjalan di perangkat ini. Tidak ada video yang diunggah kecuali kamu sendiri yang memposting.';
+      'Pelacakan tubuh berjalan di perangkat ini. Tidak ada video yang disimpan atau diunggah.';
 
   @override
   String get obWhyNeeded => 'Kenapa ini diperlukan?';
@@ -1800,50 +1800,10 @@ class LId extends L {
   String get obFormClean => 'Bersih';
 
   @override
-  String get obCreateAccountBody =>
-      'Buat akun supaya repetisi, peringkat, dan rekormu tersimpan.';
-
-  @override
-  String get obSaveProgress => 'Simpan progresku';
-
-  @override
-  String obSaveYourReps(String count) {
-    return 'Simpan $count repetisimu';
-  }
-
-  @override
-  String get obOneTap => 'Cukup email dan kata sandi.';
-
-  @override
-  String get obContinueApple => 'Lanjutkan dengan Apple';
-
-  @override
-  String get obContinueGoogle => 'Lanjutkan dengan Google';
-
-  @override
-  String get obContinueEmail => 'Lanjutkan dengan email';
-
-  @override
-  String get obSignInFootnote =>
-      'Ini hanya dipakai untuk menjaga akunmu. Kami tidak pernah memposting apa pun.';
-
-  @override
-  String get obPickName => 'Pilih nama';
-
-  @override
-  String get obPickNameBody => 'Inilah yang dilihat lawan. Bisa diganti nanti.';
-
-  @override
   String get obAvailable => 'Tersedia';
 
   @override
   String get obTaken => 'Sudah dipakai';
-
-  @override
-  String get obYourAvatar => 'Fotomu';
-
-  @override
-  String get obAddPhoto => 'Tambahkan foto';
 
   @override
   String get obPlacementsBody =>
@@ -1857,12 +1817,6 @@ class LId extends L {
 
   @override
   String get obFormMixed => 'Campur';
-
-  @override
-  String get obWelcomeBack => 'Selamat datang kembali';
-
-  @override
-  String get obWelcomeBackBody => 'Masuk dengan email dan kata sandi kamu.';
 
   @override
   String get justNow => 'Baru saja';
@@ -2037,4 +1991,11 @@ class LId extends L {
   @override
   String get setInPoolBody =>
       'Atlet berikutnya di dekat peringkatmu akan melawannya. Kamu akan melihat siapa yang menang di Notifikasi, dan peringkatmu berubah saat itu.';
+
+  @override
+  String get obWhyNeededBody =>
+      'Setiap repetisi dinilai dari seberapa jauh bahumu turun dan naik, dan hanya kamera yang bisa melihatnya. Tanpa kamera tidak ada hitungan, dan tanpa hitungan tidak ada duel. Kamera hanya menyala saat satu set berlangsung.';
+
+  @override
+  String get obWelcomeBack => 'Selamat datang kembali';
 }

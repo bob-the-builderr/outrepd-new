@@ -79,6 +79,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void _go(_Step next) => setState(() => _step = next);
 
+  /// The step before this one, for the system back gesture. Without it, back
+  /// on any step closed the app, and opening it again started over at the
+  /// welcome screen.
+  void _back() {
+    if (_step.index == 0) return;
+    _go(_Step.values[_step.index - 1]);
+  }
+
   Future<void> _finish() async {
     // No tier, no record, no history. A new account has earned none of it.
     //
@@ -146,44 +154,50 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.colors.background,
-      body: SafeArea(
-        child: switch (_step) {
-          _Step.welcome => _Welcome(
-            onStart: () => _go(_Step.howItWorks),
-            onSignIn: _directLogIn,
-          ),
-          _Step.howItWorks => _HowItWorks(onNext: () => _go(_Step.before)),
-          _Step.before => _BeforeYouStart(
-            over16: _over16,
-            healthAccepted: _healthAccepted,
-            onAge: (v) => setState(() => _over16 = v),
-            onHealth: (v) => setState(() => _healthAccepted = v),
-            onNext: () => _go(_Step.camera),
-          ),
-          _Step.camera => _CameraAsk(onNext: () => _go(_Step.placement)),
-          _Step.placement => _Placement(onNext: () => _go(_Step.framing)),
-          _Step.framing => _FramingCheck(
-            poseSource: widget.poseSource,
-            onNext: () => _go(_Step.calibration),
-          ),
-          _Step.calibration => _Calibration(
-            poseSource: widget.poseSource,
-            onDone: (result) {
-              setState(() => _calibration = result);
-              _go(_Step.calibrated);
-            },
-          ),
-          _Step.calibrated => _Calibrated(
-            result: _calibration,
-            onNext: () => _go(_Step.placements),
-          ),
-          _Step.placements => _Placements(
-            onStart: _openAuthGate,
-            onPractice: _openAuthGate,
-          ),
-        },
+    return PopScope(
+      canPop: _step == _Step.welcome,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) _back();
+      },
+      child: Scaffold(
+        backgroundColor: context.colors.background,
+        body: SafeArea(
+          child: switch (_step) {
+            _Step.welcome => _Welcome(
+              onStart: () => _go(_Step.howItWorks),
+              onSignIn: _directLogIn,
+            ),
+            _Step.howItWorks => _HowItWorks(onNext: () => _go(_Step.before)),
+            _Step.before => _BeforeYouStart(
+              over16: _over16,
+              healthAccepted: _healthAccepted,
+              onAge: (v) => setState(() => _over16 = v),
+              onHealth: (v) => setState(() => _healthAccepted = v),
+              onNext: () => _go(_Step.camera),
+            ),
+            _Step.camera => _CameraAsk(onNext: () => _go(_Step.placement)),
+            _Step.placement => _Placement(onNext: () => _go(_Step.framing)),
+            _Step.framing => _FramingCheck(
+              poseSource: widget.poseSource,
+              onNext: () => _go(_Step.calibration),
+            ),
+            _Step.calibration => _Calibration(
+              poseSource: widget.poseSource,
+              onDone: (result) {
+                setState(() => _calibration = result);
+                _go(_Step.calibrated);
+              },
+            ),
+            _Step.calibrated => _Calibrated(
+              result: _calibration,
+              onNext: () => _go(_Step.placements),
+            ),
+            _Step.placements => _Placements(
+              onStart: _openAuthGate,
+              onPractice: _openAuthGate,
+            ),
+          },
+        ),
       ),
     );
   }
@@ -793,8 +807,10 @@ class _CameraAsk extends StatelessWidget {
               context: context,
               builder: (c) => AlertDialog(
                 backgroundColor: context.colors.surface,
+                // More than the line already on the screen behind it: the
+                // question is asked by somebody that line did not convince.
                 content: Text(
-                  l.obCameraBody,
+                  l.obWhyNeededBody,
                   style: TextStyle(color: context.colors.text),
                 ),
                 actions: [

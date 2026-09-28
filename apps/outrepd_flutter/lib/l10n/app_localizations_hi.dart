@@ -1726,7 +1726,7 @@ class LHi extends L {
 
   @override
   String get obCameraPrivateBody =>
-      'बॉडी ट्रैकिंग इसी डिवाइस पर चलती है। कोई वीडियो अपलोड नहीं होता, जब तक तुम ख़ुद न डालो।';
+      'शरीर की ट्रैकिंग इसी डिवाइस पर होती है। कोई वीडियो कभी सेव या अपलोड नहीं होता।';
 
   @override
   String get obWhyNeeded => 'यह क्यों ज़रूरी है?';
@@ -1799,51 +1799,10 @@ class LHi extends L {
   String get obFormClean => 'साफ़';
 
   @override
-  String get obCreateAccountBody =>
-      'अपनी रेप्स, रैंक और रिकॉर्ड बचाए रखने के लिए अकाउंट बनाओ।';
-
-  @override
-  String get obSaveProgress => 'मेरी प्रगति सेव करो';
-
-  @override
-  String obSaveYourReps(String count) {
-    return 'अपनी $count रेप्स सेव करो';
-  }
-
-  @override
-  String get obOneTap => 'बस एक ईमेल और एक पासवर्ड।';
-
-  @override
-  String get obContinueApple => 'Apple से जारी रखो';
-
-  @override
-  String get obContinueGoogle => 'Google से जारी रखो';
-
-  @override
-  String get obContinueEmail => 'ईमेल से जारी रखो';
-
-  @override
-  String get obSignInFootnote =>
-      'हम इसे सिर्फ़ तुम्हारा अकाउंट रखने के लिए इस्तेमाल करते हैं। हम कभी कुछ पोस्ट नहीं करते।';
-
-  @override
-  String get obPickName => 'एक नाम चुनो';
-
-  @override
-  String get obPickNameBody =>
-      'यही तुम्हारे प्रतिद्वंद्वी देखेंगे। बाद में बदल सकते हो।';
-
-  @override
   String get obAvailable => 'उपलब्ध';
 
   @override
   String get obTaken => 'पहले से लिया हुआ';
-
-  @override
-  String get obYourAvatar => 'तुम्हारा अवतार';
-
-  @override
-  String get obAddPhoto => 'फ़ोटो जोड़ो';
 
   @override
   String get obPlacementsBody =>
@@ -1857,12 +1816,6 @@ class LHi extends L {
 
   @override
   String get obFormMixed => 'मिला-जुला';
-
-  @override
-  String get obWelcomeBack => 'वापसी पर स्वागत है';
-
-  @override
-  String get obWelcomeBackBody => 'अपने ईमेल और पासवर्ड से साइन इन करें।';
 
   @override
   String get justNow => 'अभी-अभी';
@@ -2038,4 +1991,11 @@ class LHi extends L {
   @override
   String get setInPoolBody =>
       'आपकी रैंक के पास वाला अगला खिलाड़ी इससे मुकाबला करेगा। कौन जीता, यह सूचनाओं में दिखेगा, और तभी आपकी रैंक बदलेगी।';
+
+  @override
+  String get obWhyNeededBody =>
+      'हर रेप इस बात से गिना जाता है कि आपके कंधे कितना नीचे जाते और ऊपर आते हैं, और यह सिर्फ़ कैमरा देख सकता है। इसके बिना गिनती नहीं, और गिनती के बिना मुकाबला नहीं। कैमरा सिर्फ़ सेट के दौरान चालू रहता है।';
+
+  @override
+  String get obWelcomeBack => 'वापसी पर स्वागत है';
 }

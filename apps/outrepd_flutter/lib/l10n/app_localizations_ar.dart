@@ -1716,7 +1716,7 @@ class LAr extends L {
 
   @override
   String get obCameraPrivateBody =>
-      'يجري تتبّع الجسم على هذا الجهاز، ولا يُرفع أي مقطع إلا إذا اخترت نشره بنفسك.';
+      'تتبّع الجسم بيحصل على الموبايل ده. مفيش أي فيديو بيتحفظ أو بيترفع.';
 
   @override
   String get obWhyNeeded => 'لماذا نحتاج إليها؟';
@@ -1789,50 +1789,10 @@ class LAr extends L {
   String get obFormClean => 'نظيف';
 
   @override
-  String get obCreateAccountBody =>
-      'أنشئ حسابًا لتحتفظ بتكراراتك ورتبتك وسجلك.';
-
-  @override
-  String get obSaveProgress => 'احفظ تقدمي';
-
-  @override
-  String obSaveYourReps(String count) {
-    return 'احفظ تكراراتك البالغة $count';
-  }
-
-  @override
-  String get obOneTap => 'بريد إلكتروني وكلمة مرور، وخلاص.';
-
-  @override
-  String get obContinueApple => 'المتابعة عبر Apple';
-
-  @override
-  String get obContinueGoogle => 'المتابعة عبر Google';
-
-  @override
-  String get obContinueEmail => 'المتابعة عبر البريد الإلكتروني';
-
-  @override
-  String get obSignInFootnote =>
-      'نستخدمه للحفاظ على حسابك فقط، ولا ننشر عنك شيئًا.';
-
-  @override
-  String get obPickName => 'اختر اسمًا';
-
-  @override
-  String get obPickNameBody => 'هذا ما يراه منافسوك، ويمكنك تغييره لاحقًا.';
-
-  @override
   String get obAvailable => 'متاح';
 
   @override
   String get obTaken => 'محجوز';
-
-  @override
-  String get obYourAvatar => 'صورتك';
-
-  @override
-  String get obAddPhoto => 'أضف صورة';
 
   @override
   String get obPlacementsBody =>
@@ -1846,12 +1806,6 @@ class LAr extends L {
 
   @override
   String get obFormMixed => 'متفاوت';
-
-  @override
-  String get obWelcomeBack => 'أهلًا بعودتك';
-
-  @override
-  String get obWelcomeBackBody => 'سجّل الدخول ببريدك الإلكتروني وكلمة المرور.';
 
   @override
   String get justNow => 'الآن';
@@ -2026,4 +1980,11 @@ class LAr extends L {
   @override
   String get setInPoolBody =>
       'أول لاعب قريب من رتبتك هيلعب ضده. هتشوف مين كسب في الإشعارات، ورتبتك هتتحرك ساعتها.';
+
+  @override
+  String get obWhyNeededBody =>
+      'كل عدّة بتتحسب من نزول كتافك وطلوعهم، والكاميرا بس هي اللي تقدر تشوف ده. من غيرها مفيش عدّ، ومن غير عدّ مفيش ماتش. والكاميرا بتشتغل وإنت بتلعب بس.';
+
+  @override
+  String get obWelcomeBack => 'أهلًا بعودتك';
 }

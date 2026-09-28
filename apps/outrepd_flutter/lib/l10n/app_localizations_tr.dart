@@ -1722,7 +1722,7 @@ class LTr extends L {
 
   @override
   String get obCameraPrivateBody =>
-      'Vücut takibi bu cihazda çalışır. Sen paylaşmadıkça hiçbir video yüklenmez.';
+      'Vücut takibi bu cihazda çalışır. Hiçbir video kaydedilmez veya yüklenmez.';
 
   @override
   String get obWhyNeeded => 'Bu neden gerekli?';
@@ -1795,51 +1795,10 @@ class LTr extends L {
   String get obFormClean => 'Temiz';
 
   @override
-  String get obCreateAccountBody =>
-      'Tekrarlarını, rütbeni ve geçmişini saklamak için hesap aç.';
-
-  @override
-  String get obSaveProgress => 'İlerlememi kaydet';
-
-  @override
-  String obSaveYourReps(String count) {
-    return '$count tekrarını kaydet';
-  }
-
-  @override
-  String get obOneTap => 'Sadece bir e-posta ve bir parola.';
-
-  @override
-  String get obContinueApple => 'Apple ile devam et';
-
-  @override
-  String get obContinueGoogle => 'Google ile devam et';
-
-  @override
-  String get obContinueEmail => 'E-posta ile devam et';
-
-  @override
-  String get obSignInFootnote =>
-      'Bunu yalnızca hesabını tutmak için kullanırız. Asla bir şey paylaşmayız.';
-
-  @override
-  String get obPickName => 'Bir ad seç';
-
-  @override
-  String get obPickNameBody =>
-      'Rakiplerin bunu görür. Sonra değiştirebilirsin.';
-
-  @override
   String get obAvailable => 'Uygun';
 
   @override
   String get obTaken => 'Alınmış';
-
-  @override
-  String get obYourAvatar => 'Avatarın';
-
-  @override
-  String get obAddPhoto => 'Fotoğraf ekle';
 
   @override
   String get obPlacementsBody =>
@@ -1853,12 +1812,6 @@ class LTr extends L {
 
   @override
   String get obFormMixed => 'Değişken';
-
-  @override
-  String get obWelcomeBack => 'Tekrar hoş geldin';
-
-  @override
-  String get obWelcomeBackBody => 'E-posta ve parolanla giriş yap.';
 
   @override
   String get justNow => 'Az önce';
@@ -2034,4 +1987,11 @@ class LTr extends L {
   @override
   String get setInPoolBody =>
       'Rütbene yakın bir sonraki sporcu buna karşı yarışacak. Kimin kazandığını Bildirimler’de göreceksin, rütben de o zaman değişecek.';
+
+  @override
+  String get obWhyNeededBody =>
+      'Her tekrar, omuzlarının ne kadar inip kalktığına göre değerlendirilir ve bunu yalnızca kamera görebilir. Kamera olmadan sayım olmaz, sayım olmadan düello olmaz. Kamera yalnızca set sırasında açıktır.';
+
+  @override
+  String get obWelcomeBack => 'Tekrar hoş geldin';
 }

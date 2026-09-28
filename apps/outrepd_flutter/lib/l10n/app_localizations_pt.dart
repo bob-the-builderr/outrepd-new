@@ -1732,7 +1732,7 @@ class LPt extends L {
 
   @override
   String get obCameraPrivateBody =>
-      'A leitura do corpo corre neste dispositivo. Nenhum vídeo é enviado, a menos que sejas tu a publicá-lo.';
+      'O rastreamento do corpo acontece neste aparelho. Nenhum vídeo é salvo ou enviado.';
 
   @override
   String get obWhyNeeded => 'Porque é preciso?';
@@ -1806,51 +1806,10 @@ class LPt extends L {
   String get obFormClean => 'Limpa';
 
   @override
-  String get obCreateAccountBody =>
-      'Cria uma conta para guardar as tuas repetições, a tua divisão e o teu registo.';
-
-  @override
-  String get obSaveProgress => 'Guardar o meu progresso';
-
-  @override
-  String obSaveYourReps(String count) {
-    return 'Guarda as tuas $count repetições';
-  }
-
-  @override
-  String get obOneTap => 'Um email e uma palavra-passe, mais nada.';
-
-  @override
-  String get obContinueApple => 'Continuar com Apple';
-
-  @override
-  String get obContinueGoogle => 'Continuar com Google';
-
-  @override
-  String get obContinueEmail => 'Continuar com email';
-
-  @override
-  String get obSignInFootnote =>
-      'Só usamos isto para manter a tua conta. Nunca publicamos nada.';
-
-  @override
-  String get obPickName => 'Escolhe um nome';
-
-  @override
-  String get obPickNameBody =>
-      'É o que os adversários veem. Podes mudá-lo depois.';
-
-  @override
   String get obAvailable => 'Disponível';
 
   @override
   String get obTaken => 'Já usado';
-
-  @override
-  String get obYourAvatar => 'A tua foto';
-
-  @override
-  String get obAddPhoto => 'Adicionar foto';
 
   @override
   String get obPlacementsBody =>
@@ -1864,13 +1823,6 @@ class LPt extends L {
 
   @override
   String get obFormMixed => 'Irregular';
-
-  @override
-  String get obWelcomeBack => 'Bem-vindo de volta';
-
-  @override
-  String get obWelcomeBackBody =>
-      'Inicia sessão com o teu email e palavra-passe.';
 
   @override
   String get justNow => 'Agora mesmo';
@@ -2045,4 +1997,11 @@ class LPt extends L {
   @override
   String get setInPoolBody =>
       'O próximo atleta perto do seu rank vai disputar contra ela. Você verá quem venceu em Notificações, e seu rank muda nessa hora.';
+
+  @override
+  String get obWhyNeededBody =>
+      'Cada repetição é avaliada por quanto seus ombros descem e sobem, e só a câmera consegue ver isso. Sem ela não há contagem, e sem contagem não há duelo. A câmera só fica ligada durante uma série.';
+
+  @override
+  String get obWelcomeBack => 'Bem-vindo de volta';
 }

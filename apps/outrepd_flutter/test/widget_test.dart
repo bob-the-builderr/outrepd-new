@@ -93,6 +93,20 @@ void main() {
     expect(find.text('Allow camera'), findsNothing);
   });
 
+  testWidgets('back goes to the step before, not out of the app',
+      (tester) async {
+    phone(tester);
+    await tester.pumpWidget(_app(null));
+    await tester.pumpAndSettle();
+
+    await tap(tester, 'Get started');
+    expect(find.textContaining('Three things'), findsOneWidget);
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(find.text('Get started'), findsOneWidget);
+  });
+
   testWidgets('says what the camera is for before asking for it',
       (tester) async {
     phone(tester);

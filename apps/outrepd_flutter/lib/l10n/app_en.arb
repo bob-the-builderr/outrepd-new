@@ -961,7 +961,7 @@
   "obCameraTitle": "outrepd needs your camera",
   "obCameraBody": "It watches your body move to count reps. There is no other way to do it.",
   "obCameraPrivateTitle": "Nothing leaves your phone",
-  "obCameraPrivateBody": "Body tracking runs on this device. No video is uploaded unless you choose to post it.",
+  "obCameraPrivateBody": "Body tracking runs on this device. No video is ever saved or uploaded.",
   "obWhyNeeded": "Why is this needed?",
   "obPlacementTitle": "Set your phone on the floor",
   "obPlacementBody": "Lean it against a wall about a metre in front of you.",
@@ -985,33 +985,12 @@
   "obAverageDepth": "Average depth",
   "obForm": "Form",
   "obFormClean": "Clean",
-  "obCreateAccountBody": "Create an account to keep your reps, your rank and your record.",
-  "obSaveProgress": "Save my progress",
-  "obSaveYourReps": "Save your {count} reps",
-  "@obSaveYourReps": {
-    "placeholders": {
-      "count": {
-        "type": "String"
-      }
-    }
-  },
-  "obOneTap": "An email and a password — that's all it takes.",
-  "obContinueApple": "Continue with Apple",
-  "obContinueGoogle": "Continue with Google",
-  "obContinueEmail": "Continue with email",
-  "obSignInFootnote": "We only use this to keep your account. We never post anything.",
-  "obPickName": "Pick a name",
-  "obPickNameBody": "This is what opponents see. You can change it later.",
   "obAvailable": "Available",
   "obTaken": "Taken",
-  "obYourAvatar": "Your avatar",
-  "obAddPhoto": "Add a photo",
   "obPlacementsBody": "Five duels decide your starting tier. Nothing counts against you yet.",
   "obFindFirstOpponent": "Find my first opponent",
   "obGotIt": "Got it",
   "obFormMixed": "Mixed",
-  "obWelcomeBack": "Welcome back",
-  "obWelcomeBackBody": "Sign in with your email and password.",
   "justNow": "Just now",
   "counterAccuracy": "Counter accuracy",
   "counterAccuracyCaption": "How close the camera gets",
@@ -1133,5 +1112,7 @@
         "type": "String"
       }
     }
-  }
+  },
+  "obWhyNeededBody": "Each rep is judged by how far your shoulders drop and rise, and only the camera can see that. Without it there is no count, and without a count there is no duel. The camera is only on during a set.",
+  "obWelcomeBack": "Welcome back"
 }

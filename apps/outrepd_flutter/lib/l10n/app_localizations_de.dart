@@ -1735,7 +1735,7 @@ class LDe extends L {
 
   @override
   String get obCameraPrivateBody =>
-      'Die Bewegungsanalyse läuft auf diesem Gerät. Kein Video wird hochgeladen, außer du postest es selbst.';
+      'Die Körpererkennung läuft auf diesem Gerät. Es wird nie ein Video gespeichert oder hochgeladen.';
 
   @override
   String get obWhyNeeded => 'Warum wird das gebraucht?';
@@ -1810,52 +1810,10 @@ class LDe extends L {
   String get obFormClean => 'Sauber';
 
   @override
-  String get obCreateAccountBody =>
-      'Erstell ein Konto, damit Wiederholungen, Rang und Bilanz erhalten bleiben.';
-
-  @override
-  String get obSaveProgress => 'Fortschritt sichern';
-
-  @override
-  String obSaveYourReps(String count) {
-    return 'Sichere deine $count Wiederholungen';
-  }
-
-  @override
-  String get obOneTap =>
-      'Eine E-Mail und ein Passwort – mehr braucht es nicht.';
-
-  @override
-  String get obContinueApple => 'Weiter mit Apple';
-
-  @override
-  String get obContinueGoogle => 'Weiter mit Google';
-
-  @override
-  String get obContinueEmail => 'Weiter mit E-Mail';
-
-  @override
-  String get obSignInFootnote =>
-      'Wir nutzen das nur für dein Konto. Wir posten nie etwas.';
-
-  @override
-  String get obPickName => 'Wähl einen Namen';
-
-  @override
-  String get obPickNameBody =>
-      'Den sehen deine Gegner. Du kannst ihn später ändern.';
-
-  @override
   String get obAvailable => 'Frei';
 
   @override
   String get obTaken => 'Vergeben';
-
-  @override
-  String get obYourAvatar => 'Dein Bild';
-
-  @override
-  String get obAddPhoto => 'Foto hinzufügen';
 
   @override
   String get obPlacementsBody =>
@@ -1869,13 +1827,6 @@ class LDe extends L {
 
   @override
   String get obFormMixed => 'Gemischt';
-
-  @override
-  String get obWelcomeBack => 'Willkommen zurück';
-
-  @override
-  String get obWelcomeBackBody =>
-      'Melde dich mit deiner E-Mail und deinem Passwort an.';
 
   @override
   String get justNow => 'Gerade eben';
@@ -2051,4 +2002,11 @@ class LDe extends L {
   @override
   String get setInPoolBody =>
       'Der nächste Sportler in deiner Nähe im Ranking tritt dagegen an. Wer gewonnen hat, siehst du in den Mitteilungen, und dann bewegt sich dein Rang.';
+
+  @override
+  String get obWhyNeededBody =>
+      'Jede Wiederholung wird danach bewertet, wie weit deine Schultern sinken und steigen, und das sieht nur die Kamera. Ohne sie gibt es keine Zählung und ohne Zählung kein Duell. Die Kamera ist nur während eines Satzes an.';
+
+  @override
+  String get obWelcomeBack => 'Willkommen zurück';
 }

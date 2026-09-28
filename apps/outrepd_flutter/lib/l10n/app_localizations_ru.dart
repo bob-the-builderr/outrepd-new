@@ -1725,7 +1725,7 @@ class LRu extends L {
 
   @override
   String get obCameraPrivateBody =>
-      'Отслеживание тела работает на этом устройстве. Видео никуда не отправляется, если ты сам его не опубликуешь.';
+      'Отслеживание тела работает на этом устройстве. Видео никогда не сохраняется и не отправляется.';
 
   @override
   String get obWhyNeeded => 'Зачем это нужно?';
@@ -1800,50 +1800,10 @@ class LRu extends L {
   String get obFormClean => 'Чисто';
 
   @override
-  String get obCreateAccountBody =>
-      'Создай аккаунт, чтобы сохранить повторы, ранг и статистику.';
-
-  @override
-  String get obSaveProgress => 'Сохранить прогресс';
-
-  @override
-  String obSaveYourReps(String count) {
-    return 'Сохрани свои $count повторов';
-  }
-
-  @override
-  String get obOneTap => 'Только email и пароль.';
-
-  @override
-  String get obContinueApple => 'Продолжить с Apple';
-
-  @override
-  String get obContinueGoogle => 'Продолжить с Google';
-
-  @override
-  String get obContinueEmail => 'Продолжить по почте';
-
-  @override
-  String get obSignInFootnote =>
-      'Это нужно только для аккаунта. Мы ничего не публикуем.';
-
-  @override
-  String get obPickName => 'Выбери имя';
-
-  @override
-  String get obPickNameBody => 'Его видят соперники. Потом можно изменить.';
-
-  @override
   String get obAvailable => 'Свободно';
 
   @override
   String get obTaken => 'Занято';
-
-  @override
-  String get obYourAvatar => 'Твой аватар';
-
-  @override
-  String get obAddPhoto => 'Добавить фото';
 
   @override
   String get obPlacementsBody =>
@@ -1857,12 +1817,6 @@ class LRu extends L {
 
   @override
   String get obFormMixed => 'Неровно';
-
-  @override
-  String get obWelcomeBack => 'С возвращением';
-
-  @override
-  String get obWelcomeBackBody => 'Войдите с помощью email и пароля.';
 
   @override
   String get justNow => 'Только что';
@@ -2038,4 +1992,11 @@ class LRu extends L {
   @override
   String get setInPoolBody =>
       'Следующий спортсмен вашего уровня посоревнуется с ним. Кто победил, вы увидите в уведомлениях, и тогда изменится ваш ранг.';
+
+  @override
+  String get obWhyNeededBody =>
+      'Каждый повтор оценивается по тому, насколько опускаются и поднимаются плечи, и видит это только камера. Без неё нет счёта, а без счёта нет дуэли. Камера включена только во время подхода.';
+
+  @override
+  String get obWelcomeBack => 'С возвращением';
 }

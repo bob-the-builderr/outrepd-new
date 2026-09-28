@@ -3262,7 +3262,7 @@ abstract class L {
   /// No description provided for @obCameraPrivateBody.
   ///
   /// In en, this message translates to:
-  /// **'Body tracking runs on this device. No video is uploaded unless you choose to post it.'**
+  /// **'Body tracking runs on this device. No video is ever saved or uploaded.'**
   String get obCameraPrivateBody;
 
   /// No description provided for @obWhyNeeded.
@@ -3403,66 +3403,6 @@ abstract class L {
   /// **'Clean'**
   String get obFormClean;
 
-  /// No description provided for @obCreateAccountBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Create an account to keep your reps, your rank and your record.'**
-  String get obCreateAccountBody;
-
-  /// No description provided for @obSaveProgress.
-  ///
-  /// In en, this message translates to:
-  /// **'Save my progress'**
-  String get obSaveProgress;
-
-  /// No description provided for @obSaveYourReps.
-  ///
-  /// In en, this message translates to:
-  /// **'Save your {count} reps'**
-  String obSaveYourReps(String count);
-
-  /// No description provided for @obOneTap.
-  ///
-  /// In en, this message translates to:
-  /// **'An email and a password — that\'s all it takes.'**
-  String get obOneTap;
-
-  /// No description provided for @obContinueApple.
-  ///
-  /// In en, this message translates to:
-  /// **'Continue with Apple'**
-  String get obContinueApple;
-
-  /// No description provided for @obContinueGoogle.
-  ///
-  /// In en, this message translates to:
-  /// **'Continue with Google'**
-  String get obContinueGoogle;
-
-  /// No description provided for @obContinueEmail.
-  ///
-  /// In en, this message translates to:
-  /// **'Continue with email'**
-  String get obContinueEmail;
-
-  /// No description provided for @obSignInFootnote.
-  ///
-  /// In en, this message translates to:
-  /// **'We only use this to keep your account. We never post anything.'**
-  String get obSignInFootnote;
-
-  /// No description provided for @obPickName.
-  ///
-  /// In en, this message translates to:
-  /// **'Pick a name'**
-  String get obPickName;
-
-  /// No description provided for @obPickNameBody.
-  ///
-  /// In en, this message translates to:
-  /// **'This is what opponents see. You can change it later.'**
-  String get obPickNameBody;
-
   /// No description provided for @obAvailable.
   ///
   /// In en, this message translates to:
@@ -3474,18 +3414,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Taken'**
   String get obTaken;
-
-  /// No description provided for @obYourAvatar.
-  ///
-  /// In en, this message translates to:
-  /// **'Your avatar'**
-  String get obYourAvatar;
-
-  /// No description provided for @obAddPhoto.
-  ///
-  /// In en, this message translates to:
-  /// **'Add a photo'**
-  String get obAddPhoto;
 
   /// No description provided for @obPlacementsBody.
   ///
@@ -3510,18 +3438,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Mixed'**
   String get obFormMixed;
-
-  /// No description provided for @obWelcomeBack.
-  ///
-  /// In en, this message translates to:
-  /// **'Welcome back'**
-  String get obWelcomeBack;
-
-  /// No description provided for @obWelcomeBackBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in with your email and password.'**
-  String get obWelcomeBackBody;
 
   /// No description provided for @justNow.
   ///
@@ -3822,6 +3738,18 @@ abstract class L {
   /// In en, this message translates to:
   /// **'The next lifter near your rank races it. You\'ll see who won in Notifications, and your rank moves then.'**
   String get setInPoolBody;
+
+  /// No description provided for @obWhyNeededBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Each rep is judged by how far your shoulders drop and rise, and only the camera can see that. Without it there is no count, and without a count there is no duel. The camera is only on during a set.'**
+  String get obWhyNeededBody;
+
+  /// No description provided for @obWelcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back'**
+  String get obWelcomeBack;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {
