@@ -205,7 +205,7 @@ class _OutrepdAppState extends State<OutrepdApp> with WidgetsBindingObserver {
           limit: kDuelLength,
           duel: DuelContext(
             opponentName: demoOpponents.first.username,
-            opponentReps: 14,
+            opponentReps: 11,
             opponentTierIdx: demoOpponents.first.tierIdx,
             opponentDivIdx: demoOpponents.first.divIdx,
             rankLabel: 'Gold III',

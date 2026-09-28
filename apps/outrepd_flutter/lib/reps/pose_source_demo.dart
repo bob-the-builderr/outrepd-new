@@ -52,38 +52,38 @@ class DemoPoseSource implements PoseSource {
   }
 
   /// [t] runs 0 at the bottom of the push-up to 1 at the top.
+  ///
+  /// Head-on, the way the phone sees a lifter: propped on the floor in front
+  /// of them. The counter reads the nose's height above the planted hands in
+  /// shoulder widths, so the proportions are the measured ones, the same as
+  /// the counter tests' bodies: about one shoulder width at lockout and a
+  /// tenth of one at the bottom of a full rep. A side-on figure has both
+  /// shoulders on one point and no width at all, and was never counted.
   BodyPose _poseAt(double t) {
-    double rad(double deg) => deg * math.pi / 180;
+    const width = 0.30;
+    const floor = 0.72;
+    final height = 0.1 + 0.9 * t;
+    final nose = floor - height * width;
+    final shoulders = nose + 0.05;
+    // The torso points away from the lens and foreshortens to almost nothing.
+    final hips = shoulders - 0.06;
 
-    // Elbow angle sweeps the range a real push-up covers.
-    final elbow = 80 + t * 95;
-
-    const shoulder = PosePoint(0.55, 0.40, 0.95);
-    const elbowPoint = PosePoint(0.42, 0.50, 0.95);
-    const hip = PosePoint(0.72, 0.45, 0.95);
-    const knee = PosePoint(0.85, 0.50, 0.9);
-    const ankle = PosePoint(0.95, 0.54, 0.8);
-
-    final wrist = PosePoint(
-      elbowPoint.x + 0.11 * math.cos(rad(elbow)),
-      elbowPoint.y + 0.11 * math.sin(rad(elbow)),
-      0.95,
-    );
+    PosePoint at(double x, double y) => PosePoint(x, y, 0.95);
 
     return BodyPose({
-      Joint.nose: const PosePoint(0.47, 0.35, 0.9),
-      Joint.leftShoulder: shoulder,
-      Joint.rightShoulder: shoulder,
-      Joint.leftElbow: elbowPoint,
-      Joint.rightElbow: elbowPoint,
-      Joint.leftWrist: wrist,
-      Joint.rightWrist: wrist,
-      Joint.leftHip: hip,
-      Joint.rightHip: hip,
-      Joint.leftKnee: knee,
-      Joint.rightKnee: knee,
-      Joint.leftAnkle: ankle,
-      Joint.rightAnkle: ankle,
+      Joint.nose: at(0.50, nose),
+      Joint.leftShoulder: at(0.35, shoulders),
+      Joint.rightShoulder: at(0.65, shoulders),
+      Joint.leftElbow: at(0.27, (shoulders + floor) / 2),
+      Joint.rightElbow: at(0.73, (shoulders + floor) / 2),
+      Joint.leftWrist: at(0.33, floor),
+      Joint.rightWrist: at(0.67, floor),
+      Joint.leftHip: at(0.44, hips),
+      Joint.rightHip: at(0.56, hips),
+      Joint.leftKnee: at(0.46, hips - 0.03),
+      Joint.rightKnee: at(0.54, hips - 0.03),
+      Joint.leftAnkle: at(0.47, hips - 0.05),
+      Joint.rightAnkle: at(0.53, hips - 0.05),
     });
   }
 }
