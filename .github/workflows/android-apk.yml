@@ -1,25 +1,33 @@
-# Builds the Android APK on GitHub's machines, so a release does not depend on
-# the local disk that holds Flutter and Gradle — and runs the checks, and
-# publishes what they found where a git fetch can read it.
+# Builds OUTREPD for Android on GitHub's machines — the APK for a phone and
+# the App Bundle for Google Play — so a release does not depend on the local
+# disk that holds Flutter and Gradle. Also runs the checks, and publishes what
+# they found where a git fetch can read it.
 #
-# Needs repository secrets (Settings > Secrets and variables > Actions):
+# Repository secrets (Settings > Secrets and variables > Actions):
 #   SUPABASE_URL, SUPABASE_ANON_KEY   required — the same two lines as
 #                                     apps/outrepd_flutter/supabase/keys.env.
 #                                     Without them the job fails rather than
-#                                     build an APK that opens with no server,
+#                                     build an app that opens with no server,
 #                                     which is exactly what shipped once.
 #   REVENUECAT_ANDROID_KEY            RevenueCat's public Google Play key
 #                                     (goog_...). Without it the build has no
 #                                     paywall; the run says so in a warning.
+#   UPLOAD_KEYSTORE_BASE64            the upload keystore (.jks), as base64.
+#   UPLOAD_KEYSTORE_PASSWORD          its password.
+#   UPLOAD_KEY_ALIAS                  the key's alias ("upload").
+#   UPLOAD_KEY_PASSWORD               optional: the keystore password is used
+#                                     when unset (a PKCS12 keystore has one).
+#     With the upload key, both files are signed with it and an App Bundle is
+#     built for Play. Without it the APK is signed with a throwaway debug key —
+#     a new one every run, so each APK replaces the last only by uninstalling
+#     it first — and there is no App Bundle.
 #
-# The APK is under "Artifacts" on the run's page. It is signed with this
-# runner's debug key, not the one on the Windows machine, so a phone with a
-# locally built copy installed has to uninstall that first.
+# Both files are under "Artifacts" on the run's page. Every run numbers its
+# build 100 + the run number, so each upload to Play is higher than the last.
 #
-# The checks job pushes its results — analyzer output, test output, and
-# screenshots from tool/screenshots — to the `ci-results` branch, one folder
-# per commit, so they can be read with `git fetch origin ci-results` without
-# signing in to GitHub.
+# Results land on two branches that a `git fetch` can read without signing in
+# to GitHub: `ci-results` (analyzer, tests, screenshots — one folder per
+# commit) and `ci-builds` (what the build job made, and with which key).
 
 name: Android APK
 
@@ -42,26 +50,48 @@ defaults:
 jobs:
   apk:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
+    permissions:
+      contents: write
     env:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
       REVENUECAT_ANDROID_KEY: ${{ secrets.REVENUECAT_ANDROID_KEY }}
+      UPLOAD_KEYSTORE_BASE64: ${{ secrets.UPLOAD_KEYSTORE_BASE64 }}
+      UPLOAD_KEYSTORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_PASSWORD }}
+      UPLOAD_KEY_ALIAS: ${{ secrets.UPLOAD_KEY_ALIAS }}
+      UPLOAD_KEY_PASSWORD: ${{ secrets.UPLOAD_KEY_PASSWORD }}
     steps:
       - uses: actions/checkout@v4
 
       - name: Refuse to build without the server keys
         run: |
           if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
-            echo "::error::Add SUPABASE_URL and SUPABASE_ANON_KEY as repository secrets (Settings > Secrets and variables > Actions). An APK built without them has no server."
+            echo "::error::Add SUPABASE_URL and SUPABASE_ANON_KEY as repository secrets (Settings > Secrets and variables > Actions). An app built without them has no server."
             exit 1
           fi
           printf 'SUPABASE_URL=%s\nSUPABASE_ANON_KEY=%s\n' "$SUPABASE_URL" "$SUPABASE_ANON_KEY" > supabase/keys.env
           if [ -n "$REVENUECAT_ANDROID_KEY" ]; then
             printf 'REVENUECAT_ANDROID_KEY=%s\n' "$REVENUECAT_ANDROID_KEY" >> supabase/keys.env
           else
-            echo "::warning::No REVENUECAT_ANDROID_KEY secret: this APK has no paywall, and the whole app is open."
+            echo "::warning::No REVENUECAT_ANDROID_KEY secret: this build has no paywall, and the whole app is open."
           fi
+
+      # android/key.properties is what android/app/build.gradle.kts reads. It
+      # only ever exists on this machine, for this run.
+      - name: The upload key
+        id: key
+        run: |
+          if [ -z "$UPLOAD_KEYSTORE_BASE64" ] || [ -z "$UPLOAD_KEYSTORE_PASSWORD" ] || [ -z "$UPLOAD_KEY_ALIAS" ]; then
+            echo "::warning::No upload key secrets: the APK is signed with a throwaway debug key and there is no App Bundle for Google Play."
+            echo "signed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          printf '%s' "$UPLOAD_KEYSTORE_BASE64" | tr -d '\r\n ' | base64 -d > "$RUNNER_TEMP/upload.jks"
+          printf 'storeFile=%s\nstorePassword=%s\nkeyAlias=%s\nkeyPassword=%s\n' \
+            "$RUNNER_TEMP/upload.jks" "$UPLOAD_KEYSTORE_PASSWORD" "$UPLOAD_KEY_ALIAS" \
+            "${UPLOAD_KEY_PASSWORD:-$UPLOAD_KEYSTORE_PASSWORD}" > android/key.properties
+          echo "signed=true" >> "$GITHUB_OUTPUT"
 
       - uses: actions/setup-java@v4
         with:
@@ -76,7 +106,12 @@ jobs:
       - run: flutter pub get
 
       # Both flags are required; see docs/building.md.
-      - run: flutter build apk --release --no-tree-shake-icons --dart-define-from-file=supabase/keys.env
+      - name: APK
+        id: apk
+        run: |
+          flutter build apk --release --no-tree-shake-icons \
+            --dart-define-from-file=supabase/keys.env \
+            --build-number=$((GITHUB_RUN_NUMBER + 100))
 
       - name: Check the server address is inside the APK
         run: |
@@ -90,12 +125,81 @@ jobs:
           cp "$apk" "$RUNNER_TEMP/OUTREPD.apk"
           echo "Server address found in the APK."
 
-      # Named after the commit, so a downloaded APK says which code it is.
+      - name: App Bundle for Google Play
+        id: aab
+        if: steps.key.outputs.signed == 'true'
+        run: |
+          flutter build appbundle --release --no-tree-shake-icons \
+            --dart-define-from-file=supabase/keys.env \
+            --build-number=$((GITHUB_RUN_NUMBER + 100))
+          aab=build/app/outputs/bundle/release/app-release.aab
+          # Signed with the upload key, not a debug one: Play refuses those.
+          keytool -printcert -jarfile "$aab" > "$RUNNER_TEMP/cert.txt"
+          if grep -q "CN=Android Debug" "$RUNNER_TEMP/cert.txt"; then
+            echo "::error::The App Bundle is signed with a debug key; Google Play would refuse it."
+            exit 1
+          fi
+          host="${SUPABASE_URL#https://}"
+          host="${host%%/*}"
+          if ! unzip -p "$aab" base/lib/arm64-v8a/libapp.so | grep -a -q -F "$host"; then
+            echo "::error::The App Bundle does not contain the Supabase address."
+            exit 1
+          fi
+          cp "$aab" "$RUNNER_TEMP/OUTREPD.aab"
+
+      # Named after the commit, so a downloaded file says which code it is.
       - uses: actions/upload-artifact@v4
         with:
           name: OUTREPD-apk-${{ github.sha }}
           path: ${{ runner.temp }}/OUTREPD.apk
           retention-days: 30
+
+      - uses: actions/upload-artifact@v4
+        if: steps.key.outputs.signed == 'true'
+        with:
+          name: OUTREPD-aab-${{ github.sha }}
+          path: ${{ runner.temp }}/OUTREPD.aab
+          retention-days: 30
+
+      - name: Publish what was built to the ci-builds branch
+        if: always()
+        working-directory: .
+        run: |
+          out="$RUNNER_TEMP/build-report"
+          mkdir -p "$out"
+          apk="$RUNNER_TEMP/OUTREPD.apk"
+          aab="$RUNNER_TEMP/OUTREPD.aab"
+          {
+            echo "commit      ${GITHUB_SHA}"
+            echo "build       $((GITHUB_RUN_NUMBER + 100))"
+            echo "upload key  ${{ steps.key.outputs.signed }}"
+            echo "apk         ${{ steps.apk.outcome }} $( [ -f "$apk" ] && stat -c %s "$apk" ) bytes"
+            echo "aab         ${{ steps.aab.outcome }} $( [ -f "$aab" ] && stat -c %s "$aab" ) bytes"
+            echo "paywall key $( [ -n "$REVENUECAT_ANDROID_KEY" ] && echo yes || echo no )"
+            if [ -f "$RUNNER_TEMP/cert.txt" ]; then
+              echo "signed by   $(grep -m1 'Owner:' "$RUNNER_TEMP/cert.txt")"
+              echo "sha-256     $(grep -m1 'SHA256:' "$RUNNER_TEMP/cert.txt" | sed 's/.*SHA256: //')"
+            fi
+            echo "run         ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          } > "$out/summary.txt"
+
+          git config user.name "ci"
+          git config user.email "ci@users.noreply.github.com"
+          work="$RUNNER_TEMP/builds"
+          if git fetch --depth 1 origin ci-builds 2>/dev/null; then
+            git worktree add "$work" FETCH_HEAD
+            git -C "$work" checkout -B ci-builds
+          else
+            git worktree add --detach "$work"
+            git -C "$work" checkout --orphan ci-builds
+            git -C "$work" rm -rf -q . || true
+          fi
+          mkdir -p "$work/${GITHUB_SHA::7}" "$work/latest"
+          cp "$out/summary.txt" "$work/${GITHUB_SHA::7}/summary.txt"
+          cp "$out/summary.txt" "$work/latest/summary.txt"
+          git -C "$work" add -A
+          git -C "$work" commit -q -m "Build ${GITHUB_SHA::7}" || true
+          git -C "$work" push -q origin ci-builds
 
   checks:
     runs-on: ubuntu-latest

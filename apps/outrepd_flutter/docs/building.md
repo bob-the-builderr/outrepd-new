@@ -47,6 +47,47 @@ flutter build appbundle --release --no-tree-shake-icons \
   --dart-define=SUPABASE_URL=... --dart-define=SUPABASE_ANON_KEY=...
 ```
 
+## Google Play من GitHub (من غير الكمبيوتر)
+
+الـ workflow في `.github/workflows/android-apk.yml` بيبني الـ APK والـ App
+Bundle على GitHub مع كل push، وبيوقّعهم بمفتاح الرفع لو لقاه في الـ Secrets.
+الملفين بيبقوا في **Artifacts** في صفحة الـ run، ورقم البناء بيزيد لوحده
+(١٠٠ + رقم الـ run)، فكل رفع على Play أعلى من اللي قبله.
+
+**مرة واحدة: اعمل مفتاح الرفع** (PowerShell، على الـ C: مش الـ D:):
+
+```powershell
+& "$env:USERPROFILE\jdk17\jdk-17.0.20+8\bin\keytool.exe" -genkeypair -v `
+  -keystore "$env:USERPROFILE\outrepd-upload.jks" `
+  -keyalg RSA -keysize 2048 -validity 10000 -alias upload
+```
+
+هيسألك على باسورد (اختار واحد طويل، **من غير `\`**)، وبعدين اسمك وبيانات
+تانية — ممكن تسيبها فاضية بـ Enter — وآخر حاجة اكتب `yes`.
+
+وبعدين انسخ المفتاح كنص:
+
+```powershell
+[Convert]::ToBase64String([IO.File]::ReadAllBytes("$env:USERPROFILE\outrepd-upload.jks")) | Set-Clipboard
+```
+
+**ضيف ٣ Secrets** في GitHub (Settings ← Secrets and variables ← Actions ←
+New repository secret):
+
+| الاسم | القيمة |
+|---|---|
+| `UPLOAD_KEYSTORE_BASE64` | Ctrl+V — النص اللي اتنسخ فوق |
+| `UPLOAD_KEYSTORE_PASSWORD` | الباسورد |
+| `UPLOAD_KEY_ALIAS` | `upload` |
+
+⚠️ **خد نسخة من `outrepd-upload.jks` والباسورد في مكان آمن** — مدير باسوردات
+أو درايف — **ومش على قرص D**. لو ضاعوا، Google بيقدر يغيّر مفتاح الرفع بس ده
+بياخد أيام، وفي الوقت ده مفيش تحديثات.
+
+بعدها أي push (أو Actions ← Android APK ← Run workflow) بيطلّع
+`OUTREPD-aab-…` جاهز يترفع على Play، والـ APK كمان متوقّع بنفس المفتاح — فكل
+APK جديد بيتنزّل فوق اللي قبله من غير ما تمسحه.
+
 ## ليه `--no-tree-shake-icons`
 
 فلاتر بيقلّص خط الأيقونات من ١.٦ ميجا لـ٢٩ كيلو بإنه يشيل الأيقونات اللي
