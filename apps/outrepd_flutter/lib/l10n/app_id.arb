@@ -638,5 +638,9 @@
   "repsAhead": "Unggul {n} repetisi.",
   "winnerLabel": "Pemenang",
   "newPersonalBest": "Rekor pribadi baru",
-  "cantReachServer": "Tidak dapat terhubung ke server. Periksa koneksimu dan coba lagi."
+  "cantReachServer": "Tidak dapat terhubung ke server. Periksa koneksimu dan coba lagi.",
+  "pushUpsInSeconds": "Push-up dalam {seconds} detik",
+  "beatOpponent": "Mengalahkan {name} {score}",
+  "lostToOpponent": "Kalah dari {name} {score}",
+  "thinkYouCanBeatMe": "Yakin bisa mengalahkanku?"
 }

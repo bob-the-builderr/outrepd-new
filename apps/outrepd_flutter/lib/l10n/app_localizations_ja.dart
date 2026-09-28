@@ -1968,4 +1968,22 @@ class LJa extends L {
 
   @override
   String get cantReachServer => 'サーバーに接続できませんでした。接続を確認して、もう一度お試しください。';
+
+  @override
+  String pushUpsInSeconds(String seconds) {
+    return '$seconds秒間の腕立て伏せ';
+  }
+
+  @override
+  String beatOpponent(String name, String score) {
+    return '$nameに勝利 $score';
+  }
+
+  @override
+  String lostToOpponent(String name, String score) {
+    return '$nameに敗北 $score';
+  }
+
+  @override
+  String get thinkYouCanBeatMe => '私に勝てると思う？';
 }

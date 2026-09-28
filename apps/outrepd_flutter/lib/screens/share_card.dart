@@ -60,6 +60,44 @@ class ShareCardData {
   String get profileUrl => '$kProfileUrlBase$username';
 }
 
+/// One finished duel, for the card shared from its result screen. The card
+/// is about the match, not the account, but it still points at the account:
+/// whoever sees it can challenge the person who posted it.
+class MatchShareData {
+  const MatchShareData({
+    required this.username,
+    required this.won,
+    required this.yourReps,
+    required this.theirReps,
+    required this.opponent,
+    required this.seconds,
+    this.tierIdx,
+    this.divIdx = 0,
+    this.lpDelta,
+    this.newBest = false,
+    this.avatarUrl,
+  });
+
+  final String username;
+  final bool won;
+  final int yourReps;
+  final int theirReps;
+  final String opponent;
+
+  /// How long the round was. The count is only a boast next to its clock.
+  final int seconds;
+
+  /// The rank this duel left the account on, or null while still in
+  /// placements, when there is no rank to show yet.
+  final int? tierIdx;
+  final int divIdx;
+  final int? lpDelta;
+  final bool newBest;
+  final String? avatarUrl;
+
+  String get profileUrl => '$kProfileUrlBase$username';
+}
+
 /// Opens the share sheet: a preview of the card, Story/Post to pick the
 /// shape, and one Share button that renders whichever is showing and hands
 /// it to the OS.
@@ -71,16 +109,55 @@ Future<void> showShareCardSheet(
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
-    builder: (_) => _ShareCardSheet(data: data),
+    builder: (_) => _ShareCardSheet(
+      username: data.username,
+      profileUrl: data.profileUrl,
+      story: _StoryCard(data: data),
+      post: _PostCard(data: data),
+    ),
+  );
+}
+
+/// The same sheet, with the result of one duel on the card instead of the
+/// account's standing.
+Future<void> showMatchShareSheet(
+  BuildContext context, {
+  required MatchShareData data,
+}) {
+  return showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (_) => _ShareCardSheet(
+      username: data.username,
+      profileUrl: data.profileUrl,
+      story: _MatchStoryCard(data: data),
+      post: _MatchPostCard(data: data),
+      // A loss is still worth posting, and asking to be beaten is the line
+      // that makes somebody try.
+      invite: data.won ? null : (L l) => l.thinkYouCanBeatMe,
+    ),
   );
 }
 
 enum _CardShape { story, post }
 
 class _ShareCardSheet extends StatefulWidget {
-  const _ShareCardSheet({required this.data});
+  const _ShareCardSheet({
+    required this.username,
+    required this.profileUrl,
+    required this.story,
+    required this.post,
+    this.invite,
+  });
 
-  final ShareCardData data;
+  final String username;
+  final String profileUrl;
+  final Widget story;
+  final Widget post;
+
+  /// The line sent with the image. Null is the usual "Duel me on outrepd".
+  final String Function(L l)? invite;
 
   @override
   State<_ShareCardSheet> createState() => _ShareCardSheetState();
@@ -118,11 +195,13 @@ class _ShareCardSheetState extends State<_ShareCardSheet> {
           files: [
             XFile.fromData(
               bytes,
-              name: 'outrepd-${widget.data.username}.png',
+              name: 'outrepd-${widget.username}.png',
               mimeType: 'image/png',
             ),
           ],
-          text: '${l.duelMeOnOutrepd}\n${widget.data.profileUrl}',
+          text:
+              '${widget.invite?.call(l) ?? l.duelMeOnOutrepd}\n'
+              '${widget.profileUrl}',
         ),
       );
     } on Object catch (error) {
@@ -140,7 +219,7 @@ class _ShareCardSheetState extends State<_ShareCardSheet> {
   }
 
   void _copyLink() {
-    Clipboard.setData(ClipboardData(text: widget.data.profileUrl));
+    Clipboard.setData(ClipboardData(text: widget.profileUrl));
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(L.of(context).linkCopied),
@@ -162,26 +241,24 @@ class _ShareCardSheetState extends State<_ShareCardSheet> {
             // Rendered at full size so there is something for the
             // RepaintBoundary to capture, but occupying no layout space —
             // `Offstage` was tried here first and skips the paint pass
-            // entirely, which left `toImage()` capturing nothing.
-            SizedBox(
-              height: 0,
-              child: OverflowBox(
-                alignment: Alignment.topLeft,
-                minWidth: 0,
-                minHeight: 0,
-                maxWidth: double.infinity,
-                maxHeight: double.infinity,
-                child: Row(
-                  children: [
-                    RepaintBoundary(
-                      key: _storyKey,
-                      child: _StoryCard(data: widget.data),
-                    ),
-                    RepaintBoundary(
-                      key: _postKey,
-                      child: _PostCard(data: widget.data),
-                    ),
-                  ],
+            // entirely, which left `toImage()` capturing nothing. The clip
+            // hides them from the screen without skipping that paint: each
+            // RepaintBoundary still records its own layer for the capture.
+            ClipRect(
+              child: SizedBox(
+                height: 0,
+                child: OverflowBox(
+                  alignment: Alignment.topLeft,
+                  minWidth: 0,
+                  minHeight: 0,
+                  maxWidth: double.infinity,
+                  maxHeight: double.infinity,
+                  child: Row(
+                    children: [
+                      RepaintBoundary(key: _storyKey, child: widget.story),
+                      RepaintBoundary(key: _postKey, child: widget.post),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -212,8 +289,8 @@ class _ShareCardSheetState extends State<_ShareCardSheet> {
                             : 400 / 260,
                         child: FittedBox(
                           child: _shape == _CardShape.story
-                              ? _StoryCard(data: widget.data)
-                              : _PostCard(data: widget.data),
+                              ? widget.story
+                              : widget.post,
                         ),
                       ),
                     ),
@@ -234,8 +311,7 @@ class _ShareCardSheetState extends State<_ShareCardSheet> {
                         child: _ShapeTab(
                           label: l.sharePost,
                           selected: _shape == _CardShape.post,
-                          onTap: () =>
-                              setState(() => _shape = _CardShape.post),
+                          onTap: () => setState(() => _shape = _CardShape.post),
                         ),
                       ),
                     ],
@@ -252,9 +328,7 @@ class _ShareCardSheetState extends State<_ShareCardSheet> {
                           ? const SizedBox(
                               width: 18,
                               height: 18,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                              ),
+                              child: CircularProgressIndicator(strokeWidth: 2),
                             )
                           : Text(l.share),
                     ),
@@ -280,7 +354,7 @@ class _ShareCardSheetState extends State<_ShareCardSheet> {
                         children: [
                           Expanded(
                             child: Text(
-                              widget.data.profileUrl,
+                              widget.profileUrl,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: context.type.label.copyWith(
@@ -378,7 +452,8 @@ class _StoryCard extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final l = L.of(context);
-          final tierColour = kTiers[data.tierIdx.clamp(0, kTiers.length - 1)].color;
+          final tierColour =
+              kTiers[data.tierIdx.clamp(0, kTiers.length - 1)].color;
 
           return Container(
             width: 272,
@@ -401,7 +476,9 @@ class _StoryCard extends StatelessWidget {
                 const SizedBox(height: 20),
                 Text(
                   l.currentRankLabel.toUpperCase(),
-                  style: context.type.micro.copyWith(color: context.colors.faint),
+                  style: context.type.micro.copyWith(
+                    color: context.colors.faint,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 TierBadge(tierIndex: data.tierIdx, size: 116),
@@ -409,7 +486,9 @@ class _StoryCard extends StatelessWidget {
                 ShrinkText(
                   tierLabel(l, data.tierIdx, data.divIdx),
                   maxLines: 1,
-                  style: context.type.heading.copyWith(color: context.colors.text),
+                  style: context.type.heading.copyWith(
+                    color: context.colors.text,
+                  ),
                 ),
                 const SizedBox(height: 2),
                 Text(
@@ -432,7 +511,9 @@ class _StoryCard extends StatelessWidget {
                 ShrinkText(
                   data.profileUrl,
                   maxLines: 1,
-                  style: context.type.micro.copyWith(color: context.colors.muted),
+                  style: context.type.micro.copyWith(
+                    color: context.colors.muted,
+                  ),
                 ),
               ],
             ),
@@ -453,7 +534,8 @@ class _PostCard extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final l = L.of(context);
-          final tierColour = kTiers[data.tierIdx.clamp(0, kTiers.length - 1)].color;
+          final tierColour =
+              kTiers[data.tierIdx.clamp(0, kTiers.length - 1)].color;
 
           return Container(
             width: 400,
@@ -476,7 +558,10 @@ class _PostCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          _Initial(name: data.username, avatarUrl: data.avatarUrl),
+                          _Initial(
+                            name: data.username,
+                            avatarUrl: data.avatarUrl,
+                          ),
                           const SizedBox(width: 8),
                           Expanded(
                             child: Column(
@@ -558,7 +643,9 @@ class _IdentityRow extends StatelessWidget {
               if (places.isNotEmpty)
                 Text(
                   places,
-                  style: context.type.micro.copyWith(color: context.colors.muted),
+                  style: context.type.micro.copyWith(
+                    color: context.colors.muted,
+                  ),
                 ),
             ],
           ),
@@ -617,7 +704,10 @@ class _StatRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = L.of(context);
     final tiles = [
-      (l.record, '${localNumber(context, data.wins)}–${localNumber(context, data.losses)}'),
+      (
+        l.record,
+        '${localNumber(context, data.wins)}–${localNumber(context, data.losses)}',
+      ),
       (l.bestSet, localNumber(context, data.bestSet)),
       (l.streak, localNumber(context, data.winStreak)),
     ];
@@ -634,12 +724,16 @@ class _StatRow extends StatelessWidget {
                   ShrinkText(
                     value,
                     maxLines: 1,
-                    style: context.type.body.copyWith(color: context.colors.text),
+                    style: context.type.body.copyWith(
+                      color: context.colors.text,
+                    ),
                   ),
                   ShrinkText(
                     label,
                     maxLines: 1,
-                    style: context.type.micro.copyWith(color: context.colors.muted),
+                    style: context.type.micro.copyWith(
+                      color: context.colors.muted,
+                    ),
                   ),
                 ],
               ),
@@ -665,17 +759,288 @@ class _StatRow extends StatelessWidget {
                 children: [
                   Text(
                     value,
-                    style: context.type.body.copyWith(color: context.colors.text),
+                    style: context.type.body.copyWith(
+                      color: context.colors.text,
+                    ),
                   ),
                   Text(
                     label,
-                    style: context.type.micro.copyWith(color: context.colors.muted),
+                    style: context.type.micro.copyWith(
+                      color: context.colors.muted,
+                    ),
                   ),
                 ],
               ),
             ),
           ),
       ],
+    );
+  }
+}
+
+// ─────────────────────────────── the match card ────────────────────────────
+
+/// The count, huge, is the whole card: it reads at a glance in a feed, and a
+/// loss still has a number worth posting. One line says who it was against.
+class _MatchStoryCard extends StatelessWidget {
+  const _MatchStoryCard({required this.data});
+  final MatchShareData data;
+
+  @override
+  Widget build(BuildContext context) {
+    return _CardTheme(
+      child: Builder(
+        builder: (context) {
+          final l = L.of(context);
+          return Container(
+            width: 272,
+            height: 560,
+            padding: const EdgeInsets.fromLTRB(18, 22, 18, 20),
+            decoration: BoxDecoration(
+              color: context.colors.background,
+              borderRadius: BorderRadius.circular(22),
+              border: Border.all(color: context.colors.border, width: 0.5),
+            ),
+            child: Column(
+              children: [
+                Text(
+                  'outrepd',
+                  style: context.type.label.copyWith(
+                    color: context.colors.muted,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                const SizedBox(height: 40),
+                _BigCount(data: data, size: 124),
+                const SizedBox(height: 26),
+                _ResultLine(data: data, centred: true),
+                const SizedBox(height: 16),
+                _RankLine(data: data),
+                if (data.newBest) ...[
+                  const SizedBox(height: 12),
+                  _BestChip(label: l.newPersonalBest),
+                ],
+                const Spacer(),
+                ShrinkText(
+                  data.won ? l.duelMeOnOutrepd : l.thinkYouCanBeatMe,
+                  maxLines: 1,
+                  style: context.type.body.copyWith(color: context.colors.text),
+                ),
+                const SizedBox(height: 2),
+                ShrinkText(
+                  data.profileUrl,
+                  maxLines: 1,
+                  style: context.type.micro.copyWith(
+                    color: context.colors.muted,
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _MatchPostCard extends StatelessWidget {
+  const _MatchPostCard({required this.data});
+  final MatchShareData data;
+
+  @override
+  Widget build(BuildContext context) {
+    return _CardTheme(
+      child: Builder(
+        builder: (context) {
+          final l = L.of(context);
+          return Container(
+            width: 400,
+            height: 260,
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: context.colors.background,
+              borderRadius: BorderRadius.circular(22),
+              border: Border.all(color: context.colors.border, width: 0.5),
+            ),
+            child: Row(
+              children: [
+                SizedBox(width: 150, child: _BigCount(data: data, size: 96)),
+                const SizedBox(width: 20),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _ResultLine(data: data, centred: false),
+                      const SizedBox(height: 12),
+                      _RankLine(data: data, centred: false),
+                      if (data.newBest) ...[
+                        const SizedBox(height: 10),
+                        _BestChip(label: l.newPersonalBest),
+                      ],
+                      const SizedBox(height: 16),
+                      ShrinkText(
+                        data.profileUrl,
+                        maxLines: 1,
+                        style: context.type.micro.copyWith(
+                          color: context.colors.muted,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+/// The rep count and the clock it was done against.
+class _BigCount extends StatelessWidget {
+  const _BigCount({required this.data, required this.size});
+  final MatchShareData data;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            localNumber(context, data.yourReps),
+            style: TextStyle(
+              color: context.colors.text,
+              fontSize: size,
+              fontWeight: FontWeight.w800,
+              height: 0.95,
+              letterSpacing: -size / 40,
+              fontFeatures: const [FontFeature.tabularFigures()],
+            ),
+          ),
+        ),
+        const SizedBox(height: 4),
+        ShrinkText(
+          l.pushUpsInSeconds(localNumber(context, data.seconds)).toUpperCase(),
+          maxLines: 1,
+          style: context.type.micro.copyWith(color: context.colors.muted),
+        ),
+      ],
+    );
+  }
+}
+
+/// "Beat iron_mike 18–11", with the opponent's name in their colour.
+class _ResultLine extends StatelessWidget {
+  const _ResultLine({required this.data, required this.centred});
+  final MatchShareData data;
+  final bool centred;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final score =
+        '${localNumber(context, data.yourReps)}–'
+        '${localNumber(context, data.theirReps)}';
+    final line = data.won
+        ? l.beatOpponent(data.opponent, score)
+        : l.lostToOpponent(data.opponent, score);
+    final at = line.indexOf(data.opponent);
+    final base = context.type.body.copyWith(color: context.colors.text);
+
+    return Text.rich(
+      at < 0
+          ? TextSpan(text: line)
+          : TextSpan(
+              children: [
+                TextSpan(text: line.substring(0, at)),
+                TextSpan(
+                  text: data.opponent,
+                  style: TextStyle(color: context.colors.rival),
+                ),
+                TextSpan(text: line.substring(at + data.opponent.length)),
+              ],
+            ),
+      style: base,
+      maxLines: 2,
+      textAlign: centred ? TextAlign.center : TextAlign.start,
+    );
+  }
+}
+
+/// The rank the duel left the account on, and what it moved. Nothing while
+/// still in placements: there is no rank yet to say.
+class _RankLine extends StatelessWidget {
+  const _RankLine({required this.data, this.centred = true});
+  final MatchShareData data;
+  final bool centred;
+
+  @override
+  Widget build(BuildContext context) {
+    final tier = data.tierIdx;
+    if (tier == null) return const SizedBox.shrink();
+    final l = L.of(context);
+    final delta = data.lpDelta;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: centred
+          ? MainAxisAlignment.center
+          : MainAxisAlignment.start,
+      children: [
+        TierBadge(tierIndex: tier, size: 22),
+        const SizedBox(width: 6),
+        Flexible(
+          child: Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(text: tierLabel(l, tier, data.divIdx)),
+                if (delta != null) ...[
+                  const TextSpan(text: ' · '),
+                  TextSpan(
+                    text:
+                        '${delta >= 0 ? '+' : '−'}'
+                        '${l.lpAmount(localNumber(context, delta.abs()))}',
+                    style: TextStyle(
+                      color: delta >= 0
+                          ? context.colors.brand
+                          : context.colors.rival,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: context.type.label.copyWith(color: context.colors.muted),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _BestChip extends StatelessWidget {
+  const _BestChip({required this.label});
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        color: context.colors.surfaceRaised,
+        borderRadius: BorderRadius.circular(99),
+      ),
+      child: Text(
+        '★ $label',
+        style: context.type.micro.copyWith(color: context.colors.text),
+      ),
     );
   }
 }

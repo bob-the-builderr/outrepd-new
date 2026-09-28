@@ -638,5 +638,9 @@
   "repsAhead": "بفارق {n} تكرارًا.",
   "winnerLabel": "الفائز",
   "newPersonalBest": "رقمك القياسي الجديد",
-  "cantReachServer": "تعذّر الوصول إلى الخادم. تأكد من اتصالك وحاول مرة أخرى."
+  "cantReachServer": "تعذّر الوصول إلى الخادم. تأكد من اتصالك وحاول مرة أخرى.",
+  "pushUpsInSeconds": "ضغطة في {seconds} ثانية",
+  "beatOpponent": "فزت على {name} {score}",
+  "lostToOpponent": "خسرت أمام {name} {score}",
+  "thinkYouCanBeatMe": "هل تظن أنك تستطيع هزيمتي؟"
 }

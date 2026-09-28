@@ -2018,4 +2018,22 @@ class LEs extends L {
   @override
   String get cantReachServer =>
       'No se pudo conectar con el servidor. Revisa tu conexión e inténtalo de nuevo.';
+
+  @override
+  String pushUpsInSeconds(String seconds) {
+    return 'Flexiones en $seconds segundos';
+  }
+
+  @override
+  String beatOpponent(String name, String score) {
+    return 'Le gané a $name $score';
+  }
+
+  @override
+  String lostToOpponent(String name, String score) {
+    return 'Perdí contra $name $score';
+  }
+
+  @override
+  String get thinkYouCanBeatMe => '¿Crees que puedes ganarme?';
 }

@@ -3786,6 +3786,30 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Couldn\'t reach the server. Check your connection and try again.'**
   String get cantReachServer;
+
+  /// No description provided for @pushUpsInSeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'Push-ups in {seconds} seconds'**
+  String pushUpsInSeconds(String seconds);
+
+  /// No description provided for @beatOpponent.
+  ///
+  /// In en, this message translates to:
+  /// **'Beat {name} {score}'**
+  String beatOpponent(String name, String score);
+
+  /// No description provided for @lostToOpponent.
+  ///
+  /// In en, this message translates to:
+  /// **'Lost to {name} {score}'**
+  String lostToOpponent(String name, String score);
+
+  /// No description provided for @thinkYouCanBeatMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Think you can beat me?'**
+  String get thinkYouCanBeatMe;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

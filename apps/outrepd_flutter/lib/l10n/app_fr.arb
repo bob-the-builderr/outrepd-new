@@ -638,5 +638,9 @@
   "repsAhead": "{n} répétitions d'avance.",
   "winnerLabel": "Vainqueur",
   "newPersonalBest": "Nouveau record personnel",
-  "cantReachServer": "Impossible de joindre le serveur. Vérifie ta connexion et réessaie."
+  "cantReachServer": "Impossible de joindre le serveur. Vérifie ta connexion et réessaie.",
+  "pushUpsInSeconds": "Pompes en {seconds} secondes",
+  "beatOpponent": "Victoire contre {name} {score}",
+  "lostToOpponent": "Défaite contre {name} {score}",
+  "thinkYouCanBeatMe": "Tu crois pouvoir me battre ?"
 }

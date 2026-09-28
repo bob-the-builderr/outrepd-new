@@ -638,5 +638,9 @@
   "repsAhead": "领先 {n} 次。",
   "winnerLabel": "胜者",
   "newPersonalBest": "个人新纪录",
-  "cantReachServer": "无法连接服务器。请检查网络后重试。"
+  "cantReachServer": "无法连接服务器。请检查网络后重试。",
+  "pushUpsInSeconds": "{seconds}秒俯卧撑",
+  "beatOpponent": "击败 {name} {score}",
+  "lostToOpponent": "输给 {name} {score}",
+  "thinkYouCanBeatMe": "你觉得你能赢我吗？"
 }

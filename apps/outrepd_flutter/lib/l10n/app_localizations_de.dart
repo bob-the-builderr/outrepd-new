@@ -2022,4 +2022,22 @@ class LDe extends L {
   @override
   String get cantReachServer =>
       'Server nicht erreichbar. Prüf deine Verbindung und versuch es noch mal.';
+
+  @override
+  String pushUpsInSeconds(String seconds) {
+    return 'Liegestütze in $seconds Sekunden';
+  }
+
+  @override
+  String beatOpponent(String name, String score) {
+    return '$name geschlagen, $score';
+  }
+
+  @override
+  String lostToOpponent(String name, String score) {
+    return 'Gegen $name verloren, $score';
+  }
+
+  @override
+  String get thinkYouCanBeatMe => 'Glaubst du, du schlägst mich?';
 }

@@ -2010,4 +2010,22 @@ class LEn extends L {
   @override
   String get cantReachServer =>
       'Couldn\'t reach the server. Check your connection and try again.';
+
+  @override
+  String pushUpsInSeconds(String seconds) {
+    return 'Push-ups in $seconds seconds';
+  }
+
+  @override
+  String beatOpponent(String name, String score) {
+    return 'Beat $name $score';
+  }
+
+  @override
+  String lostToOpponent(String name, String score) {
+    return 'Lost to $name $score';
+  }
+
+  @override
+  String get thinkYouCanBeatMe => 'Think you can beat me?';
 }

@@ -2020,4 +2020,22 @@ class LFr extends L {
   @override
   String get cantReachServer =>
       'Impossible de joindre le serveur. Vérifie ta connexion et réessaie.';
+
+  @override
+  String pushUpsInSeconds(String seconds) {
+    return 'Pompes en $seconds secondes';
+  }
+
+  @override
+  String beatOpponent(String name, String score) {
+    return 'Victoire contre $name $score';
+  }
+
+  @override
+  String lostToOpponent(String name, String score) {
+    return 'Défaite contre $name $score';
+  }
+
+  @override
+  String get thinkYouCanBeatMe => 'Tu crois pouvoir me battre ?';
 }

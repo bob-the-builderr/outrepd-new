@@ -1974,4 +1974,22 @@ class LKo extends L {
 
   @override
   String get cantReachServer => '서버에 연결할 수 없습니다. 연결을 확인하고 다시 시도하세요.';
+
+  @override
+  String pushUpsInSeconds(String seconds) {
+    return '$seconds초 동안 푸시업';
+  }
+
+  @override
+  String beatOpponent(String name, String score) {
+    return '$name 상대로 승리 $score';
+  }
+
+  @override
+  String lostToOpponent(String name, String score) {
+    return '$name에게 패배 $score';
+  }
+
+  @override
+  String get thinkYouCanBeatMe => '나를 이길 수 있을까?';
 }

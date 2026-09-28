@@ -2005,4 +2005,22 @@ class LTr extends L {
   @override
   String get cantReachServer =>
       'Sunucuya ulaşılamadı. Bağlantını kontrol edip tekrar dene.';
+
+  @override
+  String pushUpsInSeconds(String seconds) {
+    return '$seconds saniyede şınav';
+  }
+
+  @override
+  String beatOpponent(String name, String score) {
+    return '$name yenildi $score';
+  }
+
+  @override
+  String lostToOpponent(String name, String score) {
+    return '$name karşısında kaybettim $score';
+  }
+
+  @override
+  String get thinkYouCanBeatMe => 'Beni yenebileceğini mi sanıyorsun?';
 }

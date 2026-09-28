@@ -638,5 +638,9 @@
   "repsAhead": "{n}회 차이로 승리.",
   "winnerLabel": "승자",
   "newPersonalBest": "개인 최고 기록 경신",
-  "cantReachServer": "서버에 연결할 수 없습니다. 연결을 확인하고 다시 시도하세요."
+  "cantReachServer": "서버에 연결할 수 없습니다. 연결을 확인하고 다시 시도하세요.",
+  "pushUpsInSeconds": "{seconds}초 동안 푸시업",
+  "beatOpponent": "{name} 상대로 승리 {score}",
+  "lostToOpponent": "{name}에게 패배 {score}",
+  "thinkYouCanBeatMe": "나를 이길 수 있을까?"
 }

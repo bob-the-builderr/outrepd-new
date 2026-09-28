@@ -638,5 +638,9 @@
   "repsAhead": "{n} रेप्स से आगे।",
   "winnerLabel": "विजेता",
   "newPersonalBest": "नया व्यक्तिगत रिकॉर्ड",
-  "cantReachServer": "सर्वर से कनेक्ट नहीं हो सका। अपना कनेक्शन जांचें और फिर से कोशिश करें।"
+  "cantReachServer": "सर्वर से कनेक्ट नहीं हो सका। अपना कनेक्शन जांचें और फिर से कोशिश करें।",
+  "pushUpsInSeconds": "{seconds} सेकंड में पुश-अप",
+  "beatOpponent": "{name} को हराया {score}",
+  "lostToOpponent": "{name} से हारा {score}",
+  "thinkYouCanBeatMe": "क्या तुम मुझे हरा सकते हो?"
 }

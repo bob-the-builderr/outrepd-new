@@ -638,5 +638,9 @@
   "repsAhead": "{n}回差で勝利。",
   "winnerLabel": "勝者",
   "newPersonalBest": "自己ベスト更新",
-  "cantReachServer": "サーバーに接続できませんでした。接続を確認して、もう一度お試しください。"
+  "cantReachServer": "サーバーに接続できませんでした。接続を確認して、もう一度お試しください。",
+  "pushUpsInSeconds": "{seconds}秒間の腕立て伏せ",
+  "beatOpponent": "{name}に勝利 {score}",
+  "lostToOpponent": "{name}に敗北 {score}",
+  "thinkYouCanBeatMe": "私に勝てると思う？"
 }

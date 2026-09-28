@@ -2009,4 +2009,22 @@ class LRu extends L {
   @override
   String get cantReachServer =>
       'Не удалось связаться с сервером. Проверьте подключение и попробуйте снова.';
+
+  @override
+  String pushUpsInSeconds(String seconds) {
+    return 'Отжиманий за $seconds секунд';
+  }
+
+  @override
+  String beatOpponent(String name, String score) {
+    return 'Победа над $name $score';
+  }
+
+  @override
+  String lostToOpponent(String name, String score) {
+    return 'Поражение от $name $score';
+  }
+
+  @override
+  String get thinkYouCanBeatMe => 'Думаешь, сможешь меня победить?';
 }

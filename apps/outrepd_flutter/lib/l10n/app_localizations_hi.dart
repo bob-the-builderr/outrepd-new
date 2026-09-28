@@ -2009,4 +2009,22 @@ class LHi extends L {
   @override
   String get cantReachServer =>
       'सर्वर से कनेक्ट नहीं हो सका। अपना कनेक्शन जांचें और फिर से कोशिश करें।';
+
+  @override
+  String pushUpsInSeconds(String seconds) {
+    return '$seconds सेकंड में पुश-अप';
+  }
+
+  @override
+  String beatOpponent(String name, String score) {
+    return '$name को हराया $score';
+  }
+
+  @override
+  String lostToOpponent(String name, String score) {
+    return '$name से हारा $score';
+  }
+
+  @override
+  String get thinkYouCanBeatMe => 'क्या तुम मुझे हरा सकते हो?';
 }

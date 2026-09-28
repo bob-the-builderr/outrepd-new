@@ -1090,5 +1090,36 @@
   },
   "winnerLabel": "Winner",
   "newPersonalBest": "New personal best",
-  "cantReachServer": "Couldn't reach the server. Check your connection and try again."
+  "cantReachServer": "Couldn't reach the server. Check your connection and try again.",
+  "pushUpsInSeconds": "Push-ups in {seconds} seconds",
+  "@pushUpsInSeconds": {
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "beatOpponent": "Beat {name} {score}",
+  "@beatOpponent": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "score": {
+        "type": "String"
+      }
+    }
+  },
+  "lostToOpponent": "Lost to {name} {score}",
+  "@lostToOpponent": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "score": {
+        "type": "String"
+      }
+    }
+  },
+  "thinkYouCanBeatMe": "Think you can beat me?"
 }

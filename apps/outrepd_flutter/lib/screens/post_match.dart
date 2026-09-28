@@ -26,6 +26,7 @@ import '../theme.dart';
 import '../tier_badge.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
+import 'match_flow.dart' show kDuelLength;
 import 'share_card.dart';
 
 /// The current account, as [showShareCardSheet] needs it — the same shape
@@ -46,6 +47,36 @@ void _shareMyCard(BuildContext context) {
       globalPlace: demoProfile.globalRank,
       country: demoProfile.country,
       countryPlace: demoProfile.localRank,
+      avatarUrl: backend.me?.avatarUrl,
+    ),
+  );
+}
+
+/// This duel, for the card shared from its result: the count, who it was
+/// against, and what it did to the rank. The promotion screen shares the
+/// profile card instead, because a promotion is news about the rank.
+void _shareMatch(
+  BuildContext context, {
+  required bool won,
+  required int yourReps,
+  required int theirReps,
+  required Opponent opponent,
+  required DuelOutcome? outcome,
+}) {
+  final change = outcome?.rank;
+  showMatchShareSheet(
+    context,
+    data: MatchShareData(
+      username: demoProfile.username,
+      won: won,
+      yourReps: yourReps,
+      theirReps: theirReps,
+      opponent: opponent.username,
+      seconds: kDuelLength.inSeconds,
+      tierIdx: change?.after.tierIdx,
+      divIdx: change?.after.divIdx ?? 0,
+      lpDelta: change?.lpDelta,
+      newBest: outcome?.newBest ?? false,
       avatarUrl: backend.me?.avatarUrl,
     ),
   );
@@ -159,7 +190,14 @@ class DuelResultView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: OutlinedButton(
-                        onPressed: () => _shareMyCard(context),
+                        onPressed: () => _shareMatch(
+                          context,
+                          won: won,
+                          yourReps: yourReps,
+                          theirReps: theirReps,
+                          opponent: opponent,
+                          outcome: outcome,
+                        ),
                         child: Text(l.shareAction),
                       ),
                     ),

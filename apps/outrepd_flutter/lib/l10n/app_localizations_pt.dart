@@ -2017,4 +2017,22 @@ class LPt extends L {
   @override
   String get cantReachServer =>
       'Não foi possível conectar ao servidor. Verifique sua conexão e tente de novo.';
+
+  @override
+  String pushUpsInSeconds(String seconds) {
+    return 'Flexões em $seconds segundos';
+  }
+
+  @override
+  String beatOpponent(String name, String score) {
+    return 'Venci $name $score';
+  }
+
+  @override
+  String lostToOpponent(String name, String score) {
+    return 'Perdi para $name $score';
+  }
+
+  @override
+  String get thinkYouCanBeatMe => 'Acha que consegue me vencer?';
 }

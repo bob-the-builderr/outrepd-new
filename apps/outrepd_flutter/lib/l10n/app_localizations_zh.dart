@@ -1960,4 +1960,22 @@ class LZh extends L {
 
   @override
   String get cantReachServer => '无法连接服务器。请检查网络后重试。';
+
+  @override
+  String pushUpsInSeconds(String seconds) {
+    return '$seconds秒俯卧撑';
+  }
+
+  @override
+  String beatOpponent(String name, String score) {
+    return '击败 $name $score';
+  }
+
+  @override
+  String lostToOpponent(String name, String score) {
+    return '输给 $name $score';
+  }
+
+  @override
+  String get thinkYouCanBeatMe => '你觉得你能赢我吗？';
 }

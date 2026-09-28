@@ -638,5 +638,9 @@
   "repsAhead": "Отрыв: {n} повт.",
   "winnerLabel": "Победитель",
   "newPersonalBest": "Новый личный рекорд",
-  "cantReachServer": "Не удалось связаться с сервером. Проверьте подключение и попробуйте снова."
+  "cantReachServer": "Не удалось связаться с сервером. Проверьте подключение и попробуйте снова.",
+  "pushUpsInSeconds": "Отжиманий за {seconds} секунд",
+  "beatOpponent": "Победа над {name} {score}",
+  "lostToOpponent": "Поражение от {name} {score}",
+  "thinkYouCanBeatMe": "Думаешь, сможешь меня победить?"
 }

@@ -638,5 +638,9 @@
   "repsAhead": "{n} ripetizioni di vantaggio.",
   "winnerLabel": "Vincitore",
   "newPersonalBest": "Nuovo record personale",
-  "cantReachServer": "Impossibile raggiungere il server. Controlla la connessione e riprova."
+  "cantReachServer": "Impossibile raggiungere il server. Controlla la connessione e riprova.",
+  "pushUpsInSeconds": "Piegamenti in {seconds} secondi",
+  "beatOpponent": "Battuto {name} {score}",
+  "lostToOpponent": "Perso contro {name} {score}",
+  "thinkYouCanBeatMe": "Pensi di potermi battere?"
 }

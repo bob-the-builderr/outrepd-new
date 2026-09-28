@@ -67,8 +67,8 @@ Add friends with a friend code, see who is online, and send a challenge they can
 EARN TITLES
 46 titles for matches, wins, streaks, clean sets, early mornings, late nights and more. Wear the one you are proudest of and it shows beside your name.
 
-SHARE YOUR CARD
-Make a card with your rank and stats and post it anywhere.
+SHARE YOUR WINS
+After a duel, share a card with your count, who you beat and the LP it earned. Or make one with your rank and stats and post it anywhere.
 
 YOUR DATA IS YOURS
 Download everything the app holds about you, or delete your account and all of it from inside the app.
@@ -99,8 +99,8 @@ outrepd بيحوّل الضغط لتحدي. سند موبايلك، خد وضع�
 اكسب ألقاب
 ٤٦ لقب على الماتشات والفوز والأيام المتتالية والسِتّات النضيفة والتمرين بدري الصبح ومتأخر بالليل وغيرهم. البس اللقب اللي فخور بيه أكتر ويظهر جنب اسمك.
 
-شارك الكارت بتاعك
-اعمل كارت فيه رتبتك وأرقامك وانشره في أي حتة.
+شارك انتصاراتك
+بعد كل ماتش شارك كارت فيه عدّاتك وكسبت مين والنقط اللي خدتها. أو اعمل كارت فيه رتبتك وأرقامك وانشره في أي حتة.
 
 بياناتك بتاعتك
 نزّل كل حاجة الأب شايلها عنك، أو امسح حسابك وكل بياناته من جوه الأب.

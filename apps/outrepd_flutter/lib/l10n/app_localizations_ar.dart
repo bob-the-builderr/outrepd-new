@@ -1997,4 +1997,22 @@ class LAr extends L {
   @override
   String get cantReachServer =>
       'تعذّر الوصول إلى الخادم. تأكد من اتصالك وحاول مرة أخرى.';
+
+  @override
+  String pushUpsInSeconds(String seconds) {
+    return 'ضغطة في $seconds ثانية';
+  }
+
+  @override
+  String beatOpponent(String name, String score) {
+    return 'فزت على $name $score';
+  }
+
+  @override
+  String lostToOpponent(String name, String score) {
+    return 'خسرت أمام $name $score';
+  }
+
+  @override
+  String get thinkYouCanBeatMe => 'هل تظن أنك تستطيع هزيمتي؟';
 }

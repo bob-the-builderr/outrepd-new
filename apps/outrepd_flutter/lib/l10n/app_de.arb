@@ -638,5 +638,9 @@
   "repsAhead": "{n} Wiederholungen vorn.",
   "winnerLabel": "Sieger",
   "newPersonalBest": "Neue Bestleistung",
-  "cantReachServer": "Server nicht erreichbar. Prüf deine Verbindung und versuch es noch mal."
+  "cantReachServer": "Server nicht erreichbar. Prüf deine Verbindung und versuch es noch mal.",
+  "pushUpsInSeconds": "Liegestütze in {seconds} Sekunden",
+  "beatOpponent": "{name} geschlagen, {score}",
+  "lostToOpponent": "Gegen {name} verloren, {score}",
+  "thinkYouCanBeatMe": "Glaubst du, du schlägst mich?"
 }

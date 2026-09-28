@@ -638,5 +638,9 @@
   "repsAhead": "{n} tekrar önde.",
   "winnerLabel": "Kazanan",
   "newPersonalBest": "Yeni kişisel rekor",
-  "cantReachServer": "Sunucuya ulaşılamadı. Bağlantını kontrol edip tekrar dene."
+  "cantReachServer": "Sunucuya ulaşılamadı. Bağlantını kontrol edip tekrar dene.",
+  "pushUpsInSeconds": "{seconds} saniyede şınav",
+  "beatOpponent": "{name} yenildi {score}",
+  "lostToOpponent": "{name} karşısında kaybettim {score}",
+  "thinkYouCanBeatMe": "Beni yenebileceğini mi sanıyorsun?"
 }

@@ -2009,4 +2009,22 @@ class LId extends L {
   @override
   String get cantReachServer =>
       'Tidak dapat terhubung ke server. Periksa koneksimu dan coba lagi.';
+
+  @override
+  String pushUpsInSeconds(String seconds) {
+    return 'Push-up dalam $seconds detik';
+  }
+
+  @override
+  String beatOpponent(String name, String score) {
+    return 'Mengalahkan $name $score';
+  }
+
+  @override
+  String lostToOpponent(String name, String score) {
+    return 'Kalah dari $name $score';
+  }
+
+  @override
+  String get thinkYouCanBeatMe => 'Yakin bisa mengalahkanku?';
 }

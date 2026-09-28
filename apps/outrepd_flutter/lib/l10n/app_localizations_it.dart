@@ -2016,4 +2016,22 @@ class LIt extends L {
   @override
   String get cantReachServer =>
       'Impossibile raggiungere il server. Controlla la connessione e riprova.';
+
+  @override
+  String pushUpsInSeconds(String seconds) {
+    return 'Piegamenti in $seconds secondi';
+  }
+
+  @override
+  String beatOpponent(String name, String score) {
+    return 'Battuto $name $score';
+  }
+
+  @override
+  String lostToOpponent(String name, String score) {
+    return 'Perso contro $name $score';
+  }
+
+  @override
+  String get thinkYouCanBeatMe => 'Pensi di potermi battere?';
 }
