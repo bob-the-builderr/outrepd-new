@@ -71,3 +71,31 @@ flutter build appbundle --release --no-tree-shake-icons \
 
 لو حبيت ترجّع التقليص يوم ما، لازم تتفرج على كل شاشة فيها أيقونة قبل
 الإصدار — مش على اللي اتغيّرت بس.
+
+## آيفون
+
+لازم ماك عليه Xcode و Flutter و CocoaPods (`brew install cocoapods`)، وحساب
+Apple Developer (٩٩ دولار في السنة).
+
+مرة واحدة بس:
+
+1. في [developer.apple.com](https://developer.apple.com/account/resources/identifiers/list)
+   اعمل App ID بالـ Bundle ID ده بالظبط: `com.outrepd.outrepd`.
+2. في [App Store Connect](https://appstoreconnect.apple.com) اعمل App جديد
+   بنفس الـ Bundle ID.
+3. انقل `supabase/keys.env` من الويندوز لنفس المكان على الماك.
+4. افتح `ios/Runner.xcworkspace` في Xcode (الـ workspace مش الـ xcodeproj)
+   ← Runner ← Signing & Capabilities ← اختار الـ Team بتاعك، وسيب
+   "Automatically manage signing" متعلّم.
+
+كل مرة:
+
+```bash
+bash tool/build_ios.sh
+```
+
+السكريبت بيعمل الأرشيف ويفتحه في Xcode. من هناك: Distribute App ← App Store
+Connect ← Upload. بعد ربع ساعة تقريبًا النسخة بتظهر في TestFlight.
+
+قبل كل رفع جديد زوّد رقم البناء في `pubspec.yaml` (`version: 1.0.0+2`،
+`+3`، ...). Apple و Google الاتنين بيرفضوا رقم بناء اترفع قبل كده.
