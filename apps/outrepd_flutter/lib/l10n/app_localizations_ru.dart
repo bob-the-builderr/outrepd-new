@@ -2038,4 +2038,76 @@ class LRu extends L {
   @override
   String get setInPoolBody =>
       'Следующий спортсмен вашего уровня посоревнуется с ним. Кто победил, вы увидите в уведомлениях, и тогда изменится ваш ранг.';
+
+  @override
+  String get paywallTitle => 'Поднимись от Железа до Мастера';
+
+  @override
+  String get paywallPerkDuels => 'Дуэли под судейством камеры';
+
+  @override
+  String get paywallPerkLadder => 'Рейтинг в реальном времени';
+
+  @override
+  String get paywallPerkFriends => 'Друзья и вызовы';
+
+  @override
+  String get paywallPerkHistory => 'Каждое повторение каждого матча';
+
+  @override
+  String get paywallYearly => 'На год';
+
+  @override
+  String get paywallWeekly => 'На неделю';
+
+  @override
+  String paywallPerWeek(String price) {
+    return '${price}/нед.';
+  }
+
+  @override
+  String get paywallEveryWeek => 'в неделю';
+
+  @override
+  String paywallSave(String percent) {
+    return 'Экономия ${percent}%';
+  }
+
+  @override
+  String get paywallStart => 'Начать восхождение';
+
+  @override
+  String get paywallRenewsPlay => 'Продлевается автоматически, пока вы не отмените. Отменить можно в любой момент в Google Play.';
+
+  @override
+  String get paywallRenewsApple => 'Продлевается автоматически, пока вы не отмените. Отменить можно в любой момент в настройках аккаунта Apple.';
+
+  @override
+  String get paywallRestore => 'Восстановить';
+
+  @override
+  String get paywallTerms => 'Условия';
+
+  @override
+  String get paywallPrivacy => 'Конфиденциальность';
+
+  @override
+  String get paywallLoadFailed => 'Не удалось загрузить тарифы. Проверьте подключение и попробуйте снова.';
+
+  @override
+  String get paywallBuyFailed => 'Покупка не прошла. Попробуйте снова.';
+
+  @override
+  String get paywallPending => 'Платёж обрабатывается. Всё откроется, как только магазин его подтвердит.';
+
+  @override
+  String get paywallNothingToRestore => 'Подписка для восстановления не найдена.';
+
+  @override
+  String get paywallRestored => 'Подписка восстановлена';
+
+  @override
+  String paywallSignedInAs(String email) {
+    return 'Вы вошли как ${email}';
+  }
 }

@@ -2038,4 +2038,76 @@ class LEn extends L {
   @override
   String get setInPoolBody =>
       'The next lifter near your rank races it. You\'ll see who won in Notifications, and your rank moves then.';
+
+  @override
+  String get paywallTitle => 'Climb from Iron to Master';
+
+  @override
+  String get paywallPerkDuels => 'Camera-judged duels';
+
+  @override
+  String get paywallPerkLadder => 'Live ranked ladder';
+
+  @override
+  String get paywallPerkFriends => 'Friends and challenges';
+
+  @override
+  String get paywallPerkHistory => 'Every rep of every match';
+
+  @override
+  String get paywallYearly => 'Yearly';
+
+  @override
+  String get paywallWeekly => 'Weekly';
+
+  @override
+  String paywallPerWeek(String price) {
+    return '${price}/week';
+  }
+
+  @override
+  String get paywallEveryWeek => 'per week';
+
+  @override
+  String paywallSave(String percent) {
+    return 'Save ${percent}%';
+  }
+
+  @override
+  String get paywallStart => 'Start climbing';
+
+  @override
+  String get paywallRenewsPlay => 'Renews automatically until you cancel. Cancel anytime in Google Play.';
+
+  @override
+  String get paywallRenewsApple => 'Renews automatically until you cancel. Cancel anytime in your Apple account settings.';
+
+  @override
+  String get paywallRestore => 'Restore';
+
+  @override
+  String get paywallTerms => 'Terms';
+
+  @override
+  String get paywallPrivacy => 'Privacy';
+
+  @override
+  String get paywallLoadFailed => 'Couldn\'t load the plans. Check your connection and try again.';
+
+  @override
+  String get paywallBuyFailed => 'The purchase didn\'t go through. Try again.';
+
+  @override
+  String get paywallPending => 'Your payment is pending. Everything unlocks as soon as the store confirms it.';
+
+  @override
+  String get paywallNothingToRestore => 'No subscription found to restore.';
+
+  @override
+  String get paywallRestored => 'Subscription restored';
+
+  @override
+  String paywallSignedInAs(String email) {
+    return 'Signed in as ${email}';
+  }
 }

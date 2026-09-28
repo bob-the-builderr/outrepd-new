@@ -1986,4 +1986,76 @@ class LZh extends L {
 
   @override
   String get setInPoolBody => '下一位段位相近的玩家会挑战这组成绩。谁赢了会在通知里显示，届时你的段位才会变动。';
+
+  @override
+  String get paywallTitle => '从黑铁一路登上大师';
+
+  @override
+  String get paywallPerkDuels => '由摄像头裁判的对决';
+
+  @override
+  String get paywallPerkLadder => '实时排位';
+
+  @override
+  String get paywallPerkFriends => '好友与挑战';
+
+  @override
+  String get paywallPerkHistory => '每场比赛的每一次';
+
+  @override
+  String get paywallYearly => '年度';
+
+  @override
+  String get paywallWeekly => '每周';
+
+  @override
+  String paywallPerWeek(String price) {
+    return '${price}/周';
+  }
+
+  @override
+  String get paywallEveryWeek => '每周';
+
+  @override
+  String paywallSave(String percent) {
+    return '省 ${percent}%';
+  }
+
+  @override
+  String get paywallStart => '开始攀登';
+
+  @override
+  String get paywallRenewsPlay => '取消前自动续订。可随时在 Google Play 中取消。';
+
+  @override
+  String get paywallRenewsApple => '取消前自动续订。可随时在 Apple 账户设置中取消。';
+
+  @override
+  String get paywallRestore => '恢复购买';
+
+  @override
+  String get paywallTerms => '条款';
+
+  @override
+  String get paywallPrivacy => '隐私';
+
+  @override
+  String get paywallLoadFailed => '无法加载方案。请检查网络后重试。';
+
+  @override
+  String get paywallBuyFailed => '购买未完成。请重试。';
+
+  @override
+  String get paywallPending => '你的付款正在处理中。商店确认后即可解锁全部内容。';
+
+  @override
+  String get paywallNothingToRestore => '没有可恢复的订阅。';
+
+  @override
+  String get paywallRestored => '订阅已恢复';
+
+  @override
+  String paywallSignedInAs(String email) {
+    return '已登录：${email}';
+  }
 }

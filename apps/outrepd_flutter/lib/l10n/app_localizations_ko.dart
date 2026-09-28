@@ -2003,4 +2003,76 @@ class LKo extends L {
   @override
   String get setInPoolBody =>
       '비슷한 랭크의 다음 플레이어가 이 세트와 겨뤄요. 누가 이겼는지는 알림에서 볼 수 있고, 그때 랭크가 바뀌어요.';
+
+  @override
+  String get paywallTitle => '아이언에서 마스터까지';
+
+  @override
+  String get paywallPerkDuels => '카메라가 판정하는 대결';
+
+  @override
+  String get paywallPerkLadder => '실시간 랭킹';
+
+  @override
+  String get paywallPerkFriends => '친구와 도전';
+
+  @override
+  String get paywallPerkHistory => '모든 경기의 모든 반복';
+
+  @override
+  String get paywallYearly => '연간';
+
+  @override
+  String get paywallWeekly => '주간';
+
+  @override
+  String paywallPerWeek(String price) {
+    return '주당 ${price}';
+  }
+
+  @override
+  String get paywallEveryWeek => '매주';
+
+  @override
+  String paywallSave(String percent) {
+    return '${percent}% 절약';
+  }
+
+  @override
+  String get paywallStart => '등반 시작';
+
+  @override
+  String get paywallRenewsPlay => '해지할 때까지 자동으로 갱신됩니다. Google Play에서 언제든지 해지할 수 있습니다.';
+
+  @override
+  String get paywallRenewsApple => '해지할 때까지 자동으로 갱신됩니다. Apple 계정 설정에서 언제든지 해지할 수 있습니다.';
+
+  @override
+  String get paywallRestore => '복원';
+
+  @override
+  String get paywallTerms => '약관';
+
+  @override
+  String get paywallPrivacy => '개인정보';
+
+  @override
+  String get paywallLoadFailed => '요금제를 불러오지 못했습니다. 연결을 확인하고 다시 시도하세요.';
+
+  @override
+  String get paywallBuyFailed => '구매가 완료되지 않았습니다. 다시 시도하세요.';
+
+  @override
+  String get paywallPending => '결제가 대기 중입니다. 스토어에서 확인되는 즉시 모든 기능이 열립니다.';
+
+  @override
+  String get paywallNothingToRestore => '복원할 구독이 없습니다.';
+
+  @override
+  String get paywallRestored => '구독이 복원되었습니다';
+
+  @override
+  String paywallSignedInAs(String email) {
+    return '${email}(으)로 로그인됨';
+  }
 }

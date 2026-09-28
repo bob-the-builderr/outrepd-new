@@ -2051,4 +2051,76 @@ class LDe extends L {
   @override
   String get setInPoolBody =>
       'Der nächste Sportler in deiner Nähe im Ranking tritt dagegen an. Wer gewonnen hat, siehst du in den Mitteilungen, und dann bewegt sich dein Rang.';
+
+  @override
+  String get paywallTitle => 'Steig von Eisen bis Meister auf';
+
+  @override
+  String get paywallPerkDuels => 'Duelle, von der Kamera gewertet';
+
+  @override
+  String get paywallPerkLadder => 'Live-Rangliste';
+
+  @override
+  String get paywallPerkFriends => 'Freunde und Herausforderungen';
+
+  @override
+  String get paywallPerkHistory => 'Jede Wiederholung jedes Matches';
+
+  @override
+  String get paywallYearly => 'Jährlich';
+
+  @override
+  String get paywallWeekly => 'Wöchentlich';
+
+  @override
+  String paywallPerWeek(String price) {
+    return '${price}/Woche';
+  }
+
+  @override
+  String get paywallEveryWeek => 'pro Woche';
+
+  @override
+  String paywallSave(String percent) {
+    return '${percent} % sparen';
+  }
+
+  @override
+  String get paywallStart => 'Aufstieg starten';
+
+  @override
+  String get paywallRenewsPlay => 'Verlängert sich automatisch bis zur Kündigung. Jederzeit in Google Play kündbar.';
+
+  @override
+  String get paywallRenewsApple => 'Verlängert sich automatisch bis zur Kündigung. Jederzeit in den Einstellungen deines Apple-Accounts kündbar.';
+
+  @override
+  String get paywallRestore => 'Wiederherstellen';
+
+  @override
+  String get paywallTerms => 'AGB';
+
+  @override
+  String get paywallPrivacy => 'Datenschutz';
+
+  @override
+  String get paywallLoadFailed => 'Die Abos konnten nicht geladen werden. Prüfe deine Verbindung und versuch es erneut.';
+
+  @override
+  String get paywallBuyFailed => 'Der Kauf wurde nicht abgeschlossen. Versuch es erneut.';
+
+  @override
+  String get paywallPending => 'Deine Zahlung ist ausstehend. Alles wird freigeschaltet, sobald der Store sie bestätigt.';
+
+  @override
+  String get paywallNothingToRestore => 'Kein Abo zum Wiederherstellen gefunden.';
+
+  @override
+  String get paywallRestored => 'Abo wiederhergestellt';
+
+  @override
+  String paywallSignedInAs(String email) {
+    return 'Angemeldet als ${email}';
+  }
 }

@@ -1997,4 +1997,76 @@ class LJa extends L {
   @override
   String get setInPoolBody =>
       '近いランクの次のプレイヤーがこの記録と対戦します。結果は通知で確認でき、そのときにランクが動きます。';
+
+  @override
+  String get paywallTitle => 'アイアンからマスターへ';
+
+  @override
+  String get paywallPerkDuels => 'カメラが判定するデュエル';
+
+  @override
+  String get paywallPerkLadder => 'リアルタイムのランキング';
+
+  @override
+  String get paywallPerkFriends => 'フレンドとチャレンジ';
+
+  @override
+  String get paywallPerkHistory => 'すべての試合のすべてのレップ';
+
+  @override
+  String get paywallYearly => '年額';
+
+  @override
+  String get paywallWeekly => '週額';
+
+  @override
+  String paywallPerWeek(String price) {
+    return '週あたり${price}';
+  }
+
+  @override
+  String get paywallEveryWeek => '毎週';
+
+  @override
+  String paywallSave(String percent) {
+    return '${percent}%お得';
+  }
+
+  @override
+  String get paywallStart => '登りはじめる';
+
+  @override
+  String get paywallRenewsPlay => '解約するまで自動更新されます。Google Playからいつでも解約できます。';
+
+  @override
+  String get paywallRenewsApple => '解約するまで自動更新されます。Appleアカウントの設定からいつでも解約できます。';
+
+  @override
+  String get paywallRestore => '復元';
+
+  @override
+  String get paywallTerms => '利用規約';
+
+  @override
+  String get paywallPrivacy => 'プライバシー';
+
+  @override
+  String get paywallLoadFailed => 'プランを読み込めませんでした。接続を確認して、もう一度お試しください。';
+
+  @override
+  String get paywallBuyFailed => '購入が完了しませんでした。もう一度お試しください。';
+
+  @override
+  String get paywallPending => 'お支払いは保留中です。ストアで確認され次第、すべて利用できるようになります。';
+
+  @override
+  String get paywallNothingToRestore => '復元できるサブスクリプションが見つかりません。';
+
+  @override
+  String get paywallRestored => 'サブスクリプションを復元しました';
+
+  @override
+  String paywallSignedInAs(String email) {
+    return '${email} でログイン中';
+  }
 }

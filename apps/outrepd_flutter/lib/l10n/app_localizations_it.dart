@@ -2045,4 +2045,76 @@ class LIt extends L {
   @override
   String get setInPoolBody =>
       'Il prossimo atleta vicino al tuo grado la sfiderà. Vedrai chi ha vinto nelle notifiche, e allora il tuo grado cambierà.';
+
+  @override
+  String get paywallTitle => 'Sali dal Ferro al Maestro';
+
+  @override
+  String get paywallPerkDuels => 'Duelli giudicati dalla fotocamera';
+
+  @override
+  String get paywallPerkLadder => 'Classifica in tempo reale';
+
+  @override
+  String get paywallPerkFriends => 'Amici e sfide';
+
+  @override
+  String get paywallPerkHistory => 'Ogni ripetizione di ogni match';
+
+  @override
+  String get paywallYearly => 'Annuale';
+
+  @override
+  String get paywallWeekly => 'Settimanale';
+
+  @override
+  String paywallPerWeek(String price) {
+    return '${price}/settimana';
+  }
+
+  @override
+  String get paywallEveryWeek => 'a settimana';
+
+  @override
+  String paywallSave(String percent) {
+    return 'Risparmia il ${percent}%';
+  }
+
+  @override
+  String get paywallStart => 'Inizia la scalata';
+
+  @override
+  String get paywallRenewsPlay => 'Si rinnova automaticamente fino alla disdetta. Disdici quando vuoi da Google Play.';
+
+  @override
+  String get paywallRenewsApple => 'Si rinnova automaticamente fino alla disdetta. Disdici quando vuoi dalle impostazioni del tuo account Apple.';
+
+  @override
+  String get paywallRestore => 'Ripristina';
+
+  @override
+  String get paywallTerms => 'Termini';
+
+  @override
+  String get paywallPrivacy => 'Privacy';
+
+  @override
+  String get paywallLoadFailed => 'Impossibile caricare i piani. Controlla la connessione e riprova.';
+
+  @override
+  String get paywallBuyFailed => 'L’acquisto non è andato a buon fine. Riprova.';
+
+  @override
+  String get paywallPending => 'Il tuo pagamento è in sospeso. Tutto si sblocca non appena lo store lo conferma.';
+
+  @override
+  String get paywallNothingToRestore => 'Nessun abbonamento da ripristinare.';
+
+  @override
+  String get paywallRestored => 'Abbonamento ripristinato';
+
+  @override
+  String paywallSignedInAs(String email) {
+    return 'Accesso effettuato come ${email}';
+  }
 }

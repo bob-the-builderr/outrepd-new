@@ -2045,4 +2045,76 @@ class LPt extends L {
   @override
   String get setInPoolBody =>
       'O próximo atleta perto do seu rank vai disputar contra ela. Você verá quem venceu em Notificações, e seu rank muda nessa hora.';
+
+  @override
+  String get paywallTitle => 'Suba do Ferro ao Mestre';
+
+  @override
+  String get paywallPerkDuels => 'Duelos julgados pela câmera';
+
+  @override
+  String get paywallPerkLadder => 'Ranking ao vivo';
+
+  @override
+  String get paywallPerkFriends => 'Amigos e desafios';
+
+  @override
+  String get paywallPerkHistory => 'Cada repetição de cada partida';
+
+  @override
+  String get paywallYearly => 'Anual';
+
+  @override
+  String get paywallWeekly => 'Semanal';
+
+  @override
+  String paywallPerWeek(String price) {
+    return '${price}/semana';
+  }
+
+  @override
+  String get paywallEveryWeek => 'por semana';
+
+  @override
+  String paywallSave(String percent) {
+    return 'Economize ${percent}%';
+  }
+
+  @override
+  String get paywallStart => 'Começar a subir';
+
+  @override
+  String get paywallRenewsPlay => 'Renova automaticamente até você cancelar. Cancele quando quiser no Google Play.';
+
+  @override
+  String get paywallRenewsApple => 'Renova automaticamente até você cancelar. Cancele quando quiser nos ajustes da sua conta Apple.';
+
+  @override
+  String get paywallRestore => 'Restaurar';
+
+  @override
+  String get paywallTerms => 'Termos';
+
+  @override
+  String get paywallPrivacy => 'Privacidade';
+
+  @override
+  String get paywallLoadFailed => 'Não foi possível carregar os planos. Verifique sua conexão e tente de novo.';
+
+  @override
+  String get paywallBuyFailed => 'A compra não foi concluída. Tente de novo.';
+
+  @override
+  String get paywallPending => 'Seu pagamento está pendente. Tudo é liberado assim que a loja confirmar.';
+
+  @override
+  String get paywallNothingToRestore => 'Nenhuma assinatura encontrada para restaurar.';
+
+  @override
+  String get paywallRestored => 'Assinatura restaurada';
+
+  @override
+  String paywallSignedInAs(String email) {
+    return 'Conectado como ${email}';
+  }
 }

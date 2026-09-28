@@ -1,15 +1,25 @@
 # Builds the Android APK on GitHub's machines, so a release does not depend on
-# the local disk that holds Flutter and Gradle.
+# the local disk that holds Flutter and Gradle — and runs the checks, and
+# publishes what they found where a git fetch can read it.
 #
-# Needs two repository secrets (Settings > Secrets and variables > Actions):
-# SUPABASE_URL and SUPABASE_ANON_KEY, the same two lines as
-# apps/outrepd_flutter/supabase/keys.env. Without them the job fails rather
-# than build an APK that opens with no server — which is exactly what shipped
-# once, and every sign-in said there was no server.
+# Needs repository secrets (Settings > Secrets and variables > Actions):
+#   SUPABASE_URL, SUPABASE_ANON_KEY   required — the same two lines as
+#                                     apps/outrepd_flutter/supabase/keys.env.
+#                                     Without them the job fails rather than
+#                                     build an APK that opens with no server,
+#                                     which is exactly what shipped once.
+#   REVENUECAT_ANDROID_KEY            RevenueCat's public Google Play key
+#                                     (goog_...). Without it the build has no
+#                                     paywall; the run says so in a warning.
 #
 # The APK is under "Artifacts" on the run's page. It is signed with this
 # runner's debug key, not the one on the Windows machine, so a phone with a
 # locally built copy installed has to uninstall that first.
+#
+# The checks job pushes its results — analyzer output, test output, and
+# screenshots from tool/screenshots — to the `ci-results` branch, one folder
+# per commit, so they can be read with `git fetch origin ci-results` without
+# signing in to GitHub.
 
 name: Android APK
 
@@ -36,6 +46,7 @@ jobs:
     env:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+      REVENUECAT_ANDROID_KEY: ${{ secrets.REVENUECAT_ANDROID_KEY }}
     steps:
       - uses: actions/checkout@v4
 
@@ -46,6 +57,11 @@ jobs:
             exit 1
           fi
           printf 'SUPABASE_URL=%s\nSUPABASE_ANON_KEY=%s\n' "$SUPABASE_URL" "$SUPABASE_ANON_KEY" > supabase/keys.env
+          if [ -n "$REVENUECAT_ANDROID_KEY" ]; then
+            printf 'REVENUECAT_ANDROID_KEY=%s\n' "$REVENUECAT_ANDROID_KEY" >> supabase/keys.env
+          else
+            echo "::warning::No REVENUECAT_ANDROID_KEY secret: this APK has no paywall, and the whole app is open."
+          fi
 
       - uses: actions/setup-java@v4
         with:
@@ -81,15 +97,84 @@ jobs:
           path: ${{ runner.temp }}/OUTREPD.apk
           retention-days: 30
 
-  tests:
+  checks:
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
+
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
+
       - run: flutter pub get
-      - run: flutter analyze
-      - run: flutter test
+
+      - name: Analyze
+        id: analyze
+        continue-on-error: true
+        run: |
+          mkdir -p "$RUNNER_TEMP/ci"
+          set -o pipefail
+          flutter analyze 2>&1 | tee "$RUNNER_TEMP/ci/analyze.txt"
+
+      - name: Test
+        id: test
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          flutter test --reporter expanded 2>&1 | tee "$RUNNER_TEMP/ci/test.txt"
+
+      - name: Screenshots
+        id: shots
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          mkdir -p "$RUNNER_TEMP/fonts"
+          curl -sSL -o "$RUNNER_TEMP/fonts/NotoSans.ttf" \
+            "https://github.com/google/fonts/raw/main/ofl/notosans/NotoSans%5Bwdth,wght%5D.ttf"
+          SHOT_FONTS="$RUNNER_TEMP/fonts" flutter test --update-goldens tool/screenshots/ 2>&1 | tee "$RUNNER_TEMP/ci/screenshots.txt"
+
+      - name: Publish the results to the ci-results branch
+        if: always()
+        working-directory: .
+        run: |
+          out="$RUNNER_TEMP/ci"
+          mkdir -p "$out/screens"
+          cp apps/outrepd_flutter/tool/screenshots/goldens/*.png "$out/screens/" 2>/dev/null || true
+          {
+            echo "commit   ${GITHUB_SHA}"
+            echo "branch   ${GITHUB_REF_NAME}"
+            echo "analyze  ${{ steps.analyze.outcome }}"
+            echo "test     ${{ steps.test.outcome }}"
+            echo "shots    ${{ steps.shots.outcome }}"
+            echo "run      ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          } > "$out/summary.txt"
+
+          git config user.name "ci"
+          git config user.email "ci@users.noreply.github.com"
+          work="$RUNNER_TEMP/results"
+          if git fetch --depth 1 origin ci-results 2>/dev/null; then
+            git worktree add "$work" FETCH_HEAD
+            git -C "$work" checkout -B ci-results
+          else
+            git worktree add --detach "$work"
+            git -C "$work" checkout --orphan ci-results
+            git -C "$work" rm -rf -q . || true
+          fi
+          dest="$work/${GITHUB_SHA::7}"
+          rm -rf "$dest" "$work/latest"
+          mkdir -p "$dest"
+          cp -r "$out"/. "$dest"/
+          cp -r "$dest" "$work/latest"
+          git -C "$work" add -A
+          git -C "$work" commit -q -m "Results for ${GITHUB_SHA::7}" || true
+          git -C "$work" push -q origin ci-results
+
+      - name: Fail if the checks failed
+        if: steps.analyze.outcome != 'success' || steps.test.outcome != 'success'
+        run: |
+          echo "analyze: ${{ steps.analyze.outcome }}  test: ${{ steps.test.outcome }}"
+          exit 1

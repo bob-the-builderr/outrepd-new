@@ -2047,4 +2047,76 @@ class LEs extends L {
   @override
   String get setInPoolBody =>
       'El próximo atleta cerca de tu rango competirá contra ella. Verás quién ganó en Notificaciones y entonces cambiará tu rango.';
+
+  @override
+  String get paywallTitle => 'Sube de Hierro a Maestro';
+
+  @override
+  String get paywallPerkDuels => 'Duelos arbitrados por la cámara';
+
+  @override
+  String get paywallPerkLadder => 'Clasificación en vivo';
+
+  @override
+  String get paywallPerkFriends => 'Amigos y desafíos';
+
+  @override
+  String get paywallPerkHistory => 'Cada repetición de cada combate';
+
+  @override
+  String get paywallYearly => 'Anual';
+
+  @override
+  String get paywallWeekly => 'Semanal';
+
+  @override
+  String paywallPerWeek(String price) {
+    return '${price}/semana';
+  }
+
+  @override
+  String get paywallEveryWeek => 'por semana';
+
+  @override
+  String paywallSave(String percent) {
+    return 'Ahorra ${percent}%';
+  }
+
+  @override
+  String get paywallStart => 'Empieza a subir';
+
+  @override
+  String get paywallRenewsPlay => 'Se renueva automáticamente hasta que canceles. Cancela cuando quieras en Google Play.';
+
+  @override
+  String get paywallRenewsApple => 'Se renueva automáticamente hasta que canceles. Cancela cuando quieras en los ajustes de tu cuenta de Apple.';
+
+  @override
+  String get paywallRestore => 'Restaurar';
+
+  @override
+  String get paywallTerms => 'Términos';
+
+  @override
+  String get paywallPrivacy => 'Privacidad';
+
+  @override
+  String get paywallLoadFailed => 'No se pudieron cargar los planes. Revisa tu conexión e inténtalo de nuevo.';
+
+  @override
+  String get paywallBuyFailed => 'La compra no se completó. Inténtalo de nuevo.';
+
+  @override
+  String get paywallPending => 'Tu pago está pendiente. Todo se desbloquea en cuanto la tienda lo confirme.';
+
+  @override
+  String get paywallNothingToRestore => 'No se encontró ninguna suscripción para restaurar.';
+
+  @override
+  String get paywallRestored => 'Suscripción restaurada';
+
+  @override
+  String paywallSignedInAs(String email) {
+    return 'Sesión iniciada como ${email}';
+  }
 }

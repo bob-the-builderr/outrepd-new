@@ -31,6 +31,7 @@ import 'screens/trainer.dart';
 import 'reps/count_accuracy.dart';
 import 'preview_seed.dart';
 import 'settings.dart';
+import 'subscription.dart';
 import 'theme.dart';
 
 void main() async {
@@ -50,6 +51,9 @@ void main() async {
     // With keys supplied this opens the connection; without them the app
     // runs exactly as it did — on this phone, against nobody.
     await startBackend();
+    // Which store this build sells through, if any. Only chosen here: the
+    // gate in front of the app starts it, once it knows whose account it is.
+    Subscription.instance.use(Subscription.forThisBuild());
     if (kSeedPreview && !backend.available) await seedPreviewHistory();
     await settings.load();
     await loadProfileStats();

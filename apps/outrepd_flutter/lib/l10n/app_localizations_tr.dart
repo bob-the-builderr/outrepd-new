@@ -2034,4 +2034,76 @@ class LTr extends L {
   @override
   String get setInPoolBody =>
       'Rütbene yakın bir sonraki sporcu buna karşı yarışacak. Kimin kazandığını Bildirimler’de göreceksin, rütben de o zaman değişecek.';
+
+  @override
+  String get paywallTitle => 'Demir\'den Usta\'ya tırman';
+
+  @override
+  String get paywallPerkDuels => 'Kameranın hakemlik ettiği düellolar';
+
+  @override
+  String get paywallPerkLadder => 'Canlı sıralama';
+
+  @override
+  String get paywallPerkFriends => 'Arkadaşlar ve meydan okumalar';
+
+  @override
+  String get paywallPerkHistory => 'Her maçın her tekrarı';
+
+  @override
+  String get paywallYearly => 'Yıllık';
+
+  @override
+  String get paywallWeekly => 'Haftalık';
+
+  @override
+  String paywallPerWeek(String price) {
+    return '${price}/hafta';
+  }
+
+  @override
+  String get paywallEveryWeek => 'haftada';
+
+  @override
+  String paywallSave(String percent) {
+    return '%${percent} tasarruf';
+  }
+
+  @override
+  String get paywallStart => 'Tırmanmaya başla';
+
+  @override
+  String get paywallRenewsPlay => 'İptal edene kadar otomatik olarak yenilenir. Google Play\'den istediğin zaman iptal et.';
+
+  @override
+  String get paywallRenewsApple => 'İptal edene kadar otomatik olarak yenilenir. Apple hesap ayarlarından istediğin zaman iptal et.';
+
+  @override
+  String get paywallRestore => 'Geri yükle';
+
+  @override
+  String get paywallTerms => 'Şartlar';
+
+  @override
+  String get paywallPrivacy => 'Gizlilik';
+
+  @override
+  String get paywallLoadFailed => 'Planlar yüklenemedi. Bağlantını kontrol edip tekrar dene.';
+
+  @override
+  String get paywallBuyFailed => 'Satın alma tamamlanmadı. Tekrar dene.';
+
+  @override
+  String get paywallPending => 'Ödemen beklemede. Mağaza onaylar onaylamaz her şeyin kilidi açılır.';
+
+  @override
+  String get paywallNothingToRestore => 'Geri yüklenecek abonelik bulunamadı.';
+
+  @override
+  String get paywallRestored => 'Abonelik geri yüklendi';
+
+  @override
+  String paywallSignedInAs(String email) {
+    return '${email} olarak giriş yapıldı';
+  }
 }

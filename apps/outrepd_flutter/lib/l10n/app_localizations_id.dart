@@ -2037,4 +2037,76 @@ class LId extends L {
   @override
   String get setInPoolBody =>
       'Atlet berikutnya di dekat peringkatmu akan melawannya. Kamu akan melihat siapa yang menang di Notifikasi, dan peringkatmu berubah saat itu.';
+
+  @override
+  String get paywallTitle => 'Naik dari Besi ke Master';
+
+  @override
+  String get paywallPerkDuels => 'Duel yang dinilai kamera';
+
+  @override
+  String get paywallPerkLadder => 'Peringkat langsung';
+
+  @override
+  String get paywallPerkFriends => 'Teman dan tantangan';
+
+  @override
+  String get paywallPerkHistory => 'Setiap repetisi di setiap pertandingan';
+
+  @override
+  String get paywallYearly => 'Tahunan';
+
+  @override
+  String get paywallWeekly => 'Mingguan';
+
+  @override
+  String paywallPerWeek(String price) {
+    return '${price}/minggu';
+  }
+
+  @override
+  String get paywallEveryWeek => 'per minggu';
+
+  @override
+  String paywallSave(String percent) {
+    return 'Hemat ${percent}%';
+  }
+
+  @override
+  String get paywallStart => 'Mulai mendaki';
+
+  @override
+  String get paywallRenewsPlay => 'Diperpanjang otomatis sampai kamu membatalkan. Batalkan kapan saja di Google Play.';
+
+  @override
+  String get paywallRenewsApple => 'Diperpanjang otomatis sampai kamu membatalkan. Batalkan kapan saja di pengaturan akun Apple-mu.';
+
+  @override
+  String get paywallRestore => 'Pulihkan';
+
+  @override
+  String get paywallTerms => 'Ketentuan';
+
+  @override
+  String get paywallPrivacy => 'Privasi';
+
+  @override
+  String get paywallLoadFailed => 'Paket tidak dapat dimuat. Periksa koneksimu dan coba lagi.';
+
+  @override
+  String get paywallBuyFailed => 'Pembelian tidak berhasil. Coba lagi.';
+
+  @override
+  String get paywallPending => 'Pembayaranmu masih diproses. Semuanya terbuka begitu toko mengonfirmasinya.';
+
+  @override
+  String get paywallNothingToRestore => 'Tidak ada langganan yang bisa dipulihkan.';
+
+  @override
+  String get paywallRestored => 'Langganan dipulihkan';
+
+  @override
+  String paywallSignedInAs(String email) {
+    return 'Masuk sebagai ${email}';
+  }
 }

@@ -2049,4 +2049,76 @@ class LFr extends L {
   @override
   String get setInPoolBody =>
       'Le prochain athlète de ton niveau l\'affrontera. Tu verras qui a gagné dans les notifications, et ton rang bougera à ce moment-là.';
+
+  @override
+  String get paywallTitle => 'Grimpe du Fer au Maître';
+
+  @override
+  String get paywallPerkDuels => 'Duels arbitrés par la caméra';
+
+  @override
+  String get paywallPerkLadder => 'Classement en direct';
+
+  @override
+  String get paywallPerkFriends => 'Amis et défis';
+
+  @override
+  String get paywallPerkHistory => 'Chaque répétition de chaque match';
+
+  @override
+  String get paywallYearly => 'Annuel';
+
+  @override
+  String get paywallWeekly => 'Hebdomadaire';
+
+  @override
+  String paywallPerWeek(String price) {
+    return '${price}/semaine';
+  }
+
+  @override
+  String get paywallEveryWeek => 'par semaine';
+
+  @override
+  String paywallSave(String percent) {
+    return 'Économise ${percent} %';
+  }
+
+  @override
+  String get paywallStart => 'Commencer l’ascension';
+
+  @override
+  String get paywallRenewsPlay => 'Renouvellement automatique jusqu’à résiliation. Résilie à tout moment dans Google Play.';
+
+  @override
+  String get paywallRenewsApple => 'Renouvellement automatique jusqu’à résiliation. Résilie à tout moment dans les réglages de ton compte Apple.';
+
+  @override
+  String get paywallRestore => 'Restaurer';
+
+  @override
+  String get paywallTerms => 'Conditions';
+
+  @override
+  String get paywallPrivacy => 'Confidentialité';
+
+  @override
+  String get paywallLoadFailed => 'Impossible de charger les offres. Vérifie ta connexion et réessaie.';
+
+  @override
+  String get paywallBuyFailed => 'L’achat n’a pas abouti. Réessaie.';
+
+  @override
+  String get paywallPending => 'Ton paiement est en attente. Tout se débloque dès que le store le confirme.';
+
+  @override
+  String get paywallNothingToRestore => 'Aucun abonnement à restaurer.';
+
+  @override
+  String get paywallRestored => 'Abonnement restauré';
+
+  @override
+  String paywallSignedInAs(String email) {
+    return 'Connecté en tant que ${email}';
+  }
 }

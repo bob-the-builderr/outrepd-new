@@ -2026,4 +2026,76 @@ class LAr extends L {
   @override
   String get setInPoolBody =>
       'أول لاعب قريب من رتبتك هيلعب ضده. هتشوف مين كسب في الإشعارات، ورتبتك هتتحرك ساعتها.';
+
+  @override
+  String get paywallTitle => 'اصعد من الحديد إلى المُعلِّم';
+
+  @override
+  String get paywallPerkDuels => 'نزالات تحكمها الكاميرا';
+
+  @override
+  String get paywallPerkLadder => 'تصنيف مباشر';
+
+  @override
+  String get paywallPerkFriends => 'الأصدقاء والتحديات';
+
+  @override
+  String get paywallPerkHistory => 'كل تكرار في كل مباراة';
+
+  @override
+  String get paywallYearly => 'سنوي';
+
+  @override
+  String get paywallWeekly => 'أسبوعي';
+
+  @override
+  String paywallPerWeek(String price) {
+    return '${price} في الأسبوع';
+  }
+
+  @override
+  String get paywallEveryWeek => 'في الأسبوع';
+
+  @override
+  String paywallSave(String percent) {
+    return 'وفّر ${percent}٪';
+  }
+
+  @override
+  String get paywallStart => 'ابدأ الصعود';
+
+  @override
+  String get paywallRenewsPlay => 'يتجدد تلقائيًا حتى تلغيه. يمكنك الإلغاء في أي وقت من Google Play.';
+
+  @override
+  String get paywallRenewsApple => 'يتجدد تلقائيًا حتى تلغيه. يمكنك الإلغاء في أي وقت من إعدادات حساب Apple.';
+
+  @override
+  String get paywallRestore => 'استعادة';
+
+  @override
+  String get paywallTerms => 'الشروط';
+
+  @override
+  String get paywallPrivacy => 'الخصوصية';
+
+  @override
+  String get paywallLoadFailed => 'تعذّر تحميل الخطط. تأكد من اتصالك وحاول مرة أخرى.';
+
+  @override
+  String get paywallBuyFailed => 'لم تكتمل عملية الشراء. حاول مرة أخرى.';
+
+  @override
+  String get paywallPending => 'دفعتك قيد المعالجة. سيُفتح كل شيء فور تأكيد المتجر.';
+
+  @override
+  String get paywallNothingToRestore => 'لم يُعثر على اشتراك لاستعادته.';
+
+  @override
+  String get paywallRestored => 'تمت استعادة الاشتراك';
+
+  @override
+  String paywallSignedInAs(String email) {
+    return 'مسجّل الدخول باسم ${email}';
+  }
 }

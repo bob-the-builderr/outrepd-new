@@ -1133,5 +1133,48 @@
         "type": "String"
       }
     }
+  },
+  "paywallTitle": "Climb from Iron to Master",
+  "paywallPerkDuels": "Camera-judged duels",
+  "paywallPerkLadder": "Live ranked ladder",
+  "paywallPerkFriends": "Friends and challenges",
+  "paywallPerkHistory": "Every rep of every match",
+  "paywallYearly": "Yearly",
+  "paywallWeekly": "Weekly",
+  "paywallPerWeek": "{price}/week",
+  "@paywallPerWeek": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "paywallEveryWeek": "per week",
+  "paywallSave": "Save {percent}%",
+  "@paywallSave": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "paywallStart": "Start climbing",
+  "paywallRenewsPlay": "Renews automatically until you cancel. Cancel anytime in Google Play.",
+  "paywallRenewsApple": "Renews automatically until you cancel. Cancel anytime in your Apple account settings.",
+  "paywallRestore": "Restore",
+  "paywallTerms": "Terms",
+  "paywallPrivacy": "Privacy",
+  "paywallLoadFailed": "Couldn't load the plans. Check your connection and try again.",
+  "paywallBuyFailed": "The purchase didn't go through. Try again.",
+  "paywallPending": "Your payment is pending. Everything unlocks as soon as the store confirms it.",
+  "paywallNothingToRestore": "No subscription found to restore.",
+  "paywallRestored": "Subscription restored",
+  "paywallSignedInAs": "Signed in as {email}",
+  "@paywallSignedInAs": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
   }
 }

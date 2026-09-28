@@ -2038,4 +2038,76 @@ class LHi extends L {
   @override
   String get setInPoolBody =>
       'आपकी रैंक के पास वाला अगला खिलाड़ी इससे मुकाबला करेगा। कौन जीता, यह सूचनाओं में दिखेगा, और तभी आपकी रैंक बदलेगी।';
+
+  @override
+  String get paywallTitle => 'लोहा से मास्टर तक चढ़ें';
+
+  @override
+  String get paywallPerkDuels => 'कैमरे से जज किए गए मुकाबले';
+
+  @override
+  String get paywallPerkLadder => 'लाइव रैंकिंग';
+
+  @override
+  String get paywallPerkFriends => 'दोस्त और चुनौतियाँ';
+
+  @override
+  String get paywallPerkHistory => 'हर मैच का हर रेप';
+
+  @override
+  String get paywallYearly => 'सालाना';
+
+  @override
+  String get paywallWeekly => 'साप्ताहिक';
+
+  @override
+  String paywallPerWeek(String price) {
+    return '${price}/सप्ताह';
+  }
+
+  @override
+  String get paywallEveryWeek => 'प्रति सप्ताह';
+
+  @override
+  String paywallSave(String percent) {
+    return '${percent}% बचाएँ';
+  }
+
+  @override
+  String get paywallStart => 'चढ़ाई शुरू करें';
+
+  @override
+  String get paywallRenewsPlay => 'रद्द करने तक अपने-आप रिन्यू होता है। Google Play में कभी भी रद्द करें।';
+
+  @override
+  String get paywallRenewsApple => 'रद्द करने तक अपने-आप रिन्यू होता है। अपनी Apple खाता सेटिंग में कभी भी रद्द करें।';
+
+  @override
+  String get paywallRestore => 'रीस्टोर करें';
+
+  @override
+  String get paywallTerms => 'शर्तें';
+
+  @override
+  String get paywallPrivacy => 'गोपनीयता';
+
+  @override
+  String get paywallLoadFailed => 'प्लान लोड नहीं हो सके। अपना कनेक्शन जाँचें और फिर कोशिश करें।';
+
+  @override
+  String get paywallBuyFailed => 'खरीदारी पूरी नहीं हुई। फिर कोशिश करें।';
+
+  @override
+  String get paywallPending => 'आपका भुगतान लंबित है। स्टोर की पुष्टि होते ही सब कुछ खुल जाएगा।';
+
+  @override
+  String get paywallNothingToRestore => 'रीस्टोर करने के लिए कोई सदस्यता नहीं मिली।';
+
+  @override
+  String get paywallRestored => 'सदस्यता रीस्टोर हो गई';
+
+  @override
+  String paywallSignedInAs(String email) {
+    return '${email} के रूप में साइन इन';
+  }
 }

@@ -46,6 +46,9 @@ $text = Get-Content $keys -Raw
 foreach ($name in 'SUPABASE_URL', 'SUPABASE_ANON_KEY') {
   if ($text -notmatch "(?m)^\s*$name\s*=") { throw "$keys has no $name= line" }
 }
+if ($text -notmatch '(?m)^\s*REVENUECAT_ANDROID_KEY\s*=\s*\S') {
+  Write-Warning "$keys has no REVENUECAT_ANDROID_KEY: this build has no paywall, and the whole app is open."
+}
 if (-not (Test-Path 'android\key.properties')) {
   Write-Warning 'No android\key.properties: the builds will be signed with the debug key, which Google Play refuses.'
 }

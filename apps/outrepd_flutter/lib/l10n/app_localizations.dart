@@ -3822,6 +3822,138 @@ abstract class L {
   /// In en, this message translates to:
   /// **'The next lifter near your rank races it. You\'ll see who won in Notifications, and your rank moves then.'**
   String get setInPoolBody;
+
+  /// No description provided for @paywallTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Climb from Iron to Master'**
+  String get paywallTitle;
+
+  /// No description provided for @paywallPerkDuels.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera-judged duels'**
+  String get paywallPerkDuels;
+
+  /// No description provided for @paywallPerkLadder.
+  ///
+  /// In en, this message translates to:
+  /// **'Live ranked ladder'**
+  String get paywallPerkLadder;
+
+  /// No description provided for @paywallPerkFriends.
+  ///
+  /// In en, this message translates to:
+  /// **'Friends and challenges'**
+  String get paywallPerkFriends;
+
+  /// No description provided for @paywallPerkHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Every rep of every match'**
+  String get paywallPerkHistory;
+
+  /// No description provided for @paywallYearly.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly'**
+  String get paywallYearly;
+
+  /// No description provided for @paywallWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get paywallWeekly;
+
+  /// No description provided for @paywallPerWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'{price}/week'**
+  String paywallPerWeek(String price);
+
+  /// No description provided for @paywallEveryWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'per week'**
+  String get paywallEveryWeek;
+
+  /// No description provided for @paywallSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save {percent}%'**
+  String paywallSave(String percent);
+
+  /// No description provided for @paywallStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start climbing'**
+  String get paywallStart;
+
+  /// No description provided for @paywallRenewsPlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Renews automatically until you cancel. Cancel anytime in Google Play.'**
+  String get paywallRenewsPlay;
+
+  /// No description provided for @paywallRenewsApple.
+  ///
+  /// In en, this message translates to:
+  /// **'Renews automatically until you cancel. Cancel anytime in your Apple account settings.'**
+  String get paywallRenewsApple;
+
+  /// No description provided for @paywallRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore'**
+  String get paywallRestore;
+
+  /// No description provided for @paywallTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms'**
+  String get paywallTerms;
+
+  /// No description provided for @paywallPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get paywallPrivacy;
+
+  /// No description provided for @paywallLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn't load the plans. Check your connection and try again.'**
+  String get paywallLoadFailed;
+
+  /// No description provided for @paywallBuyFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The purchase didn't go through. Try again.'**
+  String get paywallBuyFailed;
+
+  /// No description provided for @paywallPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Your payment is pending. Everything unlocks as soon as the store confirms it.'**
+  String get paywallPending;
+
+  /// No description provided for @paywallNothingToRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'No subscription found to restore.'**
+  String get paywallNothingToRestore;
+
+  /// No description provided for @paywallRestored.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription restored'**
+  String get paywallRestored;
+
+  /// No description provided for @paywallSignedInAs.
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in as {email}'**
+  String paywallSignedInAs(String email);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

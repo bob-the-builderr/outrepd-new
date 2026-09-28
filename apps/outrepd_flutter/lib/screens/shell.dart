@@ -6,6 +6,7 @@ import '../career.dart';
 import '../theme.dart';
 import 'friends.dart';
 import 'match.dart';
+import 'paywall.dart';
 import 'profile.dart';
 import 'ranks.dart';
 
@@ -82,20 +83,25 @@ class _AppShellState extends State<AppShell> {
     // there is no server to have sent one — so the badge above it must agree.
     final friendRequestCount = backend.available ? _friendRequests : 0;
 
-    return Scaffold(
-      backgroundColor: context.colors.background,
-      // One listener for all four tabs. Every screen under here reads the
-      // account, so a duel that changes it has to redraw them — otherwise the
-      // profile still shows last week's LP until something else happens to
-      // rebuild it.
-      body: ListenableBuilder(
-        listenable: Career.instance,
-        builder: (context, _) => IndexedStack(index: _index, children: _tabs),
-      ),
-      bottomNavigationBar: AppBottomNav(
-        currentIndex: _index,
-        onTap: _select,
-        friendRequestCount: friendRequestCount,
+    // Every way into the app lands here — the end of onboarding, a returning
+    // launch, a login — so this is where the subscription is asked for.
+    return PaywallGate(
+      child: Scaffold(
+        backgroundColor: context.colors.background,
+        // One listener for all four tabs. Every screen under here reads the
+        // account, so a duel that changes it has to redraw them — otherwise
+        // the profile still shows last week's LP until something else
+        // happens to rebuild it.
+        body: ListenableBuilder(
+          listenable: Career.instance,
+          builder: (context, _) =>
+              IndexedStack(index: _index, children: _tabs),
+        ),
+        bottomNavigationBar: AppBottomNav(
+          currentIndex: _index,
+          onTap: _select,
+          friendRequestCount: friendRequestCount,
+        ),
       ),
     );
   }
