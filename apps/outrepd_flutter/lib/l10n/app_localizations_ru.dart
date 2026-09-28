@@ -436,10 +436,6 @@ class LRu extends L {
       'Не удалось проверить это имя — попробуйте снова';
 
   @override
-  String get simulatedOpponent =>
-      'Больше никого не было — это тренировочный темп';
-
-  @override
   String get changeUsername => 'Изменить имя пользователя';
 
   @override
@@ -1850,21 +1846,6 @@ class LRu extends L {
   String get obAddPhoto => 'Добавить фото';
 
   @override
-  String get obNotifyTitle => 'Узнавай о вызовах';
-
-  @override
-  String get obNotifyChallenged => 'Тебя вызвали на дуэль';
-
-  @override
-  String get obNotifyStreak => 'Серия вот-вот прервётся';
-
-  @override
-  String get obNotifyPassed => 'Друг обошёл тебя в таблице';
-
-  @override
-  String get obTurnOn => 'Включить';
-
-  @override
   String get obPlacementsBody =>
       'Пять дуэлей определят стартовый ранг. Пока ничего не идёт тебе в минус.';
 
@@ -2031,4 +2012,30 @@ class LRu extends L {
   @override
   String get usernameNotAllowed =>
       'Это имя использовать нельзя. Попробуйте другое.';
+
+  @override
+  String get yourBest => 'Ваш рекорд';
+
+  @override
+  String get theClock => 'Таймер';
+
+  @override
+  String get nobodyFreeRaceBest =>
+      'Сейчас нет свободных соперников вашего уровня. Посоревнуйтесь со своим рекордом. Этот раунд не влияет на ранг.';
+
+  @override
+  String get nobodyFreeFirstScore =>
+      'Сейчас нет свободных соперников вашего уровня. Поставьте первый рекорд. Этот раунд не влияет на ранг.';
+
+  @override
+  String bestStillIs(String count) {
+    return 'Ваш рекорд по-прежнему $count';
+  }
+
+  @override
+  String get setInPoolTitle => 'Ваш подход в очереди';
+
+  @override
+  String get setInPoolBody =>
+      'Следующий спортсмен вашего уровня посоревнуется с ним. Кто победил, вы увидите в уведомлениях, и тогда изменится ваш ранг.';
 }

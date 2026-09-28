@@ -119,17 +119,24 @@ enum _Stage {
 class _MatchFlowScreenState extends State<MatchFlowScreen> {
   late _Stage _stage;
 
-  // Seeded with a demo opponent in initState and overwritten in _search if a
-  // real one is found. Never left unset: practice reaches _Stage.result too,
+  // Seeded with this lifter in initState and overwritten in _search if a real
+  // opponent is found. Never left unset: practice reaches _Stage.result too,
   // by way of _ResultView's constructor, without ever calling _search.
   late Opponent _opponent;
   late int _theirReps;
 
   /// Somebody else's actual stored set, when [_search] found one. Null means
-  /// [_opponent] is the local stand-in — there was nobody real to race yet,
-  /// or there is no server at all — and the result is worked out locally
-  /// exactly as it always was.
+  /// there was nobody real to race yet, or there is no server at all, and the
+  /// round is raced against this lifter's own best instead — see [_vsBest].
   OpponentSet? _realOpponent;
+
+  /// This lifter's best set when the round started: the number [_vsBest]
+  /// races, and the one the result screen measures the new count against.
+  int _bestBefore = 0;
+
+  /// Whether the set reached the pool, where the next lifter near this rank
+  /// can race it for real.
+  bool _pooled = false;
 
   /// [MatchMode.challengeAccept] found no reserved set waiting — already
   /// raced, or the challenge was withdrawn. A real answer, not a "nobody's
@@ -147,20 +154,30 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   /// What the duel did to the account, once it has been recorded.
   DuelOutcome? _outcome;
 
-  /// Nobody real was found, so the name on the other side is a local
-  /// stand-in wearing a real lifter's shape. A challenge is never this —
-  /// either the named target's set turns up, or the screen says outright
-  /// that it did not.
-  bool get _simulated =>
-      _realOpponent == null && !widget.isChallenge && !widget.isChallengeAccept;
+  /// Nobody real was found, so the round is raced against this lifter's own
+  /// best set and moves nothing on the ladder.
+  ///
+  /// There used to be a stand-in here: a made-up name and a random count,
+  /// with the rank moved on this phone only, until the next launch put the
+  /// server's rank back. An opponent who does not exist and a result that
+  /// quietly disappears are both lies, and the store listing promises real
+  /// people. The set still goes into the pool, so the next lifter near this
+  /// rank races it for real and both ranks move then, on the server.
+  ///
+  /// A challenge is never this: either the named target's set turns up, or
+  /// the screen says outright that it did not.
+  bool get _vsBest =>
+      !widget.practice &&
+      _realOpponent == null &&
+      !widget.isChallenge &&
+      !widget.isChallengeAccept;
 
   @override
   void initState() {
     super.initState();
-    final rng = Random();
-    _opponent = demoOpponents[rng.nextInt(demoOpponents.length)];
-    // A believable minute of push-ups.
-    _theirReps = 18 + rng.nextInt(26);
+    final me = demoProfile;
+    _opponent = Opponent(me.username, me.tierIdx, me.divIdx);
+    _theirReps = 0;
 
     _stage = widget.practice ? _Stage.live : _Stage.searching;
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -248,6 +265,10 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       }
     }
     if (!mounted) return;
+    if (_realOpponent == null) {
+      _bestBefore = demoProfile.bestSet;
+      _theirReps = _bestBefore;
+    }
     _goVersus();
   }
 
@@ -285,10 +306,18 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           // clock and a count and nothing else. Sending a challenge is the
           // same: there is no pace to race yet, because the other half of
           // this duel has not been lifted.
-          duel: (widget.practice || widget.isChallenge)
+          //
+          // Racing your own best is a pace like any other, except on a very
+          // first round, when there is no best yet and only the clock.
+          duel:
+              (widget.practice ||
+                  widget.isChallenge ||
+                  (_vsBest && _theirReps == 0))
               ? null
               : DuelContext(
-                  opponentName: _opponent.username,
+                  opponentName: _vsBest
+                      ? L.of(context).yourBest
+                      : _opponent.username,
                   opponentReps: _theirReps,
                   opponentRepTimes: _realOpponent?.repTimes ?? const [],
                   opponentTierIdx: _opponent.tierIdx,
@@ -425,6 +454,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
             repTimes: repTimes,
           ),
         );
+        _pooled = _vsBest;
         if (_realOpponent case final opponentSet?) {
           settledDuel = await backend.settle(
             mySetId: mySetId,
@@ -442,7 +472,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     // what the account holds are the same thing. Showing first and saving
     // afterwards is how a duel ends with a win on screen and nothing in the
     // history behind it.
-    if (widget.practice) {
+    if (widget.practice || _vsBest) {
       await Career.instance.recordPractice(reps, clean: depth >= kCleanDepth);
     } else if (settledDuel case final settledResult?) {
       // A real opponent, settled by the server. Nothing here is guessed —
@@ -559,7 +589,11 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
         return _SearchingView(onCancel: _confirmQuit);
 
       case _Stage.versus:
-        return _VersusView(opponent: _opponent, simulated: _simulated);
+        return _VersusView(
+          opponent: _opponent,
+          vsBest: _vsBest,
+          best: _theirReps,
+        );
 
       // The camera is a pushed route, so this stage has nothing of its own on
       // screen underneath it.
@@ -576,6 +610,17 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
         );
 
       case _Stage.result:
+        if (_vsBest) {
+          return _BestResultView(
+            reps: _myReps,
+            bestBefore: _bestBefore,
+            pooled: _pooled,
+            onAgain: () => Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (_) => const MatchFlowScreen()),
+            ),
+            onDone: () => Navigator.of(context).pop(),
+          );
+        }
         return _ResultView(
           practice: widget.practice,
           won: _won,
@@ -623,9 +668,10 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     );
     if (ok != true || !mounted) return;
 
-    // Nothing was ever attempted: practice keeps no record to lose, and a
-    // challenge not yet sent has nobody on the other end to forfeit to.
-    if (widget.practice || widget.isChallenge) {
+    // Nothing was ever attempted: practice keeps no record to lose, a
+    // challenge not yet sent has nobody on the other end to forfeit to, and
+    // neither does a search that has not found anybody.
+    if (widget.practice || widget.isChallenge || _vsBest) {
       Navigator.of(context).pop();
       return;
     }
@@ -786,10 +832,18 @@ class _SearchingViewState extends State<_SearchingView> {
 /// Who you drew, and what it is worth. On screen for a second and a half, so
 /// it carries three facts and no more.
 class _VersusView extends StatelessWidget {
-  const _VersusView({required this.opponent, required this.simulated});
+  const _VersusView({
+    required this.opponent,
+    required this.vsBest,
+    required this.best,
+  });
 
   final Opponent opponent;
-  final bool simulated;
+
+  /// Nobody was free: the other side is this lifter's own [best], or just
+  /// the clock when there is no best yet.
+  final bool vsBest;
+  final int best;
 
   @override
   Widget build(BuildContext context) {
@@ -820,43 +874,55 @@ class _VersusView extends StatelessWidget {
                 ),
               ),
             ),
-            _Fighter(
-              initial: opponent.username,
-              name: opponent.username,
-              tierIdx: opponent.tierIdx,
-              divIdx: opponent.divIdx,
-              ring: context.colors.rival,
-            ),
+            if (vsBest)
+              _Pace(best: best)
+            else
+              _Fighter(
+                initial: opponent.username,
+                name: opponent.username,
+                tierIdx: opponent.tierIdx,
+                divIdx: opponent.divIdx,
+                ring: context.colors.rival,
+              ),
           ],
         ),
-        if (simulated) ...[
-          const SizedBox(height: 10),
+        if (vsBest) ...[
+          const SizedBox(height: 18),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: Text(
+              best > 0 ? l.nobodyFreeRaceBest : l.nobodyFreeFirstScore,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: context.colors.muted,
+                fontSize: 13,
+                height: 1.4,
+              ),
+            ),
+          ),
+        ] else ...[
+          const SizedBox(height: 24),
+          // No number to promise any more — LP is exactly the rep gap, which
+          // nothing about the round has decided yet. What can be said now is
+          // the rule itself.
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(color: context.colors.border, width: 0.5),
+            ),
+            child: Text(
+              l.lpMovesWithGap,
+              textAlign: TextAlign.center,
+              style: TextStyle(color: context.colors.text, fontSize: 12),
+            ),
+          ),
+          const SizedBox(height: 9),
           Text(
-            l.simulatedOpponent,
-            style: TextStyle(color: context.colors.faint, fontSize: 11),
+            l.rankedTerms(localNumber(context, kDuelLength.inSeconds)),
+            style: TextStyle(color: context.colors.muted, fontSize: 11),
           ),
         ],
-        const SizedBox(height: 24),
-        // No number to promise any more — LP is exactly the rep gap, which
-        // nothing about the round has decided yet. What can be said now is
-        // the rule itself.
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            border: Border.all(color: context.colors.border, width: 0.5),
-          ),
-          child: Text(
-            l.lpMovesWithGap,
-            textAlign: TextAlign.center,
-            style: TextStyle(color: context.colors.text, fontSize: 12),
-          ),
-        ),
-        const SizedBox(height: 9),
-        Text(
-          l.rankedTerms(localNumber(context, kDuelLength.inSeconds)),
-          style: TextStyle(color: context.colors.muted, fontSize: 11),
-        ),
         const Spacer(flex: 3),
       ],
     );
@@ -916,6 +982,192 @@ class _Fighter extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// The other side of a round with nobody to race: this lifter's own best, or
+/// the clock when there is none yet. Drawn in the fighter's place and size,
+/// with a faint ring, so it reads as a pace rather than a person.
+class _Pace extends StatelessWidget {
+  const _Pace({required this.best});
+
+  final int best;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    return SizedBox(
+      width: 88,
+      child: Column(
+        children: [
+          Container(
+            width: 62,
+            height: 62,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: context.colors.surfaceRaised,
+              border: Border.all(color: context.colors.faint, width: 2),
+            ),
+            child: best > 0
+                ? Text(
+                    localNumber(context, best),
+                    style: TextStyle(
+                      color: context.colors.text,
+                      fontSize: 21,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  )
+                : Icon(Icons.timer_outlined, color: context.colors.muted),
+          ),
+          const SizedBox(height: 7),
+          Text(
+            best > 0 ? l.yourBest : l.theClock,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: context.colors.text, fontSize: 12),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Where a round against your own best ends: the count, whether it beat the
+/// best, and where the set went.
+///
+/// No win and no LP. The only thing raced was a number this lifter already
+/// owned, and the ladder is for racing people.
+class _BestResultView extends StatelessWidget {
+  const _BestResultView({
+    required this.reps,
+    required this.bestBefore,
+    required this.pooled,
+    required this.onAgain,
+    required this.onDone,
+  });
+
+  final int reps;
+  final int bestBefore;
+  final bool pooled;
+  final VoidCallback onAgain;
+  final VoidCallback onDone;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final newBest = reps > bestBefore;
+
+    return Column(
+      children: [
+        Expanded(
+          // Centred when it fits, scrolling when a large text size means it
+          // does not.
+          child: LayoutBuilder(
+            builder: (context, box) => SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: box.maxHeight - 40),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      newBest
+                          ? l.newPersonalBest
+                          : l.bestStillIs(localNumber(context, bestBefore)),
+                      textAlign: TextAlign.center,
+                      style: context.type.heading.copyWith(
+                        color: newBest
+                            ? context.colors.brand
+                            : context.colors.text,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      localNumber(context, reps),
+                      style: context.type.display.copyWith(
+                        color: context.colors.text,
+                        fontSize: 88,
+                        fontWeight: FontWeight.w800,
+                        height: 1,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      l
+                          .pushUpsInSeconds(
+                            localNumber(context, kDuelLength.inSeconds),
+                          )
+                          .toUpperCase(),
+                      textAlign: TextAlign.center,
+                      style: context.type.micro.copyWith(
+                        color: context.colors.muted,
+                      ),
+                    ),
+                    if (pooled) ...[
+                      const SizedBox(height: 28),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: context.colors.surface,
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(
+                            color: context.colors.border,
+                            width: 0.5,
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              l.setInPoolTitle,
+                              style: TextStyle(
+                                color: context.colors.text,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              l.setInPoolBody,
+                              style: TextStyle(
+                                color: context.colors.muted,
+                                fontSize: 13,
+                                height: 1.4,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(18, 8, 18, 18),
+          child: Column(
+            children: [
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(onPressed: onAgain, child: Text(l.rematch)),
+              ),
+              const SizedBox(height: 11),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: onDone,
+                  child: Text(l.doneAction),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -1056,10 +1308,7 @@ class _ChallengeSentView extends StatelessWidget {
           const Spacer(),
           SizedBox(
             width: double.infinity,
-            child: FilledButton(
-              onPressed: onDone,
-              child: Text(l.backToHome),
-            ),
+            child: FilledButton(onPressed: onDone, child: Text(l.backToHome)),
           ),
         ],
       ),
@@ -1107,4 +1356,3 @@ class _PracticeResult extends StatelessWidget {
     );
   }
 }
-

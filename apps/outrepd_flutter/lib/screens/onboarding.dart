@@ -21,7 +21,6 @@ import 'dart:async';
 
 import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import '../career.dart';
 import '../data.dart';
@@ -64,7 +63,6 @@ enum _Step {
   framing,
   calibration,
   calibrated,
-  notifications,
   placements,
 }
 
@@ -179,9 +177,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
           _Step.calibrated => _Calibrated(
             result: _calibration,
-            onNext: () => _go(_Step.notifications),
-          ),
-          _Step.notifications => _Notifications(
             onNext: () => _go(_Step.placements),
           ),
           _Step.placements => _Placements(
@@ -1470,110 +1465,7 @@ class _Line extends StatelessWidget {
   }
 }
 
-// ──────────────────────────── 9 notifications ────────────────────────────────
-
-class _Notifications extends StatelessWidget {
-  const _Notifications({required this.onNext});
-
-  final VoidCallback onNext;
-
-  /// A real OS prompt, not a copy of the next screen wearing a bell icon.
-  /// Asked or declined, onboarding moves on either way — nothing past this
-  /// step depends on the answer, the way the camera does.
-  Future<void> _turnOn(BuildContext context) async {
-    await Permission.notification.request();
-    onNext();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l = L.of(context);
-
-    return _Step0(
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(22, 30, 22, 0),
-            child: Column(
-              children: [
-                Icon(
-                  Icons.notifications_none,
-                  size: 36,
-                  color: context.colors.brand,
-                ),
-                const SizedBox(height: 18),
-                Text(
-                  l.obNotifyTitle,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: context.colors.text,
-                    fontSize: 20,
-                    height: 1.35,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 22, 20, 0),
-            // What the notifications would be, before asking. A permission
-            // prompt with no examples behind it is just a demand.
-            child: Column(
-              children: [
-                _Reason(Icons.sports_mma, l.obNotifyChallenged),
-                const SizedBox(height: 9),
-                _Reason(Icons.local_fire_department, l.obNotifyStreak),
-                const SizedBox(height: 9),
-                _Reason(Icons.emoji_events_outlined, l.obNotifyPassed),
-              ],
-            ),
-          ),
-        ],
-      ),
-      actions: Column(
-        children: [
-          _Primary(label: l.obTurnOn, onTap: () => _turnOn(context)),
-          const SizedBox(height: 6),
-          _Secondary(label: l.notNow, onTap: onNext),
-        ],
-      ),
-    );
-  }
-}
-
-class _Reason extends StatelessWidget {
-  const _Reason(this.icon, this.label);
-
-  final IconData icon;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: context.colors.surface,
-        borderRadius: BorderRadius.circular(13),
-        border: Border.all(color: context.colors.border, width: 0.5),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, size: 16, color: context.colors.brand),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Text(
-              label,
-              style: TextStyle(color: context.colors.text, fontSize: 12),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// ───────────────────────────── 10 placements ─────────────────────────────────
+// ────────────────────────────── 9 placements ─────────────────────────────────
 
 class _Placements extends StatelessWidget {
   const _Placements({required this.onStart, required this.onPractice});

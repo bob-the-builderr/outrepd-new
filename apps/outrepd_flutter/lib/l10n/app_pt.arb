@@ -159,7 +159,6 @@
   "couldNotShareCard": "Não foi possível compartilhar este cartão",
   "couldNotOpenLink": "Não foi possível abrir esse link",
   "couldNotCheckUsername": "Não foi possível verificar esse nome — tente novamente",
-  "simulatedOpponent": "Ninguém mais estava pronto — este é um ritmo de treino",
   "changeUsername": "Alterar nome de usuário",
   "usernameInvalidLength": "Deve ter de 4 a 20 caracteres, apenas letras e números",
   "usernameAlreadyChangedBody": "Já usaste a tua única alteração de nome de utilizador — cada conta recebe exatamente uma.",
@@ -590,11 +589,6 @@
   "obTaken": "Já usado",
   "obYourAvatar": "A tua foto",
   "obAddPhoto": "Adicionar foto",
-  "obNotifyTitle": "Fica a saber quando te desafiam",
-  "obNotifyChallenged": "Alguém te desafiou",
-  "obNotifyStreak": "A tua sequência está quase a quebrar",
-  "obNotifyPassed": "Um amigo passou-te na tabela",
-  "obTurnOn": "Ativar",
   "obPlacementsBody": "Cinco duelos decidem o teu nível inicial. Ainda não conta nada contra ti.",
   "obFindFirstOpponent": "Encontrar o meu primeiro adversário",
   "obGotIt": "Percebi",
@@ -643,5 +637,12 @@
   "beatOpponent": "Venci {name} {score}",
   "lostToOpponent": "Perdi para {name} {score}",
   "thinkYouCanBeatMe": "Acha que consegue me vencer?",
-  "usernameNotAllowed": "Esse nome não é permitido. Tente outro."
+  "usernameNotAllowed": "Esse nome não é permitido. Tente outro.",
+  "yourBest": "Seu recorde",
+  "theClock": "O relógio",
+  "nobodyFreeRaceBest": "Ninguém perto do seu rank está livre agora. Dispute contra o seu recorde. Esta rodada não muda seu rank.",
+  "nobodyFreeFirstScore": "Ninguém perto do seu rank está livre agora. Marque seu primeiro placar. Esta rodada não muda seu rank.",
+  "bestStillIs": "Seu recorde continua {count}",
+  "setInPoolTitle": "Sua série está na fila",
+  "setInPoolBody": "O próximo atleta perto do seu rank vai disputar contra ela. Você verá quem venceu em Notificações, e seu rank muda nessa hora."
 }

@@ -423,9 +423,6 @@ class LKo extends L {
   String get couldNotCheckUsername => '그 이름을 확인할 수 없었어요 — 다시 시도해 주세요';
 
   @override
-  String get simulatedOpponent => '다른 상대가 준비되지 않아 연습 페이스로 진행돼요';
-
-  @override
   String get changeUsername => '사용자 이름 변경';
 
   @override
@@ -1817,21 +1814,6 @@ class LKo extends L {
   String get obAddPhoto => '사진 추가';
 
   @override
-  String get obNotifyTitle => '도전받으면 바로 알기';
-
-  @override
-  String get obNotifyChallenged => '누군가 당신에게 도전했습니다';
-
-  @override
-  String get obNotifyStreak => '연속 기록이 끊기기 직전입니다';
-
-  @override
-  String get obNotifyPassed => '친구가 순위에서 당신을 앞질렀습니다';
-
-  @override
-  String get obTurnOn => '켜기';
-
-  @override
   String get obPlacementsBody =>
       '다섯 번의 대결로 시작 등급이 정해집니다. 아직 지는 것이 기록에 남지 않습니다.';
 
@@ -1995,4 +1977,30 @@ class LKo extends L {
 
   @override
   String get usernameNotAllowed => '사용할 수 없는 이름이에요. 다른 이름을 입력하세요.';
+
+  @override
+  String get yourBest => '내 최고 기록';
+
+  @override
+  String get theClock => '시계';
+
+  @override
+  String get nobodyFreeRaceBest =>
+      '지금은 비슷한 랭크의 상대가 없어요. 내 최고 기록과 겨뤄 보세요. 이번 판은 랭크에 반영되지 않아요.';
+
+  @override
+  String get nobodyFreeFirstScore =>
+      '지금은 비슷한 랭크의 상대가 없어요. 첫 기록을 세워 보세요. 이번 판은 랭크에 반영되지 않아요.';
+
+  @override
+  String bestStillIs(String count) {
+    return '최고 기록은 그대로 $count개';
+  }
+
+  @override
+  String get setInPoolTitle => '내 세트가 대기열에 올라갔어요';
+
+  @override
+  String get setInPoolBody =>
+      '비슷한 랭크의 다음 플레이어가 이 세트와 겨뤄요. 누가 이겼는지는 알림에서 볼 수 있고, 그때 랭크가 바뀌어요.';
 }

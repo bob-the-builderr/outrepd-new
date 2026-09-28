@@ -439,10 +439,6 @@ class LIt extends L {
       'Impossibile verificare quel nome: riprova';
 
   @override
-  String get simulatedOpponent =>
-      'Nessun altro era pronto: questo è un ritmo di allenamento';
-
-  @override
   String get changeUsername => 'Cambia nome utente';
 
   @override
@@ -1857,21 +1853,6 @@ class LIt extends L {
   String get obAddPhoto => 'Aggiungi una foto';
 
   @override
-  String get obNotifyTitle => 'Scopri quando ti sfidano';
-
-  @override
-  String get obNotifyChallenged => 'Qualcuno ti ha sfidato';
-
-  @override
-  String get obNotifyStreak => 'La tua serie sta per interrompersi';
-
-  @override
-  String get obNotifyPassed => 'Un amico ti ha superato in classifica';
-
-  @override
-  String get obTurnOn => 'Attiva';
-
-  @override
   String get obPlacementsBody =>
       'Cinque sfide decidono il tuo livello di partenza. Per ora niente conta contro di te.';
 
@@ -2038,4 +2019,30 @@ class LIt extends L {
   @override
   String get usernameNotAllowed =>
       'Questo nome non è consentito. Provane un altro.';
+
+  @override
+  String get yourBest => 'Il tuo record';
+
+  @override
+  String get theClock => 'Il cronometro';
+
+  @override
+  String get nobodyFreeRaceBest =>
+      'Al momento nessuno vicino al tuo grado è libero. Sfida il tuo record. Questo round non cambia il tuo grado.';
+
+  @override
+  String get nobodyFreeFirstScore =>
+      'Al momento nessuno vicino al tuo grado è libero. Fai il tuo primo punteggio. Questo round non cambia il tuo grado.';
+
+  @override
+  String bestStillIs(String count) {
+    return 'Il tuo record resta $count';
+  }
+
+  @override
+  String get setInPoolTitle => 'La tua serie è in coda';
+
+  @override
+  String get setInPoolBody =>
+      'Il prossimo atleta vicino al tuo grado la sfiderà. Vedrai chi ha vinto nelle notifiche, e allora il tuo grado cambierà.';
 }

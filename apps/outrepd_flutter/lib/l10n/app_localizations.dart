@@ -907,12 +907,6 @@ abstract class L {
   /// **'Couldn\'t check that name — try again'**
   String get couldNotCheckUsername;
 
-  /// No description provided for @simulatedOpponent.
-  ///
-  /// In en, this message translates to:
-  /// **'No one else was ready — this is a practice pace'**
-  String get simulatedOpponent;
-
   /// No description provided for @changeUsername.
   ///
   /// In en, this message translates to:
@@ -3493,36 +3487,6 @@ abstract class L {
   /// **'Add a photo'**
   String get obAddPhoto;
 
-  /// No description provided for @obNotifyTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Know when you’re challenged'**
-  String get obNotifyTitle;
-
-  /// No description provided for @obNotifyChallenged.
-  ///
-  /// In en, this message translates to:
-  /// **'Someone challenged you'**
-  String get obNotifyChallenged;
-
-  /// No description provided for @obNotifyStreak.
-  ///
-  /// In en, this message translates to:
-  /// **'Your streak is about to break'**
-  String get obNotifyStreak;
-
-  /// No description provided for @obNotifyPassed.
-  ///
-  /// In en, this message translates to:
-  /// **'A friend passed you on the board'**
-  String get obNotifyPassed;
-
-  /// No description provided for @obTurnOn.
-  ///
-  /// In en, this message translates to:
-  /// **'Turn on'**
-  String get obTurnOn;
-
   /// No description provided for @obPlacementsBody.
   ///
   /// In en, this message translates to:
@@ -3816,6 +3780,48 @@ abstract class L {
   /// In en, this message translates to:
   /// **'That name isn\'t allowed. Try another one.'**
   String get usernameNotAllowed;
+
+  /// No description provided for @yourBest.
+  ///
+  /// In en, this message translates to:
+  /// **'Your best'**
+  String get yourBest;
+
+  /// No description provided for @theClock.
+  ///
+  /// In en, this message translates to:
+  /// **'The clock'**
+  String get theClock;
+
+  /// No description provided for @nobodyFreeRaceBest.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody near your rank is free right now. Race your best instead. This one doesn\'t move your rank.'**
+  String get nobodyFreeRaceBest;
+
+  /// No description provided for @nobodyFreeFirstScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody near your rank is free right now. Set your first score. This one doesn\'t move your rank.'**
+  String get nobodyFreeFirstScore;
+
+  /// No description provided for @bestStillIs.
+  ///
+  /// In en, this message translates to:
+  /// **'Your best is still {count}'**
+  String bestStillIs(String count);
+
+  /// No description provided for @setInPoolTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your set is in the pool'**
+  String get setInPoolTitle;
+
+  /// No description provided for @setInPoolBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The next lifter near your rank races it. You\'ll see who won in Notifications, and your rank moves then.'**
+  String get setInPoolBody;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

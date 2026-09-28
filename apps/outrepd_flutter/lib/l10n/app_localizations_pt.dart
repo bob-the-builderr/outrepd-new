@@ -440,10 +440,6 @@ class LPt extends L {
       'Não foi possível verificar esse nome — tente novamente';
 
   @override
-  String get simulatedOpponent =>
-      'Ninguém mais estava pronto — este é um ritmo de treino';
-
-  @override
   String get changeUsername => 'Alterar nome de usuário';
 
   @override
@@ -1857,21 +1853,6 @@ class LPt extends L {
   String get obAddPhoto => 'Adicionar foto';
 
   @override
-  String get obNotifyTitle => 'Fica a saber quando te desafiam';
-
-  @override
-  String get obNotifyChallenged => 'Alguém te desafiou';
-
-  @override
-  String get obNotifyStreak => 'A tua sequência está quase a quebrar';
-
-  @override
-  String get obNotifyPassed => 'Um amigo passou-te na tabela';
-
-  @override
-  String get obTurnOn => 'Ativar';
-
-  @override
   String get obPlacementsBody =>
       'Cinco duelos decidem o teu nível inicial. Ainda não conta nada contra ti.';
 
@@ -2038,4 +2019,30 @@ class LPt extends L {
 
   @override
   String get usernameNotAllowed => 'Esse nome não é permitido. Tente outro.';
+
+  @override
+  String get yourBest => 'Seu recorde';
+
+  @override
+  String get theClock => 'O relógio';
+
+  @override
+  String get nobodyFreeRaceBest =>
+      'Ninguém perto do seu rank está livre agora. Dispute contra o seu recorde. Esta rodada não muda seu rank.';
+
+  @override
+  String get nobodyFreeFirstScore =>
+      'Ninguém perto do seu rank está livre agora. Marque seu primeiro placar. Esta rodada não muda seu rank.';
+
+  @override
+  String bestStillIs(String count) {
+    return 'Seu recorde continua $count';
+  }
+
+  @override
+  String get setInPoolTitle => 'Sua série está na fila';
+
+  @override
+  String get setInPoolBody =>
+      'O próximo atleta perto do seu rank vai disputar contra ela. Você verá quem venceu em Notificações, e seu rank muda nessa hora.';
 }

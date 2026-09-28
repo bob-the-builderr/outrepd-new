@@ -423,9 +423,6 @@ class LJa extends L {
   String get couldNotCheckUsername => 'その名前を確認できませんでした。もう一度お試しください';
 
   @override
-  String get simulatedOpponent => '他に対戦相手がいなかったため、これは練習ペースです';
-
-  @override
   String get changeUsername => 'ユーザー名を変更';
 
   @override
@@ -1812,21 +1809,6 @@ class LJa extends L {
   String get obAddPhoto => '写真を追加';
 
   @override
-  String get obNotifyTitle => '挑まれたらすぐ分かる';
-
-  @override
-  String get obNotifyChallenged => '誰かがあなたに挑戦した';
-
-  @override
-  String get obNotifyStreak => '連続記録が途切れそう';
-
-  @override
-  String get obNotifyPassed => '友だちがランキングであなたを抜いた';
-
-  @override
-  String get obTurnOn => 'オンにする';
-
-  @override
   String get obPlacementsBody => '5回の対戦で開始ティアが決まります。まだ負けは記録に響きません。';
 
   @override
@@ -1989,4 +1971,30 @@ class LJa extends L {
 
   @override
   String get usernameNotAllowed => 'この名前は使えません。別の名前にしてください。';
+
+  @override
+  String get yourBest => '自己ベスト';
+
+  @override
+  String get theClock => 'タイマー';
+
+  @override
+  String get nobodyFreeRaceBest =>
+      '今は近いランクの相手がいません。自己ベストと勝負しましょう。この勝負でランクは変わりません。';
+
+  @override
+  String get nobodyFreeFirstScore =>
+      '今は近いランクの相手がいません。最初の記録を作りましょう。この勝負でランクは変わりません。';
+
+  @override
+  String bestStillIs(String count) {
+    return '自己ベストは $count のまま';
+  }
+
+  @override
+  String get setInPoolTitle => '記録は対戦待ちに入りました';
+
+  @override
+  String get setInPoolBody =>
+      '近いランクの次のプレイヤーがこの記録と対戦します。結果は通知で確認でき、そのときにランクが動きます。';
 }

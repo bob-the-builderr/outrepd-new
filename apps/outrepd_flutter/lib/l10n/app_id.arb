@@ -159,7 +159,6 @@
   "couldNotShareCard": "Kartu ini tidak bisa dibagikan",
   "couldNotOpenLink": "Tautan itu tidak bisa dibuka",
   "couldNotCheckUsername": "Nama itu tidak bisa diperiksa — coba lagi",
-  "simulatedOpponent": "Tidak ada orang lain yang siap — ini kecepatan latihan",
   "changeUsername": "Ubah nama pengguna",
   "usernameInvalidLength": "Harus 4 sampai 20 karakter, hanya huruf dan angka",
   "usernameAlreadyChangedBody": "Anda sudah menggunakan satu-satunya kesempatan mengubah nama pengguna — setiap akun hanya mendapat satu kali.",
@@ -590,11 +589,6 @@
   "obTaken": "Sudah dipakai",
   "obYourAvatar": "Fotomu",
   "obAddPhoto": "Tambahkan foto",
-  "obNotifyTitle": "Tahu saat kamu ditantang",
-  "obNotifyChallenged": "Seseorang menantangmu",
-  "obNotifyStreak": "Rentetanmu hampir putus",
-  "obNotifyPassed": "Seorang teman melewatimu di papan",
-  "obTurnOn": "Aktifkan",
   "obPlacementsBody": "Lima duel menentukan tingkat awalmu. Belum ada yang dihitung merugikanmu.",
   "obFindFirstOpponent": "Cari lawan pertamaku",
   "obGotIt": "Mengerti",
@@ -643,5 +637,12 @@
   "beatOpponent": "Mengalahkan {name} {score}",
   "lostToOpponent": "Kalah dari {name} {score}",
   "thinkYouCanBeatMe": "Yakin bisa mengalahkanku?",
-  "usernameNotAllowed": "Nama itu tidak diizinkan. Coba yang lain."
+  "usernameNotAllowed": "Nama itu tidak diizinkan. Coba yang lain.",
+  "yourBest": "Rekormu",
+  "theClock": "Waktu",
+  "nobodyFreeRaceBest": "Belum ada yang tersedia di dekat peringkatmu. Lawan rekormu sendiri. Ronde ini tidak mengubah peringkatmu.",
+  "nobodyFreeFirstScore": "Belum ada yang tersedia di dekat peringkatmu. Cetak skor pertamamu. Ronde ini tidak mengubah peringkatmu.",
+  "bestStillIs": "Rekormu masih {count}",
+  "setInPoolTitle": "Set-mu sudah masuk antrean",
+  "setInPoolBody": "Atlet berikutnya di dekat peringkatmu akan melawannya. Kamu akan melihat siapa yang menang di Notifikasi, dan peringkatmu berubah saat itu."
 }

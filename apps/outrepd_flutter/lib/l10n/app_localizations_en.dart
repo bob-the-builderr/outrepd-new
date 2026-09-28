@@ -437,10 +437,6 @@ class LEn extends L {
   String get couldNotCheckUsername => 'Couldn\'t check that name — try again';
 
   @override
-  String get simulatedOpponent =>
-      'No one else was ready — this is a practice pace';
-
-  @override
   String get changeUsername => 'Change username';
 
   @override
@@ -1851,21 +1847,6 @@ class LEn extends L {
   String get obAddPhoto => 'Add a photo';
 
   @override
-  String get obNotifyTitle => 'Know when you’re challenged';
-
-  @override
-  String get obNotifyChallenged => 'Someone challenged you';
-
-  @override
-  String get obNotifyStreak => 'Your streak is about to break';
-
-  @override
-  String get obNotifyPassed => 'A friend passed you on the board';
-
-  @override
-  String get obTurnOn => 'Turn on';
-
-  @override
   String get obPlacementsBody =>
       'Five duels decide your starting tier. Nothing counts against you yet.';
 
@@ -2031,4 +2012,30 @@ class LEn extends L {
 
   @override
   String get usernameNotAllowed => 'That name isn\'t allowed. Try another one.';
+
+  @override
+  String get yourBest => 'Your best';
+
+  @override
+  String get theClock => 'The clock';
+
+  @override
+  String get nobodyFreeRaceBest =>
+      'Nobody near your rank is free right now. Race your best instead. This one doesn\'t move your rank.';
+
+  @override
+  String get nobodyFreeFirstScore =>
+      'Nobody near your rank is free right now. Set your first score. This one doesn\'t move your rank.';
+
+  @override
+  String bestStillIs(String count) {
+    return 'Your best is still $count';
+  }
+
+  @override
+  String get setInPoolTitle => 'Your set is in the pool';
+
+  @override
+  String get setInPoolBody =>
+      'The next lifter near your rank races it. You\'ll see who won in Notifications, and your rank moves then.';
 }

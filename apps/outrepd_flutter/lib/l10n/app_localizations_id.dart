@@ -435,10 +435,6 @@ class LId extends L {
       'Nama itu tidak bisa diperiksa — coba lagi';
 
   @override
-  String get simulatedOpponent =>
-      'Tidak ada orang lain yang siap — ini kecepatan latihan';
-
-  @override
   String get changeUsername => 'Ubah nama pengguna';
 
   @override
@@ -1850,21 +1846,6 @@ class LId extends L {
   String get obAddPhoto => 'Tambahkan foto';
 
   @override
-  String get obNotifyTitle => 'Tahu saat kamu ditantang';
-
-  @override
-  String get obNotifyChallenged => 'Seseorang menantangmu';
-
-  @override
-  String get obNotifyStreak => 'Rentetanmu hampir putus';
-
-  @override
-  String get obNotifyPassed => 'Seorang teman melewatimu di papan';
-
-  @override
-  String get obTurnOn => 'Aktifkan';
-
-  @override
   String get obPlacementsBody =>
       'Lima duel menentukan tingkat awalmu. Belum ada yang dihitung merugikanmu.';
 
@@ -2030,4 +2011,30 @@ class LId extends L {
 
   @override
   String get usernameNotAllowed => 'Nama itu tidak diizinkan. Coba yang lain.';
+
+  @override
+  String get yourBest => 'Rekormu';
+
+  @override
+  String get theClock => 'Waktu';
+
+  @override
+  String get nobodyFreeRaceBest =>
+      'Belum ada yang tersedia di dekat peringkatmu. Lawan rekormu sendiri. Ronde ini tidak mengubah peringkatmu.';
+
+  @override
+  String get nobodyFreeFirstScore =>
+      'Belum ada yang tersedia di dekat peringkatmu. Cetak skor pertamamu. Ronde ini tidak mengubah peringkatmu.';
+
+  @override
+  String bestStillIs(String count) {
+    return 'Rekormu masih $count';
+  }
+
+  @override
+  String get setInPoolTitle => 'Set-mu sudah masuk antrean';
+
+  @override
+  String get setInPoolBody =>
+      'Atlet berikutnya di dekat peringkatmu akan melawannya. Kamu akan melihat siapa yang menang di Notifikasi, dan peringkatmu berubah saat itu.';
 }

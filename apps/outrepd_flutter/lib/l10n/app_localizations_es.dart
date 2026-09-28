@@ -441,10 +441,6 @@ class LEs extends L {
       'No se pudo comprobar ese nombre: inténtalo de nuevo';
 
   @override
-  String get simulatedOpponent =>
-      'Nadie más estaba listo: este es un ritmo de práctica';
-
-  @override
   String get changeUsername => 'Cambiar nombre de usuario';
 
   @override
@@ -1858,21 +1854,6 @@ class LEs extends L {
   String get obAddPhoto => 'Añadir una foto';
 
   @override
-  String get obNotifyTitle => 'Entérate cuando te reten';
-
-  @override
-  String get obNotifyChallenged => 'Alguien te ha retado';
-
-  @override
-  String get obNotifyStreak => 'Tu racha está a punto de romperse';
-
-  @override
-  String get obNotifyPassed => 'Un amigo te ha pasado en la tabla';
-
-  @override
-  String get obTurnOn => 'Activar';
-
-  @override
   String get obPlacementsBody =>
       'Cinco duelos deciden tu liga inicial. Todavía nada cuenta en tu contra.';
 
@@ -2040,4 +2021,30 @@ class LEs extends L {
   @override
   String get usernameNotAllowed =>
       'Ese nombre no está permitido. Prueba con otro.';
+
+  @override
+  String get yourBest => 'Tu récord';
+
+  @override
+  String get theClock => 'El reloj';
+
+  @override
+  String get nobodyFreeRaceBest =>
+      'Ahora no hay nadie libre cerca de tu rango. Compite contra tu récord. Esta ronda no cambia tu rango.';
+
+  @override
+  String get nobodyFreeFirstScore =>
+      'Ahora no hay nadie libre cerca de tu rango. Marca tu primer récord. Esta ronda no cambia tu rango.';
+
+  @override
+  String bestStillIs(String count) {
+    return 'Tu récord sigue siendo $count';
+  }
+
+  @override
+  String get setInPoolTitle => 'Tu serie está en la cola';
+
+  @override
+  String get setInPoolBody =>
+      'El próximo atleta cerca de tu rango competirá contra ella. Verás quién ganó en Notificaciones y entonces cambiará tu rango.';
 }

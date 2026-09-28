@@ -159,7 +159,6 @@
   "couldNotShareCard": "مقدرش يشارك الكارت ده",
   "couldNotOpenLink": "مقدرش يفتح اللينك ده",
   "couldNotCheckUsername": "مقدرش يتأكد من الاسم ده — جرب تاني",
-  "simulatedOpponent": "محدش تاني كان جاهز — دي وتيرة تمرين",
   "changeUsername": "تغيير اسم المستخدم",
   "usernameInvalidLength": "لازم يكون من 4 لـ 20 حرف، حروف وأرقام بس",
   "usernameAlreadyChangedBody": "استخدمت بالفعل فرصة تغيير الاسم الوحيدة — كل حساب ليه فرصة واحدة بس.",
@@ -590,11 +589,6 @@
   "obTaken": "محجوز",
   "obYourAvatar": "صورتك",
   "obAddPhoto": "أضف صورة",
-  "obNotifyTitle": "اعرف حين يتحداك أحد",
-  "obNotifyChallenged": "تحدّاك أحدهم",
-  "obNotifyStreak": "سلسلتك على وشك الانقطاع",
-  "obNotifyPassed": "تجاوزك صديق في لوحة الصدارة",
-  "obTurnOn": "تفعيل",
   "obPlacementsBody": "خمس مباريات تحدّد رتبتك الأولى، ولا شيء يُحتسب عليك بعد.",
   "obFindFirstOpponent": "ابحث عن منافسي الأول",
   "obGotIt": "فهمت",
@@ -643,5 +637,12 @@
   "beatOpponent": "فزت على {name} {score}",
   "lostToOpponent": "خسرت أمام {name} {score}",
   "thinkYouCanBeatMe": "هل تظن أنك تستطيع هزيمتي؟",
-  "usernameNotAllowed": "الاسم ده مش مسموح. جرّب اسم تاني."
+  "usernameNotAllowed": "الاسم ده مش مسموح. جرّب اسم تاني.",
+  "yourBest": "أحسن رقم ليك",
+  "theClock": "الساعة",
+  "nobodyFreeRaceBest": "مفيش حد قريب من رتبتك فاضي دلوقتي. العب ضد أحسن رقم ليك. الماتش ده مش هيغيّر رتبتك.",
+  "nobodyFreeFirstScore": "مفيش حد قريب من رتبتك فاضي دلوقتي. سجّل أول رقم ليك. الماتش ده مش هيغيّر رتبتك.",
+  "bestStillIs": "أحسن رقم ليك لسه {count}",
+  "setInPoolTitle": "السِت بتاعك اتحفظ",
+  "setInPoolBody": "أول لاعب قريب من رتبتك هيلعب ضده. هتشوف مين كسب في الإشعارات، ورتبتك هتتحرك ساعتها."
 }

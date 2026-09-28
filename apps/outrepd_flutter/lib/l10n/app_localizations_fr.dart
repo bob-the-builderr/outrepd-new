@@ -442,10 +442,6 @@ class LFr extends L {
       'Impossible de vérifier ce nom — réessayez';
 
   @override
-  String get simulatedOpponent =>
-      'Personne d\'autre n\'était prêt — c\'est un rythme d\'entraînement';
-
-  @override
   String get changeUsername => 'Changer de nom d\'utilisateur';
 
   @override
@@ -1860,21 +1856,6 @@ class LFr extends L {
   String get obAddPhoto => 'Ajouter une photo';
 
   @override
-  String get obNotifyTitle => 'Sache quand on te défie';
-
-  @override
-  String get obNotifyChallenged => 'Quelqu’un t’a défié';
-
-  @override
-  String get obNotifyStreak => 'Ta série est sur le point de se briser';
-
-  @override
-  String get obNotifyPassed => 'Un ami t’a dépassé au classement';
-
-  @override
-  String get obTurnOn => 'Activer';
-
-  @override
   String get obPlacementsBody =>
       'Cinq duels décident de ton palier de départ. Rien ne compte contre toi pour l’instant.';
 
@@ -2042,4 +2023,30 @@ class LFr extends L {
   @override
   String get usernameNotAllowed =>
       'Ce nom n\'est pas autorisé. Essaie-en un autre.';
+
+  @override
+  String get yourBest => 'Ton record';
+
+  @override
+  String get theClock => 'Le chrono';
+
+  @override
+  String get nobodyFreeRaceBest =>
+      'Personne de ton niveau n\'est libre pour l\'instant. Affronte ton record. Cette manche ne change pas ton rang.';
+
+  @override
+  String get nobodyFreeFirstScore =>
+      'Personne de ton niveau n\'est libre pour l\'instant. Établis ton premier score. Cette manche ne change pas ton rang.';
+
+  @override
+  String bestStillIs(String count) {
+    return 'Ton record reste $count';
+  }
+
+  @override
+  String get setInPoolTitle => 'Ta série est en attente';
+
+  @override
+  String get setInPoolBody =>
+      'Le prochain athlète de ton niveau l\'affrontera. Tu verras qui a gagné dans les notifications, et ton rang bougera à ce moment-là.';
 }

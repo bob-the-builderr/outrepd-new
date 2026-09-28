@@ -159,7 +159,6 @@
   "couldNotShareCard": "Bu kart paylaşılamadı",
   "couldNotOpenLink": "O bağlantı açılamadı",
   "couldNotCheckUsername": "O ad kontrol edilemedi — tekrar deneyin",
-  "simulatedOpponent": "Başka kimse hazır değildi — bu bir antrenman temposu",
   "changeUsername": "Kullanıcı adını değiştir",
   "usernameInvalidLength": "4 ile 20 karakter arasında olmalı, yalnızca harf ve rakam",
   "usernameAlreadyChangedBody": "Tek kullanıcı adı değişikliğinizi zaten kullandınız — her hesap tam olarak bir hak alır.",
@@ -590,11 +589,6 @@
   "obTaken": "Alınmış",
   "obYourAvatar": "Avatarın",
   "obAddPhoto": "Fotoğraf ekle",
-  "obNotifyTitle": "Sana meydan okunduğunda haberin olsun",
-  "obNotifyChallenged": "Biri sana meydan okudu",
-  "obNotifyStreak": "Serin kopmak üzere",
-  "obNotifyPassed": "Bir arkadaşın sıralamada seni geçti",
-  "obTurnOn": "Aç",
   "obPlacementsBody": "Beş düello başlangıç seviyeni belirler. Henüz hiçbir şey aleyhine sayılmıyor.",
   "obFindFirstOpponent": "İlk rakibimi bul",
   "obGotIt": "Anladım",
@@ -643,5 +637,12 @@
   "beatOpponent": "{name} yenildi {score}",
   "lostToOpponent": "{name} karşısında kaybettim {score}",
   "thinkYouCanBeatMe": "Beni yenebileceğini mi sanıyorsun?",
-  "usernameNotAllowed": "Bu isme izin verilmiyor. Başka bir tane dene."
+  "usernameNotAllowed": "Bu isme izin verilmiyor. Başka bir tane dene.",
+  "yourBest": "Rekorun",
+  "theClock": "Saat",
+  "nobodyFreeRaceBest": "Şu an rütbene yakın kimse müsait değil. Kendi rekoruna karşı yarış. Bu tur rütbeni değiştirmez.",
+  "nobodyFreeFirstScore": "Şu an rütbene yakın kimse müsait değil. İlk skorunu belirle. Bu tur rütbeni değiştirmez.",
+  "bestStillIs": "Rekorun hâlâ {count}",
+  "setInPoolTitle": "Setin havuzda",
+  "setInPoolBody": "Rütbene yakın bir sonraki sporcu buna karşı yarışacak. Kimin kazandığını Bildirimler’de göreceksin, rütben de o zaman değişecek."
 }

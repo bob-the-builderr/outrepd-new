@@ -56,7 +56,7 @@ COUNTED BY THE CAMERA, ON YOUR PHONE
 Pose detection runs on your device. It watches how low you go and how far you come back up, so a half rep does not count. No video leaves your phone, ever.
 
 RACE REAL PEOPLE
-Every opponent is somebody who did their own set. You race it at the pace they actually did it, so you see who pulled ahead and when. No bots, no made-up numbers.
+Every opponent is somebody who did their own set. You race it at the pace they actually did it, so you see who pulled ahead and when. No bots, no made-up numbers. When nobody near your rank is free, you race your own best instead, and your set waits for the next real opponent.
 
 CLIMB THE RANKS
 Five placement matches set your starting rank. From there, win to climb from Iron through Bronze, Silver, Gold, Platinum and Diamond to Master. Once you reach a tier, you keep it: a bad day can cost divisions, never the tier itself.
@@ -88,7 +88,7 @@ outrepd بيحوّل الضغط لتحدي. سند موبايلك، خد وضع�
 قراءة حركة الجسم بتحصل على جهازك. الأب بيشوف نزلت لحد فين وطلعت لحد فين، فنص العدّة مابتتحسبش. ومفيش أي فيديو بيخرج من موبايلك خالص.
 
 نافس ناس حقيقيين
-كل خصم شخص عمل السِت بتاعه بنفسه. بتتسابق معاه بنفس السرعة اللي عمل بيها، فتشوف مين سبق وإمتى. مفيش بوتات ولا أرقام متألفة.
+كل خصم شخص عمل السِت بتاعه بنفسه. بتتسابق معاه بنفس السرعة اللي عمل بيها، فتشوف مين سبق وإمتى. مفيش بوتات ولا أرقام متألفة. ولو مفيش حد قريب من رتبتك فاضي، بتلعب ضد أحسن رقم ليك، والسِت بتاعك بيستنى أول خصم حقيقي.
 
 اطلع في الرتب
 خمس ماتشات تحديد مستوى بيحددوا رتبتك الأولى. بعدها كل فوز بيطلّعك من الحديد للبرونز والفضة والدهب والبلاتين والماس لحد المعلّم. وأي رتبة توصلها بتفضل بتاعتك: اليوم الوحش ممكن ينزّلك درجة جوه الرتبة، لكن عمره ما ينزّلك من الرتبة نفسها.

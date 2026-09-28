@@ -441,10 +441,6 @@ class LDe extends L {
       'Der Name konnte nicht geprüft werden — versuch es noch mal';
 
   @override
-  String get simulatedOpponent =>
-      'Niemand sonst war bereit – das ist ein Übungstempo';
-
-  @override
   String get changeUsername => 'Benutzernamen ändern';
 
   @override
@@ -1862,21 +1858,6 @@ class LDe extends L {
   String get obAddPhoto => 'Foto hinzufügen';
 
   @override
-  String get obNotifyTitle => 'Erfahre, wenn du herausgefordert wirst';
-
-  @override
-  String get obNotifyChallenged => 'Jemand hat dich herausgefordert';
-
-  @override
-  String get obNotifyStreak => 'Deine Serie reißt gleich';
-
-  @override
-  String get obNotifyPassed => 'Ein Freund hat dich überholt';
-
-  @override
-  String get obTurnOn => 'Einschalten';
-
-  @override
   String get obPlacementsBody =>
       'Fünf Duelle bestimmen deine Startliga. Noch zählt nichts gegen dich.';
 
@@ -2044,4 +2025,30 @@ class LDe extends L {
   @override
   String get usernameNotAllowed =>
       'Dieser Name ist nicht erlaubt. Versuch einen anderen.';
+
+  @override
+  String get yourBest => 'Deine Bestmarke';
+
+  @override
+  String get theClock => 'Die Uhr';
+
+  @override
+  String get nobodyFreeRaceBest =>
+      'Gerade ist niemand in deiner Nähe im Ranking frei. Tritt gegen deine Bestmarke an. Diese Runde ändert deinen Rang nicht.';
+
+  @override
+  String get nobodyFreeFirstScore =>
+      'Gerade ist niemand in deiner Nähe im Ranking frei. Stell deine erste Bestmarke auf. Diese Runde ändert deinen Rang nicht.';
+
+  @override
+  String bestStillIs(String count) {
+    return 'Deine Bestmarke bleibt $count';
+  }
+
+  @override
+  String get setInPoolTitle => 'Dein Satz ist im Pool';
+
+  @override
+  String get setInPoolBody =>
+      'Der nächste Sportler in deiner Nähe im Ranking tritt dagegen an. Wer gewonnen hat, siehst du in den Mitteilungen, und dann bewegt sich dein Rang.';
 }

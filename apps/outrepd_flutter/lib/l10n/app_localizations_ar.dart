@@ -433,9 +433,6 @@ class LAr extends L {
   String get couldNotCheckUsername => 'مقدرش يتأكد من الاسم ده — جرب تاني';
 
   @override
-  String get simulatedOpponent => 'محدش تاني كان جاهز — دي وتيرة تمرين';
-
-  @override
   String get changeUsername => 'تغيير اسم المستخدم';
 
   @override
@@ -1838,21 +1835,6 @@ class LAr extends L {
   String get obAddPhoto => 'أضف صورة';
 
   @override
-  String get obNotifyTitle => 'اعرف حين يتحداك أحد';
-
-  @override
-  String get obNotifyChallenged => 'تحدّاك أحدهم';
-
-  @override
-  String get obNotifyStreak => 'سلسلتك على وشك الانقطاع';
-
-  @override
-  String get obNotifyPassed => 'تجاوزك صديق في لوحة الصدارة';
-
-  @override
-  String get obTurnOn => 'تفعيل';
-
-  @override
   String get obPlacementsBody =>
       'خمس مباريات تحدّد رتبتك الأولى، ولا شيء يُحتسب عليك بعد.';
 
@@ -2018,4 +2000,30 @@ class LAr extends L {
 
   @override
   String get usernameNotAllowed => 'الاسم ده مش مسموح. جرّب اسم تاني.';
+
+  @override
+  String get yourBest => 'أحسن رقم ليك';
+
+  @override
+  String get theClock => 'الساعة';
+
+  @override
+  String get nobodyFreeRaceBest =>
+      'مفيش حد قريب من رتبتك فاضي دلوقتي. العب ضد أحسن رقم ليك. الماتش ده مش هيغيّر رتبتك.';
+
+  @override
+  String get nobodyFreeFirstScore =>
+      'مفيش حد قريب من رتبتك فاضي دلوقتي. سجّل أول رقم ليك. الماتش ده مش هيغيّر رتبتك.';
+
+  @override
+  String bestStillIs(String count) {
+    return 'أحسن رقم ليك لسه $count';
+  }
+
+  @override
+  String get setInPoolTitle => 'السِت بتاعك اتحفظ';
+
+  @override
+  String get setInPoolBody =>
+      'أول لاعب قريب من رتبتك هيلعب ضده. هتشوف مين كسب في الإشعارات، ورتبتك هتتحرك ساعتها.';
 }

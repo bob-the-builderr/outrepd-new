@@ -159,7 +159,6 @@
   "couldNotShareCard": "Impossible de partager cette carte",
   "couldNotOpenLink": "Impossible d'ouvrir ce lien",
   "couldNotCheckUsername": "Impossible de vérifier ce nom — réessayez",
-  "simulatedOpponent": "Personne d'autre n'était prêt — c'est un rythme d'entraînement",
   "changeUsername": "Changer de nom d'utilisateur",
   "usernameInvalidLength": "Doit comporter de 4 à 20 caractères, lettres et chiffres uniquement",
   "usernameAlreadyChangedBody": "Tu as déjà utilisé ton unique changement de nom d'utilisateur — chaque compte n'en reçoit qu'un seul.",
@@ -590,11 +589,6 @@
   "obTaken": "Pris",
   "obYourAvatar": "Ton avatar",
   "obAddPhoto": "Ajouter une photo",
-  "obNotifyTitle": "Sache quand on te défie",
-  "obNotifyChallenged": "Quelqu’un t’a défié",
-  "obNotifyStreak": "Ta série est sur le point de se briser",
-  "obNotifyPassed": "Un ami t’a dépassé au classement",
-  "obTurnOn": "Activer",
   "obPlacementsBody": "Cinq duels décident de ton palier de départ. Rien ne compte contre toi pour l’instant.",
   "obFindFirstOpponent": "Trouver mon premier adversaire",
   "obGotIt": "Compris",
@@ -643,5 +637,12 @@
   "beatOpponent": "Victoire contre {name} {score}",
   "lostToOpponent": "Défaite contre {name} {score}",
   "thinkYouCanBeatMe": "Tu crois pouvoir me battre ?",
-  "usernameNotAllowed": "Ce nom n'est pas autorisé. Essaie-en un autre."
+  "usernameNotAllowed": "Ce nom n'est pas autorisé. Essaie-en un autre.",
+  "yourBest": "Ton record",
+  "theClock": "Le chrono",
+  "nobodyFreeRaceBest": "Personne de ton niveau n'est libre pour l'instant. Affronte ton record. Cette manche ne change pas ton rang.",
+  "nobodyFreeFirstScore": "Personne de ton niveau n'est libre pour l'instant. Établis ton premier score. Cette manche ne change pas ton rang.",
+  "bestStillIs": "Ton record reste {count}",
+  "setInPoolTitle": "Ta série est en attente",
+  "setInPoolBody": "Le prochain athlète de ton niveau l'affrontera. Tu verras qui a gagné dans les notifications, et ton rang bougera à ce moment-là."
 }

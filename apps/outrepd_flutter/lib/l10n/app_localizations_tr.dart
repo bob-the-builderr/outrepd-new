@@ -435,10 +435,6 @@ class LTr extends L {
   String get couldNotCheckUsername => 'O ad kontrol edilemedi — tekrar deneyin';
 
   @override
-  String get simulatedOpponent =>
-      'Başka kimse hazır değildi — bu bir antrenman temposu';
-
-  @override
   String get changeUsername => 'Kullanıcı adını değiştir';
 
   @override
@@ -1846,21 +1842,6 @@ class LTr extends L {
   String get obAddPhoto => 'Fotoğraf ekle';
 
   @override
-  String get obNotifyTitle => 'Sana meydan okunduğunda haberin olsun';
-
-  @override
-  String get obNotifyChallenged => 'Biri sana meydan okudu';
-
-  @override
-  String get obNotifyStreak => 'Serin kopmak üzere';
-
-  @override
-  String get obNotifyPassed => 'Bir arkadaşın sıralamada seni geçti';
-
-  @override
-  String get obTurnOn => 'Aç';
-
-  @override
   String get obPlacementsBody =>
       'Beş düello başlangıç seviyeni belirler. Henüz hiçbir şey aleyhine sayılmıyor.';
 
@@ -2027,4 +2008,30 @@ class LTr extends L {
   @override
   String get usernameNotAllowed =>
       'Bu isme izin verilmiyor. Başka bir tane dene.';
+
+  @override
+  String get yourBest => 'Rekorun';
+
+  @override
+  String get theClock => 'Saat';
+
+  @override
+  String get nobodyFreeRaceBest =>
+      'Şu an rütbene yakın kimse müsait değil. Kendi rekoruna karşı yarış. Bu tur rütbeni değiştirmez.';
+
+  @override
+  String get nobodyFreeFirstScore =>
+      'Şu an rütbene yakın kimse müsait değil. İlk skorunu belirle. Bu tur rütbeni değiştirmez.';
+
+  @override
+  String bestStillIs(String count) {
+    return 'Rekorun hâlâ $count';
+  }
+
+  @override
+  String get setInPoolTitle => 'Setin havuzda';
+
+  @override
+  String get setInPoolBody =>
+      'Rütbene yakın bir sonraki sporcu buna karşı yarışacak. Kimin kazandığını Bildirimler’de göreceksin, rütben de o zaman değişecek.';
 }

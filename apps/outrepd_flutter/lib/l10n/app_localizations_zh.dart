@@ -420,9 +420,6 @@ class LZh extends L {
   String get couldNotCheckUsername => '无法检查该名称——请重试';
 
   @override
-  String get simulatedOpponent => '没有其他人准备好——这是练习节奏';
-
-  @override
   String get changeUsername => '更改用户名';
 
   @override
@@ -1805,21 +1802,6 @@ class LZh extends L {
   String get obAddPhoto => '添加照片';
 
   @override
-  String get obNotifyTitle => '被挑战时第一时间知道';
-
-  @override
-  String get obNotifyChallenged => '有人向你发起挑战';
-
-  @override
-  String get obNotifyStreak => '你的连胜就要断了';
-
-  @override
-  String get obNotifyPassed => '有朋友在榜上超过你了';
-
-  @override
-  String get obTurnOn => '打开';
-
-  @override
   String get obPlacementsBody => '五场对决决定你的起始段位。目前还不会记在你头上。';
 
   @override
@@ -1981,4 +1963,27 @@ class LZh extends L {
 
   @override
   String get usernameNotAllowed => '这个名字不能使用，请换一个。';
+
+  @override
+  String get yourBest => '你的最佳';
+
+  @override
+  String get theClock => '计时';
+
+  @override
+  String get nobodyFreeRaceBest => '现在没有段位相近的对手。挑战你自己的最佳成绩吧。这一局不影响段位。';
+
+  @override
+  String get nobodyFreeFirstScore => '现在没有段位相近的对手。先创下你的第一个成绩吧。这一局不影响段位。';
+
+  @override
+  String bestStillIs(String count) {
+    return '你的最佳仍是 $count';
+  }
+
+  @override
+  String get setInPoolTitle => '你的成绩已进入匹配池';
+
+  @override
+  String get setInPoolBody => '下一位段位相近的玩家会挑战这组成绩。谁赢了会在通知里显示，届时你的段位才会变动。';
 }

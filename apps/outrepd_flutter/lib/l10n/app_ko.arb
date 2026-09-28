@@ -159,7 +159,6 @@
   "couldNotShareCard": "이 카드를 공유할 수 없었어요",
   "couldNotOpenLink": "이 링크를 열 수 없었어요",
   "couldNotCheckUsername": "그 이름을 확인할 수 없었어요 — 다시 시도해 주세요",
-  "simulatedOpponent": "다른 상대가 준비되지 않아 연습 페이스로 진행돼요",
   "changeUsername": "사용자 이름 변경",
   "usernameInvalidLength": "4자에서 20자 사이의 영문자와 숫자만 사용할 수 있습니다",
   "usernameAlreadyChangedBody": "이미 단 한 번뿐인 사용자 이름 변경을 사용하셨습니다 — 모든 계정은 정확히 한 번만 변경할 수 있습니다.",
@@ -590,11 +589,6 @@
   "obTaken": "이미 사용 중",
   "obYourAvatar": "프로필 사진",
   "obAddPhoto": "사진 추가",
-  "obNotifyTitle": "도전받으면 바로 알기",
-  "obNotifyChallenged": "누군가 당신에게 도전했습니다",
-  "obNotifyStreak": "연속 기록이 끊기기 직전입니다",
-  "obNotifyPassed": "친구가 순위에서 당신을 앞질렀습니다",
-  "obTurnOn": "켜기",
   "obPlacementsBody": "다섯 번의 대결로 시작 등급이 정해집니다. 아직 지는 것이 기록에 남지 않습니다.",
   "obFindFirstOpponent": "첫 상대 찾기",
   "obGotIt": "알겠어요",
@@ -643,5 +637,12 @@
   "beatOpponent": "{name} 상대로 승리 {score}",
   "lostToOpponent": "{name}에게 패배 {score}",
   "thinkYouCanBeatMe": "나를 이길 수 있을까?",
-  "usernameNotAllowed": "사용할 수 없는 이름이에요. 다른 이름을 입력하세요."
+  "usernameNotAllowed": "사용할 수 없는 이름이에요. 다른 이름을 입력하세요.",
+  "yourBest": "내 최고 기록",
+  "theClock": "시계",
+  "nobodyFreeRaceBest": "지금은 비슷한 랭크의 상대가 없어요. 내 최고 기록과 겨뤄 보세요. 이번 판은 랭크에 반영되지 않아요.",
+  "nobodyFreeFirstScore": "지금은 비슷한 랭크의 상대가 없어요. 첫 기록을 세워 보세요. 이번 판은 랭크에 반영되지 않아요.",
+  "bestStillIs": "최고 기록은 그대로 {count}개",
+  "setInPoolTitle": "내 세트가 대기열에 올라갔어요",
+  "setInPoolBody": "비슷한 랭크의 다음 플레이어가 이 세트와 겨뤄요. 누가 이겼는지는 알림에서 볼 수 있고, 그때 랭크가 바뀌어요."
 }

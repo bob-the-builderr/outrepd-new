@@ -159,7 +159,6 @@
   "couldNotShareCard": "Diese Karte konnte nicht geteilt werden",
   "couldNotOpenLink": "Der Link konnte nicht geöffnet werden",
   "couldNotCheckUsername": "Der Name konnte nicht geprüft werden — versuch es noch mal",
-  "simulatedOpponent": "Niemand sonst war bereit – das ist ein Übungstempo",
   "changeUsername": "Benutzernamen ändern",
   "usernameInvalidLength": "Muss 4 bis 20 Zeichen lang sein, nur Buchstaben und Zahlen",
   "usernameAlreadyChangedBody": "Du hast deine einzige Namensänderung bereits genutzt — jedes Konto bekommt genau eine.",
@@ -590,11 +589,6 @@
   "obTaken": "Vergeben",
   "obYourAvatar": "Dein Bild",
   "obAddPhoto": "Foto hinzufügen",
-  "obNotifyTitle": "Erfahre, wenn du herausgefordert wirst",
-  "obNotifyChallenged": "Jemand hat dich herausgefordert",
-  "obNotifyStreak": "Deine Serie reißt gleich",
-  "obNotifyPassed": "Ein Freund hat dich überholt",
-  "obTurnOn": "Einschalten",
   "obPlacementsBody": "Fünf Duelle bestimmen deine Startliga. Noch zählt nichts gegen dich.",
   "obFindFirstOpponent": "Ersten Gegner finden",
   "obGotIt": "Alles klar",
@@ -643,5 +637,12 @@
   "beatOpponent": "{name} geschlagen, {score}",
   "lostToOpponent": "Gegen {name} verloren, {score}",
   "thinkYouCanBeatMe": "Glaubst du, du schlägst mich?",
-  "usernameNotAllowed": "Dieser Name ist nicht erlaubt. Versuch einen anderen."
+  "usernameNotAllowed": "Dieser Name ist nicht erlaubt. Versuch einen anderen.",
+  "yourBest": "Deine Bestmarke",
+  "theClock": "Die Uhr",
+  "nobodyFreeRaceBest": "Gerade ist niemand in deiner Nähe im Ranking frei. Tritt gegen deine Bestmarke an. Diese Runde ändert deinen Rang nicht.",
+  "nobodyFreeFirstScore": "Gerade ist niemand in deiner Nähe im Ranking frei. Stell deine erste Bestmarke auf. Diese Runde ändert deinen Rang nicht.",
+  "bestStillIs": "Deine Bestmarke bleibt {count}",
+  "setInPoolTitle": "Dein Satz ist im Pool",
+  "setInPoolBody": "Der nächste Sportler in deiner Nähe im Ranking tritt dagegen an. Wer gewonnen hat, siehst du in den Mitteilungen, und dann bewegt sich dein Rang."
 }

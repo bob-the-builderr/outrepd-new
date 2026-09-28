@@ -197,7 +197,6 @@
   "couldNotShareCard": "Could not share this card",
   "couldNotOpenLink": "Could not open that link",
   "couldNotCheckUsername": "Couldn't check that name — try again",
-  "simulatedOpponent": "No one else was ready — this is a practice pace",
   "changeUsername": "Change username",
   "usernameInvalidLength": "4 to 20 characters, letters and numbers only",
   "usernameChanged": "Username changed",
@@ -1007,11 +1006,6 @@
   "obTaken": "Taken",
   "obYourAvatar": "Your avatar",
   "obAddPhoto": "Add a photo",
-  "obNotifyTitle": "Know when you’re challenged",
-  "obNotifyChallenged": "Someone challenged you",
-  "obNotifyStreak": "Your streak is about to break",
-  "obNotifyPassed": "A friend passed you on the board",
-  "obTurnOn": "Turn on",
   "obPlacementsBody": "Five duels decide your starting tier. Nothing counts against you yet.",
   "obFindFirstOpponent": "Find my first opponent",
   "obGotIt": "Got it",
@@ -1125,5 +1119,19 @@
   "usernameNotAllowed": "That name isn't allowed. Try another one.",
   "@usernameNotAllowed": {
     "description": "Shown when the server refuses a username as abusive or as passing for the app itself."
+  },
+  "yourBest": "Your best",
+  "theClock": "The clock",
+  "nobodyFreeRaceBest": "Nobody near your rank is free right now. Race your best instead. This one doesn't move your rank.",
+  "nobodyFreeFirstScore": "Nobody near your rank is free right now. Set your first score. This one doesn't move your rank.",
+  "bestStillIs": "Your best is still {count}",
+  "setInPoolTitle": "Your set is in the pool",
+  "setInPoolBody": "The next lifter near your rank races it. You'll see who won in Notifications, and your rank moves then.",
+  "@bestStillIs": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
   }
 }

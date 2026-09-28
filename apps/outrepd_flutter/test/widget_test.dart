@@ -279,10 +279,9 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Calibrated.'), findsOneWidget);
+    // Straight on to placements. There is no notifications step: the app
+    // sends no push, so it has no permission to ask for.
     await tap(tester, 'Continue');
-    expect(find.textContaining('Know when'), findsOneWidget);
-
-    await tap(tester, 'Not now');
     expect(find.textContaining('Five duels'), findsOneWidget);
 
     // The account gate at the very end: nothing past here is reachable

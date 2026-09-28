@@ -159,7 +159,6 @@
   "couldNotShareCard": "无法分享这张卡片",
   "couldNotOpenLink": "无法打开该链接",
   "couldNotCheckUsername": "无法检查该名称——请重试",
-  "simulatedOpponent": "没有其他人准备好——这是练习节奏",
   "changeUsername": "更改用户名",
   "usernameInvalidLength": "必须为4到20个字符，仅限字母和数字",
   "usernameAlreadyChangedBody": "你已经用过唯一一次改名机会——每个账号只能改一次用户名。",
@@ -590,11 +589,6 @@
   "obTaken": "已被占用",
   "obYourAvatar": "你的头像",
   "obAddPhoto": "添加照片",
-  "obNotifyTitle": "被挑战时第一时间知道",
-  "obNotifyChallenged": "有人向你发起挑战",
-  "obNotifyStreak": "你的连胜就要断了",
-  "obNotifyPassed": "有朋友在榜上超过你了",
-  "obTurnOn": "打开",
   "obPlacementsBody": "五场对决决定你的起始段位。目前还不会记在你头上。",
   "obFindFirstOpponent": "找第一个对手",
   "obGotIt": "知道了",
@@ -643,5 +637,12 @@
   "beatOpponent": "击败 {name} {score}",
   "lostToOpponent": "输给 {name} {score}",
   "thinkYouCanBeatMe": "你觉得你能赢我吗？",
-  "usernameNotAllowed": "这个名字不能使用，请换一个。"
+  "usernameNotAllowed": "这个名字不能使用，请换一个。",
+  "yourBest": "你的最佳",
+  "theClock": "计时",
+  "nobodyFreeRaceBest": "现在没有段位相近的对手。挑战你自己的最佳成绩吧。这一局不影响段位。",
+  "nobodyFreeFirstScore": "现在没有段位相近的对手。先创下你的第一个成绩吧。这一局不影响段位。",
+  "bestStillIs": "你的最佳仍是 {count}",
+  "setInPoolTitle": "你的成绩已进入匹配池",
+  "setInPoolBody": "下一位段位相近的玩家会挑战这组成绩。谁赢了会在通知里显示，届时你的段位才会变动。"
 }

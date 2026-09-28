@@ -436,10 +436,6 @@ class LHi extends L {
       'यह नाम जाँचा नहीं जा सका — फिर कोशिश करें';
 
   @override
-  String get simulatedOpponent =>
-      'कोई और तैयार नहीं था — यह अभ्यास की रफ़्तार है';
-
-  @override
   String get changeUsername => 'यूज़रनेम बदलें';
 
   @override
@@ -1850,21 +1846,6 @@ class LHi extends L {
   String get obAddPhoto => 'फ़ोटो जोड़ो';
 
   @override
-  String get obNotifyTitle => 'चुनौती मिलते ही पता चले';
-
-  @override
-  String get obNotifyChallenged => 'किसी ने तुम्हें चुनौती दी';
-
-  @override
-  String get obNotifyStreak => 'तुम्हारी लगातार लड़ी टूटने वाली है';
-
-  @override
-  String get obNotifyPassed => 'एक दोस्त बोर्ड पर तुमसे आगे निकल गया';
-
-  @override
-  String get obTurnOn => 'चालू करो';
-
-  @override
   String get obPlacementsBody =>
       'पाँच मुक़ाबले तय करेंगे कि तुम कहाँ से शुरू करोगे। अभी कुछ भी तुम्हारे ख़िलाफ़ नहीं गिना जाता।';
 
@@ -2031,4 +2012,30 @@ class LHi extends L {
   @override
   String get usernameNotAllowed =>
       'यह नाम इस्तेमाल नहीं किया जा सकता। कोई दूसरा आज़माएँ।';
+
+  @override
+  String get yourBest => 'आपका बेस्ट';
+
+  @override
+  String get theClock => 'घड़ी';
+
+  @override
+  String get nobodyFreeRaceBest =>
+      'अभी आपकी रैंक के पास कोई खाली नहीं है। अपने बेस्ट से मुकाबला करें। इससे आपकी रैंक नहीं बदलेगी।';
+
+  @override
+  String get nobodyFreeFirstScore =>
+      'अभी आपकी रैंक के पास कोई खाली नहीं है। अपना पहला स्कोर बनाएँ। इससे आपकी रैंक नहीं बदलेगी।';
+
+  @override
+  String bestStillIs(String count) {
+    return 'आपका बेस्ट अब भी $count है';
+  }
+
+  @override
+  String get setInPoolTitle => 'आपका सेट पूल में है';
+
+  @override
+  String get setInPoolBody =>
+      'आपकी रैंक के पास वाला अगला खिलाड़ी इससे मुकाबला करेगा। कौन जीता, यह सूचनाओं में दिखेगा, और तभी आपकी रैंक बदलेगी।';
 }

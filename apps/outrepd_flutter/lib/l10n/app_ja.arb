@@ -159,7 +159,6 @@
   "couldNotShareCard": "このカードを共有できませんでした",
   "couldNotOpenLink": "そのリンクを開けませんでした",
   "couldNotCheckUsername": "その名前を確認できませんでした。もう一度お試しください",
-  "simulatedOpponent": "他に対戦相手がいなかったため、これは練習ペースです",
   "changeUsername": "ユーザー名を変更",
   "usernameInvalidLength": "4〜20文字の半角英数字のみで入力してください",
   "usernameAlreadyChangedBody": "ユーザー名の変更は一度きりで、すでに使用済みです。",
@@ -590,11 +589,6 @@
   "obTaken": "使用済み",
   "obYourAvatar": "アイコン",
   "obAddPhoto": "写真を追加",
-  "obNotifyTitle": "挑まれたらすぐ分かる",
-  "obNotifyChallenged": "誰かがあなたに挑戦した",
-  "obNotifyStreak": "連続記録が途切れそう",
-  "obNotifyPassed": "友だちがランキングであなたを抜いた",
-  "obTurnOn": "オンにする",
   "obPlacementsBody": "5回の対戦で開始ティアが決まります。まだ負けは記録に響きません。",
   "obFindFirstOpponent": "最初の相手を探す",
   "obGotIt": "わかった",
@@ -643,5 +637,12 @@
   "beatOpponent": "{name}に勝利 {score}",
   "lostToOpponent": "{name}に敗北 {score}",
   "thinkYouCanBeatMe": "私に勝てると思う？",
-  "usernameNotAllowed": "この名前は使えません。別の名前にしてください。"
+  "usernameNotAllowed": "この名前は使えません。別の名前にしてください。",
+  "yourBest": "自己ベスト",
+  "theClock": "タイマー",
+  "nobodyFreeRaceBest": "今は近いランクの相手がいません。自己ベストと勝負しましょう。この勝負でランクは変わりません。",
+  "nobodyFreeFirstScore": "今は近いランクの相手がいません。最初の記録を作りましょう。この勝負でランクは変わりません。",
+  "bestStillIs": "自己ベストは {count} のまま",
+  "setInPoolTitle": "記録は対戦待ちに入りました",
+  "setInPoolBody": "近いランクの次のプレイヤーがこの記録と対戦します。結果は通知で確認でき、そのときにランクが動きます。"
 }
