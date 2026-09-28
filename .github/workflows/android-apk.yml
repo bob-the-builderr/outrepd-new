@@ -1,0 +1,94 @@
+# Builds the Android APK on GitHub's machines, so a release does not depend on
+# the local disk that holds Flutter and Gradle.
+#
+# Needs two repository secrets (Settings > Secrets and variables > Actions):
+# SUPABASE_URL and SUPABASE_ANON_KEY, the same two lines as
+# apps/outrepd_flutter/supabase/keys.env. Without them the job fails rather
+# than build an APK that opens with no server — which is exactly what shipped
+# once, and every sign-in said there was no server.
+#
+# The APK is under "Artifacts" on the run's page. It is signed with this
+# runner's debug key, not the one on the Windows machine, so a phone with a
+# locally built copy installed has to uninstall that first.
+
+name: Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [camera-rep-counter, camera-rep-counter-zzqfhq]
+    paths:
+      - 'apps/outrepd_flutter/**'
+      - '.github/workflows/android-apk.yml'
+
+concurrency:
+  group: android-apk-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: apps/outrepd_flutter
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Refuse to build without the server keys
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "::error::Add SUPABASE_URL and SUPABASE_ANON_KEY as repository secrets (Settings > Secrets and variables > Actions). An APK built without them has no server."
+            exit 1
+          fi
+          printf 'SUPABASE_URL=%s\nSUPABASE_ANON_KEY=%s\n' "$SUPABASE_URL" "$SUPABASE_ANON_KEY" > supabase/keys.env
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+
+      # Both flags are required; see docs/building.md.
+      - run: flutter build apk --release --no-tree-shake-icons --dart-define-from-file=supabase/keys.env
+
+      - name: Check the server address is inside the APK
+        run: |
+          host="${SUPABASE_URL#https://}"
+          host="${host%%/*}"
+          apk=build/app/outputs/flutter-apk/app-release.apk
+          if ! unzip -p "$apk" lib/arm64-v8a/libapp.so | grep -a -q -F "$host"; then
+            echo "::error::The APK does not contain the Supabase address; it would open with no server."
+            exit 1
+          fi
+          cp "$apk" "$RUNNER_TEMP/OUTREPD.apk"
+          echo "Server address found in the APK."
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: OUTREPD-apk
+          path: ${{ runner.temp }}/OUTREPD.apk
+          retention-days: 30
+
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test
