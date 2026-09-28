@@ -1,0 +1,51 @@
+# Builds the iPhone app on Codemagic's Macs and uploads it to TestFlight, so
+# the App Store release needs no Mac of our own. Set up once as described in
+# apps/outrepd_flutter/docs/building.md, "آيفون من ويندوز", then start the
+# workflow by hand from the Codemagic dashboard.
+#
+# No secret lives in this file. The Supabase keys come from the `supabase`
+# variable group, and signing from the App Store Connect API key saved in
+# Codemagic's own settings.
+
+workflows:
+  ios-release:
+    name: iOS → TestFlight
+    working_directory: apps/outrepd_flutter
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    integrations:
+      app_store_connect: outrepd
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      groups:
+        - supabase
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.outrepd.outrepd
+    scripts:
+      - name: Packages
+        script: flutter pub get
+      - name: Pods
+        script: cd ios && pod install --repo-update
+      - name: Signing
+        script: xcode-project use-profiles
+      - name: Build
+        script: |
+          # One more than the last build App Store Connect has, since it
+          # refuses a build number it has already seen. Zero before the first.
+          LATEST=$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID" 2>/dev/null || echo 0)
+          LATEST_TF=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID" 2>/dev/null || echo 0)
+          [ "$LATEST_TF" -gt "$LATEST" ] 2>/dev/null && LATEST=$LATEST_TF
+          flutter build ipa --release --no-tree-shake-icons \
+            --build-number=$((LATEST + 1)) \
+            --dart-define=SUPABASE_URL="$SUPABASE_URL" \
+            --dart-define=SUPABASE_ANON_KEY="$SUPABASE_ANON_KEY" \
+            --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true

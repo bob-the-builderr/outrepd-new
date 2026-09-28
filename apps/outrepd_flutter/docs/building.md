@@ -99,3 +99,46 @@ Connect ← Upload. بعد ربع ساعة تقريبًا النسخة بتظه�
 
 قبل كل رفع جديد زوّد رقم البناء في `pubspec.yaml` (`version: 1.0.0+2`،
 `+3`، ...). Apple و Google الاتنين بيرفضوا رقم بناء اترفع قبل كده.
+
+## آيفون من ويندوز (من غير ماك)
+
+Codemagic بيبني الأب على ماك عندهم ويرفعه على TestFlight لوحده. فيه ٥٠٠
+دقيقة مجانًا في الشهر، والبناء الواحد بياخد حوالي ١٥ دقيقة. الإعدادات
+موجودة في `codemagic.yaml` في أول الريبو.
+
+مرة واحدة بس:
+
+1. **حساب Apple Developer** (٩٩ دولار في السنة). أسهل طريقة تشترك بيها من
+   تطبيق Apple Developer على الآيفون، أو من developer.apple.com.
+2. **App ID**: من developer.apple.com ← Identifiers ← `+` ← App IDs،
+   والـ Bundle ID بالظبط `com.outrepd.outrepd`. الـ Capabilities سيبها زي
+   ما هي.
+3. **الأب في App Store Connect**: من appstoreconnect.apple.com ← Apps ← `+`
+   ← New App، واختار نفس الـ Bundle ID. بعد ما يتعمل افتح App Information،
+   وانسخ الـ **Apple ID** (رقم زي 6741234567).
+4. **مفتاح API**: من App Store Connect ← Users and Access ← Integrations ←
+   App Store Connect API ← `+`، وخلّي الصلاحية **App Manager**. نزّل ملف
+   الـ `.p8` واحفظه في مكان آمن، لأنه بيتنزّل مرة واحدة بس. خد كمان الـ
+   **Issuer ID** والـ **Key ID**.
+5. **Codemagic**: اعمل حساب على codemagic.io بحساب GitHub، واختار الريبو
+   `outrepd-new`.
+6. من Codemagic ← Team settings ← Integrations ← Developer Portal ← Manage
+   keys ← Add key:
+   - الاسم لازم يبقى بالظبط **`outrepd`**.
+   - حط الـ Issuer ID والـ Key ID، وارفع ملف الـ `.p8`.
+7. من صفحة الأب في Codemagic ← Environment variables، ضيف:
+   - `SUPABASE_URL` و `SUPABASE_ANON_KEY` (نفس اللي في `supabase\keys.env`)
+     في group اسمه **`supabase`**، وعلّم Secure.
+   - `APP_STORE_APPLE_ID` بالرقم اللي خدته في الخطوة ٣، في نفس الـ group.
+8. من Codemagic ← Code signing identities ← iOS certificates ← Generate
+   certificate. Codemagic بيعمل شهادة التوزيع بالمفتاح اللي ضفته.
+
+كل مرة:
+
+- من Codemagic ← Start new build، واختار الفرع و **iOS → TestFlight**.
+- بعد ما يخلص، النسخة بتظهر في App Store Connect ← TestFlight بعد ربع ساعة
+  تقريبًا. نزّل تطبيق TestFlight على الآيفون وجرّب منه.
+- لما تبقى جاهز: App Store Connect ← صفحة الأب ← اختار النسخة ← Add for
+  Review.
+
+رقم البناء بيزيد لوحده، فمش محتاج تغيّره في `pubspec.yaml` عشان آيفون.
