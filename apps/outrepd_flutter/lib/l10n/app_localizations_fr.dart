@@ -2038,4 +2038,8 @@ class LFr extends L {
 
   @override
   String get thinkYouCanBeatMe => 'Tu crois pouvoir me battre ?';
+
+  @override
+  String get usernameNotAllowed =>
+      'Ce nom n\'est pas autorisé. Essaie-en un autre.';
 }

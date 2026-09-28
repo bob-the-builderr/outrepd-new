@@ -642,5 +642,6 @@
   "pushUpsInSeconds": "Push-up dalam {seconds} detik",
   "beatOpponent": "Mengalahkan {name} {score}",
   "lostToOpponent": "Kalah dari {name} {score}",
-  "thinkYouCanBeatMe": "Yakin bisa mengalahkanku?"
+  "thinkYouCanBeatMe": "Yakin bisa mengalahkanku?",
+  "usernameNotAllowed": "Nama itu tidak diizinkan. Coba yang lain."
 }

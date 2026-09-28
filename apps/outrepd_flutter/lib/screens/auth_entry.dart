@@ -40,9 +40,9 @@ class AuthEntryScreen extends StatefulWidget {
 
 class _AuthEntryScreenState extends State<AuthEntryScreen> {
   Future<void> _openSignUp() async {
-    final outcome = await Navigator.of(
-      context,
-    ).push<AuthOutcome>(MaterialPageRoute(builder: (_) => const SignUpScreen()));
+    final outcome = await Navigator.of(context).push<AuthOutcome>(
+      MaterialPageRoute(builder: (_) => const SignUpScreen()),
+    );
     if (outcome != null && mounted) Navigator.of(context).pop(outcome);
   }
 
@@ -200,6 +200,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
             _error = l.usernameInvalidLength;
           });
           return;
+        case RenameResult.notAllowed:
+          setState(() {
+            _busy = false;
+            _error = l.usernameNotAllowed;
+          });
+          return;
         case RenameResult.ok:
           demoProfile.username = username;
         case RenameResult.alreadyChanged:
@@ -212,9 +218,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       switch (result) {
         case EmailSignUpResult.ok:
           final outcome = await Navigator.of(context).push<AuthOutcome>(
-            MaterialPageRoute(
-              builder: (_) => VerifyCodeScreen(email: email),
-            ),
+            MaterialPageRoute(builder: (_) => VerifyCodeScreen(email: email)),
           );
           if (outcome != null && mounted) Navigator.of(context).pop(outcome);
           if (mounted) setState(() => _busy = false);
@@ -232,7 +236,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           setState(() {
             _busy = false;
             _error = l.tooManyCodes;
-          });        case EmailSignUpResult.offline:
+          });
+        case EmailSignUpResult.offline:
           setState(() {
             _busy = false;
             _error = l.cantReachServer;
@@ -380,7 +385,8 @@ class _LoginScreenState extends State<LoginScreen> {
           setState(() {
             _busy = false;
             _error = l.tooManyCodes;
-          });        case EmailLoginCodeResult.offline:
+          });
+        case EmailLoginCodeResult.offline:
           setState(() {
             _busy = false;
             _error = l.cantReachServer;
@@ -468,7 +474,10 @@ class VerifyCodeScreen extends StatefulWidget {
 
 class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   final _digits = List<String>.filled(_kCodeLength, '');
-  final _controllers = List.generate(_kCodeLength, (_) => TextEditingController());
+  final _controllers = List.generate(
+    _kCodeLength,
+    (_) => TextEditingController(),
+  );
   final _nodes = List.generate(_kCodeLength, (_) => FocusNode());
 
   bool _busy = false;
@@ -601,11 +610,17 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
         await backend.resendEmailCode(widget.email);
       }
       messenger.showSnackBar(
-        SnackBar(content: Text(l.codeResent), behavior: SnackBarBehavior.floating),
+        SnackBar(
+          content: Text(l.codeResent),
+          behavior: SnackBarBehavior.floating,
+        ),
       );
     } on Object catch (_) {
       messenger.showSnackBar(
-        SnackBar(content: Text(l.cantReachServer), behavior: SnackBarBehavior.floating),
+        SnackBar(
+          content: Text(l.cantReachServer),
+          behavior: SnackBarBehavior.floating,
+        ),
       );
     }
     if (!mounted) return;
@@ -675,7 +690,10 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                   child: Text.rich(
                     TextSpan(
                       text: '${l.didntGetIt} ',
-                      style: TextStyle(color: context.colors.muted, fontSize: 13),
+                      style: TextStyle(
+                        color: context.colors.muted,
+                        fontSize: 13,
+                      ),
                       children: [
                         TextSpan(
                           text: _secondsLeft > 0
@@ -875,11 +893,7 @@ class _BackHeader extends StatelessWidget {
               shape: BoxShape.circle,
               color: context.colors.surfaceRaised,
             ),
-            child: Icon(
-              Icons.arrow_back,
-              size: 18,
-              color: context.colors.text,
-            ),
+            child: Icon(Icons.arrow_back, size: 18, color: context.colors.text),
           ),
         ),
         const SizedBox(height: 22),

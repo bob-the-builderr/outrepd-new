@@ -2023,4 +2023,8 @@ class LTr extends L {
 
   @override
   String get thinkYouCanBeatMe => 'Beni yenebileceğini mi sanıyorsun?';
+
+  @override
+  String get usernameNotAllowed =>
+      'Bu isme izin verilmiyor. Başka bir tane dene.';
 }

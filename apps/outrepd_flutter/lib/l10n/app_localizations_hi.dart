@@ -2027,4 +2027,8 @@ class LHi extends L {
 
   @override
   String get thinkYouCanBeatMe => 'क्या तुम मुझे हरा सकते हो?';
+
+  @override
+  String get usernameNotAllowed =>
+      'यह नाम इस्तेमाल नहीं किया जा सकता। कोई दूसरा आज़माएँ।';
 }

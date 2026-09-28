@@ -642,5 +642,6 @@
   "pushUpsInSeconds": "{seconds}초 동안 푸시업",
   "beatOpponent": "{name} 상대로 승리 {score}",
   "lostToOpponent": "{name}에게 패배 {score}",
-  "thinkYouCanBeatMe": "나를 이길 수 있을까?"
+  "thinkYouCanBeatMe": "나를 이길 수 있을까?",
+  "usernameNotAllowed": "사용할 수 없는 이름이에요. 다른 이름을 입력하세요."
 }

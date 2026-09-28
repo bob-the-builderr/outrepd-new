@@ -488,6 +488,10 @@ enum RenameResult {
 
   /// This account already spent its one rename.
   alreadyChanged,
+
+  /// A name the server refuses to show on a board: abuse, or one that would
+  /// pass for the app itself.
+  notAllowed,
 }
 
 /// What happened trying to attach an email to this account.
@@ -504,6 +508,7 @@ enum EmailSignUpResult {
   /// Too many codes sent to this address too quickly. Not a mistake in
   /// what was typed, so it earns its own message rather than [invalid]'s.
   rateLimited,
+
   /// The server could not be reached. Nothing is wrong with the address, so
   /// this must never read as [invalid].
   offline,
@@ -520,6 +525,7 @@ enum EmailLoginCodeResult {
 
   /// Too many codes sent to this address too quickly.
   rateLimited,
+
   /// The server could not be reached. Said as such, never as [notFound]:
   /// telling somebody with no signal that their account does not exist is
   /// how people end up making a second one.
@@ -916,8 +922,7 @@ class NoBackend implements Backend {
   Future<List<BlockedLifter>> blocked() async => const [];
 
   @override
-  Future<void> mute(String theirId) =>
-      throw StateError('no server configured');
+  Future<void> mute(String theirId) => throw StateError('no server configured');
 
   @override
   Future<void> unmute(String theirId) =>

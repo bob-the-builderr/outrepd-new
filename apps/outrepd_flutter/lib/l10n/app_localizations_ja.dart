@@ -1986,4 +1986,7 @@ class LJa extends L {
 
   @override
   String get thinkYouCanBeatMe => '私に勝てると思う？';
+
+  @override
+  String get usernameNotAllowed => 'この名前は使えません。別の名前にしてください。';
 }

@@ -642,5 +642,6 @@
   "pushUpsInSeconds": "Liegestütze in {seconds} Sekunden",
   "beatOpponent": "{name} geschlagen, {score}",
   "lostToOpponent": "Gegen {name} verloren, {score}",
-  "thinkYouCanBeatMe": "Glaubst du, du schlägst mich?"
+  "thinkYouCanBeatMe": "Glaubst du, du schlägst mich?",
+  "usernameNotAllowed": "Dieser Name ist nicht erlaubt. Versuch einen anderen."
 }

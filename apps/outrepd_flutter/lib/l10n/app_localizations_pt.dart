@@ -2035,4 +2035,7 @@ class LPt extends L {
 
   @override
   String get thinkYouCanBeatMe => 'Acha que consegue me vencer?';
+
+  @override
+  String get usernameNotAllowed => 'Esse nome não é permitido. Tente outro.';
 }

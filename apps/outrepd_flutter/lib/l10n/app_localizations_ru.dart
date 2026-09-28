@@ -2027,4 +2027,8 @@ class LRu extends L {
 
   @override
   String get thinkYouCanBeatMe => 'Думаешь, сможешь меня победить?';
+
+  @override
+  String get usernameNotAllowed =>
+      'Это имя использовать нельзя. Попробуйте другое.';
 }

@@ -2040,4 +2040,8 @@ class LDe extends L {
 
   @override
   String get thinkYouCanBeatMe => 'Glaubst du, du schlägst mich?';
+
+  @override
+  String get usernameNotAllowed =>
+      'Dieser Name ist nicht erlaubt. Versuch einen anderen.';
 }

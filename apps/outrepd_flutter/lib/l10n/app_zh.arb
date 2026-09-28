@@ -642,5 +642,6 @@
   "pushUpsInSeconds": "{seconds}秒俯卧撑",
   "beatOpponent": "击败 {name} {score}",
   "lostToOpponent": "输给 {name} {score}",
-  "thinkYouCanBeatMe": "你觉得你能赢我吗？"
+  "thinkYouCanBeatMe": "你觉得你能赢我吗？",
+  "usernameNotAllowed": "这个名字不能使用，请换一个。"
 }

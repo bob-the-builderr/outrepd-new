@@ -3810,6 +3810,12 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Think you can beat me?'**
   String get thinkYouCanBeatMe;
+
+  /// Shown when the server refuses a username as abusive or as passing for the app itself.
+  ///
+  /// In en, this message translates to:
+  /// **'That name isn\'t allowed. Try another one.'**
+  String get usernameNotAllowed;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

@@ -2027,4 +2027,7 @@ class LId extends L {
 
   @override
   String get thinkYouCanBeatMe => 'Yakin bisa mengalahkanku?';
+
+  @override
+  String get usernameNotAllowed => 'Nama itu tidak diizinkan. Coba yang lain.';
 }

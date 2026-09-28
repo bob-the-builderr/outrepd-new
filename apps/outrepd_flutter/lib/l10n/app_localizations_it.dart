@@ -2034,4 +2034,8 @@ class LIt extends L {
 
   @override
   String get thinkYouCanBeatMe => 'Pensi di potermi battere?';
+
+  @override
+  String get usernameNotAllowed =>
+      'Questo nome non è consentito. Provane un altro.';
 }

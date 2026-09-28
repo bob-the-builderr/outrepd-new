@@ -152,6 +152,11 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
             _saving = false;
             _error = l.usernameInvalidLength;
           });
+        case RenameResult.notAllowed:
+          setState(() {
+            _saving = false;
+            _error = l.usernameNotAllowed;
+          });
         case RenameResult.alreadyChanged:
           // The client-side check missed it — another tab, another device,
           // or a sheet left open since before the last one landed. Refuse
@@ -179,7 +184,9 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
     final canSave = _validFormat && !_unchanged && _available != false;
 
     return Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
@@ -189,11 +196,16 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
             children: [
               Text(
                 l.changeUsername,
-                style: context.type.heading.copyWith(color: context.colors.text),
+                style: context.type.heading.copyWith(
+                  color: context.colors.text,
+                ),
               ),
               const SizedBox(height: 16),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: context.colors.background,
                   borderRadius: BorderRadius.circular(14),
@@ -207,7 +219,10 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
                   children: [
                     Text(
                       '@',
-                      style: TextStyle(color: context.colors.faint, fontSize: 16),
+                      style: TextStyle(
+                        color: context.colors.faint,
+                        fontSize: 16,
+                      ),
                     ),
                     const SizedBox(width: 10),
                     Expanded(
@@ -215,7 +230,10 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
                         controller: _controller,
                         autofocus: true,
                         onChanged: _onChanged,
-                        style: TextStyle(color: context.colors.text, fontSize: 16),
+                        style: TextStyle(
+                          color: context.colors.text,
+                          fontSize: 16,
+                        ),
                         cursorColor: context.colors.brand,
                         decoration: const InputDecoration(
                           isDense: true,

@@ -2036,4 +2036,8 @@ class LEs extends L {
 
   @override
   String get thinkYouCanBeatMe => '¿Crees que puedes ganarme?';
+
+  @override
+  String get usernameNotAllowed =>
+      'Ese nombre no está permitido. Prueba con otro.';
 }

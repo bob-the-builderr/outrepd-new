@@ -2015,4 +2015,7 @@ class LAr extends L {
 
   @override
   String get thinkYouCanBeatMe => 'هل تظن أنك تستطيع هزيمتي؟';
+
+  @override
+  String get usernameNotAllowed => 'الاسم ده مش مسموح. جرّب اسم تاني.';
 }

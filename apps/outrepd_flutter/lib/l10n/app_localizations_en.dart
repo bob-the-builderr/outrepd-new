@@ -2028,4 +2028,7 @@ class LEn extends L {
 
   @override
   String get thinkYouCanBeatMe => 'Think you can beat me?';
+
+  @override
+  String get usernameNotAllowed => 'That name isn\'t allowed. Try another one.';
 }

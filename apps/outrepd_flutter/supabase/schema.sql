@@ -351,6 +351,27 @@ returns trigger
 language plpgsql
 as $$
 begin
+  -- What other lifters see, and so what a client must not write around the
+  -- rules for: a name that skipped set_my_username's checks and its one
+  -- rename, or a picture loaded from some other server, which would learn
+  -- the address of everybody who opened a board. The dashboard and the
+  -- service key are not a client, so a moderator can still rename somebody.
+  if current_user in ('authenticated', 'anon') then
+    if (new.username is distinct from old.username
+        or new.username_changed_at is distinct from old.username_changed_at)
+       and current_setting('outrepd.renaming', true) is distinct from 'on' then
+      raise exception 'a username changes through set_my_username only';
+    end if;
+
+    if new.avatar_url is distinct from old.avatar_url
+       and new.avatar_url is not null
+       and new.avatar_url !~ (
+         '^https://[A-Za-z0-9.-]+/storage/v1/object/public/avatars/'
+         || new.id::text || '/photo\.jpg(\?v=[0-9]+)?$') then
+      raise exception 'avatar_url must be this account''s own uploaded photo';
+    end if;
+  end if;
+
   -- settle_duel runs as the definer and sets this for the length of its
   -- transaction. Anything else touching these columns is a client trying to
   -- write its own rank.
@@ -389,6 +410,76 @@ drop trigger if exists profiles_guard_ladder on profiles;
 create trigger profiles_guard_ladder
   before update on profiles
   for each row execute function guard_ladder_columns();
+
+-- Names nobody gets to wear on a board. The stores ask an app with names that
+-- strangers see for a way to keep abuse from being posted at all, not only a
+-- way to report it afterwards.
+--
+-- Whole words that are abuse in any name they appear in, in English and in the
+-- Egyptian and Gulf spellings that turn up in Latin letters, plus the names
+-- that would pass for the app itself. Short fragments that are also inside
+-- ordinary words ("anal" in "analyst", "cock" in "peacock") are left out on
+-- purpose: refusing somebody's real name is worse than missing a rare one,
+-- and reports catch what this does not. Digits that stand in for letters are
+-- read as those letters first, so "b1tch" is "bitch".
+create or replace function username_not_allowed(name text)
+returns boolean
+language sql
+immutable
+as $$
+  select translate(lower(coalesce(name, '')), '013457@$', 'oieastas')
+      ~ ('(fuck|cunt|nigg|faggot|whore|slut|bitch|pussy|porn|'
+         'dildo|penis|vagina|hitler|retard|motherf|'
+         'sharmoot|sharmout|sharmuta|kosom|kossom|kusom|kosomak|khawal|'
+         'metnak|mitnak|'
+         'outrepd|admin|moderator|official)')
+    or lower(coalesce(name, '')) ~ '(شرموط|متناك|كسم|عرص|منيوك)';
+$$;
+
+-- A profile starts where everybody starts. The update guard above keeps a
+-- client from writing its own rank, but nothing stopped the first insert
+-- from arriving already a Master with a thousand wins, or with a name or a
+-- picture the rules above would have refused.
+create or replace function guard_new_profile()
+returns trigger
+language plpgsql
+as $$
+begin
+  if current_user not in ('authenticated', 'anon') then
+    return new;
+  end if;
+
+  new.tier_idx        := 0;
+  new.div_idx         := 0;
+  new.lp              := 0;
+  new.peak_tier_idx   := 0;
+  new.placements_done := 0;
+  new.placement_wins  := 0;
+  new.wins            := 0;
+  new.losses          := 0;
+  new.win_streak      := 0;
+  new.best_streak     := 0;
+  new.total_reps      := 0;
+  new.best_set        := 0;
+  new.friend_code     := generate_friend_code();
+  new.username_changed_at := null;
+  new.avatar_url      := null;
+  new.title           := null;
+  new.created_at      := now();
+
+  -- Renamed rather than refused: refusing would leave a brand-new lifter
+  -- with no account and no idea why. The one rename is still theirs to spend.
+  if username_not_allowed(new.username) then
+    new.username := 'lifter' || substr(replace(new.id::text, '-', ''), 1, 6);
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists profiles_guard_new on profiles;
+create trigger profiles_guard_new
+  before insert on profiles
+  for each row execute function guard_new_profile();
 
 -- A set belongs to the lifter who did it. They may write it once and read
 -- their own; everyone can read a set that a duel has already joined them to.
@@ -547,6 +638,13 @@ create policy "a lifter files their own reports"
 insert into storage.buckets (id, name, public)
 values ('avatars', 'avatars', true)
 on conflict (id) do nothing;
+
+-- A photo, and a small one: the phone sends an 800-pixel JPEG. Without this
+-- the public bucket would host anything any account cared to put in it.
+update storage.buckets
+   set file_size_limit = 5242880,
+       allowed_mime_types = array['image/jpeg', 'image/png', 'image/webp']
+ where id = 'avatars';
 
 drop policy if exists "avatars are public to read" on storage.objects;
 create policy "avatars are public to read"

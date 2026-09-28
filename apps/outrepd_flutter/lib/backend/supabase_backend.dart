@@ -511,9 +511,7 @@ class SupabaseBackend implements Backend {
           id: row['id'] as String,
           username: row['username'] as String,
           at:
-              DateTime.tryParse(
-                row['muted_at'] as String? ?? '',
-              )?.toLocal() ??
+              DateTime.tryParse(row['muted_at'] as String? ?? '')?.toLocal() ??
               DateTime.now(),
         ),
     ];
@@ -551,13 +549,17 @@ class SupabaseBackend implements Backend {
       return switch (result) {
         'taken' => RenameResult.taken,
         'already_changed' => RenameResult.alreadyChanged,
+        'not_allowed' => RenameResult.notAllowed,
         _ => RenameResult.invalid,
       };
     }
 
     final was = _me;
     if (was != null) {
-      _me = was.copyWith(username: name.trim(), usernameChangedAt: DateTime.now());
+      _me = was.copyWith(
+        username: name.trim(),
+        usernameChangedAt: DateTime.now(),
+      );
     }
     return RenameResult.ok;
   }

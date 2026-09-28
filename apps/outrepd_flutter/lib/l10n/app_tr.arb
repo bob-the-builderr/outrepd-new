@@ -642,5 +642,6 @@
   "pushUpsInSeconds": "{seconds} saniyede şınav",
   "beatOpponent": "{name} yenildi {score}",
   "lostToOpponent": "{name} karşısında kaybettim {score}",
-  "thinkYouCanBeatMe": "Beni yenebileceğini mi sanıyorsun?"
+  "thinkYouCanBeatMe": "Beni yenebileceğini mi sanıyorsun?",
+  "usernameNotAllowed": "Bu isme izin verilmiyor. Başka bir tane dene."
 }

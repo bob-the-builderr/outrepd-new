@@ -1121,5 +1121,9 @@
       }
     }
   },
-  "thinkYouCanBeatMe": "Think you can beat me?"
+  "thinkYouCanBeatMe": "Think you can beat me?",
+  "usernameNotAllowed": "That name isn't allowed. Try another one.",
+  "@usernameNotAllowed": {
+    "description": "Shown when the server refuses a username as abusive or as passing for the app itself."
+  }
 }

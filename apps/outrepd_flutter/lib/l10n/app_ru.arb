@@ -642,5 +642,6 @@
   "pushUpsInSeconds": "Отжиманий за {seconds} секунд",
   "beatOpponent": "Победа над {name} {score}",
   "lostToOpponent": "Поражение от {name} {score}",
-  "thinkYouCanBeatMe": "Думаешь, сможешь меня победить?"
+  "thinkYouCanBeatMe": "Думаешь, сможешь меня победить?",
+  "usernameNotAllowed": "Это имя использовать нельзя. Попробуйте другое."
 }

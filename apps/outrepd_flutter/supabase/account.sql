@@ -163,6 +163,10 @@ begin
     return 'invalid';
   end if;
 
+  if username_not_allowed(cleaned) then
+    return 'not_allowed';
+  end if;
+
   if exists (
     select 1 from profiles
      where lower(username) = lower(cleaned) and id <> auth.uid()
@@ -170,9 +174,12 @@ begin
     return 'taken';
   end if;
 
+  -- The profiles guard refuses a username written any other way.
+  perform set_config('outrepd.renaming', 'on', true);
   update profiles
      set username = cleaned, username_changed_at = now()
    where id = auth.uid();
+  perform set_config('outrepd.renaming', 'off', true);
   return 'ok';
 end;
 $$;

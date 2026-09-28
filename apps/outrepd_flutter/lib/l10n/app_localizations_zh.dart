@@ -1978,4 +1978,7 @@ class LZh extends L {
 
   @override
   String get thinkYouCanBeatMe => '你觉得你能赢我吗？';
+
+  @override
+  String get usernameNotAllowed => '这个名字不能使用，请换一个。';
 }

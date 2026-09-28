@@ -1992,4 +1992,7 @@ class LKo extends L {
 
   @override
   String get thinkYouCanBeatMe => '나를 이길 수 있을까?';
+
+  @override
+  String get usernameNotAllowed => '사용할 수 없는 이름이에요. 다른 이름을 입력하세요.';
 }

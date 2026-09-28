@@ -642,5 +642,6 @@
   "pushUpsInSeconds": "ضغطة في {seconds} ثانية",
   "beatOpponent": "فزت على {name} {score}",
   "lostToOpponent": "خسرت أمام {name} {score}",
-  "thinkYouCanBeatMe": "هل تظن أنك تستطيع هزيمتي؟"
+  "thinkYouCanBeatMe": "هل تظن أنك تستطيع هزيمتي؟",
+  "usernameNotAllowed": "الاسم ده مش مسموح. جرّب اسم تاني."
 }

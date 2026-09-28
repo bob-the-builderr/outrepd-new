@@ -642,5 +642,6 @@
   "pushUpsInSeconds": "{seconds} सेकंड में पुश-अप",
   "beatOpponent": "{name} को हराया {score}",
   "lostToOpponent": "{name} से हारा {score}",
-  "thinkYouCanBeatMe": "क्या तुम मुझे हरा सकते हो?"
+  "thinkYouCanBeatMe": "क्या तुम मुझे हरा सकते हो?",
+  "usernameNotAllowed": "यह नाम इस्तेमाल नहीं किया जा सकता। कोई दूसरा आज़माएँ।"
 }
