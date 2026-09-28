@@ -152,11 +152,10 @@ void main() {
     });
 
     test('a set the counter gets wrong, it says it is unsure of', () {
-      // The one miss on the bench — 28 for 27, two counts while the lifter
-      // was still setting the camera up — was flagged, so the confirm screen
-      // asked instead of recording 28 as fact. A confident miss is the worst
-      // thing this counter can produce: nobody checks a number presented as
-      // certain.
+      // No set on the bench is missed today, so this guards the next one: a
+      // miss must come flagged, so the confirm screen asks instead of
+      // recording a guess as fact. A confident miss is the worst thing this
+      // counter can produce: nobody checks a number presented as certain.
       final report = replayDirectory(Directory('test/recordings'));
       for (final r in report.results) {
         if (!r.exact) {
