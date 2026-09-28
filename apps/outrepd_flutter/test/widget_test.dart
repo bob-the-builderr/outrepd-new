@@ -325,9 +325,9 @@ void main() {
     });
   }
 
-  testWidgets('lays out in Arabic', (tester) async {
+  testWidgets('lays out in Hindi', (tester) async {
     phone(tester);
-    await tester.pumpWidget(_app(null, scale: 1.3, locale: const Locale('ar')));
+    await tester.pumpWidget(_app(null, scale: 1.3, locale: const Locale('hi')));
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
   });

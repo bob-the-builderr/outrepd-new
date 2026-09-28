@@ -209,9 +209,9 @@ ThemeData buildTheme(Brightness brightness) {
     brightness: brightness,
     colorScheme: scheme,
     scaffoldBackgroundColor: p.background,
-    // No font family is pinned on purpose. The app ships in fourteen
+    // No font family is pinned on purpose. The app ships in thirteen
     // languages, and naming one family stops the engine reaching for a font
-    // that has Arabic, Devanagari or CJK glyphs — those scripts come out as
+    // that has Devanagari, Cyrillic or CJK glyphs — those scripts come out as
     // empty boxes. The platform default already covers all of them.
     extensions: <ThemeExtension<dynamic>>[p],
   );

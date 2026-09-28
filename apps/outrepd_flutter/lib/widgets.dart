@@ -266,37 +266,25 @@ class SectionHeader extends StatelessWidget {
   }
 }
 
-/// Seconds as m:ss, in the reader's own digits.
-///
-/// The colon stays a colon in every language the app ships in; only the digits
-/// either side of it change.
+/// Seconds as m:ss. Every language the app ships in writes a clock this way.
 String formatClock(BuildContext context, int seconds) {
   final safe = seconds < 0 ? 0 : seconds;
   final minutes = safe ~/ 60;
   final rest = (safe % 60).toString().padLeft(2, '0');
-  final locale = Localizations.localeOf(context);
-  final text = '$minutes:$rest';
-  return locale.languageCode == 'ar' ? _arabicDigits(text) : text;
+  return '$minutes:$rest';
 }
 
-/// A number in the reader's own digits.
-///
-/// Grouping and decimal marks come from the locale. The digits themselves only
-/// change for Arabic: ٢٤ rather than 24. Hindi, Japanese, Korean and Chinese
-/// all write numbers in Western digits in practice, whatever their scripts
-/// historically had, and swapping those out would look wrong rather than
-/// localised.
+/// A number as the reader's language groups it: 1,234 in English, 1.234 in
+/// German. The digits are Western in every language the app ships in —
+/// Hindi, Japanese, Korean and Chinese all write numbers that way in practice.
 String localNumber(BuildContext context, num n) {
   final locale = Localizations.localeOf(context);
-  final text = NumberFormat.decimalPattern(locale.toString()).format(n);
-  return locale.languageCode == 'ar' ? _arabicDigits(text) : text;
+  return NumberFormat.decimalPattern(locale.toString()).format(n);
 }
 
 /// Reads a whole number a person typed, in whatever digits their keyboard
-/// produces. An Arabic keyboard gives ١٧٥, and `int.tryParse` refuses it — so
-/// showing localised digits in an editable field without this makes every save
-/// fail with "fill all three with whole numbers" while three numbers sit right
-/// there on screen.
+/// produces. The app no longer ships in Arabic, but a phone can still have an
+/// Arabic keyboard, which gives ١٧٥ — and `int.tryParse` refuses it.
 int? parseLocalNumber(String text) {
   const arabicIndic = '٠١٢٣٤٥٦٧٨٩';
   final western = text.trim().split('').map((c) {
@@ -306,13 +294,6 @@ int? parseLocalNumber(String text) {
   return int.tryParse(western);
 }
 
-String _arabicDigits(String text) {
-  const arabicIndic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-  return text.split('').map((c) {
-    final digit = '0123456789'.indexOf(c);
-    return digit == -1 ? c : arabicIndic[digit];
-  }).join();
-}
 
 /// What a screen says before it has anything to show.
 ///

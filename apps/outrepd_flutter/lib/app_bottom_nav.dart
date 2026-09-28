@@ -3,7 +3,7 @@
 /// Built from the supplied reference, with three changes: the colours come
 /// from the theme rather than from literals, the labels come from the ARB
 /// files, and each label is allowed to shrink — four fixed-width tabs have to
-/// hold a word in fourteen languages at whatever text size the reader has set,
+/// hold a word in thirteen languages at whatever text size the reader has set,
 /// and an ellipsis through "プロフィール" is worse than a point smaller.
 library;
 

@@ -279,7 +279,7 @@ void main() {
       }
     });
 
-    for (final code in ['ar', 'de', 'ja']) {
+    for (final code in ['hi', 'de', 'ja']) {
       testWidgets('the duel HUD lays out in $code', (tester) async {
         final source = await open(
           tester,

@@ -153,8 +153,7 @@ class _OutrepdAppState extends State<OutrepdApp> with WidgetsBindingObserver {
       title: 'OUTREPD',
       debugShowCheckedModeBanner: false,
       // Null follows the phone. Flutter then picks the nearest language it has
-      // and falls back to English, and lays Arabic out right to left without
-      // anything here asking it to.
+      // and falls back to English — which is what an Arabic phone now gets.
       locale: settings.language.locale,
       supportedLocales: L.supportedLocales,
       localizationsDelegates: const [

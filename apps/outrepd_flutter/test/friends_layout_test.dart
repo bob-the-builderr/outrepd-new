@@ -57,7 +57,7 @@ void main() {
   }
 
   // Every language this app ships in, at a scale that has broken rows before.
-  for (final code in ['ar', 'de', 'ja', 'ru', 'tr']) {
+  for (final code in ['hi', 'de', 'ja', 'ru', 'tr']) {
     testWidgets('friends lays out in $code', (tester) async {
       phone(tester);
       await tester.pumpWidget(_app(1.3, Locale(code)));

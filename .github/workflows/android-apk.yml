@@ -135,8 +135,6 @@ jobs:
           mkdir -p "$RUNNER_TEMP/fonts"
           curl -sSL -o "$RUNNER_TEMP/fonts/NotoSans.ttf" \
             "https://github.com/google/fonts/raw/main/ofl/notosans/NotoSans%5Bwdth,wght%5D.ttf"
-          curl -sSL -o "$RUNNER_TEMP/fonts/NotoSansArabic.ttf" \
-            "https://github.com/google/fonts/raw/main/ofl/notosansarabic/NotoSansArabic%5Bwdth,wght%5D.ttf"
           SHOT_FONTS="$RUNNER_TEMP/fonts" flutter test --update-goldens tool/screenshots/ 2>&1 | tee "$RUNNER_TEMP/ci/screenshots.txt"
 
       - name: Publish the results to the ci-results branch

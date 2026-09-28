@@ -92,7 +92,7 @@ void main() {
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.reset);
 
-      // German writes the camera explanation longest of the fourteen.
+      // German writes the camera explanation longest of the thirteen.
       await tester.pumpWidget(_app(
         Builder(
           builder: (context) => BlockingNotice(

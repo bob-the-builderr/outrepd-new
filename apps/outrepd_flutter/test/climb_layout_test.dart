@@ -67,8 +67,8 @@ void main() {
     });
   }
 
-  // German and Russian write these unlocks long; Arabic runs right to left.
-  for (final code in ['ar', 'de', 'ru', 'ja']) {
+  // German and Russian write these unlocks long; Hindi runs tallest.
+  for (final code in ['hi', 'de', 'ru', 'ja']) {
     testWidgets('the climb lays out in $code', (tester) async {
       phone(tester);
       await tester.pumpWidget(

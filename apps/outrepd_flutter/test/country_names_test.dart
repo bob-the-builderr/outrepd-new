@@ -34,7 +34,7 @@ Future<String> _nameIn(WidgetTester tester, String lang, String code) async {
 
 void main() {
   testWidgets('a code reads in the reader\'s language', (tester) async {
-    expect(await _nameIn(tester, 'ar', 'EG'), 'مصر');
+    expect(await _nameIn(tester, 'fr', 'EG'), 'Égypte');
     expect(await _nameIn(tester, 'de', 'EG'), 'Ägypten');
     expect(await _nameIn(tester, 'en', 'eg'), 'Egypt');
   });
@@ -42,7 +42,7 @@ void main() {
   testWidgets('something that is not a code is shown as it is', (
     tester,
   ) async {
-    expect(await _nameIn(tester, 'ar', 'Egypt'), 'Egypt');
+    expect(await _nameIn(tester, 'fr', 'Egypt'), 'Egypt');
   });
 
   test('every app language has a name for every country English has', () {

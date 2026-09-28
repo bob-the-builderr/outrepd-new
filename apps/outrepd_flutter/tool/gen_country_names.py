@@ -1,7 +1,7 @@
 """Writes lib/country_names.g.dart from Unicode CLDR.
 
 Accounts store a country as its two-letter ISO code ("EG"). This turns the
-CLDR territory names for the app's fourteen languages into one Dart map per
+CLDR territory names for the app's thirteen languages into one Dart map per
 language, so a screen can say "مصر" or "Ägypten" instead of the code.
 
 Needs the npm package cldr-localenames-modern unpacked somewhere:
@@ -19,7 +19,7 @@ import os
 import re
 import sys
 
-LANGUAGES = ['ar', 'de', 'en', 'es', 'fr', 'hi', 'id', 'it', 'ja', 'ko', 'pt',
+LANGUAGES = ['de', 'en', 'es', 'fr', 'hi', 'id', 'it', 'ja', 'ko', 'pt',
              'ru', 'tr', 'zh']
 
 # Two-letter codes CLDR lists that are not countries anyone lives in, plus CQ

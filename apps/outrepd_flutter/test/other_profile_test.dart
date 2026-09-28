@@ -372,7 +372,7 @@ void main() {
       });
     }
 
-    for (final code in ['ar', 'de', 'ja']) {
+    for (final code in ['hi', 'de', 'ja']) {
       testWidgets('full profile lays out in $code', (tester) async {
         backend = _FakeBackend(_played());
         phone(tester);

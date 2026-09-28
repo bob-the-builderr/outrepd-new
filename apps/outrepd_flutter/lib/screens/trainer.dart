@@ -962,7 +962,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
               children: [
                 if (widget.duel case final duel?)
                   // Flexible, because the rank label runs long in several of
-                  // the fourteen languages and this row also has to hold the
+                  // the thirteen languages and this row also has to hold the
                   // way out.
                   Flexible(
                     child: Text(

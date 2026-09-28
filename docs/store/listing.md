@@ -4,7 +4,7 @@
 مكتوبة من اللي الأب بيعمله فعلًا، ومفيش ميزة مذكورة مش موجودة. عدد الحروف
 جنب كل خانة هو الحد بتاع المتجر.
 
-الإنجليزي هو اللغة الأساسية في المتجرين، والعربي يتضاف كترجمة.
+الإنجليزي هو اللغة الوحيدة في المتجرين. الأب مابقاش فيه عربي (اتشال ٢٩ سبتمبر ٢٠٢٦).
 
 ---
 
@@ -14,7 +14,7 @@
 |---|---|
 | التصنيف | Health & Fitness |
 | التصنيف التاني (App Store) | Sports |
-| السعر | مجاني |
+| السعر | التحميل مجاني، والاستخدام باشتراك |
 | إعلانات | لأ |
 | مشتريات جوه الأب | أيوه — اشتراك: أسبوعي ٤٫٩٩$، سنوي ٣٩٫٩٩$. الأب كله ورا الاشتراك |
 | السن | الأب نفسه بيرفض أي حد أقل من ١٦ سنة في أول شاشة |
@@ -37,11 +37,6 @@ outrepd: Push-Up Duels
 English:
 ```
 Race real people in 60-second push-up duels. Your camera counts every rep.
-```
-
-العربي:
-```
-نافس ناس حقيقيين في تحدي ضغط ٦٠ ثانية. الكاميرا بتعدّ كل عدّة.
 ```
 
 ### Full description (4000)
@@ -73,41 +68,14 @@ After a duel, share a card with your count, who you beat and the LP it earned. O
 YOUR DATA IS YOURS
 Download everything the app holds about you, or delete your account and all of it from inside the app.
 
-Available in English, Arabic, German, Spanish, French, Hindi, Indonesian, Italian, Japanese, Korean, Portuguese, Russian, Turkish and Chinese.
+Available in English, German, Spanish, French, Hindi, Indonesian, Italian, Japanese, Korean, Portuguese, Russian, Turkish and Chinese.
+
+SUBSCRIPTION
+outrepd needs a subscription: weekly or yearly. Payment is charged to your Google Play or Apple account. It renews automatically at the end of each period unless you cancel at least 24 hours before, and you can cancel anytime in your store account settings.
+Terms: https://www.outrepd.com/terms
+Privacy: https://www.outrepd.com/privacy
 
 For ages 16 and up.
-```
-
-العربي:
-```
-دقيقة واحدة. خصم واحد. وكل عدّة ليها حساب.
-
-outrepd بيحوّل الضغط لتحدي. سند موبايلك، خد وضعك، وابدأ ٦٠ ثانية والكاميرا بتعدّ عدّاتك. بعدها السِت بتاعك بيتسابق مع سِت شخص حقيقي، عدّة بعدّة، واللي عمل أكتر يكسب.
-
-العدّ بالكاميرا، على موبايلك
-قراءة حركة الجسم بتحصل على جهازك. الأب بيشوف نزلت لحد فين وطلعت لحد فين، فنص العدّة مابتتحسبش. ومفيش أي فيديو بيخرج من موبايلك خالص.
-
-نافس ناس حقيقيين
-كل خصم شخص عمل السِت بتاعه بنفسه. بتتسابق معاه بنفس السرعة اللي عمل بيها، فتشوف مين سبق وإمتى. مفيش بوتات ولا أرقام متألفة. ولو مفيش حد قريب من رتبتك فاضي، بتلعب ضد أحسن رقم ليك، والسِت بتاعك بيستنى أول خصم حقيقي.
-
-اطلع في الرتب
-خمس ماتشات تحديد مستوى بيحددوا رتبتك الأولى. بعدها كل فوز بيطلّعك من الحديد للبرونز والفضة والدهب والبلاتين والماس لحد المعلّم. وأي رتبة توصلها بتفضل بتاعتك: اليوم الوحش ممكن ينزّلك درجة جوه الرتبة، لكن عمره ما ينزّلك من الرتبة نفسها.
-
-اتحدى صحابك
-ضيف صحابك بكود الصداقة، شوف مين أونلاين، وابعت تحدي يلعبوه وقت ما يكونوا جاهزين. نتيجتك مع كل صاحب محفوظة، فدايمًا فيه حساب لسه ماتقفلش.
-
-اكسب ألقاب
-٤٦ لقب على الماتشات والفوز والأيام المتتالية والسِتّات النضيفة والتمرين بدري الصبح ومتأخر بالليل وغيرهم. البس اللقب اللي فخور بيه أكتر ويظهر جنب اسمك.
-
-شارك انتصاراتك
-بعد كل ماتش شارك كارت فيه عدّاتك وكسبت مين والنقط اللي خدتها. أو اعمل كارت فيه رتبتك وأرقامك وانشره في أي حتة.
-
-بياناتك بتاعتك
-نزّل كل حاجة الأب شايلها عنك، أو امسح حسابك وكل بياناته من جوه الأب.
-
-متاح بالعربي والإنجليزي والألماني والإسباني والفرنساوي والهندي والإندونيسي والإيطالي والياباني والكوري والبرتغالي والروسي والتركي والصيني.
-
-لسن ١٦ سنة وأكبر.
 ```
 
 ---
@@ -127,11 +95,6 @@ English:
 Camera-counted push-up duels
 ```
 
-العربي:
-```
-تحدي ضغط ٦٠ ثانية بالكاميرا
-```
-
 ### Promotional text (170)
 
 English:
@@ -139,14 +102,9 @@ English:
 Race a real person's push-up set, rep by rep. Your camera counts every rep on your phone, and no video ever leaves it.
 ```
 
-العربي:
-```
-اتسابق مع سِت ضغط لشخص حقيقي، عدّة بعدّة. الكاميرا بتعدّ على موبايلك، ومفيش فيديو بيخرج منه.
-```
-
 ### Description (4000)
 
-نفس الوصف الطويل بتاع Google Play فوق، بالإنجليزي والعربي.
+نفس الوصف الطويل بتاع Google Play فوق، بالإنجليزي. Apple بيطلب إن فقرة SUBSCRIPTION ولينكات الشروط والخصوصية تفضل فيه.
 
 ### Keywords (100، مفصولة بفاصلة من غير مسافات)
 
@@ -155,21 +113,11 @@ English:
 pushup,push up,counter,workout,fitness,challenge,duel,rank,friends,rep counter,calisthenics,home
 ```
 
-العربي:
-```
-ضغط,تمرين,عداد,تحدي,لياقة,رياضة,بيت,صحاب,ترتيب,منافسة,كاليسثنكس
-```
-
 ### What's New (أول نسخة)
 
 English:
 ```
 The first release of outrepd.
-```
-
-العربي:
-```
-أول نسخة من outrepd.
 ```
 
 ---

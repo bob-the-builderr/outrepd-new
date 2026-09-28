@@ -205,7 +205,7 @@ void main() {
       });
     }
 
-    for (final code in ['ar', 'de', 'ru']) {
+    for (final code in ['hi', 'de', 'ru']) {
       testWidgets('a new account in $code', (tester) async {
         phone(tester);
         withPlacements(2);

@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 
 import 'country_names.g.dart';
 
-/// [code] as the reader would say it: "مصر" in Arabic, "Ägypten" in German.
+/// [code] as the reader would say it: "Égypte" in French, "Ägypten" in German.
 /// Falls back to English, and then to [code] itself, so a code nobody has a
 /// name for, or an old row that already holds a name, still reads as
 /// something.

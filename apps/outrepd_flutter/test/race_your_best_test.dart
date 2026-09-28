@@ -83,12 +83,12 @@ void main() {
     await leave(tester);
   });
 
-  for (final code in ['ar', 'de', 'ja']) {
+  for (final code in ['hi', 'de', 'ja']) {
     testWidgets('lays out in $code', (tester) async {
       phone(tester);
       demoProfile.bestSet = 31;
       await tester.pumpWidget(_app(locale: Locale(code)));
-      await toVersus(tester, vs: code == 'ar' ? 'ضد' : 'VS');
+      await toVersus(tester, vs: code == 'hi' ? 'बनाम' : 'VS');
       expect(tester.takeException(), isNull);
       await leave(tester);
     });

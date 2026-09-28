@@ -18,7 +18,6 @@ enum HeightUnit { cm, ft }
 enum AppLanguage {
   system,
   english,
-  arabic,
   spanish,
   french,
   german,
@@ -33,8 +32,8 @@ enum AppLanguage {
   chinese,
 }
 
-// Even the abbreviations are translated: "kg" is كجم in Arabic, 公斤 in
-// Chinese, किग्रा in Hindi. Leaving them in Latin script is the kind of detail
+// Even the abbreviations are translated: "kg" is 公斤 in Chinese, किग्रा in
+// Hindi. Leaving them in Latin script is the kind of detail
 // that makes a translated app feel half-done.
 extension WeightUnitLabel on WeightUnit {
   String label(L l) => this == WeightUnit.kg ? l.unitKg : l.unitLb;
@@ -62,7 +61,6 @@ extension AppLanguageLabel on AppLanguage {
   String label(L l) => switch (this) {
     AppLanguage.system => l.themeSystem,
     AppLanguage.english => 'English',
-    AppLanguage.arabic => 'العربية',
     AppLanguage.spanish => 'Español',
     AppLanguage.french => 'Français',
     AppLanguage.german => 'Deutsch',
@@ -81,7 +79,6 @@ extension AppLanguageLabel on AppLanguage {
   Locale? get locale => switch (this) {
     AppLanguage.system => null,
     AppLanguage.english => const Locale('en'),
-    AppLanguage.arabic => const Locale('ar'),
     AppLanguage.spanish => const Locale('es'),
     AppLanguage.french => const Locale('fr'),
     AppLanguage.german => const Locale('de'),
@@ -160,7 +157,7 @@ class AppSettings extends ChangeNotifier {
     }
 
     themeMode = pickEnum('themeMode', ThemeMode.values, themeMode);
-    language = pickEnum('language', AppLanguage.values, language);
+    language = _loadLanguage(s) ?? language;
     weightUnit = pickEnum('weightUnit', WeightUnit.values, weightUnit);
     heightUnit = pickEnum('heightUnit', HeightUnit.values, heightUnit);
 
@@ -169,6 +166,46 @@ class AppSettings extends ChangeNotifier {
     vibration = flag('vibration', vibration);
     showSkeleton = flag('showSkeleton', showSkeleton);
   }
+
+  /// The saved language, by name.
+  ///
+  /// It used to be saved by its position in [AppLanguage], and Arabic was
+  /// taken out of the middle of that list — so an old position is read
+  /// against the list as it was then. Arabic itself becomes following the
+  /// device, which on an Arabic phone now means English.
+  static AppLanguage? _loadLanguage(SharedPreferences s) {
+    final name = s.getString('languageName');
+    if (name != null) {
+      for (final language in AppLanguage.values) {
+        if (language.name == name) return language;
+      }
+      return null;
+    }
+    final old = s.getInt('language');
+    if (old == null || old < 0 || old >= _languagesByOldPosition.length) {
+      return null;
+    }
+    return _languagesByOldPosition[old];
+  }
+
+  /// [AppLanguage] as it was ordered while it was saved by position.
+  static const _languagesByOldPosition = [
+    AppLanguage.system,
+    AppLanguage.english,
+    AppLanguage.system, // was Arabic
+    AppLanguage.spanish,
+    AppLanguage.french,
+    AppLanguage.german,
+    AppLanguage.portuguese,
+    AppLanguage.italian,
+    AppLanguage.russian,
+    AppLanguage.turkish,
+    AppLanguage.indonesian,
+    AppLanguage.hindi,
+    AppLanguage.japanese,
+    AppLanguage.korean,
+    AppLanguage.chinese,
+  ];
 
   /// Mutate settings through this so listeners rebuild and the change sticks.
   void update(VoidCallback change) {
@@ -184,7 +221,7 @@ class AppSettings extends ChangeNotifier {
     if (s == null) return;
 
     s.setInt('themeMode', themeMode.index);
-    s.setInt('language', language.index);
+    s.setString('languageName', language.name);
     s.setInt('weightUnit', weightUnit.index);
     s.setInt('heightUnit', heightUnit.index);
 
@@ -204,10 +241,8 @@ final settings = AppSettings();
 
 /// Body weight in the unit the user picked, rounded — nobody needs grams.
 ///
-/// Takes a context as well as the translations, because the digits are
-/// localised too: these two strings were the last place on the profile still
-/// reading 178 and 181 on an Arabic phone while every number around them read
-/// ١٧٨ and ١٨١.
+/// Takes a context as well as the translations, because the number is
+/// grouped the reader's way, like every other number on the profile.
 String formatBodyWeight(BuildContext context, L l, int kg) {
   final unit = settings.weightUnit == WeightUnit.kg ? l.shortKg : l.shortLb;
   return '${localNumber(context, displayWeight(kg))} $unit';

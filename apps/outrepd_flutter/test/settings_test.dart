@@ -1,8 +1,8 @@
 /// The settings tree.
 ///
 /// Seven screens that mostly consist of rows of text, which is exactly the
-/// shape that breaks at a large text size and in a language that writes the
-/// other way. These walk each one at 1.0x, at 1.6x and in Arabic, because a
+/// shape that breaks at a large text size and in a language whose script runs
+/// tall. These walk each one at 1.0x, at 1.6x and in Hindi, because a
 /// settings screen that overflows is one nobody can finish reading — and the
 /// screens behind it are the ones somebody opens when they want to be left
 /// alone or to leave.
@@ -76,9 +76,9 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('${entry.key} lays out in Arabic', (tester) async {
+    testWidgets('${entry.key} lays out in Hindi', (tester) async {
       phone(tester);
-      await tester.pumpWidget(_app(entry.value.$1, locale: const Locale('ar')));
+      await tester.pumpWidget(_app(entry.value.$1, locale: const Locale('hi')));
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
     });

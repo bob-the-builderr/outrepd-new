@@ -65,12 +65,12 @@ void main() {
     });
   }
 
-  testWidgets('profile lays out in Arabic', (tester) async {
+  testWidgets('profile lays out in Hindi', (tester) async {
     tester.view.physicalSize = small;
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
 
-    await tester.pumpWidget(_app(1.3, const Locale('ar')));
+    await tester.pumpWidget(_app(1.3, const Locale('hi')));
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
   });

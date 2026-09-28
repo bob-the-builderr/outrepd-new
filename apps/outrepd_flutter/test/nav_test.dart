@@ -117,13 +117,13 @@ void main() {
   });
 
   for (final scale in [1.3, 1.6]) {
-    for (final code in ['en', 'ar', 'ja']) {
+    for (final code in ['en', 'hi', 'ja']) {
       testWidgets('the bar survives $code at ${scale}x', (tester) async {
         phone(tester);
         await tester.pumpWidget(_app(scale: scale, locale: Locale(code)));
         await tester.pumpAndSettle();
 
-        // Four fixed-width tabs holding a word in fourteen languages, plus a
+        // Four fixed-width tabs holding a word in thirteen languages, plus a
         // badge hanging off one of them.
         expect(tester.takeException(), isNull);
       });

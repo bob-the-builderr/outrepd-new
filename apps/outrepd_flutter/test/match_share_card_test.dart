@@ -156,7 +156,7 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  for (final code in ['ar', 'de', 'ja', 'ru']) {
+  for (final code in ['hi', 'de', 'ja', 'ru']) {
     testWidgets('lays out in $code', (tester) async {
       await open(tester, _loss, locale: Locale(code));
       expect(tester.takeException(), isNull);

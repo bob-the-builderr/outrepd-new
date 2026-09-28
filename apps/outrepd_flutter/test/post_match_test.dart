@@ -118,7 +118,7 @@ void main() {
       }
     }
 
-    for (final code in ['ar', 'de', 'ja']) {
+    for (final code in ['hi', 'de', 'ja']) {
       testWidgets('a win in $code', (tester) async {
         phone(tester, size: const Size(360, 640));
         await tester.pumpWidget(
@@ -129,7 +129,7 @@ void main() {
       });
     }
 
-    testWidgets('a promotion, in Arabic at 1.6x', (tester) async {
+    testWidgets('a promotion, in Hindi at 1.6x', (tester) async {
       phone(tester, size: const Size(360, 640));
       await tester.pumpWidget(
         _app(
@@ -139,7 +139,7 @@ void main() {
             highest: true,
             onContinue: () {},
           ),
-          locale: const Locale('ar'),
+          locale: const Locale('hi'),
           scale: 1.6,
         ),
       );

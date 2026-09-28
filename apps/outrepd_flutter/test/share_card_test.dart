@@ -134,7 +134,7 @@ void main() {
   }
 
   for (final code in [
-    'ar', 'de', 'es', 'fr', 'hi', 'id', 'it', 'ja', 'ko', 'pt', 'ru', 'tr', 'zh',
+    'de', 'es', 'fr', 'hi', 'id', 'it', 'ja', 'ko', 'pt', 'ru', 'tr', 'zh',
   ]) {
     testWidgets('share sheet lays out in $code', (tester) async {
       phone(tester);

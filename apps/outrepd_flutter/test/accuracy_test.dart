@@ -204,13 +204,13 @@ void main() {
       });
     }
 
-    testWidgets('lays out in Arabic', (tester) async {
+    testWidgets('lays out in Hindi', (tester) async {
       tester.view.physicalSize = const Size(360, 640);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.reset);
 
       reportOf([for (var i = 0; i < 12; i++) (10 + i % 3, 10)]);
-      await tester.pumpWidget(_app(scale: 1.3, locale: const Locale('ar')));
+      await tester.pumpWidget(_app(scale: 1.3, locale: const Locale('hi')));
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
     });

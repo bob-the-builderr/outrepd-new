@@ -309,7 +309,7 @@ void main() {
 
   group('layout', () {
     for (final code in [
-      'en', 'ar', 'es', 'fr', 'de', 'pt', 'it', //
+      'en', 'es', 'fr', 'de', 'pt', 'it', //
       'ru', 'tr', 'id', 'hi', 'ja', 'ko', 'zh',
     ]) {
       testWidgets('fits a small phone in $code at 1.3x text', (tester) async {
