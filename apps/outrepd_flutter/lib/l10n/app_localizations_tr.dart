@@ -2108,4 +2108,7 @@ class LTr extends L {
   String paywallSignedInAs(String email) {
     return '${email} olarak giriş yapıldı';
   }
+
+  @override
+  String get deleteKeepsSubscription => 'Hesabını silmek aboneliğini iptal etmez; ücreti outrepd değil mağaza alır. Önce Google Play\'den veya Apple hesap ayarlarından iptal et.';
 }

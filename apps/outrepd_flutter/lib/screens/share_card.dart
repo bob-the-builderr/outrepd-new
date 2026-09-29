@@ -22,9 +22,12 @@ import '../tier_badge.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
 
-/// Where the card's own footer points. One place to change if the domain
-/// ever does.
-const kProfileUrlBase = 'outrepd.com/u/';
+/// Where a shared card points: the site itself, for now.
+///
+/// Cards used to link `outrepd.com/u/<username>`, and there are no profile
+/// pages on the site — everybody a lifter shared with opened a 404. When the
+/// site gets them, this is the one place that says so.
+const kShareSite = 'outrepd.com';
 
 /// Everything a share card needs, whether it is drawing your own or
 /// somebody else's — both read the same shape.
@@ -57,7 +60,7 @@ class ShareCardData {
   final int? countryPlace;
   final String? avatarUrl;
 
-  String get profileUrl => '$kProfileUrlBase$username';
+  String get profileUrl => kShareSite;
 }
 
 /// One finished duel, for the card shared from its result screen. The card
@@ -95,7 +98,7 @@ class MatchShareData {
   final bool newBest;
   final String? avatarUrl;
 
-  String get profileUrl => '$kProfileUrlBase$username';
+  String get profileUrl => kShareSite;
 }
 
 /// Opens the share sheet: a preview of the card, Story/Post to pick the
@@ -201,7 +204,7 @@ class _ShareCardSheetState extends State<_ShareCardSheet> {
           ],
           text:
               '${widget.invite?.call(l) ?? l.duelMeOnOutrepd}\n'
-              '${widget.profileUrl}',
+              'https://${widget.profileUrl}',
         ),
       );
     } on Object catch (error) {
@@ -219,7 +222,7 @@ class _ShareCardSheetState extends State<_ShareCardSheet> {
   }
 
   void _copyLink() {
-    Clipboard.setData(ClipboardData(text: widget.profileUrl));
+    Clipboard.setData(ClipboardData(text: 'https://${widget.profileUrl}'));
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(L.of(context).linkCopied),
@@ -593,7 +596,7 @@ class _PostCard extends StatelessWidget {
                       _StatRow(data: data, compact: true),
                       const SizedBox(height: 12),
                       Text(
-                        kProfileUrlBase.replaceAll('/u/', ''),
+                        kShareSite,
                         style: context.type.micro.copyWith(
                           color: context.colors.faint,
                         ),

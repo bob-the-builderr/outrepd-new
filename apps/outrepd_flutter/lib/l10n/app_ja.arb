@@ -665,5 +665,6 @@
   "paywallPending": "お支払いは保留中です。ストアで確認され次第、すべて利用できるようになります。",
   "paywallNothingToRestore": "復元できるサブスクリプションが見つかりません。",
   "paywallRestored": "サブスクリプションを復元しました",
-  "paywallSignedInAs": "{email} でログイン中"
+  "paywallSignedInAs": "{email} でログイン中",
+  "deleteKeepsSubscription": "アカウントを削除してもサブスクリプションは解約されません。請求するのはストアで、outrepd ではありません。先に Google Play か Apple アカウントの設定で解約してください。"
 }

@@ -265,13 +265,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
               NavRow(
                 icon: Icons.support_agent,
                 label: l.contactSupport,
-                onTap: _needsSite,
+                onTap: () => _openUrl('mailto:$kSupportEmail'),
               ),
-              NavRow(
-                icon: Icons.star_outline,
-                label: l.rateApp,
-                onTap: _needsSite,
-              ),
+              // Android only until the App Store has a listing to point at:
+              // Apple's link needs the app's number, which it does not have
+              // until the first submission.
+              if (Theme.of(context).platform == TargetPlatform.android ||
+                  kAppStoreId.isNotEmpty)
+                NavRow(
+                  icon: Icons.star_outline,
+                  label: l.rateApp,
+                  onTap: () => _openUrl(
+                    Theme.of(context).platform == TargetPlatform.iOS
+                        ? 'https://apps.apple.com/app/id$kAppStoreId?action=write-review'
+                        : 'https://play.google.com/store/apps/details?id=$kAndroidPackage',
+                  ),
+                ),
               NavRow(
                 icon: Icons.code,
                 label: l.openSourceLicences,
@@ -291,17 +300,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  /// Contact support and the store listing still have nowhere to point at.
-  /// One honest message rather than a row that looks tappable and is not.
-  void _needsSite() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(L.of(context).needsServer),
-        behavior: SnackBarBehavior.floating,
       ),
     );
   }

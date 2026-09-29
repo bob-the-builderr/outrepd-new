@@ -665,5 +665,6 @@
   "paywallPending": "Pembayaranmu masih diproses. Semuanya terbuka begitu toko mengonfirmasinya.",
   "paywallNothingToRestore": "Tidak ada langganan yang bisa dipulihkan.",
   "paywallRestored": "Langganan dipulihkan",
-  "paywallSignedInAs": "Masuk sebagai {email}"
+  "paywallSignedInAs": "Masuk sebagai {email}",
+  "deleteKeepsSubscription": "Menghapus akun tidak membatalkan langgananmu — yang menagih adalah toko, bukan outrepd. Batalkan dulu di Google Play atau di pengaturan akun Apple-mu."
 }

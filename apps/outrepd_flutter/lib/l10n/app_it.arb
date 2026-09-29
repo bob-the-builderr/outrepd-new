@@ -665,5 +665,6 @@
   "paywallPending": "Il tuo pagamento è in sospeso. Tutto si sblocca non appena lo store lo conferma.",
   "paywallNothingToRestore": "Nessun abbonamento da ripristinare.",
   "paywallRestored": "Abbonamento ripristinato",
-  "paywallSignedInAs": "Accesso effettuato come {email}"
+  "paywallSignedInAs": "Accesso effettuato come {email}",
+  "deleteKeepsSubscription": "Eliminare l’account non annulla l’abbonamento: lo addebita lo store, non outrepd. Disdicilo prima da Google Play o dalle impostazioni del tuo account Apple."
 }

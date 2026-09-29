@@ -2119,4 +2119,7 @@ class LIt extends L {
   String paywallSignedInAs(String email) {
     return 'Accesso effettuato come ${email}';
   }
+
+  @override
+  String get deleteKeepsSubscription => 'Eliminare l’account non annulla l’abbonamento: lo addebita lo store, non outrepd. Disdicilo prima da Google Play o dalle impostazioni del tuo account Apple.';
 }

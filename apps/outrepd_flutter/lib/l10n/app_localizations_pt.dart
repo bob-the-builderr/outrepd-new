@@ -2118,4 +2118,7 @@ class LPt extends L {
   String paywallSignedInAs(String email) {
     return 'Conectado como ${email}';
   }
+
+  @override
+  String get deleteKeepsSubscription => 'Apagar sua conta não cancela sua assinatura: quem cobra é a loja, não o outrepd. Cancele antes no Google Play ou nos ajustes da sua conta Apple.';
 }

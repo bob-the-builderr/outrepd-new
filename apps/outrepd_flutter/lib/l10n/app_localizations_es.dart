@@ -2120,4 +2120,7 @@ class LEs extends L {
   String paywallSignedInAs(String email) {
     return 'Sesión iniciada como ${email}';
   }
+
+  @override
+  String get deleteKeepsSubscription => 'Eliminar tu cuenta no cancela tu suscripción: la cobra la tienda, no outrepd. Cancélala antes en Google Play o en los ajustes de tu cuenta de Apple.';
 }

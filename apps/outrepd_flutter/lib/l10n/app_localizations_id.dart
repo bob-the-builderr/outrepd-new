@@ -2113,4 +2113,7 @@ class LId extends L {
   String paywallSignedInAs(String email) {
     return 'Masuk sebagai ${email}';
   }
+
+  @override
+  String get deleteKeepsSubscription => 'Menghapus akun tidak membatalkan langgananmu — yang menagih adalah toko, bukan outrepd. Batalkan dulu di Google Play atau di pengaturan akun Apple-mu.';
 }

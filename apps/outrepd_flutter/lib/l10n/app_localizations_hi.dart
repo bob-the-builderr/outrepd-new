@@ -2112,4 +2112,7 @@ class LHi extends L {
   String paywallSignedInAs(String email) {
     return '${email} के रूप में साइन इन';
   }
+
+  @override
+  String get deleteKeepsSubscription => 'खाता मिटाने से आपकी सदस्यता रद्द नहीं होती — बिल स्टोर करता है, outrepd नहीं। पहले Google Play या अपनी Apple खाता सेटिंग में इसे रद्द करें।';
 }

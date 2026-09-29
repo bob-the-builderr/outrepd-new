@@ -665,5 +665,6 @@
   "paywallPending": "Tu pago está pendiente. Todo se desbloquea en cuanto la tienda lo confirme.",
   "paywallNothingToRestore": "No se encontró ninguna suscripción para restaurar.",
   "paywallRestored": "Suscripción restaurada",
-  "paywallSignedInAs": "Sesión iniciada como {email}"
+  "paywallSignedInAs": "Sesión iniciada como {email}",
+  "deleteKeepsSubscription": "Eliminar tu cuenta no cancela tu suscripción: la cobra la tienda, no outrepd. Cancélala antes en Google Play o en los ajustes de tu cuenta de Apple."
 }

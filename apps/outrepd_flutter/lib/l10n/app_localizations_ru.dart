@@ -2113,4 +2113,7 @@ class LRu extends L {
   String paywallSignedInAs(String email) {
     return 'Вы вошли как ${email}';
   }
+
+  @override
+  String get deleteKeepsSubscription => 'Удаление аккаунта не отменяет подписку — её списывает магазин, а не outrepd. Сначала отмените её в Google Play или в настройках аккаунта Apple.';
 }

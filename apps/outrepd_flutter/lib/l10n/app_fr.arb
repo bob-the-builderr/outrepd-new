@@ -665,5 +665,6 @@
   "paywallPending": "Ton paiement est en attente. Tout se débloque dès que le store le confirme.",
   "paywallNothingToRestore": "Aucun abonnement à restaurer.",
   "paywallRestored": "Abonnement restauré",
-  "paywallSignedInAs": "Connecté en tant que {email}"
+  "paywallSignedInAs": "Connecté en tant que {email}",
+  "deleteKeepsSubscription": "Supprimer ton compte n’annule pas ton abonnement : c’est le store qui le facture, pas outrepd. Résilie-le d’abord dans Google Play ou dans les réglages de ton compte Apple."
 }

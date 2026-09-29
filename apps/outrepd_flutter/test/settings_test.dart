@@ -84,6 +84,36 @@ void main() {
     });
   }
 
+  testWidgets('deleting says it does not cancel the subscription',
+      (tester) async {
+    // The store bills it, so the account going does not stop it. The stores
+    // expect an app with subscriptions to say so before the account goes.
+    phone(tester);
+    await tester.pumpWidget(_app(const DeleteAccountScreen()));
+    await tester.pumpAndSettle();
+    expect(
+      find.textContaining("doesn't cancel your subscription"),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('support and rating are real rows, not a "needs a server" note',
+      (tester) async {
+    // Both used to answer every tap with the same apology.
+    phone(tester);
+    await tester.pumpWidget(_app(const SettingsScreen()));
+    await tester.pumpAndSettle();
+    for (final label in ['Contact support', 'Rate OUTREPD']) {
+      final row = find.text(label);
+      await tester.scrollUntilVisible(row, 200,
+          scrollable: find.byType(Scrollable).first);
+      await tester.tap(row);
+      await tester.pumpAndSettle();
+      expect(find.text('This needs a server — not wired up yet'), findsNothing,
+          reason: '$label still says it needs a server');
+    }
+  });
+
   testWidgets('deleting is armed only by typing the word', (tester) async {
     phone(tester);
     await tester.pumpWidget(_app(const DeleteAccountScreen()));

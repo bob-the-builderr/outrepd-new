@@ -3946,6 +3946,12 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Signed in as {email}'**
   String paywallSignedInAs(String email);
+
+  /// No description provided for @deleteKeepsSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting your account doesn\'t cancel your subscription: the store bills it, not outrepd. Cancel it first in Google Play or in your Apple account settings.'**
+  String get deleteKeepsSubscription;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

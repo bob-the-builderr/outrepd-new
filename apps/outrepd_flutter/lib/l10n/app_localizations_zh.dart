@@ -2058,4 +2058,7 @@ class LZh extends L {
   String paywallSignedInAs(String email) {
     return '已登录：${email}';
   }
+
+  @override
+  String get deleteKeepsSubscription => '删除账户不会取消订阅：扣费的是应用商店，不是 outrepd。请先在 Google Play 或 Apple 账户设置中取消。';
 }

@@ -2122,4 +2122,7 @@ class LFr extends L {
   String paywallSignedInAs(String email) {
     return 'Connecté en tant que ${email}';
   }
+
+  @override
+  String get deleteKeepsSubscription => 'Supprimer ton compte n’annule pas ton abonnement : c’est le store qui le facture, pas outrepd. Résilie-le d’abord dans Google Play ou dans les réglages de ton compte Apple.';
 }

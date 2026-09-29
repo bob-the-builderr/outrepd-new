@@ -665,5 +665,6 @@
   "paywallPending": "Ödemen beklemede. Mağaza onaylar onaylamaz her şeyin kilidi açılır.",
   "paywallNothingToRestore": "Geri yüklenecek abonelik bulunamadı.",
   "paywallRestored": "Abonelik geri yüklendi",
-  "paywallSignedInAs": "{email} olarak giriş yapıldı"
+  "paywallSignedInAs": "{email} olarak giriş yapıldı",
+  "deleteKeepsSubscription": "Hesabını silmek aboneliğini iptal etmez; ücreti outrepd değil mağaza alır. Önce Google Play'den veya Apple hesap ayarlarından iptal et."
 }

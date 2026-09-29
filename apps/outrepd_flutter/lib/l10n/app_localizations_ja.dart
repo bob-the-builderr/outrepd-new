@@ -2068,4 +2068,7 @@ class LJa extends L {
   String paywallSignedInAs(String email) {
     return '${email} でログイン中';
   }
+
+  @override
+  String get deleteKeepsSubscription => 'アカウントを削除してもサブスクリプションは解約されません。請求するのはストアで、outrepd ではありません。先に Google Play か Apple アカウントの設定で解約してください。';
 }

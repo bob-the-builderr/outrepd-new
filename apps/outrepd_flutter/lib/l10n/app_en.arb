@@ -1182,5 +1182,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "deleteKeepsSubscription": "Deleting your account doesn't cancel your subscription: the store bills it, not outrepd. Cancel it first in Google Play or in your Apple account settings."
 }

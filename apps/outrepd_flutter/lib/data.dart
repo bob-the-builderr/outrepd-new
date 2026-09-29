@@ -500,3 +500,15 @@ const demoOpponents = <Opponent>[
 /// build is worse than none, since it is the first thing anybody quotes in a
 /// bug report.
 const kAppVersion = '1.0.0+1';
+
+/// Where "Contact support" writes to, and what the privacy policy and terms
+/// give as the contact address.
+const kSupportEmail = 'support@outrepd.com';
+
+/// The Play Store listing's id — `applicationId` in android/app/build.gradle.kts.
+const kAndroidPackage = 'com.outrepd.outrepd';
+
+/// The App Store's number for the app ("Apple ID" in App Store Connect).
+/// Empty until the first submission creates one; "Rate the app" stays off
+/// the iPhone until it is filled in.
+const kAppStoreId = '';

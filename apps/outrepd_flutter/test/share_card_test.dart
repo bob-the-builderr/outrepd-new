@@ -74,9 +74,10 @@ void main() {
     expect(find.text('47'), findsWidgets);
     expect(find.text('Story'), findsOneWidget);
     expect(find.text('Post'), findsOneWidget);
-    // Both hidden capture cards carry their own footer, plus the visible
-    // copy-link row in the sheet itself — three, not one.
-    expect(find.text('outrepd.com/u/mokhtar_y'), findsNWidgets(3));
+    // The cards and the copy-link row point at the site. They used to carry
+    // outrepd.com/u/<name>, a page that does not exist.
+    expect(find.text('outrepd.com'), findsWidgets);
+    expect(find.textContaining('/u/'), findsNothing);
   });
 
   testWidgets('switching to Post keeps showing the same data', (

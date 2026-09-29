@@ -2112,4 +2112,7 @@ class LEn extends L {
   String paywallSignedInAs(String email) {
     return 'Signed in as ${email}';
   }
+
+  @override
+  String get deleteKeepsSubscription => 'Deleting your account doesn\'t cancel your subscription: the store bills it, not outrepd. Cancel it first in Google Play or in your Apple account settings.';
 }

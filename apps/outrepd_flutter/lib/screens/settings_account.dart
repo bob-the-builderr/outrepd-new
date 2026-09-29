@@ -420,6 +420,22 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                   ),
                 ),
 
+                // The store bills the subscription, so deleting the account
+                // does not stop it — and the stores expect an app to say so
+                // before the account goes.
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(4, 14, 4, 0),
+                  child: Text(
+                    l.deleteKeepsSubscription,
+                    key: const Key('deleteKeepsSubscription'),
+                    style: TextStyle(
+                      color: context.colors.muted,
+                      fontSize: 12,
+                      height: 1.65,
+                    ),
+                  ),
+                ),
+
                 const SizedBox(height: 20),
                 Text(
                   l.typeToConfirm(word),

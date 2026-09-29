@@ -2124,4 +2124,7 @@ class LDe extends L {
   String paywallSignedInAs(String email) {
     return 'Angemeldet als ${email}';
   }
+
+  @override
+  String get deleteKeepsSubscription => 'Das Löschen deines Kontos kündigt dein Abo nicht – der Store rechnet es ab, nicht outrepd. Kündige es vorher in Google Play oder in den Einstellungen deines Apple-Accounts.';
 }

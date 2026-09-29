@@ -665,5 +665,6 @@
   "paywallPending": "Deine Zahlung ist ausstehend. Alles wird freigeschaltet, sobald der Store sie bestätigt.",
   "paywallNothingToRestore": "Kein Abo zum Wiederherstellen gefunden.",
   "paywallRestored": "Abo wiederhergestellt",
-  "paywallSignedInAs": "Angemeldet als {email}"
+  "paywallSignedInAs": "Angemeldet als {email}",
+  "deleteKeepsSubscription": "Das Löschen deines Kontos kündigt dein Abo nicht – der Store rechnet es ab, nicht outrepd. Kündige es vorher in Google Play oder in den Einstellungen deines Apple-Accounts."
 }

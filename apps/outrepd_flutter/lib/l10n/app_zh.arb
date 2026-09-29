@@ -665,5 +665,6 @@
   "paywallPending": "你的付款正在处理中。商店确认后即可解锁全部内容。",
   "paywallNothingToRestore": "没有可恢复的订阅。",
   "paywallRestored": "订阅已恢复",
-  "paywallSignedInAs": "已登录：{email}"
+  "paywallSignedInAs": "已登录：{email}",
+  "deleteKeepsSubscription": "删除账户不会取消订阅：扣费的是应用商店，不是 outrepd。请先在 Google Play 或 Apple 账户设置中取消。"
 }
