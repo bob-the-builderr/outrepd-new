@@ -1,7 +1,9 @@
 commit      0ddeab226c029341a0d739833f77b7be09162d57
 build       107
-upload key  
-apk         skipped  bytes
-aab         skipped  bytes
+upload key  true
+apk         success 118143415 bytes
+aab         success 113116169 bytes
 paywall key no
+signed by   Owner: CN=mokhtar, OU=outrepd, O=outrepd, L=suez, ST=suez, C=EG
+sha-256     93:19:AC:A3:AC:BD:85:34:04:9D:BF:6F:D7:CD:B5:D2:CC:1D:D8:4F:AA:E4:C3:39:4B:A6:8B:45:FF:03:7A:FB
 run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/36503236447
