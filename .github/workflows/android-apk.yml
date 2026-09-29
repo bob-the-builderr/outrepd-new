@@ -79,24 +79,49 @@ jobs:
 
       # android/key.properties is what android/app/build.gradle.kts reads. It
       # only ever exists on this machine, for this run.
-      - name: The upload key
-        id: key
-        run: |
-          if [ -z "$UPLOAD_KEYSTORE_BASE64" ] || [ -z "$UPLOAD_KEYSTORE_PASSWORD" ] || [ -z "$UPLOAD_KEY_ALIAS" ]; then
-            echo "::warning::No upload key secrets: the APK is signed with a throwaway debug key and there is no App Bundle for Google Play."
-            echo "signed=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          printf '%s' "$UPLOAD_KEYSTORE_BASE64" | tr -d '\r\n ' | base64 -d > "$RUNNER_TEMP/upload.jks"
-          printf 'storeFile=%s\nstorePassword=%s\nkeyAlias=%s\nkeyPassword=%s\n' \
-            "$RUNNER_TEMP/upload.jks" "$UPLOAD_KEYSTORE_PASSWORD" "$UPLOAD_KEY_ALIAS" \
-            "${UPLOAD_KEY_PASSWORD:-$UPLOAD_KEYSTORE_PASSWORD}" > android/key.properties
-          echo "signed=true" >> "$GITHUB_OUTPUT"
-
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
+
+      # Never fails the run: a key that cannot be used is reported — in the
+      # warning and in the ci-builds report — and the APK is built unsigned,
+      # so there is always something to install and a reason to read. None of
+      # this prints a secret, only whether each one worked.
+      - name: The upload key
+        id: key
+        run: |
+          note() { echo "note=$1" >> "$GITHUB_OUTPUT"; echo "::warning::$1"; }
+          missing=""
+          [ -z "$UPLOAD_KEYSTORE_BASE64" ] && missing="$missing UPLOAD_KEYSTORE_BASE64"
+          [ -z "$UPLOAD_KEYSTORE_PASSWORD" ] && missing="$missing UPLOAD_KEYSTORE_PASSWORD"
+          [ -z "$UPLOAD_KEY_ALIAS" ] && missing="$missing UPLOAD_KEY_ALIAS"
+          if [ -n "$missing" ]; then
+            note "No upload key: missing secret(s)$missing. The APK is signed with a throwaway debug key and there is no App Bundle."
+            echo "signed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          chars=$(printf '%s' "$UPLOAD_KEYSTORE_BASE64" | tr -d '\r\n ' | wc -c)
+          if ! printf '%s' "$UPLOAD_KEYSTORE_BASE64" | tr -d '\r\n ' | base64 -d > "$RUNNER_TEMP/upload.jks" 2>/dev/null; then
+            note "UPLOAD_KEYSTORE_BASE64 is not a base64 keystore ($chars characters; a real one is about 3,600). Paste it again."
+            echo "signed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if ! keytool -list -keystore "$RUNNER_TEMP/upload.jks" -storepass "$UPLOAD_KEYSTORE_PASSWORD" > "$RUNNER_TEMP/list.txt" 2>&1; then
+            note "The keystore does not open with UPLOAD_KEYSTORE_PASSWORD ($chars characters of keystore decoded). Check the password secret — it is the one typed into keytool."
+            echo "signed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if ! keytool -list -keystore "$RUNNER_TEMP/upload.jks" -storepass "$UPLOAD_KEYSTORE_PASSWORD" -alias "$UPLOAD_KEY_ALIAS" > /dev/null 2>&1; then
+            note "The keystore opens, but has no key called '$UPLOAD_KEY_ALIAS'. UPLOAD_KEY_ALIAS should be: upload"
+            echo "signed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          printf 'storeFile=%s\nstorePassword=%s\nkeyAlias=%s\nkeyPassword=%s\n' \
+            "$RUNNER_TEMP/upload.jks" "$UPLOAD_KEYSTORE_PASSWORD" "$UPLOAD_KEY_ALIAS" \
+            "${UPLOAD_KEY_PASSWORD:-$UPLOAD_KEYSTORE_PASSWORD}" > android/key.properties
+          echo "note=the upload key opens and has the alias" >> "$GITHUB_OUTPUT"
+          echo "signed=true" >> "$GITHUB_OUTPUT"
 
       - uses: subosito/flutter-action@v2
         with:
@@ -173,6 +198,7 @@ jobs:
             echo "commit      ${GITHUB_SHA}"
             echo "build       $((GITHUB_RUN_NUMBER + 100))"
             echo "upload key  ${{ steps.key.outputs.signed }}"
+            echo "key note    ${{ steps.key.outputs.note }}"
             echo "apk         ${{ steps.apk.outcome }} $( [ -f "$apk" ] && stat -c %s "$apk" ) bytes"
             echo "aab         ${{ steps.aab.outcome }} $( [ -f "$aab" ] && stat -c %s "$aab" ) bytes"
             echo "paywall key $( [ -n "$REVENUECAT_ANDROID_KEY" ] && echo yes || echo no )"
