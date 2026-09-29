@@ -831,18 +831,20 @@ class _MatchStoryCard extends StatelessWidget {
                     letterSpacing: 0.5,
                   ),
                 ),
-                const SizedBox(height: 22),
+                // The gaps flex, so the card is filled top to bottom whether
+                // or not there is a new best to show.
+                const Spacer(flex: 2),
                 ShrinkText(
                   data.won ? l.shareVictory : l.shareRematch,
                   maxLines: 1,
                   style: TextStyle(
                     color: data.won ? AppColors.gold : them,
-                    fontSize: 30,
+                    fontSize: 38,
                     fontWeight: FontWeight.w900,
-                    letterSpacing: 5,
+                    letterSpacing: 6,
                   ),
                 ),
-                const SizedBox(height: 26),
+                const Spacer(flex: 2),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -855,11 +857,12 @@ class _MatchStoryCard extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 26),
+                      padding: const EdgeInsets.only(bottom: 36),
                       child: Text(
                         l.vs,
                         style: context.type.label.copyWith(
                           color: context.colors.faint,
+                          fontSize: 15,
                         ),
                       ),
                     ),
@@ -872,9 +875,9 @@ class _MatchStoryCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 18),
                 _SplitBar(yours: data.yourReps, theirs: data.theirReps),
-                const SizedBox(height: 10),
+                const SizedBox(height: 12),
                 ShrinkText(
                   l
                       .pushUpsInSeconds(localNumber(context, data.seconds))
@@ -882,21 +885,24 @@ class _MatchStoryCard extends StatelessWidget {
                   maxLines: 1,
                   style: context.type.micro.copyWith(
                     color: context.colors.muted,
+                    fontSize: 12,
                   ),
                 ),
-                const SizedBox(height: 24),
-                _RankLine(data: data),
+                const Spacer(flex: 3),
+                _RankLine(data: data, scale: 1.45),
                 if (data.newBest) ...[
-                  const SizedBox(height: 12),
-                  _BestChip(label: l.newPersonalBest),
+                  const SizedBox(height: 14),
+                  _BestChip(label: l.newPersonalBest, scale: 1.35),
                 ],
-                const Spacer(),
+                const Spacer(flex: 4),
                 ShrinkText(
                   data.won ? l.duelMeOnOutrepd : l.thinkYouCanBeatMe,
                   maxLines: 1,
-                  style: context.type.body.copyWith(color: context.colors.text),
+                  style: context.type.heading.copyWith(
+                    color: context.colors.text,
+                  ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 4),
                 ShrinkText(
                   data.profileUrl,
                   maxLines: 1,
@@ -932,12 +938,12 @@ class _Side extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        _Initial(name: name, avatarUrl: avatarUrl, size: 56, textColour: colour),
-        const SizedBox(height: 7),
+        _Initial(name: name, avatarUrl: avatarUrl, size: 78, textColour: colour),
+        const SizedBox(height: 9),
         ShrinkText(
           name,
           maxLines: 1,
-          style: context.type.label.copyWith(color: colour),
+          style: context.type.label.copyWith(color: colour, fontSize: 15),
         ),
         const SizedBox(height: 4),
         FittedBox(
@@ -946,10 +952,10 @@ class _Side extends StatelessWidget {
             localNumber(context, reps),
             style: TextStyle(
               color: colour,
-              fontSize: 76,
+              fontSize: 104,
               fontWeight: FontWeight.w900,
               height: 0.95,
-              letterSpacing: -2,
+              letterSpacing: -3,
               fontFeatures: const [FontFeature.tabularFigures()],
             ),
           ),
@@ -970,9 +976,9 @@ class _SplitBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(5),
+      borderRadius: BorderRadius.circular(6),
       child: SizedBox(
-        height: 9,
+        height: 12,
         width: double.infinity,
         child: yours <= 0 && theirs <= 0
             ? ColoredBox(color: context.colors.surfaceRaised)
@@ -1129,9 +1135,12 @@ class _ResultLine extends StatelessWidget {
 /// The rank the duel left the account on, and what it moved. Nothing while
 /// still in placements: there is no rank yet to say.
 class _RankLine extends StatelessWidget {
-  const _RankLine({required this.data, this.centred = true});
+  const _RankLine({required this.data, this.centred = true, this.scale = 1});
   final MatchShareData data;
   final bool centred;
+
+  /// Larger on the story card, which has the room.
+  final double scale;
 
   @override
   Widget build(BuildContext context) {
@@ -1145,8 +1154,8 @@ class _RankLine extends StatelessWidget {
           ? MainAxisAlignment.center
           : MainAxisAlignment.start,
       children: [
-        TierBadge(tierIndex: tier, size: 22),
-        const SizedBox(width: 6),
+        TierBadge(tierIndex: tier, size: 22 * scale),
+        SizedBox(width: 6 * scale),
         Flexible(
           child: Text.rich(
             TextSpan(
@@ -1170,7 +1179,10 @@ class _RankLine extends StatelessWidget {
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: context.type.label.copyWith(color: context.colors.muted),
+            style: context.type.label.copyWith(
+              color: context.colors.muted,
+              fontSize: 13 * scale,
+            ),
           ),
         ),
       ],
@@ -1179,20 +1191,26 @@ class _RankLine extends StatelessWidget {
 }
 
 class _BestChip extends StatelessWidget {
-  const _BestChip({required this.label});
+  const _BestChip({required this.label, this.scale = 1});
   final String label;
+
+  /// Larger on the story card, which has the room.
+  final double scale;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      padding: EdgeInsets.symmetric(horizontal: 10 * scale, vertical: 5 * scale),
       decoration: BoxDecoration(
         color: context.colors.surfaceRaised,
         borderRadius: BorderRadius.circular(99),
       ),
       child: Text(
         '★ $label',
-        style: context.type.micro.copyWith(color: context.colors.text),
+        style: context.type.micro.copyWith(
+          color: context.colors.text,
+          fontSize: 11 * scale,
+        ),
       ),
     );
   }
