@@ -856,8 +856,10 @@ class _MatchStoryCard extends StatelessWidget {
                         colour: you,
                       ),
                     ),
+                    // Room either side, so the two counts read as two
+                    // numbers and not one run of digits.
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 36),
+                      padding: const EdgeInsets.fromLTRB(12, 0, 12, 36),
                       child: Text(
                         l.vs,
                         style: context.type.label.copyWith(
