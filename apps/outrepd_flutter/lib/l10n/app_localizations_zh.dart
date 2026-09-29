@@ -2081,4 +2081,10 @@ class LZh extends L {
   String friendCodeInvite(String code) {
     return '来 outrepd 和我对决吧。用我的好友码 ${code} 加我\nhttps://outrepd.com';
   }
+
+  @override
+  String get soundsLabel => '声音';
+
+  @override
+  String get soundsHint => '3、2、1 的提示音，每次计数的滴答声，以及回合结束音。可与音乐同时播放。';
 }

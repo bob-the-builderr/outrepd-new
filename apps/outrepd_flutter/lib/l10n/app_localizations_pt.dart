@@ -2141,4 +2141,10 @@ class LPt extends L {
   String friendCodeInvite(String code) {
     return 'Me desafie no outrepd. Me adicione com meu código de amigo ${code}\nhttps://outrepd.com';
   }
+
+  @override
+  String get soundsLabel => 'Sons';
+
+  @override
+  String get soundsHint => 'Um bipe no 3, 2, 1, um tique a cada repetição e o fim da rodada. Toca junto com sua música.';
 }

@@ -2101,4 +2101,10 @@ class LKo extends L {
   String friendCodeInvite(String code) {
     return 'outrepd에서 나와 대결해 줘. 내 친구 코드 ${code}로 추가해 줘\nhttps://outrepd.com';
   }
+
+  @override
+  String get soundsLabel => '소리';
+
+  @override
+  String get soundsHint => '3, 2, 1 신호음, 반복마다 틱 소리, 라운드 종료음. 음악 위에 함께 재생됩니다.';
 }

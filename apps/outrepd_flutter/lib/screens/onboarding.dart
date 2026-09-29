@@ -30,6 +30,7 @@ import '../reps/pose.dart';
 import '../reps/pose_source.dart';
 import '../reps/pushup_counter.dart';
 import '../reps/skeleton.dart';
+import '../sounds.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
 import '../widgets.dart';
@@ -1383,6 +1384,7 @@ class _CalibrationState extends State<_Calibration> {
     if (reading.counted) {
       _reps = reading.reps;
       _depth = _tracker.depth;
+      Sounds.instance.play(Cue.rep);
     }
 
     setState(() => _progress = reading.progress ?? _progress);

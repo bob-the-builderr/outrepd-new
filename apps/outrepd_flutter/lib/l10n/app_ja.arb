@@ -672,5 +672,7 @@
   "signOutBody": "アカウントはランク、履歴、サブスクリプションごとそのまま残ります。メールアドレスでいつでも再びサインインできます。",
   "shareVictory": "勝利",
   "shareRematch": "再戦？",
-  "friendCodeInvite": "outrepd で勝負しよう。フレンドコード {code} で追加してね\nhttps://outrepd.com"
+  "friendCodeInvite": "outrepd で勝負しよう。フレンドコード {code} で追加してね\nhttps://outrepd.com",
+  "soundsLabel": "サウンド",
+  "soundsHint": "3、2、1 のビープ、レップごとのティック、ラウンド終了の音。音楽と一緒に鳴ります。"
 }

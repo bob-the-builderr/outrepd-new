@@ -2142,4 +2142,10 @@ class LIt extends L {
   String friendCodeInvite(String code) {
     return 'Sfidami su outrepd. Aggiungimi con il mio codice amico ${code}\nhttps://outrepd.com';
   }
+
+  @override
+  String get soundsLabel => 'Suoni';
+
+  @override
+  String get soundsHint => 'Un bip per 3, 2, 1, un tic a ogni ripetizione e la fine del round. Sopra la tua musica.';
 }

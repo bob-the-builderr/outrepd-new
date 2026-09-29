@@ -17,6 +17,7 @@ import '../data.dart';
 import '../keep_awake.dart';
 import '../motion.dart';
 import '../settings.dart';
+import '../sounds.dart';
 import '../ranking.dart';
 import '../player_avatar.dart';
 import '../l10n/app_localizations.dart';
@@ -413,12 +414,14 @@ class _TrainerScreenState extends State<TrainerScreen>
       _stage = _Stage.countdown;
       _countdown = 3;
     });
+    Sounds.instance.play(Cue.count);
     _countdownTimer?.cancel();
     _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (!mounted) return;
       if (_countdown > 1) {
         setState(() => _countdown--);
         tap();
+        Sounds.instance.play(Cue.count);
         return;
       }
       timer.cancel();
@@ -435,6 +438,7 @@ class _TrainerScreenState extends State<TrainerScreen>
       _clock.start();
       _lastPoseAt = DateTime.now();
       tap(heavy: true);
+      Sounds.instance.play(Cue.go);
     });
   }
 
@@ -529,6 +533,7 @@ class _TrainerScreenState extends State<TrainerScreen>
     if (reading.counted) {
       _liveReps = reading.reps;
       tap(heavy: true);
+      Sounds.instance.play(Cue.rep);
     }
 
     final limit = widget.limit;
@@ -659,6 +664,9 @@ class _TrainerScreenState extends State<TrainerScreen>
     // back marked unsure, and the confirm screen asks rather than presenting
     // a guess as a fact.
     final verdict = counted.surrendered(_gaveUp);
+    // A round that ran and finished, not one abandoned before it began or
+    // given up: nobody wants a fanfare for walking away.
+    if (_boutStartMs != null && !_gaveUp) Sounds.instance.play(Cue.end);
     await _sub?.cancel();
     await _source?.dispose();
     keepScreenOn(false);

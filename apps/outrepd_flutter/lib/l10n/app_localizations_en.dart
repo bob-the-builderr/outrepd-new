@@ -2135,4 +2135,10 @@ class LEn extends L {
   String friendCodeInvite(String code) {
     return 'Duel me on outrepd. Add me with my friend code ${code}\nhttps://outrepd.com';
   }
+
+  @override
+  String get soundsLabel => 'Sounds';
+
+  @override
+  String get soundsHint => 'A beep for 3, 2, 1, a tick for each rep, and the end of the round. Plays over your music.';
 }

@@ -2147,4 +2147,10 @@ class LDe extends L {
   String friendCodeInvite(String code) {
     return 'Fordere mich auf outrepd heraus. Füg mich mit meinem Freundescode ${code} hinzu\nhttps://outrepd.com';
   }
+
+  @override
+  String get soundsLabel => 'Töne';
+
+  @override
+  String get soundsHint => 'Ein Piep bei 3, 2, 1, ein Tick pro Wiederholung und das Rundenende. Über deiner Musik.';
 }

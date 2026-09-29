@@ -3988,6 +3988,18 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Duel me on outrepd. Add me with my friend code {code}\nhttps://outrepd.com'**
   String friendCodeInvite(String code);
+
+  /// No description provided for @soundsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Sounds'**
+  String get soundsLabel;
+
+  /// No description provided for @soundsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A beep for 3, 2, 1, a tick for each rep, and the end of the round. Plays over your music.'**
+  String get soundsHint;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

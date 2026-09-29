@@ -672,5 +672,7 @@
   "signOutBody": "Аккаунт останется как есть — с рангом, историей и подпиской. Войдите снова в любой момент по своей почте.",
   "shareVictory": "ПОБЕДА",
   "shareRematch": "РЕВАНШ?",
-  "friendCodeInvite": "Вызови меня на дуэль в outrepd. Добавь меня по коду друга {code}\nhttps://outrepd.com"
+  "friendCodeInvite": "Вызови меня на дуэль в outrepd. Добавь меня по коду друга {code}\nhttps://outrepd.com",
+  "soundsLabel": "Звуки",
+  "soundsHint": "Сигнал на 3, 2, 1, щелчок на каждое повторение и конец раунда. Поверх вашей музыки."
 }

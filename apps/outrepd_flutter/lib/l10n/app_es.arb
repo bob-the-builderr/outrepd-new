@@ -672,5 +672,7 @@
   "signOutBody": "Tu cuenta queda como está, con su rango, su historial y su suscripción. Vuelve a entrar cuando quieras con tu correo.",
   "shareVictory": "VICTORIA",
   "shareRematch": "¿REVANCHA?",
-  "friendCodeInvite": "Rétame en outrepd. Agrégame con mi código de amigo {code}\nhttps://outrepd.com"
+  "friendCodeInvite": "Rétame en outrepd. Agrégame con mi código de amigo {code}\nhttps://outrepd.com",
+  "soundsLabel": "Sonidos",
+  "soundsHint": "Un pitido en 3, 2, 1, un tic por cada repetición y el final de la ronda. Suena sobre tu música."
 }

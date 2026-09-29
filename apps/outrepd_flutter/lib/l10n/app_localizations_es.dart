@@ -2143,4 +2143,10 @@ class LEs extends L {
   String friendCodeInvite(String code) {
     return 'Rétame en outrepd. Agrégame con mi código de amigo ${code}\nhttps://outrepd.com';
   }
+
+  @override
+  String get soundsLabel => 'Sonidos';
+
+  @override
+  String get soundsHint => 'Un pitido en 3, 2, 1, un tic por cada repetición y el final de la ronda. Suena sobre tu música.';
 }

@@ -672,5 +672,7 @@
   "signOutBody": "Dein Konto bleibt, wie es ist – mit Rang, Verlauf und Abo. Melde dich jederzeit mit deiner E-Mail wieder an.",
   "shareVictory": "SIEG",
   "shareRematch": "REVANCHE?",
-  "friendCodeInvite": "Fordere mich auf outrepd heraus. Füg mich mit meinem Freundescode {code} hinzu\nhttps://outrepd.com"
+  "friendCodeInvite": "Fordere mich auf outrepd heraus. Füg mich mit meinem Freundescode {code} hinzu\nhttps://outrepd.com",
+  "soundsLabel": "Töne",
+  "soundsHint": "Ein Piep bei 3, 2, 1, ein Tick pro Wiederholung und das Rundenende. Über deiner Musik."
 }

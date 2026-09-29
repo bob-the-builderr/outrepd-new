@@ -2136,4 +2136,10 @@ class LRu extends L {
   String friendCodeInvite(String code) {
     return 'Вызови меня на дуэль в outrepd. Добавь меня по коду друга ${code}\nhttps://outrepd.com';
   }
+
+  @override
+  String get soundsLabel => 'Звуки';
+
+  @override
+  String get soundsHint => 'Сигнал на 3, 2, 1, щелчок на каждое повторение и конец раунда. Поверх вашей музыки.';
 }

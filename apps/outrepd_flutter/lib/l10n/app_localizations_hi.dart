@@ -2135,4 +2135,10 @@ class LHi extends L {
   String friendCodeInvite(String code) {
     return 'outrepd पर मुझसे मुकाबला करो। मेरे फ्रेंड कोड ${code} से मुझे जोड़ो\nhttps://outrepd.com';
   }
+
+  @override
+  String get soundsLabel => 'आवाज़ें';
+
+  @override
+  String get soundsHint => '3, 2, 1 पर बीप, हर रेप पर टिक और राउंड का अंत। आपके संगीत के ऊपर बजता है।';
 }

@@ -1196,5 +1196,7 @@
         "type": "String"
       }
     }
-  }
+  },
+  "soundsLabel": "Sounds",
+  "soundsHint": "A beep for 3, 2, 1, a tick for each rep, and the end of the round. Plays over your music."
 }

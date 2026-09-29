@@ -672,5 +672,7 @@
   "signOutBody": "आपका खाता अपनी रैंक, इतिहास और सदस्यता के साथ वैसा ही रहेगा। अपने ईमेल से कभी भी फिर से साइन इन करें।",
   "shareVictory": "जीत",
   "shareRematch": "फिर से मुकाबला?",
-  "friendCodeInvite": "outrepd पर मुझसे मुकाबला करो। मेरे फ्रेंड कोड {code} से मुझे जोड़ो\nhttps://outrepd.com"
+  "friendCodeInvite": "outrepd पर मुझसे मुकाबला करो। मेरे फ्रेंड कोड {code} से मुझे जोड़ो\nhttps://outrepd.com",
+  "soundsLabel": "आवाज़ें",
+  "soundsHint": "3, 2, 1 पर बीप, हर रेप पर टिक और राउंड का अंत। आपके संगीत के ऊपर बजता है।"
 }

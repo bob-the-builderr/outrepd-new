@@ -2131,4 +2131,10 @@ class LTr extends L {
   String friendCodeInvite(String code) {
     return 'outrepd\'de benimle düello yap. Arkadaş kodumla beni ekle: ${code}\nhttps://outrepd.com';
   }
+
+  @override
+  String get soundsLabel => 'Sesler';
+
+  @override
+  String get soundsHint => '3, 2, 1 için bip, her tekrar için tık ve tur sonu. Müziğinin üstünde çalar.';
 }

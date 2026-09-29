@@ -672,5 +672,7 @@
   "signOutBody": "你的账户会原样保留，包括段位、记录和订阅。随时可以用邮箱重新登录。",
   "shareVictory": "胜利",
   "shareRematch": "再战？",
-  "friendCodeInvite": "来 outrepd 和我对决吧。用我的好友码 {code} 加我\nhttps://outrepd.com"
+  "friendCodeInvite": "来 outrepd 和我对决吧。用我的好友码 {code} 加我\nhttps://outrepd.com",
+  "soundsLabel": "声音",
+  "soundsHint": "3、2、1 的提示音，每次计数的滴答声，以及回合结束音。可与音乐同时播放。"
 }

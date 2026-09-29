@@ -2136,4 +2136,10 @@ class LId extends L {
   String friendCodeInvite(String code) {
     return 'Tantang aku di outrepd. Tambahkan aku dengan kode temanku ${code}\nhttps://outrepd.com';
   }
+
+  @override
+  String get soundsLabel => 'Suara';
+
+  @override
+  String get soundsHint => 'Bunyi bip untuk 3, 2, 1, tik untuk tiap repetisi, dan akhir ronde. Diputar di atas musikmu.';
 }

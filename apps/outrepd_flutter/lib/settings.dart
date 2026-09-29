@@ -137,6 +137,11 @@ class AppSettings extends ChangeNotifier {
   /// A tap of haptic feedback as each rep lands.
   bool vibration = true;
 
+  /// The countdown beeps, a tick for each counted rep, and the end of a
+  /// round. On by default: the lifter is looking at the floor, not the
+  /// screen. They mix with music rather than interrupt it.
+  bool sounds = true;
+
   /// Draw the tracked skeleton over the camera.
   ///
   /// On by default: it is how somebody can tell the counter is seeing them
@@ -164,6 +169,7 @@ class AppSettings extends ChangeNotifier {
     bool flag(String key, bool fallback) => s.getBool(key) ?? fallback;
 
     vibration = flag('vibration', vibration);
+    sounds = flag('sounds', sounds);
     showSkeleton = flag('showSkeleton', showSkeleton);
   }
 
@@ -226,6 +232,7 @@ class AppSettings extends ChangeNotifier {
     s.setInt('heightUnit', heightUnit.index);
 
     s.setBool('vibration', vibration);
+    s.setBool('sounds', sounds);
     s.setBool('showSkeleton', showSkeleton);
   }
 

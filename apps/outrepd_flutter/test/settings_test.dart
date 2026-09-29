@@ -17,6 +17,7 @@ import 'package:outrepd/screens/settings.dart';
 import 'package:outrepd/screens/settings_account.dart';
 import 'package:outrepd/screens/settings_notices.dart';
 import 'package:outrepd/screens/settings_privacy.dart';
+import 'package:outrepd/settings.dart';
 import 'package:outrepd/theme.dart';
 
 Widget _app(
@@ -112,6 +113,23 @@ void main() {
       expect(find.text('This needs a server — not wired up yet'), findsNothing,
           reason: '$label still says it needs a server');
     }
+  });
+
+  testWidgets('sounds can be turned off', (tester) async {
+    // On by default, so the switch has to be there for anyone who lifts
+    // somewhere a beep is not welcome.
+    addTearDown(() => settings.sounds = true);
+    phone(tester);
+    await tester.pumpWidget(_app(const SettingsScreen()));
+    await tester.pumpAndSettle();
+    expect(settings.sounds, isTrue);
+
+    final row = find.byKey(const Key('soundsSwitch'));
+    await tester.scrollUntilVisible(row, 200,
+        scrollable: find.byType(Scrollable).first);
+    await tester.tap(find.descendant(of: row, matching: find.byType(Switch)));
+    await tester.pumpAndSettle();
+    expect(settings.sounds, isFalse);
   });
 
   testWidgets('deleting is armed only by typing the word', (tester) async {

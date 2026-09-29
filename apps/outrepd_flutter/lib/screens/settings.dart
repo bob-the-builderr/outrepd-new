@@ -99,6 +99,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 onChanged: (v) => _set(() => settings.vibration = v),
               ),
               SwitchRow(
+                key: const Key('soundsSwitch'),
+                icon: Icons.volume_up_outlined,
+                label: l.soundsLabel,
+                caption: l.soundsHint,
+                value: settings.sounds,
+                onChanged: (v) => _set(() => settings.sounds = v),
+              ),
+              SwitchRow(
                 icon: Icons.accessibility_new,
                 label: l.showSkeleton,
                 caption: l.showSkeletonHint,

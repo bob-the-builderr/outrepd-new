@@ -2145,4 +2145,10 @@ class LFr extends L {
   String friendCodeInvite(String code) {
     return 'Affronte-moi sur outrepd. Ajoute-moi avec mon code ami ${code}\nhttps://outrepd.com';
   }
+
+  @override
+  String get soundsLabel => 'Sons';
+
+  @override
+  String get soundsHint => 'Un bip pour 3, 2, 1, un tic à chaque répétition et la fin de la manche. Par-dessus ta musique.';
 }

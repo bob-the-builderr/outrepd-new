@@ -2091,4 +2091,10 @@ class LJa extends L {
   String friendCodeInvite(String code) {
     return 'outrepd で勝負しよう。フレンドコード ${code} で追加してね\nhttps://outrepd.com';
   }
+
+  @override
+  String get soundsLabel => 'サウンド';
+
+  @override
+  String get soundsHint => '3、2、1 のビープ、レップごとのティック、ラウンド終了の音。音楽と一緒に鳴ります。';
 }
