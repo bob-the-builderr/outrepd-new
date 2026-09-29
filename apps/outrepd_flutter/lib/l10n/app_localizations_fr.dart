@@ -2140,4 +2140,9 @@ class LFr extends L {
 
   @override
   String get shareRematch => 'REVANCHE ?';
+
+  @override
+  String friendCodeInvite(String code) {
+    return 'Affronte-moi sur outrepd. Ajoute-moi avec mon code ami ${code}\nhttps://outrepd.com';
+  }
 }

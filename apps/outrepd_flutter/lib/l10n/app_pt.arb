@@ -671,5 +671,6 @@
   "signOutQuestion": "Sair da conta?",
   "signOutBody": "Sua conta fica como está, com seu rank, histórico e assinatura. Entre de novo quando quiser com seu e-mail.",
   "shareVictory": "VITÓRIA",
-  "shareRematch": "REVANCHE?"
+  "shareRematch": "REVANCHE?",
+  "friendCodeInvite": "Me desafie no outrepd. Me adicione com meu código de amigo {code}\nhttps://outrepd.com"
 }

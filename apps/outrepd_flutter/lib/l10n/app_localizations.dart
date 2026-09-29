@@ -3982,6 +3982,12 @@ abstract class L {
   /// In en, this message translates to:
   /// **'REMATCH?'**
   String get shareRematch;
+
+  /// No description provided for @friendCodeInvite.
+  ///
+  /// In en, this message translates to:
+  /// **'Duel me on outrepd. Add me with my friend code {code}\nhttps://outrepd.com'**
+  String friendCodeInvite(String code);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

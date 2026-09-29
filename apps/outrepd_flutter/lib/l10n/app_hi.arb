@@ -671,5 +671,6 @@
   "signOutQuestion": "साइन आउट करें?",
   "signOutBody": "आपका खाता अपनी रैंक, इतिहास और सदस्यता के साथ वैसा ही रहेगा। अपने ईमेल से कभी भी फिर से साइन इन करें।",
   "shareVictory": "जीत",
-  "shareRematch": "फिर से मुकाबला?"
+  "shareRematch": "फिर से मुकाबला?",
+  "friendCodeInvite": "outrepd पर मुझसे मुकाबला करो। मेरे फ्रेंड कोड {code} से मुझे जोड़ो\nhttps://outrepd.com"
 }

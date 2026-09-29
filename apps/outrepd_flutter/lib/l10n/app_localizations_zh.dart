@@ -2076,4 +2076,9 @@ class LZh extends L {
 
   @override
   String get shareRematch => '再战？';
+
+  @override
+  String friendCodeInvite(String code) {
+    return '来 outrepd 和我对决吧。用我的好友码 ${code} 加我\nhttps://outrepd.com';
+  }
 }

@@ -671,5 +671,6 @@
   "signOutQuestion": "Çıkış yapılsın mı?",
   "signOutBody": "Hesabın rütbesi, geçmişi ve aboneliğiyle olduğu gibi kalır. İstediğin zaman e-postanla tekrar giriş yap.",
   "shareVictory": "ZAFER",
-  "shareRematch": "RÖVANŞ?"
+  "shareRematch": "RÖVANŞ?",
+  "friendCodeInvite": "outrepd'de benimle düello yap. Arkadaş kodumla beni ekle: {code}\nhttps://outrepd.com"
 }

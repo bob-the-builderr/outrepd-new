@@ -671,5 +671,6 @@
   "signOutQuestion": "Выйти из аккаунта?",
   "signOutBody": "Аккаунт останется как есть — с рангом, историей и подпиской. Войдите снова в любой момент по своей почте.",
   "shareVictory": "ПОБЕДА",
-  "shareRematch": "РЕВАНШ?"
+  "shareRematch": "РЕВАНШ?",
+  "friendCodeInvite": "Вызови меня на дуэль в outrepd. Добавь меня по коду друга {code}\nhttps://outrepd.com"
 }

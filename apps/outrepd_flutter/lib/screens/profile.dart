@@ -250,31 +250,57 @@ class _Identity extends StatelessWidget {
         // The code a friend adds this account by without ever needing the
         // name above — see the comment on friend_code in schema.sql. Shown
         // with the '#' the stored value never has, and copied the same way.
-        InkWell(
-          onTap: () {
-            Clipboard.setData(ClipboardData(text: '#${profile.friendCode}'));
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(l.codeCopied),
-                behavior: SnackBarBehavior.floating,
-              ),
-            );
-          },
-          borderRadius: BorderRadius.circular(6),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  '#${profile.friendCode}',
-                  style: TextStyle(color: context.colors.muted, fontSize: 12),
+        // Copy, or send it on with an invite — a code only ever gets a friend
+        // by leaving this phone.
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            InkWell(
+              onTap: () {
+                Clipboard.setData(
+                  ClipboardData(text: '#${profile.friendCode}'),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(l.codeCopied),
+                    behavior: SnackBarBehavior.floating,
+                  ),
+                );
+              },
+              borderRadius: BorderRadius.circular(6),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '#${profile.friendCode}',
+                      style: TextStyle(
+                        color: context.colors.muted,
+                        fontSize: 12,
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    Icon(Icons.copy, size: 11, color: context.colors.faint),
+                  ],
                 ),
-                const SizedBox(width: 4),
-                Icon(Icons.copy, size: 11, color: context.colors.faint),
-              ],
+              ),
             ),
-          ),
+            InkWell(
+              key: const Key('shareFriendCode'),
+              onTap: () => shareFriendCode(context, profile.friendCode),
+              borderRadius: BorderRadius.circular(6),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                child: Icon(
+                  Icons.share_outlined,
+                  size: 13,
+                  color: context.colors.faint,
+                  semanticLabel: l.shareThisCode,
+                ),
+              ),
+            ),
+          ],
         ),
 
         // Worn beside the name, because that is the one place earning a

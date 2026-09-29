@@ -2137,4 +2137,9 @@ class LIt extends L {
 
   @override
   String get shareRematch => 'RIVINCITA?';
+
+  @override
+  String friendCodeInvite(String code) {
+    return 'Sfidami su outrepd. Aggiungimi con il mio codice amico ${code}\nhttps://outrepd.com';
+  }
 }

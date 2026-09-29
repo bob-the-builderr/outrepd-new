@@ -15,6 +15,7 @@ import '../l10n/app_localizations.dart';
 import '../rewards.dart';
 import '../theme.dart';
 import '../widgets.dart';
+import 'share_card.dart';
 
 class WelcomeInsideScreen extends StatelessWidget {
   const WelcomeInsideScreen({super.key, required this.onDone});
@@ -90,6 +91,26 @@ class WelcomeInsideScreen extends StatelessWidget {
                         if (code != null) ...[
                           const SizedBox(height: 14),
                           _Code(code: code),
+                          const SizedBox(height: 4),
+                          // Sent on with an invite, straight from here —
+                          // the moment somebody is most likely to ask a
+                          // friend along.
+                          Align(
+                            alignment: AlignmentDirectional.centerStart,
+                            child: TextButton.icon(
+                              key: const Key('shareFriendCode'),
+                              onPressed: () => shareFriendCode(context, code),
+                              icon: Icon(
+                                Icons.share_outlined,
+                                size: 18,
+                                color: context.colors.brand,
+                              ),
+                              label: Text(
+                                l.shareThisCode,
+                                style: TextStyle(color: context.colors.brand),
+                              ),
+                            ),
+                          ),
                         ],
                       ],
                     ),

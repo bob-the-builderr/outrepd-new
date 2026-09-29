@@ -671,5 +671,6 @@
   "signOutQuestion": "Keluar dari akun?",
   "signOutBody": "Akunmu tetap seperti sekarang, dengan peringkat, riwayat, dan langganannya. Masuk lagi kapan saja dengan emailmu.",
   "shareVictory": "MENANG",
-  "shareRematch": "TANDING ULANG?"
+  "shareRematch": "TANDING ULANG?",
+  "friendCodeInvite": "Tantang aku di outrepd. Tambahkan aku dengan kode temanku {code}\nhttps://outrepd.com"
 }

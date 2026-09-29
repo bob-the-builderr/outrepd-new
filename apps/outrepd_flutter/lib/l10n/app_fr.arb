@@ -671,5 +671,6 @@
   "signOutQuestion": "Se déconnecter ?",
   "signOutBody": "Ton compte reste tel quel, avec son rang, son historique et son abonnement. Reconnecte-toi quand tu veux avec ton e-mail.",
   "shareVictory": "VICTOIRE",
-  "shareRematch": "REVANCHE ?"
+  "shareRematch": "REVANCHE ?",
+  "friendCodeInvite": "Affronte-moi sur outrepd. Ajoute-moi avec mon code ami {code}\nhttps://outrepd.com"
 }

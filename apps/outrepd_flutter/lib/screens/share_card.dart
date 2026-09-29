@@ -22,6 +22,27 @@ import '../tier_badge.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
 
+/// Shares this account's friend code through the phone's own share sheet,
+/// with a line that says what to do with it. If the sheet will not open, the
+/// same message is copied instead, so the tap still gets somewhere.
+Future<void> shareFriendCode(BuildContext context, String code) async {
+  final l = L.of(context);
+  final messenger = ScaffoldMessenger.of(context);
+  final text = l.friendCodeInvite('#$code');
+  try {
+    await SharePlus.instance.share(ShareParams(text: text));
+  } on Object catch (error) {
+    debugPrint('Could not share the friend code: $error');
+    await Clipboard.setData(ClipboardData(text: text));
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(l.codeCopied),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+}
+
 /// Where a shared card points: the site itself, for now.
 ///
 /// Cards used to link `outrepd.com/u/<username>`, and there are no profile

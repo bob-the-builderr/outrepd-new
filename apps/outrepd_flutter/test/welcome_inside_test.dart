@@ -6,10 +6,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:outrepd/backend/backend.dart';
 import 'package:outrepd/l10n/app_localizations.dart';
 import 'package:outrepd/rewards.dart';
 import 'package:outrepd/screens/welcome_inside.dart';
 import 'package:outrepd/theme.dart';
+
+/// An account with a friend code, as one has once it exists on the server.
+class _WithCode extends NoBackend {
+  @override
+  RemoteProfile? get me => const RemoteProfile(
+        id: 'me',
+        username: 'mokhtar',
+        tierIdx: 0,
+        divIdx: 0,
+        lp: 0,
+        friendCode: 'AB12CD',
+      );
+}
 
 Widget _app(VoidCallback done, {Locale locale = const Locale('en')}) =>
     MaterialApp(
@@ -31,6 +45,19 @@ void main() {
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
   }
+
+  testWidgets('the friend code can be sent on, not just copied',
+      (tester) async {
+    phone(tester);
+    backend = _WithCode();
+    addTearDown(() => backend = const NoBackend());
+    await tester.pumpWidget(_app(() {}));
+    await tester.pumpAndSettle();
+
+    expect(find.text('#AB12CD'), findsOneWidget);
+    expect(find.byKey(const Key('shareFriendCode')), findsOneWidget);
+    expect(find.text('Share this code'), findsOneWidget);
+  });
 
   testWidgets('shows the titles and friends, and goes on', (tester) async {
     phone(tester);

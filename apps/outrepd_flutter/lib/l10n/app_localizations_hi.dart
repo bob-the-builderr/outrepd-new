@@ -2130,4 +2130,9 @@ class LHi extends L {
 
   @override
   String get shareRematch => 'फिर से मुकाबला?';
+
+  @override
+  String friendCodeInvite(String code) {
+    return 'outrepd पर मुझसे मुकाबला करो। मेरे फ्रेंड कोड ${code} से मुझे जोड़ो\nhttps://outrepd.com';
+  }
 }

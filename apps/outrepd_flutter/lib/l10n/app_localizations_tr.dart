@@ -2126,4 +2126,9 @@ class LTr extends L {
 
   @override
   String get shareRematch => 'RÖVANŞ?';
+
+  @override
+  String friendCodeInvite(String code) {
+    return 'outrepd\'de benimle düello yap. Arkadaş kodumla beni ekle: ${code}\nhttps://outrepd.com';
+  }
 }

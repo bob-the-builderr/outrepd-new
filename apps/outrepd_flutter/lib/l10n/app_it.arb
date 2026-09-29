@@ -671,5 +671,6 @@
   "signOutQuestion": "Uscire?",
   "signOutBody": "Il tuo account resta com’è, con grado, cronologia e abbonamento. Rientra quando vuoi con la tua email.",
   "shareVictory": "VITTORIA",
-  "shareRematch": "RIVINCITA?"
+  "shareRematch": "RIVINCITA?",
+  "friendCodeInvite": "Sfidami su outrepd. Aggiungimi con il mio codice amico {code}\nhttps://outrepd.com"
 }

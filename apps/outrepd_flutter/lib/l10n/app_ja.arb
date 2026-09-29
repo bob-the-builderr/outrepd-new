@@ -671,5 +671,6 @@
   "signOutQuestion": "サインアウトしますか？",
   "signOutBody": "アカウントはランク、履歴、サブスクリプションごとそのまま残ります。メールアドレスでいつでも再びサインインできます。",
   "shareVictory": "勝利",
-  "shareRematch": "再戦？"
+  "shareRematch": "再戦？",
+  "friendCodeInvite": "outrepd で勝負しよう。フレンドコード {code} で追加してね\nhttps://outrepd.com"
 }

@@ -2136,4 +2136,9 @@ class LPt extends L {
 
   @override
   String get shareRematch => 'REVANCHE?';
+
+  @override
+  String friendCodeInvite(String code) {
+    return 'Me desafie no outrepd. Me adicione com meu código de amigo ${code}\nhttps://outrepd.com';
+  }
 }

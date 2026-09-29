@@ -671,5 +671,6 @@
   "signOutQuestion": "Abmelden?",
   "signOutBody": "Dein Konto bleibt, wie es ist – mit Rang, Verlauf und Abo. Melde dich jederzeit mit deiner E-Mail wieder an.",
   "shareVictory": "SIEG",
-  "shareRematch": "REVANCHE?"
+  "shareRematch": "REVANCHE?",
+  "friendCodeInvite": "Fordere mich auf outrepd heraus. Füg mich mit meinem Freundescode {code} hinzu\nhttps://outrepd.com"
 }

@@ -1188,5 +1188,13 @@
   "signOutQuestion": "Sign out?",
   "signOutBody": "Your account stays as it is, with its rank, history and subscription. Sign back in any time with your email.",
   "shareVictory": "VICTORY",
-  "shareRematch": "REMATCH?"
+  "shareRematch": "REMATCH?",
+  "friendCodeInvite": "Duel me on outrepd. Add me with my friend code {code}\nhttps://outrepd.com",
+  "@friendCodeInvite": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  }
 }

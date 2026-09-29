@@ -671,5 +671,6 @@
   "signOutQuestion": "로그아웃할까요?",
   "signOutBody": "계정은 랭크, 기록, 구독과 함께 그대로 남습니다. 언제든 이메일로 다시 로그인하세요.",
   "shareVictory": "승리",
-  "shareRematch": "재대결?"
+  "shareRematch": "재대결?",
+  "friendCodeInvite": "outrepd에서 나와 대결해 줘. 내 친구 코드 {code}로 추가해 줘\nhttps://outrepd.com"
 }
