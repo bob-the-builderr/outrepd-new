@@ -12,6 +12,10 @@
 #   REVENUECAT_ANDROID_KEY            RevenueCat's public Google Play key
 #                                     (goog_...). Without it the build has no
 #                                     paywall; the run says so in a warning.
+#   REVENUECAT_TEST_KEY               RevenueCat's Test Store key. Adds a
+#                                     debug "outrepd test" APK where the
+#                                     paywall can be tried with simulated
+#                                     purchases, before any store is set up.
 #   UPLOAD_KEYSTORE_BASE64            the upload keystore (.jks), as base64.
 #   UPLOAD_KEYSTORE_PASSWORD          its password.
 #   UPLOAD_KEY_ALIAS                  the key's alias ("upload").
@@ -212,20 +216,122 @@ jobs:
           git config user.name "ci"
           git config user.email "ci@users.noreply.github.com"
           work="$RUNNER_TEMP/builds"
-          if git fetch --depth 1 origin ci-builds 2>/dev/null; then
-            git worktree add "$work" FETCH_HEAD
-            git -C "$work" checkout -B ci-builds
-          else
-            git worktree add --detach "$work"
-            git -C "$work" checkout --orphan ci-builds
-            git -C "$work" rm -rf -q . || true
+          # The paywall-test job pushes here too; retry on a race.
+          for attempt in 1 2 3 4 5; do
+            rm -rf "$work"
+            if git fetch --depth 1 origin ci-builds 2>/dev/null; then
+              git worktree add -f "$work" FETCH_HEAD
+              git -C "$work" checkout -B ci-builds
+            else
+              git worktree add -f --detach "$work"
+              git -C "$work" checkout --orphan ci-builds
+              git -C "$work" rm -rf -q . || true
+            fi
+            mkdir -p "$work/${GITHUB_SHA::7}" "$work/latest"
+            cp "$out/summary.txt" "$work/${GITHUB_SHA::7}/summary.txt"
+            cp "$out/summary.txt" "$work/latest/summary.txt"
+            git -C "$work" add -A
+            git -C "$work" commit -q -m "Build ${GITHUB_SHA::7}" || true
+            if git -C "$work" push -q origin ci-builds; then break; fi
+            git worktree remove -f "$work" || true
+            sleep $((attempt * 5))
+          done
+
+  # The paywall, tried without Google Play: a debug APK carrying RevenueCat's
+  # Test Store key, where a purchase opens a sheet with buy / fail / cancel
+  # instead of charging anybody. Debug on purpose — the SDK crashes a release
+  # build that has a Test Store key, so this can never reach a store. It
+  # installs as "outrepd test", beside the real app.
+  paywall-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+      REVENUECAT_TEST_KEY: ${{ secrets.REVENUECAT_TEST_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Only with a Test Store key
+        id: have
+        run: |
+          if [ -z "$REVENUECAT_TEST_KEY" ]; then
+            echo "::notice::No REVENUECAT_TEST_KEY secret: no paywall test build."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
-          mkdir -p "$work/${GITHUB_SHA::7}" "$work/latest"
-          cp "$out/summary.txt" "$work/${GITHUB_SHA::7}/summary.txt"
-          cp "$out/summary.txt" "$work/latest/summary.txt"
-          git -C "$work" add -A
-          git -C "$work" commit -q -m "Build ${GITHUB_SHA::7}" || true
-          git -C "$work" push -q origin ci-builds
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "::error::The paywall test build needs SUPABASE_URL and SUPABASE_ANON_KEY too: the paywall comes after signing up."
+            exit 1
+          fi
+          printf 'SUPABASE_URL=%s\nSUPABASE_ANON_KEY=%s\nREVENUECAT_ANDROID_KEY=%s\n' \
+            "$SUPABASE_URL" "$SUPABASE_ANON_KEY" "$REVENUECAT_TEST_KEY" > supabase/keys.env
+          echo "ready=true" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-java@v4
+        if: steps.have.outputs.ready == 'true'
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        if: steps.have.outputs.ready == 'true'
+        with:
+          channel: stable
+          cache: true
+
+      - name: Paywall test APK
+        id: build
+        if: steps.have.outputs.ready == 'true'
+        run: |
+          flutter pub get
+          flutter build apk --debug --dart-define-from-file=supabase/keys.env
+          cp build/app/outputs/flutter-apk/app-debug.apk "$RUNNER_TEMP/OUTREPD-paywall-test.apk"
+
+      - uses: actions/upload-artifact@v4
+        if: steps.have.outputs.ready == 'true'
+        with:
+          name: OUTREPD-paywall-test-${{ github.sha }}
+          path: ${{ runner.temp }}/OUTREPD-paywall-test.apk
+          retention-days: 30
+
+      # Next to the build job's report on ci-builds. Both jobs push there, so
+      # this one retries on a race rather than lose its line.
+      - name: Publish what was built to the ci-builds branch
+        if: always()
+        working-directory: .
+        run: |
+          apk="$RUNNER_TEMP/OUTREPD-paywall-test.apk"
+          report="$RUNNER_TEMP/paywall-test.txt"
+          {
+            echo "commit      ${GITHUB_SHA}"
+            echo "test key    ${{ steps.have.outputs.ready }}"
+            echo "test apk    ${{ steps.build.outcome }} $( [ -f "$apk" ] && stat -c %s "$apk" ) bytes"
+            echo "run         ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          } > "$report"
+          git config user.name "ci"
+          git config user.email "ci@users.noreply.github.com"
+          work="$RUNNER_TEMP/builds-test"
+          for attempt in 1 2 3 4 5; do
+            rm -rf "$work"
+            if git fetch --depth 1 origin ci-builds 2>/dev/null; then
+              git worktree add -f "$work" FETCH_HEAD
+              git -C "$work" checkout -B ci-builds
+            else
+              git worktree add -f --detach "$work"
+              git -C "$work" checkout --orphan ci-builds
+              git -C "$work" rm -rf -q . || true
+            fi
+            mkdir -p "$work/latest"
+            cp "$report" "$work/latest/paywall-test.txt"
+            git -C "$work" add -A
+            git -C "$work" commit -q -m "Paywall test build ${GITHUB_SHA::7}" || true
+            if git -C "$work" push -q origin ci-builds; then break; fi
+            git worktree remove -f "$work" || true
+            sleep $((attempt * 5))
+          done
 
   checks:
     runs-on: ubuntu-latest

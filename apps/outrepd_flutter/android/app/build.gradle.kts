@@ -34,6 +34,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        manifestPlaceholders["appLabel"] = "outrepd"
     }
 
     signingConfigs {
@@ -48,6 +49,15 @@ android {
     }
 
     buildTypes {
+        // A debug build is the paywall test build: it carries RevenueCat's Test
+        // Store key, which crashes a release build on purpose. Its own id and
+        // name let it sit beside the real app instead of fighting its
+        // signature, and make it obvious which one is open.
+        debug {
+            applicationIdSuffix = ".test"
+            manifestPlaceholders["appLabel"] = "outrepd test"
+        }
+
         release {
             signingConfig =
                 if (hasUploadKey) signingConfigs.getByName("release")
