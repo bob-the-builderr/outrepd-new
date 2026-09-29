@@ -192,12 +192,21 @@ class _TrainerScreenState extends State<TrainerScreen>
     }
   }
 
+  /// Stops listening to the camera. Not awaited: the pose stream has nothing
+  /// to clean up when a listener leaves, and a cancel on a broadcast stream
+  /// hands back a future from outside the screen's zone, which a widget
+  /// test's fake clock never runs — the round would never end there.
+  void _dropPoses() {
+    final sub = _sub;
+    _sub = null;
+    if (sub != null) unawaited(sub.cancel());
+  }
+
   Future<void> _releaseCamera() async {
     final source = _source;
     if (source == null || _suspended || _stage == _Stage.setup) return;
     _suspended = true;
-    await _sub?.cancel();
-    _sub = null;
+    _dropPoses();
     if (mounted) setState(() => _source = null);
     await source.dispose();
   }
@@ -667,7 +676,7 @@ class _TrainerScreenState extends State<TrainerScreen>
     // A round that ran and finished, not one abandoned before it began or
     // given up: nobody wants a fanfare for walking away.
     if (_boutStartMs != null && !_gaveUp) Sounds.instance.play(Cue.end);
-    await _sub?.cancel();
+    _dropPoses();
     await _source?.dispose();
     keepScreenOn(false);
     final recording = await _saveRecording();
