@@ -1,10 +1,8 @@
-commit      5a6223255e615fe174aa1288a34b966d614941fa
-build       117
+commit      7bed929288399af903bffe290b2e5a77810581e0
+build       118
 upload key  true
 key note    the upload key opens and has the alias
-apk         success 118405559 bytes
-aab         success 113304747 bytes
+apk         cancelled  bytes
+aab         skipped  bytes
 paywall key no
-signed by   Owner: CN=mokhtar, OU=outrepd, O=outrepd, L=suez, ST=suez, C=EG
-sha-256     93:19:AC:A3:AC:BD:85:34:04:9D:BF:6F:D7:CD:B5:D2:CC:1D:D8:4F:AA:E4:C3:39:4B:A6:8B:45:FF:03:7A:FB
-run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/36611986190
+run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/36613774932
