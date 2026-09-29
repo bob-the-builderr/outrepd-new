@@ -20,6 +20,7 @@ import '../theme.dart';
 import '../widgets.dart';
 import 'match_entry.dart';
 import 'match_flow.dart';
+import 'share_card.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -132,17 +133,43 @@ class _NoticeTile extends StatelessWidget {
       NoticeKind.challenged => l.nChallengedBody(notice.actorName),
     };
 
-    // Only a challenge with somebody still there to race is worth tapping.
-    final onTap = notice.kind == NoticeKind.challenged && notice.actorId != null
-        ? () => Navigator.of(context).push(
+    // A challenge opens the duel it asks for. A raced set opens the card to
+    // share it — the lifter who raced could share from their result screen,
+    // and the one who was raced only ever hears about it here. Nothing else
+    // goes anywhere.
+    final VoidCallback? onTap = switch (notice.kind) {
+      NoticeKind.challenged when notice.actorId != null => () =>
+          Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_) => MatchFlowScreen(
                 mode: MatchMode.challengeAccept,
                 targetId: notice.actorId,
               ),
             ),
-          )
-        : null;
+          ),
+      NoticeKind.raced
+          when notice.youWon != null &&
+              notice.yourReps != null &&
+              notice.theirReps != null =>
+        () => showMatchShareSheet(
+              context,
+              data: MatchShareData(
+                username: demoProfile.username,
+                won: notice.youWon!,
+                yourReps: notice.yourReps!,
+                theirReps: notice.theirReps!,
+                opponent: notice.actorName,
+                seconds: kDuelLength.inSeconds,
+                // The notice does not carry what the duel did to the rank,
+                // so the card shows where the account stands now, without a
+                // change it cannot vouch for.
+                tierIdx: demoProfile.isRanked ? demoProfile.tierIdx : null,
+                divIdx: demoProfile.divIdx,
+                avatarUrl: backend.me?.avatarUrl,
+              ),
+            ),
+      _ => null,
+    };
 
     return _Row(
       heading: heading,
