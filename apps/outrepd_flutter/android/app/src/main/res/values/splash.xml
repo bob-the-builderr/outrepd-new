@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The app's dark page colour, so opening the app goes from the launch
+         screen into the first page without a flash of white. -->
+    <color name="splash_background">#121110</color>
+</resources>
