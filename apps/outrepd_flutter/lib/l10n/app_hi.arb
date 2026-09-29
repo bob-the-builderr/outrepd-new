@@ -666,5 +666,8 @@
   "paywallNothingToRestore": "रीस्टोर करने के लिए कोई सदस्यता नहीं मिली।",
   "paywallRestored": "सदस्यता रीस्टोर हो गई",
   "paywallSignedInAs": "{email} के रूप में साइन इन",
-  "deleteKeepsSubscription": "खाता मिटाने से आपकी सदस्यता रद्द नहीं होती — बिल स्टोर करता है, outrepd नहीं। पहले Google Play या अपनी Apple खाता सेटिंग में इसे रद्द करें।"
+  "deleteKeepsSubscription": "खाता मिटाने से आपकी सदस्यता रद्द नहीं होती — बिल स्टोर करता है, outrepd नहीं। पहले Google Play या अपनी Apple खाता सेटिंग में इसे रद्द करें।",
+  "signOut": "साइन आउट करें",
+  "signOutQuestion": "साइन आउट करें?",
+  "signOutBody": "आपका खाता अपनी रैंक, इतिहास और सदस्यता के साथ वैसा ही रहेगा। अपने ईमेल से कभी भी फिर से साइन इन करें।"
 }

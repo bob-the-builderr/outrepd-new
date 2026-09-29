@@ -2115,4 +2115,13 @@ class LHi extends L {
 
   @override
   String get deleteKeepsSubscription => 'खाता मिटाने से आपकी सदस्यता रद्द नहीं होती — बिल स्टोर करता है, outrepd नहीं। पहले Google Play या अपनी Apple खाता सेटिंग में इसे रद्द करें।';
+
+  @override
+  String get signOut => 'साइन आउट करें';
+
+  @override
+  String get signOutQuestion => 'साइन आउट करें?';
+
+  @override
+  String get signOutBody => 'आपका खाता अपनी रैंक, इतिहास और सदस्यता के साथ वैसा ही रहेगा। अपने ईमेल से कभी भी फिर से साइन इन करें।';
 }

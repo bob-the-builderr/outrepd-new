@@ -2115,4 +2115,13 @@ class LEn extends L {
 
   @override
   String get deleteKeepsSubscription => 'Deleting your account doesn\'t cancel your subscription: the store bills it, not outrepd. Cancel it first in Google Play or in your Apple account settings.';
+
+  @override
+  String get signOut => 'Sign out';
+
+  @override
+  String get signOutQuestion => 'Sign out?';
+
+  @override
+  String get signOutBody => 'Your account stays as it is, with its rank, history and subscription. Sign back in any time with your email.';
 }

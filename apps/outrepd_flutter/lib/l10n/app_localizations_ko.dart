@@ -2081,4 +2081,13 @@ class LKo extends L {
 
   @override
   String get deleteKeepsSubscription => '계정을 삭제해도 구독은 해지되지 않습니다. 요금은 outrepd가 아니라 스토어가 청구합니다. 먼저 Google Play 또는 Apple 계정 설정에서 해지하세요.';
+
+  @override
+  String get signOut => '로그아웃';
+
+  @override
+  String get signOutQuestion => '로그아웃할까요?';
+
+  @override
+  String get signOutBody => '계정은 랭크, 기록, 구독과 함께 그대로 남습니다. 언제든 이메일로 다시 로그인하세요.';
 }

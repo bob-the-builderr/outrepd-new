@@ -666,5 +666,8 @@
   "paywallNothingToRestore": "No se encontró ninguna suscripción para restaurar.",
   "paywallRestored": "Suscripción restaurada",
   "paywallSignedInAs": "Sesión iniciada como {email}",
-  "deleteKeepsSubscription": "Eliminar tu cuenta no cancela tu suscripción: la cobra la tienda, no outrepd. Cancélala antes en Google Play o en los ajustes de tu cuenta de Apple."
+  "deleteKeepsSubscription": "Eliminar tu cuenta no cancela tu suscripción: la cobra la tienda, no outrepd. Cancélala antes en Google Play o en los ajustes de tu cuenta de Apple.",
+  "signOut": "Cerrar sesión",
+  "signOutQuestion": "¿Cerrar sesión?",
+  "signOutBody": "Tu cuenta queda como está, con su rango, su historial y su suscripción. Vuelve a entrar cuando quieras con tu correo."
 }

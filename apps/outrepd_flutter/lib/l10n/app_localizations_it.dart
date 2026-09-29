@@ -2122,4 +2122,13 @@ class LIt extends L {
 
   @override
   String get deleteKeepsSubscription => 'Eliminare l’account non annulla l’abbonamento: lo addebita lo store, non outrepd. Disdicilo prima da Google Play o dalle impostazioni del tuo account Apple.';
+
+  @override
+  String get signOut => 'Esci';
+
+  @override
+  String get signOutQuestion => 'Uscire?';
+
+  @override
+  String get signOutBody => 'Il tuo account resta com’è, con grado, cronologia e abbonamento. Rientra quando vuoi con la tua email.';
 }

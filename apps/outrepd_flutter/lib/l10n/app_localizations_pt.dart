@@ -2121,4 +2121,13 @@ class LPt extends L {
 
   @override
   String get deleteKeepsSubscription => 'Apagar sua conta não cancela sua assinatura: quem cobra é a loja, não o outrepd. Cancele antes no Google Play ou nos ajustes da sua conta Apple.';
+
+  @override
+  String get signOut => 'Sair';
+
+  @override
+  String get signOutQuestion => 'Sair da conta?';
+
+  @override
+  String get signOutBody => 'Sua conta fica como está, com seu rank, histórico e assinatura. Entre de novo quando quiser com seu e-mail.';
 }

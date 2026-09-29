@@ -2116,4 +2116,13 @@ class LRu extends L {
 
   @override
   String get deleteKeepsSubscription => 'Удаление аккаунта не отменяет подписку — её списывает магазин, а не outrepd. Сначала отмените её в Google Play или в настройках аккаунта Apple.';
+
+  @override
+  String get signOut => 'Выйти';
+
+  @override
+  String get signOutQuestion => 'Выйти из аккаунта?';
+
+  @override
+  String get signOutBody => 'Аккаунт останется как есть — с рангом, историей и подпиской. Войдите снова в любой момент по своей почте.';
 }

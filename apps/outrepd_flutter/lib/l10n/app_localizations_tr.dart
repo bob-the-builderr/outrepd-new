@@ -2111,4 +2111,13 @@ class LTr extends L {
 
   @override
   String get deleteKeepsSubscription => 'Hesabını silmek aboneliğini iptal etmez; ücreti outrepd değil mağaza alır. Önce Google Play\'den veya Apple hesap ayarlarından iptal et.';
+
+  @override
+  String get signOut => 'Çıkış yap';
+
+  @override
+  String get signOutQuestion => 'Çıkış yapılsın mı?';
+
+  @override
+  String get signOutBody => 'Hesabın rütbesi, geçmişi ve aboneliğiyle olduğu gibi kalır. İstediğin zaman e-postanla tekrar giriş yap.';
 }

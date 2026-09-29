@@ -742,6 +742,12 @@ class SupabaseBackend implements Backend {
   }
 
   @override
+  Future<void> signOut() async {
+    await _db.auth.signOut();
+    _me = null;
+  }
+
+  @override
   Future<void> deleteAccount() async {
     // The photo first, while this session can still prove it owns the file.
     // Deleting the account does not reach storage, and the bucket is public,

@@ -72,6 +72,14 @@ class _FakeStore implements Storefront {
 
   @override
   void onChange(void Function(bool active) listener) {}
+
+  int forgets = 0;
+
+  @override
+  Future<void> forget() async {
+    forgets++;
+    active = false;
+  }
 }
 
 Widget _app({Locale locale = const Locale('en'), double scale = 1}) =>

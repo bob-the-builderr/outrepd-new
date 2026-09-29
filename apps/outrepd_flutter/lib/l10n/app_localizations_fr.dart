@@ -2125,4 +2125,13 @@ class LFr extends L {
 
   @override
   String get deleteKeepsSubscription => 'Supprimer ton compte n’annule pas ton abonnement : c’est le store qui le facture, pas outrepd. Résilie-le d’abord dans Google Play ou dans les réglages de ton compte Apple.';
+
+  @override
+  String get signOut => 'Se déconnecter';
+
+  @override
+  String get signOutQuestion => 'Se déconnecter ?';
+
+  @override
+  String get signOutBody => 'Ton compte reste tel quel, avec son rang, son historique et son abonnement. Reconnecte-toi quand tu veux avec ton e-mail.';
 }

@@ -53,6 +53,8 @@ class _Store implements Storefront {
   Future<bool> restore() async => false;
   @override
   void onChange(void Function(bool active) listener) {}
+  @override
+  Future<void> forget() async {}
 }
 
 Future<void> _font(String family, String path) async {

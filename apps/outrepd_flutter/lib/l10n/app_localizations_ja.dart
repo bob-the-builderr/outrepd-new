@@ -2071,4 +2071,13 @@ class LJa extends L {
 
   @override
   String get deleteKeepsSubscription => 'アカウントを削除してもサブスクリプションは解約されません。請求するのはストアで、outrepd ではありません。先に Google Play か Apple アカウントの設定で解約してください。';
+
+  @override
+  String get signOut => 'サインアウト';
+
+  @override
+  String get signOutQuestion => 'サインアウトしますか？';
+
+  @override
+  String get signOutBody => 'アカウントはランク、履歴、サブスクリプションごとそのまま残ります。メールアドレスでいつでも再びサインインできます。';
 }

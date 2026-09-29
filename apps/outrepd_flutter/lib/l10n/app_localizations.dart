@@ -3952,6 +3952,24 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Deleting your account doesn\'t cancel your subscription: the store bills it, not outrepd. Cancel it first in Google Play or in your Apple account settings.'**
   String get deleteKeepsSubscription;
+
+  /// No description provided for @signOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get signOut;
+
+  /// No description provided for @signOutQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out?'**
+  String get signOutQuestion;
+
+  /// No description provided for @signOutBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account stays as it is, with its rank, history and subscription. Sign back in any time with your email.'**
+  String get signOutBody;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

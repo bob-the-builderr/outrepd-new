@@ -666,5 +666,8 @@
   "paywallNothingToRestore": "Nessun abbonamento da ripristinare.",
   "paywallRestored": "Abbonamento ripristinato",
   "paywallSignedInAs": "Accesso effettuato come {email}",
-  "deleteKeepsSubscription": "Eliminare l’account non annulla l’abbonamento: lo addebita lo store, non outrepd. Disdicilo prima da Google Play o dalle impostazioni del tuo account Apple."
+  "deleteKeepsSubscription": "Eliminare l’account non annulla l’abbonamento: lo addebita lo store, non outrepd. Disdicilo prima da Google Play o dalle impostazioni del tuo account Apple.",
+  "signOut": "Esci",
+  "signOutQuestion": "Uscire?",
+  "signOutBody": "Il tuo account resta com’è, con grado, cronologia e abbonamento. Rientra quando vuoi con la tua email."
 }

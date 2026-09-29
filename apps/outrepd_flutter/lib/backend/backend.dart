@@ -815,6 +815,10 @@ abstract interface class Backend {
 
   /// Deletes the account and everything hanging off it. Irreversible.
   Future<void> deleteAccount();
+
+  /// Leaves the account on the server as it is and forgets it on this
+  /// phone. [me] is null afterwards; [signIn] starts a fresh one.
+  Future<void> signOut();
 }
 
 /// The app with no server behind it.
@@ -988,6 +992,9 @@ class NoBackend implements Backend {
 
   @override
   Future<void> deleteAccount() => throw StateError('no server configured');
+
+  @override
+  Future<void> signOut() async {}
 }
 
 /// The one the app uses. Replaced at startup when keys are supplied.

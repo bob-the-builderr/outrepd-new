@@ -2116,4 +2116,13 @@ class LId extends L {
 
   @override
   String get deleteKeepsSubscription => 'Menghapus akun tidak membatalkan langgananmu — yang menagih adalah toko, bukan outrepd. Batalkan dulu di Google Play atau di pengaturan akun Apple-mu.';
+
+  @override
+  String get signOut => 'Keluar';
+
+  @override
+  String get signOutQuestion => 'Keluar dari akun?';
+
+  @override
+  String get signOutBody => 'Akunmu tetap seperti sekarang, dengan peringkat, riwayat, dan langganannya. Masuk lagi kapan saja dengan emailmu.';
 }

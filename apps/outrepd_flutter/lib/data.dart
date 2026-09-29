@@ -200,6 +200,14 @@ Future<void> markOnboarded() async {
   await s.setBool('onboarded', true);
 }
 
+/// Undoes [markOnboarded], for signing out: the phone opens on the welcome
+/// screen again, where "I already have an account" signs back in.
+Future<void> markNotOnboarded() async {
+  onboarded = false;
+  final s = await SharedPreferences.getInstance();
+  await s.setBool('onboarded', false);
+}
+
 class MatchRecord {
   const MatchRecord({
     this.exerciseType = ExerciseType.pushUp,

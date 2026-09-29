@@ -2061,4 +2061,13 @@ class LZh extends L {
 
   @override
   String get deleteKeepsSubscription => '删除账户不会取消订阅：扣费的是应用商店，不是 outrepd。请先在 Google Play 或 Apple 账户设置中取消。';
+
+  @override
+  String get signOut => '退出登录';
+
+  @override
+  String get signOutQuestion => '要退出登录吗？';
+
+  @override
+  String get signOutBody => '你的账户会原样保留，包括段位、记录和订阅。随时可以用邮箱重新登录。';
 }

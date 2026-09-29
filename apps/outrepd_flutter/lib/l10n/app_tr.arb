@@ -666,5 +666,8 @@
   "paywallNothingToRestore": "Geri yüklenecek abonelik bulunamadı.",
   "paywallRestored": "Abonelik geri yüklendi",
   "paywallSignedInAs": "{email} olarak giriş yapıldı",
-  "deleteKeepsSubscription": "Hesabını silmek aboneliğini iptal etmez; ücreti outrepd değil mağaza alır. Önce Google Play'den veya Apple hesap ayarlarından iptal et."
+  "deleteKeepsSubscription": "Hesabını silmek aboneliğini iptal etmez; ücreti outrepd değil mağaza alır. Önce Google Play'den veya Apple hesap ayarlarından iptal et.",
+  "signOut": "Çıkış yap",
+  "signOutQuestion": "Çıkış yapılsın mı?",
+  "signOutBody": "Hesabın rütbesi, geçmişi ve aboneliğiyle olduğu gibi kalır. İstediğin zaman e-postanla tekrar giriş yap."
 }

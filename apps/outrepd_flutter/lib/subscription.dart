@@ -111,6 +111,10 @@ abstract class Storefront {
   /// Called whenever the store learns something new — a renewal, an
   /// expiry, a purchase finishing in the background.
   void onChange(void Function(bool active) listener);
+
+  /// Forgets the account — signing out. A purchase made after this belongs
+  /// to whoever signs in next, not to the account that left.
+  Future<void> forget();
 }
 
 /// The app's one view of the subscription.
@@ -210,6 +214,23 @@ class Subscription extends ChangeNotifier {
 
   /// Records a purchase or a restore the paywall just finished.
   void settle(bool active) => _set(active);
+
+  /// Signing out: the store lets go of the account, and nothing is known
+  /// about the next one until the gate asks.
+  Future<void> forget() async {
+    final store = _store;
+    if (store != null && _started) {
+      try {
+        await store.forget();
+      } on Object catch (error) {
+        debugPrint('Could not sign the store out: $error');
+      }
+    }
+    _userId = null;
+    _active = null;
+    _failed = false;
+    notifyListeners();
+  }
 
   void _set(bool active) {
     if (_active == active && !_failed) return;
@@ -311,4 +332,11 @@ class RevenueCatStorefront implements Storefront {
       Purchases.addCustomerInfoUpdateListener(
         (info) => listener(_hasPro(info)),
       );
+
+  @override
+  Future<void> forget() async {
+    // logOut throws for an anonymous RevenueCat user, who has nothing to
+    // let go of.
+    if (!await Purchases.isAnonymous) await Purchases.logOut();
+  }
 }

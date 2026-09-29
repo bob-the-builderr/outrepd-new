@@ -17,14 +17,17 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../backend/backend.dart';
+import '../career.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../reps/count_accuracy.dart';
 import '../settings.dart';
+import '../subscription.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'auth_entry.dart';
 import 'counter_accuracy.dart';
+import 'onboarding.dart';
 import 'settings_account.dart';
 import 'settings_notices.dart';
 import 'settings_parts.dart';
@@ -60,14 +63,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
           SettingsSection(
             title: l.accountSection,
             children: [
-              if (backend.hasRealAccount)
+              if (backend.hasRealAccount) ...[
                 NavRow(
                   icon: Icons.verified_user_outlined,
                   label: l.signedInAs(backend.accountEmail ?? ''),
                   chevron: false,
+                ),
+                // Only for an account with an email: signing out of one
+                // without is losing it, with no way back in.
+                NavRow(
+                  key: const Key('signOut'),
+                  icon: Icons.logout,
+                  label: l.signOut,
+                  onTap: _signOut,
                   last: true,
-                )
-              else
+                ),
+              ] else
                 NavRow(
                   icon: Icons.mail_outline,
                   label: l.createAccountTitle,
@@ -301,6 +312,65 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  /// Signs out, and leaves the phone as a fresh install leaves it: on the
+  /// welcome screen, with a new session behind it so that signing up again
+  /// works as it did the first time. The account itself is untouched on the
+  /// server — rank, history and subscription wait for the next sign-in.
+  Future<void> _signOut() async {
+    final l = L.of(context);
+    final navigator = Navigator.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final sure = await showDialog<bool>(
+      context: context,
+      builder: (dialog) => AlertDialog(
+        title: Text(l.signOutQuestion),
+        content: Text(l.signOutBody),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialog).pop(false),
+            child: Text(l.cancel),
+          ),
+          TextButton(
+            key: const Key('confirmSignOut'),
+            onPressed: () => Navigator.of(dialog).pop(true),
+            child: Text(l.signOut),
+          ),
+        ],
+      ),
+    );
+    if (sure != true || !mounted) return;
+
+    try {
+      await backend.signOut();
+    } on Object catch (error) {
+      debugPrint('Could not sign out: $error');
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(l.cantReachServer),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      return;
+    }
+    await Subscription.instance.forget();
+    // What this phone kept of the account — its rank and totals — is the
+    // server's copy, and comes back with the next sign-in.
+    await Career.instance.startFresh();
+    await markNotOnboarded();
+    try {
+      await backend.signIn(username: 'lifter');
+    } on Object catch (error) {
+      // Offline: the welcome screen still opens, and signing in or up asks
+      // the server again when it is used.
+      debugPrint('Could not start a new session: $error');
+    }
+
+    navigator.pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => const OnboardingScreen()),
+      (_) => false,
     );
   }
 

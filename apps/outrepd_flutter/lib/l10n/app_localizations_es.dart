@@ -2123,4 +2123,13 @@ class LEs extends L {
 
   @override
   String get deleteKeepsSubscription => 'Eliminar tu cuenta no cancela tu suscripción: la cobra la tienda, no outrepd. Cancélala antes en Google Play o en los ajustes de tu cuenta de Apple.';
+
+  @override
+  String get signOut => 'Cerrar sesión';
+
+  @override
+  String get signOutQuestion => '¿Cerrar sesión?';
+
+  @override
+  String get signOutBody => 'Tu cuenta queda como está, con su rango, su historial y su suscripción. Vuelve a entrar cuando quieras con tu correo.';
 }

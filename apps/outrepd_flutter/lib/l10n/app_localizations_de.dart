@@ -2127,4 +2127,13 @@ class LDe extends L {
 
   @override
   String get deleteKeepsSubscription => 'Das Löschen deines Kontos kündigt dein Abo nicht – der Store rechnet es ab, nicht outrepd. Kündige es vorher in Google Play oder in den Einstellungen deines Apple-Accounts.';
+
+  @override
+  String get signOut => 'Abmelden';
+
+  @override
+  String get signOutQuestion => 'Abmelden?';
+
+  @override
+  String get signOutBody => 'Dein Konto bleibt, wie es ist – mit Rang, Verlauf und Abo. Melde dich jederzeit mit deiner E-Mail wieder an.';
 }

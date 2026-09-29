@@ -666,5 +666,8 @@
   "paywallNothingToRestore": "Tidak ada langganan yang bisa dipulihkan.",
   "paywallRestored": "Langganan dipulihkan",
   "paywallSignedInAs": "Masuk sebagai {email}",
-  "deleteKeepsSubscription": "Menghapus akun tidak membatalkan langgananmu — yang menagih adalah toko, bukan outrepd. Batalkan dulu di Google Play atau di pengaturan akun Apple-mu."
+  "deleteKeepsSubscription": "Menghapus akun tidak membatalkan langgananmu — yang menagih adalah toko, bukan outrepd. Batalkan dulu di Google Play atau di pengaturan akun Apple-mu.",
+  "signOut": "Keluar",
+  "signOutQuestion": "Keluar dari akun?",
+  "signOutBody": "Akunmu tetap seperti sekarang, dengan peringkat, riwayat, dan langganannya. Masuk lagi kapan saja dengan emailmu."
 }
