@@ -1,7 +1,8 @@
-commit      0ddeab226c029341a0d739833f77b7be09162d57
-build       107
-upload key  
-apk         skipped  bytes
+commit      6f495a05c20d2cf0994eb3c092a4f92faa3bc583
+build       108
+upload key  false
+key note    UPLOAD_KEYSTORE_BASE64 is not a base64 keystore (13 characters; a real one is about 3,600). Paste it again.
+apk         success 118143415 bytes
 aab         skipped  bytes
 paywall key no
-run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/36503236447
+run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/36507056289
