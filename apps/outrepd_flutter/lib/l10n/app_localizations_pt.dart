@@ -2130,4 +2130,10 @@ class LPt extends L {
 
   @override
   String get signOutBody => 'Sua conta fica como está, com seu rank, histórico e assinatura. Entre de novo quando quiser com seu e-mail.';
+
+  @override
+  String get shareVictory => 'VITÓRIA';
+
+  @override
+  String get shareRematch => 'REVANCHE?';
 }

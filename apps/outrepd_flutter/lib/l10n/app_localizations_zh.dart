@@ -2070,4 +2070,10 @@ class LZh extends L {
 
   @override
   String get signOutBody => '你的账户会原样保留，包括段位、记录和订阅。随时可以用邮箱重新登录。';
+
+  @override
+  String get shareVictory => '胜利';
+
+  @override
+  String get shareRematch => '再战？';
 }

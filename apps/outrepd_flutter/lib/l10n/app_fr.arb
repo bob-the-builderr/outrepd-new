@@ -669,5 +669,7 @@
   "deleteKeepsSubscription": "Supprimer ton compte n’annule pas ton abonnement : c’est le store qui le facture, pas outrepd. Résilie-le d’abord dans Google Play ou dans les réglages de ton compte Apple.",
   "signOut": "Se déconnecter",
   "signOutQuestion": "Se déconnecter ?",
-  "signOutBody": "Ton compte reste tel quel, avec son rang, son historique et son abonnement. Reconnecte-toi quand tu veux avec ton e-mail."
+  "signOutBody": "Ton compte reste tel quel, avec son rang, son historique et son abonnement. Reconnecte-toi quand tu veux avec ton e-mail.",
+  "shareVictory": "VICTOIRE",
+  "shareRematch": "REVANCHE ?"
 }

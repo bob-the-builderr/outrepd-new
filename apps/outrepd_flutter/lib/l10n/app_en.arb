@@ -1186,5 +1186,7 @@
   "deleteKeepsSubscription": "Deleting your account doesn't cancel your subscription: the store bills it, not outrepd. Cancel it first in Google Play or in your Apple account settings.",
   "signOut": "Sign out",
   "signOutQuestion": "Sign out?",
-  "signOutBody": "Your account stays as it is, with its rank, history and subscription. Sign back in any time with your email."
+  "signOutBody": "Your account stays as it is, with its rank, history and subscription. Sign back in any time with your email.",
+  "shareVictory": "VICTORY",
+  "shareRematch": "REMATCH?"
 }

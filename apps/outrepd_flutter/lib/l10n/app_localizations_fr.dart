@@ -2134,4 +2134,10 @@ class LFr extends L {
 
   @override
   String get signOutBody => 'Ton compte reste tel quel, avec son rang, son historique et son abonnement. Reconnecte-toi quand tu veux avec ton e-mail.';
+
+  @override
+  String get shareVictory => 'VICTOIRE';
+
+  @override
+  String get shareRematch => 'REVANCHE ?';
 }

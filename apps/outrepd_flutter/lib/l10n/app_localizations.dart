@@ -3970,6 +3970,18 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Your account stays as it is, with its rank, history and subscription. Sign back in any time with your email.'**
   String get signOutBody;
+
+  /// No description provided for @shareVictory.
+  ///
+  /// In en, this message translates to:
+  /// **'VICTORY'**
+  String get shareVictory;
+
+  /// No description provided for @shareRematch.
+  ///
+  /// In en, this message translates to:
+  /// **'REMATCH?'**
+  String get shareRematch;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

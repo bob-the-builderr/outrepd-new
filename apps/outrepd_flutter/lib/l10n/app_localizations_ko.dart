@@ -2090,4 +2090,10 @@ class LKo extends L {
 
   @override
   String get signOutBody => '계정은 랭크, 기록, 구독과 함께 그대로 남습니다. 언제든 이메일로 다시 로그인하세요.';
+
+  @override
+  String get shareVictory => '승리';
+
+  @override
+  String get shareRematch => '재대결?';
 }

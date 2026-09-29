@@ -2124,4 +2124,10 @@ class LEn extends L {
 
   @override
   String get signOutBody => 'Your account stays as it is, with its rank, history and subscription. Sign back in any time with your email.';
+
+  @override
+  String get shareVictory => 'VICTORY';
+
+  @override
+  String get shareRematch => 'REMATCH?';
 }

@@ -659,15 +659,25 @@ class _IdentityRow extends StatelessWidget {
 }
 
 class _Initial extends StatelessWidget {
-  const _Initial({required this.name, this.avatarUrl});
+  const _Initial({
+    required this.name,
+    this.avatarUrl,
+    this.size = 32,
+    this.textColour,
+  });
   final String name;
   final String? avatarUrl;
+  final double size;
+
+  /// The initial's colour when there is no photo — a lifter's own colour on
+  /// the scoreboard card, where the two sides are told apart by it.
+  final Color? textColour;
 
   @override
   Widget build(BuildContext context) {
     final fallback = Container(
-      width: 32,
-      height: 32,
+      width: size,
+      height: size,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
@@ -676,7 +686,11 @@ class _Initial extends StatelessWidget {
       ),
       child: Text(
         name.isEmpty ? '?' : name.characters.first.toUpperCase(),
-        style: context.type.body.copyWith(color: context.colors.text),
+        // 15 at the original 32: the other cards draw exactly as before.
+        style: context.type.body.copyWith(
+          color: textColour ?? context.colors.text,
+          fontSize: size * 15 / 32,
+        ),
       ),
     );
 
@@ -684,8 +698,8 @@ class _Initial extends StatelessWidget {
     return ClipOval(
       child: Image.network(
         avatarUrl!,
-        width: 32,
-        height: 32,
+        width: size,
+        height: size,
         fit: BoxFit.cover,
         // The card is captured moments after this loads, so this is not
         // hypothetical the way it is on a screen somebody keeps open — a
@@ -783,8 +797,10 @@ class _StatRow extends StatelessWidget {
 
 // ─────────────────────────────── the match card ────────────────────────────
 
-/// The count, huge, is the whole card: it reads at a glance in a feed, and a
-/// loss still has a number worth posting. One line says who it was against.
+/// The duel as a scoreboard: both lifters face to face, each with their count
+/// in their own colour, and a bar split by who pushed more. It reads as a
+/// duel at a glance in a feed — a count alone could be any set. A loss keeps
+/// the same board and asks for a rematch instead of claiming a win.
 class _MatchStoryCard extends StatelessWidget {
   const _MatchStoryCard({required this.data});
   final MatchShareData data;
@@ -795,6 +811,8 @@ class _MatchStoryCard extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final l = L.of(context);
+          final you = context.colors.brand;
+          final them = context.colors.rival;
           return Container(
             width: 272,
             height: 560,
@@ -813,11 +831,60 @@ class _MatchStoryCard extends StatelessWidget {
                     letterSpacing: 0.5,
                   ),
                 ),
-                const SizedBox(height: 40),
-                _BigCount(data: data, size: 124),
+                const SizedBox(height: 22),
+                ShrinkText(
+                  data.won ? l.shareVictory : l.shareRematch,
+                  maxLines: 1,
+                  style: TextStyle(
+                    color: data.won ? AppColors.gold : them,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 5,
+                  ),
+                ),
                 const SizedBox(height: 26),
-                _ResultLine(data: data, centred: true),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: _Side(
+                        name: data.username,
+                        avatarUrl: data.avatarUrl,
+                        reps: data.yourReps,
+                        colour: you,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 26),
+                      child: Text(
+                        l.vs,
+                        style: context.type.label.copyWith(
+                          color: context.colors.faint,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: _Side(
+                        name: data.opponent,
+                        reps: data.theirReps,
+                        colour: them,
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 16),
+                _SplitBar(yours: data.yourReps, theirs: data.theirReps),
+                const SizedBox(height: 10),
+                ShrinkText(
+                  l
+                      .pushUpsInSeconds(localNumber(context, data.seconds))
+                      .toUpperCase(),
+                  maxLines: 1,
+                  style: context.type.micro.copyWith(
+                    color: context.colors.muted,
+                  ),
+                ),
+                const SizedBox(height: 24),
                 _RankLine(data: data),
                 if (data.newBest) ...[
                   const SizedBox(height: 12),
@@ -841,6 +908,89 @@ class _MatchStoryCard extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+/// One lifter on the scoreboard: picture, name, count, all in their colour.
+class _Side extends StatelessWidget {
+  const _Side({
+    required this.name,
+    required this.reps,
+    required this.colour,
+    this.avatarUrl,
+  });
+
+  final String name;
+  final int reps;
+  final Color colour;
+  final String? avatarUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _Initial(name: name, avatarUrl: avatarUrl, size: 56, textColour: colour),
+        const SizedBox(height: 7),
+        ShrinkText(
+          name,
+          maxLines: 1,
+          style: context.type.label.copyWith(color: colour),
+        ),
+        const SizedBox(height: 4),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            localNumber(context, reps),
+            style: TextStyle(
+              color: colour,
+              fontSize: 76,
+              fontWeight: FontWeight.w900,
+              height: 0.95,
+              letterSpacing: -2,
+              fontFeatures: const [FontFeature.tabularFigures()],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// The two counts as one bar, split by who did more — the same bar the duel
+/// screen draws while the round is on.
+class _SplitBar extends StatelessWidget {
+  const _SplitBar({required this.yours, required this.theirs});
+
+  final int yours;
+  final int theirs;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(5),
+      child: SizedBox(
+        height: 9,
+        width: double.infinity,
+        child: yours <= 0 && theirs <= 0
+            ? ColoredBox(color: context.colors.surfaceRaised)
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (yours > 0)
+                    Expanded(
+                      flex: yours,
+                      child: ColoredBox(color: context.colors.brand),
+                    ),
+                  if (theirs > 0)
+                    Expanded(
+                      flex: theirs,
+                      child: ColoredBox(color: context.colors.rival),
+                    ),
+                ],
+              ),
       ),
     );
   }

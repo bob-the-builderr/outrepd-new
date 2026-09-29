@@ -669,5 +669,7 @@
   "deleteKeepsSubscription": "删除账户不会取消订阅：扣费的是应用商店，不是 outrepd。请先在 Google Play 或 Apple 账户设置中取消。",
   "signOut": "退出登录",
   "signOutQuestion": "要退出登录吗？",
-  "signOutBody": "你的账户会原样保留，包括段位、记录和订阅。随时可以用邮箱重新登录。"
+  "signOutBody": "你的账户会原样保留，包括段位、记录和订阅。随时可以用邮箱重新登录。",
+  "shareVictory": "胜利",
+  "shareRematch": "再战？"
 }

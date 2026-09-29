@@ -2136,4 +2136,10 @@ class LDe extends L {
 
   @override
   String get signOutBody => 'Dein Konto bleibt, wie es ist – mit Rang, Verlauf und Abo. Melde dich jederzeit mit deiner E-Mail wieder an.';
+
+  @override
+  String get shareVictory => 'SIEG';
+
+  @override
+  String get shareRematch => 'REVANCHE?';
 }

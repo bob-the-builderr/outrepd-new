@@ -2131,4 +2131,10 @@ class LIt extends L {
 
   @override
   String get signOutBody => 'Il tuo account resta com’è, con grado, cronologia e abbonamento. Rientra quando vuoi con la tua email.';
+
+  @override
+  String get shareVictory => 'VITTORIA';
+
+  @override
+  String get shareRematch => 'RIVINCITA?';
 }

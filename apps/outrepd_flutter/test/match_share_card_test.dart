@@ -95,6 +95,10 @@ void main() {
     expect(find.textContaining('+7 LP', findRichText: true), findsWidgets);
     expect(find.textContaining('New personal best'), findsWidgets);
     expect(find.text('Duel me on outrepd'), findsWidgets);
+    // The story card is a scoreboard: a heading, and both lifters by name.
+    expect(find.text('VICTORY'), findsWidgets);
+    expect(find.text('REMATCH?'), findsNothing);
+    expect(find.text('11'), findsWidgets);
     expect(tester.takeException(), isNull);
   });
 
@@ -109,6 +113,9 @@ void main() {
     expect(find.textContaining('−5 LP', findRichText: true), findsWidgets);
     expect(find.text('Think you can beat me?'), findsWidgets);
     expect(find.textContaining('New personal best'), findsNothing);
+    // A loss does not claim a win on its scoreboard; it asks for another go.
+    expect(find.text('REMATCH?'), findsWidgets);
+    expect(find.text('VICTORY'), findsNothing);
   });
 
   testWidgets('in placements there is no rank to show', (tester) async {

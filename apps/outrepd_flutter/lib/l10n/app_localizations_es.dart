@@ -2132,4 +2132,10 @@ class LEs extends L {
 
   @override
   String get signOutBody => 'Tu cuenta queda como está, con su rango, su historial y su suscripción. Vuelve a entrar cuando quieras con tu correo.';
+
+  @override
+  String get shareVictory => 'VICTORIA';
+
+  @override
+  String get shareRematch => '¿REVANCHA?';
 }

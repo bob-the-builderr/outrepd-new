@@ -2125,4 +2125,10 @@ class LRu extends L {
 
   @override
   String get signOutBody => 'Аккаунт останется как есть — с рангом, историей и подпиской. Войдите снова в любой момент по своей почте.';
+
+  @override
+  String get shareVictory => 'ПОБЕДА';
+
+  @override
+  String get shareRematch => 'РЕВАНШ?';
 }

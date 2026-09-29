@@ -2124,4 +2124,10 @@ class LHi extends L {
 
   @override
   String get signOutBody => 'आपका खाता अपनी रैंक, इतिहास और सदस्यता के साथ वैसा ही रहेगा। अपने ईमेल से कभी भी फिर से साइन इन करें।';
+
+  @override
+  String get shareVictory => 'जीत';
+
+  @override
+  String get shareRematch => 'फिर से मुकाबला?';
 }

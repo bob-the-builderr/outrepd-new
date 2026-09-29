@@ -2080,4 +2080,10 @@ class LJa extends L {
 
   @override
   String get signOutBody => 'アカウントはランク、履歴、サブスクリプションごとそのまま残ります。メールアドレスでいつでも再びサインインできます。';
+
+  @override
+  String get shareVictory => '勝利';
+
+  @override
+  String get shareRematch => '再戦？';
 }

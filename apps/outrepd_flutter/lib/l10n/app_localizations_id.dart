@@ -2125,4 +2125,10 @@ class LId extends L {
 
   @override
   String get signOutBody => 'Akunmu tetap seperti sekarang, dengan peringkat, riwayat, dan langganannya. Masuk lagi kapan saja dengan emailmu.';
+
+  @override
+  String get shareVictory => 'MENANG';
+
+  @override
+  String get shareRematch => 'TANDING ULANG?';
 }

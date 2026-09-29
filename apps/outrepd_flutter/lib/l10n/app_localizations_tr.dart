@@ -2120,4 +2120,10 @@ class LTr extends L {
 
   @override
   String get signOutBody => 'Hesabın rütbesi, geçmişi ve aboneliğiyle olduğu gibi kalır. İstediğin zaman e-postanla tekrar giriş yap.';
+
+  @override
+  String get shareVictory => 'ZAFER';
+
+  @override
+  String get shareRematch => 'RÖVANŞ?';
 }

@@ -669,5 +669,7 @@
   "deleteKeepsSubscription": "Apagar sua conta não cancela sua assinatura: quem cobra é a loja, não o outrepd. Cancele antes no Google Play ou nos ajustes da sua conta Apple.",
   "signOut": "Sair",
   "signOutQuestion": "Sair da conta?",
-  "signOutBody": "Sua conta fica como está, com seu rank, histórico e assinatura. Entre de novo quando quiser com seu e-mail."
+  "signOutBody": "Sua conta fica como está, com seu rank, histórico e assinatura. Entre de novo quando quiser com seu e-mail.",
+  "shareVictory": "VITÓRIA",
+  "shareRematch": "REVANCHE?"
 }
