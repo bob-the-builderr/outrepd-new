@@ -407,6 +407,7 @@ class SupabaseBackend implements Backend {
           youWon: row['you_won'] as bool?,
           yourReps: (row['your_reps'] as num?)?.toInt(),
           theirReps: (row['their_reps'] as num?)?.toInt(),
+          lpDelta: (row['lp_delta'] as num?)?.toInt(),
         ),
     ];
   }

@@ -306,7 +306,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
           Center(
             child: Text(
-              '${l.version} $kAppVersion',
+              '${l.version} $appVersionLabel',
               style: TextStyle(color: context.colors.faint, fontSize: 12),
             ),
           ),

@@ -140,6 +140,7 @@ jobs:
         run: |
           flutter build apk --release --no-tree-shake-icons \
             --dart-define-from-file=supabase/keys.env \
+            --dart-define=BUILD_NUMBER=$((GITHUB_RUN_NUMBER + 100)) \
             --build-number=$((GITHUB_RUN_NUMBER + 100))
 
       - name: Check the server address is inside the APK
@@ -160,6 +161,7 @@ jobs:
         run: |
           flutter build appbundle --release --no-tree-shake-icons \
             --dart-define-from-file=supabase/keys.env \
+            --dart-define=BUILD_NUMBER=$((GITHUB_RUN_NUMBER + 100)) \
             --build-number=$((GITHUB_RUN_NUMBER + 100))
           aab=build/app/outputs/bundle/release/app-release.aab
           # Signed with the upload key, not a debug one: Play refuses those.

@@ -41,6 +41,11 @@ create table if not exists notifications (
   their_reps  int
 );
 
+-- Only for 'raced': what the duel did to the raced lifter's LP, so the card
+-- they share from the notification can say it. Null for an unranked duel,
+-- which moves nothing. Added after the table, so an existing one gains it.
+alter table notifications add column if not exists lp_delta int;
+
 -- For a project that already has the table from before 'challenged' existed.
 alter table notifications drop constraint if exists notifications_kind_check;
 alter table notifications add constraint notifications_kind_check
@@ -99,10 +104,11 @@ begin
 
   insert into notifications (
     profile_id, kind, actor, actor_name,
-    duel_id, you_won, your_reps, their_reps
+    duel_id, you_won, your_reps, their_reps, lp_delta
   ) values (
     new.defender, 'raced', new.challenger, coalesce(challenger_name, ''),
-    new.id, new.winner = new.defender, mine, theirs
+    new.id, new.winner = new.defender, mine, theirs,
+    case when new.ranked then new.lp_defender end
   );
 
   return new;
@@ -233,6 +239,9 @@ create trigger sets_notify_challenged
 -- function's column set changes shape (adding `actor` did), and fails with a
 -- "cannot change return type" error that names DROP as the fix.
 drop function if exists my_notifications(int);
+-- Dropped first: it gained a column, and Postgres will not change what an
+-- existing function returns in place.
+drop function if exists my_notifications(int);
 create or replace function my_notifications(limit_to int default 50)
 returns table (
   id uuid,
@@ -243,13 +252,15 @@ returns table (
   actor_name text,
   you_won boolean,
   your_reps int,
-  their_reps int
+  their_reps int,
+  lp_delta int
 )
 language sql
 stable
-as $$
+as $
   select n.id, n.kind, n.created_at, n.read_at is null,
-         n.actor, n.actor_name, n.you_won, n.your_reps, n.their_reps
+         n.actor, n.actor_name, n.you_won, n.your_reps, n.their_reps,
+         n.lp_delta
     from notifications n
    where n.profile_id = auth.uid()
    order by n.created_at desc

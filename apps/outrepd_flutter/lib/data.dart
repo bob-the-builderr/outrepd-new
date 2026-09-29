@@ -509,6 +509,21 @@ const demoOpponents = <Opponent>[
 /// bug report.
 const kAppVersion = '1.0.0+1';
 
+/// The build number the release workflow stamps on a build
+/// (`--dart-define=BUILD_NUMBER=…`). Empty for a local build.
+///
+/// The number after the `+` in [kAppVersion] is only pubspec's; every build
+/// from CI is numbered 100 + its run, so a build reading "1.0.0+1" in
+/// Settings was in fact build 110 — and that is the number a bug report
+/// needs.
+const kBuildNumber = String.fromEnvironment('BUILD_NUMBER');
+
+/// What Settings shows as the version: "1.0.0 (110)" for a CI build, the
+/// pubspec version for any other.
+String get appVersionLabel => kBuildNumber.isEmpty
+    ? kAppVersion
+    : '${kAppVersion.split('+').first} ($kBuildNumber)';
+
 /// Where "Contact support" writes to, and what the privacy policy and terms
 /// give as the contact address.
 const kSupportEmail = 'support@outrepd.com';

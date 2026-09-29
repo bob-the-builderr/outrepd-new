@@ -160,11 +160,11 @@ class _NoticeTile extends StatelessWidget {
                 theirReps: notice.theirReps!,
                 opponent: notice.actorName,
                 seconds: kDuelLength.inSeconds,
-                // The notice does not carry what the duel did to the rank,
-                // so the card shows where the account stands now, without a
-                // change it cannot vouch for.
+                // Where the account stands now, and what this duel did to
+                // it when the server said (older notices do not carry it).
                 tierIdx: demoProfile.isRanked ? demoProfile.tierIdx : null,
                 divIdx: demoProfile.divIdx,
+                lpDelta: notice.lpDelta,
                 avatarUrl: backend.me?.avatarUrl,
               ),
             ),

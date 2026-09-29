@@ -56,6 +56,8 @@ dependencies:
   clock: ^1.1.2
   # The subscription. Store purchases through RevenueCat; see lib/subscription.dart.
   purchases_flutter: ^10.13.2
+  # Keeps the screen on while the camera counts; see lib/keep_awake.dart.
+  wakelock_plus: ^1.8.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

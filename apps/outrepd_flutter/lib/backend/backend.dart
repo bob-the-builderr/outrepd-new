@@ -436,6 +436,7 @@ class Notice {
     this.youWon,
     this.yourReps,
     this.theirReps,
+    this.lpDelta,
   });
 
   final String id;
@@ -457,6 +458,10 @@ class Notice {
   final bool? youWon;
   final int? yourReps;
   final int? theirReps;
+
+  /// Only for [NoticeKind.raced]: what the duel did to this account's LP.
+  /// Null for an unranked duel, and for notices from before it was kept.
+  final int? lpDelta;
 }
 
 /// What came of asking somebody to be friends.

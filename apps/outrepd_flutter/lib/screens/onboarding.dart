@@ -24,6 +24,7 @@ import 'package:flutter/material.dart';
 
 import '../career.dart';
 import '../data.dart';
+import '../keep_awake.dart';
 import '../l10n/app_localizations.dart';
 import '../reps/pose.dart';
 import '../reps/pose_source.dart';
@@ -1129,11 +1130,14 @@ class _CameraStageState extends State<_CameraStage> {
   @override
   void initState() {
     super.initState();
+    // Nobody touches the phone while it watches them.
+    keepScreenOn(true);
     WidgetsBinding.instance.addPostFrameCallback((_) => _start());
   }
 
   @override
   void dispose() {
+    keepScreenOn(false);
     _sub?.cancel();
     _source?.dispose();
     super.dispose();

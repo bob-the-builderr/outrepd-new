@@ -14,6 +14,7 @@ import '../reps/skeleton.dart';
 import '../reps/pushup_counter.dart';
 import '../reps/recording.dart';
 import '../data.dart';
+import '../keep_awake.dart';
 import '../motion.dart';
 import '../settings.dart';
 import '../ranking.dart';
@@ -168,6 +169,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
 
   @override
   void dispose() {
+    keepScreenOn(false);
     _countdownTimer?.cancel();
     _graceTimer?.cancel();
     _watchdog?.cancel();
@@ -205,6 +207,8 @@ class _TrainerScreenState extends State<TrainerScreen> {
       ..start();
     _boutStartMs = null;
 
+    // On until the round is over: nobody touches the phone during one.
+    keepScreenOn(true);
     _sub = source.poses.listen(_onPose);
     _watchdog?.cancel();
     _watchdog = Timer.periodic(const Duration(milliseconds: 250), (_) {
@@ -577,6 +581,7 @@ class _TrainerScreenState extends State<TrainerScreen> {
     final verdict = counted.surrendered(_gaveUp);
     await _sub?.cancel();
     await _source?.dispose();
+    keepScreenOn(false);
     final recording = await _saveRecording();
     if (!mounted) return;
 
