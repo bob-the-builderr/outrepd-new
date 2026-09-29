@@ -1122,7 +1122,8 @@ class _CameraStage extends StatefulWidget {
   State<_CameraStage> createState() => _CameraStageState();
 }
 
-class _CameraStageState extends State<_CameraStage> {
+class _CameraStageState extends State<_CameraStage>
+    with WidgetsBindingObserver {
   PoseSource? _source;
   StreamSubscription<BodyPose>? _sub;
   BodyPose _pose = BodyPose.empty;
@@ -1130,6 +1131,7 @@ class _CameraStageState extends State<_CameraStage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     // Nobody touches the phone while it watches them.
     keepScreenOn(true);
     WidgetsBinding.instance.addPostFrameCallback((_) => _start());
@@ -1137,21 +1139,51 @@ class _CameraStageState extends State<_CameraStage> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     keepScreenOn(false);
     _sub?.cancel();
     _source?.dispose();
     super.dispose();
   }
 
+  /// The camera does not come back by itself after the app has been away —
+  /// a call, the notification shade — so it is let go on the way out and
+  /// opened again on the way back, as on the camera screen.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.inactive || AppLifecycleState.paused:
+        final source = _source;
+        if (source == null) return;
+        _sub?.cancel();
+        _sub = null;
+        _source = null;
+        source.dispose();
+        if (mounted) setState(() {});
+      case AppLifecycleState.resumed:
+        if (_source == null && _sub == null && !_starting) _start();
+      default:
+        break;
+    }
+  }
+
+  /// True while a camera is being opened, so a resume arriving mid-start
+  /// does not open a second one.
+  bool _starting = false;
+
   Future<void> _start() async {
+    if (_starting) return;
+    _starting = true;
     final source = widget.poseSource?.call() ?? createPoseSource();
     try {
       await source.start();
     } on Object {
       // The camera screen owns the refusal states; here the step simply has
       // nothing to draw, and the checklist stays unticked.
+      _starting = false;
       return;
     }
+    _starting = false;
     if (!mounted) {
       await source.dispose();
       return;

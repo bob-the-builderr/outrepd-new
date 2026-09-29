@@ -111,7 +111,8 @@ enum _Stage {
   counting,
 }
 
-class _TrainerScreenState extends State<TrainerScreen> {
+class _TrainerScreenState extends State<TrainerScreen>
+    with WidgetsBindingObserver {
   PoseSource? _source;
   StreamSubscription<BodyPose>? _sub;
 
@@ -162,13 +163,73 @@ class _TrainerScreenState extends State<TrainerScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     if (widget.autoStart) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _begin());
     }
   }
 
+  /// Whether the camera was let go because the app left the screen, and is
+  /// owed a restart when it comes back.
+  bool _suspended = false;
+
+  /// A call, the notification shade, switching apps: the camera goes, and it
+  /// does not come back by itself — the preview stays black and the count
+  /// stops while the round's clock runs on. So it is let go on the way out
+  /// and opened again on the way back. The clock is not paused: stepping away
+  /// is not a way to rest mid-round, and the "get back in frame" banner
+  /// already says the clock is still running.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.inactive || AppLifecycleState.paused:
+        _releaseCamera();
+      case AppLifecycleState.resumed:
+        _resumeCamera();
+      default:
+        break;
+    }
+  }
+
+  Future<void> _releaseCamera() async {
+    final source = _source;
+    if (source == null || _suspended || _stage == _Stage.setup) return;
+    _suspended = true;
+    await _sub?.cancel();
+    _sub = null;
+    if (mounted) setState(() => _source = null);
+    await source.dispose();
+  }
+
+  Future<void> _resumeCamera() async {
+    if (!_suspended || _stage == _Stage.setup) return;
+    _suspended = false;
+    final source = widget.poseSource?.call() ?? createPoseSource();
+    try {
+      await source.start();
+    } on Object catch (error) {
+      debugPrint('Could not reopen the camera: $error');
+      if (mounted) {
+        setState(() {
+          _error = error.toString();
+          _failure = error is PoseSourceError
+              ? error.kind
+              : PoseSourceFailure.unknown;
+        });
+      }
+      return;
+    }
+    if (!mounted || _stage == _Stage.setup) {
+      await source.dispose();
+      return;
+    }
+    _sub = source.poses.listen(_onPose);
+    setState(() => _source = source);
+  }
+
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     keepScreenOn(false);
     _countdownTimer?.cancel();
     _graceTimer?.cancel();
@@ -213,6 +274,16 @@ class _TrainerScreenState extends State<TrainerScreen> {
     _watchdog?.cancel();
     _watchdog = Timer.periodic(const Duration(milliseconds: 250), (_) {
       _watchForLostBody();
+      // The round ends on the clock, not on a pose: a camera that stopped
+      // delivering — gone with the app to the background, or simply lost —
+      // must not leave a duel running forever.
+      final limit = widget.limit;
+      if (_stage == _Stage.counting &&
+          limit != null &&
+          _clock.elapsed >= limit) {
+        _stop();
+        return;
+      }
       // Redraws the clock and the opponent between poses. Without this the
       // timer only moves when the lifter does, which stops dead at the top
       // of a rep.
@@ -224,6 +295,8 @@ class _TrainerScreenState extends State<TrainerScreen> {
     _graceTimer?.cancel();
     _graceTimer = null;
     _liveReps = 0;
+    _stopping = false;
+    _suspended = false;
 
     setState(() {
       _source = source;
@@ -562,7 +635,14 @@ class _TrainerScreenState extends State<TrainerScreen> {
   /// loss whatever the count says.
   bool _gaveUp = false;
 
+  /// Set while a round is being wrapped up, so the clock and a late pose
+  /// cannot both end it.
+  bool _stopping = false;
+
   Future<void> _stop({bool gaveUp = false}) async {
+    if (_stopping) return;
+    _stopping = true;
+    _watchdog?.cancel();
     _gaveUp = gaveUp;
     // The number that leaves this screen is the number that was on it. The
     // old design re-scored the whole set at the end with a different counter,
