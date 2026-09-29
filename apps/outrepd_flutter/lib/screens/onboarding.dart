@@ -34,7 +34,9 @@ import '../tier_badge.dart';
 import '../widgets.dart';
 import 'auth_entry.dart';
 import 'match_flow.dart';
+import 'paywall.dart';
 import 'shell.dart';
+import 'welcome_inside.dart';
 
 /// Reps asked for before the app claims to know somebody's range.
 ///
@@ -57,6 +59,8 @@ class OnboardingScreen extends StatefulWidget {
 enum _Step {
   welcome,
   howItWorks,
+  duel,
+  ladder,
   before,
   camera,
   placement,
@@ -79,6 +83,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void _go(_Step next) => setState(() => _step = next);
 
+  /// The bar is for the steps a lifter reads. The welcome screen has not
+  /// started anything yet, and the two camera steps need the whole screen
+  /// for the body being framed and counted.
+  bool get _showsProgress =>
+      _step != _Step.welcome &&
+      _step != _Step.framing &&
+      _step != _Step.calibration;
+
+  /// The step before this one, for the system back gesture. Without it, back
+  /// on any step closed the app, and opening it again started over at the
+  /// welcome screen.
+  void _back() {
+    if (_step.index == 0) return;
+    _go(_Step.values[_step.index - 1]);
+  }
+
   Future<void> _finish() async {
     // No tier, no record, no history. A new account has earned none of it.
     //
@@ -95,9 +115,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     await markOnboarded();
 
     if (!mounted) return;
-    Navigator.of(
-      context,
-    ).pushReplacement(MaterialPageRoute(builder: (_) => const AppShell()));
+    // A brand-new account sees what else there is before its first duel:
+    // titles, and a friend code that is real now that the account exists.
+    //
+    // Behind the paywall, which comes straight after signing up: the welcome
+    // is to the app, and the app is the subscription. The shell's own gate
+    // then lets a subscriber straight through.
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (_) => PaywallGate(
+          child: WelcomeInsideScreen(
+            onDone: (inner) => Navigator.of(inner).pushReplacement(
+              MaterialPageRoute(builder: (_) => const AppShell()),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   /// Where signing into an existing account ends, instead of [_finish].
@@ -146,50 +180,112 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.colors.background,
-      body: SafeArea(
-        child: switch (_step) {
-          _Step.welcome => _Welcome(
-            onStart: () => _go(_Step.howItWorks),
-            onSignIn: _directLogIn,
+    return PopScope(
+      canPop: _step == _Step.welcome,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) _back();
+      },
+      child: Scaffold(
+        backgroundColor: context.colors.background,
+        body: SafeArea(
+          child: Column(
+            children: [
+              if (_showsProgress)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                  child: _Progress(
+                    done: _step.index,
+                    of: _Step.values.length - 1,
+                  ),
+                ),
+              Expanded(
+                child: switch (_step) {
+                  _Step.welcome => _Welcome(
+                    onStart: () => _go(_Step.howItWorks),
+                    onSignIn: _directLogIn,
+                  ),
+                  _Step.howItWorks => _HowItWorks(
+                    onNext: () => _go(_Step.duel),
+                  ),
+                  _Step.duel => _DuelExplainer(onNext: () => _go(_Step.ladder)),
+                  _Step.ladder => _Ladder(onNext: () => _go(_Step.before)),
+                  _Step.before => _BeforeYouStart(
+                    over16: _over16,
+                    healthAccepted: _healthAccepted,
+                    onAge: (v) => setState(() => _over16 = v),
+                    onHealth: (v) => setState(() => _healthAccepted = v),
+                    onNext: () => _go(_Step.camera),
+                  ),
+                  _Step.camera => _CameraAsk(
+                    onNext: () => _go(_Step.placement),
+                  ),
+                  _Step.placement => _Placement(
+                    onNext: () => _go(_Step.framing),
+                  ),
+                  _Step.framing => _FramingCheck(
+                    poseSource: widget.poseSource,
+                    onNext: () => _go(_Step.calibration),
+                  ),
+                  _Step.calibration => _Calibration(
+                    poseSource: widget.poseSource,
+                    onDone: (result) {
+                      setState(() => _calibration = result);
+                      _go(_Step.calibrated);
+                    },
+                  ),
+                  _Step.calibrated => _Calibrated(
+                    result: _calibration,
+                    onNext: () => _go(_Step.placements),
+                  ),
+                  _Step.placements => _Placements(
+                    onStart: _openAuthGate,
+                    onPractice: _openAuthGate,
+                  ),
+                },
+              ),
+            ],
           ),
-          _Step.howItWorks => _HowItWorks(onNext: () => _go(_Step.before)),
-          _Step.before => _BeforeYouStart(
-            over16: _over16,
-            healthAccepted: _healthAccepted,
-            onAge: (v) => setState(() => _over16 = v),
-            onHealth: (v) => setState(() => _healthAccepted = v),
-            onNext: () => _go(_Step.camera),
-          ),
-          _Step.camera => _CameraAsk(onNext: () => _go(_Step.placement)),
-          _Step.placement => _Placement(onNext: () => _go(_Step.framing)),
-          _Step.framing => _FramingCheck(
-            poseSource: widget.poseSource,
-            onNext: () => _go(_Step.calibration),
-          ),
-          _Step.calibration => _Calibration(
-            poseSource: widget.poseSource,
-            onDone: (result) {
-              setState(() => _calibration = result);
-              _go(_Step.calibrated);
-            },
-          ),
-          _Step.calibrated => _Calibrated(
-            result: _calibration,
-            onNext: () => _go(_Step.placements),
-          ),
-          _Step.placements => _Placements(
-            onStart: _openAuthGate,
-            onPractice: _openAuthGate,
-          ),
-        },
+        ),
       ),
     );
   }
 }
 
 // ───────────────────────────── shared furniture ──────────────────────────────
+
+/// How far through the steps this is: one thin segment per step, lit up to
+/// and including the current one.
+class _Progress extends StatelessWidget {
+  const _Progress({required this.done, required this.of});
+
+  final int done;
+  final int of;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: '$done / $of',
+      child: Row(
+        children: [
+          for (var i = 1; i <= of; i++) ...[
+            if (i > 1) const SizedBox(width: 4),
+            Expanded(
+              child: Container(
+                height: 3,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(2),
+                  color: i <= done
+                      ? context.colors.brand
+                      : context.colors.border,
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
 
 /// The filled button every step ends on.
 class _Primary extends StatelessWidget {
@@ -260,16 +356,37 @@ class _Secondary extends StatelessWidget {
 /// steps is taller than a phone, and a Continue button that has to be scrolled
 /// to reads as a dead end.
 class _Step0 extends StatelessWidget {
-  const _Step0({required this.body, required this.actions});
+  const _Step0({
+    required this.body,
+    required this.actions,
+    this.centred = false,
+  });
 
   final Widget body;
   final Widget actions;
+
+  /// Sits in the middle of the space above the buttons instead of at the
+  /// top. For the steps with little to say, which otherwise left two thirds
+  /// of the screen empty under a few lines. Still scrolls when a large text
+  /// size makes it taller than the screen.
+  final bool centred;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Expanded(child: SingleChildScrollView(child: body)),
+        Expanded(
+          child: centred
+              ? LayoutBuilder(
+                  builder: (context, box) => SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(minHeight: box.maxHeight),
+                      child: Center(child: body),
+                    ),
+                  ),
+                )
+              : SingleChildScrollView(child: body),
+        ),
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 22),
           child: actions,
@@ -374,8 +491,9 @@ class _Welcome extends StatelessWidget {
     final l = L.of(context);
 
     return _Step0(
+      centred: true,
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(34, 60, 34, 0),
+        padding: const EdgeInsets.fromLTRB(34, 24, 34, 24),
         child: Column(
           children: [
             // The brand asset, mark and wordmark together, rather than a
@@ -383,16 +501,16 @@ class _Welcome extends StatelessWidget {
             // either theme rather than carrying its own black square.
             Image.asset(
               'assets/images/logo-wordmark.png',
-              width: 210,
+              width: 240,
               fit: BoxFit.contain,
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 18),
             Text(
               l.obTagline,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: context.colors.muted,
-                fontSize: 13,
+                fontSize: 15,
                 height: 1.6,
               ),
             ),
@@ -422,13 +540,22 @@ class _HowItWorks extends StatelessWidget {
     final l = L.of(context);
 
     return _Step0(
+      centred: true,
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(22, 22, 22, 0),
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _Title(l.obHowTitle),
-            const SizedBox(height: 26),
+            Text(
+              l.obHowTitle,
+              style: TextStyle(
+                color: context.colors.text,
+                fontSize: 24,
+                height: 1.3,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 30),
             _Numbered(1, l.obHow1, l.obHow1Body),
             _Numbered(2, l.obHow2, l.obHow2Body),
             _Numbered(3, l.obHow3, l.obHow3Body),
@@ -450,13 +577,13 @@ class _Numbered extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(bottom: 24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 24,
-            height: 24,
+            width: 30,
+            height: 30,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -464,25 +591,29 @@ class _Numbered extends StatelessWidget {
             ),
             child: Text(
               localNumber(context, n),
-              style: TextStyle(color: context.colors.text, fontSize: 11),
+              style: TextStyle(color: context.colors.text, fontSize: 13),
             ),
           ),
-          const SizedBox(width: 13),
+          const SizedBox(width: 14),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: TextStyle(color: context.colors.text, fontSize: 14),
+                  style: TextStyle(
+                    color: context.colors.text,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(height: 4),
                 Text(
                   body,
                   style: TextStyle(
                     color: context.colors.muted,
-                    fontSize: 11,
-                    height: 1.55,
+                    fontSize: 13,
+                    height: 1.5,
                   ),
                 ),
               ],
@@ -793,8 +924,10 @@ class _CameraAsk extends StatelessWidget {
               context: context,
               builder: (c) => AlertDialog(
                 backgroundColor: context.colors.surface,
+                // More than the line already on the screen behind it: the
+                // question is asked by somebody that line did not convince.
                 content: Text(
-                  l.obCameraBody,
+                  l.obWhyNeededBody,
                   style: TextStyle(color: context.colors.text),
                 ),
                 actions: [
@@ -1538,6 +1671,322 @@ class _Placements extends StatelessWidget {
           _Secondary(label: l.practiceFirst, onTap: onPractice),
         ],
       ),
+    );
+  }
+}
+
+// ─────────────────────────── 3 what a duel is ────────────────────────────────
+
+/// A duel, played out once in miniature: two counts climbing against one
+/// clock, the bar between them, and what the gap pays.
+///
+/// Runs once and stops on the finished score rather than looping. A screen
+/// that never stops moving is a screen nobody finishes reading.
+class _DuelExplainer extends StatefulWidget {
+  const _DuelExplainer({required this.onNext});
+
+  final VoidCallback onNext;
+
+  @override
+  State<_DuelExplainer> createState() => _DuelExplainerState();
+}
+
+class _DuelExplainerState extends State<_DuelExplainer>
+    with SingleTickerProviderStateMixin {
+  /// An illustration, not an account. The name is somebody the reader has
+  /// never met, which is exactly who the first duel will be against.
+  static const _theirName = 'squat_queen';
+  static const _yours = 18;
+  static const _theirs = 11;
+
+  late final AnimationController _run = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 4200),
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_run.isAnimating || _run.isCompleted) return;
+    if (MediaQuery.of(context).disableAnimations) {
+      _run.value = 1;
+    } else {
+      _run.forward();
+    }
+  }
+
+  @override
+  void dispose() {
+    _run.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final gap = _yours - _theirs;
+
+    return _Step0(
+      centred: true,
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _BigTitle(l.obDuelTitle),
+            const SizedBox(height: 10),
+            _Lead(l.obDuelBody),
+            const SizedBox(height: 24),
+            AnimatedBuilder(
+              animation: _run,
+              builder: (context, _) {
+                final t = Curves.easeOut.transform(_run.value);
+                final mine = (_yours * t).floor();
+                final theirs = (_theirs * t).floor();
+                final left = (kDuelLength.inSeconds * (1 - _run.value)).ceil();
+                return _MiniScore(
+                  you: l.you,
+                  them: _theirName,
+                  mine: mine,
+                  theirs: theirs,
+                  seconds: left,
+                );
+              },
+            ),
+            const SizedBox(height: 14),
+            FadeTransition(
+              opacity: CurvedAnimation(
+                parent: _run,
+                curve: const Interval(0.85, 1),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      l.obDuelWinBy(localNumber(context, gap)),
+                      style: TextStyle(
+                        color: context.colors.muted,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    '+${localNumber(context, gap)} LP',
+                    style: TextStyle(
+                      color: context.colors.brand,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            _Lead(l.obDuelLpRule),
+          ],
+        ),
+      ),
+      actions: _Primary(label: l.continueLabel, onTap: widget.onNext),
+    );
+  }
+}
+
+/// The camera screen's score card, drawn small and without a camera.
+class _MiniScore extends StatelessWidget {
+  const _MiniScore({
+    required this.you,
+    required this.them,
+    required this.mine,
+    required this.theirs,
+    required this.seconds,
+  });
+
+  final String you;
+  final String them;
+  final int mine;
+  final int theirs;
+  final int seconds;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget side(String name, int count, Color colour) => Expanded(
+      child: Column(
+        children: [
+          Container(
+            width: 40,
+            height: 40,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: context.colors.surfaceRaised,
+            ),
+            child: Text(
+              name.characters.first.toUpperCase(),
+              style: TextStyle(color: colour, fontSize: 16),
+            ),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            name,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: context.colors.muted, fontSize: 12),
+          ),
+          Text(
+            localNumber(context, count),
+            style: TextStyle(
+              color: colour,
+              fontSize: 30,
+              fontWeight: FontWeight.w700,
+              fontFeatures: const [FontFeature.tabularFigures()],
+            ),
+          ),
+        ],
+      ),
+    );
+
+    final total = mine + theirs;
+    return Container(
+      padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
+      decoration: BoxDecoration(
+        color: context.colors.surface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: context.colors.border, width: 0.5),
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              side(you, mine, context.colors.text),
+              Text(
+                formatClock(context, seconds),
+                style: TextStyle(
+                  color: context.colors.muted,
+                  fontSize: 20,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
+              ),
+              side(them, theirs, context.colors.rival),
+            ],
+          ),
+          const SizedBox(height: 12),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: SizedBox(
+              height: 8,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    flex: total == 0 ? 1 : mine,
+                    child: ColoredBox(color: context.colors.brand),
+                  ),
+                  Expanded(
+                    flex: total == 0 ? 1 : theirs,
+                    child: ColoredBox(color: context.colors.rival),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ─────────────────────────────── 4 the ladder ────────────────────────────────
+
+/// All seven tiers, top to bottom, with the badge each one wears.
+class _Ladder extends StatelessWidget {
+  const _Ladder({required this.onNext});
+
+  final VoidCallback onNext;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final divisions = '${kDivisions.first}–${kDivisions.last}';
+
+    return _Step0(
+      centred: true,
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _BigTitle(l.obLadderTitle),
+            const SizedBox(height: 20),
+            for (var i = kTiers.length - 1; i >= 0; i--)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Row(
+                  children: [
+                    TierBadge(tierIndex: i, size: 34),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Text(
+                        tierName(l, i),
+                        style: TextStyle(
+                          color: kTiers[i].color,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    // Master is one rung, not five.
+                    if (i < kTiers.length - 1)
+                      Text(
+                        divisions,
+                        style: TextStyle(
+                          color: context.colors.faint,
+                          fontSize: 12,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            const SizedBox(height: 18),
+            _Lead(l.obLadderBody),
+          ],
+        ),
+      ),
+      actions: _Primary(label: l.continueLabel, onTap: onNext),
+    );
+  }
+}
+
+/// The heading size the reading steps share.
+class _BigTitle extends StatelessWidget {
+  const _BigTitle(this.text);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: TextStyle(
+        color: context.colors.text,
+        fontSize: 24,
+        height: 1.3,
+        fontWeight: FontWeight.w600,
+      ),
+    );
+  }
+}
+
+/// The body size the reading steps share.
+class _Lead extends StatelessWidget {
+  const _Lead(this.text);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: TextStyle(color: context.colors.muted, fontSize: 14, height: 1.5),
     );
   }
 }

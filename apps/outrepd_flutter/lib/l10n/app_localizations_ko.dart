@@ -1697,7 +1697,7 @@ class LKo extends L {
 
   @override
   String get obCameraPrivateBody =>
-      '동작 인식은 이 기기에서 돌아갑니다. 직접 올리지 않는 한 영상은 전송되지 않습니다.';
+      '몸 인식은 이 기기 안에서만 이루어져요. 영상은 저장되거나 업로드되지 않아요.';
 
   @override
   String get obWhyNeeded => '왜 필요한가요?';
@@ -1770,48 +1770,10 @@ class LKo extends L {
   String get obFormClean => '깔끔함';
 
   @override
-  String get obCreateAccountBody => '횟수와 등급, 전적을 남기려면 계정을 만드세요.';
-
-  @override
-  String get obSaveProgress => '내 기록 저장';
-
-  @override
-  String obSaveYourReps(String count) {
-    return '$count개를 저장하기';
-  }
-
-  @override
-  String get obOneTap => '이메일과 비밀번호만 있으면 됩니다.';
-
-  @override
-  String get obContinueApple => 'Apple로 계속하기';
-
-  @override
-  String get obContinueGoogle => 'Google로 계속하기';
-
-  @override
-  String get obContinueEmail => '이메일로 계속하기';
-
-  @override
-  String get obSignInFootnote => '계정 유지에만 사용합니다. 무엇도 대신 게시하지 않습니다.';
-
-  @override
-  String get obPickName => '이름 정하기';
-
-  @override
-  String get obPickNameBody => '상대에게 보이는 이름입니다. 나중에 바꿀 수 있습니다.';
-
-  @override
   String get obAvailable => '사용 가능';
 
   @override
   String get obTaken => '이미 사용 중';
-
-  @override
-  String get obYourAvatar => '프로필 사진';
-
-  @override
-  String get obAddPhoto => '사진 추가';
 
   @override
   String get obPlacementsBody =>
@@ -1825,12 +1787,6 @@ class LKo extends L {
 
   @override
   String get obFormMixed => '들쭉날쭉';
-
-  @override
-  String get obWelcomeBack => '다시 오셨네요';
-
-  @override
-  String get obWelcomeBackBody => '이메일과 비밀번호로 로그인하세요.';
 
   @override
   String get justNow => '방금';
@@ -2003,6 +1959,53 @@ class LKo extends L {
   @override
   String get setInPoolBody =>
       '비슷한 랭크의 다음 플레이어가 이 세트와 겨뤄요. 누가 이겼는지는 알림에서 볼 수 있고, 그때 랭크가 바뀌어요.';
+
+  @override
+  String get obWhyNeededBody =>
+      '한 번 한 번은 어깨가 얼마나 내려갔다 올라오는지로 판정하고, 그건 카메라만 볼 수 있어요. 카메라가 없으면 카운트가 없고, 카운트가 없으면 대결도 없어요. 카메라는 세트 중에만 켜져요.';
+
+  @override
+  String get obWelcomeBack => '다시 오셨네요';
+
+  @override
+  String get obDuelTitle => '진짜 사람의 1분과 겨뤄요';
+
+  @override
+  String get obDuelBody =>
+      '상대의 세트는 한 번 한 번 기록되어 있어요. 내 세트를 하는 동안 그게 실시간으로 진행되는 걸 봐요.';
+
+  @override
+  String obDuelWinBy(String count) {
+    return '$count개 차이로 승리';
+  }
+
+  @override
+  String get obDuelLpRule => '랭크 포인트는 개수 차이예요. 크게 이기면 빨리 올라가요.';
+
+  @override
+  String get obLadderTitle => '올라갈 7개의 티어';
+
+  @override
+  String get obLadderBody =>
+      '배치 대결 5번으로 시작 위치가 정해져요. 이기면 올라가고, 한 번 도달한 티어는 유지돼요.';
+
+  @override
+  String obTitlesHeading(String count) {
+    return '얻을 수 있는 칭호 $count개';
+  }
+
+  @override
+  String get obTitlesBody =>
+      '승리, 연속 기록, 깔끔한 세트, 이른 아침 운동 등으로 얻어요. 하나를 골라 이름 아래에 달 수 있어요.';
+
+  @override
+  String get obFriendsHeading => '친구와 승부를 가려요';
+
+  @override
+  String get obFriendsBody => '친구는 이 코드로 나를 추가해요. 언제든 도전하고, 둘 사이의 전적이 기록돼요.';
+
+  @override
+  String get obLetsGo => '시작하기';
 
   @override
   String get paywallTitle => '아이언에서 마스터까지';

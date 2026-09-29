@@ -1731,7 +1731,7 @@ class LIt extends L {
 
   @override
   String get obCameraPrivateBody =>
-      'Il tracciamento del corpo gira su questo dispositivo. Nessun video viene caricato, a meno che non lo pubblichi tu.';
+      'Il rilevamento del corpo avviene su questo dispositivo. Nessun video viene mai salvato o caricato.';
 
   @override
   String get obWhyNeeded => 'Perché serve?';
@@ -1806,51 +1806,10 @@ class LIt extends L {
   String get obFormClean => 'Pulita';
 
   @override
-  String get obCreateAccountBody =>
-      'Crea un account per tenere ripetizioni, grado e record.';
-
-  @override
-  String get obSaveProgress => 'Salva i miei progressi';
-
-  @override
-  String obSaveYourReps(String count) {
-    return 'Salva le tue $count ripetizioni';
-  }
-
-  @override
-  String get obOneTap => 'Un\'email e una password, tutto qui.';
-
-  @override
-  String get obContinueApple => 'Continua con Apple';
-
-  @override
-  String get obContinueGoogle => 'Continua con Google';
-
-  @override
-  String get obContinueEmail => 'Continua con l’email';
-
-  @override
-  String get obSignInFootnote =>
-      'Lo usiamo solo per tenere il tuo account. Non pubblichiamo mai niente.';
-
-  @override
-  String get obPickName => 'Scegli un nome';
-
-  @override
-  String get obPickNameBody =>
-      'È quello che vedono gli avversari. Puoi cambiarlo dopo.';
-
-  @override
   String get obAvailable => 'Disponibile';
 
   @override
   String get obTaken => 'Già preso';
-
-  @override
-  String get obYourAvatar => 'La tua foto';
-
-  @override
-  String get obAddPhoto => 'Aggiungi una foto';
 
   @override
   String get obPlacementsBody =>
@@ -1864,12 +1823,6 @@ class LIt extends L {
 
   @override
   String get obFormMixed => 'Irregolare';
-
-  @override
-  String get obWelcomeBack => 'Bentornato';
-
-  @override
-  String get obWelcomeBackBody => 'Accedi con la tua email e password.';
 
   @override
   String get justNow => 'Adesso';
@@ -2045,6 +1998,55 @@ class LIt extends L {
   @override
   String get setInPoolBody =>
       'Il prossimo atleta vicino al tuo grado la sfiderà. Vedrai chi ha vinto nelle notifiche, e allora il tuo grado cambierà.';
+
+  @override
+  String get obWhyNeededBody =>
+      'Ogni ripetizione è valutata da quanto scendono e salgono le spalle, e solo la fotocamera può vederlo. Senza, niente conteggio, e senza conteggio niente sfida. La fotocamera è accesa solo durante una serie.';
+
+  @override
+  String get obWelcomeBack => 'Bentornato';
+
+  @override
+  String get obDuelTitle => 'Sfidi il minuto di una persona reale';
+
+  @override
+  String get obDuelBody =>
+      'La sua serie è stata registrata ripetizione per ripetizione. La vedi scorrere dal vivo mentre fai la tua.';
+
+  @override
+  String obDuelWinBy(String count) {
+    return 'Vinci di $count ripetizioni';
+  }
+
+  @override
+  String get obDuelLpRule =>
+      'I punti grado sono la differenza di ripetizioni. Vinci con margine, sali in fretta.';
+
+  @override
+  String get obLadderTitle => 'Sette gradi da scalare';
+
+  @override
+  String get obLadderBody =>
+      'Cinque sfide di piazzamento decidono da dove parti. Vinci per salire: un grado raggiunto resta tuo.';
+
+  @override
+  String obTitlesHeading(String count) {
+    return '$count titoli da conquistare';
+  }
+
+  @override
+  String get obTitlesBody =>
+      'Per vittorie, serie, serie pulite, mattine presto e altro. Indossane uno sotto il tuo nome.';
+
+  @override
+  String get obFriendsHeading => 'Regolate i conti tra amici';
+
+  @override
+  String get obFriendsBody =>
+      'Gli amici ti aggiungono con questo codice. Sfidali quando vuoi: il punteggio tra voi viene salvato.';
+
+  @override
+  String get obLetsGo => 'Andiamo';
 
   @override
   String get paywallTitle => 'Sali dal Ferro al Maestro';

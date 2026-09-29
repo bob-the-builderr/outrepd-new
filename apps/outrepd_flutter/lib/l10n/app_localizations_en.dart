@@ -1726,7 +1726,7 @@ class LEn extends L {
 
   @override
   String get obCameraPrivateBody =>
-      'Body tracking runs on this device. No video is uploaded unless you choose to post it.';
+      'Body tracking runs on this device. No video is ever saved or uploaded.';
 
   @override
   String get obWhyNeeded => 'Why is this needed?';
@@ -1800,51 +1800,10 @@ class LEn extends L {
   String get obFormClean => 'Clean';
 
   @override
-  String get obCreateAccountBody =>
-      'Create an account to keep your reps, your rank and your record.';
-
-  @override
-  String get obSaveProgress => 'Save my progress';
-
-  @override
-  String obSaveYourReps(String count) {
-    return 'Save your $count reps';
-  }
-
-  @override
-  String get obOneTap => 'An email and a password — that\'s all it takes.';
-
-  @override
-  String get obContinueApple => 'Continue with Apple';
-
-  @override
-  String get obContinueGoogle => 'Continue with Google';
-
-  @override
-  String get obContinueEmail => 'Continue with email';
-
-  @override
-  String get obSignInFootnote =>
-      'We only use this to keep your account. We never post anything.';
-
-  @override
-  String get obPickName => 'Pick a name';
-
-  @override
-  String get obPickNameBody =>
-      'This is what opponents see. You can change it later.';
-
-  @override
   String get obAvailable => 'Available';
 
   @override
   String get obTaken => 'Taken';
-
-  @override
-  String get obYourAvatar => 'Your avatar';
-
-  @override
-  String get obAddPhoto => 'Add a photo';
 
   @override
   String get obPlacementsBody =>
@@ -1858,12 +1817,6 @@ class LEn extends L {
 
   @override
   String get obFormMixed => 'Mixed';
-
-  @override
-  String get obWelcomeBack => 'Welcome back';
-
-  @override
-  String get obWelcomeBackBody => 'Sign in with your email and password.';
 
   @override
   String get justNow => 'Just now';
@@ -2038,6 +1991,55 @@ class LEn extends L {
   @override
   String get setInPoolBody =>
       'The next lifter near your rank races it. You\'ll see who won in Notifications, and your rank moves then.';
+
+  @override
+  String get obWhyNeededBody =>
+      'Each rep is judged by how far your shoulders drop and rise, and only the camera can see that. Without it there is no count, and without a count there is no duel. The camera is only on during a set.';
+
+  @override
+  String get obWelcomeBack => 'Welcome back';
+
+  @override
+  String get obDuelTitle => 'You race a real person’s minute';
+
+  @override
+  String get obDuelBody =>
+      'Their set was recorded rep by rep. You see it happen live while you do yours.';
+
+  @override
+  String obDuelWinBy(String count) {
+    return 'Win by $count reps';
+  }
+
+  @override
+  String get obDuelLpRule =>
+      'Rank points are the gap in reps. Win big, climb fast.';
+
+  @override
+  String get obLadderTitle => 'Seven tiers to climb';
+
+  @override
+  String get obLadderBody =>
+      'Five placement duels set where you start. Win to climb, and once you reach a tier, you keep it.';
+
+  @override
+  String obTitlesHeading(String count) {
+    return '$count titles to earn';
+  }
+
+  @override
+  String get obTitlesBody =>
+      'For wins, streaks, clean sets, early mornings and more. Wear one under your name.';
+
+  @override
+  String get obFriendsHeading => 'Settle it with friends';
+
+  @override
+  String get obFriendsBody =>
+      'Friends add you with this code. Challenge them whenever you like, and the score between you is kept.';
+
+  @override
+  String get obLetsGo => 'Let’s go';
 
   @override
   String get paywallTitle => 'Climb from Iron to Master';

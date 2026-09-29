@@ -26,6 +26,7 @@ import 'screens/settings_notices.dart';
 import 'screens/settings_privacy.dart';
 import 'screens/share_card.dart';
 import 'screens/shell.dart';
+import 'screens/welcome_inside.dart';
 import 'screens/tier_gallery.dart';
 import 'screens/trainer.dart';
 import 'reps/count_accuracy.dart';
@@ -182,6 +183,9 @@ class _OutrepdAppState extends State<OutrepdApp> with WidgetsBindingObserver {
         // erased on the way to the home screen.
         '/': (_) => onboarded ? const AppShell() : const OnboardingScreen(),
         '/home': (_) => const AppShell(),
+        // The preview opens on home; this is the way back to the first run.
+        '/onboarding': (_) => const OnboardingScreen(),
+        '/inside': (_) => WelcomeInsideScreen(onDone: (_) {}),
         '/friends': (_) => const AppShell(initialIndex: 1),
         '/ranks': (_) => const AppShell(initialIndex: 2),
         '/profile': (_) => const AppShell(initialIndex: 3),

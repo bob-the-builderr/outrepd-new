@@ -3260,7 +3260,7 @@ abstract class L {
   /// No description provided for @obCameraPrivateBody.
   ///
   /// In en, this message translates to:
-  /// **'Body tracking runs on this device. No video is uploaded unless you choose to post it.'**
+  /// **'Body tracking runs on this device. No video is ever saved or uploaded.'**
   String get obCameraPrivateBody;
 
   /// No description provided for @obWhyNeeded.
@@ -3401,66 +3401,6 @@ abstract class L {
   /// **'Clean'**
   String get obFormClean;
 
-  /// No description provided for @obCreateAccountBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Create an account to keep your reps, your rank and your record.'**
-  String get obCreateAccountBody;
-
-  /// No description provided for @obSaveProgress.
-  ///
-  /// In en, this message translates to:
-  /// **'Save my progress'**
-  String get obSaveProgress;
-
-  /// No description provided for @obSaveYourReps.
-  ///
-  /// In en, this message translates to:
-  /// **'Save your {count} reps'**
-  String obSaveYourReps(String count);
-
-  /// No description provided for @obOneTap.
-  ///
-  /// In en, this message translates to:
-  /// **'An email and a password — that\'s all it takes.'**
-  String get obOneTap;
-
-  /// No description provided for @obContinueApple.
-  ///
-  /// In en, this message translates to:
-  /// **'Continue with Apple'**
-  String get obContinueApple;
-
-  /// No description provided for @obContinueGoogle.
-  ///
-  /// In en, this message translates to:
-  /// **'Continue with Google'**
-  String get obContinueGoogle;
-
-  /// No description provided for @obContinueEmail.
-  ///
-  /// In en, this message translates to:
-  /// **'Continue with email'**
-  String get obContinueEmail;
-
-  /// No description provided for @obSignInFootnote.
-  ///
-  /// In en, this message translates to:
-  /// **'We only use this to keep your account. We never post anything.'**
-  String get obSignInFootnote;
-
-  /// No description provided for @obPickName.
-  ///
-  /// In en, this message translates to:
-  /// **'Pick a name'**
-  String get obPickName;
-
-  /// No description provided for @obPickNameBody.
-  ///
-  /// In en, this message translates to:
-  /// **'This is what opponents see. You can change it later.'**
-  String get obPickNameBody;
-
   /// No description provided for @obAvailable.
   ///
   /// In en, this message translates to:
@@ -3472,18 +3412,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Taken'**
   String get obTaken;
-
-  /// No description provided for @obYourAvatar.
-  ///
-  /// In en, this message translates to:
-  /// **'Your avatar'**
-  String get obYourAvatar;
-
-  /// No description provided for @obAddPhoto.
-  ///
-  /// In en, this message translates to:
-  /// **'Add a photo'**
-  String get obAddPhoto;
 
   /// No description provided for @obPlacementsBody.
   ///
@@ -3508,18 +3436,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Mixed'**
   String get obFormMixed;
-
-  /// No description provided for @obWelcomeBack.
-  ///
-  /// In en, this message translates to:
-  /// **'Welcome back'**
-  String get obWelcomeBack;
-
-  /// No description provided for @obWelcomeBackBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in with your email and password.'**
-  String get obWelcomeBackBody;
 
   /// No description provided for @justNow.
   ///
@@ -3821,6 +3737,84 @@ abstract class L {
   /// **'The next lifter near your rank races it. You\'ll see who won in Notifications, and your rank moves then.'**
   String get setInPoolBody;
 
+  /// No description provided for @obWhyNeededBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Each rep is judged by how far your shoulders drop and rise, and only the camera can see that. Without it there is no count, and without a count there is no duel. The camera is only on during a set.'**
+  String get obWhyNeededBody;
+
+  /// No description provided for @obWelcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back'**
+  String get obWelcomeBack;
+
+  /// No description provided for @obDuelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You race a real person’s minute'**
+  String get obDuelTitle;
+
+  /// No description provided for @obDuelBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Their set was recorded rep by rep. You see it happen live while you do yours.'**
+  String get obDuelBody;
+
+  /// No description provided for @obDuelWinBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Win by {count} reps'**
+  String obDuelWinBy(String count);
+
+  /// No description provided for @obDuelLpRule.
+  ///
+  /// In en, this message translates to:
+  /// **'Rank points are the gap in reps. Win big, climb fast.'**
+  String get obDuelLpRule;
+
+  /// No description provided for @obLadderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Seven tiers to climb'**
+  String get obLadderTitle;
+
+  /// No description provided for @obLadderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Five placement duels set where you start. Win to climb, and once you reach a tier, you keep it.'**
+  String get obLadderBody;
+
+  /// No description provided for @obTitlesHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} titles to earn'**
+  String obTitlesHeading(String count);
+
+  /// No description provided for @obTitlesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'For wins, streaks, clean sets, early mornings and more. Wear one under your name.'**
+  String get obTitlesBody;
+
+  /// No description provided for @obFriendsHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Settle it with friends'**
+  String get obFriendsHeading;
+
+  /// No description provided for @obFriendsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Friends add you with this code. Challenge them whenever you like, and the score between you is kept.'**
+  String get obFriendsBody;
+
+  /// No description provided for @obLetsGo.
+  ///
+  /// In en, this message translates to:
+  /// **'Let’s go'**
+  String get obLetsGo;
+
   /// No description provided for @paywallTitle.
   ///
   /// In en, this message translates to:
@@ -3920,13 +3914,13 @@ abstract class L {
   /// No description provided for @paywallLoadFailed.
   ///
   /// In en, this message translates to:
-  /// **'Couldn't load the plans. Check your connection and try again.'**
+  /// **'Couldn\'t load the plans. Check your connection and try again.'**
   String get paywallLoadFailed;
 
   /// No description provided for @paywallBuyFailed.
   ///
   /// In en, this message translates to:
-  /// **'The purchase didn't go through. Try again.'**
+  /// **'The purchase didn\'t go through. Try again.'**
   String get paywallBuyFailed;
 
   /// No description provided for @paywallPending.

@@ -1735,7 +1735,7 @@ class LDe extends L {
 
   @override
   String get obCameraPrivateBody =>
-      'Die Bewegungsanalyse läuft auf diesem Gerät. Kein Video wird hochgeladen, außer du postest es selbst.';
+      'Die Körpererkennung läuft auf diesem Gerät. Es wird nie ein Video gespeichert oder hochgeladen.';
 
   @override
   String get obWhyNeeded => 'Warum wird das gebraucht?';
@@ -1810,52 +1810,10 @@ class LDe extends L {
   String get obFormClean => 'Sauber';
 
   @override
-  String get obCreateAccountBody =>
-      'Erstell ein Konto, damit Wiederholungen, Rang und Bilanz erhalten bleiben.';
-
-  @override
-  String get obSaveProgress => 'Fortschritt sichern';
-
-  @override
-  String obSaveYourReps(String count) {
-    return 'Sichere deine $count Wiederholungen';
-  }
-
-  @override
-  String get obOneTap =>
-      'Eine E-Mail und ein Passwort – mehr braucht es nicht.';
-
-  @override
-  String get obContinueApple => 'Weiter mit Apple';
-
-  @override
-  String get obContinueGoogle => 'Weiter mit Google';
-
-  @override
-  String get obContinueEmail => 'Weiter mit E-Mail';
-
-  @override
-  String get obSignInFootnote =>
-      'Wir nutzen das nur für dein Konto. Wir posten nie etwas.';
-
-  @override
-  String get obPickName => 'Wähl einen Namen';
-
-  @override
-  String get obPickNameBody =>
-      'Den sehen deine Gegner. Du kannst ihn später ändern.';
-
-  @override
   String get obAvailable => 'Frei';
 
   @override
   String get obTaken => 'Vergeben';
-
-  @override
-  String get obYourAvatar => 'Dein Bild';
-
-  @override
-  String get obAddPhoto => 'Foto hinzufügen';
 
   @override
   String get obPlacementsBody =>
@@ -1869,13 +1827,6 @@ class LDe extends L {
 
   @override
   String get obFormMixed => 'Gemischt';
-
-  @override
-  String get obWelcomeBack => 'Willkommen zurück';
-
-  @override
-  String get obWelcomeBackBody =>
-      'Melde dich mit deiner E-Mail und deinem Passwort an.';
 
   @override
   String get justNow => 'Gerade eben';
@@ -2051,6 +2002,56 @@ class LDe extends L {
   @override
   String get setInPoolBody =>
       'Der nächste Sportler in deiner Nähe im Ranking tritt dagegen an. Wer gewonnen hat, siehst du in den Mitteilungen, und dann bewegt sich dein Rang.';
+
+  @override
+  String get obWhyNeededBody =>
+      'Jede Wiederholung wird danach bewertet, wie weit deine Schultern sinken und steigen, und das sieht nur die Kamera. Ohne sie gibt es keine Zählung und ohne Zählung kein Duell. Die Kamera ist nur während eines Satzes an.';
+
+  @override
+  String get obWelcomeBack => 'Willkommen zurück';
+
+  @override
+  String get obDuelTitle =>
+      'Du trittst gegen die Minute eines echten Menschen an';
+
+  @override
+  String get obDuelBody =>
+      'Sein Satz wurde Wiederholung für Wiederholung aufgezeichnet. Du siehst ihn live, während du deinen machst.';
+
+  @override
+  String obDuelWinBy(String count) {
+    return 'Mit $count Wiederholungen Vorsprung gewinnen';
+  }
+
+  @override
+  String get obDuelLpRule =>
+      'Ranglistenpunkte sind der Abstand in Wiederholungen. Hoch gewinnen heißt schnell aufsteigen.';
+
+  @override
+  String get obLadderTitle => 'Sieben Stufen zum Aufsteigen';
+
+  @override
+  String get obLadderBody =>
+      'Fünf Einstufungsduelle legen fest, wo du startest. Gewinne, um aufzusteigen – eine erreichte Stufe behältst du.';
+
+  @override
+  String obTitlesHeading(String count) {
+    return '$count Titel zu verdienen';
+  }
+
+  @override
+  String get obTitlesBody =>
+      'Für Siege, Serien, saubere Sätze, frühe Morgen und mehr. Trag einen unter deinem Namen.';
+
+  @override
+  String get obFriendsHeading => 'Macht es unter Freunden aus';
+
+  @override
+  String get obFriendsBody =>
+      'Freunde fügen dich mit diesem Code hinzu. Fordere sie heraus, wann du willst – der Stand zwischen euch wird gespeichert.';
+
+  @override
+  String get obLetsGo => 'Auf geht’s';
 
   @override
   String get paywallTitle => 'Steig von Eisen bis Meister auf';

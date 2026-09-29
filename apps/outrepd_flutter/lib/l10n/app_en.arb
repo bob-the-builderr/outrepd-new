@@ -961,7 +961,7 @@
   "obCameraTitle": "outrepd needs your camera",
   "obCameraBody": "It watches your body move to count reps. There is no other way to do it.",
   "obCameraPrivateTitle": "Nothing leaves your phone",
-  "obCameraPrivateBody": "Body tracking runs on this device. No video is uploaded unless you choose to post it.",
+  "obCameraPrivateBody": "Body tracking runs on this device. No video is ever saved or uploaded.",
   "obWhyNeeded": "Why is this needed?",
   "obPlacementTitle": "Set your phone on the floor",
   "obPlacementBody": "Lean it against a wall about a metre in front of you.",
@@ -985,33 +985,12 @@
   "obAverageDepth": "Average depth",
   "obForm": "Form",
   "obFormClean": "Clean",
-  "obCreateAccountBody": "Create an account to keep your reps, your rank and your record.",
-  "obSaveProgress": "Save my progress",
-  "obSaveYourReps": "Save your {count} reps",
-  "@obSaveYourReps": {
-    "placeholders": {
-      "count": {
-        "type": "String"
-      }
-    }
-  },
-  "obOneTap": "An email and a password — that's all it takes.",
-  "obContinueApple": "Continue with Apple",
-  "obContinueGoogle": "Continue with Google",
-  "obContinueEmail": "Continue with email",
-  "obSignInFootnote": "We only use this to keep your account. We never post anything.",
-  "obPickName": "Pick a name",
-  "obPickNameBody": "This is what opponents see. You can change it later.",
   "obAvailable": "Available",
   "obTaken": "Taken",
-  "obYourAvatar": "Your avatar",
-  "obAddPhoto": "Add a photo",
   "obPlacementsBody": "Five duels decide your starting tier. Nothing counts against you yet.",
   "obFindFirstOpponent": "Find my first opponent",
   "obGotIt": "Got it",
   "obFormMixed": "Mixed",
-  "obWelcomeBack": "Welcome back",
-  "obWelcomeBackBody": "Sign in with your email and password.",
   "justNow": "Just now",
   "counterAccuracy": "Counter accuracy",
   "counterAccuracyCaption": "How close the camera gets",
@@ -1128,6 +1107,33 @@
   "setInPoolTitle": "Your set is in the pool",
   "setInPoolBody": "The next lifter near your rank races it. You'll see who won in Notifications, and your rank moves then.",
   "@bestStillIs": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "obWhyNeededBody": "Each rep is judged by how far your shoulders drop and rise, and only the camera can see that. Without it there is no count, and without a count there is no duel. The camera is only on during a set.",
+  "obWelcomeBack": "Welcome back",
+  "obDuelTitle": "You race a real person’s minute",
+  "obDuelBody": "Their set was recorded rep by rep. You see it happen live while you do yours.",
+  "obDuelWinBy": "Win by {count} reps",
+  "obDuelLpRule": "Rank points are the gap in reps. Win big, climb fast.",
+  "obLadderTitle": "Seven tiers to climb",
+  "obLadderBody": "Five placement duels set where you start. Win to climb, and once you reach a tier, you keep it.",
+  "obTitlesHeading": "{count} titles to earn",
+  "obTitlesBody": "For wins, streaks, clean sets, early mornings and more. Wear one under your name.",
+  "obFriendsHeading": "Settle it with friends",
+  "obFriendsBody": "Friends add you with this code. Challenge them whenever you like, and the score between you is kept.",
+  "obLetsGo": "Let’s go",
+  "@obDuelWinBy": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "@obTitlesHeading": {
     "placeholders": {
       "count": {
         "type": "String"

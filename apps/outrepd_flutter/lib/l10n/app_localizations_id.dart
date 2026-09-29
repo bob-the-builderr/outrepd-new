@@ -1725,7 +1725,7 @@ class LId extends L {
 
   @override
   String get obCameraPrivateBody =>
-      'Pelacakan tubuh berjalan di perangkat ini. Tidak ada video yang diunggah kecuali kamu sendiri yang memposting.';
+      'Pelacakan tubuh berjalan di perangkat ini. Tidak ada video yang disimpan atau diunggah.';
 
   @override
   String get obWhyNeeded => 'Kenapa ini diperlukan?';
@@ -1800,50 +1800,10 @@ class LId extends L {
   String get obFormClean => 'Bersih';
 
   @override
-  String get obCreateAccountBody =>
-      'Buat akun supaya repetisi, peringkat, dan rekormu tersimpan.';
-
-  @override
-  String get obSaveProgress => 'Simpan progresku';
-
-  @override
-  String obSaveYourReps(String count) {
-    return 'Simpan $count repetisimu';
-  }
-
-  @override
-  String get obOneTap => 'Cukup email dan kata sandi.';
-
-  @override
-  String get obContinueApple => 'Lanjutkan dengan Apple';
-
-  @override
-  String get obContinueGoogle => 'Lanjutkan dengan Google';
-
-  @override
-  String get obContinueEmail => 'Lanjutkan dengan email';
-
-  @override
-  String get obSignInFootnote =>
-      'Ini hanya dipakai untuk menjaga akunmu. Kami tidak pernah memposting apa pun.';
-
-  @override
-  String get obPickName => 'Pilih nama';
-
-  @override
-  String get obPickNameBody => 'Inilah yang dilihat lawan. Bisa diganti nanti.';
-
-  @override
   String get obAvailable => 'Tersedia';
 
   @override
   String get obTaken => 'Sudah dipakai';
-
-  @override
-  String get obYourAvatar => 'Fotomu';
-
-  @override
-  String get obAddPhoto => 'Tambahkan foto';
 
   @override
   String get obPlacementsBody =>
@@ -1857,12 +1817,6 @@ class LId extends L {
 
   @override
   String get obFormMixed => 'Campur';
-
-  @override
-  String get obWelcomeBack => 'Selamat datang kembali';
-
-  @override
-  String get obWelcomeBackBody => 'Masuk dengan email dan kata sandi kamu.';
 
   @override
   String get justNow => 'Baru saja';
@@ -2037,6 +1991,56 @@ class LId extends L {
   @override
   String get setInPoolBody =>
       'Atlet berikutnya di dekat peringkatmu akan melawannya. Kamu akan melihat siapa yang menang di Notifikasi, dan peringkatmu berubah saat itu.';
+
+  @override
+  String get obWhyNeededBody =>
+      'Setiap repetisi dinilai dari seberapa jauh bahumu turun dan naik, dan hanya kamera yang bisa melihatnya. Tanpa kamera tidak ada hitungan, dan tanpa hitungan tidak ada duel. Kamera hanya menyala saat satu set berlangsung.';
+
+  @override
+  String get obWelcomeBack => 'Selamat datang kembali';
+
+  @override
+  String get obDuelTitle =>
+      'Kamu berlomba dengan satu menit milik orang sungguhan';
+
+  @override
+  String get obDuelBody =>
+      'Set mereka direkam per repetisi. Kamu melihatnya berjalan langsung saat kamu melakukan set-mu.';
+
+  @override
+  String obDuelWinBy(String count) {
+    return 'Menang selisih $count repetisi';
+  }
+
+  @override
+  String get obDuelLpRule =>
+      'Poin peringkat adalah selisih repetisi. Menang telak, naik cepat.';
+
+  @override
+  String get obLadderTitle => 'Tujuh tingkat untuk didaki';
+
+  @override
+  String get obLadderBody =>
+      'Lima duel penempatan menentukan titik awalmu. Menang untuk naik, dan tingkat yang sudah dicapai tetap milikmu.';
+
+  @override
+  String obTitlesHeading(String count) {
+    return '$count gelar untuk diraih';
+  }
+
+  @override
+  String get obTitlesBody =>
+      'Untuk kemenangan, beruntun, set bersih, pagi buta, dan lainnya. Pakai satu di bawah namamu.';
+
+  @override
+  String get obFriendsHeading => 'Selesaikan dengan teman';
+
+  @override
+  String get obFriendsBody =>
+      'Teman menambahkanmu dengan kode ini. Tantang mereka kapan saja, dan skor di antara kalian tersimpan.';
+
+  @override
+  String get obLetsGo => 'Ayo mulai';
 
   @override
   String get paywallTitle => 'Naik dari Besi ke Master';

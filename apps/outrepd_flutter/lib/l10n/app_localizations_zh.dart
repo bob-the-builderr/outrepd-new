@@ -1686,7 +1686,7 @@ class LZh extends L {
   String get obCameraPrivateTitle => '没有任何东西离开你的手机';
 
   @override
-  String get obCameraPrivateBody => '姿态识别在本机运行。除非你自己发布，否则不会上传任何视频。';
+  String get obCameraPrivateBody => '身体识别在这台设备上完成。视频不会被保存或上传。';
 
   @override
   String get obWhyNeeded => '为什么需要这个？';
@@ -1758,48 +1758,10 @@ class LZh extends L {
   String get obFormClean => '干净';
 
   @override
-  String get obCreateAccountBody => '创建账号，保住你的次数、段位和战绩。';
-
-  @override
-  String get obSaveProgress => '保存我的进度';
-
-  @override
-  String obSaveYourReps(String count) {
-    return '保存你的 $count 次';
-  }
-
-  @override
-  String get obOneTap => '只需一个邮箱和一个密码。';
-
-  @override
-  String get obContinueApple => '使用 Apple 继续';
-
-  @override
-  String get obContinueGoogle => '使用 Google 继续';
-
-  @override
-  String get obContinueEmail => '使用邮箱继续';
-
-  @override
-  String get obSignInFootnote => '只用来保住你的账号。我们从不替你发布任何内容。';
-
-  @override
-  String get obPickName => '取个名字';
-
-  @override
-  String get obPickNameBody => '对手看到的就是这个。之后可以改。';
-
-  @override
   String get obAvailable => '可以用';
 
   @override
   String get obTaken => '已被占用';
-
-  @override
-  String get obYourAvatar => '你的头像';
-
-  @override
-  String get obAddPhoto => '添加照片';
 
   @override
   String get obPlacementsBody => '五场对决决定你的起始段位。目前还不会记在你头上。';
@@ -1812,12 +1774,6 @@ class LZh extends L {
 
   @override
   String get obFormMixed => '不稳定';
-
-  @override
-  String get obWelcomeBack => '欢迎回来';
-
-  @override
-  String get obWelcomeBackBody => '使用邮箱和密码登录。';
 
   @override
   String get justNow => '刚刚';
@@ -1986,6 +1942,50 @@ class LZh extends L {
 
   @override
   String get setInPoolBody => '下一位段位相近的玩家会挑战这组成绩。谁赢了会在通知里显示，届时你的段位才会变动。';
+
+  @override
+  String get obWhyNeededBody =>
+      '每一次都根据你肩膀下降和抬起的幅度来判定，而只有摄像头能看到这些。没有摄像头就无法计数，没有计数就没有对决。摄像头只在做组时开启。';
+
+  @override
+  String get obWelcomeBack => '欢迎回来';
+
+  @override
+  String get obDuelTitle => '你和真人的一分钟比拼';
+
+  @override
+  String get obDuelBody => '对方的那一组是逐次记录下来的。你做自己这组时，能实时看到它的进度。';
+
+  @override
+  String obDuelWinBy(String count) {
+    return '领先 $count 次获胜';
+  }
+
+  @override
+  String get obDuelLpRule => '段位积分就是次数差。赢得越多，升得越快。';
+
+  @override
+  String get obLadderTitle => '七个段位等你攀登';
+
+  @override
+  String get obLadderBody => '五场定级对决决定你的起点。赢了就升段，达到的段位会一直保留。';
+
+  @override
+  String obTitlesHeading(String count) {
+    return '$count 个称号等你获得';
+  }
+
+  @override
+  String get obTitlesBody => '赢得胜利、连胜、标准动作、早起训练等都能获得。可以选一个显示在你的名字下方。';
+
+  @override
+  String get obFriendsHeading => '和朋友一决高下';
+
+  @override
+  String get obFriendsBody => '朋友可以用这个代码添加你。随时向他们发起挑战，你们之间的战绩会一直保留。';
+
+  @override
+  String get obLetsGo => '出发';
 
   @override
   String get paywallTitle => '从黑铁一路登上大师';

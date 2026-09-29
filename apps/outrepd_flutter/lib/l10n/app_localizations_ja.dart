@@ -1691,8 +1691,7 @@ class LJa extends L {
   String get obCameraPrivateTitle => 'スマホの外には出ない';
 
   @override
-  String get obCameraPrivateBody =>
-      '姿勢の解析はこの端末で動きます。自分で投稿しない限り、動画はアップロードされません。';
+  String get obCameraPrivateBody => '体の検出はこの端末の中で行われます。動画が保存・送信されることはありません。';
 
   @override
   String get obWhyNeeded => 'なぜ必要?';
@@ -1765,48 +1764,10 @@ class LJa extends L {
   String get obFormClean => 'きれい';
 
   @override
-  String get obCreateAccountBody => '回数もランクも戦績も残すには、アカウントを作成。';
-
-  @override
-  String get obSaveProgress => '記録を保存';
-
-  @override
-  String obSaveYourReps(String count) {
-    return '$count 回を保存する';
-  }
-
-  @override
-  String get obOneTap => 'メールアドレスとパスワードだけ。';
-
-  @override
-  String get obContinueApple => 'Apple で続ける';
-
-  @override
-  String get obContinueGoogle => 'Google で続ける';
-
-  @override
-  String get obContinueEmail => 'メールで続ける';
-
-  @override
-  String get obSignInFootnote => 'アカウントの維持だけに使います。こちらから投稿することはありません。';
-
-  @override
-  String get obPickName => '名前を決める';
-
-  @override
-  String get obPickNameBody => '対戦相手に表示される名前です。あとから変更できます。';
-
-  @override
   String get obAvailable => '使える';
 
   @override
   String get obTaken => '使用済み';
-
-  @override
-  String get obYourAvatar => 'アイコン';
-
-  @override
-  String get obAddPhoto => '写真を追加';
 
   @override
   String get obPlacementsBody => '5回の対戦で開始ティアが決まります。まだ負けは記録に響きません。';
@@ -1819,12 +1780,6 @@ class LJa extends L {
 
   @override
   String get obFormMixed => 'ばらつきあり';
-
-  @override
-  String get obWelcomeBack => 'おかえり';
-
-  @override
-  String get obWelcomeBackBody => 'メールアドレスとパスワードでサインインしてください。';
 
   @override
   String get justNow => 'たった今';
@@ -1997,6 +1952,50 @@ class LJa extends L {
   @override
   String get setInPoolBody =>
       '近いランクの次のプレイヤーがこの記録と対戦します。結果は通知で確認でき、そのときにランクが動きます。';
+
+  @override
+  String get obWhyNeededBody =>
+      '1回ごとに肩がどれだけ下がって上がったかで判定します。それを見られるのはカメラだけです。カメラがなければカウントできず、カウントがなければ対戦もできません。カメラが動くのはセット中だけです。';
+
+  @override
+  String get obWelcomeBack => 'おかえり';
+
+  @override
+  String get obDuelTitle => '本物の誰かの1分間と勝負します';
+
+  @override
+  String get obDuelBody => '相手のセットは1回ごとに記録されています。自分のセット中に、それがリアルタイムで進むのが見えます。';
+
+  @override
+  String obDuelWinBy(String count) {
+    return '$count回差で勝利';
+  }
+
+  @override
+  String get obDuelLpRule => 'ランクポイントは回数の差です。大差で勝てば早く上がれます。';
+
+  @override
+  String get obLadderTitle => '登るべき7つのティア';
+
+  @override
+  String get obLadderBody => '最初の5回の対戦でスタート位置が決まります。勝てば上がり、一度到達したティアからは落ちません。';
+
+  @override
+  String obTitlesHeading(String count) {
+    return '獲得できる称号は$count個';
+  }
+
+  @override
+  String get obTitlesBody => '勝利、連勝、きれいなセット、早朝トレーニングなどでもらえます。名前の下に1つ表示できます。';
+
+  @override
+  String get obFriendsHeading => '友達と決着をつけよう';
+
+  @override
+  String get obFriendsBody => '友達はこのコードであなたを追加できます。いつでも挑戦でき、2人の対戦成績は記録されます。';
+
+  @override
+  String get obLetsGo => '始めよう';
 
   @override
   String get paywallTitle => 'アイアンからマスターへ';

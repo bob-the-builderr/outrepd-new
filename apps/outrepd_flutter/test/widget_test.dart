@@ -93,6 +93,20 @@ void main() {
     expect(find.text('Allow camera'), findsNothing);
   });
 
+  testWidgets('back goes to the step before, not out of the app',
+      (tester) async {
+    phone(tester);
+    await tester.pumpWidget(_app(null));
+    await tester.pumpAndSettle();
+
+    await tap(tester, 'Get started');
+    expect(find.textContaining('Three things'), findsOneWidget);
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(find.text('Get started'), findsOneWidget);
+  });
+
   testWidgets('says what the camera is for before asking for it',
       (tester) async {
     phone(tester);
@@ -101,6 +115,16 @@ void main() {
 
     await tap(tester, 'Get started');
     expect(find.textContaining('Three things'), findsOneWidget);
+
+    // What a duel is and what there is to climb, before anything is asked.
+    await tap(tester, 'Continue');
+    expect(find.text('You race a real person’s minute'), findsOneWidget);
+    expect(find.text('+7 LP'), findsOneWidget);
+
+    await tap(tester, 'Continue');
+    expect(find.text('Seven tiers to climb'), findsOneWidget);
+    expect(find.text('Master'), findsOneWidget);
+    expect(find.text('Iron'), findsOneWidget);
 
     await tap(tester, 'Continue');
     expect(find.text('Two quick things.'), findsOneWidget);
@@ -127,6 +151,8 @@ void main() {
 
     await tap(tester, 'Get started');
     await tap(tester, 'Continue');
+    await tap(tester, 'Continue');
+    await tap(tester, 'Continue');
     await tap(tester, 'Under 16');
 
     expect(find.textContaining('outrepd is for 16 and over'), findsOneWidget);
@@ -148,6 +174,8 @@ void main() {
     await tester.pumpAndSettle();
 
     await tap(tester, 'Get started');
+    await tap(tester, 'Continue');
+    await tap(tester, 'Continue');
     await tap(tester, 'Continue');
     await tap(tester, '16 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
@@ -198,6 +226,8 @@ void main() {
     await tester.pumpAndSettle();
 
     await tap(tester, 'Get started');
+    await tap(tester, 'Continue');
+    await tap(tester, 'Continue');
     await tap(tester, 'Continue');
     await tap(tester, '16 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
@@ -260,6 +290,8 @@ void main() {
 
     await tap(tester, 'Get started');
     await tap(tester, 'Continue');
+    await tap(tester, 'Continue');
+    await tap(tester, 'Continue');
     await tap(tester, '16 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
@@ -318,8 +350,10 @@ void main() {
 
       await tap(tester, 'Get started');
       expect(tester.takeException(), isNull);
-      await tap(tester, 'Continue');
-      expect(tester.takeException(), isNull);
+      for (var i = 0; i < 3; i++) {
+        await tap(tester, 'Continue');
+        expect(tester.takeException(), isNull);
+      }
       await tap(tester, '16 or over');
       expect(tester.takeException(), isNull);
     });

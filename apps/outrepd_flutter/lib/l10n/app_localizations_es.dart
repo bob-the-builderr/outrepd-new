@@ -1732,7 +1732,7 @@ class LEs extends L {
 
   @override
   String get obCameraPrivateBody =>
-      'El seguimiento corporal se hace en este dispositivo. No se sube ningún vídeo salvo que tú lo publiques.';
+      'El seguimiento corporal se hace en este dispositivo. Nunca se guarda ni se sube ningún vídeo.';
 
   @override
   String get obWhyNeeded => '¿Por qué hace falta?';
@@ -1807,51 +1807,10 @@ class LEs extends L {
   String get obFormClean => 'Limpia';
 
   @override
-  String get obCreateAccountBody =>
-      'Crea una cuenta para conservar tus repeticiones, tu rango y tu historial.';
-
-  @override
-  String get obSaveProgress => 'Guardar mi progreso';
-
-  @override
-  String obSaveYourReps(String count) {
-    return 'Guarda tus $count repeticiones';
-  }
-
-  @override
-  String get obOneTap => 'Un correo y una contraseña, nada más.';
-
-  @override
-  String get obContinueApple => 'Continuar con Apple';
-
-  @override
-  String get obContinueGoogle => 'Continuar con Google';
-
-  @override
-  String get obContinueEmail => 'Continuar con correo';
-
-  @override
-  String get obSignInFootnote =>
-      'Solo lo usamos para mantener tu cuenta. Nunca publicamos nada.';
-
-  @override
-  String get obPickName => 'Elige un nombre';
-
-  @override
-  String get obPickNameBody =>
-      'Es lo que ven tus rivales. Puedes cambiarlo luego.';
-
-  @override
   String get obAvailable => 'Disponible';
 
   @override
   String get obTaken => 'Ocupado';
-
-  @override
-  String get obYourAvatar => 'Tu foto';
-
-  @override
-  String get obAddPhoto => 'Añadir una foto';
 
   @override
   String get obPlacementsBody =>
@@ -1865,13 +1824,6 @@ class LEs extends L {
 
   @override
   String get obFormMixed => 'Irregular';
-
-  @override
-  String get obWelcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get obWelcomeBackBody =>
-      'Inicia sesión con tu correo y tu contraseña.';
 
   @override
   String get justNow => 'Ahora mismo';
@@ -2047,6 +1999,55 @@ class LEs extends L {
   @override
   String get setInPoolBody =>
       'El próximo atleta cerca de tu rango competirá contra ella. Verás quién ganó en Notificaciones y entonces cambiará tu rango.';
+
+  @override
+  String get obWhyNeededBody =>
+      'Cada repetición se valora por cuánto bajan y suben tus hombros, y solo la cámara puede verlo. Sin ella no hay conteo, y sin conteo no hay duelo. La cámara solo se enciende durante una serie.';
+
+  @override
+  String get obWelcomeBack => 'Bienvenido de nuevo';
+
+  @override
+  String get obDuelTitle => 'Compites contra el minuto de una persona real';
+
+  @override
+  String get obDuelBody =>
+      'Su serie se grabó repetición a repetición. La ves en directo mientras haces la tuya.';
+
+  @override
+  String obDuelWinBy(String count) {
+    return 'Gana por $count repeticiones';
+  }
+
+  @override
+  String get obDuelLpRule =>
+      'Los puntos de rango son la diferencia en repeticiones. Gana por mucho y sube rápido.';
+
+  @override
+  String get obLadderTitle => 'Siete rangos por escalar';
+
+  @override
+  String get obLadderBody =>
+      'Cinco duelos de clasificación deciden dónde empiezas. Gana para subir; el rango que alcances es tuyo para siempre.';
+
+  @override
+  String obTitlesHeading(String count) {
+    return '$count títulos por ganar';
+  }
+
+  @override
+  String get obTitlesBody =>
+      'Por victorias, rachas, series limpias, madrugones y más. Lleva uno bajo tu nombre.';
+
+  @override
+  String get obFriendsHeading => 'Resuélvelo con tus amigos';
+
+  @override
+  String get obFriendsBody =>
+      'Tus amigos te añaden con este código. Rétalos cuando quieras y el marcador entre vosotros queda guardado.';
+
+  @override
+  String get obLetsGo => 'Vamos';
 
   @override
   String get paywallTitle => 'Sube de Hierro a Maestro';
