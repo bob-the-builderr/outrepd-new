@@ -371,6 +371,12 @@ class _LiveInviteBannerState extends State<LiveInviteBanner> {
             FilledButton(
               key: const Key('joinLiveInvite'),
               onPressed: widget.onJoin,
+              // The theme's buttons fill the width they are given, and a
+              // row gives them all of it; this one is sized to its word.
+              style: FilledButton.styleFrom(
+                minimumSize: const Size(0, 42),
+                padding: const EdgeInsets.symmetric(horizontal: 18),
+              ),
               child: Text(l.joinLive),
             ),
           ],

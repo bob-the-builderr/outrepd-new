@@ -16,14 +16,37 @@ bool _started = false;
 /// Whether Firebase is running in this build.
 bool get firebaseReady => _started;
 
+// On iPhone the config comes in as build values rather than a
+// GoogleService-Info.plist file, which would have to be written into the
+// Xcode project to be bundled. CI reads them out of the GOOGLE_SERVICE_INFO_PLIST
+// secret; a build without them has no Firebase on iPhone, as on Android.
+const _iosApiKey = String.fromEnvironment('FIREBASE_IOS_API_KEY');
+const _iosAppId = String.fromEnvironment('FIREBASE_IOS_APP_ID');
+const _senderId = String.fromEnvironment('FIREBASE_SENDER_ID');
+const _projectId = String.fromEnvironment('FIREBASE_PROJECT_ID');
+
+/// The options to start Firebase with: from the build on iPhone, from
+/// google-services.json (read by Firebase itself) on Android.
+FirebaseOptions? _options() {
+  if (!Platform.isIOS) return null;
+  return FirebaseOptions(
+    apiKey: _iosApiKey,
+    appId: _iosAppId,
+    messagingSenderId: _senderId,
+    projectId: _projectId,
+    iosBundleId: 'com.outrepd.outrepd',
+  );
+}
+
 /// Starts Firebase if this build carries its config, and from then on sends
 /// errors to Crashlytics. Never throws: a phone that cannot report a crash
 /// must still open.
 Future<void> startFirebase() async {
   if (kIsWeb || Platform.environment.containsKey('FLUTTER_TEST')) return;
   if (!Platform.isAndroid && !Platform.isIOS) return;
+  if (Platform.isIOS && _iosApiKey.isEmpty) return;
   try {
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(options: _options());
     _started = true;
   } on Object catch (error) {
     debugPrint('Firebase is not set up in this build: $error');

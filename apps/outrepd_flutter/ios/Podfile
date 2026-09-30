@@ -54,8 +54,9 @@ post_install do |installer|
 
       # permission_handler compiles every permission out unless asked for it.
       # The app opens Settings when the camera has been refused; the camera
-      # itself is asked for by the camera plugin. No push notifications, so
-      # no notification permission either.
+      # itself is asked for by the camera plugin. Notifications are asked for
+      # by firebase_messaging and flutter_local_notifications themselves, so
+      # permission_handler needs no notification permission either.
       config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
         '$(inherited)',
         'PERMISSION_CAMERA=1',

@@ -50,6 +50,14 @@ class Push {
     try {
       final messaging = FirebaseMessaging.instance;
       _listen(messaging);
+      // On iPhone the Firebase token waits on Apple's, which arrives a moment
+      // after launch; asking before it has is an error, not a wait.
+      if (Platform.isIOS) {
+        for (var i = 0; i < 10; i++) {
+          if (await messaging.getAPNSToken() != null) break;
+          await Future<void>.delayed(const Duration(seconds: 1));
+        }
+      }
       final token = await messaging.getToken();
       if (token != null) await _register(token);
       _tokenRefresh ??= messaging.onTokenRefresh.listen(_register);

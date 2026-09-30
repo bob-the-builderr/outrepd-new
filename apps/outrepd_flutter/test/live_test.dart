@@ -54,13 +54,14 @@ class _Link implements LiveLink {
 class _Live extends NoBackend {
   _Live({
     _Link? link,
-    this.startsIn = const Duration(milliseconds: 600),
     this.savedSet,
     this.friendList = const [],
   }) : link = link ?? _Link();
 
   final _Link link;
-  final Duration? startsIn;
+
+  /// Where the server puts the round's start once both are ready.
+  final Duration startsIn = const Duration(milliseconds: 600);
   final OpponentSet? savedSet;
   final List<RemoteFriend> friendList;
 
@@ -237,7 +238,10 @@ void main() {
     expect(find.text('GET READY'), findsNothing, reason: 'the round never began');
     expect(session.startedAt, isNotNull);
 
+    // Two pumps: the first delivers the message, which marks the screen
+    // dirty after that frame was already built; the second draws it.
     fake.link.hear(7);
+    await tester.pump();
     await tester.pump();
     expect(find.text('7'), findsWidgets);
 
