@@ -6,7 +6,6 @@
 library;
 
 import 'dart:io' show Platform;
-import 'dart:ui' show PlatformDispatcher;
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
