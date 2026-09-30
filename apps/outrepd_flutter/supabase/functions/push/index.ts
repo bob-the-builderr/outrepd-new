@@ -15,8 +15,13 @@
 //        FCM_SERVICE_ACCOUNT   the whole of that JSON file, pasted as is
 //
 //   3. Edge Functions → Deploy a new function → Via editor. Name it exactly
-//      `push`, paste this file as index.ts, and add a second file named
-//      messages.ts with the contents of messages.ts beside this one.
+//      `push` and paste this file — with the import of './messages.ts'
+//      below replaced by the contents of messages.ts, minus its `export`,
+//      so the editor gets one file. That is how it was first deployed.
+//      With the Supabase CLI instead, the two files deploy as they are:
+//        supabase functions deploy push --no-verify-jwt
+//      Deploy again whenever messages.ts is regenerated, or pushes keep the
+//      old wording.
 //
 //   4. Edge Functions → push → Details → turn off "Enforce JWT verification".
 //      The trigger calls it without one, and the notice lookup above is what
