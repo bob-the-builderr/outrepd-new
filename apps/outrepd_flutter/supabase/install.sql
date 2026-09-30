@@ -1103,7 +1103,10 @@ as $$
 declare
   them uuid;
 begin
-  select id into them from profiles where username = their_name;
+  -- Case-insensitive, as find_lifters is: usernames keep the case they were
+  -- typed in, and nobody remembers whether a friend capitalised theirs.
+  select id into them from profiles
+   where lower(username) = lower(trim(their_name));
   if them is null then
     return 'no such lifter';
   end if;

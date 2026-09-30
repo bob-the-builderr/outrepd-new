@@ -388,6 +388,22 @@ class FriendRequest {
   final int divIdx;
 }
 
+/// The friend code in what somebody typed to add a friend, or null when it
+/// reads as a username.
+///
+/// The profile shows a code as "#123456", and people type it back every way:
+/// with the '#', without it, with a space in the middle. Only '#' used to
+/// count, so a code typed without one was looked up as a name and found
+/// nobody.
+String? friendCodeIn(String typed) {
+  final compact = typed.replaceAll(RegExp(r'\s'), '');
+  if (compact.startsWith('#')) {
+    final code = compact.substring(1);
+    return code.isEmpty ? null : code;
+  }
+  return RegExp(r'^\d{6}$').hasMatch(compact) ? compact : null;
+}
+
 /// Somebody found by name, who may or may not be anybody's friend yet.
 class FoundLifter {
   const FoundLifter({

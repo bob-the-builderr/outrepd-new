@@ -364,15 +364,21 @@ class SupabaseBackend implements Backend {
   @override
   Future<AskResult> askFriend(String identifier) async {
     final trimmed = identifier.trim();
-    final answer = trimmed.startsWith('#')
-        ? await _db.rpc<String>(
-            'request_friend_by_code',
-            params: {'code': trimmed.substring(1)},
-          )
+    Future<String> byName() => _db.rpc<String>(
+      'request_friend',
+      params: {'their_name': trimmed},
+    );
+    final code = friendCodeIn(trimmed);
+    var answer = code == null
+        ? await byName()
         : await _db.rpc<String>(
-            'request_friend',
-            params: {'their_name': trimmed},
+            'request_friend_by_code',
+            params: {'code': code},
           );
+    // Six digits with no '#' could still be somebody's name.
+    if (answer == 'no such lifter' && code != null && !trimmed.startsWith('#')) {
+      answer = await byName();
+    }
     return switch (answer) {
       'friends' => AskResult.friends,
       'no such lifter' => AskResult.noSuchLifter,
