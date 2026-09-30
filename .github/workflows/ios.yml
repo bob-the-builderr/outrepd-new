@@ -19,6 +19,12 @@
 #     With the last four, the build is signed (Xcode makes the certificate
 #     and profile itself) and uploaded. Without them it is only built, to
 #     prove it compiles.
+#
+#     The team also needs at least one iPhone registered under Devices in the
+#     Apple Developer portal: automatic signing archives with a development
+#     profile first, and Apple will not make one for a team with no devices
+#     ("Your team has no devices from which to generate a provisioning
+#     profile" — build 103).
 
 name: iOS
 
