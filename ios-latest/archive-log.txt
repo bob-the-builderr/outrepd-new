@@ -1,0 +1,200 @@
+    Target 'GoogleUtilities_GoogleUtilities-UserDefaults' in project 'GoogleUtilities' (no dependencies)
+    Target 'FBLPromises' in project 'Promises'
+        ➜ Explicit dependency on target 'FBLPromises' in project 'Promises'
+        ➜ Explicit dependency on target 'Promises_FBLPromises' in project 'Promises'
+    Target 'FBLPromises' in project 'Promises'
+        ➜ Explicit dependency on target 'Promises_FBLPromises' in project 'Promises'
+    Target 'Promises_FBLPromises' in project 'Promises' (no dependencies)
+    Target 'FirebaseCore' in project 'Firebase'
+        ➜ Explicit dependency on target 'Firebase_FirebaseCore' in project 'Firebase'
+        ➜ Explicit dependency on target 'Firebase' in project 'Firebase'
+        ➜ Explicit dependency on target 'FirebaseCoreInternal' in project 'Firebase'
+        ➜ Explicit dependency on target 'GULNSData' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GULEnvironment' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GULLogger' in project 'GoogleUtilities'
+    Target 'GULLogger' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities-Logger' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities_GoogleUtilities-Logger' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'third-party-IsAppEncrypted' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities-Environment' in project 'GoogleUtilities'
+    Target 'GoogleUtilities-Logger' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities_GoogleUtilities-Logger' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'third-party-IsAppEncrypted' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities-Environment' in project 'GoogleUtilities'
+    Target 'GoogleUtilities_GoogleUtilities-Logger' in project 'GoogleUtilities' (no dependencies)
+    Target 'GULEnvironment' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities-Environment' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities_GoogleUtilities-Environment' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'third-party-IsAppEncrypted' in project 'GoogleUtilities'
+    Target 'GoogleUtilities-Environment' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities_GoogleUtilities-Environment' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'third-party-IsAppEncrypted' in project 'GoogleUtilities'
+    Target 'third-party-IsAppEncrypted' in project 'GoogleUtilities' (no dependencies)
+    Target 'GoogleUtilities_GoogleUtilities-Environment' in project 'GoogleUtilities' (no dependencies)
+    Target 'Firebase_FirebaseCore' in project 'Firebase' (no dependencies)
+    Target 'FirebaseCoreInternal' in project 'Firebase'
+        ➜ Explicit dependency on target 'Firebase_FirebaseCoreInternal' in project 'Firebase'
+        ➜ Explicit dependency on target 'GULNSData' in project 'GoogleUtilities'
+    Target 'GULNSData' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities-NSData' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities_GoogleUtilities-NSData' in project 'GoogleUtilities'
+    Target 'GoogleUtilities-NSData' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities_GoogleUtilities-NSData' in project 'GoogleUtilities'
+    Target 'GoogleUtilities_GoogleUtilities-NSData' in project 'GoogleUtilities' (no dependencies)
+    Target 'Firebase_FirebaseCoreInternal' in project 'Firebase' (no dependencies)
+    Target 'Firebase' in project 'Firebase' (no dependencies)
+    Target 'Firebase_FirebaseInstallations' in project 'Firebase' (no dependencies)
+    Target 'connectivity-plus' in project 'connectivity_plus'
+        ➜ Explicit dependency on target 'connectivity_plus' in project 'connectivity_plus'
+        ➜ Explicit dependency on target 'connectivity_plus_connectivity_plus' in project 'connectivity_plus'
+        ➜ Explicit dependency on target 'FlutterFramework' in project 'FlutterFramework'
+    Target 'connectivity_plus' in project 'connectivity_plus'
+        ➜ Explicit dependency on target 'connectivity_plus_connectivity_plus' in project 'connectivity_plus'
+        ➜ Explicit dependency on target 'FlutterFramework' in project 'FlutterFramework'
+    Target 'connectivity_plus_connectivity_plus' in project 'connectivity_plus' (no dependencies)
+    Target 'camera-avfoundation' in project 'camera_avfoundation'
+        ➜ Explicit dependency on target 'camera_avfoundation' in project 'camera_avfoundation'
+        ➜ Explicit dependency on target 'camera_avfoundation_camera_avfoundation' in project 'camera_avfoundation'
+    Target 'camera_avfoundation' in project 'camera_avfoundation'
+        ➜ Explicit dependency on target 'camera_avfoundation_camera_avfoundation' in project 'camera_avfoundation'
+    Target 'camera_avfoundation_camera_avfoundation' in project 'camera_avfoundation' (no dependencies)
+    Target 'audioplayers-darwin' in project 'audioplayers_darwin'
+        ➜ Explicit dependency on target 'audioplayers_darwin' in project 'audioplayers_darwin'
+    Target 'audioplayers_darwin' in project 'audioplayers_darwin' (no dependencies)
+    Target 'app-links' in project 'app_links'
+        ➜ Explicit dependency on target 'app_links' in project 'app_links'
+        ➜ Explicit dependency on target 'app_links_app_links' in project 'app_links'
+        ➜ Explicit dependency on target 'FlutterFramework' in project 'FlutterFramework'
+    Target 'app_links' in project 'app_links'
+        ➜ Explicit dependency on target 'app_links_app_links' in project 'app_links'
+        ➜ Explicit dependency on target 'FlutterFramework' in project 'FlutterFramework'
+    Target 'FlutterFramework' in project 'FlutterFramework'
+        ➜ Explicit dependency on target 'FlutterFramework' in project 'FlutterFramework'
+    Target 'FlutterFramework' in project 'FlutterFramework' (no dependencies)
+    Target 'app_links_app_links' in project 'app_links' (no dependencies)
+    Target 'Pods-Runner' in project 'Pods'
+        ➜ Explicit dependency on target 'Flutter' in project 'Pods'
+        ➜ Explicit dependency on target 'GTMSessionFetcher' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleDataTransport' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleMLKit' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleToolboxForMac' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleUtilities' in project 'Pods'
+        ➜ Explicit dependency on target 'MLImage' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitPoseDetection' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitPoseDetectionAccurate' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitPoseDetectionCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitVision' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitXenoCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'PromisesObjC' in project 'Pods'
+        ➜ Explicit dependency on target 'google_mlkit_commons' in project 'Pods'
+        ➜ Explicit dependency on target 'google_mlkit_pose_detection' in project 'Pods'
+        ➜ Explicit dependency on target 'nanopb' in project 'Pods'
+    Target 'google_mlkit_pose_detection' in project 'Pods'
+        ➜ Explicit dependency on target 'Flutter' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleMLKit' in project 'Pods'
+        ➜ Explicit dependency on target 'google_mlkit_commons' in project 'Pods'
+    Target 'google_mlkit_commons' in project 'Pods'
+        ➜ Explicit dependency on target 'Flutter' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitVision' in project 'Pods'
+    Target 'GoogleMLKit' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitPoseDetection' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitPoseDetectionAccurate' in project 'Pods'
+    Target 'MLKitPoseDetectionAccurate' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitPoseDetectionAccurate-MLKitPoseDetectionAccurateResources' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitPoseDetectionCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitXenoCommon' in project 'Pods'
+    Target 'MLKitPoseDetectionAccurate-MLKitPoseDetectionAccurateResources' in project 'Pods' (no dependencies)
+    Target 'MLKitPoseDetection' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitPoseDetection-MLKitPoseDetectionFastResources' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitPoseDetectionCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitXenoCommon' in project 'Pods'
+    Target 'MLKitPoseDetectionCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitPoseDetectionCommon-MLKitPoseDetectionCommonResources' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitXenoCommon' in project 'Pods'
+    Target 'MLKitXenoCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitVision' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitXenoCommon-MLKitXenoResources' in project 'Pods'
+    Target 'MLKitXenoCommon-MLKitXenoResources' in project 'Pods' (no dependencies)
+    Target 'MLKitVision' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleToolboxForMac' in project 'Pods'
+        ➜ Explicit dependency on target 'GTMSessionFetcher' in project 'Pods'
+        ➜ Explicit dependency on target 'MLImage' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitCommon' in project 'Pods'
+    Target 'MLImage' in project 'Pods' (no dependencies)
+    Target 'MLKitPoseDetectionCommon-MLKitPoseDetectionCommonResources' in project 'Pods' (no dependencies)
+    Target 'MLKitPoseDetection-MLKitPoseDetectionFastResources' in project 'Pods' (no dependencies)
+    Target 'MLKitCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleDataTransport' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleToolboxForMac' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleUtilities' in project 'Pods'
+        ➜ Explicit dependency on target 'GTMSessionFetcher' in project 'Pods'
+    Target 'GoogleUtilities' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleUtilities-GoogleUtilities_Privacy' in project 'Pods'
+    Target 'GoogleUtilities-GoogleUtilities_Privacy' in project 'Pods' (no dependencies)
+    Target 'GoogleToolboxForMac' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleToolboxForMac-GoogleToolboxForMac_Logger_Privacy' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleToolboxForMac-GoogleToolboxForMac_Privacy' in project 'Pods'
+    Target 'GoogleToolboxForMac-GoogleToolboxForMac_Privacy' in project 'Pods' (no dependencies)
+    Target 'GoogleToolboxForMac-GoogleToolboxForMac_Logger_Privacy' in project 'Pods' (no dependencies)
+    Target 'GoogleDataTransport' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleDataTransport-GoogleDataTransport_Privacy' in project 'Pods'
+        ➜ Explicit dependency on target 'PromisesObjC' in project 'Pods'
+        ➜ Explicit dependency on target 'nanopb' in project 'Pods'
+    Target 'GoogleDataTransport-GoogleDataTransport_Privacy' in project 'Pods'
+        ➜ Implicit dependency on target 'PromisesObjC' in project 'Pods' via options '-framework FBLPromises' in build setting 'OTHER_LDFLAGS'
+        ➜ Implicit dependency on target 'nanopb' in project 'Pods' via options '-framework nanopb' in build setting 'OTHER_LDFLAGS'
+    Target 'nanopb' in project 'Pods'
+        ➜ Explicit dependency on target 'nanopb-nanopb_Privacy' in project 'Pods'
+    Target 'nanopb-nanopb_Privacy' in project 'Pods' (no dependencies)
+    Target 'PromisesObjC' in project 'Pods'
+        ➜ Explicit dependency on target 'PromisesObjC-FBLPromises_Privacy' in project 'Pods'
+    Target 'PromisesObjC-FBLPromises_Privacy' in project 'Pods' (no dependencies)
+    Target 'GTMSessionFetcher' in project 'Pods'
+        ➜ Explicit dependency on target 'GTMSessionFetcher-GTMSessionFetcher_Core_Privacy' in project 'Pods'
+    Target 'GTMSessionFetcher-GTMSessionFetcher_Core_Privacy' in project 'Pods' (no dependencies)
+    Target 'Flutter' in project 'Pods' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -x objective-c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool -V
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -x objective-c++ -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/ibtool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios/Runner/Assets.xcassets
+
+ReadFileContents /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/docc/features.json
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+Build description signature: 39ea3d348a1eea6fb9487e84f1b48895
+Build description path: /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/XCBuildData/39ea3d348a1eea6fb9487e84f1b48895.xcbuilddata
+/Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios/Runner.xcodeproj: error: Communication with Apple failed: Your team has no devices from which to generate a provisioning profile. Connect a device to use or manually add device IDs in Certificates, Identifiers & Profiles. https://developer.apple.com/account/ (in target 'Runner' from project 'Runner')
+/Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios/Runner.xcodeproj: error: No profiles for 'com.outrepd.outrepd' were found: Xcode couldn't find any iOS App Development provisioning profiles matching 'com.outrepd.outrepd'. (in target 'Runner' from project 'Runner')
+note: Run script build phase 'Run Script' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'Runner' from project 'Runner')
+note: Run script build phase 'Thin Binary' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'Runner' from project 'Runner')
+** ARCHIVE FAILED **
+
+
+The following build commands failed:
+	Archiving workspace Runner with scheme Runner
+(1 failure)

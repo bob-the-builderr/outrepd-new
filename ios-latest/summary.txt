@@ -1,9 +1,9 @@
-commit      dc9985b944aa634cdaf247ddbb58080ad750c030
+commit      4a95773bf4094839eb690aabda66c1a0367552ae
 platform    ios
-build       102
+build       103
 compiled    success
-signed      false
-uploaded    skipped
+signed      true
+uploaded    failure
 paywall key no
-firebase    false — No GOOGLE_SERVICE_INFO_PLIST secret: no push notifications or crash reports on iPhone.
-run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/36669852779
+firebase    true — push notifications and crash reports are in
+run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/36747619977

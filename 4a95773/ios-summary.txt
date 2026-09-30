@@ -1,0 +1,9 @@
+commit      4a95773bf4094839eb690aabda66c1a0367552ae
+platform    ios
+build       103
+compiled    success
+signed      true
+uploaded    failure
+paywall key no
+firebase    true — push notifications and crash reports are in
+run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/36747619977
