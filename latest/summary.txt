@@ -1,11 +1,9 @@
-commit      1ff5e1ad3309b9048c202bd4a46e04d6e66a9f37
-build       127
+commit      87beac4026e509ff7a084647cdb2cec70b609608
+build       128
 upload key  true
 key note    the upload key opens and has the alias
-apk         success 121750158 bytes
-aab         success 116025724 bytes
+apk         cancelled  bytes
+aab         skipped  bytes
 paywall key no
 firebase    true — push notifications and crash reports are in
-signed by   Owner: CN=mokhtar, OU=outrepd, O=outrepd, L=suez, ST=suez, C=EG
-sha-256     93:19:AC:A3:AC:BD:85:34:04:9D:BF:6F:D7:CD:B5:D2:CC:1D:D8:4F:AA:E4:C3:39:4B:A6:8B:45:FF:03:7A:FB
-run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/36658216552
+run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/36664742994
