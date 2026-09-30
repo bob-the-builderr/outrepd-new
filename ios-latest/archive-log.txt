@@ -1,173 +1,3 @@
-    export PUBLIC_HEADERS_FOLDER_PATH\=Runner.app/Headers
-    export RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET\=15.0
-    export RECURSIVE_SEARCH_PATHS_FOLLOW_SYMLINKS\=YES
-    export REMOVE_CVS_FROM_RESOURCES\=YES
-    export REMOVE_GIT_FROM_RESOURCES\=YES
-    export REMOVE_HEADERS_FROM_EMBEDDED_BUNDLES\=YES
-    export REMOVE_HG_FROM_RESOURCES\=YES
-    export REMOVE_STATIC_EXECUTABLES_FROM_EMBEDDED_BUNDLES\=YES
-    export REMOVE_SVN_FROM_RESOURCES\=YES
-    export RESCHEDULE_INDEPENDENT_HEADERS_PHASES\=YES
-    export REZ_COLLECTOR_DIR\=/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/ResourceManagerResources
-    export REZ_OBJECTS_DIR\=/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/ResourceManagerResources/Objects
-    export REZ_SEARCH_PATHS\=/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/Release-iphoneos\ 
-    export RPATH_ORIGIN\=@loader_path
-    export RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES\=NO
-    export RUNTIME_EXCEPTION_ALLOW_JIT\=NO
-    export RUNTIME_EXCEPTION_ALLOW_UNSIGNED_EXECUTABLE_MEMORY\=NO
-    export RUNTIME_EXCEPTION_DEBUGGING_TOOL\=NO
-    export RUNTIME_EXCEPTION_DISABLE_EXECUTABLE_PAGE_PROTECTION\=NO
-    export RUNTIME_EXCEPTION_DISABLE_LIBRARY_VALIDATION\=NO
-    export SCANNING_PCM_KEEP_CACHE_DIRECTORY\=YES
-    export SCAN_ALL_SOURCE_FILES_FOR_INCLUDES\=NO
-    export SCRIPTS_FOLDER_PATH\=Runner.app/Scripts
-    export SCRIPT_INPUT_FILE_COUNT\=0
-    export SCRIPT_INPUT_FILE_LIST_COUNT\=0
-    export SCRIPT_OUTPUT_FILE_COUNT\=0
-    export SCRIPT_OUTPUT_FILE_LIST_COUNT\=0
-    export SDKROOT\=/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk
-    export SDK_DIR\=/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk
-    export SDK_DIR_iphoneos\=/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk
-    export SDK_DIR_iphoneos26_5\=/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk
-    export SDK_NAME\=iphoneos26.5
-    export SDK_NAMES\=iphoneos26.5
-    export SDK_PRODUCT_BUILD_VERSION\=23F81a
-    export SDK_STAT_CACHE_DIR\=/Users/runner/Library/Developer/Xcode/DerivedData
-    export SDK_STAT_CACHE_ENABLE\=YES
-    export SDK_STAT_CACHE_PATH\=/Users/runner/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphoneos26.5-23F81a-688ef53f1462e2c8f657fdc38a81448fee66e23052a0157c865c76b268046726.sdkstatcache
-    export SDK_VERSION\=26.5
-    export SDK_VERSION_ACTUAL\=260500
-    export SDK_VERSION_MAJOR\=260000
-    export SDK_VERSION_MINOR\=260500
-    export SED\=/usr/bin/sed
-    export SEPARATE_STRIP\=NO
-    export SEPARATE_SYMBOL_EDIT\=NO
-    export SET_DIR_MODE_OWNER_GROUP\=YES
-    export SET_FILE_MODE_OWNER_GROUP\=NO
-    export SHALLOW_BUNDLE\=YES
-    export SHALLOW_BUNDLE_TRIPLE\=ios
-    export SHALLOW_BUNDLE_ios_macabi\=NO
-    export SHALLOW_BUNDLE_macos\=NO
-    export SHARED_DERIVED_FILE_DIR\=/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/Release-iphoneos/DerivedSources
-    export SHARED_FRAMEWORKS_FOLDER_PATH\=Runner.app/SharedFrameworks
-    export SHARED_PRECOMPS_DIR\=/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/PrecompiledHeaders
-    export SHARED_SUPPORT_FOLDER_PATH\=Runner.app/SharedSupport
-    export SIGNATURE_METADATA_FOLDER_PATH\=/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/Signatures
-    export SKIP_INSTALL\=NO
-    export SKIP_MERGEABLE_LIBRARY_BUNDLE_HOOK\=NO
-    export SOURCE_ROOT\=/Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
-    export SRCROOT\=/Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
-    export STRINGSDATA_DIR\=/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Objects-normal/undefined_arch
-    export STRINGSDATA_ROOT\=/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build
-    export STRINGS_FILE_INFOPLIST_RENAME\=YES
-    export STRINGS_FILE_OUTPUT_ENCODING\=binary
-    export STRING_CATALOG_GENERATE_SYMBOLS\=YES
-    export STRIP_BITCODE_FROM_COPIED_FILES\=YES
-    export STRIP_INSTALLED_PRODUCT\=YES
-    export STRIP_STYLE\=all
-    export STRIP_SWIFT_SYMBOLS\=YES
-    export SUPPORTED_DEVICE_FAMILIES\=1,2
-    export SUPPORTED_PLATFORMS\=iphoneos
-    export SUPPORTS_MACCATALYST\=NO
-    export SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD\=YES
-    export SUPPORTS_ON_DEMAND_RESOURCES\=YES
-    export SUPPORTS_TEXT_BASED_API\=NO
-    export SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD\=YES
-    export SUPPRESS_WARNINGS\=NO
-    export SWIFT_COMPILATION_MODE\=wholemodule
-    export SWIFT_EMIT_CONST_VALUE_PROTOCOLS\=AnyResolverProviding\ AppEntity\ AppEnum\ AppExtension\ AppIntent\ AppIntentsPackage\ AppShortcutProviding\ AppShortcutsProvider\ DynamicOptionsProvider\ EntityQuery\ ExtensionPointDefining\ IntentValueQuery\ Resolver\ TransientEntity\ _AssistantIntentsProvider\ _GenerativeFunctionExtractable\ _IntentValueRepresentable
-    export SWIFT_EMIT_LOC_STRINGS\=NO
-    export SWIFT_ENABLE_EXPLICIT_MODULES\=YES
-    export SWIFT_OBJC_BRIDGING_HEADER\=Runner/Runner-Bridging-Header.h
-    export SWIFT_OPTIMIZATION_LEVEL\=-O
-    export SWIFT_PLATFORM_TARGET_PREFIX\=ios
-    export SWIFT_RESPONSE_FILE_PATH_normal_arm64\=/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Objects-normal/arm64/Runner.SwiftFileList
-    export SWIFT_STDLIB_TOOL_UNSIGNED_DESTINATION_DIR\=/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/SwiftSupport
-    export SWIFT_VERSION\=5.0
-    export SYMROOT\=/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath
-    export SYSTEM_ADMIN_APPS_DIR\=/Applications/Utilities
-    export SYSTEM_APPS_DIR\=/Applications
-    export SYSTEM_CORE_SERVICES_DIR\=/System/Library/CoreServices
-    export SYSTEM_DEMOS_DIR\=/Applications/Extras
-    export SYSTEM_DEVELOPER_APPS_DIR\=/Applications/Xcode_26.6.app/Contents/Developer/Applications
-    export SYSTEM_DEVELOPER_BIN_DIR\=/Applications/Xcode_26.6.app/Contents/Developer/usr/bin
-    export SYSTEM_DEVELOPER_DEMOS_DIR\=/Applications/Xcode_26.6.app/Contents/Developer/Applications/Utilities/Built\ Examples
-    export SYSTEM_DEVELOPER_DIR\=/Applications/Xcode_26.6.app/Contents/Developer
-    export SYSTEM_DEVELOPER_DOC_DIR\=/Applications/Xcode_26.6.app/Contents/Developer/ADC\ Reference\ Library
-    export SYSTEM_DEVELOPER_GRAPHICS_TOOLS_DIR\=/Applications/Xcode_26.6.app/Contents/Developer/Applications/Graphics\ Tools
-    export SYSTEM_DEVELOPER_JAVA_TOOLS_DIR\=/Applications/Xcode_26.6.app/Contents/Developer/Applications/Java\ Tools
-    export SYSTEM_DEVELOPER_PERFORMANCE_TOOLS_DIR\=/Applications/Xcode_26.6.app/Contents/Developer/Applications/Performance\ Tools
-    export SYSTEM_DEVELOPER_RELEASENOTES_DIR\=/Applications/Xcode_26.6.app/Contents/Developer/ADC\ Reference\ Library/releasenotes
-    export SYSTEM_DEVELOPER_TOOLS\=/Applications/Xcode_26.6.app/Contents/Developer/Tools
-    export SYSTEM_DEVELOPER_TOOLS_DOC_DIR\=/Applications/Xcode_26.6.app/Contents/Developer/ADC\ Reference\ Library/documentation/DeveloperTools
-    export SYSTEM_DEVELOPER_TOOLS_RELEASENOTES_DIR\=/Applications/Xcode_26.6.app/Contents/Developer/ADC\ Reference\ Library/releasenotes/DeveloperTools
-    export SYSTEM_DEVELOPER_USR_DIR\=/Applications/Xcode_26.6.app/Contents/Developer/usr
-    export SYSTEM_DEVELOPER_UTILITIES_DIR\=/Applications/Xcode_26.6.app/Contents/Developer/Applications/Utilities
-    export SYSTEM_DEXT_INSTALL_PATH\=/System/Library/DriverExtensions
-    export SYSTEM_DOCUMENTATION_DIR\=/Library/Documentation
-    export SYSTEM_EXTENSIONS_FOLDER_PATH\=Runner.app/SystemExtensions
-    export SYSTEM_EXTENSIONS_FOLDER_PATH_SHALLOW_BUNDLE_NO\=Runner.app/Library/SystemExtensions
-    export SYSTEM_EXTENSIONS_FOLDER_PATH_SHALLOW_BUNDLE_YES\=Runner.app/SystemExtensions
-    export SYSTEM_KEXT_INSTALL_PATH\=/System/Library/Extensions
-    export SYSTEM_LIBRARY_DIR\=/System/Library
-    export TAPI_DEMANGLE\=YES
-    export TAPI_ENABLE_PROJECT_HEADERS\=NO
-    export TAPI_LANGUAGE\=objective-c
-    export TAPI_LANGUAGE_STANDARD\=compiler-default
-    export TAPI_USE_SRCROOT\=YES
-    export TAPI_VERIFY_MODE\=Pedantic
-    export TARGETED_DEVICE_FAMILY\=1
-    export TARGETNAME\=Runner
-    export TARGET_BUILD_DIR\=/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications
-    export TARGET_NAME\=Runner
-    export TARGET_TEMP_DIR\=/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build
-    export TEMP_DIR\=/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build
-    export TEMP_FILES_DIR\=/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build
-    export TEMP_FILE_DIR\=/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build
-    export TEMP_ROOT\=/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath
-    export TEMP_SANDBOX_DIR\=/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/TemporaryTaskSandboxes
-    export TEST_FRAMEWORK_SEARCH_PATHS\=\ /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/Frameworks\ /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk/Developer/Library/Frameworks
-    export TEST_LIBRARY_SEARCH_PATHS\=\ /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/lib
-    export TOOLCHAINS\=com.apple.dt.toolchain.Metal.32023.883\ com.apple.dt.toolchain.XcodeDefault
-    export TOOLCHAIN_DIR\=/var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.5ACH7d/Metal.xctoolchain
-    export TOOLCHAIN_VERSION\=32023.883
-    export TRACK_WIDGET_CREATION\=false
-    export TREAT_MISSING_BASELINES_AS_TEST_FAILURES\=NO
-    export TREAT_MISSING_SCRIPT_PHASE_OUTPUTS_AS_ERRORS\=NO
-    export TREE_SHAKE_ICONS\=false
-    export TeamIdentifierPrefix\=U8ZRKKVZB4.
-    export UID\=501
-    export UNINSTALLED_PRODUCTS_DIR\=/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/UninstalledProducts
-    export UNLOCALIZED_RESOURCES_FOLDER_PATH\=Runner.app
-    export UNLOCALIZED_RESOURCES_FOLDER_PATH_SHALLOW_BUNDLE_NO\=Runner.app/Resources
-    export UNLOCALIZED_RESOURCES_FOLDER_PATH_SHALLOW_BUNDLE_YES\=Runner.app
-    export UNSTRIPPED_PRODUCT\=NO
-    export USER\=runner
-    export USER_APPS_DIR\=/Users/runner/Applications
-    export USER_LIBRARY_DIR\=/Users/runner/Library
-    export USE_DYNAMIC_NO_PIC\=YES
-    export USE_HEADERMAP\=YES
-    export USE_HEADER_SYMLINKS\=NO
-    export USE_RECURSIVE_SCRIPT_INPUTS_IN_SCRIPT_PHASES\=YES
-    export VALIDATE_DEVELOPMENT_ASSET_PATHS\=YES_ERROR
-    export VALIDATE_PRODUCT\=YES
-    export VALID_ARCHS\=arm64\ arm64e\ armv7\ armv7s
-    export VERBOSE_PBXCP\=NO
-    export VERSIONING_SYSTEM\=apple-generic
-    export VERSIONPLIST_PATH\=Runner.app/version.plist
-    export VERSION_INFO_BUILDER\=runner
-    export VERSION_INFO_FILE\=Runner_vers.c
-    export VERSION_INFO_STRING\=\"@\(\#\)PROGRAM:Runner\ \ PROJECT:Runner-110\"
-    export WATCHKIT_2_SUPPORT_FOLDER_PATH\=/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/WatchKitSupport2
-    export WORKSPACE_DIR\=/Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
-    export WRAPPER_EXTENSION\=app
-    export WRAPPER_NAME\=Runner.app
-    export WRAPPER_SUFFIX\=.app
-    export WRAP_ASSET_PACKS_IN_SEPARATE_DIRECTORIES\=NO
-    export XCODE_APP_SUPPORT_DIR\=/Applications/Xcode_26.6.app/Contents/Developer/Library/Xcode
-    export XCODE_PRODUCT_BUILD_VERSION\=17F113
-    export XCODE_VERSION_ACTUAL\=2660
-    export XCODE_VERSION_MAJOR\=2600
     export XCODE_VERSION_MINOR\=2660
     export XPCSERVICES_FOLDER_PATH\=Runner.app/XPCServices
     export YACC\=yacc
@@ -185,16 +15,186 @@
     export __ORIGINAL_SDK_DEFINED_LLVM_TARGET_TRIPLE_SYS\=ios
     export arch\=undefined_arch
     export variant\=normal
-    /bin/sh -c /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Script-9740EEB61CF901F6004384FC.sh
-Project /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter built and packaged successfully.
-MkDir /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/assetcatalog_output/thinned (in target 'Runner' from project 'Runner')
-    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
-    /bin/mkdir -p /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/assetcatalog_output/thinned
+    /bin/sh -c /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Script-3B06AD1E1E4923F5004D2608.sh
 
-MkDir /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/assetcatalog_output/unthinned (in target 'Runner' from project 'Runner')
+GenerateDSYMFile /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/Release-iphoneos/Runner.app.dSYM /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Runner (in target 'Runner' from project 'Runner')
     cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
-    /bin/mkdir -p /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/assetcatalog_output/unthinned
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Runner -o /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/Release-iphoneos/Runner.app.dSYM
 
-GenerateAssetSymbols /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios/Runner/Assets.xcassets (in target 'Runner' from project 'Runner')
+PhaseScriptExecution [CP]\ Embed\ Pods\ Frameworks /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Script-3583FE98B9167C08A983651B.sh (in target 'Runner' from project 'Runner')
     cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
-    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios/Runner/Assets.xcassets --compile /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app --output-format human-readable-text --notices --warnings --export-dependency-info /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/assetcatalog_dependencies --output-partial-info-plist /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/assetcatalog_generated_info.plist --app-icon AppIcon --compress-pngs --enable-on-demand-resources YES --development-region en --target-device iphone --minimum-deployment-target 15.5 --platform iphoneos --bundle-identifier com.outrepd.outrepd --generate-swift-asset-symbols /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/DerivedSources/GeneratedAssetSymbols.swift --generate-objc-asset-symbols /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/DerivedSources/GeneratedAssetSymbols.h --generate-asset-symbol-index /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+    /bin/sh -c /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Script-3583FE98B9167C08A983651B.sh
+mkdir -p /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/Release-iphoneos/Runner.app/Frameworks
+Symlinked...
+rsync --delete -av --filter P .*.?????? --links --filter "- CVS/" --filter "- .svn/" --filter "- .git/" --filter "- .hg/" --filter "- Headers" --filter "- PrivateHeaders" --filter "- Modules" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/UninstalledProducts/iphoneos/GTMSessionFetcher.framework" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks"
+Transfer starting: 6 files
+GTMSessionFetcher.framework/
+GTMSessionFetcher.framework/GTMSessionFetcher
+GTMSessionFetcher.framework/Info.plist
+GTMSessionFetcher.framework/GTMSessionFetcher_Core_Privacy.bundle/
+GTMSessionFetcher.framework/GTMSessionFetcher_Core_Privacy.bundle/Info.plist
+GTMSessionFetcher.framework/GTMSessionFetcher_Core_Privacy.bundle/PrivacyInfo.xcprivacy
+
+sent 395520 bytes  received 120 bytes  64859016 bytes/sec
+total size is 394635  speedup is 1.00
+Code Signing /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/GTMSessionFetcher.framework with Identity Apple Development: Created via API (4CNFJPR3WA)
+/usr/bin/codesign --force --sign 6B8C27AE7BE5F02B1E244864E0108525D0B3F80A  --preserve-metadata=identifier,entitlements '/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/GTMSessionFetcher.framework' &
+Symlinked...
+rsync --delete -av --filter P .*.?????? --links --filter "- CVS/" --filter "- .svn/" --filter "- .git/" --filter "- .hg/" --filter "- Headers" --filter "- PrivateHeaders" --filter "- Modules" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/UninstalledProducts/iphoneos/GoogleDataTransport.framework" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks"
+Transfer starting: 6 files
+GoogleDataTransport.framework/
+GoogleDataTransport.framework/GoogleDataTransport
+GoogleDataTransport.framework/Info.plist
+GoogleDataTransport.framework/GoogleDataTransport_Privacy.bundle/
+GoogleDataTransport.framework/GoogleDataTransport_Privacy.bundle/Info.plist
+GoogleDataTransport.framework/GoogleDataTransport_Privacy.bundle/PrivacyInfo.xcprivacy
+
+sent 377024 bytes  received 120 bytes  53118873 bytes/sec
+total size is 376134  speedup is 1.00
+Code Signing /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/GoogleDataTransport.framework with Identity Apple Development: Created via API (4CNFJPR3WA)
+/usr/bin/codesign --force --sign 6B8C27AE7BE5F02B1E244864E0108525D0B3F80A  --preserve-metadata=identifier,entitlements '/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/GoogleDataTransport.framework' &
+Symlinked...
+rsync --delete -av --filter P .*.?????? --links --filter "- CVS/" --filter "- .svn/" --filter "- .git/" --filter "- .hg/" --filter "- Headers" --filter "- PrivateHeaders" --filter "- Modules" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/UninstalledProducts/iphoneos/GoogleToolboxForMac.framework" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks"
+Transfer starting: 9 files
+GoogleToolboxForMac.framework/
+GoogleToolboxForMac.framework/GoogleToolboxForMac
+GoogleToolboxForMac.framework/Info.plist
+GoogleToolboxForMac.framework/GoogleToolboxForMac_Logger_Privacy.bundle/
+GoogleToolboxForMac.framework/GoogleToolboxForMac_Logger_Privacy.bundle/Info.plist
+GoogleToolboxForMac.framework/GoogleToolboxForMac_Logger_Privacy.bundle/PrivacyInfo.xcprivacy
+GoogleToolboxForMac.framework/GoogleToolboxForMac_Privacy.bundle/
+GoogleToolboxForMac.framework/GoogleToolboxForMac_Privacy.bundle/Info.plist
+GoogleToolboxForMac.framework/GoogleToolboxForMac_Privacy.bundle/PrivacyInfo.xcprivacy
+
+sent 113986 bytes  received 170 bytes  22383529 bytes/sec
+total size is 112709  speedup is 0.99
+Code Signing /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/GoogleToolboxForMac.framework with Identity Apple Development: Created via API (4CNFJPR3WA)
+/usr/bin/codesign --force --sign 6B8C27AE7BE5F02B1E244864E0108525D0B3F80A  --preserve-metadata=identifier,entitlements '/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/GoogleToolboxForMac.framework' &
+Symlinked...
+rsync --delete -av --filter P .*.?????? --links --filter "- CVS/" --filter "- .svn/" --filter "- .git/" --filter "- .hg/" --filter "- Headers" --filter "- PrivateHeaders" --filter "- Modules" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/UninstalledProducts/iphoneos/GoogleUtilities.framework" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks"
+Transfer starting: 6 files
+GoogleUtilities.framework/
+GoogleUtilities.framework/GoogleUtilities
+GoogleUtilities.framework/Info.plist
+GoogleUtilities.framework/GoogleUtilities_Privacy.bundle/
+GoogleUtilities.framework/GoogleUtilities_Privacy.bundle/Info.plist
+GoogleUtilities.framework/GoogleUtilities_Privacy.bundle/PrivacyInfo.xcprivacy
+
+sent 136146 bytes  received 120 bytes  33235609 bytes/sec
+total size is 135324  speedup is 0.99
+Code Signing /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/GoogleUtilities.framework with Identity Apple Development: Created via API (4CNFJPR3WA)
+/usr/bin/codesign --force --sign 6B8C27AE7BE5F02B1E244864E0108525D0B3F80A  --preserve-metadata=identifier,entitlements '/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/GoogleUtilities.framework' &
+Symlinked...
+rsync --delete -av --filter P .*.?????? --links --filter "- CVS/" --filter "- .svn/" --filter "- .git/" --filter "- .hg/" --filter "- Headers" --filter "- PrivateHeaders" --filter "- Modules" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/UninstalledProducts/iphoneos/FBLPromises.framework" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks"
+Transfer starting: 6 files
+FBLPromises.framework/
+FBLPromises.framework/FBLPromises
+FBLPromises.framework/Info.plist
+FBLPromises.framework/FBLPromises_Privacy.bundle/
+FBLPromises.framework/FBLPromises_Privacy.bundle/Info.plist
+FBLPromises.framework/FBLPromises_Privacy.bundle/PrivacyInfo.xcprivacy
+
+sent 172008 bytes  received 120 bytes  41982439 bytes/sec
+total size is 171222  speedup is 0.99
+Code Signing /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/FBLPromises.framework with Identity Apple Development: Created via API (4CNFJPR3WA)
+/usr/bin/codesign --force --sign 6B8C27AE7BE5F02B1E244864E0108525D0B3F80A  --preserve-metadata=identifier,entitlements '/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/FBLPromises.framework' &
+Symlinked...
+rsync --delete -av --filter P .*.?????? --links --filter "- CVS/" --filter "- .svn/" --filter "- .git/" --filter "- .hg/" --filter "- Headers" --filter "- PrivateHeaders" --filter "- Modules" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/UninstalledProducts/iphoneos/nanopb.framework" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks"
+Transfer starting: 6 files
+nanopb.framework/
+nanopb.framework/Info.plist
+nanopb.framework/nanopb
+nanopb.framework/nanopb_Privacy.bundle/
+nanopb.framework/nanopb_Privacy.bundle/Info.plist
+nanopb.framework/nanopb_Privacy.bundle/PrivacyInfo.xcprivacy
+
+sent 79077 bytes  received 120 bytes  25547419 bytes/sec
+total size is 78353  speedup is 0.99
+Code Signing /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/nanopb.framework with Identity Apple Development: Created via API (4CNFJPR3WA)
+/usr/bin/codesign --force --sign 6B8C27AE7BE5F02B1E244864E0108525D0B3F80A  --preserve-metadata=identifier,entitlements '/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/nanopb.framework' &
+
+PhaseScriptExecution [CP]\ Copy\ Pods\ Resources /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Script-153438D258B96878ABF935ED.sh (in target 'Runner' from project 'Runner')
+    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
+    /bin/sh -c /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Script-153438D258B96878ABF935ED.sh
+/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/Release-iphoneos/MLKitPoseDetection/MLKitPoseDetectionFastResources.bundle
+/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/Release-iphoneos/MLKitPoseDetectionAccurate/MLKitPoseDetectionAccurateResources.bundle
+/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/Release-iphoneos/MLKitPoseDetectionCommon/MLKitPoseDetectionCommonResources.bundle
+/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/Release-iphoneos/MLKitXenoCommon/MLKitXenoResources.bundle
+Transfer starting: 15 files
+MLKitPoseDetectionAccurateResources.bundle/
+MLKitPoseDetectionAccurateResources.bundle/Info.plist
+MLKitPoseDetectionAccurateResources.bundle/pose_landmark_detector_accurate.tflite
+MLKitPoseDetectionAccurateResources.bundle/pose_person_detector_accurate.tflite
+MLKitPoseDetectionCommonResources.bundle/
+MLKitPoseDetectionCommonResources.bundle/Info.plist
+MLKitPoseDetectionCommonResources.bundle/pose_non_tracking_graph.binarypb
+MLKitPoseDetectionCommonResources.bundle/pose_tracking_graph.binarypb
+MLKitPoseDetectionFastResources.bundle/
+MLKitPoseDetectionFastResources.bundle/Info.plist
+MLKitPoseDetectionFastResources.bundle/pose_landmark_detector_fast.tflite
+MLKitPoseDetectionFastResources.bundle/pose_person_detector_fast.tflite
+MLKitXenoResources.bundle/
+MLKitXenoResources.bundle/Info.plist
+MLKitXenoResources.bundle/yuv_to_rgb_graph.binarypb
+
+sent 15181867 bytes  received 286 bytes  107598532 bytes/sec
+total size is 15178237  speedup is 1.00
+Transfer starting: 15 files
+
+sent 1256 bytes  received 20 bytes  1160000 bytes/sec
+total size is 15178237  speedup is 11895.16
+
+ExtractAppIntentsMetadata (in target 'Runner' from project 'Runner')
+    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.2vhuZG/Metal.xctoolchain --module-name Runner --sdk-root /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk --xcode-version 17F113 --platform-family iOS --deployment-target 15.5 --bundle-identifier com.outrepd.outrepd --output /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app --target-triple arm64-apple-ios15.5 --binary-file /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Runner --dependency-file /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Objects-normal/arm64/Runner_dependency_info.dat --stringsdata-file /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Objects-normal/arm64/Runner.SwiftFileList --metadata-file-list /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Runner.DependencyMetadataFileList --static-metadata-file-list /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Runner.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Objects-normal/arm64/Runner.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-09-30 23:19:28.785 appintentsmetadataprocessor[26363:82270] Starting appintentsmetadataprocessor export
+2026-09-30 23:19:28.791 appintentsmetadataprocessor[26363:82270] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+CopySwiftLibs /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app (in target 'Runner' from project 'Runner')
+    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
+    builtin-swiftStdLibTool --copy --verbose --sign 6B8C27AE7BE5F02B1E244864E0108525D0B3F80A --scan-executable /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Runner --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/PlugIns --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/SystemExtensions --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Extensions --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/Release-iphoneos/Pods_Runner.framework --platform iphoneos --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.2vhuZG/Metal.xctoolchain --toolchain /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks --unsigned-destination /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/SwiftSupport --strip-bitcode --strip-bitcode-tool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+
+AppIntentsSSUTraining (in target 'Runner' from project 'Runner')
+    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Info.plist --temp-dir-path /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/ssu --bundle-id com.outrepd.outrepd --product-path /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app --extracted-metadata-path /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Metadata.appintents --deployment-postprocessing --metadata-file-list /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Runner.DependencyMetadataFileList --source-file /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Info.plist --archive-ssu-assets
+2026-09-30 23:19:28.828 appintentsnltrainingprocessor[26364:82271] Parsing options for appintentsnltrainingprocessor
+2026-09-30 23:19:28.828 appintentsnltrainingprocessor[26364:82271] Starting AppIntents SSU YAML Generation
+2026-09-30 23:19:28.830 appintentsnltrainingprocessor[26364:82271] No AppShortcuts found - Skipping.
+
+Strip /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Runner (in target 'Runner' from project 'Runner')
+    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -D /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Runner
+
+SetOwnerAndGroup runner:staff /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app (in target 'Runner' from project 'Runner')
+    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
+    /usr/sbin/chown -RH runner:staff /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app
+
+SetMode u+w,go-w,a+rX /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app (in target 'Runner' from project 'Runner')
+    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
+    /bin/chmod -RH u+w,go-w,a+rX /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app
+
+CodeSign /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app (in target 'Runner' from project 'Runner')
+    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
+    
+    Signing Identity:     "Apple Development: Created via API (4CNFJPR3WA)"
+    Provisioning Profile: "iOS Team Provisioning Profile: com.outrepd.outrepd"
+                          (332b51ba-e388-479a-9083-b2232f08e07d)
+    
+    /usr/bin/codesign --force --sign 6B8C27AE7BE5F02B1E244864E0108525D0B3F80A --entitlements /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Runner.app.xcent --generate-entitlement-der /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app
+
+RegisterExecutionPolicyException /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app (in target 'Runner' from project 'Runner')
+    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
+    builtin-RegisterExecutionPolicyException /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app
+
+Validate /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app (in target 'Runner' from project 'Runner')
+    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
+    builtin-validationUtility /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app -validate-for-store -shallow-bundle -infoplist-subpath Info.plist
+
+Touch /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app (in target 'Runner' from project 'Runner')
+    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
+    /usr/bin/touch -c /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app
+
+note: Run script build phase 'Run Script' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'Runner' from project 'Runner')
+note: Run script build phase 'Thin Binary' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'Runner' from project 'Runner')
+** ARCHIVE SUCCEEDED **
+
