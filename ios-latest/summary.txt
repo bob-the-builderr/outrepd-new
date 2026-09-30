@@ -1,9 +1,9 @@
-commit      bfbefe62ceec2e96147deba1f807da4f0e1a30aa
+commit      57c91286365b90e188ef48e3e0537eceb2fec8e1
 platform    ios
-build       105
-compiled    cancelled
+build       106
+compiled    success
 signed      true
-uploaded    skipped
+uploaded    success
 paywall key no
 firebase    true — push notifications and crash reports are in
-run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/36756933868
+run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/36757675247
