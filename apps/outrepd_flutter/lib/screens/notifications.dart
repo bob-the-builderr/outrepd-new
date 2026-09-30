@@ -19,6 +19,7 @@ import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'match_entry.dart';
+import 'live_invite.dart';
 import 'match_flow.dart';
 import 'share_card.dart';
 
@@ -124,6 +125,7 @@ class _NoticeTile extends StatelessWidget {
       NoticeKind.friendRequest => l.nFriendTitle,
       NoticeKind.friendAccepted => l.nFriendOkTitle,
       NoticeKind.challenged => l.nChallengedTitle,
+      NoticeKind.liveInvite => l.nLiveTitle,
     };
 
     final detail = switch (notice.kind) {
@@ -131,6 +133,7 @@ class _NoticeTile extends StatelessWidget {
       NoticeKind.friendRequest => l.nFriendBody(notice.actorName),
       NoticeKind.friendAccepted => l.nFriendOkBody(notice.actorName),
       NoticeKind.challenged => l.nChallengedBody(notice.actorName),
+      NoticeKind.liveInvite => l.nLiveBody(notice.actorName),
     };
 
     // A challenge opens the duel it asks for. A raced set opens the card to
@@ -138,6 +141,10 @@ class _NoticeTile extends StatelessWidget {
     // and the one who was raced only ever hears about it here. Nothing else
     // goes anywhere.
     final VoidCallback? onTap = switch (notice.kind) {
+      // Still open, it joins; run out, it says so. The list keeps the notice
+      // either way, as the record that they asked.
+      NoticeKind.liveInvite when notice.actorId != null => () =>
+          _joinFrom(context, notice.actorId!),
       NoticeKind.challenged when notice.actorId != null => () =>
           Navigator.of(context).push(
             MaterialPageRoute(
@@ -284,4 +291,24 @@ class _Row extends StatelessWidget {
       ),
     );
   }
+}
+
+/// A live invite tapped in the list: joined if it is still open, and said so
+/// if it has run out.
+Future<void> _joinFrom(BuildContext context, String fromId) async {
+  final messenger = ScaffoldMessenger.of(context);
+  final gone = L.of(context).inviteGone;
+  try {
+    final invites = await backend.liveInvites();
+    for (final invite in invites) {
+      if (invite.from.id != fromId) continue;
+      if (context.mounted) await joinLiveInvite(context, invite);
+      return;
+    }
+  } on Object catch (error) {
+    debugPrint('Could not read live invites: $error');
+  }
+  messenger.showSnackBar(
+    SnackBar(content: Text(gone), behavior: SnackBarBehavior.floating),
+  );
 }

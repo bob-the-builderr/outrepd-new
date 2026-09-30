@@ -4072,6 +4072,216 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Daily reminder'**
   String get channelReminders;
+
+  /// No description provided for @liveTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Live'**
+  String get liveTag;
+
+  /// No description provided for @reconnecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Reconnecting'**
+  String get reconnecting;
+
+  /// No description provided for @rankedLive.
+  ///
+  /// In en, this message translates to:
+  /// **'Ranked · live'**
+  String get rankedLive;
+
+  /// No description provided for @lookingForLive.
+  ///
+  /// In en, this message translates to:
+  /// **'Looking for a live opponent'**
+  String get lookingForLive;
+
+  /// No description provided for @ofTime.
+  ///
+  /// In en, this message translates to:
+  /// **'of {time}'**
+  String ofTime(String time);
+
+  /// No description provided for @liveFallbackAt.
+  ///
+  /// In en, this message translates to:
+  /// **'At {time} you race a saved set instead'**
+  String liveFallbackAt(String time);
+
+  /// No description provided for @liveFoundBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is on the camera now. Same clock, same start.'**
+  String liveFoundBody(String name);
+
+  /// No description provided for @nobodyLiveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody\'s live right now'**
+  String get nobodyLiveTitle;
+
+  /// No description provided for @nobodyLiveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ll race a saved set instead'**
+  String get nobodyLiveBody;
+
+  /// No description provided for @didRepsIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Did {reps} in 60 seconds'**
+  String didRepsIn(String reps);
+
+  /// No description provided for @sameRankPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Same rank points as a live match'**
+  String get sameRankPoints;
+
+  /// No description provided for @raceIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Race it'**
+  String get raceIt;
+
+  /// No description provided for @sendASet.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a set'**
+  String get sendASet;
+
+  /// No description provided for @onlineNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Online now'**
+  String get onlineNow;
+
+  /// No description provided for @liveOrSetHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Live needs them online. A set waits until they race it.'**
+  String get liveOrSetHint;
+
+  /// No description provided for @friendlyNoRank.
+  ///
+  /// In en, this message translates to:
+  /// **'Friendly · no rank'**
+  String get friendlyNoRank;
+
+  /// No description provided for @waitingForName.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for {name}'**
+  String waitingForName(String name);
+
+  /// No description provided for @weSentThemANotice.
+  ///
+  /// In en, this message translates to:
+  /// **'We sent them a notification'**
+  String get weSentThemANotice;
+
+  /// No description provided for @untilInviteRunsOut.
+  ///
+  /// In en, this message translates to:
+  /// **'until the invite runs out'**
+  String get untilInviteRunsOut;
+
+  /// No description provided for @cancelInvite.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel invite'**
+  String get cancelInvite;
+
+  /// No description provided for @inviteDeclined.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} said not now'**
+  String inviteDeclined(String name);
+
+  /// No description provided for @inviteRanOut.
+  ///
+  /// In en, this message translates to:
+  /// **'The invite ran out'**
+  String get inviteRanOut;
+
+  /// No description provided for @inviteAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite again'**
+  String get inviteAgain;
+
+  /// No description provided for @liveInviteFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is live'**
+  String liveInviteFrom(String name);
+
+  /// No description provided for @timeLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} left'**
+  String timeLeft(String time);
+
+  /// No description provided for @joinLive.
+  ///
+  /// In en, this message translates to:
+  /// **'Join'**
+  String get joinLive;
+
+  /// No description provided for @nLiveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Live invite'**
+  String get nLiveTitle;
+
+  /// No description provided for @nLiveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} wants to go live'**
+  String nLiveBody(String name);
+
+  /// No description provided for @inviteGone.
+  ///
+  /// In en, this message translates to:
+  /// **'That invite has run out'**
+  String get inviteGone;
+
+  /// No description provided for @waitingForPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for {name} to get into position'**
+  String waitingForPosition(String name);
+
+  /// No description provided for @opponentDropped.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}\'s connection dropped. Keep going: the round finishes on the clock.'**
+  String opponentDropped(String name);
+
+  /// No description provided for @opponentGaveUp.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} gave up. Finish the round to take the win.'**
+  String opponentGaveUp(String name);
+
+  /// No description provided for @calledOffTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Match called off'**
+  String get calledOffTitle;
+
+  /// No description provided for @calledOffBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} didn\'t get into position in time. Nothing was recorded.'**
+  String calledOffBody(String name);
+
+  /// No description provided for @waitingForFinal.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for {name}\'s final count…'**
+  String waitingForFinal(String name);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

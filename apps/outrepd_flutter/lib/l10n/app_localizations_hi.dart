@@ -2179,4 +2179,137 @@ class LHi extends L {
 
   @override
   String get channelReminders => 'रोज़ का रिमाइंडर';
+
+  @override
+  String get liveTag => 'लाइव';
+
+  @override
+  String get reconnecting => 'फिर से जुड़ रहा है';
+
+  @override
+  String get rankedLive => 'रैंक्ड · लाइव';
+
+  @override
+  String get lookingForLive => 'लाइव प्रतिद्वंद्वी खोज रहे हैं';
+
+  @override
+  String ofTime(String time) {
+    return '${time} में से';
+  }
+
+  @override
+  String liveFallbackAt(String time) {
+    return '${time} पर आप एक सेव्ड सेट से मुकाबला करेंगे';
+  }
+
+  @override
+  String liveFoundBody(String name) {
+    return '${name} अभी कैमरे पर हैं। एक ही घड़ी, एक ही शुरुआत।';
+  }
+
+  @override
+  String get nobodyLiveTitle => 'अभी कोई लाइव नहीं है';
+
+  @override
+  String get nobodyLiveBody => 'आप एक सेव्ड सेट से मुकाबला करेंगे';
+
+  @override
+  String didRepsIn(String reps) {
+    return '60 सेकंड में ${reps} किए';
+  }
+
+  @override
+  String get sameRankPoints => 'लाइव मैच जितने ही रैंक पॉइंट';
+
+  @override
+  String get raceIt => 'मुकाबला करें';
+
+  @override
+  String get sendASet => 'सेट भेजें';
+
+  @override
+  String get onlineNow => 'अभी ऑनलाइन';
+
+  @override
+  String get liveOrSetHint => 'लाइव के लिए उनका ऑनलाइन होना ज़रूरी है। सेट तब तक इंतज़ार करता है जब तक वे मुकाबला न करें।';
+
+  @override
+  String get friendlyNoRank => 'दोस्ताना · बिना रैंक';
+
+  @override
+  String waitingForName(String name) {
+    return '${name} का इंतज़ार';
+  }
+
+  @override
+  String get weSentThemANotice => 'हमने उन्हें सूचना भेज दी है';
+
+  @override
+  String get untilInviteRunsOut => 'न्योता खत्म होने तक';
+
+  @override
+  String get cancelInvite => 'न्योता रद्द करें';
+
+  @override
+  String inviteDeclined(String name) {
+    return '${name} ने कहा अभी नहीं';
+  }
+
+  @override
+  String get inviteRanOut => 'न्योते का समय खत्म हो गया';
+
+  @override
+  String get inviteAgain => 'फिर से न्योता दें';
+
+  @override
+  String liveInviteFrom(String name) {
+    return '${name} लाइव हैं';
+  }
+
+  @override
+  String timeLeft(String time) {
+    return '${time} बाकी';
+  }
+
+  @override
+  String get joinLive => 'जुड़ें';
+
+  @override
+  String get nLiveTitle => 'लाइव न्योता';
+
+  @override
+  String nLiveBody(String name) {
+    return '${name} लाइव मुकाबला करना चाहते हैं';
+  }
+
+  @override
+  String get inviteGone => 'उस न्योते का समय खत्म हो गया';
+
+  @override
+  String waitingForPosition(String name) {
+    return '${name} के पोज़िशन में आने का इंतज़ार';
+  }
+
+  @override
+  String opponentDropped(String name) {
+    return '${name} का कनेक्शन टूट गया। जारी रखें: राउंड समय पूरा होने पर खत्म होगा।';
+  }
+
+  @override
+  String opponentGaveUp(String name) {
+    return '${name} ने हार मान ली। जीत के लिए राउंड पूरा करें।';
+  }
+
+  @override
+  String get calledOffTitle => 'मैच रद्द हो गया';
+
+  @override
+  String calledOffBody(String name) {
+    return '${name} समय पर पोज़िशन में नहीं आए। कुछ भी दर्ज नहीं हुआ।';
+  }
+
+  @override
+  String waitingForFinal(String name) {
+    return '${name} की अंतिम गिनती का इंतज़ार…';
+  }
 }

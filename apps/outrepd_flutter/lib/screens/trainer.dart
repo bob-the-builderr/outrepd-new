@@ -15,6 +15,7 @@ import '../reps/pushup_counter.dart';
 import '../reps/recording.dart';
 import '../data.dart';
 import '../keep_awake.dart';
+import '../live.dart';
 import '../motion.dart';
 import '../settings.dart';
 import '../sounds.dart';
@@ -68,7 +69,13 @@ class TrainerScreen extends StatefulWidget {
     this.limit,
     this.duel,
     this.poseSource,
+    this.live,
   });
+
+  /// A live match: the other lifter is on camera right now, their count comes
+  /// from their phone as it moves, and the round starts when both are in
+  /// position rather than when this phone alone is. Null for everything else.
+  final LiveSession? live;
 
   /// Where poses come from. Defaults to the camera; a test hands in a scripted
   /// stream, which is the only way to reach the stages that live behind a
@@ -165,9 +172,16 @@ class _TrainerScreenState extends State<TrainerScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    widget.live?.addListener(_liveChanged);
+    widget.live?.open();
     if (widget.autoStart) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _begin());
     }
+  }
+
+  /// Their count moved, or their phone went quiet.
+  void _liveChanged() {
+    if (mounted) setState(() {});
   }
 
   /// Whether the camera was let go because the app left the screen, and is
@@ -240,6 +254,7 @@ class _TrainerScreenState extends State<TrainerScreen>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    widget.live?.removeListener(_liveChanged);
     keepScreenOn(false);
     _countdownTimer?.cancel();
     _graceTimer?.cancel();
@@ -417,14 +432,62 @@ class _TrainerScreenState extends State<TrainerScreen>
   int _countdown = 3;
   Timer? _countdownTimer;
 
+  /// In position, in a live match, and waiting for the other lifter to be.
+  bool _waitingForOpponent = false;
+
   void _startCountdown() {
     if (_stage != _Stage.positioning) return;
+    final live = widget.live;
+    if (live == null) {
+      _countDownTo(null);
+      return;
+    }
+    // Live: this phone being ready is half of it. The server gives the round
+    // one start once both are, and both phones count down to that instant.
+    if (_waitingForOpponent) return;
+    setState(() => _waitingForOpponent = true);
+    live.ready().then((start) {
+      if (!mounted) return;
+      setState(() => _waitingForOpponent = false);
+      if (start == null) {
+        _callOff();
+        return;
+      }
+      _countDownTo(start);
+    });
+  }
+
+  /// Three, two, one. On this phone's own second when [start] is null; ending
+  /// exactly at [start] when there is one, so two phones end theirs together.
+  void _countDownTo(DateTime? start) {
     setState(() {
       _stage = _Stage.countdown;
       _countdown = 3;
     });
     Sounds.instance.play(Cue.count);
     _countdownTimer?.cancel();
+
+    if (start != null) {
+      _countdownTimer = Timer.periodic(const Duration(milliseconds: 100), (
+        timer,
+      ) {
+        if (!mounted) return;
+        final left = start.difference(clock.now());
+        if (left <= Duration.zero) {
+          timer.cancel();
+          _beginRound();
+          return;
+        }
+        final shown = ((left.inMilliseconds + 999) ~/ 1000).clamp(1, 3);
+        if (shown != _countdown) {
+          setState(() => _countdown = shown);
+          tap();
+          Sounds.instance.play(Cue.count);
+        }
+      });
+      return;
+    }
+
     _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (!mounted) return;
       if (_countdown > 1) {
@@ -434,21 +497,39 @@ class _TrainerScreenState extends State<TrainerScreen>
         return;
       }
       timer.cancel();
-      // The bout starts here, and not one frame earlier. The tracker keeps
-      // what it learned while the lifter got into position and starts its
-      // count from nothing.
-      final startMs = _poseClock.elapsedMilliseconds;
-      _boutStartMs = startMs;
-      _tracker?.restartCount(startMs);
-      setState(() {
-        _stage = _Stage.counting;
-        _liveReps = 0;
-      });
-      _clock.start();
-      _lastPoseAt = DateTime.now();
-      tap(heavy: true);
-      Sounds.instance.play(Cue.go);
+      _beginRound();
     });
+  }
+
+  void _beginRound() {
+    // The bout starts here, and not one frame earlier. The tracker keeps
+    // what it learned while the lifter got into position and starts its
+    // count from nothing.
+    final startMs = _poseClock.elapsedMilliseconds;
+    _boutStartMs = startMs;
+    _tracker?.restartCount(startMs);
+    setState(() {
+      _stage = _Stage.counting;
+      _liveReps = 0;
+    });
+    _clock.start();
+    _lastPoseAt = DateTime.now();
+    widget.live?.start();
+    tap(heavy: true);
+    Sounds.instance.play(Cue.go);
+  }
+
+  /// A live match that never started: the other lifter did not get into
+  /// position in time. Nothing was lifted, so nothing goes back but the fact.
+  Future<void> _callOff() async {
+    if (_stopping) return;
+    _stopping = true;
+    _watchdog?.cancel();
+    _graceTimer?.cancel();
+    _dropPoses();
+    await _source?.dispose();
+    keepScreenOn(false);
+    if (mounted) Navigator.of(context).pop();
   }
 
   /// How many the opponent is supposed to have by now.
@@ -463,6 +544,8 @@ class _TrainerScreenState extends State<TrainerScreen>
   /// set that never recorded when its reps landed, and a rival number that
   /// only appears at the end is not something anybody can race.
   int get _opponentReps {
+    // Live: what their phone last said, as it said it.
+    if (widget.live case final live?) return live.opponentReps;
     final duel = widget.duel;
     final limit = widget.limit;
     if (duel == null || limit == null || limit.inMilliseconds == 0) return 0;
@@ -541,6 +624,7 @@ class _TrainerScreenState extends State<TrainerScreen>
     // gets back up to the top line — and never otherwise.
     if (reading.counted) {
       _liveReps = reading.reps;
+      widget.live?.counted(reading.reps);
       tap(heavy: true);
       Sounds.instance.play(Cue.rep);
     }
@@ -658,6 +742,8 @@ class _TrainerScreenState extends State<TrainerScreen>
     _stopping = true;
     _watchdog?.cancel();
     _gaveUp = gaveUp;
+    // The other phone freezes this count and says why.
+    if (gaveUp) widget.live?.gaveUp();
     // The number that leaves this screen is the number that was on it. The
     // old design re-scored the whole set at the end with a different counter,
     // and lifters watched one number all round and were handed another.
@@ -860,12 +946,50 @@ class _TrainerScreenState extends State<TrainerScreen>
             left: 14,
             right: 14,
             top: 36,
-            child: _ScoreCard(
-              yours: _liveReps,
-              theirs: _opponentReps,
-              remaining: _remaining,
-              duel: widget.duel,
-              live: _stage == _Stage.counting,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _ScoreCard(
+                  yours: _liveReps,
+                  theirs: _opponentReps,
+                  remaining: _remaining,
+                  duel: widget.duel,
+                  live: _stage == _Stage.counting,
+                  session: widget.live,
+                ),
+                // Live, when the other phone has gone quiet or given up: the
+                // number that stopped moving needs a reason beside it, or it
+                // reads as the lifter having simply stopped.
+                if (widget.live case final live?
+                    when live.opponentGaveUp || live.opponentAway)
+                  Container(
+                    margin: const EdgeInsets.only(top: 8),
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF121110),
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: context.colors.border,
+                        width: 0.5,
+                      ),
+                    ),
+                    child: Text(
+                      live.opponentGaveUp
+                          ? L.of(context).opponentGaveUp(
+                              live.match.opponent.username,
+                            )
+                          : L.of(context).opponentDropped(
+                              live.match.opponent.username,
+                            ),
+                      style: const TextStyle(
+                        color: Color(0xFFC9C1B6),
+                        fontSize: 12,
+                        height: 1.45,
+                      ),
+                    ),
+                  ),
+              ],
             ),
           ),
 
@@ -886,7 +1010,14 @@ class _TrainerScreenState extends State<TrainerScreen>
                       borderRadius: BorderRadius.circular(18),
                     ),
                     child: Text(
-                      L.of(context).getIntoPosition,
+                      // Live, and this lifter is ready: the wait is the other
+                      // one now, and the screen says whose.
+                      _waitingForOpponent
+                          ? L.of(context).waitingForPosition(
+                              widget.live!.match.opponent.username,
+                            )
+                          : L.of(context).getIntoPosition,
+                      textAlign: TextAlign.center,
                       style: const TextStyle(color: Colors.white, fontSize: 15),
                     ),
                   ),
@@ -1245,6 +1376,7 @@ class _ScoreCard extends StatelessWidget {
     required this.remaining,
     required this.duel,
     required this.live,
+    this.session,
   });
 
   final int yours;
@@ -1256,10 +1388,15 @@ class _ScoreCard extends StatelessWidget {
   /// share to draw.
   final bool live;
 
+  /// A live match, when this is one: the tag on top, and the other side
+  /// dimmed while their phone is quiet.
+  final LiveSession? session;
+
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
     final duel = this.duel;
+    final away = session?.opponentAway ?? false;
 
     return Container(
       padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
@@ -1271,6 +1408,11 @@ class _ScoreCard extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          if (session != null)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: LiveTag(reconnecting: away),
+            ),
           // No IntrinsicHeight: the two sides are built from the same pieces
           // in the same order, so they come out the same height on their own —
           // and measuring them would mean asking a ShrinkText for an intrinsic
@@ -1305,12 +1447,15 @@ class _ScoreCard extends StatelessWidget {
                 child: duel == null
                     // Keeps the clock centred when there is nobody there.
                     ? const SizedBox.shrink()
-                    : _Fighter(
-                        name: duel.opponentName,
-                        reps: theirs,
-                        tierIdx: duel.opponentTierIdx,
-                        divIdx: duel.opponentDivIdx,
-                        colour: context.colors.rival,
+                    : Opacity(
+                        opacity: away ? 0.45 : 1,
+                        child: _Fighter(
+                          name: duel.opponentName,
+                          reps: theirs,
+                          tierIdx: duel.opponentTierIdx,
+                          divIdx: duel.opponentDivIdx,
+                          colour: context.colors.rival,
+                        ),
                       ),
               ),
             ],

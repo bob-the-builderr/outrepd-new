@@ -534,3 +534,50 @@ class PillButton extends StatelessWidget {
     );
   }
 }
+
+/// The small red "Live" pill on anything happening with both lifters on
+/// camera at once — the opponent found, the invite, the score card. Grey and
+/// "Reconnecting" while the other phone has gone quiet.
+class LiveTag extends StatelessWidget {
+  const LiveTag({super.key, this.reconnecting = false, this.label});
+
+  final bool reconnecting;
+
+  /// In place of "Live", for a pill that says a little more.
+  final String? label;
+
+  static const _red = Color(0xFFE24B4A);
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: reconnecting ? context.colors.surfaceRaised : const Color(0xFF3A1414),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 7,
+            height: 7,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: reconnecting ? context.colors.muted : _red,
+            ),
+          ),
+          const SizedBox(width: 6),
+          Text(
+            reconnecting ? l.reconnecting : (label ?? l.liveTag),
+            style: TextStyle(
+              color: reconnecting ? context.colors.muted : const Color(0xFFF09595),
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

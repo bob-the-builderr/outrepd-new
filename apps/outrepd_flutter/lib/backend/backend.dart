@@ -422,6 +422,151 @@ enum NoticeKind {
   /// Somebody wants a rematch. Their half is already stored and waiting —
   /// see [Backend.findTargetedOpponent].
   challenged,
+
+  /// A friend asked to go live. The invite itself lasts a minute; the notice
+  /// stays as a record that they asked. See [Backend.liveInvites].
+  liveInvite,
+}
+
+// ──────────────────────────────── live matches ────────────────────────────────
+
+/// Who is on the other side of a live match.
+class LiveOpponent {
+  const LiveOpponent({
+    required this.id,
+    required this.username,
+    required this.tierIdx,
+    required this.divIdx,
+  });
+
+  final String id;
+  final String username;
+  final int tierIdx;
+  final int divIdx;
+}
+
+/// A live match this account is in: both lifters on camera at once.
+class LiveMatch {
+  const LiveMatch({
+    required this.id,
+    required this.ranked,
+    required this.opponent,
+  });
+
+  final String id;
+
+  /// Ranked matches come from the live queue and move the ladder; a match
+  /// with a friend is friendly and moves nothing.
+  final bool ranked;
+  final LiveOpponent opponent;
+}
+
+/// A friend's invite waiting on this account.
+class LiveInvite {
+  const LiveInvite({
+    required this.matchId,
+    required this.from,
+    required this.expiresIn,
+  });
+
+  final String matchId;
+  final LiveOpponent from;
+
+  /// How long it has left, from when it was read.
+  final Duration expiresIn;
+}
+
+enum LiveStatus {
+  /// Asked, not answered.
+  invited,
+
+  /// Both in; getting into position.
+  ready,
+
+  /// Both in position; the round has a start.
+  live,
+
+  done,
+  cancelled,
+  declined,
+  expired;
+
+  static LiveStatus parse(String? value) => LiveStatus.values.firstWhere(
+    (s) => s.name == value,
+    orElse: () => LiveStatus.cancelled,
+  );
+
+  /// Over without a round ever being played.
+  bool get calledOff =>
+      this == cancelled || this == declined || this == expired;
+}
+
+/// Where a live match stands, from this account's side.
+class LiveState {
+  const LiveState({
+    required this.status,
+    required this.ranked,
+    required this.opponent,
+    required this.theyAreReady,
+    required this.theirReps,
+    this.startsIn,
+    this.expiresIn,
+  });
+
+  final LiveStatus status;
+  final bool ranked;
+  final LiveOpponent opponent;
+  final bool theyAreReady;
+
+  /// The last count their phone reported to the server.
+  final int theirReps;
+
+  /// How far away the round's start is, once both are in position. Relative
+  /// on purpose: the two phones' clocks do not have to agree for the round
+  /// to start at the same moment on both.
+  final Duration? startsIn;
+
+  /// How long an invite has left.
+  final Duration? expiresIn;
+}
+
+/// The end of a live match: the result once the server has both sets, or
+/// nothing yet while it waits for the other phone.
+class LiveFinish {
+  const LiveFinish({this.settled, this.theirReps});
+
+  final SettledDuel? settled;
+
+  /// Their count as the server settled it.
+  final int? theirReps;
+
+  bool get done => settled != null;
+}
+
+/// One message between the two phones during a round.
+class LiveMessage {
+  const LiveMessage({required this.reps, this.gaveUp = false});
+
+  final int reps;
+
+  /// They pressed Give up: their count will not move again.
+  final bool gaveUp;
+
+  Map<String, dynamic> toJson() => {'reps': reps, 'gave_up': gaveUp};
+
+  static LiveMessage? fromJson(Map<String, dynamic> json) {
+    final reps = json['reps'];
+    if (reps is! num) return null;
+    return LiveMessage(reps: reps.toInt(), gaveUp: json['gave_up'] == true);
+  }
+}
+
+/// The line between the two phones while a round runs. Only for showing the
+/// other count as it moves — the result is settled from the two sets.
+abstract interface class LiveLink {
+  Stream<LiveMessage> get messages;
+  Future<void> send(LiveMessage message);
+  Future<void> close();
 }
 
 /// One thing the server has to tell somebody.
@@ -836,6 +981,44 @@ abstract interface class Backend {
 
   /// This phone gets no more of the signed-in account's pushes.
   Future<void> forgetPushToken(String token);
+
+  // ── Live matches (supabase/live.sql) ──
+
+  /// One step of the ranked live search: the match once somebody is found,
+  /// null while this account waits in the queue. Called every second or so.
+  Future<LiveMatch?> findLiveOpponent();
+
+  /// The search is over without a live opponent.
+  Future<void> leaveLiveQueue();
+
+  /// Asks a friend to go live now. Returns the match's id.
+  Future<String> inviteLive(String friendId);
+
+  /// Invites waiting on this account.
+  Future<List<LiveInvite>> liveInvites();
+
+  /// Yes or no to an invite; what the invite is now.
+  Future<LiveStatus> answerLiveInvite(String matchId, {required bool accept});
+
+  Future<void> cancelLiveInvite(String matchId);
+
+  Future<LiveState> liveState(String matchId);
+
+  /// This lifter is in position. How far away the round's start is once both
+  /// are; null while the other is not yet.
+  Future<Duration?> liveReady(String matchId);
+
+  /// This lifter's count so far, kept on the server in case the phone drops.
+  Future<void> reportLiveCount(String matchId, int reps);
+
+  /// This lifter's set, at the end of the round.
+  Future<LiveFinish> finishLive(String matchId, SetUpload set);
+
+  /// The result, for the one who finished first.
+  Future<LiveFinish> liveResult(String matchId);
+
+  /// The phone-to-phone line for a round.
+  LiveLink openLiveLink(String matchId);
 }
 
 /// The app with no server behind it.
@@ -1023,6 +1206,52 @@ class NoBackend implements Backend {
 
   @override
   Future<void> forgetPushToken(String token) async {}
+
+  /// Nobody live without a server: the search goes straight to the fallback.
+  @override
+  Future<LiveMatch?> findLiveOpponent() async => null;
+
+  @override
+  Future<void> leaveLiveQueue() async {}
+
+  @override
+  Future<String> inviteLive(String friendId) =>
+      throw StateError('no server configured');
+
+  @override
+  Future<List<LiveInvite>> liveInvites() async => const [];
+
+  @override
+  Future<LiveStatus> answerLiveInvite(
+    String matchId, {
+    required bool accept,
+  }) => throw StateError('no server configured');
+
+  @override
+  Future<void> cancelLiveInvite(String matchId) async {}
+
+  @override
+  Future<LiveState> liveState(String matchId) =>
+      throw StateError('no server configured');
+
+  @override
+  Future<Duration?> liveReady(String matchId) =>
+      throw StateError('no server configured');
+
+  @override
+  Future<void> reportLiveCount(String matchId, int reps) async {}
+
+  @override
+  Future<LiveFinish> finishLive(String matchId, SetUpload set) =>
+      throw StateError('no server configured');
+
+  @override
+  Future<LiveFinish> liveResult(String matchId) =>
+      throw StateError('no server configured');
+
+  @override
+  LiveLink openLiveLink(String matchId) =>
+      throw StateError('no server configured');
 }
 
 /// The one the app uses. Replaced at startup when keys are supplied.

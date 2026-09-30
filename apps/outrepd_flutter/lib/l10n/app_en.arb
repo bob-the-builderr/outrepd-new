@@ -1217,5 +1217,138 @@
     }
   },
   "channelMatches": "Matches and friends",
-  "channelReminders": "Daily reminder"
+  "channelReminders": "Daily reminder",
+  "liveTag": "Live",
+  "reconnecting": "Reconnecting",
+  "rankedLive": "Ranked · live",
+  "lookingForLive": "Looking for a live opponent",
+  "ofTime": "of {time}",
+  "@ofTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "liveFallbackAt": "At {time} you race a saved set instead",
+  "@liveFallbackAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "liveFoundBody": "{name} is on the camera now. Same clock, same start.",
+  "@liveFoundBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "nobodyLiveTitle": "Nobody's live right now",
+  "nobodyLiveBody": "You'll race a saved set instead",
+  "didRepsIn": "Did {reps} in 60 seconds",
+  "@didRepsIn": {
+    "placeholders": {
+      "reps": {
+        "type": "String"
+      }
+    }
+  },
+  "sameRankPoints": "Same rank points as a live match",
+  "raceIt": "Race it",
+  "sendASet": "Send a set",
+  "onlineNow": "Online now",
+  "liveOrSetHint": "Live needs them online. A set waits until they race it.",
+  "friendlyNoRank": "Friendly · no rank",
+  "waitingForName": "Waiting for {name}",
+  "@waitingForName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "weSentThemANotice": "We sent them a notification",
+  "untilInviteRunsOut": "until the invite runs out",
+  "cancelInvite": "Cancel invite",
+  "inviteDeclined": "{name} said not now",
+  "@inviteDeclined": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "inviteRanOut": "The invite ran out",
+  "inviteAgain": "Invite again",
+  "liveInviteFrom": "{name} is live",
+  "@liveInviteFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "timeLeft": "{time} left",
+  "@timeLeft": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "joinLive": "Join",
+  "nLiveTitle": "Live invite",
+  "nLiveBody": "{name} wants to go live",
+  "@nLiveBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "inviteGone": "That invite has run out",
+  "waitingForPosition": "Waiting for {name} to get into position",
+  "@waitingForPosition": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "opponentDropped": "{name}'s connection dropped. Keep going: the round finishes on the clock.",
+  "@opponentDropped": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "opponentGaveUp": "{name} gave up. Finish the round to take the win.",
+  "@opponentGaveUp": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "calledOffTitle": "Match called off",
+  "calledOffBody": "{name} didn't get into position in time. Nothing was recorded.",
+  "@calledOffBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "waitingForFinal": "Waiting for {name}'s final count…",
+  "@waitingForFinal": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

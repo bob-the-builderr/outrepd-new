@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 
 import '../app_bottom_nav.dart';
@@ -6,6 +9,7 @@ import '../career.dart';
 import '../push.dart';
 import '../theme.dart';
 import 'friends.dart';
+import 'live_invite.dart';
 import 'match.dart';
 import 'notifications.dart';
 import 'paywall.dart';
@@ -126,23 +130,77 @@ class _Inside extends StatefulWidget {
   State<_Inside> createState() => _InsideState();
 }
 
-class _InsideState extends State<_Inside> {
+class _InsideState extends State<_Inside> with WidgetsBindingObserver {
+  /// Friends' live invites waiting on this account, as last read.
+  List<LiveInvite> _invites = const [];
+  DateTime _invitesReadAt = clock.now();
+  final _dismissed = <String>{};
+  Timer? _invitePoll;
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     Push.instance.openNotices.addListener(_openNotices);
+    Push.instance.arrived.addListener(_checkInvites);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await askForNotificationsOnce();
       // After the answer, so a phone that just said yes is registered with
       // the permission it now has.
       await Push.instance.start();
     });
+    // An invite lasts a minute, so every few seconds is the least that
+    // shows one in time to answer it.
+    if (backend.available) {
+      _checkInvites();
+      _invitePoll = Timer.periodic(
+        const Duration(seconds: 5),
+        (_) => _checkInvites(),
+      );
+    }
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     Push.instance.openNotices.removeListener(_openNotices);
+    Push.instance.arrived.removeListener(_checkInvites);
+    _invitePoll?.cancel();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) _checkInvites();
+  }
+
+  Future<void> _checkInvites() async {
+    if (!backend.available || backend.me == null) return;
+    try {
+      final invites = await backend.liveInvites();
+      if (!mounted) return;
+      setState(() {
+        _invites = invites;
+        _invitesReadAt = clock.now();
+      });
+    } on Object catch (error) {
+      debugPrint('Could not read live invites: $error');
+    }
+  }
+
+  LiveInvite? get _shownInvite {
+    for (final invite in _invites) {
+      if (_dismissed.contains(invite.matchId)) continue;
+      final left =
+          invite.expiresIn - clock.now().difference(_invitesReadAt);
+      if (left > Duration.zero) return invite;
+    }
+    return null;
+  }
+
+  Future<void> _join(LiveInvite invite) async {
+    setState(() => _dismissed.add(invite.matchId));
+    await joinLiveInvite(context, invite);
   }
 
   bool _showingNotices = false;
@@ -157,5 +215,37 @@ class _InsideState extends State<_Inside> {
   }
 
   @override
-  Widget build(BuildContext context) => widget.child;
+  Widget build(BuildContext context) {
+    final invite = _shownInvite;
+    // Always the same Stack, banner or not: swapping the tree's shape when an
+    // invite lands would rebuild every tab underneath it from scratch.
+    return Stack(
+      children: [
+        widget.child,
+        if (invite != null)
+          Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: SafeArea(
+            bottom: false,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 8, 10, 0),
+              child: Dismissible(
+                key: ValueKey('invite-${invite.matchId}'),
+                direction: DismissDirection.up,
+                onDismissed: (_) =>
+                    setState(() => _dismissed.add(invite.matchId)),
+                child: LiveInviteBanner(
+                  invite: invite,
+                  readAt: _invitesReadAt,
+                  onJoin: () => _join(invite),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }

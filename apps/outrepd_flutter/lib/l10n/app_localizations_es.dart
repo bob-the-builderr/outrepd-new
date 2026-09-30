@@ -2187,4 +2187,137 @@ class LEs extends L {
 
   @override
   String get channelReminders => 'Recordatorio diario';
+
+  @override
+  String get liveTag => 'En vivo';
+
+  @override
+  String get reconnecting => 'Reconectando';
+
+  @override
+  String get rankedLive => 'Clasificatoria · en vivo';
+
+  @override
+  String get lookingForLive => 'Buscando un rival en vivo';
+
+  @override
+  String ofTime(String time) {
+    return 'de ${time}';
+  }
+
+  @override
+  String liveFallbackAt(String time) {
+    return 'A los ${time} competirás contra una serie guardada';
+  }
+
+  @override
+  String liveFoundBody(String name) {
+    return '${name} está frente a la cámara ahora. Mismo reloj, misma salida.';
+  }
+
+  @override
+  String get nobodyLiveTitle => 'Nadie está en vivo ahora';
+
+  @override
+  String get nobodyLiveBody => 'Competirás contra una serie guardada';
+
+  @override
+  String didRepsIn(String reps) {
+    return 'Hizo ${reps} en 60 segundos';
+  }
+
+  @override
+  String get sameRankPoints => 'Los mismos puntos de rango que en vivo';
+
+  @override
+  String get raceIt => 'Competir';
+
+  @override
+  String get sendASet => 'Enviar una serie';
+
+  @override
+  String get onlineNow => 'En línea ahora';
+
+  @override
+  String get liveOrSetHint => 'En vivo requiere que estén en línea. Una serie espera hasta que la compitan.';
+
+  @override
+  String get friendlyNoRank => 'Amistoso · sin rango';
+
+  @override
+  String waitingForName(String name) {
+    return 'Esperando a ${name}';
+  }
+
+  @override
+  String get weSentThemANotice => 'Le enviamos una notificación';
+
+  @override
+  String get untilInviteRunsOut => 'hasta que caduque la invitación';
+
+  @override
+  String get cancelInvite => 'Cancelar invitación';
+
+  @override
+  String inviteDeclined(String name) {
+    return '${name} dijo que ahora no';
+  }
+
+  @override
+  String get inviteRanOut => 'La invitación caducó';
+
+  @override
+  String get inviteAgain => 'Invitar de nuevo';
+
+  @override
+  String liveInviteFrom(String name) {
+    return '${name} está en vivo';
+  }
+
+  @override
+  String timeLeft(String time) {
+    return 'Quedan ${time}';
+  }
+
+  @override
+  String get joinLive => 'Unirme';
+
+  @override
+  String get nLiveTitle => 'Invitación en vivo';
+
+  @override
+  String nLiveBody(String name) {
+    return '${name} quiere competir en vivo';
+  }
+
+  @override
+  String get inviteGone => 'Esa invitación ya caducó';
+
+  @override
+  String waitingForPosition(String name) {
+    return 'Esperando a que ${name} se ponga en posición';
+  }
+
+  @override
+  String opponentDropped(String name) {
+    return 'La conexión de ${name} se cayó. Sigue: la ronda termina con el reloj.';
+  }
+
+  @override
+  String opponentGaveUp(String name) {
+    return '${name} se rindió. Termina la ronda para llevarte la victoria.';
+  }
+
+  @override
+  String get calledOffTitle => 'Partida cancelada';
+
+  @override
+  String calledOffBody(String name) {
+    return '${name} no se puso en posición a tiempo. No se registró nada.';
+  }
+
+  @override
+  String waitingForFinal(String name) {
+    return 'Esperando el conteo final de ${name}…';
+  }
 }

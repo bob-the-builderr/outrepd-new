@@ -10,6 +10,7 @@ library;
 import 'dart:async';
 import 'dart:math';
 
+import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 
 import '../backend/backend.dart';
@@ -17,6 +18,8 @@ import '../career.dart';
 import '../connection.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../live.dart';
+import '../player_avatar.dart';
 import '../reps/recording.dart';
 import '../reps/pushup_counter.dart';
 import '../type_scale.dart';
@@ -50,6 +53,10 @@ class MatchFlowScreen extends StatefulWidget {
   final int? targetTierIdx;
   final int? targetDivIdx;
 
+  /// The friend's live match [MatchMode.liveFriend] was opened for, already
+  /// accepted by both. Ranked live matches are found by the search instead.
+  final LiveMatch? liveMatch;
+
   const MatchFlowScreen({
     super.key,
     this.mode = MatchMode.ranked,
@@ -57,7 +64,12 @@ class MatchFlowScreen extends StatefulWidget {
     this.targetUsername,
     this.targetTierIdx,
     this.targetDivIdx,
+    this.liveMatch,
   }) : assert(
+         mode != MatchMode.liveFriend || liveMatch != null,
+         'a live match with a friend needs the match',
+       ),
+       assert(
          mode != MatchMode.challenge ||
              (targetId != null &&
                  targetUsername != null &&
@@ -95,6 +107,9 @@ class MatchFlowScreen extends StatefulWidget {
   /// challenge.
   bool get isChallengeAccept => mode == MatchMode.challengeAccept;
 
+  /// Live with a friend, from an accepted invite.
+  bool get isLiveFriend => mode == MatchMode.liveFriend;
+
   @override
   State<MatchFlowScreen> createState() => _MatchFlowScreenState();
 }
@@ -114,6 +129,20 @@ enum _Stage {
   /// [MatchMode.challenge] ends here instead of at [result] — reps landed,
   /// but nobody has raced them yet.
   sent,
+
+  /// The ranked search found nobody live in fifteen seconds and a saved set
+  /// instead. Shown, not skipped past: racing a set is a different thing
+  /// from racing somebody now, and the lifter starts it themselves.
+  nobodyLive,
+
+  /// Live: this set is in, and the other phone's is not yet.
+  waitingResult,
+
+  /// Live: the other lifter never got into position. Nothing was recorded.
+  calledOff,
+
+  /// Live: the server could not be reached to settle it.
+  liveFailed,
 }
 
 class _MatchFlowScreenState extends State<MatchFlowScreen> {
@@ -154,6 +183,26 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   /// What the duel did to the account, once it has been recorded.
   DuelOutcome? _outcome;
 
+  /// The live match, when there is one: found by the ranked search, or the
+  /// friend's invite this screen was opened for.
+  LiveMatch? _live;
+  LiveSession? _session;
+
+  /// How long the ranked search looks for somebody live before it races a
+  /// saved set instead.
+  static const liveSearchFor = Duration(seconds: 15);
+
+  /// When the live search began, for the ring on the search screen. Null
+  /// when this search is not looking for anybody live.
+  DateTime? _liveSearchFrom;
+
+  /// Whether this search went looking for somebody live at all — and so
+  /// whether a saved set found after it is a fallback worth saying so about.
+  bool _searchedLive = false;
+
+  /// Left while still looking, so the queue is left too.
+  bool _searchCancelled = false;
+
   /// Nobody real was found, so the round is raced against this lifter's own
   /// best set and moves nothing on the ladder.
   ///
@@ -169,6 +218,8 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   bool get _vsBest =>
       !widget.practice &&
       _realOpponent == null &&
+      _live == null &&
+      !widget.isLiveFriend &&
       !widget.isChallenge &&
       !widget.isChallengeAccept;
 
@@ -192,7 +243,45 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   @override
   void dispose() {
     _timer?.cancel();
+    // Gone mid-search: out of the queue, so nobody is paired with a lifter
+    // who has already left.
+    if (_liveSearchFrom != null && _live == null && !_searchCancelled) {
+      _searchCancelled = true;
+      unawaited(
+        backend.leaveLiveQueue().catchError(
+          (Object error) => debugPrint('Could not leave the queue: $error'),
+        ),
+      );
+    }
+    _session?.dispose();
     super.dispose();
+  }
+
+  /// One step at a time for up to [liveSearchFor]: the live match once
+  /// somebody is found, or null — and out of the queue — once nobody was.
+  Future<LiveMatch?> _searchLive() async {
+    _searchedLive = true;
+    final from = clock.now();
+    setState(() => _liveSearchFrom = from);
+    final until = from.add(liveSearchFor);
+    while (mounted && !_searchCancelled && clock.now().isBefore(until)) {
+      try {
+        final found = await backend.findLiveOpponent();
+        if (found != null) return found;
+      } on Object catch (error) {
+        debugPrint('Could not look for a live opponent: $error');
+      }
+      await Future<void>.delayed(const Duration(milliseconds: 1500));
+    }
+    if (!_searchCancelled) {
+      _searchCancelled = true;
+      try {
+        await backend.leaveLiveQueue();
+      } on Object catch (error) {
+        debugPrint('Could not leave the queue: $error');
+      }
+    }
+    return null;
   }
 
   bool get _won =>
@@ -200,6 +289,22 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
 
   Future<void> _search() async {
     _timer?.cancel();
+
+    // A friend's live match: both already said yes, so there is nobody to
+    // look for — straight to meeting them.
+    if (widget.liveMatch case final match? when widget.isLiveFriend) {
+      setState(() {
+        _live = match;
+        _opponent = Opponent(
+          match.opponent.username,
+          match.opponent.tierIdx,
+          match.opponent.divIdx,
+        );
+        _theirReps = 0;
+      });
+      _goVersus();
+      return;
+    }
 
     // Sending a challenge: there is nobody to look for. The point of this
     // mode is that it does not exist on the other end until the set about to
@@ -251,6 +356,26 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     // stored sets has anybody in it — so it falls back to the local stand-in
     // exactly as this screen always has.
     if (backend.available && backend.me != null) {
+      // Ranked looks for somebody live first: two people on camera at once
+      // is the match. Fifteen seconds, then a saved set, so the button
+      // always ends in a match whoever else is around.
+      if (widget.ranked) {
+        final live = await _searchLive();
+        if (!mounted) return;
+        if (live != null) {
+          setState(() {
+            _live = live;
+            _opponent = Opponent(
+              live.opponent.username,
+              live.opponent.tierIdx,
+              live.opponent.divIdx,
+            );
+            _theirReps = 0;
+          });
+          _goVersus(quick: true);
+          return;
+        }
+      }
       try {
         final found = await backend.findOpponent();
         if (found != null && mounted) {
@@ -268,19 +393,30 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     if (_realOpponent == null) {
       _bestBefore = demoProfile.bestSet;
       _theirReps = _bestBefore;
+    } else if (_searchedLive) {
+      // Nobody live, and a saved set instead: say so first.
+      setState(() => _stage = _Stage.nobodyLive);
+      return;
     }
-    _goVersus();
+    // Fifteen seconds were already spent looking; no need to look longer.
+    _goVersus(quick: _searchedLive);
   }
 
   /// The countdown from "found somebody" to "on camera", shared by every mode
   /// that reaches it.
-  void _goVersus() {
+  void _goVersus({bool quick = false}) {
     // A challenge already knows exactly who it is with — there is nothing to
     // search for, so nothing to fake the look of searching for either.
     // Everyone else gets a wait somewhere inside the window the design
     // allows, so it never feels scripted whether what was found is a real
-    // set or the stand-in seeded in initState.
-    final wait = (widget.isChallenge || widget.isChallengeAccept)
+    // set or the stand-in seeded in initState. A live opponent is waiting on
+    // the other phone, and a search that already ran its fifteen seconds has
+    // been seen to be real.
+    final wait =
+        (quick ||
+            widget.isChallenge ||
+            widget.isChallengeAccept ||
+            widget.isLiveFriend)
         ? const Duration(milliseconds: 600)
         : Duration(milliseconds: 2200 + Random().nextInt(3400));
     _timer = Timer(wait, () {
@@ -296,6 +432,10 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
 
   /// Hands over to the camera, and takes back a count the lifter has agreed to.
   Future<void> _lift() async {
+    if (_live case final live?) {
+      await _liftLive(live);
+      return;
+    }
     final scored = await Navigator.of(context).push<PushupCount>(
       MaterialPageRoute(
         builder: (_) => TrainerScreen(
@@ -514,6 +654,103 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     });
   }
 
+  /// Both on camera at once. The other lifter's count comes from their phone
+  /// while the round runs; at the end both sets go to the server, which
+  /// settles them exactly as it settles any duel.
+  Future<void> _liftLive(LiveMatch live) async {
+    final session = LiveSession(live);
+    _session = session;
+    final l = L.of(context);
+
+    final scored = await Navigator.of(context).push<PushupCount>(
+      MaterialPageRoute(
+        builder: (_) => TrainerScreen(
+          autoStart: true,
+          forMatch: true,
+          limit: kDuelLength,
+          live: session,
+          duel: DuelContext(
+            opponentName: _opponent.username,
+            opponentReps: 0,
+            opponentTierIdx: _opponent.tierIdx,
+            opponentDivIdx: _opponent.divIdx,
+            rankLabel: live.ranked
+                ? tierLabel(l, demoProfile.tierIdx, demoProfile.divIdx)
+                : l.friendlyNoRank,
+          ),
+        ),
+      ),
+    );
+    final theirs = session.opponentReps;
+    await session.close();
+    if (!mounted) return;
+
+    // The other lifter never got into position, or this one left before the
+    // round began: nothing was lifted, so nothing is recorded.
+    if (session.calledOff || scored == null || session.startedAt == null) {
+      setState(() => _stage = _Stage.calledOff);
+      return;
+    }
+
+    setState(() {
+      _myReps = scored.reps;
+      _theirReps = theirs;
+      _stage = _Stage.waitingResult;
+    });
+
+    final set = SetUpload(
+      reps: scored.reps,
+      repsCamera: scored.reps,
+      depth: scored.depth,
+      confident: scored.confident,
+      durationMs: scored.durationMs,
+      gaveUp: scored.gaveUp,
+      repTimes: scored.repTimes,
+    );
+
+    // The set, sent until it lands; then the result, asked for until the
+    // other set is in. The server settles a phone that vanished on its last
+    // reported count once it is long overdue, so this ends either way.
+    LiveFinish? finish;
+    var sent = false;
+    final giveUpAt = clock.now().add(const Duration(minutes: 3));
+    while (mounted && clock.now().isBefore(giveUpAt)) {
+      try {
+        finish = sent
+            ? await backend.liveResult(live.id)
+            : await backend.finishLive(live.id, set);
+        sent = true;
+        if (finish.done) break;
+      } on Object catch (error) {
+        debugPrint('Could not settle the live match yet: $error');
+      }
+      await Future<void>.delayed(const Duration(seconds: 2));
+    }
+    if (!mounted) return;
+
+    final settled = finish?.settled;
+    if (settled == null) {
+      setState(() => _stage = _Stage.liveFailed);
+      return;
+    }
+    _theirReps = finish?.theirReps ?? theirs;
+    _outcome = await Career.instance.recordSettledDuel(
+      settled: settled,
+      yourReps: scored.reps,
+      theirReps: _theirReps,
+      opponent: _opponent.username,
+      opponentTier: _opponent.tierIdx,
+      ranked: live.ranked,
+      clean: scored.depth >= kCleanDepth,
+    );
+    if (!mounted) return;
+    setState(() {
+      _stage = (_outcome?.rank?.promoted ?? false)
+          ? _Stage.promoted
+          : _Stage.result;
+    });
+  }
+
   /// Backing out before the camera ever opened — [_confirmQuit] below. No
   /// reps landed, but the rule is the one the camera's own "give up" already
   /// enforces mid-round: walking away is a loss whatever the count says, and
@@ -532,6 +769,11 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           _stage == _Stage.result ||
           _stage == _Stage.promoted ||
           _stage == _Stage.sent ||
+          _stage == _Stage.calledOff ||
+          _stage == _Stage.liveFailed ||
+          // The set is in; the server settles it whether or not this screen
+          // waits to see it.
+          _stage == _Stage.waitingResult ||
           _challengeGone,
       onPopInvokedWithResult: (didPop, _) {
         if (!didPop) _confirmQuit();
@@ -584,6 +826,14 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
             ),
           );
         }
+        // Ranked: the ring, counting up to the moment a saved set takes over.
+        if (_liveSearchFrom case final from?) {
+          return _LiveSearchView(
+            from: from,
+            total: liveSearchFor,
+            onCancel: _confirmQuit,
+          );
+        }
         // The same door as the back gesture: leaving from here still forfeits
         // if a real opponent already turned up while this screen searched.
         return _SearchingView(onCancel: _confirmQuit);
@@ -593,6 +843,51 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           opponent: _opponent,
           vsBest: _vsBest,
           best: _theirReps,
+          live: _live,
+        );
+
+      case _Stage.nobodyLive:
+        return _NobodyLiveView(
+          opponent: _opponent,
+          reps: _theirReps,
+          onRace: () => _goVersus(quick: true),
+        );
+
+      case _Stage.waitingResult:
+        return Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(color: context.colors.brand),
+                const SizedBox(height: 18),
+                Text(
+                  L.of(context).waitingForFinal(_opponent.username),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: context.colors.text, fontSize: 15),
+                ),
+              ],
+            ),
+          ),
+        );
+
+      case _Stage.calledOff:
+        return BlockingNotice(
+          icon: Icons.timer_off_outlined,
+          title: L.of(context).calledOffTitle,
+          body: L.of(context).calledOffBody(_opponent.username),
+          actionLabel: L.of(context).backToHome,
+          onAction: () => Navigator.of(context).pop(),
+        );
+
+      case _Stage.liveFailed:
+        return BlockingNotice(
+          icon: Icons.wifi_off,
+          title: L.of(context).noConnection,
+          body: L.of(context).needsServer,
+          actionLabel: L.of(context).backToHome,
+          onAction: () => Navigator.of(context).pop(),
         );
 
       // The camera is a pushed route, so this stage has nothing of its own on
@@ -629,7 +924,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           opponent: _opponent,
           // Null for a local stand-in: nobody real is on the other end to
           // send a challenge to, so the button can only honestly go back.
-          realOpponentId: _realOpponent?.profileId,
+          realOpponentId: _realOpponent?.profileId ?? _live?.opponent.id,
           outcome: _outcome,
           onDone: () => Navigator.of(context).pop(),
         );
@@ -670,8 +965,15 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
 
     // Nothing was ever attempted: practice keeps no record to lose, a
     // challenge not yet sent has nobody on the other end to forfeit to, and
-    // neither does a search that has not found anybody.
-    if (widget.practice || widget.isChallenge || _vsBest) {
+    // neither does a search that has not found anybody. A saved set offered
+    // in place of a live match has not been agreed to yet, and a live match
+    // that has not started is called off for the other phone rather than
+    // lost: the round never began.
+    if (widget.practice ||
+        widget.isChallenge ||
+        _vsBest ||
+        _live != null ||
+        _stage == _Stage.nobodyLive) {
       Navigator.of(context).pop();
       return;
     }
@@ -827,6 +1129,287 @@ class _SearchingViewState extends State<_SearchingView> {
   }
 }
 
+// ─────────────────────────── ranked: the live search ─────────────────────────
+
+/// A ring filling to fifteen seconds, the time inside it, and what happens
+/// when it is full. The time is the point, as it is on [_SearchingView]: a
+/// wait with a number and an end is a wait people sit through.
+class _LiveSearchView extends StatefulWidget {
+  const _LiveSearchView({
+    required this.from,
+    required this.total,
+    required this.onCancel,
+  });
+
+  final DateTime from;
+  final Duration total;
+  final VoidCallback onCancel;
+
+  @override
+  State<_LiveSearchView> createState() => _LiveSearchViewState();
+}
+
+class _LiveSearchViewState extends State<_LiveSearchView> {
+  Timer? _tick;
+
+  @override
+  void initState() {
+    super.initState();
+    _tick = Timer.periodic(
+      const Duration(milliseconds: 100),
+      (_) => setState(() {}),
+    );
+  }
+
+  @override
+  void dispose() {
+    _tick?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final elapsed = clock.now().difference(widget.from);
+    final total = widget.total;
+    final share = (elapsed.inMilliseconds / total.inMilliseconds).clamp(
+      0.0,
+      1.0,
+    );
+    final seconds = elapsed.inSeconds.clamp(0, total.inSeconds);
+    final end = formatClock(context, total.inSeconds);
+
+    return Column(
+      children: [
+        const SizedBox(height: 28),
+        Text(
+          l.rankedLive,
+          style: TextStyle(color: context.colors.muted, fontSize: 13),
+        ),
+        const Spacer(flex: 2),
+        SizedBox(
+          width: 230,
+          height: 230,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              SizedBox.expand(
+                child: CircularProgressIndicator(
+                  key: const Key('liveSearchRing'),
+                  value: share,
+                  strokeWidth: 12,
+                  strokeCap: StrokeCap.round,
+                  backgroundColor: context.colors.surfaceRaised,
+                  color: context.colors.brand,
+                ),
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    formatClock(context, seconds),
+                    style: TextStyle(
+                      color: context.colors.text,
+                      fontSize: 48,
+                      fontWeight: FontWeight.w500,
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                    ),
+                  ),
+                  Text(
+                    l.ofTime(end),
+                    style: TextStyle(color: context.colors.muted, fontSize: 13),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 30),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Text(
+            l.lookingForLive,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: context.colors.text,
+              fontSize: 19,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32),
+          child: Text(
+            l.liveFallbackAt(end),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: context.colors.muted,
+              fontSize: 13,
+              height: 1.4,
+            ),
+          ),
+        ),
+        const Spacer(flex: 3),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(18, 0, 18, 22),
+          child: InkWell(
+            onTap: widget.onCancel,
+            borderRadius: BorderRadius.circular(14),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: context.colors.border),
+              ),
+              child: Center(
+                child: Text(
+                  l.cancel,
+                  style: TextStyle(color: context.colors.text, fontSize: 15),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Fifteen seconds and nobody live: who the saved set belongs to and what
+/// they did, and a button to race it. The rank points are the same as a live
+/// match's, and the screen says so — a fallback that paid less would be a
+/// reason to cancel and search again.
+class _NobodyLiveView extends StatelessWidget {
+  const _NobodyLiveView({
+    required this.opponent,
+    required this.reps,
+    required this.onRace,
+  });
+
+  final Opponent opponent;
+  final int reps;
+  final VoidCallback onRace;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+
+    return Column(
+      children: [
+        const Spacer(flex: 2),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Text(
+            l.nobodyLiveTitle,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: context.colors.text,
+              fontSize: 22,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          l.nobodyLiveBody,
+          textAlign: TextAlign.center,
+          style: TextStyle(color: context.colors.muted, fontSize: 14),
+        ),
+        const SizedBox(height: 30),
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+            color: context.colors.surface,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: context.colors.border, width: 0.5),
+          ),
+          child: Row(
+            children: [
+              PlayerAvatar(
+                name: opponent.username,
+                tierIdx: opponent.tierIdx,
+                size: 60,
+                textColour: context.colors.rival,
+                ringColour: context.colors.surface,
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      opponent.username,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: context.colors.rival,
+                        fontSize: 17,
+                      ),
+                    ),
+                    Text(
+                      tierLabel(l, opponent.tierIdx, opponent.divIdx),
+                      style: TextStyle(
+                        color: context.colors.muted,
+                        fontSize: 12,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      l.didRepsIn(localNumber(context, reps)),
+                      style: TextStyle(
+                        color: context.colors.text,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 18),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Text(
+            l.sameRankPoints,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: context.colors.muted, fontSize: 12),
+          ),
+        ),
+        const Spacer(flex: 3),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(18, 0, 18, 22),
+          child: Material(
+            color: context.colors.brand,
+            borderRadius: BorderRadius.circular(14),
+            child: InkWell(
+              key: const Key('raceSavedSet'),
+              onTap: onRace,
+              borderRadius: BorderRadius.circular(14),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 18),
+                child: Center(
+                  child: Text(
+                    l.raceIt,
+                    style: TextStyle(
+                      color: context.colors.background,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 // ────────────────────────── stage 2: opponent found ──────────────────────────
 
 /// Who you drew, and what it is worth. On screen for a second and a half, so
@@ -836,6 +1419,7 @@ class _VersusView extends StatelessWidget {
     required this.opponent,
     required this.vsBest,
     required this.best,
+    this.live,
   });
 
   final Opponent opponent;
@@ -845,14 +1429,22 @@ class _VersusView extends StatelessWidget {
   final bool vsBest;
   final int best;
 
+  /// A live match: the other lifter is about to be on camera too.
+  final LiveMatch? live;
+
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
     final me = demoProfile;
+    final live = this.live;
 
     return Column(
       children: [
         const Spacer(flex: 2),
+        if (live != null) ...[
+          const LiveTag(),
+          const SizedBox(height: 28),
+        ],
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -886,7 +1478,26 @@ class _VersusView extends StatelessWidget {
               ),
           ],
         ),
-        if (vsBest) ...[
+        if (live != null) ...[
+          const SizedBox(height: 28),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: Text(
+              l.liveFoundBody(opponent.username),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: context.colors.text,
+                fontSize: 15,
+                height: 1.45,
+              ),
+            ),
+          ),
+          const SizedBox(height: 14),
+          Text(
+            live.ranked ? l.lpMovesWithGap : l.friendlyNoRank,
+            style: TextStyle(color: context.colors.muted, fontSize: 12),
+          ),
+        ] else if (vsBest) ...[
           const SizedBox(height: 18),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),

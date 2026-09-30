@@ -2180,4 +2180,137 @@ class LRu extends L {
 
   @override
   String get channelReminders => 'Ежедневное напоминание';
+
+  @override
+  String get liveTag => 'Вживую';
+
+  @override
+  String get reconnecting => 'Переподключение';
+
+  @override
+  String get rankedLive => 'Рейтинговый · вживую';
+
+  @override
+  String get lookingForLive => 'Ищем соперника вживую';
+
+  @override
+  String ofTime(String time) {
+    return 'из ${time}';
+  }
+
+  @override
+  String liveFallbackAt(String time) {
+    return 'На ${time} вы будете соревноваться с сохранённым подходом';
+  }
+
+  @override
+  String liveFoundBody(String name) {
+    return '${name} сейчас перед камерой. Одни часы, один старт.';
+  }
+
+  @override
+  String get nobodyLiveTitle => 'Сейчас никого нет вживую';
+
+  @override
+  String get nobodyLiveBody => 'Вы будете соревноваться с сохранённым подходом';
+
+  @override
+  String didRepsIn(String reps) {
+    return 'Сделал(а) ${reps} за 60 секунд';
+  }
+
+  @override
+  String get sameRankPoints => 'Столько же очков рейтинга, как вживую';
+
+  @override
+  String get raceIt => 'Соревноваться';
+
+  @override
+  String get sendASet => 'Отправить подход';
+
+  @override
+  String get onlineNow => 'Сейчас в сети';
+
+  @override
+  String get liveOrSetHint => 'Для игры вживую друг должен быть в сети. Подход подождёт, пока он его не пройдёт.';
+
+  @override
+  String get friendlyNoRank => 'Дружеский · без рейтинга';
+
+  @override
+  String waitingForName(String name) {
+    return 'Ждём ${name}';
+  }
+
+  @override
+  String get weSentThemANotice => 'Мы отправили уведомление';
+
+  @override
+  String get untilInviteRunsOut => 'до конца приглашения';
+
+  @override
+  String get cancelInvite => 'Отменить приглашение';
+
+  @override
+  String inviteDeclined(String name) {
+    return '${name} ответил(а): не сейчас';
+  }
+
+  @override
+  String get inviteRanOut => 'Приглашение истекло';
+
+  @override
+  String get inviteAgain => 'Пригласить снова';
+
+  @override
+  String liveInviteFrom(String name) {
+    return '${name} ждёт вживую';
+  }
+
+  @override
+  String timeLeft(String time) {
+    return 'Осталось ${time}';
+  }
+
+  @override
+  String get joinLive => 'Присоединиться';
+
+  @override
+  String get nLiveTitle => 'Приглашение вживую';
+
+  @override
+  String nLiveBody(String name) {
+    return '${name} хочет сразиться вживую';
+  }
+
+  @override
+  String get inviteGone => 'Это приглашение уже истекло';
+
+  @override
+  String waitingForPosition(String name) {
+    return 'Ждём, пока ${name} займёт позицию';
+  }
+
+  @override
+  String opponentDropped(String name) {
+    return 'У ${name} пропало соединение. Продолжайте: раунд закончится по времени.';
+  }
+
+  @override
+  String opponentGaveUp(String name) {
+    return '${name} сдался(ась). Закончите раунд, чтобы забрать победу.';
+  }
+
+  @override
+  String get calledOffTitle => 'Матч отменён';
+
+  @override
+  String calledOffBody(String name) {
+    return '${name} не занял(а) позицию вовремя. Ничего не записано.';
+  }
+
+  @override
+  String waitingForFinal(String name) {
+    return 'Ждём итоговый счёт ${name}…';
+  }
 }

@@ -2189,4 +2189,137 @@ class LFr extends L {
 
   @override
   String get channelReminders => 'Rappel quotidien';
+
+  @override
+  String get liveTag => 'En direct';
+
+  @override
+  String get reconnecting => 'Reconnexion';
+
+  @override
+  String get rankedLive => 'Classé · en direct';
+
+  @override
+  String get lookingForLive => 'Recherche d\'un adversaire en direct';
+
+  @override
+  String ofTime(String time) {
+    return 'sur ${time}';
+  }
+
+  @override
+  String liveFallbackAt(String time) {
+    return 'À ${time}, tu affronteras une série enregistrée';
+  }
+
+  @override
+  String liveFoundBody(String name) {
+    return '${name} est devant la caméra. Même chrono, même départ.';
+  }
+
+  @override
+  String get nobodyLiveTitle => 'Personne n\'est en direct';
+
+  @override
+  String get nobodyLiveBody => 'Tu vas affronter une série enregistrée';
+
+  @override
+  String didRepsIn(String reps) {
+    return 'A fait ${reps} en 60 secondes';
+  }
+
+  @override
+  String get sameRankPoints => 'Autant de points de rang qu\'en direct';
+
+  @override
+  String get raceIt => 'L\'affronter';
+
+  @override
+  String get sendASet => 'Envoyer une série';
+
+  @override
+  String get onlineNow => 'En ligne';
+
+  @override
+  String get liveOrSetHint => 'Le direct demande qu\'ils soient en ligne. Une série attend qu\'ils l\'affrontent.';
+
+  @override
+  String get friendlyNoRank => 'Amical · sans classement';
+
+  @override
+  String waitingForName(String name) {
+    return 'En attente de ${name}';
+  }
+
+  @override
+  String get weSentThemANotice => 'On lui a envoyé une notification';
+
+  @override
+  String get untilInviteRunsOut => 'avant la fin de l\'invitation';
+
+  @override
+  String get cancelInvite => 'Annuler l\'invitation';
+
+  @override
+  String inviteDeclined(String name) {
+    return '${name} a dit pas maintenant';
+  }
+
+  @override
+  String get inviteRanOut => 'L\'invitation a expiré';
+
+  @override
+  String get inviteAgain => 'Inviter à nouveau';
+
+  @override
+  String liveInviteFrom(String name) {
+    return '${name} est en direct';
+  }
+
+  @override
+  String timeLeft(String time) {
+    return 'Encore ${time}';
+  }
+
+  @override
+  String get joinLive => 'Rejoindre';
+
+  @override
+  String get nLiveTitle => 'Invitation en direct';
+
+  @override
+  String nLiveBody(String name) {
+    return '${name} veut s\'affronter en direct';
+  }
+
+  @override
+  String get inviteGone => 'Cette invitation a expiré';
+
+  @override
+  String waitingForPosition(String name) {
+    return 'En attente que ${name} se mette en position';
+  }
+
+  @override
+  String opponentDropped(String name) {
+    return 'La connexion de ${name} a coupé. Continue : la manche se termine au chrono.';
+  }
+
+  @override
+  String opponentGaveUp(String name) {
+    return '${name} a abandonné. Termine la manche pour gagner.';
+  }
+
+  @override
+  String get calledOffTitle => 'Match annulé';
+
+  @override
+  String calledOffBody(String name) {
+    return '${name} ne s\'est pas mis en position à temps. Rien n\'a été enregistré.';
+  }
+
+  @override
+  String waitingForFinal(String name) {
+    return 'En attente du total final de ${name}…';
+  }
 }

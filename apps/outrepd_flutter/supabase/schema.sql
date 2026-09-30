@@ -255,6 +255,9 @@ create table if not exists sets (
 alter table sets add column if not exists rep_times int[] not null default '{}';
 alter table sets add column if not exists challenge_target uuid
   references profiles on delete set null;
+-- Set when the set was lifted in a live match (live.sql). It already has its
+-- opponent, so it is never offered to the open pool.
+alter table sets add column if not exists live_match uuid;
 
 create index if not exists sets_open_idx
   on sets (profile_id, created_at desc)

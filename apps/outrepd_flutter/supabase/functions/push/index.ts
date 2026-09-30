@@ -44,7 +44,12 @@ type ServiceAccount = {
 type Notice = {
   id: string;
   profile_id: string;
-  kind: 'raced' | 'friend_request' | 'friend_accepted' | 'challenged';
+  kind:
+    | 'raced'
+    | 'friend_request'
+    | 'friend_accepted'
+    | 'challenged'
+    | 'live_invite';
   actor_name: string;
   you_won: boolean | null;
   your_reps: number | null;
@@ -78,6 +83,8 @@ function words(notice: Notice, language: string) {
       return { title: l.nFriendOkTitle, body: fill(l.nFriendOkBody) };
     case 'challenged':
       return { title: l.nChallengedTitle, body: fill(l.nChallengedBody) };
+    case 'live_invite':
+      return { title: l.nLiveTitle, body: fill(l.nLiveBody) };
   }
 }
 

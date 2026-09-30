@@ -280,6 +280,7 @@ void main() {
       'social.sql',
       'notify.sql',
       'push.sql',
+      'live.sql',
       'account.sql',
     ];
     final installer = File('supabase/install.sql');

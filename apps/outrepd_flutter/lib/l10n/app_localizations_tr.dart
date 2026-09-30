@@ -2175,4 +2175,137 @@ class LTr extends L {
 
   @override
   String get channelReminders => 'Günlük hatırlatıcı';
+
+  @override
+  String get liveTag => 'Canlı';
+
+  @override
+  String get reconnecting => 'Yeniden bağlanıyor';
+
+  @override
+  String get rankedLive => 'Dereceli · canlı';
+
+  @override
+  String get lookingForLive => 'Canlı bir rakip aranıyor';
+
+  @override
+  String ofTime(String time) {
+    return '${time} içinde';
+  }
+
+  @override
+  String liveFallbackAt(String time) {
+    return '${time} olunca kayıtlı bir sete karşı yarışacaksın';
+  }
+
+  @override
+  String liveFoundBody(String name) {
+    return '${name} şu an kamerada. Aynı süre, aynı başlangıç.';
+  }
+
+  @override
+  String get nobodyLiveTitle => 'Şu an kimse canlı değil';
+
+  @override
+  String get nobodyLiveBody => 'Bunun yerine kayıtlı bir sete karşı yarışacaksın';
+
+  @override
+  String didRepsIn(String reps) {
+    return '60 saniyede ${reps} yaptı';
+  }
+
+  @override
+  String get sameRankPoints => 'Canlı maçla aynı sıralama puanı';
+
+  @override
+  String get raceIt => 'Yarış';
+
+  @override
+  String get sendASet => 'Set gönder';
+
+  @override
+  String get onlineNow => 'Şu an çevrimiçi';
+
+  @override
+  String get liveOrSetHint => 'Canlı maç için çevrimiçi olmaları gerekir. Set, yarışana kadar bekler.';
+
+  @override
+  String get friendlyNoRank => 'Dostça · sıralamasız';
+
+  @override
+  String waitingForName(String name) {
+    return '${name} bekleniyor';
+  }
+
+  @override
+  String get weSentThemANotice => 'Ona bildirim gönderdik';
+
+  @override
+  String get untilInviteRunsOut => 'davetin süresi dolana kadar';
+
+  @override
+  String get cancelInvite => 'Daveti iptal et';
+
+  @override
+  String inviteDeclined(String name) {
+    return '${name} şimdi olmaz dedi';
+  }
+
+  @override
+  String get inviteRanOut => 'Davetin süresi doldu';
+
+  @override
+  String get inviteAgain => 'Tekrar davet et';
+
+  @override
+  String liveInviteFrom(String name) {
+    return '${name} canlı';
+  }
+
+  @override
+  String timeLeft(String time) {
+    return '${time} kaldı';
+  }
+
+  @override
+  String get joinLive => 'Katıl';
+
+  @override
+  String get nLiveTitle => 'Canlı davet';
+
+  @override
+  String nLiveBody(String name) {
+    return '${name} canlı yarışmak istiyor';
+  }
+
+  @override
+  String get inviteGone => 'Bu davetin süresi doldu';
+
+  @override
+  String waitingForPosition(String name) {
+    return '${name} pozisyon alması bekleniyor';
+  }
+
+  @override
+  String opponentDropped(String name) {
+    return '${name} bağlantısını kaybetti. Devam et: tur süre bitince biter.';
+  }
+
+  @override
+  String opponentGaveUp(String name) {
+    return '${name} pes etti. Galibiyeti almak için turu bitir.';
+  }
+
+  @override
+  String get calledOffTitle => 'Maç iptal edildi';
+
+  @override
+  String calledOffBody(String name) {
+    return '${name} zamanında pozisyon almadı. Hiçbir şey kaydedilmedi.';
+  }
+
+  @override
+  String waitingForFinal(String name) {
+    return '${name} için son sayı bekleniyor…';
+  }
 }

@@ -2180,4 +2180,137 @@ class LId extends L {
 
   @override
   String get channelReminders => 'Pengingat harian';
+
+  @override
+  String get liveTag => 'Langsung';
+
+  @override
+  String get reconnecting => 'Menyambung ulang';
+
+  @override
+  String get rankedLive => 'Peringkat · langsung';
+
+  @override
+  String get lookingForLive => 'Mencari lawan langsung';
+
+  @override
+  String ofTime(String time) {
+    return 'dari ${time}';
+  }
+
+  @override
+  String liveFallbackAt(String time) {
+    return 'Di ${time} kamu akan melawan set yang tersimpan';
+  }
+
+  @override
+  String liveFoundBody(String name) {
+    return '${name} sedang di depan kamera. Waktu sama, mulai bersamaan.';
+  }
+
+  @override
+  String get nobodyLiveTitle => 'Belum ada yang langsung sekarang';
+
+  @override
+  String get nobodyLiveBody => 'Kamu akan melawan set yang tersimpan';
+
+  @override
+  String didRepsIn(String reps) {
+    return 'Melakukan ${reps} dalam 60 detik';
+  }
+
+  @override
+  String get sameRankPoints => 'Poin peringkat sama dengan pertandingan langsung';
+
+  @override
+  String get raceIt => 'Lawan';
+
+  @override
+  String get sendASet => 'Kirim set';
+
+  @override
+  String get onlineNow => 'Sedang online';
+
+  @override
+  String get liveOrSetHint => 'Langsung butuh mereka online. Set akan menunggu sampai mereka melawannya.';
+
+  @override
+  String get friendlyNoRank => 'Persahabatan · tanpa peringkat';
+
+  @override
+  String waitingForName(String name) {
+    return 'Menunggu ${name}';
+  }
+
+  @override
+  String get weSentThemANotice => 'Kami sudah mengirim notifikasi';
+
+  @override
+  String get untilInviteRunsOut => 'sampai undangan habis';
+
+  @override
+  String get cancelInvite => 'Batalkan undangan';
+
+  @override
+  String inviteDeclined(String name) {
+    return '${name} bilang tidak sekarang';
+  }
+
+  @override
+  String get inviteRanOut => 'Undangan sudah habis';
+
+  @override
+  String get inviteAgain => 'Undang lagi';
+
+  @override
+  String liveInviteFrom(String name) {
+    return '${name} sedang langsung';
+  }
+
+  @override
+  String timeLeft(String time) {
+    return 'Sisa ${time}';
+  }
+
+  @override
+  String get joinLive => 'Gabung';
+
+  @override
+  String get nLiveTitle => 'Undangan langsung';
+
+  @override
+  String nLiveBody(String name) {
+    return '${name} ingin bertanding langsung';
+  }
+
+  @override
+  String get inviteGone => 'Undangan itu sudah habis';
+
+  @override
+  String waitingForPosition(String name) {
+    return 'Menunggu ${name} bersiap di posisi';
+  }
+
+  @override
+  String opponentDropped(String name) {
+    return 'Koneksi ${name} terputus. Terus lanjut: ronde selesai saat waktu habis.';
+  }
+
+  @override
+  String opponentGaveUp(String name) {
+    return '${name} menyerah. Selesaikan ronde untuk menang.';
+  }
+
+  @override
+  String get calledOffTitle => 'Pertandingan dibatalkan';
+
+  @override
+  String calledOffBody(String name) {
+    return '${name} tidak bersiap di posisi tepat waktu. Tidak ada yang dicatat.';
+  }
+
+  @override
+  String waitingForFinal(String name) {
+    return 'Menunggu hitungan akhir ${name}…';
+  }
 }

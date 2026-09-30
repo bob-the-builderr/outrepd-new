@@ -24,7 +24,7 @@ create table if not exists notifications (
   read_at     timestamptz,
 
   kind text not null
-       check (kind in ('raced', 'friend_request', 'friend_accepted', 'challenged')),
+       check (kind in ('raced', 'friend_request', 'friend_accepted', 'challenged', 'live_invite')),
 
   -- Who caused it. The id can go — accounts get deleted — so the name is
   -- kept beside it: a notification that has forgotten who it was about is
@@ -46,10 +46,11 @@ create table if not exists notifications (
 -- which moves nothing. Added after the table, so an existing one gains it.
 alter table notifications add column if not exists lp_delta int;
 
--- For a project that already has the table from before 'challenged' existed.
+-- For a project that already has the table from before 'challenged' and
+-- 'live_invite' (live.sql) existed.
 alter table notifications drop constraint if exists notifications_kind_check;
 alter table notifications add constraint notifications_kind_check
-  check (kind in ('raced', 'friend_request', 'friend_accepted', 'challenged'));
+  check (kind in ('raced', 'friend_request', 'friend_accepted', 'challenged', 'live_invite'));
 
 -- Everything reads "mine, newest first", and the badge counts the unread.
 create index if not exists notifications_for_profile_idx

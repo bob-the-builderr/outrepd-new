@@ -2125,4 +2125,137 @@ class LZh extends L {
 
   @override
   String get channelReminders => '每日提醒';
+
+  @override
+  String get liveTag => '实时';
+
+  @override
+  String get reconnecting => '重新连接中';
+
+  @override
+  String get rankedLive => '排位 · 实时';
+
+  @override
+  String get lookingForLive => '正在寻找实时对手';
+
+  @override
+  String ofTime(String time) {
+    return '共 ${time}';
+  }
+
+  @override
+  String liveFallbackAt(String time) {
+    return '到 ${time} 时将改为挑战已保存的一组';
+  }
+
+  @override
+  String liveFoundBody(String name) {
+    return '${name} 正在镜头前。同一计时，同时开始。';
+  }
+
+  @override
+  String get nobodyLiveTitle => '现在没有人在线实时对战';
+
+  @override
+  String get nobodyLiveBody => '你将改为挑战已保存的一组';
+
+  @override
+  String didRepsIn(String reps) {
+    return '60 秒内完成 ${reps} 个';
+  }
+
+  @override
+  String get sameRankPoints => '与实时对战相同的排位分';
+
+  @override
+  String get raceIt => '开始挑战';
+
+  @override
+  String get sendASet => '发送一组';
+
+  @override
+  String get onlineNow => '在线';
+
+  @override
+  String get liveOrSetHint => '实时对战需要对方在线。发送的一组会一直等到对方来挑战。';
+
+  @override
+  String get friendlyNoRank => '友谊赛 · 不计排位';
+
+  @override
+  String waitingForName(String name) {
+    return '正在等待 ${name}';
+  }
+
+  @override
+  String get weSentThemANotice => '已向对方发送通知';
+
+  @override
+  String get untilInviteRunsOut => '邀请失效前';
+
+  @override
+  String get cancelInvite => '取消邀请';
+
+  @override
+  String inviteDeclined(String name) {
+    return '${name} 表示现在不行';
+  }
+
+  @override
+  String get inviteRanOut => '邀请已失效';
+
+  @override
+  String get inviteAgain => '再次邀请';
+
+  @override
+  String liveInviteFrom(String name) {
+    return '${name} 正在等你实时对战';
+  }
+
+  @override
+  String timeLeft(String time) {
+    return '剩余 ${time}';
+  }
+
+  @override
+  String get joinLive => '加入';
+
+  @override
+  String get nLiveTitle => '实时对战邀请';
+
+  @override
+  String nLiveBody(String name) {
+    return '${name} 想和你实时对战';
+  }
+
+  @override
+  String get inviteGone => '该邀请已失效';
+
+  @override
+  String waitingForPosition(String name) {
+    return '等待 ${name} 就位';
+  }
+
+  @override
+  String opponentDropped(String name) {
+    return '${name} 的连接断开了。继续：本回合按时间结束。';
+  }
+
+  @override
+  String opponentGaveUp(String name) {
+    return '${name} 已放弃。完成本回合即可获胜。';
+  }
+
+  @override
+  String get calledOffTitle => '对战已取消';
+
+  @override
+  String calledOffBody(String name) {
+    return '${name} 未能及时就位。没有记录任何结果。';
+  }
+
+  @override
+  String waitingForFinal(String name) {
+    return '正在等待 ${name} 的最终计数…';
+  }
 }

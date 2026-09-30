@@ -2135,4 +2135,137 @@ class LJa extends L {
 
   @override
   String get channelReminders => '毎日のリマインダー';
+
+  @override
+  String get liveTag => 'ライブ';
+
+  @override
+  String get reconnecting => '再接続中';
+
+  @override
+  String get rankedLive => 'ランク戦 · ライブ';
+
+  @override
+  String get lookingForLive => 'ライブの対戦相手を探しています';
+
+  @override
+  String ofTime(String time) {
+    return '${time} 中';
+  }
+
+  @override
+  String liveFallbackAt(String time) {
+    return '${time} になると保存済みのセットと対戦します';
+  }
+
+  @override
+  String liveFoundBody(String name) {
+    return '${name} が今カメラの前にいます。同じ時計、同時スタート。';
+  }
+
+  @override
+  String get nobodyLiveTitle => '今ライブの人はいません';
+
+  @override
+  String get nobodyLiveBody => '代わりに保存済みのセットと対戦します';
+
+  @override
+  String didRepsIn(String reps) {
+    return '60秒で ${reps} 回';
+  }
+
+  @override
+  String get sameRankPoints => 'ライブ戦と同じランクポイント';
+
+  @override
+  String get raceIt => '対戦する';
+
+  @override
+  String get sendASet => 'セットを送る';
+
+  @override
+  String get onlineNow => 'オンライン';
+
+  @override
+  String get liveOrSetHint => 'ライブは相手がオンラインのときだけ。セットは相手が挑むまで待ちます。';
+
+  @override
+  String get friendlyNoRank => 'フレンドリー · ランクなし';
+
+  @override
+  String waitingForName(String name) {
+    return '${name} を待っています';
+  }
+
+  @override
+  String get weSentThemANotice => '通知を送りました';
+
+  @override
+  String get untilInviteRunsOut => '招待の期限まで';
+
+  @override
+  String get cancelInvite => '招待を取り消す';
+
+  @override
+  String inviteDeclined(String name) {
+    return '${name} は今は無理なようです';
+  }
+
+  @override
+  String get inviteRanOut => '招待の期限が切れました';
+
+  @override
+  String get inviteAgain => 'もう一度招待';
+
+  @override
+  String liveInviteFrom(String name) {
+    return '${name} がライブ中';
+  }
+
+  @override
+  String timeLeft(String time) {
+    return '残り ${time}';
+  }
+
+  @override
+  String get joinLive => '参加';
+
+  @override
+  String get nLiveTitle => 'ライブの招待';
+
+  @override
+  String nLiveBody(String name) {
+    return '${name} がライブで対戦したがっています';
+  }
+
+  @override
+  String get inviteGone => 'その招待は期限切れです';
+
+  @override
+  String waitingForPosition(String name) {
+    return '${name} が構えるのを待っています';
+  }
+
+  @override
+  String opponentDropped(String name) {
+    return '${name} の接続が切れました。続けて：ラウンドは時間で終わります。';
+  }
+
+  @override
+  String opponentGaveUp(String name) {
+    return '${name} が棄権しました。ラウンドを終えて勝利をつかもう。';
+  }
+
+  @override
+  String get calledOffTitle => '対戦は中止になりました';
+
+  @override
+  String calledOffBody(String name) {
+    return '${name} が時間内に構えられませんでした。記録は残りません。';
+  }
+
+  @override
+  String waitingForFinal(String name) {
+    return '${name} の最終カウントを待っています…';
+  }
 }

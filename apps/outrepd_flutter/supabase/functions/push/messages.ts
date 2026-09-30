@@ -13,7 +13,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nFriendOkTitle": "Freundschaftsanfrage angenommen",
     "nFriendOkBody": "{name} hat deine Anfrage angenommen",
     "nChallengedTitle": "Revanche",
-    "nChallengedBody": "{name} möchte eine Revanche"
+    "nChallengedBody": "{name} möchte eine Revanche",
+    "nLiveTitle": "Live-Einladung",
+    "nLiveBody": "{name} will live gegen dich antreten"
   },
   "en": {
     "nRacedTitle": "Your set was raced",
@@ -24,7 +26,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nFriendOkTitle": "Friend request accepted",
     "nFriendOkBody": "{name} accepted your request",
     "nChallengedTitle": "Rematch",
-    "nChallengedBody": "{name} wants a rematch"
+    "nChallengedBody": "{name} wants a rematch",
+    "nLiveTitle": "Live invite",
+    "nLiveBody": "{name} wants to go live"
   },
   "es": {
     "nRacedTitle": "Retaron tu serie",
@@ -35,7 +39,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nFriendOkTitle": "Solicitud aceptada",
     "nFriendOkBody": "{name} aceptó tu solicitud",
     "nChallengedTitle": "Revancha",
-    "nChallengedBody": "{name} quiere la revancha"
+    "nChallengedBody": "{name} quiere la revancha",
+    "nLiveTitle": "Invitación en vivo",
+    "nLiveBody": "{name} quiere competir en vivo"
   },
   "fr": {
     "nRacedTitle": "Ta série a été défiée",
@@ -46,7 +52,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nFriendOkTitle": "Demande d'ami acceptée",
     "nFriendOkBody": "{name} a accepté ta demande",
     "nChallengedTitle": "Revanche",
-    "nChallengedBody": "{name} veut une revanche"
+    "nChallengedBody": "{name} veut une revanche",
+    "nLiveTitle": "Invitation en direct",
+    "nLiveBody": "{name} veut s'affronter en direct"
   },
   "hi": {
     "nRacedTitle": "आपके सेट को चुनौती मिली",
@@ -57,7 +65,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nFriendOkTitle": "दोस्ती का अनुरोध स्वीकार हुआ",
     "nFriendOkBody": "{name} ने आपका अनुरोध स्वीकार किया",
     "nChallengedTitle": "दोबारा मुक़ाबला",
-    "nChallengedBody": "{name} दोबारा मुक़ाबला चाहता है"
+    "nChallengedBody": "{name} दोबारा मुक़ाबला चाहता है",
+    "nLiveTitle": "लाइव न्योता",
+    "nLiveBody": "{name} लाइव मुकाबला करना चाहते हैं"
   },
   "id": {
     "nRacedTitle": "Set-mu ditantang",
@@ -68,7 +78,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nFriendOkTitle": "Permintaan pertemanan diterima",
     "nFriendOkBody": "{name} menerima permintaanmu",
     "nChallengedTitle": "Tanding ulang",
-    "nChallengedBody": "{name} ingin tanding ulang"
+    "nChallengedBody": "{name} ingin tanding ulang",
+    "nLiveTitle": "Undangan langsung",
+    "nLiveBody": "{name} ingin bertanding langsung"
   },
   "it": {
     "nRacedTitle": "La tua serie è stata sfidata",
@@ -79,7 +91,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nFriendOkTitle": "Richiesta di amicizia accettata",
     "nFriendOkBody": "{name} ha accettato la tua richiesta",
     "nChallengedTitle": "Rivincita",
-    "nChallengedBody": "{name} vuole la rivincita"
+    "nChallengedBody": "{name} vuole la rivincita",
+    "nLiveTitle": "Invito live",
+    "nLiveBody": "{name} vuole sfidarti live"
   },
   "ja": {
     "nRacedTitle": "あなたのセットが挑まれました",
@@ -90,7 +104,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nFriendOkTitle": "フレンド申請が承認されました",
     "nFriendOkBody": "{name} がリクエストを承認しました",
     "nChallengedTitle": "再戦",
-    "nChallengedBody": "{name}さんが再戦を希望しています"
+    "nChallengedBody": "{name}さんが再戦を希望しています",
+    "nLiveTitle": "ライブの招待",
+    "nLiveBody": "{name} がライブで対戦したがっています"
   },
   "ko": {
     "nRacedTitle": "당신의 세트에 도전이 있었습니다",
@@ -101,7 +117,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nFriendOkTitle": "친구 요청이 수락되었습니다",
     "nFriendOkBody": "{name} 님이 요청을 수락했습니다",
     "nChallengedTitle": "재대결",
-    "nChallengedBody": "{name}님이 재대결을 원합니다"
+    "nChallengedBody": "{name}님이 재대결을 원합니다",
+    "nLiveTitle": "라이브 초대",
+    "nLiveBody": "{name} 님이 라이브 대결을 원해요"
   },
   "pt": {
     "nRacedTitle": "A tua série foi desafiada",
@@ -112,7 +130,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nFriendOkTitle": "Pedido de amizade aceite",
     "nFriendOkBody": "{name} aceitou o teu pedido",
     "nChallengedTitle": "Desforra",
-    "nChallengedBody": "{name} quer a desforra"
+    "nChallengedBody": "{name} quer a desforra",
+    "nLiveTitle": "Convite ao vivo",
+    "nLiveBody": "{name} quer competir ao vivo"
   },
   "ru": {
     "nRacedTitle": "Ваш подход приняли вызовом",
@@ -123,7 +143,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nFriendOkTitle": "Запрос в друзья принят",
     "nFriendOkBody": "{name} принял ваш запрос",
     "nChallengedTitle": "Реванш",
-    "nChallengedBody": "{name} хочет реванш"
+    "nChallengedBody": "{name} хочет реванш",
+    "nLiveTitle": "Приглашение вживую",
+    "nLiveBody": "{name} хочет сразиться вживую"
   },
   "tr": {
     "nRacedTitle": "Setine meydan okundu",
@@ -134,7 +156,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nFriendOkTitle": "Arkadaşlık isteği kabul edildi",
     "nFriendOkBody": "{name} isteğini kabul etti",
     "nChallengedTitle": "Rövanş",
-    "nChallengedBody": "{name} rövanş istiyor"
+    "nChallengedBody": "{name} rövanş istiyor",
+    "nLiveTitle": "Canlı davet",
+    "nLiveBody": "{name} canlı yarışmak istiyor"
   },
   "zh": {
     "nRacedTitle": "有人挑战了你的组",
@@ -145,6 +169,8 @@ export const messages: Record<string, Record<string, string>> = {
     "nFriendOkTitle": "好友请求已接受",
     "nFriendOkBody": "{name} 接受了你的请求",
     "nChallengedTitle": "再来一局",
-    "nChallengedBody": "{name} 想再来一局"
+    "nChallengedBody": "{name} 想再来一局",
+    "nLiveTitle": "实时对战邀请",
+    "nLiveBody": "{name} 想和你实时对战"
   }
 };

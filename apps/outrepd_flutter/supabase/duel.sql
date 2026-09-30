@@ -50,6 +50,9 @@ begin
     -- point of naming a challenge_target is that only they can find it, with
     -- find_targeted_set below.
     and s.challenge_target is null
+    -- Lifted live against somebody already (live.sql): it is settled against
+    -- them, not left for the pool.
+    and s.live_match is null
     -- Near your level, measured in rungs rather than tiers: the difference
     -- between the top and the bottom of one tier is five divisions, and
     -- matching "same tier" would pair those two.

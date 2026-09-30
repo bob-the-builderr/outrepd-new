@@ -20,6 +20,8 @@ const pushKeys = [
   'nFriendOkBody',
   'nChallengedTitle',
   'nChallengedBody',
+  'nLiveTitle',
+  'nLiveBody',
 ];
 
 Map<String, Map<String, String>> pushMessages() {

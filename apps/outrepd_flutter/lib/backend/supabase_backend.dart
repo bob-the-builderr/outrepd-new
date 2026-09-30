@@ -6,6 +6,8 @@
 /// carrying rows there and back.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -190,9 +192,14 @@ class SupabaseBackend implements Backend {
       placementWins: row['placement_wins'] as int,
     );
 
-    // What came back is the rank now. The app recomputes the same numbers to
-    // show them, and where the two ever disagree the server is right — it is
-    // the one holding the row.
+    _remember(settled);
+    return settled;
+  }
+
+  /// What came back is the rank now. The app recomputes the same numbers to
+  /// show them, and where the two ever disagree the server is right — it is
+  /// the one holding the row.
+  void _remember(SettledDuel settled) {
     final was = _me;
     if (was != null) {
       _me = was.copyWith(
@@ -212,7 +219,6 @@ class SupabaseBackend implements Backend {
         placementWins: settled.placementWins,
       );
     }
-    return settled;
   }
 
   @override
@@ -394,6 +400,7 @@ class SupabaseBackend implements Backend {
             'friend_request' => NoticeKind.friendRequest,
             'friend_accepted' => NoticeKind.friendAccepted,
             'challenged' => NoticeKind.challenged,
+            'live_invite' => NoticeKind.liveInvite,
             _ => NoticeKind.raced,
           },
           at:
@@ -769,6 +776,155 @@ class SupabaseBackend implements Backend {
     await _db.rpc<void>('forget_push_token', params: {'push_token': token});
   }
 
+  // ── Live matches ──
+
+  static LiveOpponent _opponentFrom(Map<String, dynamic> row, String prefix) =>
+      LiveOpponent(
+        id: row['${prefix}_id'] as String,
+        username: row['${prefix}_name'] as String? ?? '',
+        tierIdx: (row['${prefix}_tier'] as num?)?.toInt() ?? 0,
+        divIdx: (row['${prefix}_div'] as num?)?.toInt() ?? 0,
+      );
+
+  static Duration? _ms(Object? value) =>
+      value is num ? Duration(milliseconds: value.toInt()) : null;
+
+  @override
+  Future<LiveMatch?> findLiveOpponent() async {
+    final rows = await _db.rpc<List<dynamic>>('find_live_opponent');
+    if (rows.isEmpty) return null;
+    final row = rows.first as Map<String, dynamic>;
+    return LiveMatch(
+      id: row['match_id'] as String,
+      ranked: true,
+      opponent: _opponentFrom(row, 'opponent'),
+    );
+  }
+
+  @override
+  Future<void> leaveLiveQueue() async {
+    await _db.rpc<void>('leave_live_queue');
+  }
+
+  @override
+  Future<String> inviteLive(String friendId) async =>
+      await _db.rpc<String>('invite_live', params: {'friend_id': friendId});
+
+  @override
+  Future<List<LiveInvite>> liveInvites() async {
+    final rows = await _db.rpc<List<dynamic>>('my_live_invites');
+    return [
+      for (final row in rows.cast<Map<String, dynamic>>())
+        LiveInvite(
+          matchId: row['match_id'] as String,
+          from: _opponentFrom(row, 'from'),
+          expiresIn: _ms(row['expires_in_ms']) ?? Duration.zero,
+        ),
+    ];
+  }
+
+  @override
+  Future<LiveStatus> answerLiveInvite(
+    String matchId, {
+    required bool accept,
+  }) async => LiveStatus.parse(
+    await _db.rpc<String>(
+      'answer_live_invite',
+      params: {'invite': matchId, 'accept': accept},
+    ),
+  );
+
+  @override
+  Future<void> cancelLiveInvite(String matchId) async {
+    await _db.rpc<void>('cancel_live_invite', params: {'invite': matchId});
+  }
+
+  @override
+  Future<LiveState> liveState(String matchId) async {
+    final rows = await _db.rpc<List<dynamic>>(
+      'live_match_state',
+      params: {'live': matchId},
+    );
+    if (rows.isEmpty) throw StateError('no such live match');
+    final row = rows.first as Map<String, dynamic>;
+    return LiveState(
+      status: LiveStatus.parse(row['match_status'] as String?),
+      ranked: row['is_ranked'] as bool? ?? false,
+      opponent: _opponentFrom(row, 'opponent'),
+      theyAreReady: row['they_are_ready'] as bool? ?? false,
+      theirReps: (row['their_reps'] as num?)?.toInt() ?? 0,
+      startsIn: _ms(row['starts_in_ms']),
+      expiresIn: _ms(row['expires_in_ms']),
+    );
+  }
+
+  @override
+  Future<Duration?> liveReady(String matchId) async =>
+      _ms(await _db.rpc<dynamic>('live_ready', params: {'live': matchId}));
+
+  @override
+  Future<void> reportLiveCount(String matchId, int reps) async {
+    await _db.rpc<void>(
+      'report_live_count',
+      params: {'live': matchId, 'reps_now': reps},
+    );
+  }
+
+  LiveFinish _finishFrom(List<dynamic> rows) {
+    if (rows.isEmpty) return const LiveFinish();
+    final row = rows.first as Map<String, dynamic>;
+    if (row['is_settled'] != true) return const LiveFinish();
+    int n(String key) => (row[key] as num?)?.toInt() ?? 0;
+    final settled = SettledDuel(
+      duelId: row['result_duel'] as String,
+      won: row['result_won'] as bool? ?? false,
+      lpDelta: n('result_lp_delta'),
+      tierIdx: n('result_tier'),
+      divIdx: n('result_div'),
+      lp: n('result_lp'),
+      wins: n('result_wins'),
+      losses: n('result_losses'),
+      winStreak: n('result_win_streak'),
+      bestStreak: n('result_best_streak'),
+      placementsDone: n('result_placements_done'),
+      placementWins: n('result_placement_wins'),
+    );
+    _remember(settled);
+    return LiveFinish(
+      settled: settled,
+      theirReps: (row['result_their_reps'] as num?)?.toInt(),
+    );
+  }
+
+  @override
+  Future<LiveFinish> finishLive(String matchId, SetUpload set) async =>
+      _finishFrom(
+        await _db.rpc<List<dynamic>>(
+          'finish_live_match',
+          params: {
+            'live': matchId,
+            'set_reps': set.reps,
+            'set_reps_camera': set.repsCamera,
+            'set_depth': set.depth,
+            'set_confident': set.confident,
+            'set_duration_ms': set.durationMs,
+            'set_gave_up': set.gaveUp,
+            'set_rep_times': set.repTimes,
+          },
+        ),
+      );
+
+  @override
+  Future<LiveFinish> liveResult(String matchId) async => _finishFrom(
+    await _db.rpc<List<dynamic>>(
+      'live_match_result',
+      params: {'live': matchId},
+    ),
+  );
+
+  @override
+  LiveLink openLiveLink(String matchId) => _RealtimeLiveLink(_db, matchId);
+
   @override
   Future<void> deleteAccount() async {
     // The photo first, while this session can still prove it owns the file.
@@ -840,5 +996,55 @@ class SupabaseBackend implements Backend {
     return base.length > 14
         ? '${base.substring(0, 14)}${id.substring(0, 4)}'
         : '$base${id.substring(0, 4)}';
+  }
+}
+
+/// The two phones' line, over a Supabase Realtime broadcast channel named
+/// after the match. Nothing is stored: a message missed is simply replaced by
+/// the next one, which carries the whole count rather than a change to it.
+class _RealtimeLiveLink implements LiveLink {
+  _RealtimeLiveLink(this._db, String matchId)
+    : _channel = _db.channel(
+        'live:$matchId',
+        opts: const RealtimeChannelConfig(self: false),
+      ) {
+    _channel
+        .onBroadcast(
+          event: 'count',
+          callback: (raw) {
+            // The callback has been handed both the whole envelope and just
+            // the payload across versions of the client; read either.
+            final inner = raw['payload'];
+            final json = inner is Map
+                ? Map<String, dynamic>.from(inner)
+                : Map<String, dynamic>.from(raw);
+            final message = LiveMessage.fromJson(json);
+            if (message != null && !_messages.isClosed) {
+              _messages.add(message);
+            }
+          },
+        )
+        .subscribe();
+  }
+
+  final SupabaseClient _db;
+  final RealtimeChannel _channel;
+  final _messages = StreamController<LiveMessage>.broadcast();
+
+  @override
+  Stream<LiveMessage> get messages => _messages.stream;
+
+  @override
+  Future<void> send(LiveMessage message) async {
+    await _channel.sendBroadcastMessage(
+      event: 'count',
+      payload: message.toJson(),
+    );
+  }
+
+  @override
+  Future<void> close() async {
+    await _messages.close();
+    await _db.removeChannel(_channel);
   }
 }
