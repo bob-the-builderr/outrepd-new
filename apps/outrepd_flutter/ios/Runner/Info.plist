@@ -61,6 +61,10 @@
 	<string>outrepd counts your reps by watching your body move. Pose detection runs on your device and nothing is uploaded.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Pick a photo from your library for your profile picture.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Save your share card to your photos.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>outrepd never records sound. The camera is used for pictures of your movement only.</string>
 	<key>CFBundleLocalizations</key>
 	<array>
 		<string>en</string>

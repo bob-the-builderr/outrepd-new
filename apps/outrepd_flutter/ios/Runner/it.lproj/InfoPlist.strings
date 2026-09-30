@@ -1,3 +1,5 @@
 /* Permission prompts. The camera text is cameraNeededBody from lib/l10n. */
 "NSCameraUsageDescription" = "outrepd conta le ripetizioni guardando il tuo corpo muoversi. Il rilevamento gira sul tuo dispositivo e non viene caricato nulla.";
 "NSPhotoLibraryUsageDescription" = "Scegli una foto dalla tua libreria come immagine del profilo.";
+"NSMicrophoneUsageDescription" = "outrepd non registra mai l’audio. La fotocamera serve solo a vedere i tuoi movimenti.";
+"NSPhotoLibraryAddUsageDescription" = "Salva la tua scheda da condividere nelle foto.";

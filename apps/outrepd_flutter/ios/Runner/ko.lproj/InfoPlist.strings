@@ -1,3 +1,5 @@
 /* Permission prompts. The camera text is cameraNeededBody from lib/l10n. */
 "NSCameraUsageDescription" = "outrepd는 몸의 움직임을 보고 횟수를 셉니다. 분석은 기기에서 이뤄지며 아무것도 업로드되지 않습니다.";
 "NSPhotoLibraryUsageDescription" = "프로필 사진으로 쓸 사진을 보관함에서 고릅니다.";
+"NSMicrophoneUsageDescription" = "outrepd는 소리를 녹음하지 않습니다. 카메라는 움직임을 보는 데만 사용됩니다.";
+"NSPhotoLibraryAddUsageDescription" = "공유 카드를 사진에 저장합니다.";

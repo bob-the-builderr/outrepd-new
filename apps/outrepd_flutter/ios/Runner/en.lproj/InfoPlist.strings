@@ -1,3 +1,5 @@
 /* Permission prompts. The camera text is cameraNeededBody from lib/l10n. */
 "NSCameraUsageDescription" = "outrepd counts your reps by watching your body move. Pose detection runs on your device and nothing is uploaded.";
 "NSPhotoLibraryUsageDescription" = "Pick a photo from your library for your profile picture.";
+"NSMicrophoneUsageDescription" = "outrepd never records sound. The camera is used for pictures of your movement only.";
+"NSPhotoLibraryAddUsageDescription" = "Save your share card to your photos.";

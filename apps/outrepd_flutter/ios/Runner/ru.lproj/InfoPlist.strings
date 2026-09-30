@@ -1,3 +1,5 @@
 /* Permission prompts. The camera text is cameraNeededBody from lib/l10n. */
 "NSCameraUsageDescription" = "outrepd считает повторы, наблюдая за движением тела. Распознавание работает на вашем устройстве, ничего не отправляется.";
 "NSPhotoLibraryUsageDescription" = "Выберите фото из медиатеки для аватара профиля.";
+"NSMicrophoneUsageDescription" = "outrepd никогда не записывает звук. Камера нужна только чтобы видеть ваши движения.";
+"NSPhotoLibraryAddUsageDescription" = "Сохраните карточку для публикации в фото.";
