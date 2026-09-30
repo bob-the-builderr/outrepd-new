@@ -59,6 +59,24 @@ class CameraPoseSource implements PoseSource {
     return o == 90 || o == 270;
   }
 
+  /// Whether [image] still has to be turned upright. Android hands frames over
+  /// as the sensor sees them, a quarter turn from the screen. iOS turns them
+  /// upright itself before they arrive — and telling ML Kit to turn one of
+  /// those again had it looking for a body lying on its side, and the
+  /// skeleton drawn squashed across the screen. A frame taller than it is
+  /// wide is already upright, whichever phone sent it.
+  bool _needsTurn(CameraImage image) =>
+      _quarterTurned && image.width > image.height;
+
+  /// iOS also mirrors the front camera's frames itself, the way its preview is
+  /// shown. Everything downstream expects the camera's own un-mirrored view —
+  /// what Android sends, and what every recording was made from — so those
+  /// frames are flipped back, and left and right with them.
+  bool _mirrored(CameraImage image) =>
+      Platform.isIOS &&
+      _camera?.description.lensDirection == CameraLensDirection.front &&
+      !_needsTurn(image);
+
   @override
   Size? get sourceSize {
     final preview = _camera?.value.previewSize;
@@ -163,7 +181,7 @@ class CameraPoseSource implements PoseSource {
     if (camera == null) return null;
 
     final rotation = mlkit.InputImageRotationValue.fromRawValue(
-      camera.description.sensorOrientation,
+      _needsTurn(image) ? camera.description.sensorOrientation : 0,
     );
     final format =
         mlkit.InputImageFormatValue.fromRawValue(image.format.raw as int);
@@ -187,17 +205,20 @@ class CameraPoseSource implements PoseSource {
   /// so the sides swap with it. Dividing by the raw buffer's width and height
   /// instead skews the whole skeleton off the body.
   BodyPose _convert(mlkit.Pose pose, CameraImage image) {
-    final w =
-        (_quarterTurned ? image.height : image.width).toDouble();
-    final h =
-        (_quarterTurned ? image.width : image.height).toDouble();
+    final turned = _needsTurn(image);
+    final w = (turned ? image.height : image.width).toDouble();
+    final h = (turned ? image.width : image.height).toDouble();
+    final mirrored = _mirrored(image);
 
     final points = <Joint, PosePoint>{};
     for (final entry in _wanted.entries) {
       final landmark = pose.landmarks[entry.key];
       if (landmark == null) continue;
-      points[entry.value] = PosePoint(
-        (landmark.x / w).clamp(0.0, 1.0),
+      final x = (landmark.x / w).clamp(0.0, 1.0);
+      // In a mirrored frame the body's own left is drawn on the right, and
+      // ML Kit names it for the side it appears on.
+      points[mirrored ? _opposite(entry.value) : entry.value] = PosePoint(
+        mirrored ? 1 - x : x,
         (landmark.y / h).clamp(0.0, 1.0),
         landmark.likelihood,
         // Depth comes in the same units as x, so it scales the same way. Not
@@ -221,5 +242,8 @@ class CameraPoseSource implements PoseSource {
     await _controller.close();
   }
 }
+
+/// The same joint on the other side of the body.
+Joint _opposite(Joint joint) => jointMirror[joint] ?? joint;
 
 PoseSource createPoseSource() => CameraPoseSource();
