@@ -223,7 +223,7 @@
   "privacyPolicy": "隐私政策",
   "openSourceLicences": "开源许可",
   "deleteAccount": "删除账号",
-  "needsServer": "此功能需要服务器支持，目前尚未接入",
+  "needsServer": "无法连接。请检查网络后重试。",
   "achievements": "成就",
   "roadTitle": "大师之路",
   "allTiers": "全部段位",

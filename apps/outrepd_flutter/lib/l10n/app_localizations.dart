@@ -1292,7 +1292,7 @@ abstract class L {
   /// No description provided for @needsServer.
   ///
   /// In en, this message translates to:
-  /// **'This needs a server — not wired up yet'**
+  /// **'Couldn't connect. Check your internet and try again.'**
   String get needsServer;
 
   /// No description provided for @achievements.

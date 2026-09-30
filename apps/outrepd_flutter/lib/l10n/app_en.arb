@@ -268,7 +268,7 @@
   "privacyPolicy": "Privacy policy",
   "openSourceLicences": "Open source licences",
   "deleteAccount": "Delete account",
-  "needsServer": "This needs a server — not wired up yet",
+  "needsServer": "Couldn't connect. Check your internet and try again.",
   "achievements": "Achievements",
   "roadTitle": "Road to Master",
   "allTiers": "All tiers",

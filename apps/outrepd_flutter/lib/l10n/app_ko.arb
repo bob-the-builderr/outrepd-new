@@ -223,7 +223,7 @@
   "privacyPolicy": "개인정보 처리방침",
   "openSourceLicences": "오픈소스 라이선스",
   "deleteAccount": "계정 삭제",
-  "needsServer": "이 기능에는 서버가 필요하며 아직 연결되지 않았습니다",
+  "needsServer": "연결할 수 없습니다. 인터넷 연결을 확인하고 다시 시도해 주세요.",
   "achievements": "업적",
   "roadTitle": "마스터로 가는 길",
   "allTiers": "모든 랭크",

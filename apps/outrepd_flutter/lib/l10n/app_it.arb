@@ -223,7 +223,7 @@
   "privacyPolicy": "Informativa sulla privacy",
   "openSourceLicences": "Licenze open source",
   "deleteAccount": "Elimina account",
-  "needsServer": "Questa funzione richiede un server e non è ancora collegata",
+  "needsServer": "Impossibile connettersi. Controlla la connessione e riprova.",
   "achievements": "Obiettivi",
   "roadTitle": "La strada per Maestro",
   "allTiers": "Tutti i ranghi",

@@ -636,7 +636,7 @@ class LRu extends L {
 
   @override
   String get needsServer =>
-      'Для этой функции нужен сервер — он ещё не подключён';
+      'Не удалось подключиться. Проверьте интернет и попробуйте снова.';
 
   @override
   String get achievements => 'Достижения';

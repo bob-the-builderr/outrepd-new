@@ -268,7 +268,7 @@ void main() {
       await tester.tap(find.text('Challenge'));
       await tester.pump();
 
-      expect(find.text('This needs a server — not wired up yet'), findsOneWidget);
+      expect(find.text("Couldn't connect. Check your internet and try again."), findsOneWidget);
     });
   });
 

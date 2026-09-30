@@ -614,7 +614,7 @@ class LZh extends L {
   String get deleteAccount => '删除账号';
 
   @override
-  String get needsServer => '此功能需要服务器支持，目前尚未接入';
+  String get needsServer => '无法连接。请检查网络后重试。';
 
   @override
   String get achievements => '成就';

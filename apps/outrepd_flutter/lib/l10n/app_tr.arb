@@ -223,7 +223,7 @@
   "privacyPolicy": "Gizlilik politikası",
   "openSourceLicences": "Açık kaynak lisansları",
   "deleteAccount": "Hesabı sil",
-  "needsServer": "Bu özellik bir sunucu gerektiriyor ve henüz bağlanmadı",
+  "needsServer": "Bağlanılamadı. İnternetini kontrol edip tekrar dene.",
   "achievements": "Başarımlar",
   "roadTitle": "Ustalığa giden yol",
   "allTiers": "Tüm rütbeler",

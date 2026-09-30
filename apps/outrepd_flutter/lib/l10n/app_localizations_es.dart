@@ -641,7 +641,7 @@ class LEs extends L {
 
   @override
   String get needsServer =>
-      'Esta función requiere un servidor y aún no está conectada';
+      'No se pudo conectar. Revisa tu internet e inténtalo de nuevo.';
 
   @override
   String get achievements => 'Logros';

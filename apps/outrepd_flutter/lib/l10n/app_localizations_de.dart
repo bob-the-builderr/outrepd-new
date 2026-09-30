@@ -641,7 +641,7 @@ class LDe extends L {
 
   @override
   String get needsServer =>
-      'Diese Funktion benötigt einen Server und ist noch nicht angebunden';
+      'Keine Verbindung. Prüfe dein Internet und versuche es erneut.';
 
   @override
   String get achievements => 'Erfolge';

@@ -223,7 +223,7 @@
   "privacyPolicy": "Política de privacidade",
   "openSourceLicences": "Licenças de código aberto",
   "deleteAccount": "Apagar conta",
-  "needsServer": "Esta funcionalidade precisa de um servidor e ainda não está ligada",
+  "needsServer": "Não foi possível conectar. Verifique sua internet e tente de novo.",
   "achievements": "Conquistas",
   "roadTitle": "Caminho para Mestre",
   "allTiers": "Todos os ranques",

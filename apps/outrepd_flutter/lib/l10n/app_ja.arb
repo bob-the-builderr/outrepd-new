@@ -223,7 +223,7 @@
   "privacyPolicy": "プライバシーポリシー",
   "openSourceLicences": "オープンソースライセンス",
   "deleteAccount": "アカウントを削除",
-  "needsServer": "この機能にはサーバーが必要ですが、まだ接続されていません",
+  "needsServer": "接続できませんでした。インターネット接続を確認して、もう一度お試しください。",
   "achievements": "実績",
   "roadTitle": "マスターへの道",
   "allTiers": "すべてのランク",

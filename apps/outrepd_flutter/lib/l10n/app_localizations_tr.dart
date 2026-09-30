@@ -635,7 +635,7 @@ class LTr extends L {
 
   @override
   String get needsServer =>
-      'Bu özellik bir sunucu gerektiriyor ve henüz bağlanmadı';
+      'Bağlanılamadı. İnternetini kontrol edip tekrar dene.';
 
   @override
   String get achievements => 'Başarımlar';

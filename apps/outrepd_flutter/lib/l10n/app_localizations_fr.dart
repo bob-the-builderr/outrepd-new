@@ -643,7 +643,7 @@ class LFr extends L {
 
   @override
   String get needsServer =>
-      'Cette fonction nécessite un serveur et n\'est pas encore connectée';
+      'Connexion impossible. Vérifie ta connexion internet et réessaie.';
 
   @override
   String get achievements => 'Succès';

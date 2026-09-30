@@ -223,7 +223,7 @@
   "privacyPolicy": "Politique de confidentialité",
   "openSourceLicences": "Licences open source",
   "deleteAccount": "Supprimer le compte",
-  "needsServer": "Cette fonction nécessite un serveur et n'est pas encore connectée",
+  "needsServer": "Connexion impossible. Vérifie ta connexion internet et réessaie.",
   "achievements": "Succès",
   "roadTitle": "La route vers Maître",
   "allTiers": "Tous les rangs",

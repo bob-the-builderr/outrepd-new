@@ -110,7 +110,7 @@ void main() {
           scrollable: find.byType(Scrollable).first);
       await tester.tap(row);
       await tester.pumpAndSettle();
-      expect(find.text('This needs a server — not wired up yet'), findsNothing,
+      expect(find.text("Couldn't connect. Check your internet and try again."), findsNothing,
           reason: '$label still says it needs a server');
     }
   });

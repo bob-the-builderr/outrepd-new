@@ -636,7 +636,7 @@ class LHi extends L {
 
   @override
   String get needsServer =>
-      'इस सुविधा के लिए सर्वर आवश्यक है, जो अभी जुड़ा नहीं है';
+      'कनेक्ट नहीं हो सका। अपना इंटरनेट जांचें और फिर से कोशिश करें।';
 
   @override
   String get achievements => 'उपलब्धियाँ';

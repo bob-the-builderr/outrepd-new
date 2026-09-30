@@ -617,7 +617,7 @@ class LJa extends L {
   String get deleteAccount => 'アカウントを削除';
 
   @override
-  String get needsServer => 'この機能にはサーバーが必要ですが、まだ接続されていません';
+  String get needsServer => '接続できませんでした。インターネット接続を確認して、もう一度お試しください。';
 
   @override
   String get achievements => '実績';

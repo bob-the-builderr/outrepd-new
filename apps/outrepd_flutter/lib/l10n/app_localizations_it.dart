@@ -639,7 +639,7 @@ class LIt extends L {
 
   @override
   String get needsServer =>
-      'Questa funzione richiede un server e non è ancora collegata';
+      'Impossibile connettersi. Controlla la connessione e riprova.';
 
   @override
   String get achievements => 'Obiettivi';

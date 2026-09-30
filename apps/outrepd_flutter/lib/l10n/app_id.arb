@@ -223,7 +223,7 @@
   "privacyPolicy": "Kebijakan privasi",
   "openSourceLicences": "Lisensi sumber terbuka",
   "deleteAccount": "Hapus akun",
-  "needsServer": "Fitur ini memerlukan server dan belum tersambung",
+  "needsServer": "Tidak bisa terhubung. Periksa internetmu lalu coba lagi.",
   "achievements": "Pencapaian",
   "roadTitle": "Jalan menuju Master",
   "allTiers": "Semua peringkat",

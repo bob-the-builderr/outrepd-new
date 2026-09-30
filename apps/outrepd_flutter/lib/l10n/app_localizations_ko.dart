@@ -619,7 +619,7 @@ class LKo extends L {
   String get deleteAccount => '계정 삭제';
 
   @override
-  String get needsServer => '이 기능에는 서버가 필요하며 아직 연결되지 않았습니다';
+  String get needsServer => '연결할 수 없습니다. 인터넷 연결을 확인하고 다시 시도해 주세요.';
 
   @override
   String get achievements => '업적';

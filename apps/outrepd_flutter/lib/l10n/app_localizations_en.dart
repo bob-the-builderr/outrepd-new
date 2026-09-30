@@ -636,7 +636,7 @@ class LEn extends L {
   String get deleteAccount => 'Delete account';
 
   @override
-  String get needsServer => 'This needs a server — not wired up yet';
+  String get needsServer => 'Couldn\'t connect. Check your internet and try again.';
 
   @override
   String get achievements => 'Achievements';

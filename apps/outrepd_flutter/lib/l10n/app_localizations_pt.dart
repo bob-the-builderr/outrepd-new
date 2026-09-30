@@ -640,7 +640,7 @@ class LPt extends L {
 
   @override
   String get needsServer =>
-      'Esta funcionalidade precisa de um servidor e ainda não está ligada';
+      'Não foi possível conectar. Verifique sua internet e tente de novo.';
 
   @override
   String get achievements => 'Conquistas';

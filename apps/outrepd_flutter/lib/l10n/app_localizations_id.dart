@@ -634,7 +634,7 @@ class LId extends L {
   String get deleteAccount => 'Hapus akun';
 
   @override
-  String get needsServer => 'Fitur ini memerlukan server dan belum tersambung';
+  String get needsServer => 'Tidak bisa terhubung. Periksa internetmu lalu coba lagi.';
 
   @override
   String get achievements => 'Pencapaian';

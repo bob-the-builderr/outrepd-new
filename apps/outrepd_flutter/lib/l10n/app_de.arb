@@ -223,7 +223,7 @@
   "privacyPolicy": "Datenschutzerklärung",
   "openSourceLicences": "Open-Source-Lizenzen",
   "deleteAccount": "Konto löschen",
-  "needsServer": "Diese Funktion benötigt einen Server und ist noch nicht angebunden",
+  "needsServer": "Keine Verbindung. Prüfe dein Internet und versuche es erneut.",
   "achievements": "Erfolge",
   "roadTitle": "Der Weg zum Meister",
   "allTiers": "Alle Ränge",
