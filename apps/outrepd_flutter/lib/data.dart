@@ -531,7 +531,7 @@ const kSupportEmail = 'support@outrepd.com';
 /// The Play Store listing's id — `applicationId` in android/app/build.gradle.kts.
 const kAndroidPackage = 'com.outrepd.outrepd';
 
-/// The App Store's number for the app ("Apple ID" in App Store Connect).
-/// Empty until the first submission creates one; "Rate the app" stays off
-/// the iPhone until it is filled in.
-const kAppStoreId = '';
+/// The App Store's number for the app ("Apple ID" in App Store Connect), for
+/// the iPhone's "Rate OUTREPD" link. Read back from App Store Connect's API
+/// once the app record existed (.github/workflows/asc-status.yml).
+const kAppStoreId = '6817853725';
