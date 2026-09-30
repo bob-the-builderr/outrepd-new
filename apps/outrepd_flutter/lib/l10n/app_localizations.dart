@@ -4282,6 +4282,24 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Waiting for {name}\'s final count…'**
   String waitingForFinal(String name);
+
+  /// No description provided for @wantsToBeFriends.
+  ///
+  /// In en, this message translates to:
+  /// **'wants to be friends'**
+  String get wantsToBeFriends;
+
+  /// No description provided for @giveUpQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Give up this round?'**
+  String get giveUpQuestion;
+
+  /// No description provided for @giveUpBody.
+  ///
+  /// In en, this message translates to:
+  /// **'It counts as a loss, whatever your count is now.'**
+  String get giveUpBody;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

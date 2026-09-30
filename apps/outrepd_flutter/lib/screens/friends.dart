@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import '../backend/backend.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../player_avatar.dart';
 import '../theme.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
@@ -120,7 +121,8 @@ class _FriendsScreenState extends State<FriendsScreen> {
   Future<void> _openRequests() async {
     await showModalBottomSheet<void>(
       context: context,
-      backgroundColor: context.colors.surface,
+      // The page colour, so each request card stands out from it.
+      backgroundColor: context.colors.background,
       showDragHandle: true,
       builder: (_) => _RequestsSheet(
         requests: _requests,
@@ -465,7 +467,7 @@ class _RequestsSheet extends StatelessWidget {
             l.incomingRequests,
             style: TextStyle(
               color: context.colors.text,
-              fontSize: 16,
+              fontSize: 17,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -480,54 +482,244 @@ class _RequestsSheet extends StatelessWidget {
             ),
           for (final request in requests)
             Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          request.username,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: context.colors.text,
-                            fontSize: 14,
-                          ),
-                        ),
-                        Text(
-                          tierLabel(l, request.tierIdx, request.divIdx),
-                          style: TextStyle(
-                            color: context.colors.muted,
-                            fontSize: 11,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () async {
-                      Navigator.of(context).pop();
-                      await onAnswer(request, false);
-                    },
-                    child: Text(
-                      l.decline,
-                      style: TextStyle(color: context.colors.muted),
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  FilledButton(
-                    onPressed: () async {
-                      Navigator.of(context).pop();
-                      await onAnswer(request, true);
-                    },
-                    child: Text(l.accept),
-                  ),
-                ],
+              padding: const EdgeInsets.only(bottom: 10),
+              child: _RequestCard(
+                request: request,
+                onAnswer: (accept) async {
+                  Navigator.of(context).pop();
+                  await onAnswer(request, accept);
+                },
               ),
             ),
         ],
+      ),
+    );
+  }
+}
+
+/// One request, with enough about whoever sent it to decide on: their photo
+/// and name, when they asked, their rank, best set and record — and the two
+/// answers, each a button a thumb can find.
+class _RequestCard extends StatelessWidget {
+  const _RequestCard({required this.request, required this.onAnswer});
+
+  final FriendRequest request;
+  final ValueChanged<bool> onAnswer;
+
+  String _asked(BuildContext context) {
+    final l = L.of(context);
+    final at = request.askedAt;
+    if (at == null) return l.wantsToBeFriends;
+    final since = DateTime.now().difference(at);
+    final String when;
+    if (since.inMinutes < 60) {
+      when = l.justNow;
+    } else if (since.inHours < 24) {
+      when = l.hoursAgo(localNumber(context, since.inHours));
+    } else {
+      when = relativeDays(context, since.inDays);
+    }
+    return '${l.wantsToBeFriends} · $when';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final ranked = request.placementsDone >= kPlacementDuels;
+    final photo = request.avatarUrl;
+    final wins = localNumber(context, request.wins);
+    final losses = localNumber(context, request.losses);
+
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: context.colors.surface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: context.colors.border, width: 0.5),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              PlayerAvatar(
+                name: request.username,
+                tierIdx: ranked ? request.tierIdx : null,
+                image: photo == null ? null : NetworkImage(photo),
+                size: 52,
+                textColour: context.colors.rival,
+                ringColour: context.colors.surface,
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      request.username,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: context.colors.text,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      _asked(context),
+                      style: TextStyle(
+                        color: context.colors.muted,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(
+                child: _Stat(
+                  value: ranked
+                      ? tierLabel(l, request.tierIdx, request.divIdx)
+                      : l.unranked,
+                  label: l.rankLabel,
+                  colour: ranked
+                      ? kTiers[request.tierIdx.clamp(0, kTiers.length - 1)]
+                            .color
+                      : context.colors.muted,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: _Stat(
+                  value: localNumber(context, request.bestSet),
+                  label: l.bestSet,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: _Stat(value: '$wins–$losses', label: l.record),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          Row(
+            children: [
+              Expanded(
+                child: _AnswerButton(
+                  key: Key('decline-${request.id}'),
+                  label: l.decline,
+                  colour: AppColors.loss,
+                  filled: false,
+                  onTap: () => onAnswer(false),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: _AnswerButton(
+                  key: Key('accept-${request.id}'),
+                  label: l.accept,
+                  colour: AppColors.success,
+                  filled: true,
+                  onTap: () => onAnswer(true),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Stat extends StatelessWidget {
+  const _Stat({required this.value, required this.label, this.colour});
+
+  final String value;
+  final String label;
+  final Color? colour;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+      decoration: BoxDecoration(
+        color: context.colors.surfaceRaised,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: [
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              value,
+              maxLines: 1,
+              style: TextStyle(
+                color: colour ?? context.colors.text,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          const SizedBox(height: 2),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              label,
+              maxLines: 1,
+              style: TextStyle(color: context.colors.muted, fontSize: 11),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AnswerButton extends StatelessWidget {
+  const _AnswerButton({
+    super.key,
+    required this.label,
+    required this.colour,
+    required this.filled,
+    required this.onTap,
+  });
+
+  final String label;
+  final Color colour;
+  final bool filled;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: filled ? colour : Colors.transparent,
+      borderRadius: BorderRadius.circular(12),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          height: 46,
+          alignment: Alignment.center,
+          decoration: filled
+              ? null
+              : BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: colour, width: 1.2),
+                ),
+          child: Text(
+            label,
+            style: TextStyle(
+              color: filled ? context.colors.background : colour,
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
       ),
     );
   }

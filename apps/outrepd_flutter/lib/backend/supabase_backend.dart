@@ -338,6 +338,14 @@ class SupabaseBackend implements Backend {
           username: row['username'] as String,
           tierIdx: (row['tier_idx'] as num?)?.toInt() ?? 0,
           divIdx: (row['div_idx'] as num?)?.toInt() ?? 0,
+          askedAt: DateTime.tryParse(
+            row['asked_at'] as String? ?? '',
+          )?.toLocal(),
+          placementsDone: (row['placements_done'] as num?)?.toInt() ?? 0,
+          bestSet: (row['best_set'] as num?)?.toInt() ?? 0,
+          wins: (row['wins'] as num?)?.toInt() ?? 0,
+          losses: (row['losses'] as num?)?.toInt() ?? 0,
+          avatarUrl: row['avatar_url'] as String?,
         ),
     ];
   }

@@ -2312,4 +2312,13 @@ class LHi extends L {
   String waitingForFinal(String name) {
     return '${name} की अंतिम गिनती का इंतज़ार…';
   }
+
+  @override
+  String get wantsToBeFriends => 'दोस्त बनना चाहते हैं';
+
+  @override
+  String get giveUpQuestion => 'यह राउंड छोड़ दें?';
+
+  @override
+  String get giveUpBody => 'इसे हार माना जाएगा, आपकी अभी की गिनती चाहे जो हो।';
 }

@@ -2312,4 +2312,13 @@ class LEn extends L {
   String waitingForFinal(String name) {
     return 'Waiting for ${name}\'s final count…';
   }
+
+  @override
+  String get wantsToBeFriends => 'wants to be friends';
+
+  @override
+  String get giveUpQuestion => 'Give up this round?';
+
+  @override
+  String get giveUpBody => 'It counts as a loss, whatever your count is now.';
 }

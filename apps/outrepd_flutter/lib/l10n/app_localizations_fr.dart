@@ -2322,4 +2322,13 @@ class LFr extends L {
   String waitingForFinal(String name) {
     return 'En attente du total final de ${name}…';
   }
+
+  @override
+  String get wantsToBeFriends => 'veut être ton ami';
+
+  @override
+  String get giveUpQuestion => 'Abandonner cette manche ?';
+
+  @override
+  String get giveUpBody => 'C\'est une défaite, quel que soit ton total actuel.';
 }

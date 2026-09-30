@@ -2320,4 +2320,13 @@ class LEs extends L {
   String waitingForFinal(String name) {
     return 'Esperando el conteo final de ${name}…';
   }
+
+  @override
+  String get wantsToBeFriends => 'quiere ser tu amigo';
+
+  @override
+  String get giveUpQuestion => '¿Rendirte en esta ronda?';
+
+  @override
+  String get giveUpBody => 'Cuenta como derrota, sea cual sea tu conteo ahora.';
 }

@@ -1221,19 +1221,31 @@ as $$
    order by p.last_seen desc;
 $$;
 
--- Requests waiting on an answer from this account, oldest first.
+-- Requests waiting on an answer from this account, oldest first — with
+-- enough about whoever asked (photo, rank, best set, record) to decide on,
+-- rather than a bare name.
+--
+-- Dropped first: adding columns changes the table it returns, which
+-- `create or replace` refuses.
+drop function if exists friend_requests();
 create or replace function friend_requests()
 returns table (
   id uuid,
   username text,
   tier_idx int,
   div_idx int,
-  asked_at timestamptz
+  asked_at timestamptz,
+  placements_done int,
+  best_set int,
+  wins int,
+  losses int,
+  avatar_url text
 )
 language sql
 stable
 as $$
-  select p.id, p.username, p.tier_idx, p.div_idx, f.created_at
+  select p.id, p.username, p.tier_idx, p.div_idx, f.created_at,
+         p.placements_done, p.best_set, p.wins, p.losses, p.avatar_url
     from friendships f
     join profiles p on p.id = f.requester
    where f.addressee = auth.uid()

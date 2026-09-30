@@ -721,5 +721,8 @@
   "opponentGaveUp": "{name} desistiu. Termina a ronda para ficares com a vitória.",
   "calledOffTitle": "Partida cancelada",
   "calledOffBody": "{name} não ficou em posição a tempo. Nada foi registado.",
-  "waitingForFinal": "À espera da contagem final de {name}…"
+  "waitingForFinal": "À espera da contagem final de {name}…",
+  "wantsToBeFriends": "quer ser teu amigo",
+  "giveUpQuestion": "Desistir desta ronda?",
+  "giveUpBody": "Conta como derrota, seja qual for a tua contagem agora."
 }

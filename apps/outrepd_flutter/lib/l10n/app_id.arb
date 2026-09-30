@@ -721,5 +721,8 @@
   "opponentGaveUp": "{name} menyerah. Selesaikan ronde untuk menang.",
   "calledOffTitle": "Pertandingan dibatalkan",
   "calledOffBody": "{name} tidak bersiap di posisi tepat waktu. Tidak ada yang dicatat.",
-  "waitingForFinal": "Menunggu hitungan akhir {name}…"
+  "waitingForFinal": "Menunggu hitungan akhir {name}…",
+  "wantsToBeFriends": "ingin berteman",
+  "giveUpQuestion": "Menyerah di ronde ini?",
+  "giveUpBody": "Ini dihitung kalah, berapa pun hitunganmu sekarang."
 }

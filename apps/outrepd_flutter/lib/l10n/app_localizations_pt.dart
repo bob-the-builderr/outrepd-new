@@ -2318,4 +2318,13 @@ class LPt extends L {
   String waitingForFinal(String name) {
     return 'À espera da contagem final de ${name}…';
   }
+
+  @override
+  String get wantsToBeFriends => 'quer ser teu amigo';
+
+  @override
+  String get giveUpQuestion => 'Desistir desta ronda?';
+
+  @override
+  String get giveUpBody => 'Conta como derrota, seja qual for a tua contagem agora.';
 }

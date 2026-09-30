@@ -2308,4 +2308,13 @@ class LTr extends L {
   String waitingForFinal(String name) {
     return '${name} için son sayı bekleniyor…';
   }
+
+  @override
+  String get wantsToBeFriends => 'arkadaş olmak istiyor';
+
+  @override
+  String get giveUpQuestion => 'Bu turdan çekilmek mi?';
+
+  @override
+  String get giveUpBody => 'Şu anki sayın ne olursa olsun yenilgi sayılır.';
 }

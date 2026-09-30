@@ -2319,4 +2319,13 @@ class LIt extends L {
   String waitingForFinal(String name) {
     return 'In attesa del conteggio finale di ${name}…';
   }
+
+  @override
+  String get wantsToBeFriends => 'vuole essere tuo amico';
+
+  @override
+  String get giveUpQuestion => 'Arrenderti in questo round?';
+
+  @override
+  String get giveUpBody => 'Conta come sconfitta, qualunque sia il tuo conteggio ora.';
 }

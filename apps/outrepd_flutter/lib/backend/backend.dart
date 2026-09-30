@@ -380,12 +380,30 @@ class FriendRequest {
     required this.username,
     required this.tierIdx,
     required this.divIdx,
+    this.askedAt,
+    this.placementsDone = 0,
+    this.bestSet = 0,
+    this.wins = 0,
+    this.losses = 0,
+    this.avatarUrl,
   });
 
   final String id;
   final String username;
   final int tierIdx;
   final int divIdx;
+
+  /// When they asked.
+  final DateTime? askedAt;
+
+  /// Below five they have no rank yet: the card says Unranked rather than
+  /// read their placeholder tier as one.
+  final int placementsDone;
+
+  final int bestSet;
+  final int wins;
+  final int losses;
+  final String? avatarUrl;
 }
 
 /// The friend code in what somebody typed to add a friend, or null when it

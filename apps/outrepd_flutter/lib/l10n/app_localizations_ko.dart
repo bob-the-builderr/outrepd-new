@@ -2278,4 +2278,13 @@ class LKo extends L {
   String waitingForFinal(String name) {
     return '${name} 님의 최종 기록을 기다리는 중…';
   }
+
+  @override
+  String get wantsToBeFriends => '친구가 되고 싶어 해요';
+
+  @override
+  String get giveUpQuestion => '이번 라운드를 포기할까요?';
+
+  @override
+  String get giveUpBody => '지금 횟수와 상관없이 패배로 기록돼요.';
 }

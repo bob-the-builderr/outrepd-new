@@ -721,5 +721,8 @@
   "opponentGaveUp": "{name} сдался(ась). Закончите раунд, чтобы забрать победу.",
   "calledOffTitle": "Матч отменён",
   "calledOffBody": "{name} не занял(а) позицию вовремя. Ничего не записано.",
-  "waitingForFinal": "Ждём итоговый счёт {name}…"
+  "waitingForFinal": "Ждём итоговый счёт {name}…",
+  "wantsToBeFriends": "хочет дружить",
+  "giveUpQuestion": "Сдаться в этом раунде?",
+  "giveUpBody": "Это засчитается как поражение, каким бы ни был ваш счёт."
 }

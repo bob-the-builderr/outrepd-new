@@ -2258,4 +2258,13 @@ class LZh extends L {
   String waitingForFinal(String name) {
     return '正在等待 ${name} 的最终计数…';
   }
+
+  @override
+  String get wantsToBeFriends => '想和你成为好友';
+
+  @override
+  String get giveUpQuestion => '放弃本回合？';
+
+  @override
+  String get giveUpBody => '无论你现在做了多少个，都算作失败。';
 }

@@ -2313,4 +2313,13 @@ class LId extends L {
   String waitingForFinal(String name) {
     return 'Menunggu hitungan akhir ${name}…';
   }
+
+  @override
+  String get wantsToBeFriends => 'ingin berteman';
+
+  @override
+  String get giveUpQuestion => 'Menyerah di ronde ini?';
+
+  @override
+  String get giveUpBody => 'Ini dihitung kalah, berapa pun hitunganmu sekarang.';
 }

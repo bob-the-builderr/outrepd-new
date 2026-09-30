@@ -721,5 +721,8 @@
   "opponentGaveUp": "{name} a abandonné. Termine la manche pour gagner.",
   "calledOffTitle": "Match annulé",
   "calledOffBody": "{name} ne s'est pas mis en position à temps. Rien n'a été enregistré.",
-  "waitingForFinal": "En attente du total final de {name}…"
+  "waitingForFinal": "En attente du total final de {name}…",
+  "wantsToBeFriends": "veut être ton ami",
+  "giveUpQuestion": "Abandonner cette manche ?",
+  "giveUpBody": "C'est une défaite, quel que soit ton total actuel."
 }

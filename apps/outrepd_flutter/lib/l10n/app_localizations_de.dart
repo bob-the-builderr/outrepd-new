@@ -2324,4 +2324,13 @@ class LDe extends L {
   String waitingForFinal(String name) {
     return 'Warte auf das Endergebnis von ${name} …';
   }
+
+  @override
+  String get wantsToBeFriends => 'möchte befreundet sein';
+
+  @override
+  String get giveUpQuestion => 'Diese Runde aufgeben?';
+
+  @override
+  String get giveUpBody => 'Es zählt als Niederlage, egal wie viele du gerade hast.';
 }

@@ -721,5 +721,8 @@
   "opponentGaveUp": "{name} pes etti. Galibiyeti almak için turu bitir.",
   "calledOffTitle": "Maç iptal edildi",
   "calledOffBody": "{name} zamanında pozisyon almadı. Hiçbir şey kaydedilmedi.",
-  "waitingForFinal": "{name} için son sayı bekleniyor…"
+  "waitingForFinal": "{name} için son sayı bekleniyor…",
+  "wantsToBeFriends": "arkadaş olmak istiyor",
+  "giveUpQuestion": "Bu turdan çekilmek mi?",
+  "giveUpBody": "Şu anki sayın ne olursa olsun yenilgi sayılır."
 }

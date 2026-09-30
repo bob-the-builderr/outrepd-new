@@ -721,5 +721,8 @@
   "opponentGaveUp": "{name} si è arreso. Finisci il round per prenderti la vittoria.",
   "calledOffTitle": "Sfida annullata",
   "calledOffBody": "{name} non si è messo in posizione in tempo. Non è stato registrato nulla.",
-  "waitingForFinal": "In attesa del conteggio finale di {name}…"
+  "waitingForFinal": "In attesa del conteggio finale di {name}…",
+  "wantsToBeFriends": "vuole essere tuo amico",
+  "giveUpQuestion": "Arrenderti in questo round?",
+  "giveUpBody": "Conta come sconfitta, qualunque sia il tuo conteggio ora."
 }

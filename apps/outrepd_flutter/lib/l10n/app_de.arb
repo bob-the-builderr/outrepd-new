@@ -721,5 +721,8 @@
   "opponentGaveUp": "{name} hat aufgegeben. Beende die Runde und hol dir den Sieg.",
   "calledOffTitle": "Match abgesagt",
   "calledOffBody": "{name} war nicht rechtzeitig in Position. Es wurde nichts gewertet.",
-  "waitingForFinal": "Warte auf das Endergebnis von {name} …"
+  "waitingForFinal": "Warte auf das Endergebnis von {name} …",
+  "wantsToBeFriends": "möchte befreundet sein",
+  "giveUpQuestion": "Diese Runde aufgeben?",
+  "giveUpBody": "Es zählt als Niederlage, egal wie viele du gerade hast."
 }

@@ -2313,4 +2313,13 @@ class LRu extends L {
   String waitingForFinal(String name) {
     return 'Ждём итоговый счёт ${name}…';
   }
+
+  @override
+  String get wantsToBeFriends => 'хочет дружить';
+
+  @override
+  String get giveUpQuestion => 'Сдаться в этом раунде?';
+
+  @override
+  String get giveUpBody => 'Это засчитается как поражение, каким бы ни был ваш счёт.';
 }

@@ -2268,4 +2268,13 @@ class LJa extends L {
   String waitingForFinal(String name) {
     return '${name} の最終カウントを待っています…';
   }
+
+  @override
+  String get wantsToBeFriends => 'フレンドになりたがっています';
+
+  @override
+  String get giveUpQuestion => 'このラウンドを棄権しますか？';
+
+  @override
+  String get giveUpBody => '今のカウントに関係なく、負けになります。';
 }

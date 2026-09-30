@@ -1350,5 +1350,8 @@
         "type": "String"
       }
     }
-  }
+  },
+  "wantsToBeFriends": "wants to be friends",
+  "giveUpQuestion": "Give up this round?",
+  "giveUpBody": "It counts as a loss, whatever your count is now."
 }

@@ -230,6 +230,22 @@ void main() {
       expect(find.text('Give up'), findsOneWidget);
     });
 
+    testWidgets('giving up asks first, and staying keeps the round going',
+        (tester) async {
+      await open(tester, duel: duel);
+
+      // Red and on the score card, where it can be found — and so one tap
+      // no longer ends the round as a loss on the spot.
+      await tester.tap(find.byKey(const Key('stopButton')));
+      await tester.pumpAndSettle();
+      expect(find.text('Give up this round?'), findsOneWidget);
+
+      await tester.tap(find.text('Stay'));
+      await tester.pumpAndSettle();
+      expect(find.text('Give up this round?'), findsNothing);
+      expect(find.text('Give up'), findsOneWidget);
+    });
+
     testWidgets('the score bar has height once the bout is running',
         (tester) async {
       final source = await open(tester, duel: duel);

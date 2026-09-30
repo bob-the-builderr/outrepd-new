@@ -721,5 +721,8 @@
   "opponentGaveUp": "{name} ने हार मान ली। जीत के लिए राउंड पूरा करें।",
   "calledOffTitle": "मैच रद्द हो गया",
   "calledOffBody": "{name} समय पर पोज़िशन में नहीं आए। कुछ भी दर्ज नहीं हुआ।",
-  "waitingForFinal": "{name} की अंतिम गिनती का इंतज़ार…"
+  "waitingForFinal": "{name} की अंतिम गिनती का इंतज़ार…",
+  "wantsToBeFriends": "दोस्त बनना चाहते हैं",
+  "giveUpQuestion": "यह राउंड छोड़ दें?",
+  "giveUpBody": "इसे हार माना जाएगा, आपकी अभी की गिनती चाहे जो हो।"
 }

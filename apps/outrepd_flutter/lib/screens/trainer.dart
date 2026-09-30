@@ -519,6 +519,42 @@ class _TrainerScreenState extends State<TrainerScreen>
     Sounds.instance.play(Cue.go);
   }
 
+  /// Give up, after saying what it costs. A big red button on the score card
+  /// is easy to find, which is the point, and easy to hit by mistake, which
+  /// is not: one tap used to end the round as a loss on the spot.
+  Future<void> _confirmGiveUp() async {
+    final l = L.of(context);
+    final sure = await showDialog<bool>(
+      context: context,
+      builder: (dialog) => AlertDialog(
+        backgroundColor: _panel,
+        title: Text(
+          l.giveUpQuestion,
+          style: context.type.heading.copyWith(color: Colors.white),
+        ),
+        content: Text(
+          l.giveUpBody,
+          style: const TextStyle(color: _dim),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialog).pop(false),
+            child: Text(l.stay, style: const TextStyle(color: Colors.white)),
+          ),
+          TextButton(
+            key: const Key('confirmGiveUp'),
+            onPressed: () => Navigator.of(dialog).pop(true),
+            child: Text(
+              l.giveUp,
+              style: const TextStyle(color: _giveUpRed),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (sure == true && mounted) await _stop(gaveUp: true);
+  }
+
   /// A live match that never started: the other lifter did not get into
   /// position in time. Nothing was lifted, so nothing goes back but the fact.
   Future<void> _callOff() async {
@@ -957,6 +993,9 @@ class _TrainerScreenState extends State<TrainerScreen>
                   duel: widget.duel,
                   live: _stage == _Stage.counting,
                   session: widget.live,
+                  onStop: widget.duel == null
+                      ? () => _stop()
+                      : _confirmGiveUp,
                 ),
                 // Live, when the other phone has gone quiet or given up: the
                 // number that stopped moving needs a reason beside it, or it
@@ -1183,20 +1222,17 @@ class _TrainerScreenState extends State<TrainerScreen>
               ),
             ),
 
-          // What is riding on this, and the way out of it. Both small: neither
-          // is what anybody is here for, and the stop button in particular
-          // should take a deliberate press rather than a panicked one.
+          // What is riding on this. Small: it is not what anybody is here for.
+          // The way out is on the score card, where it can be found.
           Positioned(
             left: 12,
             right: 12,
             bottom: 12,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 if (widget.duel case final duel?)
                   // Flexible, because the rank label runs long in several of
-                  // the thirteen languages and this row also has to hold the
-                  // way out.
+                  // the thirteen languages.
                   Flexible(
                     child: Text(
                       duel.rankLabel,
@@ -1213,29 +1249,6 @@ class _TrainerScreenState extends State<TrainerScreen>
                         setState(() => _showNumbers = !_showNumbers),
                     child: const SizedBox(width: 60, height: 20),
                   ),
-                GestureDetector(
-                  // In a duel this button is Give up, and giving up is a loss.
-                  onTap: () => _stop(gaveUp: widget.duel != null),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 11,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: Colors.white.withValues(alpha: 0.3),
-                        width: 0.5,
-                      ),
-                    ),
-                    child: Text(
-                      widget.duel == null
-                          ? L.of(context).finish
-                          : L.of(context).giveUp,
-                      style: const TextStyle(color: Colors.white, fontSize: 10),
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
@@ -1252,6 +1265,10 @@ const _accent = Color(0xFF4BB8FA);
 const _dim = Color(0xFF9AA6B4);
 const _panel = Color(0xFF11161C);
 const _panelEdge = Color(0xFF232C36);
+
+/// Giving up: the one red thing on the camera screen, because it is the one
+/// thing on it that costs a match.
+const _giveUpRed = Color(0xFFE24B4A);
 
 class _DarkPanel extends StatelessWidget {
   const _DarkPanel({required this.child});
@@ -1377,6 +1394,7 @@ class _ScoreCard extends StatelessWidget {
     required this.duel,
     required this.live,
     this.session,
+    this.onStop,
   });
 
   final int yours;
@@ -1391,6 +1409,10 @@ class _ScoreCard extends StatelessWidget {
   /// A live match, when this is one: the tag on top, and the other side
   /// dimmed while their phone is quiet.
   final LiveSession? session;
+
+  /// The way out: Give up in a match, in red; Finish in practice, where
+  /// nothing is lost by stopping.
+  final VoidCallback? onStop;
 
   @override
   Widget build(BuildContext context) {
@@ -1488,7 +1510,64 @@ class _ScoreCard extends StatelessWidget {
               ),
             ),
           ],
+          if (onStop case final stop?) ...[
+            const SizedBox(height: 12),
+            Center(child: _StopButton(inMatch: duel != null, onTap: stop)),
+          ],
         ],
+      ),
+    );
+  }
+}
+
+/// Give up, in the middle of the score card: red, and big enough to find at
+/// a glance from the floor. Finish in practice, plain, since nothing is lost.
+class _StopButton extends StatelessWidget {
+  const _StopButton({required this.inMatch, required this.onTap});
+
+  final bool inMatch;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    return Material(
+      color: inMatch ? _giveUpRed : Colors.transparent,
+      borderRadius: BorderRadius.circular(22),
+      child: InkWell(
+        key: const Key('stopButton'),
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(22),
+        child: Container(
+          constraints: const BoxConstraints(minWidth: 150),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 11),
+          decoration: inMatch
+              ? null
+              : BoxDecoration(
+                  borderRadius: BorderRadius.circular(22),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.5),
+                  ),
+                ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (inMatch) ...[
+                const Icon(Icons.flag_outlined, size: 18, color: Colors.white),
+                const SizedBox(width: 8),
+              ],
+              Text(
+                inMatch ? l.giveUp : l.finish,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
