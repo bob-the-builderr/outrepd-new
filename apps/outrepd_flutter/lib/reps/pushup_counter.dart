@@ -26,6 +26,7 @@ import 'dart:collection';
 import 'dart:math' as math;
 
 import 'pose.dart';
+import 'posture.dart';
 import 'recording.dart';
 
 /// The bottom line: at or below this share of lockout height, the lifter has
@@ -90,6 +91,21 @@ const kCleanDepth = 0.8;
 /// have gone the other way on a different frame", not a judgement of form.
 const kBorderlineBand = 0.05;
 const kNearMissBand = 0.05;
+
+/// Stood up rather than down: judged over this long, seconds, and true when
+/// at least [kStoodUpShare] of the frames in it that could be measured say
+/// so ([isStoodUp] in posture.dart — the torso long against the shoulders
+/// and running down the frame).
+///
+/// The hands test alone let a lifter on their feet count reps: hands held
+/// still in front of them, bobbing the head down toward them and back, reads
+/// exactly like a push-up's head travelling to planted hands. On the
+/// lifter's own camera the torso measured 0.16–0.53 shoulder widths through
+/// real reps and 0.68–0.91 standing. Over a window, never one frame, so a
+/// hip the tracker throws somewhere for a moment cannot cost a real rep; and
+/// frames where the hips cannot be seen — often, head-on — say nothing.
+const kStoodUpSeconds = 0.5;
+const kStoodUpShare = 0.6;
 
 // ─────────────────────────────── the hands ───────────────────────────────
 
@@ -306,6 +322,10 @@ class PushupTracker {
   final _widths = Queue<(int, double)>();
   final _tops = Queue<double>.of(List.filled(kLockoutSeeds, kLockoutPrior));
 
+  /// Recent frames' say on whether the body is stood up; see
+  /// [kStoodUpSeconds].
+  final _stances = Queue<(int, bool)>();
+
   double? _smooth;
   int? _lastAt;
   _Phase _phase = _Phase.idle;
@@ -391,7 +411,22 @@ class PushupTracker {
 
   double get _lockout => _median(_tops);
 
+  /// Whether the body has been stood up over the last [kStoodUpSeconds].
+  /// False without enough frames to say — no evidence is not evidence.
+  bool get standing {
+    if (_stances.length < 3) return false;
+    final up = _stances.where((s) => s.$2).length;
+    return up >= _stances.length * kStoodUpShare;
+  }
+
   PushupReading add(int atMs, BodyPose pose) {
+    final stance = isStoodUp(pose);
+    if (stance != null) _stances.add((atMs, stance));
+    while (_stances.isNotEmpty &&
+        atMs - _stances.first.$1 > kStoodUpSeconds * 1000) {
+      _stances.removeFirst();
+    }
+
     final head = pose.confident(Joint.nose);
     if (head != null) _heads.add((atMs, head.y));
     final width = _shoulderWidth(pose);
@@ -453,7 +488,9 @@ class PushupTracker {
             (share > kBottomShare &&
                 top != null &&
                 top / _lockout >= kTopShare);
-        if (_phase == _Phase.idle && seenTop && _planted) {
+        // And not on their feet: somebody standing with their hands still
+        // is not at the top of a push-up.
+        if (_phase == _Phase.idle && seenTop && _planted && !standing) {
           _phase = _Phase.up;
           _dipLow = share;
         }
@@ -481,19 +518,21 @@ class PushupTracker {
           final lastRep = _lastRepAt;
           final quickEnough =
               lastRep == null || atMs - lastRep >= kMinRepSeconds * 1000;
-          if (_planted && quickEnough) {
+          final stoodUp = standing;
+          if (_planted && quickEnough && !stoodUp) {
             _reps++;
             _repTimes.add(atMs - _origin);
             _repBottoms.add(_dipLow!);
             _lastRepAt = atMs;
             counted = true;
-          } else if (!_planted) {
-            // A full swing that finished with a hand off the floor: standing
-            // up at the end of a set, or an arm lifted to flex. Not a rep —
+          } else if (!_planted || stoodUp) {
+            // A full swing that finished with a hand off the floor — standing
+            // up at the end of a set, or an arm lifted to flex — or with the
+            // body on its feet, bobbing toward hands held still. Not a rep,
             // and nothing to build the next one on.
             _refusedAt.add(atMs - _origin);
           }
-          _phase = _planted ? _Phase.up : _Phase.idle;
+          _phase = _planted && !stoodUp ? _Phase.up : _Phase.idle;
           _excursionTop = h;
           _dipLow = share;
         }

@@ -209,6 +209,36 @@ void main() {
       expect(countPushups(timed(poses)).reps, 0);
     });
 
+    test('on their feet, bowing toward hands held still, is not a rep', () {
+      // Found on a phone: stood in front of the camera, hands still in front
+      // of the chest, head lowered toward them and back. The hands test reads
+      // those hands as planted and the nose travels as it does in a push-up;
+      // the torso, long and upright, is what says otherwise.
+      final bows = [
+        for (var i = 0; i < 20; i++) bowPose(1),
+        for (var rep = 0; rep < 5; rep++)
+          for (var f = 0; f < 30; f++) bowPose(repShape(f / 30)),
+        for (var i = 0; i < 10; i++) bowPose(1),
+      ];
+      expect(isStoodUp(bowPose(1)), isTrue);
+      expect(isStoodUp(bowPose(0)), isTrue);
+      expect(isStoodUp(pushUpPose(1)), isFalse);
+      expect(isStoodUp(pushUpPose(0)), isFalse);
+      expect(countPushups(timed(bows)).reps, 0);
+    });
+
+    test('a hip nobody can see is no reason to refuse a rep', () {
+      // Head-on, the hips often hide behind the shoulders. Not seeing them is
+      // not seeing somebody stand.
+      BodyPose noHips(BodyPose pose) => BodyPose({
+        for (final MapEntry(:key, :value) in pose.points.entries)
+          if (key != Joint.leftHip && key != Joint.rightHip) key: value,
+      });
+      expect(isStoodUp(noHips(pushUpPose(1))), isNull);
+      final set = [for (final pose in pushUpSet(6)) noHips(pose)];
+      expect(countPushups(timed(set)).reps, 6);
+    });
+
     test('a set that begins already in position loses nothing off the front',
         () {
       // The round starts once the lifter is down, so the first frame is

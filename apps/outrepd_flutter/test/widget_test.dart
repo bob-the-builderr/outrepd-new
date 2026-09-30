@@ -205,6 +205,37 @@ void main() {
     expect(find.text('CALIBRATING'), findsOneWidget);
   });
 
+  testWidgets('held in frame a moment, the framing check moves on by itself',
+      (tester) async {
+    // The lifter is on the floor a metre from the phone; the button is out
+    // of reach.
+    phone(tester);
+    final source = _ScriptedSource();
+    addTearDown(source.dispose);
+    await tester.pumpWidget(_app(() => source));
+    await tester.pumpAndSettle();
+
+    await tap(tester, 'Get started');
+    await tap(tester, 'Continue');
+    await tap(tester, 'Continue');
+    await tap(tester, 'Continue');
+    await tap(tester, '16 or over');
+    await tap(tester, 'I understand outrepd counts reps and does not give '
+        'medical or training advice. I’ll stop if something hurts.');
+    await tap(tester, 'Continue');
+    await tap(tester, 'Allow camera');
+    await tap(tester, 'I’m set up');
+    expect(find.text('Get into a push-up position'), findsOneWidget);
+
+    for (var i = 0; i < 50; i++) {
+      source.emit(_framedBody());
+      await tester.pump(const Duration(milliseconds: kFrameMs));
+    }
+    await tester.pumpAndSettle();
+    expect(find.text('Get into a push-up position'), findsNothing);
+    expect(find.text('CALIBRATING'), findsOneWidget);
+  });
+
   testWidgets('three push-ups finish the calibration', (tester) async {
     // The step a new lifter cannot get past if the counter does not count.
     // It was scored from an elbow angle, which a phone on the floor reads
@@ -327,13 +358,19 @@ void main() {
     await tester.tap(find.byType(FilledButton));
     await tester.pumpAndSettle();
 
-    // The code stage's six segmented boxes, filled one at a time — the
-    // sixth submits on its own rather than waiting on a button.
-    final boxes = find.byType(TextField);
-    for (var i = 0; i < 6; i++) {
-      await tester.enterText(boxes.at(i), '${(i % 9) + 1}');
-      await tester.pump();
-    }
+    // The code stage: six boxes over one field. Typed a digit at a time, a
+    // mistake deleted straight back across a box — which six separate fields
+    // could not do from a phone keyboard — and the sixth digit submits on
+    // its own rather than waiting on a button.
+    final code = find.byKey(const Key('codeField'));
+    await tester.enterText(code, '1239');
+    await tester.pump();
+    expect(find.text('9'), findsOneWidget);
+    await tester.enterText(code, '12');
+    await tester.pump();
+    expect(find.text('9'), findsNothing);
+    expect(find.text('3'), findsNothing);
+    await tester.enterText(code, '123456');
     await tester.pumpAndSettle();
 
     expect(find.text('Unranked'), findsOneWidget);

@@ -1286,13 +1286,42 @@ class _FramingCheckState extends State<_FramingCheck> {
   bool get _ankles => _sees(_pose, [Joint.leftAnkle, Joint.rightAnkle]);
   bool get _ready => _core && _wrists && _ankles;
 
+  /// Since when the whole body has been in view without a break.
+  DateTime? _readySince;
+  bool _movedOn = false;
+
+  /// How long the whole body has to stay in view before the step moves on by
+  /// itself. The lifter is on the floor a metre from the phone; reaching over
+  /// to press a button means getting up and coming back. A moment of it, not
+  /// the first frame, so a body passing through the frame on its way down
+  /// does not skip the check.
+  static const _hold = Duration(milliseconds: 1200);
+
+  void _onPose(BodyPose pose) {
+    setState(() => _pose = pose);
+    if (_movedOn) return;
+    if (!_ready) {
+      _readySince = null;
+      return;
+    }
+    final now = clock.now();
+    _readySince ??= now;
+    if (now.difference(_readySince!) >= _hold) _moveOn();
+  }
+
+  void _moveOn() {
+    if (_movedOn) return;
+    _movedOn = true;
+    widget.onNext();
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
 
     return _CameraStage(
       poseSource: widget.poseSource,
-      onPose: (pose) => setState(() => _pose = pose),
+      onPose: _onPose,
       builder: (context, _) => Stack(
         children: [
           Positioned(
@@ -1325,9 +1354,10 @@ class _FramingCheckState extends State<_FramingCheck> {
             left: 20,
             right: 20,
             bottom: 22,
+            // Still there for anybody who would rather not wait the moment.
             child: _Primary(
               label: l.obLooksGood,
-              onTap: _ready ? widget.onNext : null,
+              onTap: _ready ? _moveOn : null,
             ),
           ),
         ],

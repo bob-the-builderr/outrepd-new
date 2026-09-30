@@ -11,7 +11,6 @@ library;
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../backend/backend.dart';
 import '../career.dart';
@@ -473,12 +472,13 @@ class VerifyCodeScreen extends StatefulWidget {
 }
 
 class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
-  final _digits = List<String>.filled(_kCodeLength, '');
-  final _controllers = List.generate(
-    _kCodeLength,
-    (_) => TextEditingController(),
-  );
-  final _nodes = List.generate(_kCodeLength, (_) => FocusNode());
+  /// One field behind the six boxes, not six fields. With six, a phone's
+  /// keyboard sends nothing when delete is pressed in an empty box, so
+  /// deleting stopped at every box and the lifter had to tap back into the
+  /// one before it. One field deletes, types and pastes straight through,
+  /// and the boxes only show what is in it.
+  final _field = TextEditingController();
+  final _focus = FocusNode();
 
   bool _busy = false;
   bool _wrong = false;
@@ -494,12 +494,8 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   @override
   void dispose() {
     _timer?.cancel();
-    for (final c in _controllers) {
-      c.dispose();
-    }
-    for (final n in _nodes) {
-      n.dispose();
-    }
+    _field.dispose();
+    _focus.dispose();
     super.dispose();
   }
 
@@ -513,40 +509,23 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
     });
   }
 
-  String get _code => _digits.join();
+  String get _code => _field.text;
 
-  void _onDigit(int index, String value) {
-    // A paste can land the whole code in one field — spread it across the
-    // rest rather than reject it as too long for a single box.
+  void _onChanged(String value) {
+    // Digits only, and no more than the code has — a paste of a whole line
+    // from the email still leaves just the code.
     final clean = value.replaceAll(RegExp(r'\D'), '');
-    if (clean.length > 1) {
-      for (var i = 0; i < clean.length && index + i < _kCodeLength; i++) {
-        _digits[index + i] = clean[i];
-        _controllers[index + i].text = clean[i];
-      }
-      final next = (index + clean.length).clamp(0, _kCodeLength - 1);
-      _nodes[next].requestFocus();
-      setState(() => _wrong = false);
-      if (_code.length == _kCodeLength) _submit();
-      return;
+    final code = clean.length > _kCodeLength
+        ? clean.substring(0, _kCodeLength)
+        : clean;
+    if (code != value) {
+      _field.value = TextEditingValue(
+        text: code,
+        selection: TextSelection.collapsed(offset: code.length),
+      );
     }
-
-    setState(() {
-      _digits[index] = clean;
-      _wrong = false;
-    });
-    if (clean.isNotEmpty && index < _kCodeLength - 1) {
-      _nodes[index + 1].requestFocus();
-    }
-    if (_code.length == _kCodeLength) _submit();
-  }
-
-  void _onBackspace(int index) {
-    if (_digits[index].isEmpty && index > 0) {
-      _nodes[index - 1].requestFocus();
-      _controllers[index - 1].clear();
-      setState(() => _digits[index - 1] = '');
-    }
+    setState(() => _wrong = false);
+    if (code.length == _kCodeLength) _submit();
   }
 
   Future<void> _submit() async {
@@ -624,12 +603,9 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
       );
     }
     if (!mounted) return;
-    for (var i = 0; i < _kCodeLength; i++) {
-      _controllers[i].clear();
-      _digits[i] = '';
-    }
+    _field.clear();
     setState(() => _wrong = false);
-    _nodes[0].requestFocus();
+    _focus.requestFocus();
     _startCountdown();
   }
 
@@ -652,17 +628,46 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                 subtitle: l.codeSentTo(widget.email),
               ),
               const SizedBox(height: 26),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // The six boxes draw what is in the one field underneath them;
+              // tapping anywhere on them is tapping the field.
+              Stack(
                 children: [
-                  for (var i = 0; i < _kCodeLength; i++)
-                    _CodeBox(
-                      controller: _controllers[i],
-                      focusNode: _nodes[i],
-                      error: _wrong,
-                      onChanged: (v) => _onDigit(i, v),
-                      onBackspace: () => _onBackspace(i),
+                  ListenableBuilder(
+                    listenable: Listenable.merge([_field, _focus]),
+                    builder: (context, _) => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        for (var i = 0; i < _kCodeLength; i++)
+                          _CodeBox(
+                            digit: i < _code.length ? _code[i] : '',
+                            // The box the next digit goes into.
+                            active: _focus.hasFocus &&
+                                i == _code.length.clamp(0, _kCodeLength - 1),
+                            error: _wrong,
+                          ),
+                      ],
                     ),
+                  ),
+                  Positioned.fill(
+                    child: Opacity(
+                      opacity: 0,
+                      child: TextField(
+                        key: const Key('codeField'),
+                        controller: _field,
+                        focusNode: _focus,
+                        autofocus: true,
+                        keyboardType: TextInputType.number,
+                        autofillHints: const [AutofillHints.oneTimeCode],
+                        showCursor: false,
+                        maxLength: _kCodeLength,
+                        onChanged: _onChanged,
+                        decoration: const InputDecoration(
+                          counterText: '',
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
               if (_wrong) ...[
@@ -729,70 +734,45 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   }
 }
 
+/// One of the six boxes: what the field under them holds at this place, drawn
+/// the way the six separate fields used to look — the next box to fill ringed
+/// in the brand colour, every box in red when the code was wrong.
 class _CodeBox extends StatelessWidget {
   const _CodeBox({
-    required this.controller,
-    required this.focusNode,
+    required this.digit,
+    required this.active,
     required this.error,
-    required this.onChanged,
-    required this.onBackspace,
   });
 
-  final TextEditingController controller;
-  final FocusNode focusNode;
+  final String digit;
+  final bool active;
   final bool error;
-  final ValueChanged<String> onChanged;
-  final VoidCallback onBackspace;
 
   @override
   Widget build(BuildContext context) {
-    final borderColor = error ? AppColors.loss : context.colors.border;
-    return SizedBox(
+    final Color border;
+    if (error) {
+      border = AppColors.loss;
+    } else if (active) {
+      border = context.colors.brand;
+    } else {
+      border = context.colors.border;
+    }
+    return Container(
       width: 44,
       height: 54,
-      child: KeyboardListener(
-        focusNode: FocusNode(skipTraversal: true, canRequestFocus: false),
-        onKeyEvent: (event) {
-          if (event is KeyDownEvent &&
-              event.logicalKey == LogicalKeyboardKey.backspace &&
-              controller.text.isEmpty) {
-            onBackspace();
-          }
-        },
-        child: TextField(
-          controller: controller,
-          focusNode: focusNode,
-          textAlign: TextAlign.center,
-          keyboardType: TextInputType.number,
-          maxLength: _kCodeLength,
-          onChanged: onChanged,
-          style: TextStyle(
-            color: error ? AppColors.loss : context.colors.text,
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-          ),
-          cursorColor: context.colors.brand,
-          decoration: InputDecoration(
-            counterText: '',
-            filled: true,
-            fillColor: context.colors.surface,
-            contentPadding: const EdgeInsets.symmetric(vertical: 12),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: borderColor),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: borderColor),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(
-                color: error ? AppColors.loss : context.colors.brand,
-                width: 1.5,
-              ),
-            ),
-          ),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: context.colors.surface,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: border, width: active || error ? 1.5 : 1),
+      ),
+      child: Text(
+        digit,
+        style: TextStyle(
+          color: error ? AppColors.loss : context.colors.text,
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
         ),
       ),
     );

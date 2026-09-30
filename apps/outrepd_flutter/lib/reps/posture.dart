@@ -95,6 +95,23 @@ bool _bodyIsDown(BodyPose pose) {
   return (dy.abs() / torso) <= kFlatTorso;
 }
 
+/// Whether the body is stood up facing the camera: the opposite of
+/// [_bodyIsDown], but only when there is something to measure. Null when the
+/// shoulders or hips cannot be seen — head-on, the hips often hide behind the
+/// shoulders in a real push-up, and not seeing them is no evidence of
+/// standing.
+bool? isStoodUp(BodyPose pose) {
+  final shoulder = midpoint(pose, Joint.leftShoulder, Joint.rightShoulder);
+  final hip = midpoint(pose, Joint.leftHip, Joint.rightHip);
+  if (shoulder == null || hip == null || shoulderWidth(pose) == null) {
+    return null;
+  }
+  final dx = hip.$1 - shoulder.$1;
+  final dy = hip.$2 - shoulder.$2;
+  if (math.sqrt(dx * dx + dy * dy) < 0.01) return null;
+  return !_bodyIsDown(pose);
+}
+
 /// What a single frame can say. The hands-planted test needs frames either
 /// side of it and lives in [inPushUpPosition].
 ///

@@ -98,6 +98,33 @@ BodyPose squatPose(double up) {
   });
 }
 
+/// On their feet, hands held still in front at chest height, bowing the head
+/// down toward them and back — what a lifter did to see whether standing
+/// counts, and it did. [up] is 1 upright and 0 with the head at the hands.
+///
+/// Only the head and shoulders move. The hands stay exactly where they are,
+/// so the hands test reads them as planted, and the nose travels from about
+/// one shoulder width above them to nothing, as it does in a push-up. What
+/// gives it away is the torso: long, and running down the frame.
+BodyPose bowPose(double up) {
+  final drop = (1 - up) * 0.17;
+  return BodyPose({
+    Joint.nose: _at(0.50, 0.10 + drop),
+    Joint.leftShoulder: _at(0.42, 0.20 + drop * 0.4),
+    Joint.rightShoulder: _at(0.58, 0.20 + drop * 0.4),
+    Joint.leftElbow: _at(0.40, 0.27),
+    Joint.rightElbow: _at(0.60, 0.27),
+    Joint.leftWrist: _at(0.44, 0.28),
+    Joint.rightWrist: _at(0.56, 0.28),
+    Joint.leftHip: _at(0.44, 0.50),
+    Joint.rightHip: _at(0.56, 0.50),
+    Joint.leftKnee: _at(0.44, 0.70),
+    Joint.rightKnee: _at(0.56, 0.70),
+    Joint.leftAnkle: _at(0.44, 0.90),
+    Joint.rightAnkle: _at(0.56, 0.90),
+  });
+}
+
 /// Every joint of [from] moved [t] of the way to [to].
 BodyPose between(BodyPose from, BodyPose to, double t) => BodyPose({
   for (final joint in from.points.keys)
