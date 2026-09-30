@@ -1,0 +1,11 @@
+
+::group::✅ Passing tests
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/match_card_test.dart: match card won story
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/match_card_test.dart: match card won post
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/match_card_test.dart: match card lost story
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/match_card_test.dart: match card lost post
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_en_test.dart: paywall en small
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_en_test.dart: paywall en tall
+::endgroup::
+
+🎉 6 tests passed.
