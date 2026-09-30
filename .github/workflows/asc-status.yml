@@ -1,0 +1,102 @@
+# Asks App Store Connect what happened to the iPhone builds that were
+# uploaded: still processing, ready for TestFlight, or refused, and why.
+# Runs on Linux with the same API key the iOS workflow signs with, so it
+# costs no Mac minutes. Answers on the ci-builds branch, in asc/status.txt.
+#
+# Run by hand from the Actions tab, or by a push that changes this file.
+
+name: App Store Connect status
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [camera-rep-counter]
+    paths:
+      - '.github/workflows/asc-status.yml'
+
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: pip install --quiet pyjwt cryptography requests
+
+      - name: Ask App Store Connect
+        run: |
+          python3 - <<'PY' > "$RUNNER_TEMP/status.txt" 2>&1 || true
+          import os, time, jwt, requests
+
+          key = os.environ["ASC_KEY_P8"].strip()
+          token = jwt.encode(
+              {"iss": os.environ["ASC_ISSUER_ID"].strip(),
+               "iat": int(time.time()), "exp": int(time.time()) + 900,
+               "aud": "appstoreconnect-v1"},
+              key, algorithm="ES256",
+              headers={"kid": os.environ["ASC_KEY_ID"].strip(), "typ": "JWT"})
+          api = "https://api.appstoreconnect.apple.com/v1"
+          h = {"Authorization": f"Bearer {token}"}
+
+          def get(path, **params):
+              r = requests.get(api + path, headers=h, params=params, timeout=30)
+              if r.status_code >= 400:
+                  print(f"{path} -> HTTP {r.status_code}: {r.text[:600]}")
+                  return None
+              return r.json()
+
+          apps = get("/apps", **{"filter[bundleId]": "com.outrepd.outrepd"})
+          if not apps or not apps["data"]:
+              print("no app with bundle id com.outrepd.outrepd in App Store Connect")
+              raise SystemExit
+          app = apps["data"][0]
+          print(f"app         {app['attributes'].get('name')} ({app['id']})")
+
+          builds = get("/builds", **{"filter[app]": app["id"],
+                                     "sort": "-uploadedDate", "limit": "10"})
+          if builds is not None:
+              if not builds["data"]:
+                  print("builds      none yet")
+              for b in builds["data"]:
+                  a = b["attributes"]
+                  print(f"build       {a.get('version')}  {a.get('processingState')}"
+                        f"  uploaded {a.get('uploadedDate')}"
+                        f"  expired={a.get('expired')}"
+                        f"  encryption={a.get('usesNonExemptEncryption')}")
+
+          # Uploads that never became builds carry the reason here.
+          uploads = get(f"/apps/{app['id']}/buildUploads", limit="10")
+          if uploads is not None:
+              for u in uploads.get("data", []):
+                  a = u["attributes"]
+                  print(f"upload      {a.get('cfBundleVersion')}  {a.get('state')}")
+                  for e in (a.get("errors") or []) + (a.get("warnings") or []):
+                      print(f"   - {e.get('code')}: {e.get('description')}")
+          PY
+          cat "$RUNNER_TEMP/status.txt"
+
+      - name: Publish to the ci-builds branch
+        working-directory: .
+        run: |
+          git config user.name "ci"
+          git config user.email "ci@users.noreply.github.com"
+          work="$RUNNER_TEMP/builds"
+          for attempt in 1 2 3 4 5; do
+            rm -rf "$work"
+            git fetch --depth 1 origin ci-builds
+            git worktree add -f "$work" FETCH_HEAD
+            git -C "$work" checkout -B ci-builds
+            mkdir -p "$work/asc"
+            { date -u +"asked       %Y-%m-%d %H:%M UTC"; cat "$RUNNER_TEMP/status.txt"; } > "$work/asc/status.txt"
+            git -C "$work" add -A
+            git -C "$work" commit -q -m "App Store Connect status" || true
+            if git -C "$work" push -q origin ci-builds; then break; fi
+            git worktree remove -f "$work" || true
+            sleep $((attempt * 5))
+          done
