@@ -228,6 +228,18 @@ void main() {
       // there is nothing here to promise a number for.
       expect(find.text('Gold III'), findsOneWidget);
       expect(find.text('Give up'), findsOneWidget);
+
+      // Under the clock, between the two lifters, and no lower than their
+      // counts — on a row of its own it made the card taller than the
+      // lifters in it, and the card came down over the lifter's head.
+      final clock = tester.getRect(find.text('1:00'));
+      final stop = tester.getRect(find.byKey(const Key('stopButton')));
+      expect(stop.top, greaterThan(clock.bottom));
+      expect((stop.center.dx - clock.center.dx).abs(), lessThan(1));
+      expect(
+        stop.bottom,
+        lessThanOrEqualTo(tester.getRect(find.text('0').first).bottom),
+      );
     });
 
     testWidgets('giving up asks first, and staying keeps the round going',

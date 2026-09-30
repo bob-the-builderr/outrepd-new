@@ -980,9 +980,9 @@ class _TrainerScreenState extends State<TrainerScreen>
           // and during the bout instead of appearing when it starts.
           //
           // Down to just above the cue, because the depth bar hangs under the
-          // card in the same column: the card grew a Live tag and a Give up
-          // button, and a bar pinned at a fixed height ended up drawn across
-          // its corner.
+          // card in the same column: how tall the card is depends on what it
+          // holds, and a bar pinned at a fixed height once ended up drawn
+          // across its corner.
           Positioned(
             left: 14,
             right: 14,
@@ -1447,11 +1447,6 @@ class _ScoreCard extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (session != null)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: LiveTag(reconnecting: away),
-            ),
           // No IntrinsicHeight: the two sides are built from the same pieces
           // in the same order, so they come out the same height on their own —
           // and measuring them would mean asking a ShrinkText for an intrinsic
@@ -1468,18 +1463,41 @@ class _ScoreCard extends StatelessWidget {
                   colour: Colors.white,
                 ),
               ),
-              // The clock takes only what it needs; the two lifters either
-              // side share what is left. A fixed width here is what put a
-              // long username through the edge of the card.
+              // The middle column: whether this is live, the clock, and the
+              // way out, all between the two lifters — so the card is no
+              // taller than the lifters are. They sat on rows of their own
+              // above and below, and the card came down over the lifter's
+              // head on a short phone.
+              //
+              // It takes only what it needs; the two lifters either side
+              // share what is left. A fixed width here is what put a long
+              // username through the edge of the card.
               Padding(
-                padding: const EdgeInsets.only(top: 16, left: 4, right: 4),
-                child: Text(
-                  formatClock(context, remaining.inSeconds),
-                  style: TextStyle(
-                    color: live ? Colors.white : context.colors.muted,
-                    fontSize: 22,
-                    fontFeatures: const [FontFeature.tabularFigures()],
-                  ),
+                padding: EdgeInsets.only(
+                  top: session == null ? 16 : 2,
+                  left: 4,
+                  right: 4,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (session != null) ...[
+                      LiveTag(reconnecting: away),
+                      const SizedBox(height: 4),
+                    ],
+                    Text(
+                      formatClock(context, remaining.inSeconds),
+                      style: TextStyle(
+                        color: live ? Colors.white : context.colors.muted,
+                        fontSize: 22,
+                        fontFeatures: const [FontFeature.tabularFigures()],
+                      ),
+                    ),
+                    if (onStop case final stop?) ...[
+                      const SizedBox(height: 8),
+                      _StopButton(inMatch: duel != null, onTap: stop),
+                    ],
+                  ],
                 ),
               ),
               Expanded(
@@ -1527,18 +1545,16 @@ class _ScoreCard extends StatelessWidget {
               ),
             ),
           ],
-          if (onStop case final stop?) ...[
-            const SizedBox(height: 12),
-            Center(child: _StopButton(inMatch: duel != null, onTap: stop)),
-          ],
         ],
       ),
     );
   }
 }
 
-/// Give up, in the middle of the score card: red, and big enough to find at
-/// a glance from the floor. Finish in practice, plain, since nothing is lost.
+/// Give up, under the clock: red, the one red thing on the card, so it is
+/// found at a glance from the floor. Finish in practice, plain, since nothing
+/// is lost. Its words shrink rather than widen the column in a language
+/// where they run long.
 class _StopButton extends StatelessWidget {
   const _StopButton({required this.inMatch, required this.onTap});
 
@@ -1550,39 +1566,45 @@ class _StopButton extends StatelessWidget {
     final l = L.of(context);
     return Material(
       color: inMatch ? _giveUpRed : Colors.transparent,
-      borderRadius: BorderRadius.circular(22),
+      borderRadius: BorderRadius.circular(20),
       child: InkWell(
         key: const Key('stopButton'),
         onTap: onTap,
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: BorderRadius.circular(20),
         child: Container(
-          constraints: const BoxConstraints(minWidth: 150),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 11),
+          constraints: const BoxConstraints(maxWidth: 132),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
           decoration: inMatch
               ? null
               : BoxDecoration(
-                  borderRadius: BorderRadius.circular(22),
+                  borderRadius: BorderRadius.circular(20),
                   border: Border.all(
                     color: Colors.white.withValues(alpha: 0.5),
                   ),
                 ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (inMatch) ...[
-                const Icon(Icons.flag_outlined, size: 18, color: Colors.white),
-                const SizedBox(width: 8),
-              ],
-              Text(
-                inMatch ? l.giveUp : l.finish,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (inMatch) ...[
+                  const Icon(
+                    Icons.flag_outlined,
+                    size: 16,
+                    color: Colors.white,
+                  ),
+                  const SizedBox(width: 6),
+                ],
+                Text(
+                  inMatch ? l.giveUp : l.finish,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
