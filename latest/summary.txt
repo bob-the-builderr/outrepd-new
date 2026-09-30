@@ -1,11 +1,9 @@
-commit      f5158f0035c53983c853dfb14fa9838ae5be4ac4
-build       125
+commit      94452fee6bb11df4f59d1230648553294e928157
+build       126
 upload key  true
 key note    the upload key opens and has the alias
-apk         success 121746714 bytes
-aab         success 116023506 bytes
+apk         cancelled  bytes
+aab         skipped  bytes
 paywall key no
-firebase    false — No GOOGLE_SERVICES_JSON secret: this build has no push notifications and no crash reports.
-signed by   Owner: CN=mokhtar, OU=outrepd, O=outrepd, L=suez, ST=suez, C=EG
-sha-256     93:19:AC:A3:AC:BD:85:34:04:9D:BF:6F:D7:CD:B5:D2:CC:1D:D8:4F:AA:E4:C3:39:4B:A6:8B:45:FF:03:7A:FB
-run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/36656582457
+firebase    true — push notifications and crash reports are in
+run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/36657749616
