@@ -6,9 +6,6 @@
 <title>Privacy Policy · outrepd</title>
 <!--
   Publish at https://www.outrepd.com/privacy (the app links there).
-  Before publishing, replace every {{…}}:
-    MK Labs          the person or company that runs outrepd
-    support@outrepd.com  an address that answers privacy and deletion requests
   Google Play's account deletion form takes https://www.outrepd.com/privacy#delete,
   so keep that id. Keep the page public, not behind a login, and not a PDF.
 -->
@@ -31,14 +28,15 @@
 <body>
 <main>
 <h1>Privacy Policy</h1>
-<p class="muted">outrepd · Last updated 30 September 2026</p>
+<p class="muted">outrepd · Last updated 1 October 2026</p>
 
 <p>This policy explains what the outrepd app ("outrepd", "we", "us") collects, why, who can see it, how long it is kept, and how to get a copy or delete it. outrepd is run by MK Labs. Questions go to <a href="mailto:support@outrepd.com">support@outrepd.com</a>.</p>
 
-<p>outrepd is a push-up game: your phone's camera counts your reps, and your set is raced against other people's sets.</p>
+<p>outrepd is a push-up game: your phone's camera counts your reps, and you race other people — live, both on camera at the same time, or against a set they recorded earlier.</p>
 
 <h2>The camera never leaves your phone</h2>
 <p>The camera is used only to count reps. Pose detection runs on your device. No video, image or body-position data from the camera is sent to us or to anyone else.</p>
+<p>In a live match, the only thing your phone sends the other player's phone while the round runs is your rep count — a number. Never video, pictures or body positions.</p>
 <p>To check the counter's accuracy, the app may keep a recording of body positions (points on a skeleton, not video) on your phone. It stays on the phone and is removed when you uninstall the app.</p>
 <p>Pose detection uses Google's ML Kit library, which runs on the device. Google describes what ML Kit itself may send to Google in its terms: <a href="https://developers.google.com/ml-kit/terms">developers.google.com/ml-kit/terms</a>.</p>
 
@@ -51,11 +49,13 @@
 <tr><td>Profile photo</td><td>No</td><td>Shown to other people next to your name.</td></tr>
 <tr><td>Your sets: the rep count the camera scored, the count you confirmed, the time of each rep, rep depth, duration and date</td><td>Yes, to play matches</td><td>Racing your set against other people's, settling results and rank, and measuring the counter's accuracy.</td></tr>
 <tr><td>Matches, results, rank, record and streaks</td><td>Yes</td><td>The ladder and your profile.</td></tr>
+<tr><td>Live matches: who you played, when the round started, the rep count your phone sends every few seconds during it, and the result. While you search for a ranked live match, that you are searching and your rank level, for up to 15 seconds.</td><td>Yes, to play live</td><td>Pairing you with somebody live, showing each of you the other's count, and settling the match — including on the last count received if a phone loses its connection.</td></tr>
+<tr><td>Live invites you send to friends and receive from them</td><td>No</td><td>Letting a friend join you live. An invite lasts one minute.</td></tr>
 <tr><td>Friends, blocks and mutes</td><td>No</td><td>The social features you choose to use.</td></tr>
 <tr><td>Reports you file, including any text you write</td><td>No</td><td>Reviewing cheating and abuse.</td></tr>
 <tr><td>In-app notifications, the title you wear, when you were last active, and your settings</td><td>Yes</td><td>Showing you what happened, showing friends you are around, and applying your choices.</td></tr>
 <tr><td>Your subscription: which plan, when it started, renews or ends, and the store it was bought through</td><td>Yes, to use the app</td><td>outrepd needs a subscription. We record whether yours is active so the app and the server can let you play.</td></tr>
-<tr><td>A push notification address for your phone, and the app's language</td><td>No — only if you allow notifications</td><td>Sending your phone a notification when somebody races your set, asks to be your friend, accepts, or wants a rematch, in your language. Removed when you sign out or delete your account.</td></tr>
+<tr><td>A push notification address for your phone, and the app's language</td><td>No — only if you allow notifications</td><td>Sending your phone a notification when somebody races your set, asks to be your friend, accepts, wants a rematch, or invites you to a live match, in your language. Removed when you sign out or delete your account.</td></tr>
 <tr><td>Crash reports: what the app was doing when it failed, the phone model, operating system version and app version</td><td>Yes</td><td>Finding and fixing crashes. They are not used to identify you.</td></tr>
 </table></div>
 <p>We do not collect your location, contacts, advertising identifiers, or payment details. You pay Google Play or the App Store, never us: your card details go to them and we never see them.</p>
@@ -70,10 +70,10 @@
 <h2>Sharing</h2>
 <p>We do not sell your data or share it for advertising. We use four service providers who process data only on our behalf, to run the service:</p>
 <ul>
-<li><strong>Supabase</strong> hosts the app's server, database and profile photos.</li>
+<li><strong>Supabase</strong> hosts the app's server, database and profile photos, sends the sign-in codes you receive by email, and relays the rep counts between the two phones in a live match.</li>
 <li><strong>Resend</strong> sends the email with your data when you ask for a copy.</li>
 <li><strong>RevenueCat</strong> manages subscriptions. It receives your account ID and your purchase records from Google Play or the App Store, and tells the app and our server whether your subscription is active. Its privacy policy: <a href="https://www.revenuecat.com/privacy">revenuecat.com/privacy</a>.</li>
-<li><strong>Google Firebase</strong> delivers push notifications to your phone (Firebase Cloud Messaging) and collects crash reports (Firebase Crashlytics). Its privacy information: <a href="https://firebase.google.com/support/privacy">firebase.google.com/support/privacy</a>.</li>
+<li><strong>Google Firebase</strong> delivers push notifications to your phone (Firebase Cloud Messaging — on iPhone, through Apple's push notification service) and collects crash reports (Firebase Crashlytics). Its privacy information: <a href="https://firebase.google.com/support/privacy">firebase.google.com/support/privacy</a>.</li>
 </ul>
 <p>We may disclose data if the law requires it, or to protect players from fraud or abuse. Your data may be processed in countries other than yours.</p>
 
@@ -95,7 +95,7 @@
 <h2 id="delete">Deleting your account</h2>
 <p><strong>In the app:</strong> open outrepd, go to Settings → Data → Delete account, and confirm.</p>
 <p><strong>Without the app:</strong> email <a href="mailto:support@outrepd.com">support@outrepd.com</a> from the email address on your account, or tell us your username, with the subject "Delete my outrepd account". We will delete it within 30 days and confirm by email.</p>
-<p><strong>What is deleted:</strong> your account, email address, username, profile photo, sets, matches, friends, blocks, mutes, reports you filed, notifications and settings.</p>
+<p><strong>What is deleted:</strong> your account, email address, username, profile photo, sets, matches, live matches and invites, friends, blocks, mutes, reports you filed, notifications, push notification addresses and settings.</p>
 <p><strong>What is kept:</strong> opponents keep the rank points they won or lost against you, because those are part of their own records, but the match is removed from their history. Reports other players filed about you are kept with your account removed from them.</p>
 <p><strong>Subscriptions:</strong> deleting your account does not cancel a subscription, because Google Play or the App Store bills it, not us. Cancel it in Google Play → Payments &amp; subscriptions, or on iPhone in Settings → your name → Subscriptions.</p>
 <p>Deletion cannot be undone.</p>
