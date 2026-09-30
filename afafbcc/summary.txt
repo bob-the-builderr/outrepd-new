@@ -1,0 +1,10 @@
+commit      afafbcc0777ceba35557ca78a45a73a14e470f0f
+build       123
+upload key  true
+key note    the upload key opens and has the alias
+apk         success 118804421 bytes
+aab         success 113719033 bytes
+paywall key no
+signed by   Owner: CN=mokhtar, OU=outrepd, O=outrepd, L=suez, ST=suez, C=EG
+sha-256     93:19:AC:A3:AC:BD:85:34:04:9D:BF:6F:D7:CD:B5:D2:CC:1D:D8:4F:AA:E4:C3:39:4B:A6:8B:45:FF:03:7A:FB
+run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/36652521798
