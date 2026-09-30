@@ -41,7 +41,9 @@ defaults:
 jobs:
   ios:
     if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[ios]')
-    runs-on: macos-15
+    # macOS 26 for Xcode 26: connectivity_plus already uses the iOS 26 SDK, and
+    # the App Store takes only builds made with the current one.
+    runs-on: macos-26
     timeout-minutes: 75
     permissions:
       contents: write
@@ -111,6 +113,14 @@ jobs:
           printf '%s\n' "$ASC_KEY_P8" > "$RUNNER_TEMP/keys/AuthKey.p8"
           echo "signed=true" >> "$GITHUB_OUTPUT"
 
+      # The newest Xcode on the machine, whatever the image picked as default.
+      - name: Xcode
+        run: |
+          # Not a beta: the App Store refuses builds made with one.
+          newest=$(ls -d /Applications/Xcode_*.app 2>/dev/null | grep -vi beta | sort -V | tail -1)
+          if [ -n "$newest" ]; then sudo xcode-select -s "$newest"; fi
+          xcodebuild -version
+
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
@@ -122,10 +132,14 @@ jobs:
       - name: Build
         id: build
         run: |
+          # Without this the tee below would hide a failed build behind its
+          # own success.
+          set -o pipefail
+          xcodebuild -version 2>&1 | tee "$RUNNER_TEMP/build.log"
           flutter build ios --release --no-codesign --no-tree-shake-icons \
             --dart-define-from-file=supabase/keys.env \
             --dart-define=BUILD_NUMBER=$((GITHUB_RUN_NUMBER + 100)) \
-            --build-number=$((GITHUB_RUN_NUMBER + 100)) 2>&1 | tee "$RUNNER_TEMP/build.log"
+            --build-number=$((GITHUB_RUN_NUMBER + 100)) 2>&1 | tee -a "$RUNNER_TEMP/build.log"
 
       - name: Archive, sign and upload to App Store Connect
         id: upload
