@@ -220,6 +220,24 @@ jobs:
           path: ${{ runner.temp }}/OUTREPD.aab
           retention-days: 30
 
+      # One fixed place for the newest APK, so installing it is one link and
+      # one file rather than a run page, two zips and picking the right one:
+      #   https://github.com/bob-the-builderr/outrepd-new/releases/latest/download/OUTREPD.apk
+      # Replaced whole on every build of the main branch, so the release only
+      # ever holds the newest APK.
+      - name: The newest APK, on the latest release
+        if: steps.apk.outcome == 'success' && github.ref == 'refs/heads/camera-rep-counter'
+        working-directory: .
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          build=$((GITHUB_RUN_NUMBER + 100))
+          gh release delete android-latest --cleanup-tag --yes 2>/dev/null || true
+          gh release create android-latest "$RUNNER_TEMP/OUTREPD.apk" \
+            --target "$GITHUB_SHA" --latest \
+            --title "Android build $build" \
+            --notes "Build $build, from ${GITHUB_SHA::7}. Download OUTREPD.apk below and open it on an Android phone to install."
+
       - name: Publish what was built to the ci-builds branch
         if: always()
         working-directory: .
@@ -236,6 +254,7 @@ jobs:
             echo "apk         ${{ steps.apk.outcome }} $( [ -f "$apk" ] && stat -c %s "$apk" ) bytes"
             echo "aab         ${{ steps.aab.outcome }} $( [ -f "$aab" ] && stat -c %s "$aab" ) bytes"
             echo "paywall key $( [ -n "$REVENUECAT_ANDROID_KEY" ] && echo yes || echo no )"
+            echo "download    https://github.com/${GITHUB_REPOSITORY}/releases/latest/download/OUTREPD.apk"
             echo "firebase    ${{ steps.firebase.outputs.ready }} — ${{ steps.firebase.outputs.note }}"
             if [ -f "$RUNNER_TEMP/cert.txt" ]; then
               echo "signed by   $(grep -m1 'Owner:' "$RUNNER_TEMP/cert.txt")"
