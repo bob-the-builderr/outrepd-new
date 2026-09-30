@@ -16,6 +16,7 @@ import '../connection.dart';
 import '../backend/backend.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../push.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
 import '../widgets.dart';
@@ -317,6 +318,15 @@ class _TopRowState extends State<_TopRow> {
   void initState() {
     super.initState();
     _countUnread();
+    // A push that lands with the app open is not drawn by Android; the dot
+    // is how it gets noticed.
+    Push.instance.arrived.addListener(_countUnread);
+  }
+
+  @override
+  void dispose() {
+    Push.instance.arrived.removeListener(_countUnread);
+    super.dispose();
   }
 
   Future<void> _countUnread() async {

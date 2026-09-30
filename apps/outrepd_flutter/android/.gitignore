@@ -13,3 +13,6 @@ key.properties
 **/*.keystore
 **/*.jks
 /build/
+
+# Firebase config: written by CI from the GOOGLE_SERVICES_JSON secret.
+/app/google-services.json

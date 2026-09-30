@@ -2087,4 +2087,42 @@ class LZh extends L {
 
   @override
   String get soundsHint => '3、2、1 的提示音，每次计数的滴答声，以及回合结束音。可与音乐同时播放。';
+
+  @override
+  String get phoneSection => '此手机';
+
+  @override
+  String get allowNotifications => '允许通知';
+
+  @override
+  String get allowNotificationsHint => '手机设置中已关闭 OUTREPD 的通知，因此下面的通知都无法送达。';
+
+  @override
+  String get remindersSection => '提醒';
+
+  @override
+  String get dailyReminder => '每日提醒';
+
+  @override
+  String get dailyReminderHint => '仅在你当天还没训练时提醒。';
+
+  @override
+  String get reminderTime => '时间';
+
+  @override
+  String get reminderTitle => '该做今天的俯卧撑了';
+
+  @override
+  String get reminderBody => '做一组就能计入你的连续记录。';
+
+  @override
+  String reminderStreakBody(String count) {
+    return '保持你 ${count} 天的连续记录。做一组就够了。';
+  }
+
+  @override
+  String get channelMatches => '对战与好友';
+
+  @override
+  String get channelReminders => '每日提醒';
 }

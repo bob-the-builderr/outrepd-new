@@ -4000,6 +4000,78 @@ abstract class L {
   /// In en, this message translates to:
   /// **'A beep for 3, 2, 1, a tick for each rep, and the end of the round. Plays over your music.'**
   String get soundsHint;
+
+  /// No description provided for @phoneSection.
+  ///
+  /// In en, this message translates to:
+  /// **'On this phone'**
+  String get phoneSection;
+
+  /// No description provided for @allowNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow notifications'**
+  String get allowNotifications;
+
+  /// No description provided for @allowNotificationsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'They\'re off for OUTREPD in your phone\'s settings, so nothing below can reach you.'**
+  String get allowNotificationsHint;
+
+  /// No description provided for @remindersSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder'**
+  String get remindersSection;
+
+  /// No description provided for @dailyReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reminder'**
+  String get dailyReminder;
+
+  /// No description provided for @dailyReminderHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Only on days you haven\'t trained yet.'**
+  String get dailyReminderHint;
+
+  /// No description provided for @reminderTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get reminderTime;
+
+  /// No description provided for @reminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Time for today\'s push-ups'**
+  String get reminderTitle;
+
+  /// No description provided for @reminderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'One quick set counts toward your streak.'**
+  String get reminderBody;
+
+  /// No description provided for @reminderStreakBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep your {count}-day streak going. One set is enough.'**
+  String reminderStreakBody(String count);
+
+  /// No description provided for @channelMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'Matches and friends'**
+  String get channelMatches;
+
+  /// No description provided for @channelReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reminder'**
+  String get channelReminders;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

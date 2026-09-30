@@ -2148,4 +2148,42 @@ class LIt extends L {
 
   @override
   String get soundsHint => 'Un bip per 3, 2, 1, un tic a ogni ripetizione e la fine del round. Sopra la tua musica.';
+
+  @override
+  String get phoneSection => 'Su questo telefono';
+
+  @override
+  String get allowNotifications => 'Consenti notifiche';
+
+  @override
+  String get allowNotificationsHint => 'Sono disattivate per OUTREPD nelle impostazioni del telefono, quindi niente di quanto sotto ti arriverà.';
+
+  @override
+  String get remindersSection => 'Promemoria';
+
+  @override
+  String get dailyReminder => 'Promemoria giornaliero';
+
+  @override
+  String get dailyReminderHint => 'Solo nei giorni in cui non ti sei ancora allenato.';
+
+  @override
+  String get reminderTime => 'Ora';
+
+  @override
+  String get reminderTitle => 'È ora dei piegamenti di oggi';
+
+  @override
+  String get reminderBody => 'Una serie veloce conta per la tua striscia.';
+
+  @override
+  String reminderStreakBody(String count) {
+    return 'Tieni viva la tua striscia di ${count} giorni. Basta una serie.';
+  }
+
+  @override
+  String get channelMatches => 'Sfide e amici';
+
+  @override
+  String get channelReminders => 'Promemoria giornaliero';
 }

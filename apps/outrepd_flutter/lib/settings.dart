@@ -142,6 +142,15 @@ class AppSettings extends ChangeNotifier {
   /// screen. They mix with music rather than interrupt it.
   bool sounds = true;
 
+  /// A notification on a day not yet trained, at [reminderMinutes]. On by
+  /// default: a streak lost to forgetting is the commonest way to lose one,
+  /// and Android still asks before any notification is shown.
+  bool reminder = true;
+
+  /// When the reminder comes, in minutes past midnight. 7 pm: late enough
+  /// that most people's day is done, early enough to still do a set.
+  int reminderMinutes = 19 * 60;
+
   /// Draw the tracked skeleton over the camera.
   ///
   /// On by default: it is how somebody can tell the counter is seeing them
@@ -170,6 +179,11 @@ class AppSettings extends ChangeNotifier {
 
     vibration = flag('vibration', vibration);
     sounds = flag('sounds', sounds);
+    reminder = flag('reminder', reminder);
+    final minutes = s.getInt('reminderMinutes');
+    if (minutes != null && minutes >= 0 && minutes < 24 * 60) {
+      reminderMinutes = minutes;
+    }
     showSkeleton = flag('showSkeleton', showSkeleton);
   }
 
@@ -233,6 +247,8 @@ class AppSettings extends ChangeNotifier {
 
     s.setBool('vibration', vibration);
     s.setBool('sounds', sounds);
+    s.setBool('reminder', reminder);
+    s.setInt('reminderMinutes', reminderMinutes);
     s.setBool('showSkeleton', showSkeleton);
   }
 

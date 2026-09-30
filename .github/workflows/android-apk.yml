@@ -65,6 +65,7 @@ jobs:
       UPLOAD_KEYSTORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_PASSWORD }}
       UPLOAD_KEY_ALIAS: ${{ secrets.UPLOAD_KEY_ALIAS }}
       UPLOAD_KEY_PASSWORD: ${{ secrets.UPLOAD_KEY_PASSWORD }}
+      GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
     steps:
       - uses: actions/checkout@v4
 
@@ -126,6 +127,33 @@ jobs:
             "${UPLOAD_KEY_PASSWORD:-$UPLOAD_KEYSTORE_PASSWORD}" > android/key.properties
           echo "note=the upload key opens and has the alias" >> "$GITHUB_OUTPUT"
           echo "signed=true" >> "$GITHUB_OUTPUT"
+
+      # Firebase, for push notifications and crash reports. Optional, like the
+      # paywall key: without it the app has neither and says nothing about it.
+      # The file has to name this app's package, or the Google services plugin
+      # fails the whole build, so one that does not is left out and reported.
+      - name: Firebase config
+        id: firebase
+        run: |
+          note() { echo "note=$1" >> "$GITHUB_OUTPUT"; echo "::warning::$1"; }
+          if [ -z "$GOOGLE_SERVICES_JSON" ]; then
+            note "No GOOGLE_SERVICES_JSON secret: this build has no push notifications and no crash reports."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          json="$GOOGLE_SERVICES_JSON"
+          case "$json" in
+            {*) ;;
+            *) json=$(printf '%s' "$json" | tr -d '\r\n ' | base64 -d 2>/dev/null || true) ;;
+          esac
+          if ! printf '%s' "$json" | jq -e '.client[] | select(.client_info.android_client_info.package_name == "com.outrepd.outrepd")' > /dev/null 2>&1; then
+            note "GOOGLE_SERVICES_JSON is not a google-services.json for com.outrepd.outrepd. Download it again from Firebase after adding the Android app with that package name."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          printf '%s' "$json" > android/app/google-services.json
+          echo "note=push notifications and crash reports are in" >> "$GITHUB_OUTPUT"
+          echo "ready=true" >> "$GITHUB_OUTPUT"
 
       - uses: subosito/flutter-action@v2
         with:
@@ -208,6 +236,7 @@ jobs:
             echo "apk         ${{ steps.apk.outcome }} $( [ -f "$apk" ] && stat -c %s "$apk" ) bytes"
             echo "aab         ${{ steps.aab.outcome }} $( [ -f "$aab" ] && stat -c %s "$aab" ) bytes"
             echo "paywall key $( [ -n "$REVENUECAT_ANDROID_KEY" ] && echo yes || echo no )"
+            echo "firebase    ${{ steps.firebase.outputs.ready }} — ${{ steps.firebase.outputs.note }}"
             if [ -f "$RUNNER_TEMP/cert.txt" ]; then
               echo "signed by   $(grep -m1 'Owner:' "$RUNNER_TEMP/cert.txt")"
               echo "sha-256     $(grep -m1 'SHA256:' "$RUNNER_TEMP/cert.txt" | sed 's/.*SHA256: //')"

@@ -3,4 +3,6 @@
     <!-- The app's dark page colour, so opening the app goes from the launch
          screen into the first page without a flash of white. -->
     <color name="splash_background">#121110</color>
+    <!-- The rival's orange, for the small icon on a notification. -->
+    <color name="notification_accent">#E8846B</color>
 </resources>

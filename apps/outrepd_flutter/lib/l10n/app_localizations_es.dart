@@ -2149,4 +2149,42 @@ class LEs extends L {
 
   @override
   String get soundsHint => 'Un pitido en 3, 2, 1, un tic por cada repetición y el final de la ronda. Suena sobre tu música.';
+
+  @override
+  String get phoneSection => 'En este teléfono';
+
+  @override
+  String get allowNotifications => 'Permitir notificaciones';
+
+  @override
+  String get allowNotificationsHint => 'Están desactivadas para OUTREPD en los ajustes del teléfono, así que nada de lo de abajo te llegará.';
+
+  @override
+  String get remindersSection => 'Recordatorio';
+
+  @override
+  String get dailyReminder => 'Recordatorio diario';
+
+  @override
+  String get dailyReminderHint => 'Solo los días que aún no has entrenado.';
+
+  @override
+  String get reminderTime => 'Hora';
+
+  @override
+  String get reminderTitle => 'Hora de las flexiones de hoy';
+
+  @override
+  String get reminderBody => 'Una serie rápida cuenta para tu racha.';
+
+  @override
+  String reminderStreakBody(String count) {
+    return 'Mantén tu racha de ${count} días. Basta con una serie.';
+  }
+
+  @override
+  String get channelMatches => 'Partidas y amigos';
+
+  @override
+  String get channelReminders => 'Recordatorio diario';
 }

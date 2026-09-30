@@ -674,5 +674,17 @@
   "shareRematch": "¿REVANCHA?",
   "friendCodeInvite": "Rétame en outrepd. Agrégame con mi código de amigo {code}\nhttps://outrepd.com",
   "soundsLabel": "Sonidos",
-  "soundsHint": "Un pitido en 3, 2, 1, un tic por cada repetición y el final de la ronda. Suena sobre tu música."
+  "soundsHint": "Un pitido en 3, 2, 1, un tic por cada repetición y el final de la ronda. Suena sobre tu música.",
+  "phoneSection": "En este teléfono",
+  "allowNotifications": "Permitir notificaciones",
+  "allowNotificationsHint": "Están desactivadas para OUTREPD en los ajustes del teléfono, así que nada de lo de abajo te llegará.",
+  "remindersSection": "Recordatorio",
+  "dailyReminder": "Recordatorio diario",
+  "dailyReminderHint": "Solo los días que aún no has entrenado.",
+  "reminderTime": "Hora",
+  "reminderTitle": "Hora de las flexiones de hoy",
+  "reminderBody": "Una serie rápida cuenta para tu racha.",
+  "reminderStreakBody": "Mantén tu racha de {count} días. Basta con una serie.",
+  "channelMatches": "Partidas y amigos",
+  "channelReminders": "Recordatorio diario"
 }

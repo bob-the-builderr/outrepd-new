@@ -674,5 +674,17 @@
   "shareRematch": "RÖVANŞ?",
   "friendCodeInvite": "outrepd'de benimle düello yap. Arkadaş kodumla beni ekle: {code}\nhttps://outrepd.com",
   "soundsLabel": "Sesler",
-  "soundsHint": "3, 2, 1 için bip, her tekrar için tık ve tur sonu. Müziğinin üstünde çalar."
+  "soundsHint": "3, 2, 1 için bip, her tekrar için tık ve tur sonu. Müziğinin üstünde çalar.",
+  "phoneSection": "Bu telefonda",
+  "allowNotifications": "Bildirimlere izin ver",
+  "allowNotificationsHint": "Telefon ayarlarında OUTREPD için kapalı, bu yüzden aşağıdakilerin hiçbiri sana ulaşamaz.",
+  "remindersSection": "Hatırlatıcı",
+  "dailyReminder": "Günlük hatırlatıcı",
+  "dailyReminderHint": "Sadece henüz antrenman yapmadığın günlerde.",
+  "reminderTime": "Saat",
+  "reminderTitle": "Bugünün şınavları zamanı",
+  "reminderBody": "Kısa bir set serine sayılır.",
+  "reminderStreakBody": "{count} günlük serini sürdür. Bir set yeter.",
+  "channelMatches": "Maçlar ve arkadaşlar",
+  "channelReminders": "Günlük hatırlatıcı"
 }

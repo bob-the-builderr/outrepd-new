@@ -640,7 +640,7 @@ class LPt extends L {
 
   @override
   String get needsServer =>
-      'Não foi possível conectar. Verifique sua internet e tente de novo.';
+      'Não foi possível ligar. Verifica a tua internet e tenta de novo.';
 
   @override
   String get achievements => 'Conquistas';
@@ -2146,5 +2146,43 @@ class LPt extends L {
   String get soundsLabel => 'Sons';
 
   @override
-  String get soundsHint => 'Um bipe no 3, 2, 1, um tique a cada repetição e o fim da rodada. Toca junto com sua música.';
+  String get soundsHint => 'Um bipe no 3, 2, 1, um tique a cada repetição e o fim da ronda. Toca por cima da tua música.';
+
+  @override
+  String get phoneSection => 'Neste telemóvel';
+
+  @override
+  String get allowNotifications => 'Permitir notificações';
+
+  @override
+  String get allowNotificationsHint => 'Estão desligadas para o OUTREPD nas definições do telemóvel, por isso nada abaixo te chega.';
+
+  @override
+  String get remindersSection => 'Lembrete';
+
+  @override
+  String get dailyReminder => 'Lembrete diário';
+
+  @override
+  String get dailyReminderHint => 'Só nos dias em que ainda não treinaste.';
+
+  @override
+  String get reminderTime => 'Hora';
+
+  @override
+  String get reminderTitle => 'Hora das flexões de hoje';
+
+  @override
+  String get reminderBody => 'Uma série rápida conta para a tua sequência.';
+
+  @override
+  String reminderStreakBody(String count) {
+    return 'Mantém a tua sequência de ${count} dias. Basta uma série.';
+  }
+
+  @override
+  String get channelMatches => 'Partidas e amigos';
+
+  @override
+  String get channelReminders => 'Lembrete diário';
 }

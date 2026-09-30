@@ -2153,4 +2153,42 @@ class LDe extends L {
 
   @override
   String get soundsHint => 'Ein Piep bei 3, 2, 1, ein Tick pro Wiederholung und das Rundenende. Über deiner Musik.';
+
+  @override
+  String get phoneSection => 'Auf diesem Handy';
+
+  @override
+  String get allowNotifications => 'Mitteilungen erlauben';
+
+  @override
+  String get allowNotificationsHint => 'Sie sind für OUTREPD in den Handy-Einstellungen aus, also kommt nichts von unten bei dir an.';
+
+  @override
+  String get remindersSection => 'Erinnerung';
+
+  @override
+  String get dailyReminder => 'Tägliche Erinnerung';
+
+  @override
+  String get dailyReminderHint => 'Nur an Tagen, an denen du noch nicht trainiert hast.';
+
+  @override
+  String get reminderTime => 'Uhrzeit';
+
+  @override
+  String get reminderTitle => 'Zeit für die Liegestütze von heute';
+
+  @override
+  String get reminderBody => 'Ein kurzer Satz zählt für deine Serie.';
+
+  @override
+  String reminderStreakBody(String count) {
+    return 'Halte deine Serie von ${count} Tagen. Ein Satz reicht.';
+  }
+
+  @override
+  String get channelMatches => 'Matches und Freunde';
+
+  @override
+  String get channelReminders => 'Tägliche Erinnerung';
 }

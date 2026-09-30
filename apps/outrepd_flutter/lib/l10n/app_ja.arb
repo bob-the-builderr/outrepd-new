@@ -674,5 +674,17 @@
   "shareRematch": "再戦？",
   "friendCodeInvite": "outrepd で勝負しよう。フレンドコード {code} で追加してね\nhttps://outrepd.com",
   "soundsLabel": "サウンド",
-  "soundsHint": "3、2、1 のビープ、レップごとのティック、ラウンド終了の音。音楽と一緒に鳴ります。"
+  "soundsHint": "3、2、1 のビープ、レップごとのティック、ラウンド終了の音。音楽と一緒に鳴ります。",
+  "phoneSection": "この端末",
+  "allowNotifications": "通知を許可",
+  "allowNotificationsHint": "端末の設定で OUTREPD の通知がオフになっているため、以下の通知は届きません。",
+  "remindersSection": "リマインダー",
+  "dailyReminder": "毎日のリマインダー",
+  "dailyReminderHint": "まだトレーニングしていない日だけ。",
+  "reminderTime": "時刻",
+  "reminderTitle": "今日の腕立て伏せの時間です",
+  "reminderBody": "1セットでも連続記録に数えられます。",
+  "reminderStreakBody": "{count}日連続の記録を続けましょう。1セットで十分です。",
+  "channelMatches": "対戦とフレンド",
+  "channelReminders": "毎日のリマインダー"
 }

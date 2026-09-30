@@ -674,5 +674,17 @@
   "shareRematch": "REVANCHE ?",
   "friendCodeInvite": "Affronte-moi sur outrepd. Ajoute-moi avec mon code ami {code}\nhttps://outrepd.com",
   "soundsLabel": "Sons",
-  "soundsHint": "Un bip pour 3, 2, 1, un tic à chaque répétition et la fin de la manche. Par-dessus ta musique."
+  "soundsHint": "Un bip pour 3, 2, 1, un tic à chaque répétition et la fin de la manche. Par-dessus ta musique.",
+  "phoneSection": "Sur ce téléphone",
+  "allowNotifications": "Autoriser les notifications",
+  "allowNotificationsHint": "Elles sont désactivées pour OUTREPD dans les réglages du téléphone : rien de ce qui suit ne peut t'arriver.",
+  "remindersSection": "Rappel",
+  "dailyReminder": "Rappel quotidien",
+  "dailyReminderHint": "Seulement les jours où tu ne t'es pas encore entraîné.",
+  "reminderTime": "Heure",
+  "reminderTitle": "C'est l'heure des pompes du jour",
+  "reminderBody": "Une petite série compte pour ta série de jours.",
+  "reminderStreakBody": "Garde ta série de {count} jours. Une série suffit.",
+  "channelMatches": "Matchs et amis",
+  "channelReminders": "Rappel quotidien"
 }

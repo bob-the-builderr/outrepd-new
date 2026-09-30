@@ -1198,5 +1198,24 @@
     }
   },
   "soundsLabel": "Sounds",
-  "soundsHint": "A beep for 3, 2, 1, a tick for each rep, and the end of the round. Plays over your music."
+  "soundsHint": "A beep for 3, 2, 1, a tick for each rep, and the end of the round. Plays over your music.",
+  "phoneSection": "On this phone",
+  "allowNotifications": "Allow notifications",
+  "allowNotificationsHint": "They're off for OUTREPD in your phone's settings, so nothing below can reach you.",
+  "remindersSection": "Reminder",
+  "dailyReminder": "Daily reminder",
+  "dailyReminderHint": "Only on days you haven't trained yet.",
+  "reminderTime": "Time",
+  "reminderTitle": "Time for today's push-ups",
+  "reminderBody": "One quick set counts toward your streak.",
+  "reminderStreakBody": "Keep your {count}-day streak going. One set is enough.",
+  "@reminderStreakBody": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "channelMatches": "Matches and friends",
+  "channelReminders": "Daily reminder"
 }

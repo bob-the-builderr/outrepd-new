@@ -279,6 +279,7 @@ void main() {
       'duel.sql',
       'social.sql',
       'notify.sql',
+      'push.sql',
       'account.sql',
     ];
     final installer = File('supabase/install.sql');

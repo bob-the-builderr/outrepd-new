@@ -674,5 +674,17 @@
   "shareRematch": "REVANCHE?",
   "friendCodeInvite": "Fordere mich auf outrepd heraus. Füg mich mit meinem Freundescode {code} hinzu\nhttps://outrepd.com",
   "soundsLabel": "Töne",
-  "soundsHint": "Ein Piep bei 3, 2, 1, ein Tick pro Wiederholung und das Rundenende. Über deiner Musik."
+  "soundsHint": "Ein Piep bei 3, 2, 1, ein Tick pro Wiederholung und das Rundenende. Über deiner Musik.",
+  "phoneSection": "Auf diesem Handy",
+  "allowNotifications": "Mitteilungen erlauben",
+  "allowNotificationsHint": "Sie sind für OUTREPD in den Handy-Einstellungen aus, also kommt nichts von unten bei dir an.",
+  "remindersSection": "Erinnerung",
+  "dailyReminder": "Tägliche Erinnerung",
+  "dailyReminderHint": "Nur an Tagen, an denen du noch nicht trainiert hast.",
+  "reminderTime": "Uhrzeit",
+  "reminderTitle": "Zeit für die Liegestütze von heute",
+  "reminderBody": "Ein kurzer Satz zählt für deine Serie.",
+  "reminderStreakBody": "Halte deine Serie von {count} Tagen. Ein Satz reicht.",
+  "channelMatches": "Matches und Freunde",
+  "channelReminders": "Tägliche Erinnerung"
 }

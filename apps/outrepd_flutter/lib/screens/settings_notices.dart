@@ -1,21 +1,24 @@
-/// Which of the three things that happen are worth being told about.
+/// Which of the things that happen are worth being told about, and the daily
+/// reminder.
 ///
-/// Three switches, not six. The settings mock drew a season ending, a friend
-/// passing you on the board, a streak reminder and a line about the phone's
-/// own notification settings — and none of those exist: there are no
-/// seasons, nothing watches the board for overtakes, there are no scheduled
-/// reminders, and there is no push. A switch for each would have been four
-/// controls wired to nothing.
+/// The settings mock drew a season ending and a friend passing you on the
+/// board too — neither exists: there are no seasons, and nothing watches the
+/// board for overtakes. A switch for each would be a control wired to nothing.
 ///
-/// Each of these is enforced where it is written. Turning one off does not
-/// hide the notice — it stops the server storing it at all, which is the
-/// only version of "off" worth the name.
+/// The three notice switches are enforced where the notice is written.
+/// Turning one off does not hide the notice — it stops the server storing it
+/// at all, and so its push with it, which is the only version of "off" worth
+/// the name. The reminder lives on the phone; see lib/reminders.dart.
 library;
 
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart'
+    show openAppSettings;
 
 import '../backend/backend.dart';
 import '../l10n/app_localizations.dart';
+import '../push.dart';
+import '../settings.dart';
 import '../theme.dart';
 import 'settings_parts.dart';
 
@@ -26,9 +29,52 @@ class NoticeSettingsScreen extends StatefulWidget {
   State<NoticeSettingsScreen> createState() => _NoticeSettingsScreenState();
 }
 
-class _NoticeSettingsScreenState extends State<NoticeSettingsScreen> {
+class _NoticeSettingsScreenState extends State<NoticeSettingsScreen>
+    with WidgetsBindingObserver {
   late RemotePrefs _prefs = backend.me?.prefs ?? const RemotePrefs();
   bool _saving = false;
+
+  /// Whether the phone lets the app show notifications. Only false earns a
+  /// row: every switch below is pointless while the phone says no, and
+  /// nothing else on the screen would tell anybody why nothing arrives.
+  bool? _allowed;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _checkAllowed();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  /// Back from the phone's settings, where the answer may have changed.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) _checkAllowed();
+  }
+
+  Future<void> _checkAllowed() async {
+    final allowed = await notificationsAllowed();
+    if (mounted && allowed != _allowed) setState(() => _allowed = allowed);
+  }
+
+  Future<void> _pickTime() async {
+    final minutes = settings.reminderMinutes;
+    final picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay(hour: minutes ~/ 60, minute: minutes % 60),
+    );
+    if (picked == null || !mounted) return;
+    settings.update(
+      () => settings.reminderMinutes = picked.hour * 60 + picked.minute,
+    );
+    setState(() {});
+  }
 
   /// Applies the change on screen, then tries to save it.
   ///
@@ -77,6 +123,51 @@ class _NoticeSettingsScreenState extends State<NoticeSettingsScreen> {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
         children: [
+          if (_allowed == false)
+            SettingsSection(
+              title: l.phoneSection,
+              children: [
+                NavRow(
+                  key: const Key('allowNotifications'),
+                  icon: Icons.notifications_off_outlined,
+                  label: l.allowNotifications,
+                  caption: l.allowNotificationsHint,
+                  onTap: openAppSettings,
+                  last: true,
+                ),
+              ],
+            ),
+          SettingsSection(
+            title: l.remindersSection,
+            children: [
+              SwitchRow(
+                key: const Key('reminderSwitch'),
+                icon: Icons.alarm_outlined,
+                label: l.dailyReminder,
+                caption: l.dailyReminderHint,
+                value: settings.reminder,
+                onChanged: (v) {
+                  settings.update(() => settings.reminder = v);
+                  setState(() {});
+                },
+                last: !settings.reminder,
+              ),
+              if (settings.reminder)
+                NavRow(
+                  key: const Key('reminderTime'),
+                  icon: Icons.schedule_outlined,
+                  label: l.reminderTime,
+                  value: MaterialLocalizations.of(context).formatTimeOfDay(
+                    TimeOfDay(
+                      hour: settings.reminderMinutes ~/ 60,
+                      minute: settings.reminderMinutes % 60,
+                    ),
+                  ),
+                  onTap: _pickTime,
+                  last: true,
+                ),
+            ],
+          ),
           SettingsSection(
             title: l.duelSection,
             children: [

@@ -674,5 +674,17 @@
   "shareRematch": "फिर से मुकाबला?",
   "friendCodeInvite": "outrepd पर मुझसे मुकाबला करो। मेरे फ्रेंड कोड {code} से मुझे जोड़ो\nhttps://outrepd.com",
   "soundsLabel": "आवाज़ें",
-  "soundsHint": "3, 2, 1 पर बीप, हर रेप पर टिक और राउंड का अंत। आपके संगीत के ऊपर बजता है।"
+  "soundsHint": "3, 2, 1 पर बीप, हर रेप पर टिक और राउंड का अंत। आपके संगीत के ऊपर बजता है।",
+  "phoneSection": "इस फ़ोन पर",
+  "allowNotifications": "सूचनाओं की अनुमति दें",
+  "allowNotificationsHint": "फ़ोन की सेटिंग में OUTREPD के लिए ये बंद हैं, इसलिए नीचे की कोई सूचना आप तक नहीं पहुँचेगी।",
+  "remindersSection": "रिमाइंडर",
+  "dailyReminder": "रोज़ का रिमाइंडर",
+  "dailyReminderHint": "सिर्फ़ उन दिनों जब आपने अभी तक ट्रेनिंग नहीं की है।",
+  "reminderTime": "समय",
+  "reminderTitle": "आज के पुश-अप्स का समय",
+  "reminderBody": "एक छोटा सेट भी आपकी स्ट्रीक में गिना जाता है।",
+  "reminderStreakBody": "अपनी {count} दिन की स्ट्रीक जारी रखें। एक सेट काफ़ी है।",
+  "channelMatches": "मैच और दोस्त",
+  "channelReminders": "रोज़ का रिमाइंडर"
 }

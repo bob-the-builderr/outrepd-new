@@ -10,6 +10,8 @@ import 'backend/supabase_backend.dart';
 import 'career.dart';
 import 'connection.dart';
 import 'data.dart';
+import 'firebase.dart';
+import 'reminders.dart';
 import 'rewards.dart';
 import 'screens/auth_entry.dart';
 import 'screens/avatar_picker.dart';
@@ -38,6 +40,9 @@ import 'theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  // First, so a crash anywhere after it is reported. Quick — it reads config
+  // already on the phone — and a build without Firebase skips it entirely.
+  await startFirebase();
   // Not awaited: the first frame can open on the default "online" guess,
   // and this corrects it within a moment rather than delaying startup for a
   // network check nothing else here depends on.
@@ -80,6 +85,9 @@ void main() async {
     await loadCountAccuracy();
     await avatar.load();
     await rewards.load();
+    // After settings and rewards: the reminder's time is one, and whether
+    // today is already trained is the other.
+    await Reminders.instance.start();
     // After rewards, because the career copies the streak out of it, and
     // before the title sync below, which reads the totals it restores.
     await Career.instance.load();

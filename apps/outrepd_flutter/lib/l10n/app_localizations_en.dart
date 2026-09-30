@@ -2141,4 +2141,42 @@ class LEn extends L {
 
   @override
   String get soundsHint => 'A beep for 3, 2, 1, a tick for each rep, and the end of the round. Plays over your music.';
+
+  @override
+  String get phoneSection => 'On this phone';
+
+  @override
+  String get allowNotifications => 'Allow notifications';
+
+  @override
+  String get allowNotificationsHint => 'They\'re off for OUTREPD in your phone\'s settings, so nothing below can reach you.';
+
+  @override
+  String get remindersSection => 'Reminder';
+
+  @override
+  String get dailyReminder => 'Daily reminder';
+
+  @override
+  String get dailyReminderHint => 'Only on days you haven\'t trained yet.';
+
+  @override
+  String get reminderTime => 'Time';
+
+  @override
+  String get reminderTitle => 'Time for today\'s push-ups';
+
+  @override
+  String get reminderBody => 'One quick set counts toward your streak.';
+
+  @override
+  String reminderStreakBody(String count) {
+    return 'Keep your ${count}-day streak going. One set is enough.';
+  }
+
+  @override
+  String get channelMatches => 'Matches and friends';
+
+  @override
+  String get channelReminders => 'Daily reminder';
 }

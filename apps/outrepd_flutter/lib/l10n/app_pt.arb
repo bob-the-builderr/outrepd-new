@@ -223,7 +223,7 @@
   "privacyPolicy": "Política de privacidade",
   "openSourceLicences": "Licenças de código aberto",
   "deleteAccount": "Apagar conta",
-  "needsServer": "Não foi possível conectar. Verifique sua internet e tente de novo.",
+  "needsServer": "Não foi possível ligar. Verifica a tua internet e tenta de novo.",
   "achievements": "Conquistas",
   "roadTitle": "Caminho para Mestre",
   "allTiers": "Todos os ranques",
@@ -674,5 +674,17 @@
   "shareRematch": "REVANCHE?",
   "friendCodeInvite": "Me desafie no outrepd. Me adicione com meu código de amigo {code}\nhttps://outrepd.com",
   "soundsLabel": "Sons",
-  "soundsHint": "Um bipe no 3, 2, 1, um tique a cada repetição e o fim da rodada. Toca junto com sua música."
+  "soundsHint": "Um bipe no 3, 2, 1, um tique a cada repetição e o fim da ronda. Toca por cima da tua música.",
+  "phoneSection": "Neste telemóvel",
+  "allowNotifications": "Permitir notificações",
+  "allowNotificationsHint": "Estão desligadas para o OUTREPD nas definições do telemóvel, por isso nada abaixo te chega.",
+  "remindersSection": "Lembrete",
+  "dailyReminder": "Lembrete diário",
+  "dailyReminderHint": "Só nos dias em que ainda não treinaste.",
+  "reminderTime": "Hora",
+  "reminderTitle": "Hora das flexões de hoje",
+  "reminderBody": "Uma série rápida conta para a tua sequência.",
+  "reminderStreakBody": "Mantém a tua sequência de {count} dias. Basta uma série.",
+  "channelMatches": "Partidas e amigos",
+  "channelReminders": "Lembrete diário"
 }

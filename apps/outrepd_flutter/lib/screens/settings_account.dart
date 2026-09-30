@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import '../backend/backend.dart';
 import '../career.dart';
 import '../l10n/app_localizations.dart';
+import '../push.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'settings_parts.dart';
@@ -273,6 +274,10 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
     setState(() => _deleting = true);
 
     try {
+      // The server drops the account's phones with it; this also drops the
+      // address on the phone, so the next account here starts clean. If the
+      // delete then fails, the next launch registers again.
+      await Push.instance.stop();
       await backend.deleteAccount();
       // The local account goes too. Leaving a career behind on the phone
       // after the server has forgotten it is the same account in two states.

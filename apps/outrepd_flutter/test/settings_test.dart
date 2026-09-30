@@ -132,6 +132,26 @@ void main() {
     expect(settings.sounds, isFalse);
   });
 
+  testWidgets('the daily reminder can be turned off, and its time goes with it',
+      (tester) async {
+    addTearDown(() => settings.reminder = true);
+    phone(tester);
+    await tester.pumpWidget(_app(const NoticeSettingsScreen()));
+    await tester.pumpAndSettle();
+
+    expect(settings.reminder, isTrue);
+    expect(find.byKey(const Key('reminderTime')), findsOneWidget);
+    expect(find.text('7:00 PM'), findsOneWidget);
+
+    await tester.tap(find.descendant(
+      of: find.byKey(const Key('reminderSwitch')),
+      matching: find.byType(Switch),
+    ));
+    await tester.pumpAndSettle();
+    expect(settings.reminder, isFalse);
+    expect(find.byKey(const Key('reminderTime')), findsNothing);
+  });
+
   testWidgets('deleting is armed only by typing the word', (tester) async {
     phone(tester);
     await tester.pumpWidget(_app(const DeleteAccountScreen()));

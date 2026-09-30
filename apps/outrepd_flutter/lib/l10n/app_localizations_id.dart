@@ -2142,4 +2142,42 @@ class LId extends L {
 
   @override
   String get soundsHint => 'Bunyi bip untuk 3, 2, 1, tik untuk tiap repetisi, dan akhir ronde. Diputar di atas musikmu.';
+
+  @override
+  String get phoneSection => 'Di ponsel ini';
+
+  @override
+  String get allowNotifications => 'Izinkan notifikasi';
+
+  @override
+  String get allowNotificationsHint => 'Notifikasi OUTREPD mati di pengaturan ponselmu, jadi tidak ada yang di bawah ini bisa sampai.';
+
+  @override
+  String get remindersSection => 'Pengingat';
+
+  @override
+  String get dailyReminder => 'Pengingat harian';
+
+  @override
+  String get dailyReminderHint => 'Hanya di hari kamu belum latihan.';
+
+  @override
+  String get reminderTime => 'Waktu';
+
+  @override
+  String get reminderTitle => 'Waktunya push-up hari ini';
+
+  @override
+  String get reminderBody => 'Satu set singkat dihitung untuk streak-mu.';
+
+  @override
+  String reminderStreakBody(String count) {
+    return 'Pertahankan streak ${count} harimu. Satu set sudah cukup.';
+  }
+
+  @override
+  String get channelMatches => 'Pertandingan dan teman';
+
+  @override
+  String get channelReminders => 'Pengingat harian';
 }

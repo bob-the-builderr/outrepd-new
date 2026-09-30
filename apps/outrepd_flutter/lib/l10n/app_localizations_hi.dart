@@ -2141,4 +2141,42 @@ class LHi extends L {
 
   @override
   String get soundsHint => '3, 2, 1 पर बीप, हर रेप पर टिक और राउंड का अंत। आपके संगीत के ऊपर बजता है।';
+
+  @override
+  String get phoneSection => 'इस फ़ोन पर';
+
+  @override
+  String get allowNotifications => 'सूचनाओं की अनुमति दें';
+
+  @override
+  String get allowNotificationsHint => 'फ़ोन की सेटिंग में OUTREPD के लिए ये बंद हैं, इसलिए नीचे की कोई सूचना आप तक नहीं पहुँचेगी।';
+
+  @override
+  String get remindersSection => 'रिमाइंडर';
+
+  @override
+  String get dailyReminder => 'रोज़ का रिमाइंडर';
+
+  @override
+  String get dailyReminderHint => 'सिर्फ़ उन दिनों जब आपने अभी तक ट्रेनिंग नहीं की है।';
+
+  @override
+  String get reminderTime => 'समय';
+
+  @override
+  String get reminderTitle => 'आज के पुश-अप्स का समय';
+
+  @override
+  String get reminderBody => 'एक छोटा सेट भी आपकी स्ट्रीक में गिना जाता है।';
+
+  @override
+  String reminderStreakBody(String count) {
+    return 'अपनी ${count} दिन की स्ट्रीक जारी रखें। एक सेट काफ़ी है।';
+  }
+
+  @override
+  String get channelMatches => 'मैच और दोस्त';
+
+  @override
+  String get channelReminders => 'रोज़ का रिमाइंडर';
 }

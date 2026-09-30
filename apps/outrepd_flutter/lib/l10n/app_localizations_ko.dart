@@ -2107,4 +2107,42 @@ class LKo extends L {
 
   @override
   String get soundsHint => '3, 2, 1 신호음, 반복마다 틱 소리, 라운드 종료음. 음악 위에 함께 재생됩니다.';
+
+  @override
+  String get phoneSection => '이 휴대폰';
+
+  @override
+  String get allowNotifications => '알림 허용';
+
+  @override
+  String get allowNotificationsHint => '휴대폰 설정에서 OUTREPD 알림이 꺼져 있어 아래 알림을 받을 수 없습니다.';
+
+  @override
+  String get remindersSection => '리마인더';
+
+  @override
+  String get dailyReminder => '매일 리마인더';
+
+  @override
+  String get dailyReminderHint => '아직 운동하지 않은 날에만.';
+
+  @override
+  String get reminderTime => '시간';
+
+  @override
+  String get reminderTitle => '오늘의 푸시업 시간이에요';
+
+  @override
+  String get reminderBody => '짧은 한 세트도 연속 기록에 포함돼요.';
+
+  @override
+  String reminderStreakBody(String count) {
+    return '${count}일 연속 기록을 이어가세요. 한 세트면 충분해요.';
+  }
+
+  @override
+  String get channelMatches => '대결과 친구';
+
+  @override
+  String get channelReminders => '매일 리마인더';
 }

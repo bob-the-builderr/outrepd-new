@@ -26,13 +26,21 @@
 نقط الجسم بيتحفظ على الموبايل بس عشان مقارنة دقة العداد. في جدول `sets` فيه
 خانة `recording_path` لتسجيل، بس الأب ماعندوش أي كود بيرفعه.
 
-**مفيش:** إعلانات، أنالتكس، تتبع، crash reporting، إشعارات push، موقع، جهات
-اتصال، أو أي معرّف للجهاز.
+**اتضاف يوم ٣٠ سبتمبر ٢٠٢٦ (`supabase/push.sql`، `lib/push.dart`، `lib/firebase.dart`):**
+- عنوان push للموبايل (FCM token) ولغة الأب، في جدول `push_tokens`. اختياري:
+  بس لو الموبايل سمح بالإشعارات. بيتمسح مع تسجيل الخروج أو مسح الحساب.
+- Crash reports من Firebase Crashlytics: الغلطة، موديل الموبايل، نسخة النظام
+  والأب، ومعرّف تثبيت بتاع Crashlytics. للإصلاح بس.
+- التذكير اليومي بيتعمل على الموبايل ومابيوصلش السيرفر.
+
+**مفيش:** إعلانات، أنالتكس، تتبع، موقع، جهات اتصال.
 
 **جهات بتشيل البيانات بالنيابة عنك (service providers، مش "مشاركة"):**
 - Supabase: السيرفر وقاعدة البيانات والصور.
 - Resend: بيبعت ملف بياناتك بالإيميل لما تطلبه من الإعدادات.
 - RevenueCat: بيدير الاشتراكات. بياخد الـ user ID وسجل الشراء من المتجر.
+- Google Firebase: بيوصّل الإشعارات (Cloud Messaging) وبيجمع الـ crash
+  reports (Crashlytics).
 
 **Google ML Kit:** قراءة حركة الجسم بتحصل على الموبايل بمكتبة Google ML Kit.
 شروط Google بتقول إن المكتبة ممكن تبعت لجوجل معلومات استخدام وأداء عن المكتبة
@@ -66,6 +74,9 @@
 | App activity | In-app actions (duels, friends, blocks) | Required | App functionality |
 | App activity | Other user-generated content (reports) | Optional | App functionality |
 | Financial info | Purchase history (subscription) | Required | App functionality |
+| App info and performance | Crash logs | Required | App functionality |
+| App info and performance | Diagnostics | Required | App functionality |
+| Device or other IDs | Device or other IDs (push token, Crashlytics installation ID) | Optional | App functionality |
 
 كلها **Processed ephemerally: No**، و **not used for** advertising or
 analytics.
@@ -90,8 +101,14 @@ for tracking or advertising):
 | User Content | Other User Content (reports) |
 | Usage Data | Product Interaction |
 | Purchases | Purchase History (subscription) |
+| Identifiers | Device ID (push token) |
 
-**Data not linked to the user:** None
+**Data not linked to the user** (for *App Functionality*):
+
+| Category | Type |
+|---|---|
+| Diagnostics | Crash Data |
+| Diagnostics | Other Diagnostic Data |
 
 ---
 

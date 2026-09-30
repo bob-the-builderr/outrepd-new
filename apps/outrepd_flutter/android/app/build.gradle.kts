@@ -4,6 +4,20 @@ plugins {
     id("com.android.application")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
+    id("com.google.gms.google-services") apply false
+    id("com.google.firebase.crashlytics") apply false
+}
+
+// Firebase, for push notifications and crash reports, only when its config
+// is there. google-services.json is kept out of the repository: CI writes it
+// from the GOOGLE_SERVICES_JSON secret, and a build without it — a local one,
+// or the paywall test build — simply has neither. The Google services plugin
+// fails the build outright when the file is missing, so it cannot be applied
+// unconditionally; Crashlytics needs the build id its plugin stamps in, or the
+// app would die on launch the moment Firebase starts.
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
+    apply(plugin = "com.google.firebase.crashlytics")
 }
 
 // The upload key, kept out of the repository. android/key.properties names the
@@ -22,6 +36,9 @@ android {
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
+        // flutter_local_notifications schedules the daily reminder with
+        // java.time, which older Androids only have through desugaring.
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -88,4 +105,8 @@ kotlin {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
 }

@@ -2137,4 +2137,42 @@ class LTr extends L {
 
   @override
   String get soundsHint => '3, 2, 1 için bip, her tekrar için tık ve tur sonu. Müziğinin üstünde çalar.';
+
+  @override
+  String get phoneSection => 'Bu telefonda';
+
+  @override
+  String get allowNotifications => 'Bildirimlere izin ver';
+
+  @override
+  String get allowNotificationsHint => 'Telefon ayarlarında OUTREPD için kapalı, bu yüzden aşağıdakilerin hiçbiri sana ulaşamaz.';
+
+  @override
+  String get remindersSection => 'Hatırlatıcı';
+
+  @override
+  String get dailyReminder => 'Günlük hatırlatıcı';
+
+  @override
+  String get dailyReminderHint => 'Sadece henüz antrenman yapmadığın günlerde.';
+
+  @override
+  String get reminderTime => 'Saat';
+
+  @override
+  String get reminderTitle => 'Bugünün şınavları zamanı';
+
+  @override
+  String get reminderBody => 'Kısa bir set serine sayılır.';
+
+  @override
+  String reminderStreakBody(String count) {
+    return '${count} günlük serini sürdür. Bir set yeter.';
+  }
+
+  @override
+  String get channelMatches => 'Maçlar ve arkadaşlar';
+
+  @override
+  String get channelReminders => 'Günlük hatırlatıcı';
 }

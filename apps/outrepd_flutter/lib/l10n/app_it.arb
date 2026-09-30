@@ -674,5 +674,17 @@
   "shareRematch": "RIVINCITA?",
   "friendCodeInvite": "Sfidami su outrepd. Aggiungimi con il mio codice amico {code}\nhttps://outrepd.com",
   "soundsLabel": "Suoni",
-  "soundsHint": "Un bip per 3, 2, 1, un tic a ogni ripetizione e la fine del round. Sopra la tua musica."
+  "soundsHint": "Un bip per 3, 2, 1, un tic a ogni ripetizione e la fine del round. Sopra la tua musica.",
+  "phoneSection": "Su questo telefono",
+  "allowNotifications": "Consenti notifiche",
+  "allowNotificationsHint": "Sono disattivate per OUTREPD nelle impostazioni del telefono, quindi niente di quanto sotto ti arriverà.",
+  "remindersSection": "Promemoria",
+  "dailyReminder": "Promemoria giornaliero",
+  "dailyReminderHint": "Solo nei giorni in cui non ti sei ancora allenato.",
+  "reminderTime": "Ora",
+  "reminderTitle": "È ora dei piegamenti di oggi",
+  "reminderBody": "Una serie veloce conta per la tua striscia.",
+  "reminderStreakBody": "Tieni viva la tua striscia di {count} giorni. Basta una serie.",
+  "channelMatches": "Sfide e amici",
+  "channelReminders": "Promemoria giornaliero"
 }

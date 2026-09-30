@@ -674,5 +674,17 @@
   "shareRematch": "재대결?",
   "friendCodeInvite": "outrepd에서 나와 대결해 줘. 내 친구 코드 {code}로 추가해 줘\nhttps://outrepd.com",
   "soundsLabel": "소리",
-  "soundsHint": "3, 2, 1 신호음, 반복마다 틱 소리, 라운드 종료음. 음악 위에 함께 재생됩니다."
+  "soundsHint": "3, 2, 1 신호음, 반복마다 틱 소리, 라운드 종료음. 음악 위에 함께 재생됩니다.",
+  "phoneSection": "이 휴대폰",
+  "allowNotifications": "알림 허용",
+  "allowNotificationsHint": "휴대폰 설정에서 OUTREPD 알림이 꺼져 있어 아래 알림을 받을 수 없습니다.",
+  "remindersSection": "리마인더",
+  "dailyReminder": "매일 리마인더",
+  "dailyReminderHint": "아직 운동하지 않은 날에만.",
+  "reminderTime": "시간",
+  "reminderTitle": "오늘의 푸시업 시간이에요",
+  "reminderBody": "짧은 한 세트도 연속 기록에 포함돼요.",
+  "reminderStreakBody": "{count}일 연속 기록을 이어가세요. 한 세트면 충분해요.",
+  "channelMatches": "대결과 친구",
+  "channelReminders": "매일 리마인더"
 }

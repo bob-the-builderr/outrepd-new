@@ -824,6 +824,18 @@ abstract interface class Backend {
   /// Leaves the account on the server as it is and forgets it on this
   /// phone. [me] is null afterwards; [signIn] starts a fresh one.
   Future<void> signOut();
+
+  /// Where the signed-in account's pushes go: this phone's address with
+  /// Firebase, and the language to write them in. A phone that moves to
+  /// another account moves with it.
+  Future<void> registerPushToken(
+    String token, {
+    required String platform,
+    required String language,
+  });
+
+  /// This phone gets no more of the signed-in account's pushes.
+  Future<void> forgetPushToken(String token);
 }
 
 /// The app with no server behind it.
@@ -1000,6 +1012,17 @@ class NoBackend implements Backend {
 
   @override
   Future<void> signOut() async {}
+
+  /// Nobody to push from.
+  @override
+  Future<void> registerPushToken(
+    String token, {
+    required String platform,
+    required String language,
+  }) async {}
+
+  @override
+  Future<void> forgetPushToken(String token) async {}
 }
 
 /// The one the app uses. Replaced at startup when keys are supplied.

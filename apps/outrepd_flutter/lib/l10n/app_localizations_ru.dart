@@ -2142,4 +2142,42 @@ class LRu extends L {
 
   @override
   String get soundsHint => 'Сигнал на 3, 2, 1, щелчок на каждое повторение и конец раунда. Поверх вашей музыки.';
+
+  @override
+  String get phoneSection => 'На этом телефоне';
+
+  @override
+  String get allowNotifications => 'Разрешить уведомления';
+
+  @override
+  String get allowNotificationsHint => 'Они отключены для OUTREPD в настройках телефона, поэтому ничего из списка ниже до вас не дойдёт.';
+
+  @override
+  String get remindersSection => 'Напоминание';
+
+  @override
+  String get dailyReminder => 'Ежедневное напоминание';
+
+  @override
+  String get dailyReminderHint => 'Только в дни, когда вы ещё не тренировались.';
+
+  @override
+  String get reminderTime => 'Время';
+
+  @override
+  String get reminderTitle => 'Время сегодняшних отжиманий';
+
+  @override
+  String get reminderBody => 'Один быстрый подход засчитывается в вашу серию.';
+
+  @override
+  String reminderStreakBody(String count) {
+    return 'Сохраните серию из ${count} дн. Достаточно одного подхода.';
+  }
+
+  @override
+  String get channelMatches => 'Матчи и друзья';
+
+  @override
+  String get channelReminders => 'Ежедневное напоминание';
 }

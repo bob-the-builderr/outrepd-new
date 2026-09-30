@@ -2097,4 +2097,42 @@ class LJa extends L {
 
   @override
   String get soundsHint => '3、2、1 のビープ、レップごとのティック、ラウンド終了の音。音楽と一緒に鳴ります。';
+
+  @override
+  String get phoneSection => 'この端末';
+
+  @override
+  String get allowNotifications => '通知を許可';
+
+  @override
+  String get allowNotificationsHint => '端末の設定で OUTREPD の通知がオフになっているため、以下の通知は届きません。';
+
+  @override
+  String get remindersSection => 'リマインダー';
+
+  @override
+  String get dailyReminder => '毎日のリマインダー';
+
+  @override
+  String get dailyReminderHint => 'まだトレーニングしていない日だけ。';
+
+  @override
+  String get reminderTime => '時刻';
+
+  @override
+  String get reminderTitle => '今日の腕立て伏せの時間です';
+
+  @override
+  String get reminderBody => '1セットでも連続記録に数えられます。';
+
+  @override
+  String reminderStreakBody(String count) {
+    return '${count}日連続の記録を続けましょう。1セットで十分です。';
+  }
+
+  @override
+  String get channelMatches => '対戦とフレンド';
+
+  @override
+  String get channelReminders => '毎日のリマインダー';
 }

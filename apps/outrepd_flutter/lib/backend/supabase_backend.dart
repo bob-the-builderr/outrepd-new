@@ -749,6 +749,27 @@ class SupabaseBackend implements Backend {
   }
 
   @override
+  Future<void> registerPushToken(
+    String token, {
+    required String platform,
+    required String language,
+  }) async {
+    await _db.rpc<void>(
+      'register_push_token',
+      params: {
+        'push_token': token,
+        'push_platform': platform,
+        'push_language': language,
+      },
+    );
+  }
+
+  @override
+  Future<void> forgetPushToken(String token) async {
+    await _db.rpc<void>('forget_push_token', params: {'push_token': token});
+  }
+
+  @override
   Future<void> deleteAccount() async {
     // The photo first, while this session can still prove it owns the file.
     // Deleting the account does not reach storage, and the bucket is public,

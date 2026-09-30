@@ -674,5 +674,17 @@
   "shareRematch": "TANDING ULANG?",
   "friendCodeInvite": "Tantang aku di outrepd. Tambahkan aku dengan kode temanku {code}\nhttps://outrepd.com",
   "soundsLabel": "Suara",
-  "soundsHint": "Bunyi bip untuk 3, 2, 1, tik untuk tiap repetisi, dan akhir ronde. Diputar di atas musikmu."
+  "soundsHint": "Bunyi bip untuk 3, 2, 1, tik untuk tiap repetisi, dan akhir ronde. Diputar di atas musikmu.",
+  "phoneSection": "Di ponsel ini",
+  "allowNotifications": "Izinkan notifikasi",
+  "allowNotificationsHint": "Notifikasi OUTREPD mati di pengaturan ponselmu, jadi tidak ada yang di bawah ini bisa sampai.",
+  "remindersSection": "Pengingat",
+  "dailyReminder": "Pengingat harian",
+  "dailyReminderHint": "Hanya di hari kamu belum latihan.",
+  "reminderTime": "Waktu",
+  "reminderTitle": "Waktunya push-up hari ini",
+  "reminderBody": "Satu set singkat dihitung untuk streak-mu.",
+  "reminderStreakBody": "Pertahankan streak {count} harimu. Satu set sudah cukup.",
+  "channelMatches": "Pertandingan dan teman",
+  "channelReminders": "Pengingat harian"
 }

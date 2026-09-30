@@ -2151,4 +2151,42 @@ class LFr extends L {
 
   @override
   String get soundsHint => 'Un bip pour 3, 2, 1, un tic à chaque répétition et la fin de la manche. Par-dessus ta musique.';
+
+  @override
+  String get phoneSection => 'Sur ce téléphone';
+
+  @override
+  String get allowNotifications => 'Autoriser les notifications';
+
+  @override
+  String get allowNotificationsHint => 'Elles sont désactivées pour OUTREPD dans les réglages du téléphone : rien de ce qui suit ne peut t\'arriver.';
+
+  @override
+  String get remindersSection => 'Rappel';
+
+  @override
+  String get dailyReminder => 'Rappel quotidien';
+
+  @override
+  String get dailyReminderHint => 'Seulement les jours où tu ne t\'es pas encore entraîné.';
+
+  @override
+  String get reminderTime => 'Heure';
+
+  @override
+  String get reminderTitle => 'C\'est l\'heure des pompes du jour';
+
+  @override
+  String get reminderBody => 'Une petite série compte pour ta série de jours.';
+
+  @override
+  String reminderStreakBody(String count) {
+    return 'Garde ta série de ${count} jours. Une série suffit.';
+  }
+
+  @override
+  String get channelMatches => 'Matchs et amis';
+
+  @override
+  String get channelReminders => 'Rappel quotidien';
 }

@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import '../app_bottom_nav.dart';
 import '../backend/backend.dart';
 import '../career.dart';
+import '../push.dart';
 import '../theme.dart';
 import 'friends.dart';
 import 'match.dart';
+import 'notifications.dart';
 import 'paywall.dart';
 import 'profile.dart';
 import 'ranks.dart';
@@ -86,23 +88,74 @@ class _AppShellState extends State<AppShell> {
     // Every way into the app lands here — the end of onboarding, a returning
     // launch, a login — so this is where the subscription is asked for.
     return PaywallGate(
-      child: Scaffold(
-        backgroundColor: context.colors.background,
-        // One listener for all four tabs. Every screen under here reads the
-        // account, so a duel that changes it has to redraw them — otherwise
-        // the profile still shows last week's LP until something else
-        // happens to rebuild it.
-        body: ListenableBuilder(
-          listenable: Career.instance,
-          builder: (context, _) =>
-              IndexedStack(index: _index, children: _tabs),
-        ),
-        bottomNavigationBar: AppBottomNav(
-          currentIndex: _index,
-          onTap: _select,
-          friendRequestCount: friendRequestCount,
+      child: _Inside(
+        child: Scaffold(
+          backgroundColor: context.colors.background,
+          // One listener for all four tabs. Every screen under here reads the
+          // account, so a duel that changes it has to redraw them — otherwise
+          // the profile still shows last week's LP until something else
+          // happens to rebuild it.
+          body: ListenableBuilder(
+            listenable: Career.instance,
+            builder: (context, _) =>
+                IndexedStack(index: _index, children: _tabs),
+          ),
+          bottomNavigationBar: AppBottomNav(
+            currentIndex: _index,
+            onTap: _select,
+            friendRequestCount: friendRequestCount,
+          ),
         ),
       ),
     );
   }
+}
+
+/// What happens once somebody is past the paywall: the phone is asked, once,
+/// whether the app may show notifications; it is registered for the
+/// account's pushes; and a tapped push opens the notices.
+///
+/// Inside the gate on purpose. Built only when the gate lets the app through,
+/// so a push can never open a screen the subscription has not.
+class _Inside extends StatefulWidget {
+  const _Inside({required this.child});
+
+  final Widget child;
+
+  @override
+  State<_Inside> createState() => _InsideState();
+}
+
+class _InsideState extends State<_Inside> {
+  @override
+  void initState() {
+    super.initState();
+    Push.instance.openNotices.addListener(_openNotices);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await askForNotificationsOnce();
+      // After the answer, so a phone that just said yes is registered with
+      // the permission it now has.
+      await Push.instance.start();
+    });
+  }
+
+  @override
+  void dispose() {
+    Push.instance.openNotices.removeListener(_openNotices);
+    super.dispose();
+  }
+
+  bool _showingNotices = false;
+
+  Future<void> _openNotices() async {
+    if (!mounted || _showingNotices) return;
+    _showingNotices = true;
+    await Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => const NotificationsScreen()),
+    );
+    _showingNotices = false;
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.child;
 }

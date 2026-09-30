@@ -20,6 +20,7 @@ import '../backend/backend.dart';
 import '../career.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../push.dart';
 import '../reps/count_accuracy.dart';
 import '../settings.dart';
 import '../subscription.dart';
@@ -351,6 +352,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
     if (sure != true || !mounted) return;
 
+    // While still signed in: the server only lets an account forget its own
+    // phones.
+    await Push.instance.stop();
     try {
       await backend.signOut();
     } on Object catch (error) {
