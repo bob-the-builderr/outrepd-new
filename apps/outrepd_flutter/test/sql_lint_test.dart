@@ -215,6 +215,30 @@ void main() {
     expect(risky, isEmpty, reason: risky.join('\n'));
   });
 
+  test(r'every function body is quoted with $$ at both ends', () {
+    // A single `$` where `$$` belongs is `syntax error at or near "$"`, and
+    // the whole install stops there. It happened once: a script rewriting a
+    // function ran the new text through a replace that reads `$$` as an
+    // escaped `$`, and install.sql was built from the damaged part.
+    final broken = <String>[];
+    for (final file in [...files, File('supabase/install.sql')]) {
+      final text = _withoutComments(file.readAsStringSync());
+      final lines = text.split('\n');
+      for (var i = 0; i < lines.length; i++) {
+        if (RegExp(r'^\s*as\s+\$\s*$', caseSensitive: false)
+                .hasMatch(lines[i]) ||
+            RegExp(r'^\s*\$\s*;\s*$').hasMatch(lines[i])) {
+          broken.add('${file.path}:${i + 1} ${lines[i].trim()}');
+        }
+      }
+      if (r'$$'.allMatches(text).length.isOdd) {
+        broken.add('${file.path} opens a \$\$ it never closes');
+      }
+    }
+
+    expect(broken, isEmpty, reason: broken.join('\n'));
+  });
+
   test('every function declares a search path', () {
     // A `security definer` function without one runs with whatever search
     // path the caller set, which is how a client points a trusted function at

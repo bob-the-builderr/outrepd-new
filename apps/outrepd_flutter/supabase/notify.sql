@@ -257,7 +257,7 @@ returns table (
 )
 language sql
 stable
-as $
+as $$
   select n.id, n.kind, n.created_at, n.read_at is null,
          n.actor, n.actor_name, n.you_won, n.your_reps, n.their_reps,
          n.lp_delta
