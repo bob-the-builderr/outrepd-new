@@ -36,10 +36,6 @@ on:
       - 'apps/outrepd_flutter/**'
       - '.github/workflows/ios.yml'
 
-concurrency:
-  group: ios-${{ github.ref }}
-  cancel-in-progress: true
-
 defaults:
   run:
     working-directory: apps/outrepd_flutter
@@ -47,6 +43,12 @@ defaults:
 jobs:
   ios:
     if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[ios]')
+    # On the job, not the workflow: a push without [ios] still starts this
+    # workflow, only to skip the job, and a workflow-level group would have
+    # that empty run cancel an iPhone build halfway through its upload.
+    concurrency:
+      group: ios-${{ github.ref }}
+      cancel-in-progress: true
     # macOS 26 for Xcode 26: connectivity_plus already uses the iOS 26 SDK, and
     # the App Store takes only builds made with the current one.
     runs-on: macos-26

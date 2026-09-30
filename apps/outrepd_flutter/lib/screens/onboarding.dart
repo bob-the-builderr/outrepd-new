@@ -18,6 +18,7 @@
 library;
 
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
@@ -221,7 +222,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   _Step.camera => _CameraAsk(
                     onNext: () => _go(_Step.placement),
                   ),
-                  _Step.placement => _Placement(
+                  _Step.placement => PlacementStep(
                     onNext: () => _go(_Step.framing),
                   ),
                   _Step.framing => _FramingCheck(
@@ -949,8 +950,9 @@ class _CameraAsk extends StatelessWidget {
 
 // ─────────────────────────────── 5 placement ─────────────────────────────────
 
-class _Placement extends StatelessWidget {
-  const _Placement({required this.onNext});
+/// Public only so tool/screenshots can draw this one step on its own.
+class PlacementStep extends StatelessWidget {
+  const PlacementStep({super.key, required this.onNext});
 
   final VoidCallback onNext;
 
@@ -971,8 +973,9 @@ class _Placement extends StatelessWidget {
               child: CustomPaint(
                 painter: _PlacementPainter(
                   line: context.colors.border,
-                  body: context.colors.brand,
+                  body: context.colors.text,
                   fill: context.colors.surfaceRaised,
+                  camera: context.colors.rival,
                 ),
               ),
             ),
@@ -983,7 +986,7 @@ class _Placement extends StatelessWidget {
                   child: Text(
                     l.obOneMetre,
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: context.colors.muted, fontSize: 9),
+                    style: TextStyle(color: context.colors.muted, fontSize: 11),
                   ),
                 ),
                 Expanded(
@@ -991,7 +994,7 @@ class _Placement extends StatelessWidget {
                   child: Text(
                     l.obFullBody,
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: context.colors.muted, fontSize: 9),
+                    style: TextStyle(color: context.colors.muted, fontSize: 11),
                   ),
                 ),
               ],
@@ -1008,25 +1011,65 @@ class _Placement extends StatelessWidget {
   }
 }
 
-/// A phone leaning on a wall, a gap, and somebody in a push-up.
+/// A phone leaning on a wall, the camera's view across the floor, and the
+/// lifter from the logo in a push-up inside it — head toward the phone, body
+/// straight, arm down to the floor: the one way the camera reads a set.
 class _PlacementPainter extends CustomPainter {
   const _PlacementPainter({
     required this.line,
     required this.body,
     required this.fill,
+    required this.camera,
   });
 
   final Color line;
   final Color body;
   final Color fill;
 
+  /// The phone and what it can see, in the rival's orange — the same pair of
+  /// colours as the two lifters in the logo.
+  final Color camera;
+
   @override
   void paint(Canvas canvas, Size size) {
+    // Drawn on a 220 × 130 grid and scaled to whatever it is given.
     final s = size.width / 220;
     Offset p(double x, double y) => Offset(x * s, y * s);
+    Path shape(List<List<double>> points) {
+      final path = Path()..moveTo(points.first[0] * s, points.first[1] * s);
+      for (final pt in points.skip(1)) {
+        path.lineTo(pt[0] * s, pt[1] * s);
+      }
+      return path..close();
+    }
 
-    final flat = Paint()..color = line;
+    // What the camera sees: a wedge from the lens across the whole body.
+    canvas.drawPath(
+      shape([
+        [30, 72],
+        [214, 46],
+        [214, 104],
+        [30, 81],
+      ]),
+      Paint()..color = camera.withValues(alpha: 0.10),
+    );
+    final edge = Paint()
+      ..color = camera.withValues(alpha: 0.5)
+      ..strokeWidth = 1 * s;
+    void dashed(Offset from, Offset to) {
+      final length = (to - from).distance;
+      final step = (to - from) / length;
+      for (var d = 0.0; d < length; d += 6 * s) {
+        final end = d + 3 * s > length ? length : d + 3 * s;
+        canvas.drawLine(from + step * d, from + step * end, edge);
+      }
+    }
+
+    dashed(p(30, 72), p(214, 46));
+    dashed(p(30, 81), p(214, 104));
+
     // Floor and wall.
+    final flat = Paint()..color = line;
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         Rect.fromLTWH(0, 104 * s, 220 * s, 3 * s),
@@ -1036,72 +1079,73 @@ class _PlacementPainter extends CustomPainter {
     );
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromLTWH(6 * s, 52 * s, 4 * s, 54 * s),
+        Rect.fromLTWH(6 * s, 48 * s, 4 * s, 58 * s),
         Radius.circular(2 * s),
       ),
       flat,
     );
 
-    // The phone.
+    // The phone, leaning back against the wall.
+    canvas.save();
+    canvas.translate(24 * s, 83 * s);
+    canvas.rotate(-8 * math.pi / 180);
+    canvas.translate(-24 * s, -83 * s);
     final phone = RRect.fromRectAndRadius(
-      Rect.fromLTWH(14 * s, 66 * s, 22 * s, 40 * s),
-      Radius.circular(4 * s),
+      Rect.fromLTWH(12 * s, 61 * s, 24 * s, 45 * s),
+      Radius.circular(5 * s),
     );
     canvas.drawRRect(phone, Paint()..color = fill);
     canvas.drawRRect(
       phone,
       Paint()
-        ..color = body
-        ..strokeWidth = 1.5 * s
+        ..color = camera
+        ..strokeWidth = 2 * s
         ..style = PaintingStyle.stroke,
     );
+    canvas.restore();
 
-    final limb = Paint()
-      ..color = body
-      ..strokeWidth = 2.5 * s
-      ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round
-      ..style = PaintingStyle.stroke;
-
-    // Head, then the body in a push-up seen from the side.
-    canvas.drawCircle(p(112, 70), 8 * s, limb);
-    final path = Path()
-      ..moveTo(p(92, 88).dx, p(92, 88).dy)
-      ..lineTo(p(150, 88).dx, p(150, 88).dy)
-      ..moveTo(p(92, 88).dx, p(92, 88).dy)
-      ..lineTo(p(80, 104).dx, p(80, 104).dy)
-      ..moveTo(p(150, 88).dx, p(150, 88).dy)
-      ..lineTo(p(162, 104).dx, p(162, 104).dy)
-      ..moveTo(p(100, 88).dx, p(100, 88).dy)
-      ..lineTo(p(108, 100).dx, p(108, 100).dy)
-      ..moveTo(p(142, 88).dx, p(142, 88).dy)
-      ..lineTo(p(134, 100).dx, p(134, 100).dy)
-      ..moveTo(p(108, 100).dx, p(108, 100).dy)
-      ..lineTo(p(134, 100).dx, p(134, 100).dy);
-    canvas.drawPath(path, limb);
-
-    // The gap between phone and lifter.
-    final dash = Paint()
-      ..color = line
-      ..strokeWidth = 1 * s
-      ..style = PaintingStyle.stroke;
-    for (var x = 40.0; x < 74; x += 6) {
-      canvas.drawLine(
-        p(x, 86 - (x - 40) * 0.23),
-        p(x + 3, 86 - (x + 3 - 40) * 0.23),
-        dash,
-      );
-      canvas.drawLine(
-        p(x, 86 + (x - 40) * 0.29),
-        p(x + 3, 86 + (x + 3 - 40) * 0.29),
-        dash,
-      );
-    }
+    // The lifter: head, a straight body from shoulders to toes, an arm
+    // straight down under the shoulder, and the hand flat on the floor.
+    final solid = Paint()..color = body;
+    canvas.drawCircle(p(86, 77), 8 * s, solid);
+    canvas.drawPath(
+      shape([
+        [96, 82],
+        [104, 82],
+        [196, 100],
+        [196, 106],
+        [188, 106],
+        [186, 103],
+        [100, 91],
+      ]),
+      solid,
+    );
+    canvas.drawPath(
+      shape([
+        [96, 86],
+        [104, 86],
+        [107, 104],
+        [99, 104],
+      ]),
+      solid,
+    );
+    canvas.drawPath(
+      shape([
+        [92, 104],
+        [110, 104],
+        [110, 106],
+        [92, 106],
+      ]),
+      solid,
+    );
   }
 
   @override
   bool shouldRepaint(_PlacementPainter old) =>
-      old.line != line || old.body != body || old.fill != fill;
+      old.line != line ||
+      old.body != body ||
+      old.fill != fill ||
+      old.camera != camera;
 }
 
 // ─────────────────────── 6 and 7: the camera is open ─────────────────────────
