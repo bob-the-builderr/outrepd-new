@@ -238,6 +238,13 @@ void main() {
     expect(find.text('GET READY'), findsNothing, reason: 'the round never began');
     expect(session.startedAt, isNotNull);
 
+    // The card grew a Live tag and a Give up button; the depth bar hangs
+    // under it rather than across its corner.
+    expect(
+      tester.getTopLeft(find.byKey(const Key('depthBar'))).dy,
+      greaterThan(tester.getBottomLeft(find.byKey(const Key('scoreCard'))).dy),
+    );
+
     // Two pumps: the first delivers the message, which marks the screen
     // dirty after that frame was already built; the second draws it.
     fake.link.hear(7);

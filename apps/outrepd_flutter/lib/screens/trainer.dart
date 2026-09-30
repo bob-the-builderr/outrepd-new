@@ -978,15 +978,21 @@ class _TrainerScreenState extends State<TrainerScreen>
           // The score, the clock, and the rival — pinned to the top from the
           // moment the camera opens, so the numbers are in the same place before
           // and during the bout instead of appearing when it starts.
+          //
+          // Down to just above the cue, because the depth bar hangs under the
+          // card in the same column: the card grew a Live tag and a Give up
+          // button, and a bar pinned at a fixed height ended up drawn across
+          // its corner.
           Positioned(
             left: 14,
             right: 14,
             top: 36,
+            bottom: 96,
             child: Column(
-              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _ScoreCard(
+                  key: const Key('scoreCard'),
                   yours: _liveReps,
                   theirs: _opponentReps,
                   remaining: _remaining,
@@ -1025,6 +1031,32 @@ class _TrainerScreenState extends State<TrainerScreen>
                         color: Color(0xFFC9C1B6),
                         fontSize: 12,
                         height: 1.45,
+                      ),
+                    ),
+                  ),
+
+                // How deep this rep is, as a bar that fills from the bottom. On
+                // the left, under the card: the phone is on the floor and the
+                // lifter is looking down the screen at it from a push-up, so
+                // the upper left edge is where a glance actually lands. Wide
+                // enough to read at that angle without turning the head, and
+                // shorter on a short phone rather than running into the cue.
+                if (_stage == _Stage.counting)
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 14),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        // Three points further out than the card, where it
+                        // has always sat: as near the edge as a thumb allows.
+                        child: Transform.translate(
+                          offset: const Offset(-3, 0),
+                          child: _DepthBar(
+                            key: const Key('depthBar'),
+                            progress: _progress ?? 0,
+                            good: ready,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -1156,22 +1188,6 @@ class _TrainerScreenState extends State<TrainerScreen>
                     ),
                   ),
                 ),
-              ),
-            ),
-
-          // How deep this rep is, as a bar that fills from the bottom. On the
-          // left, and low: the phone is on the floor and the lifter is looking
-          // down the screen at it from a push-up, so the middle of the left edge
-          // is where a glance actually lands. Wide enough to read at that angle
-          // without turning the head.
-          if (_stage == _Stage.counting)
-            Positioned(
-              left: 11,
-              top: 260,
-              child: _DepthBar(
-                key: const Key('depthBar'),
-                progress: _progress ?? 0,
-                good: ready,
               ),
             ),
 
@@ -1388,6 +1404,7 @@ double? _torsoOverShoulders(BodyPose? pose) {
 
 class _ScoreCard extends StatelessWidget {
   const _ScoreCard({
+    super.key,
     required this.yours,
     required this.theirs,
     required this.remaining,
