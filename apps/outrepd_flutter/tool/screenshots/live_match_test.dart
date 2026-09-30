@@ -142,6 +142,8 @@ void main() {
     }
   });
 
+  // A test in all but folder: it lives in tool/ so `flutter test` skips it.
+  // ignore: invalid_use_of_visible_for_testing_member
   setUp(() => SharedPreferences.setMockInitialValues({}));
   tearDown(() => backend = const NoBackend());
 
@@ -235,9 +237,14 @@ void main() {
       }
       expect(find.text('0:18'), findsOneWidget);
 
-      // And on the way down into the next one, so the cue says to push.
+      // And down into the next one, so the cue says to push — held there a
+      // moment, because the bar reads a few frames together and would still
+      // be on its way down. Well inside the second the clock just ticked to.
       for (var i = 1; i <= 10; i++) {
         await frame(pushUpPose(1 - 0.7 * i / 10));
+      }
+      for (var i = 0; i < 8; i++) {
+        await frame(pushUpPose(0.3));
       }
       fake.link.hear(7);
       await tester.pump();
