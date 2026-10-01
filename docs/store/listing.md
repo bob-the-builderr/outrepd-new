@@ -45,19 +45,19 @@ English:
 ```
 One minute. One opponent. Every push-up counts.
 
-outrepd turns push-ups into a duel. Prop your phone up, get into position, and go for 60 seconds while the camera counts your reps. Then your set races a real person's set, rep by rep, and the one who did more wins.
+outrepd turns push-ups into a duel. Prop your phone up, get into position, and go for 60 seconds while the camera counts your reps. Your opponent is a real person, and the one who does more wins.
 
 COUNTED BY THE CAMERA, ON YOUR PHONE
 Pose detection runs on your device. It watches how low you go and how far you come back up, so a half rep does not count. No video leaves your phone, ever.
 
-RACE REAL PEOPLE
-Every opponent is somebody who did their own set. You race it at the pace they actually did it, so you see who pulled ahead and when. No bots, no made-up numbers. When nobody near your rank is free, you race your own best instead, and your set waits for the next real opponent.
+RACE REAL PEOPLE, LIVE
+A ranked match looks for somebody on camera at the same moment as you. You both get ten seconds to get down, start together, and watch each other's count move as you lift. If nobody near your rank is live within fifteen seconds, you race a real person's recorded set instead, at the pace they actually did it. No bots, no made-up numbers.
 
 CLIMB THE RANKS
 Five placement matches set your starting rank. From there, win to climb from Iron through Bronze, Silver, Gold, Platinum and Diamond to Master. Once you reach a tier, you keep it: a bad day can cost divisions, never the tier itself.
 
 CHALLENGE YOUR FRIENDS
-Add friends with a friend code, see who is online, and send a challenge they can race whenever they are ready. Your record against each friend is kept, so there is always something to settle.
+Add friends with a friend code, see who is online, and go live together right now, or send a set they can race whenever they are ready. Your record against each friend is kept, so there is always something to settle.
 
 EARN TITLES
 46 titles for matches, wins, streaks, clean sets, early mornings, late nights and more. Wear the one you are proudest of and it shows beside your name.
@@ -99,7 +99,7 @@ Camera-counted push-up duels
 
 English:
 ```
-Race a real person's push-up set, rep by rep. Your camera counts every rep on your phone, and no video ever leaves it.
+Race real people live, rep by rep. Your camera counts every push-up on your phone, and no video ever leaves it.
 ```
 
 ### Description (4000)
@@ -130,7 +130,7 @@ The first release of outrepd.
 
 الأب iPhone بس، فمفيش صور iPad مطلوبة.
 
-**ناقص صورة للعداد وهو شغال**، ودي لازم تتاخد من موبايل حقيقي. المفروض تبقى
-أول صورة، لأنها أهم حاجة في الأب.
+أول صورة هي `00-live-match.png`: الماتش اللايف والعداد شغال. بتترسم من الأب
+نفسه على CI (`tool/screenshots/live_match_test.dart`).
 
 Google Play كمان بيطلب **Feature graphic** مقاس 1024×500، وهي جاهزة في `docs/store/feature-graphic.png` (PNG من غير شفافية).
