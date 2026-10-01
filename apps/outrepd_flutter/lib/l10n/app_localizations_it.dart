@@ -197,12 +197,6 @@ class LIt extends L {
   String get emailHint => 'tu@esempio.com';
 
   @override
-  String get passwordHint => 'Password';
-
-  @override
-  String get codeHint => 'Codice di verifica';
-
-  @override
   String get createAccountTitle => 'Crea account';
 
   @override
@@ -211,21 +205,6 @@ class LIt extends L {
 
   @override
   String get createAccountAction => 'Crea account';
-
-  @override
-  String get signInTitle => 'Accedi';
-
-  @override
-  String get signInBody => 'Accedi con l\'email e la password del tuo account.';
-
-  @override
-  String get signInAction => 'Accedi';
-
-  @override
-  String get switchToSignIn => 'Hai già un account? Accedi';
-
-  @override
-  String get switchToSignUp => 'Nuovo qui? Crea un account';
 
   @override
   String get emailTakenSwitchToSignIn =>
@@ -250,9 +229,6 @@ class LIt extends L {
   String get authEntryTagline => 'Spingi. Sfida. Sali di livello.';
 
   @override
-  String get orDivider => 'oppure';
-
-  @override
   String get signUpWithEmail => 'Registrati con email';
 
   @override
@@ -268,30 +244,13 @@ class LIt extends L {
   String get createAccountSubtitle => 'Richiede meno di un minuto.';
 
   @override
-  String get usernameHint => 'Nome utente';
-
-  @override
   String get usernameLabel => 'Nome utente';
 
   @override
   String get emailLabel => 'Email';
 
   @override
-  String get passwordLabel => 'Password';
-
-  @override
-  String get passwordMinLength => 'Almeno 8 caratteri';
-
-  @override
   String get logInSubtitle => 'Accedi per mantenere il tuo grado.';
-
-  @override
-  String get forgotPassword => 'Password dimenticata?';
-
-  @override
-  String resetPasswordSent(String email) {
-    return 'Se esiste un account per $email, un link di reset è in arrivo.';
-  }
 
   @override
   String get checkYourEmailTitle => 'Controlla la tua email';
@@ -314,39 +273,6 @@ class LIt extends L {
 
   @override
   String get usernameTaken => 'Quel nome utente è già in uso.';
-
-  @override
-  String get socialLinkFailed => 'Impossibile completare l\'accesso. Riprova.';
-
-  @override
-  String get showLabel => 'Mostra';
-
-  @override
-  String get hideLabel => 'Nascondi';
-
-  @override
-  String get resetPasswordTitle => 'Imposta una nuova password';
-
-  @override
-  String get resetPasswordBody =>
-      'Scegli una nuova password per il tuo account.';
-
-  @override
-  String get setPasswordAction => 'Imposta password';
-
-  @override
-  String get wrongEmailOrPassword => 'Email o password errati.';
-
-  @override
-  String get enterCodeTitle => 'Inserisci codice';
-
-  @override
-  String codeInstructions(String email) {
-    return 'Inserisci il codice che abbiamo inviato a $email.';
-  }
-
-  @override
-  String get verifyAction => 'Verifica';
 
   @override
   String get wrongCode => 'Codice errato o scaduto.';
@@ -412,9 +338,6 @@ class LIt extends L {
   String get skip => 'Salta';
 
   @override
-  String get height => 'Altezza';
-
-  @override
   String get yourPicture => 'La tua foto';
 
   @override
@@ -457,9 +380,6 @@ class LIt extends L {
 
   @override
   String get camera => 'Fotocamera';
-
-  @override
-  String get orPickOurs => 'Oppure scegli uno dei nostri';
 
   @override
   String get awards => 'Riconoscimenti';
@@ -527,12 +447,6 @@ class LIt extends L {
   String get reps => 'rip.';
 
   @override
-  String get recalibrate => 'Ricalibra';
-
-  @override
-  String get resetCount => 'Azzera il conteggio';
-
-  @override
   String get howManyReally => 'Quante ne hai fatte davvero?';
 
   @override
@@ -547,12 +461,6 @@ class LIt extends L {
 
   @override
   String get language => 'Lingua';
-
-  @override
-  String get units => 'Unità';
-
-  @override
-  String get weight => 'Peso';
 
   @override
   String get privacy => 'Privacy';
@@ -574,29 +482,6 @@ class LIt extends L {
 
   @override
   String get accept => 'Accetta';
-
-  @override
-  String challengeSent(String name) {
-    return 'Sfida inviata a $name';
-  }
-
-  @override
-  String get weightUnitTitle => 'Unità di peso';
-
-  @override
-  String get heightUnitTitle => 'Unità di altezza';
-
-  @override
-  String get unitKg => 'Chilogrammi (kg)';
-
-  @override
-  String get unitLb => 'Libbre (lb)';
-
-  @override
-  String get unitCm => 'Centimetri (cm)';
-
-  @override
-  String get unitFt => 'Piedi e pollici';
 
   @override
   String get visEveryone => 'Tutti';
@@ -642,43 +527,14 @@ class LIt extends L {
       'Impossibile connettersi. Controlla la connessione e riprova.';
 
   @override
-  String get achievements => 'Obiettivi';
-
-  @override
-  String get roadTitle => 'La strada per Maestro';
-
-  @override
-  String get allTiers => 'Tutti i ranghi';
-
-  @override
-  String get topTier => 'Rango massimo';
-
-  @override
-  String lpToGo(String lp) {
-    return '$lp PL';
-  }
-
-  @override
   String get roomFriendly =>
       'Le sfide in stanza sono amichevoli: non toccano il tuo rango.';
-
-  @override
-  String get createRoom => 'Crea una stanza';
-
-  @override
-  String get enterCode => 'INSERISCI IL CODICE';
-
-  @override
-  String get joinRoom => 'Entra nella stanza';
 
   @override
   String get shareThisCode => 'Condividi questo codice';
 
   @override
   String get codeCopied => 'Codice copiato';
-
-  @override
-  String get pickMuscleAndStart => 'Scegli il muscolo e parti';
 
   @override
   String xOfY(String a, String b) {
@@ -705,18 +561,6 @@ class LIt extends L {
 
   @override
   String get tierMaster => 'Maestro';
-
-  @override
-  String get shortKg => 'kg';
-
-  @override
-  String get shortLb => 'lb';
-
-  @override
-  String get shortCm => 'cm';
-
-  @override
-  String get shortFt => 'ft';
 
   @override
   String winLoss(String w, String l) {
@@ -1079,21 +923,6 @@ class LIt extends L {
   String get mgChest => 'Petto';
 
   @override
-  String get mgBack => 'Schiena';
-
-  @override
-  String get mgLegs => 'Gambe';
-
-  @override
-  String get mgShoulders => 'Spalle';
-
-  @override
-  String get mgArms => 'Braccia';
-
-  @override
-  String get mgCore => 'Core';
-
-  @override
   String get nWonTitle => 'Hai vinto!';
 
   @override
@@ -1224,9 +1053,6 @@ class LIt extends L {
       'Una sfida contro qualcuno che conosci è un’altra cosa.';
 
   @override
-  String get addFriend => 'Aggiungi';
-
-  @override
   String get decline => 'Rifiuta';
 
   @override
@@ -1270,21 +1096,6 @@ class LIt extends L {
   @override
   String get unsureMovement =>
       'Non sono sicuro fosse il movimento giusto — controlla il numero.';
-
-  @override
-  String get local => 'Local';
-
-  @override
-  String get weekly => 'Weekly';
-
-  @override
-  String get seasonTab => 'Season';
-
-  @override
-  String get allTime => 'All-time';
-
-  @override
-  String get daily => 'Daily';
 
   @override
   String get noRanksYet => 'No ranks yet';
@@ -1470,9 +1281,6 @@ class LIt extends L {
   String get practiceComplete => 'ALLENAMENTO COMPLETATO';
 
   @override
-  String get findPeople => 'Trova persone';
-
-  @override
   String get noRankYet => 'Ancora senza rango';
 
   @override
@@ -1525,17 +1333,6 @@ class LIt extends L {
   String get youWonPlain => 'Hai vinto';
 
   @override
-  String opponentDisconnected(String name) {
-    return '$name si è disconnesso';
-  }
-
-  @override
-  String get forfeitNoMargin => 'Ritiro · il margine non conta';
-
-  @override
-  String get findAnotherMatch => 'Cerca un’altra sfida';
-
-  @override
   String get cameraNeededTitle => 'Serve l’accesso alla fotocamera';
 
   @override
@@ -1571,11 +1368,6 @@ class LIt extends L {
 
   @override
   String get giveUp => 'Arrenditi';
-
-  @override
-  String lpSwing(String gain, String loss) {
-    return '+$gain / −$loss LP';
-  }
 
   @override
   String get lpMovesWithGap =>
@@ -1621,9 +1413,6 @@ class LIt extends L {
 
   @override
   String get duelMeOnOutrepd => 'Sfidami su outrepd';
-
-  @override
-  String get yourRankCard => 'La tua carta rango';
 
   @override
   String get shareStory => 'Storia';
@@ -1906,21 +1695,6 @@ class LIt extends L {
 
   @override
   String get continueAction => 'Continua';
-
-  @override
-  String get lpRowWin => 'Vittoria';
-
-  @override
-  String get lpRowLoss => 'Sconfitta';
-
-  @override
-  String get lpRowOpponent => 'Grado dell\'avversario';
-
-  @override
-  String get lpRowMargin => 'Distacco';
-
-  @override
-  String get lpRowDepth => 'Profondità';
 
   @override
   String get promotedLabel => 'Promosso';
@@ -2291,11 +2065,6 @@ class LIt extends L {
 
   @override
   String get inviteGone => 'Quell\'invito è scaduto';
-
-  @override
-  String waitingForPosition(String name) {
-    return 'In attesa che ${name} si metta in posizione';
-  }
 
   @override
   String opponentDropped(String name) {

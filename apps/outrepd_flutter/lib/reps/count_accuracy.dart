@@ -21,7 +21,6 @@
 library;
 
 import 'dart:convert';
-import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -258,7 +257,3 @@ String reps(double value) => value.abs() < 0.05
 /// screen that shows "100% exact" after two sets invites exactly the wrong
 /// conclusion. The accuracy screen says so rather than hiding the figure.
 const kMinimumUsefulSamples = 10;
-
-/// Convenience for the screen: how far off a full picture we are.
-int get samplesNeeded =>
-    math.max(0, kMinimumUsefulSamples - countSamples.length);

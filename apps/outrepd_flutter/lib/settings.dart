@@ -1,5 +1,6 @@
-/// Every preference the app exposes. There is no backend yet, so these live on
-/// the device rather than an account — reinstalling starts you over.
+/// Every preference the app keeps on this phone. They are about this phone
+/// — its theme, its language, its sounds — so they live on it rather than on
+/// the account, and a reinstall starts them over.
 library;
 
 import 'package:flutter/material.dart';
@@ -7,11 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'backend/backend.dart' show Challengeable;
 import 'l10n/app_localizations.dart';
-import 'widgets.dart';
-
-enum WeightUnit { kg, lb }
-
-enum HeightUnit { cm, ft }
 
 /// The languages the app ships in. Following the device is the default: most
 /// people never open a language picker, and a phone already knows.
@@ -30,19 +26,6 @@ enum AppLanguage {
   japanese,
   korean,
   chinese,
-}
-
-// Even the abbreviations are translated: "kg" is 公斤 in Chinese, किग्रा in
-// Hindi. Leaving them in Latin script is the kind of detail
-// that makes a translated app feel half-done.
-extension WeightUnitLabel on WeightUnit {
-  String label(L l) => this == WeightUnit.kg ? l.unitKg : l.unitLb;
-  String short(L l) => this == WeightUnit.kg ? l.shortKg : l.shortLb;
-}
-
-extension HeightUnitLabel on HeightUnit {
-  String label(L l) => this == HeightUnit.cm ? l.unitCm : l.unitFt;
-  String short(L l) => this == HeightUnit.cm ? l.shortCm : l.shortFt;
 }
 
 extension ChallengeableLabel on Challengeable {
@@ -113,10 +96,6 @@ class AppSettings extends ChangeNotifier {
   ThemeMode themeMode = ThemeMode.dark;
   AppLanguage language = AppLanguage.system;
 
-  // Units
-  WeightUnit weightUnit = WeightUnit.kg;
-  HeightUnit heightUnit = HeightUnit.cm;
-
   // The duel, as it behaves on this phone.
   //
   // Only two things here, and both of them do something. The settings mock
@@ -172,8 +151,6 @@ class AppSettings extends ChangeNotifier {
 
     themeMode = pickEnum('themeMode', ThemeMode.values, themeMode);
     language = _loadLanguage(s) ?? language;
-    weightUnit = pickEnum('weightUnit', WeightUnit.values, weightUnit);
-    heightUnit = pickEnum('heightUnit', HeightUnit.values, heightUnit);
 
     bool flag(String key, bool fallback) => s.getBool(key) ?? fallback;
 
@@ -242,8 +219,6 @@ class AppSettings extends ChangeNotifier {
 
     s.setInt('themeMode', themeMode.index);
     s.setString('languageName', language.name);
-    s.setInt('weightUnit', weightUnit.index);
-    s.setInt('heightUnit', heightUnit.index);
 
     s.setBool('vibration', vibration);
     s.setBool('sounds', sounds);
@@ -261,38 +236,3 @@ class AppSettings extends ChangeNotifier {
 }
 
 final settings = AppSettings();
-
-/// Body weight in the unit the user picked, rounded — nobody needs grams.
-///
-/// Takes a context as well as the translations, because the number is
-/// grouped the reader's way, like every other number on the profile.
-String formatBodyWeight(BuildContext context, L l, int kg) {
-  final unit = settings.weightUnit == WeightUnit.kg ? l.shortKg : l.shortLb;
-  return '${localNumber(context, displayWeight(kg))} $unit';
-}
-
-String formatHeight(BuildContext context, L l, int cm) {
-  if (settings.heightUnit == HeightUnit.cm) {
-    return '${localNumber(context, cm)} ${l.shortCm}';
-  }
-  final (feet, inches) = feetInches(cm);
-  return "${localNumber(context, feet)}'${localNumber(context, inches)}\"";
-}
-
-/// The conversion on its own, with no widget tree in sight, so the rounding
-/// can be tested without pumping a screen to get at it.
-(int feet, int inches) feetInches(int cm) {
-  final totalInches = cm / 2.54;
-  var feet = totalInches ~/ 12;
-  var inches = (totalInches % 12).round();
-  // 11.6" rounds to 12" — carry it rather than report 5'12".
-  if (inches == 12) {
-    feet += 1;
-    inches = 0;
-  }
-  return (feet, inches);
-}
-
-/// Body weight in the unit on screen, as a number rather than a sentence.
-int displayWeight(int kg) =>
-    settings.weightUnit == WeightUnit.kg ? kg : (kg * 2.20462).round();

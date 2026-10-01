@@ -26,6 +26,9 @@ begin
   begin
     execute statement;
   exception when others then
+    -- Said, so the log shows each refusal was the rule meant to refuse it
+    -- and not some other error on the way there.
+    raise notice 'refused, as it should be — %: %', what, sqlerrm;
     return;
   end;
   raise exception 'FAIL: % — it went through', what;

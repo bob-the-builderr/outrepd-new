@@ -134,15 +134,11 @@ void main() {
       winStreak: 0,
       dayStreak: 0,
       bestStreak: 0,
-      totalVolumeKg: 0,
       totalReps: 12,
       bestSet: 6,
       globalRank: 98412,
       localRank: 3107,
       country: 'Egypt',
-      heightCm: 175,
-      weightKg: 75,
-      age: 25,
     );
     await tester.pumpWidget(
       _app(ProgressionScreen(profile: beginner), 1.0, const Locale('en')),

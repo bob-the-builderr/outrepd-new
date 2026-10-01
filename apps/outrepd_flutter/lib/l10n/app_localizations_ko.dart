@@ -192,12 +192,6 @@ class LKo extends L {
   String get emailHint => 'you@example.com';
 
   @override
-  String get passwordHint => '비밀번호';
-
-  @override
-  String get codeHint => '인증 코드';
-
-  @override
   String get createAccountTitle => '계정 만들기';
 
   @override
@@ -206,21 +200,6 @@ class LKo extends L {
 
   @override
   String get createAccountAction => '계정 만들기';
-
-  @override
-  String get signInTitle => '로그인';
-
-  @override
-  String get signInBody => '계정의 이메일과 비밀번호로 로그인하세요.';
-
-  @override
-  String get signInAction => '로그인';
-
-  @override
-  String get switchToSignIn => '이미 계정이 있으신가요? 로그인';
-
-  @override
-  String get switchToSignUp => '처음이신가요? 계정 만들기';
 
   @override
   String get emailTakenSwitchToSignIn => '이 이메일은 이미 계정이 있습니다 — 대신 로그인하세요.';
@@ -241,9 +220,6 @@ class LKo extends L {
   String get authEntryTagline => '푸시업하고, 겨루고, 랭크를 올려라.';
 
   @override
-  String get orDivider => '또는';
-
-  @override
   String get signUpWithEmail => '이메일로 가입하기';
 
   @override
@@ -259,30 +235,13 @@ class LKo extends L {
   String get createAccountSubtitle => '1분도 안 걸려요.';
 
   @override
-  String get usernameHint => '사용자 이름';
-
-  @override
   String get usernameLabel => '사용자 이름';
 
   @override
   String get emailLabel => '이메일';
 
   @override
-  String get passwordLabel => '비밀번호';
-
-  @override
-  String get passwordMinLength => '최소 8자';
-
-  @override
   String get logInSubtitle => '랭크를 유지하려면 로그인하세요.';
-
-  @override
-  String get forgotPassword => '비밀번호를 잊으셨나요?';
-
-  @override
-  String resetPasswordSent(String email) {
-    return '$email에 해당하는 계정이 있다면 재설정 링크를 보냈습니다.';
-  }
 
   @override
   String get checkYourEmailTitle => '이메일을 확인하세요';
@@ -305,38 +264,6 @@ class LKo extends L {
 
   @override
   String get usernameTaken => '이미 사용 중인 사용자 이름입니다.';
-
-  @override
-  String get socialLinkFailed => '로그인을 완료하지 못했습니다. 다시 시도하세요.';
-
-  @override
-  String get showLabel => '표시';
-
-  @override
-  String get hideLabel => '숨기기';
-
-  @override
-  String get resetPasswordTitle => '새 비밀번호 설정';
-
-  @override
-  String get resetPasswordBody => '계정의 새 비밀번호를 선택하세요.';
-
-  @override
-  String get setPasswordAction => '비밀번호 설정';
-
-  @override
-  String get wrongEmailOrPassword => '이메일 또는 비밀번호가 틀렸습니다.';
-
-  @override
-  String get enterCodeTitle => '코드 입력';
-
-  @override
-  String codeInstructions(String email) {
-    return '$email로 보낸 코드를 입력하세요.';
-  }
-
-  @override
-  String get verifyAction => '확인';
 
   @override
   String get wrongCode => '코드가 틀리거나 만료되었습니다.';
@@ -399,9 +326,6 @@ class LKo extends L {
   String get skip => '건너뛰기';
 
   @override
-  String get height => '키';
-
-  @override
   String get yourPicture => '내 사진';
 
   @override
@@ -440,9 +364,6 @@ class LKo extends L {
 
   @override
   String get camera => '카메라';
-
-  @override
-  String get orPickOurs => '준비된 이미지에서 고르기';
 
   @override
   String get awards => '업적';
@@ -508,12 +429,6 @@ class LKo extends L {
   String get reps => '회';
 
   @override
-  String get recalibrate => '재보정';
-
-  @override
-  String get resetCount => '횟수 초기화';
-
-  @override
   String get howManyReally => '실제로 몇 개 했나요?';
 
   @override
@@ -528,12 +443,6 @@ class LKo extends L {
 
   @override
   String get language => '언어';
-
-  @override
-  String get units => '단위';
-
-  @override
-  String get weight => '무게';
 
   @override
   String get privacy => '개인정보';
@@ -555,29 +464,6 @@ class LKo extends L {
 
   @override
   String get accept => '수락';
-
-  @override
-  String challengeSent(String name) {
-    return '$name에게 도전장을 보냈습니다';
-  }
-
-  @override
-  String get weightUnitTitle => '무게 단위';
-
-  @override
-  String get heightUnitTitle => '키 단위';
-
-  @override
-  String get unitKg => '킬로그램 (kg)';
-
-  @override
-  String get unitLb => '파운드 (lb)';
-
-  @override
-  String get unitCm => '센티미터 (cm)';
-
-  @override
-  String get unitFt => '피트·인치';
 
   @override
   String get visEveryone => '모두';
@@ -622,42 +508,13 @@ class LKo extends L {
   String get needsServer => '연결할 수 없습니다. 인터넷 연결을 확인하고 다시 시도해 주세요.';
 
   @override
-  String get achievements => '업적';
-
-  @override
-  String get roadTitle => '마스터로 가는 길';
-
-  @override
-  String get allTiers => '모든 랭크';
-
-  @override
-  String get topTier => '최고 랭크';
-
-  @override
-  String lpToGo(String lp) {
-    return '$lp LP';
-  }
-
-  @override
   String get roomFriendly => '룸 대결은 친선전입니다. 랭크에는 반영되지 않습니다.';
-
-  @override
-  String get createRoom => '룸 만들기';
-
-  @override
-  String get enterCode => '코드 입력';
-
-  @override
-  String get joinRoom => '룸 참가';
 
   @override
   String get shareThisCode => '이 코드를 공유하세요';
 
   @override
   String get codeCopied => '코드를 복사했습니다';
-
-  @override
-  String get pickMuscleAndStart => '부위를 고르고 시작';
 
   @override
   String xOfY(String a, String b) {
@@ -684,18 +541,6 @@ class LKo extends L {
 
   @override
   String get tierMaster => '마스터';
-
-  @override
-  String get shortKg => 'kg';
-
-  @override
-  String get shortLb => 'lb';
-
-  @override
-  String get shortCm => 'cm';
-
-  @override
-  String get shortFt => 'ft';
 
   @override
   String winLoss(String w, String l) {
@@ -1057,21 +902,6 @@ class LKo extends L {
   String get mgChest => '가슴';
 
   @override
-  String get mgBack => '등';
-
-  @override
-  String get mgLegs => '하체';
-
-  @override
-  String get mgShoulders => '어깨';
-
-  @override
-  String get mgArms => '팔';
-
-  @override
-  String get mgCore => '코어';
-
-  @override
   String get nWonTitle => '승리했습니다!';
 
   @override
@@ -1199,9 +1029,6 @@ class LKo extends L {
   String get noFriendsBody => '아는 사람과의 대결은 느낌이 다릅니다.';
 
   @override
-  String get addFriend => '추가';
-
-  @override
   String get decline => '거절';
 
   @override
@@ -1243,21 +1070,6 @@ class LKo extends L {
 
   @override
   String get unsureMovement => '올바른 동작인지 확신할 수 없습니다. 숫자를 확인하세요.';
-
-  @override
-  String get local => 'Local';
-
-  @override
-  String get weekly => 'Weekly';
-
-  @override
-  String get seasonTab => 'Season';
-
-  @override
-  String get allTime => 'All-time';
-
-  @override
-  String get daily => 'Daily';
 
   @override
   String get noRanksYet => 'No ranks yet';
@@ -1442,9 +1254,6 @@ class LKo extends L {
   String get practiceComplete => '연습 완료';
 
   @override
-  String get findPeople => '사람 찾기';
-
-  @override
   String get noRankYet => '아직 랭크 없음';
 
   @override
@@ -1497,17 +1306,6 @@ class LKo extends L {
   String get youWonPlain => '승리';
 
   @override
-  String opponentDisconnected(String name) {
-    return '$name 연결이 끊겼습니다';
-  }
-
-  @override
-  String get forfeitNoMargin => '기권 · 점수 차는 반영 안 됨';
-
-  @override
-  String get findAnotherMatch => '다른 대전 찾기';
-
-  @override
   String get cameraNeededTitle => '카메라 권한이 필요해요';
 
   @override
@@ -1542,11 +1340,6 @@ class LKo extends L {
 
   @override
   String get giveUp => '포기';
-
-  @override
-  String lpSwing(String gain, String loss) {
-    return '+$gain / −$loss LP';
-  }
 
   @override
   String get lpMovesWithGap => 'LP는 렙 차이만큼 움직여요 — 더 크게 이기면 더 많이 얻어요';
@@ -1591,9 +1384,6 @@ class LKo extends L {
 
   @override
   String get duelMeOnOutrepd => 'outrepd에서 나와 붙자';
-
-  @override
-  String get yourRankCard => '내 랭크 카드';
 
   @override
   String get shareStory => '스토리';
@@ -1869,21 +1659,6 @@ class LKo extends L {
 
   @override
   String get continueAction => '계속';
-
-  @override
-  String get lpRowWin => '승리';
-
-  @override
-  String get lpRowLoss => '패배';
-
-  @override
-  String get lpRowOpponent => '상대 등급';
-
-  @override
-  String get lpRowMargin => '격차';
-
-  @override
-  String get lpRowDepth => '깊이';
 
   @override
   String get promotedLabel => '승급';
@@ -2250,11 +2025,6 @@ class LKo extends L {
 
   @override
   String get inviteGone => '그 초대는 만료됐어요';
-
-  @override
-  String waitingForPosition(String name) {
-    return '${name} 님이 자세를 잡기를 기다리는 중';
-  }
 
   @override
   String opponentDropped(String name) {

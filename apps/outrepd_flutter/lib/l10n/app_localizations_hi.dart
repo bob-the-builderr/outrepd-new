@@ -196,12 +196,6 @@ class LHi extends L {
   String get emailHint => 'you@example.com';
 
   @override
-  String get passwordHint => 'पासवर्ड';
-
-  @override
-  String get codeHint => 'सत्यापन कोड';
-
-  @override
   String get createAccountTitle => 'खाता बनाएं';
 
   @override
@@ -210,21 +204,6 @@ class LHi extends L {
 
   @override
   String get createAccountAction => 'खाता बनाएं';
-
-  @override
-  String get signInTitle => 'साइन इन करें';
-
-  @override
-  String get signInBody => 'अपने खाते के ईमेल और पासवर्ड से साइन इन करें।';
-
-  @override
-  String get signInAction => 'साइन इन करें';
-
-  @override
-  String get switchToSignIn => 'पहले से खाता है? साइन इन करें';
-
-  @override
-  String get switchToSignUp => 'यहाँ नए हैं? खाता बनाएं';
 
   @override
   String get emailTakenSwitchToSignIn =>
@@ -248,9 +227,6 @@ class LHi extends L {
   String get authEntryTagline => 'पुश करो। मुक़ाबला करो। सीढ़ी चढ़ो।';
 
   @override
-  String get orDivider => 'या';
-
-  @override
   String get signUpWithEmail => 'ईमेल से साइन अप करें';
 
   @override
@@ -266,30 +242,13 @@ class LHi extends L {
   String get createAccountSubtitle => 'एक मिनट से भी कम समय लगता है।';
 
   @override
-  String get usernameHint => 'यूज़रनेम';
-
-  @override
   String get usernameLabel => 'यूज़रनेम';
 
   @override
   String get emailLabel => 'ईमेल';
 
   @override
-  String get passwordLabel => 'पासवर्ड';
-
-  @override
-  String get passwordMinLength => 'कम से कम 8 अक्षर';
-
-  @override
   String get logInSubtitle => 'अपनी रैंक बनाए रखने के लिए लॉग इन करें।';
-
-  @override
-  String get forgotPassword => 'पासवर्ड भूल गए?';
-
-  @override
-  String resetPasswordSent(String email) {
-    return 'अगर $email के लिए कोई खाता मौजूद है, तो रीसेट लिंक भेजा जा रहा है।';
-  }
 
   @override
   String get checkYourEmailTitle => 'अपना ईमेल जांचें';
@@ -312,38 +271,6 @@ class LHi extends L {
 
   @override
   String get usernameTaken => 'यह यूज़रनेम पहले से लिया जा चुका है।';
-
-  @override
-  String get socialLinkFailed => 'साइन इन पूरा नहीं हो सका। फिर से कोशिश करें।';
-
-  @override
-  String get showLabel => 'दिखाएं';
-
-  @override
-  String get hideLabel => 'छिपाएं';
-
-  @override
-  String get resetPasswordTitle => 'नया पासवर्ड सेट करें';
-
-  @override
-  String get resetPasswordBody => 'अपने खाते के लिए नया पासवर्ड चुनें।';
-
-  @override
-  String get setPasswordAction => 'पासवर्ड सेट करें';
-
-  @override
-  String get wrongEmailOrPassword => 'गलत ईमेल या पासवर्ड।';
-
-  @override
-  String get enterCodeTitle => 'कोड डालें';
-
-  @override
-  String codeInstructions(String email) {
-    return '$email पर भेजा गया कोड डालें।';
-  }
-
-  @override
-  String get verifyAction => 'सत्यापित करें';
 
   @override
   String get wrongCode => 'यह कोड गलत है या समय समाप्त हो गया।';
@@ -409,9 +336,6 @@ class LHi extends L {
   String get skip => 'छोड़ें';
 
   @override
-  String get height => 'कद';
-
-  @override
   String get yourPicture => 'आपकी तस्वीर';
 
   @override
@@ -454,9 +378,6 @@ class LHi extends L {
 
   @override
   String get camera => 'कैमरा';
-
-  @override
-  String get orPickOurs => 'या हमारे में से चुनें';
 
   @override
   String get awards => 'पुरस्कार';
@@ -524,12 +445,6 @@ class LHi extends L {
   String get reps => 'रेप';
 
   @override
-  String get recalibrate => 'फिर से सेट करें';
-
-  @override
-  String get resetCount => 'गिनती शून्य करें';
-
-  @override
   String get howManyReally => 'असल में कितने किए?';
 
   @override
@@ -544,12 +459,6 @@ class LHi extends L {
 
   @override
   String get language => 'भाषा';
-
-  @override
-  String get units => 'इकाइयाँ';
-
-  @override
-  String get weight => 'वज़न';
 
   @override
   String get privacy => 'प्राइवेसी';
@@ -571,29 +480,6 @@ class LHi extends L {
 
   @override
   String get accept => 'स्वीकारें';
-
-  @override
-  String challengeSent(String name) {
-    return '$name को चुनौती भेजी गई';
-  }
-
-  @override
-  String get weightUnitTitle => 'वज़न की इकाई';
-
-  @override
-  String get heightUnitTitle => 'कद की इकाई';
-
-  @override
-  String get unitKg => 'किलोग्राम (kg)';
-
-  @override
-  String get unitLb => 'पाउंड (lb)';
-
-  @override
-  String get unitCm => 'सेंटीमीटर (cm)';
-
-  @override
-  String get unitFt => 'फ़ीट और इंच';
 
   @override
   String get visEveryone => 'सब लोग';
@@ -639,43 +525,14 @@ class LHi extends L {
       'कनेक्ट नहीं हो सका। अपना इंटरनेट जांचें और फिर से कोशिश करें।';
 
   @override
-  String get achievements => 'उपलब्धियाँ';
-
-  @override
-  String get roadTitle => 'मास्टर तक का रास्ता';
-
-  @override
-  String get allTiers => 'सभी रैंक';
-
-  @override
-  String get topTier => 'सर्वोच्च रैंक';
-
-  @override
-  String lpToGo(String lp) {
-    return '$lp LP';
-  }
-
-  @override
   String get roomFriendly =>
       'रूम मैच दोस्ताना होते हैं — इनसे आपकी रैंक पर असर नहीं पड़ता।';
-
-  @override
-  String get createRoom => 'रूम बनाएँ';
-
-  @override
-  String get enterCode => 'कोड डालें';
-
-  @override
-  String get joinRoom => 'रूम में जुड़ें';
 
   @override
   String get shareThisCode => 'यह कोड साझा करें';
 
   @override
   String get codeCopied => 'कोड कॉपी हो गया';
-
-  @override
-  String get pickMuscleAndStart => 'मसल चुनें और शुरू करें';
 
   @override
   String xOfY(String a, String b) {
@@ -702,18 +559,6 @@ class LHi extends L {
 
   @override
   String get tierMaster => 'मास्टर';
-
-  @override
-  String get shortKg => 'किग्रा';
-
-  @override
-  String get shortLb => 'पाउंड';
-
-  @override
-  String get shortCm => 'सेमी';
-
-  @override
-  String get shortFt => 'फ़ीट';
 
   @override
   String winLoss(String w, String l) {
@@ -1075,21 +920,6 @@ class LHi extends L {
   String get mgChest => 'छाती';
 
   @override
-  String get mgBack => 'पीठ';
-
-  @override
-  String get mgLegs => 'पैर';
-
-  @override
-  String get mgShoulders => 'कंधे';
-
-  @override
-  String get mgArms => 'बाँहें';
-
-  @override
-  String get mgCore => 'कोर';
-
-  @override
   String get nWonTitle => 'आप जीत गए!';
 
   @override
@@ -1220,9 +1050,6 @@ class LHi extends L {
       'जानने वाले के ख़िलाफ़ मुक़ाबला कुछ और ही होता है।';
 
   @override
-  String get addFriend => 'जोड़ें';
-
-  @override
   String get decline => 'अस्वीकार';
 
   @override
@@ -1266,21 +1093,6 @@ class LHi extends L {
   @override
   String get unsureMovement =>
       'यकीन नहीं कि यह सही मूवमेंट था — संख्या जाँच लें।';
-
-  @override
-  String get local => 'Local';
-
-  @override
-  String get weekly => 'Weekly';
-
-  @override
-  String get seasonTab => 'Season';
-
-  @override
-  String get allTime => 'All-time';
-
-  @override
-  String get daily => 'Daily';
 
   @override
   String get noRanksYet => 'No ranks yet';
@@ -1467,9 +1279,6 @@ class LHi extends L {
   String get practiceComplete => 'अभ्यास पूरा';
 
   @override
-  String get findPeople => 'लोग ढूँढें';
-
-  @override
   String get noRankYet => 'अभी कोई रैंक नहीं';
 
   @override
@@ -1522,17 +1331,6 @@ class LHi extends L {
   String get youWonPlain => 'आप जीते';
 
   @override
-  String opponentDisconnected(String name) {
-    return '$name का कनेक्शन टूट गया';
-  }
-
-  @override
-  String get forfeitNoMargin => 'वॉकओवर · अंतर नहीं गिना गया';
-
-  @override
-  String get findAnotherMatch => 'दूसरा मुक़ाबला ढूँढें';
-
-  @override
   String get cameraNeededTitle => 'कैमरा की अनुमति चाहिए';
 
   @override
@@ -1567,11 +1365,6 @@ class LHi extends L {
 
   @override
   String get giveUp => 'हार मानें';
-
-  @override
-  String lpSwing(String gain, String loss) {
-    return '+$gain / −$loss LP';
-  }
 
   @override
   String get lpMovesWithGap =>
@@ -1617,9 +1410,6 @@ class LHi extends L {
 
   @override
   String get duelMeOnOutrepd => 'outrepd पर मुझे चुनौती दें';
-
-  @override
-  String get yourRankCard => 'आपका रैंक कार्ड';
 
   @override
   String get shareStory => 'स्टोरी';
@@ -1899,21 +1689,6 @@ class LHi extends L {
 
   @override
   String get continueAction => 'आगे बढ़ो';
-
-  @override
-  String get lpRowWin => 'जीत';
-
-  @override
-  String get lpRowLoss => 'हार';
-
-  @override
-  String get lpRowOpponent => 'प्रतिद्वंद्वी की रैंक';
-
-  @override
-  String get lpRowMargin => 'अंतर';
-
-  @override
-  String get lpRowDepth => 'गहराई';
 
   @override
   String get promotedLabel => 'पदोन्नति';
@@ -2284,11 +2059,6 @@ class LHi extends L {
 
   @override
   String get inviteGone => 'उस न्योते का समय खत्म हो गया';
-
-  @override
-  String waitingForPosition(String name) {
-    return '${name} के पोज़िशन में आने का इंतज़ार';
-  }
 
   @override
   String opponentDropped(String name) {

@@ -282,19 +282,6 @@ String localNumber(BuildContext context, num n) {
   return NumberFormat.decimalPattern(locale.toString()).format(n);
 }
 
-/// Reads a whole number a person typed, in whatever digits their keyboard
-/// produces. The app no longer ships in Arabic, but a phone can still have an
-/// Arabic keyboard, which gives ١٧٥ — and `int.tryParse` refuses it.
-int? parseLocalNumber(String text) {
-  const arabicIndic = '٠١٢٣٤٥٦٧٨٩';
-  final western = text.trim().split('').map((c) {
-    final i = arabicIndic.indexOf(c);
-    return i == -1 ? c : '$i';
-  }).join();
-  return int.tryParse(western);
-}
-
-
 /// What a screen says before it has anything to show.
 ///
 /// Every list in the app opened onto demo data, so nobody had seen these

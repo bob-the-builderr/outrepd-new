@@ -198,12 +198,6 @@ class LFr extends L {
   String get emailHint => 'toi@exemple.com';
 
   @override
-  String get passwordHint => 'Mot de passe';
-
-  @override
-  String get codeHint => 'Code de vérification';
-
-  @override
   String get createAccountTitle => 'Créer un compte';
 
   @override
@@ -212,22 +206,6 @@ class LFr extends L {
 
   @override
   String get createAccountAction => 'Créer un compte';
-
-  @override
-  String get signInTitle => 'Se connecter';
-
-  @override
-  String get signInBody =>
-      'Connecte-toi avec l\'e-mail et le mot de passe de ton compte.';
-
-  @override
-  String get signInAction => 'Se connecter';
-
-  @override
-  String get switchToSignIn => 'Déjà un compte ? Se connecter';
-
-  @override
-  String get switchToSignUp => 'Nouveau ici ? Créer un compte';
 
   @override
   String get emailTakenSwitchToSignIn =>
@@ -252,9 +230,6 @@ class LFr extends L {
   String get authEntryTagline => 'Pousse. Affronte. Grimpe.';
 
   @override
-  String get orDivider => 'ou';
-
-  @override
   String get signUpWithEmail => 'S\'inscrire avec l\'e-mail';
 
   @override
@@ -270,30 +245,13 @@ class LFr extends L {
   String get createAccountSubtitle => 'Ça prend moins d\'une minute.';
 
   @override
-  String get usernameHint => 'Nom d\'utilisateur';
-
-  @override
   String get usernameLabel => 'Nom d\'utilisateur';
 
   @override
   String get emailLabel => 'E-mail';
 
   @override
-  String get passwordLabel => 'Mot de passe';
-
-  @override
-  String get passwordMinLength => 'Au moins 8 caractères';
-
-  @override
   String get logInSubtitle => 'Connecte-toi pour garder ton rang.';
-
-  @override
-  String get forgotPassword => 'Mot de passe oublié ?';
-
-  @override
-  String resetPasswordSent(String email) {
-    return 'Si un compte existe pour $email, un lien de réinitialisation arrive.';
-  }
 
   @override
   String get checkYourEmailTitle => 'Vérifie ton e-mail';
@@ -316,40 +274,6 @@ class LFr extends L {
 
   @override
   String get usernameTaken => 'Ce nom d\'utilisateur est déjà pris.';
-
-  @override
-  String get socialLinkFailed =>
-      'Impossible de terminer la connexion. Réessaie.';
-
-  @override
-  String get showLabel => 'Afficher';
-
-  @override
-  String get hideLabel => 'Masquer';
-
-  @override
-  String get resetPasswordTitle => 'Définis un nouveau mot de passe';
-
-  @override
-  String get resetPasswordBody =>
-      'Choisis un nouveau mot de passe pour ton compte.';
-
-  @override
-  String get setPasswordAction => 'Définir le mot de passe';
-
-  @override
-  String get wrongEmailOrPassword => 'E-mail ou mot de passe incorrect.';
-
-  @override
-  String get enterCodeTitle => 'Saisir le code';
-
-  @override
-  String codeInstructions(String email) {
-    return 'Saisis le code envoyé à $email.';
-  }
-
-  @override
-  String get verifyAction => 'Vérifier';
 
   @override
   String get wrongCode => 'Ce code est faux ou a expiré.';
@@ -415,9 +339,6 @@ class LFr extends L {
   String get skip => 'Passer';
 
   @override
-  String get height => 'Taille';
-
-  @override
   String get yourPicture => 'Votre photo';
 
   @override
@@ -460,9 +381,6 @@ class LFr extends L {
 
   @override
   String get camera => 'Caméra';
-
-  @override
-  String get orPickOurs => 'Ou choisissez l\'un des nôtres';
 
   @override
   String get awards => 'Récompenses';
@@ -531,12 +449,6 @@ class LFr extends L {
   String get reps => 'reps';
 
   @override
-  String get recalibrate => 'Recalibrer';
-
-  @override
-  String get resetCount => 'Remettre à zéro';
-
-  @override
   String get howManyReally => 'Combien en avez-vous vraiment fait ?';
 
   @override
@@ -551,12 +463,6 @@ class LFr extends L {
 
   @override
   String get language => 'Langue';
-
-  @override
-  String get units => 'Unités';
-
-  @override
-  String get weight => 'Poids';
 
   @override
   String get privacy => 'Confidentialité';
@@ -578,29 +484,6 @@ class LFr extends L {
 
   @override
   String get accept => 'Accepter';
-
-  @override
-  String challengeSent(String name) {
-    return 'Défi envoyé à $name';
-  }
-
-  @override
-  String get weightUnitTitle => 'Unité de poids';
-
-  @override
-  String get heightUnitTitle => 'Unité de taille';
-
-  @override
-  String get unitKg => 'Kilogrammes (kg)';
-
-  @override
-  String get unitLb => 'Livres (lb)';
-
-  @override
-  String get unitCm => 'Centimètres (cm)';
-
-  @override
-  String get unitFt => 'Pieds et pouces';
 
   @override
   String get visEveryone => 'Tout le monde';
@@ -646,43 +529,14 @@ class LFr extends L {
       'Connexion impossible. Vérifie ta connexion internet et réessaie.';
 
   @override
-  String get achievements => 'Succès';
-
-  @override
-  String get roadTitle => 'La route vers Maître';
-
-  @override
-  String get allTiers => 'Tous les rangs';
-
-  @override
-  String get topTier => 'Rang maximal';
-
-  @override
-  String lpToGo(String lp) {
-    return '$lp PL';
-  }
-
-  @override
   String get roomFriendly =>
       'Les duels en salon sont amicaux : ils n\'affectent pas votre rang.';
-
-  @override
-  String get createRoom => 'Créer un salon';
-
-  @override
-  String get enterCode => 'SAISIR LE CODE';
-
-  @override
-  String get joinRoom => 'Rejoindre le salon';
 
   @override
   String get shareThisCode => 'Partagez ce code';
 
   @override
   String get codeCopied => 'Code copié';
-
-  @override
-  String get pickMuscleAndStart => 'Choisir un muscle et commencer';
 
   @override
   String xOfY(String a, String b) {
@@ -709,18 +563,6 @@ class LFr extends L {
 
   @override
   String get tierMaster => 'Maître';
-
-  @override
-  String get shortKg => 'kg';
-
-  @override
-  String get shortLb => 'lb';
-
-  @override
-  String get shortCm => 'cm';
-
-  @override
-  String get shortFt => 'pi';
 
   @override
   String winLoss(String w, String l) {
@@ -1083,21 +925,6 @@ class LFr extends L {
   String get mgChest => 'Pectoraux';
 
   @override
-  String get mgBack => 'Dos';
-
-  @override
-  String get mgLegs => 'Jambes';
-
-  @override
-  String get mgShoulders => 'Épaules';
-
-  @override
-  String get mgArms => 'Bras';
-
-  @override
-  String get mgCore => 'Gainage';
-
-  @override
   String get nWonTitle => 'Vous avez gagné !';
 
   @override
@@ -1227,9 +1054,6 @@ class LFr extends L {
       'Un duel contre quelqu’un que tu connais, ça n’a rien à voir.';
 
   @override
-  String get addFriend => 'Ajouter';
-
-  @override
   String get decline => 'Refuser';
 
   @override
@@ -1273,21 +1097,6 @@ class LFr extends L {
   @override
   String get unsureMovement =>
       'Pas sûr que ce soit le bon mouvement — vérifiez le nombre.';
-
-  @override
-  String get local => 'Local';
-
-  @override
-  String get weekly => 'Weekly';
-
-  @override
-  String get seasonTab => 'Season';
-
-  @override
-  String get allTime => 'All-time';
-
-  @override
-  String get daily => 'Daily';
 
   @override
   String get noRanksYet => 'No ranks yet';
@@ -1473,9 +1282,6 @@ class LFr extends L {
   String get practiceComplete => 'ENTRAÎNEMENT TERMINÉ';
 
   @override
-  String get findPeople => 'Trouver des gens';
-
-  @override
   String get noRankYet => 'Pas encore classé';
 
   @override
@@ -1528,17 +1334,6 @@ class LFr extends L {
   String get youWonPlain => 'Tu as gagné';
 
   @override
-  String opponentDisconnected(String name) {
-    return '$name s’est déconnecté';
-  }
-
-  @override
-  String get forfeitNoMargin => 'Abandon · l’écart ne compte pas';
-
-  @override
-  String get findAnotherMatch => 'Chercher un autre match';
-
-  @override
   String get cameraNeededTitle => 'Accès caméra nécessaire';
 
   @override
@@ -1574,11 +1369,6 @@ class LFr extends L {
 
   @override
   String get giveUp => 'Abandonner';
-
-  @override
-  String lpSwing(String gain, String loss) {
-    return '+$gain / −$loss LP';
-  }
 
   @override
   String get lpMovesWithGap =>
@@ -1624,9 +1414,6 @@ class LFr extends L {
 
   @override
   String get duelMeOnOutrepd => 'Défie-moi sur outrepd';
-
-  @override
-  String get yourRankCard => 'Ta carte de rang';
 
   @override
   String get shareStory => 'Story';
@@ -1909,21 +1696,6 @@ class LFr extends L {
 
   @override
   String get continueAction => 'Continuer';
-
-  @override
-  String get lpRowWin => 'Victoire';
-
-  @override
-  String get lpRowLoss => 'Défaite';
-
-  @override
-  String get lpRowOpponent => 'Rang de l\'adversaire';
-
-  @override
-  String get lpRowMargin => 'Écart';
-
-  @override
-  String get lpRowDepth => 'Profondeur';
 
   @override
   String get promotedLabel => 'Promu';
@@ -2294,11 +2066,6 @@ class LFr extends L {
 
   @override
   String get inviteGone => 'Cette invitation a expiré';
-
-  @override
-  String waitingForPosition(String name) {
-    return 'En attente que ${name} se mette en position';
-  }
 
   @override
   String opponentDropped(String name) {

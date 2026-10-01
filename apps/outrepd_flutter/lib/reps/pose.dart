@@ -118,25 +118,3 @@ double angleBetween(PosePoint a, PosePoint vertex, PosePoint b) {
   final cos = (dot / (magA * magB)).clamp(-1.0, 1.0);
   return math.acos(cos) * 180 / math.pi;
 }
-
-/// Smooths a stream of readings so tracker jitter does not rattle the meter or
-/// trip a zone boundary twice. A plain exponential filter — cheap, and it adds
-/// only a frame or two of lag at this weight.
-class Smoothed {
-  Smoothed({this.weight = 0.4});
-
-  /// How much of each new reading to take. Lower is steadier but laggier.
-  final double weight;
-
-  double? _value;
-
-  double get value => _value ?? 0;
-  bool get hasValue => _value != null;
-
-  double add(double reading) {
-    final v = _value;
-    return _value = v == null ? reading : v + (reading - v) * weight;
-  }
-
-  void reset() => _value = null;
-}

@@ -190,12 +190,6 @@ class LZh extends L {
   String get emailHint => 'you@example.com';
 
   @override
-  String get passwordHint => '密码';
-
-  @override
-  String get codeHint => '验证码';
-
-  @override
   String get createAccountTitle => '创建账户';
 
   @override
@@ -203,21 +197,6 @@ class LZh extends L {
 
   @override
   String get createAccountAction => '创建账户';
-
-  @override
-  String get signInTitle => '登录';
-
-  @override
-  String get signInBody => '使用账户的邮箱和密码登录。';
-
-  @override
-  String get signInAction => '登录';
-
-  @override
-  String get switchToSignIn => '已有账户？登录';
-
-  @override
-  String get switchToSignUp => '第一次来？创建账户';
 
   @override
   String get emailTakenSwitchToSignIn => '该邮箱已注册账户——请直接登录。';
@@ -238,9 +217,6 @@ class LZh extends L {
   String get authEntryTagline => '俯卧撑。对决。冲上排行榜。';
 
   @override
-  String get orDivider => '或';
-
-  @override
   String get signUpWithEmail => '使用邮箱注册';
 
   @override
@@ -256,30 +232,13 @@ class LZh extends L {
   String get createAccountSubtitle => '不到一分钟。';
 
   @override
-  String get usernameHint => '用户名';
-
-  @override
   String get usernameLabel => '用户名';
 
   @override
   String get emailLabel => '电子邮箱';
 
   @override
-  String get passwordLabel => '密码';
-
-  @override
-  String get passwordMinLength => '至少8个字符';
-
-  @override
   String get logInSubtitle => '登录以保留你的段位。';
-
-  @override
-  String get forgotPassword => '忘记密码?';
-
-  @override
-  String resetPasswordSent(String email) {
-    return '如果 $email 存在账户,重置链接正在发送中。';
-  }
 
   @override
   String get checkYourEmailTitle => '查看你的邮箱';
@@ -302,38 +261,6 @@ class LZh extends L {
 
   @override
   String get usernameTaken => '该用户名已被占用。';
-
-  @override
-  String get socialLinkFailed => '无法完成登录。请重试。';
-
-  @override
-  String get showLabel => '显示';
-
-  @override
-  String get hideLabel => '隐藏';
-
-  @override
-  String get resetPasswordTitle => '设置新密码';
-
-  @override
-  String get resetPasswordBody => '为你的账户选择新密码。';
-
-  @override
-  String get setPasswordAction => '设置密码';
-
-  @override
-  String get wrongEmailOrPassword => '邮箱或密码错误。';
-
-  @override
-  String get enterCodeTitle => '输入验证码';
-
-  @override
-  String codeInstructions(String email) {
-    return '请输入发送到 $email 的验证码。';
-  }
-
-  @override
-  String get verifyAction => '验证';
 
   @override
   String get wrongCode => '验证码错误或已过期。';
@@ -396,9 +323,6 @@ class LZh extends L {
   String get skip => '跳过';
 
   @override
-  String get height => '身高';
-
-  @override
   String get yourPicture => '你的头像';
 
   @override
@@ -436,9 +360,6 @@ class LZh extends L {
 
   @override
   String get camera => '拍照';
-
-  @override
-  String get orPickOurs => '或者从我们准备的里挑一个';
 
   @override
   String get awards => '成就';
@@ -504,12 +425,6 @@ class LZh extends L {
   String get reps => '次';
 
   @override
-  String get recalibrate => '重新校准';
-
-  @override
-  String get resetCount => '计数清零';
-
-  @override
   String get howManyReally => '你实际做了多少个？';
 
   @override
@@ -523,12 +438,6 @@ class LZh extends L {
 
   @override
   String get language => '语言';
-
-  @override
-  String get units => '单位';
-
-  @override
-  String get weight => '重量';
 
   @override
   String get privacy => '隐私';
@@ -550,29 +459,6 @@ class LZh extends L {
 
   @override
   String get accept => '接受';
-
-  @override
-  String challengeSent(String name) {
-    return '已向 $name 发出挑战';
-  }
-
-  @override
-  String get weightUnitTitle => '重量单位';
-
-  @override
-  String get heightUnitTitle => '身高单位';
-
-  @override
-  String get unitKg => '千克 (kg)';
-
-  @override
-  String get unitLb => '磅 (lb)';
-
-  @override
-  String get unitCm => '厘米 (cm)';
-
-  @override
-  String get unitFt => '英尺与英寸';
 
   @override
   String get visEveryone => '所有人';
@@ -617,42 +503,13 @@ class LZh extends L {
   String get needsServer => '无法连接。请检查网络后重试。';
 
   @override
-  String get achievements => '成就';
-
-  @override
-  String get roadTitle => '大师之路';
-
-  @override
-  String get allTiers => '全部段位';
-
-  @override
-  String get topTier => '最高段位';
-
-  @override
-  String lpToGo(String lp) {
-    return '$lp LP';
-  }
-
-  @override
   String get roomFriendly => '房间对战是友谊赛，不影响你的段位。';
-
-  @override
-  String get createRoom => '创建房间';
-
-  @override
-  String get enterCode => '输入邀请码';
-
-  @override
-  String get joinRoom => '加入房间';
 
   @override
   String get shareThisCode => '分享这个码';
 
   @override
   String get codeCopied => '已复制邀请码';
-
-  @override
-  String get pickMuscleAndStart => '选择肌群并开始';
 
   @override
   String xOfY(String a, String b) {
@@ -679,18 +536,6 @@ class LZh extends L {
 
   @override
   String get tierMaster => '大师';
-
-  @override
-  String get shortKg => '公斤';
-
-  @override
-  String get shortLb => '磅';
-
-  @override
-  String get shortCm => '厘米';
-
-  @override
-  String get shortFt => '英尺';
 
   @override
   String winLoss(String w, String l) {
@@ -1052,21 +897,6 @@ class LZh extends L {
   String get mgChest => '胸';
 
   @override
-  String get mgBack => '背';
-
-  @override
-  String get mgLegs => '腿';
-
-  @override
-  String get mgShoulders => '肩';
-
-  @override
-  String get mgArms => '手臂';
-
-  @override
-  String get mgCore => '核心';
-
-  @override
   String get nWonTitle => '你赢了！';
 
   @override
@@ -1194,9 +1024,6 @@ class LZh extends L {
   String get noFriendsBody => '和认识的人对决，感觉完全不一样。';
 
   @override
-  String get addFriend => '添加';
-
-  @override
   String get decline => '拒绝';
 
   @override
@@ -1238,21 +1065,6 @@ class LZh extends L {
 
   @override
   String get unsureMovement => '不确定这是不是正确的动作，请核对数字。';
-
-  @override
-  String get local => 'Local';
-
-  @override
-  String get weekly => 'Weekly';
-
-  @override
-  String get seasonTab => 'Season';
-
-  @override
-  String get allTime => 'All-time';
-
-  @override
-  String get daily => 'Daily';
 
   @override
   String get noRanksYet => 'No ranks yet';
@@ -1437,9 +1249,6 @@ class LZh extends L {
   String get practiceComplete => '练习结束';
 
   @override
-  String get findPeople => '找人';
-
-  @override
   String get noRankYet => '还没有段位';
 
   @override
@@ -1492,17 +1301,6 @@ class LZh extends L {
   String get youWonPlain => '你赢了';
 
   @override
-  String opponentDisconnected(String name) {
-    return '$name 断线了';
-  }
-
-  @override
-  String get forfeitNoMargin => '对手退出 · 分差不计';
-
-  @override
-  String get findAnotherMatch => '再找一场';
-
-  @override
   String get cameraNeededTitle => '需要相机权限';
 
   @override
@@ -1534,11 +1332,6 @@ class LZh extends L {
 
   @override
   String get giveUp => '放弃';
-
-  @override
-  String lpSwing(String gain, String loss) {
-    return '+$gain / −$loss LP';
-  }
 
   @override
   String get lpMovesWithGap => '积分根据次数差变化——领先越多，获得越多';
@@ -1583,9 +1376,6 @@ class LZh extends L {
 
   @override
   String get duelMeOnOutrepd => '在outrepd上挑战我';
-
-  @override
-  String get yourRankCard => '你的段位卡';
 
   @override
   String get shareStory => '故事';
@@ -1855,21 +1645,6 @@ class LZh extends L {
 
   @override
   String get continueAction => '继续';
-
-  @override
-  String get lpRowWin => '胜利';
-
-  @override
-  String get lpRowLoss => '失败';
-
-  @override
-  String get lpRowOpponent => '对手段位';
-
-  @override
-  String get lpRowMargin => '差距';
-
-  @override
-  String get lpRowDepth => '深度';
 
   @override
   String get promotedLabel => '晋级';
@@ -2230,11 +2005,6 @@ class LZh extends L {
 
   @override
   String get inviteGone => '该邀请已失效';
-
-  @override
-  String waitingForPosition(String name) {
-    return '等待 ${name} 就位';
-  }
 
   @override
   String opponentDropped(String name) {

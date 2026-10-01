@@ -195,12 +195,6 @@ class LRu extends L {
   String get emailHint => 'vy@primer.com';
 
   @override
-  String get passwordHint => 'Пароль';
-
-  @override
-  String get codeHint => 'Код подтверждения';
-
-  @override
   String get createAccountTitle => 'Создать аккаунт';
 
   @override
@@ -209,21 +203,6 @@ class LRu extends L {
 
   @override
   String get createAccountAction => 'Создать аккаунт';
-
-  @override
-  String get signInTitle => 'Войти';
-
-  @override
-  String get signInBody => 'Войдите с email и паролем вашего аккаунта.';
-
-  @override
-  String get signInAction => 'Войти';
-
-  @override
-  String get switchToSignIn => 'Уже есть аккаунт? Войти';
-
-  @override
-  String get switchToSignUp => 'Впервые здесь? Создать аккаунт';
 
   @override
   String get emailTakenSwitchToSignIn =>
@@ -248,9 +227,6 @@ class LRu extends L {
       'Отжимайся. Соревнуйся. Поднимайся по лестнице.';
 
   @override
-  String get orDivider => 'или';
-
-  @override
   String get signUpWithEmail => 'Регистрация по email';
 
   @override
@@ -266,30 +242,13 @@ class LRu extends L {
   String get createAccountSubtitle => 'Займёт меньше минуты.';
 
   @override
-  String get usernameHint => 'Имя пользователя';
-
-  @override
   String get usernameLabel => 'Имя пользователя';
 
   @override
   String get emailLabel => 'Эл. почта';
 
   @override
-  String get passwordLabel => 'Пароль';
-
-  @override
-  String get passwordMinLength => 'Минимум 8 символов';
-
-  @override
   String get logInSubtitle => 'Войдите, чтобы сохранить свой ранг.';
-
-  @override
-  String get forgotPassword => 'Забыли пароль?';
-
-  @override
-  String resetPasswordSent(String email) {
-    return 'Если аккаунт с $email существует, ссылка для сброса уже в пути.';
-  }
 
   @override
   String get checkYourEmailTitle => 'Проверьте почту';
@@ -312,38 +271,6 @@ class LRu extends L {
 
   @override
   String get usernameTaken => 'Это имя пользователя уже занято.';
-
-  @override
-  String get socialLinkFailed => 'Не удалось завершить вход. Попробуйте снова.';
-
-  @override
-  String get showLabel => 'Показать';
-
-  @override
-  String get hideLabel => 'Скрыть';
-
-  @override
-  String get resetPasswordTitle => 'Установите новый пароль';
-
-  @override
-  String get resetPasswordBody => 'Выберите новый пароль для своего аккаунта.';
-
-  @override
-  String get setPasswordAction => 'Установить пароль';
-
-  @override
-  String get wrongEmailOrPassword => 'Неверный email или пароль.';
-
-  @override
-  String get enterCodeTitle => 'Введите код';
-
-  @override
-  String codeInstructions(String email) {
-    return 'Введите код, отправленный на $email.';
-  }
-
-  @override
-  String get verifyAction => 'Подтвердить';
 
   @override
   String get wrongCode => 'Код неверный или истёк.';
@@ -409,9 +336,6 @@ class LRu extends L {
   String get skip => 'Пропустить';
 
   @override
-  String get height => 'Рост';
-
-  @override
   String get yourPicture => 'Твоё фото';
 
   @override
@@ -454,9 +378,6 @@ class LRu extends L {
 
   @override
   String get camera => 'Камера';
-
-  @override
-  String get orPickOurs => 'Или выбери из наших';
 
   @override
   String get awards => 'Награды';
@@ -524,12 +445,6 @@ class LRu extends L {
   String get reps => 'повт.';
 
   @override
-  String get recalibrate => 'Перекалибровать';
-
-  @override
-  String get resetCount => 'Обнулить счёт';
-
-  @override
   String get howManyReally => 'Сколько повторов вы сделали на самом деле?';
 
   @override
@@ -544,12 +459,6 @@ class LRu extends L {
 
   @override
   String get language => 'Язык';
-
-  @override
-  String get units => 'Единицы';
-
-  @override
-  String get weight => 'Вес';
 
   @override
   String get privacy => 'Приватность';
@@ -571,29 +480,6 @@ class LRu extends L {
 
   @override
   String get accept => 'Принять';
-
-  @override
-  String challengeSent(String name) {
-    return 'Вызов отправлен: $name';
-  }
-
-  @override
-  String get weightUnitTitle => 'Единица веса';
-
-  @override
-  String get heightUnitTitle => 'Единица роста';
-
-  @override
-  String get unitKg => 'Килограммы (кг)';
-
-  @override
-  String get unitLb => 'Фунты (lb)';
-
-  @override
-  String get unitCm => 'Сантиметры (см)';
-
-  @override
-  String get unitFt => 'Футы и дюймы';
 
   @override
   String get visEveryone => 'Все';
@@ -639,43 +525,14 @@ class LRu extends L {
       'Не удалось подключиться. Проверьте интернет и попробуйте снова.';
 
   @override
-  String get achievements => 'Достижения';
-
-  @override
-  String get roadTitle => 'Путь к Мастеру';
-
-  @override
-  String get allTiers => 'Все ранги';
-
-  @override
-  String get topTier => 'Высший ранг';
-
-  @override
-  String lpToGo(String lp) {
-    return '$lp ОЛ';
-  }
-
-  @override
   String get roomFriendly =>
       'Матчи в комнате — товарищеские, на ранг они не влияют.';
-
-  @override
-  String get createRoom => 'Создать комнату';
-
-  @override
-  String get enterCode => 'ВВЕДИ КОД';
-
-  @override
-  String get joinRoom => 'Войти в комнату';
 
   @override
   String get shareThisCode => 'Поделись этим кодом';
 
   @override
   String get codeCopied => 'Код скопирован';
-
-  @override
-  String get pickMuscleAndStart => 'Выбери мышцу и начинай';
 
   @override
   String xOfY(String a, String b) {
@@ -702,18 +559,6 @@ class LRu extends L {
 
   @override
   String get tierMaster => 'Мастер';
-
-  @override
-  String get shortKg => 'кг';
-
-  @override
-  String get shortLb => 'фнт';
-
-  @override
-  String get shortCm => 'см';
-
-  @override
-  String get shortFt => 'фут';
 
   @override
   String winLoss(String w, String l) {
@@ -1075,21 +920,6 @@ class LRu extends L {
   String get mgChest => 'Грудь';
 
   @override
-  String get mgBack => 'Спина';
-
-  @override
-  String get mgLegs => 'Ноги';
-
-  @override
-  String get mgShoulders => 'Плечи';
-
-  @override
-  String get mgArms => 'Руки';
-
-  @override
-  String get mgCore => 'Кор';
-
-  @override
   String get nWonTitle => 'Вы победили!';
 
   @override
@@ -1218,9 +1048,6 @@ class LRu extends L {
   String get noFriendsBody => 'Дуэль с знакомым — совсем другое дело.';
 
   @override
-  String get addFriend => 'Добавить';
-
-  @override
   String get decline => 'Отклонить';
 
   @override
@@ -1265,21 +1092,6 @@ class LRu extends L {
   @override
   String get unsureMovement =>
       'Не уверен, что это было то движение — проверьте число.';
-
-  @override
-  String get local => 'Local';
-
-  @override
-  String get weekly => 'Weekly';
-
-  @override
-  String get seasonTab => 'Season';
-
-  @override
-  String get allTime => 'All-time';
-
-  @override
-  String get daily => 'Daily';
 
   @override
   String get noRanksYet => 'No ranks yet';
@@ -1465,9 +1277,6 @@ class LRu extends L {
   String get practiceComplete => 'ТРЕНИРОВКА ЗАВЕРШЕНА';
 
   @override
-  String get findPeople => 'Найти людей';
-
-  @override
   String get noRankYet => 'Ранга пока нет';
 
   @override
@@ -1520,17 +1329,6 @@ class LRu extends L {
   String get youWonPlain => 'Вы победили';
 
   @override
-  String opponentDisconnected(String name) {
-    return '$name отключился';
-  }
-
-  @override
-  String get forfeitNoMargin => 'Сдача · разрыв не учитывается';
-
-  @override
-  String get findAnotherMatch => 'Найти другой матч';
-
-  @override
   String get cameraNeededTitle => 'Нужен доступ к камере';
 
   @override
@@ -1565,11 +1363,6 @@ class LRu extends L {
 
   @override
   String get giveUp => 'Сдаться';
-
-  @override
-  String lpSwing(String gain, String loss) {
-    return '+$gain / −$loss LP';
-  }
 
   @override
   String get lpMovesWithGap =>
@@ -1615,9 +1408,6 @@ class LRu extends L {
 
   @override
   String get duelMeOnOutrepd => 'Вызови меня на outrepd';
-
-  @override
-  String get yourRankCard => 'Ваша карточка ранга';
 
   @override
   String get shareStory => 'История';
@@ -1900,21 +1690,6 @@ class LRu extends L {
 
   @override
   String get continueAction => 'Дальше';
-
-  @override
-  String get lpRowWin => 'Победа';
-
-  @override
-  String get lpRowLoss => 'Поражение';
-
-  @override
-  String get lpRowOpponent => 'Ранг соперника';
-
-  @override
-  String get lpRowMargin => 'Разрыв';
-
-  @override
-  String get lpRowDepth => 'Глубина';
 
   @override
   String get promotedLabel => 'Повышение';
@@ -2285,11 +2060,6 @@ class LRu extends L {
 
   @override
   String get inviteGone => 'Это приглашение уже истекло';
-
-  @override
-  String waitingForPosition(String name) {
-    return 'Ждём, пока ${name} займёт позицию';
-  }
 
   @override
   String opponentDropped(String name) {

@@ -1,8 +1,10 @@
-/// Sample data the UI runs on. No network, no accounts — everything here is
-/// held in memory so the whole app is browsable straight after install.
+/// The lifter on this phone, and the sample data a build with no server
+/// draws its screens from.
 ///
-/// The one exception is the three body measurements a lifter types in: those
-/// are theirs, not sample data, so they survive a restart.
+/// [demoProfile] is the lifter themselves, whatever its name says: the
+/// starting values below are what a build with no server shows, and a real
+/// account overwrites every one of them from the server (applyServerProfile)
+/// or from a fresh start (Career.startFresh).
 library;
 
 import 'package:flutter/foundation.dart';
@@ -23,7 +25,6 @@ class Profile {
     required this.winStreak,
     required this.dayStreak,
     required this.bestStreak,
-    required this.totalVolumeKg,
     required this.totalReps,
     required this.bestSet,
     this.peakTierIdx = 0,
@@ -32,9 +33,6 @@ class Profile {
     required this.localRank,
     required this.country,
     this.placementsDone = kPlacementDuels,
-    required this.heightCm,
-    required this.weightKg,
-    required this.age,
     this.friendCode = '000000',
   });
 
@@ -62,7 +60,6 @@ class Profile {
   int dayStreak;
 
   int bestStreak;
-  int totalVolumeKg;
 
   /// Every push-up ever counted for this account.
   int totalReps;
@@ -101,9 +98,6 @@ class Profile {
   /// judgement people quit over. Until these are done the app says "Unranked",
   /// which is a statement about the app's knowledge, not about the lifter.
   int placementsDone;
-  int heightCm;
-  int weightKg;
-  int age;
 
   int get totalMatches => wins + losses;
 
@@ -126,7 +120,6 @@ final demoProfile = Profile(
   winStreak: 4,
   dayStreak: 5,
   bestStreak: 7,
-  totalVolumeKg: 184320,
   totalReps: 412,
   bestSet: 24,
   peakTierIdx: 3,
@@ -134,9 +127,6 @@ final demoProfile = Profile(
   localRank: 64,
   country: 'US',
   placementsDone: kPlacementDuels,
-  heightCm: 178,
-  weightKg: 82,
-  age: 25,
   friendCode: '482910',
 );
 
@@ -145,42 +135,17 @@ final demoProfile = Profile(
 /// find out where they stand.
 const kPlacementDuels = 5;
 
-/// Restore the measurements the lifter set by hand. Everything else about the
-/// profile is demo data and stays as written above.
+/// The name this phone last knew, and whether it has been set up. Everything
+/// else about the profile comes from the server or the saved career.
 Future<void> loadProfileStats() async {
   final s = await SharedPreferences.getInstance();
-  demoProfile
-    ..heightCm = s.getInt('profileHeightCm') ?? demoProfile.heightCm
-    ..weightKg = s.getInt('profileWeightKg') ?? demoProfile.weightKg
-    ..age = s.getInt('profileAge') ?? demoProfile.age
-    ..username = s.getString('username') ?? demoProfile.username;
+  demoProfile.username = s.getString('username') ?? demoProfile.username;
 
   // A stored career counts as set up even with no flag beside it. The flag
   // is newer than the installs it has to protect, and reading its absence as
   // "new account" would send exactly the people with something to lose back
   // through the screen that clears it.
   onboarded = s.getBool('onboarded') ?? (s.getString('career.profile') != null);
-}
-
-/// What the onboarding questionnaire learned. Nothing reads it yet — the
-/// suggestions it will feed need the match and counter work first — but a
-/// person who answered twelve questions about themselves should not have to
-/// answer them again because the app forgot on the way to the home screen.
-Future<void> saveOnboardingAnswers(Map<String, String?> answers) async {
-  final s = await SharedPreferences.getInstance();
-  for (final entry in answers.entries) {
-    final value = entry.value;
-    if (value == null) continue;
-    await s.setString('onboarding.${entry.key}', value);
-  }
-  await s.setBool('onboarding.done', true);
-}
-
-Future<void> saveProfileStats() async {
-  final s = await SharedPreferences.getInstance();
-  await s.setInt('profileHeightCm', demoProfile.heightCm);
-  await s.setInt('profileWeightKg', demoProfile.weightKg);
-  await s.setInt('profileAge', demoProfile.age);
 }
 
 /// Whether this install has been set up already.
@@ -459,27 +424,6 @@ extension AppNotificationText on AppNotification {
     _ => l.nRankBody(body),
   };
 }
-
-/// The words a person reads. The list below stays English because those
-/// strings are ids: they match recorded matches and exercise definitions.
-String muscleGroupLabel(L l, String group) => switch (group) {
-  'Chest' => l.mgChest,
-  'Back' => l.mgBack,
-  'Legs' => l.mgLegs,
-  'Shoulders' => l.mgShoulders,
-  'Arms' => l.mgArms,
-  'Core' => l.mgCore,
-  _ => group,
-};
-
-const muscleGroups = <String>[
-  'Chest',
-  'Back',
-  'Legs',
-  'Shoulders',
-  'Arms',
-  'Core',
-];
 
 /// Stand-ins for real players until matchmaking is wired to a server.
 class Opponent {

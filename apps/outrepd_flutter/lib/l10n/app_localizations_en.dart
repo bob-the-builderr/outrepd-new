@@ -196,12 +196,6 @@ class LEn extends L {
   String get emailHint => 'you@example.com';
 
   @override
-  String get passwordHint => 'Password';
-
-  @override
-  String get codeHint => 'Verification code';
-
-  @override
   String get createAccountTitle => 'Create account';
 
   @override
@@ -210,22 +204,6 @@ class LEn extends L {
 
   @override
   String get createAccountAction => 'Create account';
-
-  @override
-  String get signInTitle => 'Sign in';
-
-  @override
-  String get signInBody =>
-      'Sign in with the email and password on your account.';
-
-  @override
-  String get signInAction => 'Sign in';
-
-  @override
-  String get switchToSignIn => 'Already have an account? Sign in';
-
-  @override
-  String get switchToSignUp => 'New here? Create an account';
 
   @override
   String get emailTakenSwitchToSignIn =>
@@ -250,9 +228,6 @@ class LEn extends L {
   String get authEntryTagline => 'Push. Compete. Climb the ladder.';
 
   @override
-  String get orDivider => 'or';
-
-  @override
   String get signUpWithEmail => 'Sign up with email';
 
   @override
@@ -268,30 +243,13 @@ class LEn extends L {
   String get createAccountSubtitle => 'Takes less than a minute.';
 
   @override
-  String get usernameHint => 'Username';
-
-  @override
   String get usernameLabel => 'Username';
 
   @override
   String get emailLabel => 'Email';
 
   @override
-  String get passwordLabel => 'Password';
-
-  @override
-  String get passwordMinLength => 'At least 8 characters';
-
-  @override
   String get logInSubtitle => 'Log in to keep your rank.';
-
-  @override
-  String get forgotPassword => 'Forgot password?';
-
-  @override
-  String resetPasswordSent(String email) {
-    return 'If an account exists for $email, a reset link is on its way.';
-  }
 
   @override
   String get checkYourEmailTitle => 'Check your email';
@@ -314,38 +272,6 @@ class LEn extends L {
 
   @override
   String get usernameTaken => 'That username is taken.';
-
-  @override
-  String get socialLinkFailed => 'Couldn\'t finish signing in. Try again.';
-
-  @override
-  String get showLabel => 'Show';
-
-  @override
-  String get hideLabel => 'Hide';
-
-  @override
-  String get resetPasswordTitle => 'Set a new password';
-
-  @override
-  String get resetPasswordBody => 'Choose a new password for your account.';
-
-  @override
-  String get setPasswordAction => 'Set password';
-
-  @override
-  String get wrongEmailOrPassword => 'Wrong email or password.';
-
-  @override
-  String get enterCodeTitle => 'Enter code';
-
-  @override
-  String codeInstructions(String email) {
-    return 'Enter the code we sent to $email.';
-  }
-
-  @override
-  String get verifyAction => 'Verify';
 
   @override
   String get wrongCode => 'That code\'s wrong or expired.';
@@ -411,9 +337,6 @@ class LEn extends L {
   String get skip => 'Skip';
 
   @override
-  String get height => 'Height';
-
-  @override
   String get yourPicture => 'Your picture';
 
   @override
@@ -455,9 +378,6 @@ class LEn extends L {
 
   @override
   String get camera => 'Camera';
-
-  @override
-  String get orPickOurs => 'Or pick one of ours';
 
   @override
   String get awards => 'Awards';
@@ -525,12 +445,6 @@ class LEn extends L {
   String get reps => 'reps';
 
   @override
-  String get recalibrate => 'Recalibrate';
-
-  @override
-  String get resetCount => 'Reset count';
-
-  @override
   String get howManyReally => 'How many did you really do?';
 
   @override
@@ -545,12 +459,6 @@ class LEn extends L {
 
   @override
   String get language => 'Language';
-
-  @override
-  String get units => 'Units';
-
-  @override
-  String get weight => 'Weight';
 
   @override
   String get privacy => 'Privacy';
@@ -572,29 +480,6 @@ class LEn extends L {
 
   @override
   String get accept => 'Accept';
-
-  @override
-  String challengeSent(String name) {
-    return 'Challenge sent to $name';
-  }
-
-  @override
-  String get weightUnitTitle => 'Weight unit';
-
-  @override
-  String get heightUnitTitle => 'Height unit';
-
-  @override
-  String get unitKg => 'Kilograms (kg)';
-
-  @override
-  String get unitLb => 'Pounds (lb)';
-
-  @override
-  String get unitCm => 'Centimetres (cm)';
-
-  @override
-  String get unitFt => 'Feet & inches';
 
   @override
   String get visEveryone => 'Everyone';
@@ -639,43 +524,14 @@ class LEn extends L {
   String get needsServer => 'Couldn\'t connect. Check your internet and try again.';
 
   @override
-  String get achievements => 'Achievements';
-
-  @override
-  String get roadTitle => 'Road to Master';
-
-  @override
-  String get allTiers => 'All tiers';
-
-  @override
-  String get topTier => 'Top tier';
-
-  @override
-  String lpToGo(String lp) {
-    return '$lp LP';
-  }
-
-  @override
   String get roomFriendly =>
       'Room matches are friendly — they do not affect your rank.';
-
-  @override
-  String get createRoom => 'Create a room';
-
-  @override
-  String get enterCode => 'ENTER CODE';
-
-  @override
-  String get joinRoom => 'Join room';
 
   @override
   String get shareThisCode => 'Share this code';
 
   @override
   String get codeCopied => 'Code copied';
-
-  @override
-  String get pickMuscleAndStart => 'Pick muscle and start';
 
   @override
   String xOfY(String a, String b) {
@@ -702,18 +558,6 @@ class LEn extends L {
 
   @override
   String get tierMaster => 'Master';
-
-  @override
-  String get shortKg => 'kg';
-
-  @override
-  String get shortLb => 'lb';
-
-  @override
-  String get shortCm => 'cm';
-
-  @override
-  String get shortFt => 'ft';
 
   @override
   String winLoss(String w, String l) {
@@ -1075,21 +919,6 @@ class LEn extends L {
   String get mgChest => 'Chest';
 
   @override
-  String get mgBack => 'Back';
-
-  @override
-  String get mgLegs => 'Legs';
-
-  @override
-  String get mgShoulders => 'Shoulders';
-
-  @override
-  String get mgArms => 'Arms';
-
-  @override
-  String get mgCore => 'Core';
-
-  @override
   String get nWonTitle => 'You won!';
 
   @override
@@ -1219,9 +1048,6 @@ class LEn extends L {
   String get noFriendsBody => 'Duels hit different against someone you know.';
 
   @override
-  String get addFriend => 'Add';
-
-  @override
   String get decline => 'Decline';
 
   @override
@@ -1265,21 +1091,6 @@ class LEn extends L {
   @override
   String get unsureMovement =>
       'Not sure this was the right movement — check the number.';
-
-  @override
-  String get local => 'Local';
-
-  @override
-  String get weekly => 'Weekly';
-
-  @override
-  String get seasonTab => 'Season';
-
-  @override
-  String get allTime => 'All-time';
-
-  @override
-  String get daily => 'Daily';
 
   @override
   String get noRanksYet => 'No ranks yet';
@@ -1465,9 +1276,6 @@ class LEn extends L {
   String get practiceComplete => 'PRACTICE COMPLETE';
 
   @override
-  String get findPeople => 'Find people';
-
-  @override
   String get noRankYet => 'No rank yet';
 
   @override
@@ -1520,17 +1328,6 @@ class LEn extends L {
   String get youWonPlain => 'You won';
 
   @override
-  String opponentDisconnected(String name) {
-    return '$name disconnected';
-  }
-
-  @override
-  String get forfeitNoMargin => 'Forfeit · margin not counted';
-
-  @override
-  String get findAnotherMatch => 'Find another match';
-
-  @override
   String get cameraNeededTitle => 'Camera access needed';
 
   @override
@@ -1566,11 +1363,6 @@ class LEn extends L {
 
   @override
   String get giveUp => 'Give up';
-
-  @override
-  String lpSwing(String gain, String loss) {
-    return '+$gain / −$loss LP';
-  }
 
   @override
   String get lpMovesWithGap =>
@@ -1616,9 +1408,6 @@ class LEn extends L {
 
   @override
   String get duelMeOnOutrepd => 'Duel me on outrepd';
-
-  @override
-  String get yourRankCard => 'Your rank card';
 
   @override
   String get shareStory => 'Story';
@@ -1900,21 +1689,6 @@ class LEn extends L {
 
   @override
   String get continueAction => 'Continue';
-
-  @override
-  String get lpRowWin => 'Win';
-
-  @override
-  String get lpRowLoss => 'Loss';
-
-  @override
-  String get lpRowOpponent => 'Opponent\'s rank';
-
-  @override
-  String get lpRowMargin => 'Margin';
-
-  @override
-  String get lpRowDepth => 'Depth';
 
   @override
   String get promotedLabel => 'Promoted';
@@ -2284,11 +2058,6 @@ class LEn extends L {
 
   @override
   String get inviteGone => 'That invite has run out';
-
-  @override
-  String waitingForPosition(String name) {
-    return 'Waiting for ${name} to get into position';
-  }
 
   @override
   String opponentDropped(String name) {

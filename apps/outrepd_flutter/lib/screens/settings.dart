@@ -231,45 +231,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
 
           SettingsSection(
-            title: l.units,
-            children: [
-              NavRow(
-                icon: Icons.monitor_weight_outlined,
-                label: l.weight,
-                value: settings.weightUnit.label(l),
-                onTap: () async {
-                  await pickOne<WeightUnit>(
-                    context: context,
-                    title: l.weightUnitTitle,
-                    values: WeightUnit.values,
-                    current: settings.weightUnit,
-                    label: (v) => v.label(l),
-                    onPick: (v) => _set(() => settings.weightUnit = v),
-                  );
-                  if (mounted) setState(() {});
-                },
-              ),
-              NavRow(
-                icon: Icons.straighten,
-                label: l.height,
-                value: settings.heightUnit.label(l),
-                onTap: () async {
-                  await pickOne<HeightUnit>(
-                    context: context,
-                    title: l.heightUnitTitle,
-                    values: HeightUnit.values,
-                    current: settings.heightUnit,
-                    label: (v) => v.label(l),
-                    onPick: (v) => _set(() => settings.heightUnit = v),
-                  );
-                  if (mounted) setState(() {});
-                },
-                last: true,
-              ),
-            ],
-          ),
-
-          SettingsSection(
             title: l.about,
             children: [
               NavRow(

@@ -473,18 +473,6 @@ abstract class L {
   /// **'you@example.com'**
   String get emailHint;
 
-  /// No description provided for @passwordHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Password'**
-  String get passwordHint;
-
-  /// No description provided for @codeHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Verification code'**
-  String get codeHint;
-
   /// No description provided for @createAccountTitle.
   ///
   /// In en, this message translates to:
@@ -502,36 +490,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Create account'**
   String get createAccountAction;
-
-  /// No description provided for @signInTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in'**
-  String get signInTitle;
-
-  /// No description provided for @signInBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in with the email and password on your account.'**
-  String get signInBody;
-
-  /// No description provided for @signInAction.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in'**
-  String get signInAction;
-
-  /// No description provided for @switchToSignIn.
-  ///
-  /// In en, this message translates to:
-  /// **'Already have an account? Sign in'**
-  String get switchToSignIn;
-
-  /// No description provided for @switchToSignUp.
-  ///
-  /// In en, this message translates to:
-  /// **'New here? Create an account'**
-  String get switchToSignUp;
 
   /// No description provided for @emailTakenSwitchToSignIn.
   ///
@@ -569,12 +527,6 @@ abstract class L {
   /// **'Push. Compete. Climb the ladder.'**
   String get authEntryTagline;
 
-  /// No description provided for @orDivider.
-  ///
-  /// In en, this message translates to:
-  /// **'or'**
-  String get orDivider;
-
   /// No description provided for @signUpWithEmail.
   ///
   /// In en, this message translates to:
@@ -605,12 +557,6 @@ abstract class L {
   /// **'Takes less than a minute.'**
   String get createAccountSubtitle;
 
-  /// No description provided for @usernameHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Username'**
-  String get usernameHint;
-
   /// No description provided for @usernameLabel.
   ///
   /// In en, this message translates to:
@@ -623,35 +569,11 @@ abstract class L {
   /// **'Email'**
   String get emailLabel;
 
-  /// No description provided for @passwordLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Password'**
-  String get passwordLabel;
-
-  /// No description provided for @passwordMinLength.
-  ///
-  /// In en, this message translates to:
-  /// **'At least 8 characters'**
-  String get passwordMinLength;
-
   /// No description provided for @logInSubtitle.
   ///
   /// In en, this message translates to:
   /// **'Log in to keep your rank.'**
   String get logInSubtitle;
-
-  /// No description provided for @forgotPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Forgot password?'**
-  String get forgotPassword;
-
-  /// No description provided for @resetPasswordSent.
-  ///
-  /// In en, this message translates to:
-  /// **'If an account exists for {email}, a reset link is on its way.'**
-  String resetPasswordSent(String email);
 
   /// No description provided for @checkYourEmailTitle.
   ///
@@ -688,66 +610,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'That username is taken.'**
   String get usernameTaken;
-
-  /// No description provided for @socialLinkFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Couldn\'t finish signing in. Try again.'**
-  String get socialLinkFailed;
-
-  /// No description provided for @showLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Show'**
-  String get showLabel;
-
-  /// No description provided for @hideLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Hide'**
-  String get hideLabel;
-
-  /// No description provided for @resetPasswordTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Set a new password'**
-  String get resetPasswordTitle;
-
-  /// No description provided for @resetPasswordBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Choose a new password for your account.'**
-  String get resetPasswordBody;
-
-  /// No description provided for @setPasswordAction.
-  ///
-  /// In en, this message translates to:
-  /// **'Set password'**
-  String get setPasswordAction;
-
-  /// No description provided for @wrongEmailOrPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Wrong email or password.'**
-  String get wrongEmailOrPassword;
-
-  /// No description provided for @enterCodeTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter code'**
-  String get enterCodeTitle;
-
-  /// No description provided for @codeInstructions.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter the code we sent to {email}.'**
-  String codeInstructions(String email);
-
-  /// No description provided for @verifyAction.
-  ///
-  /// In en, this message translates to:
-  /// **'Verify'**
-  String get verifyAction;
 
   /// No description provided for @wrongCode.
   ///
@@ -857,12 +719,6 @@ abstract class L {
   /// **'Skip'**
   String get skip;
 
-  /// No description provided for @height.
-  ///
-  /// In en, this message translates to:
-  /// **'Height'**
-  String get height;
-
   /// No description provided for @yourPicture.
   ///
   /// In en, this message translates to:
@@ -940,12 +796,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Camera'**
   String get camera;
-
-  /// No description provided for @orPickOurs.
-  ///
-  /// In en, this message translates to:
-  /// **'Or pick one of ours'**
-  String get orPickOurs;
 
   /// No description provided for @awards.
   ///
@@ -1073,18 +923,6 @@ abstract class L {
   /// **'reps'**
   String get reps;
 
-  /// No description provided for @recalibrate.
-  ///
-  /// In en, this message translates to:
-  /// **'Recalibrate'**
-  String get recalibrate;
-
-  /// No description provided for @resetCount.
-  ///
-  /// In en, this message translates to:
-  /// **'Reset count'**
-  String get resetCount;
-
   /// No description provided for @howManyReally.
   ///
   /// In en, this message translates to:
@@ -1114,18 +952,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Language'**
   String get language;
-
-  /// No description provided for @units.
-  ///
-  /// In en, this message translates to:
-  /// **'Units'**
-  String get units;
-
-  /// No description provided for @weight.
-  ///
-  /// In en, this message translates to:
-  /// **'Weight'**
-  String get weight;
 
   /// No description provided for @privacy.
   ///
@@ -1168,48 +994,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Accept'**
   String get accept;
-
-  /// No description provided for @challengeSent.
-  ///
-  /// In en, this message translates to:
-  /// **'Challenge sent to {name}'**
-  String challengeSent(String name);
-
-  /// No description provided for @weightUnitTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Weight unit'**
-  String get weightUnitTitle;
-
-  /// No description provided for @heightUnitTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Height unit'**
-  String get heightUnitTitle;
-
-  /// No description provided for @unitKg.
-  ///
-  /// In en, this message translates to:
-  /// **'Kilograms (kg)'**
-  String get unitKg;
-
-  /// No description provided for @unitLb.
-  ///
-  /// In en, this message translates to:
-  /// **'Pounds (lb)'**
-  String get unitLb;
-
-  /// No description provided for @unitCm.
-  ///
-  /// In en, this message translates to:
-  /// **'Centimetres (cm)'**
-  String get unitCm;
-
-  /// No description provided for @unitFt.
-  ///
-  /// In en, this message translates to:
-  /// **'Feet & inches'**
-  String get unitFt;
 
   /// No description provided for @visEveryone.
   ///
@@ -1295,59 +1079,11 @@ abstract class L {
   /// **'Couldn't connect. Check your internet and try again.'**
   String get needsServer;
 
-  /// No description provided for @achievements.
-  ///
-  /// In en, this message translates to:
-  /// **'Achievements'**
-  String get achievements;
-
-  /// No description provided for @roadTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Road to Master'**
-  String get roadTitle;
-
-  /// No description provided for @allTiers.
-  ///
-  /// In en, this message translates to:
-  /// **'All tiers'**
-  String get allTiers;
-
-  /// No description provided for @topTier.
-  ///
-  /// In en, this message translates to:
-  /// **'Top tier'**
-  String get topTier;
-
-  /// No description provided for @lpToGo.
-  ///
-  /// In en, this message translates to:
-  /// **'{lp} LP'**
-  String lpToGo(String lp);
-
   /// No description provided for @roomFriendly.
   ///
   /// In en, this message translates to:
   /// **'Room matches are friendly — they do not affect your rank.'**
   String get roomFriendly;
-
-  /// No description provided for @createRoom.
-  ///
-  /// In en, this message translates to:
-  /// **'Create a room'**
-  String get createRoom;
-
-  /// No description provided for @enterCode.
-  ///
-  /// In en, this message translates to:
-  /// **'ENTER CODE'**
-  String get enterCode;
-
-  /// No description provided for @joinRoom.
-  ///
-  /// In en, this message translates to:
-  /// **'Join room'**
-  String get joinRoom;
 
   /// No description provided for @shareThisCode.
   ///
@@ -1360,12 +1096,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Code copied'**
   String get codeCopied;
-
-  /// No description provided for @pickMuscleAndStart.
-  ///
-  /// In en, this message translates to:
-  /// **'Pick muscle and start'**
-  String get pickMuscleAndStart;
 
   /// No description provided for @xOfY.
   ///
@@ -1414,30 +1144,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Master'**
   String get tierMaster;
-
-  /// No description provided for @shortKg.
-  ///
-  /// In en, this message translates to:
-  /// **'kg'**
-  String get shortKg;
-
-  /// No description provided for @shortLb.
-  ///
-  /// In en, this message translates to:
-  /// **'lb'**
-  String get shortLb;
-
-  /// No description provided for @shortCm.
-  ///
-  /// In en, this message translates to:
-  /// **'cm'**
-  String get shortCm;
-
-  /// No description provided for @shortFt.
-  ///
-  /// In en, this message translates to:
-  /// **'ft'**
-  String get shortFt;
 
   /// No description provided for @winLoss.
   ///
@@ -2153,36 +1859,6 @@ abstract class L {
   /// **'Chest'**
   String get mgChest;
 
-  /// No description provided for @mgBack.
-  ///
-  /// In en, this message translates to:
-  /// **'Back'**
-  String get mgBack;
-
-  /// No description provided for @mgLegs.
-  ///
-  /// In en, this message translates to:
-  /// **'Legs'**
-  String get mgLegs;
-
-  /// No description provided for @mgShoulders.
-  ///
-  /// In en, this message translates to:
-  /// **'Shoulders'**
-  String get mgShoulders;
-
-  /// No description provided for @mgArms.
-  ///
-  /// In en, this message translates to:
-  /// **'Arms'**
-  String get mgArms;
-
-  /// No description provided for @mgCore.
-  ///
-  /// In en, this message translates to:
-  /// **'Core'**
-  String get mgCore;
-
   /// No description provided for @nWonTitle.
   ///
   /// In en, this message translates to:
@@ -2381,12 +2057,6 @@ abstract class L {
   /// **'Duels hit different against someone you know.'**
   String get noFriendsBody;
 
-  /// No description provided for @addFriend.
-  ///
-  /// In en, this message translates to:
-  /// **'Add'**
-  String get addFriend;
-
   /// No description provided for @decline.
   ///
   /// In en, this message translates to:
@@ -2464,36 +2134,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Not sure this was the right movement — check the number.'**
   String get unsureMovement;
-
-  /// No description provided for @local.
-  ///
-  /// In en, this message translates to:
-  /// **'Local'**
-  String get local;
-
-  /// No description provided for @weekly.
-  ///
-  /// In en, this message translates to:
-  /// **'Weekly'**
-  String get weekly;
-
-  /// No description provided for @seasonTab.
-  ///
-  /// In en, this message translates to:
-  /// **'Season'**
-  String get seasonTab;
-
-  /// No description provided for @allTime.
-  ///
-  /// In en, this message translates to:
-  /// **'All-time'**
-  String get allTime;
-
-  /// No description provided for @daily.
-  ///
-  /// In en, this message translates to:
-  /// **'Daily'**
-  String get daily;
 
   /// No description provided for @noRanksYet.
   ///
@@ -2795,12 +2435,6 @@ abstract class L {
   /// **'PRACTICE COMPLETE'**
   String get practiceComplete;
 
-  /// No description provided for @findPeople.
-  ///
-  /// In en, this message translates to:
-  /// **'Find people'**
-  String get findPeople;
-
   /// No description provided for @noRankYet.
   ///
   /// In en, this message translates to:
@@ -2885,24 +2519,6 @@ abstract class L {
   /// **'You won'**
   String get youWonPlain;
 
-  /// No description provided for @opponentDisconnected.
-  ///
-  /// In en, this message translates to:
-  /// **'{name} disconnected'**
-  String opponentDisconnected(String name);
-
-  /// No description provided for @forfeitNoMargin.
-  ///
-  /// In en, this message translates to:
-  /// **'Forfeit · margin not counted'**
-  String get forfeitNoMargin;
-
-  /// No description provided for @findAnotherMatch.
-  ///
-  /// In en, this message translates to:
-  /// **'Find another match'**
-  String get findAnotherMatch;
-
   /// No description provided for @cameraNeededTitle.
   ///
   /// In en, this message translates to:
@@ -2968,12 +2584,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Give up'**
   String get giveUp;
-
-  /// No description provided for @lpSwing.
-  ///
-  /// In en, this message translates to:
-  /// **'+{gain} / −{loss} LP'**
-  String lpSwing(String gain, String loss);
 
   /// No description provided for @lpMovesWithGap.
   ///
@@ -3058,12 +2668,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Duel me on outrepd'**
   String get duelMeOnOutrepd;
-
-  /// No description provided for @yourRankCard.
-  ///
-  /// In en, this message translates to:
-  /// **'Your rank card'**
-  String get yourRankCard;
 
   /// No description provided for @shareStory.
   ///
@@ -3586,36 +3190,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Continue'**
   String get continueAction;
-
-  /// No description provided for @lpRowWin.
-  ///
-  /// In en, this message translates to:
-  /// **'Win'**
-  String get lpRowWin;
-
-  /// No description provided for @lpRowLoss.
-  ///
-  /// In en, this message translates to:
-  /// **'Loss'**
-  String get lpRowLoss;
-
-  /// No description provided for @lpRowOpponent.
-  ///
-  /// In en, this message translates to:
-  /// **'Opponent\'s rank'**
-  String get lpRowOpponent;
-
-  /// No description provided for @lpRowMargin.
-  ///
-  /// In en, this message translates to:
-  /// **'Margin'**
-  String get lpRowMargin;
-
-  /// No description provided for @lpRowDepth.
-  ///
-  /// In en, this message translates to:
-  /// **'Depth'**
-  String get lpRowDepth;
 
   /// No description provided for @promotedLabel.
   ///
@@ -4246,12 +3820,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'That invite has run out'**
   String get inviteGone;
-
-  /// No description provided for @waitingForPosition.
-  ///
-  /// In en, this message translates to:
-  /// **'Waiting for {name} to get into position'**
-  String waitingForPosition(String name);
 
   /// No description provided for @opponentDropped.
   ///

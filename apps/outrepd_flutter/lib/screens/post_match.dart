@@ -32,7 +32,31 @@ import 'share_card.dart';
 /// The current account, as [showShareCardSheet] needs it — the same shape
 /// [ProfileScreen] shares from, built here too since a result or a
 /// promotion is exactly the moment somebody wants to say so.
-void _shareMyCard(BuildContext context) {
+///
+/// The places on the boards come from the server, as the profile screen's
+/// do. They used to be the sample profile's — #1842 in the world, #64 in the
+/// country — which nothing ever replaces, so every card shared from here
+/// carried two numbers nobody had earned.
+Future<void> _shareMyCard(BuildContext context) async {
+  int? global;
+  int? local;
+  if (backend.available) {
+    try {
+      final places = await Future.wait([
+        backend.boardPosition(),
+        backend.boardPosition(country: backend.me?.country),
+      ]);
+      global = places.first;
+      local = places.last;
+    } on Object catch (error) {
+      // No place on the card rather than a wrong one.
+      debugPrint('Could not read the board positions: $error');
+    }
+  } else {
+    global = demoProfile.globalRank;
+    local = demoProfile.localRank;
+  }
+  if (!context.mounted) return;
   showShareCardSheet(
     context,
     data: ShareCardData(
@@ -44,9 +68,9 @@ void _shareMyCard(BuildContext context) {
       losses: demoProfile.losses,
       bestSet: demoProfile.bestSet,
       winStreak: demoProfile.winStreak,
-      globalPlace: demoProfile.globalRank,
+      globalPlace: global,
       country: demoProfile.country,
-      countryPlace: demoProfile.localRank,
+      countryPlace: local,
       avatarUrl: backend.me?.avatarUrl,
     ),
   );

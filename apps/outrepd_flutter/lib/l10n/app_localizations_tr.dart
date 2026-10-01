@@ -196,12 +196,6 @@ class LTr extends L {
   String get emailHint => 'sen@ornek.com';
 
   @override
-  String get passwordHint => 'Şifre';
-
-  @override
-  String get codeHint => 'Doğrulama kodu';
-
-  @override
   String get createAccountTitle => 'Hesap oluştur';
 
   @override
@@ -210,21 +204,6 @@ class LTr extends L {
 
   @override
   String get createAccountAction => 'Hesap oluştur';
-
-  @override
-  String get signInTitle => 'Giriş yap';
-
-  @override
-  String get signInBody => 'Hesabının e-postası ve şifresiyle giriş yap.';
-
-  @override
-  String get signInAction => 'Giriş yap';
-
-  @override
-  String get switchToSignIn => 'Zaten hesabın var mı? Giriş yap';
-
-  @override
-  String get switchToSignUp => 'Yeni misin? Hesap oluştur';
 
   @override
   String get emailTakenSwitchToSignIn =>
@@ -248,9 +227,6 @@ class LTr extends L {
   String get authEntryTagline => 'İt. Yarış. Merdiveni tırman.';
 
   @override
-  String get orDivider => 'veya';
-
-  @override
   String get signUpWithEmail => 'E-posta ile kaydol';
 
   @override
@@ -266,30 +242,13 @@ class LTr extends L {
   String get createAccountSubtitle => 'Bir dakikadan az sürer.';
 
   @override
-  String get usernameHint => 'Kullanıcı adı';
-
-  @override
   String get usernameLabel => 'Kullanıcı adı';
 
   @override
   String get emailLabel => 'E-posta';
 
   @override
-  String get passwordLabel => 'Şifre';
-
-  @override
-  String get passwordMinLength => 'En az 8 karakter';
-
-  @override
   String get logInSubtitle => 'Rütbeni korumak için giriş yap.';
-
-  @override
-  String get forgotPassword => 'Parolanı mı unuttun?';
-
-  @override
-  String resetPasswordSent(String email) {
-    return '$email için bir hesap varsa, sıfırlama bağlantısı yolda.';
-  }
 
   @override
   String get checkYourEmailTitle => 'E-postanı kontrol et';
@@ -312,38 +271,6 @@ class LTr extends L {
 
   @override
   String get usernameTaken => 'Bu kullanıcı adı alınmış.';
-
-  @override
-  String get socialLinkFailed => 'Giriş tamamlanamadı. Tekrar dene.';
-
-  @override
-  String get showLabel => 'Göster';
-
-  @override
-  String get hideLabel => 'Gizle';
-
-  @override
-  String get resetPasswordTitle => 'Yeni parola belirle';
-
-  @override
-  String get resetPasswordBody => 'Hesabın için yeni bir parola seç.';
-
-  @override
-  String get setPasswordAction => 'Parolayı belirle';
-
-  @override
-  String get wrongEmailOrPassword => 'E-posta veya şifre yanlış.';
-
-  @override
-  String get enterCodeTitle => 'Kodu gir';
-
-  @override
-  String codeInstructions(String email) {
-    return '$email adresine gönderdiğimiz kodu gir.';
-  }
-
-  @override
-  String get verifyAction => 'Doğrula';
 
   @override
   String get wrongCode => 'Bu kod yanlış veya süresi doldu.';
@@ -409,9 +336,6 @@ class LTr extends L {
   String get skip => 'Atla';
 
   @override
-  String get height => 'Boy';
-
-  @override
   String get yourPicture => 'Fotoğrafın';
 
   @override
@@ -453,9 +377,6 @@ class LTr extends L {
 
   @override
   String get camera => 'Kamera';
-
-  @override
-  String get orPickOurs => 'Ya da bizimkilerden birini seç';
 
   @override
   String get awards => 'Ödüller';
@@ -523,12 +444,6 @@ class LTr extends L {
   String get reps => 'tekrar';
 
   @override
-  String get recalibrate => 'Yeniden ayarla';
-
-  @override
-  String get resetCount => 'Sayacı sıfırla';
-
-  @override
   String get howManyReally => 'Gerçekte kaç tekrar yaptınız?';
 
   @override
@@ -543,12 +458,6 @@ class LTr extends L {
 
   @override
   String get language => 'Dil';
-
-  @override
-  String get units => 'Birimler';
-
-  @override
-  String get weight => 'Ağırlık';
 
   @override
   String get privacy => 'Gizlilik';
@@ -570,29 +479,6 @@ class LTr extends L {
 
   @override
   String get accept => 'Kabul et';
-
-  @override
-  String challengeSent(String name) {
-    return '$name kişisine meydan okuma gönderildi';
-  }
-
-  @override
-  String get weightUnitTitle => 'Ağırlık birimi';
-
-  @override
-  String get heightUnitTitle => 'Boy birimi';
-
-  @override
-  String get unitKg => 'Kilogram (kg)';
-
-  @override
-  String get unitLb => 'Pound (lb)';
-
-  @override
-  String get unitCm => 'Santimetre (cm)';
-
-  @override
-  String get unitFt => 'Fit ve inç';
 
   @override
   String get visEveryone => 'Herkes';
@@ -638,42 +524,13 @@ class LTr extends L {
       'Bağlanılamadı. İnternetini kontrol edip tekrar dene.';
 
   @override
-  String get achievements => 'Başarımlar';
-
-  @override
-  String get roadTitle => 'Ustalığa giden yol';
-
-  @override
-  String get allTiers => 'Tüm rütbeler';
-
-  @override
-  String get topTier => 'En üst rütbe';
-
-  @override
-  String lpToGo(String lp) {
-    return '$lp LP';
-  }
-
-  @override
   String get roomFriendly => 'Oda maçları dostane — rütbeni etkilemiyor.';
-
-  @override
-  String get createRoom => 'Oda kur';
-
-  @override
-  String get enterCode => 'KODU GİR';
-
-  @override
-  String get joinRoom => 'Odaya katıl';
 
   @override
   String get shareThisCode => 'Bu kodu paylaş';
 
   @override
   String get codeCopied => 'Kod kopyalandı';
-
-  @override
-  String get pickMuscleAndStart => 'Kası seç ve başla';
 
   @override
   String xOfY(String a, String b) {
@@ -700,18 +557,6 @@ class LTr extends L {
 
   @override
   String get tierMaster => 'Usta';
-
-  @override
-  String get shortKg => 'kg';
-
-  @override
-  String get shortLb => 'lb';
-
-  @override
-  String get shortCm => 'cm';
-
-  @override
-  String get shortFt => 'ft';
 
   @override
   String winLoss(String w, String l) {
@@ -1073,21 +918,6 @@ class LTr extends L {
   String get mgChest => 'Göğüs';
 
   @override
-  String get mgBack => 'Sırt';
-
-  @override
-  String get mgLegs => 'Bacak';
-
-  @override
-  String get mgShoulders => 'Omuz';
-
-  @override
-  String get mgArms => 'Kol';
-
-  @override
-  String get mgCore => 'Karın';
-
-  @override
   String get nWonTitle => 'Kazandınız!';
 
   @override
@@ -1216,9 +1046,6 @@ class LTr extends L {
   String get noFriendsBody => 'Tanıdığın biriyle düello bambaşka bir şey.';
 
   @override
-  String get addFriend => 'Ekle';
-
-  @override
   String get decline => 'Reddet';
 
   @override
@@ -1262,21 +1089,6 @@ class LTr extends L {
   @override
   String get unsureMovement =>
       'Doğru hareket miydi emin değilim — sayıyı kontrol edin.';
-
-  @override
-  String get local => 'Local';
-
-  @override
-  String get weekly => 'Weekly';
-
-  @override
-  String get seasonTab => 'Season';
-
-  @override
-  String get allTime => 'All-time';
-
-  @override
-  String get daily => 'Daily';
 
   @override
   String get noRanksYet => 'No ranks yet';
@@ -1462,9 +1274,6 @@ class LTr extends L {
   String get practiceComplete => 'ALIŞTIRMA BİTTİ';
 
   @override
-  String get findPeople => 'Kişi bul';
-
-  @override
   String get noRankYet => 'Henüz derece yok';
 
   @override
@@ -1517,17 +1326,6 @@ class LTr extends L {
   String get youWonPlain => 'Kazandın';
 
   @override
-  String opponentDisconnected(String name) {
-    return '$name bağlantıyı kaybetti';
-  }
-
-  @override
-  String get forfeitNoMargin => 'Çekilme · fark sayılmaz';
-
-  @override
-  String get findAnotherMatch => 'Başka maç bul';
-
-  @override
   String get cameraNeededTitle => 'Kamera izni gerekiyor';
 
   @override
@@ -1562,11 +1360,6 @@ class LTr extends L {
 
   @override
   String get giveUp => 'Pes et';
-
-  @override
-  String lpSwing(String gain, String loss) {
-    return '+$gain / −$loss LP';
-  }
 
   @override
   String get lpMovesWithGap =>
@@ -1612,9 +1405,6 @@ class LTr extends L {
 
   @override
   String get duelMeOnOutrepd => 'outrepd\'de bana meydan oku';
-
-  @override
-  String get yourRankCard => 'Derece kartın';
 
   @override
   String get shareStory => 'Hikaye';
@@ -1895,21 +1685,6 @@ class LTr extends L {
 
   @override
   String get continueAction => 'Devam';
-
-  @override
-  String get lpRowWin => 'Galibiyet';
-
-  @override
-  String get lpRowLoss => 'Mağlubiyet';
-
-  @override
-  String get lpRowOpponent => 'Rakibin rütbesi';
-
-  @override
-  String get lpRowMargin => 'Fark';
-
-  @override
-  String get lpRowDepth => 'Derinlik';
 
   @override
   String get promotedLabel => 'Yükseldin';
@@ -2280,11 +2055,6 @@ class LTr extends L {
 
   @override
   String get inviteGone => 'Bu davetin süresi doldu';
-
-  @override
-  String waitingForPosition(String name) {
-    return '${name} pozisyon alması bekleniyor';
-  }
 
   @override
   String opponentDropped(String name) {

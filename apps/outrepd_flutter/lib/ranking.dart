@@ -48,8 +48,6 @@ class Rank {
   /// The very bottom of the ladder, where a placed account can land.
   static const start = Rank(tierIdx: 0, divIdx: 0, lp: 0);
 
-  bool get atCeiling => tierIdx >= kTopTier && divIdx >= kTopDivision;
-
   Rank copyWith({int? tierIdx, int? divIdx, int? lp}) => Rank(
     tierIdx: tierIdx ?? this.tierIdx,
     divIdx: divIdx ?? this.divIdx,

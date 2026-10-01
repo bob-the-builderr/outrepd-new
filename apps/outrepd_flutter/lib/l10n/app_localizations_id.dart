@@ -196,12 +196,6 @@ class LId extends L {
   String get emailHint => 'kamu@contoh.com';
 
   @override
-  String get passwordHint => 'Kata sandi';
-
-  @override
-  String get codeHint => 'Kode verifikasi';
-
-  @override
   String get createAccountTitle => 'Buat akun';
 
   @override
@@ -210,21 +204,6 @@ class LId extends L {
 
   @override
   String get createAccountAction => 'Buat akun';
-
-  @override
-  String get signInTitle => 'Masuk';
-
-  @override
-  String get signInBody => 'Masuk dengan email dan kata sandi akun Anda.';
-
-  @override
-  String get signInAction => 'Masuk';
-
-  @override
-  String get switchToSignIn => 'Sudah punya akun? Masuk';
-
-  @override
-  String get switchToSignUp => 'Baru di sini? Buat akun';
 
   @override
   String get emailTakenSwitchToSignIn =>
@@ -248,9 +227,6 @@ class LId extends L {
   String get authEntryTagline => 'Push-up. Bertanding. Naik peringkat.';
 
   @override
-  String get orDivider => 'atau';
-
-  @override
   String get signUpWithEmail => 'Daftar dengan email';
 
   @override
@@ -266,30 +242,13 @@ class LId extends L {
   String get createAccountSubtitle => 'Kurang dari semenit.';
 
   @override
-  String get usernameHint => 'Nama pengguna';
-
-  @override
   String get usernameLabel => 'Nama pengguna';
 
   @override
   String get emailLabel => 'Email';
 
   @override
-  String get passwordLabel => 'Kata sandi';
-
-  @override
-  String get passwordMinLength => 'Minimal 8 karakter';
-
-  @override
   String get logInSubtitle => 'Masuk untuk menjaga peringkatmu.';
-
-  @override
-  String get forgotPassword => 'Lupa kata sandi?';
-
-  @override
-  String resetPasswordSent(String email) {
-    return 'Jika ada akun untuk $email, tautan reset sedang dikirim.';
-  }
 
   @override
   String get checkYourEmailTitle => 'Periksa emailmu';
@@ -312,38 +271,6 @@ class LId extends L {
 
   @override
   String get usernameTaken => 'Nama pengguna itu sudah dipakai.';
-
-  @override
-  String get socialLinkFailed => 'Tidak dapat menyelesaikan masuk. Coba lagi.';
-
-  @override
-  String get showLabel => 'Tampilkan';
-
-  @override
-  String get hideLabel => 'Sembunyikan';
-
-  @override
-  String get resetPasswordTitle => 'Atur kata sandi baru';
-
-  @override
-  String get resetPasswordBody => 'Pilih kata sandi baru untuk akunmu.';
-
-  @override
-  String get setPasswordAction => 'Atur kata sandi';
-
-  @override
-  String get wrongEmailOrPassword => 'Email atau kata sandi salah.';
-
-  @override
-  String get enterCodeTitle => 'Masukkan kode';
-
-  @override
-  String codeInstructions(String email) {
-    return 'Masukkan kode yang kami kirim ke $email.';
-  }
-
-  @override
-  String get verifyAction => 'Verifikasi';
 
   @override
   String get wrongCode => 'Kode itu salah atau sudah kedaluwarsa.';
@@ -409,9 +336,6 @@ class LId extends L {
   String get skip => 'Lewati';
 
   @override
-  String get height => 'Tinggi';
-
-  @override
   String get yourPicture => 'Foto kamu';
 
   @override
@@ -453,9 +377,6 @@ class LId extends L {
 
   @override
   String get camera => 'Kamera';
-
-  @override
-  String get orPickOurs => 'Atau pilih punya kami';
 
   @override
   String get awards => 'Penghargaan';
@@ -523,12 +444,6 @@ class LId extends L {
   String get reps => 'rep';
 
   @override
-  String get recalibrate => 'Kalibrasi ulang';
-
-  @override
-  String get resetCount => 'Nolkan hitungan';
-
-  @override
   String get howManyReally => 'Sebenarnya berapa yang kamu lakukan?';
 
   @override
@@ -543,12 +458,6 @@ class LId extends L {
 
   @override
   String get language => 'Bahasa';
-
-  @override
-  String get units => 'Satuan';
-
-  @override
-  String get weight => 'Berat';
 
   @override
   String get privacy => 'Privasi';
@@ -570,29 +479,6 @@ class LId extends L {
 
   @override
   String get accept => 'Terima';
-
-  @override
-  String challengeSent(String name) {
-    return 'Tantangan dikirim ke $name';
-  }
-
-  @override
-  String get weightUnitTitle => 'Satuan berat';
-
-  @override
-  String get heightUnitTitle => 'Satuan tinggi';
-
-  @override
-  String get unitKg => 'Kilogram (kg)';
-
-  @override
-  String get unitLb => 'Pon (lb)';
-
-  @override
-  String get unitCm => 'Sentimeter (cm)';
-
-  @override
-  String get unitFt => 'Kaki & inci';
 
   @override
   String get visEveryone => 'Semua orang';
@@ -637,43 +523,14 @@ class LId extends L {
   String get needsServer => 'Tidak bisa terhubung. Periksa internetmu lalu coba lagi.';
 
   @override
-  String get achievements => 'Pencapaian';
-
-  @override
-  String get roadTitle => 'Jalan menuju Master';
-
-  @override
-  String get allTiers => 'Semua peringkat';
-
-  @override
-  String get topTier => 'Peringkat tertinggi';
-
-  @override
-  String lpToGo(String lp) {
-    return '$lp LP';
-  }
-
-  @override
   String get roomFriendly =>
       'Duel di ruangan sifatnya santai — tidak memengaruhi peringkatmu.';
-
-  @override
-  String get createRoom => 'Buat ruangan';
-
-  @override
-  String get enterCode => 'MASUKKAN KODE';
-
-  @override
-  String get joinRoom => 'Masuk ruangan';
 
   @override
   String get shareThisCode => 'Bagikan kode ini';
 
   @override
   String get codeCopied => 'Kode disalin';
-
-  @override
-  String get pickMuscleAndStart => 'Pilih otot lalu mulai';
 
   @override
   String xOfY(String a, String b) {
@@ -700,18 +557,6 @@ class LId extends L {
 
   @override
   String get tierMaster => 'Master';
-
-  @override
-  String get shortKg => 'kg';
-
-  @override
-  String get shortLb => 'lb';
-
-  @override
-  String get shortCm => 'cm';
-
-  @override
-  String get shortFt => 'kaki';
 
   @override
   String winLoss(String w, String l) {
@@ -1073,21 +918,6 @@ class LId extends L {
   String get mgChest => 'Dada';
 
   @override
-  String get mgBack => 'Punggung';
-
-  @override
-  String get mgLegs => 'Kaki';
-
-  @override
-  String get mgShoulders => 'Bahu';
-
-  @override
-  String get mgArms => 'Lengan';
-
-  @override
-  String get mgCore => 'Inti tubuh';
-
-  @override
   String get nWonTitle => 'Anda menang!';
 
   @override
@@ -1216,9 +1046,6 @@ class LId extends L {
   String get noFriendsBody => 'Duel lawan orang yang kamu kenal rasanya beda.';
 
   @override
-  String get addFriend => 'Tambah';
-
-  @override
   String get decline => 'Tolak';
 
   @override
@@ -1263,21 +1090,6 @@ class LId extends L {
   @override
   String get unsureMovement =>
       'Belum yakin ini gerakan yang benar — cek angkanya.';
-
-  @override
-  String get local => 'Local';
-
-  @override
-  String get weekly => 'Weekly';
-
-  @override
-  String get seasonTab => 'Season';
-
-  @override
-  String get allTime => 'All-time';
-
-  @override
-  String get daily => 'Daily';
 
   @override
   String get noRanksYet => 'No ranks yet';
@@ -1464,9 +1276,6 @@ class LId extends L {
   String get practiceComplete => 'LATIHAN SELESAI';
 
   @override
-  String get findPeople => 'Cari orang';
-
-  @override
   String get noRankYet => 'Belum ada peringkat';
 
   @override
@@ -1519,17 +1328,6 @@ class LId extends L {
   String get youWonPlain => 'Kamu menang';
 
   @override
-  String opponentDisconnected(String name) {
-    return '$name terputus';
-  }
-
-  @override
-  String get forfeitNoMargin => 'Mundur · selisih tidak dihitung';
-
-  @override
-  String get findAnotherMatch => 'Cari pertandingan lain';
-
-  @override
   String get cameraNeededTitle => 'Butuh akses kamera';
 
   @override
@@ -1565,11 +1363,6 @@ class LId extends L {
 
   @override
   String get giveUp => 'Menyerah';
-
-  @override
-  String lpSwing(String gain, String loss) {
-    return '+$gain / −$loss LP';
-  }
 
   @override
   String get lpMovesWithGap =>
@@ -1615,9 +1408,6 @@ class LId extends L {
 
   @override
   String get duelMeOnOutrepd => 'Tantang aku di outrepd';
-
-  @override
-  String get yourRankCard => 'Kartu peringkatmu';
 
   @override
   String get shareStory => 'Story';
@@ -1900,21 +1690,6 @@ class LId extends L {
 
   @override
   String get continueAction => 'Lanjut';
-
-  @override
-  String get lpRowWin => 'Menang';
-
-  @override
-  String get lpRowLoss => 'Kalah';
-
-  @override
-  String get lpRowOpponent => 'Peringkat lawan';
-
-  @override
-  String get lpRowMargin => 'Selisih';
-
-  @override
-  String get lpRowDepth => 'Kedalaman';
 
   @override
   String get promotedLabel => 'Naik tingkat';
@@ -2285,11 +2060,6 @@ class LId extends L {
 
   @override
   String get inviteGone => 'Undangan itu sudah habis';
-
-  @override
-  String waitingForPosition(String name) {
-    return 'Menunggu ${name} bersiap di posisi';
-  }
 
   @override
   String opponentDropped(String name) {

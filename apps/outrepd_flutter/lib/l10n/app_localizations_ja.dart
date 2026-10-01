@@ -192,12 +192,6 @@ class LJa extends L {
   String get emailHint => 'you@example.com';
 
   @override
-  String get passwordHint => 'パスワード';
-
-  @override
-  String get codeHint => '確認コード';
-
-  @override
   String get createAccountTitle => 'アカウントを作成';
 
   @override
@@ -206,21 +200,6 @@ class LJa extends L {
 
   @override
   String get createAccountAction => 'アカウントを作成';
-
-  @override
-  String get signInTitle => 'サインイン';
-
-  @override
-  String get signInBody => 'アカウントのメールアドレスとパスワードでサインインしてください。';
-
-  @override
-  String get signInAction => 'サインイン';
-
-  @override
-  String get switchToSignIn => 'すでにアカウントをお持ちですか？サインイン';
-
-  @override
-  String get switchToSignUp => '初めてですか？アカウントを作成';
 
   @override
   String get emailTakenSwitchToSignIn => 'このメールアドレスはすでに登録されています — サインインしてください。';
@@ -241,9 +220,6 @@ class LJa extends L {
   String get authEntryTagline => '腕立てして、競って、駆け上がれ。';
 
   @override
-  String get orDivider => 'または';
-
-  @override
   String get signUpWithEmail => 'メールで登録';
 
   @override
@@ -259,30 +235,13 @@ class LJa extends L {
   String get createAccountSubtitle => '1分もかかりません。';
 
   @override
-  String get usernameHint => 'ユーザー名';
-
-  @override
   String get usernameLabel => 'ユーザー名';
 
   @override
   String get emailLabel => 'メールアドレス';
 
   @override
-  String get passwordLabel => 'パスワード';
-
-  @override
-  String get passwordMinLength => '8文字以上';
-
-  @override
   String get logInSubtitle => 'ランクを維持するにはログインしてください。';
-
-  @override
-  String get forgotPassword => 'パスワードをお忘れですか?';
-
-  @override
-  String resetPasswordSent(String email) {
-    return '$email のアカウントが存在する場合、リセットリンクをお送りしています。';
-  }
 
   @override
   String get checkYourEmailTitle => 'メールを確認してください';
@@ -305,38 +264,6 @@ class LJa extends L {
 
   @override
   String get usernameTaken => 'そのユーザー名は使われています。';
-
-  @override
-  String get socialLinkFailed => 'サインインを完了できませんでした。もう一度お試しください。';
-
-  @override
-  String get showLabel => '表示';
-
-  @override
-  String get hideLabel => '隠す';
-
-  @override
-  String get resetPasswordTitle => '新しいパスワードを設定';
-
-  @override
-  String get resetPasswordBody => 'アカウントの新しいパスワードを選んでください。';
-
-  @override
-  String get setPasswordAction => 'パスワードを設定';
-
-  @override
-  String get wrongEmailOrPassword => 'メールアドレスかパスワードが間違っています。';
-
-  @override
-  String get enterCodeTitle => 'コードを入力';
-
-  @override
-  String codeInstructions(String email) {
-    return '$email に送信したコードを入力してください。';
-  }
-
-  @override
-  String get verifyAction => '確認';
 
   @override
   String get wrongCode => 'コードが間違っているか、期限切れです。';
@@ -399,9 +326,6 @@ class LJa extends L {
   String get skip => 'スキップ';
 
   @override
-  String get height => '身長';
-
-  @override
   String get yourPicture => 'あなたの写真';
 
   @override
@@ -439,9 +363,6 @@ class LJa extends L {
 
   @override
   String get camera => 'カメラ';
-
-  @override
-  String get orPickOurs => '用意された中から選ぶ';
 
   @override
   String get awards => 'アワード';
@@ -507,12 +428,6 @@ class LJa extends L {
   String get reps => 'レップ';
 
   @override
-  String get recalibrate => '再調整';
-
-  @override
-  String get resetCount => 'カウントをリセット';
-
-  @override
   String get howManyReally => '実際は何回でしたか？';
 
   @override
@@ -526,12 +441,6 @@ class LJa extends L {
 
   @override
   String get language => '言語';
-
-  @override
-  String get units => '単位';
-
-  @override
-  String get weight => '重量';
 
   @override
   String get privacy => 'プライバシー';
@@ -553,29 +462,6 @@ class LJa extends L {
 
   @override
   String get accept => '承認';
-
-  @override
-  String challengeSent(String name) {
-    return '$name に挑戦を送りました';
-  }
-
-  @override
-  String get weightUnitTitle => '重量の単位';
-
-  @override
-  String get heightUnitTitle => '身長の単位';
-
-  @override
-  String get unitKg => 'キログラム (kg)';
-
-  @override
-  String get unitLb => 'ポンド (lb)';
-
-  @override
-  String get unitCm => 'センチメートル (cm)';
-
-  @override
-  String get unitFt => 'フィート・インチ';
 
   @override
   String get visEveryone => '全員';
@@ -620,42 +506,13 @@ class LJa extends L {
   String get needsServer => '接続できませんでした。インターネット接続を確認して、もう一度お試しください。';
 
   @override
-  String get achievements => '実績';
-
-  @override
-  String get roadTitle => 'マスターへの道';
-
-  @override
-  String get allTiers => 'すべてのランク';
-
-  @override
-  String get topTier => '最上位ランク';
-
-  @override
-  String lpToGo(String lp) {
-    return '$lp LP';
-  }
-
-  @override
   String get roomFriendly => 'ルームマッチは親善戦です。ランクには影響しません。';
-
-  @override
-  String get createRoom => 'ルームを作る';
-
-  @override
-  String get enterCode => 'コードを入力';
-
-  @override
-  String get joinRoom => 'ルームに入る';
 
   @override
   String get shareThisCode => 'このコードを共有';
 
   @override
   String get codeCopied => 'コードをコピーしました';
-
-  @override
-  String get pickMuscleAndStart => '部位を選んで開始';
 
   @override
   String xOfY(String a, String b) {
@@ -682,18 +539,6 @@ class LJa extends L {
 
   @override
   String get tierMaster => 'マスター';
-
-  @override
-  String get shortKg => 'kg';
-
-  @override
-  String get shortLb => 'lb';
-
-  @override
-  String get shortCm => 'cm';
-
-  @override
-  String get shortFt => 'ft';
 
   @override
   String winLoss(String w, String l) {
@@ -1055,21 +900,6 @@ class LJa extends L {
   String get mgChest => '胸';
 
   @override
-  String get mgBack => '背中';
-
-  @override
-  String get mgLegs => '脚';
-
-  @override
-  String get mgShoulders => '肩';
-
-  @override
-  String get mgArms => '腕';
-
-  @override
-  String get mgCore => '体幹';
-
-  @override
   String get nWonTitle => '勝ちました！';
 
   @override
@@ -1197,9 +1027,6 @@ class LJa extends L {
   String get noFriendsBody => '知っている相手との勝負はひと味違います。';
 
   @override
-  String get addFriend => '追加';
-
-  @override
   String get decline => '辞退';
 
   @override
@@ -1241,21 +1068,6 @@ class LJa extends L {
 
   @override
   String get unsureMovement => '正しい種目か確信が持てません。数を確認してください。';
-
-  @override
-  String get local => 'Local';
-
-  @override
-  String get weekly => 'Weekly';
-
-  @override
-  String get seasonTab => 'Season';
-
-  @override
-  String get allTime => 'All-time';
-
-  @override
-  String get daily => 'Daily';
 
   @override
   String get noRanksYet => 'No ranks yet';
@@ -1440,9 +1252,6 @@ class LJa extends L {
   String get practiceComplete => '練習終了';
 
   @override
-  String get findPeople => '人を探す';
-
-  @override
   String get noRankYet => 'まだランクなし';
 
   @override
@@ -1495,17 +1304,6 @@ class LJa extends L {
   String get youWonPlain => '勝ち';
 
   @override
-  String opponentDisconnected(String name) {
-    return '$nameが切断しました';
-  }
-
-  @override
-  String get forfeitNoMargin => '棄権 · 差はカウントされません';
-
-  @override
-  String get findAnotherMatch => '別のマッチを探す';
-
-  @override
   String get cameraNeededTitle => 'カメラの許可が必要です';
 
   @override
@@ -1538,11 +1336,6 @@ class LJa extends L {
 
   @override
   String get giveUp => '棄権';
-
-  @override
-  String lpSwing(String gain, String loss) {
-    return '+$gain / −$loss LP';
-  }
 
   @override
   String get lpMovesWithGap => 'LPはレップ差で変動します。差が大きいほど獲得LPも増えます';
@@ -1587,9 +1380,6 @@ class LJa extends L {
 
   @override
   String get duelMeOnOutrepd => 'outrepdで勝負しよう';
-
-  @override
-  String get yourRankCard => 'あなたのランクカード';
 
   @override
   String get shareStory => 'ストーリー';
@@ -1862,21 +1652,6 @@ class LJa extends L {
 
   @override
   String get continueAction => '続ける';
-
-  @override
-  String get lpRowWin => '勝利';
-
-  @override
-  String get lpRowLoss => '敗北';
-
-  @override
-  String get lpRowOpponent => '相手のランク';
-
-  @override
-  String get lpRowMargin => '差';
-
-  @override
-  String get lpRowDepth => '深さ';
 
   @override
   String get promotedLabel => '昇格';
@@ -2240,11 +2015,6 @@ class LJa extends L {
 
   @override
   String get inviteGone => 'その招待は期限切れです';
-
-  @override
-  String waitingForPosition(String name) {
-    return '${name} が構えるのを待っています';
-  }
 
   @override
   String opponentDropped(String name) {

@@ -76,43 +76,23 @@
   "noLandmarksNote": "Pose landmarks are not in it, and never were. The camera reads them on your phone and they are not sent anywhere.",
   "sendItTo": "Send it to",
   "emailHint": "you@example.com",
-  "passwordHint": "Password",
-  "codeHint": "Verification code",
   "createAccountTitle": "Create account",
   "createAccountBody": "Add an email and password so this account is never just one phone away from gone.",
   "createAccountAction": "Create account",
-  "signInTitle": "Sign in",
-  "signInBody": "Sign in with the email and password on your account.",
-  "signInAction": "Sign in",
-  "switchToSignIn": "Already have an account? Sign in",
-  "switchToSignUp": "New here? Create an account",
   "emailTakenSwitchToSignIn": "That email already has an account — sign in instead.",
   "emailSignUpInvalid": "Check the email and password — six characters minimum.",
   "tooManyCodes": "Too many codes sent — wait a few minutes and try again.",
   "sendCodeAction": "Send code",
   "noAccountForEmail": "We couldn't find an account with that email.",
   "authEntryTagline": "Push. Compete. Climb the ladder.",
-  "orDivider": "or",
   "signUpWithEmail": "Sign up with email",
   "alreadyHaveAccountQuestion": "Already have an account?",
   "logInAction": "Log in",
   "createYourAccountTitle": "Create your account",
   "createAccountSubtitle": "Takes less than a minute.",
-  "usernameHint": "Username",
   "usernameLabel": "Username",
   "emailLabel": "Email",
-  "passwordLabel": "Password",
-  "passwordMinLength": "At least 8 characters",
   "logInSubtitle": "Log in to keep your rank.",
-  "forgotPassword": "Forgot password?",
-  "resetPasswordSent": "If an account exists for {email}, a reset link is on its way.",
-  "@resetPasswordSent": {
-    "placeholders": {
-      "email": {
-        "type": "String"
-      }
-    }
-  },
   "checkYourEmailTitle": "Check your email",
   "codeSentTo": "We sent a 6-digit code to {email}.",
   "@codeSentTo": {
@@ -133,23 +113,6 @@
   },
   "wrongEmailGoBack": "Wrong email? Go back",
   "usernameTaken": "That username is taken.",
-  "socialLinkFailed": "Couldn't finish signing in. Try again.",
-  "showLabel": "Show",
-  "hideLabel": "Hide",
-  "resetPasswordTitle": "Set a new password",
-  "resetPasswordBody": "Choose a new password for your account.",
-  "setPasswordAction": "Set password",
-  "wrongEmailOrPassword": "Wrong email or password.",
-  "enterCodeTitle": "Enter code",
-  "codeInstructions": "Enter the code we sent to {email}.",
-  "@codeInstructions": {
-    "placeholders": {
-      "email": {
-        "type": "String"
-      }
-    }
-  },
-  "verifyAction": "Verify",
   "wrongCode": "That code's wrong or expired.",
   "resendCode": "Resend code",
   "codeResent": "Sent a new code.",
@@ -189,7 +152,6 @@
   "save": "Save",
   "cancel": "Cancel",
   "skip": "Skip",
-  "height": "Height",
   "yourPicture": "Your picture",
   "yourPictureHint": "The frame comes from your rank and changes as you climb.",
   "couldNotUsePicture": "Could not use that picture",
@@ -203,7 +165,6 @@
   "usernameAlreadyChangedBody": "You've already used your one username change — every account gets exactly one.",
   "gallery": "Gallery",
   "camera": "Camera",
-  "orPickOurs": "Or pick one of ours",
   "awards": "Awards",
   "yourTitles": "Your titles",
   "stillToEarn": "Still to earn",
@@ -225,15 +186,11 @@
   "start": "Start",
   "finish": "Finish",
   "reps": "reps",
-  "recalibrate": "Recalibrate",
-  "resetCount": "Reset count",
   "howManyReally": "How many did you really do?",
   "howManyReallyHint": "Your own count, not the app's. It is what the counter gets measured against later.",
   "appearance": "Appearance",
   "theme": "Theme",
   "language": "Language",
-  "units": "Units",
-  "weight": "Weight",
   "privacy": "Privacy",
   "data": "Data",
   "about": "About",
@@ -241,20 +198,6 @@
   "themeLight": "Light",
   "themeDark": "Dark",
   "accept": "Accept",
-  "challengeSent": "Challenge sent to {name}",
-  "@challengeSent": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "weightUnitTitle": "Weight unit",
-  "heightUnitTitle": "Height unit",
-  "unitKg": "Kilograms (kg)",
-  "unitLb": "Pounds (lb)",
-  "unitCm": "Centimetres (cm)",
-  "unitFt": "Feet & inches",
   "visEveryone": "Everyone",
   "visFriends": "Friends only",
   "visNobody": "Nobody",
@@ -269,25 +212,9 @@
   "openSourceLicences": "Open source licences",
   "deleteAccount": "Delete account",
   "needsServer": "Couldn't connect. Check your internet and try again.",
-  "achievements": "Achievements",
-  "roadTitle": "Road to Master",
-  "allTiers": "All tiers",
-  "topTier": "Top tier",
-  "lpToGo": "{lp} LP",
-  "@lpToGo": {
-    "placeholders": {
-      "lp": {
-        "type": "String"
-      }
-    }
-  },
   "roomFriendly": "Room matches are friendly — they do not affect your rank.",
-  "createRoom": "Create a room",
-  "enterCode": "ENTER CODE",
-  "joinRoom": "Join room",
   "shareThisCode": "Share this code",
   "codeCopied": "Code copied",
-  "pickMuscleAndStart": "Pick muscle and start",
   "xOfY": "{a} / {b}",
   "@xOfY": {
     "placeholders": {
@@ -306,10 +233,6 @@
   "tierPlatinum": "Platinum",
   "tierDiamond": "Diamond",
   "tierMaster": "Master",
-  "shortKg": "kg",
-  "shortLb": "lb",
-  "shortCm": "cm",
-  "shortFt": "ft",
   "winLoss": "{w}W {l}L",
   "@winLoss": {
     "placeholders": {
@@ -439,11 +362,6 @@
   "vs": "VS",
   "backToHome": "BACK TO HOME",
   "mgChest": "Chest",
-  "mgBack": "Back",
-  "mgLegs": "Legs",
-  "mgShoulders": "Shoulders",
-  "mgArms": "Arms",
-  "mgCore": "Core",
   "nWonTitle": "You won!",
   "nWonBody": "You beat {name} on {muscle} day",
   "@nWonBody": {
@@ -593,7 +511,6 @@
   },
   "noFriendsTitle": "No friends yet",
   "noFriendsBody": "Duels hit different against someone you know.",
-  "addFriend": "Add",
   "decline": "Decline",
   "requestSent": "Request sent to {name}",
   "@requestSent": {
@@ -621,11 +538,6 @@
   "useMyCount": "Use my count",
   "confirmHint": "Change it if the camera got it wrong.",
   "unsureMovement": "Not sure this was the right movement — check the number.",
-  "local": "Local",
-  "weekly": "Weekly",
-  "seasonTab": "Season",
-  "allTime": "All-time",
-  "daily": "Daily",
   "noRanksYet": "No ranks yet",
   "noRanksYetBody": "Play a duel and the board fills in.",
   "ranksTitle": "Ranks",
@@ -803,7 +715,6 @@
   },
   "practiceTerms": "Practice — no rank, no opponent",
   "practiceComplete": "PRACTICE COMPLETE",
-  "findPeople": "Find people",
   "noRankYet": "No rank yet",
   "placementsForFirstTier": "Finish {count} placement duels to earn your first tier.",
   "@placementsForFirstTier": {
@@ -868,16 +779,6 @@
   "practiceOffline": "Practice offline",
   "retry": "Retry",
   "youWonPlain": "You won",
-  "opponentDisconnected": "{name} disconnected",
-  "@opponentDisconnected": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "forfeitNoMargin": "Forfeit · margin not counted",
-  "findAnotherMatch": "Find another match",
   "cameraNeededTitle": "Camera access needed",
   "cameraNeededBody": "outrepd counts your reps by watching your body move. Pose detection runs on your device and nothing is uploaded.",
   "openSettings": "Open settings",
@@ -889,18 +790,7 @@
   "getBackInFrame": "Get back in frame",
   "clockStillRunning": "The clock is still running. Reps are not counting.",
   "giveUp": "Give up",
-  "lpSwing": "+{gain} / −{loss} LP",
   "lpMovesWithGap": "LP moves with the rep gap — win by more, gain more",
-  "@lpSwing": {
-    "placeholders": {
-      "gain": {
-        "type": "String"
-      },
-      "loss": {
-        "type": "String"
-      }
-    }
-  },
   "searchingForOpponent": "Searching for an opponent",
   "getIntoPosition": "Get into position",
   "framingHint": "Wrists and ankles must be in frame",
@@ -921,7 +811,6 @@
   "shareProfile": "Share profile",
   "share": "Share",
   "duelMeOnOutrepd": "Duel me on outrepd",
-  "yourRankCard": "Your rank card",
   "shareStory": "Story",
   "sharePost": "Post",
   "copyLink": "Copy",
@@ -1037,11 +926,6 @@
   "shareAction": "Share",
   "doneAction": "Done",
   "continueAction": "Continue",
-  "lpRowWin": "Win",
-  "lpRowLoss": "Loss",
-  "lpRowOpponent": "Opponent's rank",
-  "lpRowMargin": "Margin",
-  "lpRowDepth": "Depth",
   "promotedLabel": "Promoted",
   "highestReached": "Highest you've reached",
   "repsOff": "{n} reps off.",
@@ -1310,14 +1194,6 @@
     }
   },
   "inviteGone": "That invite has run out",
-  "waitingForPosition": "Waiting for {name} to get into position",
-  "@waitingForPosition": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
   "opponentDropped": "{name}'s connection dropped. Keep going: the round finishes on the clock.",
   "@opponentDropped": {
     "placeholders": {
