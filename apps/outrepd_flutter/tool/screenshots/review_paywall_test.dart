@@ -6,7 +6,6 @@ library;
 
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -98,9 +97,9 @@ void main() {
 
   tearDown(() => Subscription.instance.use(null));
 
+  // Drawn as an iPhone: the wording, the scrolling and the system fonts
+  // the theme asks for are iOS's, and the variant resets it afterwards.
   testWidgets('app review paywall 1320x2868', (tester) async {
-    debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
-    addTearDown(() => debugDefaultTargetPlatformOverride = null);
     tester.view.physicalSize = const Size(1320, 2868);
     tester.view.devicePixelRatio = 3;
     addTearDown(tester.view.reset);
@@ -131,5 +130,5 @@ void main() {
       find.byType(MaterialApp),
       matchesGoldenFile('goldens/app_review_paywall_1320x2868.png'),
     );
-  });
+  }, variant: TargetPlatformVariant.only(TargetPlatform.iOS));
 }
