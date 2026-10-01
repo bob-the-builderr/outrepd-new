@@ -121,6 +121,13 @@ jobs:
           printf '%s\n' "$ASC_KEY_P8" > "$RUNNER_TEMP/keys/AuthKey.p8"
           echo "signed=true" >> "$GITHUB_OUTPUT"
 
+      # Each run is a fresh Mac, so automatic signing makes a new development
+      # certificate every time, and Apple caps how many an account holds —
+      # build 120 stopped there. The old ones' keys left with their machines.
+      - name: Clear old development certificates
+        if: steps.apple.outputs.signed == 'true'
+        run: node tool/ios/revoke_dev_certs.mjs "$RUNNER_TEMP/keys/AuthKey.p8"
+
       # The newest Xcode on the machine, whatever the image picked as default.
       - name: Xcode
         run: |
