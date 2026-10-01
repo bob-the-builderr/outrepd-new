@@ -3874,6 +3874,48 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Waiting for {name} to join'**
   String waitingToJoin(String name);
+
+  /// No description provided for @removeFriend.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove friend'**
+  String get removeFriend;
+
+  /// No description provided for @removeFriendBody.
+  ///
+  /// In en, this message translates to:
+  /// **'They aren\'t told, and you can add each other again'**
+  String get removeFriendBody;
+
+  /// No description provided for @removeFriendQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {username} from your friends?'**
+  String removeFriendQuestion(String username);
+
+  /// No description provided for @removeAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get removeAction;
+
+  /// No description provided for @removedFriend.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed {username} from your friends'**
+  String removedFriend(String username);
+
+  /// No description provided for @noticeChallenged.
+  ///
+  /// In en, this message translates to:
+  /// **'Someone challenged me to a rematch'**
+  String get noticeChallenged;
+
+  /// No description provided for @noticeLiveInvite.
+  ///
+  /// In en, this message translates to:
+  /// **'A friend asked me to go live'**
+  String get noticeLiveInvite;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

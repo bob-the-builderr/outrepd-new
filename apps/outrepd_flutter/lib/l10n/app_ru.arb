@@ -646,5 +646,12 @@
   "wantsToBeFriends": "хочет дружить",
   "giveUpQuestion": "Сдаться в этом раунде?",
   "giveUpBody": "Это засчитается как поражение, каким бы ни был ваш счёт.",
-  "waitingToJoin": "Ждём, пока {name} присоединится"
+  "waitingToJoin": "Ждём, пока {name} присоединится",
+  "removeFriend": "Удалить из друзей",
+  "removeFriendBody": "Ему не сообщат, и вы сможете снова добавить друг друга",
+  "removeFriendQuestion": "Удалить {username} из друзей?",
+  "removeAction": "Удалить",
+  "removedFriend": "{username} удалён из друзей",
+  "noticeChallenged": "Меня вызвали на реванш",
+  "noticeLiveInvite": "Друг позвал меня на живой матч"
 }

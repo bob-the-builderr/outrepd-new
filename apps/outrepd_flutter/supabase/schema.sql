@@ -100,6 +100,10 @@ alter table profiles add column if not exists notify_friend_ok bool not null
   default true;
 alter table profiles add column if not exists notify_challenged bool not null
   default true;
+-- A friend asking to go live (live.sql). The invite itself still arrives in
+-- the app; this is only whether it buzzes the phone.
+alter table profiles add column if not exists notify_live_invite bool not null
+  default true;
 alter table profiles add column if not exists avatar_url text;
 alter table profiles add column if not exists username_changed_at timestamptz;
 

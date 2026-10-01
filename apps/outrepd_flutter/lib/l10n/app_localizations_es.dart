@@ -2102,4 +2102,29 @@ class LEs extends L {
   String waitingToJoin(String name) {
     return 'Esperando a que ${name} entre';
   }
+
+  @override
+  String get removeFriend => 'Eliminar amigo';
+
+  @override
+  String get removeFriendBody => 'No se le avisa, y podrán volver a agregarse';
+
+  @override
+  String removeFriendQuestion(String username) {
+    return '¿Eliminar a ${username} de tus amigos?';
+  }
+
+  @override
+  String get removeAction => 'Eliminar';
+
+  @override
+  String removedFriend(String username) {
+    return 'Eliminaste a ${username} de tus amigos';
+  }
+
+  @override
+  String get noticeChallenged => 'Alguien me retó a una revancha';
+
+  @override
+  String get noticeLiveInvite => 'Un amigo me invitó a un duelo en vivo';
 }

@@ -646,5 +646,12 @@
   "wantsToBeFriends": "arkadaş olmak istiyor",
   "giveUpQuestion": "Bu turdan çekilmek mi?",
   "giveUpBody": "Şu anki sayın ne olursa olsun yenilgi sayılır.",
-  "waitingToJoin": "{name} bekleniyor"
+  "waitingToJoin": "{name} bekleniyor",
+  "removeFriend": "Arkadaşlıktan çıkar",
+  "removeFriendBody": "Ona bildirilmez, birbirinizi yeniden ekleyebilirsiniz",
+  "removeFriendQuestion": "{username} arkadaşlarından çıkarılsın mı?",
+  "removeAction": "Çıkar",
+  "removedFriend": "{username} arkadaşlarından çıkarıldı",
+  "noticeChallenged": "Biri bana rövanş teklif etti",
+  "noticeLiveInvite": "Bir arkadaşım beni canlı maça davet etti"
 }

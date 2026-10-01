@@ -646,5 +646,12 @@
   "wantsToBeFriends": "veut être ton ami",
   "giveUpQuestion": "Abandonner cette manche ?",
   "giveUpBody": "C'est une défaite, quel que soit ton total actuel.",
-  "waitingToJoin": "En attente de {name}"
+  "waitingToJoin": "En attente de {name}",
+  "removeFriend": "Retirer des amis",
+  "removeFriendBody": "La personne n'est pas prévenue, et vous pourrez vous rajouter",
+  "removeFriendQuestion": "Retirer {username} de tes amis ?",
+  "removeAction": "Retirer",
+  "removedFriend": "{username} a été retiré de tes amis",
+  "noticeChallenged": "Quelqu'un m'a défié en revanche",
+  "noticeLiveInvite": "Un ami m'a invité à un duel en direct"
 }

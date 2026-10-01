@@ -646,5 +646,12 @@
   "wantsToBeFriends": "フレンドになりたがっています",
   "giveUpQuestion": "このラウンドを棄権しますか？",
   "giveUpBody": "今のカウントに関係なく、負けになります。",
-  "waitingToJoin": "{name}の参加を待っています"
+  "waitingToJoin": "{name}の参加を待っています",
+  "removeFriend": "フレンドを解除",
+  "removeFriendBody": "相手に通知はされず、あとでまたフレンドになれます",
+  "removeFriendQuestion": "{username}をフレンドから解除しますか？",
+  "removeAction": "解除",
+  "removedFriend": "{username}をフレンドから解除しました",
+  "noticeChallenged": "リマッチを挑まれた",
+  "noticeLiveInvite": "フレンドからライブ対戦に誘われた"
 }

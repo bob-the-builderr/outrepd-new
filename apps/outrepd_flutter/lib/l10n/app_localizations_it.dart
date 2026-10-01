@@ -2102,4 +2102,29 @@ class LIt extends L {
   String waitingToJoin(String name) {
     return 'In attesa che ${name} entri';
   }
+
+  @override
+  String get removeFriend => 'Rimuovi amico';
+
+  @override
+  String get removeFriendBody => 'Non viene avvisato, e potrete aggiungervi di nuovo';
+
+  @override
+  String removeFriendQuestion(String username) {
+    return 'Rimuovere ${username} dai tuoi amici?';
+  }
+
+  @override
+  String get removeAction => 'Rimuovi';
+
+  @override
+  String removedFriend(String username) {
+    return 'Hai rimosso ${username} dai tuoi amici';
+  }
+
+  @override
+  String get noticeChallenged => 'Qualcuno mi ha sfidato a una rivincita';
+
+  @override
+  String get noticeLiveInvite => 'Un amico mi ha invitato a un duello dal vivo';
 }

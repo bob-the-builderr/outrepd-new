@@ -241,8 +241,13 @@ begin
 
   -- A notice, and with it a push (push.sql): the friend may not have the
   -- app open, which is the whole reason there is a minute to answer in.
-  insert into notifications (profile_id, kind, actor, actor_name)
-  values (friend_id, 'live_invite', me.id, coalesce(me.username, ''));
+  -- Unless they turned these off — the invite still shows in the app.
+  if exists (
+    select 1 from profiles p where p.id = friend_id and p.notify_live_invite
+  ) then
+    insert into notifications (profile_id, kind, actor, actor_name)
+    values (friend_id, 'live_invite', me.id, coalesce(me.username, ''));
+  end if;
 
   return new_id;
 end;

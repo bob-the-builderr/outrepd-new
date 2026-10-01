@@ -477,6 +477,8 @@ class SupabaseBackend implements Backend {
           'show_on_board': prefs.showOnBoard,
           'show_country': prefs.showCountry,
           'notify_raced': prefs.notifyRaced,
+          'notify_challenged': prefs.notifyChallenged,
+          'notify_live_invite': prefs.notifyLiveInvite,
           'notify_friend_request': prefs.notifyFriendRequest,
           'notify_friend_ok': prefs.notifyFriendOk,
         })
@@ -488,6 +490,11 @@ class SupabaseBackend implements Backend {
     final now = _prefsFrom(row);
     if (was != null) _me = _withPrefs(was, now);
     return now;
+  }
+
+  @override
+  Future<void> removeFriend(String theirId) async {
+    await _db.rpc<String>('remove_friend', params: {'their_id': theirId});
   }
 
   @override
@@ -972,6 +979,8 @@ class SupabaseBackend implements Backend {
     showOnBoard: row['show_on_board'] as bool? ?? true,
     showCountry: row['show_country'] as bool? ?? true,
     notifyRaced: row['notify_raced'] as bool? ?? true,
+    notifyChallenged: row['notify_challenged'] as bool? ?? true,
+    notifyLiveInvite: row['notify_live_invite'] as bool? ?? true,
     notifyFriendRequest: row['notify_friend_request'] as bool? ?? true,
     notifyFriendOk: row['notify_friend_ok'] as bool? ?? true,
   );

@@ -2096,4 +2096,29 @@ class LHi extends L {
   String waitingToJoin(String name) {
     return '${name} के जुड़ने का इंतज़ार';
   }
+
+  @override
+  String get removeFriend => 'दोस्त हटाएँ';
+
+  @override
+  String get removeFriendBody => 'उन्हें बताया नहीं जाएगा, और आप फिर से एक-दूसरे को जोड़ सकते हैं';
+
+  @override
+  String removeFriendQuestion(String username) {
+    return '${username} को अपने दोस्तों से हटाएँ?';
+  }
+
+  @override
+  String get removeAction => 'हटाएँ';
+
+  @override
+  String removedFriend(String username) {
+    return '${username} को दोस्तों से हटा दिया';
+  }
+
+  @override
+  String get noticeChallenged => 'किसी ने मुझे रीमैच की चुनौती दी';
+
+  @override
+  String get noticeLiveInvite => 'किसी दोस्त ने मुझे लाइव मैच में बुलाया';
 }

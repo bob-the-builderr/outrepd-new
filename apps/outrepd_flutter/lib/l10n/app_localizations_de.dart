@@ -2105,4 +2105,29 @@ class LDe extends L {
   String waitingToJoin(String name) {
     return 'Warte, bis ${name} beitritt';
   }
+
+  @override
+  String get removeFriend => 'Freund entfernen';
+
+  @override
+  String get removeFriendBody => 'Die Person wird nicht benachrichtigt, und ihr könnt euch wieder hinzufügen';
+
+  @override
+  String removeFriendQuestion(String username) {
+    return '${username} aus deinen Freunden entfernen?';
+  }
+
+  @override
+  String get removeAction => 'Entfernen';
+
+  @override
+  String removedFriend(String username) {
+    return '${username} ist nicht mehr in deinen Freunden';
+  }
+
+  @override
+  String get noticeChallenged => 'Jemand hat mich zur Revanche herausgefordert';
+
+  @override
+  String get noticeLiveInvite => 'Ein Freund hat mich zu einem Live-Duell eingeladen';
 }

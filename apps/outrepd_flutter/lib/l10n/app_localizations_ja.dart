@@ -2052,4 +2052,29 @@ class LJa extends L {
   String waitingToJoin(String name) {
     return '${name}の参加を待っています';
   }
+
+  @override
+  String get removeFriend => 'フレンドを解除';
+
+  @override
+  String get removeFriendBody => '相手に通知はされず、あとでまたフレンドになれます';
+
+  @override
+  String removeFriendQuestion(String username) {
+    return '${username}をフレンドから解除しますか？';
+  }
+
+  @override
+  String get removeAction => '解除';
+
+  @override
+  String removedFriend(String username) {
+    return '${username}をフレンドから解除しました';
+  }
+
+  @override
+  String get noticeChallenged => 'リマッチを挑まれた';
+
+  @override
+  String get noticeLiveInvite => 'フレンドからライブ対戦に誘われた';
 }

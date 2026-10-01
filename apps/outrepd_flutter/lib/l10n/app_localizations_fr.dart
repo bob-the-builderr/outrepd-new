@@ -2103,4 +2103,29 @@ class LFr extends L {
   String waitingToJoin(String name) {
     return 'En attente de ${name}';
   }
+
+  @override
+  String get removeFriend => 'Retirer des amis';
+
+  @override
+  String get removeFriendBody => 'La personne n\'est pas prévenue, et vous pourrez vous rajouter';
+
+  @override
+  String removeFriendQuestion(String username) {
+    return 'Retirer ${username} de tes amis ?';
+  }
+
+  @override
+  String get removeAction => 'Retirer';
+
+  @override
+  String removedFriend(String username) {
+    return '${username} a été retiré de tes amis';
+  }
+
+  @override
+  String get noticeChallenged => 'Quelqu\'un m\'a défié en revanche';
+
+  @override
+  String get noticeLiveInvite => 'Un ami m\'a invité à un duel en direct';
 }

@@ -29,6 +29,8 @@ class RemotePrefs {
     this.showOnBoard = true,
     this.showCountry = true,
     this.notifyRaced = true,
+    this.notifyChallenged = true,
+    this.notifyLiveInvite = true,
     this.notifyFriendRequest = true,
     this.notifyFriendOk = true,
   });
@@ -37,6 +39,13 @@ class RemotePrefs {
   final bool showOnBoard;
   final bool showCountry;
   final bool notifyRaced;
+
+  /// A rematch set waiting with this account's name on it.
+  final bool notifyChallenged;
+
+  /// A friend asking to go live now. The invite still shows in the app with
+  /// this off; it only stops buzzing the phone.
+  final bool notifyLiveInvite;
   final bool notifyFriendRequest;
   final bool notifyFriendOk;
 
@@ -45,6 +54,8 @@ class RemotePrefs {
     bool? showOnBoard,
     bool? showCountry,
     bool? notifyRaced,
+    bool? notifyChallenged,
+    bool? notifyLiveInvite,
     bool? notifyFriendRequest,
     bool? notifyFriendOk,
   }) => RemotePrefs(
@@ -52,6 +63,8 @@ class RemotePrefs {
     showOnBoard: showOnBoard ?? this.showOnBoard,
     showCountry: showCountry ?? this.showCountry,
     notifyRaced: notifyRaced ?? this.notifyRaced,
+    notifyChallenged: notifyChallenged ?? this.notifyChallenged,
+    notifyLiveInvite: notifyLiveInvite ?? this.notifyLiveInvite,
     notifyFriendRequest: notifyFriendRequest ?? this.notifyFriendRequest,
     notifyFriendOk: notifyFriendOk ?? this.notifyFriendOk,
   );
@@ -60,10 +73,12 @@ class RemotePrefs {
   /// without making anybody open the screen.
   int get noticesOn =>
       (notifyRaced ? 1 : 0) +
+      (notifyChallenged ? 1 : 0) +
+      (notifyLiveInvite ? 1 : 0) +
       (notifyFriendRequest ? 1 : 0) +
       (notifyFriendOk ? 1 : 0);
 
-  static const noticeCount = 3;
+  static const noticeCount = 5;
 }
 
 /// A lifter, as the server knows them.
@@ -915,6 +930,10 @@ abstract interface class Backend {
   /// the account now holds.
   Future<RemotePrefs> savePrefs(RemotePrefs prefs);
 
+  /// Stop being friends, without blocking: they are not told, and either can
+  /// ask again.
+  Future<void> removeFriend(String theirId);
+
   /// Block somebody. Ends the friendship, and they are not told.
   Future<void> block(String theirId);
 
@@ -1146,6 +1165,10 @@ class NoBackend implements Backend {
   // than one that says there is no server.
   @override
   Future<RemotePrefs> savePrefs(RemotePrefs prefs) =>
+      throw StateError('no server configured');
+
+  @override
+  Future<void> removeFriend(String theirId) =>
       throw StateError('no server configured');
 
   @override

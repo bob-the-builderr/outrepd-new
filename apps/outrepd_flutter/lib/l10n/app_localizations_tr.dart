@@ -2092,4 +2092,29 @@ class LTr extends L {
   String waitingToJoin(String name) {
     return '${name} bekleniyor';
   }
+
+  @override
+  String get removeFriend => 'Arkadaşlıktan çıkar';
+
+  @override
+  String get removeFriendBody => 'Ona bildirilmez, birbirinizi yeniden ekleyebilirsiniz';
+
+  @override
+  String removeFriendQuestion(String username) {
+    return '${username} arkadaşlarından çıkarılsın mı?';
+  }
+
+  @override
+  String get removeAction => 'Çıkar';
+
+  @override
+  String removedFriend(String username) {
+    return '${username} arkadaşlarından çıkarıldı';
+  }
+
+  @override
+  String get noticeChallenged => 'Biri bana rövanş teklif etti';
+
+  @override
+  String get noticeLiveInvite => 'Bir arkadaşım beni canlı maça davet etti';
 }

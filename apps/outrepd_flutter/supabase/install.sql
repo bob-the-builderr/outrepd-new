@@ -212,6 +212,10 @@ alter table profiles add column if not exists notify_friend_ok bool not null
   default true;
 alter table profiles add column if not exists notify_challenged bool not null
   default true;
+-- A friend asking to go live (live.sql). The invite itself still arrives in
+-- the app; this is only whether it buzzes the phone.
+alter table profiles add column if not exists notify_live_invite bool not null
+  default true;
 alter table profiles add column if not exists avatar_url text;
 alter table profiles add column if not exists username_changed_at timestamptz;
 
@@ -1408,6 +1412,22 @@ begin
 end;
 $$;
 
+-- Stop being friends, without blocking. Either of the two may; the other is
+-- not told, and nothing stops either asking again. Runs as the caller: the
+-- delete policy on friendships ("either side may end it") is the rule.
+create or replace function remove_friend(their_id uuid)
+returns text
+language plpgsql
+as $$
+begin
+  delete from friendships
+   where accepted_at is not null
+     and ((requester = auth.uid() and addressee = their_id)
+       or (requester = their_id and addressee = auth.uid()));
+  return case when found then 'removed' else 'not friends' end;
+end;
+$$;
+
 -- ──────────────────────────────── reading ────────────────────────────────────
 
 -- Everybody this account is actually friends with, and what stands between
@@ -1919,6 +1939,8 @@ revoke all on function request_friend_by_code(text) from public;
 grant execute on function request_friend_by_code(text) to authenticated;
 revoke all on function answer_friend(uuid, boolean) from public;
 grant execute on function answer_friend(uuid, boolean) to authenticated;
+revoke all on function remove_friend(uuid) from public;
+grant execute on function remove_friend(uuid) to authenticated;
 revoke all on function my_friends() from public;
 grant execute on function my_friends() to authenticated;
 revoke all on function friend_requests() from public;
@@ -3126,8 +3148,13 @@ begin
 
   -- A notice, and with it a push (push.sql): the friend may not have the
   -- app open, which is the whole reason there is a minute to answer in.
-  insert into notifications (profile_id, kind, actor, actor_name)
-  values (friend_id, 'live_invite', me.id, coalesce(me.username, ''));
+  -- Unless they turned these off — the invite still shows in the app.
+  if exists (
+    select 1 from profiles p where p.id = friend_id and p.notify_live_invite
+  ) then
+    insert into notifications (profile_id, kind, actor, actor_name)
+    values (friend_id, 'live_invite', me.id, coalesce(me.username, ''));
+  end if;
 
   return new_id;
 end;

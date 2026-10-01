@@ -184,6 +184,7 @@ class _LifterPeekSheetState extends State<_LifterPeekSheet>
                     id: widget.id,
                     username: widget.username,
                     profile: p,
+                    onChanged: load,
                   ),
                 ),
               ],
@@ -355,6 +356,7 @@ class _OtherProfileScreenState extends State<OtherProfileScreen>
               id: widget.id,
               username: widget.username,
               profile: p,
+              onChanged: load,
             ),
           ),
         ],
@@ -725,13 +727,19 @@ Future<void> openLifterMenu(
   required String id,
   required String username,
   LifterProfile? profile,
+  VoidCallback? onChanged,
 }) {
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
     backgroundColor: context.colors.surface,
     showDragHandle: true,
-    builder: (_) => _LifterMenuSheet(id: id, username: username, profile: profile),
+    builder: (_) => _LifterMenuSheet(
+      id: id,
+      username: username,
+      profile: profile,
+      onChanged: onChanged,
+    ),
   );
 }
 
@@ -740,6 +748,7 @@ class _LifterMenuSheet extends StatefulWidget {
     required this.id,
     required this.username,
     this.profile,
+    this.onChanged,
   });
 
   final String id;
@@ -749,6 +758,10 @@ class _LifterMenuSheet extends StatefulWidget {
   /// the profile never loaded — Share falls back to the same placeholder
   /// every other share button in the app uses without one.
   final LifterProfile? profile;
+
+  /// Something this sheet did changed what the screen behind it shows — a
+  /// friendship ended — so it should fetch the profile again.
+  final VoidCallback? onChanged;
 
   @override
   State<_LifterMenuSheet> createState() => _LifterMenuSheetState();
@@ -769,6 +782,59 @@ class _LifterMenuSheetState extends State<_LifterMenuSheet> {
       messenger.showSnackBar(
         SnackBar(
           content: Text(l.mutedLifter(widget.username)),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    } on Object catch (_) {
+      if (!mounted) return;
+      setState(() => _busy = false);
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(l.needsServer),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
+  }
+
+  /// Asks first: a friendship takes both people agreeing to make, and one
+  /// mistaken tap should not be what ends it.
+  Future<void> _removeFriend() async {
+    if (_busy) return;
+    final l = L.of(context);
+    final sure = await showDialog<bool>(
+      context: context,
+      builder: (dialog) => AlertDialog(
+        title: Text(l.removeFriendQuestion(widget.username)),
+        content: Text(l.removeFriendBody),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialog).pop(false),
+            child: Text(l.cancel),
+          ),
+          TextButton(
+            key: const Key('confirmRemoveFriend'),
+            onPressed: () => Navigator.of(dialog).pop(true),
+            child: Text(
+              l.removeAction,
+              style: TextStyle(color: context.colors.rival),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (sure != true || !mounted) return;
+
+    setState(() => _busy = true);
+    final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
+    try {
+      await backend.removeFriend(widget.id);
+      navigator.pop();
+      widget.onChanged?.call();
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(l.removedFriend(widget.username)),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -879,6 +945,15 @@ class _LifterMenuSheetState extends State<_LifterMenuSheet> {
               label: l.muteChallenges(widget.username),
               onTap: _busy ? null : _mute,
             ),
+            // Only between friends: there is nothing to remove otherwise.
+            if (widget.profile?.isFriend ?? false)
+              _MenuRow(
+                key: const Key('removeFriend'),
+                icon: Icons.person_remove_outlined,
+                label: l.removeFriend,
+                body: l.removeFriendBody,
+                onTap: _busy ? null : _removeFriend,
+              ),
             _MenuRow(
               icon: Icons.block,
               iconColour: context.colors.rival,
@@ -915,6 +990,7 @@ class _LifterMenuSheetState extends State<_LifterMenuSheet> {
 
 class _MenuRow extends StatelessWidget {
   const _MenuRow({
+    super.key,
     required this.icon,
     required this.label,
     required this.onTap,

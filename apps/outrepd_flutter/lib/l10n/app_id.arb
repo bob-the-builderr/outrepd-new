@@ -646,5 +646,12 @@
   "wantsToBeFriends": "ingin berteman",
   "giveUpQuestion": "Menyerah di ronde ini?",
   "giveUpBody": "Ini dihitung kalah, berapa pun hitunganmu sekarang.",
-  "waitingToJoin": "Menunggu {name} bergabung"
+  "waitingToJoin": "Menunggu {name} bergabung",
+  "removeFriend": "Hapus teman",
+  "removeFriendBody": "Dia tidak diberi tahu, dan kalian bisa saling menambahkan lagi",
+  "removeFriendQuestion": "Hapus {username} dari temanmu?",
+  "removeAction": "Hapus",
+  "removedFriend": "{username} dihapus dari temanmu",
+  "noticeChallenged": "Seseorang menantangku tanding ulang",
+  "noticeLiveInvite": "Teman mengajakku bertanding langsung"
 }

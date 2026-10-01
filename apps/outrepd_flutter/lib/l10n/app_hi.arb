@@ -646,5 +646,12 @@
   "wantsToBeFriends": "दोस्त बनना चाहते हैं",
   "giveUpQuestion": "यह राउंड छोड़ दें?",
   "giveUpBody": "इसे हार माना जाएगा, आपकी अभी की गिनती चाहे जो हो।",
-  "waitingToJoin": "{name} के जुड़ने का इंतज़ार"
+  "waitingToJoin": "{name} के जुड़ने का इंतज़ार",
+  "removeFriend": "दोस्त हटाएँ",
+  "removeFriendBody": "उन्हें बताया नहीं जाएगा, और आप फिर से एक-दूसरे को जोड़ सकते हैं",
+  "removeFriendQuestion": "{username} को अपने दोस्तों से हटाएँ?",
+  "removeAction": "हटाएँ",
+  "removedFriend": "{username} को दोस्तों से हटा दिया",
+  "noticeChallenged": "किसी ने मुझे रीमैच की चुनौती दी",
+  "noticeLiveInvite": "किसी दोस्त ने मुझे लाइव मैच में बुलाया"
 }

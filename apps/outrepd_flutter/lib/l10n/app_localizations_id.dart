@@ -2097,4 +2097,29 @@ class LId extends L {
   String waitingToJoin(String name) {
     return 'Menunggu ${name} bergabung';
   }
+
+  @override
+  String get removeFriend => 'Hapus teman';
+
+  @override
+  String get removeFriendBody => 'Dia tidak diberi tahu, dan kalian bisa saling menambahkan lagi';
+
+  @override
+  String removeFriendQuestion(String username) {
+    return 'Hapus ${username} dari temanmu?';
+  }
+
+  @override
+  String get removeAction => 'Hapus';
+
+  @override
+  String removedFriend(String username) {
+    return '${username} dihapus dari temanmu';
+  }
+
+  @override
+  String get noticeChallenged => 'Seseorang menantangku tanding ulang';
+
+  @override
+  String get noticeLiveInvite => 'Teman mengajakku bertanding langsung';
 }

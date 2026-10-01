@@ -646,5 +646,12 @@
   "wantsToBeFriends": "친구가 되고 싶어 해요",
   "giveUpQuestion": "이번 라운드를 포기할까요?",
   "giveUpBody": "지금 횟수와 상관없이 패배로 기록돼요.",
-  "waitingToJoin": "{name}님이 들어오길 기다리는 중"
+  "waitingToJoin": "{name}님이 들어오길 기다리는 중",
+  "removeFriend": "친구 삭제",
+  "removeFriendBody": "상대에게 알림이 가지 않으며, 다시 친구를 추가할 수 있어요",
+  "removeFriendQuestion": "{username}님을 친구에서 삭제할까요?",
+  "removeAction": "삭제",
+  "removedFriend": "{username}님을 친구에서 삭제했어요",
+  "noticeChallenged": "누군가 재대결을 신청했어요",
+  "noticeLiveInvite": "친구가 라이브 대결에 초대했어요"
 }

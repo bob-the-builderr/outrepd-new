@@ -646,5 +646,12 @@
   "wantsToBeFriends": "möchte befreundet sein",
   "giveUpQuestion": "Diese Runde aufgeben?",
   "giveUpBody": "Es zählt als Niederlage, egal wie viele du gerade hast.",
-  "waitingToJoin": "Warte, bis {name} beitritt"
+  "waitingToJoin": "Warte, bis {name} beitritt",
+  "removeFriend": "Freund entfernen",
+  "removeFriendBody": "Die Person wird nicht benachrichtigt, und ihr könnt euch wieder hinzufügen",
+  "removeFriendQuestion": "{username} aus deinen Freunden entfernen?",
+  "removeAction": "Entfernen",
+  "removedFriend": "{username} ist nicht mehr in deinen Freunden",
+  "noticeChallenged": "Jemand hat mich zur Revanche herausgefordert",
+  "noticeLiveInvite": "Ein Freund hat mich zu einem Live-Duell eingeladen"
 }

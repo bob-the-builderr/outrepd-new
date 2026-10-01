@@ -177,6 +177,22 @@ class _NoticeSettingsScreenState extends State<NoticeSettingsScreen>
                 caption: l.noticeRacedHint,
                 value: _prefs.notifyRaced,
                 onChanged: (v) => _change(_prefs.copyWith(notifyRaced: v)),
+              ),
+              SwitchRow(
+                key: const Key('noticeChallenged'),
+                icon: Icons.replay,
+                label: l.noticeChallenged,
+                value: _prefs.notifyChallenged,
+                onChanged: (v) =>
+                    _change(_prefs.copyWith(notifyChallenged: v)),
+              ),
+              SwitchRow(
+                key: const Key('noticeLiveInvite'),
+                icon: Icons.sensors,
+                label: l.noticeLiveInvite,
+                value: _prefs.notifyLiveInvite,
+                onChanged: (v) =>
+                    _change(_prefs.copyWith(notifyLiveInvite: v)),
                 last: true,
               ),
             ],

@@ -312,11 +312,36 @@ reset role;
 
 -- ── live invites ──────────────────────────────────────────────────────────────
 
+-- B turned live invites off: the invite is made, nothing buzzes.
+select as_user(:'B'); set role authenticated;
+update profiles set notify_live_invite = false where id = auth.uid();
+reset role;
+select as_user(:'A'); set role authenticated;
+select invite_live(:'B');
+reset role;
+select check_that((select count(*) from notifications
+                    where profile_id = :'B' and kind = 'live_invite') = 0,
+                  'a live invite pushed somebody who turned them off');
+select as_user(:'B'); set role authenticated;
+update profiles set notify_live_invite = true where id = auth.uid();
+reset role;
 select as_user(:'A'); set role authenticated;
 select invite_live(:'B');
 select invite_live(:'B');
-select invite_live(:'B');
 select must_fail('a fourth live invite in ten minutes', format('select invite_live(%L)', :'B'));
+reset role;
+select check_that((select count(*) from notifications
+                    where profile_id = :'B' and kind = 'live_invite') = 2,
+                  'live invites with notices on did not reach them');
+
+-- ── removing a friend ─────────────────────────────────────────────────────────
+
+select as_user(:'A'); set role authenticated;
+select check_that(remove_friend(:'B') = 'removed', 'removing a friend');
+select check_that((select count(*) from my_friends()) = 0,
+                  'a removed friend is still on the list');
+select check_that(remove_friend(:'C') = 'not friends',
+                  'removing somebody who was never a friend');
 reset role;
 
 select 'all security checks passed' as result;

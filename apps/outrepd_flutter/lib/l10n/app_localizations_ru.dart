@@ -2097,4 +2097,29 @@ class LRu extends L {
   String waitingToJoin(String name) {
     return 'Ждём, пока ${name} присоединится';
   }
+
+  @override
+  String get removeFriend => 'Удалить из друзей';
+
+  @override
+  String get removeFriendBody => 'Ему не сообщат, и вы сможете снова добавить друг друга';
+
+  @override
+  String removeFriendQuestion(String username) {
+    return 'Удалить ${username} из друзей?';
+  }
+
+  @override
+  String get removeAction => 'Удалить';
+
+  @override
+  String removedFriend(String username) {
+    return '${username} удалён из друзей';
+  }
+
+  @override
+  String get noticeChallenged => 'Меня вызвали на реванш';
+
+  @override
+  String get noticeLiveInvite => 'Друг позвал меня на живой матч';
 }

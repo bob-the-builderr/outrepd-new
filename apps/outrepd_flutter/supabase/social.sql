@@ -237,6 +237,22 @@ begin
 end;
 $$;
 
+-- Stop being friends, without blocking. Either of the two may; the other is
+-- not told, and nothing stops either asking again. Runs as the caller: the
+-- delete policy on friendships ("either side may end it") is the rule.
+create or replace function remove_friend(their_id uuid)
+returns text
+language plpgsql
+as $$
+begin
+  delete from friendships
+   where accepted_at is not null
+     and ((requester = auth.uid() and addressee = their_id)
+       or (requester = their_id and addressee = auth.uid()));
+  return case when found then 'removed' else 'not friends' end;
+end;
+$$;
+
 -- ──────────────────────────────── reading ────────────────────────────────────
 
 -- Everybody this account is actually friends with, and what stands between
@@ -748,6 +764,8 @@ revoke all on function request_friend_by_code(text) from public;
 grant execute on function request_friend_by_code(text) to authenticated;
 revoke all on function answer_friend(uuid, boolean) from public;
 grant execute on function answer_friend(uuid, boolean) to authenticated;
+revoke all on function remove_friend(uuid) from public;
+grant execute on function remove_friend(uuid) to authenticated;
 revoke all on function my_friends() from public;
 grant execute on function my_friends() to authenticated;
 revoke all on function friend_requests() from public;

@@ -19,7 +19,11 @@ class _FakeBackend extends NoBackend {
   final LifterProfile? profile;
   bool muteCalled = false;
   bool blockCalled = false;
+  bool removeCalled = false;
   AskResult askResult = AskResult.asked;
+
+  @override
+  Future<void> removeFriend(String theirId) async => removeCalled = true;
 
   @override
   bool get available => true;
@@ -434,6 +438,44 @@ void main() {
 
       expect(fake.muteCalled, isTrue);
       expect(find.text('Muted ayaan99'), findsOneWidget);
+    });
+
+    testWidgets('a stranger has no Remove friend; a friend does, and it asks '
+        'first', (tester) async {
+      phone(tester);
+      backend = _FakeBackend(_played());
+      await tester.pumpWidget(
+        _appDirect(
+          const OtherProfileScreen(id: 'ayaan99-id', username: 'ayaan99'),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byIcon(Icons.more_vert));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('removeFriend')), findsNothing);
+
+      final fake = _FakeBackend(_played(isFriend: true));
+      backend = fake;
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpWidget(
+        _appDirect(
+          const OtherProfileScreen(id: 'ayaan99-id', username: 'ayaan99'),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byIcon(Icons.more_vert));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('removeFriend')));
+      await tester.pumpAndSettle();
+
+      // Not yet: one tap only asks.
+      expect(find.text('Remove ayaan99 from your friends?'), findsOneWidget);
+      expect(fake.removeCalled, isFalse);
+
+      await tester.tap(find.byKey(const Key('confirmRemoveFriend')));
+      await tester.pumpAndSettle();
+      expect(fake.removeCalled, isTrue);
+      expect(find.text('Removed ayaan99 from your friends'), findsOneWidget);
     });
 
     testWidgets('block calls the backend and closes the sheet', (

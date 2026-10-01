@@ -1237,5 +1237,26 @@
         "type": "String"
       }
     }
-  }
+  },
+  "removeFriend": "Remove friend",
+  "removeFriendBody": "They aren't told, and you can add each other again",
+  "removeFriendQuestion": "Remove {username} from your friends?",
+  "@removeFriendQuestion": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "removeAction": "Remove",
+  "removedFriend": "Removed {username} from your friends",
+  "@removedFriend": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "noticeChallenged": "Someone challenged me to a rematch",
+  "noticeLiveInvite": "A friend asked me to go live"
 }

@@ -2062,4 +2062,29 @@ class LKo extends L {
   String waitingToJoin(String name) {
     return '${name}님이 들어오길 기다리는 중';
   }
+
+  @override
+  String get removeFriend => '친구 삭제';
+
+  @override
+  String get removeFriendBody => '상대에게 알림이 가지 않으며, 다시 친구를 추가할 수 있어요';
+
+  @override
+  String removeFriendQuestion(String username) {
+    return '${username}님을 친구에서 삭제할까요?';
+  }
+
+  @override
+  String get removeAction => '삭제';
+
+  @override
+  String removedFriend(String username) {
+    return '${username}님을 친구에서 삭제했어요';
+  }
+
+  @override
+  String get noticeChallenged => '누군가 재대결을 신청했어요';
+
+  @override
+  String get noticeLiveInvite => '친구가 라이브 대결에 초대했어요';
 }

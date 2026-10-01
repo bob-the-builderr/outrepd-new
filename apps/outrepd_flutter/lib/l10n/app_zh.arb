@@ -646,5 +646,12 @@
   "wantsToBeFriends": "想和你成为好友",
   "giveUpQuestion": "放弃本回合？",
   "giveUpBody": "无论你现在做了多少个，都算作失败。",
-  "waitingToJoin": "正在等待 {name} 加入"
+  "waitingToJoin": "正在等待 {name} 加入",
+  "removeFriend": "删除好友",
+  "removeFriendBody": "对方不会收到通知，你们之后还可以重新添加",
+  "removeFriendQuestion": "要将 {username} 从好友中删除吗？",
+  "removeAction": "删除",
+  "removedFriend": "已将 {username} 从好友中删除",
+  "noticeChallenged": "有人向我发起复赛挑战",
+  "noticeLiveInvite": "好友邀请我进行实时对战"
 }

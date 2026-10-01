@@ -2042,4 +2042,29 @@ class LZh extends L {
   String waitingToJoin(String name) {
     return '正在等待 ${name} 加入';
   }
+
+  @override
+  String get removeFriend => '删除好友';
+
+  @override
+  String get removeFriendBody => '对方不会收到通知，你们之后还可以重新添加';
+
+  @override
+  String removeFriendQuestion(String username) {
+    return '要将 ${username} 从好友中删除吗？';
+  }
+
+  @override
+  String get removeAction => '删除';
+
+  @override
+  String removedFriend(String username) {
+    return '已将 ${username} 从好友中删除';
+  }
+
+  @override
+  String get noticeChallenged => '有人向我发起复赛挑战';
+
+  @override
+  String get noticeLiveInvite => '好友邀请我进行实时对战';
 }

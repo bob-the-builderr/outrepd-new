@@ -2095,4 +2095,29 @@ class LEn extends L {
   String waitingToJoin(String name) {
     return 'Waiting for ${name} to join';
   }
+
+  @override
+  String get removeFriend => 'Remove friend';
+
+  @override
+  String get removeFriendBody => 'They aren\'t told, and you can add each other again';
+
+  @override
+  String removeFriendQuestion(String username) {
+    return 'Remove ${username} from your friends?';
+  }
+
+  @override
+  String get removeAction => 'Remove';
+
+  @override
+  String removedFriend(String username) {
+    return 'Removed ${username} from your friends';
+  }
+
+  @override
+  String get noticeChallenged => 'Someone challenged me to a rematch';
+
+  @override
+  String get noticeLiveInvite => 'A friend asked me to go live';
 }

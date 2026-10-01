@@ -2099,4 +2099,29 @@ class LPt extends L {
   String waitingToJoin(String name) {
     return 'À espera que ${name} entre';
   }
+
+  @override
+  String get removeFriend => 'Remover amigo';
+
+  @override
+  String get removeFriendBody => 'Não é avisado, e podem voltar a adicionar-se';
+
+  @override
+  String removeFriendQuestion(String username) {
+    return 'Remover ${username} dos teus amigos?';
+  }
+
+  @override
+  String get removeAction => 'Remover';
+
+  @override
+  String removedFriend(String username) {
+    return 'Removeste ${username} dos teus amigos';
+  }
+
+  @override
+  String get noticeChallenged => 'Alguém me desafiou para uma desforra';
+
+  @override
+  String get noticeLiveInvite => 'Um amigo convidou-me para um duelo ao vivo';
 }

@@ -646,5 +646,12 @@
   "wantsToBeFriends": "quiere ser tu amigo",
   "giveUpQuestion": "¿Rendirte en esta ronda?",
   "giveUpBody": "Cuenta como derrota, sea cual sea tu conteo ahora.",
-  "waitingToJoin": "Esperando a que {name} entre"
+  "waitingToJoin": "Esperando a que {name} entre",
+  "removeFriend": "Eliminar amigo",
+  "removeFriendBody": "No se le avisa, y podrán volver a agregarse",
+  "removeFriendQuestion": "¿Eliminar a {username} de tus amigos?",
+  "removeAction": "Eliminar",
+  "removedFriend": "Eliminaste a {username} de tus amigos",
+  "noticeChallenged": "Alguien me retó a una revancha",
+  "noticeLiveInvite": "Un amigo me invitó a un duelo en vivo"
 }
