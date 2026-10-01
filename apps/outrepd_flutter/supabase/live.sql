@@ -225,6 +225,13 @@ begin
     raise exception 'only a friend can be invited live';
   end if;
 
+  -- Every invite is a push on their phone, and cancelling one and sending
+  -- another is a second: three to one friend in ten minutes, six in all.
+  if not within_rate('live_invite_to', interval '10 minutes', 3, friend_id)
+     or not within_rate('live_invite', interval '10 minutes', 6) then
+    raise exception 'too many invites, wait a few minutes';
+  end if;
+
   update live_matches lm set status = 'cancelled'
    where lm.a = me.id and lm.status = 'invited';
 
@@ -619,11 +626,13 @@ begin
      and (case when i_am_a then m.a_set else m.b_set end) is not null
      and (case when i_am_a then m.b_set else m.a_set end) is null
      and m.starts_at + interval '100 seconds' < now() then
+    -- At most what a minute holds (sets_reps_fit_the_time, schema.sql): the
+    -- count came from their phone, and the stand-in is stored as a minute.
     insert into sets (profile_id, reps, reps_camera, depth, confident,
                       duration_ms, gave_up, rep_times, live_match)
     values (case when i_am_a then m.b else m.a end,
-            case when i_am_a then m.b_reps else m.a_reps end,
-            case when i_am_a then m.b_reps else m.a_reps end,
+            least(case when i_am_a then m.b_reps else m.a_reps end, 200),
+            least(case when i_am_a then m.b_reps else m.a_reps end, 200),
             0, false, 60000, false, '{}', m.id)
     returning id into stand_in;
     if i_am_a then

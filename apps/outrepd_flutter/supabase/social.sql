@@ -63,24 +63,14 @@ create policy "a lifter reads their own friendships"
   to authenticated
   using (auth.uid() = requester or auth.uid() = addressee);
 
--- You may only ever create a request as yourself. The functions below are the
--- intended door, but the policy is what actually holds: a client that skips
--- them and posts straight to the table still cannot invent an invitation from
--- somebody else.
+-- No insert and no update from the phone: asking goes through
+-- request_friend_with and answering through answer_friend, both below. The
+-- table used to take both directly, as long as the caller's own id was on
+-- the row — which let a phone write a request that arrived already accepted,
+-- skip the block check on the way, or, holding a request, rewrite who it was
+-- from and become friends with somebody who never asked.
 drop policy if exists "a lifter asks in their own name" on friendships;
-create policy "a lifter asks in their own name"
-  on friendships for insert
-  to authenticated
-  with check (auth.uid() = requester);
-
--- Only the person who was asked can accept. Accepting your own request would
--- make every friendship unilateral.
 drop policy if exists "only the asked may answer" on friendships;
-create policy "only the asked may answer"
-  on friendships for update
-  to authenticated
-  using (auth.uid() = addressee)
-  with check (auth.uid() = addressee);
 
 -- Either side can end it, and either side can withdraw a request that has
 -- not been answered.
@@ -145,6 +135,23 @@ begin
     return 'friends';
   end if;
 
+  -- Already asked, or already friends: nothing new to send.
+  if exists (
+    select 1 from friendships
+     where requester = auth.uid() and addressee = them
+  ) then
+    return 'asked';
+  end if;
+
+  -- Each request is a notice and a push on their phone. Withdrawn and sent
+  -- again, it is another one, so how often is counted: a few times a day to
+  -- any one lifter, and forty new people a day in all. Past that the answer
+  -- reads the same as a request that went — nothing is sent.
+  if not within_rate('friend_request_to', interval '1 day', 3, them)
+     or not within_rate('friend_request', interval '1 day', 40) then
+    return 'asked';
+  end if;
+
   insert into friendships (requester, addressee)
   values (auth.uid(), them)
   on conflict (requester, addressee) do nothing;
@@ -207,9 +214,13 @@ $$;
 -- Declining deletes the row rather than marking it: a declined request that
 -- lingers is a record of a small rejection kept on a server forever, and it
 -- would also stop them ever asking again.
+-- Security definer, since nothing on the phone may update the table itself;
+-- every write here names the caller as the one who was asked.
 create or replace function answer_friend(their_id uuid, accept boolean)
 returns text
 language plpgsql
+security definer
+set search_path = public
 as $$
 begin
   if accept then
@@ -255,6 +266,8 @@ returns table (
 )
 language sql
 stable
+security definer
+set search_path = public
 as $$
   with mine as (
     select case when f.requester = auth.uid() then f.addressee
@@ -307,6 +320,8 @@ returns table (
 )
 language sql
 stable
+security definer
+set search_path = public
 as $$
   select p.id, p.username, p.tier_idx, p.div_idx, f.created_at,
          p.placements_done, p.best_set, p.wins, p.losses, p.avatar_url
@@ -417,6 +432,8 @@ returns table (
 )
 language sql
 stable
+security definer
+set search_path = public
 as $$
   select p.id, p.username, b.created_at
     from blocks b
@@ -466,6 +483,8 @@ returns table (
 )
 language sql
 stable
+security definer
+set search_path = public
 as $$
   select p.id, p.username, m.created_at
     from mutes m
@@ -506,6 +525,8 @@ returns table (
 )
 language sql
 stable
+security definer
+set search_path = public
 as $$
   select p.id, p.username, p.tier_idx, p.div_idx, p.lp, p.wins, p.losses,
          p.avatar_url
@@ -531,6 +552,8 @@ create or replace function board_place(for_id uuid, in_country text default null
 returns int
 language sql
 stable
+security definer
+set search_path = public
 as $$
   select case
     when not exists (
@@ -561,6 +584,8 @@ create or replace function my_board_place(in_country text default null)
 returns int
 language sql
 stable
+security definer
+set search_path = public
 as $$
   select board_place(auth.uid(), in_country);
 $$;
@@ -636,8 +661,12 @@ begin
   select
     p.id, p.username, p.tier_idx, p.div_idx, p.lp, p.placements_done,
     p.total_reps, p.best_set, p.wins, p.losses, p.win_streak,
-    board_place(p.id, null), p.country,
-    case when p.country is null then null else board_place(p.id, p.country) end,
+    -- Their country only if they chose to show it: the setting says "show
+    -- my country", and a card that showed it anyway would make it a lie.
+    board_place(p.id, null),
+    case when p.show_country then p.country end,
+    case when p.country is null or not p.show_country then null
+         else board_place(p.id, p.country) end,
     exists (
       select 1 from friendships f
        where f.accepted_at is not null
@@ -703,8 +732,10 @@ begin
   select
     who.username, who.tier_idx, who.div_idx, who.lp, who.wins, who.losses,
     who.best_set, who.win_streak,
-    board_place(who.id, null), who.country,
-    case when who.country is null then null else board_place(who.id, who.country) end,
+    board_place(who.id, null),
+    case when who.show_country then who.country end,
+    case when who.country is null or not who.show_country then null
+         else board_place(who.id, who.country) end,
     who.avatar_url;
 end;
 $$;

@@ -219,6 +219,17 @@ begin
     return new;
   end if;
 
+  -- Blocked either way round: the set is stored, find_targeted_set will
+  -- never hand it over, and nobody is told — the one who sent it least of
+  -- all, since a block is not announced.
+  if exists (
+    select 1 from blocks b
+     where (b.blocker = new.challenge_target and b.blocked = new.profile_id)
+        or (b.blocker = new.profile_id and b.blocked = new.challenge_target)
+  ) then
+    return new;
+  end if;
+
   select username into challenger_name from profiles where id = new.profile_id;
   insert into notifications (profile_id, kind, actor, actor_name)
   values (new.challenge_target, 'challenged', new.profile_id,
@@ -237,11 +248,9 @@ create trigger sets_notify_challenged
 -- Mine, newest first.
 --
 -- Dropped first: Postgres refuses `create or replace` when a table-returning
--- function's column set changes shape (adding `actor` did), and fails with a
--- "cannot change return type" error that names DROP as the fix.
-drop function if exists my_notifications(int);
--- Dropped first: it gained a column, and Postgres will not change what an
--- existing function returns in place.
+-- function's column set changes shape (adding `actor` and `lp_delta` did),
+-- and fails with a "cannot change return type" error that names DROP as the
+-- fix.
 drop function if exists my_notifications(int);
 create or replace function my_notifications(limit_to int default 50)
 returns table (

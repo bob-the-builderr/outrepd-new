@@ -71,6 +71,25 @@ Deno.serve(async (request) => {
     { global: { headers: { Authorization: authorization } } },
   );
 
+  // Only to the address this account signed in with. It used to go wherever
+  // the request said, which made this function a way for anybody with an
+  // account to send mail from this project's sender to any address at all,
+  // as often as they liked — and a sender that does that gets blocked.
+  const token = authorization.replace(/^Bearer\s+/i, '');
+  const { data: who } = await db.auth.getUser(token);
+  const own = (who?.user?.email ?? '').trim().toLowerCase();
+  if (!own) return reply(403, { error: 'this account has no email address' });
+  if (to.toLowerCase() !== own) {
+    return reply(403, { error: 'the export only goes to your own address' });
+  }
+
+  // And not endlessly: three a day (claim_data_export, account.sql).
+  const { data: allowed, error: rateError } = await db.rpc('claim_data_export');
+  if (rateError) return reply(400, { error: rateError.message });
+  if (allowed !== true) {
+    return reply(429, { error: 'already sent three today' });
+  }
+
   const { data, error } = await db.rpc('my_data');
   if (error) return reply(400, { error: error.message });
 

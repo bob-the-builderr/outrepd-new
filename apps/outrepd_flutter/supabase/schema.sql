@@ -152,9 +152,13 @@ create index if not exists profiles_ladder_idx
 -- being one. Usernames are already unique, so this is not for telling two
 -- lifters apart — it is for adding one without having to hand over the name
 -- shown on the ladder to do it.
+-- Security definer because it has to see every code already taken, and a
+-- lifter can only read their own row.
 create or replace function generate_friend_code()
 returns text
 language plpgsql
+security definer
+set search_path = public
 as $$
 declare
   candidate text;
@@ -290,6 +294,101 @@ create trigger sets_count_reps
   after insert on sets
   for each row execute function count_reps_of_set();
 
+-- What a minute can hold. Nobody does a push-up in under 0.3 seconds — the
+-- counter itself waits 0.35 between reps — and no set the app records runs
+-- past a minute and a bit. A count beyond either is not a set anybody lifted,
+-- and LP is paid in reps. NOT VALID: it holds every set from here on and
+-- leaves rows already stored alone.
+alter table sets drop constraint if exists sets_reps_fit_the_time;
+alter table sets add constraint sets_reps_fit_the_time
+  check (reps * 300 <= duration_ms + 1000
+         and reps_camera * 300 <= duration_ms + 1000
+         and duration_ms <= 75000) not valid;
+
+-- A set the phone sends itself. The phone says what was lifted; everything
+-- else about the row is the server's to decide:
+--
+--   * when it was stored — "oldest first" decides whose set the pool hands
+--     out next, and a date the client chose would jump the queue;
+--   * that nobody has raced it yet, and that it was not part of a live match
+--     — those are written by settle_duel and live.sql, never sent;
+--   * who a challenge may name: a friend, or somebody this account has
+--     already raced. A challenge is a notice and a push on the other phone,
+--     and a stranger picked out of a search is not somebody to send one to.
+--
+-- And how often. A set is a minute of push-ups, so a phone sending them
+-- seconds apart is not lifting them, and every set adds to the totals on the
+-- profile and every challenge buzzes somebody's phone.
+--
+-- Runs as the caller, not as the definer: sets written by settle_duel's and
+-- live.sql's own functions arrive as the database owner and pass untouched.
+create or replace function guard_new_set()
+returns trigger
+language plpgsql
+as $$
+begin
+  if current_user not in ('authenticated', 'anon') then
+    return new;
+  end if;
+
+  new.created_at := now();
+  new.claimed_by := null;
+  new.live_match := null;
+
+  if exists (
+    select 1 from sets s
+     where s.profile_id = new.profile_id
+       and s.created_at > now() - interval '8 seconds'
+  ) or (
+    select count(*) from sets s
+     where s.profile_id = new.profile_id
+       and s.created_at > now() - interval '1 hour'
+  ) >= 40 then
+    raise exception 'sets are arriving faster than anybody lifts them';
+  end if;
+
+  if new.challenge_target is not null then
+    if new.challenge_target = new.profile_id then
+      raise exception 'cannot challenge yourself';
+    end if;
+    -- Both are read through the caller's own rows, which is all a lifter
+    -- can see of either table: their own friendships and their own duels.
+    if not exists (
+      select 1 from friendships f
+       where f.accepted_at is not null
+         and ((f.requester = new.profile_id and f.addressee = new.challenge_target)
+           or (f.addressee = new.profile_id and f.requester = new.challenge_target))
+    ) and not exists (
+      select 1 from duels d
+       where (d.challenger = new.profile_id and d.defender = new.challenge_target)
+          or (d.defender = new.profile_id and d.challenger = new.challenge_target)
+    ) then
+      raise exception 'a challenge goes to a friend or a past opponent';
+    end if;
+    if (
+      select count(*) from sets s
+       where s.profile_id = new.profile_id
+         and s.challenge_target is not null
+         and s.created_at > now() - interval '1 day'
+    ) >= 15 or (
+      select count(*) from sets s
+       where s.profile_id = new.profile_id
+         and s.challenge_target = new.challenge_target
+         and s.created_at > now() - interval '1 day'
+    ) >= 3 then
+      raise exception 'that is enough challenges for today';
+    end if;
+  end if;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists sets_guard_new on sets;
+create trigger sets_guard_new
+  before insert on sets
+  for each row execute function guard_new_set();
+
 -- ──────────────────────────────── duels ──────────────────────────────────────
 
 create table if not exists duels (
@@ -325,12 +424,20 @@ alter table profiles enable row level security;
 alter table sets     enable row level security;
 alter table duels    enable row level security;
 
--- Anyone signed in can read any profile: that is what a leaderboard is.
+-- A lifter reads their own row, and only their own. Everybody else is seen
+-- through the functions that draw the board, a friends list or a profile
+-- card, each of which hands back the columns that screen shows and keeps the
+-- rest — when somebody was last online, a country they asked to hide, the
+-- notices they turned off, whether they asked to be left off the boards.
+-- Every row used to be readable whole by anyone signed in, which a guest
+-- account is, and which made each of those settings a request rather than a
+-- rule.
 drop policy if exists "profiles are public to signed-in lifters" on profiles;
-create policy "profiles are public to signed-in lifters"
+drop policy if exists "a lifter reads their own profile" on profiles;
+create policy "a lifter reads their own profile"
   on profiles for select
   to authenticated
-  using (true);
+  using (auth.uid() = id);
 
 drop policy if exists "a lifter creates their own profile" on profiles;
 create policy "a lifter creates their own profile"
@@ -472,7 +579,13 @@ begin
 
   -- Renamed rather than refused: refusing would leave a brand-new lifter
   -- with no account and no idea why. The one rename is still theirs to spend.
-  if username_not_allowed(new.username) then
+  --
+  -- The same letters set_my_username allows, plus the underscore the app's
+  -- own first name for a guest has in it. Anything else is a name nobody
+  -- could type into a search — or one built to look like somebody else's
+  -- out of characters that only resemble theirs.
+  if username_not_allowed(new.username)
+     or new.username !~ '^[A-Za-z0-9_]{2,20}$' then
     new.username := 'lifter' || substr(replace(new.id::text, '-', ''), 1, 6);
   end if;
   return new;
@@ -624,9 +737,113 @@ create policy "a lifter files their own reports"
   to authenticated
   with check (auth.uid() = reporter);
 
+-- Each report emails whoever answers them (functions/report-alert), so an
+-- account that files them in a loop fills an inbox. Past ten a day, or a
+-- second one about the same account the same day, the report is quietly not
+-- stored: the reporter sees it go through, and the inbox sees nothing new.
+-- Runs as the caller, who can see nothing of this table, so the counting
+-- goes through count_my_reports below.
+create or replace function count_my_reports(about uuid)
+returns table (today int, about_them int)
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select count(*)::int,
+         (count(*) filter (where r.reported = about))::int
+    from reports r
+   where r.reporter = auth.uid()
+     and r.created_at > now() - interval '1 day';
+$$;
+
+revoke all on function count_my_reports(uuid) from public, anon;
+grant execute on function count_my_reports(uuid) to authenticated;
+
+create or replace function guard_new_report()
+returns trigger
+language plpgsql
+as $$
+declare
+  counted record;
+begin
+  if current_user not in ('authenticated', 'anon') then
+    return new;
+  end if;
+  new.created_at := now();
+  select * into counted from count_my_reports(new.reported);
+  if counted.today >= 10 or counted.about_them >= 1 then
+    return null;
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists reports_guard_new on reports;
+create trigger reports_guard_new
+  before insert on reports
+  for each row execute function guard_new_report();
+
 -- Deliberately no select policy. Filing a report does not entitle anybody to
 -- read reports, including their own — there is nothing useful in reading it
 -- back, and a readable pile is one more thing to leak.
+
+-- ─────────────────────────────── how often ─────────────────────────────────────
+
+-- Things a lifter does that land on somebody else's phone or in somebody's
+-- inbox — a friend request, a live invite, an emailed export — and so must
+-- not be repeatable without end. One row each time one goes through; nothing
+-- reads or writes this table but within_rate below.
+create table if not exists rate_events (
+  profile_id uuid not null references profiles on delete cascade,
+  kind       text not null,
+  target     uuid,
+  at         timestamptz not null default now()
+);
+
+create index if not exists rate_events_idx
+  on rate_events (profile_id, kind, at desc);
+
+alter table rate_events enable row level security;
+
+-- Whether the caller may do [what] once more: fewer than [most] in the last
+-- [per] — counted toward [toward] alone when one is given. Counts this one
+-- if so. Only the server's own functions call it; nothing a phone can reach.
+create or replace function within_rate(
+  what text,
+  per interval,
+  most int,
+  toward uuid default null
+)
+returns boolean
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  used int;
+begin
+  if auth.uid() is null then
+    return false;
+  end if;
+  delete from rate_events
+   where profile_id = auth.uid() and at < now() - interval '2 days';
+  select count(*) into used from rate_events
+   where profile_id = auth.uid()
+     and kind = what
+     and at > now() - per
+     and (toward is null or target = toward);
+  if used >= most then
+    return false;
+  end if;
+  insert into rate_events (profile_id, kind, target)
+  values (auth.uid(), what, toward);
+  return true;
+end;
+$$;
+
+revoke all on function within_rate(text, interval, int, uuid)
+  from public, anon, authenticated;
 
 -- ──────────────────────────────── avatars ─────────────────────────────────────
 
@@ -651,18 +868,32 @@ update storage.buckets
        allowed_mime_types = array['image/jpeg', 'image/png', 'image/webp']
  where id = 'avatars';
 
+-- Drawn from the bucket's public address, which serves any photo to anybody
+-- holding its link without asking the policies at all. What a policy here
+-- controls is listing the bucket through the API — every account with a
+-- photo, by id — so it reaches the lifter's own file and nothing else. The
+-- upload replaces that file in place, and replacing needs to see it.
 drop policy if exists "avatars are public to read" on storage.objects;
-create policy "avatars are public to read"
+drop policy if exists "a lifter sees their own avatar file" on storage.objects;
+create policy "a lifter sees their own avatar file"
   on storage.objects for select
-  using (bucket_id = 'avatars');
+  to authenticated
+  using (
+    bucket_id = 'avatars'
+    and name = auth.uid()::text || '/photo.jpg'
+  );
 
+-- One file per account, at the one path the app writes: `<id>/photo.jpg`.
+-- The folder alone was the rule before, which let an account fill its folder
+-- with as many public files as it liked, under any names — free hosting on
+-- this project's bill and its domain.
 drop policy if exists "a lifter uploads their own avatar" on storage.objects;
 create policy "a lifter uploads their own avatar"
   on storage.objects for insert
   to authenticated
   with check (
     bucket_id = 'avatars'
-    and (storage.foldername(name))[1] = auth.uid()::text
+    and name = auth.uid()::text || '/photo.jpg'
   );
 
 drop policy if exists "a lifter replaces their own avatar" on storage.objects;
@@ -671,7 +902,11 @@ create policy "a lifter replaces their own avatar"
   to authenticated
   using (
     bucket_id = 'avatars'
-    and (storage.foldername(name))[1] = auth.uid()::text
+    and name = auth.uid()::text || '/photo.jpg'
+  )
+  with check (
+    bucket_id = 'avatars'
+    and name = auth.uid()::text || '/photo.jpg'
   );
 
 drop policy if exists "a lifter deletes their own avatar" on storage.objects;

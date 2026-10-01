@@ -9,6 +9,26 @@
 -- argument is treated as hostile, and the caller's identity comes from
 -- `auth.uid()` rather than from anything they passed in.
 
+-- ─────────────────────────────── what was offered ───────────────────────────────
+
+-- Which stored set was handed to whom, and how. settle_duel only settles a
+-- set against the one it was raced against, and this is how it knows: the
+-- pool's rules — near your level, never the same two twice, blocks, mutes,
+-- who agreed to be challenged — are all decided in the two find_ functions,
+-- and a set id the phone simply names went around every one of them. With
+-- nothing but an id, a second account could store sets of nothing and be
+-- beaten by the first over and over, for as much LP as anybody liked.
+create table if not exists set_offers (
+  set_id      uuid not null references sets on delete cascade,
+  offered_to  uuid not null references profiles on delete cascade,
+  offered_at  timestamptz not null default now(),
+  -- Handed out by find_targeted_set: a rematch, which never moves a rank.
+  targeted    boolean not null default false,
+  primary key (set_id, offered_to)
+);
+
+alter table set_offers enable row level security;
+
 -- ───────────────────────────── finding somebody ──────────────────────────────
 
 -- A stored set from somebody near your level that you have not faced.
@@ -32,6 +52,7 @@ set search_path = public
 as $$
 declare
   me profiles;
+  found_set record;
 begin
   -- Only a subscriber plays (see subscriptions.sql; off until switched on).
   perform require_pro();
@@ -40,8 +61,9 @@ begin
     raise exception 'no profile for this account';
   end if;
 
-  return query
-  select s.id, p.id, p.username, p.tier_idx, p.div_idx, s.reps, s.rep_times
+  select s.id as set_id, p.id as profile_id, p.username, p.tier_idx,
+         p.div_idx, s.reps, s.rep_times
+    into found_set
   from sets s
   join profiles p on p.id = s.profile_id
   where s.claimed_by is null
@@ -94,6 +116,25 @@ begin
   -- been forgotten about, and its owner is owed a result.
   order by s.created_at
   limit 1;
+
+  if not found then
+    return;
+  end if;
+
+  -- Written down, so settle_duel can tell this set was handed out here. The
+  -- conflict is named by its constraint: `set_id` is also one of this
+  -- function's output columns, and plpgsql reads a bare one as ambiguous.
+  -- Offers a day old were never raced, and go.
+  delete from set_offers o
+   where o.offered_to = me.id and o.offered_at < now() - interval '1 day';
+  insert into set_offers (set_id, offered_to, targeted)
+  values (found_set.set_id, me.id, false)
+  on conflict on constraint set_offers_pkey do update
+    set offered_at = now(), targeted = false;
+
+  return query select found_set.set_id, found_set.profile_id,
+                      found_set.username, found_set.tier_idx,
+                      found_set.div_idx, found_set.reps, found_set.rep_times;
 end;
 $$;
 
@@ -119,11 +160,14 @@ language plpgsql
 security definer
 set search_path = public
 as $$
+declare
+  found_set record;
 begin
   -- Only a subscriber plays (see subscriptions.sql; off until switched on).
   perform require_pro();
-  return query
-  select s.id, p.id, p.username, p.tier_idx, p.div_idx, s.reps, s.rep_times
+  select s.id as set_id, p.id as profile_id, p.username, p.tier_idx,
+         p.div_idx, s.reps, s.rep_times
+    into found_set
   from sets s
   join profiles p on p.id = s.profile_id
   where s.claimed_by is null
@@ -137,6 +181,20 @@ begin
     )
   order by s.created_at desc
   limit 1;
+
+  if not found then
+    return;
+  end if;
+
+  -- A rematch: settle_duel will settle it, and will not let it move a rank.
+  insert into set_offers (set_id, offered_to, targeted)
+  values (found_set.set_id, auth.uid(), true)
+  on conflict on constraint set_offers_pkey do update
+    set offered_at = now(), targeted = true;
+
+  return query select found_set.set_id, found_set.profile_id,
+                      found_set.username, found_set.tier_idx,
+                      found_set.div_idx, found_set.reps, found_set.rep_times;
 end;
 $$;
 
@@ -218,6 +276,7 @@ declare
   their_placing boolean;
   my_delta int;
   their_delta int;
+  offer set_offers;
 begin
   -- Only a subscriber plays (see subscriptions.sql; off until switched on).
   perform require_pro();
@@ -237,6 +296,39 @@ begin
   end if;
   if mine.profile_id = theirs.profile_id then
     raise exception 'cannot duel yourself';
+  end if;
+
+  -- How the two sets met decides whether they may be settled at all, and
+  -- whether the result moves a rank. Not the `ranked` the phone sends: that
+  -- is only ever allowed to make a duel *less* than what it was.
+  if mine.live_match is not null or theirs.live_match is not null then
+    -- Lifted against each other on camera. Only live.sql writes live_match,
+    -- and it writes the same one into both sets of a match.
+    if mine.live_match is distinct from theirs.live_match then
+      raise exception 'these sets were not raced against each other';
+    end if;
+    select lm.ranked into is_ranked
+      from live_matches lm where lm.id = mine.live_match;
+    is_ranked := coalesce(is_ranked, false);
+  else
+    -- Raced from the pool or from a challenge: their set has to be one the
+    -- find_ functions handed this account, recently, and this account's set
+    -- the one lifted after it.
+    select * into offer from set_offers o
+     where o.set_id = theirs.id
+       and o.offered_to = auth.uid()
+       and o.offered_at > now() - interval '2 hours';
+    if not found then
+      raise exception 'that set was never handed to you';
+    end if;
+    if mine.created_at < offer.offered_at then
+      raise exception 'your set has to be the one lifted against theirs';
+    end if;
+    -- A rematch never moves a rank: two people who can arrange rematches
+    -- between themselves could otherwise arrange each other's LP.
+    if offer.targeted then
+      is_ranked := false;
+    end if;
   end if;
 
   select * into me   from profiles where id = mine.profile_id   for update;
@@ -352,6 +444,7 @@ begin
   ) returning id into d_id;
 
   update sets set claimed_by = d_id where id in (mine.id, theirs.id);
+  delete from set_offers o where o.set_id in (mine.id, theirs.id);
 
   perform set_config('outrepd.settling', 'off', true);
 

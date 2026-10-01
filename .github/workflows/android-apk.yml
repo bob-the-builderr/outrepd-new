@@ -388,8 +388,39 @@ jobs:
     timeout-minutes: 45
     permissions:
       contents: write
+    # A bare Postgres, so the server's SQL is run for real before anybody
+    # pastes it into the project: installed twice over (it is pasted again
+    # after every change), then attacked by tool/db/security_test.sql.
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready --health-interval 5s
+          --health-timeout 5s --health-retries 12
     steps:
       - uses: actions/checkout@v4
+
+      - name: Server
+        id: server
+        continue-on-error: true
+        run: |
+          mkdir -p "$RUNNER_TEMP/ci"
+          set -o pipefail
+          db=postgresql://postgres:postgres@localhost:5432/postgres
+          # pg_net is Supabase's; stubs.sql stands in for the one call made.
+          sed '/create extension if not exists pg_net/d' supabase/install.sql \
+            > "$RUNNER_TEMP/install.sql"
+          {
+            psql "$db" -v ON_ERROR_STOP=1 -q -f tool/db/stubs.sql &&
+            psql "$db" -v ON_ERROR_STOP=1 -q -f "$RUNNER_TEMP/install.sql" &&
+            echo "installed once" &&
+            psql "$db" -v ON_ERROR_STOP=1 -q -f "$RUNNER_TEMP/install.sql" &&
+            echo "installed twice" &&
+            psql "$db" -v ON_ERROR_STOP=1 -f tool/db/security_test.sql
+          } 2>&1 | tee "$RUNNER_TEMP/ci/server.txt"
 
       - uses: subosito/flutter-action@v2
         with:
@@ -443,6 +474,7 @@ jobs:
             echo "analyze  ${{ steps.analyze.outcome }}"
             echo "test     ${{ steps.test.outcome }}"
             echo "shots    ${{ steps.shots.outcome }}"
+            echo "server   ${{ steps.server.outcome }}"
             echo "run      ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           } > "$out/summary.txt"
 
@@ -467,7 +499,7 @@ jobs:
           git -C "$work" push -q origin ci-results
 
       - name: Fail if the checks failed
-        if: steps.analyze.outcome != 'success' || steps.test.outcome != 'success'
+        if: steps.analyze.outcome != 'success' || steps.test.outcome != 'success' || steps.server.outcome != 'success'
         run: |
-          echo "analyze: ${{ steps.analyze.outcome }}  test: ${{ steps.test.outcome }}"
+          echo "analyze: ${{ steps.analyze.outcome }}  test: ${{ steps.test.outcome }}  server: ${{ steps.server.outcome }}"
           exit 1

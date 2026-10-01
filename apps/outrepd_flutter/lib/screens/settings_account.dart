@@ -35,7 +35,10 @@ class DownloadDataScreen extends StatefulWidget {
 }
 
 class _DownloadDataScreenState extends State<DownloadDataScreen> {
-  final _address = TextEditingController();
+  // The account's own address, already in: it is the only one the export
+  // goes to (functions/email-my-data), so asking for it would be asking the
+  // lifter to type the one answer that works.
+  final _address = TextEditingController(text: backend.accountEmail ?? '');
   bool _sending = false;
   bool _sent = false;
 

@@ -16,10 +16,14 @@
 -- What is *not* in here is as much the point as what is. There are no pose
 -- landmarks and no video: pose detection runs on the phone and the frames
 -- never leave it, so there is nothing on any server to hand back.
+-- Security definer: a friend's or a blocked account's name is read off a
+-- profile the caller cannot read directly. Every part is scoped to auth.uid().
 create or replace function my_data()
 returns jsonb
 language sql
 stable
+security definer
+set search_path = public
 as $$
   select jsonb_build_object(
     'exported_at', now(),
@@ -60,6 +64,21 @@ as $$
       select count(*) from reports r where r.reporter = auth.uid()
     ), 0)
   );
+$$;
+
+-- Whether the export may be emailed once more today. Asked by the
+-- email-my-data function, with the caller's own sign-in, before it sends:
+-- three a day is plenty for anybody's own copy, and the function's sender is
+-- this project's, which mail services judge by how much it sends.
+create or replace function claim_data_export()
+returns boolean
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  return within_rate('data_export', interval '1 day', 3);
+end;
 $$;
 
 -- What is about to be lost, for the screen that asks whether you are sure.
@@ -122,6 +141,8 @@ create or replace function username_available(name text)
 returns boolean
 language sql
 stable
+security definer
+set search_path = public
 as $$
   select not exists (
     select 1 from profiles where lower(username) = lower(trim(name))
@@ -140,9 +161,13 @@ $$;
 -- reads off a leaderboard or types into a search box, not a display name —
 -- no spaces or punctuation to type around, no length short enough to be
 -- somebody else by accident.
+-- Security definer: whether a name is taken means looking at everybody's,
+-- and a lifter can only read their own row. It writes only the caller's.
 create or replace function set_my_username(new_name text)
 returns text
 language plpgsql
+security definer
+set search_path = public
 as $$
 declare
   cleaned text := trim(new_name);
@@ -186,6 +211,8 @@ $$;
 
 revoke all on function my_data() from public;
 grant execute on function my_data() to authenticated;
+revoke all on function claim_data_export() from public, anon;
+grant execute on function claim_data_export() to authenticated;
 revoke all on function my_account_summary() from public;
 grant execute on function my_account_summary() to authenticated;
 revoke all on function delete_my_account() from public;

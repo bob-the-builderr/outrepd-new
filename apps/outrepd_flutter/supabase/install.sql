@@ -264,9 +264,13 @@ create index if not exists profiles_ladder_idx
 -- being one. Usernames are already unique, so this is not for telling two
 -- lifters apart — it is for adding one without having to hand over the name
 -- shown on the ladder to do it.
+-- Security definer because it has to see every code already taken, and a
+-- lifter can only read their own row.
 create or replace function generate_friend_code()
 returns text
 language plpgsql
+security definer
+set search_path = public
 as $$
 declare
   candidate text;
@@ -402,6 +406,101 @@ create trigger sets_count_reps
   after insert on sets
   for each row execute function count_reps_of_set();
 
+-- What a minute can hold. Nobody does a push-up in under 0.3 seconds — the
+-- counter itself waits 0.35 between reps — and no set the app records runs
+-- past a minute and a bit. A count beyond either is not a set anybody lifted,
+-- and LP is paid in reps. NOT VALID: it holds every set from here on and
+-- leaves rows already stored alone.
+alter table sets drop constraint if exists sets_reps_fit_the_time;
+alter table sets add constraint sets_reps_fit_the_time
+  check (reps * 300 <= duration_ms + 1000
+         and reps_camera * 300 <= duration_ms + 1000
+         and duration_ms <= 75000) not valid;
+
+-- A set the phone sends itself. The phone says what was lifted; everything
+-- else about the row is the server's to decide:
+--
+--   * when it was stored — "oldest first" decides whose set the pool hands
+--     out next, and a date the client chose would jump the queue;
+--   * that nobody has raced it yet, and that it was not part of a live match
+--     — those are written by settle_duel and live.sql, never sent;
+--   * who a challenge may name: a friend, or somebody this account has
+--     already raced. A challenge is a notice and a push on the other phone,
+--     and a stranger picked out of a search is not somebody to send one to.
+--
+-- And how often. A set is a minute of push-ups, so a phone sending them
+-- seconds apart is not lifting them, and every set adds to the totals on the
+-- profile and every challenge buzzes somebody's phone.
+--
+-- Runs as the caller, not as the definer: sets written by settle_duel's and
+-- live.sql's own functions arrive as the database owner and pass untouched.
+create or replace function guard_new_set()
+returns trigger
+language plpgsql
+as $$
+begin
+  if current_user not in ('authenticated', 'anon') then
+    return new;
+  end if;
+
+  new.created_at := now();
+  new.claimed_by := null;
+  new.live_match := null;
+
+  if exists (
+    select 1 from sets s
+     where s.profile_id = new.profile_id
+       and s.created_at > now() - interval '8 seconds'
+  ) or (
+    select count(*) from sets s
+     where s.profile_id = new.profile_id
+       and s.created_at > now() - interval '1 hour'
+  ) >= 40 then
+    raise exception 'sets are arriving faster than anybody lifts them';
+  end if;
+
+  if new.challenge_target is not null then
+    if new.challenge_target = new.profile_id then
+      raise exception 'cannot challenge yourself';
+    end if;
+    -- Both are read through the caller's own rows, which is all a lifter
+    -- can see of either table: their own friendships and their own duels.
+    if not exists (
+      select 1 from friendships f
+       where f.accepted_at is not null
+         and ((f.requester = new.profile_id and f.addressee = new.challenge_target)
+           or (f.addressee = new.profile_id and f.requester = new.challenge_target))
+    ) and not exists (
+      select 1 from duels d
+       where (d.challenger = new.profile_id and d.defender = new.challenge_target)
+          or (d.defender = new.profile_id and d.challenger = new.challenge_target)
+    ) then
+      raise exception 'a challenge goes to a friend or a past opponent';
+    end if;
+    if (
+      select count(*) from sets s
+       where s.profile_id = new.profile_id
+         and s.challenge_target is not null
+         and s.created_at > now() - interval '1 day'
+    ) >= 15 or (
+      select count(*) from sets s
+       where s.profile_id = new.profile_id
+         and s.challenge_target = new.challenge_target
+         and s.created_at > now() - interval '1 day'
+    ) >= 3 then
+      raise exception 'that is enough challenges for today';
+    end if;
+  end if;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists sets_guard_new on sets;
+create trigger sets_guard_new
+  before insert on sets
+  for each row execute function guard_new_set();
+
 -- ──────────────────────────────── duels ──────────────────────────────────────
 
 create table if not exists duels (
@@ -437,12 +536,20 @@ alter table profiles enable row level security;
 alter table sets     enable row level security;
 alter table duels    enable row level security;
 
--- Anyone signed in can read any profile: that is what a leaderboard is.
+-- A lifter reads their own row, and only their own. Everybody else is seen
+-- through the functions that draw the board, a friends list or a profile
+-- card, each of which hands back the columns that screen shows and keeps the
+-- rest — when somebody was last online, a country they asked to hide, the
+-- notices they turned off, whether they asked to be left off the boards.
+-- Every row used to be readable whole by anyone signed in, which a guest
+-- account is, and which made each of those settings a request rather than a
+-- rule.
 drop policy if exists "profiles are public to signed-in lifters" on profiles;
-create policy "profiles are public to signed-in lifters"
+drop policy if exists "a lifter reads their own profile" on profiles;
+create policy "a lifter reads their own profile"
   on profiles for select
   to authenticated
-  using (true);
+  using (auth.uid() = id);
 
 drop policy if exists "a lifter creates their own profile" on profiles;
 create policy "a lifter creates their own profile"
@@ -584,7 +691,13 @@ begin
 
   -- Renamed rather than refused: refusing would leave a brand-new lifter
   -- with no account and no idea why. The one rename is still theirs to spend.
-  if username_not_allowed(new.username) then
+  --
+  -- The same letters set_my_username allows, plus the underscore the app's
+  -- own first name for a guest has in it. Anything else is a name nobody
+  -- could type into a search — or one built to look like somebody else's
+  -- out of characters that only resemble theirs.
+  if username_not_allowed(new.username)
+     or new.username !~ '^[A-Za-z0-9_]{2,20}$' then
     new.username := 'lifter' || substr(replace(new.id::text, '-', ''), 1, 6);
   end if;
   return new;
@@ -736,9 +849,113 @@ create policy "a lifter files their own reports"
   to authenticated
   with check (auth.uid() = reporter);
 
+-- Each report emails whoever answers them (functions/report-alert), so an
+-- account that files them in a loop fills an inbox. Past ten a day, or a
+-- second one about the same account the same day, the report is quietly not
+-- stored: the reporter sees it go through, and the inbox sees nothing new.
+-- Runs as the caller, who can see nothing of this table, so the counting
+-- goes through count_my_reports below.
+create or replace function count_my_reports(about uuid)
+returns table (today int, about_them int)
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select count(*)::int,
+         (count(*) filter (where r.reported = about))::int
+    from reports r
+   where r.reporter = auth.uid()
+     and r.created_at > now() - interval '1 day';
+$$;
+
+revoke all on function count_my_reports(uuid) from public, anon;
+grant execute on function count_my_reports(uuid) to authenticated;
+
+create or replace function guard_new_report()
+returns trigger
+language plpgsql
+as $$
+declare
+  counted record;
+begin
+  if current_user not in ('authenticated', 'anon') then
+    return new;
+  end if;
+  new.created_at := now();
+  select * into counted from count_my_reports(new.reported);
+  if counted.today >= 10 or counted.about_them >= 1 then
+    return null;
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists reports_guard_new on reports;
+create trigger reports_guard_new
+  before insert on reports
+  for each row execute function guard_new_report();
+
 -- Deliberately no select policy. Filing a report does not entitle anybody to
 -- read reports, including their own — there is nothing useful in reading it
 -- back, and a readable pile is one more thing to leak.
+
+-- ─────────────────────────────── how often ─────────────────────────────────────
+
+-- Things a lifter does that land on somebody else's phone or in somebody's
+-- inbox — a friend request, a live invite, an emailed export — and so must
+-- not be repeatable without end. One row each time one goes through; nothing
+-- reads or writes this table but within_rate below.
+create table if not exists rate_events (
+  profile_id uuid not null references profiles on delete cascade,
+  kind       text not null,
+  target     uuid,
+  at         timestamptz not null default now()
+);
+
+create index if not exists rate_events_idx
+  on rate_events (profile_id, kind, at desc);
+
+alter table rate_events enable row level security;
+
+-- Whether the caller may do [what] once more: fewer than [most] in the last
+-- [per] — counted toward [toward] alone when one is given. Counts this one
+-- if so. Only the server's own functions call it; nothing a phone can reach.
+create or replace function within_rate(
+  what text,
+  per interval,
+  most int,
+  toward uuid default null
+)
+returns boolean
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  used int;
+begin
+  if auth.uid() is null then
+    return false;
+  end if;
+  delete from rate_events
+   where profile_id = auth.uid() and at < now() - interval '2 days';
+  select count(*) into used from rate_events
+   where profile_id = auth.uid()
+     and kind = what
+     and at > now() - per
+     and (toward is null or target = toward);
+  if used >= most then
+    return false;
+  end if;
+  insert into rate_events (profile_id, kind, target)
+  values (auth.uid(), what, toward);
+  return true;
+end;
+$$;
+
+revoke all on function within_rate(text, interval, int, uuid)
+  from public, anon, authenticated;
 
 -- ──────────────────────────────── avatars ─────────────────────────────────────
 
@@ -763,18 +980,32 @@ update storage.buckets
        allowed_mime_types = array['image/jpeg', 'image/png', 'image/webp']
  where id = 'avatars';
 
+-- Drawn from the bucket's public address, which serves any photo to anybody
+-- holding its link without asking the policies at all. What a policy here
+-- controls is listing the bucket through the API — every account with a
+-- photo, by id — so it reaches the lifter's own file and nothing else. The
+-- upload replaces that file in place, and replacing needs to see it.
 drop policy if exists "avatars are public to read" on storage.objects;
-create policy "avatars are public to read"
+drop policy if exists "a lifter sees their own avatar file" on storage.objects;
+create policy "a lifter sees their own avatar file"
   on storage.objects for select
-  using (bucket_id = 'avatars');
+  to authenticated
+  using (
+    bucket_id = 'avatars'
+    and name = auth.uid()::text || '/photo.jpg'
+  );
 
+-- One file per account, at the one path the app writes: `<id>/photo.jpg`.
+-- The folder alone was the rule before, which let an account fill its folder
+-- with as many public files as it liked, under any names — free hosting on
+-- this project's bill and its domain.
 drop policy if exists "a lifter uploads their own avatar" on storage.objects;
 create policy "a lifter uploads their own avatar"
   on storage.objects for insert
   to authenticated
   with check (
     bucket_id = 'avatars'
-    and (storage.foldername(name))[1] = auth.uid()::text
+    and name = auth.uid()::text || '/photo.jpg'
   );
 
 drop policy if exists "a lifter replaces their own avatar" on storage.objects;
@@ -783,7 +1014,11 @@ create policy "a lifter replaces their own avatar"
   to authenticated
   using (
     bucket_id = 'avatars'
-    and (storage.foldername(name))[1] = auth.uid()::text
+    and name = auth.uid()::text || '/photo.jpg'
+  )
+  with check (
+    bucket_id = 'avatars'
+    and name = auth.uid()::text || '/photo.jpg'
   );
 
 drop policy if exists "a lifter deletes their own avatar" on storage.objects;
@@ -999,24 +1234,14 @@ create policy "a lifter reads their own friendships"
   to authenticated
   using (auth.uid() = requester or auth.uid() = addressee);
 
--- You may only ever create a request as yourself. The functions below are the
--- intended door, but the policy is what actually holds: a client that skips
--- them and posts straight to the table still cannot invent an invitation from
--- somebody else.
+-- No insert and no update from the phone: asking goes through
+-- request_friend_with and answering through answer_friend, both below. The
+-- table used to take both directly, as long as the caller's own id was on
+-- the row — which let a phone write a request that arrived already accepted,
+-- skip the block check on the way, or, holding a request, rewrite who it was
+-- from and become friends with somebody who never asked.
 drop policy if exists "a lifter asks in their own name" on friendships;
-create policy "a lifter asks in their own name"
-  on friendships for insert
-  to authenticated
-  with check (auth.uid() = requester);
-
--- Only the person who was asked can accept. Accepting your own request would
--- make every friendship unilateral.
 drop policy if exists "only the asked may answer" on friendships;
-create policy "only the asked may answer"
-  on friendships for update
-  to authenticated
-  using (auth.uid() = addressee)
-  with check (auth.uid() = addressee);
 
 -- Either side can end it, and either side can withdraw a request that has
 -- not been answered.
@@ -1081,6 +1306,23 @@ begin
     return 'friends';
   end if;
 
+  -- Already asked, or already friends: nothing new to send.
+  if exists (
+    select 1 from friendships
+     where requester = auth.uid() and addressee = them
+  ) then
+    return 'asked';
+  end if;
+
+  -- Each request is a notice and a push on their phone. Withdrawn and sent
+  -- again, it is another one, so how often is counted: a few times a day to
+  -- any one lifter, and forty new people a day in all. Past that the answer
+  -- reads the same as a request that went — nothing is sent.
+  if not within_rate('friend_request_to', interval '1 day', 3, them)
+     or not within_rate('friend_request', interval '1 day', 40) then
+    return 'asked';
+  end if;
+
   insert into friendships (requester, addressee)
   values (auth.uid(), them)
   on conflict (requester, addressee) do nothing;
@@ -1143,9 +1385,13 @@ $$;
 -- Declining deletes the row rather than marking it: a declined request that
 -- lingers is a record of a small rejection kept on a server forever, and it
 -- would also stop them ever asking again.
+-- Security definer, since nothing on the phone may update the table itself;
+-- every write here names the caller as the one who was asked.
 create or replace function answer_friend(their_id uuid, accept boolean)
 returns text
 language plpgsql
+security definer
+set search_path = public
 as $$
 begin
   if accept then
@@ -1191,6 +1437,8 @@ returns table (
 )
 language sql
 stable
+security definer
+set search_path = public
 as $$
   with mine as (
     select case when f.requester = auth.uid() then f.addressee
@@ -1243,6 +1491,8 @@ returns table (
 )
 language sql
 stable
+security definer
+set search_path = public
 as $$
   select p.id, p.username, p.tier_idx, p.div_idx, f.created_at,
          p.placements_done, p.best_set, p.wins, p.losses, p.avatar_url
@@ -1353,6 +1603,8 @@ returns table (
 )
 language sql
 stable
+security definer
+set search_path = public
 as $$
   select p.id, p.username, b.created_at
     from blocks b
@@ -1402,6 +1654,8 @@ returns table (
 )
 language sql
 stable
+security definer
+set search_path = public
 as $$
   select p.id, p.username, m.created_at
     from mutes m
@@ -1442,6 +1696,8 @@ returns table (
 )
 language sql
 stable
+security definer
+set search_path = public
 as $$
   select p.id, p.username, p.tier_idx, p.div_idx, p.lp, p.wins, p.losses,
          p.avatar_url
@@ -1467,6 +1723,8 @@ create or replace function board_place(for_id uuid, in_country text default null
 returns int
 language sql
 stable
+security definer
+set search_path = public
 as $$
   select case
     when not exists (
@@ -1497,6 +1755,8 @@ create or replace function my_board_place(in_country text default null)
 returns int
 language sql
 stable
+security definer
+set search_path = public
 as $$
   select board_place(auth.uid(), in_country);
 $$;
@@ -1572,8 +1832,12 @@ begin
   select
     p.id, p.username, p.tier_idx, p.div_idx, p.lp, p.placements_done,
     p.total_reps, p.best_set, p.wins, p.losses, p.win_streak,
-    board_place(p.id, null), p.country,
-    case when p.country is null then null else board_place(p.id, p.country) end,
+    -- Their country only if they chose to show it: the setting says "show
+    -- my country", and a card that showed it anyway would make it a lie.
+    board_place(p.id, null),
+    case when p.show_country then p.country end,
+    case when p.country is null or not p.show_country then null
+         else board_place(p.id, p.country) end,
     exists (
       select 1 from friendships f
        where f.accepted_at is not null
@@ -1639,8 +1903,10 @@ begin
   select
     who.username, who.tier_idx, who.div_idx, who.lp, who.wins, who.losses,
     who.best_set, who.win_streak,
-    board_place(who.id, null), who.country,
-    case when who.country is null then null else board_place(who.id, who.country) end,
+    board_place(who.id, null),
+    case when who.show_country then who.country end,
+    case when who.country is null or not who.show_country then null
+         else board_place(who.id, who.country) end,
     who.avatar_url;
 end;
 $$;
@@ -1700,6 +1966,26 @@ grant execute on function public_lifter_card(text) to anon, authenticated;
 -- argument is treated as hostile, and the caller's identity comes from
 -- `auth.uid()` rather than from anything they passed in.
 
+-- ─────────────────────────────── what was offered ───────────────────────────────
+
+-- Which stored set was handed to whom, and how. settle_duel only settles a
+-- set against the one it was raced against, and this is how it knows: the
+-- pool's rules — near your level, never the same two twice, blocks, mutes,
+-- who agreed to be challenged — are all decided in the two find_ functions,
+-- and a set id the phone simply names went around every one of them. With
+-- nothing but an id, a second account could store sets of nothing and be
+-- beaten by the first over and over, for as much LP as anybody liked.
+create table if not exists set_offers (
+  set_id      uuid not null references sets on delete cascade,
+  offered_to  uuid not null references profiles on delete cascade,
+  offered_at  timestamptz not null default now(),
+  -- Handed out by find_targeted_set: a rematch, which never moves a rank.
+  targeted    boolean not null default false,
+  primary key (set_id, offered_to)
+);
+
+alter table set_offers enable row level security;
+
 -- ───────────────────────────── finding somebody ──────────────────────────────
 
 -- A stored set from somebody near your level that you have not faced.
@@ -1723,6 +2009,7 @@ set search_path = public
 as $$
 declare
   me profiles;
+  found_set record;
 begin
   -- Only a subscriber plays (see subscriptions.sql; off until switched on).
   perform require_pro();
@@ -1731,8 +2018,9 @@ begin
     raise exception 'no profile for this account';
   end if;
 
-  return query
-  select s.id, p.id, p.username, p.tier_idx, p.div_idx, s.reps, s.rep_times
+  select s.id as set_id, p.id as profile_id, p.username, p.tier_idx,
+         p.div_idx, s.reps, s.rep_times
+    into found_set
   from sets s
   join profiles p on p.id = s.profile_id
   where s.claimed_by is null
@@ -1785,6 +2073,25 @@ begin
   -- been forgotten about, and its owner is owed a result.
   order by s.created_at
   limit 1;
+
+  if not found then
+    return;
+  end if;
+
+  -- Written down, so settle_duel can tell this set was handed out here. The
+  -- conflict is named by its constraint: `set_id` is also one of this
+  -- function's output columns, and plpgsql reads a bare one as ambiguous.
+  -- Offers a day old were never raced, and go.
+  delete from set_offers o
+   where o.offered_to = me.id and o.offered_at < now() - interval '1 day';
+  insert into set_offers (set_id, offered_to, targeted)
+  values (found_set.set_id, me.id, false)
+  on conflict on constraint set_offers_pkey do update
+    set offered_at = now(), targeted = false;
+
+  return query select found_set.set_id, found_set.profile_id,
+                      found_set.username, found_set.tier_idx,
+                      found_set.div_idx, found_set.reps, found_set.rep_times;
 end;
 $$;
 
@@ -1810,11 +2117,14 @@ language plpgsql
 security definer
 set search_path = public
 as $$
+declare
+  found_set record;
 begin
   -- Only a subscriber plays (see subscriptions.sql; off until switched on).
   perform require_pro();
-  return query
-  select s.id, p.id, p.username, p.tier_idx, p.div_idx, s.reps, s.rep_times
+  select s.id as set_id, p.id as profile_id, p.username, p.tier_idx,
+         p.div_idx, s.reps, s.rep_times
+    into found_set
   from sets s
   join profiles p on p.id = s.profile_id
   where s.claimed_by is null
@@ -1828,6 +2138,20 @@ begin
     )
   order by s.created_at desc
   limit 1;
+
+  if not found then
+    return;
+  end if;
+
+  -- A rematch: settle_duel will settle it, and will not let it move a rank.
+  insert into set_offers (set_id, offered_to, targeted)
+  values (found_set.set_id, auth.uid(), true)
+  on conflict on constraint set_offers_pkey do update
+    set offered_at = now(), targeted = true;
+
+  return query select found_set.set_id, found_set.profile_id,
+                      found_set.username, found_set.tier_idx,
+                      found_set.div_idx, found_set.reps, found_set.rep_times;
 end;
 $$;
 
@@ -1909,6 +2233,7 @@ declare
   their_placing boolean;
   my_delta int;
   their_delta int;
+  offer set_offers;
 begin
   -- Only a subscriber plays (see subscriptions.sql; off until switched on).
   perform require_pro();
@@ -1928,6 +2253,39 @@ begin
   end if;
   if mine.profile_id = theirs.profile_id then
     raise exception 'cannot duel yourself';
+  end if;
+
+  -- How the two sets met decides whether they may be settled at all, and
+  -- whether the result moves a rank. Not the `ranked` the phone sends: that
+  -- is only ever allowed to make a duel *less* than what it was.
+  if mine.live_match is not null or theirs.live_match is not null then
+    -- Lifted against each other on camera. Only live.sql writes live_match,
+    -- and it writes the same one into both sets of a match.
+    if mine.live_match is distinct from theirs.live_match then
+      raise exception 'these sets were not raced against each other';
+    end if;
+    select lm.ranked into is_ranked
+      from live_matches lm where lm.id = mine.live_match;
+    is_ranked := coalesce(is_ranked, false);
+  else
+    -- Raced from the pool or from a challenge: their set has to be one the
+    -- find_ functions handed this account, recently, and this account's set
+    -- the one lifted after it.
+    select * into offer from set_offers o
+     where o.set_id = theirs.id
+       and o.offered_to = auth.uid()
+       and o.offered_at > now() - interval '2 hours';
+    if not found then
+      raise exception 'that set was never handed to you';
+    end if;
+    if mine.created_at < offer.offered_at then
+      raise exception 'your set has to be the one lifted against theirs';
+    end if;
+    -- A rematch never moves a rank: two people who can arrange rematches
+    -- between themselves could otherwise arrange each other's LP.
+    if offer.targeted then
+      is_ranked := false;
+    end if;
   end if;
 
   select * into me   from profiles where id = mine.profile_id   for update;
@@ -2043,6 +2401,7 @@ begin
   ) returning id into d_id;
 
   update sets set claimed_by = d_id where id in (mine.id, theirs.id);
+  delete from set_offers o where o.set_id in (mine.id, theirs.id);
 
   perform set_config('outrepd.settling', 'off', true);
 
@@ -2291,6 +2650,17 @@ begin
     return new;
   end if;
 
+  -- Blocked either way round: the set is stored, find_targeted_set will
+  -- never hand it over, and nobody is told — the one who sent it least of
+  -- all, since a block is not announced.
+  if exists (
+    select 1 from blocks b
+     where (b.blocker = new.challenge_target and b.blocked = new.profile_id)
+        or (b.blocker = new.profile_id and b.blocked = new.challenge_target)
+  ) then
+    return new;
+  end if;
+
   select username into challenger_name from profiles where id = new.profile_id;
   insert into notifications (profile_id, kind, actor, actor_name)
   values (new.challenge_target, 'challenged', new.profile_id,
@@ -2309,11 +2679,9 @@ create trigger sets_notify_challenged
 -- Mine, newest first.
 --
 -- Dropped first: Postgres refuses `create or replace` when a table-returning
--- function's column set changes shape (adding `actor` did), and fails with a
--- "cannot change return type" error that names DROP as the fix.
-drop function if exists my_notifications(int);
--- Dropped first: it gained a column, and Postgres will not change what an
--- existing function returns in place.
+-- function's column set changes shape (adding `actor` and `lp_delta` did),
+-- and fails with a "cannot change return type" error that names DROP as the
+-- fix.
 drop function if exists my_notifications(int);
 create or replace function my_notifications(limit_to int default 50)
 returns table (
@@ -2742,6 +3110,13 @@ begin
     raise exception 'only a friend can be invited live';
   end if;
 
+  -- Every invite is a push on their phone, and cancelling one and sending
+  -- another is a second: three to one friend in ten minutes, six in all.
+  if not within_rate('live_invite_to', interval '10 minutes', 3, friend_id)
+     or not within_rate('live_invite', interval '10 minutes', 6) then
+    raise exception 'too many invites, wait a few minutes';
+  end if;
+
   update live_matches lm set status = 'cancelled'
    where lm.a = me.id and lm.status = 'invited';
 
@@ -3136,11 +3511,13 @@ begin
      and (case when i_am_a then m.a_set else m.b_set end) is not null
      and (case when i_am_a then m.b_set else m.a_set end) is null
      and m.starts_at + interval '100 seconds' < now() then
+    -- At most what a minute holds (sets_reps_fit_the_time, schema.sql): the
+    -- count came from their phone, and the stand-in is stored as a minute.
     insert into sets (profile_id, reps, reps_camera, depth, confident,
                       duration_ms, gave_up, rep_times, live_match)
     values (case when i_am_a then m.b else m.a end,
-            case when i_am_a then m.b_reps else m.a_reps end,
-            case when i_am_a then m.b_reps else m.a_reps end,
+            least(case when i_am_a then m.b_reps else m.a_reps end, 200),
+            least(case when i_am_a then m.b_reps else m.a_reps end, 200),
             0, false, 60000, false, '{}', m.id)
     returning id into stand_in;
     if i_am_a then
@@ -3209,10 +3586,14 @@ grant execute on function live_match_result(uuid) to authenticated;
 -- What is *not* in here is as much the point as what is. There are no pose
 -- landmarks and no video: pose detection runs on the phone and the frames
 -- never leave it, so there is nothing on any server to hand back.
+-- Security definer: a friend's or a blocked account's name is read off a
+-- profile the caller cannot read directly. Every part is scoped to auth.uid().
 create or replace function my_data()
 returns jsonb
 language sql
 stable
+security definer
+set search_path = public
 as $$
   select jsonb_build_object(
     'exported_at', now(),
@@ -3253,6 +3634,21 @@ as $$
       select count(*) from reports r where r.reporter = auth.uid()
     ), 0)
   );
+$$;
+
+-- Whether the export may be emailed once more today. Asked by the
+-- email-my-data function, with the caller's own sign-in, before it sends:
+-- three a day is plenty for anybody's own copy, and the function's sender is
+-- this project's, which mail services judge by how much it sends.
+create or replace function claim_data_export()
+returns boolean
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  return within_rate('data_export', interval '1 day', 3);
+end;
 $$;
 
 -- What is about to be lost, for the screen that asks whether you are sure.
@@ -3315,6 +3711,8 @@ create or replace function username_available(name text)
 returns boolean
 language sql
 stable
+security definer
+set search_path = public
 as $$
   select not exists (
     select 1 from profiles where lower(username) = lower(trim(name))
@@ -3333,9 +3731,13 @@ $$;
 -- reads off a leaderboard or types into a search box, not a display name —
 -- no spaces or punctuation to type around, no length short enough to be
 -- somebody else by accident.
+-- Security definer: whether a name is taken means looking at everybody's,
+-- and a lifter can only read their own row. It writes only the caller's.
 create or replace function set_my_username(new_name text)
 returns text
 language plpgsql
+security definer
+set search_path = public
 as $$
 declare
   cleaned text := trim(new_name);
@@ -3379,6 +3781,8 @@ $$;
 
 revoke all on function my_data() from public;
 grant execute on function my_data() to authenticated;
+revoke all on function claim_data_export() from public, anon;
+grant execute on function claim_data_export() to authenticated;
 revoke all on function my_account_summary() from public;
 grant execute on function my_account_summary() to authenticated;
 revoke all on function delete_my_account() from public;

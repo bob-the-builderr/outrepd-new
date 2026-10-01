@@ -121,7 +121,10 @@ class SupabaseBackend implements Backend {
           'reps_camera': set.repsCamera,
           'depth': set.depth,
           'confident': set.confident,
-          'duration_ms': set.durationMs,
+          // At least a millisecond: a round given up before it started
+          // never ran its clock, and a zero is refused (duration_ms > 0) —
+          // which would leave the forfeit off the server entirely.
+          'duration_ms': set.durationMs < 1 ? 1 : set.durationMs,
           'gave_up': set.gaveUp,
           'rep_times': set.repTimes,
           'challenge_target': set.challengeTarget,
@@ -921,7 +924,7 @@ class SupabaseBackend implements Backend {
             'set_reps_camera': set.repsCamera,
             'set_depth': set.depth,
             'set_confident': set.confident,
-            'set_duration_ms': set.durationMs,
+            'set_duration_ms': set.durationMs < 1 ? 1 : set.durationMs,
             'set_gave_up': set.gaveUp,
             'set_rep_times': set.repTimes,
           },
