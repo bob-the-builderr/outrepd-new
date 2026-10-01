@@ -283,12 +283,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- 0d1c6adc-7351-433b-8b93-6271c9d544d4
+ 6b33183f-01fe-4f32-936c-23be9d931407
 (1 row)
 
               set_config              
 --------------------------------------
- fa0f14f3-eb2e-4fe9-96b3-d884cd5b2b89
+ 6531f1c5-f220-402b-b8b3-741fd80d655e
 (1 row)
 
  as_user 
@@ -330,12 +330,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- 0d1c6adc-7351-433b-8b93-6271c9d544d4
+ 6b33183f-01fe-4f32-936c-23be9d931407
 (1 row)
 
               set_config              
 --------------------------------------
- 1f686a5e-e97b-4219-ac81-1c1f13ae34bc
+ e8d08ce0-13fc-4d61-827a-a4afc2099740
 (1 row)
 
  as_user 
@@ -377,7 +377,7 @@ SET
 RESET
               set_config              
 --------------------------------------
- 8a2a9047-c3f0-4ffa-8d8a-7b32599b43b6
+ ee4cab19-6cf0-4c2c-853e-e857253b616a
 (1 row)
 
  pg_sleep 
@@ -432,12 +432,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- d74a11e9-5375-4c9a-9680-fc8dd3b2965e
+ 3c911cb3-ba61-43a3-a583-10e679f3360d
 (1 row)
 
               set_config              
 --------------------------------------
- 746169fe-88cf-457b-b821-964c6a82859e
+ bd54f969-587e-4de7-b7c4-bd2f218e3312
 (1 row)
 
  as_user 
@@ -448,7 +448,7 @@ RESET
 SET
                          settle_duel                          
 --------------------------------------------------------------
- (d7f52e24-d66c-48d6-9580-b19c6a0e0a3b,t,0,0,0,0,1,0,1,1,1,1)
+ (6e1028fe-9838-452c-ae59-4df5de773f79,t,0,0,0,0,1,0,1,1,1,1)
 (1 row)
 
 RESET
@@ -521,7 +521,37 @@ SET
  
 (1 row)
 
-psql:tool/db/security_test.sql:279: NOTICE:  refused, as it should be — calling the rate counter directly: permission denied for function within_rate
+RESET
+UPDATE 1
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ check_that 
+------------
+ 
+(1 row)
+
+RESET
+ check_that 
+------------
+ 
+(1 row)
+
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ check_that 
+------------
+ 
+(1 row)
+
+psql:tool/db/security_test.sql:293: NOTICE:  refused, as it should be — calling the rate counter directly: permission denied for function within_rate
  must_fail 
 -----------
  
@@ -539,7 +569,7 @@ RESET
 (1 row)
 
 SET
-psql:tool/db/security_test.sql:290: NOTICE:  refused, as it should be — a file under any other name in the public bucket: new row violates row-level security policy for table "objects"
+psql:tool/db/security_test.sql:304: NOTICE:  refused, as it should be — a file under any other name in the public bucket: new row violates row-level security policy for table "objects"
  must_fail 
 -----------
  
@@ -567,20 +597,20 @@ RESET
 SET
              invite_live              
 --------------------------------------
- 87975eba-6e96-4e4f-960e-d7334b0d2556
+ 99b2eaa5-bebb-4097-8127-496214acb670
 (1 row)
 
              invite_live              
 --------------------------------------
- 36d47d17-dbe6-4444-8fb9-634c50000e50
+ 8779f608-bfac-4f9e-a221-9d265b5ed840
 (1 row)
 
              invite_live              
 --------------------------------------
- 1bcd0ee8-4af4-4b18-9d75-2f5fabc94d31
+ 6f0b8d41-dc28-424e-8435-cb4117204bcb
 (1 row)
 
-psql:tool/db/security_test.sql:305: NOTICE:  refused, as it should be — a fourth live invite in ten minutes: too many invites, wait a few minutes
+psql:tool/db/security_test.sql:319: NOTICE:  refused, as it should be — a fourth live invite in ten minutes: too many invites, wait a few minutes
  must_fail 
 -----------
  
