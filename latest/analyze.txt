@@ -1,2 +1,7 @@
 Analyzing outrepd_flutter...                                    
-No issues found! (ran in 16.8s)
+
+  error • The operands of the operator '&&' must be assignable to 'bool' • lib/screens/paywall.dart:164:26 • non_bool_operand
+warning • The null-check pattern will have no effect because the matched type isn't nullable. Try replacing the null-check pattern with its nested pattern • lib/screens/paywall.dart:164:56 • unnecessary_null_check_pattern
+  error • The argument type 'bool' can't be assigned to the parameter type 'int'.  • lib/screens/paywall.dart:165:64 • argument_type_not_assignable
+
+3 issues found. (ran in 19.8s)
