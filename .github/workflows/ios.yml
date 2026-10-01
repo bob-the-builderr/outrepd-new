@@ -184,6 +184,12 @@ jobs:
             echo "compiled    ${{ steps.build.outcome }}"
             echo "signed      ${{ steps.apple.outputs.signed }}"
             echo "uploaded    ${{ steps.upload.outcome }}"
+            # The one upload failure that is nothing to do with the code:
+            # Apple holds every upload until the account holder accepts an
+            # updated agreement in App Store Connect.
+            if grep -q "REQUIRED_AGREEMENTS" "$RUNNER_TEMP/export.log" 2>/dev/null; then
+              echo "upload note Apple wants an agreement accepted: App Store Connect > Business"
+            fi
             echo "paywall key $( [ -n "$REVENUECAT_APPLE_KEY" ] && echo yes || echo no )"
             echo "firebase    ${{ steps.firebase.outputs.ready }} — ${{ steps.firebase.outputs.note }}"
             echo "run         ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
