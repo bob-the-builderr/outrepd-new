@@ -2130,4 +2130,52 @@ class LDe extends L {
 
   @override
   String get noticeLiveInvite => 'Ein Freund hat mich zu einem Live-Duell eingeladen';
+
+  @override
+  String trialHeadline(String days) {
+    return 'Deine ersten ${days} Tage sind *kostenlos*';
+  }
+
+  @override
+  String get trialToday => 'Heute';
+
+  @override
+  String get trialTodayBody => 'Alle Duelle, live und gewertet, freigeschaltet.';
+
+  @override
+  String trialDay(String day) {
+    return 'Tag ${day}';
+  }
+
+  @override
+  String get trialReminderBody => 'Wir erinnern dich am Tag vor dem Ende deines Tests.';
+
+  @override
+  String get trialEndBody => 'Dein Abo beginnt. Kündige vorher und du zahlst nichts.';
+
+  @override
+  String trialTag(String days) {
+    return '${days} Tage gratis';
+  }
+
+  @override
+  String trialCta(String days) {
+    return 'Meinen ${days}-tägigen Gratistest starten';
+  }
+
+  @override
+  String trialThenYearly(String price) {
+    return 'Jetzt keine Zahlung · danach ${price}/Jahr';
+  }
+
+  @override
+  String trialThenWeekly(String price) {
+    return 'Jetzt keine Zahlung · danach ${price}/Woche';
+  }
+
+  @override
+  String get trialEndsTitle => 'Dein Gratistest endet morgen';
+
+  @override
+  String get trialEndsBody => 'Weiter aufsteigen, oder vorher in deinen Abo-Einstellungen kündigen.';
 }

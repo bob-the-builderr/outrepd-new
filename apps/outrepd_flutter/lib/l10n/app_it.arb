@@ -653,5 +653,17 @@
   "removeAction": "Rimuovi",
   "removedFriend": "Hai rimosso {username} dai tuoi amici",
   "noticeChallenged": "Qualcuno mi ha sfidato a una rivincita",
-  "noticeLiveInvite": "Un amico mi ha invitato a un duello dal vivo"
+  "noticeLiveInvite": "Un amico mi ha invitato a un duello dal vivo",
+  "trialHeadline": "I tuoi primi {days} giorni sono *gratis*",
+  "trialToday": "Oggi",
+  "trialTodayBody": "Tutti i duelli, dal vivo e classificati, sbloccati.",
+  "trialDay": "Giorno {day}",
+  "trialReminderBody": "Ti avvisiamo il giorno prima della fine della prova.",
+  "trialEndBody": "Il tuo piano inizia. Annulla prima e non paghi nulla.",
+  "trialTag": "{days} giorni gratis",
+  "trialCta": "Inizia la mia prova gratuita di {days} giorni",
+  "trialThenYearly": "Nessun pagamento ora · poi {price}/anno",
+  "trialThenWeekly": "Nessun pagamento ora · poi {price}/settimana",
+  "trialEndsTitle": "La tua prova gratuita finisce domani",
+  "trialEndsBody": "Continua a salire, o annulla prima nelle impostazioni dell'abbonamento."
 }

@@ -145,6 +145,40 @@ class Reminders {
     );
   }
 
+  /// The notice before a free trial turns into a charge. Its own id, so the
+  /// week's reminders being cleared and set again never touches it.
+  static const _trialEndsId = 7100;
+
+  /// A free trial of [length] started just now: one notice a day before it
+  /// ends — the reminder the paywall's timeline promised. Not tied to the
+  /// daily reminder switch, which is about training, not about money.
+  Future<void> trialStarted(Duration length) async {
+    if (!_started) return;
+    final at = DateTime.now().add(length - const Duration(days: 1));
+    if (!at.isAfter(DateTime.now())) return;
+    try {
+      final l = _words;
+      await _plugin.zonedSchedule(
+        id: _trialEndsId,
+        title: l.trialEndsTitle,
+        body: l.trialEndsBody,
+        scheduledDate: tz.TZDateTime.from(at, tz.UTC),
+        notificationDetails: NotificationDetails(
+          android: AndroidNotificationDetails(
+            remindersChannel,
+            l.channelReminders,
+            icon: 'ic_stat_outrepd',
+            color: const Color(0xFFE8846B),
+          ),
+          iOS: const DarwinNotificationDetails(),
+        ),
+        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      );
+    } on Object catch (error) {
+      debugPrint('Could not schedule the trial reminder: $error');
+    }
+  }
+
   /// Settings and rewards both change in bursts; one reschedule per burst.
   void _soon() {
     _pending?.cancel();

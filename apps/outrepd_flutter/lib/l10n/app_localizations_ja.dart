@@ -2077,4 +2077,52 @@ class LJa extends L {
 
   @override
   String get noticeLiveInvite => 'フレンドからライブ対戦に誘われた';
+
+  @override
+  String trialHeadline(String days) {
+    return '最初の${days}日間は*無料*';
+  }
+
+  @override
+  String get trialToday => '今日';
+
+  @override
+  String get trialTodayBody => 'ライブもランクも、すべての対戦が解放。';
+
+  @override
+  String trialDay(String day) {
+    return '${day}日目';
+  }
+
+  @override
+  String get trialReminderBody => 'トライアル終了の前日にお知らせします。';
+
+  @override
+  String get trialEndBody => 'プランが始まります。それまでに解約すれば料金はかかりません。';
+
+  @override
+  String trialTag(String days) {
+    return '${days}日間無料';
+  }
+
+  @override
+  String trialCta(String days) {
+    return '${days}日間の無料トライアルを始める';
+  }
+
+  @override
+  String trialThenYearly(String price) {
+    return '今は支払いなし・その後${price}/年';
+  }
+
+  @override
+  String trialThenWeekly(String price) {
+    return '今は支払いなし・その後${price}/週';
+  }
+
+  @override
+  String get trialEndsTitle => '無料トライアルは明日終了します';
+
+  @override
+  String get trialEndsBody => 'このまま続けるか、それまでにサブスクリプション設定で解約してください。';
 }

@@ -27,11 +27,29 @@ const _yearly = Plan(
   pricePerWeekString: r'$0.77',
 );
 
+// The same two plans with the 3-day free trial set up on them in the stores.
+const _weeklyTrial = Plan(
+  period: PlanPeriod.weekly,
+  price: 4.99,
+  priceString: r'$4.99',
+  currencyCode: 'USD',
+  trialDays: 3,
+);
+const _yearlyTrial = Plan(
+  period: PlanPeriod.yearly,
+  price: 39.99,
+  priceString: r'$39.99',
+  currencyCode: 'USD',
+  pricePerWeekString: r'$0.77',
+  trialDays: 3,
+);
+
 class _FakeStore implements Storefront {
   _FakeStore({this.active = false});
 
   bool active;
   bool failPlans = false;
+  List<Plan> plansGiven = const [_weekly, _yearly];
   BuyOutcome nextOutcome = BuyOutcome.bought;
   bool restoreFinds = false;
   Plan? bought;
@@ -54,7 +72,7 @@ class _FakeStore implements Storefront {
   Future<List<Plan>> plans() async {
     planLoads++;
     if (failPlans) throw StateError('offline');
-    return const [_weekly, _yearly];
+    return plansGiven;
   }
 
   @override
@@ -163,6 +181,53 @@ void main() {
       await tester.pumpWidget(_app());
       await _settle(tester);
       expect(store.starts, 1);
+    });
+  });
+
+  group('the free trial', () {
+    testWidgets('says the first days are free, when the charge comes, and '
+        'what it will be', (tester) async {
+      Subscription.instance.use(
+        _FakeStore()..plansGiven = const [_weeklyTrial, _yearlyTrial],
+      );
+      _phone(tester);
+      await tester.pumpWidget(_app());
+      await _settle(tester);
+
+      expect(find.text('Your first 3 days are free'), findsOneWidget);
+      expect(find.text('Today'), findsOneWidget);
+      expect(find.text('Day 2'), findsOneWidget);
+      expect(find.text('Day 3'), findsOneWidget);
+      expect(find.text('3 days free'), findsNWidgets(2));
+      expect(find.text('Start my 3-day free trial'), findsOneWidget);
+      expect(
+        find.text(r'No payment now · then $39.99/year'),
+        findsOneWidget,
+      );
+
+      await tester.tap(find.byKey(const Key('planWeekly')));
+      await tester.pump();
+      expect(find.text(r'No payment now · then $4.99/week'), findsOneWidget);
+    });
+
+    testWidgets('a plan this account has no trial on is sold as it always '
+        'was', (tester) async {
+      // The yearly plan, chosen first, without a trial; the weekly with one.
+      Subscription.instance.use(
+        _FakeStore()..plansGiven = const [_weeklyTrial, _yearly],
+      );
+      _phone(tester);
+      await tester.pumpWidget(_app());
+      await _settle(tester);
+
+      expect(find.text('Climb from Iron to Master'), findsOneWidget);
+      expect(find.text('Start climbing'), findsOneWidget);
+      expect(find.byKey(const Key('trialThen')), findsNothing);
+
+      await tester.tap(find.byKey(const Key('planWeekly')));
+      await tester.pump();
+      expect(find.text('Your first 3 days are free'), findsOneWidget);
+      expect(find.text('Start my 3-day free trial'), findsOneWidget);
     });
   });
 

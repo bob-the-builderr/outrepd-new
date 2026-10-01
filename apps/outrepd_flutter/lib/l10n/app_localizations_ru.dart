@@ -2122,4 +2122,52 @@ class LRu extends L {
 
   @override
   String get noticeLiveInvite => 'Друг позвал меня на живой матч';
+
+  @override
+  String trialHeadline(String days) {
+    return 'Первые ${days} дня — *бесплатно*';
+  }
+
+  @override
+  String get trialToday => 'Сегодня';
+
+  @override
+  String get trialTodayBody => 'Все дуэли, живые и рейтинговые, открыты.';
+
+  @override
+  String trialDay(String day) {
+    return 'День ${day}';
+  }
+
+  @override
+  String get trialReminderBody => 'Напомним за день до конца пробного периода.';
+
+  @override
+  String get trialEndBody => 'Подписка начинается. Отмените раньше — и ничего не заплатите.';
+
+  @override
+  String trialTag(String days) {
+    return '${days} дня бесплатно';
+  }
+
+  @override
+  String trialCta(String days) {
+    return 'Начать бесплатный период на ${days} дня';
+  }
+
+  @override
+  String trialThenYearly(String price) {
+    return 'Сейчас без оплаты · затем ${price}/год';
+  }
+
+  @override
+  String trialThenWeekly(String price) {
+    return 'Сейчас без оплаты · затем ${price}/нед.';
+  }
+
+  @override
+  String get trialEndsTitle => 'Пробный период заканчивается завтра';
+
+  @override
+  String get trialEndsBody => 'Продолжайте подниматься или отмените заранее в настройках подписки.';
 }

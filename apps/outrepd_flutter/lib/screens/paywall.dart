@@ -7,6 +7,7 @@
 /// price and how it renews, and a way to delete the account without paying.
 library;
 
+import 'dart:async';
 import 'dart:math' as math;
 import 'dart:ui' show ImageFilter;
 
@@ -16,6 +17,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../backend/backend.dart';
 import '../l10n/app_localizations.dart';
+import '../reminders.dart';
 import '../subscription.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
@@ -157,6 +159,11 @@ class _PaywallScreenState extends State<PaywallScreen> {
       debugPrint('Purchase failed: $error');
       result = (outcome: BuyOutcome.failed, active: false);
     }
+    // A trial just began: the reminder the timeline promised, the day
+    // before the first charge.
+    if (result.active && plan.trialDays case final days?) {
+      unawaited(Reminders.instance.trialStarted(Duration(days: days)));
+    }
     if (!mounted) return;
     setState(() {
       _busy = false;
@@ -296,7 +303,12 @@ class _PaywallScreenState extends State<PaywallScreen> {
                       // Less the scroll padding above and below.
                       minHeight: math.max(0.0, viewport.maxHeight - 42),
                     ),
-                    child: Center(child: _pitch(context, l)),
+                    child: Center(
+                      child: switch (_plan(_chosen)?.trialDays) {
+                        final days? => _trialPitch(context, l, days),
+                        null => _pitch(context, l),
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -337,6 +349,25 @@ class _PaywallScreenState extends State<PaywallScreen> {
     );
   }
 
+  /// The free trial, told as what happens when: today everything opens, the
+  /// day before it ends the app says so, and the day it ends the plan starts.
+  /// Shown in place of the crests while the chosen plan has a trial, so the
+  /// first thing read is that nothing is charged now.
+  Widget _trialPitch(BuildContext context, L l, int days) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _AccentHeadline(
+          key: const Key('trialHeadline'),
+          text: l.trialHeadline(localNumber(context, days)),
+        ),
+        const SizedBox(height: 30),
+        _TrialTimeline(days: days),
+      ],
+    );
+  }
+
   Widget _purchaseArea(BuildContext context, L l) {
     final colors = context.colors;
     final weekly = _plan(PlanPeriod.weekly);
@@ -345,6 +376,14 @@ class _PaywallScreenState extends State<PaywallScreen> {
         weekly != null && yearly != null ? yearlySaving(weekly, yearly) : null;
     final ready = _plans != null && !_loadFailed;
     final apple = defaultTargetPlatform == TargetPlatform.iOS;
+    final chosen = _plan(_chosen);
+    final trial = chosen?.trialDays;
+    // Any trial on offer turns the plans into rows with room to say so.
+    final anyTrial = weekly?.trialDays != null || yearly?.trialDays != null;
+    String? tag(Plan? plan) => switch (plan?.trialDays) {
+      final days? => l.trialTag(localNumber(context, days)),
+      null => null,
+    };
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -371,6 +410,36 @@ class _PaywallScreenState extends State<PaywallScreen> {
             child: Center(
               child: CircularProgressIndicator(color: colors.brand),
             ),
+          )
+        else if (anyTrial)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (yearly != null)
+                _PlanRow(
+                  key: const Key('planYearly'),
+                  label: l.paywallYearly,
+                  price: yearly.priceString,
+                  detail: l.paywallPerWeek(yearly.perWeek()),
+                  badge: saving == null
+                      ? null
+                      : l.paywallSave(localNumber(context, saving)),
+                  trial: tag(yearly),
+                  selected: _chosen == PlanPeriod.yearly,
+                  onTap: () => setState(() => _chosen = PlanPeriod.yearly),
+                ),
+              if (yearly != null && weekly != null) const SizedBox(height: 8),
+              if (weekly != null)
+                _PlanRow(
+                  key: const Key('planWeekly'),
+                  label: l.paywallWeekly,
+                  price: weekly.priceString,
+                  detail: l.paywallEveryWeek,
+                  trial: tag(weekly),
+                  selected: _chosen == PlanPeriod.weekly,
+                  onTap: () => setState(() => _chosen = PlanPeriod.weekly),
+                ),
+            ],
           )
         else
           Row(
@@ -430,7 +499,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 : FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      l.paywallStart,
+                      trial == null
+                          ? l.paywallStart
+                          : l.trialCta(localNumber(context, trial)),
                       maxLines: 1,
                       style: const TextStyle(
                         fontSize: 17,
@@ -447,6 +518,20 @@ class _PaywallScreenState extends State<PaywallScreen> {
             key: const Key('paywallNote'),
             textAlign: TextAlign.center,
             style: context.type.label.copyWith(color: AppColors.loss),
+          ),
+        ],
+        // What a trial costs, said plainly where the button is: nothing now,
+        // and exactly what after. The stores ask for the price after a free
+        // trial to be as clear as the trial itself.
+        if (trial != null && chosen != null) ...[
+          const SizedBox(height: 10),
+          Text(
+            chosen.period == PlanPeriod.yearly
+                ? l.trialThenYearly(chosen.priceString)
+                : l.trialThenWeekly(chosen.priceString),
+            key: const Key('trialThen'),
+            textAlign: TextAlign.center,
+            style: context.type.label.copyWith(color: colors.text),
           ),
         ],
         const SizedBox(height: 8),
@@ -586,6 +671,268 @@ class _Perk extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// A headline with one stretch of it in the accent: the part between the two
+/// asterisks in the translation ("Your first 3 days are *free*"). Marked in
+/// the string rather than split into pieces, because where the word falls in
+/// the sentence is different in every language.
+class _AccentHeadline extends StatelessWidget {
+  const _AccentHeadline({super.key, required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final parts = text.split('*');
+    return Text.rich(
+      TextSpan(
+        children: [
+          for (var i = 0; i < parts.length; i++)
+            TextSpan(
+              text: parts[i],
+              style: i.isOdd ? TextStyle(color: context.colors.rival) : null,
+            ),
+        ],
+      ),
+      textAlign: TextAlign.center,
+      style: context.type.title.copyWith(
+        fontSize: 32,
+        height: 1.15,
+        color: context.colors.text,
+      ),
+    );
+  }
+}
+
+/// Today, the reminder, the first charge — down a bar that is lit for the
+/// part already under way.
+class _TrialTimeline extends StatelessWidget {
+  const _TrialTimeline({required this.days});
+
+  final int days;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final colors = context.colors;
+    final steps = [
+      (Icons.lock_open_rounded, l.trialToday, l.trialTodayBody),
+      // A one-day trial has no day before its last to remind on.
+      if (days >= 2)
+        (
+          Icons.notifications_active_outlined,
+          l.trialDay(localNumber(context, days - 1)),
+          l.trialReminderBody,
+        ),
+      (
+        Icons.workspace_premium_outlined,
+        l.trialDay(localNumber(context, days)),
+        l.trialEndBody,
+      ),
+    ];
+
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            width: 8,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  colors.brand,
+                  colors.brand,
+                  colors.faint,
+                  colors.faint,
+                  colors.surfaceRaised,
+                ],
+                stops: const [0, 0.3, 0.38, 0.62, 0.72],
+              ),
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (var i = 0; i < steps.length; i++) ...[
+                  if (i > 0) const SizedBox(height: 22),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(steps[i].$1, size: 22, color: colors.brand),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              steps[i].$2,
+                              style: context.type.heading.copyWith(
+                                fontSize: 17,
+                                color: colors.text,
+                              ),
+                            ),
+                            const SizedBox(height: 3),
+                            Text(
+                              steps[i].$3,
+                              style: context.type.body.copyWith(
+                                fontSize: 14,
+                                height: 1.4,
+                                color: colors.muted,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// A plan as one row, for when a trial is on offer: the name and what it
+/// saves on the left, the price and the free days on the right.
+class _PlanRow extends StatelessWidget {
+  const _PlanRow({
+    super.key,
+    required this.label,
+    required this.price,
+    required this.detail,
+    required this.selected,
+    required this.onTap,
+    this.badge,
+    this.trial,
+  });
+
+  final String label;
+  final String price;
+  final String detail;
+  final bool selected;
+  final VoidCallback onTap;
+
+  /// "Save 85%", on the plan that saves.
+  final String? badge;
+
+  /// "3 days free", on a plan with a trial this account can still have.
+  final String? trial;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return Semantics(
+      selected: selected,
+      button: true,
+      child: Material(
+        color: colors.surface,
+        borderRadius: BorderRadius.circular(16),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(16),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 150),
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: selected ? colors.brand : colors.border,
+                width: selected ? 2 : 1,
+              ),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              label,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: context.type.heading.copyWith(
+                                fontSize: 16,
+                                color: colors.text,
+                              ),
+                            ),
+                          ),
+                          if (badge case final saving?) ...[
+                            const SizedBox(width: 8),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 7,
+                                vertical: 3,
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppColors.gold,
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Text(
+                                saving,
+                                maxLines: 1,
+                                style: const TextStyle(
+                                  color: Color(0xFF2A1E05),
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                      const SizedBox(height: 3),
+                      Text(
+                        detail,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: colors.muted, fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      price,
+                      style: context.type.statValue.copyWith(
+                        fontSize: 20,
+                        color: colors.text,
+                      ),
+                    ),
+                    if (trial case final free?) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        free,
+                        style: TextStyle(
+                          color: colors.rival,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

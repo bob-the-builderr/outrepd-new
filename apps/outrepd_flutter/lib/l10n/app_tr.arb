@@ -653,5 +653,17 @@
   "removeAction": "Çıkar",
   "removedFriend": "{username} arkadaşlarından çıkarıldı",
   "noticeChallenged": "Biri bana rövanş teklif etti",
-  "noticeLiveInvite": "Bir arkadaşım beni canlı maça davet etti"
+  "noticeLiveInvite": "Bir arkadaşım beni canlı maça davet etti",
+  "trialHeadline": "İlk {days} gün *ücretsiz*",
+  "trialToday": "Bugün",
+  "trialTodayBody": "Tüm düellolar, canlı ve dereceli, açık.",
+  "trialDay": "{day}. gün",
+  "trialReminderBody": "Denemen bitmeden bir gün önce hatırlatırız.",
+  "trialEndBody": "Planın başlar. Önceden iptal edersen hiçbir şey ödemezsin.",
+  "trialTag": "{days} gün ücretsiz",
+  "trialCta": "{days} günlük ücretsiz denememi başlat",
+  "trialThenYearly": "Şimdi ödeme yok · sonra {price}/yıl",
+  "trialThenWeekly": "Şimdi ödeme yok · sonra {price}/hafta",
+  "trialEndsTitle": "Ücretsiz denemen yarın bitiyor",
+  "trialEndsBody": "Tırmanmaya devam et ya da daha önce abonelik ayarlarından iptal et."
 }

@@ -653,5 +653,17 @@
   "removeAction": "删除",
   "removedFriend": "已将 {username} 从好友中删除",
   "noticeChallenged": "有人向我发起复赛挑战",
-  "noticeLiveInvite": "好友邀请我进行实时对战"
+  "noticeLiveInvite": "好友邀请我进行实时对战",
+  "trialHeadline": "前 {days} 天*免费*",
+  "trialToday": "今天",
+  "trialTodayBody": "所有对决，实时与排位，全部解锁。",
+  "trialDay": "第 {day} 天",
+  "trialReminderBody": "试用结束前一天我们会提醒你。",
+  "trialEndBody": "你的方案开始。在此之前取消则无需付费。",
+  "trialTag": "{days} 天免费",
+  "trialCta": "开始我的 {days} 天免费试用",
+  "trialThenYearly": "现在无需付款 · 之后 {price}/年",
+  "trialThenWeekly": "现在无需付款 · 之后 {price}/周",
+  "trialEndsTitle": "你的免费试用明天结束",
+  "trialEndsBody": "继续攀登，或在此之前于订阅设置中取消。"
 }

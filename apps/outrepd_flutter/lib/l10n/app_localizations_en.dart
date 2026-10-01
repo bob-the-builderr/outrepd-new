@@ -2120,4 +2120,52 @@ class LEn extends L {
 
   @override
   String get noticeLiveInvite => 'A friend asked me to go live';
+
+  @override
+  String trialHeadline(String days) {
+    return 'Your first ${days} days are *free*';
+  }
+
+  @override
+  String get trialToday => 'Today';
+
+  @override
+  String get trialTodayBody => 'Every duel, live and ranked, unlocked.';
+
+  @override
+  String trialDay(String day) {
+    return 'Day ${day}';
+  }
+
+  @override
+  String get trialReminderBody => 'We\'ll remind you the day before your trial ends.';
+
+  @override
+  String get trialEndBody => 'Your plan starts. Cancel any time before and you pay nothing.';
+
+  @override
+  String trialTag(String days) {
+    return '${days} days free';
+  }
+
+  @override
+  String trialCta(String days) {
+    return 'Start my ${days}-day free trial';
+  }
+
+  @override
+  String trialThenYearly(String price) {
+    return 'No payment now · then ${price}/year';
+  }
+
+  @override
+  String trialThenWeekly(String price) {
+    return 'No payment now · then ${price}/week';
+  }
+
+  @override
+  String get trialEndsTitle => 'Your free trial ends tomorrow';
+
+  @override
+  String get trialEndsBody => 'Keep climbing, or cancel before then in your subscription settings.';
 }

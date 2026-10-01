@@ -2124,4 +2124,52 @@ class LPt extends L {
 
   @override
   String get noticeLiveInvite => 'Um amigo convidou-me para um duelo ao vivo';
+
+  @override
+  String trialHeadline(String days) {
+    return 'Os teus primeiros ${days} dias são *grátis*';
+  }
+
+  @override
+  String get trialToday => 'Hoje';
+
+  @override
+  String get trialTodayBody => 'Todos os duelos, ao vivo e classificados, desbloqueados.';
+
+  @override
+  String trialDay(String day) {
+    return 'Dia ${day}';
+  }
+
+  @override
+  String get trialReminderBody => 'Avisamos-te na véspera do fim do teu teste.';
+
+  @override
+  String get trialEndBody => 'O teu plano começa. Cancela antes e não pagas nada.';
+
+  @override
+  String trialTag(String days) {
+    return '${days} dias grátis';
+  }
+
+  @override
+  String trialCta(String days) {
+    return 'Começar o meu teste grátis de ${days} dias';
+  }
+
+  @override
+  String trialThenYearly(String price) {
+    return 'Sem pagamento agora · depois ${price}/ano';
+  }
+
+  @override
+  String trialThenWeekly(String price) {
+    return 'Sem pagamento agora · depois ${price}/semana';
+  }
+
+  @override
+  String get trialEndsTitle => 'O teu teste grátis termina amanhã';
+
+  @override
+  String get trialEndsBody => 'Continua a subir, ou cancela antes nas definições da tua subscrição.';
 }

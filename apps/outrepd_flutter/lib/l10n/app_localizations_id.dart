@@ -2122,4 +2122,52 @@ class LId extends L {
 
   @override
   String get noticeLiveInvite => 'Teman mengajakku bertanding langsung';
+
+  @override
+  String trialHeadline(String days) {
+    return '${days} hari pertamamu *gratis*';
+  }
+
+  @override
+  String get trialToday => 'Hari ini';
+
+  @override
+  String get trialTodayBody => 'Semua duel, langsung dan peringkat, terbuka.';
+
+  @override
+  String trialDay(String day) {
+    return 'Hari ${day}';
+  }
+
+  @override
+  String get trialReminderBody => 'Kami ingatkan sehari sebelum masa cobamu berakhir.';
+
+  @override
+  String get trialEndBody => 'Paketmu dimulai. Batalkan sebelumnya dan kamu tidak membayar apa pun.';
+
+  @override
+  String trialTag(String days) {
+    return 'Gratis ${days} hari';
+  }
+
+  @override
+  String trialCta(String days) {
+    return 'Mulai uji coba gratis ${days} hari';
+  }
+
+  @override
+  String trialThenYearly(String price) {
+    return 'Tanpa bayar sekarang · lalu ${price}/tahun';
+  }
+
+  @override
+  String trialThenWeekly(String price) {
+    return 'Tanpa bayar sekarang · lalu ${price}/minggu';
+  }
+
+  @override
+  String get trialEndsTitle => 'Uji coba gratismu berakhir besok';
+
+  @override
+  String get trialEndsBody => 'Terus naik, atau batalkan sebelumnya di pengaturan langganan.';
 }

@@ -653,5 +653,17 @@
   "removeAction": "Entfernen",
   "removedFriend": "{username} ist nicht mehr in deinen Freunden",
   "noticeChallenged": "Jemand hat mich zur Revanche herausgefordert",
-  "noticeLiveInvite": "Ein Freund hat mich zu einem Live-Duell eingeladen"
+  "noticeLiveInvite": "Ein Freund hat mich zu einem Live-Duell eingeladen",
+  "trialHeadline": "Deine ersten {days} Tage sind *kostenlos*",
+  "trialToday": "Heute",
+  "trialTodayBody": "Alle Duelle, live und gewertet, freigeschaltet.",
+  "trialDay": "Tag {day}",
+  "trialReminderBody": "Wir erinnern dich am Tag vor dem Ende deines Tests.",
+  "trialEndBody": "Dein Abo beginnt. Kündige vorher und du zahlst nichts.",
+  "trialTag": "{days} Tage gratis",
+  "trialCta": "Meinen {days}-tägigen Gratistest starten",
+  "trialThenYearly": "Jetzt keine Zahlung · danach {price}/Jahr",
+  "trialThenWeekly": "Jetzt keine Zahlung · danach {price}/Woche",
+  "trialEndsTitle": "Dein Gratistest endet morgen",
+  "trialEndsBody": "Weiter aufsteigen, oder vorher in deinen Abo-Einstellungen kündigen."
 }

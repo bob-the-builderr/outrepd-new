@@ -3916,6 +3916,78 @@ abstract class L {
   /// In en, this message translates to:
   /// **'A friend asked me to go live'**
   String get noticeLiveInvite;
+
+  /// No description provided for @trialHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first {days} days are *free*'**
+  String trialHeadline(String days);
+
+  /// No description provided for @trialToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get trialToday;
+
+  /// No description provided for @trialTodayBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Every duel, live and ranked, unlocked.'**
+  String get trialTodayBody;
+
+  /// No description provided for @trialDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Day {day}'**
+  String trialDay(String day);
+
+  /// No description provided for @trialReminderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll remind you the day before your trial ends.'**
+  String get trialReminderBody;
+
+  /// No description provided for @trialEndBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your plan starts. Cancel any time before and you pay nothing.'**
+  String get trialEndBody;
+
+  /// No description provided for @trialTag.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days free'**
+  String trialTag(String days);
+
+  /// No description provided for @trialCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Start my {days}-day free trial'**
+  String trialCta(String days);
+
+  /// No description provided for @trialThenYearly.
+  ///
+  /// In en, this message translates to:
+  /// **'No payment now · then {price}/year'**
+  String trialThenYearly(String price);
+
+  /// No description provided for @trialThenWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'No payment now · then {price}/week'**
+  String trialThenWeekly(String price);
+
+  /// No description provided for @trialEndsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your free trial ends tomorrow'**
+  String get trialEndsTitle;
+
+  /// No description provided for @trialEndsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep climbing, or cancel before then in your subscription settings.'**
+  String get trialEndsBody;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

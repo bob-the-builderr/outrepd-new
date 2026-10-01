@@ -653,5 +653,17 @@
   "removeAction": "解除",
   "removedFriend": "{username}をフレンドから解除しました",
   "noticeChallenged": "リマッチを挑まれた",
-  "noticeLiveInvite": "フレンドからライブ対戦に誘われた"
+  "noticeLiveInvite": "フレンドからライブ対戦に誘われた",
+  "trialHeadline": "最初の{days}日間は*無料*",
+  "trialToday": "今日",
+  "trialTodayBody": "ライブもランクも、すべての対戦が解放。",
+  "trialDay": "{day}日目",
+  "trialReminderBody": "トライアル終了の前日にお知らせします。",
+  "trialEndBody": "プランが始まります。それまでに解約すれば料金はかかりません。",
+  "trialTag": "{days}日間無料",
+  "trialCta": "{days}日間の無料トライアルを始める",
+  "trialThenYearly": "今は支払いなし・その後{price}/年",
+  "trialThenWeekly": "今は支払いなし・その後{price}/週",
+  "trialEndsTitle": "無料トライアルは明日終了します",
+  "trialEndsBody": "このまま続けるか、それまでにサブスクリプション設定で解約してください。"
 }

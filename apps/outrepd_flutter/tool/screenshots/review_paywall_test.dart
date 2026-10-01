@@ -1,7 +1,7 @@
 /// The screenshot App Review asks for beside each subscription: the paywall
-/// as an iPhone shows it — Apple's wording, at the 6.9" size — with
-/// the two plans at the prices set in App Store Connect. See shots.dart for
-/// how these are run and published.
+/// as an iPhone shows it — Apple's wording, at the 6.9" size — with the two
+/// plans at the prices set in App Store Connect, each with its three-day
+/// free trial. See shots.dart for how these are run and published.
 library;
 
 import 'dart:io';
@@ -30,6 +30,7 @@ class _Store implements Storefront {
           price: 4.99,
           priceString: r'$4.99',
           currencyCode: 'USD',
+          trialDays: 3,
         ),
         Plan(
           period: PlanPeriod.yearly,
@@ -37,6 +38,7 @@ class _Store implements Storefront {
           priceString: r'$39.99',
           currencyCode: 'USD',
           pricePerWeekString: r'$0.77',
+          trialDays: 3,
         ),
       ];
   @override
@@ -123,7 +125,8 @@ void main() {
     for (var i = 0; i < 6; i++) {
       await tester.pump(const Duration(milliseconds: 50));
     }
-    // Apple's wording, not Google Play's.
+    // Apple's wording, not Google Play's, and the trial's terms.
+    expect(find.text('Your first 3 days are free'), findsOneWidget);
     expect(find.textContaining('Apple account'), findsWidgets);
 
     await expectLater(

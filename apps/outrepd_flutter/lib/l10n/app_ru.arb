@@ -653,5 +653,17 @@
   "removeAction": "Удалить",
   "removedFriend": "{username} удалён из друзей",
   "noticeChallenged": "Меня вызвали на реванш",
-  "noticeLiveInvite": "Друг позвал меня на живой матч"
+  "noticeLiveInvite": "Друг позвал меня на живой матч",
+  "trialHeadline": "Первые {days} дня — *бесплатно*",
+  "trialToday": "Сегодня",
+  "trialTodayBody": "Все дуэли, живые и рейтинговые, открыты.",
+  "trialDay": "День {day}",
+  "trialReminderBody": "Напомним за день до конца пробного периода.",
+  "trialEndBody": "Подписка начинается. Отмените раньше — и ничего не заплатите.",
+  "trialTag": "{days} дня бесплатно",
+  "trialCta": "Начать бесплатный период на {days} дня",
+  "trialThenYearly": "Сейчас без оплаты · затем {price}/год",
+  "trialThenWeekly": "Сейчас без оплаты · затем {price}/нед.",
+  "trialEndsTitle": "Пробный период заканчивается завтра",
+  "trialEndsBody": "Продолжайте подниматься или отмените заранее в настройках подписки."
 }

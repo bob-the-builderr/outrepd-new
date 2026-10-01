@@ -653,5 +653,17 @@
   "removeAction": "Retirer",
   "removedFriend": "{username} a été retiré de tes amis",
   "noticeChallenged": "Quelqu'un m'a défié en revanche",
-  "noticeLiveInvite": "Un ami m'a invité à un duel en direct"
+  "noticeLiveInvite": "Un ami m'a invité à un duel en direct",
+  "trialHeadline": "Tes {days} premiers jours sont *gratuits*",
+  "trialToday": "Aujourd'hui",
+  "trialTodayBody": "Tous les duels, en direct et classés, débloqués.",
+  "trialDay": "Jour {day}",
+  "trialReminderBody": "On te prévient la veille de la fin de ton essai.",
+  "trialEndBody": "Ton abonnement démarre. Annule avant et tu ne paies rien.",
+  "trialTag": "{days} jours gratuits",
+  "trialCta": "Commencer mon essai gratuit de {days} jours",
+  "trialThenYearly": "Rien à payer maintenant · puis {price}/an",
+  "trialThenWeekly": "Rien à payer maintenant · puis {price}/semaine",
+  "trialEndsTitle": "Ton essai gratuit se termine demain",
+  "trialEndsBody": "Continue de grimper, ou annule avant dans les réglages de ton abonnement."
 }

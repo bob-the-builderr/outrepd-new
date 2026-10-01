@@ -2127,4 +2127,52 @@ class LEs extends L {
 
   @override
   String get noticeLiveInvite => 'Un amigo me invitó a un duelo en vivo';
+
+  @override
+  String trialHeadline(String days) {
+    return 'Tus primeros ${days} días son *gratis*';
+  }
+
+  @override
+  String get trialToday => 'Hoy';
+
+  @override
+  String get trialTodayBody => 'Todos los duelos, en vivo y clasificatorios, desbloqueados.';
+
+  @override
+  String trialDay(String day) {
+    return 'Día ${day}';
+  }
+
+  @override
+  String get trialReminderBody => 'Te avisaremos el día antes de que termine tu prueba.';
+
+  @override
+  String get trialEndBody => 'Empieza tu plan. Cancela antes y no pagas nada.';
+
+  @override
+  String trialTag(String days) {
+    return '${days} días gratis';
+  }
+
+  @override
+  String trialCta(String days) {
+    return 'Empezar mi prueba gratis de ${days} días';
+  }
+
+  @override
+  String trialThenYearly(String price) {
+    return 'Sin pago ahora · luego ${price}/año';
+  }
+
+  @override
+  String trialThenWeekly(String price) {
+    return 'Sin pago ahora · luego ${price}/semana';
+  }
+
+  @override
+  String get trialEndsTitle => 'Tu prueba gratis termina mañana';
+
+  @override
+  String get trialEndsBody => 'Sigue subiendo, o cancela antes en los ajustes de tu suscripción.';
 }

@@ -2087,4 +2087,52 @@ class LKo extends L {
 
   @override
   String get noticeLiveInvite => '친구가 라이브 대결에 초대했어요';
+
+  @override
+  String trialHeadline(String days) {
+    return '처음 ${days}일은 *무료*';
+  }
+
+  @override
+  String get trialToday => '오늘';
+
+  @override
+  String get trialTodayBody => '라이브와 랭크, 모든 대결이 열려요.';
+
+  @override
+  String trialDay(String day) {
+    return '${day}일째';
+  }
+
+  @override
+  String get trialReminderBody => '체험이 끝나기 하루 전에 알려 드려요.';
+
+  @override
+  String get trialEndBody => '플랜이 시작돼요. 그 전에 취소하면 결제되지 않아요.';
+
+  @override
+  String trialTag(String days) {
+    return '${days}일 무료';
+  }
+
+  @override
+  String trialCta(String days) {
+    return '${days}일 무료 체험 시작하기';
+  }
+
+  @override
+  String trialThenYearly(String price) {
+    return '지금은 결제 없음 · 이후 ${price}/년';
+  }
+
+  @override
+  String trialThenWeekly(String price) {
+    return '지금은 결제 없음 · 이후 ${price}/주';
+  }
+
+  @override
+  String get trialEndsTitle => '무료 체험이 내일 끝나요';
+
+  @override
+  String get trialEndsBody => '계속 오르거나, 그 전에 구독 설정에서 취소하세요.';
 }
