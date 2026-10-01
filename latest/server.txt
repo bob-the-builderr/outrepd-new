@@ -168,6 +168,7 @@ SET
  
 (1 row)
 
+psql:tool/db/security_test.sql:82: NOTICE:  refused, as it should be — writing your own LP: rank and record are settled by the server, not the client
  must_fail 
 -----------
  
@@ -180,6 +181,7 @@ RESET
 (1 row)
 
 SET
+psql:tool/db/security_test.sql:91: NOTICE:  refused, as it should be — a friendship written straight into the table, already accepted: new row violates row-level security policy for table "friendships"
  must_fail 
 -----------
  
@@ -233,17 +235,20 @@ RESET
 (1 row)
 
 SET
+psql:tool/db/security_test.sql:130: NOTICE:  refused, as it should be — 250 push-ups in a minute: new row for relation "sets" violates check constraint "sets_reps_fit_the_time"
  must_fail 
 -----------
  
 (1 row)
 
+psql:tool/db/security_test.sql:133: NOTICE:  refused, as it should be — a minute stretched to an hour to fit the count: new row for relation "sets" violates check constraint "sets_reps_fit_the_time"
  must_fail 
 -----------
  
 (1 row)
 
 INSERT 0 1
+psql:tool/db/security_test.sql:139: NOTICE:  refused, as it should be — a second set two seconds after the first: sets are arriving faster than anybody lifts them
  must_fail 
 -----------
  
@@ -261,6 +266,7 @@ RESET
 (1 row)
 
 SET
+psql:tool/db/security_test.sql:150: NOTICE:  refused, as it should be — a challenge sent to a stranger: a challenge goes to a friend or a past opponent
  must_fail 
 -----------
  
@@ -277,12 +283,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- 40baaea6-feed-44aa-8a26-f80bb4ff4094
+ 46af9a39-e15a-4e20-ad55-ae1461338076
 (1 row)
 
               set_config              
 --------------------------------------
- 600330f1-dbbf-4de8-9556-afa43984aea1
+ 1746cc87-7a03-4b08-aef5-2b50d6407945
 (1 row)
 
  as_user 
@@ -291,6 +297,7 @@ RESET
 (1 row)
 
 SET
+psql:tool/db/security_test.sql:170: NOTICE:  refused, as it should be — settling against a set nobody handed over: that set was never handed to you
  must_fail 
 -----------
  
@@ -301,6 +308,7 @@ SET
  
 (1 row)
 
+psql:tool/db/security_test.sql:177: NOTICE:  refused, as it should be — settling with a set lifted before the offer: your set has to be the one lifted against theirs
  must_fail 
 -----------
  
@@ -322,12 +330,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- 40baaea6-feed-44aa-8a26-f80bb4ff4094
+ 46af9a39-e15a-4e20-ad55-ae1461338076
 (1 row)
 
               set_config              
 --------------------------------------
- 3fd6e7cc-6a83-4b54-90e8-1e9b82a79fef
+ 5fd44235-e2cf-48ce-b1fb-98fc1f5c8ea1
 (1 row)
 
  as_user 
@@ -369,7 +377,7 @@ SET
 RESET
               set_config              
 --------------------------------------
- dd797f7c-a993-436b-9edc-3c86f073973d
+ 59bd178e-d9c6-4dae-8341-6d399035bff2
 (1 row)
 
  pg_sleep 
@@ -384,6 +392,7 @@ RESET
 
 SET
 INSERT 0 1
+psql:tool/db/security_test.sql:218: NOTICE:  refused, as it should be — farming the same second account a second time: that set was never handed to you
  must_fail 
 -----------
  
@@ -423,12 +432,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- d9b6c568-9fa1-4fe9-88ea-6c1a98ebb3f2
+ 74f75fe1-fa60-475c-b35f-4f07e36abf67
 (1 row)
 
               set_config              
 --------------------------------------
- 173411e0-5205-467c-a30c-b39431b33b2a
+ c85be9b4-5e8b-4f24-b1a7-cc49cfbc5ba5
 (1 row)
 
  as_user 
@@ -439,7 +448,7 @@ RESET
 SET
                          settle_duel                          
 --------------------------------------------------------------
- (d7b5accf-1b56-45e0-98fa-264abc720cf4,t,0,0,0,0,1,0,1,1,1,1)
+ (3915b97c-731a-4002-8afe-21dee5e570db,t,0,0,0,0,1,0,1,1,1,1)
 (1 row)
 
 RESET
@@ -512,6 +521,7 @@ SET
  
 (1 row)
 
+psql:tool/db/security_test.sql:279: NOTICE:  refused, as it should be — calling the rate counter directly: permission denied for function within_rate
  must_fail 
 -----------
  
@@ -529,6 +539,7 @@ RESET
 (1 row)
 
 SET
+psql:tool/db/security_test.sql:290: NOTICE:  refused, as it should be — a file under any other name in the public bucket: new row violates row-level security policy for table "objects"
  must_fail 
 -----------
  
@@ -556,19 +567,20 @@ RESET
 SET
              invite_live              
 --------------------------------------
- a3efe16e-2a89-49da-ba6e-462323b38779
+ 23122e42-0417-463b-ae43-ff624bc42d4b
 (1 row)
 
              invite_live              
 --------------------------------------
- 4255b102-5b51-4d22-bf41-9729a5b7650e
+ 67c946e4-5192-46bd-89fb-5caa8821cd17
 (1 row)
 
              invite_live              
 --------------------------------------
- d2fb2c67-43e2-4d24-bb52-74df426ceaf6
+ a7365606-a127-443f-9bc4-74316c9dca7b
 (1 row)
 
+psql:tool/db/security_test.sql:305: NOTICE:  refused, as it should be — a fourth live invite in ten minutes: too many invites, wait a few minutes
  must_fail 
 -----------
  
