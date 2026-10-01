@@ -7,10 +7,10 @@
 //
 // Deploying it:
 //
-//   Supabase dashboard → Edge Functions → Deploy a new function
+//   Supabase dashboard > Edge Functions > Deploy a new function
 //   Name it exactly `email-my-data` and paste this file.
 //
-//   Then Edge Functions → Secrets, and add:
+//   Then Edge Functions > Secrets, and add:
 //     RESEND_API_KEY   the key from resend.com
 //     EXPORT_FROM      the verified sender, e.g. outrepd <data@yourdomain>
 //
@@ -52,7 +52,7 @@ Deno.serve(async (request) => {
 
   // The caller's own token, passed straight through. Everything the export
   // gathers is scoped by `auth.uid()` inside the database, so this function
-  // never decides whose data it is — it cannot, and that is the point.
+  // never decides whose data it is - it cannot, and that is the point.
   const authorization = request.headers.get('Authorization');
   if (!authorization) return reply(401, { error: 'not signed in' });
 
@@ -74,7 +74,7 @@ Deno.serve(async (request) => {
   // Only to the address this account signed in with. It used to go wherever
   // the request said, which made this function a way for anybody with an
   // account to send mail from this project's sender to any address at all,
-  // as often as they liked — and a sender that does that gets blocked.
+  // as often as they liked - and a sender that does that gets blocked.
   const token = authorization.replace(/^Bearer\s+/i, '');
   const { data: who } = await db.auth.getUser(token);
   const own = (who?.user?.email ?? '').trim().toLowerCase();
@@ -116,9 +116,11 @@ Deno.serve(async (request) => {
           filename: file,
           content: btoa(
             // The export is plain ASCII once escaped, which keeps btoa from
-            // choking on a username with an accent in it.
+            // choking on a username with an accent in it. The range is
+            // written as escapes rather than the characters themselves,
+            // which do not survive being pasted into the dashboard's editor.
             JSON.stringify(data, null, 2).replace(
-              /[-￿]/g,
+              /[\u0080-\uffff]/g,
               (c) => '\\u' + c.charCodeAt(0).toString(16).padStart(4, '0'),
             ),
           ),
