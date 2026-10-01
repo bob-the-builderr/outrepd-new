@@ -13,7 +13,11 @@ alter default privileges in schema public
   grant select, insert, update, delete on tables to anon, authenticated, service_role;
 
 create schema auth;
-create table auth.users (id uuid primary key);
+create table auth.users (
+  id uuid primary key,
+  email text,
+  email_confirmed_at timestamptz
+);
 grant usage on schema auth to anon, authenticated;
 
 -- Supabase's own definition: the `sub` claim of the request's token.

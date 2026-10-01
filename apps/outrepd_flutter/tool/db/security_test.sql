@@ -273,7 +273,21 @@ select check_that(jsonb_array_length(my_data() -> 'friends') = 1,
                   'the export lost its friends');
 select check_that(not username_available('BOB_B1'),
                   'a taken name read as free once profiles closed');
+-- A guest picks a name on the sign-up screen, goes back and picks another.
 select check_that(set_my_username('Alice2') = 'ok', 'renaming');
+select check_that(set_my_username('Alice3') = 'ok',
+                  'a guest could not change the name they had just typed');
+reset role;
+-- Then confirms the email: the name chosen is the name kept.
+update auth.users set email = 'a@example.com', email_confirmed_at = now()
+ where id = :'A';
+select as_user(:'A'); set role authenticated;
+select check_that(set_my_username('Alice4') = 'already_changed',
+                  'a confirmed account renamed a second time');
+reset role;
+select check_that((select username from profiles where id = :'A') = 'Alice3',
+                  'the name kept is not the last one chosen');
+select as_user(:'A'); set role authenticated;
 select check_that((select count(*) from leaderboard()) >= 0, 'leaderboard');
 select must_fail('calling the rate counter directly',
                  $q$select within_rate('data_export', interval '1 day', 99)$q$);

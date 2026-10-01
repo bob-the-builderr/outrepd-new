@@ -181,9 +181,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
 
     try {
-      // Claimed first: the account this session already has has never
-      // renamed before, so this is that one free rename, spent on the name
-      // just typed rather than left for later.
+      // Claimed first, so the code only goes out once the name is known to
+      // be free. The account is still a guest here, and a guest may rename
+      // as often as it likes: coming back to this screen to fix the name, or
+      // because the email was taken, renames again. The name becomes final
+      // when the code is confirmed (set_my_username, account.sql).
       final renamed = await backend.renameUsername(username);
       if (!mounted) return;
       switch (renamed) {
@@ -208,8 +210,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         case RenameResult.ok:
           demoProfile.username = username;
         case RenameResult.alreadyChanged:
-        // Not an error here — the name is already whatever it was, and the
-        // account is still this session's own.
+        // Only an account with a confirmed email gets this, and one with a
+        // confirmed email is not signing up. Not an error: it keeps its name.
       }
 
       final result = await backend.startEmailSignUp(email: email);

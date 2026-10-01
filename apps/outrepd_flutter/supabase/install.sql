@@ -3719,20 +3719,29 @@ as $$
   );
 $$;
 
--- Renames this account. Once — see username_changed_at on profiles.
+-- Renames this account.
 --
--- The only name a lifter never actually got to choose: signing up appends a
--- few characters from the account's own id so two people typing the same
--- thing at signup never collide, which is exactly the ugly result this
--- undoes. Re-checks availability itself — the gap between the screen's own
--- check and this call is exactly long enough for somebody else to take it.
+-- As a guest — no confirmed email yet — as often as it likes. The name is
+-- chosen on the sign-up screen, before the code has been typed, and somebody
+-- who goes back to fix a typo, or because their email was already taken,
+-- has to be able to choose again: when the first try counted as the one
+-- rename, the second was quietly refused and the account kept a name its
+-- owner had already changed their mind about.
+--
+-- Once the email is confirmed the name is final if one was ever chosen
+-- (username_changed_at is set), and an account that never chose one gets a
+-- single rename. Re-checks availability itself — the gap between the
+-- screen's own check and this call is exactly long enough for somebody else
+-- to take it.
 --
 -- Letters and digits only, four characters minimum. A tag another lifter
 -- reads off a leaderboard or types into a search box, not a display name —
 -- no spaces or punctuation to type around, no length short enough to be
 -- somebody else by accident.
+--
 -- Security definer: whether a name is taken means looking at everybody's,
--- and a lifter can only read their own row. It writes only the caller's.
+-- and a lifter can only read their own row; and whether the email is
+-- confirmed is in auth.users. It writes only the caller's row.
 create or replace function set_my_username(new_name text)
 returns text
 language plpgsql
@@ -3741,16 +3750,26 @@ set search_path = public
 as $$
 declare
   cleaned text := trim(new_name);
+  confirmed boolean;
 begin
   if auth.uid() is null then
     return 'invalid';
   end if;
 
-  if exists (
+  select coalesce(u.email, '') <> '' and u.email_confirmed_at is not null
+    into confirmed
+    from auth.users u where u.id = auth.uid();
+
+  if coalesce(confirmed, false) and exists (
     select 1 from profiles
      where id = auth.uid() and username_changed_at is not null
   ) then
     return 'already_changed';
+  end if;
+
+  -- Free as a guest, but not endless: renaming in a loop is holding names.
+  if not within_rate('rename', interval '1 hour', 30) then
+    return 'too_often';
   end if;
 
   if char_length(cleaned) < 4 or char_length(cleaned) > 20
