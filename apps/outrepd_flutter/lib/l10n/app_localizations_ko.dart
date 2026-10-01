@@ -2287,4 +2287,9 @@ class LKo extends L {
 
   @override
   String get giveUpBody => '지금 횟수와 상관없이 패배로 기록돼요.';
+
+  @override
+  String waitingToJoin(String name) {
+    return '${name}님이 들어오길 기다리는 중';
+  }
 }

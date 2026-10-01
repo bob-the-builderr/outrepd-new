@@ -724,5 +724,6 @@
   "waitingForFinal": "Warte auf das Endergebnis von {name} …",
   "wantsToBeFriends": "möchte befreundet sein",
   "giveUpQuestion": "Diese Runde aufgeben?",
-  "giveUpBody": "Es zählt als Niederlage, egal wie viele du gerade hast."
+  "giveUpBody": "Es zählt als Niederlage, egal wie viele du gerade hast.",
+  "waitingToJoin": "Warte, bis {name} beitritt"
 }

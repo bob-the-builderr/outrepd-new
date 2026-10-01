@@ -2333,4 +2333,9 @@ class LDe extends L {
 
   @override
   String get giveUpBody => 'Es zählt als Niederlage, egal wie viele du gerade hast.';
+
+  @override
+  String waitingToJoin(String name) {
+    return 'Warte, bis ${name} beitritt';
+  }
 }

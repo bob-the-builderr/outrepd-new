@@ -4300,6 +4300,12 @@ abstract class L {
   /// In en, this message translates to:
   /// **'It counts as a loss, whatever your count is now.'**
   String get giveUpBody;
+
+  /// No description provided for @waitingToJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for {name} to join'**
+  String waitingToJoin(String name);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

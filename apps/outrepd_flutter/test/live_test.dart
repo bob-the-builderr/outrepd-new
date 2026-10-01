@@ -56,12 +56,13 @@ class _Live extends NoBackend {
     _Link? link,
     this.savedSet,
     this.friendList = const [],
+    this.startsIn = const Duration(milliseconds: 600),
   }) : link = link ?? _Link();
 
   final _Link link;
 
-  /// Where the server puts the round's start once both are ready.
-  final Duration startsIn = const Duration(milliseconds: 600);
+  /// Where the server puts the round's start once both are there.
+  final Duration startsIn;
   final OpponentSet? savedSet;
   final List<RemoteFriend> friendList;
 
@@ -251,6 +252,53 @@ void main() {
     await tester.pump();
     await tester.pump();
     expect(find.text('7'), findsWidgets);
+
+    await tester.pumpWidget(const SizedBox());
+    await session.close();
+  });
+
+  testWidgets('the round starts ten seconds after both are there, down in '
+      'position or not', (tester) async {
+    phone(tester);
+    backend = _Live(startsIn: const Duration(seconds: 10));
+    final session = LiveSession(_match);
+    final source = _Source();
+
+    await tester.pumpWidget(
+      _app(
+        TrainerScreen(
+          autoStart: true,
+          forMatch: true,
+          limit: const Duration(seconds: 60),
+          live: session,
+          poseSource: () => source,
+          duel: const DuelContext(
+            opponentName: 'omar_fit',
+            opponentReps: 0,
+            opponentTierIdx: 2,
+            opponentDivIdx: 1,
+            rankLabel: 'Friendly · no rank',
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 50));
+
+    // Still standing in front of the phone, and the count to the start is
+    // already running — from ten, the same ten on both phones.
+    source.emit(standingPose());
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(find.text('GET READY'), findsOneWidget);
+    expect(find.text('10'), findsOneWidget);
+
+    // Nobody ever gets down, and it starts anyway, on time.
+    for (var i = 0; i < 11 * 1000 ~/ kFrameMs; i++) {
+      source.emit(standingPose());
+      await tester.pump(const Duration(milliseconds: kFrameMs));
+    }
+    expect(find.text('GET READY'), findsNothing);
+    expect(session.startedAt, isNotNull);
 
     await tester.pumpWidget(const SizedBox());
     await session.close();

@@ -2327,4 +2327,9 @@ class LPt extends L {
 
   @override
   String get giveUpBody => 'Conta como derrota, seja qual for a tua contagem agora.';
+
+  @override
+  String waitingToJoin(String name) {
+    return 'À espera que ${name} entre';
+  }
 }

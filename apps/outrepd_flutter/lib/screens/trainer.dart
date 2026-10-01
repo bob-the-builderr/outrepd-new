@@ -73,8 +73,9 @@ class TrainerScreen extends StatefulWidget {
   });
 
   /// A live match: the other lifter is on camera right now, their count comes
-  /// from their phone as it moves, and the round starts when both are in
-  /// position rather than when this phone alone is. Null for everything else.
+  /// from their phone as it moves, and the round starts ten seconds after
+  /// both are on this screen — the same instant on both phones, in position
+  /// or not. Null for everything else.
   final LiveSession? live;
 
   /// Where poses come from. Defaults to the camera; a test hands in a scripted
@@ -113,7 +114,8 @@ enum _Stage {
   /// they have touched the floor.
   positioning,
 
-  /// Three seconds, so the start is a moment rather than an ambush.
+  /// Three seconds, so the start is a moment rather than an ambush. Ten in a
+  /// live match, counted from both lifters arriving, to get down in.
   countdown,
 
   counting,
@@ -332,6 +334,11 @@ class _TrainerScreenState extends State<TrainerScreen>
       _failure = null;
       _lastPoseAt = DateTime.now();
     });
+
+    // Live: here is all the server waits for. The round starts a fixed time
+    // after both lifters reach this screen, so it starts for both at once —
+    // not whenever the slower of two cameras first sees somebody down.
+    if (widget.live != null) _startCountdown();
   }
 
   /// The number on the card: the tracker's count, moved on the frame the rep
@@ -432,7 +439,7 @@ class _TrainerScreenState extends State<TrainerScreen>
   int _countdown = 3;
   Timer? _countdownTimer;
 
-  /// In position, in a live match, and waiting for the other lifter to be.
+  /// In a live match, and waiting for the other lifter to reach this screen.
   bool _waitingForOpponent = false;
 
   void _startCountdown() {
@@ -442,7 +449,7 @@ class _TrainerScreenState extends State<TrainerScreen>
       _countDownTo(null);
       return;
     }
-    // Live: this phone being ready is half of it. The server gives the round
+    // Live: this phone being here is half of it. The server gives the round
     // one start once both are, and both phones count down to that instant.
     if (_waitingForOpponent) return;
     setState(() => _waitingForOpponent = true);
@@ -458,11 +465,12 @@ class _TrainerScreenState extends State<TrainerScreen>
   }
 
   /// Three, two, one. On this phone's own second when [start] is null; ending
-  /// exactly at [start] when there is one, so two phones end theirs together.
+  /// exactly at [start] when there is one, so two phones end theirs together
+  /// — from ten, in a live match, which the server puts that far out.
   void _countDownTo(DateTime? start) {
     setState(() {
       _stage = _Stage.countdown;
-      _countdown = 3;
+      _countdown = start == null ? 3 : _secondsTo(start);
     });
     Sounds.instance.play(Cue.count);
     _countdownTimer?.cancel();
@@ -478,11 +486,15 @@ class _TrainerScreenState extends State<TrainerScreen>
           _beginRound();
           return;
         }
-        final shown = ((left.inMilliseconds + 999) ~/ 1000).clamp(1, 3);
+        final shown = _secondsTo(start);
         if (shown != _countdown) {
           setState(() => _countdown = shown);
-          tap();
-          Sounds.instance.play(Cue.count);
+          // A beep a second for ten seconds is noise: the first, then the
+          // last three, which are the ones anybody counts along to.
+          if (shown <= 3) {
+            tap();
+            Sounds.instance.play(Cue.count);
+          }
         }
       });
       return;
@@ -500,6 +512,14 @@ class _TrainerScreenState extends State<TrainerScreen>
       _beginRound();
     });
   }
+
+  /// Whole seconds until [start], rounded up: 10 at ten seconds out, 1 in
+  /// the last.
+  int _secondsTo(DateTime start) =>
+      ((start.difference(clock.now()).inMilliseconds + 999) ~/ 1000).clamp(
+        1,
+        10,
+      );
 
   void _beginRound() {
     // The bout starts here, and not one frame earlier. The tracker keeps
@@ -555,8 +575,8 @@ class _TrainerScreenState extends State<TrainerScreen>
     if (sure == true && mounted) await _stop(gaveUp: true);
   }
 
-  /// A live match that never started: the other lifter did not get into
-  /// position in time. Nothing was lifted, so nothing goes back but the fact.
+  /// A live match that never started: the other lifter never turned up.
+  /// Nothing was lifted, so nothing goes back but the fact.
   Future<void> _callOff() async {
     if (_stopping) return;
     _stopping = true;
@@ -628,6 +648,9 @@ class _TrainerScreenState extends State<TrainerScreen>
 
     if (_stage == _Stage.positioning) {
       setState(() => _pose = pose);
+      // Live waits on the other phone, not on this body: the start was asked
+      // for the moment the camera opened.
+      if (widget.live != null) return;
       if (!_framed(pose)) {
         _graceTimer?.cancel();
         _graceTimer = null;
@@ -883,6 +906,11 @@ class _TrainerScreenState extends State<TrainerScreen>
   /// This used to be the picker — a catch-all "any exercise" tile, then eighty
   /// named movements under six muscle headings. All of it is gone.
   Widget _buildSetup() {
+    // Opening the camera by itself: nothing to read or press while it does.
+    // The framing panel and Start used to flash up here before every match,
+    // a black screen about wrists and ankles between the match and the
+    // camera. Unless the last try failed, and there is something to say.
+    if (widget.autoStart && _error == null) return const SizedBox.expand();
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 110, 16, 24),
       children: [
@@ -1081,10 +1109,10 @@ class _TrainerScreenState extends State<TrainerScreen>
                       borderRadius: BorderRadius.circular(18),
                     ),
                     child: Text(
-                      // Live, and this lifter is ready: the wait is the other
+                      // Live, and this lifter is here: the wait is the other
                       // one now, and the screen says whose.
                       _waitingForOpponent
-                          ? L.of(context).waitingForPosition(
+                          ? L.of(context).waitingToJoin(
                               widget.live!.match.opponent.username,
                             )
                           : L.of(context).getIntoPosition,

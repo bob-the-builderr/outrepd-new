@@ -2317,4 +2317,9 @@ class LTr extends L {
 
   @override
   String get giveUpBody => 'Şu anki sayın ne olursa olsun yenilgi sayılır.';
+
+  @override
+  String waitingToJoin(String name) {
+    return '${name} bekleniyor';
+  }
 }

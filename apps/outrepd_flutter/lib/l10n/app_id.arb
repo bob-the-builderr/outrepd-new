@@ -724,5 +724,6 @@
   "waitingForFinal": "Menunggu hitungan akhir {name}…",
   "wantsToBeFriends": "ingin berteman",
   "giveUpQuestion": "Menyerah di ronde ini?",
-  "giveUpBody": "Ini dihitung kalah, berapa pun hitunganmu sekarang."
+  "giveUpBody": "Ini dihitung kalah, berapa pun hitunganmu sekarang.",
+  "waitingToJoin": "Menunggu {name} bergabung"
 }

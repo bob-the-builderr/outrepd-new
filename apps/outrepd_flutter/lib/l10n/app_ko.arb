@@ -724,5 +724,6 @@
   "waitingForFinal": "{name} 님의 최종 기록을 기다리는 중…",
   "wantsToBeFriends": "친구가 되고 싶어 해요",
   "giveUpQuestion": "이번 라운드를 포기할까요?",
-  "giveUpBody": "지금 횟수와 상관없이 패배로 기록돼요."
+  "giveUpBody": "지금 횟수와 상관없이 패배로 기록돼요.",
+  "waitingToJoin": "{name}님이 들어오길 기다리는 중"
 }

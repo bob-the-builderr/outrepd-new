@@ -724,5 +724,6 @@
   "waitingForFinal": "En attente du total final de {name}…",
   "wantsToBeFriends": "veut être ton ami",
   "giveUpQuestion": "Abandonner cette manche ?",
-  "giveUpBody": "C'est une défaite, quel que soit ton total actuel."
+  "giveUpBody": "C'est une défaite, quel que soit ton total actuel.",
+  "waitingToJoin": "En attente de {name}"
 }

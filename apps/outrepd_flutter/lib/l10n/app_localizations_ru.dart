@@ -2322,4 +2322,9 @@ class LRu extends L {
 
   @override
   String get giveUpBody => 'Это засчитается как поражение, каким бы ни был ваш счёт.';
+
+  @override
+  String waitingToJoin(String name) {
+    return 'Ждём, пока ${name} присоединится';
+  }
 }

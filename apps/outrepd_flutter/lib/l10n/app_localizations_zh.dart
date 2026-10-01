@@ -2267,4 +2267,9 @@ class LZh extends L {
 
   @override
   String get giveUpBody => '无论你现在做了多少个，都算作失败。';
+
+  @override
+  String waitingToJoin(String name) {
+    return '正在等待 ${name} 加入';
+  }
 }

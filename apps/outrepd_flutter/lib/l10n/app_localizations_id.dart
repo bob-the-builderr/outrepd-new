@@ -2322,4 +2322,9 @@ class LId extends L {
 
   @override
   String get giveUpBody => 'Ini dihitung kalah, berapa pun hitunganmu sekarang.';
+
+  @override
+  String waitingToJoin(String name) {
+    return 'Menunggu ${name} bergabung';
+  }
 }

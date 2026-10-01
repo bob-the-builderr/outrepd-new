@@ -2328,4 +2328,9 @@ class LIt extends L {
 
   @override
   String get giveUpBody => 'Conta come sconfitta, qualunque sia il tuo conteggio ora.';
+
+  @override
+  String waitingToJoin(String name) {
+    return 'In attesa che ${name} entri';
+  }
 }

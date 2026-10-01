@@ -724,5 +724,6 @@
   "waitingForFinal": "In attesa del conteggio finale di {name}…",
   "wantsToBeFriends": "vuole essere tuo amico",
   "giveUpQuestion": "Arrenderti in questo round?",
-  "giveUpBody": "Conta come sconfitta, qualunque sia il tuo conteggio ora."
+  "giveUpBody": "Conta come sconfitta, qualunque sia il tuo conteggio ora.",
+  "waitingToJoin": "In attesa che {name} entri"
 }

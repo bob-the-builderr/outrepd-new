@@ -724,5 +724,6 @@
   "waitingForFinal": "正在等待 {name} 的最终计数…",
   "wantsToBeFriends": "想和你成为好友",
   "giveUpQuestion": "放弃本回合？",
-  "giveUpBody": "无论你现在做了多少个，都算作失败。"
+  "giveUpBody": "无论你现在做了多少个，都算作失败。",
+  "waitingToJoin": "正在等待 {name} 加入"
 }

@@ -2321,4 +2321,9 @@ class LHi extends L {
 
   @override
   String get giveUpBody => 'इसे हार माना जाएगा, आपकी अभी की गिनती चाहे जो हो।';
+
+  @override
+  String waitingToJoin(String name) {
+    return '${name} के जुड़ने का इंतज़ार';
+  }
 }

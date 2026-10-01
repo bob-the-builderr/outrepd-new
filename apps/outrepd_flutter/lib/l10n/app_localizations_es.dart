@@ -2329,4 +2329,9 @@ class LEs extends L {
 
   @override
   String get giveUpBody => 'Cuenta como derrota, sea cual sea tu conteo ahora.';
+
+  @override
+  String waitingToJoin(String name) {
+    return 'Esperando a que ${name} entre';
+  }
 }

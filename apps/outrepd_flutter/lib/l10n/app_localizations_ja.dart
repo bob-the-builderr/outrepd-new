@@ -2277,4 +2277,9 @@ class LJa extends L {
 
   @override
   String get giveUpBody => '今のカウントに関係なく、負けになります。';
+
+  @override
+  String waitingToJoin(String name) {
+    return '${name}の参加を待っています';
+  }
 }

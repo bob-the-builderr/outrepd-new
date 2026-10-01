@@ -2331,4 +2331,9 @@ class LFr extends L {
 
   @override
   String get giveUpBody => 'C\'est une défaite, quel que soit ton total actuel.';
+
+  @override
+  String waitingToJoin(String name) {
+    return 'En attente de ${name}';
+  }
 }

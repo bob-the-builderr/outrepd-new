@@ -724,5 +724,6 @@
   "waitingForFinal": "{name} の最終カウントを待っています…",
   "wantsToBeFriends": "フレンドになりたがっています",
   "giveUpQuestion": "このラウンドを棄権しますか？",
-  "giveUpBody": "今のカウントに関係なく、負けになります。"
+  "giveUpBody": "今のカウントに関係なく、負けになります。",
+  "waitingToJoin": "{name}の参加を待っています"
 }

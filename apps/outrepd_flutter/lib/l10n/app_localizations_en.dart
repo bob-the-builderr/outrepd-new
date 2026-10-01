@@ -2321,4 +2321,9 @@ class LEn extends L {
 
   @override
   String get giveUpBody => 'It counts as a loss, whatever your count is now.';
+
+  @override
+  String waitingToJoin(String name) {
+    return 'Waiting for ${name} to join';
+  }
 }

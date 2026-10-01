@@ -2527,9 +2527,10 @@ create trigger send_push
 --   friend   `invite_live` asks one friend, who gets a notice and a push and
 --            has a minute to join. Friendly: it moves no rank.
 --
--- Then both phones say they are in position (`live_ready`), and the server
--- picks one instant for the round to start, handed to each phone as "this
--- many milliseconds from now" so neither phone's clock has to be right.
+-- Then both phones say they are on the match screen (`live_ready`) — in
+-- position or not — and the server picks one instant for the round to start,
+-- ten seconds after the second of them, handed to each phone as "this many
+-- milliseconds from now" so neither phone's clock has to be right.
 --
 -- The counts travel phone to phone over Supabase Realtime while the round
 -- runs; that is only for showing them. What settles the match is the two
@@ -2555,7 +2556,7 @@ create table if not exists live_matches (
 
   -- The invite's minute.
   expires_at  timestamptz,
-  -- How long the two have to both get into position once paired.
+  -- How long the two have to both reach the match screen once paired.
   ready_by    timestamptz,
 
   a_ready     boolean not null default false,
@@ -2869,7 +2870,7 @@ begin
     update live_matches lm set status = 'expired' where lm.id = m.id;
     m.status := 'expired';
   elsif m.status = 'ready' and m.ready_by <= now() then
-    -- Paired, and one of them never got into position.
+    -- Paired, and one of them never turned up.
     update live_matches lm set status = 'expired' where lm.id = m.id;
     m.status := 'expired';
   end if;
@@ -2887,9 +2888,10 @@ begin
 end;
 $$;
 
--- The caller is in position. When both are, the round gets its start: four
--- seconds out, room for the three-second countdown on both phones. Returns
--- how far away that start is, or null while the other is still getting down.
+-- The caller is on the match screen. When both are, the round gets its
+-- start: ten seconds out, for both to get down while both phones count to
+-- it, and then it starts for both at once whether or not they are down.
+-- Returns how far away that start is, or null while the other is not there.
 create or replace function live_ready(live uuid)
 returns int
 language plpgsql
@@ -2915,7 +2917,7 @@ begin
     m.b_ready := true;
   end if;
   if m.a_ready and m.b_ready and m.starts_at is null then
-    m.starts_at := now() + interval '4 seconds';
+    m.starts_at := now() + interval '10 seconds';
     m.status := 'live';
   end if;
 
