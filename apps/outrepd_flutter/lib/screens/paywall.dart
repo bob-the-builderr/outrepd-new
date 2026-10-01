@@ -161,8 +161,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
     }
     // A trial just began: the reminder the timeline promised, the day
     // before the first charge.
-    if (result.active && plan.trialDays case final days?) {
-      unawaited(Reminders.instance.trialStarted(Duration(days: days)));
+    final trialDays = plan.trialDays;
+    if (result.active && trialDays != null) {
+      unawaited(Reminders.instance.trialStarted(Duration(days: trialDays)));
     }
     if (!mounted) return;
     setState(() {
