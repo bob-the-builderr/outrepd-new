@@ -216,6 +216,14 @@ ThemeData buildTheme(Brightness brightness) {
     extensions: <ThemeExtension<dynamic>>[p],
   );
 
+  // The styles below start from the theme's own text styles rather than a
+  // bare TextStyle. A bare one names no family at all, and on a phone that
+  // still reaches the system face — but a button or a title built from it
+  // stops following the platform's typography the way every other line of
+  // text does, and in the screenshot engine it falls through to a face with
+  // no letters in it, which is how the paywall's button came out as boxes.
+  final text = base.textTheme;
+
   return base.copyWith(
     appBarTheme: AppBarTheme(
       backgroundColor: p.background,
@@ -223,7 +231,7 @@ ThemeData buildTheme(Brightness brightness) {
       surfaceTintColor: Colors.transparent,
       elevation: 0,
       centerTitle: false,
-      titleTextStyle: TextStyle(
+      titleTextStyle: text.titleLarge!.copyWith(
         color: p.text,
         fontSize: 22,
         fontWeight: FontWeight.w800,
@@ -241,7 +249,7 @@ ThemeData buildTheme(Brightness brightness) {
         backgroundColor: p.brand,
         foregroundColor: onBrand,
         minimumSize: const Size.fromHeight(56),
-        textStyle: const TextStyle(
+        textStyle: text.labelLarge!.copyWith(
           fontSize: 17,
           fontWeight: FontWeight.w700,
           letterSpacing: 0.5,
@@ -254,7 +262,10 @@ ThemeData buildTheme(Brightness brightness) {
         foregroundColor: p.text,
         minimumSize: const Size.fromHeight(56),
         side: BorderSide(color: p.text.withValues(alpha: 0.2), width: 2),
-        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        textStyle: text.labelLarge!.copyWith(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+        ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
     ),
