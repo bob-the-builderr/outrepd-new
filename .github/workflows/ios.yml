@@ -75,6 +75,14 @@ jobs:
           fi
           printf 'SUPABASE_URL=%s\nSUPABASE_ANON_KEY=%s\n' "$SUPABASE_URL" "$SUPABASE_ANON_KEY" > supabase/keys.env
           if [ -n "$REVENUECAT_APPLE_KEY" ]; then
+            # Whatever is in the secret ships inside the app, where anybody
+            # can read it out. A secret key (sk_) there is RevenueCat's whole
+            # account in a stranger's hands, so it stops the build.
+            case "$REVENUECAT_APPLE_KEY" in
+              sk_*) echo "::error::REVENUECAT_APPLE_KEY is a RevenueCat SECRET key (sk_...). The app takes the public App Store key, which starts appl_. Replace the secret, and rotate that sk_ key in RevenueCat."; exit 1 ;;
+              appl_*) ;;
+              *) echo "::warning::REVENUECAT_APPLE_KEY does not start appl_. Is it RevenueCat's public App Store key?" ;;
+            esac
             printf 'REVENUECAT_APPLE_KEY=%s\n' "$REVENUECAT_APPLE_KEY" >> supabase/keys.env
           else
             echo "::warning::No REVENUECAT_APPLE_KEY secret: this build has no paywall."
