@@ -94,9 +94,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       _step != _Step.framing &&
       _step != _Step.calibration;
 
-  /// The step before this one, for the system back gesture. Without it, back
-  /// on any step closed the app, and opening it again started over at the
-  /// welcome screen.
+  /// The step before this one, for the back button and the system back
+  /// gesture. Without it, back on any step closed the app, and opening it
+  /// again started over at the welcome screen.
   void _back() {
     if (_step.index == 0) return;
     _go(_Step.values[_step.index - 1]);
@@ -193,12 +193,31 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         body: SafeArea(
           child: Column(
             children: [
-              if (_showsProgress)
+              // Back on every step but the first, the camera steps included:
+              // the system gesture did this already, but nothing on the
+              // screen said it could be done, and an iPhone has no back key.
+              if (_step != _Step.welcome)
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-                  child: _Progress(
-                    done: _step.index,
-                    of: _Step.values.length - 1,
+                  padding: const EdgeInsetsDirectional.fromSTEB(4, 2, 20, 0),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        key: const Key('onboardingBack'),
+                        onPressed: _back,
+                        tooltip: MaterialLocalizations.of(
+                          context,
+                        ).backButtonTooltip,
+                        color: context.colors.text,
+                        icon: const BackButtonIcon(),
+                      ),
+                      if (_showsProgress)
+                        Expanded(
+                          child: _Progress(
+                            done: _step.index,
+                            of: _Step.values.length - 1,
+                          ),
+                        ),
+                    ],
                   ),
                 ),
               Expanded(

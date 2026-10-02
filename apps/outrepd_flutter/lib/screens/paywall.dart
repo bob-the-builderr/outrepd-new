@@ -9,7 +9,6 @@ library;
 
 import 'dart:async';
 import 'dart:math' as math;
-import 'dart:ui' show ImageFilter;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +20,6 @@ import '../l10n/app_localizations.dart';
 import '../reminders.dart';
 import '../subscription.dart';
 import '../theme.dart';
-import '../tier_badge.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
 import 'settings_account.dart';
@@ -326,10 +324,16 @@ class _PaywallScreenState extends State<PaywallScreen> {
                       minHeight: math.max(0.0, viewport.maxHeight - 42),
                     ),
                     child: Center(
-                      child: switch (_plan(_chosen)?.trialDays) {
-                        final days? => _trialPitch(context, l, days),
-                        null => _pitch(context, l),
-                      },
+                      // Nothing while the plans load: whether this account
+                      // can still have the free days comes with them, and a
+                      // headline that changed its mind a moment later would
+                      // be one paywall swapped for another in front of it.
+                      child: _plans == null && !_loadFailed
+                          ? const SizedBox.shrink()
+                          : switch (_plan(_chosen)?.trialDays) {
+                              final days? => _trialPitch(context, l, days),
+                              null => _pitch(context, l),
+                            },
                     ),
                   ),
                 ),
@@ -345,36 +349,34 @@ class _PaywallScreenState extends State<PaywallScreen> {
     );
   }
 
-  /// The crests, the promise, and what it buys.
+  /// What the subscription opens, down the same rail as the trial's days:
+  /// for an account that has had its free days, a plan without any, or plans
+  /// that would not load. The same paywall either way. There used to be a
+  /// second one here, of crests and perks, and picking the other plan
+  /// switched from one to the other.
   Widget _pitch(BuildContext context, L l) {
     return Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _TierArc(),
-        const SizedBox(height: 28),
-        Text(
-          l.paywallTitle,
-          key: const Key('paywallTitle'),
-          textAlign: TextAlign.center,
-          style: context.type.title.copyWith(
-            fontSize: 32,
-            height: 1.12,
-            color: context.colors.text,
-          ),
+        _AccentHeadline(key: const Key('paywallTitle'), text: l.paywallTitle),
+        const SizedBox(height: 30),
+        _Rail(
+          steps: [
+            (Icons.videocam_outlined, l.paywallPerkDuels, null),
+            (Icons.emoji_events_outlined, l.paywallPerkLadder, null),
+            (Icons.group_outlined, l.paywallPerkFriends, null),
+            (Icons.insights_outlined, l.paywallPerkHistory, null),
+          ],
         ),
-        const SizedBox(height: 26),
-        _Perk(icon: Icons.videocam_outlined, text: l.paywallPerkDuels),
-        _Perk(icon: Icons.emoji_events_outlined, text: l.paywallPerkLadder),
-        _Perk(icon: Icons.group_outlined, text: l.paywallPerkFriends),
-        _Perk(icon: Icons.insights_outlined, text: l.paywallPerkHistory),
       ],
     );
   }
 
   /// The free trial, told as what happens when: today everything opens, the
   /// day before it ends the app says so, and the day it ends the plan starts.
-  /// Shown in place of the crests while the chosen plan has a trial, so the
-  /// first thing read is that nothing is charged now.
+  /// Shown while the chosen plan has a trial, so the first thing read is that
+  /// nothing is charged now.
   Widget _trialPitch(BuildContext context, L l, int days) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -400,8 +402,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
     final apple = defaultTargetPlatform == TargetPlatform.iOS;
     final chosen = _plan(_chosen);
     final trial = chosen?.trialDays;
-    // Any trial on offer turns the plans into rows with room to say so.
-    final anyTrial = weekly?.trialDays != null || yearly?.trialDays != null;
     String? tag(Plan? plan) => switch (plan?.trialDays) {
       final days? => l.trialTag(localNumber(context, days)),
       null => null,
@@ -445,7 +445,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
               child: CircularProgressIndicator(color: colors.brand),
             ),
           )
-        else if (anyTrial)
+        else
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -472,38 +472,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   trial: tag(weekly),
                   selected: _chosen == PlanPeriod.weekly,
                   onTap: () => setState(() => _chosen = PlanPeriod.weekly),
-                ),
-            ],
-          )
-        else
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (yearly != null)
-                Expanded(
-                  child: _PlanCard(
-                    key: const Key('planYearly'),
-                    label: l.paywallYearly,
-                    price: yearly.priceString,
-                    detail: l.paywallPerWeek(yearly.perWeek()),
-                    badge: saving == null
-                        ? null
-                        : l.paywallSave(localNumber(context, saving)),
-                    selected: _chosen == PlanPeriod.yearly,
-                    onTap: () => setState(() => _chosen = PlanPeriod.yearly),
-                  ),
-                ),
-              if (yearly != null && weekly != null) const SizedBox(width: 10),
-              if (weekly != null)
-                Expanded(
-                  child: _PlanCard(
-                    key: const Key('planWeekly'),
-                    label: l.paywallWeekly,
-                    price: weekly.priceString,
-                    detail: l.paywallEveryWeek,
-                    selected: _chosen == PlanPeriod.weekly,
-                    onTap: () => setState(() => _chosen = PlanPeriod.weekly),
-                  ),
                 ),
             ],
           ),
@@ -601,115 +569,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 }
 
-/// The seven crests, Iron to Master, rising to the middle — the whole ladder
-/// the subscription is the way onto.
-class _TierArc extends StatelessWidget {
-  const _TierArc();
-
-  /// Each crest's size against the middle one's.
-  static const _scale = [0.72, 0.84, 0.94, 1.12, 0.94, 0.84, 0.72];
-  static const _gap = 6.0;
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final total = _scale.reduce((a, b) => a + b);
-        final unit =
-            ((constraints.maxWidth - _gap * (_scale.length - 1)) / total)
-                .clamp(24.0, 70.0)
-                .toDouble();
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            for (var i = 0; i < _scale.length; i++) ...[
-              if (i > 0) const SizedBox(width: _gap),
-              _GlowingCrest(tierIndex: i, size: unit * _scale[i]),
-            ],
-          ],
-        );
-      },
-    );
-  }
-}
-
-/// A crest with its own colour bleeding out past its edges — a blurred,
-/// tinted copy of the same silhouette behind it, not a ring.
-class _GlowingCrest extends StatelessWidget {
-  const _GlowingCrest({required this.tierIndex, required this.size});
-
-  final int tierIndex;
-  final double size;
-
-  @override
-  Widget build(BuildContext context) {
-    final tint = kTiers[tierIndex.clamp(0, kTiers.length - 1)].color;
-    return SizedBox(
-      width: size,
-      height: size,
-      child: Stack(
-        clipBehavior: Clip.none,
-        alignment: Alignment.center,
-        children: [
-          ImageFiltered(
-            imageFilter: ImageFilter.blur(
-              sigmaX: size * 0.16,
-              sigmaY: size * 0.16,
-            ),
-            child: ColorFiltered(
-              colorFilter: ColorFilter.mode(
-                tint.withValues(alpha: 0.75),
-                BlendMode.srcIn,
-              ),
-              child: TierBadge(tierIndex: tierIndex, size: size),
-            ),
-          ),
-          TierBadge(tierIndex: tierIndex, size: size),
-        ],
-      ),
-    );
-  }
-}
-
-class _Perk extends StatelessWidget {
-  const _Perk({required this.icon, required this.text});
-
-  final IconData icon;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 7),
-      child: Row(
-        children: [
-          Container(
-            width: 38,
-            height: 38,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: context.colors.surfaceRaised,
-              borderRadius: BorderRadius.circular(11),
-            ),
-            child: Icon(icon, size: 21, color: context.colors.brand),
-          ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Text(
-              text,
-              style: context.type.body.copyWith(
-                fontSize: 16,
-                color: context.colors.text,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 /// A headline with one stretch of it in the accent: the part between the two
 /// asterisks in the translation ("Your first 3 days are *free*"). Marked in
 /// the string rather than split into pieces, because where the word falls in
@@ -752,8 +611,7 @@ class _TrialTimeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
-    final colors = context.colors;
-    final steps = [
+    final steps = <(IconData, String, String?)>[
       (Icons.lock_open_rounded, l.trialToday, l.trialTodayBody),
       // A one-day trial has no day before its last to remind on.
       if (days >= 2)
@@ -769,6 +627,24 @@ class _TrialTimeline extends StatelessWidget {
       ),
     ];
 
+    return _Rail(steps: steps, fades: true);
+  }
+}
+
+/// Steps down a bar, each an icon, a line and, if it needs one, a sentence
+/// under it — the shape the whole paywall is told in, trial or not.
+class _Rail extends StatelessWidget {
+  const _Rail({required this.steps, this.fades = false});
+
+  final List<(IconData, String, String?)> steps;
+
+  /// Lit for the part under way and dimming after it, for the days of a
+  /// trial; otherwise lit the whole way down, for what opens all at once.
+  final bool fades;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -777,18 +653,21 @@ class _TrialTimeline extends StatelessWidget {
             width: 8,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  colors.brand,
-                  colors.brand,
-                  colors.faint,
-                  colors.faint,
-                  colors.surfaceRaised,
-                ],
-                stops: const [0, 0.3, 0.38, 0.62, 0.72],
-              ),
+              color: fades ? null : colors.brand,
+              gradient: fades
+                  ? LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        colors.brand,
+                        colors.brand,
+                        colors.faint,
+                        colors.faint,
+                        colors.surfaceRaised,
+                      ],
+                      stops: const [0, 0.3, 0.38, 0.62, 0.72],
+                    )
+                  : null,
             ),
           ),
           const SizedBox(width: 16),
@@ -814,15 +693,17 @@ class _TrialTimeline extends StatelessWidget {
                                 color: colors.text,
                               ),
                             ),
-                            const SizedBox(height: 3),
-                            Text(
-                              steps[i].$3,
-                              style: context.type.body.copyWith(
-                                fontSize: 14,
-                                height: 1.4,
-                                color: colors.muted,
+                            if (steps[i].$3 case final more?) ...[
+                              const SizedBox(height: 3),
+                              Text(
+                                more,
+                                style: context.type.body.copyWith(
+                                  fontSize: 14,
+                                  height: 1.4,
+                                  color: colors.muted,
+                                ),
                               ),
-                            ),
+                            ],
                           ],
                         ),
                       ),
@@ -838,8 +719,8 @@ class _TrialTimeline extends StatelessWidget {
   }
 }
 
-/// A plan as one row, for when a trial is on offer: the name and what it
-/// saves on the left, the price and the free days on the right.
+/// A plan as one row: the name and what it saves on the left, the price and
+/// any free days on the right.
 class _PlanRow extends StatelessWidget {
   const _PlanRow({
     super.key,
@@ -962,120 +843,6 @@ class _PlanRow extends StatelessWidget {
                       ),
                     ],
                   ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _PlanCard extends StatelessWidget {
-  const _PlanCard({
-    super.key,
-    required this.label,
-    required this.price,
-    required this.detail,
-    required this.selected,
-    required this.onTap,
-    this.badge,
-  });
-
-  final String label;
-  final String price;
-  final String detail;
-  final bool selected;
-  final VoidCallback onTap;
-
-  /// "Save 85%", on the plan that saves.
-  final String? badge;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    return Semantics(
-      selected: selected,
-      button: true,
-      child: Material(
-        color: colors.surface,
-        borderRadius: BorderRadius.circular(16),
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(16),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 150),
-            padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: selected ? colors.brand : colors.border,
-                width: selected ? 2 : 1,
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // The same height whether or not there is a badge, so the two
-                // cards line up.
-                SizedBox(
-                  height: 22,
-                  child: badge == null
-                      ? null
-                      : Align(
-                          alignment: AlignmentDirectional.centerStart,
-                          // A pill the size of its text, shrunk rather than
-                          // cut when a language runs long.
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 7,
-                                vertical: 3,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.gold,
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: Text(
-                                badge!,
-                                maxLines: 1,
-                                style: const TextStyle(
-                                  color: Color(0xFF2A1E05),
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: context.type.label.copyWith(color: colors.muted),
-                ),
-                const SizedBox(height: 2),
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: AlignmentDirectional.centerStart,
-                  child: Text(
-                    price,
-                    style: context.type.statValue.copyWith(
-                      fontSize: 26,
-                      color: colors.text,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 3),
-                Text(
-                  detail,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: colors.muted, fontSize: 12),
                 ),
               ],
             ),

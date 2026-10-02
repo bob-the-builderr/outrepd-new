@@ -107,6 +107,56 @@ void main() {
     expect(find.text('Get started'), findsOneWidget);
   });
 
+  testWidgets('a back button on every step after the first', (tester) async {
+    phone(tester);
+    final source = _ScriptedSource();
+    addTearDown(source.dispose);
+    await tester.pumpWidget(_app(() => source));
+    await tester.pumpAndSettle();
+    final back = find.byKey(const Key('onboardingBack'));
+
+    // Nothing before the first step to go back to.
+    expect(back, findsNothing);
+
+    await tap(tester, 'Get started');
+    await tap(tester, 'Continue');
+    expect(find.text('You race a real person’s minute'), findsOneWidget);
+    await tester.tap(back);
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Three things'), findsOneWidget);
+
+    // On the camera steps too, where the screen is the camera.
+    await tap(tester, 'Continue');
+    await tap(tester, 'Continue');
+    await tap(tester, 'Continue');
+    await tap(tester, '16 or over');
+    await tap(tester, 'I understand outrepd counts reps and does not give '
+        'medical or training advice. I’ll stop if something hurts.');
+    await tap(tester, 'Continue');
+    await tap(tester, 'Allow camera');
+    await tap(tester, 'I’m set up');
+    expect(find.text('Get into a push-up position'), findsOneWidget);
+    await tester.tap(back);
+    await tester.pumpAndSettle();
+    expect(find.text('Get into a push-up position'), findsNothing);
+    expect(find.text('I’m set up'), findsOneWidget);
+
+    await tester.tap(back);
+    await tester.pumpAndSettle();
+    await tester.tap(back);
+    await tester.pumpAndSettle();
+    await tester.tap(back);
+    await tester.pumpAndSettle();
+    await tester.tap(back);
+    await tester.pumpAndSettle();
+    await tester.tap(back);
+    await tester.pumpAndSettle();
+    await tester.tap(back);
+    await tester.pumpAndSettle();
+    expect(find.text('Get started'), findsOneWidget);
+    expect(back, findsNothing);
+  });
+
   testWidgets('says what the camera is for before asking for it',
       (tester) async {
     phone(tester);
