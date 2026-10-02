@@ -18,11 +18,11 @@ library;
 import 'package:flutter/material.dart';
 
 import '../backend/backend.dart';
-import '../career.dart';
 import '../l10n/app_localizations.dart';
 import '../push.dart';
 import '../theme.dart';
 import '../widgets.dart';
+import 'leave_account.dart';
 import 'settings_parts.dart';
 
 // ──────────────────────────── download my data ───────────────────────────────
@@ -274,6 +274,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
   Future<void> _delete() async {
     final l = L.of(context);
     final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
     setState(() => _deleting = true);
 
     try {
@@ -282,11 +283,6 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
       // delete then fails, the next launch registers again.
       await Push.instance.stop();
       await backend.deleteAccount();
-      // The local account goes too. Leaving a career behind on the phone
-      // after the server has forgotten it is the same account in two states.
-      await Career.instance.startFresh();
-      if (!mounted) return;
-      Navigator.of(context).popUntil((route) => route.isFirst);
     } on Object catch (_) {
       if (!mounted) return;
       setState(() => _deleting = false);
@@ -296,7 +292,11 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
           behavior: SnackBarBehavior.floating,
         ),
       );
+      return;
     }
+    // Gone from the server: the phone goes back to how a fresh install is,
+    // exactly as signing out leaves it.
+    await leaveForWelcome(navigator);
   }
 
   @override

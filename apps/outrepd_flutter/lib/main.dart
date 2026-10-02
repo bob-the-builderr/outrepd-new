@@ -187,9 +187,17 @@ class _OutrepdAppState extends State<OutrepdApp> with WidgetsBindingObserver {
       routes: {
         // Onboarding is for accounts that do not exist yet. Anybody who has
         // been here before goes straight in — finishing onboarding calls
-        // startFresh(), so showing it to them again is how a career gets
-        // erased on the way to the home screen.
-        '/': (_) => onboarded ? const AppShell() : const OnboardingScreen(),
+        // startFresh() only for a phone not yet set up, so going through it
+        // again never erases a career.
+        //
+        // Straight in means with an account: a phone set up before but
+        // holding only a guest session — no email behind it — goes back
+        // through the welcome and the sign-up, because inside is the paywall,
+        // and a subscription bought by a guest belongs to no account anybody
+        // can sign back into.
+        '/': (_) => onboarded && (!backend.available || backend.hasRealAccount)
+            ? const AppShell()
+            : const OnboardingScreen(),
         '/home': (_) => const AppShell(),
         // The preview opens on home; this is the way back to the first run.
         '/onboarding': (_) => const OnboardingScreen(),

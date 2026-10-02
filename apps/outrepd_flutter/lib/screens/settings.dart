@@ -17,18 +17,16 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../backend/backend.dart';
-import '../career.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../push.dart';
 import '../reps/count_accuracy.dart';
 import '../settings.dart';
-import '../subscription.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'auth_entry.dart';
 import 'counter_accuracy.dart';
-import 'onboarding.dart';
+import 'leave_account.dart';
 import 'settings_account.dart';
 import 'settings_notices.dart';
 import 'settings_parts.dart';
@@ -328,23 +326,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       );
       return;
     }
-    await Subscription.instance.forget();
-    // What this phone kept of the account — its rank and totals — is the
-    // server's copy, and comes back with the next sign-in.
-    await Career.instance.startFresh();
-    await markNotOnboarded();
-    try {
-      await backend.signIn(username: 'lifter');
-    } on Object catch (error) {
-      // Offline: the welcome screen still opens, and signing in or up asks
-      // the server again when it is used.
-      debugPrint('Could not start a new session: $error');
-    }
-
-    navigator.pushAndRemoveUntil(
-      MaterialPageRoute(builder: (_) => const OnboardingScreen()),
-      (_) => false,
-    );
+    await leaveForWelcome(navigator);
   }
 
   Future<void> _openUrl(String url) async {
