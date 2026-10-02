@@ -13,6 +13,7 @@ import 'dart:ui' show ImageFilter;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../backend/backend.dart';
@@ -103,6 +104,13 @@ class PaywallScreen extends StatefulWidget {
 class _PaywallScreenState extends State<PaywallScreen> {
   List<Plan>? _plans;
   bool _loadFailed = false;
+
+  /// Why the plans did not load, in the store's own words, under the
+  /// message that says so. Small and faint: it is for whoever is setting the
+  /// store up — an agreement not yet in effect, a product the store will not
+  /// hand out, an offering with nothing in it — and it is the one place on a
+  /// phone that reason can be read.
+  String? _loadError;
   PlanPeriod _chosen = PlanPeriod.yearly;
   bool _busy = false;
 
@@ -120,6 +128,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
     setState(() {
       _plans = null;
       _loadFailed = false;
+      _loadError = null;
     });
     try {
       final plans = await widget.store.plans();
@@ -127,13 +136,25 @@ class _PaywallScreenState extends State<PaywallScreen> {
       setState(() {
         _plans = plans;
         _loadFailed = plans.isEmpty;
+        _loadError = plans.isEmpty
+            ? 'The current offering has no weekly or annual package.'
+            : null;
         if (plans.isNotEmpty && !plans.any((p) => p.period == _chosen)) {
           _chosen = plans.first.period;
         }
       });
     } on Object catch (error) {
       debugPrint('Could not load the plans: $error');
-      if (mounted) setState(() => _loadFailed = true);
+      if (mounted) {
+        setState(() {
+          _loadFailed = true;
+          _loadError = switch (error) {
+            PlatformException(:final code, :final message) =>
+              '$code: ${message ?? ''}',
+            _ => '$error',
+          };
+        });
+      }
     }
   }
 
@@ -398,6 +419,18 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 textAlign: TextAlign.center,
                 style: context.type.body.copyWith(color: colors.muted),
               ),
+              if (_loadError case final why?)
+                Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: Text(
+                    why,
+                    key: const Key('paywallLoadError'),
+                    textAlign: TextAlign.center,
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: colors.faint, fontSize: 10),
+                  ),
+                ),
               TextButton(
                 key: const Key('paywallRetry'),
                 onPressed: _load,
