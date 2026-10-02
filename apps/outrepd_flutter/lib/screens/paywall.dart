@@ -767,48 +767,56 @@ class _PlanRow extends StatelessWidget {
                 width: selected ? 2 : 1,
               ),
             ),
+            // Three parts to the left side and two to the right, each shrunk
+            // rather than cut when a language or a large text size runs long:
+            // the name and its saving, and the price and its free days, are
+            // each read as one, so neither half loses its end.
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
+                  flex: 3,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Flexible(
-                            child: Text(
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: AlignmentDirectional.centerStart,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
                               label,
                               maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
                               style: context.type.heading.copyWith(
                                 fontSize: 16,
                                 color: colors.text,
                               ),
                             ),
-                          ),
-                          if (badge case final saving?) ...[
-                            const SizedBox(width: 8),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 7,
-                                vertical: 3,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.gold,
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: Text(
-                                saving,
-                                maxLines: 1,
-                                style: const TextStyle(
-                                  color: Color(0xFF2A1E05),
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w800,
+                            if (badge case final saving?) ...[
+                              const SizedBox(width: 8),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 7,
+                                  vertical: 3,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.gold,
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Text(
+                                  saving,
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                    color: Color(0xFF2A1E05),
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w800,
+                                  ),
                                 ),
                               ),
-                            ),
+                            ],
                           ],
-                        ],
+                        ),
                       ),
                       const SizedBox(height: 3),
                       Text(
@@ -821,28 +829,35 @@ class _PlanRow extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      price,
-                      style: context.type.statValue.copyWith(
-                        fontSize: 20,
-                        color: colors.text,
-                      ),
-                    ),
-                    if (trial case final free?) ...[
-                      const SizedBox(height: 2),
-                      Text(
-                        free,
-                        style: TextStyle(
-                          color: colors.rival,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
+                Flexible(
+                  flex: 2,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          price,
+                          style: context.type.statValue.copyWith(
+                            fontSize: 20,
+                            color: colors.text,
+                          ),
                         ),
-                      ),
-                    ],
-                  ],
+                        if (trial case final free?) ...[
+                          const SizedBox(height: 2),
+                          Text(
+                            free,
+                            style: TextStyle(
+                              color: colors.rival,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
