@@ -284,12 +284,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- 1b470b91-d81b-47c6-afbb-ae73796f4fb4
+ 30cd2ef2-539f-4466-8731-86c40237b5b2
 (1 row)
 
               set_config              
 --------------------------------------
- 945294ee-af0d-4497-882c-db10fe916cc3
+ 67125ae6-c87b-4c69-b8db-0910217366de
 (1 row)
 
  as_user 
@@ -331,12 +331,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- 1b470b91-d81b-47c6-afbb-ae73796f4fb4
+ 30cd2ef2-539f-4466-8731-86c40237b5b2
 (1 row)
 
               set_config              
 --------------------------------------
- 5ca31fe4-b062-47a9-bd0f-69a5f951b3c4
+ 190adc81-8c30-4fcc-846f-bf189f53be94
 (1 row)
 
  as_user 
@@ -378,7 +378,7 @@ SET
 RESET
               set_config              
 --------------------------------------
- 2dcbbc9d-ada1-4f04-8672-c92f494be37d
+ 1dba7c36-7d9e-4b63-b60b-778657a84e53
 (1 row)
 
  pg_sleep 
@@ -433,12 +433,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- 5d0ade3c-5d2a-4d6c-8a02-9b6eb78d956b
+ bef4eb69-b827-4e55-987f-b80190194618
 (1 row)
 
               set_config              
 --------------------------------------
- bcef54a0-b059-4dd7-bce6-8e50aa1832bd
+ 875b89ac-55f8-464d-b392-a3c6486ec414
 (1 row)
 
  as_user 
@@ -449,7 +449,7 @@ RESET
 SET
                          settle_duel                          
 --------------------------------------------------------------
- (819848be-4e28-4966-bcc8-2e695495b978,t,0,0,0,0,1,0,1,1,1,1)
+ (243ec51e-267d-4aa8-b309-28c1269426dc,t,0,0,0,0,1,0,1,1,1,1)
 (1 row)
 
 RESET
@@ -606,7 +606,7 @@ RESET
 SET
              invite_live              
 --------------------------------------
- 110bae60-3da9-426e-898f-94412abaa68e
+ f855fd46-174d-4b6a-a3c7-b8ea9811c1e1
 (1 row)
 
 RESET
@@ -631,12 +631,12 @@ RESET
 SET
              invite_live              
 --------------------------------------
- cf28064f-009f-48bb-9c9d-383a01ed7cea
+ 88ad081f-92ef-4b5c-a622-1c8c7a1a427b
 (1 row)
 
              invite_live              
 --------------------------------------
- ba9478a4-c979-474d-8db2-5fb459447e03
+ 414cd129-e639-4430-bfde-c7bf6e06e07a
 (1 row)
 
 psql:tool/db/security_test.sql:331: NOTICE:  refused, as it should be — a fourth live invite in ten minutes: too many invites, wait a few minutes
