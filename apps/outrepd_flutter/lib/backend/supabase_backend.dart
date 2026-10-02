@@ -698,8 +698,17 @@ class SupabaseBackend implements Backend {
     await _db.auth.resend(type: OtpType.emailChange, email: email);
   }
 
+  /// Whether [email] is App Review's account. Its inbox is nobody's, so it is
+  /// never sent a code: the code typed for it is the account's password —
+  /// six digits, set on the account in the Supabase dashboard and given to
+  /// Apple with the submission. Every other account signs in only with a
+  /// code from its own inbox.
+  bool _isReviewAccount(String email) =>
+      email.trim().toLowerCase() == kReviewEmail;
+
   @override
   Future<EmailLoginCodeResult> requestLoginCode(String email) async {
+    if (_isReviewAccount(email)) return EmailLoginCodeResult.ok;
     try {
       // Never creates an account — signing in needs one to already exist,
       // unlike [startEmailSignUp].
@@ -721,21 +730,43 @@ class SupabaseBackend implements Backend {
     required String code,
   }) async {
     try {
-      final response = await _db.auth.verifyOTP(
-        type: OtpType.email,
-        email: email,
-        token: code,
-      );
+      final response = _isReviewAccount(email)
+          ? await _db.auth.signInWithPassword(
+              email: kReviewEmail,
+              password: code,
+            )
+          : await _db.auth.verifyOTP(
+              type: OtpType.email,
+              email: email,
+              token: code,
+            );
       final user = response.user;
       if (user == null) return false;
 
       // A different account than whatever this device held before, if
       // any — a fresh session, not one this row was already read for.
-      final row = await _db
-          .from('profiles')
-          .select()
-          .eq('id', user.id)
-          .single();
+      //
+      // Made here if it is missing: an account added in the dashboard, like
+      // App Review's, has never been through the app's first launch, which
+      // is where every other account's row is made.
+      final row =
+          await _db
+              .from('profiles')
+              .select()
+              .eq('id', user.id)
+              .maybeSingle() ??
+          await _db
+              .from('profiles')
+              .insert({
+                'id': user.id,
+                'username': _unique(
+                  _isReviewAccount(email) ? 'reviewer' : 'lifter',
+                  user.id,
+                ),
+                'country': _country,
+              })
+              .select()
+              .single();
       _me = _profileFrom(row);
       return true;
     } on AuthRetryableFetchException {

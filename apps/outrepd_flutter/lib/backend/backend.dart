@@ -713,6 +713,12 @@ enum EmailSignUpResult {
   offline,
 }
 
+/// The account App Review signs in with, from "I already have an account".
+/// Its inbox is nobody's: no code is sent to it, and what is typed in the
+/// code boxes is the account's own six-digit password instead. The account
+/// is added by hand in the Supabase dashboard; the app never makes it.
+const kReviewEmail = 'appreview@outrepd.com';
+
 /// What happened trying to send a sign-in code to an email.
 enum EmailLoginCodeResult {
   ok,
