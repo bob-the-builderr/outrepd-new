@@ -205,7 +205,13 @@ jobs:
             if grep -q "REQUIRED_AGREEMENTS" "$RUNNER_TEMP/export.log" 2>/dev/null; then
               echo "upload note Apple wants an agreement accepted: App Store Connect > Business"
             fi
-            echo "paywall key $( [ -n "$REVENUECAT_APPLE_KEY" ] && echo yes || echo no )"
+            # Which kind of key, never the key: enough to tell a missing secret
+            # from one pasted in the wrong place or of the wrong kind.
+            case "$REVENUECAT_APPLE_KEY" in
+              appl_*) echo "paywall key yes — RevenueCat's public App Store key" ;;
+              "") echo "paywall key no — add REVENUECAT_APPLE_KEY under Settings > Secrets and variables > Actions > Repository secrets" ;;
+              *) echo "paywall key yes — but it does not start appl_" ;;
+            esac
             echo "firebase    ${{ steps.firebase.outputs.ready }} — ${{ steps.firebase.outputs.note }}"
             echo "run         ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           } > "$out/summary.txt"
