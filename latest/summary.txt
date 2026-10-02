@@ -1,12 +1,12 @@
-commit      bb24ac302d00c9e99e14162b87ef7dd18ec0757e
-build       153
+commit      043791dfdaa24427f2c70c79a5ea2251eababd7a
+build       154
 upload key  true
 key note    the upload key opens and has the alias
 apk         success 118740035 bytes
-aab         success 112930900 bytes
+aab         success 112930874 bytes
 paywall key no
 download    https://github.com/bob-the-builderr/outrepd-new/releases/latest/download/OUTREPD.apk
 firebase    true — push notifications and crash reports are in
 signed by   Owner: CN=mokhtar, OU=outrepd, O=outrepd, L=suez, ST=suez, C=EG
 sha-256     93:19:AC:A3:AC:BD:85:34:04:9D:BF:6F:D7:CD:B5:D2:CC:1D:D8:4F:AA:E4:C3:39:4B:A6:8B:45:FF:03:7A:FB
-run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/36931594288
+run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/36958473286
