@@ -23,8 +23,12 @@
 
 ## ٢. صفحة النسخة (iOS App ← 1.0)
 
-### Screenshots (iPhone 6.9")
-اسحب الـ٩ صور من `Desktop\app-store-upload` بالترتيب (00 ← 08).
+### Screenshots
+App Store Connect بيطلب مقاس حسب الخانة:
+- **iPhone 6.5"**: ‏1284×2778 ← `Desktop\app-store-1284x2778` (فيه `marketing` و `app`)
+- **iPhone 6.9"**: ‏1320×2868 ← `Desktop\app-store-marketing` و `Desktop\app-store-upload`
+
+لحد ١٠ صور: الـ٤ بتوع `marketing` الأول، وبعدهم صور من الأب.
 
 ### Promotional Text
 ```
