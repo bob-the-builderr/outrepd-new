@@ -47,9 +47,13 @@ App Review ← الرسالة ← **Reply**. الصق ده (وغيّر `[VIDEO L
 ```
 Hello, and thank you for reviewing OUTREPD. Here is the information you asked for.
 
-1. SCREEN RECORDING
-Recorded on a physical iPhone on the latest iOS, starting at app launch: onboarding, sign-up with an email code, the subscription screen (plan names, lengths, prices, Terms of Use and Privacy Policy links) and a purchase, a practice set, reporting and blocking a user, signing out and back in, and deleting the account.
-[VIDEO LINK]
+1. SCREEN RECORDINGS
+Recorded on a physical iPhone running the latest iOS. Each recording begins with launching the app.
+- Recording 1: [DRIVE LINK 1]
+  The app's main features, switching to another account (signing out and signing back in), playing a match, and deleting the account.
+- Recording 2: [DRIVE LINK 2]
+  Registering a new account after that deletion: the onboarding with its camera calibration, sign-up with an email code, and the subscription screen, then playing another match.
+- Recording 3 (attached to this message): reporting and blocking another user from their profile.
 
 2. PURPOSE AND AUDIENCE
 OUTREPD is a competitive push-up app for people aged 16 and over who train with their own body weight. Training alone is hard to keep up and easy to cheat on, so OUTREPD makes every set a 60-second duel against a real person. The front camera counts each push-up on the device, only full-depth reps score, and results move the user up a seven-tier ranked ladder (Iron to Master). Users can also add and challenge friends, earn titles and see their history.
@@ -94,7 +98,7 @@ App Review Information ← **Notes**: امسح اللي فيها والصق ده
 وده الحد بتاعها). وغيّر `[VIDEO LINK]`.
 
 ```
-SCREEN RECORDING: [VIDEO LINK]
+SCREEN RECORDINGS: [DRIVE LINK 1] (main features, switching accounts, a match, account deletion); [DRIVE LINK 2] (registration after deletion, calibration, subscription screen, a match); [DRIVE LINK 3] (reporting and blocking a user).
 
 PURPOSE: OUTREPD is a competitive push-up app for people aged 16+. The front camera counts push-ups on the device (only full-depth reps score), and each 60-second set is a duel against a real person that moves the user up a seven-tier ranked ladder. Friends, challenges, titles and history.
 
