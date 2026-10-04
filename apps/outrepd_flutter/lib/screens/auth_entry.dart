@@ -181,6 +181,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
 
     try {
+      // A phone whose session did not start at launch — offline then, or
+      // turned away by the server's hourly limit on new guests — has no
+      // account to name or to give an email to, and the server answered the
+      // name as if it were wrong. One more try, and a failure is reported as
+      // the connection it is, not as the name.
+      if (backend.available && backend.me == null) {
+        await backend.signIn(username: username);
+        if (!mounted) return;
+      }
+
       // Claimed first, so the code only goes out once the name is known to
       // be free. The account is still a guest here, and a guest may rename
       // as often as it likes: coming back to this screen to fix the name, or
