@@ -45,26 +45,25 @@ Apple طالب ٧ حاجات. الأولى فيديو إنت اللي هتسجل
 App Review ← الرسالة ← **Reply**. الصق ده (وغيّر `[VIDEO LINK]`):
 
 ```
-Hello, and thank you for reviewing OUTREPD. Here is the information you asked for.
+Thank you for reviewing OUTREPD. Here is the information requested.
 
 1. SCREEN RECORDINGS
 Recorded on a physical iPhone running the latest iOS. Each recording begins with launching the app.
 - Recording 1: [DRIVE LINK 1]
-  The app's main features, switching to another account (signing out and signing back in), playing a match, and deleting the account.
+  The app's main features, switching to another account, playing a match, and deleting the account.
 - Recording 2: [DRIVE LINK 2]
   Registering a new account after that deletion: the onboarding with its camera calibration, sign-up with an email code, and the subscription screen, then playing another match.
 - Recording 3 (attached to this message): reporting and blocking another user from their profile.
 
 2. PURPOSE AND AUDIENCE
-OUTREPD is a competitive push-up app for people aged 16 and over who train with their own body weight. Training alone is hard to keep up and easy to cheat on, so OUTREPD makes every set a 60-second duel against a real person. The front camera counts each push-up on the device, only full-depth reps score, and results move the user up a seven-tier ranked ladder (Iron to Master). Users can also add and challenge friends, earn titles and see their history.
+OUTREPD is a competitive push-up app for people aged 16 and over who train with their own body weight. Training alone is hard to keep up and easy to cheat on, so OUTREPD makes every set a 60-second duel against a real person. The front camera counts each push-up on the device, only full-depth reps score, and results move the user up a seven-tier ranked ladder (Iron to Master). Plus friends, challenges, titles and history.
 
 3. HOW TO ACCESS THE APP
 Review account (no subscription, so the paywall appears after sign-in): on the first screen tap "I already have an account", enter appreview@outrepd.com, tap "Send code", and type the six-digit password from App Review Information into the code boxes. This account is never sent an email; every other account signs in with a one-time code sent to its email.
 New account: "Get started", the onboarding (16+ age check, health notice, camera permission, phone placement, a three push-up calibration), then "Find my first opponent", "Sign up with email", and the code from that email.
 Features: Match tab (Find a match: ranked, 60 seconds, a live opponent or a real person's recorded set; Challenge a friend; Practice). Stand the phone on the floor about one metre in front of you, facing you. Friends tab (search, friend codes, challenges), Ranks tab (global, country and friends leaderboards), Profile tab (titles, history; the gear icon opens Settings).
-User-generated content is limited to usernames and profile photos. Report (with reasons, reviewed within 24 hours) and Block are in the top-right menu of any other user's profile; Settings also has "Report a problem" and "Blocked accounts". Usernames are filtered on the server.
+User-generated content is limited to usernames and profile photos. Report (with reasons, reviewed within 24 hours) and Block are in the top-right menu of any other user's profile; Settings also has "Report a problem" and "Blocked accounts".
 Account deletion: Profile > gear > Delete account, also reachable from the paywall's "Account" link without subscribing.
-No sample files are needed.
 
 4. EXTERNAL SERVICES
 - Supabase: sign-in with email codes, database, profile photo storage, Realtime for live matches, server functions.
@@ -76,7 +75,7 @@ No sample files are needed.
 No generative AI services are used.
 
 5. REGIONAL DIFFERENCES
-The app works the same in every region: 13 interface languages, prices in local currency from the App Store, and a country leaderboard based on the device's region. No feature or content differs by region.
+The app works the same in every region (13 interface languages; prices in local currency). No feature or content differs by region.
 
 6. REGULATED INDUSTRY OR THIRD-PARTY MATERIAL
 Not applicable. OUTREPD is not a medical device, gives no medical or training advice, and contains no protected third-party material.
