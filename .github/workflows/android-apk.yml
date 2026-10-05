@@ -191,6 +191,45 @@ jobs:
           cp "$apk" "$RUNNER_TEMP/OUTREPD.apk"
           echo "Server address found in the APK."
 
+      # What Google Play looks at before it takes a build, read off the APK
+      # itself: the Android version targeted, every permission — the plugins
+      # add their own, which the manifest in the repo does not show — and
+      # whether the native libraries are laid out for 16 KB memory pages,
+      # which Play requires of apps targeting Android 15 and later.
+      - name: What Google Play will check
+        if: steps.apk.outcome == 'success'
+        run: |
+          apk="$RUNNER_TEMP/OUTREPD.apk"
+          tools=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
+          report="$RUNNER_TEMP/play-check.txt"
+          {
+            echo "build-tools $(basename "$tools")"
+            "$tools/aapt2" dump badging "$apk" \
+              | grep -E "^(package|sdkVersion|targetSdkVersion|uses-permission|uses-feature)" \
+              | sed -E "s/^uses-permission: name='([^']*)'.*/permission  \1/; s/^uses-feature: name='([^']*)'.*/feature     \1/"
+            echo "-- 16 KB pages"
+            libs=$(mktemp -d)
+            unzip -q -o "$apk" 'lib/*' -d "$libs" || true
+            bad=0
+            for so in $(find "$libs/lib" -name '*.so' | sort); do
+              arch=$(basename "$(dirname "$so")")
+              case "$arch" in arm64-v8a|x86_64) ;; *) continue ;; esac
+              least=$(readelf -lW "$so" | awk '$1=="LOAD"{print $NF}' \
+                | while read -r a; do printf '%d\n' "$a"; done | sort -n | head -1)
+              if [ "${least:-0}" -lt 16384 ]; then
+                echo "4 KB only  $arch/$(basename "$so") (aligned to ${least:-?})"
+                bad=1
+              fi
+            done
+            [ "$bad" = 0 ] && echo "every arm64 and x86_64 library is aligned to 16 KB"
+            if "$tools/zipalign" -c -P 16 4 "$apk" > /dev/null 2>&1; then
+              echo "the APK's zip layout is 16 KB aligned"
+            else
+              echo "the APK's zip layout is NOT 16 KB aligned (or this zipalign cannot tell)"
+            fi
+          } > "$report" 2>&1 || true
+          cat "$report"
+
       - name: App Bundle for Google Play
         id: aab
         if: steps.key.outputs.signed == 'true'
@@ -288,6 +327,10 @@ jobs:
             mkdir -p "$work/${GITHUB_SHA::7}" "$work/latest"
             cp "$out/summary.txt" "$work/${GITHUB_SHA::7}/summary.txt"
             cp "$out/summary.txt" "$work/latest/summary.txt"
+            if [ -f "$RUNNER_TEMP/play-check.txt" ]; then
+              cp "$RUNNER_TEMP/play-check.txt" "$work/${GITHUB_SHA::7}/play-check.txt"
+              cp "$RUNNER_TEMP/play-check.txt" "$work/latest/play-check.txt"
+            fi
             git -C "$work" add -A
             git -C "$work" commit -q -m "Build ${GITHUB_SHA::7}" || true
             if git -C "$work" push -q origin ci-builds; then break; fi
