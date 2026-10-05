@@ -57,7 +57,7 @@
 
 **Do you provide a way for users to request that their data is deleted?** Yes
 - جوه الأب: الإعدادات ← Data ← Delete account.
-- من برّه الأب: https://www.outrepd.com/privacy#delete (Google بيطلب لينك
+- من برّه الأب: https://www.outrepd.com/privacy#deleting-your-account (Google بيطلب لينك
   ويب للطلب ده).
 
 **Data shared with third parties:** None
@@ -73,7 +73,7 @@
 | Health and fitness | Fitness info (rep counts, sets) | Required | App functionality |
 | App activity | In-app actions (duels, friends, blocks) | Required | App functionality |
 | App activity | Other user-generated content (reports) | Optional | App functionality |
-| Financial info | Purchase history (subscription) | Required | App functionality |
+| Financial info | Purchase history (subscription) | Required | App functionality, Analytics (RevenueCat) |
 | App info and performance | Crash logs | Required | App functionality |
 | App info and performance | Diagnostics | Required | App functionality |
 | Device or other IDs | Device or other IDs (push token, Crashlytics installation ID) | Optional | App functionality |
