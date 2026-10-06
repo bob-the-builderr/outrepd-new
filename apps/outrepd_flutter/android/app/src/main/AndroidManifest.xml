@@ -1,4 +1,11 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- The app has no ads and no analytics, and Play Console is told it does
+         not use the advertising ID. Removed here so that stays true even if a
+         library's own manifest ever brings the permission in. -->
+    <uses-permission
+        android:name="com.google.android.gms.permission.AD_ID"
+        tools:node="remove" />
     <!-- Only the debug and profile manifests had this, so a release build
          could not reach the server at all: every sign-in and fetch failed. -->
     <uses-permission android:name="android.permission.INTERNET" />
