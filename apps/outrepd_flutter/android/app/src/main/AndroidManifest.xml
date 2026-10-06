@@ -6,6 +6,12 @@
     <uses-permission
         android:name="com.google.android.gms.permission.AD_ID"
         tools:node="remove" />
+    <!-- The camera plugin declares the microphone for video recording. The
+         camera here is opened with enableAudio: false and nothing records
+         sound, so the store listing should not say the app uses it. -->
+    <uses-permission
+        android:name="android.permission.RECORD_AUDIO"
+        tools:node="remove" />
     <!-- Only the debug and profile manifests had this, so a release build
          could not reach the server at all: every sign-in and fetch failed. -->
     <uses-permission android:name="android.permission.INTERNET" />
