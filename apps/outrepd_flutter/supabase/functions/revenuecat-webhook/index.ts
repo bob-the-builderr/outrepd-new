@@ -1,28 +1,28 @@
 // Keeps the `subscriptions` table in step with RevenueCat.
 //
 // RevenueCat calls this on every purchase, renewal, cancellation, expiry,
-// billing problem and transfer. Rather than trust each event's own fields —
-// they differ by type, and events can arrive out of order — it asks
+// billing problem and transfer. Rather than trust each event's own fields --
+// they differ by type, and events can arrive out of order -- it asks
 // RevenueCat for the account's current state and writes that. The server's
 // has_pro() (subscriptions.sql) then reads it, so a modified app that skips
 // the paywall still cannot play a duel once enforcement is switched on.
 //
 // Deploying it:
 //
-//   1. Supabase dashboard → Edge Functions → Deploy a new function.
+//   1. Supabase dashboard -> Edge Functions -> Deploy a new function.
 //      Name it exactly `revenuecat-webhook` and paste this file.
 //
-//   2. Edge Functions → revenuecat-webhook → turn off "Enforce JWT
+//   2. Edge Functions -> revenuecat-webhook -> turn off "Enforce JWT
 //      Verification". RevenueCat cannot send a Supabase token; the
 //      authorization value below is what keeps other callers out.
 //
-//   3. Edge Functions → Secrets, and add:
-//        REVENUECAT_SECRET_KEY     RevenueCat → Project settings → API keys →
+//   3. Edge Functions -> Secrets, and add:
+//        REVENUECAT_SECRET_KEY     RevenueCat -> Project settings -> API keys ->
 //                                  a *secret* key (sk_...). Never the public
 //                                  one the app uses, and never in the app.
 //        REVENUECAT_WEBHOOK_AUTH   any long random string
 //
-//   4. RevenueCat → Project → Integrations → Webhooks → Add:
+//   4. RevenueCat -> Project -> Integrations -> Webhooks -> Add:
 //        URL:                   https://<project ref>.supabase.co/functions/v1/revenuecat-webhook
 //        Authorization header:  the same value as REVENUECAT_WEBHOOK_AUTH
 //      Then "Send test event" and check a 200 comes back.
@@ -47,7 +47,7 @@
 //     webhook can be seconds behind the store and the first duel should not
 //     be turned down in between.
 //
-// The secrets live in those two dashboards and nowhere else — not in this
+// The secrets live in those two dashboards and nowhere else -- not in this
 // file, the repository, or a chat window.
 
 import { createClient } from 'jsr:@supabase/supabase-js@2';
@@ -62,7 +62,7 @@ function reply(status: number, body: Record<string, unknown>) {
 }
 
 /// The app logs RevenueCat in with the Supabase user id, a UUID. Anything
-/// else — RevenueCat's own anonymous ids — belongs to no account here.
+/// else -- RevenueCat's own anonymous ids -- belongs to no account here.
 const uuid =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -179,11 +179,11 @@ Deno.serve(async (request) => {
     // The app's own call has no body; RevenueCat's always has one.
   }
 
-  // ── the app, right after a purchase or a restore ──────────────────────────
+  // -- the app, right after a purchase or a restore --------------------------
   //
   // Called with the lifter's own Supabase token. The store has just said
   // yes and the app has opened, but RevenueCat's webhook can be seconds
-  // behind — long enough for the server to turn down the first duel. This
+  // behind -- long enough for the server to turn down the first duel. This
   // writes the caller's row now. Only ever the caller's: the account comes
   // from the token, not from anything the phone says.
   if (!sameSecret(given, auth)) {
@@ -214,7 +214,7 @@ Deno.serve(async (request) => {
     return reply(200, { active: now?.active ?? false, synced: true });
   }
 
-  // ── once, before enforcement: everybody who subscribed before this ─────────
+  // -- once, before enforcement: everybody who subscribed before this ---------
   //
   // With the webhook's own secret and {"backfill": true}: every account gets
   // its row from RevenueCat, so nobody who paid before the webhook existed is
@@ -248,7 +248,7 @@ Deno.serve(async (request) => {
     }
   }
 
-  // ── RevenueCat's webhook ──────────────────────────────────────────────────
+  // -- RevenueCat's webhook --------------------------------------------------
   const event = (body.event ?? {}) as Record<string, unknown>;
   try {
     const { written, skipped } = await sync(db, accountsIn(event), secretKey);
