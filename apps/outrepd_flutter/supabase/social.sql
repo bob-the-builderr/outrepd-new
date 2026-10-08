@@ -61,7 +61,7 @@ drop policy if exists "a lifter reads their own friendships" on friendships;
 create policy "a lifter reads their own friendships"
   on friendships for select
   to authenticated
-  using (auth.uid() = requester or auth.uid() = addressee);
+  using ((select auth.uid()) = requester or (select auth.uid()) = addressee);
 
 -- No insert and no update from the phone: asking goes through
 -- request_friend_with and answering through answer_friend, both below. The
@@ -78,7 +78,7 @@ drop policy if exists "either side may end it" on friendships;
 create policy "either side may end it"
   on friendships for delete
   to authenticated
-  using (auth.uid() = requester or auth.uid() = addressee);
+  using ((select auth.uid()) = requester or (select auth.uid()) = addressee);
 
 -- ──────────────────────────────── asking ─────────────────────────────────────
 
@@ -243,6 +243,7 @@ $$;
 create or replace function remove_friend(their_id uuid)
 returns text
 language plpgsql
+set search_path = public
 as $$
 begin
   delete from friendships
@@ -411,6 +412,7 @@ $$;
 create or replace function block_lifter(their_id uuid)
 returns text
 language plpgsql
+set search_path = public
 as $$
 begin
   if their_id = auth.uid() then
@@ -432,6 +434,7 @@ $$;
 create or replace function unblock_lifter(their_id uuid)
 returns text
 language plpgsql
+set search_path = public
 as $$
 begin
   delete from blocks where blocker = auth.uid() and blocked = their_id;
@@ -466,6 +469,7 @@ $$;
 create or replace function mute_lifter(their_id uuid)
 returns text
 language plpgsql
+set search_path = public
 as $$
 begin
   if their_id = auth.uid() then
@@ -483,6 +487,7 @@ $$;
 create or replace function unmute_lifter(their_id uuid)
 returns text
 language plpgsql
+set search_path = public
 as $$
 begin
   delete from mutes where muter = auth.uid() and muted = their_id;

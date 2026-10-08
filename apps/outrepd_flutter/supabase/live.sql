@@ -61,6 +61,13 @@ create table if not exists live_matches (
 
 create index if not exists live_matches_b_idx on live_matches (b, status);
 create index if not exists live_matches_a_idx on live_matches (a, status);
+-- The foreign keys' own indexes; see sets_challenge_target_idx in schema.sql.
+create index if not exists live_matches_a_set_idx
+  on live_matches (a_set) where a_set is not null;
+create index if not exists live_matches_b_set_idx
+  on live_matches (b_set) where b_set is not null;
+create index if not exists live_matches_duel_idx
+  on live_matches (duel) where duel is not null;
 
 -- Nobody reads or writes it directly; the functions below are the only way.
 alter table live_matches enable row level security;

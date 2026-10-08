@@ -15,19 +15,20 @@
 -- Nine tiers of five divisions. Divisions climb V → I, so a higher div_idx is
 -- better, and LP runs 0..99 inside one.
 create or replace function top_division() returns int
-  language sql immutable as $$ select 4 $$;
+  language sql immutable set search_path = public as $$ select 4 $$;
 
 -- Seven tiers, Iron to Master. It was nine: Mythic and Legend sat above
 -- Master until the crest artwork settled at seven, and the app's own
 -- `kTiers` is the other half of this number. They have to move together or
 -- the server will hand out a rank the app cannot draw.
 create or replace function top_tier() returns int
-  language sql immutable as $$ select 6 $$;
+  language sql immutable set search_path = public as $$ select 6 $$;
 
 -- The rung somebody is standing on, counted from the bottom, starting at 1.
 create or replace function ladder_level(tier_idx int, div_idx int)
 returns int
 language sql immutable
+set search_path = public
 as $$
   select least(greatest(tier_idx, 0), top_tier()) * (top_division() + 1)
        + least(greatest(div_idx, 0), top_division())
@@ -45,6 +46,7 @@ create or replace function lp_for(won boolean, your_reps int, their_reps int)
 returns int
 language sql
 immutable
+set search_path = public
 as $$
   select case when won then abs(your_reps - their_reps)
               else -abs(your_reps - their_reps) end;
@@ -64,6 +66,7 @@ create or replace function apply_lp(
 returns table (tier_idx int, div_idx int, lp int)
 language plpgsql
 immutable
+set search_path = public
 as $$
 declare
   t int := from_tier;
@@ -113,6 +116,7 @@ create or replace function placement_rank(wins int)
 returns table (tier_idx int, div_idx int, lp int)
 language sql
 immutable
+set search_path = public
 as $$
   -- The twin of the table in `lib/ranking.dart`. Re-spaced when the ladder
   -- went from nine tiers to seven: a clean sweep used to land at Gold IV,

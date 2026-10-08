@@ -55,7 +55,7 @@ drop policy if exists "a lifter reads their own subscription" on subscriptions;
 create policy "a lifter reads their own subscription"
   on subscriptions for select
   to authenticated
-  using (user_id = auth.uid());
+  using (user_id = (select auth.uid()));
 
 -- The switch. Replace `false` with `true` once the webhook has been receiving
 -- events — see functions/revenuecat-webhook/index.ts.
@@ -383,6 +383,15 @@ create index if not exists sets_open_idx
   on sets (profile_id, created_at desc)
   where claimed_by is null;
 
+-- Every foreign key has an index on the side that points. Deleting an
+-- account deletes or clears each row that points at it, and with no index
+-- Postgres reads the whole table to find them — once for every row the
+-- deletion reaches, which for a set is every duel there has ever been.
+-- Partial where the column may be empty: an equality implies not null, so
+-- the lookup still uses it, and the empty rows cost nothing to keep.
+create index if not exists sets_challenge_target_idx
+  on sets (challenge_target) where challenge_target is not null;
+
 -- Reps are counted when the set is stored, not when it is raced.
 --
 -- A set is push-ups somebody did. Counting them at settle time meant the
@@ -441,6 +450,7 @@ alter table sets add constraint sets_reps_fit_the_time
 create or replace function guard_new_set()
 returns trigger
 language plpgsql
+set search_path = public
 as $$
 begin
   if current_user not in ('authenticated', 'anon') then
@@ -533,12 +543,24 @@ create index if not exists duels_for_profile_idx
   on duels (challenger, created_at desc);
 create index if not exists duels_against_profile_idx
   on duels (defender, created_at desc);
+-- The foreign keys' own indexes; see sets_challenge_target_idx.
+create index if not exists duels_challenger_set_idx on duels (challenger_set);
+create index if not exists duels_defender_set_idx on duels (defender_set);
+create index if not exists duels_winner_idx
+  on duels (winner) where winner is not null;
 
 -- ───────────────────────────── row level security ────────────────────────────
 
 alter table profiles enable row level security;
 alter table sets     enable row level security;
 alter table duels    enable row level security;
+
+-- Every policy in this project reads the caller as `(select auth.uid())`,
+-- never a bare `auth.uid()`. The bare call is evaluated once per row the
+-- query looks at; inside a select, Postgres works it out once per query and
+-- reuses it. Same answer either way, and on a table the size `sets` and
+-- `duels` will reach, the difference is the difference. Supabase's
+-- performance advisor flags the bare form (auth_rls_initplan).
 
 -- A lifter reads their own row, and only their own. Everybody else is seen
 -- through the functions that draw the board, a friends list or a profile
@@ -553,13 +575,13 @@ drop policy if exists "a lifter reads their own profile" on profiles;
 create policy "a lifter reads their own profile"
   on profiles for select
   to authenticated
-  using (auth.uid() = id);
+  using ((select auth.uid()) = id);
 
 drop policy if exists "a lifter creates their own profile" on profiles;
 create policy "a lifter creates their own profile"
   on profiles for insert
   to authenticated
-  with check (auth.uid() = id);
+  with check ((select auth.uid()) = id);
 
 -- The only columns a lifter may change about themselves are the ones that are
 -- about them rather than about their standing. The ladder columns are locked
@@ -569,12 +591,13 @@ drop policy if exists "a lifter edits their own profile" on profiles;
 create policy "a lifter edits their own profile"
   on profiles for update
   to authenticated
-  using (auth.uid() = id)
-  with check (auth.uid() = id);
+  using ((select auth.uid()) = id)
+  with check ((select auth.uid()) = id);
 
 create or replace function guard_ladder_columns()
 returns trigger
 language plpgsql
+set search_path = public
 as $$
 begin
   -- What other lifters see, and so what a client must not write around the
@@ -652,6 +675,7 @@ create or replace function username_not_allowed(name text)
 returns boolean
 language sql
 immutable
+set search_path = public
 as $$
   select translate(lower(coalesce(name, '')), '013457@$', 'oieastas')
       ~ ('(fuck|cunt|nigg|faggot|whore|slut|bitch|pussy|porn|'
@@ -669,6 +693,7 @@ $$;
 create or replace function guard_new_profile()
 returns trigger
 language plpgsql
+set search_path = public
 as $$
 begin
   if current_user not in ('authenticated', 'anon') then
@@ -721,20 +746,20 @@ drop policy if exists "a lifter writes their own sets" on sets;
 create policy "a lifter writes their own sets"
   on sets for insert
   to authenticated
-  with check (auth.uid() = profile_id and has_pro(auth.uid()));
+  with check ((select auth.uid()) = profile_id and has_pro((select auth.uid())));
 
 drop policy if exists "a lifter reads their own sets" on sets;
 create policy "a lifter reads their own sets"
   on sets for select
   to authenticated
-  using (auth.uid() = profile_id);
+  using ((select auth.uid()) = profile_id);
 
 -- Duels are readable by the two people in them, and by nobody else.
 drop policy if exists "a lifter reads their own duels" on duels;
 create policy "a lifter reads their own duels"
   on duels for select
   to authenticated
-  using (auth.uid() = challenger or auth.uid() = defender);
+  using ((select auth.uid()) = challenger or (select auth.uid()) = defender);
 
 -- Nothing inserts into duels directly. settle_duel does it, as the definer.
 
@@ -764,19 +789,19 @@ drop policy if exists "a lifter reads their own blocks" on blocks;
 create policy "a lifter reads their own blocks"
   on blocks for select
   to authenticated
-  using (auth.uid() = blocker);
+  using ((select auth.uid()) = blocker);
 
 drop policy if exists "a lifter blocks in their own name" on blocks;
 create policy "a lifter blocks in their own name"
   on blocks for insert
   to authenticated
-  with check (auth.uid() = blocker);
+  with check ((select auth.uid()) = blocker);
 
 drop policy if exists "a lifter unblocks their own" on blocks;
 create policy "a lifter unblocks their own"
   on blocks for delete
   to authenticated
-  using (auth.uid() = blocker);
+  using ((select auth.uid()) = blocker);
 
 -- ──────────────────────────────────── mutes ───────────────────────────────────
 
@@ -805,19 +830,19 @@ drop policy if exists "a lifter reads their own mutes" on mutes;
 create policy "a lifter reads their own mutes"
   on mutes for select
   to authenticated
-  using (auth.uid() = muter);
+  using ((select auth.uid()) = muter);
 
 drop policy if exists "a lifter mutes in their own name" on mutes;
 create policy "a lifter mutes in their own name"
   on mutes for insert
   to authenticated
-  with check (auth.uid() = muter);
+  with check ((select auth.uid()) = muter);
 
 drop policy if exists "a lifter unmutes their own" on mutes;
 create policy "a lifter unmutes their own"
   on mutes for delete
   to authenticated
-  using (auth.uid() = muter);
+  using ((select auth.uid()) = muter);
 
 -- ──────────────────────────────── reports ────────────────────────────────────
 
@@ -844,6 +869,7 @@ create table if not exists reports (
 
 create index if not exists reports_reported_idx
   on reports (reported, created_at desc);
+create index if not exists reports_reporter_idx on reports (reporter);
 
 alter table reports enable row level security;
 
@@ -851,7 +877,7 @@ drop policy if exists "a lifter files their own reports" on reports;
 create policy "a lifter files their own reports"
   on reports for insert
   to authenticated
-  with check (auth.uid() = reporter);
+  with check ((select auth.uid()) = reporter);
 
 -- Each report emails whoever answers them (functions/report-alert), so an
 -- account that files them in a loop fills an inbox. Past ten a day, or a
@@ -879,6 +905,7 @@ grant execute on function count_my_reports(uuid) to authenticated;
 create or replace function guard_new_report()
 returns trigger
 language plpgsql
+set search_path = public
 as $$
 declare
   counted record;
@@ -996,7 +1023,7 @@ create policy "a lifter sees their own avatar file"
   to authenticated
   using (
     bucket_id = 'avatars'
-    and name = auth.uid()::text || '/photo.jpg'
+    and name = (select auth.uid())::text || '/photo.jpg'
   );
 
 -- One file per account, at the one path the app writes: `<id>/photo.jpg`.
@@ -1009,7 +1036,7 @@ create policy "a lifter uploads their own avatar"
   to authenticated
   with check (
     bucket_id = 'avatars'
-    and name = auth.uid()::text || '/photo.jpg'
+    and name = (select auth.uid())::text || '/photo.jpg'
   );
 
 drop policy if exists "a lifter replaces their own avatar" on storage.objects;
@@ -1018,11 +1045,11 @@ create policy "a lifter replaces their own avatar"
   to authenticated
   using (
     bucket_id = 'avatars'
-    and name = auth.uid()::text || '/photo.jpg'
+    and name = (select auth.uid())::text || '/photo.jpg'
   )
   with check (
     bucket_id = 'avatars'
-    and name = auth.uid()::text || '/photo.jpg'
+    and name = (select auth.uid())::text || '/photo.jpg'
   );
 
 drop policy if exists "a lifter deletes their own avatar" on storage.objects;
@@ -1031,7 +1058,7 @@ create policy "a lifter deletes their own avatar"
   to authenticated
   using (
     bucket_id = 'avatars'
-    and (storage.foldername(name))[1] = auth.uid()::text
+    and (storage.foldername(name))[1] = (select auth.uid())::text
   );
 
 -- ========================================================================
@@ -1055,19 +1082,20 @@ create policy "a lifter deletes their own avatar"
 -- Nine tiers of five divisions. Divisions climb V → I, so a higher div_idx is
 -- better, and LP runs 0..99 inside one.
 create or replace function top_division() returns int
-  language sql immutable as $$ select 4 $$;
+  language sql immutable set search_path = public as $$ select 4 $$;
 
 -- Seven tiers, Iron to Master. It was nine: Mythic and Legend sat above
 -- Master until the crest artwork settled at seven, and the app's own
 -- `kTiers` is the other half of this number. They have to move together or
 -- the server will hand out a rank the app cannot draw.
 create or replace function top_tier() returns int
-  language sql immutable as $$ select 6 $$;
+  language sql immutable set search_path = public as $$ select 6 $$;
 
 -- The rung somebody is standing on, counted from the bottom, starting at 1.
 create or replace function ladder_level(tier_idx int, div_idx int)
 returns int
 language sql immutable
+set search_path = public
 as $$
   select least(greatest(tier_idx, 0), top_tier()) * (top_division() + 1)
        + least(greatest(div_idx, 0), top_division())
@@ -1085,6 +1113,7 @@ create or replace function lp_for(won boolean, your_reps int, their_reps int)
 returns int
 language sql
 immutable
+set search_path = public
 as $$
   select case when won then abs(your_reps - their_reps)
               else -abs(your_reps - their_reps) end;
@@ -1104,6 +1133,7 @@ create or replace function apply_lp(
 returns table (tier_idx int, div_idx int, lp int)
 language plpgsql
 immutable
+set search_path = public
 as $$
 declare
   t int := from_tier;
@@ -1153,6 +1183,7 @@ create or replace function placement_rank(wins int)
 returns table (tier_idx int, div_idx int, lp int)
 language sql
 immutable
+set search_path = public
 as $$
   -- The twin of the table in `lib/ranking.dart`. Re-spaced when the ladder
   -- went from nine tiers to seven: a clean sweep used to land at Gold IV,
@@ -1236,7 +1267,7 @@ drop policy if exists "a lifter reads their own friendships" on friendships;
 create policy "a lifter reads their own friendships"
   on friendships for select
   to authenticated
-  using (auth.uid() = requester or auth.uid() = addressee);
+  using ((select auth.uid()) = requester or (select auth.uid()) = addressee);
 
 -- No insert and no update from the phone: asking goes through
 -- request_friend_with and answering through answer_friend, both below. The
@@ -1253,7 +1284,7 @@ drop policy if exists "either side may end it" on friendships;
 create policy "either side may end it"
   on friendships for delete
   to authenticated
-  using (auth.uid() = requester or auth.uid() = addressee);
+  using ((select auth.uid()) = requester or (select auth.uid()) = addressee);
 
 -- ──────────────────────────────── asking ─────────────────────────────────────
 
@@ -1418,6 +1449,7 @@ $$;
 create or replace function remove_friend(their_id uuid)
 returns text
 language plpgsql
+set search_path = public
 as $$
 begin
   delete from friendships
@@ -1586,6 +1618,7 @@ $$;
 create or replace function block_lifter(their_id uuid)
 returns text
 language plpgsql
+set search_path = public
 as $$
 begin
   if their_id = auth.uid() then
@@ -1607,6 +1640,7 @@ $$;
 create or replace function unblock_lifter(their_id uuid)
 returns text
 language plpgsql
+set search_path = public
 as $$
 begin
   delete from blocks where blocker = auth.uid() and blocked = their_id;
@@ -1641,6 +1675,7 @@ $$;
 create or replace function mute_lifter(their_id uuid)
 returns text
 language plpgsql
+set search_path = public
 as $$
 begin
   if their_id = auth.uid() then
@@ -1658,6 +1693,7 @@ $$;
 create or replace function unmute_lifter(their_id uuid)
 returns text
 language plpgsql
+set search_path = public
 as $$
 begin
   delete from mutes where muter = auth.uid() and muted = their_id;
@@ -2008,6 +2044,10 @@ create table if not exists set_offers (
 
 alter table set_offers enable row level security;
 
+-- The primary key leads with the set; deleting an account looks rows up by
+-- whom they were offered to.
+create index if not exists set_offers_offered_to_idx on set_offers (offered_to);
+
 -- ───────────────────────────── finding somebody ──────────────────────────────
 
 -- A stored set from somebody near your level that you have not faced.
@@ -2193,6 +2233,7 @@ create or replace function place_after(
 returns table (tier_idx int, div_idx int, lp int)
 language plpgsql
 immutable
+set search_path = public
 as $$
 begin
   if done < 5 then
@@ -2510,6 +2551,12 @@ create index if not exists notifications_for_profile_idx
   on notifications (profile_id, created_at desc);
 create index if not exists notifications_unread_idx
   on notifications (profile_id) where read_at is null;
+-- The foreign keys' own indexes, for deleting an account or a duel; see
+-- sets_challenge_target_idx in schema.sql.
+create index if not exists notifications_actor_idx
+  on notifications (actor) where actor is not null;
+create index if not exists notifications_duel_idx
+  on notifications (duel_id) where duel_id is not null;
 
 alter table notifications enable row level security;
 
@@ -2520,13 +2567,13 @@ drop policy if exists "a lifter reads their own notifications" on notifications;
 create policy "a lifter reads their own notifications"
   on notifications for select
   to authenticated
-  using (auth.uid() = profile_id);
+  using ((select auth.uid()) = profile_id);
 
 drop policy if exists "a lifter clears their own notifications" on notifications;
 create policy "a lifter clears their own notifications"
   on notifications for delete
   to authenticated
-  using (auth.uid() = profile_id);
+  using ((select auth.uid()) = profile_id);
 
 -- ──────────────────────────── being raced ────────────────────────────────────
 
@@ -2720,6 +2767,7 @@ returns table (
 )
 language sql
 stable
+set search_path = public
 as $$
   select n.id, n.kind, n.created_at, n.read_at is null,
          n.actor, n.actor_name, n.you_won, n.your_reps, n.their_reps,
@@ -2735,6 +2783,7 @@ create or replace function unread_notifications()
 returns int
 language sql
 stable
+set search_path = public
 as $$
   select count(*)::int from notifications
    where profile_id = auth.uid() and read_at is null;
@@ -2968,6 +3017,13 @@ create table if not exists live_matches (
 
 create index if not exists live_matches_b_idx on live_matches (b, status);
 create index if not exists live_matches_a_idx on live_matches (a, status);
+-- The foreign keys' own indexes; see sets_challenge_target_idx in schema.sql.
+create index if not exists live_matches_a_set_idx
+  on live_matches (a_set) where a_set is not null;
+create index if not exists live_matches_b_set_idx
+  on live_matches (b_set) where b_set is not null;
+create index if not exists live_matches_duel_idx
+  on live_matches (duel) where duel is not null;
 
 -- Nobody reads or writes it directly; the functions below are the only way.
 alter table live_matches enable row level security;
@@ -3695,6 +3751,7 @@ returns table (
 )
 language sql
 stable
+set search_path = public
 as $$
   select p.tier_idx, p.div_idx, p.lp, p.placements_done,
          p.total_reps, p.best_set,
@@ -3837,3 +3894,44 @@ revoke all on function username_available(text) from public;
 grant execute on function username_available(text) to authenticated;
 revoke all on function set_my_username(text) from public;
 grant execute on function set_my_username(text) to authenticated;
+
+-- ========================================================================
+-- lockdown.sql
+-- ========================================================================
+
+-- ───────────────────────── what a signed-out caller may do ───────────────────
+--
+-- Runs last, after every table and function exists.
+--
+-- Supabase grants every new function in `public` to anon and authenticated
+-- by name — its default privileges — so the `revoke … from public` in the
+-- files before this left anon, a request carrying no session at all, able
+-- to call all of them. Most stop there, on a null auth.uid(); a few did not
+-- need one to hand something back: a profile, a recorded set, the boards,
+-- whether a username is taken.
+--
+-- Nobody uses the app signed out. A guest has an anonymous session, which is
+-- `authenticated`, not anon. The one thing meant for whoever a link reaches
+-- is the share card the website draws at /u/<username>.
+
+--
+-- From PUBLIC as well: Postgres itself lets PUBLIC — every role, anon among
+-- them — run any new function, on top of Supabase's grants. Signed-in
+-- callers keep what they had: Supabase granted authenticated each function
+-- by name, and the ones taken from authenticated on purpose above (the rate
+-- limiter, settling a live match) stay taken.
+--
+-- This file runs on every install, after everything else, so a function
+-- added later is closed the next time install.sql is pasted.
+revoke execute on all functions in schema public from public, anon;
+alter default privileges in schema public revoke execute on functions from anon;
+grant execute on function public_lifter_card(text) to anon;
+
+-- The tables, the same way. Every one has row level security and no policy
+-- names anon, so anon already read and wrote nothing; this takes the
+-- privilege itself away, so a table added later and given no policy yet is
+-- not the exception.
+revoke all on all tables in schema public from anon;
+revoke all on all sequences in schema public from anon;
+alter default privileges in schema public revoke all on tables from anon;
+alter default privileges in schema public revoke all on sequences from anon;

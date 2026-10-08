@@ -29,6 +29,10 @@ create table if not exists set_offers (
 
 alter table set_offers enable row level security;
 
+-- The primary key leads with the set; deleting an account looks rows up by
+-- whom they were offered to.
+create index if not exists set_offers_offered_to_idx on set_offers (offered_to);
+
 -- ───────────────────────────── finding somebody ──────────────────────────────
 
 -- A stored set from somebody near your level that you have not faced.
@@ -214,6 +218,7 @@ create or replace function place_after(
 returns table (tier_idx int, div_idx int, lp int)
 language plpgsql
 immutable
+set search_path = public
 as $$
 begin
   if done < 5 then

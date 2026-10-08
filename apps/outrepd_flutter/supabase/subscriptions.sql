@@ -36,7 +36,7 @@ drop policy if exists "a lifter reads their own subscription" on subscriptions;
 create policy "a lifter reads their own subscription"
   on subscriptions for select
   to authenticated
-  using (user_id = auth.uid());
+  using (user_id = (select auth.uid()));
 
 -- The switch. Replace `false` with `true` once the webhook has been receiving
 -- events — see functions/revenuecat-webhook/index.ts.

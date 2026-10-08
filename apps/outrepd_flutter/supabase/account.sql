@@ -98,6 +98,7 @@ returns table (
 )
 language sql
 stable
+set search_path = public
 as $$
   select p.tier_idx, p.div_idx, p.lp, p.placements_done,
          p.total_reps, p.best_set,

@@ -344,4 +344,44 @@ select check_that(remove_friend(:'C') = 'not friends',
                   'removing somebody who was never a friend');
 reset role;
 
+-- ── signed out ────────────────────────────────────────────────────────────────
+
+-- A request with no session runs as anon. It may draw the website's share
+-- card and nothing else. Read off the catalogue rather than function by
+-- function, so one added later and never closed fails here, not in use.
+select check_that(count(*) = 0,
+                  'signed out, these functions can still be called: '
+                  || coalesce(string_agg(p.proname, ', '), ''))
+  from pg_proc p
+  join pg_namespace n on n.oid = p.pronamespace
+ where n.nspname = 'public'
+   and has_function_privilege('anon', p.oid, 'execute')
+   -- The share card, and this file's own helpers.
+   and p.proname not in ('public_lifter_card', 'as_user', 'must_fail', 'check_that');
+
+select check_that(count(*) = 0,
+                  'signed out, these tables still allow something: '
+                  || coalesce(string_agg(c.relname, ', '), ''))
+  from pg_class c
+  join pg_namespace n on n.oid = c.relnamespace
+ where n.nspname = 'public'
+   and c.relkind in ('r', 'p', 'v', 'm')
+   and (has_table_privilege('anon', c.oid, 'select')
+     or has_table_privilege('anon', c.oid, 'insert')
+     or has_table_privilege('anon', c.oid, 'update')
+     or has_table_privilege('anon', c.oid, 'delete'));
+
+-- And as a request would actually try it.
+select as_user(null); set role anon;
+select must_fail('signed out, a lifter''s profile',
+                 format('select * from lifter_profile(%L)', :'B'));
+select must_fail('signed out, somebody''s recorded set',
+                 'select * from find_opponent_set()');
+select must_fail('signed out, whether a name is taken',
+                 'select username_available(''alice_a1'')');
+select must_fail('signed out, the profiles table', 'select * from profiles');
+-- The one thing that is meant to work signed out.
+select count(*) from public_lifter_card('alice_a1');
+reset role;
+
 select 'all security checks passed' as result;

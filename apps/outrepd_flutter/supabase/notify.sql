@@ -57,6 +57,12 @@ create index if not exists notifications_for_profile_idx
   on notifications (profile_id, created_at desc);
 create index if not exists notifications_unread_idx
   on notifications (profile_id) where read_at is null;
+-- The foreign keys' own indexes, for deleting an account or a duel; see
+-- sets_challenge_target_idx in schema.sql.
+create index if not exists notifications_actor_idx
+  on notifications (actor) where actor is not null;
+create index if not exists notifications_duel_idx
+  on notifications (duel_id) where duel_id is not null;
 
 alter table notifications enable row level security;
 
@@ -67,13 +73,13 @@ drop policy if exists "a lifter reads their own notifications" on notifications;
 create policy "a lifter reads their own notifications"
   on notifications for select
   to authenticated
-  using (auth.uid() = profile_id);
+  using ((select auth.uid()) = profile_id);
 
 drop policy if exists "a lifter clears their own notifications" on notifications;
 create policy "a lifter clears their own notifications"
   on notifications for delete
   to authenticated
-  using (auth.uid() = profile_id);
+  using ((select auth.uid()) = profile_id);
 
 -- ──────────────────────────── being raced ────────────────────────────────────
 
@@ -267,6 +273,7 @@ returns table (
 )
 language sql
 stable
+set search_path = public
 as $$
   select n.id, n.kind, n.created_at, n.read_at is null,
          n.actor, n.actor_name, n.you_won, n.your_reps, n.their_reps,
@@ -282,6 +289,7 @@ create or replace function unread_notifications()
 returns int
 language sql
 stable
+set search_path = public
 as $$
   select count(*)::int from notifications
    where profile_id = auth.uid() and read_at is null;

@@ -11,6 +11,13 @@ create role service_role nologin bypassrls;
 grant usage on schema public to anon, authenticated, service_role;
 alter default privileges in schema public
   grant select, insert, update, delete on tables to anon, authenticated, service_role;
+-- Functions and sequences too, the way Supabase does it: each new one is
+-- granted to anon and authenticated by name. Before this line CI never saw
+-- that anon, signed out, could call every function (see lockdown.sql).
+alter default privileges in schema public
+  grant execute on functions to anon, authenticated, service_role;
+alter default privileges in schema public
+  grant usage, select on sequences to anon, authenticated, service_role;
 
 create schema auth;
 create table auth.users (
