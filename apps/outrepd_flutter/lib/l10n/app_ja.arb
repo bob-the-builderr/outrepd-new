@@ -129,7 +129,7 @@
   "couldNotOpenLink": "そのリンクを開けませんでした",
   "couldNotCheckUsername": "その名前を確認できませんでした。もう一度お試しください",
   "changeUsername": "ユーザー名を変更",
-  "usernameInvalidLength": "4〜20文字の半角英数字のみで入力してください",
+  "usernameInvalidLength": "4〜20文字の半角英数字と _ のみで入力してください",
   "usernameAlreadyChangedBody": "ユーザー名の変更は一度きりで、すでに使用済みです。",
   "usernameChanged": "ユーザー名を変更しました",
   "gallery": "ギャラリー",

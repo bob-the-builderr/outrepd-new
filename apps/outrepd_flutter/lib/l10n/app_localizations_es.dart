@@ -367,7 +367,7 @@ class LEs extends L {
 
   @override
   String get usernameInvalidLength =>
-      'Debe tener de 4 a 20 caracteres, solo letras y números';
+      'Debe tener de 4 a 20 caracteres, solo letras, números y _';
 
   @override
   String get usernameChanged => 'Nombre de usuario cambiado';

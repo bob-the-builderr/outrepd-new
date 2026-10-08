@@ -129,7 +129,7 @@
   "couldNotOpenLink": "O bağlantı açılamadı",
   "couldNotCheckUsername": "O ad kontrol edilemedi — tekrar deneyin",
   "changeUsername": "Kullanıcı adını değiştir",
-  "usernameInvalidLength": "4 ile 20 karakter arasında olmalı, yalnızca harf ve rakam",
+  "usernameInvalidLength": "4 ile 20 karakter arasında olmalı, yalnızca harf, rakam ve _",
   "usernameAlreadyChangedBody": "Tek kullanıcı adı değişikliğinizi zaten kullandınız — her hesap tam olarak bir hak alır.",
   "usernameChanged": "Kullanıcı adı değiştirildi",
   "gallery": "Galeri",

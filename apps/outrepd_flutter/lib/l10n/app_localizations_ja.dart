@@ -350,7 +350,7 @@ class LJa extends L {
   String get changeUsername => 'ユーザー名を変更';
 
   @override
-  String get usernameInvalidLength => '4〜20文字の半角英数字のみで入力してください';
+  String get usernameInvalidLength => '4〜20文字の半角英数字と _ のみで入力してください';
 
   @override
   String get usernameChanged => 'ユーザー名を変更しました';

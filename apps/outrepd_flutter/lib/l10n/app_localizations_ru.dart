@@ -364,7 +364,7 @@ class LRu extends L {
 
   @override
   String get usernameInvalidLength =>
-      'Должно быть от 4 до 20 символов, только буквы и цифры';
+      'Должно быть от 4 до 20 символов, только буквы, цифры и _';
 
   @override
   String get usernameChanged => 'Имя пользователя изменено';

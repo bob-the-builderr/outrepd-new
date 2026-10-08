@@ -129,7 +129,7 @@
   "couldNotOpenLink": "यह लिंक नहीं खुल सका",
   "couldNotCheckUsername": "यह नाम जाँचा नहीं जा सका — फिर कोशिश करें",
   "changeUsername": "यूज़रनेम बदलें",
-  "usernameInvalidLength": "4 से 20 अक्षर होने चाहिए, सिर्फ अक्षर और अंक",
+  "usernameInvalidLength": "4 से 20 अक्षर होने चाहिए, सिर्फ अक्षर, अंक और _",
   "usernameAlreadyChangedBody": "आप अपना एकमात्र यूज़रनेम बदलाव पहले ही इस्तेमाल कर चुके हैं — हर खाते को बिल्कुल एक बार मिलता है।",
   "usernameChanged": "यूज़रनेम बदल दिया गया",
   "gallery": "गैलरी",

@@ -34,9 +34,9 @@
 //      how many are active.
 //
 //   6. Only then, and only with an app version out that calls this function
-//      after a purchase (see below), switch enforcement on: in
-//      subscriptions.sql change paywall_enforced() to `select true`, and run
-//      that function's `create or replace` in the SQL Editor.
+//      after a purchase (see below), switch enforcement on with the `On:`
+//      statement in supabase/switches.sql, run in the SQL Editor. A
+//      re-install leaves it on.
 //
 // Three callers, told apart by the Authorization header:
 //   - RevenueCat, with REVENUECAT_WEBHOOK_AUTH: syncs the accounts the event

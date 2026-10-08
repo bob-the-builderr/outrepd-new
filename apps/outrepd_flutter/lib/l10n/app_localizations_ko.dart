@@ -350,7 +350,7 @@ class LKo extends L {
   String get changeUsername => '사용자 이름 변경';
 
   @override
-  String get usernameInvalidLength => '4자에서 20자 사이의 영문자와 숫자만 사용할 수 있습니다';
+  String get usernameInvalidLength => '4자에서 20자 사이의 영문자, 숫자, _만 사용할 수 있습니다';
 
   @override
   String get usernameChanged => '사용자 이름이 변경되었습니다';

@@ -129,7 +129,7 @@
   "couldNotOpenLink": "无法打开该链接",
   "couldNotCheckUsername": "无法检查该名称——请重试",
   "changeUsername": "更改用户名",
-  "usernameInvalidLength": "必须为4到20个字符，仅限字母和数字",
+  "usernameInvalidLength": "必须为4到20个字符，仅限字母、数字和 _",
   "usernameAlreadyChangedBody": "你已经用过唯一一次改名机会——每个账号只能改一次用户名。",
   "usernameChanged": "用户名已更改",
   "gallery": "相册",

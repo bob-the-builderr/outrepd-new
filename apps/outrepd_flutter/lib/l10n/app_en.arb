@@ -160,7 +160,7 @@
   "couldNotOpenLink": "Could not open that link",
   "couldNotCheckUsername": "Couldn't check that name — try again",
   "changeUsername": "Change username",
-  "usernameInvalidLength": "4 to 20 characters, letters and numbers only",
+  "usernameInvalidLength": "4 to 20 characters: letters, numbers and _ only",
   "usernameChanged": "Username changed",
   "usernameAlreadyChangedBody": "You've already used your one username change — every account gets exactly one.",
   "gallery": "Gallery",

@@ -365,7 +365,7 @@ class LPt extends L {
 
   @override
   String get usernameInvalidLength =>
-      'Deve ter de 4 a 20 caracteres, apenas letras e números';
+      'Deve ter de 4 a 20 caracteres, apenas letras, números e _';
 
   @override
   String get usernameChanged => 'Nome de usuário alterado';

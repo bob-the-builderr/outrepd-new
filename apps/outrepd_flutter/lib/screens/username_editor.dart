@@ -59,15 +59,22 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
   /// sheet does not offer to.
   bool get _alreadyChanged => backend.me?.usernameChangedAt != null;
 
-  static final _validCharacters = RegExp(r'^[A-Za-z0-9]+$');
+  /// The server's rule (set_my_username, account.sql): letters, numbers and
+  /// underscores, with at least one letter or number among them.
+  static final _validCharacters = RegExp(r'^[A-Za-z0-9_]+$');
+  static final _someLetterOrNumber = RegExp(r'[A-Za-z0-9]');
 
   bool get _validLength {
     final len = _controller.text.trim().length;
     return len >= 4 && len <= 20;
   }
 
-  bool get _validFormat =>
-      _validLength && _validCharacters.hasMatch(_controller.text.trim());
+  bool get _validFormat {
+    final name = _controller.text.trim();
+    return _validLength &&
+        _validCharacters.hasMatch(name) &&
+        _someLetterOrNumber.hasMatch(name);
+  }
 
   bool get _unchanged => _controller.text.trim() == demoProfile.username;
 

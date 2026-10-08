@@ -103,12 +103,15 @@ class _PaywallScreenState extends State<PaywallScreen> {
   List<Plan>? _plans;
   bool _loadFailed = false;
 
-  /// Why the plans did not load, in the store's own words, under the
-  /// message that says so. Small and faint: it is for whoever is setting the
-  /// store up — an agreement not yet in effect, a product the store will not
-  /// hand out, an offering with nothing in it — and it is the one place on a
-  /// phone that reason can be read.
+  /// Why the plans did not load, in the store's own words. Not shown unless
+  /// asked for — a long press on the message — because "10: Error performing
+  /// request" tells somebody who wants to subscribe nothing they can act on,
+  /// while the message above it does. It is for whoever is setting the store
+  /// up or answering a support email: an agreement not yet in effect, a
+  /// product the store will not hand out, a phone whose private DNS blocks
+  /// the store — and it is the one place on a phone that reason can be read.
   String? _loadError;
+  bool _showLoadError = false;
   PlanPeriod _chosen = PlanPeriod.yearly;
   bool _busy = false;
 
@@ -414,12 +417,16 @@ class _PaywallScreenState extends State<PaywallScreen> {
         if (_loadFailed)
           Column(
             children: [
-              Text(
-                l.paywallLoadFailed,
-                textAlign: TextAlign.center,
-                style: context.type.body.copyWith(color: colors.muted),
+              GestureDetector(
+                key: const Key('paywallLoadFailed'),
+                onLongPress: () => setState(() => _showLoadError = true),
+                child: Text(
+                  l.paywallLoadFailed,
+                  textAlign: TextAlign.center,
+                  style: context.type.body.copyWith(color: colors.muted),
+                ),
               ),
-              if (_loadError case final why?)
+              if (_loadError case final why? when _showLoadError)
                 Padding(
                   padding: const EdgeInsets.only(top: 6),
                   child: Text(

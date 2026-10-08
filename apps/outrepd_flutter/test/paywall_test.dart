@@ -321,6 +321,13 @@ void main() {
       await _settle(tester);
 
       expect(find.byKey(const Key('paywallRetry')), findsOneWidget);
+      // The store's own words stay out of sight until somebody asks for
+      // them: they help whoever answers a support email, not a subscriber.
+      expect(find.byKey(const Key('paywallLoadError')), findsNothing);
+      await tester.longPress(find.byKey(const Key('paywallLoadFailed')));
+      await tester.pump();
+      expect(find.byKey(const Key('paywallLoadError')), findsOneWidget);
+      expect(find.textContaining('offline'), findsOneWidget);
       // Still the one paywall, with what it opens, and no free days claimed.
       expect(find.byKey(const Key('paywallTitle')), findsOneWidget);
       expect(find.byKey(const Key('trialHeadline')), findsNothing);

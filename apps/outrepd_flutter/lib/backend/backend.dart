@@ -682,7 +682,8 @@ enum RenameResult {
   /// long enough for that somebody else to have just taken it.
   taken,
 
-  /// Too short, too long, empty, or not just letters and digits.
+  /// Too short, too long, empty, or not just letters, digits and
+  /// underscores with at least one letter or digit.
   invalid,
 
   /// This account already spent its one rename.

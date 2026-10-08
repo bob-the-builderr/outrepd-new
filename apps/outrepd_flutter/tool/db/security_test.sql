@@ -275,6 +275,13 @@ select check_that(not username_available('BOB_B1'),
                   'a taken name read as free once profiles closed');
 -- A guest picks a name on the sign-up screen, goes back and picks another.
 select check_that(set_my_username('Alice2') = 'ok', 'renaming');
+-- Underscores, the way handles are usually written — but not a name made
+-- of nothing else, and still no spaces.
+select check_that(set_my_username('iron_mike') = 'ok',
+                  'an underscore in a name was refused');
+select check_that(set_my_username('____') = 'invalid',
+                  'a name of nothing but underscores');
+select check_that(set_my_username('al ice') = 'invalid', 'a space in a name');
 select check_that(set_my_username('Alice3') = 'ok',
                   'a guest could not change the name they had just typed');
 reset role;
@@ -287,6 +294,16 @@ select check_that(set_my_username('Alice4') = 'already_changed',
 reset role;
 select check_that((select username from profiles where id = :'A') = 'Alice3',
                   'the name kept is not the last one chosen');
+
+-- A search matches what was typed: `_` and `%` are not wildcards.
+select as_user(:'B'); set role authenticated;
+select check_that((select count(*) from find_lifters('dan_')) = 1,
+                  'a search for a name with an underscore in it');
+select check_that((select count(*) from find_lifters('d_n')) = 0,
+                  'an underscore in a search matched any letter');
+select check_that((select count(*) from find_lifters('%%')) = 0,
+                  'a search for %% listed people');
+reset role;
 select as_user(:'A'); set role authenticated;
 select check_that((select count(*) from leaderboard()) >= 0, 'leaderboard');
 select must_fail('calling the rate counter directly',
@@ -343,6 +360,32 @@ select check_that((select count(*) from my_friends()) = 0,
 select check_that(remove_friend(:'C') = 'not friends',
                   'removing somebody who was never a friend');
 reset role;
+
+-- ── the paywall switch ────────────────────────────────────────────────────────
+
+-- Off, as installed: everybody may play.
+select check_that(not paywall_enforced(), 'the paywall was on straight after install');
+update server_switches set enabled = true where name = 'paywall_enforced';
+select as_user(:'B'); set role authenticated;
+select check_that(not has_pro(:'B'),
+                  'enforcement on, and an account with no subscription played');
+-- A row a lifter cannot see, and a switch a lifter cannot flip.
+select check_that((select count(*) from server_switches) = 0,
+                  'a lifter can read the server''s switches');
+update server_switches set enabled = false where name = 'paywall_enforced';
+reset role;
+select check_that(paywall_enforced(), 'a lifter turned the paywall off');
+insert into subscriptions (user_id, active, expires_at)
+values (:'B', true, now() + interval '1 day');
+select as_user(:'B'); set role authenticated;
+select check_that(has_pro(:'B'), 'an active subscription did not count');
+reset role;
+update subscriptions set expires_at = now() - interval '2 hours' where user_id = :'B';
+select as_user(:'B'); set role authenticated;
+select check_that(not has_pro(:'B'), 'a subscription two hours lapsed still counted');
+reset role;
+update server_switches set enabled = false where name = 'paywall_enforced';
+delete from subscriptions where user_id = :'B';
 
 -- ── signed out ────────────────────────────────────────────────────────────────
 

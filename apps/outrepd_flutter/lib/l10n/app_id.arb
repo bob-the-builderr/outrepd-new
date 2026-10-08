@@ -129,7 +129,7 @@
   "couldNotOpenLink": "Tautan itu tidak bisa dibuka",
   "couldNotCheckUsername": "Nama itu tidak bisa diperiksa — coba lagi",
   "changeUsername": "Ubah nama pengguna",
-  "usernameInvalidLength": "Harus 4 sampai 20 karakter, hanya huruf dan angka",
+  "usernameInvalidLength": "Harus 4 sampai 20 karakter, hanya huruf, angka, dan _",
   "usernameAlreadyChangedBody": "Anda sudah menggunakan satu-satunya kesempatan mengubah nama pengguna — setiap akun hanya mendapat satu kali.",
   "usernameChanged": "Nama pengguna diubah",
   "gallery": "Galeri",

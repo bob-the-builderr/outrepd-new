@@ -390,7 +390,15 @@ as $$
      -- Same comparison as profiles_username_prefix_idx above, on purpose:
      -- ilike would read identically but plans as a sequential scan, because
      -- nothing ties it back to that index.
-     and lower(p.username) like lower(trim(query)) || '%'
+     --
+     -- What was typed is matched as written. In a like pattern `_` stands
+     -- for any one character and `%` for any run of them, so a name with an
+     -- underscore in it found its neighbours too, and a search for "%%"
+     -- listed whoever came first alphabetically. Both are escaped, and the
+     -- escape character itself before them.
+     and lower(p.username) like
+         replace(replace(replace(lower(trim(query)),
+           '\', '\\'), '%', '\%'), '_', '\_') || '%'
      -- Somebody blocked, in either direction, is simply not there. A search
      -- that still turns them up is a block that only half works.
      and not exists (

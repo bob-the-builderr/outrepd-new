@@ -363,7 +363,7 @@ class LTr extends L {
 
   @override
   String get usernameInvalidLength =>
-      '4 ile 20 karakter arasında olmalı, yalnızca harf ve rakam';
+      '4 ile 20 karakter arasında olmalı, yalnızca harf, rakam ve _';
 
   @override
   String get usernameChanged => 'Kullanıcı adı değiştirildi';

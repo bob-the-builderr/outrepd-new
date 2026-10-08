@@ -203,8 +203,13 @@ begin
     return 'too_often';
   end if;
 
+  -- Letters, numbers and underscores, the way a handle is usually written
+  -- (iron_mike), with at least one letter or number among them. The same
+  -- characters the guard on a new profile has always allowed; this was the
+  -- one place that left the underscore out.
   if char_length(cleaned) < 4 or char_length(cleaned) > 20
-     or cleaned !~ '^[A-Za-z0-9]+$' then
+     or cleaned !~ '^[A-Za-z0-9_]+$'
+     or cleaned !~ '[A-Za-z0-9]' then
     return 'invalid';
   end if;
 

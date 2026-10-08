@@ -364,7 +364,7 @@ class LHi extends L {
 
   @override
   String get usernameInvalidLength =>
-      '4 से 20 अक्षर होने चाहिए, सिर्फ अक्षर और अंक';
+      '4 से 20 अक्षर होने चाहिए, सिर्फ अक्षर, अंक और _';
 
   @override
   String get usernameChanged => 'यूज़रनेम बदल दिया गया';

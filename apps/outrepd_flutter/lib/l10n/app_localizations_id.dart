@@ -363,7 +363,7 @@ class LId extends L {
 
   @override
   String get usernameInvalidLength =>
-      'Harus 4 sampai 20 karakter, hanya huruf dan angka';
+      'Harus 4 sampai 20 karakter, hanya huruf, angka, dan _';
 
   @override
   String get usernameChanged => 'Nama pengguna diubah';

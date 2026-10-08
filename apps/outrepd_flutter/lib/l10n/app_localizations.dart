@@ -770,7 +770,7 @@ abstract class L {
   /// No description provided for @usernameInvalidLength.
   ///
   /// In en, this message translates to:
-  /// **'4 to 20 characters, letters and numbers only'**
+  /// **'4 to 20 characters: letters, numbers and _ only'**
   String get usernameInvalidLength;
 
   /// No description provided for @usernameChanged.

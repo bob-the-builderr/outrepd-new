@@ -347,7 +347,7 @@ class LZh extends L {
   String get changeUsername => '更改用户名';
 
   @override
-  String get usernameInvalidLength => '必须为4到20个字符，仅限字母和数字';
+  String get usernameInvalidLength => '必须为4到20个字符，仅限字母、数字和 _';
 
   @override
   String get usernameChanged => '用户名已更改';

@@ -367,7 +367,7 @@ class LFr extends L {
 
   @override
   String get usernameInvalidLength =>
-      'Doit comporter de 4 à 20 caractères, lettres et chiffres uniquement';
+      'Doit comporter de 4 à 20 caractères : lettres, chiffres et _ uniquement';
 
   @override
   String get usernameChanged => 'Nom d\'utilisateur modifié';

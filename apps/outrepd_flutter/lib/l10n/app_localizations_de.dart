@@ -366,7 +366,7 @@ class LDe extends L {
 
   @override
   String get usernameInvalidLength =>
-      'Muss 4 bis 20 Zeichen lang sein, nur Buchstaben und Zahlen';
+      'Muss 4 bis 20 Zeichen lang sein, nur Buchstaben, Zahlen und _';
 
   @override
   String get usernameChanged => 'Benutzername geändert';

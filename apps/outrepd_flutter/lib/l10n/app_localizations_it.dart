@@ -366,7 +366,7 @@ class LIt extends L {
 
   @override
   String get usernameInvalidLength =>
-      'Deve avere da 4 a 20 caratteri, solo lettere e numeri';
+      'Deve avere da 4 a 20 caratteri, solo lettere, numeri e _';
 
   @override
   String get usernameChanged => 'Nome utente cambiato';

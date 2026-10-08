@@ -129,7 +129,7 @@
   "couldNotOpenLink": "No se pudo abrir ese enlace",
   "couldNotCheckUsername": "No se pudo comprobar ese nombre: inténtalo de nuevo",
   "changeUsername": "Cambiar nombre de usuario",
-  "usernameInvalidLength": "Debe tener de 4 a 20 caracteres, solo letras y números",
+  "usernameInvalidLength": "Debe tener de 4 a 20 caracteres, solo letras, números y _",
   "usernameAlreadyChangedBody": "Ya has usado tu único cambio de nombre de usuario — cada cuenta recibe exactamente uno.",
   "usernameChanged": "Nombre de usuario cambiado",
   "gallery": "Galería",

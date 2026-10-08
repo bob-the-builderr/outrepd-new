@@ -364,7 +364,7 @@ class LEn extends L {
 
   @override
   String get usernameInvalidLength =>
-      '4 to 20 characters, letters and numbers only';
+      '4 to 20 characters: letters, numbers and _ only';
 
   @override
   String get usernameChanged => 'Username changed';
