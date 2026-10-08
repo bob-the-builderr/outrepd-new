@@ -832,6 +832,12 @@ create table if not exists rate_events (
   at         timestamptz not null default now()
 );
 
+-- A key of its own. Nothing looks a row up by it; it is there because
+-- Postgres replication and Supabase's realtime need one on every table, and
+-- deleting old rows is cheaper with one.
+alter table rate_events
+  add column if not exists id bigint generated always as identity primary key;
+
 create index if not exists rate_events_idx
   on rate_events (profile_id, kind, at desc);
 

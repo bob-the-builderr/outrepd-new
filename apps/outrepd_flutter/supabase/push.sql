@@ -98,7 +98,27 @@ grant execute on function forget_push_token(text) to authenticated;
 -- call and returns at once, so storing the notice never waits on Firebase;
 -- and any failure here is swallowed, because a push that cannot be sent must
 -- never be the reason a notice is not stored.
-create extension if not exists pg_net;
+--
+-- In `extensions`, not `public`: an extension's objects in the API's own
+-- schema sit beside the app's functions, and Supabase's advisor flags it.
+-- pg_net cannot be moved in place, so one an earlier installer put in
+-- public is dropped and made again. Nothing here names it by that schema —
+-- the trigger calls net.http_post, and `net` stays where it is. Left alone,
+-- with a notice, if something else in the project has come to depend on it.
+do $$
+begin
+  if exists (select 1 from pg_extension
+              where extname = 'pg_net'
+                and extnamespace = 'public'::regnamespace) then
+    begin
+      drop extension pg_net;
+    exception when dependent_objects_still_exist then
+      raise notice 'pg_net stays in public: %', sqlerrm;
+    end;
+  end if;
+end;
+$$;
+create extension if not exists pg_net with schema extensions;
 
 create or replace function send_push()
 returns trigger

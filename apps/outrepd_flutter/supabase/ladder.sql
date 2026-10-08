@@ -42,6 +42,11 @@ $$;
 -- ahead, which stays a loss regardless of the count at the moment of
 -- quitting — a loss must never pay a gain. No tier, no form, no cap
 -- otherwise: a blowout is worth exactly what it was.
+--
+-- The first version took tiers and form as well. A different argument list
+-- is a different function to Postgres, so `or replace` left that one behind
+-- on a database the first installer was pasted into; it is dropped by name.
+drop function if exists lp_for(boolean, int, int, int, int, boolean, boolean);
 create or replace function lp_for(won boolean, your_reps int, their_reps int)
 returns int
 language sql

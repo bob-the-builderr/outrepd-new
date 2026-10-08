@@ -944,6 +944,12 @@ create table if not exists rate_events (
   at         timestamptz not null default now()
 );
 
+-- A key of its own. Nothing looks a row up by it; it is there because
+-- Postgres replication and Supabase's realtime need one on every table, and
+-- deleting old rows is cheaper with one.
+alter table rate_events
+  add column if not exists id bigint generated always as identity primary key;
+
 create index if not exists rate_events_idx
   on rate_events (profile_id, kind, at desc);
 
@@ -1109,6 +1115,11 @@ $$;
 -- ahead, which stays a loss regardless of the count at the moment of
 -- quitting — a loss must never pay a gain. No tier, no form, no cap
 -- otherwise: a blowout is worth exactly what it was.
+--
+-- The first version took tiers and form as well. A different argument list
+-- is a different function to Postgres, so `or replace` left that one behind
+-- on a database the first installer was pasted into; it is dropped by name.
+drop function if exists lp_for(boolean, int, int, int, int, boolean, boolean);
 create or replace function lp_for(won boolean, your_reps int, their_reps int)
 returns int
 language sql
@@ -2921,7 +2932,27 @@ grant execute on function forget_push_token(text) to authenticated;
 -- call and returns at once, so storing the notice never waits on Firebase;
 -- and any failure here is swallowed, because a push that cannot be sent must
 -- never be the reason a notice is not stored.
-create extension if not exists pg_net;
+--
+-- In `extensions`, not `public`: an extension's objects in the API's own
+-- schema sit beside the app's functions, and Supabase's advisor flags it.
+-- pg_net cannot be moved in place, so one an earlier installer put in
+-- public is dropped and made again. Nothing here names it by that schema —
+-- the trigger calls net.http_post, and `net` stays where it is. Left alone,
+-- with a notice, if something else in the project has come to depend on it.
+do $$
+begin
+  if exists (select 1 from pg_extension
+              where extname = 'pg_net'
+                and extnamespace = 'public'::regnamespace) then
+    begin
+      drop extension pg_net;
+    exception when dependent_objects_still_exist then
+      raise notice 'pg_net stays in public: %', sqlerrm;
+    end;
+  end if;
+end;
+$$;
+create extension if not exists pg_net with schema extensions;
 
 create or replace function send_push()
 returns trigger
