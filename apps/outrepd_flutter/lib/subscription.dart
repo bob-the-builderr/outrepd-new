@@ -12,10 +12,14 @@
 /// build rather than let it go out unnoticed.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+
+import 'backend/backend.dart';
 
 /// Supplied at build time, never committed — the same file as the Supabase
 /// keys (`supabase/keys.env`). These are RevenueCat's *public* SDK keys; they
@@ -271,9 +275,25 @@ class Subscription extends ChangeNotifier {
 
   void _set(bool active) {
     if (_active == active && !_failed) return;
+    final became = active && _active != true;
     _active = active;
     _failed = false;
     notifyListeners();
+    // The store has said yes — a purchase, a restore, or an app opened by a
+    // subscriber. The server hears it from RevenueCat's webhook too, but that
+    // can be seconds behind, and the server is what lets a duel be played.
+    // Not awaited: the app opens on the store's word; this only catches the
+    // server up.
+    if (became) unawaited(_catchUpServer());
+  }
+
+  Future<void> _catchUpServer() async {
+    try {
+      await backend.syncSubscription();
+    } on Object catch (error) {
+      // The webhook still gets there; this was only the faster way.
+      debugPrint('Could not sync the subscription to the server: $error');
+    }
   }
 }
 

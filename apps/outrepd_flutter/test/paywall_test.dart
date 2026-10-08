@@ -10,6 +10,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:outrepd/backend/backend.dart';
 import 'package:outrepd/l10n/app_localizations.dart';
 import 'package:outrepd/screens/paywall.dart';
 import 'package:outrepd/subscription.dart';
@@ -104,6 +105,16 @@ class _FakeStore implements Storefront {
   Future<void> forget() async {
     forgets++;
     active = false;
+  }
+}
+
+/// Counts the calls that catch the server up on the subscription.
+class _SyncCounter extends NoBackend {
+  int syncs = 0;
+
+  @override
+  Future<void> syncSubscription() async {
+    syncs++;
   }
 }
 
@@ -332,6 +343,24 @@ void main() {
       await tester.tap(find.byKey(const Key('paywallBuy')));
       await _settle(tester);
       expect(find.text('inside the app'), findsOneWidget);
+    });
+
+    testWidgets('a purchase has the server catch up at once', (tester) async {
+      // The server lets a duel be played on its own copy of the
+      // subscription; RevenueCat's webhook fills it in, but seconds late.
+      final server = _SyncCounter();
+      backend = server;
+      addTearDown(() => backend = const NoBackend());
+      Subscription.instance.use(_FakeStore());
+      _phone(tester);
+      await tester.pumpWidget(_app());
+      await _settle(tester);
+      expect(server.syncs, 0, reason: 'nothing bought yet');
+
+      await tester.tap(find.byKey(const Key('paywallBuy')));
+      await _settle(tester);
+      expect(find.text('inside the app'), findsOneWidget);
+      expect(server.syncs, 1);
     });
 
     testWidgets('backing out of the store says nothing and stays',

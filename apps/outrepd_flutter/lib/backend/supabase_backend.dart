@@ -811,6 +811,15 @@ class SupabaseBackend implements Backend {
   }
 
   @override
+  Future<void> syncSubscription() async {
+    // The function reads whose subscription it is from this session's
+    // token, never from anything sent with it — so there is nothing to
+    // send, and nobody to send it for without a session.
+    if (_db.auth.currentSession == null) return;
+    await _db.functions.invoke('revenuecat-webhook');
+  }
+
+  @override
   Future<void> registerPushToken(
     String token, {
     required String platform,

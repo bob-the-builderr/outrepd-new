@@ -1029,6 +1029,12 @@ abstract interface class Backend {
   /// phone. [me] is null afterwards; [signIn] starts a fresh one.
   Future<void> signOut();
 
+  /// Has the server read this account's subscription from RevenueCat now,
+  /// rather than wait for RevenueCat's webhook: called the moment the store
+  /// says it is active, so the first duel after a purchase is not turned
+  /// down while the webhook is still on its way.
+  Future<void> syncSubscription();
+
   /// Where the signed-in account's pushes go: this phone's address with
   /// Firebase, and the language to write them in. A phone that moves to
   /// another account moves with it.
@@ -1258,6 +1264,9 @@ class NoBackend implements Backend {
 
   @override
   Future<void> signOut() async {}
+
+  @override
+  Future<void> syncSubscription() async {}
 
   /// Nobody to push from.
   @override
