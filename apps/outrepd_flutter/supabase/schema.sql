@@ -690,18 +690,21 @@ create policy "a lifter deletes their own avatar"
 --
 -- One row per action taken. Old rows for the same account and action are
 -- cleared on the next call, so the table holds roughly one window's worth.
-create table if not exists rate_events (
+-- Named so it cannot collide with anything else in the project: an earlier
+-- version called it rate_events, and a project already had an unrelated
+-- table by that name, which `if not exists` then silently kept.
+create table if not exists rate_limit_hits (
   profile_id uuid not null references profiles on delete cascade,
   action     text not null,
   at         timestamptz not null default now()
 );
 
-create index if not exists rate_events_idx
-  on rate_events (profile_id, action, at desc);
+create index if not exists rate_limit_hits_idx
+  on rate_limit_hits (profile_id, action, at desc);
 
 -- No policies at all: only the functions below, running as their owner,
 -- ever read or write it.
-alter table rate_events enable row level security;
+alter table rate_limit_hits enable row level security;
 
 -- Records one use of `act` by the calling account, or refuses it with HTTP
 -- 429 when `max_count` uses already fall inside `per`.
@@ -723,11 +726,11 @@ begin
     return;
   end if;
 
-  delete from rate_events r
+  delete from rate_limit_hits r
    where r.profile_id = me and r.action = act and r.at < now() - per;
 
   select count(*) into recent
-    from rate_events r
+    from rate_limit_hits r
    where r.profile_id = me and r.action = act;
 
   if recent >= max_count then
@@ -735,7 +738,7 @@ begin
       using errcode = 'PT429', detail = act;
   end if;
 
-  insert into rate_events (profile_id, action) values (me, act);
+  insert into rate_limit_hits (profile_id, action) values (me, act);
 end;
 $$;
 
