@@ -256,6 +256,17 @@ insert into reports (reporter, reported, reason) values (auth.uid(), :'C', 'othe
 reset role;
 select check_that((select count(*) from reports where reporter = :'A') = 1,
                   'the same account was reported three times in a day, three emails');
+-- A report that arrives already marked as emailed about would never be.
+select as_user(:'B'); set role authenticated;
+insert into reports (reporter, reported, reason, alerted_at)
+values (auth.uid(), :'C', 'other', now());
+reset role;
+select check_that((select alerted_at is null from reports where reporter = :'B'),
+                  'a report arrived already marked as alerted');
+select check_that((select count(*) from pg_trigger
+                    where tgrelid = 'reports'::regclass and not tgisinternal
+                      and tgname = 'send_report_alert') = 1,
+                  'no trigger hands new reports to report-alert');
 
 -- ── what other people see ─────────────────────────────────────────────────────
 

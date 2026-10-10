@@ -4,54 +4,32 @@
 // the app shows the reports table to anybody, so without this a report sits
 // there until someone happens to open the dashboard.
 //
+// Called by the send_report_alert trigger in supabase/push.sql with a
+// report's id and nothing else. It claims the report itself -- sets
+// alerted_at where it is still empty -- before emailing, so any number of
+// calls for one report send one email, and a caller who is not the trigger
+// can do nothing but have an existing report emailed about once. That is
+// why this function needs no secret from its caller, and why the trigger
+// lives in install.sql rather than in a statement typed into the SQL editor.
+//
 // Deploying it:
 //
-//   1. Supabase dashboard → Edge Functions → Deploy a new function.
-//      Name it exactly `report-alert` and paste this file.
+//   1. Supabase dashboard > Edge Functions > report-alert > Code (or Deploy
+//      a new function named exactly `report-alert`), paste this file, deploy.
 //
-//   2. Edge Functions → Secrets, and add:
-//        REPORTS_TO            where alerts go, e.g. you@yourdomain
-//        REPORT_ALERT_SECRET   any long random string
-//      RESEND_API_KEY and EXPORT_FROM are shared with `email-my-data`, so if
-//      that function already works they are set.
+//   2. Edge Functions > Secrets must hold:
+//        REPORTS_TO       where alerts go, e.g. you@yourdomain
+//        RESEND_API_KEY   shared with email-my-data
+//        EXPORT_FROM      shared with email-my-data
+//      REPORT_ALERT_SECRET is no longer used and can be deleted once the
+//      new install.sql has been pasted.
 //
-//   3. Edge Functions → report-alert → turn off "Enforce JWT Verification".
-//      The secret header below is what keeps other callers out.
+//   3. Edge Functions > report-alert > Details: "Verify JWT" off. The trigger
+//      calls it without a token.
 //
-//   4. SQL Editor, with the secret in place of PUT-YOUR-SECRET-HERE. This
-//      calls the function from a trigger through pg_net, which works whether
-//      or not the dashboard's Database Webhooks screen has been enabled:
-//
-//        create extension if not exists pg_net;
-//
-//        create or replace function public.send_report_alert()
-//        returns trigger language plpgsql security definer
-//        set search_path = public as $$
-//        begin
-//          perform net.http_post(
-//            url := 'https://<project ref>.supabase.co/functions/v1/report-alert',
-//            headers := jsonb_build_object(
-//              'Content-Type', 'application/json',
-//              'x-alert-secret', 'PUT-YOUR-SECRET-HERE'),
-//            body := jsonb_build_object(
-//              'type', 'INSERT', 'table', 'reports', 'schema', 'public',
-//              'record', to_jsonb(new)));
-//          return new;
-//        end; $$;
-//
-//        revoke all on function public.send_report_alert()
-//          from public, anon, authenticated;
-//
-//        drop trigger if exists "report-alert" on public.reports;
-//        create trigger "report-alert" after insert on public.reports
-//          for each row execute function public.send_report_alert();
-//
-//      Changing REPORT_ALERT_SECRET later means running this again with the
-//      new value, since Supabase never shows a saved secret back.
-//
-// The secrets are set in those screens and in that one SQL statement, and
-// nowhere else. They must not be
-// written into this file, the repository, or a chat window.
+// Deploy this before pasting the install.sql that carries the new trigger:
+// it also understands the old hand-made trigger's call, so no report goes
+// unannounced in between.
 
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 
@@ -71,36 +49,32 @@ const reasons: Record<string, string> = {
   other: 'Something else',
 };
 
+const uuid =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 Deno.serve(async (request) => {
   const key = Deno.env.get('RESEND_API_KEY');
   const from = Deno.env.get('EXPORT_FROM');
   const to = Deno.env.get('REPORTS_TO');
-  const secret = Deno.env.get('REPORT_ALERT_SECRET');
-  if (!key || !from || !to || !secret) {
+  if (!key || !from || !to) {
     return reply(500, {
-      error:
-        'RESEND_API_KEY, EXPORT_FROM, REPORTS_TO and REPORT_ALERT_SECRET ' +
-        'must all be set on this function',
+      error: 'RESEND_API_KEY, EXPORT_FROM and REPORTS_TO must all be set',
     });
   }
 
-  // Only the database webhook knows this. Without the check anybody holding
-  // the app's public key could call the function and fill the inbox.
-  if (request.headers.get('x-alert-secret') !== secret) {
-    return reply(401, { error: 'not the webhook' });
-  }
-
-  let record: Record<string, unknown> | undefined;
+  // The trigger sends {report_id}. The hand-made trigger this replaced sent
+  // the whole row as {type, table, record}; only its id is used, and the
+  // report is read back from the table, never taken from the request.
+  let id: unknown;
   try {
     const body = await request.json();
-    if (body?.type !== 'INSERT' || body?.table !== 'reports') {
-      return reply(200, { skipped: true });
-    }
-    record = body.record;
+    id = body?.report_id ?? body?.record?.id;
   } catch {
-    return reply(400, { error: 'expected the webhook JSON body' });
+    return reply(400, { error: 'expected a JSON body' });
   }
-  if (!record) return reply(400, { error: 'no record' });
+  if (typeof id !== 'string' || !uuid.test(id)) {
+    return reply(400, { error: 'no report id' });
+  }
 
   // The service key, which the platform provides to every function, because
   // the reports table has no read policy at all: nobody reads it through the
@@ -108,32 +82,45 @@ Deno.serve(async (request) => {
   const db = createClient(
     Deno.env.get('SUPABASE_URL')!,
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
+    { auth: { persistSession: false } },
   );
 
-  async function nameOf(id: unknown) {
-    if (typeof id !== 'string') return '(deleted account)';
+  // Claimed in the same step as read: of any number of calls, one gets the
+  // row back, and the rest find it already alerted.
+  const { data: report, error: claimError } = await db
+    .from('reports')
+    .update({ alerted_at: new Date().toISOString() })
+    .eq('id', id)
+    .is('alerted_at', null)
+    .select('id, reporter, reported, reason, details, created_at')
+    .maybeSingle();
+  if (claimError) return reply(500, { error: claimError.message });
+  if (!report) return reply(200, { skipped: 'already alerted, or no such report' });
+
+  async function nameOf(who: unknown) {
+    if (typeof who !== 'string') return '(deleted account)';
     const { data } = await db
       .from('profiles')
       .select('username')
-      .eq('id', id)
+      .eq('id', who)
       .maybeSingle();
-    return data?.username ? `${data.username} (${id})` : `(unknown) ${id}`;
+    return data?.username ? `${data.username} (${who})` : `(unknown) ${who}`;
   }
 
-  const reporter = await nameOf(record.reporter);
-  const reported = await nameOf(record.reported);
-  const reason = reasons[String(record.reason)] ?? String(record.reason);
-  const details = String(record.details ?? '').trim();
+  const reporter = await nameOf(report.reporter);
+  const reported = await nameOf(report.reported);
+  const reason = reasons[String(report.reason)] ?? String(report.reason);
+  const details = String(report.details ?? '').trim();
 
   // Earlier reports against the same account, which is usually what decides
   // between a warning and a ban.
   let earlier = 0;
-  if (typeof record.reported === 'string') {
+  if (typeof report.reported === 'string') {
     const { count } = await db
       .from('reports')
       .select('id', { count: 'exact', head: true })
-      .eq('reported', record.reported)
-      .neq('id', record.id);
+      .eq('reported', report.reported)
+      .neq('id', report.id);
     earlier = count ?? 0;
   }
 
@@ -152,15 +139,17 @@ Deno.serve(async (request) => {
         `Reason:    ${reason}\n` +
         `Reported:  ${reported}\n` +
         `By:        ${reporter}\n` +
-        `Filed:     ${record.created_at}\n` +
+        `Filed:     ${report.created_at}\n` +
         `Earlier reports against this account: ${earlier}\n\n` +
         `Details:\n${details || '(none)'}\n\n` +
-        `Report id: ${record.id}\n` +
-        `See it in Supabase → Table Editor → reports.\n`,
+        `Report id: ${report.id}\n` +
+        `See it in Supabase > Table Editor > reports.\n`,
     }),
   });
 
   if (!sent.ok) {
+    // Not sent, so not alerted: let a later call try again.
+    await db.from('reports').update({ alerted_at: null }).eq('id', report.id);
     return reply(502, { error: `resend refused it: ${await sent.text()}` });
   }
   return reply(200, { sent: true });

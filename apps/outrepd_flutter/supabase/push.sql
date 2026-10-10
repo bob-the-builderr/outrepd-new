@@ -146,3 +146,60 @@ drop trigger if exists send_push on notifications;
 create trigger send_push
   after insert on notifications
   for each row execute function send_push();
+
+-- ──────────────────────────────── report alerts ──────────────────────────────
+
+-- Every new report is handed to the `report-alert` edge function, which
+-- emails whoever answers reports — the terms promise action within 24 hours,
+-- and nothing in the app shows the reports table to anybody.
+--
+-- The same shape as send_push above: only the report's id goes out, and the
+-- function looks the report up itself and claims it by setting alerted_at,
+-- so any number of calls for one report email once and a caller who is not
+-- this trigger can do nothing but that. No secret, which is what let this
+-- move out of the SQL editor and into install.sql. It replaces a trigger
+-- named "report-alert", made by hand with a secret written into it.
+do $$
+begin
+  if not exists (
+    select 1 from information_schema.columns
+     where table_schema = 'public'
+       and table_name = 'reports'
+       and column_name = 'alerted_at'
+  ) then
+    alter table reports add column alerted_at timestamptz;
+    -- Every report already filed was emailed about by the trigger this
+    -- replaces. Only the first time, when the column is new.
+    update reports set alerted_at = created_at;
+  end if;
+end;
+$$;
+
+create or replace function send_report_alert()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  begin
+    perform net.http_post(
+      url := 'https://pzhdakzjbjyxhspymjhb.supabase.co/functions/v1/report-alert',
+      headers := jsonb_build_object('Content-Type', 'application/json'),
+      body := jsonb_build_object('report_id', new.id)
+    );
+  exception when others then
+    -- A report is stored whether or not the alert goes.
+    raise warning 'report alert not queued: %', sqlerrm;
+  end;
+  return new;
+end;
+$$;
+
+revoke all on function send_report_alert() from public, anon, authenticated;
+
+drop trigger if exists "report-alert" on reports;
+drop trigger if exists send_report_alert on reports;
+create trigger send_report_alert
+  after insert on reports
+  for each row execute function send_report_alert();

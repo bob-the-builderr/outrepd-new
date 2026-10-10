@@ -802,6 +802,9 @@ begin
     return new;
   end if;
   new.created_at := now();
+  -- Set by report-alert once it has emailed about this report (push.sql).
+  -- A report that arrived already marked would never be emailed about.
+  new.alerted_at := null;
   select * into counted from count_my_reports(new.reported);
   if counted.today >= 10 or counted.about_them >= 1 then
     return null;
