@@ -2050,4 +2050,7 @@ class LFr extends L {
 
   @override
   String get obLetsGo => 'C\'est parti';
+
+  @override
+  String get tooOften => 'Tu fais ça trop souvent. Attends un peu et réessaie.';
 }

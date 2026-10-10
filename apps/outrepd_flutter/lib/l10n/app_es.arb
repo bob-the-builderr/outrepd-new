@@ -643,5 +643,6 @@
   "obTitlesBody": "Por victorias, rachas, series limpias, madrugones y más. Lleva uno bajo tu nombre.",
   "obFriendsHeading": "Resuélvelo con tus amigos",
   "obFriendsBody": "Tus amigos te añaden con este código. Rétalos cuando quieras y el marcador entre vosotros queda guardado.",
-  "obLetsGo": "Vamos"
+  "obLetsGo": "Vamos",
+  "tooOften": "Lo estás haciendo demasiado seguido. Espera un rato y vuelve a intentarlo."
 }

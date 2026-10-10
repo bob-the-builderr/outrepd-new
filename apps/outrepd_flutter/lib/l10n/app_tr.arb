@@ -643,5 +643,6 @@
   "obTitlesBody": "Galibiyetler, seriler, temiz setler, sabah erken antrenmanlar ve daha fazlası için. Birini adının altında taşı.",
   "obFriendsHeading": "Arkadaşlarınla hesaplaş",
   "obFriendsBody": "Arkadaşların seni bu kodla ekler. İstediğin zaman meydan oku, aranızdaki skor saklanır.",
-  "obLetsGo": "Hadi başlayalım"
+  "obLetsGo": "Hadi başlayalım",
+  "tooOften": "Bunu çok sık yapıyorsun. Biraz bekleyip tekrar dene."
 }

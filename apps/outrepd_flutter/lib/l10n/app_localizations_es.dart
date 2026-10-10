@@ -2048,4 +2048,8 @@ class LEs extends L {
 
   @override
   String get obLetsGo => 'Vamos';
+
+  @override
+  String get tooOften =>
+      'Lo estás haciendo demasiado seguido. Espera un rato y vuelve a intentarlo.';
 }

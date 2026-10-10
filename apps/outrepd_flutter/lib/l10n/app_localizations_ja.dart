@@ -1996,4 +1996,7 @@ class LJa extends L {
 
   @override
   String get obLetsGo => '始めよう';
+
+  @override
+  String get tooOften => '操作の回数が多すぎます。しばらく待ってから、もう一度お試しください。';
 }

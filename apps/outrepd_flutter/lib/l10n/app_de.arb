@@ -643,5 +643,6 @@
   "obTitlesBody": "Für Siege, Serien, saubere Sätze, frühe Morgen und mehr. Trag einen unter deinem Namen.",
   "obFriendsHeading": "Macht es unter Freunden aus",
   "obFriendsBody": "Freunde fügen dich mit diesem Code hinzu. Fordere sie heraus, wann du willst – der Stand zwischen euch wird gespeichert.",
-  "obLetsGo": "Auf geht’s"
+  "obLetsGo": "Auf geht’s",
+  "tooOften": "Das machst du gerade zu oft. Warte ein bisschen und versuch es dann noch mal."
 }

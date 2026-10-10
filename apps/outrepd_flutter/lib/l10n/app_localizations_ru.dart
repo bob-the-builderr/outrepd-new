@@ -2041,4 +2041,8 @@ class LRu extends L {
 
   @override
   String get obLetsGo => 'Поехали';
+
+  @override
+  String get tooOften =>
+      'Вы делаете это слишком часто. Подождите немного и попробуйте снова.';
 }

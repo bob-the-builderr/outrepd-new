@@ -2040,4 +2040,8 @@ class LHi extends L {
 
   @override
   String get obLetsGo => 'चलिए शुरू करें';
+
+  @override
+  String get tooOften =>
+      'आप यह बहुत बार कर रहे हैं। थोड़ी देर रुकें और फिर कोशिश करें।';
 }

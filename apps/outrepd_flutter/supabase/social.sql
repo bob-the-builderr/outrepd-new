@@ -145,6 +145,10 @@ begin
     return 'friends';
   end if;
 
+  -- A new request sends the other person a notice. Thirty a day is a lot of
+  -- new friends and very little spam.
+  perform take_rate('friend_request', 30, interval '1 day');
+
   insert into friendships (requester, addressee)
   values (auth.uid(), them)
   on conflict (requester, addressee) do nothing;
@@ -167,6 +171,8 @@ as $$
 declare
   them uuid;
 begin
+  -- Each lookup is a guess at who exists. See request_friend_by_code.
+  perform take_rate('friend_lookup', 30, interval '1 hour');
   select id into them from profiles where username = their_name;
   if them is null then
     return 'no such lifter';
@@ -191,6 +197,9 @@ declare
   them uuid;
   cleaned text := trim(leading '#' from trim(code));
 begin
+  -- A friend code is six digits, a million of them. Without a limit, trying
+  -- every one in turn finds every account; thirty guesses an hour does not.
+  perform take_rate('friend_lookup', 30, interval '1 hour');
   select id into them from profiles where friend_code = cleaned;
   if them is null then
     return 'no such lifter';
@@ -330,29 +339,36 @@ returns table (
   placements_done int,
   avatar_url text
 )
-language sql
-stable
+language plpgsql
 security definer
 set search_path = public
 as $$
-  select p.id, p.username, p.tier_idx, p.div_idx, p.placements_done,
-         p.avatar_url
-    from profiles p
-   where length(trim(query)) >= 2
-     and p.id <> auth.uid()
-     -- Same comparison as profiles_username_prefix_idx above, on purpose:
-     -- ilike would read identically but plans as a sequential scan, because
-     -- nothing ties it back to that index.
-     and lower(p.username) like lower(trim(query)) || '%'
-     -- Somebody blocked, in either direction, is simply not there. A search
-     -- that still turns them up is a block that only half works.
-     and not exists (
-       select 1 from blocks b
-       where (b.blocker = auth.uid() and b.blocked = p.id)
-          or (b.blocker = p.id and b.blocked = auth.uid())
-     )
-   order by p.username
-   limit least(greatest(limit_to, 1), 25);
+begin
+  -- Prefix search hands back names the caller has no relationship with, so
+  -- it is also the quickest way to list the users. Generous enough for
+  -- typing, with the screen's own debounce; not enough to walk the alphabet.
+  perform take_rate('search', 120, interval '10 minutes');
+
+  return query
+    select p.id, p.username, p.tier_idx, p.div_idx, p.placements_done,
+           p.avatar_url
+      from profiles p
+     where length(trim(find_lifters.query)) >= 2
+       and p.id <> auth.uid()
+       -- Same comparison as profiles_username_prefix_idx above, on purpose:
+       -- ilike would read identically but plans as a sequential scan, because
+       -- nothing ties it back to that index.
+       and lower(p.username) like lower(trim(find_lifters.query)) || '%'
+       -- Somebody blocked, in either direction, is simply not there. A search
+       -- that still turns them up is a block that only half works.
+       and not exists (
+         select 1 from blocks b
+         where (b.blocker = auth.uid() and b.blocked = p.id)
+            or (b.blocker = p.id and b.blocked = auth.uid())
+       )
+     order by p.username
+     limit least(greatest(find_lifters.limit_to, 1), 25);
+end;
 $$;
 
 -- ──────────────────────────────── blocking ───────────────────────────────────

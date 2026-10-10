@@ -2046,4 +2046,8 @@ class LPt extends L {
 
   @override
   String get obLetsGo => 'Vamos lá';
+
+  @override
+  String get tooOften =>
+      'Você está fazendo isso com muita frequência. Espere um pouco e tente de novo.';
 }

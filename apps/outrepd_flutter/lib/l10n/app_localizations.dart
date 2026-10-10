@@ -3816,6 +3816,12 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Let’s go'**
   String get obLetsGo;
+
+  /// Shown when the server refuses because the same action was repeated too many times recently.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re doing that too often. Wait a while and try again.'**
+  String get tooOften;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

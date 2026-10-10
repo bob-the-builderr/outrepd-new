@@ -677,3 +677,134 @@ create policy "a lifter deletes their own avatar"
     bucket_id = 'avatars'
     and (storage.foldername(name))[1] = auth.uid()::text
   );
+
+-- ─────────────────────────────── rate limits ─────────────────────────────────
+
+-- How often one account may do the things that cost something when done
+-- thousands of times: an email sent, a stranger asked, a row written.
+--
+-- Kept here, in the database, because a limit in the app is a limit only on
+-- people who use the app. Anybody can talk to this server without it, with
+-- the public key every copy of the app carries; these checks run whichever
+-- way the request arrives.
+--
+-- One row per action taken. Old rows for the same account and action are
+-- cleared on the next call, so the table holds roughly one window's worth.
+create table if not exists rate_events (
+  profile_id uuid not null references profiles on delete cascade,
+  action     text not null,
+  at         timestamptz not null default now()
+);
+
+create index if not exists rate_events_idx
+  on rate_events (profile_id, action, at desc);
+
+-- No policies at all: only the functions below, running as their owner,
+-- ever read or write it.
+alter table rate_events enable row level security;
+
+-- Records one use of `act` by the calling account, or refuses it with HTTP
+-- 429 when `max_count` uses already fall inside `per`.
+--
+-- PT429 is how PostgREST is told which HTTP status to answer with; the app
+-- reads the message, 'rate_limited'. Calls with no signed-in account (the
+-- dashboard, the service key, other server functions) are never limited.
+create or replace function take_rate(act text, max_count int, per interval)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  me uuid := auth.uid();
+  recent int;
+begin
+  if me is null then
+    return;
+  end if;
+
+  delete from rate_events r
+   where r.profile_id = me and r.action = act and r.at < now() - per;
+
+  select count(*) into recent
+    from rate_events r
+   where r.profile_id = me and r.action = act;
+
+  if recent >= max_count then
+    raise exception 'rate_limited'
+      using errcode = 'PT429', detail = act;
+  end if;
+
+  insert into rate_events (profile_id, action) values (me, act);
+end;
+$$;
+
+-- Not callable from the app. The triggers and functions that use it run as
+-- their owner, which is what lets them.
+revoke all on function take_rate(text, int, interval) from public, anon, authenticated;
+
+-- Reports. Each one emails whoever answers them (report-alert), so a loop
+-- filing reports is a loop sending email. Five an hour is more than anybody
+-- with a real complaint files; twenty a day stops a slow drip as well.
+create or replace function limit_reports()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  perform take_rate('report_hour', 5, interval '1 hour');
+  perform take_rate('report_day', 20, interval '1 day');
+  return new;
+end;
+$$;
+
+drop trigger if exists reports_rate_limit on reports;
+create trigger reports_rate_limit
+  before insert on reports
+  for each row execute function limit_reports();
+
+-- Sets. A set is a minute of push-ups, so a person cannot honestly store more
+-- than about fifty an hour; forty leaves room and stops a script filling the
+-- table and the opponent pool. A set naming somebody is a challenge, which
+-- also sends them a notice, so those get a daily cap of their own.
+create or replace function limit_sets()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  perform take_rate('set', 40, interval '1 hour');
+  if new.challenge_target is not null then
+    perform take_rate('challenge', 20, interval '1 day');
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists sets_rate_limit on sets;
+create trigger sets_rate_limit
+  before insert on sets
+  for each row execute function limit_sets();
+
+-- Emailing yourself your data. It sends a real email through Resend to
+-- whatever address is typed, so it is the most expensive thing an account
+-- can do and the easiest to aim at somebody else's inbox. Twice a day covers
+-- a typo in the address; the edge function asks this before it sends.
+create or replace function claim_data_export()
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if auth.uid() is null then
+    raise exception 'not signed in';
+  end if;
+  perform take_rate('data_export', 2, interval '1 day');
+end;
+$$;
+
+revoke all on function claim_data_export() from public;
+grant execute on function claim_data_export() to authenticated;

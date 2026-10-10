@@ -55,11 +55,11 @@ class _DownloadDataScreenState extends State<DownloadDataScreen> {
     try {
       await backend.emailMyData(to);
       if (mounted) setState(() => _sent = true);
-    } on Object catch (_) {
+    } on Object catch (error) {
       if (!mounted) return;
       messenger.showSnackBar(
         SnackBar(
-          content: Text(l.needsServer),
+          content: Text(error is RateLimited ? l.tooOften : l.needsServer),
           behavior: SnackBarBehavior.floating,
         ),
       );

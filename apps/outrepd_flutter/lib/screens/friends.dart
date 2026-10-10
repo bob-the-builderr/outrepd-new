@@ -363,7 +363,7 @@ class _AddFriendSheetState extends State<_AddFriendSheet> {
       if (!mounted) return;
       setState(() {
         _sending = false;
-        _error = l.needsServer;
+        _error = error is RateLimited ? l.tooOften : l.needsServer;
       });
     }
   }

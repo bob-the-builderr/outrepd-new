@@ -39,6 +39,25 @@ Future<void> startBackend() async {
   }
 }
 
+/// Runs [call], turning the server's rate-limit refusal into [RateLimited].
+///
+/// The database answers with HTTP 429 and the message 'rate_limited'; an edge
+/// function answers 429. Both arrive here as a library exception that says
+/// nothing a screen can act on.
+Future<T> _limited<T>(Future<T> Function() call) async {
+  try {
+    return await call();
+  } on PostgrestException catch (error) {
+    if (error.code == 'PT429' || error.message.contains('rate_limited')) {
+      throw const RateLimited();
+    }
+    rethrow;
+  } on FunctionException catch (error) {
+    if (error.status == 429) throw const RateLimited();
+    rethrow;
+  }
+}
+
 class SupabaseBackend implements Backend {
   SupabaseBackend(this._db);
 
@@ -338,9 +357,8 @@ class SupabaseBackend implements Backend {
 
   @override
   Future<List<FoundLifter>> findLifters(String query) async {
-    final rows = await _db.rpc<List<dynamic>>(
-      'find_lifters',
-      params: {'query': query},
+    final rows = await _limited(
+      () => _db.rpc<List<dynamic>>('find_lifters', params: {'query': query}),
     );
     return [
       for (final row in rows.cast<Map<String, dynamic>>())
@@ -358,15 +376,14 @@ class SupabaseBackend implements Backend {
   @override
   Future<AskResult> askFriend(String identifier) async {
     final trimmed = identifier.trim();
-    final answer = trimmed.startsWith('#')
-        ? await _db.rpc<String>(
-            'request_friend_by_code',
-            params: {'code': trimmed.substring(1)},
-          )
-        : await _db.rpc<String>(
-            'request_friend',
-            params: {'their_name': trimmed},
-          );
+    final answer = await _limited(
+      () => trimmed.startsWith('#')
+          ? _db.rpc<String>(
+              'request_friend_by_code',
+              params: {'code': trimmed.substring(1)},
+            )
+          : _db.rpc<String>('request_friend', params: {'their_name': trimmed}),
+    );
     return switch (answer) {
       'friends' => AskResult.friends,
       'no such lifter' => AskResult.noSuchLifter,
@@ -526,12 +543,14 @@ class SupabaseBackend implements Backend {
     final user = _db.auth.currentUser;
     if (user == null) throw StateError('not signed in');
 
-    await _db.from('reports').insert({
-      'reporter': user.id,
-      'reported': aboutId,
-      'reason': reason.name,
-      'details': details,
-    });
+    await _limited(
+      () => _db.from('reports').insert({
+        'reporter': user.id,
+        'reported': aboutId,
+        'reason': reason.name,
+        'details': details,
+      }),
+    );
   }
 
   @override
@@ -738,7 +757,9 @@ class SupabaseBackend implements Backend {
   Future<void> emailMyData(String address) async {
     // An edge function, because sending it needs a key that must never be
     // on a phone. The app hands over an address and nothing else.
-    await _db.functions.invoke('email-my-data', body: {'to': address});
+    await _limited(
+      () => _db.functions.invoke('email-my-data', body: {'to': address}),
+    );
   }
 
   @override

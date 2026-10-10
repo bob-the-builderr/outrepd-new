@@ -382,12 +382,12 @@ class _ReportScreenState extends State<ReportScreen> {
         ),
       );
       navigator.pop();
-    } on Object catch (_) {
+    } on Object catch (error) {
       if (!mounted) return;
       setState(() => _sending = false);
       messenger.showSnackBar(
         SnackBar(
-          content: Text(l.needsServer),
+          content: Text(error is RateLimited ? l.tooOften : l.needsServer),
           behavior: SnackBarBehavior.floating,
         ),
       );

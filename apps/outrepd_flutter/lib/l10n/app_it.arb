@@ -643,5 +643,6 @@
   "obTitlesBody": "Per vittorie, serie, serie pulite, mattine presto e altro. Indossane uno sotto il tuo nome.",
   "obFriendsHeading": "Regolate i conti tra amici",
   "obFriendsBody": "Gli amici ti aggiungono con questo codice. Sfidali quando vuoi: il punteggio tra voi viene salvato.",
-  "obLetsGo": "Andiamo"
+  "obLetsGo": "Andiamo",
+  "tooOften": "Lo stai facendo troppo spesso. Aspetta un po’ e riprova."
 }

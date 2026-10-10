@@ -1139,5 +1139,9 @@
         "type": "String"
       }
     }
+  },
+  "tooOften": "You’re doing that too often. Wait a while and try again.",
+  "@tooOften": {
+    "description": "Shown when the server refuses because the same action was repeated too many times recently."
   }
 }

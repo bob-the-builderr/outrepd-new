@@ -2041,4 +2041,8 @@ class LId extends L {
 
   @override
   String get obLetsGo => 'Ayo mulai';
+
+  @override
+  String get tooOften =>
+      'Kamu terlalu sering melakukannya. Tunggu sebentar lalu coba lagi.';
 }

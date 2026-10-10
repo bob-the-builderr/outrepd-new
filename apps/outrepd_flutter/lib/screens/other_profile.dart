@@ -322,11 +322,11 @@ class _OtherProfileScreenState extends State<OtherProfileScreen>
       if (result == AskResult.asked || result == AskResult.friends) {
         await load();
       }
-    } on Object catch (_) {
+    } on Object catch (error) {
       if (!mounted) return;
       messenger.showSnackBar(
         SnackBar(
-          content: Text(l.needsServer),
+          content: Text(error is RateLimited ? l.tooOften : l.needsServer),
           behavior: SnackBarBehavior.floating,
         ),
       );

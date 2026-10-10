@@ -643,5 +643,6 @@
   "obTitlesBody": "Untuk kemenangan, beruntun, set bersih, pagi buta, dan lainnya. Pakai satu di bawah namamu.",
   "obFriendsHeading": "Selesaikan dengan teman",
   "obFriendsBody": "Teman menambahkanmu dengan kode ini. Tantang mereka kapan saja, dan skor di antara kalian tersimpan.",
-  "obLetsGo": "Ayo mulai"
+  "obLetsGo": "Ayo mulai",
+  "tooOften": "Kamu terlalu sering melakukannya. Tunggu sebentar lalu coba lagi."
 }

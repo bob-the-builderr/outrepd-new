@@ -643,5 +643,6 @@
   "obTitlesBody": "Pour les victoires, les séries, les séries propres, les matins tôt et plus. Porte-en un sous ton nom.",
   "obFriendsHeading": "Réglez ça entre amis",
   "obFriendsBody": "Tes amis t'ajoutent avec ce code. Défie-les quand tu veux, et le score entre vous est gardé.",
-  "obLetsGo": "C'est parti"
+  "obLetsGo": "C'est parti",
+  "tooOften": "Tu fais ça trop souvent. Attends un peu et réessaie."
 }

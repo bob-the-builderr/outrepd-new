@@ -2036,4 +2036,7 @@ class LTr extends L {
 
   @override
   String get obLetsGo => 'Hadi başlayalım';
+
+  @override
+  String get tooOften => 'Bunu çok sık yapıyorsun. Biraz bekleyip tekrar dene.';
 }

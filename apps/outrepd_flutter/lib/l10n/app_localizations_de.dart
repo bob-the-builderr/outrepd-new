@@ -2052,4 +2052,8 @@ class LDe extends L {
 
   @override
   String get obLetsGo => 'Auf geht’s';
+
+  @override
+  String get tooOften =>
+      'Das machst du gerade zu oft. Warte ein bisschen und versuch es dann noch mal.';
 }

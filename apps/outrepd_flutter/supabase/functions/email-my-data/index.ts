@@ -71,6 +71,17 @@ Deno.serve(async (request) => {
     { global: { headers: { Authorization: authorization } } },
   );
 
+  // Twice a day per account, counted in the database. This sends a real email
+  // to any address typed, so without a limit it is a free way to fill
+  // somebody's inbox and spend the Resend quota.
+  const claim = await db.rpc('claim_data_export');
+  if (claim.error) {
+    if (claim.error.message?.includes('rate_limited')) {
+      return reply(429, { error: 'rate_limited' });
+    }
+    return reply(400, { error: claim.error.message });
+  }
+
   const { data, error } = await db.rpc('my_data');
   if (error) return reply(400, { error: error.message });
 

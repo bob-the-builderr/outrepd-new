@@ -2029,4 +2029,7 @@ class LAr extends L {
 
   @override
   String get obLetsGo => 'يلا بينا';
+
+  @override
+  String get tooOften => 'إنت بتعمل ده كتير. استنى شوية وجرّب تاني.';
 }

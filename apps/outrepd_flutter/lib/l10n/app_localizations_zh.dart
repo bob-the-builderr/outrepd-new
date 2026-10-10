@@ -1986,4 +1986,7 @@ class LZh extends L {
 
   @override
   String get obLetsGo => '出发';
+
+  @override
+  String get tooOften => '操作太频繁了，请稍等一会儿再试。';
 }

@@ -474,6 +474,17 @@ enum AskResult {
   thatIsYou,
 }
 
+/// The server refused because this account has done the same thing too
+/// often lately (see `take_rate` in schema.sql). Not a fault in the network
+/// or the request, so it earns its own message rather than "can't reach the
+/// server": waiting is the fix, and saying so is the whole point.
+class RateLimited implements Exception {
+  const RateLimited();
+
+  @override
+  String toString() => 'RateLimited';
+}
+
 /// What happened to a rename.
 enum RenameResult {
   ok,

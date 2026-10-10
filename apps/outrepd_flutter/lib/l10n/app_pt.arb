@@ -643,5 +643,6 @@
   "obTitlesBody": "Por vitórias, sequências, séries limpas, madrugadas e mais. Use um abaixo do seu nome.",
   "obFriendsHeading": "Resolva com os amigos",
   "obFriendsBody": "Seus amigos te adicionam com este código. Desafie quando quiser, e o placar entre vocês fica salvo.",
-  "obLetsGo": "Vamos lá"
+  "obLetsGo": "Vamos lá",
+  "tooOften": "Você está fazendo isso com muita frequência. Espere um pouco e tente de novo."
 }

@@ -2040,4 +2040,8 @@ class LEn extends L {
 
   @override
   String get obLetsGo => 'Let’s go';
+
+  @override
+  String get tooOften =>
+      'You’re doing that too often. Wait a while and try again.';
 }

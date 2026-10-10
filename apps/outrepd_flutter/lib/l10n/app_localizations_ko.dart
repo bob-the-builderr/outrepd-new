@@ -2006,4 +2006,7 @@ class LKo extends L {
 
   @override
   String get obLetsGo => '시작하기';
+
+  @override
+  String get tooOften => '너무 자주 시도하고 있어요. 잠시 후 다시 시도해 주세요.';
 }
