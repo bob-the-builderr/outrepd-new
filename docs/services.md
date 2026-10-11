@@ -30,15 +30,16 @@
 | `notifications`, `push_tokens` | الإشعارات وعناوين الموبايلات |
 | `subscriptions` | مين مشترك، بيكتبه `revenuecat-webhook` بس |
 | `server_switches` | مفاتيح السيرفر (`paywall_enforced`)، بتتغير بـ`switches.sql` |
+| `beta_testers`, `beta_tester_grants` | إيميلات تيسترز الـclosed test، ومين خد الـPro المجاني (`testers.sql`) |
 | `rate_events` | عدّاد الحدود (كام تغيير اسم/دعوة في الساعة) |
 
 **الحماية:** كل جدول عليه Row Level Security. الأب بيتكلم مع السيرفر من خلال
 functions بس. اللي مالوش أكونت ممنوع من كل حاجة غير `public_lifter_card`
 (كارت الشير على الموقع). الاختبارات: `tool/db/security_test.sql`.
 
-**حاجة اتعملت يدوي ومش في install.sql:** trigger على `reports` اسمه
-`send_report_alert` بيبعت للـfunction `report-alert` (الخطوة ٤ في أول
-`functions/report-alert/index.ts`). جواه قيمة `REPORT_ALERT_SECRET`.
+**كل السيرفر في الريبو:** مفيش حاجة اتعملت يدوي برّه `install.sql`. الـtriggers
+اللي بتنادي functions (`send_push`، `send_report_alert`، `tester_signed_up`،
+`tester_added`) كلها فيه، ومن غير أي قيمة سرية جواها.
 
 ### Edge Functions (لازم يبقوا ٤ بالظبط)
 
@@ -46,15 +47,15 @@ functions بس. اللي مالوش أكونت ممنوع من كل حاجة غ�
 |---|---|---|---|
 | `push` | تبعت الإشعار للموبايل عن طريق Firebase | **مقفول** | `FCM_SERVICE_ACCOUNT` |
 | `email-my-data` | تبعت لليوزر نسخة من بياناته بالإيميل | مفتوح أو مقفول، الاتنين شغالين | `RESEND_API_KEY`, `EXPORT_FROM` |
-| `report-alert` | تبعتلك إيميل مع كل بلاغ | **مقفول** | `RESEND_API_KEY`, `EXPORT_FROM`, `REPORTS_TO`, `REPORT_ALERT_SECRET` |
-| `revenuecat-webhook` | تحدّث جدول الاشتراكات من RevenueCat | **مقفول** | `REVENUECAT_SECRET_KEY`, `REVENUECAT_WEBHOOK_AUTH` |
+| `report-alert` | تبعتلك إيميل مع كل بلاغ (مرة واحدة لكل بلاغ) | **مقفول** | `RESEND_API_KEY`, `EXPORT_FROM`, `REPORTS_TO` |
+| `revenuecat-webhook` | تحدّث جدول الاشتراكات من RevenueCat، وتدي التيسترز Pro شهرين | **مقفول** | `REVENUECAT_SECRET_KEY`, `REVENUECAT_WEBHOOK_AUTH` |
 
 الكود في `apps/outrepd_flutter/supabase/functions/<الاسم>/index.ts`، وفي أول
 كل ملف خطوات النشر.
 
-### Edge Function Secrets (لازم يبقوا ٧ بالظبط، غير بتوع Supabase التلقائية)
+### Edge Function Secrets (لازم يبقوا ٦ بالظبط، غير بتوع Supabase التلقائية)
 `FCM_SERVICE_ACCOUNT` · `RESEND_API_KEY` · `EXPORT_FROM` · `REPORTS_TO` ·
-`REPORT_ALERT_SECRET` · `REVENUECAT_SECRET_KEY` · `REVENUECAT_WEBHOOK_AUTH`
+`REVENUECAT_SECRET_KEY` · `REVENUECAT_WEBHOOK_AUTH`
 
 (`SUPABASE_URL`، `SUPABASE_ANON_KEY`، `SUPABASE_SERVICE_ROLE_KEY`،
 `SUPABASE_DB_URL` بيحطهم Supabase لوحده، متلمسهمش.)
