@@ -1449,29 +1449,6 @@ class LEn extends L {
   String get obHaveAccount => 'I already have an account';
 
   @override
-  String get obHowTitle => 'Three things, then you’re in.';
-
-  @override
-  String get obHow1 => 'Prop your phone on the floor';
-
-  @override
-  String get obHow1Body => 'Lean it against a wall, a metre in front of you.';
-
-  @override
-  String get obHow2 => 'The camera counts your reps';
-
-  @override
-  String get obHow2Body =>
-      'Every rep is checked for depth. Half reps don’t count.';
-
-  @override
-  String get obHow3 => 'Sixty seconds against someone';
-
-  @override
-  String get obHow3Body =>
-      'Win to climb. Lose and you drop. Same rules for everyone.';
-
-  @override
   String get obTwoThings => 'Two quick things.';
 
   @override
@@ -1593,13 +1570,6 @@ class LEn extends L {
 
   @override
   String get obTaken => 'Taken';
-
-  @override
-  String get obPlacementsBody =>
-      'Five duels decide your starting tier. Nothing counts against you yet.';
-
-  @override
-  String get obFindFirstOpponent => 'Find my first opponent';
 
   @override
   String get obGotIt => 'Got it';
@@ -1772,29 +1742,6 @@ class LEn extends L {
 
   @override
   String get obWelcomeBack => 'Welcome back';
-
-  @override
-  String get obDuelTitle => 'You race a real person’s minute';
-
-  @override
-  String get obDuelBody =>
-      'Their set was recorded rep by rep. You see it happen live while you do yours.';
-
-  @override
-  String obDuelWinBy(String count) {
-    return 'Win by $count reps';
-  }
-
-  @override
-  String get obDuelLpRule =>
-      'Rank points are the gap in reps. Win big, climb fast.';
-
-  @override
-  String get obLadderTitle => 'Seven tiers to climb';
-
-  @override
-  String get obLadderBody =>
-      'Five placement duels set where you start. Win to climb, and once you reach a tier, you keep it.';
 
   @override
   String obTitlesHeading(String count) {
@@ -2168,4 +2115,13 @@ class LEn extends L {
 
   @override
   String get trialEndsBody => 'Keep climbing, or cancel before then in your subscription settings.';
+
+  @override
+  String get obIdeaTitle => '60 seconds. One opponent.';
+
+  @override
+  String get obIdeaRival => 'A real person, live or their recorded set';
+
+  @override
+  String get obIdeaCamera => 'Your camera counts every rep, on your phone';
 }

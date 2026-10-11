@@ -1449,29 +1449,6 @@ class LRu extends L {
   String get obHaveAccount => 'У меня уже есть аккаунт';
 
   @override
-  String get obHowTitle => 'Три вещи — и ты в деле.';
-
-  @override
-  String get obHow1 => 'Поставь телефон на пол';
-
-  @override
-  String get obHow1Body => 'Прислони к стене, в метре перед собой.';
-
-  @override
-  String get obHow2 => 'Камера считает повторы';
-
-  @override
-  String get obHow2Body =>
-      'У каждого повтора проверяется глубина. Половинчатые не в счёт.';
-
-  @override
-  String get obHow3 => 'Шестьдесят секунд против соперника';
-
-  @override
-  String get obHow3Body =>
-      'Выиграл — поднялся. Проиграл — опустился. Правила для всех одни.';
-
-  @override
   String get obTwoThings => 'Две короткие вещи.';
 
   @override
@@ -1594,13 +1571,6 @@ class LRu extends L {
 
   @override
   String get obTaken => 'Занято';
-
-  @override
-  String get obPlacementsBody =>
-      'Пять дуэлей определят стартовый ранг. Пока ничего не идёт тебе в минус.';
-
-  @override
-  String get obFindFirstOpponent => 'Найти первого соперника';
 
   @override
   String get obGotIt => 'Понятно';
@@ -1774,29 +1744,6 @@ class LRu extends L {
 
   @override
   String get obWelcomeBack => 'С возвращением';
-
-  @override
-  String get obDuelTitle => 'Вы соревнуетесь с минутой живого человека';
-
-  @override
-  String get obDuelBody =>
-      'Их подход записан по каждому повтору. Вы видите его вживую, пока делаете свой.';
-
-  @override
-  String obDuelWinBy(String count) {
-    return 'Победа с отрывом в $count повт.';
-  }
-
-  @override
-  String get obDuelLpRule =>
-      'Очки ранга — это разница в повторах. Побеждайте с отрывом и растите быстрее.';
-
-  @override
-  String get obLadderTitle => 'Семь ступеней наверх';
-
-  @override
-  String get obLadderBody =>
-      'Пять отборочных дуэлей определяют стартовую ступень. Побеждайте, чтобы расти; достигнутая ступень остаётся за вами.';
 
   @override
   String obTitlesHeading(String count) {
@@ -2170,4 +2117,13 @@ class LRu extends L {
 
   @override
   String get trialEndsBody => 'Продолжайте подниматься или отмените заранее в настройках подписки.';
+
+  @override
+  String get obIdeaTitle => '60 секунд. Один соперник.';
+
+  @override
+  String get obIdeaRival => 'Живой человек — вживую или его записанный подход';
+
+  @override
+  String get obIdeaCamera => 'Камера считает каждое повторение прямо на телефоне';
 }

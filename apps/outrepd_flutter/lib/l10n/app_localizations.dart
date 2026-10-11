@@ -2741,48 +2741,6 @@ abstract class L {
   /// **'I already have an account'**
   String get obHaveAccount;
 
-  /// No description provided for @obHowTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Three things, then you’re in.'**
-  String get obHowTitle;
-
-  /// No description provided for @obHow1.
-  ///
-  /// In en, this message translates to:
-  /// **'Prop your phone on the floor'**
-  String get obHow1;
-
-  /// No description provided for @obHow1Body.
-  ///
-  /// In en, this message translates to:
-  /// **'Lean it against a wall, a metre in front of you.'**
-  String get obHow1Body;
-
-  /// No description provided for @obHow2.
-  ///
-  /// In en, this message translates to:
-  /// **'The camera counts your reps'**
-  String get obHow2;
-
-  /// No description provided for @obHow2Body.
-  ///
-  /// In en, this message translates to:
-  /// **'Every rep is checked for depth. Half reps don’t count.'**
-  String get obHow2Body;
-
-  /// No description provided for @obHow3.
-  ///
-  /// In en, this message translates to:
-  /// **'Sixty seconds against someone'**
-  String get obHow3;
-
-  /// No description provided for @obHow3Body.
-  ///
-  /// In en, this message translates to:
-  /// **'Win to climb. Lose and you drop. Same rules for everyone.'**
-  String get obHow3Body;
-
   /// No description provided for @obTwoThings.
   ///
   /// In en, this message translates to:
@@ -3016,18 +2974,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Taken'**
   String get obTaken;
-
-  /// No description provided for @obPlacementsBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Five duels decide your starting tier. Nothing counts against you yet.'**
-  String get obPlacementsBody;
-
-  /// No description provided for @obFindFirstOpponent.
-  ///
-  /// In en, this message translates to:
-  /// **'Find my first opponent'**
-  String get obFindFirstOpponent;
 
   /// No description provided for @obGotIt.
   ///
@@ -3322,42 +3268,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Welcome back'**
   String get obWelcomeBack;
-
-  /// No description provided for @obDuelTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'You race a real person’s minute'**
-  String get obDuelTitle;
-
-  /// No description provided for @obDuelBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Their set was recorded rep by rep. You see it happen live while you do yours.'**
-  String get obDuelBody;
-
-  /// No description provided for @obDuelWinBy.
-  ///
-  /// In en, this message translates to:
-  /// **'Win by {count} reps'**
-  String obDuelWinBy(String count);
-
-  /// No description provided for @obDuelLpRule.
-  ///
-  /// In en, this message translates to:
-  /// **'Rank points are the gap in reps. Win big, climb fast.'**
-  String get obDuelLpRule;
-
-  /// No description provided for @obLadderTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Seven tiers to climb'**
-  String get obLadderTitle;
-
-  /// No description provided for @obLadderBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Five placement duels set where you start. Win to climb, and once you reach a tier, you keep it.'**
-  String get obLadderBody;
 
   /// No description provided for @obTitlesHeading.
   ///
@@ -3988,6 +3898,24 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Keep climbing, or cancel before then in your subscription settings.'**
   String get trialEndsBody;
+
+  /// No description provided for @obIdeaTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'60 seconds. One opponent.'**
+  String get obIdeaTitle;
+
+  /// No description provided for @obIdeaRival.
+  ///
+  /// In en, this message translates to:
+  /// **'A real person, live or their recorded set'**
+  String get obIdeaRival;
+
+  /// No description provided for @obIdeaCamera.
+  ///
+  /// In en, this message translates to:
+  /// **'Your camera counts every rep, on your phone'**
+  String get obIdeaCamera;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

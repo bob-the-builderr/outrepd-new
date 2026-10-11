@@ -11,6 +11,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:outrepd/backend/backend.dart';
 import 'package:outrepd/data.dart';
@@ -100,7 +101,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await tap(tester, 'Get started');
-    expect(find.textContaining('Three things'), findsOneWidget);
+    expect(find.text('60 seconds. One opponent.'), findsOneWidget);
 
     await tester.binding.handlePopRoute();
     await tester.pumpAndSettle();
@@ -120,14 +121,12 @@ void main() {
 
     await tap(tester, 'Get started');
     await tap(tester, 'Continue');
-    expect(find.text('You race a real person’s minute'), findsOneWidget);
+    expect(find.text('Two quick things.'), findsOneWidget);
     await tester.tap(back);
     await tester.pumpAndSettle();
-    expect(find.textContaining('Three things'), findsOneWidget);
+    expect(find.text('60 seconds. One opponent.'), findsOneWidget);
 
     // On the camera steps too, where the screen is the camera.
-    await tap(tester, 'Continue');
-    await tap(tester, 'Continue');
     await tap(tester, 'Continue');
     await tap(tester, '16 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
@@ -141,18 +140,11 @@ void main() {
     expect(find.text('Get into a push-up position'), findsNothing);
     expect(find.text('I’m set up'), findsOneWidget);
 
-    await tester.tap(back);
-    await tester.pumpAndSettle();
-    await tester.tap(back);
-    await tester.pumpAndSettle();
-    await tester.tap(back);
-    await tester.pumpAndSettle();
-    await tester.tap(back);
-    await tester.pumpAndSettle();
-    await tester.tap(back);
-    await tester.pumpAndSettle();
-    await tester.tap(back);
-    await tester.pumpAndSettle();
+    // Camera, the two questions, the idea, the welcome.
+    for (var i = 0; i < 4; i++) {
+      await tester.tap(back);
+      await tester.pumpAndSettle();
+    }
     expect(find.text('Get started'), findsOneWidget);
     expect(back, findsNothing);
   });
@@ -164,17 +156,10 @@ void main() {
     await tester.pumpAndSettle();
 
     await tap(tester, 'Get started');
-    expect(find.textContaining('Three things'), findsOneWidget);
-
-    // What a duel is and what there is to climb, before anything is asked.
-    await tap(tester, 'Continue');
-    expect(find.text('You race a real person’s minute'), findsOneWidget);
-    expect(find.text('+7 LP'), findsOneWidget);
-
-    await tap(tester, 'Continue');
-    expect(find.text('Seven tiers to climb'), findsOneWidget);
-    expect(find.text('Master'), findsOneWidget);
-    expect(find.text('Iron'), findsOneWidget);
+    // The whole idea on one screen — who, what counts, what for — before
+    // anything is asked.
+    expect(find.text('60 seconds. One opponent.'), findsOneWidget);
+    expect(find.text('Climb from Iron to Master'), findsOneWidget);
 
     await tap(tester, 'Continue');
     expect(find.text('Two quick things.'), findsOneWidget);
@@ -201,8 +186,6 @@ void main() {
 
     await tap(tester, 'Get started');
     await tap(tester, 'Continue');
-    await tap(tester, 'Continue');
-    await tap(tester, 'Continue');
     await tap(tester, 'Under 16');
 
     expect(find.textContaining('outrepd is for 16 and over'), findsOneWidget);
@@ -224,8 +207,6 @@ void main() {
     await tester.pumpAndSettle();
 
     await tap(tester, 'Get started');
-    await tap(tester, 'Continue');
-    await tap(tester, 'Continue');
     await tap(tester, 'Continue');
     await tap(tester, '16 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
@@ -267,8 +248,6 @@ void main() {
 
     await tap(tester, 'Get started');
     await tap(tester, 'Continue');
-    await tap(tester, 'Continue');
-    await tap(tester, 'Continue');
     await tap(tester, '16 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
@@ -307,8 +286,6 @@ void main() {
     await tester.pumpAndSettle();
 
     await tap(tester, 'Get started');
-    await tap(tester, 'Continue');
-    await tap(tester, 'Continue');
     await tap(tester, 'Continue');
     await tap(tester, '16 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
@@ -351,7 +328,11 @@ void main() {
     expect(find.text('Allow camera'), findsNothing);
   });
 
-  testWidgets('ends unranked, with placements still to play', (tester) async {
+  testWidgets('signs up straight from the calibration result', (tester) async {
+    // The end of onboarding writes to this phone's storage; without a
+    // stand-in for it the hand-over failed quietly and the test went on
+    // reading the screen it had never left.
+    SharedPreferences.setMockInitialValues({});
     final was = demoProfile.placementsDone;
     addTearDown(() => demoProfile.placementsDone = was);
     backend = _FakeBackend();
@@ -370,8 +351,6 @@ void main() {
     await tester.pumpAndSettle();
 
     await tap(tester, 'Get started');
-    await tap(tester, 'Continue');
-    await tap(tester, 'Continue');
     await tap(tester, 'Continue');
     await tap(tester, '16 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
@@ -392,14 +371,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Calibrated.'), findsOneWidget);
-    // Straight on to placements. There is no notifications step: the app
-    // sends no push, so it has no permission to ask for.
+    // Straight on to the account gate: no page about placements before
+    // there is an account to place. Nothing past here is reachable without
+    // going through it.
     await tap(tester, 'Continue');
-    expect(find.textContaining('Five duels'), findsOneWidget);
-
-    // The account gate at the very end: nothing past here is reachable
-    // without going through it.
-    await tap(tester, 'Find my first opponent');
     await tap(tester, 'Sign up with email');
 
     await tester.enterText(find.byType(TextField).at(0), 'lifter_one');
@@ -423,9 +398,8 @@ void main() {
     await tester.enterText(code, '123456');
     await tester.pumpAndSettle();
 
-    expect(find.text('Unranked'), findsOneWidget);
-    expect(find.textContaining('Five duels'), findsOneWidget);
-    expect(find.text('0 of 5 · 60 seconds each'), findsOneWidget);
+    // Signed up: the onboarding hands over to the app's own welcome.
+    expect(find.text('Settle it with friends'), findsOneWidget);
   });
 
   for (final scale in [1.3, 1.6]) {
@@ -437,7 +411,7 @@ void main() {
 
       await tap(tester, 'Get started');
       expect(tester.takeException(), isNull);
-      for (var i = 0; i < 3; i++) {
+      for (var i = 0; i < 1; i++) {
         await tap(tester, 'Continue');
         expect(tester.takeException(), isNull);
       }

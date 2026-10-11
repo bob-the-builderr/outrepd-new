@@ -830,13 +830,6 @@
   "obTagline": "Push-up battles. Your phone counts. Someone else is counting too.",
   "obGetStarted": "Get started",
   "obHaveAccount": "I already have an account",
-  "obHowTitle": "Three things, then you’re in.",
-  "obHow1": "Prop your phone on the floor",
-  "obHow1Body": "Lean it against a wall, a metre in front of you.",
-  "obHow2": "The camera counts your reps",
-  "obHow2Body": "Every rep is checked for depth. Half reps don’t count.",
-  "obHow3": "Sixty seconds against someone",
-  "obHow3Body": "Win to climb. Lose and you drop. Same rules for everyone.",
   "obTwoThings": "Two quick things.",
   "obAgeQuestion": "How old are you?",
   "obUnder16": "Under 16",
@@ -876,8 +869,6 @@
   "obFormClean": "Clean",
   "obAvailable": "Available",
   "obTaken": "Taken",
-  "obPlacementsBody": "Five duels decide your starting tier. Nothing counts against you yet.",
-  "obFindFirstOpponent": "Find my first opponent",
   "obGotIt": "Got it",
   "obFormMixed": "Mixed",
   "justNow": "Just now",
@@ -999,24 +990,11 @@
   },
   "obWhyNeededBody": "Each rep is judged by how far your shoulders drop and rise, and only the camera can see that. Without it there is no count, and without a count there is no duel. The camera is only on during a set.",
   "obWelcomeBack": "Welcome back",
-  "obDuelTitle": "You race a real person’s minute",
-  "obDuelBody": "Their set was recorded rep by rep. You see it happen live while you do yours.",
-  "obDuelWinBy": "Win by {count} reps",
-  "obDuelLpRule": "Rank points are the gap in reps. Win big, climb fast.",
-  "obLadderTitle": "Seven tiers to climb",
-  "obLadderBody": "Five placement duels set where you start. Win to climb, and once you reach a tier, you keep it.",
   "obTitlesHeading": "{count} titles to earn",
   "obTitlesBody": "For wins, streaks, clean sets, early mornings and more. Wear one under your name.",
   "obFriendsHeading": "Settle it with friends",
   "obFriendsBody": "Friends add you with this code. Challenge them whenever you like, and the score between you is kept.",
   "obLetsGo": "Let’s go",
-  "@obDuelWinBy": {
-    "placeholders": {
-      "count": {
-        "type": "String"
-      }
-    }
-  },
   "@obTitlesHeading": {
     "placeholders": {
       "count": {
@@ -1312,5 +1290,8 @@
     }
   },
   "trialEndsTitle": "Your free trial ends tomorrow",
-  "trialEndsBody": "Keep climbing, or cancel before then in your subscription settings."
+  "trialEndsBody": "Keep climbing, or cancel before then in your subscription settings.",
+  "obIdeaTitle": "60 seconds. One opponent.",
+  "obIdeaRival": "A real person, live or their recorded set",
+  "obIdeaCamera": "Your camera counts every rep, on your phone"
 }

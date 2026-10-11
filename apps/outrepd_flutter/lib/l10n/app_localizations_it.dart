@@ -1454,29 +1454,6 @@ class LIt extends L {
   String get obHaveAccount => 'Ho già un account';
 
   @override
-  String get obHowTitle => 'Tre cose e sei dentro.';
-
-  @override
-  String get obHow1 => 'Appoggia il telefono a terra';
-
-  @override
-  String get obHow1Body => 'Mettilo contro un muro, a un metro davanti a te.';
-
-  @override
-  String get obHow2 => 'La fotocamera conta le tue ripetizioni';
-
-  @override
-  String get obHow2Body =>
-      'Di ogni ripetizione si misura la profondità. Quelle a metà non contano.';
-
-  @override
-  String get obHow3 => 'Sessanta secondi contro qualcuno';
-
-  @override
-  String get obHow3Body =>
-      'Vinci e sali. Perdi e scendi. Stesse regole per tutti.';
-
-  @override
   String get obTwoThings => 'Due cose veloci.';
 
   @override
@@ -1599,13 +1576,6 @@ class LIt extends L {
 
   @override
   String get obTaken => 'Già preso';
-
-  @override
-  String get obPlacementsBody =>
-      'Cinque sfide decidono il tuo livello di partenza. Per ora niente conta contro di te.';
-
-  @override
-  String get obFindFirstOpponent => 'Trova il mio primo avversario';
 
   @override
   String get obGotIt => 'Capito';
@@ -1779,29 +1749,6 @@ class LIt extends L {
 
   @override
   String get obWelcomeBack => 'Bentornato';
-
-  @override
-  String get obDuelTitle => 'Sfidi il minuto di una persona reale';
-
-  @override
-  String get obDuelBody =>
-      'La sua serie è stata registrata ripetizione per ripetizione. La vedi scorrere dal vivo mentre fai la tua.';
-
-  @override
-  String obDuelWinBy(String count) {
-    return 'Vinci di $count ripetizioni';
-  }
-
-  @override
-  String get obDuelLpRule =>
-      'I punti grado sono la differenza di ripetizioni. Vinci con margine, sali in fretta.';
-
-  @override
-  String get obLadderTitle => 'Sette gradi da scalare';
-
-  @override
-  String get obLadderBody =>
-      'Cinque sfide di piazzamento decidono da dove parti. Vinci per salire: un grado raggiunto resta tuo.';
 
   @override
   String obTitlesHeading(String count) {
@@ -2175,4 +2122,13 @@ class LIt extends L {
 
   @override
   String get trialEndsBody => 'Continua a salire, o annulla prima nelle impostazioni dell\'abbonamento.';
+
+  @override
+  String get obIdeaTitle => '60 secondi. Un avversario.';
+
+  @override
+  String get obIdeaRival => 'Una persona vera, dal vivo o la sua serie registrata';
+
+  @override
+  String get obIdeaCamera => 'La tua fotocamera conta ogni ripetizione, sul tuo telefono';
 }

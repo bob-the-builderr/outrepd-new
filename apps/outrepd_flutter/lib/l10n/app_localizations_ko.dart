@@ -1424,27 +1424,6 @@ class LKo extends L {
   String get obHaveAccount => '이미 계정이 있어요';
 
   @override
-  String get obHowTitle => '세 가지만 보면 끝.';
-
-  @override
-  String get obHow1 => '폰을 바닥에 세워 두기';
-
-  @override
-  String get obHow1Body => '1미터 앞 벽에 기대 놓으세요.';
-
-  @override
-  String get obHow2 => '카메라가 횟수를 셉니다';
-
-  @override
-  String get obHow2Body => '매 개마다 깊이를 확인합니다. 반만 내려가면 세지 않습니다.';
-
-  @override
-  String get obHow3 => '누군가와 60초';
-
-  @override
-  String get obHow3Body => '이기면 오르고 지면 내려갑니다. 규칙은 모두에게 같습니다.';
-
-  @override
   String get obTwoThings => '빠르게 두 가지만.';
 
   @override
@@ -1564,13 +1543,6 @@ class LKo extends L {
 
   @override
   String get obTaken => '이미 사용 중';
-
-  @override
-  String get obPlacementsBody =>
-      '다섯 번의 대결로 시작 등급이 정해집니다. 아직 지는 것이 기록에 남지 않습니다.';
-
-  @override
-  String get obFindFirstOpponent => '첫 상대 찾기';
 
   @override
   String get obGotIt => '알겠어요';
@@ -1741,28 +1713,6 @@ class LKo extends L {
 
   @override
   String get obWelcomeBack => '다시 오셨네요';
-
-  @override
-  String get obDuelTitle => '진짜 사람의 1분과 겨뤄요';
-
-  @override
-  String get obDuelBody =>
-      '상대의 세트는 한 번 한 번 기록되어 있어요. 내 세트를 하는 동안 그게 실시간으로 진행되는 걸 봐요.';
-
-  @override
-  String obDuelWinBy(String count) {
-    return '$count개 차이로 승리';
-  }
-
-  @override
-  String get obDuelLpRule => '랭크 포인트는 개수 차이예요. 크게 이기면 빨리 올라가요.';
-
-  @override
-  String get obLadderTitle => '올라갈 7개의 티어';
-
-  @override
-  String get obLadderBody =>
-      '배치 대결 5번으로 시작 위치가 정해져요. 이기면 올라가고, 한 번 도달한 티어는 유지돼요.';
 
   @override
   String obTitlesHeading(String count) {
@@ -2135,4 +2085,13 @@ class LKo extends L {
 
   @override
   String get trialEndsBody => '계속 오르거나, 그 전에 구독 설정에서 취소하세요.';
+
+  @override
+  String get obIdeaTitle => '60초. 상대는 한 명.';
+
+  @override
+  String get obIdeaRival => '실제 사람과 대결, 실시간 또는 녹화된 세트로';
+
+  @override
+  String get obIdeaCamera => '카메라가 모든 반복을 휴대폰에서 셉니다';
 }

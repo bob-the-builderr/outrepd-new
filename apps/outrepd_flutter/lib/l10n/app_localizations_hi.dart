@@ -1451,28 +1451,6 @@ class LHi extends L {
   String get obHaveAccount => 'मेरा अकाउंट पहले से है';
 
   @override
-  String get obHowTitle => 'तीन बातें, फिर तुम अंदर।';
-
-  @override
-  String get obHow1 => 'फ़ोन को ज़मीन पर रखो';
-
-  @override
-  String get obHow1Body => 'दीवार से टिका दो, अपने से एक मीटर आगे।';
-
-  @override
-  String get obHow2 => 'कैमरा तुम्हारी रेप्स गिनता है';
-
-  @override
-  String get obHow2Body =>
-      'हर रेप की गहराई जाँची जाती है। आधी रेप नहीं गिनी जाती।';
-
-  @override
-  String get obHow3 => 'किसी के ख़िलाफ़ साठ सेकंड';
-
-  @override
-  String get obHow3Body => 'जीतो तो ऊपर। हारो तो नीचे। नियम सबके लिए एक।';
-
-  @override
   String get obTwoThings => 'दो छोटी बातें।';
 
   @override
@@ -1593,13 +1571,6 @@ class LHi extends L {
 
   @override
   String get obTaken => 'पहले से लिया हुआ';
-
-  @override
-  String get obPlacementsBody =>
-      'पाँच मुक़ाबले तय करेंगे कि तुम कहाँ से शुरू करोगे। अभी कुछ भी तुम्हारे ख़िलाफ़ नहीं गिना जाता।';
-
-  @override
-  String get obFindFirstOpponent => 'पहला प्रतिद्वंद्वी ढूँढो';
 
   @override
   String get obGotIt => 'समझ गया';
@@ -1773,29 +1744,6 @@ class LHi extends L {
 
   @override
   String get obWelcomeBack => 'वापसी पर स्वागत है';
-
-  @override
-  String get obDuelTitle => 'आप एक असली इंसान के मिनट से मुकाबला करते हैं';
-
-  @override
-  String get obDuelBody =>
-      'उनका सेट हर रेप के साथ रिकॉर्ड हुआ था। आप अपना सेट करते हुए उसे लाइव होते देखते हैं।';
-
-  @override
-  String obDuelWinBy(String count) {
-    return '$count रेप से जीतें';
-  }
-
-  @override
-  String get obDuelLpRule =>
-      'रैंक पॉइंट रेप के अंतर के बराबर होते हैं। बड़े अंतर से जीतें, तेज़ी से ऊपर जाएँ।';
-
-  @override
-  String get obLadderTitle => 'चढ़ने के लिए सात टियर';
-
-  @override
-  String get obLadderBody =>
-      'पाँच प्लेसमेंट मुकाबले तय करते हैं कि आप कहाँ से शुरू करेंगे। जीतकर ऊपर जाएँ, और जो टियर पा लिया वह आपका रहता है।';
 
   @override
   String obTitlesHeading(String count) {
@@ -2169,4 +2117,13 @@ class LHi extends L {
 
   @override
   String get trialEndsBody => 'चढ़ते रहें, या उससे पहले सब्सक्रिप्शन सेटिंग्स में रद्द करें।';
+
+  @override
+  String get obIdeaTitle => '60 सेकंड। एक प्रतिद्वंद्वी।';
+
+  @override
+  String get obIdeaRival => 'असली इंसान, लाइव या उसका रिकॉर्ड किया हुआ सेट';
+
+  @override
+  String get obIdeaCamera => 'आपका कैमरा हर रेप गिनता है, आपके फ़ोन पर ही';
 }

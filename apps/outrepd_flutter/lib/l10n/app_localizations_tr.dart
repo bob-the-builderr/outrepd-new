@@ -1446,29 +1446,6 @@ class LTr extends L {
   String get obHaveAccount => 'Zaten hesabım var';
 
   @override
-  String get obHowTitle => 'Üç şey, sonra içeridesin.';
-
-  @override
-  String get obHow1 => 'Telefonu yere yasla';
-
-  @override
-  String get obHow1Body => 'Bir metre önünde, duvara dayat.';
-
-  @override
-  String get obHow2 => 'Kamera tekrarlarını sayar';
-
-  @override
-  String get obHow2Body =>
-      'Her tekrarın derinliği kontrol edilir. Yarım tekrar sayılmaz.';
-
-  @override
-  String get obHow3 => 'Birine karşı altmış saniye';
-
-  @override
-  String get obHow3Body =>
-      'Kazanırsan çıkarsın, kaybedersen düşersin. Kurallar herkes için aynı.';
-
-  @override
   String get obTwoThings => 'İki kısa şey.';
 
   @override
@@ -1589,13 +1566,6 @@ class LTr extends L {
 
   @override
   String get obTaken => 'Alınmış';
-
-  @override
-  String get obPlacementsBody =>
-      'Beş düello başlangıç seviyeni belirler. Henüz hiçbir şey aleyhine sayılmıyor.';
-
-  @override
-  String get obFindFirstOpponent => 'İlk rakibimi bul';
 
   @override
   String get obGotIt => 'Anladım';
@@ -1769,29 +1739,6 @@ class LTr extends L {
 
   @override
   String get obWelcomeBack => 'Tekrar hoş geldin';
-
-  @override
-  String get obDuelTitle => 'Gerçek birinin dakikasıyla yarışırsın';
-
-  @override
-  String get obDuelBody =>
-      'Onun seti tekrar tekrar kaydedildi. Sen kendi setini yaparken onu canlı görürsün.';
-
-  @override
-  String obDuelWinBy(String count) {
-    return '$count tekrar farkla kazan';
-  }
-
-  @override
-  String get obDuelLpRule =>
-      'Rütbe puanı tekrar farkı kadardır. Farklı kazan, hızlı yüksel.';
-
-  @override
-  String get obLadderTitle => 'Tırmanılacak yedi kademe';
-
-  @override
-  String get obLadderBody =>
-      'Beş yerleştirme düellosu nereden başlayacağını belirler. Kazanarak yüksel; ulaştığın kademe senin kalır.';
 
   @override
   String obTitlesHeading(String count) {
@@ -2165,4 +2112,13 @@ class LTr extends L {
 
   @override
   String get trialEndsBody => 'Tırmanmaya devam et ya da daha önce abonelik ayarlarından iptal et.';
+
+  @override
+  String get obIdeaTitle => '60 saniye. Tek rakip.';
+
+  @override
+  String get obIdeaRival => 'Gerçek bir kişi; canlı ya da kaydettiği set';
+
+  @override
+  String get obIdeaCamera => 'Kameran her tekrarı telefonunda sayar';
 }

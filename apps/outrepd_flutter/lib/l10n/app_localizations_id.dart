@@ -1449,29 +1449,6 @@ class LId extends L {
   String get obHaveAccount => 'Saya sudah punya akun';
 
   @override
-  String get obHowTitle => 'Tiga hal, lalu kamu masuk.';
-
-  @override
-  String get obHow1 => 'Sandarkan ponsel di lantai';
-
-  @override
-  String get obHow1Body => 'Sandarkan ke dinding, satu meter di depanmu.';
-
-  @override
-  String get obHow2 => 'Kamera menghitung repetisimu';
-
-  @override
-  String get obHow2Body =>
-      'Kedalaman tiap repetisi diperiksa. Setengah repetisi tidak dihitung.';
-
-  @override
-  String get obHow3 => 'Enam puluh detik melawan seseorang';
-
-  @override
-  String get obHow3Body =>
-      'Menang naik. Kalah turun. Aturannya sama untuk semua.';
-
-  @override
   String get obTwoThings => 'Dua hal singkat.';
 
   @override
@@ -1594,13 +1571,6 @@ class LId extends L {
 
   @override
   String get obTaken => 'Sudah dipakai';
-
-  @override
-  String get obPlacementsBody =>
-      'Lima duel menentukan tingkat awalmu. Belum ada yang dihitung merugikanmu.';
-
-  @override
-  String get obFindFirstOpponent => 'Cari lawan pertamaku';
 
   @override
   String get obGotIt => 'Mengerti';
@@ -1773,30 +1743,6 @@ class LId extends L {
 
   @override
   String get obWelcomeBack => 'Selamat datang kembali';
-
-  @override
-  String get obDuelTitle =>
-      'Kamu berlomba dengan satu menit milik orang sungguhan';
-
-  @override
-  String get obDuelBody =>
-      'Set mereka direkam per repetisi. Kamu melihatnya berjalan langsung saat kamu melakukan set-mu.';
-
-  @override
-  String obDuelWinBy(String count) {
-    return 'Menang selisih $count repetisi';
-  }
-
-  @override
-  String get obDuelLpRule =>
-      'Poin peringkat adalah selisih repetisi. Menang telak, naik cepat.';
-
-  @override
-  String get obLadderTitle => 'Tujuh tingkat untuk didaki';
-
-  @override
-  String get obLadderBody =>
-      'Lima duel penempatan menentukan titik awalmu. Menang untuk naik, dan tingkat yang sudah dicapai tetap milikmu.';
 
   @override
   String obTitlesHeading(String count) {
@@ -2170,4 +2116,13 @@ class LId extends L {
 
   @override
   String get trialEndsBody => 'Terus naik, atau batalkan sebelumnya di pengaturan langganan.';
+
+  @override
+  String get obIdeaTitle => '60 detik. Satu lawan.';
+
+  @override
+  String get obIdeaRival => 'Orang sungguhan, secara langsung atau set rekamannya';
+
+  @override
+  String get obIdeaCamera => 'Kameramu menghitung setiap repetisi, di ponselmu';
 }

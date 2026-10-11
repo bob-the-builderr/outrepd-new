@@ -1455,29 +1455,6 @@ class LFr extends L {
   String get obHaveAccount => 'J’ai déjà un compte';
 
   @override
-  String get obHowTitle => 'Trois choses, et tu es dedans.';
-
-  @override
-  String get obHow1 => 'Pose ton téléphone par terre';
-
-  @override
-  String get obHow1Body => 'Adosse-le à un mur, à un mètre devant toi.';
-
-  @override
-  String get obHow2 => 'La caméra compte tes répétitions';
-
-  @override
-  String get obHow2Body =>
-      'La profondeur de chaque répétition est vérifiée. Les demies ne comptent pas.';
-
-  @override
-  String get obHow3 => 'Soixante secondes contre quelqu’un';
-
-  @override
-  String get obHow3Body =>
-      'Gagne et tu montes. Perds et tu descends. Mêmes règles pour tous.';
-
-  @override
   String get obTwoThings => 'Deux petites choses.';
 
   @override
@@ -1600,13 +1577,6 @@ class LFr extends L {
 
   @override
   String get obTaken => 'Pris';
-
-  @override
-  String get obPlacementsBody =>
-      'Cinq duels décident de ton palier de départ. Rien ne compte contre toi pour l’instant.';
-
-  @override
-  String get obFindFirstOpponent => 'Trouver mon premier adversaire';
 
   @override
   String get obGotIt => 'Compris';
@@ -1780,29 +1750,6 @@ class LFr extends L {
 
   @override
   String get obWelcomeBack => 'Content de te revoir';
-
-  @override
-  String get obDuelTitle => 'Tu affrontes la minute d\'une vraie personne';
-
-  @override
-  String get obDuelBody =>
-      'Sa série a été enregistrée répétition par répétition. Tu la vois se dérouler en direct pendant la tienne.';
-
-  @override
-  String obDuelWinBy(String count) {
-    return 'Gagne avec $count répétitions d\'avance';
-  }
-
-  @override
-  String get obDuelLpRule =>
-      'Les points de rang sont l\'écart en répétitions. Gagne largement, grimpe vite.';
-
-  @override
-  String get obLadderTitle => 'Sept rangs à gravir';
-
-  @override
-  String get obLadderBody =>
-      'Cinq duels de placement fixent ton point de départ. Gagne pour grimper, et un rang atteint reste acquis.';
 
   @override
   String obTitlesHeading(String count) {
@@ -2176,4 +2123,13 @@ class LFr extends L {
 
   @override
   String get trialEndsBody => 'Continue de grimper, ou annule avant dans les réglages de ton abonnement.';
+
+  @override
+  String get obIdeaTitle => '60 secondes. Un adversaire.';
+
+  @override
+  String get obIdeaRival => 'Une vraie personne, en direct ou sa série enregistrée';
+
+  @override
+  String get obIdeaCamera => 'Ta caméra compte chaque répétition, sur ton téléphone';
 }

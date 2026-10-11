@@ -1453,29 +1453,6 @@ class LPt extends L {
   String get obHaveAccount => 'Já tenho conta';
 
   @override
-  String get obHowTitle => 'Três coisas e estás pronto.';
-
-  @override
-  String get obHow1 => 'Põe o telemóvel no chão';
-
-  @override
-  String get obHow1Body => 'Encosta-o a uma parede, a um metro à tua frente.';
-
-  @override
-  String get obHow2 => 'A câmara conta as tuas repetições';
-
-  @override
-  String get obHow2Body =>
-      'A profundidade de cada uma é verificada. Meias repetições não contam.';
-
-  @override
-  String get obHow3 => 'Sessenta segundos contra alguém';
-
-  @override
-  String get obHow3Body =>
-      'Ganhas e sobes. Perdes e desces. As mesmas regras para todos.';
-
-  @override
   String get obTwoThings => 'Duas coisas rápidas.';
 
   @override
@@ -1597,13 +1574,6 @@ class LPt extends L {
 
   @override
   String get obTaken => 'Já usado';
-
-  @override
-  String get obPlacementsBody =>
-      'Cinco duelos decidem o teu nível inicial. Ainda não conta nada contra ti.';
-
-  @override
-  String get obFindFirstOpponent => 'Encontrar o meu primeiro adversário';
 
   @override
   String get obGotIt => 'Percebi';
@@ -1776,29 +1746,6 @@ class LPt extends L {
 
   @override
   String get obWelcomeBack => 'Bem-vindo de volta';
-
-  @override
-  String get obDuelTitle => 'Você disputa contra o minuto de uma pessoa real';
-
-  @override
-  String get obDuelBody =>
-      'A série da pessoa foi gravada repetição por repetição. Você vê acontecer ao vivo enquanto faz a sua.';
-
-  @override
-  String obDuelWinBy(String count) {
-    return 'Vença por $count repetições';
-  }
-
-  @override
-  String get obDuelLpRule =>
-      'Os pontos de rank são a diferença de repetições. Vença por muito e suba rápido.';
-
-  @override
-  String get obLadderTitle => 'Sete níveis para subir';
-
-  @override
-  String get obLadderBody =>
-      'Cinco duelos de classificação definem onde você começa. Vença para subir; um nível alcançado é seu para sempre.';
 
   @override
   String obTitlesHeading(String count) {
@@ -2172,4 +2119,13 @@ class LPt extends L {
 
   @override
   String get trialEndsBody => 'Continua a subir, ou cancela antes nas definições da tua subscrição.';
+
+  @override
+  String get obIdeaTitle => '60 segundos. Um adversário.';
+
+  @override
+  String get obIdeaRival => 'Uma pessoa real, ao vivo ou a série que gravou';
+
+  @override
+  String get obIdeaCamera => 'A tua câmara conta cada repetição, no teu telemóvel';
 }

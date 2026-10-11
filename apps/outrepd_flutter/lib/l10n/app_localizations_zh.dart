@@ -1416,27 +1416,6 @@ class LZh extends L {
   String get obHaveAccount => '我已经有账号';
 
   @override
-  String get obHowTitle => '三件事，然后就能开始。';
-
-  @override
-  String get obHow1 => '把手机立在地上';
-
-  @override
-  String get obHow1Body => '靠墙放，在你前方一米处。';
-
-  @override
-  String get obHow2 => '摄像头数你的次数';
-
-  @override
-  String get obHow2Body => '每一次都检查深度。半程不算。';
-
-  @override
-  String get obHow3 => '六十秒，对上一个人';
-
-  @override
-  String get obHow3Body => '赢了上升，输了下降。规则对谁都一样。';
-
-  @override
   String get obTwoThings => '两件小事。';
 
   @override
@@ -1552,12 +1531,6 @@ class LZh extends L {
 
   @override
   String get obTaken => '已被占用';
-
-  @override
-  String get obPlacementsBody => '五场对决决定你的起始段位。目前还不会记在你头上。';
-
-  @override
-  String get obFindFirstOpponent => '找第一个对手';
 
   @override
   String get obGotIt => '知道了';
@@ -1724,26 +1697,6 @@ class LZh extends L {
 
   @override
   String get obWelcomeBack => '欢迎回来';
-
-  @override
-  String get obDuelTitle => '你和真人的一分钟比拼';
-
-  @override
-  String get obDuelBody => '对方的那一组是逐次记录下来的。你做自己这组时，能实时看到它的进度。';
-
-  @override
-  String obDuelWinBy(String count) {
-    return '领先 $count 次获胜';
-  }
-
-  @override
-  String get obDuelLpRule => '段位积分就是次数差。赢得越多，升得越快。';
-
-  @override
-  String get obLadderTitle => '七个段位等你攀登';
-
-  @override
-  String get obLadderBody => '五场定级对决决定你的起点。赢了就升段，达到的段位会一直保留。';
 
   @override
   String obTitlesHeading(String count) {
@@ -2115,4 +2068,13 @@ class LZh extends L {
 
   @override
   String get trialEndsBody => '继续攀登，或在此之前于订阅设置中取消。';
+
+  @override
+  String get obIdeaTitle => '60 秒，一个对手。';
+
+  @override
+  String get obIdeaRival => '真人对手，实时或其录下的一组';
+
+  @override
+  String get obIdeaCamera => '摄像头在你的手机上数每一次';
 }

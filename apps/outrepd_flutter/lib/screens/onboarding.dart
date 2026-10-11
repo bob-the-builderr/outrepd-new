@@ -33,10 +33,8 @@ import '../reps/pushup_counter.dart';
 import '../reps/skeleton.dart';
 import '../sounds.dart';
 import '../theme.dart';
-import '../tier_badge.dart';
 import '../widgets.dart';
 import 'auth_entry.dart';
-import 'match_flow.dart';
 import 'paywall.dart';
 import 'shell.dart';
 import 'welcome_inside.dart';
@@ -59,18 +57,20 @@ class OnboardingScreen extends StatefulWidget {
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
+/// Eight steps to signing up, where there were eleven: the idea on one screen
+/// instead of three, and no page about placements before there is an account
+/// to place — the home screen says it when it matters. The camera and the
+/// three-rep calibration stay before the account, on purpose: seeing the
+/// camera count your own push-ups is what makes the subscription worth it.
 enum _Step {
   welcome,
-  howItWorks,
-  duel,
-  ladder,
+  idea,
   before,
   camera,
   placement,
   framing,
   calibration,
   calibrated,
-  placements,
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
@@ -165,8 +165,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       case AuthOutcome.signedIn:
         await _finishAfterSignIn();
       case null:
-      // Backed all the way out without finishing either. Stay on
-      // placements rather than assume which one was meant.
+      // Backed all the way out without finishing either. Stay on the
+      // calibration result rather than assume which one was meant.
     }
   }
 
@@ -223,14 +223,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               Expanded(
                 child: switch (_step) {
                   _Step.welcome => _Welcome(
-                    onStart: () => _go(_Step.howItWorks),
+                    onStart: () => _go(_Step.idea),
                     onSignIn: _directLogIn,
                   ),
-                  _Step.howItWorks => _HowItWorks(
-                    onNext: () => _go(_Step.duel),
-                  ),
-                  _Step.duel => _DuelExplainer(onNext: () => _go(_Step.ladder)),
-                  _Step.ladder => _Ladder(onNext: () => _go(_Step.before)),
+                  _Step.idea => _Idea(onNext: () => _go(_Step.before)),
                   _Step.before => _BeforeYouStart(
                     over16: _over16,
                     healthAccepted: _healthAccepted,
@@ -257,11 +253,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                   _Step.calibrated => _Calibrated(
                     result: _calibration,
-                    onNext: () => _go(_Step.placements),
-                  ),
-                  _Step.placements => _Placements(
-                    onStart: _openAuthGate,
-                    onPractice: _openAuthGate,
+                    // Straight on to the account: the calibration set was the
+                    // last thing the app had to show before asking for one.
+                    onNext: _openAuthGate,
                   ),
                 },
               ),
@@ -550,10 +544,13 @@ class _Welcome extends StatelessWidget {
   }
 }
 
-// ────────────────────────────── 2 how it works ───────────────────────────────
+// ──────────────────────────────── 2 the idea ─────────────────────────────────
 
-class _HowItWorks extends StatelessWidget {
-  const _HowItWorks({required this.onNext});
+/// What the app is, on one screen: who you race, what counts, what for. It
+/// used to take three — how it works, what a duel is, the ladder — and every
+/// screen before the camera is one more place to put the phone down.
+class _Idea extends StatelessWidget {
+  const _Idea({required this.onNext});
 
   final VoidCallback onNext;
 
@@ -569,7 +566,7 @@ class _HowItWorks extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l.obHowTitle,
+              l.obIdeaTitle,
               style: TextStyle(
                 color: context.colors.text,
                 fontSize: 24,
@@ -578,9 +575,9 @@ class _HowItWorks extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            _Numbered(1, l.obHow1, l.obHow1Body),
-            _Numbered(2, l.obHow2, l.obHow2Body),
-            _Numbered(3, l.obHow3, l.obHow3Body),
+            _IdeaLine(icon: Icons.groups_outlined, text: l.obIdeaRival),
+            _IdeaLine(icon: Icons.videocam_outlined, text: l.obIdeaCamera),
+            _IdeaLine(icon: Icons.emoji_events_outlined, text: l.paywallTitle),
           ],
         ),
       ),
@@ -589,56 +586,29 @@ class _HowItWorks extends StatelessWidget {
   }
 }
 
-class _Numbered extends StatelessWidget {
-  const _Numbered(this.n, this.title, this.body);
+class _IdeaLine extends StatelessWidget {
+  const _IdeaLine({required this.icon, required this.text});
 
-  final int n;
-  final String title;
-  final String body;
+  final IconData icon;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 24),
+      padding: const EdgeInsets.only(bottom: 22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 30,
-            height: 30,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: context.colors.surfaceRaised,
-            ),
-            child: Text(
-              localNumber(context, n),
-              style: TextStyle(color: context.colors.text, fontSize: 13),
-            ),
-          ),
+          Icon(icon, size: 24, color: context.colors.brand),
           const SizedBox(width: 14),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: context.colors.text,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  body,
-                  style: TextStyle(
-                    color: context.colors.muted,
-                    fontSize: 13,
-                    height: 1.5,
-                  ),
-                ),
-              ],
+            child: Text(
+              text,
+              style: TextStyle(
+                color: context.colors.text,
+                fontSize: 16,
+                height: 1.4,
+              ),
             ),
           ),
         ],
@@ -1725,399 +1695,6 @@ class _Line extends StatelessWidget {
         ),
         Text(value, style: TextStyle(color: context.colors.text, fontSize: 11)),
       ],
-    );
-  }
-}
-
-// ────────────────────────────── 9 placements ─────────────────────────────────
-
-class _Placements extends StatelessWidget {
-  const _Placements({required this.onStart, required this.onPractice});
-
-  final VoidCallback onStart;
-  final VoidCallback onPractice;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = L.of(context);
-
-    return _Step0(
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(30, 26, 30, 0),
-        child: Column(
-          children: [
-            TierBadge.unranked(size: 78),
-            const SizedBox(height: 12),
-            Text(
-              l.unranked,
-              style: TextStyle(
-                color: context.colors.text,
-                fontSize: 19,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const SizedBox(height: 9),
-            Text(
-              l.obPlacementsBody,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: context.colors.muted,
-                fontSize: 12,
-                height: 1.6,
-              ),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                for (var i = 0; i < kPlacementDuels; i++) ...[
-                  if (i > 0) const SizedBox(width: 6),
-                  Container(
-                    width: 28,
-                    height: 5,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(3),
-                      color: context.colors.surfaceRaised,
-                    ),
-                  ),
-                ],
-              ],
-            ),
-            const SizedBox(height: 9),
-            Text(
-              l.placementsTerms(
-                localNumber(context, 0),
-                localNumber(context, kPlacementDuels),
-                localNumber(context, kDuelLength.inSeconds),
-              ),
-              style: TextStyle(color: context.colors.muted, fontSize: 11),
-            ),
-          ],
-        ),
-      ),
-      actions: Column(
-        children: [
-          _Primary(label: l.obFindFirstOpponent, onTap: onStart),
-          const SizedBox(height: 6),
-          _Secondary(label: l.practiceFirst, onTap: onPractice),
-        ],
-      ),
-    );
-  }
-}
-
-// ─────────────────────────── 3 what a duel is ────────────────────────────────
-
-/// A duel, played out once in miniature: two counts climbing against one
-/// clock, the bar between them, and what the gap pays.
-///
-/// Runs once and stops on the finished score rather than looping. A screen
-/// that never stops moving is a screen nobody finishes reading.
-class _DuelExplainer extends StatefulWidget {
-  const _DuelExplainer({required this.onNext});
-
-  final VoidCallback onNext;
-
-  @override
-  State<_DuelExplainer> createState() => _DuelExplainerState();
-}
-
-class _DuelExplainerState extends State<_DuelExplainer>
-    with SingleTickerProviderStateMixin {
-  /// An illustration, not an account. The name is somebody the reader has
-  /// never met, which is exactly who the first duel will be against.
-  static const _theirName = 'squat_queen';
-  static const _yours = 18;
-  static const _theirs = 11;
-
-  late final AnimationController _run = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 4200),
-  );
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_run.isAnimating || _run.isCompleted) return;
-    if (MediaQuery.of(context).disableAnimations) {
-      _run.value = 1;
-    } else {
-      _run.forward();
-    }
-  }
-
-  @override
-  void dispose() {
-    _run.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l = L.of(context);
-    final gap = _yours - _theirs;
-
-    return _Step0(
-      centred: true,
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _BigTitle(l.obDuelTitle),
-            const SizedBox(height: 10),
-            _Lead(l.obDuelBody),
-            const SizedBox(height: 24),
-            AnimatedBuilder(
-              animation: _run,
-              builder: (context, _) {
-                final t = Curves.easeOut.transform(_run.value);
-                final mine = (_yours * t).floor();
-                final theirs = (_theirs * t).floor();
-                final left = (kDuelLength.inSeconds * (1 - _run.value)).ceil();
-                return _MiniScore(
-                  you: l.you,
-                  them: _theirName,
-                  mine: mine,
-                  theirs: theirs,
-                  seconds: left,
-                );
-              },
-            ),
-            const SizedBox(height: 14),
-            FadeTransition(
-              opacity: CurvedAnimation(
-                parent: _run,
-                curve: const Interval(0.85, 1),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      l.obDuelWinBy(localNumber(context, gap)),
-                      style: TextStyle(
-                        color: context.colors.muted,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    '+${localNumber(context, gap)} LP',
-                    style: TextStyle(
-                      color: context.colors.brand,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            _Lead(l.obDuelLpRule),
-          ],
-        ),
-      ),
-      actions: _Primary(label: l.continueLabel, onTap: widget.onNext),
-    );
-  }
-}
-
-/// The camera screen's score card, drawn small and without a camera.
-class _MiniScore extends StatelessWidget {
-  const _MiniScore({
-    required this.you,
-    required this.them,
-    required this.mine,
-    required this.theirs,
-    required this.seconds,
-  });
-
-  final String you;
-  final String them;
-  final int mine;
-  final int theirs;
-  final int seconds;
-
-  @override
-  Widget build(BuildContext context) {
-    Widget side(String name, int count, Color colour) => Expanded(
-      child: Column(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: context.colors.surfaceRaised,
-            ),
-            child: Text(
-              name.characters.first.toUpperCase(),
-              style: TextStyle(color: colour, fontSize: 16),
-            ),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            name,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: context.colors.muted, fontSize: 12),
-          ),
-          Text(
-            localNumber(context, count),
-            style: TextStyle(
-              color: colour,
-              fontSize: 30,
-              fontWeight: FontWeight.w700,
-              fontFeatures: const [FontFeature.tabularFigures()],
-            ),
-          ),
-        ],
-      ),
-    );
-
-    final total = mine + theirs;
-    return Container(
-      padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
-      decoration: BoxDecoration(
-        color: context.colors.surface,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: context.colors.border, width: 0.5),
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              side(you, mine, context.colors.text),
-              Text(
-                formatClock(context, seconds),
-                style: TextStyle(
-                  color: context.colors.muted,
-                  fontSize: 20,
-                  fontFeatures: const [FontFeature.tabularFigures()],
-                ),
-              ),
-              side(them, theirs, context.colors.rival),
-            ],
-          ),
-          const SizedBox(height: 12),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(5),
-            child: SizedBox(
-              height: 8,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    flex: total == 0 ? 1 : mine,
-                    child: ColoredBox(color: context.colors.brand),
-                  ),
-                  Expanded(
-                    flex: total == 0 ? 1 : theirs,
-                    child: ColoredBox(color: context.colors.rival),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// ─────────────────────────────── 4 the ladder ────────────────────────────────
-
-/// All seven tiers, top to bottom, with the badge each one wears.
-class _Ladder extends StatelessWidget {
-  const _Ladder({required this.onNext});
-
-  final VoidCallback onNext;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = L.of(context);
-    final divisions = '${kDivisions.first}–${kDivisions.last}';
-
-    return _Step0(
-      centred: true,
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _BigTitle(l.obLadderTitle),
-            const SizedBox(height: 20),
-            for (var i = kTiers.length - 1; i >= 0; i--)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
-                child: Row(
-                  children: [
-                    TierBadge(tierIndex: i, size: 34),
-                    const SizedBox(width: 14),
-                    Expanded(
-                      child: Text(
-                        tierName(l, i),
-                        style: TextStyle(
-                          color: kTiers[i].color,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    // Master is one rung, not five.
-                    if (i < kTiers.length - 1)
-                      Text(
-                        divisions,
-                        style: TextStyle(
-                          color: context.colors.faint,
-                          fontSize: 12,
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-            const SizedBox(height: 18),
-            _Lead(l.obLadderBody),
-          ],
-        ),
-      ),
-      actions: _Primary(label: l.continueLabel, onTap: onNext),
-    );
-  }
-}
-
-/// The heading size the reading steps share.
-class _BigTitle extends StatelessWidget {
-  const _BigTitle(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: TextStyle(
-        color: context.colors.text,
-        fontSize: 24,
-        height: 1.3,
-        fontWeight: FontWeight.w600,
-      ),
-    );
-  }
-}
-
-/// The body size the reading steps share.
-class _Lead extends StatelessWidget {
-  const _Lead(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: TextStyle(color: context.colors.muted, fontSize: 14, height: 1.5),
     );
   }
 }

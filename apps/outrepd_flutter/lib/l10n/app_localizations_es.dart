@@ -1454,29 +1454,6 @@ class LEs extends L {
   String get obHaveAccount => 'Ya tengo cuenta';
 
   @override
-  String get obHowTitle => 'Tres cosas y estás dentro.';
-
-  @override
-  String get obHow1 => 'Apoya el móvil en el suelo';
-
-  @override
-  String get obHow1Body => 'Recuéstalo contra una pared, a un metro de ti.';
-
-  @override
-  String get obHow2 => 'La cámara cuenta tus repeticiones';
-
-  @override
-  String get obHow2Body =>
-      'Se mide la profundidad de cada una. Las medias no cuentan.';
-
-  @override
-  String get obHow3 => 'Sesenta segundos contra alguien';
-
-  @override
-  String get obHow3Body =>
-      'Gana y subes. Pierde y bajas. Las mismas reglas para todos.';
-
-  @override
   String get obTwoThings => 'Dos cosas rápidas.';
 
   @override
@@ -1599,13 +1576,6 @@ class LEs extends L {
 
   @override
   String get obTaken => 'Ocupado';
-
-  @override
-  String get obPlacementsBody =>
-      'Cinco duelos deciden tu liga inicial. Todavía nada cuenta en tu contra.';
-
-  @override
-  String get obFindFirstOpponent => 'Buscar mi primer rival';
 
   @override
   String get obGotIt => 'Entendido';
@@ -1779,29 +1749,6 @@ class LEs extends L {
 
   @override
   String get obWelcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get obDuelTitle => 'Compites contra el minuto de una persona real';
-
-  @override
-  String get obDuelBody =>
-      'Su serie se grabó repetición a repetición. La ves en directo mientras haces la tuya.';
-
-  @override
-  String obDuelWinBy(String count) {
-    return 'Gana por $count repeticiones';
-  }
-
-  @override
-  String get obDuelLpRule =>
-      'Los puntos de rango son la diferencia en repeticiones. Gana por mucho y sube rápido.';
-
-  @override
-  String get obLadderTitle => 'Siete rangos por escalar';
-
-  @override
-  String get obLadderBody =>
-      'Cinco duelos de clasificación deciden dónde empiezas. Gana para subir; el rango que alcances es tuyo para siempre.';
 
   @override
   String obTitlesHeading(String count) {
@@ -2175,4 +2122,13 @@ class LEs extends L {
 
   @override
   String get trialEndsBody => 'Sigue subiendo, o cancela antes en los ajustes de tu suscripción.';
+
+  @override
+  String get obIdeaTitle => '60 segundos. Un rival.';
+
+  @override
+  String get obIdeaRival => 'Una persona real, en directo o su serie grabada';
+
+  @override
+  String get obIdeaCamera => 'Tu cámara cuenta cada repetición, en tu móvil';
 }

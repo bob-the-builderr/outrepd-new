@@ -1420,27 +1420,6 @@ class LJa extends L {
   String get obHaveAccount => 'アカウントを持っている';
 
   @override
-  String get obHowTitle => '3つだけ。それで準備完了。';
-
-  @override
-  String get obHow1 => 'スマホを床に置く';
-
-  @override
-  String get obHow1Body => '1メートル前の壁に立てかける。';
-
-  @override
-  String get obHow2 => 'カメラが回数を数える';
-
-  @override
-  String get obHow2Body => '1回ごとに深さを判定。浅い回はカウントしない。';
-
-  @override
-  String get obHow3 => '誰かと60秒勝負';
-
-  @override
-  String get obHow3Body => '勝てば上がる。負ければ下がる。ルールは全員同じ。';
-
-  @override
   String get obTwoThings => '手早く2つだけ。';
 
   @override
@@ -1558,12 +1537,6 @@ class LJa extends L {
 
   @override
   String get obTaken => '使用済み';
-
-  @override
-  String get obPlacementsBody => '5回の対戦で開始ティアが決まります。まだ負けは記録に響きません。';
-
-  @override
-  String get obFindFirstOpponent => '最初の相手を探す';
 
   @override
   String get obGotIt => 'わかった';
@@ -1734,26 +1707,6 @@ class LJa extends L {
 
   @override
   String get obWelcomeBack => 'おかえり';
-
-  @override
-  String get obDuelTitle => '本物の誰かの1分間と勝負します';
-
-  @override
-  String get obDuelBody => '相手のセットは1回ごとに記録されています。自分のセット中に、それがリアルタイムで進むのが見えます。';
-
-  @override
-  String obDuelWinBy(String count) {
-    return '$count回差で勝利';
-  }
-
-  @override
-  String get obDuelLpRule => 'ランクポイントは回数の差です。大差で勝てば早く上がれます。';
-
-  @override
-  String get obLadderTitle => '登るべき7つのティア';
-
-  @override
-  String get obLadderBody => '最初の5回の対戦でスタート位置が決まります。勝てば上がり、一度到達したティアからは落ちません。';
 
   @override
   String obTitlesHeading(String count) {
@@ -2125,4 +2078,13 @@ class LJa extends L {
 
   @override
   String get trialEndsBody => 'このまま続けるか、それまでにサブスクリプション設定で解約してください。';
+
+  @override
+  String get obIdeaTitle => '60秒。相手はひとり。';
+
+  @override
+  String get obIdeaRival => '本物の人と対戦。ライブでも、記録したセットでも';
+
+  @override
+  String get obIdeaCamera => 'カメラがすべての回数を、スマホの中で数えます';
 }

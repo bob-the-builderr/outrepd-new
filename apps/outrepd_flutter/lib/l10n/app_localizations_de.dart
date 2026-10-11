@@ -1456,29 +1456,6 @@ class LDe extends L {
   String get obHaveAccount => 'Ich habe schon ein Konto';
 
   @override
-  String get obHowTitle => 'Drei Dinge, dann bist du drin.';
-
-  @override
-  String get obHow1 => 'Stell dein Handy auf den Boden';
-
-  @override
-  String get obHow1Body => 'Lehn es an eine Wand, einen Meter vor dir.';
-
-  @override
-  String get obHow2 => 'Die Kamera zählt deine Wiederholungen';
-
-  @override
-  String get obHow2Body =>
-      'Jede Wiederholung wird auf Tiefe geprüft. Halbe zählen nicht.';
-
-  @override
-  String get obHow3 => 'Sechzig Sekunden gegen jemanden';
-
-  @override
-  String get obHow3Body =>
-      'Gewinn und du steigst. Verlier und du fällst. Für alle dieselben Regeln.';
-
-  @override
   String get obTwoThings => 'Zwei kurze Sachen.';
 
   @override
@@ -1601,13 +1578,6 @@ class LDe extends L {
 
   @override
   String get obTaken => 'Vergeben';
-
-  @override
-  String get obPlacementsBody =>
-      'Fünf Duelle bestimmen deine Startliga. Noch zählt nichts gegen dich.';
-
-  @override
-  String get obFindFirstOpponent => 'Ersten Gegner finden';
 
   @override
   String get obGotIt => 'Alles klar';
@@ -1781,30 +1751,6 @@ class LDe extends L {
 
   @override
   String get obWelcomeBack => 'Willkommen zurück';
-
-  @override
-  String get obDuelTitle =>
-      'Du trittst gegen die Minute eines echten Menschen an';
-
-  @override
-  String get obDuelBody =>
-      'Sein Satz wurde Wiederholung für Wiederholung aufgezeichnet. Du siehst ihn live, während du deinen machst.';
-
-  @override
-  String obDuelWinBy(String count) {
-    return 'Mit $count Wiederholungen Vorsprung gewinnen';
-  }
-
-  @override
-  String get obDuelLpRule =>
-      'Ranglistenpunkte sind der Abstand in Wiederholungen. Hoch gewinnen heißt schnell aufsteigen.';
-
-  @override
-  String get obLadderTitle => 'Sieben Stufen zum Aufsteigen';
-
-  @override
-  String get obLadderBody =>
-      'Fünf Einstufungsduelle legen fest, wo du startest. Gewinne, um aufzusteigen – eine erreichte Stufe behältst du.';
 
   @override
   String obTitlesHeading(String count) {
@@ -2178,4 +2124,13 @@ class LDe extends L {
 
   @override
   String get trialEndsBody => 'Weiter aufsteigen, oder vorher in deinen Abo-Einstellungen kündigen.';
+
+  @override
+  String get obIdeaTitle => '60 Sekunden. Ein Gegner.';
+
+  @override
+  String get obIdeaRival => 'Ein echter Mensch – live oder sein aufgezeichneter Satz';
+
+  @override
+  String get obIdeaCamera => 'Deine Kamera zählt jede Wiederholung – auf deinem Handy';
 }
