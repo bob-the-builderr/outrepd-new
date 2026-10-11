@@ -1,10 +1,10 @@
-/// Links into the app: outrepd.com/u/<name>, the page an invite or a shared
+/// Links into the app: `outrepd.com/u/<name>`, the page an invite or a shared
 /// card points at, opens that lifter's card in the app when it is installed
 /// rather than the web page.
 ///
 /// Flutter's own deep linking is off (AndroidManifest.xml, Info.plist): it
 /// would push the link's path as a route name, and the app has no route
-/// called /u/<name>. The phone hands the link here instead.
+/// called `/u/<name>`. The phone hands the link here instead.
 library;
 
 import 'dart:async';

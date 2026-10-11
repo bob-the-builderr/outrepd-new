@@ -144,5 +144,5 @@ functions بس. اللي مالوش أكونت ممنوع من كل حاجة غ�
 
 - **الدومين:** `outrepd.com`، الإيميل عليه **Google Workspace** (`support@outrepd.com`)
 - **الموقع:** `https://www.outrepd.com` على **Vercel**، والكود في ريبو `outrepd/outrepd` (أي push على `main` بيتنشر لوحده). الصفحات: `/privacy`، `/terms`، `/contact`، `/u/<username>` (كارت اللاعب، ولو اللينك فيه `?code=` بيعرض كود الصاحب وزراير المتجر)
-- **ناقص على الموقع:** `.well-known/assetlinks.json` (محتاج بصمة SHA-256 بتاعة App signing key من Play Console) و`.well-known/apple-app-site-association` (محتاج الـTeam ID). من غيرهم اللينك بيفتح الموقع بدل الأب
+- **لينكات الأب:** `.well-known/assetlinks.json` (بصمة App signing key من Play Console: Test and release ← App integrity ← Play Store protection ← Play app signing) و`.well-known/apple-app-site-association` (Team ID `U8ZRKKVZB4`). على `www.outrepd.com` بس: `outrepd.com` بيحوّل لـ`www` بـ308، وأندرويد وأبل مبيتبعوش التحويل
 - **Resend:** بيبعت إيميل نسخة البيانات وتنبيهات البلاغات (`RESEND_API_KEY`)

@@ -6,12 +6,12 @@
 	     the App Store switches it to production when the build is signed. -->
 	<key>aps-environment</key>
 	<string>development</string>
-	<!-- outrepd.com/u/<name> opens the app (lib/deep_links.dart), checked
-	     against the site's .well-known/apple-app-site-association. -->
+	<!-- www.outrepd.com/u/<name> opens the app (lib/deep_links.dart),
+	     checked against the site's .well-known/apple-app-site-association.
+	     www only: the bare domain redirects, which Apple does not follow. -->
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:www.outrepd.com</string>
-		<string>applinks:outrepd.com</string>
 	</array>
 </dict>
 </plist>

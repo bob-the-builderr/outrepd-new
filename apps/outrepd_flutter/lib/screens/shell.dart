@@ -139,7 +139,7 @@ class _InsideState extends State<_Inside> with WidgetsBindingObserver {
   final _dismissed = <String>{};
   Timer? _invitePoll;
 
-  /// Links to outrepd.com/u/<name>, opened as that lifter's card.
+  /// Links to `outrepd.com/u/<name>`, opened as that lifter's card.
   StreamSubscription<Uri>? _links;
 
   @override
