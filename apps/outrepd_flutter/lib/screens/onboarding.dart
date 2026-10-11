@@ -569,12 +569,12 @@ class _Idea extends StatelessWidget {
               l.obIdeaTitle,
               style: TextStyle(
                 color: context.colors.text,
-                fontSize: 26,
-                height: 1.3,
-                fontWeight: FontWeight.w600,
+                fontSize: 38,
+                height: 1.15,
+                fontWeight: FontWeight.w800,
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 36),
             _IdeaLine(icon: Icons.groups_outlined, text: l.obIdeaRival),
             _IdeaLine(icon: Icons.videocam_outlined, text: l.obIdeaCamera),
             _IdeaLine(icon: Icons.emoji_events_outlined, text: l.paywallTitle),
@@ -595,19 +595,20 @@ class _IdeaLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 22),
+      padding: const EdgeInsets.only(bottom: 28),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 24, color: context.colors.brand),
-          const SizedBox(width: 14),
+          Icon(icon, size: 32, color: context.colors.brand),
+          const SizedBox(width: 16),
           Expanded(
             child: Text(
               text,
               style: TextStyle(
                 color: context.colors.text,
-                fontSize: 18,
-                height: 1.4,
+                fontSize: 21,
+                height: 1.35,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),

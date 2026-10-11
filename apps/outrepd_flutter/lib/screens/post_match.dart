@@ -850,7 +850,14 @@ class _PromotedBadge extends StatelessWidget {
     final colour = kTiers[tierIdx.clamp(0, kTiers.length - 1)].color;
 
     Widget glow(double blur, double opacity) => ImageFiltered(
-      imageFilter: ui.ImageFilter.blur(sigmaX: blur, sigmaY: blur),
+      // Decal, not the default clamp: outside the badge there is nothing to
+      // blur, and clamping drew a faint disc there — a circle behind the
+      // crest, which is the one shape a glow here must not have.
+      imageFilter: ui.ImageFilter.blur(
+        sigmaX: blur,
+        sigmaY: blur,
+        tileMode: ui.TileMode.decal,
+      ),
       child: Opacity(
         opacity: opacity,
         child: ColorFiltered(
