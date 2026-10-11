@@ -336,6 +336,21 @@ begin
     end if;
   end if;
 
+  -- Two ranked duels a day between the same two lifters, and no more: a third
+  -- pays nothing and counts for nothing. The live search lets two people meet
+  -- again a day after they last did, and two who can find each other could
+  -- otherwise trade LP between them; this keeps whatever they arrange to two
+  -- duels' worth in any twenty-four hours.
+  if is_ranked and (
+       select count(*) from duels d
+        where d.ranked
+          and d.created_at > now() - interval '24 hours'
+          and ((d.challenger = mine.profile_id and d.defender = theirs.profile_id)
+            or (d.challenger = theirs.profile_id and d.defender = mine.profile_id))
+     ) >= 2 then
+    is_ranked := false;
+  end if;
+
   select * into me   from profiles where id = mine.profile_id   for update;
   select * into them from profiles where id = theirs.profile_id for update;
 

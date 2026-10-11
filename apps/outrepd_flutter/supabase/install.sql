@@ -2398,6 +2398,21 @@ begin
     end if;
   end if;
 
+  -- Two ranked duels a day between the same two lifters, and no more: a third
+  -- pays nothing and counts for nothing. The live search lets two people meet
+  -- again a day after they last did, and two who can find each other could
+  -- otherwise trade LP between them; this keeps whatever they arrange to two
+  -- duels' worth in any twenty-four hours.
+  if is_ranked and (
+       select count(*) from duels d
+        where d.ranked
+          and d.created_at > now() - interval '24 hours'
+          and ((d.challenger = mine.profile_id and d.defender = theirs.profile_id)
+            or (d.challenger = theirs.profile_id and d.defender = mine.profile_id))
+     ) >= 2 then
+    is_ranked := false;
+  end if;
+
   select * into me   from profiles where id = mine.profile_id   for update;
   select * into them from profiles where id = theirs.profile_id for update;
 
@@ -3271,10 +3286,15 @@ begin
      and abs(q.level - my_level) <= greatest(
            live_reach(my_wait),
            live_reach(extract(epoch from now() - q.joined_at)))
+     -- Not somebody faced in the last day. It was never-again, which with
+     -- few people live at once left almost nobody to meet; a day apart is
+     -- room enough, and settle_duel caps what two lifters can win off each
+     -- other in any twenty-four hours.
      and not exists (
        select 1 from duels d
-        where (d.challenger = me.id and d.defender = p.id)
-           or (d.defender = me.id and d.challenger = p.id)
+        where d.created_at > now() - interval '24 hours'
+          and ((d.challenger = me.id and d.defender = p.id)
+            or (d.defender = me.id and d.challenger = p.id))
      )
      and not exists (
        select 1 from blocks bl

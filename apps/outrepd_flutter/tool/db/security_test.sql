@@ -400,7 +400,11 @@ delete from subscriptions where user_id = :'B';
 
 -- ── the monthly board ─────────────────────────────────────────────────────────
 
+-- Placed, the way settle_duel would leave them: through its own flag, since
+-- the guard on profiles lets nothing else touch the ladder columns.
+select set_config('outrepd.settling', 'on', false);
 update profiles set placements_done = 5 where id in (:'A', :'B');
+select set_config('outrepd.settling', 'off', false);
 -- Last month: twenty duels A won against B's recorded set, twelve LP each.
 insert into sets (profile_id, reps, reps_camera, duration_ms)
 values (:'A', 20, 20, 60000), (:'B', 10, 10, 60000);
@@ -455,6 +459,38 @@ select check_that(not exists (
                    from month_board()) b
    where b.before < b.points), 'the monthly board is out of order');
 reset role;
+
+-- ── two ranked duels a day between the same two lifters ───────────────────────
+
+-- A and D have met twice today already.
+insert into sets (profile_id, reps, reps_camera, duration_ms)
+values (:'A', 10, 10, 60000), (:'D', 10, 10, 60000);
+insert into duels (challenger, defender, challenger_set, defender_set,
+                   winner, ranked, lp_challenger, lp_defender)
+select :'A'::uuid, :'D'::uuid,
+       (select id from sets where profile_id = :'A' order by created_at desc limit 1),
+       (select id from sets where profile_id = :'D' order by created_at desc limit 1),
+       :'A'::uuid, true, 5, -5
+  from generate_series(1, 2);
+-- A third time, handed over the honest way: it settles, and pays nothing.
+insert into sets (profile_id, reps, reps_camera, duration_ms)
+values (:'D', 0, 0, 60000);
+select set_config('test.d3',
+  (select id::text from sets where profile_id = :'D' order by created_at desc limit 1), false);
+insert into set_offers (set_id, offered_to) values (current_setting('test.d3')::uuid, :'A');
+insert into sets (profile_id, reps, reps_camera, duration_ms)
+values (:'A', 40, 40, 60000);
+select set_config('test.a3',
+  (select id::text from sets where profile_id = :'A' order by created_at desc limit 1), false);
+select as_user(:'A'); set role authenticated;
+select check_that(
+  (select lp_delta from settle_duel(current_setting('test.a3')::uuid,
+                                    current_setting('test.d3')::uuid, true)) = 0,
+  'a third ranked duel in a day between the same two paid LP');
+reset role;
+select check_that(
+  (select not ranked from duels where challenger_set = current_setting('test.a3')::uuid),
+  'a third duel in a day between the same two counted as ranked');
 
 -- ── the live search ───────────────────────────────────────────────────────────
 

@@ -191,10 +191,15 @@ begin
      and abs(q.level - my_level) <= greatest(
            live_reach(my_wait),
            live_reach(extract(epoch from now() - q.joined_at)))
+     -- Not somebody faced in the last day. It was never-again, which with
+     -- few people live at once left almost nobody to meet; a day apart is
+     -- room enough, and settle_duel caps what two lifters can win off each
+     -- other in any twenty-four hours.
      and not exists (
        select 1 from duels d
-        where (d.challenger = me.id and d.defender = p.id)
-           or (d.defender = me.id and d.challenger = p.id)
+        where d.created_at > now() - interval '24 hours'
+          and ((d.challenger = me.id and d.defender = p.id)
+            or (d.defender = me.id and d.challenger = p.id))
      )
      and not exists (
        select 1 from blocks bl
