@@ -2133,4 +2133,73 @@ class LDe extends L {
 
   @override
   String get obIdeaCamera => 'Deine Kamera zählt jede Wiederholung – auf deinem Handy';
+
+  @override
+  String get thisMonth => 'Dieser Monat';
+
+  @override
+  String shortDays(String n) {
+    return '${n} T.';
+  }
+
+  @override
+  String shortHours(String n) {
+    return '${n} Std.';
+  }
+
+  @override
+  String get awardChampion => 'Champion';
+
+  @override
+  String get awardPodium => 'Podium';
+
+  @override
+  String get awardTop10 => 'Top 10';
+
+  @override
+  String get awardRegular => 'Stammgast';
+
+  @override
+  String monthToTop10(String lp) {
+    return 'Noch ${lp} LP bis zur Top 10';
+  }
+
+  @override
+  String monthIfEndedNow(String award) {
+    return '${award}, wenn der Monat jetzt enden würde';
+  }
+
+  @override
+  String get monthJoinHint => 'Spiel ein gewertetes Duell, um auf die Monatsliste zu kommen';
+
+  @override
+  String monthRegularProgress(String progress) {
+    return 'Abzeichen Stammgast · ${progress} gewertete Duelle';
+  }
+
+  @override
+  String get monthRegularEarned => 'Abzeichen Stammgast diesen Monat verdient';
+
+  @override
+  String get monthEmptyTitle => 'Ein neuer Monat';
+
+  @override
+  String get monthEmptyBody => 'Diesen Monat hat noch niemand LP gewonnen. Gewinn das erste gewertete Duell und du führst.';
+
+  @override
+  String rankedDuelsCount(String n) {
+    return '${n} gewertete Duelle';
+  }
+
+  @override
+  String get monthlyAwards => 'Monatsauszeichnungen';
+
+  @override
+  String get seasonOver => 'Saison vorbei';
+
+  @override
+  String get seasonOverBody => 'Es steht jetzt in deinem Profil. Der neue Monat beginnt bei null.';
+
+  @override
+  String get seasonPlayCta => 'Den neuen Monat spielen';
 }

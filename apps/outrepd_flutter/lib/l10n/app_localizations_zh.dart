@@ -2077,4 +2077,73 @@ class LZh extends L {
 
   @override
   String get obIdeaCamera => '摄像头在你的手机上数每一次';
+
+  @override
+  String get thisMonth => '本月';
+
+  @override
+  String shortDays(String n) {
+    return '${n}天';
+  }
+
+  @override
+  String shortHours(String n) {
+    return '${n}小时';
+  }
+
+  @override
+  String get awardChampion => '冠军';
+
+  @override
+  String get awardPodium => '领奖台';
+
+  @override
+  String get awardTop10 => '前十';
+
+  @override
+  String get awardRegular => '常客';
+
+  @override
+  String monthToTop10(String lp) {
+    return '距前十还差 ${lp} LP';
+  }
+
+  @override
+  String monthIfEndedNow(String award) {
+    return '如果本月现在结束：${award}';
+  }
+
+  @override
+  String get monthJoinHint => '打一场排位赛即可登上本月榜单';
+
+  @override
+  String monthRegularProgress(String progress) {
+    return '常客徽章 · 排位赛 ${progress}';
+  }
+
+  @override
+  String get monthRegularEarned => '本月常客徽章已获得';
+
+  @override
+  String get monthEmptyTitle => '全新的一个月';
+
+  @override
+  String get monthEmptyBody => '本月还没有人赢得 LP。赢下第一场排位赛，你就领先。';
+
+  @override
+  String rankedDuelsCount(String n) {
+    return '${n} 场排位赛';
+  }
+
+  @override
+  String get monthlyAwards => '月度荣誉';
+
+  @override
+  String get seasonOver => '赛季结束';
+
+  @override
+  String get seasonOverBody => '已显示在你的主页上。新的一个月从零开始。';
+
+  @override
+  String get seasonPlayCta => '开始新的一个月';
 }

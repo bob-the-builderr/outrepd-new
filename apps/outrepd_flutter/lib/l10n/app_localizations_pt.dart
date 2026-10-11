@@ -2128,4 +2128,73 @@ class LPt extends L {
 
   @override
   String get obIdeaCamera => 'A tua câmara conta cada repetição, no teu telemóvel';
+
+  @override
+  String get thisMonth => 'Este mês';
+
+  @override
+  String shortDays(String n) {
+    return '${n} d';
+  }
+
+  @override
+  String shortHours(String n) {
+    return '${n} h';
+  }
+
+  @override
+  String get awardChampion => 'Campeão';
+
+  @override
+  String get awardPodium => 'Pódio';
+
+  @override
+  String get awardTop10 => 'Top 10';
+
+  @override
+  String get awardRegular => 'Assíduo';
+
+  @override
+  String monthToTop10(String lp) {
+    return 'A ${lp} LP do top 10';
+  }
+
+  @override
+  String monthIfEndedNow(String award) {
+    return '${award} se o mês acabasse agora';
+  }
+
+  @override
+  String get monthJoinHint => 'Jogue um duelo ranqueado para entrar no ranking do mês';
+
+  @override
+  String monthRegularProgress(String progress) {
+    return 'Selo Assíduo · ${progress} duelos ranqueados';
+  }
+
+  @override
+  String get monthRegularEarned => 'Selo Assíduo conquistado este mês';
+
+  @override
+  String get monthEmptyTitle => 'Um mês novo';
+
+  @override
+  String get monthEmptyBody => 'Ninguém ganhou LP este mês ainda. Vença o primeiro duelo ranqueado e você lidera.';
+
+  @override
+  String rankedDuelsCount(String n) {
+    return '${n} duelos ranqueados';
+  }
+
+  @override
+  String get monthlyAwards => 'Prêmios mensais';
+
+  @override
+  String get seasonOver => 'Temporada encerrada';
+
+  @override
+  String get seasonOverBody => 'Já está no seu perfil. O novo mês começa do zero.';
+
+  @override
+  String get seasonPlayCta => 'Jogar o novo mês';
 }

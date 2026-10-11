@@ -2094,4 +2094,73 @@ class LKo extends L {
 
   @override
   String get obIdeaCamera => '카메라가 모든 반복을 휴대폰에서 셉니다';
+
+  @override
+  String get thisMonth => '이번 달';
+
+  @override
+  String shortDays(String n) {
+    return '${n}일';
+  }
+
+  @override
+  String shortHours(String n) {
+    return '${n}시간';
+  }
+
+  @override
+  String get awardChampion => '챔피언';
+
+  @override
+  String get awardPodium => '포디움';
+
+  @override
+  String get awardTop10 => '톱 10';
+
+  @override
+  String get awardRegular => '단골';
+
+  @override
+  String monthToTop10(String lp) {
+    return '톱 10까지 ${lp} LP';
+  }
+
+  @override
+  String monthIfEndedNow(String award) {
+    return '지금 끝나면 ${award}';
+  }
+
+  @override
+  String get monthJoinHint => '랭크전을 한 판 하면 이번 달 순위표에 올라요';
+
+  @override
+  String monthRegularProgress(String progress) {
+    return '단골 배지 · 랭크전 ${progress}';
+  }
+
+  @override
+  String get monthRegularEarned => '이번 달 단골 배지 획득';
+
+  @override
+  String get monthEmptyTitle => '새로운 달';
+
+  @override
+  String get monthEmptyBody => '이번 달엔 아직 아무도 LP를 얻지 못했어요. 첫 랭크전을 이기면 1위예요.';
+
+  @override
+  String rankedDuelsCount(String n) {
+    return '랭크전 ${n}판';
+  }
+
+  @override
+  String get monthlyAwards => '월간 업적';
+
+  @override
+  String get seasonOver => '시즌 종료';
+
+  @override
+  String get seasonOverBody => '이제 프로필에 표시돼요. 새로운 달은 0부터 시작해요.';
+
+  @override
+  String get seasonPlayCta => '새로운 달 시작';
 }

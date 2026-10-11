@@ -2087,4 +2087,73 @@ class LJa extends L {
 
   @override
   String get obIdeaCamera => 'カメラがすべての回数を、スマホの中で数えます';
+
+  @override
+  String get thisMonth => '今月';
+
+  @override
+  String shortDays(String n) {
+    return '${n}日';
+  }
+
+  @override
+  String shortHours(String n) {
+    return '${n}時間';
+  }
+
+  @override
+  String get awardChampion => 'チャンピオン';
+
+  @override
+  String get awardPodium => '表彰台';
+
+  @override
+  String get awardTop10 => 'トップ10';
+
+  @override
+  String get awardRegular => '常連';
+
+  @override
+  String monthToTop10(String lp) {
+    return 'トップ10まであと${lp} LP';
+  }
+
+  @override
+  String monthIfEndedNow(String award) {
+    return '今月が今終われば${award}';
+  }
+
+  @override
+  String get monthJoinHint => 'ランク戦を1回やると今月のボードに載ります';
+
+  @override
+  String monthRegularProgress(String progress) {
+    return '常連バッジ · ランク戦 ${progress}';
+  }
+
+  @override
+  String get monthRegularEarned => '今月の常連バッジを獲得';
+
+  @override
+  String get monthEmptyTitle => '新しい月';
+
+  @override
+  String get monthEmptyBody => '今月はまだ誰もLPを獲得していません。最初のランク戦に勝てば首位です。';
+
+  @override
+  String rankedDuelsCount(String n) {
+    return 'ランク戦 ${n}回';
+  }
+
+  @override
+  String get monthlyAwards => '月間アワード';
+
+  @override
+  String get seasonOver => 'シーズン終了';
+
+  @override
+  String get seasonOverBody => 'プロフィールに追加されました。新しい月はゼロからスタートです。';
+
+  @override
+  String get seasonPlayCta => '新しい月をプレイ';
 }

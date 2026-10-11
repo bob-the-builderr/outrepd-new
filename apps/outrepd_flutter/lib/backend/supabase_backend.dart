@@ -269,6 +269,96 @@ class SupabaseBackend implements Backend {
   }
 
   @override
+  Future<List<MonthRow>> monthBoard({int limit = 100}) async {
+    final rows = await _db.rpc<List<dynamic>>(
+      'month_board',
+      params: {'limit_to': limit},
+    );
+    return [
+      for (final row in rows.cast<Map<String, dynamic>>())
+        MonthRow(
+          place: (row['place'] as num).toInt(),
+          id: row['id'] as String,
+          username: row['username'] as String,
+          tierIdx: (row['tier_idx'] as num?)?.toInt() ?? 0,
+          divIdx: (row['div_idx'] as num?)?.toInt() ?? 0,
+          points: (row['points'] as num?)?.toInt() ?? 0,
+          wins: (row['wins'] as num?)?.toInt() ?? 0,
+          played: (row['played'] as num?)?.toInt() ?? 0,
+          avatarUrl: row['avatar_url'] as String?,
+        ),
+    ];
+  }
+
+  @override
+  Future<MonthPlace?> myMonthPlace() async {
+    if (_db.auth.currentUser == null) return null;
+    final rows = await _db.rpc<List<dynamic>>('my_month_place');
+    if (rows.isEmpty) return null;
+    final row = rows.first as Map<String, dynamic>;
+    return MonthPlace(
+      season: _seasonDate(row['season'] as String),
+      endsAt: DateTime.parse(row['ends_at'] as String),
+      place: (row['place'] as num?)?.toInt(),
+      ofTotal: (row['of_total'] as num?)?.toInt() ?? 0,
+      points: (row['points'] as num?)?.toInt() ?? 0,
+      wins: (row['wins'] as num?)?.toInt() ?? 0,
+      played: (row['played'] as num?)?.toInt() ?? 0,
+    );
+  }
+
+  @override
+  Future<List<SeasonAward>> mySeasonAwards() async {
+    if (_db.auth.currentUser == null) return const [];
+    final rows = await _db.rpc<List<dynamic>>('my_season_awards');
+    return [
+      for (final row in rows.cast<Map<String, dynamic>>())
+        if (_awardKind(row['award'] as String?) case final kind?)
+          SeasonAward(
+            season: _seasonDate(row['season'] as String),
+            kind: kind,
+            place: (row['place'] as num?)?.toInt(),
+            points: (row['points'] as num?)?.toInt() ?? 0,
+            played: (row['played'] as num?)?.toInt() ?? 0,
+            seen: row['seen'] as bool? ?? true,
+          ),
+    ];
+  }
+
+  @override
+  Future<void> markSeasonAwardsSeen() async {
+    if (_db.auth.currentUser == null) return;
+    await _db.rpc<void>('mark_season_awards_seen');
+  }
+
+  @override
+  Future<List<SeasonAward>> lifterSeasonAwards(String theirId) async {
+    final rows = await _db.rpc<List<dynamic>>(
+      'lifter_season_awards',
+      params: {'their_id': theirId},
+    );
+    return [
+      for (final row in rows.cast<Map<String, dynamic>>())
+        if (_awardKind(row['award'] as String?) case final kind?)
+          SeasonAward(
+            season: _seasonDate(row['season'] as String),
+            kind: kind,
+            place: (row['place'] as num?)?.toInt(),
+          ),
+    ];
+  }
+
+  /// A `date` column, which comes as `2026-10-01`, at midnight UTC — the
+  /// months are UTC months on the server, and read as local midnight one
+  /// could land in the month before.
+  static DateTime _seasonDate(String date) => DateTime.parse('${date}T00:00:00Z');
+
+  /// Unknown kinds are skipped: an award a newer server gives out is not one
+  /// this build can draw.
+  static SeasonAwardKind? _awardKind(String? name) =>
+      SeasonAwardKind.values.where((k) => k.name == name).firstOrNull;
+
+  @override
   Future<LifterProfile?> lifterProfile(String theirId) async {
     final rows = await _db.rpc<List<dynamic>>(
       'lifter_profile',

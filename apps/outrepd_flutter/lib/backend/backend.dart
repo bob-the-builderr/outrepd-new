@@ -274,6 +274,89 @@ class BoardRow {
   final String? avatarUrl;
 }
 
+/// One row of this month's board.
+///
+/// [points] is the LP won in ranked duels since the 1st, less the LP lost —
+/// the month's race, separate from the rank, which never comes down.
+class MonthRow {
+  const MonthRow({
+    required this.place,
+    required this.id,
+    required this.username,
+    required this.tierIdx,
+    required this.divIdx,
+    required this.points,
+    required this.wins,
+    required this.played,
+    this.avatarUrl,
+  });
+
+  final int place;
+  final String id;
+  final String username;
+  final int tierIdx;
+  final int divIdx;
+  final int points;
+  final int wins;
+  final int played;
+  final String? avatarUrl;
+}
+
+/// Where this account stands in the month that is running, and when it ends.
+class MonthPlace {
+  const MonthPlace({
+    required this.season,
+    required this.endsAt,
+    required this.place,
+    required this.ofTotal,
+    required this.points,
+    required this.wins,
+    required this.played,
+  });
+
+  /// The 1st of the month, UTC.
+  final DateTime season;
+  final DateTime endsAt;
+
+  /// Null until a ranked duel this month puts the account on the board.
+  final int? place;
+  final int ofTotal;
+  final int points;
+  final int wins;
+  final int played;
+}
+
+/// What the end of a month gives out: a place in the top ten, or the badge
+/// for twenty ranked duels.
+enum SeasonAwardKind { champion, podium, top10, regular }
+
+/// The ranked duels in one month that earn [SeasonAwardKind.regular].
+const kRegularDuels = 20;
+
+/// One award from one finished month.
+class SeasonAward {
+  const SeasonAward({
+    required this.season,
+    required this.kind,
+    this.place,
+    this.points = 0,
+    this.played = 0,
+    this.seen = true,
+  });
+
+  final DateTime season;
+  final SeasonAwardKind kind;
+
+  /// The place on the board; null for the badge, which is not one.
+  final int? place;
+  final int points;
+  final int played;
+
+  /// Whether the app has told this account about it yet. Only meaningful for
+  /// the account's own awards.
+  final bool seen;
+}
+
 /// Everything a profile card needs about somebody else, in one read: their
 /// own totals, where they stand on the board, and the head-to-head with the
 /// account asking.
@@ -892,6 +975,24 @@ abstract interface class Backend {
   /// either the real one or nothing.
   Future<int?> boardPosition({String? country});
 
+  /// This month's board, best first: everyone placed who has lifted in a
+  /// ranked duel since the 1st, by the LP that won them.
+  Future<List<MonthRow>> monthBoard({int limit = 100});
+
+  /// Where this account stands this month. Also closes any month that has
+  /// ended, so it is what hands out last month's awards. Null with no
+  /// account to ask about.
+  Future<MonthPlace?> myMonthPlace();
+
+  /// This account's awards from finished months, newest first.
+  Future<List<SeasonAward>> mySeasonAwards();
+
+  /// Marks every award this account has as told, so it is shown once.
+  Future<void> markSeasonAwardsSeen();
+
+  /// Somebody else's awards, for their profile card.
+  Future<List<SeasonAward>> lifterSeasonAwards(String theirId);
+
   /// Everything a profile card needs about somebody else. Null when there is
   /// no such account.
   Future<LifterProfile?> lifterProfile(String theirId);
@@ -1134,6 +1235,22 @@ class NoBackend implements Backend {
 
   @override
   Future<int?> boardPosition({String? country}) async => null;
+
+  @override
+  Future<List<MonthRow>> monthBoard({int limit = 100}) async => const [];
+
+  @override
+  Future<MonthPlace?> myMonthPlace() async => null;
+
+  @override
+  Future<List<SeasonAward>> mySeasonAwards() async => const [];
+
+  @override
+  Future<void> markSeasonAwardsSeen() async {}
+
+  @override
+  Future<List<SeasonAward>> lifterSeasonAwards(String theirId) async =>
+      const [];
 
   @override
   Future<LifterProfile?> lifterProfile(String theirId) async => null;

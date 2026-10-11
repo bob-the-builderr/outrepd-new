@@ -3916,6 +3916,120 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Your camera counts every rep, on your phone'**
   String get obIdeaCamera;
+
+  /// No description provided for @thisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'This Month'**
+  String get thisMonth;
+
+  /// No description provided for @shortDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{n}d'**
+  String shortDays(String n);
+
+  /// No description provided for @shortHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{n}h'**
+  String shortHours(String n);
+
+  /// No description provided for @awardChampion.
+  ///
+  /// In en, this message translates to:
+  /// **'Champion'**
+  String get awardChampion;
+
+  /// No description provided for @awardPodium.
+  ///
+  /// In en, this message translates to:
+  /// **'Podium'**
+  String get awardPodium;
+
+  /// No description provided for @awardTop10.
+  ///
+  /// In en, this message translates to:
+  /// **'Top 10'**
+  String get awardTop10;
+
+  /// No description provided for @awardRegular.
+  ///
+  /// In en, this message translates to:
+  /// **'Regular'**
+  String get awardRegular;
+
+  /// No description provided for @monthToTop10.
+  ///
+  /// In en, this message translates to:
+  /// **'{lp} LP to the top 10'**
+  String monthToTop10(String lp);
+
+  /// No description provided for @monthIfEndedNow.
+  ///
+  /// In en, this message translates to:
+  /// **'{award} if the month ended now'**
+  String monthIfEndedNow(String award);
+
+  /// No description provided for @monthJoinHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Play a ranked duel to get on this month\'s board'**
+  String get monthJoinHint;
+
+  /// No description provided for @monthRegularProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Regular badge · {progress} ranked duels'**
+  String monthRegularProgress(String progress);
+
+  /// No description provided for @monthRegularEarned.
+  ///
+  /// In en, this message translates to:
+  /// **'Regular badge earned this month'**
+  String get monthRegularEarned;
+
+  /// No description provided for @monthEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A fresh month'**
+  String get monthEmptyTitle;
+
+  /// No description provided for @monthEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody has won LP this month yet. Win the first ranked duel and you lead.'**
+  String get monthEmptyBody;
+
+  /// No description provided for @rankedDuelsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} ranked duels'**
+  String rankedDuelsCount(String n);
+
+  /// No description provided for @monthlyAwards.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly awards'**
+  String get monthlyAwards;
+
+  /// No description provided for @seasonOver.
+  ///
+  /// In en, this message translates to:
+  /// **'Season over'**
+  String get seasonOver;
+
+  /// No description provided for @seasonOverBody.
+  ///
+  /// In en, this message translates to:
+  /// **'It\'s on your profile now. The new month starts from zero.'**
+  String get seasonOverBody;
+
+  /// No description provided for @seasonPlayCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Play the new month'**
+  String get seasonPlayCta;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

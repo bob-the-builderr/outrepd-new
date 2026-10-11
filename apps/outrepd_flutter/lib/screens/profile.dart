@@ -27,6 +27,7 @@ import '../l10n/app_localizations.dart';
 import '../country_names.dart';
 import '../rewards.dart';
 import '../player_avatar.dart';
+import '../season.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import '../worn_title.dart';
@@ -52,10 +53,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int? _globalPosition;
   int? _localPosition;
 
+  /// Awards from finished months, newest first. Empty until fetched, and for
+  /// the many who have none — the card only appears once there is one.
+  List<SeasonAward> _seasonAwards = const [];
+
   @override
   void initState() {
     super.initState();
     _loadPositions();
+    _loadSeasonAwards();
+  }
+
+  Future<void> _loadSeasonAwards() async {
+    if (!backend.available) return;
+    try {
+      final awards = await backend.mySeasonAwards();
+      if (mounted) setState(() => _seasonAwards = awards);
+    } on Object catch (error) {
+      debugPrint('Could not read the season awards: $error');
+    }
   }
 
   Future<void> _loadPositions() async {
@@ -124,6 +140,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
               global: _globalPosition,
               local: _localPosition,
             ),
+            if (_seasonAwards.isNotEmpty) ...[
+              const SizedBox(height: 9),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: _Card(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _CardLabel(L.of(context).monthlyAwards),
+                      const SizedBox(height: 8),
+                      SeasonAwardChips(awards: _seasonAwards),
+                    ],
+                  ),
+                ),
+              ),
+            ],
             const SizedBox(height: 9),
             _StatGrid(profile: p),
             const SizedBox(height: 12),

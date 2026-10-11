@@ -2126,4 +2126,73 @@ class LHi extends L {
 
   @override
   String get obIdeaCamera => 'आपका कैमरा हर रेप गिनता है, आपके फ़ोन पर ही';
+
+  @override
+  String get thisMonth => 'इस महीने';
+
+  @override
+  String shortDays(String n) {
+    return '${n} दिन';
+  }
+
+  @override
+  String shortHours(String n) {
+    return '${n} घंटे';
+  }
+
+  @override
+  String get awardChampion => 'चैंपियन';
+
+  @override
+  String get awardPodium => 'पोडियम';
+
+  @override
+  String get awardTop10 => 'टॉप 10';
+
+  @override
+  String get awardRegular => 'नियमित';
+
+  @override
+  String monthToTop10(String lp) {
+    return 'टॉप 10 से ${lp} LP दूर';
+  }
+
+  @override
+  String monthIfEndedNow(String award) {
+    return 'महीना अभी खत्म हो तो: ${award}';
+  }
+
+  @override
+  String get monthJoinHint => 'इस महीने के बोर्ड पर आने के लिए एक रैंक्ड ड्यूल खेलें';
+
+  @override
+  String monthRegularProgress(String progress) {
+    return 'नियमित बैज · ${progress} रैंक्ड ड्यूल';
+  }
+
+  @override
+  String get monthRegularEarned => 'इस महीने का नियमित बैज मिल गया';
+
+  @override
+  String get monthEmptyTitle => 'नया महीना';
+
+  @override
+  String get monthEmptyBody => 'इस महीने अभी तक किसी ने LP नहीं जीते। पहला रैंक्ड ड्यूल जीतें और आप सबसे आगे।';
+
+  @override
+  String rankedDuelsCount(String n) {
+    return '${n} रैंक्ड ड्यूल';
+  }
+
+  @override
+  String get monthlyAwards => 'मासिक पुरस्कार';
+
+  @override
+  String get seasonOver => 'सीज़न खत्म';
+
+  @override
+  String get seasonOverBody => 'अब यह आपकी प्रोफ़ाइल पर है। नया महीना शून्य से शुरू होता है।';
+
+  @override
+  String get seasonPlayCta => 'नया महीना खेलें';
 }

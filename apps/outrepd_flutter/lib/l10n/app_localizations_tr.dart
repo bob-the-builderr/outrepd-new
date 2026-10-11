@@ -2121,4 +2121,73 @@ class LTr extends L {
 
   @override
   String get obIdeaCamera => 'Kameran her tekrarı telefonunda sayar';
+
+  @override
+  String get thisMonth => 'Bu Ay';
+
+  @override
+  String shortDays(String n) {
+    return '${n} g';
+  }
+
+  @override
+  String shortHours(String n) {
+    return '${n} sa';
+  }
+
+  @override
+  String get awardChampion => 'Şampiyon';
+
+  @override
+  String get awardPodium => 'Kürsü';
+
+  @override
+  String get awardTop10 => 'İlk 10';
+
+  @override
+  String get awardRegular => 'Müdavim';
+
+  @override
+  String monthToTop10(String lp) {
+    return 'İlk 10\'a ${lp} LP';
+  }
+
+  @override
+  String monthIfEndedNow(String award) {
+    return 'Ay şimdi bitse: ${award}';
+  }
+
+  @override
+  String get monthJoinHint => 'Bu ayın listesine girmek için dereceli bir düello oyna';
+
+  @override
+  String monthRegularProgress(String progress) {
+    return 'Müdavim rozeti · ${progress} dereceli düello';
+  }
+
+  @override
+  String get monthRegularEarned => 'Bu ay Müdavim rozetini kazandın';
+
+  @override
+  String get monthEmptyTitle => 'Yepyeni bir ay';
+
+  @override
+  String get monthEmptyBody => 'Bu ay henüz kimse LP kazanmadı. İlk dereceli düelloyu kazan, zirve senin.';
+
+  @override
+  String rankedDuelsCount(String n) {
+    return '${n} dereceli düello';
+  }
+
+  @override
+  String get monthlyAwards => 'Aylık ödüller';
+
+  @override
+  String get seasonOver => 'Sezon bitti';
+
+  @override
+  String get seasonOverBody => 'Artık profilinde. Yeni ay sıfırdan başlıyor.';
+
+  @override
+  String get seasonPlayCta => 'Yeni ayı oyna';
 }

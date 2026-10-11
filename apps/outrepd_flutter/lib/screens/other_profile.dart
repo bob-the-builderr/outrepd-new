@@ -14,6 +14,7 @@ import '../l10n/app_localizations.dart';
 import '../country_names.dart';
 import '../player_avatar.dart';
 import '../rewards.dart';
+import '../season.dart';
 import '../theme.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
@@ -292,6 +293,11 @@ class _OtherProfileScreenState extends State<OtherProfileScreen>
 
   bool _sendingRequest = false;
 
+  /// Their awards from finished months. Fetched beside the profile rather
+  /// than inside it: a card that could not get them still has everything
+  /// else to show.
+  List<SeasonAward> _awards = const [];
+
   @override
   void initState() {
     super.initState();
@@ -300,6 +306,17 @@ class _OtherProfileScreenState extends State<OtherProfileScreen>
       loading = false;
     } else {
       load();
+    }
+    _loadAwards();
+  }
+
+  Future<void> _loadAwards() async {
+    if (!backend.available || widget.id.isEmpty) return;
+    try {
+      final awards = await backend.lifterSeasonAwards(widget.id);
+      if (mounted) setState(() => _awards = awards);
+    } on Object catch (error) {
+      debugPrint('Could not read their season awards: $error');
     }
   }
 
@@ -379,6 +396,7 @@ class _OtherProfileScreenState extends State<OtherProfileScreen>
           : _Body(
               profile: p,
               username: widget.username,
+              awards: _awards,
               sendingRequest: _sendingRequest,
               onChallenge: () => _challenge(context, p),
               onAddFriend: _addFriend,
@@ -391,6 +409,7 @@ class _Body extends StatelessWidget {
   const _Body({
     required this.profile,
     required this.username,
+    required this.awards,
     required this.sendingRequest,
     required this.onChallenge,
     required this.onAddFriend,
@@ -398,6 +417,7 @@ class _Body extends StatelessWidget {
 
   final LifterProfile profile;
   final String username;
+  final List<SeasonAward> awards;
   final bool sendingRequest;
   final VoidCallback onChallenge;
   final VoidCallback onAddFriend;
@@ -445,6 +465,10 @@ class _Body extends StatelessWidget {
             textAlign: TextAlign.center,
             style: context.type.micro.copyWith(color: context.colors.muted),
           ),
+        ],
+        if (awards.isNotEmpty) ...[
+          const SizedBox(height: 10),
+          SeasonAwardChips(awards: awards, alignment: WrapAlignment.center),
         ],
 
         const SizedBox(height: 18),

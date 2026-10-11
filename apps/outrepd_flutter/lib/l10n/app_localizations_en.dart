@@ -2124,4 +2124,73 @@ class LEn extends L {
 
   @override
   String get obIdeaCamera => 'Your camera counts every rep, on your phone';
+
+  @override
+  String get thisMonth => 'This Month';
+
+  @override
+  String shortDays(String n) {
+    return '${n}d';
+  }
+
+  @override
+  String shortHours(String n) {
+    return '${n}h';
+  }
+
+  @override
+  String get awardChampion => 'Champion';
+
+  @override
+  String get awardPodium => 'Podium';
+
+  @override
+  String get awardTop10 => 'Top 10';
+
+  @override
+  String get awardRegular => 'Regular';
+
+  @override
+  String monthToTop10(String lp) {
+    return '${lp} LP to the top 10';
+  }
+
+  @override
+  String monthIfEndedNow(String award) {
+    return '${award} if the month ended now';
+  }
+
+  @override
+  String get monthJoinHint => 'Play a ranked duel to get on this month\'s board';
+
+  @override
+  String monthRegularProgress(String progress) {
+    return 'Regular badge · ${progress} ranked duels';
+  }
+
+  @override
+  String get monthRegularEarned => 'Regular badge earned this month';
+
+  @override
+  String get monthEmptyTitle => 'A fresh month';
+
+  @override
+  String get monthEmptyBody => 'Nobody has won LP this month yet. Win the first ranked duel and you lead.';
+
+  @override
+  String rankedDuelsCount(String n) {
+    return '${n} ranked duels';
+  }
+
+  @override
+  String get monthlyAwards => 'Monthly awards';
+
+  @override
+  String get seasonOver => 'Season over';
+
+  @override
+  String get seasonOverBody => 'It\'s on your profile now. The new month starts from zero.';
+
+  @override
+  String get seasonPlayCta => 'Play the new month';
 }

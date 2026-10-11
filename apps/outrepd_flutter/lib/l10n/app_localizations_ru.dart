@@ -2126,4 +2126,73 @@ class LRu extends L {
 
   @override
   String get obIdeaCamera => 'Камера считает каждое повторение прямо на телефоне';
+
+  @override
+  String get thisMonth => 'Этот месяц';
+
+  @override
+  String shortDays(String n) {
+    return '${n} д';
+  }
+
+  @override
+  String shortHours(String n) {
+    return '${n} ч';
+  }
+
+  @override
+  String get awardChampion => 'Чемпион';
+
+  @override
+  String get awardPodium => 'Пьедестал';
+
+  @override
+  String get awardTop10 => 'Топ-10';
+
+  @override
+  String get awardRegular => 'Постоянный';
+
+  @override
+  String monthToTop10(String lp) {
+    return 'До топ-10: ${lp} LP';
+  }
+
+  @override
+  String monthIfEndedNow(String award) {
+    return '${award}, если бы месяц закончился сейчас';
+  }
+
+  @override
+  String get monthJoinHint => 'Сыграйте рейтинговую дуэль, чтобы попасть в таблицу месяца';
+
+  @override
+  String monthRegularProgress(String progress) {
+    return 'Значок «Постоянный» · ${progress} рейтинговых дуэлей';
+  }
+
+  @override
+  String get monthRegularEarned => 'Значок «Постоянный» в этом месяце получен';
+
+  @override
+  String get monthEmptyTitle => 'Новый месяц';
+
+  @override
+  String get monthEmptyBody => 'В этом месяце LP ещё никто не выиграл. Выиграйте первую рейтинговую дуэль — и вы лидер.';
+
+  @override
+  String rankedDuelsCount(String n) {
+    return 'Рейтинговых дуэлей: ${n}';
+  }
+
+  @override
+  String get monthlyAwards => 'Награды месяца';
+
+  @override
+  String get seasonOver => 'Сезон завершён';
+
+  @override
+  String get seasonOverBody => 'Теперь это в вашем профиле. Новый месяц начинается с нуля.';
+
+  @override
+  String get seasonPlayCta => 'Играть в новом месяце';
 }

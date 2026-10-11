@@ -2132,4 +2132,73 @@ class LFr extends L {
 
   @override
   String get obIdeaCamera => 'Ta caméra compte chaque répétition, sur ton téléphone';
+
+  @override
+  String get thisMonth => 'Ce mois-ci';
+
+  @override
+  String shortDays(String n) {
+    return '${n} j';
+  }
+
+  @override
+  String shortHours(String n) {
+    return '${n} h';
+  }
+
+  @override
+  String get awardChampion => 'Champion';
+
+  @override
+  String get awardPodium => 'Podium';
+
+  @override
+  String get awardTop10 => 'Top 10';
+
+  @override
+  String get awardRegular => 'Assidu';
+
+  @override
+  String monthToTop10(String lp) {
+    return 'À ${lp} LP du top 10';
+  }
+
+  @override
+  String monthIfEndedNow(String award) {
+    return '${award} si le mois finissait maintenant';
+  }
+
+  @override
+  String get monthJoinHint => 'Joue un duel classé pour entrer dans le classement du mois';
+
+  @override
+  String monthRegularProgress(String progress) {
+    return 'Badge Assidu · ${progress} duels classés';
+  }
+
+  @override
+  String get monthRegularEarned => 'Badge Assidu gagné ce mois-ci';
+
+  @override
+  String get monthEmptyTitle => 'Un nouveau mois';
+
+  @override
+  String get monthEmptyBody => 'Personne n\'a encore gagné de LP ce mois-ci. Gagne le premier duel classé et tu prends la tête.';
+
+  @override
+  String rankedDuelsCount(String n) {
+    return '${n} duels classés';
+  }
+
+  @override
+  String get monthlyAwards => 'Récompenses du mois';
+
+  @override
+  String get seasonOver => 'Saison terminée';
+
+  @override
+  String get seasonOverBody => 'C\'est sur ton profil maintenant. Le nouveau mois repart de zéro.';
+
+  @override
+  String get seasonPlayCta => 'Jouer le nouveau mois';
 }

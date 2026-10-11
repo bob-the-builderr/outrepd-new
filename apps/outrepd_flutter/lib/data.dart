@@ -287,6 +287,23 @@ const demoLeaderboard = <LeaderboardEntry>[
   LeaderboardEntry('newbie_gains', 1, 2, 21, 6, 11),
 ];
 
+/// This month's board with no server: the same people as [demoLeaderboard]
+/// and a few more, so the podium, the top ten and the line under it all have
+/// somebody in them.
+const demoMonthBoard = <MonthRow>[
+  MonthRow(place: 1, id: '', username: 'squat_queen', tierIdx: 4, divIdx: 3, points: 142, wins: 19, played: 24),
+  MonthRow(place: 2, id: '', username: 'iron_mike', tierIdx: 5, divIdx: 1, points: 131, wins: 17, played: 22),
+  MonthRow(place: 3, id: '', username: 'benchgod', tierIdx: 3, divIdx: 2, points: 124, wins: 16, played: 21),
+  MonthRow(place: 4, id: '', username: 'cardio_hater', tierIdx: 2, divIdx: 4, points: 117, wins: 15, played: 20),
+  MonthRow(place: 5, id: '', username: 'delt_destroyer', tierIdx: 2, divIdx: 2, points: 109, wins: 14, played: 19),
+  MonthRow(place: 6, id: '', username: 'plank_ninja', tierIdx: 3, divIdx: 0, points: 104, wins: 13, played: 18),
+  MonthRow(place: 7, id: '', username: 'rep_machine', tierIdx: 2, divIdx: 1, points: 101, wins: 13, played: 17),
+  MonthRow(place: 8, id: '', username: 'chest_day', tierIdx: 1, divIdx: 3, points: 99, wins: 12, played: 16),
+  MonthRow(place: 9, id: '', username: 'gravity_no', tierIdx: 1, divIdx: 1, points: 98, wins: 12, played: 15),
+  MonthRow(place: 10, id: '', username: 'newbie_gains', tierIdx: 1, divIdx: 2, points: 98, wins: 11, played: 15),
+  MonthRow(place: 11, id: '', username: 'floor_fan', tierIdx: 1, divIdx: 4, points: 91, wins: 11, played: 14),
+];
+
 class Friend {
   const Friend(
     this.username,

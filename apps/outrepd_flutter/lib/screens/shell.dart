@@ -15,6 +15,7 @@ import 'notifications.dart';
 import 'paywall.dart';
 import 'profile.dart';
 import 'ranks.dart';
+import 'season_over.dart';
 
 /// Bottom-tab container holding the four sections.
 ///
@@ -148,6 +149,9 @@ class _InsideState extends State<_Inside> with WidgetsBindingObserver {
       // After the answer, so a phone that just said yes is registered with
       // the permission it now has.
       await Push.instance.start();
+      // Last, so the month's result is not stacked on top of the question
+      // about notifications.
+      if (mounted) await tellSeasonAwards(context);
     });
     // An invite lasts a minute, so every few seconds is the least that
     // shows one in time to answer it.

@@ -2125,4 +2125,73 @@ class LId extends L {
 
   @override
   String get obIdeaCamera => 'Kameramu menghitung setiap repetisi, di ponselmu';
+
+  @override
+  String get thisMonth => 'Bulan Ini';
+
+  @override
+  String shortDays(String n) {
+    return '${n} hr';
+  }
+
+  @override
+  String shortHours(String n) {
+    return '${n} j';
+  }
+
+  @override
+  String get awardChampion => 'Juara';
+
+  @override
+  String get awardPodium => 'Podium';
+
+  @override
+  String get awardTop10 => '10 Besar';
+
+  @override
+  String get awardRegular => 'Setia';
+
+  @override
+  String monthToTop10(String lp) {
+    return '${lp} LP lagi ke 10 besar';
+  }
+
+  @override
+  String monthIfEndedNow(String award) {
+    return '${award} jika bulan berakhir sekarang';
+  }
+
+  @override
+  String get monthJoinHint => 'Main duel berperingkat untuk masuk papan bulan ini';
+
+  @override
+  String monthRegularProgress(String progress) {
+    return 'Lencana Setia · ${progress} duel berperingkat';
+  }
+
+  @override
+  String get monthRegularEarned => 'Lencana Setia bulan ini sudah didapat';
+
+  @override
+  String get monthEmptyTitle => 'Bulan yang baru';
+
+  @override
+  String get monthEmptyBody => 'Belum ada yang menang LP bulan ini. Menangkan duel berperingkat pertama dan kamu memimpin.';
+
+  @override
+  String rankedDuelsCount(String n) {
+    return '${n} duel berperingkat';
+  }
+
+  @override
+  String get monthlyAwards => 'Penghargaan bulanan';
+
+  @override
+  String get seasonOver => 'Musim berakhir';
+
+  @override
+  String get seasonOverBody => 'Sekarang sudah ada di profilmu. Bulan baru mulai dari nol.';
+
+  @override
+  String get seasonPlayCta => 'Main bulan baru';
 }

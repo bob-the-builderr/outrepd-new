@@ -1293,5 +1293,66 @@
   "trialEndsBody": "Keep climbing, or cancel before then in your subscription settings.",
   "obIdeaTitle": "60 seconds. One opponent.",
   "obIdeaRival": "A real person, live or their recorded set",
-  "obIdeaCamera": "Your camera counts every rep, on your phone"
+  "obIdeaCamera": "Your camera counts every rep, on your phone",
+  "thisMonth": "This Month",
+  "shortDays": "{n}d",
+  "@shortDays": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "shortHours": "{n}h",
+  "@shortHours": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "awardChampion": "Champion",
+  "awardPodium": "Podium",
+  "awardTop10": "Top 10",
+  "awardRegular": "Regular",
+  "monthToTop10": "{lp} LP to the top 10",
+  "@monthToTop10": {
+    "placeholders": {
+      "lp": {
+        "type": "String"
+      }
+    }
+  },
+  "monthIfEndedNow": "{award} if the month ended now",
+  "@monthIfEndedNow": {
+    "placeholders": {
+      "award": {
+        "type": "String"
+      }
+    }
+  },
+  "monthJoinHint": "Play a ranked duel to get on this month's board",
+  "monthRegularProgress": "Regular badge · {progress} ranked duels",
+  "@monthRegularProgress": {
+    "placeholders": {
+      "progress": {
+        "type": "String"
+      }
+    }
+  },
+  "monthRegularEarned": "Regular badge earned this month",
+  "monthEmptyTitle": "A fresh month",
+  "monthEmptyBody": "Nobody has won LP this month yet. Win the first ranked duel and you lead.",
+  "rankedDuelsCount": "{n} ranked duels",
+  "@rankedDuelsCount": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "monthlyAwards": "Monthly awards",
+  "seasonOver": "Season over",
+  "seasonOverBody": "It's on your profile now. The new month starts from zero.",
+  "seasonPlayCta": "Play the new month"
 }
