@@ -2,7 +2,6 @@ Analyzing outrepd_flutter...
 
    info • Angle brackets will be interpreted as HTML. Try using backticks around the content with angle brackets, or try replacing `<` with `&lt;` and `>` with `&gt;` • lib/deep_links.dart:1:39 • unintended_html_in_doc_comment
    info • Angle brackets will be interpreted as HTML. Try using backticks around the content with angle brackets, or try replacing `<` with `&lt;` and `>` with `&gt;` • lib/deep_links.dart:7:15 • unintended_html_in_doc_comment
-  error • Undefined name 'kIsWeb'. Try correcting the name to one that is defined, or defining the name • lib/main.dart:114:23 • undefined_identifier
    info • Angle brackets will be interpreted as HTML. Try using backticks around the content with angle brackets, or try replacing `<` with `&lt;` and `>` with `&gt;` • lib/screens/shell.dart:142:30 • unintended_html_in_doc_comment
 
-4 issues found. (ran in 17.4s)
+3 issues found. (ran in 15.0s)
