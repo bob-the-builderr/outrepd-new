@@ -1,200 +1,200 @@
-    export XCODE_APP_SUPPORT_DIR\=/Applications/Xcode_26.6.app/Contents/Developer/Library/Xcode
-    export XCODE_PRODUCT_BUILD_VERSION\=17F113
-    export XCODE_VERSION_ACTUAL\=2660
-    export XCODE_VERSION_MAJOR\=2600
-    export XCODE_VERSION_MINOR\=2660
-    export XPCSERVICES_FOLDER_PATH\=Runner.app/XPCServices
-    export YACC\=yacc
-    export _DISCOVER_COMMAND_LINE_LINKER_INPUTS\=YES
-    export _DISCOVER_COMMAND_LINE_LINKER_INPUTS_INCLUDE_WL\=YES
-    export _LD_MULTIARCH\=YES
-    export _WRAPPER_CONTENTS_DIR_SHALLOW_BUNDLE_NO\=/Contents
-    export _WRAPPER_PARENT_PATH_SHALLOW_BUNDLE_NO\=/..
-    export _WRAPPER_RESOURCES_DIR_SHALLOW_BUNDLE_NO\=/Resources
-    export __DIAGNOSE_DEPRECATED_ARCHS\=YES
-    export __IS_NOT_MACOS\=YES
-    export __IS_NOT_MACOS_macosx\=NO
-    export __IS_NOT_SIMULATOR\=YES
-    export __IS_NOT_SIMULATOR_simulator\=NO
-    export __ORIGINAL_SDK_DEFINED_LLVM_TARGET_TRIPLE_SYS\=ios
-    export arch\=undefined_arch
-    export variant\=normal
-    /bin/sh -c /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Script-3B06AD1E1E4923F5004D2608.sh
+    Target 'FBLPromises' in project 'Promises'
+        ➜ Explicit dependency on target 'FBLPromises' in project 'Promises'
+        ➜ Explicit dependency on target 'Promises_FBLPromises' in project 'Promises'
+    Target 'FBLPromises' in project 'Promises'
+        ➜ Explicit dependency on target 'Promises_FBLPromises' in project 'Promises'
+    Target 'Promises_FBLPromises' in project 'Promises' (no dependencies)
+    Target 'FirebaseCore' in project 'Firebase'
+        ➜ Explicit dependency on target 'Firebase_FirebaseCore' in project 'Firebase'
+        ➜ Explicit dependency on target 'Firebase' in project 'Firebase'
+        ➜ Explicit dependency on target 'FirebaseCoreInternal' in project 'Firebase'
+        ➜ Explicit dependency on target 'GULNSData' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GULEnvironment' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GULLogger' in project 'GoogleUtilities'
+    Target 'GULLogger' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities-Logger' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities_GoogleUtilities-Logger' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'third-party-IsAppEncrypted' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities-Environment' in project 'GoogleUtilities'
+    Target 'GoogleUtilities-Logger' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities_GoogleUtilities-Logger' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'third-party-IsAppEncrypted' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities-Environment' in project 'GoogleUtilities'
+    Target 'GoogleUtilities_GoogleUtilities-Logger' in project 'GoogleUtilities' (no dependencies)
+    Target 'GULEnvironment' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities-Environment' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities_GoogleUtilities-Environment' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'third-party-IsAppEncrypted' in project 'GoogleUtilities'
+    Target 'GoogleUtilities-Environment' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities_GoogleUtilities-Environment' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'third-party-IsAppEncrypted' in project 'GoogleUtilities'
+    Target 'third-party-IsAppEncrypted' in project 'GoogleUtilities' (no dependencies)
+    Target 'GoogleUtilities_GoogleUtilities-Environment' in project 'GoogleUtilities' (no dependencies)
+    Target 'Firebase_FirebaseCore' in project 'Firebase' (no dependencies)
+    Target 'FirebaseCoreInternal' in project 'Firebase'
+        ➜ Explicit dependency on target 'Firebase_FirebaseCoreInternal' in project 'Firebase'
+        ➜ Explicit dependency on target 'GULNSData' in project 'GoogleUtilities'
+    Target 'GULNSData' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities-NSData' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities_GoogleUtilities-NSData' in project 'GoogleUtilities'
+    Target 'GoogleUtilities-NSData' in project 'GoogleUtilities'
+        ➜ Explicit dependency on target 'GoogleUtilities_GoogleUtilities-NSData' in project 'GoogleUtilities'
+    Target 'GoogleUtilities_GoogleUtilities-NSData' in project 'GoogleUtilities' (no dependencies)
+    Target 'Firebase_FirebaseCoreInternal' in project 'Firebase' (no dependencies)
+    Target 'Firebase' in project 'Firebase' (no dependencies)
+    Target 'Firebase_FirebaseInstallations' in project 'Firebase' (no dependencies)
+    Target 'connectivity-plus' in project 'connectivity_plus'
+        ➜ Explicit dependency on target 'connectivity_plus' in project 'connectivity_plus'
+        ➜ Explicit dependency on target 'connectivity_plus_connectivity_plus' in project 'connectivity_plus'
+        ➜ Explicit dependency on target 'FlutterFramework' in project 'FlutterFramework'
+    Target 'connectivity_plus' in project 'connectivity_plus'
+        ➜ Explicit dependency on target 'connectivity_plus_connectivity_plus' in project 'connectivity_plus'
+        ➜ Explicit dependency on target 'FlutterFramework' in project 'FlutterFramework'
+    Target 'connectivity_plus_connectivity_plus' in project 'connectivity_plus' (no dependencies)
+    Target 'camera-avfoundation' in project 'camera_avfoundation'
+        ➜ Explicit dependency on target 'camera_avfoundation' in project 'camera_avfoundation'
+        ➜ Explicit dependency on target 'camera_avfoundation_camera_avfoundation' in project 'camera_avfoundation'
+    Target 'camera_avfoundation' in project 'camera_avfoundation'
+        ➜ Explicit dependency on target 'camera_avfoundation_camera_avfoundation' in project 'camera_avfoundation'
+    Target 'camera_avfoundation_camera_avfoundation' in project 'camera_avfoundation' (no dependencies)
+    Target 'audioplayers-darwin' in project 'audioplayers_darwin'
+        ➜ Explicit dependency on target 'audioplayers_darwin' in project 'audioplayers_darwin'
+    Target 'audioplayers_darwin' in project 'audioplayers_darwin' (no dependencies)
+    Target 'app-links' in project 'app_links'
+        ➜ Explicit dependency on target 'app_links' in project 'app_links'
+        ➜ Explicit dependency on target 'app_links_app_links' in project 'app_links'
+        ➜ Explicit dependency on target 'FlutterFramework' in project 'FlutterFramework'
+    Target 'app_links' in project 'app_links'
+        ➜ Explicit dependency on target 'app_links_app_links' in project 'app_links'
+        ➜ Explicit dependency on target 'FlutterFramework' in project 'FlutterFramework'
+    Target 'FlutterFramework' in project 'FlutterFramework'
+        ➜ Explicit dependency on target 'FlutterFramework' in project 'FlutterFramework'
+    Target 'FlutterFramework' in project 'FlutterFramework' (no dependencies)
+    Target 'app_links_app_links' in project 'app_links' (no dependencies)
+    Target 'Pods-Runner' in project 'Pods'
+        ➜ Explicit dependency on target 'Flutter' in project 'Pods'
+        ➜ Explicit dependency on target 'GTMSessionFetcher' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleDataTransport' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleMLKit' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleToolboxForMac' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleUtilities' in project 'Pods'
+        ➜ Explicit dependency on target 'MLImage' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitPoseDetection' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitPoseDetectionAccurate' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitPoseDetectionCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitVision' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitXenoCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'PromisesObjC' in project 'Pods'
+        ➜ Explicit dependency on target 'google_mlkit_commons' in project 'Pods'
+        ➜ Explicit dependency on target 'google_mlkit_pose_detection' in project 'Pods'
+        ➜ Explicit dependency on target 'nanopb' in project 'Pods'
+    Target 'google_mlkit_pose_detection' in project 'Pods'
+        ➜ Explicit dependency on target 'Flutter' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleMLKit' in project 'Pods'
+        ➜ Explicit dependency on target 'google_mlkit_commons' in project 'Pods'
+    Target 'google_mlkit_commons' in project 'Pods'
+        ➜ Explicit dependency on target 'Flutter' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitVision' in project 'Pods'
+    Target 'GoogleMLKit' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitPoseDetection' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitPoseDetectionAccurate' in project 'Pods'
+    Target 'MLKitPoseDetectionAccurate' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitPoseDetectionAccurate-MLKitPoseDetectionAccurateResources' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitPoseDetectionCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitXenoCommon' in project 'Pods'
+    Target 'MLKitPoseDetectionAccurate-MLKitPoseDetectionAccurateResources' in project 'Pods' (no dependencies)
+    Target 'MLKitPoseDetection' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitPoseDetection-MLKitPoseDetectionFastResources' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitPoseDetectionCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitXenoCommon' in project 'Pods'
+    Target 'MLKitPoseDetectionCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitPoseDetectionCommon-MLKitPoseDetectionCommonResources' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitXenoCommon' in project 'Pods'
+    Target 'MLKitXenoCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitVision' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitXenoCommon-MLKitXenoResources' in project 'Pods'
+    Target 'MLKitXenoCommon-MLKitXenoResources' in project 'Pods' (no dependencies)
+    Target 'MLKitVision' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleToolboxForMac' in project 'Pods'
+        ➜ Explicit dependency on target 'GTMSessionFetcher' in project 'Pods'
+        ➜ Explicit dependency on target 'MLImage' in project 'Pods'
+        ➜ Explicit dependency on target 'MLKitCommon' in project 'Pods'
+    Target 'MLImage' in project 'Pods' (no dependencies)
+    Target 'MLKitPoseDetectionCommon-MLKitPoseDetectionCommonResources' in project 'Pods' (no dependencies)
+    Target 'MLKitPoseDetection-MLKitPoseDetectionFastResources' in project 'Pods' (no dependencies)
+    Target 'MLKitCommon' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleDataTransport' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleToolboxForMac' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleUtilities' in project 'Pods'
+        ➜ Explicit dependency on target 'GTMSessionFetcher' in project 'Pods'
+    Target 'GoogleUtilities' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleUtilities-GoogleUtilities_Privacy' in project 'Pods'
+    Target 'GoogleUtilities-GoogleUtilities_Privacy' in project 'Pods' (no dependencies)
+    Target 'GoogleToolboxForMac' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleToolboxForMac-GoogleToolboxForMac_Logger_Privacy' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleToolboxForMac-GoogleToolboxForMac_Privacy' in project 'Pods'
+    Target 'GoogleToolboxForMac-GoogleToolboxForMac_Privacy' in project 'Pods' (no dependencies)
+    Target 'GoogleToolboxForMac-GoogleToolboxForMac_Logger_Privacy' in project 'Pods' (no dependencies)
+    Target 'GoogleDataTransport' in project 'Pods'
+        ➜ Explicit dependency on target 'GoogleDataTransport-GoogleDataTransport_Privacy' in project 'Pods'
+        ➜ Explicit dependency on target 'PromisesObjC' in project 'Pods'
+        ➜ Explicit dependency on target 'nanopb' in project 'Pods'
+    Target 'GoogleDataTransport-GoogleDataTransport_Privacy' in project 'Pods'
+        ➜ Implicit dependency on target 'PromisesObjC' in project 'Pods' via options '-framework FBLPromises' in build setting 'OTHER_LDFLAGS'
+        ➜ Implicit dependency on target 'nanopb' in project 'Pods' via options '-framework nanopb' in build setting 'OTHER_LDFLAGS'
+    Target 'nanopb' in project 'Pods'
+        ➜ Explicit dependency on target 'nanopb-nanopb_Privacy' in project 'Pods'
+    Target 'nanopb-nanopb_Privacy' in project 'Pods' (no dependencies)
+    Target 'PromisesObjC' in project 'Pods'
+        ➜ Explicit dependency on target 'PromisesObjC-FBLPromises_Privacy' in project 'Pods'
+    Target 'PromisesObjC-FBLPromises_Privacy' in project 'Pods' (no dependencies)
+    Target 'GTMSessionFetcher' in project 'Pods'
+        ➜ Explicit dependency on target 'GTMSessionFetcher-GTMSessionFetcher_Core_Privacy' in project 'Pods'
+    Target 'GTMSessionFetcher-GTMSessionFetcher_Core_Privacy' in project 'Pods' (no dependencies)
+    Target 'Flutter' in project 'Pods' (no dependencies)
+    Target 'OutrepdWidgetExtension' in project 'Runner' (no dependencies)
 
-PhaseScriptExecution [CP]\ Embed\ Pods\ Frameworks /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Script-9327F5AE57D19E174F1AB0C0.sh (in target 'Runner' from project 'Runner')
-    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
-    /bin/sh -c /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Script-9327F5AE57D19E174F1AB0C0.sh
-mkdir -p /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/Release-iphoneos/Runner.app/Frameworks
-Symlinked...
-rsync --delete -av --filter P .*.?????? --links --filter "- CVS/" --filter "- .svn/" --filter "- .git/" --filter "- .hg/" --filter "- Headers" --filter "- PrivateHeaders" --filter "- Modules" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/UninstalledProducts/iphoneos/GTMSessionFetcher.framework" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks"
-Transfer starting: 6 files
-GTMSessionFetcher.framework/
-GTMSessionFetcher.framework/GTMSessionFetcher
-GTMSessionFetcher.framework/Info.plist
-GTMSessionFetcher.framework/GTMSessionFetcher_Core_Privacy.bundle/
-GTMSessionFetcher.framework/GTMSessionFetcher_Core_Privacy.bundle/Info.plist
-GTMSessionFetcher.framework/GTMSessionFetcher_Core_Privacy.bundle/PrivacyInfo.xcprivacy
+GatherProvisioningInputs
 
-sent 395520 bytes  received 120 bytes  28059574 bytes/sec
-total size is 394635  speedup is 1.00
-Code Signing /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/GTMSessionFetcher.framework with Identity Apple Development: Created via API (4CNFJPR3WA)
-/usr/bin/codesign --force --sign 41B31F8D006F977893236E0C87D813E72AD7F361  --preserve-metadata=identifier,entitlements '/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/GTMSessionFetcher.framework' &
-Symlinked...
-rsync --delete -av --filter P .*.?????? --links --filter "- CVS/" --filter "- .svn/" --filter "- .git/" --filter "- .hg/" --filter "- Headers" --filter "- PrivateHeaders" --filter "- Modules" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/UninstalledProducts/iphoneos/GoogleDataTransport.framework" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks"
-Transfer starting: 6 files
-GoogleDataTransport.framework/
-GoogleDataTransport.framework/GoogleDataTransport
-GoogleDataTransport.framework/Info.plist
-GoogleDataTransport.framework/GoogleDataTransport_Privacy.bundle/
-GoogleDataTransport.framework/GoogleDataTransport_Privacy.bundle/Info.plist
-GoogleDataTransport.framework/GoogleDataTransport_Privacy.bundle/PrivacyInfo.xcprivacy
+CreateBuildDescription
 
-sent 377024 bytes  received 120 bytes  24976423 bytes/sec
-total size is 376134  speedup is 1.00
-Code Signing /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/GoogleDataTransport.framework with Identity Apple Development: Created via API (4CNFJPR3WA)
-/usr/bin/codesign --force --sign 41B31F8D006F977893236E0C87D813E72AD7F361  --preserve-metadata=identifier,entitlements '/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/GoogleDataTransport.framework' &
-Symlinked...
-rsync --delete -av --filter P .*.?????? --links --filter "- CVS/" --filter "- .svn/" --filter "- .git/" --filter "- .hg/" --filter "- Headers" --filter "- PrivateHeaders" --filter "- Modules" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/UninstalledProducts/iphoneos/GoogleToolboxForMac.framework" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks"
-Transfer starting: 9 files
-GoogleToolboxForMac.framework/
-GoogleToolboxForMac.framework/GoogleToolboxForMac
-GoogleToolboxForMac.framework/Info.plist
-GoogleToolboxForMac.framework/GoogleToolboxForMac_Logger_Privacy.bundle/
-GoogleToolboxForMac.framework/GoogleToolboxForMac_Logger_Privacy.bundle/Info.plist
-GoogleToolboxForMac.framework/GoogleToolboxForMac_Logger_Privacy.bundle/PrivacyInfo.xcprivacy
-GoogleToolboxForMac.framework/GoogleToolboxForMac_Privacy.bundle/
-GoogleToolboxForMac.framework/GoogleToolboxForMac_Privacy.bundle/Info.plist
-GoogleToolboxForMac.framework/GoogleToolboxForMac_Privacy.bundle/PrivacyInfo.xcprivacy
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
 
-sent 113986 bytes  received 170 bytes  10284324 bytes/sec
-total size is 112709  speedup is 0.99
-Code Signing /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/GoogleToolboxForMac.framework with Identity Apple Development: Created via API (4CNFJPR3WA)
-/usr/bin/codesign --force --sign 41B31F8D006F977893236E0C87D813E72AD7F361  --preserve-metadata=identifier,entitlements '/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/GoogleToolboxForMac.framework' &
-Symlinked...
-rsync --delete -av --filter P .*.?????? --links --filter "- CVS/" --filter "- .svn/" --filter "- .git/" --filter "- .hg/" --filter "- Headers" --filter "- PrivateHeaders" --filter "- Modules" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/UninstalledProducts/iphoneos/GoogleUtilities.framework" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks"
-Transfer starting: 6 files
-GoogleUtilities.framework/
-GoogleUtilities.framework/GoogleUtilities
-GoogleUtilities.framework/Info.plist
-GoogleUtilities.framework/GoogleUtilities_Privacy.bundle/
-GoogleUtilities.framework/GoogleUtilities_Privacy.bundle/Info.plist
-GoogleUtilities.framework/GoogleUtilities_Privacy.bundle/PrivacyInfo.xcprivacy
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -x c -c /dev/null
 
-sent 136146 bytes  received 120 bytes  9024238 bytes/sec
-total size is 135324  speedup is 0.99
-Code Signing /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/GoogleUtilities.framework with Identity Apple Development: Created via API (4CNFJPR3WA)
-/usr/bin/codesign --force --sign 41B31F8D006F977893236E0C87D813E72AD7F361  --preserve-metadata=identifier,entitlements '/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/GoogleUtilities.framework' &
-Symlinked...
-rsync --delete -av --filter P .*.?????? --links --filter "- CVS/" --filter "- .svn/" --filter "- .git/" --filter "- .hg/" --filter "- Headers" --filter "- PrivateHeaders" --filter "- Modules" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/UninstalledProducts/iphoneos/FBLPromises.framework" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks"
-Transfer starting: 6 files
-FBLPromises.framework/
-FBLPromises.framework/FBLPromises
-FBLPromises.framework/Info.plist
-FBLPromises.framework/FBLPromises_Privacy.bundle/
-FBLPromises.framework/FBLPromises_Privacy.bundle/Info.plist
-FBLPromises.framework/FBLPromises_Privacy.bundle/PrivacyInfo.xcprivacy
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -x c -c /dev/null
 
-sent 172008 bytes  received 120 bytes  28217704 bytes/sec
-total size is 171222  speedup is 0.99
-Code Signing /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/FBLPromises.framework with Identity Apple Development: Created via API (4CNFJPR3WA)
-/usr/bin/codesign --force --sign 41B31F8D006F977893236E0C87D813E72AD7F361  --preserve-metadata=identifier,entitlements '/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/FBLPromises.framework' &
-Symlinked...
-rsync --delete -av --filter P .*.?????? --links --filter "- CVS/" --filter "- .svn/" --filter "- .git/" --filter "- .hg/" --filter "- Headers" --filter "- PrivateHeaders" --filter "- Modules" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/UninstalledProducts/iphoneos/nanopb.framework" "/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks"
-Transfer starting: 6 files
-nanopb.framework/
-nanopb.framework/Info.plist
-nanopb.framework/nanopb
-nanopb.framework/nanopb_Privacy.bundle/
-nanopb.framework/nanopb_Privacy.bundle/Info.plist
-nanopb.framework/nanopb_Privacy.bundle/PrivacyInfo.xcprivacy
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -x objective-c -c /dev/null
 
-sent 79077 bytes  received 120 bytes  9777407 bytes/sec
-total size is 78353  speedup is 0.99
-Code Signing /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/nanopb.framework with Identity Apple Development: Created via API (4CNFJPR3WA)
-/usr/bin/codesign --force --sign 41B31F8D006F977893236E0C87D813E72AD7F361  --preserve-metadata=identifier,entitlements '/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks/nanopb.framework' &
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
 
-PhaseScriptExecution [CP]\ Copy\ Pods\ Resources /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Script-C53DCDF71984957E25B1D006.sh (in target 'Runner' from project 'Runner')
-    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
-    /bin/sh -c /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Script-C53DCDF71984957E25B1D006.sh
-/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/Release-iphoneos/MLKitPoseDetection/MLKitPoseDetectionFastResources.bundle
-/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/Release-iphoneos/MLKitPoseDetectionAccurate/MLKitPoseDetectionAccurateResources.bundle
-/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/Release-iphoneos/MLKitPoseDetectionCommon/MLKitPoseDetectionCommonResources.bundle
-/Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/Release-iphoneos/MLKitXenoCommon/MLKitXenoResources.bundle
-Transfer starting: 15 files
-MLKitPoseDetectionAccurateResources.bundle/
-MLKitPoseDetectionAccurateResources.bundle/Info.plist
-MLKitPoseDetectionAccurateResources.bundle/pose_landmark_detector_accurate.tflite
-MLKitPoseDetectionAccurateResources.bundle/pose_person_detector_accurate.tflite
-MLKitPoseDetectionCommonResources.bundle/
-MLKitPoseDetectionCommonResources.bundle/Info.plist
-MLKitPoseDetectionCommonResources.bundle/pose_non_tracking_graph.binarypb
-MLKitPoseDetectionCommonResources.bundle/pose_tracking_graph.binarypb
-MLKitPoseDetectionFastResources.bundle/
-MLKitPoseDetectionFastResources.bundle/Info.plist
-MLKitPoseDetectionFastResources.bundle/pose_landmark_detector_fast.tflite
-MLKitPoseDetectionFastResources.bundle/pose_person_detector_fast.tflite
-MLKitXenoResources.bundle/
-MLKitXenoResources.bundle/Info.plist
-MLKitXenoResources.bundle/yuv_to_rgb_graph.binarypb
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool -V
 
-sent 15181867 bytes  received 286 bytes  61441331 bytes/sec
-total size is 15178237  speedup is 1.00
-Transfer starting: 15 files
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -x objective-c++ -c /dev/null
 
-sent 1256 bytes  received 20 bytes  250196 bytes/sec
-total size is 15178237  speedup is 11895.16
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/ibtool --version --output-format xml1
 
-CopySwiftLibs /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app (in target 'Runner' from project 'Runner')
-    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
-    builtin-swiftStdLibTool --copy --verbose --sign 41B31F8D006F977893236E0C87D813E72AD7F361 --scan-executable /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Runner --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/PlugIns --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/SystemExtensions --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Extensions --scan-folder /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/Release-iphoneos/Pods_Runner.framework --platform iphoneos --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.22wYYN/Metal.xctoolchain --toolchain /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Frameworks --unsigned-destination /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/BuildProductsPath/SwiftSupport --strip-bitcode --strip-bitcode-tool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios/Runner/Assets.xcassets
 
-ExtractAppIntentsMetadata (in target 'Runner' from project 'Runner')
-    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
-    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.22wYYN/Metal.xctoolchain --module-name Runner --sdk-root /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk --xcode-version 17F113 --platform-family iOS --deployment-target 15.5 --bundle-identifier com.outrepd.outrepd --output /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app --target-triple arm64-apple-ios15.5 --binary-file /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Runner --dependency-file /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Objects-normal/arm64/Runner_dependency_info.dat --stringsdata-file /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Objects-normal/arm64/Runner.SwiftFileList --metadata-file-list /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Runner.DependencyMetadataFileList --static-metadata-file-list /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Runner.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Objects-normal/arm64/Runner.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
-2026-10-11 20:41:32.560 appintentsmetadataprocessor[45101:125984] Starting appintentsmetadataprocessor export
-2026-10-11 20:41:32.594 appintentsmetadataprocessor[45101:125984] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+ReadFileContents /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/docc/features.json
 
-AppIntentsSSUTraining (in target 'Runner' from project 'Runner')
-    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
-    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Info.plist --temp-dir-path /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/ssu --bundle-id com.outrepd.outrepd --product-path /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app --extracted-metadata-path /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Metadata.appintents --deployment-postprocessing --metadata-file-list /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Runner.DependencyMetadataFileList --source-file /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Info.plist --archive-ssu-assets
-2026-10-11 20:41:32.696 appintentsnltrainingprocessor[45104:125992] Parsing options for appintentsnltrainingprocessor
-2026-10-11 20:41:32.697 appintentsnltrainingprocessor[45104:125992] Starting AppIntents SSU YAML Generation
-2026-10-11 20:41:32.702 appintentsnltrainingprocessor[45104:125992] No AppShortcuts found - Skipping.
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool --version --output-format xml1
 
-Strip /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Runner (in target 'Runner' from project 'Runner')
-    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
-    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -D /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app/Runner
-
-SetOwnerAndGroup runner:staff /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app (in target 'Runner' from project 'Runner')
-    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
-    /usr/sbin/chown -RH runner:staff /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app
-
-SetMode u+w,go-w,a+rX /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app (in target 'Runner' from project 'Runner')
-    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
-    /bin/chmod -RH u+w,go-w,a+rX /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app
-
-CodeSign /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app (in target 'Runner' from project 'Runner')
-    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
-    
-    Signing Identity:     "Apple Development: Created via API (4CNFJPR3WA)"
-    Provisioning Profile: "iOS Team Provisioning Profile: com.outrepd.outrepd"
-                          (b5b5ae5a-8c0d-4284-a5c5-f90dc6886a21)
-    
-    /usr/bin/codesign --force --sign 41B31F8D006F977893236E0C87D813E72AD7F361 --entitlements /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Runner.build/Release-iphoneos/Runner.build/Runner.app.xcent --generate-entitlement-der /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app
-
-RegisterExecutionPolicyException /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app (in target 'Runner' from project 'Runner')
-    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
-    builtin-RegisterExecutionPolicyException /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app
-
-Validate /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app (in target 'Runner' from project 'Runner')
-    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
-    builtin-validationUtility /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app -validate-for-store -shallow-bundle -infoplist-subpath Info.plist
-
-Touch /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app (in target 'Runner' from project 'Runner')
-    cd /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios
-    /usr/bin/touch -c /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/InstallationBuildProductsLocation/Applications/Runner.app
-
+Build description signature: 49ff144e9589a8b73be918c2504bf990
+Build description path: /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/XCBuildData/49ff144e9589a8b73be918c2504bf990.xcbuilddata
+/Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios/Runner.xcodeproj: error: Provisioning profile "iOS Team Provisioning Profile: com.outrepd.outrepd" doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement. (in target 'Runner' from project 'Runner')
 note: Run script build phase 'Run Script' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'Runner' from project 'Runner')
 note: Run script build phase 'Thin Binary' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'Runner' from project 'Runner')
-** ARCHIVE SUCCEEDED **
+/Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios/Runner.xcodeproj: error: Provisioning profile "iOS Team Provisioning Profile: com.outrepd.outrepd.OutrepdWidget" doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement. (in target 'OutrepdWidgetExtension' from project 'Runner')
+** ARCHIVE FAILED **
 
+
+The following build commands failed:
+	Archiving workspace Runner with scheme Runner
+(1 failure)
