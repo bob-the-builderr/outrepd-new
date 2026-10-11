@@ -24,6 +24,8 @@ class _Store implements Storefront {
   @override
   Future<bool> check() async => false;
   @override
+  Future<bool> checkFresh() async => false;
+  @override
   Future<List<Plan>> plans() async => const [
         Plan(
           period: PlanPeriod.weekly,

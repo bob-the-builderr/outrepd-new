@@ -963,6 +963,43 @@ class SupabaseBackend implements Backend {
   }
 
   @override
+  Future<InviteResult> claimInvite(String code) async {
+    try {
+      return InviteResult.parse(
+        await _db.rpc<String>('claim_invite', params: {'code': code}),
+      );
+    } on PostgrestException catch (error) {
+      // Ten tries an hour, then the server says so. Not a wrong code: the
+      // same answer as having no connection is the honest one to show.
+      debugPrint('Could not claim the invite: ${error.message}');
+      return InviteResult.offline;
+    }
+  }
+
+  @override
+  Future<MyInvites?> myInvites() async {
+    if (_db.auth.currentUser == null) return null;
+    final rows = await _db.rpc<List<dynamic>>('my_invites');
+    if (rows.isEmpty) return null;
+    final row = rows.first as Map<String, dynamic>;
+    return MyInvites(
+      canInvite: row['can_invite'] as bool? ?? false,
+      joined: (row['joined'] as num?)?.toInt() ?? 0,
+    );
+  }
+
+  @override
+  Future<LiveOnline?> liveOnline() async {
+    final rows = await _db.rpc<List<dynamic>>('live_online');
+    if (rows.isEmpty) return null;
+    final row = rows.first as Map<String, dynamic>;
+    return LiveOnline(
+      searching: (row['searching'] as num?)?.toInt() ?? 0,
+      online: (row['online'] as num?)?.toInt() ?? 0,
+    );
+  }
+
+  @override
   Future<String> inviteLive(String friendId) async =>
       await _db.rpc<String>('invite_live', params: {'friend_id': friendId});
 

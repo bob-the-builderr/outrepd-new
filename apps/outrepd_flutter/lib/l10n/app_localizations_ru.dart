@@ -2150,7 +2150,7 @@ class LRu extends L {
   String get awardTop10 => 'Топ-10';
 
   @override
-  String get awardRegular => 'Постоянный';
+  String get awardRegular => 'Клуб 20';
 
   @override
   String monthToTop10(String lp) {
@@ -2167,11 +2167,11 @@ class LRu extends L {
 
   @override
   String monthRegularProgress(String progress) {
-    return 'Значок «Постоянный» · ${progress} рейтинговых дуэлей';
+    return 'Значок «Клуб 20» · ${progress} рейтинговых дуэлей';
   }
 
   @override
-  String get monthRegularEarned => 'Значок «Постоянный» в этом месяце получен';
+  String get monthRegularEarned => 'Значок «Клуб 20» в этом месяце получен';
 
   @override
   String get monthEmptyTitle => 'Новый месяц';
@@ -2223,5 +2223,58 @@ class LRu extends L {
   @override
   String promotedFrom(String rank) {
     return 'с уровня ${rank}';
+  }
+
+  @override
+  String liveOnlineNow(String n) {
+    return 'Сейчас в сети: ${n}';
+  }
+
+  @override
+  String liveSearchingNow(String n) {
+    return 'ищут: ${n}';
+  }
+
+  @override
+  String get inviteCodeLabel => 'Код друга (необязательно)';
+
+  @override
+  String get inviteClaimed => 'Код добавлен · 7 дней бесплатно';
+
+  @override
+  String get inviteUnknownCode => 'Ни у кого нет такого кода';
+
+  @override
+  String get inviteNotYearly => 'Этот код сейчас не даёт бесплатных дней';
+
+  @override
+  String get inviteOwnCode => 'Это ваш собственный код';
+
+  @override
+  String get inviteTooLate => 'Коды работают в первую неделю аккаунта';
+
+  @override
+  String get inviteFull => 'Этот код часто использовали в этом месяце. Попробуйте другой';
+
+  @override
+  String get inviteTitle => 'Подарите другу 7 дней бесплатно';
+
+  @override
+  String get inviteBody => 'Код входит в годовой план. Друг вводит его при регистрации.';
+
+  @override
+  String get inviteYourCode => 'Ваш код';
+
+  @override
+  String inviteJoined(String n) {
+    return 'Присоединились: ${n}';
+  }
+
+  @override
+  String get inviteSend => 'Отправить приглашение';
+
+  @override
+  String inviteShareText(String code) {
+    return 'Сразись со мной в OUTREPD: 60 секунд отжиманий вживую. Введи мой код ${code} при регистрации и получи 7 дней бесплатно.';
   }
 }

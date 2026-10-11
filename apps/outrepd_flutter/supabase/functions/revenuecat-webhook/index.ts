@@ -38,10 +38,12 @@
 //      statement in supabase/switches.sql, run in the SQL Editor. A
 //      re-install leaves it on.
 //
-// Four callers. A body of {"tester": <account id>} comes from the triggers in
+// Five callers. A body of {"tester": <account id>} comes from the triggers in
 // supabase/testers.sql and gives a listed closed-test tester Pro as a
-// RevenueCat promotional grant -- see grantTesterPass. The other three are
-// told apart by the Authorization header:
+// RevenueCat promotional grant -- see grantTesterPass. A body of
+// {"invite_grant": <account id>} comes from supabase/invites.sql and gives
+// that account the week a friend's code owes it -- see grantInviteWeek. The
+// other three are told apart by the Authorization header:
 //   - RevenueCat, with REVENUECAT_WEBHOOK_AUTH: syncs the accounts the event
 //     names.
 //   - The same secret with {"backfill": true}: syncs every account.
@@ -91,6 +93,8 @@ type Row = {
   expires_at: string | null;
   product_id: string | null;
   store: string | null;
+  // 'normal', 'trial' or 'intro', as RevenueCat names the current period.
+  period_type: string | null;
   updated_at: string;
 };
 
@@ -117,6 +121,9 @@ async function currentState(id: string, secretKey: string): Promise<Row> {
     expires_at: entitlement ? expires : null,
     product_id: product,
     store: product ? subscriber.subscriptions?.[product]?.store ?? null : null,
+    period_type: product
+      ? subscriber.subscriptions?.[product]?.period_type ?? null
+      : null,
     updated_at: new Date().toISOString(),
   };
 }
@@ -191,18 +198,7 @@ async function grantTesterPass(
     return reply(200, { skipped: 'already granted' });
   }
 
-  const granted = await fetch(
-    `https://api.revenuecat.com/v1/subscribers/${encodeURIComponent(tester)}` +
-      `/entitlements/${ENTITLEMENT}/promotional`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${secretKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ duration: TESTER_PASS }),
-    },
-  );
+  const granted = await promote(tester, TESTER_PASS, secretKey);
   if (!granted.ok) {
     // Not granted, so not claimed: the next trigger may try again.
     await db.from('beta_tester_grants').delete().eq('user_id', tester);
@@ -211,6 +207,62 @@ async function grantTesterPass(
   }
   try {
     await sync(db, [tester], secretKey);
+  } catch (e) {
+    // The grant stands; the webhook writes the row when RevenueCat reports.
+    console.error(e);
+  }
+  return reply(200, { granted: true });
+}
+
+/// A RevenueCat promotional grant of Pro to [id] for [duration].
+async function promote(id: string, duration: string, secretKey: string) {
+  return await fetch(
+    `https://api.revenuecat.com/v1/subscribers/${encodeURIComponent(id)}` +
+      `/entitlements/${ENTITLEMENT}/promotional`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${secretKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ duration }),
+    },
+  );
+}
+
+/// What an invitee gets (supabase/invites.sql): a week.
+const INVITEE_PASS = 'weekly';
+
+/// Gives [who] the week a friend's code owes them, if the invite table says
+/// it is owed and not yet given. The row is claimed before RevenueCat is
+/// asked and released if it says no, so two calls at once give it once, and
+/// a refusal can be tried again.
+async function grantInviteWeek(
+  db: ReturnType<typeof createClient>,
+  who: unknown,
+  secretKey: string,
+) {
+  if (typeof who !== 'string' || !uuid.test(who)) {
+    return reply(400, { error: 'not an account id' });
+  }
+  const { data: claimed, error } = await db
+    .from('invites')
+    .update({ granted_at: new Date().toISOString() })
+    .eq('invitee', who)
+    .is('granted_at', null)
+    .select('invitee');
+  if (error) return reply(500, { error: error.message });
+  if (!claimed || claimed.length === 0) {
+    return reply(200, { skipped: 'nothing owed' });
+  }
+  const granted = await promote(who, INVITEE_PASS, secretKey);
+  if (!granted.ok) {
+    await db.from('invites').update({ granted_at: null }).eq('invitee', who);
+    console.error(`RevenueCat refused the invite week: ${await granted.text()}`);
+    return reply(502, { error: `RevenueCat answered ${granted.status}` });
+  }
+  try {
+    await sync(db, [who], secretKey);
   } catch (e) {
     // The grant stands; the webhook writes the row when RevenueCat reports.
     console.error(e);
@@ -263,6 +315,15 @@ Deno.serve(async (request) => {
   // is granted once.
   if (body.tester !== undefined) {
     return await grantTesterPass(db, body.tester, secretKey);
+  }
+
+  // -- a friend's code (supabase/invites.sql) ---------------------------------
+  //
+  // Also with no secret, and for the same reason it needs none: what is
+  // given is read from the invite table, so a caller naming any account
+  // gives it only what it was already owed.
+  if (body.invite_grant !== undefined) {
+    return await grantInviteWeek(db, body.invite_grant, secretKey);
   }
 
   // -- the app, right after a purchase or a restore --------------------------

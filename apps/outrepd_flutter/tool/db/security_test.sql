@@ -563,6 +563,77 @@ select must_fail('a rematch with somebody who blocked you',
 reset role;
 delete from blocks where blocker = :'C' and blocked = :'A';
 
+-- ── a friend's code ───────────────────────────────────────────────────────────
+
+select set_config('test.dcode', (select friend_code from profiles where id = :'D'), false);
+
+-- D has no plan, then the weekly one, then the yearly one in its free
+-- days: none of them carries a code.
+select as_user(:'B'); set role authenticated;
+select check_that(claim_invite(current_setting('test.dcode')) = 'not_yearly',
+                  'a code from somebody with no plan gave a week');
+reset role;
+insert into subscriptions (user_id, active, expires_at, product_id, period_type)
+values (:'D', true, now() + interval '5 days', 'pro_weekly:weekly', 'normal');
+select as_user(:'B'); set role authenticated;
+select check_that(claim_invite(current_setting('test.dcode')) = 'not_yearly',
+                  'a weekly subscriber''s code gave a week');
+reset role;
+update subscriptions set product_id = 'pro_yearly:yearly', period_type = 'trial'
+ where user_id = :'D';
+select as_user(:'B'); set role authenticated;
+select check_that(claim_invite(current_setting('test.dcode')) = 'not_yearly',
+                  'a yearly plan still in its free days gave a week');
+select check_that((select not can_invite from my_invites()),
+                  'an account with no plan was offered a code to share');
+reset role;
+
+-- Paying for the year: the code gives the week, once.
+update subscriptions set period_type = 'normal' where user_id = :'D';
+select as_user(:'B'); set role authenticated;
+select check_that(claim_invite('#' || current_setting('test.dcode')) = 'claimed',
+                  'a paying yearly subscriber''s code did not give a week');
+select check_that(claim_invite(current_setting('test.dcode')) = 'already',
+                  'one account used a code twice');
+select check_that((select inviter_name = 'dan_d1' from my_inviter()),
+                  'the invitee is not told who brought them in');
+select check_that((select count(*) from invites) = 0,
+                  'a lifter can read the invites table');
+select must_fail('a lifter asking for a grant',
+                 format('select ask_invite_grant(%L)', :'B'));
+select must_fail('a lifter checking somebody''s plan',
+                 format('select on_yearly_plan(%L)', :'D'));
+reset role;
+select check_that((select count(*) from invites where invitee = :'B' and inviter = :'D') = 1,
+                  'the invite was not recorded');
+
+select as_user(:'D'); set role authenticated;
+select check_that((select can_invite and joined = 1 from my_invites()),
+                  'the yearly subscriber''s card is wrong');
+select check_that(claim_invite(current_setting('test.dcode')) = 'own_code',
+                  'an account used its own code');
+reset role;
+
+select as_user(:'C'); set role authenticated;
+select check_that(claim_invite('not a code') = 'unknown_code', 'a made-up code');
+reset role;
+
+-- Not across a block, and not after the first week.
+insert into blocks (blocker, blocked) values (:'C', :'D');
+select as_user(:'C'); set role authenticated;
+select check_that(claim_invite(current_setting('test.dcode')) = 'unknown_code',
+                  'a code from somebody blocked gave a week');
+reset role;
+delete from blocks where blocker = :'C' and blocked = :'D';
+select set_config('outrepd.settling', 'on', false);
+update profiles set created_at = now() - interval '8 days' where id = :'C';
+select set_config('outrepd.settling', 'off', false);
+select as_user(:'C'); set role authenticated;
+select check_that(claim_invite(current_setting('test.dcode')) = 'too_late',
+                  'an account more than a week old used a code');
+reset role;
+delete from subscriptions where user_id = :'D';
+
 -- ── closed-test testers ───────────────────────────────────────────────────────
 
 -- The trigger on auth.users runs inside every sign-up, as whatever role the

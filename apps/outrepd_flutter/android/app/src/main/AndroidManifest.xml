@@ -45,6 +45,21 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <!-- outrepd.com/u/<name> opens that lifter's card in the app
+                 (lib/deep_links.dart). Verified against the site's
+                 .well-known/assetlinks.json; until it is there, Android offers
+                 the browser instead, which still works. -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="https" android:host="www.outrepd.com" android:pathPrefix="/u/"/>
+                <data android:scheme="https" android:host="outrepd.com" android:pathPrefix="/u/"/>
+            </intent-filter>
+            <!-- The link goes to lib/deep_links.dart, not to Flutter's own
+                 routing, which would push /u/<name> as a route the app does
+                 not have. -->
+            <meta-data android:name="flutter_deeplinking_enabled" android:value="false"/>
         </activity>
         <!-- The daily reminder: fires it at its time, and schedules it again
              after a restart or an update, which clear every alarm. -->

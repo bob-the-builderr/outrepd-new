@@ -29,6 +29,12 @@ create table if not exists subscriptions (
   updated_at timestamptz not null default now()
 );
 
+-- 'normal', 'trial' or 'intro': the period the plan is in, as RevenueCat
+-- names it. A yearly plan still in its free days carries no invite code
+-- (invites.sql). Added after the table; the webhook writes it, so this has
+-- to be installed before a webhook that sends it is deployed.
+alter table subscriptions add column if not exists period_type text;
+
 alter table subscriptions enable row level security;
 
 -- A lifter may read their own row (the app does not today, but a support

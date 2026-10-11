@@ -10,6 +10,7 @@ import 'backend/supabase_backend.dart';
 import 'career.dart';
 import 'connection.dart';
 import 'data.dart';
+import 'deep_links.dart';
 import 'firebase.dart';
 import 'reminders.dart';
 import 'rewards.dart';
@@ -110,6 +111,7 @@ void main() async {
   } on Object catch (error, stack) {
     debugPrint('Could not read saved settings: $error\n$stack');
   }
+  deepLinksEnabled = !kIsWeb;
   runApp(const OutrepdApp());
 }
 

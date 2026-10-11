@@ -2150,7 +2150,7 @@ class LHi extends L {
   String get awardTop10 => 'टॉप 10';
 
   @override
-  String get awardRegular => 'नियमित';
+  String get awardRegular => '20 क्लब';
 
   @override
   String monthToTop10(String lp) {
@@ -2167,11 +2167,11 @@ class LHi extends L {
 
   @override
   String monthRegularProgress(String progress) {
-    return 'नियमित बैज · ${progress} रैंक्ड ड्यूल';
+    return '20 क्लब बैज · ${progress} रैंक्ड ड्यूल';
   }
 
   @override
-  String get monthRegularEarned => 'इस महीने का नियमित बैज मिल गया';
+  String get monthRegularEarned => 'इस महीने का 20 क्लब बैज मिल गया';
 
   @override
   String get monthEmptyTitle => 'नया महीना';
@@ -2223,5 +2223,58 @@ class LHi extends L {
   @override
   String promotedFrom(String rank) {
     return '${rank} से';
+  }
+
+  @override
+  String liveOnlineNow(String n) {
+    return 'अभी ${n} ऑनलाइन';
+  }
+
+  @override
+  String liveSearchingNow(String n) {
+    return '${n} खोज रहे हैं';
+  }
+
+  @override
+  String get inviteCodeLabel => 'दोस्त का कोड (वैकल्पिक)';
+
+  @override
+  String get inviteClaimed => 'कोड जुड़ गया · 7 दिन मुफ़्त आपके';
+
+  @override
+  String get inviteUnknownCode => 'यह कोड किसी का नहीं है';
+
+  @override
+  String get inviteNotYearly => 'यह कोड अभी मुफ़्त दिन नहीं दे सकता';
+
+  @override
+  String get inviteOwnCode => 'यह आपका अपना कोड है';
+
+  @override
+  String get inviteTooLate => 'कोड खाते के पहले हफ़्ते में ही चलते हैं';
+
+  @override
+  String get inviteFull => 'इस महीने यह कोड बहुत इस्तेमाल हुआ। दूसरा आज़माएँ';
+
+  @override
+  String get inviteTitle => 'किसी दोस्त को 7 दिन मुफ़्त दें';
+
+  @override
+  String get inviteBody => 'आपका कोड सालाना प्लान के साथ आता है। आपका दोस्त साइन अप करते समय इसे डालता है।';
+
+  @override
+  String get inviteYourCode => 'आपका कोड';
+
+  @override
+  String inviteJoined(String n) {
+    return '${n} जुड़े';
+  }
+
+  @override
+  String get inviteSend => 'न्योता भेजें';
+
+  @override
+  String inviteShareText(String code) {
+    return 'OUTREPD पर मुझसे मुकाबला करो: 60 सेकंड पुश-अप, लाइव। साइन अप करते समय मेरा कोड ${code} डालो और 7 दिन मुफ़्त पाओ।';
   }
 }

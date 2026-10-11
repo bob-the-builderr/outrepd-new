@@ -16,6 +16,7 @@ import '../backend/backend.dart';
 import '../career.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../subscription.dart';
 import '../theme.dart';
 import '../type_scale.dart';
 
@@ -154,14 +155,50 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _username = TextEditingController();
   final _email = TextEditingController();
+
+  /// A friend's code, optional. See supabase/invites.sql.
+  final _invite = TextEditingController();
   bool _busy = false;
   String? _error;
+
+  /// The code went through: the week is on its way.
+  bool _inviteClaimed = false;
 
   @override
   void dispose() {
     _username.dispose();
     _email.dispose();
+    _invite.dispose();
     super.dispose();
+  }
+
+  /// What a code that did not go through should say, or null when it did
+  /// (or there was none). Asked before the email code goes out, so a typo
+  /// is fixed on this screen rather than discovered behind the paywall.
+  Future<String?> _claimInvite(L l) async {
+    final code = _invite.text.trim();
+    if (code.isEmpty || _inviteClaimed) return null;
+    final result = await backend.claimInvite(code);
+    switch (result) {
+      case InviteResult.claimed || InviteResult.already:
+        _inviteClaimed = true;
+        // The server asked RevenueCat for the week; the store hears of it in
+        // a few seconds, by when the paywall would otherwise be showing.
+        unawaited(Subscription.instance.expectGrant());
+        return null;
+      case InviteResult.unknownCode:
+        return l.inviteUnknownCode;
+      case InviteResult.notYearly:
+        return l.inviteNotYearly;
+      case InviteResult.ownCode:
+        return l.inviteOwnCode;
+      case InviteResult.tooLate:
+        return l.inviteTooLate;
+      case InviteResult.full:
+        return l.inviteFull;
+      case InviteResult.offline:
+        return l.cantReachServer;
+    }
   }
 
   bool get _canSubmit =>
@@ -223,6 +260,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
         // Only an account with a confirmed email gets this, and one with a
         // confirmed email is not signing up. Not an error: it keeps its name.
       }
+
+      final inviteError = await _claimInvite(l);
+      if (!mounted) return;
+      if (inviteError != null) {
+        setState(() {
+          _busy = false;
+          _error = inviteError;
+        });
+        return;
+      }
+      setState(() {});
 
       final result = await backend.startEmailSignUp(email: email);
       if (!mounted) return;
@@ -294,6 +342,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 onChanged: (_) => setState(() => _error = null),
                 onSubmitted: (_) => _submit(),
               ),
+              const SizedBox(height: 12),
+              _Field(
+                key: const Key('inviteCode'),
+                controller: _invite,
+                label: l.inviteCodeLabel,
+                hint: '#482913',
+                keyboardType: TextInputType.number,
+                onChanged: (_) => setState(() => _error = null),
+                onSubmitted: (_) => _submit(),
+              ),
+              if (_inviteClaimed) ...[
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.check_circle,
+                      size: 16,
+                      color: AppColors.success,
+                    ),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        l.inviteClaimed,
+                        style: context.type.label.copyWith(
+                          color: AppColors.success,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
               if (_error != null) ...[
                 const SizedBox(height: 10),
                 Text(
@@ -795,6 +874,7 @@ class _CodeBox extends StatelessWidget {
 
 class _Field extends StatelessWidget {
   const _Field({
+    super.key,
     required this.controller,
     this.label,
     this.hint,

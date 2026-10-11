@@ -2118,7 +2118,7 @@ class LKo extends L {
   String get awardTop10 => '톱 10';
 
   @override
-  String get awardRegular => '단골';
+  String get awardRegular => '20 클럽';
 
   @override
   String monthToTop10(String lp) {
@@ -2135,11 +2135,11 @@ class LKo extends L {
 
   @override
   String monthRegularProgress(String progress) {
-    return '단골 배지 · 랭크전 ${progress}';
+    return '20 클럽 배지 · 랭크전 ${progress}';
   }
 
   @override
-  String get monthRegularEarned => '이번 달 단골 배지 획득';
+  String get monthRegularEarned => '이번 달 20 클럽 배지 획득';
 
   @override
   String get monthEmptyTitle => '새로운 달';
@@ -2191,5 +2191,58 @@ class LKo extends L {
   @override
   String promotedFrom(String rank) {
     return '${rank}에서';
+  }
+
+  @override
+  String liveOnlineNow(String n) {
+    return '지금 ${n}명 접속 중';
+  }
+
+  @override
+  String liveSearchingNow(String n) {
+    return '${n}명 찾는 중';
+  }
+
+  @override
+  String get inviteCodeLabel => '친구 코드 (선택)';
+
+  @override
+  String get inviteClaimed => '코드 추가됨 · 7일 무료';
+
+  @override
+  String get inviteUnknownCode => '그 코드를 가진 사람이 없어요';
+
+  @override
+  String get inviteNotYearly => '이 코드는 지금 무료 기간을 줄 수 없어요';
+
+  @override
+  String get inviteOwnCode => '내 코드예요';
+
+  @override
+  String get inviteTooLate => '코드는 계정 생성 후 첫 주에만 쓸 수 있어요';
+
+  @override
+  String get inviteFull => '이번 달에 많이 쓰인 코드예요. 다른 코드를 써 보세요';
+
+  @override
+  String get inviteTitle => '친구에게 7일 무료 선물하기';
+
+  @override
+  String get inviteBody => '코드는 연간 플랜에 포함돼요. 친구가 가입할 때 입력하면 돼요.';
+
+  @override
+  String get inviteYourCode => '내 코드';
+
+  @override
+  String inviteJoined(String n) {
+    return '${n}명 가입';
+  }
+
+  @override
+  String get inviteSend => '초대 보내기';
+
+  @override
+  String inviteShareText(String code) {
+    return 'OUTREPD에서 나랑 대결해: 60초 푸시업, 실시간. 가입할 때 내 코드 ${code}를 입력하면 7일 무료야.';
   }
 }

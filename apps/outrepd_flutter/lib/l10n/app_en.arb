@@ -1314,7 +1314,7 @@
   "awardChampion": "Champion",
   "awardPodium": "Podium",
   "awardTop10": "Top 10",
-  "awardRegular": "Regular",
+  "awardRegular": "20 Club",
   "monthToTop10": "{lp} LP to the top 10",
   "@monthToTop10": {
     "placeholders": {
@@ -1332,7 +1332,7 @@
     }
   },
   "monthJoinHint": "Play a ranked duel to get on this month's board",
-  "monthRegularProgress": "Regular badge · {progress} ranked duels",
+  "monthRegularProgress": "20 Club badge · {progress} ranked duels",
   "@monthRegularProgress": {
     "placeholders": {
       "progress": {
@@ -1340,7 +1340,7 @@
       }
     }
   },
-  "monthRegularEarned": "Regular badge earned this month",
+  "monthRegularEarned": "20 Club badge earned this month",
   "monthEmptyTitle": "A fresh month",
   "monthEmptyBody": "Nobody has won LP this month yet. Win the first ranked duel and you lead.",
   "rankedDuelsCount": "{n} ranked duels",
@@ -1386,6 +1386,49 @@
   "@promotedFrom": {
     "placeholders": {
       "rank": {
+        "type": "String"
+      }
+    }
+  },
+  "liveOnlineNow": "{n} online now",
+  "@liveOnlineNow": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "liveSearchingNow": "{n} searching",
+  "@liveSearchingNow": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "inviteCodeLabel": "Friend's code (optional)",
+  "inviteClaimed": "Code added · 7 days free are yours",
+  "inviteUnknownCode": "No lifter has that code",
+  "inviteNotYearly": "That code can't give free days right now",
+  "inviteOwnCode": "That's your own code",
+  "inviteTooLate": "Codes work in an account's first week",
+  "inviteFull": "That code has been used a lot this month. Try another",
+  "inviteTitle": "Give a friend 7 days free",
+  "inviteBody": "Your code comes with the yearly plan. Your friend types it when they sign up.",
+  "inviteYourCode": "Your code",
+  "inviteJoined": "{n} joined",
+  "@inviteJoined": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "inviteSend": "Send invite",
+  "inviteShareText": "Duel me on OUTREPD: 60 seconds of push-ups, live. Use my code {code} when you sign up and get 7 days free.",
+  "@inviteShareText": {
+    "placeholders": {
+      "code": {
         "type": "String"
       }
     }

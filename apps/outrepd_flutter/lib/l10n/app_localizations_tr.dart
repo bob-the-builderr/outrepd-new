@@ -2145,7 +2145,7 @@ class LTr extends L {
   String get awardTop10 => 'İlk 10';
 
   @override
-  String get awardRegular => 'Müdavim';
+  String get awardRegular => '20 Kulübü';
 
   @override
   String monthToTop10(String lp) {
@@ -2162,11 +2162,11 @@ class LTr extends L {
 
   @override
   String monthRegularProgress(String progress) {
-    return 'Müdavim rozeti · ${progress} dereceli düello';
+    return '20 Kulübü rozeti · ${progress} dereceli düello';
   }
 
   @override
-  String get monthRegularEarned => 'Bu ay Müdavim rozetini kazandın';
+  String get monthRegularEarned => 'Bu ay 20 Kulübü rozetini kazandın';
 
   @override
   String get monthEmptyTitle => 'Yepyeni bir ay';
@@ -2218,5 +2218,58 @@ class LTr extends L {
   @override
   String promotedFrom(String rank) {
     return '${rank} seviyesinden';
+  }
+
+  @override
+  String liveOnlineNow(String n) {
+    return 'Şu an ${n} çevrimiçi';
+  }
+
+  @override
+  String liveSearchingNow(String n) {
+    return '${n} arıyor';
+  }
+
+  @override
+  String get inviteCodeLabel => 'Arkadaş kodu (isteğe bağlı)';
+
+  @override
+  String get inviteClaimed => 'Kod eklendi · 7 gün ücretsiz senin';
+
+  @override
+  String get inviteUnknownCode => 'Bu kod kimseye ait değil';
+
+  @override
+  String get inviteNotYearly => 'Bu kod şu an ücretsiz gün veremiyor';
+
+  @override
+  String get inviteOwnCode => 'Bu senin kendi kodun';
+
+  @override
+  String get inviteTooLate => 'Kodlar hesabın ilk haftasında geçerli';
+
+  @override
+  String get inviteFull => 'Bu kod bu ay çok kullanıldı. Başka birini dene';
+
+  @override
+  String get inviteTitle => 'Bir arkadaşına 7 gün ücretsiz ver';
+
+  @override
+  String get inviteBody => 'Kodun yıllık planla gelir. Arkadaşın kaydolurken yazar.';
+
+  @override
+  String get inviteYourCode => 'Kodun';
+
+  @override
+  String inviteJoined(String n) {
+    return '${n} katıldı';
+  }
+
+  @override
+  String get inviteSend => 'Davet gönder';
+
+  @override
+  String inviteShareText(String code) {
+    return 'OUTREPD\'de bana meydan oku: 60 saniye şınav, canlı. Kaydolurken ${code} kodumu kullan, 7 gün ücretsiz kazan.';
   }
 }

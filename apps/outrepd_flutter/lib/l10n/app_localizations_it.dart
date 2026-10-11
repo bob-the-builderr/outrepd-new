@@ -2155,7 +2155,7 @@ class LIt extends L {
   String get awardTop10 => 'Top 10';
 
   @override
-  String get awardRegular => 'Assiduo';
+  String get awardRegular => 'Club 20';
 
   @override
   String monthToTop10(String lp) {
@@ -2172,11 +2172,11 @@ class LIt extends L {
 
   @override
   String monthRegularProgress(String progress) {
-    return 'Badge Assiduo · ${progress} duelli classificati';
+    return 'Badge Club 20 · ${progress} duelli classificati';
   }
 
   @override
-  String get monthRegularEarned => 'Badge Assiduo ottenuto questo mese';
+  String get monthRegularEarned => 'Badge Club 20 ottenuto questo mese';
 
   @override
   String get monthEmptyTitle => 'Un mese nuovo';
@@ -2228,5 +2228,58 @@ class LIt extends L {
   @override
   String promotedFrom(String rank) {
     return 'da ${rank}';
+  }
+
+  @override
+  String liveOnlineNow(String n) {
+    return '${n} online ora';
+  }
+
+  @override
+  String liveSearchingNow(String n) {
+    return '${n} in cerca';
+  }
+
+  @override
+  String get inviteCodeLabel => 'Codice di un amico (facoltativo)';
+
+  @override
+  String get inviteClaimed => 'Codice aggiunto · 7 giorni gratis per te';
+
+  @override
+  String get inviteUnknownCode => 'Nessuno ha questo codice';
+
+  @override
+  String get inviteNotYearly => 'Questo codice ora non può dare giorni gratis';
+
+  @override
+  String get inviteOwnCode => 'Questo è il tuo codice';
+
+  @override
+  String get inviteTooLate => 'I codici valgono nella prima settimana dell\'account';
+
+  @override
+  String get inviteFull => 'Questo codice è stato usato molto questo mese. Provane un altro';
+
+  @override
+  String get inviteTitle => 'Regala a un amico 7 giorni gratis';
+
+  @override
+  String get inviteBody => 'Il tuo codice è incluso nel piano annuale. Il tuo amico lo inserisce all\'iscrizione.';
+
+  @override
+  String get inviteYourCode => 'Il tuo codice';
+
+  @override
+  String inviteJoined(String n) {
+    return '${n} iscritti';
+  }
+
+  @override
+  String get inviteSend => 'Invia invito';
+
+  @override
+  String inviteShareText(String code) {
+    return 'Sfidami su OUTREPD: 60 secondi di flessioni, live. Usa il mio codice ${code} all\'iscrizione e ottieni 7 giorni gratis.';
   }
 }

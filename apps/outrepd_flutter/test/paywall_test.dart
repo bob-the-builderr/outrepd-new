@@ -72,6 +72,9 @@ class _FakeStore implements Storefront {
   @override
   Future<bool> check() async => active;
 
+  @override
+  Future<bool> checkFresh() async => active;
+
   /// Plans the store is still fetching, until the test completes it.
   Completer<List<Plan>>? plansPending;
 

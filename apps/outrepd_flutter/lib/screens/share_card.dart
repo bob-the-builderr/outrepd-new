@@ -43,12 +43,13 @@ Future<void> shareFriendCode(BuildContext context, String code) async {
   }
 }
 
-/// Where a shared card points: the site itself, for now.
-///
-/// Cards used to link `outrepd.com/u/<username>`, and there are no profile
-/// pages on the site — everybody a lifter shared with opened a 404. When the
-/// site gets them, this is the one place that says so.
+/// Where a shared card points: the lifter's own page on the site, their rank
+/// card with the stores under it — and, when the app is installed, their
+/// card in the app (lib/deep_links.dart).
 const kShareSite = 'outrepd.com';
+
+String profilePath(String username) =>
+    '$kShareSite/u/${Uri.encodeComponent(username)}';
 
 /// Everything a share card needs, whether it is drawing your own or
 /// somebody else's — both read the same shape.
@@ -81,7 +82,7 @@ class ShareCardData {
   final int? countryPlace;
   final String? avatarUrl;
 
-  String get profileUrl => kShareSite;
+  String get profileUrl => profilePath(username);
 }
 
 /// One finished duel, for the card shared from its result screen. The card
@@ -119,7 +120,7 @@ class MatchShareData {
   final bool newBest;
   final String? avatarUrl;
 
-  String get profileUrl => kShareSite;
+  String get profileUrl => profilePath(username);
 }
 
 /// Opens the share sheet: a preview of the card, Story/Post to pick the

@@ -10,6 +10,8 @@
 /// the cost of one column.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../backend/backend.dart';
@@ -19,6 +21,7 @@ import '../player_avatar.dart';
 import '../theme.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
+import 'invite_card.dart';
 import 'match_entry.dart';
 import 'other_profile.dart';
 
@@ -34,6 +37,10 @@ class _FriendsScreenState extends State<FriendsScreen> {
 
   List<Friend> _friends = const [];
   List<FriendRequest> _requests = const [];
+
+  /// This account's code, as an invite — shown only when its plan carries
+  /// one (a paid yearly subscription).
+  MyInvites? _invites;
 
   bool _loading = false;
   Object? _error;
@@ -56,6 +63,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
 
   Future<void> _load() async {
     if (!backend.available) return;
+    unawaited(_loadInvites());
     setState(() {
       _loading = true;
       _error = null;
@@ -88,6 +96,17 @@ class _FriendsScreenState extends State<FriendsScreen> {
         _error = error;
         _loading = false;
       });
+    }
+  }
+
+  /// Beside the list, not in it: a card that could not be read is simply not
+  /// shown, and the friends are no less there.
+  Future<void> _loadInvites() async {
+    try {
+      final invites = await backend.myInvites();
+      if (mounted) setState(() => _invites = invites);
+    } on Object catch (error) {
+      debugPrint('Could not read the invite card: $error');
     }
   }
 
@@ -247,6 +266,11 @@ class _FriendsScreenState extends State<FriendsScreen> {
                         count: _requests.length,
                         onTap: _openRequests,
                       ),
+                      if (_invites case final invites? when invites.canInvite)
+                        ...[
+                          const SizedBox(height: 9),
+                          InviteCard(invites: invites),
+                        ],
                     ],
                   ),
                 ),

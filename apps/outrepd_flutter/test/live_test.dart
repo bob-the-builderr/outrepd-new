@@ -57,7 +57,11 @@ class _Live extends NoBackend {
     this.savedSet,
     this.friendList = const [],
     this.startsIn = const Duration(milliseconds: 600),
+    this.around,
   }) : link = link ?? _Link();
+
+  /// Who else is around, for the search screen's count.
+  final LiveOnline? around;
 
   final _Link link;
 
@@ -106,6 +110,9 @@ class _Live extends NoBackend {
 
   @override
   Future<void> leaveLiveQueue() async => leftQueue = true;
+
+  @override
+  Future<LiveOnline?> liveOnline() async => around;
 
   @override
   Future<OpponentSet?> findOpponent() async => savedSet;
@@ -335,6 +342,27 @@ void main() {
     expect(find.text('Race it'), findsOneWidget);
 
     await tester.pumpWidget(const SizedBox());
+  });
+
+  testWidgets('the search says who else is around, and nothing when nobody is',
+      (tester) async {
+    phone(tester);
+    backend = _Live(around: const LiveOnline(searching: 3, online: 23));
+    await tester.pumpWidget(_app(const MatchFlowScreen()));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(find.text('23 online now · 3 searching'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+    // The search's own waits run out before the next screen goes up.
+    await tester.pump(const Duration(seconds: 2));
+
+    backend = _Live(around: const LiveOnline(searching: 0, online: 0));
+    await tester.pumpWidget(_app(const MatchFlowScreen()));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(find.byKey(const Key('liveOnline')), findsNothing);
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump(const Duration(seconds: 2));
   });
 
   testWidgets('a friend online can be asked live; one who is not, sent a set',

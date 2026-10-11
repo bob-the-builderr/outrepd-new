@@ -2111,7 +2111,7 @@ class LJa extends L {
   String get awardTop10 => 'トップ10';
 
   @override
-  String get awardRegular => '常連';
+  String get awardRegular => '20クラブ';
 
   @override
   String monthToTop10(String lp) {
@@ -2128,11 +2128,11 @@ class LJa extends L {
 
   @override
   String monthRegularProgress(String progress) {
-    return '常連バッジ · ランク戦 ${progress}';
+    return '20クラブバッジ · ランク戦 ${progress}';
   }
 
   @override
-  String get monthRegularEarned => '今月の常連バッジを獲得';
+  String get monthRegularEarned => '今月の20クラブバッジを獲得';
 
   @override
   String get monthEmptyTitle => '新しい月';
@@ -2184,5 +2184,58 @@ class LJa extends L {
   @override
   String promotedFrom(String rank) {
     return '${rank}から';
+  }
+
+  @override
+  String liveOnlineNow(String n) {
+    return '${n}人がオンライン';
+  }
+
+  @override
+  String liveSearchingNow(String n) {
+    return '${n}人が検索中';
+  }
+
+  @override
+  String get inviteCodeLabel => '友達のコード（任意）';
+
+  @override
+  String get inviteClaimed => 'コードを追加 · 7日間無料';
+
+  @override
+  String get inviteUnknownCode => 'そのコードのユーザーはいません';
+
+  @override
+  String get inviteNotYearly => 'このコードでは今は無料期間を受け取れません';
+
+  @override
+  String get inviteOwnCode => 'それはあなた自身のコードです';
+
+  @override
+  String get inviteTooLate => 'コードはアカウント作成から1週間以内のみ有効です';
+
+  @override
+  String get inviteFull => 'このコードは今月の上限に達しました。別のコードをお試しください';
+
+  @override
+  String get inviteTitle => '友達に7日間無料をプレゼント';
+
+  @override
+  String get inviteBody => 'コードは年間プランの特典です。友達は登録時に入力します。';
+
+  @override
+  String get inviteYourCode => 'あなたのコード';
+
+  @override
+  String inviteJoined(String n) {
+    return '${n}人が参加';
+  }
+
+  @override
+  String get inviteSend => '招待を送る';
+
+  @override
+  String inviteShareText(String code) {
+    return 'OUTREPDで勝負しよう：60秒の腕立て伏せ、ライブ対戦。登録時にコード${code}を入れると7日間無料。';
   }
 }

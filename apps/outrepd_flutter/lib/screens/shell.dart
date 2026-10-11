@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../app_bottom_nav.dart';
 import '../backend/backend.dart';
 import '../career.dart';
+import '../deep_links.dart';
 import '../push.dart';
 import '../theme.dart';
 import 'friends.dart';
@@ -138,10 +139,14 @@ class _InsideState extends State<_Inside> with WidgetsBindingObserver {
   final _dismissed = <String>{};
   Timer? _invitePoll;
 
+  /// Links to outrepd.com/u/<name>, opened as that lifter's card.
+  StreamSubscription<Uri>? _links;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    _links = listenForLinks(() => context);
     Push.instance.openNotices.addListener(_openNotices);
     Push.instance.arrived.addListener(_checkInvites);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -170,6 +175,7 @@ class _InsideState extends State<_Inside> with WidgetsBindingObserver {
     Push.instance.openNotices.removeListener(_openNotices);
     Push.instance.arrived.removeListener(_checkInvites);
     _invitePoll?.cancel();
+    _links?.cancel();
     super.dispose();
   }
 

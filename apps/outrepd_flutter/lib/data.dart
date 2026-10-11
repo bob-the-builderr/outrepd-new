@@ -468,7 +468,7 @@ const demoOpponents = <Opponent>[
 /// `pubspec.yaml` ever disagree — a version number that quietly lags the
 /// build is worse than none, since it is the first thing anybody quotes in a
 /// bug report.
-const kAppVersion = '1.0.0+1';
+const kAppVersion = '1.1.0+1';
 
 /// The build number the release workflow stamps on a build
 /// (`--dart-define=BUILD_NUMBER=…`). Empty for a local build.

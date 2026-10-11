@@ -1184,6 +1184,10 @@ class _LiveSearchView extends StatefulWidget {
 
 class _LiveSearchViewState extends State<_LiveSearchView> {
   Timer? _tick;
+  Timer? _countPoll;
+
+  /// Who else is around, once the server has said.
+  LiveOnline? _around;
 
   @override
   void initState() {
@@ -1192,12 +1196,25 @@ class _LiveSearchViewState extends State<_LiveSearchView> {
       const Duration(milliseconds: 100),
       (_) => setState(() {}),
     );
+    _count();
+    _countPoll = Timer.periodic(const Duration(seconds: 3), (_) => _count());
   }
 
   @override
   void dispose() {
     _tick?.cancel();
+    _countPoll?.cancel();
     super.dispose();
+  }
+
+  Future<void> _count() async {
+    if (!backend.available) return;
+    try {
+      final around = await backend.liveOnline();
+      if (mounted) setState(() => _around = around);
+    } on Object catch (error) {
+      debugPrint('Could not count who is online: $error');
+    }
   }
 
   @override
@@ -1283,6 +1300,34 @@ class _LiveSearchViewState extends State<_LiveSearchView> {
             ),
           ),
         ),
+        // Only once there is somebody to count: "0 online" tells a lifter
+        // waiting on a search nothing worth reading.
+        if (_around case final around? when around.online > 0) ...[
+          const SizedBox(height: 14),
+          Row(
+            key: const Key('liveOnline'),
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 8,
+                height: 8,
+                decoration: const BoxDecoration(
+                  color: AppColors.success,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: 7),
+              Text(
+                [
+                  l.liveOnlineNow(localNumber(context, around.online)),
+                  if (around.searching > 0)
+                    l.liveSearchingNow(localNumber(context, around.searching)),
+                ].join(' · '),
+                style: TextStyle(color: context.colors.text, fontSize: 13),
+              ),
+            ],
+          ),
+        ],
         const Spacer(flex: 3),
         Padding(
           padding: const EdgeInsets.fromLTRB(18, 0, 18, 22),

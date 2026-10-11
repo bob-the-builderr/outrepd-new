@@ -74,10 +74,8 @@ void main() {
     expect(find.text('47'), findsWidgets);
     expect(find.text('Story'), findsOneWidget);
     expect(find.text('Post'), findsOneWidget);
-    // The cards and the copy-link row point at the site. They used to carry
-    // outrepd.com/u/<name>, a page that does not exist.
-    expect(find.text('outrepd.com'), findsWidgets);
-    expect(find.textContaining('/u/'), findsNothing);
+    // The cards and the copy-link row point at the lifter's own page.
+    expect(find.text('outrepd.com/u/mokhtar_y'), findsWidgets);
   });
 
   testWidgets('switching to Post keeps showing the same data', (

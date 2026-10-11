@@ -116,7 +116,7 @@ void main() {
       expect(find.text('October · 20d 4h left'), findsOneWidget);
       expect(find.text('karimfit'), findsOneWidget);
       expect(find.text('142 LP'), findsOneWidget);
-      expect(find.text('Regular badge · 12/20 ranked duels'), findsOneWidget);
+      expect(find.text('20 Club badge · 12/20 ranked duels'), findsOneWidget);
     });
 
     testWidgets('marks the top ten and draws the line under it', (tester) async {
@@ -190,7 +190,7 @@ void main() {
       await tester.pumpWidget(_app(const RanksScreen()));
       await tester.pumpAndSettle();
 
-      expect(find.text('Regular badge earned this month'), findsOneWidget);
+      expect(find.text('20 Club badge earned this month'), findsOneWidget);
     });
 
     testWidgets('still has the all-time boards a tap away', (tester) async {
@@ -254,7 +254,7 @@ void main() {
       expect(find.text('#7'), findsOneWidget);
       expect(find.text('104 LP · 23 ranked duels'), findsOneWidget);
       expect(find.text('Top 10 · Sep'), findsOneWidget);
-      expect(find.text('Regular · Sep'), findsOneWidget);
+      expect(find.text('20 Club · Sep'), findsOneWidget);
     });
 
     testWidgets('is told once, then marked seen', (tester) async {

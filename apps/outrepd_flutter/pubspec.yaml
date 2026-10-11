@@ -50,6 +50,9 @@ dependencies:
   share_plus: ^13.3.0
   connectivity_plus: ^7.3.1
   url_launcher: ^6.3.1
+  # Links into the app: outrepd.com/u/<name> opens that lifter's card. Already
+  # in the build through supabase_flutter; named here because lib/ uses it.
+  app_links: ^7.2.1
   # The rep counter judges time in milliseconds, and poses carry no timestamp.
   # A stopwatch from here follows a test's fake clock, so a scripted set in a
   # widget test takes as long as it says it does.

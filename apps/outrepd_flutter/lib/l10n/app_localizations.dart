@@ -4072,6 +4072,96 @@ abstract class L {
   /// In en, this message translates to:
   /// **'from {rank}'**
   String promotedFrom(String rank);
+
+  /// No description provided for @liveOnlineNow.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} online now'**
+  String liveOnlineNow(String n);
+
+  /// No description provided for @liveSearchingNow.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} searching'**
+  String liveSearchingNow(String n);
+
+  /// No description provided for @inviteCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend\'s code (optional)'**
+  String get inviteCodeLabel;
+
+  /// No description provided for @inviteClaimed.
+  ///
+  /// In en, this message translates to:
+  /// **'Code added · 7 days free are yours'**
+  String get inviteClaimed;
+
+  /// No description provided for @inviteUnknownCode.
+  ///
+  /// In en, this message translates to:
+  /// **'No lifter has that code'**
+  String get inviteUnknownCode;
+
+  /// No description provided for @inviteNotYearly.
+  ///
+  /// In en, this message translates to:
+  /// **'That code can\'t give free days right now'**
+  String get inviteNotYearly;
+
+  /// No description provided for @inviteOwnCode.
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s your own code'**
+  String get inviteOwnCode;
+
+  /// No description provided for @inviteTooLate.
+  ///
+  /// In en, this message translates to:
+  /// **'Codes work in an account\'s first week'**
+  String get inviteTooLate;
+
+  /// No description provided for @inviteFull.
+  ///
+  /// In en, this message translates to:
+  /// **'That code has been used a lot this month. Try another'**
+  String get inviteFull;
+
+  /// No description provided for @inviteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Give a friend 7 days free'**
+  String get inviteTitle;
+
+  /// No description provided for @inviteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your code comes with the yearly plan. Your friend types it when they sign up.'**
+  String get inviteBody;
+
+  /// No description provided for @inviteYourCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Your code'**
+  String get inviteYourCode;
+
+  /// No description provided for @inviteJoined.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} joined'**
+  String inviteJoined(String n);
+
+  /// No description provided for @inviteSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send invite'**
+  String get inviteSend;
+
+  /// No description provided for @inviteShareText.
+  ///
+  /// In en, this message translates to:
+  /// **'Duel me on OUTREPD: 60 seconds of push-ups, live. Use my code {code} when you sign up and get 7 days free.'**
+  String inviteShareText(String code);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

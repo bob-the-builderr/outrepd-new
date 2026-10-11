@@ -2148,7 +2148,7 @@ class LEn extends L {
   String get awardTop10 => 'Top 10';
 
   @override
-  String get awardRegular => 'Regular';
+  String get awardRegular => '20 Club';
 
   @override
   String monthToTop10(String lp) {
@@ -2165,11 +2165,11 @@ class LEn extends L {
 
   @override
   String monthRegularProgress(String progress) {
-    return 'Regular badge · ${progress} ranked duels';
+    return '20 Club badge · ${progress} ranked duels';
   }
 
   @override
-  String get monthRegularEarned => 'Regular badge earned this month';
+  String get monthRegularEarned => '20 Club badge earned this month';
 
   @override
   String get monthEmptyTitle => 'A fresh month';
@@ -2221,5 +2221,58 @@ class LEn extends L {
   @override
   String promotedFrom(String rank) {
     return 'from ${rank}';
+  }
+
+  @override
+  String liveOnlineNow(String n) {
+    return '${n} online now';
+  }
+
+  @override
+  String liveSearchingNow(String n) {
+    return '${n} searching';
+  }
+
+  @override
+  String get inviteCodeLabel => 'Friend\'s code (optional)';
+
+  @override
+  String get inviteClaimed => 'Code added · 7 days free are yours';
+
+  @override
+  String get inviteUnknownCode => 'No lifter has that code';
+
+  @override
+  String get inviteNotYearly => 'That code can\'t give free days right now';
+
+  @override
+  String get inviteOwnCode => 'That\'s your own code';
+
+  @override
+  String get inviteTooLate => 'Codes work in an account\'s first week';
+
+  @override
+  String get inviteFull => 'That code has been used a lot this month. Try another';
+
+  @override
+  String get inviteTitle => 'Give a friend 7 days free';
+
+  @override
+  String get inviteBody => 'Your code comes with the yearly plan. Your friend types it when they sign up.';
+
+  @override
+  String get inviteYourCode => 'Your code';
+
+  @override
+  String inviteJoined(String n) {
+    return '${n} joined';
+  }
+
+  @override
+  String get inviteSend => 'Send invite';
+
+  @override
+  String inviteShareText(String code) {
+    return 'Duel me on OUTREPD: 60 seconds of push-ups, live. Use my code ${code} when you sign up and get 7 days free.';
   }
 }

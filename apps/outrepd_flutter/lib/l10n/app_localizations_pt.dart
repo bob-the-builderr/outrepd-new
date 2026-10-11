@@ -2152,7 +2152,7 @@ class LPt extends L {
   String get awardTop10 => 'Top 10';
 
   @override
-  String get awardRegular => 'Assíduo';
+  String get awardRegular => 'Clube 20';
 
   @override
   String monthToTop10(String lp) {
@@ -2169,11 +2169,11 @@ class LPt extends L {
 
   @override
   String monthRegularProgress(String progress) {
-    return 'Selo Assíduo · ${progress} duelos ranqueados';
+    return 'Selo Clube 20 · ${progress} duelos ranqueados';
   }
 
   @override
-  String get monthRegularEarned => 'Selo Assíduo conquistado este mês';
+  String get monthRegularEarned => 'Selo Clube 20 conquistado este mês';
 
   @override
   String get monthEmptyTitle => 'Um mês novo';
@@ -2225,5 +2225,58 @@ class LPt extends L {
   @override
   String promotedFrom(String rank) {
     return 'de ${rank}';
+  }
+
+  @override
+  String liveOnlineNow(String n) {
+    return '${n} online agora';
+  }
+
+  @override
+  String liveSearchingNow(String n) {
+    return '${n} procurando';
+  }
+
+  @override
+  String get inviteCodeLabel => 'Código de um amigo (opcional)';
+
+  @override
+  String get inviteClaimed => 'Código adicionado · 7 dias grátis para você';
+
+  @override
+  String get inviteUnknownCode => 'Ninguém tem esse código';
+
+  @override
+  String get inviteNotYearly => 'Esse código não pode dar dias grátis agora';
+
+  @override
+  String get inviteOwnCode => 'Esse é o seu próprio código';
+
+  @override
+  String get inviteTooLate => 'Os códigos valem na primeira semana da conta';
+
+  @override
+  String get inviteFull => 'Esse código foi muito usado este mês. Tente outro';
+
+  @override
+  String get inviteTitle => 'Dê 7 dias grátis a um amigo';
+
+  @override
+  String get inviteBody => 'Seu código vem com o plano anual. Seu amigo digita ao se cadastrar.';
+
+  @override
+  String get inviteYourCode => 'Seu código';
+
+  @override
+  String inviteJoined(String n) {
+    return '${n} entraram';
+  }
+
+  @override
+  String get inviteSend => 'Enviar convite';
+
+  @override
+  String inviteShareText(String code) {
+    return 'Me desafie no OUTREPD: 60 segundos de flexões, ao vivo. Use meu código ${code} ao se cadastrar e ganhe 7 dias grátis.';
   }
 }
