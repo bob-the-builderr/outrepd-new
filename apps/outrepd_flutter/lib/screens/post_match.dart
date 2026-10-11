@@ -168,10 +168,18 @@ class DuelResultView extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(18, 24, 18, 8),
-              child: Column(
-                children: [
+            // Centred in the space above the buttons when it fits, rather
+            // than pinned to the top with half the screen empty under it.
+            child: LayoutBuilder(
+              builder: (context, box) => SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(18, 16, 18, 8),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: (box.maxHeight - 40).clamp(0, double.infinity),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
                   // One line whatever the language: "VOUS AVEZ GAGNÉ" shrinks
                   // to fit rather than breaking the verdict in two.
                   FittedBox(
@@ -199,7 +207,7 @@ class DuelResultView extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: context.colors.muted,
-                      fontSize: 12.5,
+                      fontSize: 14,
                       height: 1.4,
                     ),
                   ),
@@ -231,7 +239,7 @@ class DuelResultView extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: context.colors.muted,
-                        fontSize: 12,
+                        fontSize: 14,
                       ),
                     ),
                   ],
@@ -242,12 +250,14 @@ class DuelResultView extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: AppColors.gold,
-                        fontSize: 13,
+                        fontSize: 15,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],
-                ],
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
@@ -360,7 +370,7 @@ class _Scoreboard extends StatelessWidget {
                 image: avatar.hasPhoto
                     ? FileImage(File(avatar.photoPath!))
                     : null,
-                size: 46,
+                size: 58,
                 ringColour: context.colors.surface,
               ),
               name: l.you,
@@ -374,7 +384,7 @@ class _Scoreboard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 6),
             child: Text(
               '–',
-              style: TextStyle(color: context.colors.faint, fontSize: 15),
+              style: TextStyle(color: context.colors.faint, fontSize: 17),
             ),
           ),
           Expanded(
@@ -382,7 +392,7 @@ class _Scoreboard extends StatelessWidget {
               avatar: PlayerAvatar(
                 name: opponent.username,
                 tierIdx: opponent.tierIdx,
-                size: 46,
+                size: 58,
                 ringColour: context.colors.surface,
               ),
               name: opponent.username,
@@ -436,7 +446,7 @@ class _Side extends StatelessWidget {
           ShrinkText(
             name,
             maxLines: 1,
-            style: TextStyle(color: context.colors.muted, fontSize: 11.5),
+            style: TextStyle(color: context.colors.muted, fontSize: 13),
           ),
           const SizedBox(height: 2),
           FittedBox(
@@ -445,8 +455,8 @@ class _Side extends StatelessWidget {
               localNumber(context, reps),
               style: TextStyle(
                 color: colour,
-                fontSize: 48,
-                fontWeight: FontWeight.w600,
+                fontSize: 62,
+                fontWeight: FontWeight.w800,
                 height: 1.05,
                 fontFeatures: const [FontFeature.tabularFigures()],
               ),
@@ -465,7 +475,7 @@ class _Side extends StatelessWidget {
               maxLines: 1,
               style: TextStyle(
                 color: accent,
-                fontSize: 10.5,
+                fontSize: 12,
                 letterSpacing: 0.6,
               ),
             ),
@@ -491,7 +501,7 @@ class _Chip extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: TextStyle(color: context.colors.text, fontSize: 11.5),
+        style: TextStyle(color: context.colors.text, fontSize: 13),
       ),
     );
   }
@@ -572,7 +582,7 @@ class LpCard extends StatelessWidget {
                 child: ShrinkText(
                   tierLabel(l, now.tierIdx, now.divIdx),
                   maxLines: 1,
-                  style: TextStyle(color: context.colors.text, fontSize: 13),
+                  style: TextStyle(color: context.colors.text, fontSize: 15),
                 ),
               ),
               Text(
@@ -596,7 +606,7 @@ class LpCard extends StatelessWidget {
             '  ·  '
             '${l.toNextTier(localNumber(context, toGo), nextRankName(l, now.tierIdx, now.divIdx))}',
             maxLines: 1,
-            style: TextStyle(color: context.colors.muted, fontSize: 11),
+            style: TextStyle(color: context.colors.muted, fontSize: 13),
           ),
         ],
       ),
@@ -700,20 +710,28 @@ class PromotionView extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(24, 34, 24, 8),
-              child: Column(
-                children: [
+            // Centred in the space above the buttons when it fits, rather
+            // than pinned to the top with half the screen empty under it.
+            child: LayoutBuilder(
+              builder: (context, box) => SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(24, 16, 24, 8),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: (box.maxHeight - 40).clamp(0, double.infinity),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
                   Text(
                     l.promotedLabel.toUpperCase(),
                     style: TextStyle(
                       color: context.colors.muted,
-                      fontSize: 12,
+                      fontSize: 14,
                       letterSpacing: 2,
                     ),
                   ),
                   const SizedBox(height: 18),
-                  _PromotedBadge(tierIdx: tierIdx, size: 140),
+                  _PromotedBadge(tierIdx: tierIdx, size: 172),
                   const SizedBox(height: 18),
                   ShrinkText(
                     tierLabel(l, tierIdx, divIdx),
@@ -733,7 +751,7 @@ class PromotionView extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: context.colors.muted,
-                        fontSize: 13,
+                        fontSize: 15,
                       ),
                     ),
                   ],
@@ -744,7 +762,7 @@ class PromotionView extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: context.colors.muted,
-                        fontSize: 12,
+                        fontSize: 14,
                       ),
                     ),
                   ],
@@ -778,7 +796,7 @@ class PromotionView extends StatelessWidget {
                             ),
                             style: TextStyle(
                               color: context.colors.text,
-                              fontSize: 13,
+                              fontSize: 15,
                               height: 1.5,
                             ),
                           ),
@@ -786,7 +804,9 @@ class PromotionView extends StatelessWidget {
                       ],
                     ),
                   ),
-                ],
+                    ],
+                  ),
+                ),
               ),
             ),
           ),

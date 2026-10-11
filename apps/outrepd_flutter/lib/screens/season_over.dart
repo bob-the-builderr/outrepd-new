@@ -79,14 +79,14 @@ class SeasonOverDialog extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: context.colors.text,
-                fontSize: 20,
+                fontSize: 22,
                 fontWeight: FontWeight.w700,
               ),
             ),
             const SizedBox(height: 2),
             Text(
               monthAndYear(context, lead.season),
-              style: TextStyle(color: context.colors.muted, fontSize: 13),
+              style: TextStyle(color: context.colors.muted, fontSize: 15),
             ),
             const SizedBox(height: 18),
             Icon(
@@ -110,7 +110,7 @@ class SeasonOverDialog extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: context.colors.text,
-                fontSize: 22,
+                fontSize: 24,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -119,7 +119,7 @@ class SeasonOverDialog extends StatelessWidget {
               '${localNumber(context, lead.points)} ${l.lpUnit} · '
               '${l.rankedDuelsCount(localNumber(context, lead.played))}',
               textAlign: TextAlign.center,
-              style: TextStyle(color: context.colors.muted, fontSize: 13),
+              style: TextStyle(color: context.colors.muted, fontSize: 15),
             ),
             const SizedBox(height: 14),
             SeasonAwardChips(awards: awards),
@@ -127,7 +127,7 @@ class SeasonOverDialog extends StatelessWidget {
             Text(
               l.seasonOverBody,
               textAlign: TextAlign.center,
-              style: TextStyle(color: context.colors.muted, fontSize: 13),
+              style: TextStyle(color: context.colors.muted, fontSize: 15),
             ),
             const SizedBox(height: 20),
             Material(
@@ -147,7 +147,7 @@ class SeasonOverDialog extends StatelessWidget {
                       l.seasonPlayCta,
                       style: TextStyle(
                         color: context.colors.background,
-                        fontSize: 16,
+                        fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
                     ),

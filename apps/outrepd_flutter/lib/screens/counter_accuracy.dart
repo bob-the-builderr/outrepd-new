@@ -48,7 +48,7 @@ class CounterAccuracyScreen extends StatelessWidget {
               children: [
                 Text(
                   l.measuredOverSets(localNumber(context, report.sets)),
-                  style: TextStyle(color: context.colors.muted, fontSize: 12),
+                  style: TextStyle(color: context.colors.muted, fontSize: 14),
                 ),
                 if (needed > 0) ...[
                   const SizedBox(height: 8),
@@ -98,7 +98,7 @@ class CounterAccuracyScreen extends StatelessWidget {
                   l.accRecentSets.toUpperCase(),
                   style: TextStyle(
                     color: context.colors.muted,
-                    fontSize: 11,
+                    fontSize: 13,
                     letterSpacing: 0.5,
                   ),
                 ),
@@ -209,7 +209,7 @@ class _Figure extends StatelessWidget {
               softWrap: false,
               style: TextStyle(
                 color: context.colors.muted,
-                fontSize: 9,
+                fontSize: 11,
                 letterSpacing: 0.5,
               ),
             ),
@@ -226,7 +226,7 @@ class _Figure extends StatelessWidget {
                       color: highlight
                           ? context.colors.brand
                           : context.colors.text,
-                      fontSize: 24,
+                      fontSize: 26,
                       height: 1.2,
                     ),
                   ),
@@ -235,7 +235,7 @@ class _Figure extends StatelessWidget {
                       text: ' $unit',
                       style: TextStyle(
                         color: context.colors.muted,
-                        fontSize: 12,
+                        fontSize: 14,
                       ),
                     ),
                 ],
@@ -277,7 +277,7 @@ class _Bias extends StatelessWidget {
           Expanded(
             child: Text(
               l.accTendsTo,
-              style: TextStyle(color: context.colors.muted, fontSize: 12),
+              style: TextStyle(color: context.colors.muted, fontSize: 14),
             ),
           ),
           Flexible(
@@ -286,7 +286,7 @@ class _Bias extends StatelessWidget {
                   ? direction
                   : '$direction · ${reps(bias)}',
               maxLines: 1,
-              style: TextStyle(color: colour, fontSize: 13),
+              style: TextStyle(color: colour, fontSize: 15),
             ),
           ),
         ],
@@ -324,7 +324,7 @@ class _SampleRow extends StatelessWidget {
               '  ·  ${l.accYouSaid} ${localNumber(context, sample.lifter)}',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: context.colors.text, fontSize: 12),
+              style: TextStyle(color: context.colors.text, fontSize: 14),
             ),
           ),
           Text(
@@ -332,7 +332,7 @@ class _SampleRow extends StatelessWidget {
                 ? localNumber(context, 0)
                 : '${sample.error > 0 ? '+' : '−'}'
                     '${localNumber(context, sample.error.abs())}',
-            style: TextStyle(color: colour, fontSize: 12),
+            style: TextStyle(color: colour, fontSize: 14),
           ),
         ],
       ),
@@ -351,7 +351,7 @@ class _Note extends StatelessWidget {
       text,
       style: TextStyle(
         color: context.colors.faint,
-        fontSize: 11,
+        fontSize: 13,
         height: 1.6,
       ),
     );

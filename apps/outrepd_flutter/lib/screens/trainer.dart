@@ -1057,7 +1057,7 @@ class _TrainerScreenState extends State<TrainerScreen>
                             ),
                       style: const TextStyle(
                         color: Color(0xFFC9C1B6),
-                        fontSize: 12,
+                        fontSize: 14,
                         height: 1.45,
                       ),
                     ),
@@ -1117,7 +1117,7 @@ class _TrainerScreenState extends State<TrainerScreen>
                             )
                           : L.of(context).getIntoPosition,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.white, fontSize: 15),
+                      style: const TextStyle(color: Colors.white, fontSize: 17),
                     ),
                   ),
                   const SizedBox(height: 9),
@@ -1128,7 +1128,7 @@ class _TrainerScreenState extends State<TrainerScreen>
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Color(0xFFC9C1B6),
-                        fontSize: 11,
+                        fontSize: 13,
                       ),
                     ),
                   ),
@@ -1152,7 +1152,7 @@ class _TrainerScreenState extends State<TrainerScreen>
                     L.of(context).getReady,
                     style: const TextStyle(
                       color: Color(0xFFC9C1B6),
-                      fontSize: 10,
+                      fontSize: 12,
                       letterSpacing: 3,
                     ),
                   ),
@@ -1195,7 +1195,7 @@ class _TrainerScreenState extends State<TrainerScreen>
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 16,
+                            fontSize: 18,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -1208,7 +1208,7 @@ class _TrainerScreenState extends State<TrainerScreen>
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             color: Color(0xFFC9C1B6),
-                            fontSize: 11,
+                            fontSize: 13,
                             height: 1.6,
                           ),
                         ),
@@ -1261,7 +1261,7 @@ class _TrainerScreenState extends State<TrainerScreen>
                 // installs the app can reach it.
                 child: const Text(
                   'Demo body — no camera in the browser',
-                  style: TextStyle(color: Color(0xFFC9C1B6), fontSize: 11),
+                  style: TextStyle(color: Color(0xFFC9C1B6), fontSize: 13),
                 ),
               ),
             ),
@@ -1282,7 +1282,7 @@ class _TrainerScreenState extends State<TrainerScreen>
                       duel.rankLabel,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(color: Colors.white, fontSize: 10),
+                      style: const TextStyle(color: Colors.white, fontSize: 12),
                     ),
                   )
                 else
@@ -1517,7 +1517,7 @@ class _ScoreCard extends StatelessWidget {
                       formatClock(context, remaining.inSeconds),
                       style: TextStyle(
                         color: live ? Colors.white : context.colors.muted,
-                        fontSize: 22,
+                        fontSize: 24,
                         fontFeatures: const [FontFeature.tabularFigures()],
                       ),
                     ),
@@ -1627,7 +1627,7 @@ class _StopButton extends StatelessWidget {
                   inMatch ? l.giveUp : l.finish,
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 14,
+                    fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -1681,12 +1681,12 @@ class _Fighter extends StatelessWidget {
         ShrinkText(
           name,
           maxLines: 1,
-          style: TextStyle(color: colour, fontSize: 12),
+          style: TextStyle(color: colour, fontSize: 14),
         ),
         ShrinkText(
           l.levelNumber(localNumber(context, ladderLevel(tierIdx, divIdx))),
           maxLines: 1,
-          style: TextStyle(color: context.colors.muted, fontSize: 11),
+          style: TextStyle(color: context.colors.muted, fontSize: 13),
         ),
         const SizedBox(height: 4),
         FittedBox(
@@ -1762,7 +1762,7 @@ class _Cue extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: const TextStyle(color: Colors.white, fontSize: 13),
+        style: const TextStyle(color: Colors.white, fontSize: 15),
       ),
     );
   }

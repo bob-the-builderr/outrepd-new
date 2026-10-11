@@ -90,7 +90,7 @@ class _DownloadDataScreenState extends State<DownloadDataScreen> {
                     l.exportIntro,
                     style: TextStyle(
                       color: context.colors.muted,
-                      fontSize: 12,
+                      fontSize: 14,
                       height: 1.65,
                     ),
                   ),
@@ -140,7 +140,7 @@ class _DownloadDataScreenState extends State<DownloadDataScreen> {
                           l.noLandmarksNote,
                           style: TextStyle(
                             color: context.colors.muted,
-                            fontSize: 11,
+                            fontSize: 13,
                             height: 1.6,
                           ),
                         ),
@@ -152,7 +152,7 @@ class _DownloadDataScreenState extends State<DownloadDataScreen> {
                 const SizedBox(height: 20),
                 Text(
                   l.sendItTo,
-                  style: TextStyle(color: context.colors.muted, fontSize: 11),
+                  style: TextStyle(color: context.colors.muted, fontSize: 13),
                 ),
                 const SizedBox(height: 7),
                 TextField(
@@ -160,13 +160,13 @@ class _DownloadDataScreenState extends State<DownloadDataScreen> {
                   keyboardType: TextInputType.emailAddress,
                   autocorrect: false,
                   onChanged: (_) => setState(() => _sent = false),
-                  style: TextStyle(color: context.colors.text, fontSize: 14),
+                  style: TextStyle(color: context.colors.text, fontSize: 16),
                   cursorColor: context.colors.brand,
                   decoration: InputDecoration(
                     hintText: l.emailHint,
                     hintStyle: TextStyle(
                       color: context.colors.faint,
-                      fontSize: 14,
+                      fontSize: 16,
                     ),
                     filled: true,
                     fillColor: context.colors.surface,
@@ -182,7 +182,7 @@ class _DownloadDataScreenState extends State<DownloadDataScreen> {
                 const SizedBox(height: 7),
                 Text(
                   l.addressNotKept,
-                  style: TextStyle(color: context.colors.faint, fontSize: 11),
+                  style: TextStyle(color: context.colors.faint, fontSize: 13),
                 ),
 
                 if (_sent) ...[
@@ -200,7 +200,7 @@ class _DownloadDataScreenState extends State<DownloadDataScreen> {
                           l.exportSent(_address.text.trim()),
                           style: TextStyle(
                             color: context.colors.text,
-                            fontSize: 12,
+                            fontSize: 14,
                           ),
                         ),
                       ),
@@ -320,7 +320,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                     l.deleteIntro,
                     style: TextStyle(
                       color: context.colors.muted,
-                      fontSize: 12,
+                      fontSize: 14,
                       height: 1.65,
                     ),
                   ),
@@ -371,7 +371,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                     padding: const EdgeInsets.only(bottom: 4),
                     child: Text(
                       l.couldNotLoadProfile,
-                      style: TextStyle(color: context.colors.faint, fontSize: 11),
+                      style: TextStyle(color: context.colors.faint, fontSize: 13),
                     ),
                   ),
 
@@ -393,7 +393,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                         l.wantCopyFirst,
                         style: TextStyle(
                           color: context.colors.text,
-                          fontSize: 12,
+                          fontSize: 14,
                         ),
                       ),
                       const SizedBox(height: 6),
@@ -401,7 +401,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                         l.wantCopyBody,
                         style: TextStyle(
                           color: context.colors.muted,
-                          fontSize: 11,
+                          fontSize: 13,
                           height: 1.55,
                         ),
                       ),
@@ -419,7 +419,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                             l.exportData,
                             style: TextStyle(
                               color: context.colors.brand,
-                              fontSize: 12,
+                              fontSize: 14,
                             ),
                           ),
                         ),
@@ -438,7 +438,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                     key: const Key('deleteKeepsSubscription'),
                     style: TextStyle(
                       color: context.colors.muted,
-                      fontSize: 12,
+                      fontSize: 14,
                       height: 1.65,
                     ),
                   ),
@@ -447,7 +447,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                 const SizedBox(height: 20),
                 Text(
                   l.typeToConfirm(word),
-                  style: TextStyle(color: context.colors.muted, fontSize: 11),
+                  style: TextStyle(color: context.colors.muted, fontSize: 13),
                 ),
                 const SizedBox(height: 7),
                 TextField(
@@ -457,7 +457,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                   onChanged: (_) => setState(() {}),
                   style: TextStyle(
                     color: context.colors.text,
-                    fontSize: 14,
+                    fontSize: 16,
                     letterSpacing: 1,
                   ),
                   cursorColor: context.colors.rival,
@@ -536,14 +536,14 @@ class _Lost extends StatelessWidget {
       children: [
         Text(
           label,
-          style: TextStyle(color: context.colors.muted, fontSize: 12),
+          style: TextStyle(color: context.colors.muted, fontSize: 14),
         ),
         Flexible(
           child: Text(
             value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: context.colors.text, fontSize: 12),
+            style: TextStyle(color: context.colors.text, fontSize: 14),
           ),
         ),
       ],

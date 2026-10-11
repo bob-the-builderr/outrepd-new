@@ -75,6 +75,16 @@ class MatchScreen extends StatelessWidget {
   }
 }
 
+/// The badge on this tab: half the width on a tall phone, smaller on a
+/// short one, so the rank fills the top of the screen and the buttons stay
+/// in reach.
+double _badgeSize(BuildContext context) {
+  final screen = MediaQuery.sizeOf(context);
+  final byWidth = screen.width * 0.5;
+  final byHeight = screen.height * 0.24;
+  return (byWidth < byHeight ? byWidth : byHeight).clamp(100.0, 220.0);
+}
+
 // ─────────────────────────────── unranked ────────────────────────────────────
 
 /// A new account: no tier, a dashed outline where the badge goes, and either
@@ -91,15 +101,13 @@ class _Unranked extends StatelessWidget {
 
     return Column(
       children: [
-        TierBadge.unranked(
-          size: (MediaQuery.of(context).size.width * 0.32).clamp(76.0, 110.0),
-        ),
+        TierBadge.unranked(size: _badgeSize(context)),
         const SizedBox(height: 9),
         Text(
           l.unranked,
           style: TextStyle(
             color: context.colors.text,
-            fontSize: 18,
+            fontSize: 20,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -113,7 +121,7 @@ class _Unranked extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: context.colors.muted,
-                fontSize: 11,
+                fontSize: 13,
                 height: 1.6,
               ),
             ),
@@ -147,7 +155,7 @@ class _Unranked extends StatelessWidget {
               localNumber(context, kPlacementDuels),
               localNumber(context, profile.placementsLeft),
             ),
-            style: TextStyle(color: context.colors.muted, fontSize: 11),
+            style: TextStyle(color: context.colors.muted, fontSize: 13),
           ),
         ],
       ],
@@ -182,7 +190,7 @@ class _PlacementActions extends StatelessWidget {
               localNumber(context, kDuelLength.inSeconds),
             ),
             textAlign: TextAlign.center,
-            style: TextStyle(color: context.colors.muted, fontSize: 11),
+            style: TextStyle(color: context.colors.muted, fontSize: 13),
           ),
           const SizedBox(height: 18),
           // Before the first duel the useful second option is a dry run, not
@@ -198,7 +206,7 @@ class _PlacementActions extends StatelessWidget {
                 ),
                 child: Text(
                   l.practiceFirst,
-                  style: TextStyle(color: context.colors.muted, fontSize: 12),
+                  style: TextStyle(color: context.colors.muted, fontSize: 14),
                 ),
               ),
             ),
@@ -243,7 +251,7 @@ class _OfflineActions extends StatelessWidget {
               const SizedBox(width: 7),
               Text(
                 l.noConnection,
-                style: TextStyle(color: context.colors.muted, fontSize: 12),
+                style: TextStyle(color: context.colors.muted, fontSize: 14),
               ),
             ],
           ),
@@ -262,7 +270,7 @@ class _OfflineActions extends StatelessWidget {
               l.findMatch,
               style: TextStyle(
                 color: context.colors.faint,
-                fontSize: 16,
+                fontSize: 18,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -282,7 +290,7 @@ class _OfflineActions extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Text(
                 l.retry,
-                style: TextStyle(color: context.colors.muted, fontSize: 12),
+                style: TextStyle(color: context.colors.muted, fontSize: 14),
               ),
             ),
           ),
@@ -359,7 +367,7 @@ class _TopRowState extends State<_TopRow> {
             ),
             child: Text(
               l.dayStreakCount(localNumber(context, profile.dayStreak)),
-              style: TextStyle(color: context.colors.text, fontSize: 12),
+              style: TextStyle(color: context.colors.text, fontSize: 14),
             ),
           ),
         const Spacer(),
@@ -422,9 +430,9 @@ class _Rank extends StatelessWidget {
 
     return Column(
       children: [
-        // Sized off the viewport so it holds its proportion on a small phone,
-        // but capped — past about 140dp it starts pushing the buttons under
-        // the fold, which is the one thing this screen must not do.
+        // Sized off the screen's width and height together: big — the badge
+        // is what this tab is about — but never so tall on a short phone
+        // that the buttons go under the fold.
         GestureDetector(
           onTap: () => Navigator.of(context).push(
             MaterialPageRoute(
@@ -433,7 +441,7 @@ class _Rank extends StatelessWidget {
           ),
           child: TierBadge(
             tierIndex: profile.tierIdx,
-            size: (MediaQuery.of(context).size.width * 0.32).clamp(96.0, 132.0),
+            size: _badgeSize(context),
           ),
         ),
         const SizedBox(height: 18),
@@ -441,8 +449,8 @@ class _Rank extends StatelessWidget {
           tierLabel(l, profile.tierIdx, profile.divIdx),
           style: TextStyle(
             color: context.colors.text,
-            fontSize: 26,
-            fontWeight: FontWeight.w600,
+            fontSize: 32,
+            fontWeight: FontWeight.w800,
           ),
         ),
         const SizedBox(height: 16),
@@ -450,7 +458,7 @@ class _Rank extends StatelessWidget {
           borderRadius: BorderRadius.circular(3),
           child: LinearProgressIndicator(
             value: profile.lp / 100,
-            minHeight: 5,
+            minHeight: 8,
             backgroundColor: context.colors.surfaceRaised,
             valueColor: AlwaysStoppedAnimation(context.colors.brand),
           ),
@@ -463,7 +471,7 @@ class _Rank extends StatelessWidget {
           '${localNumber(context, profile.lp)} / '
           '${localNumber(context, 100)} LP · '
           '${l.toNextTier(localNumber(context, toNext), nextRankName(l, profile.tierIdx, profile.divIdx))}',
-          style: TextStyle(color: context.colors.muted, fontSize: 12),
+          style: TextStyle(color: context.colors.muted, fontSize: 14),
         ),
       ],
     );
@@ -495,7 +503,7 @@ class _Actions extends StatelessWidget {
         Text(
           l.rankedTerms(localNumber(context, kDuelLength.inSeconds)),
           textAlign: TextAlign.center,
-          style: TextStyle(color: context.colors.muted, fontSize: 12),
+          style: TextStyle(color: context.colors.muted, fontSize: 14),
         ),
 
         const SizedBox(height: 20),
@@ -513,7 +521,7 @@ class _Actions extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               child: Text(
                 l.practiceTerms,
-                style: TextStyle(color: context.colors.faint, fontSize: 13),
+                style: TextStyle(color: context.colors.faint, fontSize: 15),
               ),
             ),
           ),
@@ -546,7 +554,7 @@ class _FilledAction extends StatelessWidget {
                 // The page background is the only colour dark enough to read
                 // on `brand`.
                 color: context.colors.background,
-                fontSize: 17,
+                fontSize: 19,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -579,7 +587,7 @@ class _OutlinedAction extends StatelessWidget {
             label,
             style: TextStyle(
               color: context.colors.text,
-              fontSize: 16,
+              fontSize: 18,
               fontWeight: FontWeight.w500,
             ),
           ),

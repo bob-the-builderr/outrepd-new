@@ -58,7 +58,7 @@ class ProgressionScreen extends StatelessWidget {
                       l.yourClimb,
                       style: TextStyle(
                         color: context.colors.text,
-                        fontSize: 18,
+                        fontSize: 20,
                         fontWeight: FontWeight.w600,
                       ),
                       maxLines: 1,
@@ -90,7 +90,7 @@ class ProgressionScreen extends StatelessWidget {
                           ),
                           style: TextStyle(
                             color: context.colors.muted,
-                            fontSize: 12,
+                            fontSize: 14,
                           ),
                         ),
                       ),
@@ -126,7 +126,7 @@ class ProgressionScreen extends StatelessWidget {
                                     color: reached
                                         ? context.colors.text
                                         : context.colors.muted,
-                                    fontSize: 15,
+                                    fontSize: 17,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),

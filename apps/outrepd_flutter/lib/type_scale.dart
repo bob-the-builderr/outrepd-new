@@ -10,11 +10,16 @@
 /// | step      | size | used for                                        |
 /// |-----------|------|-------------------------------------------------|
 /// | `display` | 44   | the one number a screen is about                |
-/// | `title`   | 24   | screen titles, a rank, a username               |
-/// | `heading` | 18   | section headers, an exercise name, a big button |
-/// | `body`    | 15   | ordinary text                                   |
-/// | `label`   | 13   | captions, hints, the second line of a row       |
-/// | `micro`   | 11   | overlines — tracked out and upper-cased         |
+/// | `title`   | 26   | screen titles, a rank, a username               |
+/// | `heading` | 20   | section headers, an exercise name, a big button |
+/// | `body`    | 17   | ordinary text                                   |
+/// | `label`   | 15   | captions, hints, the second line of a row       |
+/// | `micro`   | 13   | overlines — tracked out and upper-cased         |
+///
+/// Two steps larger than they first were, with every size set by hand
+/// across the app: on a real phone the screens read smaller than the
+/// mockups they were approved from, which drew the same sizes on a frame
+/// half as wide.
 ///
 /// Colour is deliberately NOT baked in. Every style arrives colourless and the
 /// caller says what it is for — `context.type.label` on a muted caption, on a
@@ -56,31 +61,31 @@ class AppType {
       );
 
   TextStyle get title => const TextStyle(
-        fontSize: 24,
+        fontSize: 26,
         fontWeight: FontWeight.w800,
         letterSpacing: -0.4,
       );
 
   TextStyle get heading => const TextStyle(
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: FontWeight.w800,
         letterSpacing: -0.2,
       );
 
   TextStyle get body => const TextStyle(
-        fontSize: 15,
+        fontSize: 17,
         fontWeight: FontWeight.w500,
       );
 
   TextStyle get label => const TextStyle(
-        fontSize: 13,
+        fontSize: 15,
         fontWeight: FontWeight.w600,
       );
 
-  /// An overline. Upper-cased at the call site — at 11px the extra tracking is
+  /// An overline. Upper-cased at the call site — at this size the tracking is
   /// what keeps it legible rather than cramped.
   TextStyle get micro => const TextStyle(
-        fontSize: 11,
+        fontSize: 13,
         fontWeight: FontWeight.w700,
         letterSpacing: 1.6,
       );
@@ -88,7 +93,7 @@ class AppType {
   /// A number inside a row of text — a stat value, a figure in a table. Heavier
   /// than the text around it and tabular, so a column of them lines up.
   TextStyle get figure => const TextStyle(
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: FontWeight.w800,
         fontFeatures: [FontFeature.tabularFigures()],
       );

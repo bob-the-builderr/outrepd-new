@@ -102,7 +102,7 @@ class _AuthEntryScreenState extends State<AuthEntryScreen> {
                 child: Text.rich(
                   TextSpan(
                     text: '${l.alreadyHaveAccountQuestion} ',
-                    style: TextStyle(color: context.colors.muted, fontSize: 13),
+                    style: TextStyle(color: context.colors.muted, fontSize: 15),
                     children: [
                       TextSpan(
                         text: l.logInAction,
@@ -118,7 +118,7 @@ class _AuthEntryScreenState extends State<AuthEntryScreen> {
               const SizedBox(height: 6),
               Text.rich(
                 TextSpan(
-                  style: TextStyle(color: context.colors.faint, fontSize: 11),
+                  style: TextStyle(color: context.colors.faint, fontSize: 13),
                   children: [
                     TextSpan(text: '${l.obTermsIntro} '),
                     TextSpan(
@@ -397,7 +397,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(height: 14),
               Text.rich(
                 TextSpan(
-                  style: TextStyle(color: context.colors.faint, fontSize: 11),
+                  style: TextStyle(color: context.colors.faint, fontSize: 13),
                   children: [
                     TextSpan(text: '${l.obTermsIntro} '),
                     TextSpan(
@@ -788,7 +788,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                       text: '${l.didntGetIt} ',
                       style: TextStyle(
                         color: context.colors.muted,
-                        fontSize: 13,
+                        fontSize: 15,
                       ),
                       children: [
                         TextSpan(
@@ -813,7 +813,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     l.wrongEmailGoBack,
-                    style: TextStyle(color: context.colors.faint, fontSize: 12),
+                    style: TextStyle(color: context.colors.faint, fontSize: 14),
                   ),
                 ),
               ),
@@ -862,7 +862,7 @@ class _CodeBox extends StatelessWidget {
         digit,
         style: TextStyle(
           color: error ? AppColors.loss : context.colors.text,
-          fontSize: 20,
+          fontSize: 22,
           fontWeight: FontWeight.w700,
         ),
       ),
@@ -912,11 +912,11 @@ class _Field extends StatelessWidget {
           keyboardType: keyboardType,
           onChanged: onChanged,
           onSubmitted: onSubmitted,
-          style: TextStyle(color: context.colors.text, fontSize: 16),
+          style: TextStyle(color: context.colors.text, fontSize: 18),
           cursorColor: context.colors.brand,
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: TextStyle(color: context.colors.faint, fontSize: 16),
+            hintStyle: TextStyle(color: context.colors.faint, fontSize: 18),
             filled: true,
             fillColor: context.colors.surface,
             contentPadding: const EdgeInsets.symmetric(

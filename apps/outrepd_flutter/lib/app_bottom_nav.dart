@@ -156,7 +156,7 @@ class _NavItem extends StatelessWidget {
                               badgeCount > 9 ? '9+' : '$badgeCount',
                               style: TextStyle(
                                 color: context.colors.background,
-                                fontSize: 9,
+                                fontSize: 11,
                                 height: 1.2,
                                 fontFeatures: const [
                                   FontFeature.tabularFigures(),
@@ -178,7 +178,7 @@ class _NavItem extends StatelessWidget {
                       maxLines: 1,
                       style: TextStyle(
                         color: colour,
-                        fontSize: 10,
+                        fontSize: 12,
                         height: 1.2,
                       ),
                     ),

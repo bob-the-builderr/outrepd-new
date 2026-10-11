@@ -272,7 +272,7 @@ class _Identity extends StatelessWidget {
               profile.username,
               style: TextStyle(
                 color: context.colors.text,
-                fontSize: 20,
+                fontSize: 22,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -309,7 +309,7 @@ class _Identity extends StatelessWidget {
                       '#${profile.friendCode}',
                       style: TextStyle(
                         color: context.colors.muted,
-                        fontSize: 12,
+                        fontSize: 14,
                       ),
                     ),
                     const SizedBox(width: 4),
@@ -356,7 +356,7 @@ class _Identity extends StatelessWidget {
               '${tierLabel(l, profile.tierIdx, profile.divIdx)} · '
               '${localNumber(context, profile.lp)} / '
               '${localNumber(context, 100)} LP',
-              style: TextStyle(color: context.colors.muted, fontSize: 12),
+              style: TextStyle(color: context.colors.muted, fontSize: 14),
             ),
           ),
         ),
@@ -423,7 +423,7 @@ class _CardLabel extends StatelessWidget {
       overflow: TextOverflow.ellipsis,
       style: TextStyle(
         color: context.colors.muted,
-        fontSize: 9,
+        fontSize: 11,
         letterSpacing: 0.5,
       ),
     );
@@ -505,7 +505,7 @@ class _RankCard extends StatelessWidget {
                 color: position == null
                     ? context.colors.muted
                     : context.colors.text,
-                fontSize: 16,
+                fontSize: 18,
                 fontFeatures: const [FontFeature.tabularFigures()],
               ),
             ),
@@ -610,11 +610,11 @@ class _Stat extends StatelessWidget {
   Widget build(BuildContext context) {
     final big = TextStyle(
       color: colour ?? context.colors.text,
-      fontSize: 24,
+      fontSize: 26,
       height: 1.2,
       fontFeatures: const [FontFeature.tabularFigures()],
     );
-    final small = TextStyle(color: context.colors.muted, fontSize: 13);
+    final small = TextStyle(color: context.colors.muted, fontSize: 15);
 
     return _Card(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
@@ -681,7 +681,7 @@ class _WeekChart extends StatelessWidget {
                 Expanded(child: _CardLabel(l.last7Days)),
                 Text(
                   l.repsCount(localNumber(context, total)),
-                  style: TextStyle(color: context.colors.muted, fontSize: 10),
+                  style: TextStyle(color: context.colors.muted, fontSize: 12),
                 ),
               ],
             ),
@@ -722,7 +722,7 @@ class _WeekChart extends StatelessWidget {
                       maxLines: 1,
                       style: TextStyle(
                         color: context.colors.faint,
-                        fontSize: 9,
+                        fontSize: 11,
                       ),
                     ),
                   ),
@@ -797,7 +797,7 @@ class _Recent extends StatelessWidget {
                   l.recent.toUpperCase(),
                   style: TextStyle(
                     color: context.colors.text,
-                    fontSize: 12,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 0.5,
                   ),
@@ -813,7 +813,7 @@ class _Recent extends StatelessWidget {
                   ),
                   child: Text(
                     l.viewAll,
-                    style: TextStyle(color: context.colors.muted, fontSize: 11),
+                    style: TextStyle(color: context.colors.muted, fontSize: 13),
                   ),
                 ),
               ),
@@ -874,7 +874,7 @@ class _RecentRow extends StatelessWidget {
                       : l.lostVs(match.opponent),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: context.colors.text, fontSize: 12),
+                  style: TextStyle(color: context.colors.text, fontSize: 14),
                 ),
                 Text(
                   '${localNumber(context, match.userReps)} – '
@@ -882,7 +882,7 @@ class _RecentRow extends StatelessWidget {
                   '${_ago(context, match)}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: context.colors.muted, fontSize: 10),
+                  style: TextStyle(color: context.colors.muted, fontSize: 12),
                 ),
               ],
             ),
@@ -893,7 +893,7 @@ class _RecentRow extends StatelessWidget {
             '${localNumber(context, match.lpChange.abs())}',
             style: TextStyle(
               color: colour,
-              fontSize: 12,
+              fontSize: 14,
               fontFeatures: const [FontFeature.tabularFigures()],
             ),
           ),
@@ -950,7 +950,7 @@ class _AchievementsRow extends StatelessWidget {
             Expanded(
               child: Text(
                 l.awards,
-                style: TextStyle(color: context.colors.text, fontSize: 12),
+                style: TextStyle(color: context.colors.text, fontSize: 14),
               ),
             ),
             Text(
@@ -958,7 +958,7 @@ class _AchievementsRow extends StatelessWidget {
                 localNumber(context, owned),
                 localNumber(context, kTitles.length),
               ),
-              style: TextStyle(color: context.colors.muted, fontSize: 11),
+              style: TextStyle(color: context.colors.muted, fontSize: 13),
             ),
             const SizedBox(width: 6),
             Icon(Icons.chevron_right, size: 14, color: context.colors.muted),

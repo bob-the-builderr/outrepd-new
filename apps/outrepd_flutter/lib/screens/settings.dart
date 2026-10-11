@@ -275,7 +275,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           Center(
             child: Text(
               '${l.version} $appVersionLabel',
-              style: TextStyle(color: context.colors.faint, fontSize: 12),
+              style: TextStyle(color: context.colors.faint, fontSize: 14),
             ),
           ),
         ],
@@ -361,7 +361,7 @@ class _Note extends StatelessWidget {
     padding: const EdgeInsets.fromLTRB(4, 0, 4, 22),
     child: Text(
       text,
-      style: TextStyle(color: context.colors.faint, fontSize: 11, height: 1.55),
+      style: TextStyle(color: context.colors.faint, fontSize: 13, height: 1.55),
     ),
   );
 }

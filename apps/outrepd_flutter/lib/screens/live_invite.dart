@@ -196,7 +196,7 @@ class _LiveInviteScreenState extends State<LiveInviteScreen> {
             const SizedBox(height: 28),
             Text(
               l.friendlyNoRank,
-              style: TextStyle(color: context.colors.muted, fontSize: 13),
+              style: TextStyle(color: context.colors.muted, fontSize: 15),
             ),
             const Spacer(flex: 2),
             Container(
@@ -227,7 +227,7 @@ class _LiveInviteScreenState extends State<LiveInviteScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: context.colors.text,
-                  fontSize: 20,
+                  fontSize: 22,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -236,7 +236,7 @@ class _LiveInviteScreenState extends State<LiveInviteScreen> {
               const SizedBox(height: 8),
               Text(
                 l.weSentThemANotice,
-                style: TextStyle(color: context.colors.muted, fontSize: 13),
+                style: TextStyle(color: context.colors.muted, fontSize: 15),
               ),
               const SizedBox(height: 24),
               Text(
@@ -249,7 +249,7 @@ class _LiveInviteScreenState extends State<LiveInviteScreen> {
               ),
               Text(
                 l.untilInviteRunsOut,
-                style: TextStyle(color: context.colors.faint, fontSize: 12),
+                style: TextStyle(color: context.colors.faint, fontSize: 14),
               ),
             ],
             const Spacer(flex: 3),
@@ -359,13 +359,13 @@ class _LiveInviteBannerState extends State<LiveInviteBanner> {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: context.colors.text,
-                      fontSize: 15,
+                      fontSize: 17,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                   Text(
                     l.timeLeft(formatClock(context, seconds)),
-                    style: TextStyle(color: context.colors.muted, fontSize: 12),
+                    style: TextStyle(color: context.colors.muted, fontSize: 14),
                   ),
                 ],
               ),

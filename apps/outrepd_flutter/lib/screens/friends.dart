@@ -191,7 +191,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
         child: Text(
           l.noConnectionBody,
           textAlign: TextAlign.center,
-          style: TextStyle(color: context.colors.muted, fontSize: 13),
+          style: TextStyle(color: context.colors.muted, fontSize: 15),
         ),
       );
     } else if (_friends.isEmpty && !searching) {
@@ -210,7 +210,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
         child: Text(
           l.noFriendsMatch,
           textAlign: TextAlign.center,
-          style: TextStyle(color: context.colors.muted, fontSize: 13),
+          style: TextStyle(color: context.colors.muted, fontSize: 15),
         ),
       );
     }
@@ -238,7 +238,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                                 l.tabFriends.toUpperCase(),
                                 style: TextStyle(
                                   color: context.colors.text,
-                                  fontSize: 22,
+                                  fontSize: 24,
                                   fontWeight: FontWeight.w600,
                                   letterSpacing: 0.5,
                                 ),
@@ -431,7 +431,7 @@ class _AddFriendSheetState extends State<_AddFriendSheet> {
                   autocorrect: false,
                   onChanged: (_) => setState(() {}),
                   onSubmitted: (_) => _send(),
-                  style: TextStyle(color: context.colors.text, fontSize: 16),
+                  style: TextStyle(color: context.colors.text, fontSize: 18),
                   cursorColor: context.colors.brand,
                   decoration: InputDecoration(
                     isDense: true,
@@ -444,7 +444,7 @@ class _AddFriendSheetState extends State<_AddFriendSheet> {
               const SizedBox(height: 8),
               Text(
                 _error ?? '',
-                style: TextStyle(color: AppColors.loss, fontSize: 12),
+                style: TextStyle(color: AppColors.loss, fontSize: 14),
               ),
               const SizedBox(height: 8),
               SizedBox(
@@ -491,7 +491,7 @@ class _RequestsSheet extends StatelessWidget {
             l.incomingRequests,
             style: TextStyle(
               color: context.colors.text,
-              fontSize: 17,
+              fontSize: 19,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -501,7 +501,7 @@ class _RequestsSheet extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Text(
                 l.noRequestsWaiting,
-                style: TextStyle(color: context.colors.muted, fontSize: 13),
+                style: TextStyle(color: context.colors.muted, fontSize: 15),
               ),
             ),
           for (final request in requests)
@@ -585,7 +585,7 @@ class _RequestCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: context.colors.text,
-                        fontSize: 16,
+                        fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -594,7 +594,7 @@ class _RequestCard extends StatelessWidget {
                       _asked(context),
                       style: TextStyle(
                         color: context.colors.muted,
-                        fontSize: 12,
+                        fontSize: 14,
                       ),
                     ),
                   ],
@@ -684,7 +684,7 @@ class _Stat extends StatelessWidget {
               maxLines: 1,
               style: TextStyle(
                 color: colour ?? context.colors.text,
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -695,7 +695,7 @@ class _Stat extends StatelessWidget {
             child: Text(
               label,
               maxLines: 1,
-              style: TextStyle(color: context.colors.muted, fontSize: 11),
+              style: TextStyle(color: context.colors.muted, fontSize: 13),
             ),
           ),
         ],
@@ -739,7 +739,7 @@ class _AnswerButton extends StatelessWidget {
             label,
             style: TextStyle(
               color: filled ? context.colors.background : colour,
-              fontSize: 15,
+              fontSize: 17,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -774,7 +774,7 @@ class _SearchField extends StatelessWidget {
             child: TextField(
               controller: controller,
               onChanged: onChanged,
-              style: TextStyle(color: context.colors.text, fontSize: 13),
+              style: TextStyle(color: context.colors.text, fontSize: 15),
               cursorColor: context.colors.brand,
               decoration: InputDecoration(
                 isDense: true,
@@ -783,7 +783,7 @@ class _SearchField extends StatelessWidget {
                 // second one inside it.
                 contentPadding: EdgeInsets.zero,
                 hintText: L.of(context).searchByUsername,
-                hintStyle: TextStyle(color: context.colors.faint, fontSize: 13),
+                hintStyle: TextStyle(color: context.colors.faint, fontSize: 15),
               ),
             ),
           ),
@@ -830,7 +830,7 @@ class _RequestsRow extends StatelessWidget {
             Expanded(
               child: Text(
                 l.incomingRequests,
-                style: TextStyle(color: context.colors.text, fontSize: 13),
+                style: TextStyle(color: context.colors.text, fontSize: 15),
               ),
             ),
             // A row that is always here to check needs no badge to justify
@@ -847,7 +847,7 @@ class _RequestsRow extends StatelessWidget {
                   localNumber(context, count),
                   style: TextStyle(
                     color: context.colors.background,
-                    fontSize: 11,
+                    fontSize: 13,
                   ),
                 ),
               ),
@@ -876,7 +876,7 @@ class _SectionLabel extends StatelessWidget {
         text.toUpperCase(),
         style: TextStyle(
           color: context.colors.muted,
-          fontSize: 11,
+          fontSize: 13,
           letterSpacing: 0.5,
         ),
       ),
@@ -935,7 +935,7 @@ class _FriendRow extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: context.colors.text,
-                          fontSize: 13,
+                          fontSize: 15,
                         ),
                       ),
                       const SizedBox(height: 2),
@@ -944,7 +944,7 @@ class _FriendRow extends StatelessWidget {
                         maxLines: 1,
                         style: TextStyle(
                           color: context.colors.muted,
-                          fontSize: 10,
+                          fontSize: 12,
                         ),
                       ),
                     ],
@@ -977,16 +977,16 @@ class _Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 32,
-      height: 32,
+      width: 44,
+      height: 44,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
           Builder(
             builder: (context) {
               final fallback = Container(
-                width: 32,
-                height: 32,
+                width: 44,
+                height: 44,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -996,15 +996,15 @@ class _Avatar extends StatelessWidget {
                   friend.username.isEmpty
                       ? '?'
                       : friend.username.characters.first.toUpperCase(),
-                  style: TextStyle(color: context.colors.text, fontSize: 13),
+                  style: TextStyle(color: context.colors.text, fontSize: 19),
                 ),
               );
               if (friend.avatarUrl == null) return fallback;
               return ClipOval(
                 child: Image.network(
                   friend.avatarUrl!,
-                  width: 32,
-                  height: 32,
+                  width: 44,
+                  height: 44,
                   fit: BoxFit.cover,
                   loadingBuilder: (context, child, progress) =>
                       progress == null ? child : fallback,
@@ -1081,7 +1081,7 @@ class _ActionButton extends StatelessWidget {
             // On the filled button the label is the page's background colour,
             // which is the only thing dark enough to read on `brand`.
             color: online ? context.colors.background : context.colors.text,
-            fontSize: 11,
+            fontSize: 13,
           ),
         ),
       ),

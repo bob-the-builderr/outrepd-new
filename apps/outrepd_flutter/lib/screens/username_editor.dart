@@ -228,7 +228,7 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
                       '@',
                       style: TextStyle(
                         color: context.colors.faint,
-                        fontSize: 16,
+                        fontSize: 18,
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -239,7 +239,7 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
                         onChanged: _onChanged,
                         style: TextStyle(
                           color: context.colors.text,
-                          fontSize: 16,
+                          fontSize: 18,
                         ),
                         cursorColor: context.colors.brand,
                         decoration: const InputDecoration(

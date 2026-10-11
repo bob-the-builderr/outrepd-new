@@ -329,7 +329,7 @@ class _Primary extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: on ? context.colors.background : context.colors.faint,
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -358,7 +358,7 @@ class _Secondary extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           child: Text(
             label,
-            style: TextStyle(color: context.colors.muted, fontSize: 13),
+            style: TextStyle(color: context.colors.muted, fontSize: 15),
           ),
         ),
       ),
@@ -427,7 +427,7 @@ class _Title extends StatelessWidget {
           text,
           style: TextStyle(
             color: context.colors.text,
-            fontSize: 20,
+            fontSize: 22,
             height: 1.35,
             fontWeight: FontWeight.w500,
           ),
@@ -438,7 +438,7 @@ class _Title extends StatelessWidget {
             body,
             style: TextStyle(
               color: context.colors.muted,
-              fontSize: 12,
+              fontSize: 14,
               height: 1.6,
             ),
           ),
@@ -485,7 +485,7 @@ class _Tick extends StatelessWidget {
           Expanded(
             child: Text(
               label,
-              style: TextStyle(color: context.colors.text, fontSize: 12),
+              style: TextStyle(color: context.colors.text, fontSize: 14),
             ),
           ),
         ],
@@ -526,7 +526,7 @@ class _Welcome extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: context.colors.muted,
-                fontSize: 15,
+                fontSize: 17,
                 height: 1.6,
               ),
             ),
@@ -569,7 +569,7 @@ class _Idea extends StatelessWidget {
               l.obIdeaTitle,
               style: TextStyle(
                 color: context.colors.text,
-                fontSize: 24,
+                fontSize: 26,
                 height: 1.3,
                 fontWeight: FontWeight.w600,
               ),
@@ -606,7 +606,7 @@ class _IdeaLine extends StatelessWidget {
               text,
               style: TextStyle(
                 color: context.colors.text,
-                fontSize: 16,
+                fontSize: 18,
                 height: 1.4,
               ),
             ),
@@ -654,7 +654,7 @@ class _BeforeYouStart extends StatelessWidget {
                 children: [
                   Text(
                     l.obAgeQuestion,
-                    style: TextStyle(color: context.colors.text, fontSize: 13),
+                    style: TextStyle(color: context.colors.text, fontSize: 15),
                   ),
                   const SizedBox(height: 11),
                   Row(
@@ -688,7 +688,7 @@ class _BeforeYouStart extends StatelessWidget {
                 l.obUnder16Blocked,
                 style: TextStyle(
                   color: context.colors.rival,
-                  fontSize: 12,
+                  fontSize: 14,
                   height: 1.6,
                 ),
               ),
@@ -729,7 +729,7 @@ class _BeforeYouStart extends StatelessWidget {
                           l.obHealthConsent,
                           style: TextStyle(
                             color: context.colors.text,
-                            fontSize: 12,
+                            fontSize: 14,
                             height: 1.55,
                           ),
                         ),
@@ -743,7 +743,7 @@ class _BeforeYouStart extends StatelessWidget {
                 TextSpan(
                   style: TextStyle(
                     color: context.colors.muted,
-                    fontSize: 11,
+                    fontSize: 13,
                     height: 1.6,
                   ),
                   children: [
@@ -803,7 +803,7 @@ class _Choice extends StatelessWidget {
               color: selected
                   ? context.colors.background
                   : context.colors.muted,
-              fontSize: 12,
+              fontSize: 14,
             ),
           ),
         ),
@@ -841,7 +841,7 @@ class _CameraAsk extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: context.colors.text,
-                    fontSize: 20,
+                    fontSize: 22,
                     height: 1.35,
                     fontWeight: FontWeight.w500,
                   ),
@@ -852,7 +852,7 @@ class _CameraAsk extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: context.colors.muted,
-                    fontSize: 12,
+                    fontSize: 14,
                     height: 1.65,
                   ),
                 ),
@@ -885,7 +885,7 @@ class _CameraAsk extends StatelessWidget {
                           l.obCameraPrivateTitle,
                           style: TextStyle(
                             color: context.colors.text,
-                            fontSize: 12,
+                            fontSize: 14,
                           ),
                         ),
                         const SizedBox(height: 4),
@@ -893,7 +893,7 @@ class _CameraAsk extends StatelessWidget {
                           l.obCameraPrivateBody,
                           style: TextStyle(
                             color: context.colors.muted,
-                            fontSize: 11,
+                            fontSize: 13,
                             height: 1.6,
                           ),
                         ),
@@ -975,7 +975,7 @@ class PlacementStep extends StatelessWidget {
                   child: Text(
                     l.obOneMetre,
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: context.colors.muted, fontSize: 11),
+                    style: TextStyle(color: context.colors.muted, fontSize: 13),
                   ),
                 ),
                 Expanded(
@@ -983,7 +983,7 @@ class PlacementStep extends StatelessWidget {
                   child: Text(
                     l.obFullBody,
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: context.colors.muted, fontSize: 11),
+                    style: TextStyle(color: context.colors.muted, fontSize: 13),
                   ),
                 ),
               ],
@@ -1328,7 +1328,7 @@ class _FramingCheckState extends State<_FramingCheck> {
                 children: [
                   Text(
                     l.obFramingTitle,
-                    style: TextStyle(color: context.colors.text, fontSize: 13),
+                    style: TextStyle(color: context.colors.text, fontSize: 15),
                   ),
                   // Three ticks rather than one verdict: somebody whose feet
                   // are out of shot is told which end to move.
@@ -1378,7 +1378,7 @@ class _Mark extends StatelessWidget {
               label,
               style: TextStyle(
                 color: on ? context.colors.text : context.colors.muted,
-                fontSize: 11,
+                fontSize: 13,
               ),
             ),
           ),
@@ -1495,7 +1495,7 @@ class _CalibrationState extends State<_Calibration> {
                     l.obCalibrating.toUpperCase(),
                     style: TextStyle(
                       color: context.colors.muted,
-                      fontSize: 10,
+                      fontSize: 12,
                       letterSpacing: 0.5,
                     ),
                   ),
@@ -1530,7 +1530,7 @@ class _CalibrationState extends State<_Calibration> {
                   Text(
                     left == 1 ? l.obOneMoreRep : l.obCalibrationHint,
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: context.colors.muted, fontSize: 11),
+                    style: TextStyle(color: context.colors.muted, fontSize: 13),
                   ),
                 ],
               ),
@@ -1576,7 +1576,7 @@ class _CalibrationState extends State<_Calibration> {
                 ),
                 child: Text(
                   _progress < 0.5 ? l.goUp : l.goDown,
-                  style: TextStyle(color: context.colors.text, fontSize: 15),
+                  style: TextStyle(color: context.colors.text, fontSize: 17),
                 ),
               ),
             ),
@@ -1610,7 +1610,7 @@ class _Calibrated extends StatelessWidget {
                   l.obCalibrated,
                   style: TextStyle(
                     color: context.colors.text,
-                    fontSize: 19,
+                    fontSize: 21,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -1620,7 +1620,7 @@ class _Calibrated extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: context.colors.muted,
-                    fontSize: 12,
+                    fontSize: 14,
                     height: 1.6,
                   ),
                 ),
@@ -1642,7 +1642,7 @@ class _Calibrated extends StatelessWidget {
                           l.obRepsCounted,
                           style: TextStyle(
                             color: context.colors.muted,
-                            fontSize: 11,
+                            fontSize: 13,
                           ),
                         ),
                       ),
@@ -1690,10 +1690,10 @@ class _Line extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: TextStyle(color: context.colors.muted, fontSize: 11),
+            style: TextStyle(color: context.colors.muted, fontSize: 13),
           ),
         ),
-        Text(value, style: TextStyle(color: context.colors.text, fontSize: 11)),
+        Text(value, style: TextStyle(color: context.colors.text, fontSize: 13)),
       ],
     );
   }

@@ -208,7 +208,7 @@ class _RanksScreenState extends State<RanksScreen> {
                   L.of(context).ranksTitle.toUpperCase(),
                   style: TextStyle(
                     color: context.colors.text,
-                    fontSize: 22,
+                    fontSize: 24,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 0.5,
                   ),
@@ -349,7 +349,7 @@ class _ScopeToggle extends StatelessWidget {
                   color: selected
                       ? context.colors.background
                       : context.colors.muted,
-                  fontSize: 13,
+                  fontSize: 15,
                   fontWeight: selected ? FontWeight.w600 : null,
                 ),
               ),
@@ -401,8 +401,8 @@ class _RankRow extends StatelessWidget {
             const SizedBox(width: 11),
             _Initial(
               name: entry.username,
-              size: 30,
-              fontSize: 13,
+              size: 40,
+              fontSize: 17,
               avatarUrl: entry.avatarUrl,
             ),
             const SizedBox(width: 11),
@@ -460,13 +460,13 @@ class _SelfRow extends StatelessWidget {
               localNumber(context, place),
               style: TextStyle(
                 color: context.colors.muted,
-                fontSize: 12,
+                fontSize: 14,
                 fontFeatures: const [FontFeature.tabularFigures()],
               ),
             ),
             const SizedBox(width: 11),
           ],
-          _Initial(name: username, size: 30, fontSize: 13),
+          _Initial(name: username, size: 40, fontSize: 17),
           const SizedBox(width: 11),
           Expanded(
             child: _Identity(
@@ -500,7 +500,7 @@ class _RowCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 11),
+      padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 14),
       decoration: BoxDecoration(
         color: context.colors.surface,
         borderRadius: BorderRadius.circular(12),
@@ -531,8 +531,8 @@ class _Position extends StatelessWidget {
     };
 
     return Container(
-      width: 24,
-      height: 24,
+      width: 30,
+      height: 30,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
@@ -544,7 +544,7 @@ class _Position extends StatelessWidget {
           color: medal == null
               ? context.colors.muted
               : context.colors.background,
-          fontSize: 12,
+          fontSize: 14,
           fontFeatures: const [FontFeature.tabularFigures()],
         ),
       ),
@@ -626,7 +626,7 @@ class _Identity extends StatelessWidget {
                 username,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: context.colors.text, fontSize: 13),
+                style: TextStyle(color: context.colors.text, fontSize: 15),
               ),
             ),
             if (trailing case final chip?) ...[const SizedBox(width: 6), chip],
@@ -638,7 +638,7 @@ class _Identity extends StatelessWidget {
           '${L.of(context).winLoss(localNumber(context, wins), localNumber(context, losses))}',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(color: context.colors.muted, fontSize: 10),
+          style: TextStyle(color: context.colors.muted, fontSize: 12),
         ),
       ],
     );
@@ -661,13 +661,13 @@ class _Points extends StatelessWidget {
           localNumber(context, lp),
           style: TextStyle(
             color: colour,
-            fontSize: 15,
+            fontSize: 17,
             fontFeatures: const [FontFeature.tabularFigures()],
           ),
         ),
         Text(
           L.of(context).lpUnit,
-          style: TextStyle(color: context.colors.muted, fontSize: 9),
+          style: TextStyle(color: context.colors.muted, fontSize: 11),
         ),
       ],
     );
@@ -687,7 +687,7 @@ class _YouChip extends StatelessWidget {
       ),
       child: Text(
         L.of(context).you.toUpperCase(),
-        style: TextStyle(color: context.colors.background, fontSize: 9),
+        style: TextStyle(color: context.colors.background, fontSize: 11),
       ),
     );
   }
@@ -765,7 +765,7 @@ class _SeasonHeader extends StatelessWidget {
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: AppColors.gold,
-            fontSize: 14,
+            fontSize: 16,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -780,7 +780,7 @@ class _SeasonHeader extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(
             color: earned ? context.colors.brand : context.colors.muted,
-            fontSize: 11,
+            fontSize: 13,
           ),
         ),
       ],
@@ -864,7 +864,7 @@ class _PodiumPlace extends StatelessWidget {
             child: _Initial(
               name: row.username,
               size: avatar,
-              fontSize: first ? 24 : 19,
+              fontSize: first ? 26 : 21,
               avatarUrl: row.avatarUrl,
             ),
           ),
@@ -875,7 +875,7 @@ class _PodiumPlace extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: context.colors.text,
-              fontSize: first ? 14 : 12,
+              fontSize: first ? 16 : 14,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -902,7 +902,7 @@ class _PodiumPlace extends StatelessWidget {
                     localNumber(context, row.place),
                     style: TextStyle(
                       color: context.colors.background,
-                      fontSize: first ? 30 : 24,
+                      fontSize: first ? 30 : 26,
                       fontWeight: FontWeight.w800,
                       height: 1.1,
                     ),
@@ -912,7 +912,7 @@ class _PodiumPlace extends StatelessWidget {
                     '${L.of(context).lpUnit}',
                     style: TextStyle(
                       color: context.colors.background,
-                      fontSize: 12,
+                      fontSize: 14,
                       fontWeight: FontWeight.w600,
                       fontFeatures: const [FontFeature.tabularFigures()],
                     ),
@@ -959,7 +959,7 @@ class _Top10Line extends StatelessWidget {
               L.of(context).awardTop10,
               style: const TextStyle(
                 color: AppColors.gold,
-                fontSize: 11,
+                fontSize: 13,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -996,8 +996,8 @@ class _MonthRankRow extends StatelessWidget {
             const SizedBox(width: 11),
             _Initial(
               name: row.username,
-              size: 30,
-              fontSize: 13,
+              size: 40,
+              fontSize: 17,
               avatarUrl: row.avatarUrl,
             ),
             const SizedBox(width: 11),
@@ -1010,7 +1010,7 @@ class _MonthRankRow extends StatelessWidget {
                     row.username,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: context.colors.text, fontSize: 13),
+                    style: TextStyle(color: context.colors.text, fontSize: 15),
                   ),
                   const SizedBox(height: 2),
                   Text(
@@ -1023,7 +1023,7 @@ class _MonthRankRow extends StatelessWidget {
                       color: award != null
                           ? awardColour(context, award)
                           : context.colors.muted,
-                      fontSize: 10,
+                      fontSize: 12,
                       fontWeight: award != null ? FontWeight.w600 : null,
                     ),
                   ),
@@ -1081,7 +1081,7 @@ class _MonthSelfRow extends StatelessWidget {
               localNumber(context, place),
               style: TextStyle(
                 color: context.colors.muted,
-                fontSize: 12,
+                fontSize: 14,
                 fontFeatures: const [FontFeature.tabularFigures()],
               ),
             ),
@@ -1089,8 +1089,8 @@ class _MonthSelfRow extends StatelessWidget {
           ],
           _Initial(
             name: username,
-            size: 30,
-            fontSize: 13,
+            size: 40,
+            fontSize: 17,
             avatarUrl: backend.me?.avatarUrl,
           ),
           const SizedBox(width: 11),
@@ -1108,7 +1108,7 @@ class _MonthSelfRow extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: context.colors.text,
-                          fontSize: 13,
+                          fontSize: 15,
                         ),
                       ),
                     ),
@@ -1121,7 +1121,7 @@ class _MonthSelfRow extends StatelessWidget {
                   _hint(context),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: context.colors.muted, fontSize: 10),
+                  style: TextStyle(color: context.colors.muted, fontSize: 12),
                 ),
               ],
             ),

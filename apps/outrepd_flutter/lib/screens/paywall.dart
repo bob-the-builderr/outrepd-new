@@ -435,7 +435,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                     textAlign: TextAlign.center,
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: colors.faint, fontSize: 10),
+                    style: TextStyle(color: colors.faint, fontSize: 12),
                   ),
                 ),
               TextButton(
@@ -513,7 +513,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                           : l.trialCta(localNumber(context, trial)),
                       maxLines: 1,
                       style: const TextStyle(
-                        fontSize: 17,
+                        fontSize: 19,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
@@ -547,7 +547,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
         Text(
           apple ? l.paywallRenewsApple : l.paywallRenewsPlay,
           textAlign: TextAlign.center,
-          style: TextStyle(color: colors.muted, fontSize: 11, height: 1.4),
+          style: TextStyle(color: colors.muted, fontSize: 13, height: 1.4),
         ),
         const SizedBox(height: 2),
         Wrap(
@@ -696,7 +696,7 @@ class _Rail extends StatelessWidget {
                             Text(
                               steps[i].$2,
                               style: context.type.heading.copyWith(
-                                fontSize: 17,
+                                fontSize: 19,
                                 color: colors.text,
                               ),
                             ),
@@ -705,7 +705,7 @@ class _Rail extends StatelessWidget {
                               Text(
                                 more,
                                 style: context.type.body.copyWith(
-                                  fontSize: 14,
+                                  fontSize: 16,
                                   height: 1.4,
                                   color: colors.muted,
                                 ),
@@ -796,7 +796,7 @@ class _PlanRow extends StatelessWidget {
                               label,
                               maxLines: 1,
                               style: context.type.heading.copyWith(
-                                fontSize: 16,
+                                fontSize: 18,
                                 color: colors.text,
                               ),
                             ),
@@ -816,7 +816,7 @@ class _PlanRow extends StatelessWidget {
                                   maxLines: 1,
                                   style: const TextStyle(
                                     color: Color(0xFF2A1E05),
-                                    fontSize: 11,
+                                    fontSize: 13,
                                     fontWeight: FontWeight.w800,
                                   ),
                                 ),
@@ -830,7 +830,7 @@ class _PlanRow extends StatelessWidget {
                         detail,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: colors.muted, fontSize: 12),
+                        style: TextStyle(color: colors.muted, fontSize: 14),
                       ),
                     ],
                   ),
@@ -847,7 +847,7 @@ class _PlanRow extends StatelessWidget {
                         Text(
                           price,
                           style: context.type.statValue.copyWith(
-                            fontSize: 20,
+                            fontSize: 22,
                             color: colors.text,
                           ),
                         ),
@@ -857,7 +857,7 @@ class _PlanRow extends StatelessWidget {
                             free,
                             style: TextStyle(
                               color: colors.rival,
-                              fontSize: 12,
+                              fontSize: 14,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -893,7 +893,7 @@ class _SmallLink extends StatelessWidget {
           label,
           style: TextStyle(
             color: context.colors.muted,
-            fontSize: 12,
+            fontSize: 14,
             decoration: TextDecoration.underline,
             decorationColor: context.colors.faint,
           ),
@@ -908,5 +908,5 @@ class _Dot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      Text('·', style: TextStyle(color: context.colors.faint, fontSize: 12));
+      Text('·', style: TextStyle(color: context.colors.faint, fontSize: 14));
 }

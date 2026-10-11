@@ -71,7 +71,7 @@ class InviteCard extends StatelessWidget {
                   l.inviteTitle,
                   style: TextStyle(
                     color: context.colors.text,
-                    fontSize: 16,
+                    fontSize: 18,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -83,7 +83,7 @@ class InviteCard extends StatelessWidget {
             l.inviteBody,
             style: TextStyle(
               color: context.colors.muted,
-              fontSize: 13,
+              fontSize: 15,
               height: 1.4,
             ),
           ),
@@ -99,14 +99,14 @@ class InviteCard extends StatelessWidget {
                       l.inviteYourCode,
                       style: TextStyle(
                         color: context.colors.muted,
-                        fontSize: 11,
+                        fontSize: 13,
                       ),
                     ),
                     Text(
                       '#$code',
                       style: TextStyle(
                         color: context.colors.text,
-                        fontSize: 24,
+                        fontSize: 26,
                         fontWeight: FontWeight.w800,
                         letterSpacing: 2,
                         fontFeatures: const [FontFeature.tabularFigures()],
@@ -120,7 +120,7 @@ class InviteCard extends StatelessWidget {
                   l.inviteJoined(localNumber(context, invites.joined)),
                   style: const TextStyle(
                     color: AppColors.gold,
-                    fontSize: 12,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

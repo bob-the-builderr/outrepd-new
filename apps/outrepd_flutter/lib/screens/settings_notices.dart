@@ -222,7 +222,7 @@ class _NoticeSettingsScreenState extends State<NoticeSettingsScreen>
               l.noticesStoredNote,
               style: TextStyle(
                 color: context.colors.faint,
-                fontSize: 11,
+                fontSize: 13,
                 height: 1.55,
               ),
             ),

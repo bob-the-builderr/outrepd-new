@@ -203,7 +203,7 @@ class _BlockedScreenState extends State<BlockedScreen> {
               l.blockedIntro,
               style: TextStyle(
                 color: context.colors.muted,
-                fontSize: 12,
+                fontSize: 14,
                 height: 1.6,
               ),
             ),
@@ -279,7 +279,7 @@ class _BlockedRow extends StatelessWidget {
               who.username.isEmpty
                   ? '?'
                   : who.username.characters.first.toUpperCase(),
-              style: TextStyle(color: context.colors.muted, fontSize: 13),
+              style: TextStyle(color: context.colors.muted, fontSize: 15),
             ),
           ),
           const SizedBox(width: 11),
@@ -292,7 +292,7 @@ class _BlockedRow extends StatelessWidget {
                   who.username,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: context.colors.text, fontSize: 13),
+                  style: TextStyle(color: context.colors.text, fontSize: 15),
                 ),
                 const SizedBox(height: 2),
                 Text(
@@ -302,7 +302,7 @@ class _BlockedRow extends StatelessWidget {
                       DateTime.now().difference(who.at).inDays,
                     ),
                   ),
-                  style: TextStyle(color: context.colors.muted, fontSize: 11),
+                  style: TextStyle(color: context.colors.muted, fontSize: 13),
                 ),
               ],
             ),
@@ -319,7 +319,7 @@ class _BlockedRow extends StatelessWidget {
               ),
               child: Text(
                 l.unblock,
-                style: TextStyle(color: context.colors.text, fontSize: 11),
+                style: TextStyle(color: context.colors.text, fontSize: 13),
               ),
             ),
           ),
@@ -437,7 +437,7 @@ class _ReportScreenState extends State<ReportScreen> {
                                 : name.characters.first.toUpperCase(),
                             style: TextStyle(
                               color: context.colors.text,
-                              fontSize: 13,
+                              fontSize: 15,
                             ),
                           ),
                         ),
@@ -450,7 +450,7 @@ class _ReportScreenState extends State<ReportScreen> {
                                 name,
                                 style: TextStyle(
                                   color: context.colors.text,
-                                  fontSize: 13,
+                                  fontSize: 15,
                                 ),
                               ),
                               const SizedBox(height: 2),
@@ -458,7 +458,7 @@ class _ReportScreenState extends State<ReportScreen> {
                                 l.reportingThisAccount,
                                 style: TextStyle(
                                   color: context.colors.muted,
-                                  fontSize: 11,
+                                  fontSize: 13,
                                 ),
                               ),
                             ],
@@ -488,13 +488,13 @@ class _ReportScreenState extends State<ReportScreen> {
                   controller: _details,
                   maxLines: 4,
                   maxLength: 1000,
-                  style: TextStyle(color: context.colors.text, fontSize: 13),
+                  style: TextStyle(color: context.colors.text, fontSize: 15),
                   cursorColor: context.colors.brand,
                   decoration: InputDecoration(
                     hintText: l.addDetails,
                     hintStyle: TextStyle(
                       color: context.colors.faint,
-                      fontSize: 13,
+                      fontSize: 15,
                     ),
                     filled: true,
                     fillColor: context.colors.surface,
@@ -515,7 +515,7 @@ class _ReportScreenState extends State<ReportScreen> {
                       l.alsoBlock,
                       style: TextStyle(
                         color: context.colors.text,
-                        fontSize: 13,
+                        fontSize: 15,
                       ),
                     ),
                   ),

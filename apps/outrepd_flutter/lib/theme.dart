@@ -233,7 +233,7 @@ ThemeData buildTheme(Brightness brightness) {
       centerTitle: false,
       titleTextStyle: text.titleLarge!.copyWith(
         color: p.text,
-        fontSize: 22,
+        fontSize: 24,
         fontWeight: FontWeight.w800,
         letterSpacing: 0.5,
       ),
@@ -250,7 +250,7 @@ ThemeData buildTheme(Brightness brightness) {
         foregroundColor: onBrand,
         minimumSize: const Size.fromHeight(56),
         textStyle: text.labelLarge!.copyWith(
-          fontSize: 17,
+          fontSize: 19,
           fontWeight: FontWeight.w700,
           letterSpacing: 0.5,
         ),
@@ -263,7 +263,7 @@ ThemeData buildTheme(Brightness brightness) {
         minimumSize: const Size.fromHeight(56),
         side: BorderSide(color: p.text.withValues(alpha: 0.2), width: 2),
         textStyle: text.labelLarge!.copyWith(
-          fontSize: 16,
+          fontSize: 18,
           fontWeight: FontWeight.w600,
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -277,7 +277,7 @@ ThemeData buildTheme(Brightness brightness) {
       height: 68,
       labelTextStyle: WidgetStateProperty.resolveWith(
         (states) => TextStyle(
-          fontSize: 12,
+          fontSize: 14,
           fontWeight: FontWeight.w600,
           color: states.contains(WidgetState.selected) ? p.brand : p.muted,
         ),

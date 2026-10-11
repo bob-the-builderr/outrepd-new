@@ -336,7 +336,7 @@ class EmptyState extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: context.colors.text,
-                fontSize: 15,
+                fontSize: 17,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -346,7 +346,7 @@ class EmptyState extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: context.colors.muted,
-                fontSize: 11,
+                fontSize: 13,
                 height: 1.6,
               ),
             ),
@@ -358,7 +358,7 @@ class EmptyState extends StatelessWidget {
               const SizedBox(height: 12),
               Text(
                 footnote,
-                style: TextStyle(color: context.colors.muted, fontSize: 11),
+                style: TextStyle(color: context.colors.muted, fontSize: 13),
               ),
             ],
           ],
@@ -419,7 +419,7 @@ class BlockingNotice extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: context.colors.text,
-                fontSize: 17,
+                fontSize: 19,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -429,7 +429,7 @@ class BlockingNotice extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: context.colors.muted,
-                fontSize: 12,
+                fontSize: 14,
                 height: 1.6,
               ),
             ),
@@ -449,7 +449,7 @@ class BlockingNotice extends StatelessWidget {
                         actionLabel,
                         style: TextStyle(
                           color: context.colors.background,
-                          fontSize: 14,
+                          fontSize: 16,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -474,7 +474,7 @@ class BlockingNotice extends StatelessWidget {
                       color: secondaryProminent
                           ? context.colors.text
                           : context.colors.muted,
-                      fontSize: 12,
+                      fontSize: 14,
                     ),
                   ),
                 ),
@@ -512,7 +512,7 @@ class PillButton extends StatelessWidget {
             label,
             style: TextStyle(
               color: context.colors.background,
-              fontSize: 13,
+              fontSize: 15,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -560,7 +560,7 @@ class LiveTag extends StatelessWidget {
             reconnecting ? l.reconnecting : (label ?? l.liveTag),
             style: TextStyle(
               color: reconnecting ? context.colors.muted : const Color(0xFFF09595),
-              fontSize: 12,
+              fontSize: 14,
             ),
           ),
         ],

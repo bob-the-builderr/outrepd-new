@@ -893,7 +893,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
                 Text(
                   L.of(context).waitingForFinal(_opponent.username),
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: context.colors.text, fontSize: 15),
+                  style: TextStyle(color: context.colors.text, fontSize: 17),
                 ),
               ],
             ),
@@ -1069,7 +1069,7 @@ class _SearchingViewState extends State<_SearchingView> {
               const SizedBox(height: 6),
               Text(
                 tierLabel(l, p.tierIdx, p.divIdx),
-                style: TextStyle(color: context.colors.text, fontSize: 15),
+                style: TextStyle(color: context.colors.text, fontSize: 17),
               ),
             ],
           ),
@@ -1113,7 +1113,7 @@ class _SearchingViewState extends State<_SearchingView> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: context.colors.text,
-                        fontSize: 14,
+                        fontSize: 16,
                       ),
                     ),
                     const SizedBox(height: 3),
@@ -1121,7 +1121,7 @@ class _SearchingViewState extends State<_SearchingView> {
                       formatClock(context, seconds),
                       style: TextStyle(
                         color: context.colors.muted,
-                        fontSize: 12,
+                        fontSize: 14,
                         fontFeatures: const [FontFeature.tabularFigures()],
                       ),
                     ),
@@ -1147,7 +1147,7 @@ class _SearchingViewState extends State<_SearchingView> {
                       l.cancel,
                       style: TextStyle(
                         color: context.colors.text,
-                        fontSize: 13,
+                        fontSize: 15,
                       ),
                     ),
                   ),
@@ -1234,7 +1234,7 @@ class _LiveSearchViewState extends State<_LiveSearchView> {
         const SizedBox(height: 28),
         Text(
           l.rankedLive,
-          style: TextStyle(color: context.colors.muted, fontSize: 13),
+          style: TextStyle(color: context.colors.muted, fontSize: 15),
         ),
         const Spacer(flex: 2),
         SizedBox(
@@ -1267,7 +1267,7 @@ class _LiveSearchViewState extends State<_LiveSearchView> {
                   ),
                   Text(
                     l.ofTime(end),
-                    style: TextStyle(color: context.colors.muted, fontSize: 13),
+                    style: TextStyle(color: context.colors.muted, fontSize: 15),
                   ),
                 ],
               ),
@@ -1282,7 +1282,7 @@ class _LiveSearchViewState extends State<_LiveSearchView> {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: context.colors.text,
-              fontSize: 19,
+              fontSize: 21,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -1295,7 +1295,7 @@ class _LiveSearchViewState extends State<_LiveSearchView> {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: context.colors.muted,
-              fontSize: 13,
+              fontSize: 15,
               height: 1.4,
             ),
           ),
@@ -1323,7 +1323,7 @@ class _LiveSearchViewState extends State<_LiveSearchView> {
                   if (around.searching > 0)
                     l.liveSearchingNow(localNumber(context, around.searching)),
                 ].join(' · '),
-                style: TextStyle(color: context.colors.text, fontSize: 13),
+                style: TextStyle(color: context.colors.text, fontSize: 15),
               ),
             ],
           ),
@@ -1344,7 +1344,7 @@ class _LiveSearchViewState extends State<_LiveSearchView> {
               child: Center(
                 child: Text(
                   l.cancel,
-                  style: TextStyle(color: context.colors.text, fontSize: 15),
+                  style: TextStyle(color: context.colors.text, fontSize: 17),
                 ),
               ),
             ),
@@ -1384,7 +1384,7 @@ class _NobodyLiveView extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: context.colors.text,
-              fontSize: 22,
+              fontSize: 24,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -1393,7 +1393,7 @@ class _NobodyLiveView extends StatelessWidget {
         Text(
           l.nobodyLiveBody,
           textAlign: TextAlign.center,
-          style: TextStyle(color: context.colors.muted, fontSize: 14),
+          style: TextStyle(color: context.colors.muted, fontSize: 16),
         ),
         const SizedBox(height: 30),
         Container(
@@ -1424,14 +1424,14 @@ class _NobodyLiveView extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: context.colors.rival,
-                        fontSize: 17,
+                        fontSize: 19,
                       ),
                     ),
                     Text(
                       tierLabel(l, opponent.tierIdx, opponent.divIdx),
                       style: TextStyle(
                         color: context.colors.muted,
-                        fontSize: 12,
+                        fontSize: 14,
                       ),
                     ),
                     const SizedBox(height: 5),
@@ -1439,7 +1439,7 @@ class _NobodyLiveView extends StatelessWidget {
                       l.didRepsIn(localNumber(context, reps)),
                       style: TextStyle(
                         color: context.colors.text,
-                        fontSize: 15,
+                        fontSize: 17,
                       ),
                     ),
                   ],
@@ -1454,7 +1454,7 @@ class _NobodyLiveView extends StatelessWidget {
           child: Text(
             l.sameRankPoints,
             textAlign: TextAlign.center,
-            style: TextStyle(color: context.colors.muted, fontSize: 12),
+            style: TextStyle(color: context.colors.muted, fontSize: 14),
           ),
         ),
         const Spacer(flex: 3),
@@ -1474,7 +1474,7 @@ class _NobodyLiveView extends StatelessWidget {
                     l.raceIt,
                     style: TextStyle(
                       color: context.colors.background,
-                      fontSize: 17,
+                      fontSize: 19,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -1539,7 +1539,7 @@ class _VersusView extends StatelessWidget {
                 l.vs,
                 style: TextStyle(
                   color: context.colors.faint,
-                  fontSize: 11,
+                  fontSize: 13,
                   letterSpacing: 1,
                 ),
               ),
@@ -1565,7 +1565,7 @@ class _VersusView extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: context.colors.text,
-                fontSize: 15,
+                fontSize: 17,
                 height: 1.45,
               ),
             ),
@@ -1573,7 +1573,7 @@ class _VersusView extends StatelessWidget {
           const SizedBox(height: 14),
           Text(
             live.ranked ? l.lpMovesWithGap : l.friendlyNoRank,
-            style: TextStyle(color: context.colors.muted, fontSize: 12),
+            style: TextStyle(color: context.colors.muted, fontSize: 14),
           ),
         ] else if (vsBest) ...[
           const SizedBox(height: 18),
@@ -1584,7 +1584,7 @@ class _VersusView extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: context.colors.muted,
-                fontSize: 13,
+                fontSize: 15,
                 height: 1.4,
               ),
             ),
@@ -1603,13 +1603,13 @@ class _VersusView extends StatelessWidget {
             child: Text(
               l.lpMovesWithGap,
               textAlign: TextAlign.center,
-              style: TextStyle(color: context.colors.text, fontSize: 12),
+              style: TextStyle(color: context.colors.text, fontSize: 14),
             ),
           ),
           const SizedBox(height: 9),
           Text(
             l.rankedTerms(localNumber(context, kDuelLength.inSeconds)),
-            style: TextStyle(color: context.colors.muted, fontSize: 11),
+            style: TextStyle(color: context.colors.muted, fontSize: 13),
           ),
         ],
         const Spacer(flex: 3),
@@ -1650,7 +1650,7 @@ class _Fighter extends StatelessWidget {
             ),
             child: Text(
               initial.isEmpty ? '?' : initial.characters.first.toUpperCase(),
-              style: TextStyle(color: context.colors.text, fontSize: 21),
+              style: TextStyle(color: context.colors.text, fontSize: 23),
             ),
           ),
           const SizedBox(height: 7),
@@ -1658,7 +1658,7 @@ class _Fighter extends StatelessWidget {
             name,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: context.colors.text, fontSize: 12),
+            style: TextStyle(color: context.colors.text, fontSize: 14),
           ),
           Text(
             tierLabel(L.of(context), tierIdx, divIdx),
@@ -1666,7 +1666,7 @@ class _Fighter extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: kTiers[tierIdx.clamp(0, kTiers.length - 1)].color,
-              fontSize: 10,
+              fontSize: 12,
             ),
           ),
         ],
@@ -1704,7 +1704,7 @@ class _Pace extends StatelessWidget {
                     localNumber(context, best),
                     style: TextStyle(
                       color: context.colors.text,
-                      fontSize: 21,
+                      fontSize: 23,
                       fontWeight: FontWeight.w700,
                     ),
                   )
@@ -1715,7 +1715,7 @@ class _Pace extends StatelessWidget {
             best > 0 ? l.yourBest : l.theClock,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: context.colors.text, fontSize: 12),
+            style: TextStyle(color: context.colors.text, fontSize: 14),
           ),
         ],
       ),
@@ -1814,7 +1814,7 @@ class _BestResultView extends StatelessWidget {
                               l.setInPoolTitle,
                               style: TextStyle(
                                 color: context.colors.text,
-                                fontSize: 14,
+                                fontSize: 16,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -1823,7 +1823,7 @@ class _BestResultView extends StatelessWidget {
                               l.setInPoolBody,
                               style: TextStyle(
                                 color: context.colors.muted,
-                                fontSize: 13,
+                                fontSize: 15,
                                 height: 1.4,
                               ),
                             ),

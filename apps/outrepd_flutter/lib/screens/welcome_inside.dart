@@ -75,7 +75,7 @@ class WelcomeInsideScreen extends StatelessWidget {
                                   t.name(l),
                                   style: TextStyle(
                                     color: context.colors.text,
-                                    fontSize: 12,
+                                    fontSize: 14,
                                   ),
                                 ),
                               ),
@@ -152,7 +152,7 @@ class _Heading extends StatelessWidget {
             text,
             style: TextStyle(
               color: context.colors.text,
-              fontSize: 20,
+              fontSize: 22,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -171,7 +171,7 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(color: context.colors.muted, fontSize: 14, height: 1.5),
+      style: TextStyle(color: context.colors.muted, fontSize: 16, height: 1.5),
     );
   }
 }
@@ -212,7 +212,7 @@ class _Code extends StatelessWidget {
                 '#$code',
                 style: TextStyle(
                   color: context.colors.text,
-                  fontSize: 24,
+                  fontSize: 26,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 3,
                   fontFeatures: const [FontFeature.tabularFigures()],
@@ -223,7 +223,7 @@ class _Code extends StatelessWidget {
             const SizedBox(width: 6),
             Text(
               l.copyLink,
-              style: TextStyle(color: context.colors.muted, fontSize: 13),
+              style: TextStyle(color: context.colors.muted, fontSize: 15),
             ),
           ],
         ),

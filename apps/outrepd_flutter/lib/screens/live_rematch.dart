@@ -225,7 +225,7 @@ class _LiveRematchButtonState extends State<LiveRematchButton> {
                       maxLines: 1,
                       style: TextStyle(
                         color: ink,
-                        fontSize: 16,
+                        fontSize: 18,
                         fontWeight: FontWeight.w700,
                         fontFeatures: const [FontFeature.tabularFigures()],
                       ),
@@ -243,7 +243,7 @@ class _LiveRematchButtonState extends State<LiveRematchButton> {
             padding: const EdgeInsets.only(top: 6),
             child: Text(
               l.timeLeft(_secondsLeft()),
-              style: TextStyle(color: context.colors.muted, fontSize: 12),
+              style: TextStyle(color: context.colors.muted, fontSize: 14),
             ),
           )
         else if (_ask == _Ask.gone)
@@ -251,7 +251,7 @@ class _LiveRematchButtonState extends State<LiveRematchButton> {
             padding: const EdgeInsets.only(top: 6),
             child: Text(
               l.rematchGone,
-              style: TextStyle(color: context.colors.muted, fontSize: 12),
+              style: TextStyle(color: context.colors.muted, fontSize: 14),
             ),
           ),
         if (friendly)
@@ -260,7 +260,7 @@ class _LiveRematchButtonState extends State<LiveRematchButton> {
             child: Text(
               l.twoRankedADay,
               textAlign: TextAlign.center,
-              style: TextStyle(color: context.colors.muted, fontSize: 12),
+              style: TextStyle(color: context.colors.muted, fontSize: 14),
             ),
           ),
       ],

@@ -301,7 +301,7 @@ class TitleChip extends StatelessWidget {
             title.name(L.of(context)),
             style: TextStyle(
               color: colour,
-              fontSize: compact ? 10 : 11.5,
+              fontSize: compact ? 12 : 13,
               fontWeight: FontWeight.w700,
             ),
           ),
