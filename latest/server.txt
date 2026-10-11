@@ -47,18 +47,23 @@ psql:/home/runner/work/_temp/install.sql:1615: NOTICE:  function find_lifters(te
 psql:/home/runner/work/_temp/install.sql:1783: NOTICE:  function leaderboard(text,pg_catalog.int4) does not exist, skipping
 psql:/home/runner/work/_temp/install.sql:1880: NOTICE:  function lifter_profile(uuid) does not exist, skipping
 psql:/home/runner/work/_temp/install.sql:1977: NOTICE:  function public_lifter_card(text) does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:2628: NOTICE:  policy "a lifter reads their own notifications" for relation "notifications" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:2634: NOTICE:  policy "a lifter clears their own notifications" for relation "notifications" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:2681: NOTICE:  trigger "duels_notify_defender" for relation "duels" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:2719: NOTICE:  trigger "friendships_notify_request" for relation "friendships" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:2754: NOTICE:  trigger "friendships_notify_accepted" for relation "friendships" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:2803: NOTICE:  trigger "sets_notify_challenged" for relation "sets" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:2816: NOTICE:  function my_notifications(pg_catalog.int4) does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:3029: NOTICE:  trigger "send_push" for relation "notifications" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:3085: NOTICE:  trigger "report-alert" for relation "reports" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:3086: NOTICE:  trigger "send_report_alert" for relation "reports" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:4459: NOTICE:  trigger "tester_signed_up" for relation "auth.users" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:4488: NOTICE:  trigger "tester_added" for relation "beta_testers" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:2306: NOTICE:  function settle_duel(uuid,uuid,pg_catalog.bool) does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:2636: NOTICE:  policy "a lifter reads their own notifications" for relation "notifications" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:2642: NOTICE:  policy "a lifter clears their own notifications" for relation "notifications" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:2689: NOTICE:  trigger "duels_notify_defender" for relation "duels" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:2727: NOTICE:  trigger "friendships_notify_request" for relation "friendships" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:2762: NOTICE:  trigger "friendships_notify_accepted" for relation "friendships" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:2811: NOTICE:  trigger "sets_notify_challenged" for relation "sets" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:2824: NOTICE:  function my_notifications(pg_catalog.int4) does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:3037: NOTICE:  trigger "send_push" for relation "notifications" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:3093: NOTICE:  trigger "report-alert" for relation "reports" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:3094: NOTICE:  trigger "send_report_alert" for relation "reports" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:3432: NOTICE:  function my_live_invites() does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:3720: NOTICE:  function live_outcome(live_matches) does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:3721: NOTICE:  function finish_live_match(uuid,pg_catalog.int4,pg_catalog.int4,pg_catalog.float4,pg_catalog.bool,pg_catalog.int4,pg_catalog.bool,pg_catalog.int4[]) does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:3722: NOTICE:  function live_match_result(uuid) does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:4589: NOTICE:  trigger "tester_signed_up" for relation "auth.users" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:4618: NOTICE:  trigger "tester_added" for relation "beta_testers" does not exist, skipping
 installed once
 psql:/home/runner/work/_temp/install.sql:49: NOTICE:  relation "subscriptions" already exists, skipping
 psql:/home/runner/work/_temp/install.sql:73: NOTICE:  relation "server_switches" already exists, skipping
@@ -111,29 +116,31 @@ psql:/home/runner/work/_temp/install.sql:1605: NOTICE:  relation "profiles_usern
 psql:/home/runner/work/_temp/install.sql:1783: NOTICE:  function leaderboard(text,pg_catalog.int4) does not exist, skipping
 psql:/home/runner/work/_temp/install.sql:2090: NOTICE:  relation "set_offers" already exists, skipping
 psql:/home/runner/work/_temp/install.sql:2096: NOTICE:  relation "set_offers_offered_to_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:2598: NOTICE:  relation "notifications" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:2603: NOTICE:  column "lp_delta" of relation "notifications" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:2613: NOTICE:  relation "notifications_for_profile_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:2615: NOTICE:  relation "notifications_unread_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:2619: NOTICE:  relation "notifications_actor_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:2621: NOTICE:  relation "notifications_duel_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:2914: NOTICE:  relation "push_tokens" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:2916: NOTICE:  relation "push_tokens_profile_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:2924: NOTICE:  column "pushed_at" of relation "notifications" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:3085: NOTICE:  trigger "report-alert" for relation "reports" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:3154: NOTICE:  relation "live_matches" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:3156: NOTICE:  relation "live_matches_b_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:3157: NOTICE:  relation "live_matches_a_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:3160: NOTICE:  relation "live_matches_a_set_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:3162: NOTICE:  relation "live_matches_b_set_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:3164: NOTICE:  relation "live_matches_duel_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:3177: NOTICE:  relation "live_queue" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4121: NOTICE:  relation "duels_ranked_month_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4261: NOTICE:  relation "season_awards" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4263: NOTICE:  relation "season_awards_profile_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4268: NOTICE:  relation "season_closings" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4406: NOTICE:  relation "beta_testers" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4414: NOTICE:  relation "beta_tester_grants" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:2606: NOTICE:  relation "notifications" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:2611: NOTICE:  column "lp_delta" of relation "notifications" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:2621: NOTICE:  relation "notifications_for_profile_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:2623: NOTICE:  relation "notifications_unread_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:2627: NOTICE:  relation "notifications_actor_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:2629: NOTICE:  relation "notifications_duel_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:2922: NOTICE:  relation "push_tokens" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:2924: NOTICE:  relation "push_tokens_profile_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:2932: NOTICE:  column "pushed_at" of relation "notifications" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3093: NOTICE:  trigger "report-alert" for relation "reports" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:3162: NOTICE:  relation "live_matches" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3164: NOTICE:  relation "live_matches_b_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3165: NOTICE:  relation "live_matches_a_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3168: NOTICE:  relation "live_matches_a_set_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3170: NOTICE:  relation "live_matches_b_set_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3172: NOTICE:  relation "live_matches_duel_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3176: NOTICE:  column "rematch_of" of relation "live_matches" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3178: NOTICE:  relation "live_matches_rematch_of_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3191: NOTICE:  relation "live_queue" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4251: NOTICE:  relation "duels_ranked_month_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4391: NOTICE:  relation "season_awards" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4393: NOTICE:  relation "season_awards_profile_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4398: NOTICE:  relation "season_closings" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4536: NOTICE:  relation "beta_testers" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4544: NOTICE:  relation "beta_tester_grants" already exists, skipping
 installed twice
 CREATE FUNCTION
 CREATE FUNCTION
@@ -310,12 +317,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- 7167c833-f37b-4670-aa9c-4453b6b32e25
+ 29c84566-4754-406c-a246-e2eb8c05c958
 (1 row)
 
               set_config              
 --------------------------------------
- 1bb7cef3-0983-4eef-96f1-0e777ae02259
+ 0cabfba7-0ffd-42c6-adfb-7cf98e5619c9
 (1 row)
 
  as_user 
@@ -357,12 +364,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- 7167c833-f37b-4670-aa9c-4453b6b32e25
+ 29c84566-4754-406c-a246-e2eb8c05c958
 (1 row)
 
               set_config              
 --------------------------------------
- 14d7e48a-3be5-4985-ab4b-9c31ac07ba66
+ 4463c7a9-34af-4ba6-85e7-d5b716208a1f
 (1 row)
 
  as_user 
@@ -404,7 +411,7 @@ SET
 RESET
               set_config              
 --------------------------------------
- 4da56285-6061-4342-bdc3-166f05724bc2
+ 23b8ed77-33da-4baa-8042-0f67a38fd576
 (1 row)
 
  pg_sleep 
@@ -459,12 +466,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- 074b998f-7445-40b8-9e4f-4a0e9c7f4f4d
+ 1cdca204-05d3-444c-9e01-7969a27a779c
 (1 row)
 
               set_config              
 --------------------------------------
- 398c2a43-b46c-413f-bd02-9bd913e00248
+ 3cbfdf47-4412-488d-91f6-cbf51a207510
 (1 row)
 
  as_user 
@@ -473,9 +480,9 @@ RESET
 (1 row)
 
 SET
-                         settle_duel                          
---------------------------------------------------------------
- (0bdee9a4-ba89-4998-85eb-8dff76e18e3d,t,0,0,0,0,1,0,1,1,1,1)
+                          settle_duel                           
+----------------------------------------------------------------
+ (eff9e7e4-b0d2-4fb8-9e9b-2dbcd4f0e427,t,0,0,0,0,1,0,1,1,1,1,f)
 (1 row)
 
 RESET
@@ -687,7 +694,7 @@ RESET
 SET
              invite_live              
 --------------------------------------
- 2a40ff97-c5ad-4b42-aa1c-99d6958a3043
+ 751a6bf3-23d4-41cd-a5e2-a8884fc7a390
 (1 row)
 
 RESET
@@ -712,12 +719,12 @@ RESET
 SET
              invite_live              
 --------------------------------------
- d709a187-9dab-40bd-bd9f-1f0121cf2269
+ 88f9bda0-c792-44f3-8f48-ffde7fd545ff
 (1 row)
 
              invite_live              
 --------------------------------------
- b8e3d591-0512-4824-bcef-5177e04106df
+ 4d2ba6e3-feb5-48b2-82ae-de3635cb9ea3
 (1 row)
 
 psql:tool/db/security_test.sql:359: NOTICE:  refused, as it should be — a fourth live invite in ten minutes: too many invites, wait a few minutes
@@ -907,14 +914,14 @@ INSERT 0 2
 INSERT 0 1
               set_config              
 --------------------------------------
- 8b2ac7a6-bb9b-4831-916f-bc82bd49f958
+ 7e7e4241-3f0f-4413-b5ea-b4ec5d60bf61
 (1 row)
 
 INSERT 0 1
 INSERT 0 1
               set_config              
 --------------------------------------
- f90a93e5-3f9f-4a97-95bc-0d37b003ec5b
+ 297c1bbc-da25-437e-a207-7ea39a0a3789
 (1 row)
 
  as_user 
@@ -961,6 +968,95 @@ SET
 (1 row)
 
 RESET
+INSERT 0 1
+              set_config              
+--------------------------------------
+ 29291112-c249-4114-aa21-dc57dab518c9
+(1 row)
+
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+psql:tool/db/security_test.sql:520: NOTICE:  refused, as it should be — a rematch of somebody else's match: no finished live match to rematch
+ must_fail 
+-----------
+ 
+(1 row)
+
+RESET
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ check_that 
+------------
+ 
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+RESET
+ check_that 
+------------
+ 
+(1 row)
+
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ check_that 
+------------
+ 
+(1 row)
+
+RESET
+INSERT 0 2
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+psql:tool/db/security_test.sql:549: NOTICE:  refused, as it should be — a rematch of a match an hour old: no finished live match to rematch
+ must_fail 
+-----------
+ 
+(1 row)
+
+psql:tool/db/security_test.sql:552: NOTICE:  refused, as it should be — a rematch of a match still running: no finished live match to rematch
+ must_fail 
+-----------
+ 
+(1 row)
+
+RESET
+INSERT 0 1
+INSERT 0 1
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+psql:tool/db/security_test.sql:562: NOTICE:  refused, as it should be — a rematch with somebody who blocked you: no finished live match to rematch
+ must_fail 
+-----------
+ 
+(1 row)
+
+RESET
+DELETE 1
 DO
 GRANT
 GRANT
@@ -974,7 +1070,7 @@ RESET
  
 (1 row)
 
-psql:tool/db/security_test.sql:529: NOTICE:  refused, as it should be — a tester listed with capitals: new row for relation "beta_testers" violates check constraint "beta_testers_email_check"
+psql:tool/db/security_test.sql:589: NOTICE:  refused, as it should be — a tester listed with capitals: new row for relation "beta_testers" violates check constraint "beta_testers_email_check"
  must_fail 
 -----------
  
@@ -986,7 +1082,7 @@ psql:tool/db/security_test.sql:529: NOTICE:  refused, as it should be — a test
 (1 row)
 
 SET
-psql:tool/db/security_test.sql:533: NOTICE:  refused, as it should be — a lifter handing out tester passes: permission denied for function grant_tester_pro
+psql:tool/db/security_test.sql:593: NOTICE:  refused, as it should be — a lifter handing out tester passes: permission denied for function grant_tester_pro
  must_fail 
 -----------
  
@@ -997,7 +1093,7 @@ psql:tool/db/security_test.sql:533: NOTICE:  refused, as it should be — a lift
  
 (1 row)
 
-psql:tool/db/security_test.sql:537: NOTICE:  refused, as it should be — a lifter putting themselves on the tester list: new row violates row-level security policy for table "beta_testers"
+psql:tool/db/security_test.sql:597: NOTICE:  refused, as it should be — a lifter putting themselves on the tester list: new row violates row-level security policy for table "beta_testers"
  must_fail 
 -----------
  
@@ -1021,25 +1117,25 @@ DELETE 1
 (1 row)
 
 SET
-psql:tool/db/security_test.sql:571: NOTICE:  refused, as it should be — signed out, a lifter's profile: permission denied for function lifter_profile
+psql:tool/db/security_test.sql:631: NOTICE:  refused, as it should be — signed out, a lifter's profile: permission denied for function lifter_profile
  must_fail 
 -----------
  
 (1 row)
 
-psql:tool/db/security_test.sql:573: NOTICE:  refused, as it should be — signed out, somebody's recorded set: permission denied for function find_opponent_set
+psql:tool/db/security_test.sql:633: NOTICE:  refused, as it should be — signed out, somebody's recorded set: permission denied for function find_opponent_set
  must_fail 
 -----------
  
 (1 row)
 
-psql:tool/db/security_test.sql:575: NOTICE:  refused, as it should be — signed out, whether a name is taken: permission denied for function username_available
+psql:tool/db/security_test.sql:635: NOTICE:  refused, as it should be — signed out, whether a name is taken: permission denied for function username_available
  must_fail 
 -----------
  
 (1 row)
 
-psql:tool/db/security_test.sql:576: NOTICE:  refused, as it should be — signed out, the profiles table: permission denied for table profiles
+psql:tool/db/security_test.sql:636: NOTICE:  refused, as it should be — signed out, the profiles table: permission denied for table profiles
  must_fail 
 -----------
  
