@@ -20,7 +20,7 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # duel.sql because find_opponent_set has to check friendships to honour
 # 'friends only'.
 PARTS = ['subscriptions.sql', 'schema.sql', 'ladder.sql', 'social.sql',
-         'duel.sql', 'notify.sql', 'push.sql', 'live.sql', 'account.sql', 'testers.sql',
+         'duel.sql', 'notify.sql', 'push.sql', 'live.sql', 'account.sql', 'seasons.sql', 'testers.sql',
          'lockdown.sql']
 
 HEADER = """-- OUTREPD — everything the server needs, in one paste.

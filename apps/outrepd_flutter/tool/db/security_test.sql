@@ -398,6 +398,75 @@ reset role;
 update server_switches set enabled = false where name = 'paywall_enforced';
 delete from subscriptions where user_id = :'B';
 
+-- ── the monthly board ─────────────────────────────────────────────────────────
+
+update profiles set placements_done = 5 where id in (:'A', :'B');
+-- Last month: twenty duels A won against B's recorded set, twelve LP each.
+insert into sets (profile_id, reps, reps_camera, duration_ms)
+values (:'A', 20, 20, 60000), (:'B', 10, 10, 60000);
+insert into duels (created_at, challenger, defender, challenger_set,
+                   defender_set, winner, ranked, lp_challenger, lp_defender)
+select (date_trunc('month', now() at time zone 'UTC') at time zone 'UTC')
+         - interval '3 days' + g * interval '1 minute',
+       :'A'::uuid, :'B'::uuid,
+       (select id from sets where profile_id = :'A' order by created_at desc limit 1),
+       (select id from sets where profile_id = :'B' order by created_at desc limit 1),
+       :'A'::uuid, true, 12, -12
+  from generate_series(1, 20) g;
+
+-- The first request of the month closes the last one.
+select as_user(:'A'); set role authenticated;
+select check_that((select count(*) from my_season_awards() where award = 'champion') = 1,
+                  'last month''s winner was not named Champion');
+select check_that((select count(*) from my_season_awards() where award = 'regular') = 1,
+                  'twenty duels in a month did not earn the badge');
+reset role;
+select as_user(:'B'); set role authenticated;
+-- Raced twenty times while away: points lost, but no duel of theirs played.
+select check_that((select count(*) from my_season_awards()) = 0,
+                  'a month of losses was rewarded');
+select check_that((select count(*) from season_awards) = 0,
+                  'a lifter can read the awards table');
+select check_that((select count(*) from lifter_season_awards(:'A')) = 2,
+                  'another lifter''s awards are not on their card');
+select must_fail('a lifter closing a month', 'select close_finished_seasons()');
+select must_fail('a lifter reading the raw standings',
+                 'select * from season_standings(current_date)');
+reset role;
+select close_finished_seasons();
+select check_that((select count(*) from season_awards) = 2, 'a month was closed twice');
+
+-- This month: the board's points are this month's LP, and it is in order.
+select as_user(:'A'); set role authenticated;
+select check_that(
+  (select points from my_month_place()) = coalesce((
+    select sum(lp) from (
+      select lp_challenger as lp from duels
+       where ranked and challenger = :'A'
+         and created_at >= date_trunc('month', now() at time zone 'UTC') at time zone 'UTC'
+      union all
+      select lp_defender from duels
+       where ranked and defender = :'A'
+         and created_at >= date_trunc('month', now() at time zone 'UTC') at time zone 'UTC'
+    ) x), 0),
+  'this month''s points are not the LP of this month''s duels');
+select check_that(not exists (
+  select 1 from (select points, lag(points) over (order by place) as before
+                   from month_board()) b
+   where b.before < b.points), 'the monthly board is out of order');
+reset role;
+
+-- ── the live search ───────────────────────────────────────────────────────────
+
+select check_that(live_reach(0) = 2 and live_reach(7) = 6 and live_reach(20) = 12,
+                  'the live search does not widen with the wait');
+select as_user(:'A'); set role authenticated;
+select check_that((select searching >= 0 and online >= 0 from live_online()),
+                  'live_online');
+select count(*) from find_live_opponent();
+select leave_live_queue();
+reset role;
+
 -- ── closed-test testers ───────────────────────────────────────────────────────
 
 -- The trigger on auth.users runs inside every sign-up, as whatever role the

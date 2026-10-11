@@ -86,6 +86,46 @@ alter table live_queue enable row level security;
 
 -- ─────────────────────────────── ranked: the queue ─────────────────────────────
 
+-- How far apart in level two lifters may be, given how long one of them has
+-- searched: close at first, wider every five seconds, and the whole ladder's
+-- worth of reach before the fifteen seconds after which the app gives up and
+-- races a recorded set instead. A level is one division; a tier is five.
+create or replace function live_reach(waited_seconds double precision)
+returns int
+language sql
+immutable
+set search_path = public
+as $$
+  select case
+           when waited_seconds < 5 then 2
+           when waited_seconds < 10 then 6
+           else 12
+         end
+$$;
+
+-- For the search screen while it waits: how many are searching right now,
+-- and how many have had the app open in the last few minutes. Counts only;
+-- nobody in them is named.
+create or replace function live_online()
+returns table (searching int, online int)
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select
+    (select count(*)::int from live_queue q
+      where q.seen_at > now() - interval '5 seconds'
+        and q.profile_id <> auth.uid()),
+    (select count(*)::int from profiles p
+      where p.last_seen > now() - interval '3 minutes'
+        and p.id <> auth.uid());
+$$;
+
+revoke all on function live_reach(double precision) from public, anon;
+revoke all on function live_online() from public, anon;
+grant execute on function live_online() to authenticated;
+
 -- Pairs the caller with somebody live, or waits in the queue. Returns one row
 -- once there is somebody to race, and nothing while there is not.
 create or replace function find_live_opponent()
@@ -103,6 +143,7 @@ as $$
 declare
   me profiles;
   my_level int;
+  my_wait double precision;
   paired live_matches;
   waiting live_queue;
 begin
@@ -112,6 +153,12 @@ begin
     raise exception 'no profile for this account';
   end if;
   my_level := ladder_level(me.tier_idx, me.div_idx);
+  -- How long this search has run: the phone asks again every few seconds,
+  -- and the queue row keeps when it first joined.
+  my_wait := coalesce(
+    extract(epoch from now() - (select q.joined_at from live_queue q
+                                 where q.profile_id = me.id)),
+    0);
 
   -- One pairing at a time, so two people can never both take the same third.
   perform pg_advisory_xact_lock(hashtext('outrepd.live_queue'));
@@ -138,7 +185,12 @@ begin
     join profiles p on p.id = q.profile_id
    where q.profile_id <> me.id
      and q.seen_at > now() - interval '5 seconds'
-     and abs(q.level - my_level) <= 6
+     -- Close in level first, wider the longer either of them has waited:
+     -- the nearest opponent when there is one, and a match rather than a
+     -- recorded set when there is not.
+     and abs(q.level - my_level) <= greatest(
+           live_reach(my_wait),
+           live_reach(extract(epoch from now() - q.joined_at)))
      and not exists (
        select 1 from duels d
         where (d.challenger = me.id and d.defender = p.id)
@@ -154,7 +206,7 @@ begin
         where (mu.muter = me.id and mu.muted = p.id)
            or (mu.muter = p.id and mu.muted = me.id)
      )
-   order by q.joined_at
+   order by abs(q.level - my_level), q.joined_at
    limit 1;
 
   if waiting.profile_id is not null then
