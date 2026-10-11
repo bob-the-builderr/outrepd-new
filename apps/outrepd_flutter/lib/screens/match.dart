@@ -45,10 +45,22 @@ class MatchScreen extends StatelessWidget {
           builder: (context, _) {
             final offline = !Connection.instance.online;
 
-            return ListView(
-              padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
-              children: [
+            // The rank and the buttons sit in the middle of the space under
+            // the top row, rather than at the top of it with the bottom
+            // third of a tall phone empty. A short phone scrolls instead.
+            return LayoutBuilder(
+              builder: (context, box) => SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: (box.maxHeight - 28).clamp(0, double.infinity),
+                  ),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
                 _TopRow(profile: p),
+                const Spacer(),
                 const SizedBox(height: 18),
                 if (!p.isRanked)
                   _Unranked(profile: p)
@@ -66,7 +78,12 @@ class MatchScreen extends StatelessWidget {
                   _PlacementActions(profile: p)
                 else
                   const _Actions(),
-              ],
+                const Spacer(flex: 2),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             );
           },
         ),
@@ -81,8 +98,8 @@ class MatchScreen extends StatelessWidget {
 double _badgeSize(BuildContext context) {
   final screen = MediaQuery.sizeOf(context);
   final byWidth = screen.width * 0.5;
-  final byHeight = screen.height * 0.24;
-  return (byWidth < byHeight ? byWidth : byHeight).clamp(100.0, 220.0);
+  final byHeight = screen.height * 0.27;
+  return (byWidth < byHeight ? byWidth : byHeight).clamp(100.0, 240.0);
 }
 
 // ─────────────────────────────── unranked ────────────────────────────────────
