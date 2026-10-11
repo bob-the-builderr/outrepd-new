@@ -701,5 +701,6 @@
   "dailyGoalLeft": "{n} kaldı",
   "dailyGoalChange": "Değiştir",
   "dailyGoalPick": "Günlük hedefin",
-  "dailyGoalOption": "Günde {n} şınav"
+  "dailyGoalOption": "Günde {n} şınav",
+  "widgetGoalOf": "bugün {goal} hedefin"
 }

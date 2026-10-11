@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Today's goal as a ring: a dark track, and the share done drawn over it
+     from twelve o'clock. A horizontal ProgressBar drawn round, because that is
+     what a home-screen widget is allowed to hold. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/background">
+        <shape
+            android:shape="ring"
+            android:innerRadiusRatio="2.7"
+            android:thicknessRatio="9"
+            android:useLevel="false">
+            <solid android:color="#262320" />
+        </shape>
+    </item>
+    <item android:id="@android:id/progress">
+        <rotate
+            android:fromDegrees="270"
+            android:toDegrees="270"
+            android:pivotX="50%"
+            android:pivotY="50%">
+            <shape
+                android:shape="ring"
+                android:innerRadiusRatio="2.7"
+                android:thicknessRatio="9"
+                android:useLevel="true">
+                <solid android:color="#E8DCC8" />
+            </shape>
+        </rotate>
+    </item>
+</layer-list>

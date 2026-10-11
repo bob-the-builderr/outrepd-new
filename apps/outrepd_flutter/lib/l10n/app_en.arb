@@ -1460,5 +1460,13 @@
         "type": "String"
       }
     }
+  },
+  "widgetGoalOf": "of {goal} today",
+  "@widgetGoalOf": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -701,5 +701,6 @@
   "dailyGoalLeft": "noch {n}",
   "dailyGoalChange": "Ändern",
   "dailyGoalPick": "Dein Tagesziel",
-  "dailyGoalOption": "{n} Liegestütze am Tag"
+  "dailyGoalOption": "{n} Liegestütze am Tag",
+  "widgetGoalOf": "von {goal} heute"
 }

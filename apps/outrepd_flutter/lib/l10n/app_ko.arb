@@ -701,5 +701,6 @@
   "dailyGoalLeft": "{n}개 남음",
   "dailyGoalChange": "변경",
   "dailyGoalPick": "하루 목표",
-  "dailyGoalOption": "하루 {n}개"
+  "dailyGoalOption": "하루 {n}개",
+  "widgetGoalOf": "오늘 {goal}개 중"
 }

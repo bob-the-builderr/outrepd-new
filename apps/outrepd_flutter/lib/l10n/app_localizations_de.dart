@@ -2311,4 +2311,9 @@ class LDe extends L {
   String dailyGoalOption(String n) {
     return '${n} Liegestütze am Tag';
   }
+
+  @override
+  String widgetGoalOf(String goal) {
+    return 'von ${goal} heute';
+  }
 }

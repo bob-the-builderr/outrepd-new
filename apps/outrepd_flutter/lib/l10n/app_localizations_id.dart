@@ -2303,4 +2303,9 @@ class LId extends L {
   String dailyGoalOption(String n) {
     return '${n} push-up sehari';
   }
+
+  @override
+  String widgetGoalOf(String goal) {
+    return 'dari ${goal} hari ini';
+  }
 }

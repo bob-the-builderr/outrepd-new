@@ -2310,4 +2310,9 @@ class LFr extends L {
   String dailyGoalOption(String n) {
     return '${n} pompes par jour';
   }
+
+  @override
+  String widgetGoalOf(String goal) {
+    return 'sur ${goal} aujourd\'hui';
+  }
 }

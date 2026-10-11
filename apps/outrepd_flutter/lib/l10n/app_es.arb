@@ -701,5 +701,6 @@
   "dailyGoalLeft": "faltan {n}",
   "dailyGoalChange": "Cambiar",
   "dailyGoalPick": "Tu objetivo diario",
-  "dailyGoalOption": "{n} flexiones al día"
+  "dailyGoalOption": "{n} flexiones al día",
+  "widgetGoalOf": "de {goal} hoy"
 }

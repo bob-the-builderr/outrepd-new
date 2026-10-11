@@ -2309,4 +2309,9 @@ class LEs extends L {
   String dailyGoalOption(String n) {
     return '${n} flexiones al día';
   }
+
+  @override
+  String widgetGoalOf(String goal) {
+    return 'de ${goal} hoy';
+  }
 }

@@ -2304,4 +2304,9 @@ class LRu extends L {
   String dailyGoalOption(String n) {
     return '${n} отжиманий в день';
   }
+
+  @override
+  String widgetGoalOf(String goal) {
+    return 'из ${goal} сегодня';
+  }
 }

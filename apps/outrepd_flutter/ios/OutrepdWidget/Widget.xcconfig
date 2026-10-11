@@ -1,0 +1,5 @@
+// The widget extension's own base settings: Flutter's generated values —
+// FLUTTER_BUILD_NAME and FLUTTER_BUILD_NUMBER, so the extension's version
+// matches the app's — and nothing of the app's CocoaPods, which link
+// libraries an extension must not carry.
+#include "../Flutter/Generated.xcconfig"

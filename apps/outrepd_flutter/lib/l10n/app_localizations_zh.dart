@@ -2255,4 +2255,9 @@ class LZh extends L {
   String dailyGoalOption(String n) {
     return '每天 ${n} 个';
   }
+
+  @override
+  String widgetGoalOf(String goal) {
+    return '今日目标 ${goal}';
+  }
 }

@@ -2304,4 +2304,9 @@ class LHi extends L {
   String dailyGoalOption(String n) {
     return 'रोज़ ${n} पुश-अप';
   }
+
+  @override
+  String widgetGoalOf(String goal) {
+    return 'आज ${goal} में से';
+  }
 }

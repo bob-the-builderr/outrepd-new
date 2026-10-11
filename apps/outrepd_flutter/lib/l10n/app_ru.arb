@@ -701,5 +701,6 @@
   "dailyGoalLeft": "осталось {n}",
   "dailyGoalChange": "Изменить",
   "dailyGoalPick": "Ваша цель на день",
-  "dailyGoalOption": "{n} отжиманий в день"
+  "dailyGoalOption": "{n} отжиманий в день",
+  "widgetGoalOf": "из {goal} сегодня"
 }

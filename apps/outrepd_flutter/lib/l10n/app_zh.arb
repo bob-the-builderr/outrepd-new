@@ -701,5 +701,6 @@
   "dailyGoalLeft": "还差 {n}",
   "dailyGoalChange": "更改",
   "dailyGoalPick": "你的每日目标",
-  "dailyGoalOption": "每天 {n} 个"
+  "dailyGoalOption": "每天 {n} 个",
+  "widgetGoalOf": "今日目标 {goal}"
 }

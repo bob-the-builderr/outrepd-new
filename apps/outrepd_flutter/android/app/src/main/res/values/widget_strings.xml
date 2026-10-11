@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- What the home-screen widget picker says about each widget. -->
+<resources>
+    <string name="widget_small_description">Today\'s goal and your streak</string>
+    <string name="widget_medium_description">Your rank, today\'s goal and your streak</string>
+</resources>

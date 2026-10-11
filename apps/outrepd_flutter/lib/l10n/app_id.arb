@@ -701,5 +701,6 @@
   "dailyGoalLeft": "{n} lagi",
   "dailyGoalChange": "Ubah",
   "dailyGoalPick": "Target harianmu",
-  "dailyGoalOption": "{n} push-up sehari"
+  "dailyGoalOption": "{n} push-up sehari",
+  "widgetGoalOf": "dari {goal} hari ini"
 }

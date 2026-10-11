@@ -701,5 +701,6 @@
   "dailyGoalLeft": "{n} बाकी",
   "dailyGoalChange": "बदलें",
   "dailyGoalPick": "आपका रोज़ का लक्ष्य",
-  "dailyGoalOption": "रोज़ {n} पुश-अप"
+  "dailyGoalOption": "रोज़ {n} पुश-अप",
+  "widgetGoalOf": "आज {goal} में से"
 }

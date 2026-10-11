@@ -2306,4 +2306,9 @@ class LPt extends L {
   String dailyGoalOption(String n) {
     return '${n} flexões por dia';
   }
+
+  @override
+  String widgetGoalOf(String goal) {
+    return 'de ${goal} hoje';
+  }
 }

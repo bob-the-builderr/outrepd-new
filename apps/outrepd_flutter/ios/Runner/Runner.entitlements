@@ -9,6 +9,12 @@
 	<!-- www.outrepd.com/u/<name> opens the app (lib/deep_links.dart),
 	     checked against the site's .well-known/apple-app-site-association.
 	     www only: the bare domain redirects, which Apple does not follow. -->
+	<!-- Shared with the home-screen widget (ios/OutrepdWidget), which reads
+	     what lib/home_widgets.dart writes here. -->
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.com.outrepd.outrepd</string>
+	</array>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:www.outrepd.com</string>

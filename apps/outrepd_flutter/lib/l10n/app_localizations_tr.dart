@@ -2299,4 +2299,9 @@ class LTr extends L {
   String dailyGoalOption(String n) {
     return 'Günde ${n} şınav';
   }
+
+  @override
+  String widgetGoalOf(String goal) {
+    return 'bugün ${goal} hedefin';
+  }
 }

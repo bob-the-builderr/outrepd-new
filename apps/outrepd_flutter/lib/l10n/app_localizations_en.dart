@@ -2302,4 +2302,9 @@ class LEn extends L {
   String dailyGoalOption(String n) {
     return '${n} push-ups a day';
   }
+
+  @override
+  String widgetGoalOf(String goal) {
+    return 'of ${goal} today';
+  }
 }

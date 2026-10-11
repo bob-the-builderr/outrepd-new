@@ -2272,4 +2272,9 @@ class LKo extends L {
   String dailyGoalOption(String n) {
     return '하루 ${n}개';
   }
+
+  @override
+  String widgetGoalOf(String goal) {
+    return '오늘 ${goal}개 중';
+  }
 }

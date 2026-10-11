@@ -2309,4 +2309,9 @@ class LIt extends L {
   String dailyGoalOption(String n) {
     return '${n} flessioni al giorno';
   }
+
+  @override
+  String widgetGoalOf(String goal) {
+    return 'su ${goal} oggi';
+  }
 }

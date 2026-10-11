@@ -2265,4 +2265,9 @@ class LJa extends L {
   String dailyGoalOption(String n) {
     return '1日${n}回';
   }
+
+  @override
+  String widgetGoalOf(String goal) {
+    return '今日の目標 ${goal}';
+  }
 }

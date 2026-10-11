@@ -701,5 +701,6 @@
   "dailyGoalLeft": "encore {n}",
   "dailyGoalChange": "Modifier",
   "dailyGoalPick": "Ton objectif quotidien",
-  "dailyGoalOption": "{n} pompes par jour"
+  "dailyGoalOption": "{n} pompes par jour",
+  "widgetGoalOf": "sur {goal} aujourd'hui"
 }

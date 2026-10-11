@@ -4204,6 +4204,12 @@ abstract class L {
   /// In en, this message translates to:
   /// **'{n} push-ups a day'**
   String dailyGoalOption(String n);
+
+  /// No description provided for @widgetGoalOf.
+  ///
+  /// In en, this message translates to:
+  /// **'of {goal} today'**
+  String widgetGoalOf(String goal);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +15,7 @@ import 'connection.dart';
 import 'data.dart';
 import 'deep_links.dart';
 import 'firebase.dart';
+import 'home_widgets.dart';
 import 'reminders.dart';
 import 'rewards.dart';
 import 'screens/auth_entry.dart';
@@ -113,6 +116,8 @@ void main() async {
     debugPrint('Could not read saved settings: $error\n$stack');
   }
   deepLinksEnabled = !kIsWeb;
+  // After the career and settings are loaded: the widgets show both.
+  unawaited(HomeWidgets.start());
   runApp(const OutrepdApp());
 }
 
