@@ -62,8 +62,8 @@ psql:/home/runner/work/_temp/install.sql:3438: NOTICE:  function my_live_invites
 psql:/home/runner/work/_temp/install.sql:3726: NOTICE:  function live_outcome(live_matches) does not exist, skipping
 psql:/home/runner/work/_temp/install.sql:3727: NOTICE:  function finish_live_match(uuid,pg_catalog.int4,pg_catalog.int4,pg_catalog.float4,pg_catalog.bool,pg_catalog.int4,pg_catalog.bool,pg_catalog.int4[]) does not exist, skipping
 psql:/home/runner/work/_temp/install.sql:3728: NOTICE:  function live_match_result(uuid) does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:4595: NOTICE:  trigger "tester_signed_up" for relation "auth.users" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:4624: NOTICE:  trigger "tester_added" for relation "beta_testers" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:4342: NOTICE:  trigger "tester_signed_up" for relation "auth.users" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:4371: NOTICE:  trigger "tester_added" for relation "beta_testers" does not exist, skipping
 installed once
 psql:/home/runner/work/_temp/install.sql:49: NOTICE:  relation "subscriptions" already exists, skipping
 psql:/home/runner/work/_temp/install.sql:55: NOTICE:  column "period_type" of relation "subscriptions" already exists, skipping
@@ -136,14 +136,14 @@ psql:/home/runner/work/_temp/install.sql:3178: NOTICE:  relation "live_matches_d
 psql:/home/runner/work/_temp/install.sql:3182: NOTICE:  column "rematch_of" of relation "live_matches" already exists, skipping
 psql:/home/runner/work/_temp/install.sql:3184: NOTICE:  relation "live_matches_rematch_of_idx" already exists, skipping
 psql:/home/runner/work/_temp/install.sql:3197: NOTICE:  relation "live_queue" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4257: NOTICE:  relation "duels_ranked_month_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4397: NOTICE:  relation "season_awards" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4399: NOTICE:  relation "season_awards_profile_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4404: NOTICE:  relation "season_closings" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4542: NOTICE:  relation "beta_testers" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4550: NOTICE:  relation "beta_tester_grants" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4658: NOTICE:  relation "invites" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4659: NOTICE:  relation "invites_inviter_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4004: NOTICE:  relation "duels_ranked_month_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4144: NOTICE:  relation "season_awards" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4146: NOTICE:  relation "season_awards_profile_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4151: NOTICE:  relation "season_closings" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4289: NOTICE:  relation "beta_testers" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4297: NOTICE:  relation "beta_tester_grants" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4405: NOTICE:  relation "invites" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4406: NOTICE:  relation "invites_inviter_idx" already exists, skipping
 installed twice
 CREATE FUNCTION
 CREATE FUNCTION
@@ -320,12 +320,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- fecbc320-0575-4db6-a6b0-40d63dd72af3
+ a6d6d17d-39d6-49e5-8556-1a5a1d0c0efe
 (1 row)
 
               set_config              
 --------------------------------------
- 33f5c1a6-aee8-4579-baf5-c0f643ceb216
+ 526f17c7-1ff0-40e3-b949-7005b9798eec
 (1 row)
 
  as_user 
@@ -367,12 +367,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- fecbc320-0575-4db6-a6b0-40d63dd72af3
+ a6d6d17d-39d6-49e5-8556-1a5a1d0c0efe
 (1 row)
 
               set_config              
 --------------------------------------
- e1726473-5d19-4a0a-b0d2-e5487bf1282d
+ 445ca286-663f-4c66-a73a-de026b6cbbc3
 (1 row)
 
  as_user 
@@ -414,7 +414,7 @@ SET
 RESET
               set_config              
 --------------------------------------
- 72afac9c-eca3-482c-b8d9-72f5cc941fe1
+ 47a161ec-8b4e-4cac-a5ea-ca74a9f21ce4
 (1 row)
 
  pg_sleep 
@@ -469,12 +469,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- ac359dd2-5564-44e6-81b0-71fece0a2b3a
+ 2df740f3-c072-4326-a820-a67b675e5745
 (1 row)
 
               set_config              
 --------------------------------------
- 0ee3e2a8-44a1-4ba8-8509-eb6f7c0f6a0d
+ ac2b5ca0-7792-4f86-8c6f-9d9a29a54510
 (1 row)
 
  as_user 
@@ -485,7 +485,7 @@ RESET
 SET
                           settle_duel                           
 ----------------------------------------------------------------
- (4eb12c6c-6245-4afc-acc0-39fc9d3bd138,t,0,0,0,0,1,0,1,1,1,1,f)
+ (d49cf562-72ef-4b5d-8d86-7589f89fd39f,t,0,0,0,0,1,0,1,1,1,1,f)
 (1 row)
 
 RESET
@@ -697,7 +697,7 @@ RESET
 SET
              invite_live              
 --------------------------------------
- 0b423e11-5064-428d-ad9d-fcc43719c727
+ 7be35e53-0b11-4d52-a66f-d0028bacfb53
 (1 row)
 
 RESET
@@ -722,12 +722,12 @@ RESET
 SET
              invite_live              
 --------------------------------------
- abfd1649-76b1-47fb-84cf-8c758a634106
+ ce7c2d1c-6720-4e5a-934f-73f68c02567b
 (1 row)
 
              invite_live              
 --------------------------------------
- 49a00192-ed60-4de7-a0a5-d783d6fa4c81
+ c90ef632-6680-4489-9c98-72d9088fa7cd
 (1 row)
 
 psql:tool/db/security_test.sql:359: NOTICE:  refused, as it should be — a fourth live invite in ten minutes: too many invites, wait a few minutes
@@ -917,14 +917,14 @@ INSERT 0 2
 INSERT 0 1
               set_config              
 --------------------------------------
- 4828787c-a551-4ced-bfa6-48a254c1f306
+ 4775f0b5-dd64-4132-a272-5c39f1de76b4
 (1 row)
 
 INSERT 0 1
 INSERT 0 1
               set_config              
 --------------------------------------
- cbfea467-2a04-4c61-b832-e405c0c6be59
+ fc08beb1-2a9f-4045-9aee-3b29e2e59f87
 (1 row)
 
  as_user 
@@ -974,7 +974,7 @@ RESET
 INSERT 0 1
               set_config              
 --------------------------------------
- 795f9687-7527-4b6b-8702-f8564bf07873
+ c1a02f88-31e7-43bd-8217-6cf32753cb43
 (1 row)
 
  as_user 
@@ -1062,7 +1062,7 @@ RESET
 DELETE 1
  set_config 
 ------------
- 426202
+ 485239
 (1 row)
 
  as_user 
@@ -1135,13 +1135,18 @@ SET
  
 (1 row)
 
-psql:tool/db/security_test.sql:603: NOTICE:  refused, as it should be — a lifter asking for a grant: permission denied for function ask_invite_grant
+ check_that 
+------------
+ 
+(1 row)
+
+psql:tool/db/security_test.sql:605: NOTICE:  refused, as it should be — a lifter asking for a grant: permission denied for function ask_invite_grant
  must_fail 
 -----------
  
 (1 row)
 
-psql:tool/db/security_test.sql:605: NOTICE:  refused, as it should be — a lifter checking somebody's plan: permission denied for function on_yearly_plan
+psql:tool/db/security_test.sql:607: NOTICE:  refused, as it should be — a lifter checking somebody's plan: permission denied for function on_yearly_plan
  must_fail 
 -----------
  
@@ -1159,6 +1164,11 @@ RESET
 (1 row)
 
 SET
+ check_that 
+------------
+ 
+(1 row)
+
  check_that 
 ------------
  
@@ -1233,7 +1243,7 @@ RESET
  
 (1 row)
 
-psql:tool/db/security_test.sql:660: NOTICE:  refused, as it should be — a tester listed with capitals: new row for relation "beta_testers" violates check constraint "beta_testers_email_check"
+psql:tool/db/security_test.sql:665: NOTICE:  refused, as it should be — a tester listed with capitals: new row for relation "beta_testers" violates check constraint "beta_testers_email_check"
  must_fail 
 -----------
  
@@ -1245,7 +1255,7 @@ psql:tool/db/security_test.sql:660: NOTICE:  refused, as it should be — a test
 (1 row)
 
 SET
-psql:tool/db/security_test.sql:664: NOTICE:  refused, as it should be — a lifter handing out tester passes: permission denied for function grant_tester_pro
+psql:tool/db/security_test.sql:669: NOTICE:  refused, as it should be — a lifter handing out tester passes: permission denied for function grant_tester_pro
  must_fail 
 -----------
  
@@ -1256,7 +1266,7 @@ psql:tool/db/security_test.sql:664: NOTICE:  refused, as it should be — a lift
  
 (1 row)
 
-psql:tool/db/security_test.sql:668: NOTICE:  refused, as it should be — a lifter putting themselves on the tester list: new row violates row-level security policy for table "beta_testers"
+psql:tool/db/security_test.sql:673: NOTICE:  refused, as it should be — a lifter putting themselves on the tester list: new row violates row-level security policy for table "beta_testers"
  must_fail 
 -----------
  
@@ -1280,25 +1290,25 @@ DELETE 1
 (1 row)
 
 SET
-psql:tool/db/security_test.sql:702: NOTICE:  refused, as it should be — signed out, a lifter's profile: permission denied for function lifter_profile
+psql:tool/db/security_test.sql:707: NOTICE:  refused, as it should be — signed out, a lifter's profile: permission denied for function lifter_profile
  must_fail 
 -----------
  
 (1 row)
 
-psql:tool/db/security_test.sql:704: NOTICE:  refused, as it should be — signed out, somebody's recorded set: permission denied for function find_opponent_set
+psql:tool/db/security_test.sql:709: NOTICE:  refused, as it should be — signed out, somebody's recorded set: permission denied for function find_opponent_set
  must_fail 
 -----------
  
 (1 row)
 
-psql:tool/db/security_test.sql:706: NOTICE:  refused, as it should be — signed out, whether a name is taken: permission denied for function username_available
+psql:tool/db/security_test.sql:711: NOTICE:  refused, as it should be — signed out, whether a name is taken: permission denied for function username_available
  must_fail 
 -----------
  
 (1 row)
 
-psql:tool/db/security_test.sql:707: NOTICE:  refused, as it should be — signed out, the profiles table: permission denied for table profiles
+psql:tool/db/security_test.sql:712: NOTICE:  refused, as it should be — signed out, the profiles table: permission denied for table profiles
  must_fail 
 -----------
  
