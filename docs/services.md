@@ -28,7 +28,9 @@
 | `friendships`, `blocks`, `mutes` | الصحاب والبلوك والكتم |
 | `reports` | البلاغات |
 | `notifications`, `push_tokens` | الإشعارات وعناوين الموبايلات |
-| `subscriptions` | مين مشترك، بيكتبه `revenuecat-webhook` بس |
+| `subscriptions` | مين مشترك وعلى أنهي خطة وهل لسه في الأيام المجانية (`period_type`)، بيكتبه `revenuecat-webhook` بس |
+| `invites` | مين دخل بكود مين، وإمتى اتدّاله الأسبوع (`invites.sql`) |
+| `season_awards`, `season_closings` | مكافآت لوحة الشهر، والشهور اللي اتقفلت (`seasons.sql`) |
 | `server_switches` | مفاتيح السيرفر (`paywall_enforced`)، بتتغير بـ`switches.sql` |
 | `beta_testers`, `beta_tester_grants` | إيميلات تيسترز الـclosed test، ومين خد الـPro المجاني (`testers.sql`) |
 | `rate_events` | عدّاد الحدود (كام تغيير اسم/دعوة في الساعة) |
@@ -39,7 +41,8 @@ functions بس. اللي مالوش أكونت ممنوع من كل حاجة غ�
 
 **كل السيرفر في الريبو:** مفيش حاجة اتعملت يدوي برّه `install.sql`. الـtriggers
 اللي بتنادي functions (`send_push`، `send_report_alert`، `tester_signed_up`،
-`tester_added`) كلها فيه، ومن غير أي قيمة سرية جواها.
+`tester_added`، و`ask_invite_grant` بتاعة كود الصاحب) كلها فيه، ومن غير أي قيمة
+سرية جواها.
 
 ### Edge Functions (لازم يبقوا ٤ بالظبط)
 
@@ -48,7 +51,7 @@ functions بس. اللي مالوش أكونت ممنوع من كل حاجة غ�
 | `push` | تبعت الإشعار للموبايل عن طريق Firebase | **مقفول** | `FCM_SERVICE_ACCOUNT` |
 | `email-my-data` | تبعت لليوزر نسخة من بياناته بالإيميل | مفتوح أو مقفول، الاتنين شغالين | `RESEND_API_KEY`, `EXPORT_FROM` |
 | `report-alert` | تبعتلك إيميل مع كل بلاغ (مرة واحدة لكل بلاغ) | **مقفول** | `RESEND_API_KEY`, `EXPORT_FROM`, `REPORTS_TO` |
-| `revenuecat-webhook` | تحدّث جدول الاشتراكات من RevenueCat، وتدي التيسترز Pro شهرين | **مقفول** | `REVENUECAT_SECRET_KEY`, `REVENUECAT_WEBHOOK_AUTH` |
+| `revenuecat-webhook` | تحدّث جدول الاشتراكات من RevenueCat، وتدي التيسترز Pro شهرين، واللي دخل بكود صاحب أسبوع | **مقفول** | `REVENUECAT_SECRET_KEY`, `REVENUECAT_WEBHOOK_AUTH` |
 
 الكود في `apps/outrepd_flutter/supabase/functions/<الاسم>/index.ts`، وفي أول
 كل ملف خطوات النشر.
@@ -140,5 +143,6 @@ functions بس. اللي مالوش أكونت ممنوع من كل حاجة غ�
 ## ٧. الدومين والإيميل والموقع
 
 - **الدومين:** `outrepd.com`، الإيميل عليه **Google Workspace** (`support@outrepd.com`)
-- **الموقع:** `https://www.outrepd.com`: `/privacy`، `/terms`، `/u/<username>` (كارت الشير)
+- **الموقع:** `https://www.outrepd.com` على **Vercel**، والكود في ريبو `outrepd/outrepd` (أي push على `main` بيتنشر لوحده). الصفحات: `/privacy`، `/terms`، `/contact`، `/u/<username>` (كارت اللاعب، ولو اللينك فيه `?code=` بيعرض كود الصاحب وزراير المتجر)
+- **ناقص على الموقع:** `.well-known/assetlinks.json` (محتاج بصمة SHA-256 بتاعة App signing key من Play Console) و`.well-known/apple-app-site-association` (محتاج الـTeam ID). من غيرهم اللينك بيفتح الموقع بدل الأب
 - **Resend:** بيبعت إيميل نسخة البيانات وتنبيهات البلاغات (`RESEND_API_KEY`)

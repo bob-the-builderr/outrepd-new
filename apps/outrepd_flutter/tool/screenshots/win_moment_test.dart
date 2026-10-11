@@ -148,7 +148,7 @@ void main() {
       _app(
         PromotionView(
           tierIdx: 3,
-          divIdx: 1,
+          divIdx: 3,
           fromTierIdx: 3,
           fromDivIdx: 2,
           highest: true,
