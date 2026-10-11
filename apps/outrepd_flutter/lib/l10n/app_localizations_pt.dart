@@ -1097,45 +1097,45 @@ class LPt extends L {
       'Não tenho a certeza de que foi o movimento certo — confere o número.';
 
   @override
-  String get noRanksYet => 'No ranks yet';
+  String get noRanksYet => 'Ainda não há ranking';
 
   @override
-  String get noRanksYetBody => 'Play a duel and the board fills in.';
+  String get noRanksYetBody => 'Jogue um duelo e o ranking se preenche.';
 
   @override
-  String get ranksTitle => 'Ranks';
+  String get ranksTitle => 'Ranques';
 
   @override
-  String get totalReps => 'Total reps';
+  String get totalReps => 'Repetições totais';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'Recentes';
 
   @override
   String wonVs(String name) {
-    return 'Won vs $name';
+    return 'Vitória contra ${name}';
   }
 
   @override
   String lostVs(String name) {
-    return 'Lost vs $name';
+    return 'Derrota contra ${name}';
   }
 
   @override
   String hoursAgo(String n) {
-    return '${n}h ago';
+    return 'há ${n} h';
   }
 
   @override
   String toNextTier(String n, String tier) {
-    return '$n to $tier';
+    return '${n} para ${tier}';
   }
 
   @override
-  String get noMatchesYet => 'No duels yet';
+  String get noMatchesYet => 'Ainda não há duelos';
 
   @override
-  String get noMatchesYetBody => 'Your first one shows up here, win or lose.';
+  String get noMatchesYetBody => 'O primeiro aparece aqui, ganhando ou perdendo.';
 
   @override
   String get searchByUsername => 'Buscar por nome de usuário';

@@ -1067,45 +1067,45 @@ class LZh extends L {
   String get unsureMovement => '不确定这是不是正确的动作，请核对数字。';
 
   @override
-  String get noRanksYet => 'No ranks yet';
+  String get noRanksYet => '暂无排名';
 
   @override
-  String get noRanksYetBody => 'Play a duel and the board fills in.';
+  String get noRanksYetBody => '打一场对决，榜单就会出现。';
 
   @override
-  String get ranksTitle => 'Ranks';
+  String get ranksTitle => '段位';
 
   @override
-  String get totalReps => 'Total reps';
+  String get totalReps => '总次数';
 
   @override
-  String get recent => 'Recent';
+  String get recent => '最近';
 
   @override
   String wonVs(String name) {
-    return 'Won vs $name';
+    return '战胜 ${name}';
   }
 
   @override
   String lostVs(String name) {
-    return 'Lost vs $name';
+    return '负于 ${name}';
   }
 
   @override
   String hoursAgo(String n) {
-    return '${n}h ago';
+    return '${n} 小时前';
   }
 
   @override
   String toNextTier(String n, String tier) {
-    return '$n to $tier';
+    return '距 ${tier} 还差 ${n}';
   }
 
   @override
-  String get noMatchesYet => 'No duels yet';
+  String get noMatchesYet => '还没有对决';
 
   @override
-  String get noMatchesYetBody => 'Your first one shows up here, win or lose.';
+  String get noMatchesYetBody => '你的第一场对决会显示在这里，无论输赢。';
 
   @override
   String get searchByUsername => '按用户名搜索';

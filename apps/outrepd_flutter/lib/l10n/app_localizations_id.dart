@@ -1092,45 +1092,45 @@ class LId extends L {
       'Belum yakin ini gerakan yang benar — cek angkanya.';
 
   @override
-  String get noRanksYet => 'No ranks yet';
+  String get noRanksYet => 'Belum ada peringkat';
 
   @override
-  String get noRanksYetBody => 'Play a duel and the board fills in.';
+  String get noRanksYetBody => 'Main duel dan papan akan terisi.';
 
   @override
-  String get ranksTitle => 'Ranks';
+  String get ranksTitle => 'Peringkat';
 
   @override
-  String get totalReps => 'Total reps';
+  String get totalReps => 'Total repetisi';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'Terbaru';
 
   @override
   String wonVs(String name) {
-    return 'Won vs $name';
+    return 'Menang lawan ${name}';
   }
 
   @override
   String lostVs(String name) {
-    return 'Lost vs $name';
+    return 'Kalah dari ${name}';
   }
 
   @override
   String hoursAgo(String n) {
-    return '${n}h ago';
+    return '${n} jam lalu';
   }
 
   @override
   String toNextTier(String n, String tier) {
-    return '$n to $tier';
+    return '${n} lagi ke ${tier}';
   }
 
   @override
-  String get noMatchesYet => 'No duels yet';
+  String get noMatchesYet => 'Belum ada duel';
 
   @override
-  String get noMatchesYetBody => 'Your first one shows up here, win or lose.';
+  String get noMatchesYetBody => 'Duel pertamamu muncul di sini, menang atau kalah.';
 
   @override
   String get searchByUsername => 'Cari berdasarkan nama pengguna';

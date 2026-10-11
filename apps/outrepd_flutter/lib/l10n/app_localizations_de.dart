@@ -1099,45 +1099,45 @@ class LDe extends L {
       'Nicht sicher, ob das die richtige Übung war — prüfe die Zahl.';
 
   @override
-  String get noRanksYet => 'No ranks yet';
+  String get noRanksYet => 'Noch keine Rangliste';
 
   @override
-  String get noRanksYetBody => 'Play a duel and the board fills in.';
+  String get noRanksYetBody => 'Spiel ein Duell, dann füllt sich die Liste.';
 
   @override
-  String get ranksTitle => 'Ranks';
+  String get ranksTitle => 'Ränge';
 
   @override
-  String get totalReps => 'Total reps';
+  String get totalReps => 'Wiederholungen gesamt';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'Zuletzt';
 
   @override
   String wonVs(String name) {
-    return 'Won vs $name';
+    return 'Sieg gegen ${name}';
   }
 
   @override
   String lostVs(String name) {
-    return 'Lost vs $name';
+    return 'Niederlage gegen ${name}';
   }
 
   @override
   String hoursAgo(String n) {
-    return '${n}h ago';
+    return 'vor ${n} Std.';
   }
 
   @override
   String toNextTier(String n, String tier) {
-    return '$n to $tier';
+    return '${n} bis ${tier}';
   }
 
   @override
-  String get noMatchesYet => 'No duels yet';
+  String get noMatchesYet => 'Noch keine Duelle';
 
   @override
-  String get noMatchesYetBody => 'Your first one shows up here, win or lose.';
+  String get noMatchesYetBody => 'Dein erstes erscheint hier, Sieg oder Niederlage.';
 
   @override
   String get searchByUsername => 'Nach Benutzernamen suchen';

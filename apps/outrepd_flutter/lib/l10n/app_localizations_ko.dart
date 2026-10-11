@@ -1072,45 +1072,45 @@ class LKo extends L {
   String get unsureMovement => '올바른 동작인지 확신할 수 없습니다. 숫자를 확인하세요.';
 
   @override
-  String get noRanksYet => 'No ranks yet';
+  String get noRanksYet => '아직 순위가 없어요';
 
   @override
-  String get noRanksYetBody => 'Play a duel and the board fills in.';
+  String get noRanksYetBody => '대결을 하면 순위표가 채워져요.';
 
   @override
-  String get ranksTitle => 'Ranks';
+  String get ranksTitle => '랭크';
 
   @override
-  String get totalReps => 'Total reps';
+  String get totalReps => '총 반복 수';
 
   @override
-  String get recent => 'Recent';
+  String get recent => '최근';
 
   @override
   String wonVs(String name) {
-    return 'Won vs $name';
+    return '${name}에게 승리';
   }
 
   @override
   String lostVs(String name) {
-    return 'Lost vs $name';
+    return '${name}에게 패배';
   }
 
   @override
   String hoursAgo(String n) {
-    return '${n}h ago';
+    return '${n}시간 전';
   }
 
   @override
   String toNextTier(String n, String tier) {
-    return '$n to $tier';
+    return '${tier}까지 ${n}';
   }
 
   @override
-  String get noMatchesYet => 'No duels yet';
+  String get noMatchesYet => '아직 대결이 없어요';
 
   @override
-  String get noMatchesYetBody => 'Your first one shows up here, win or lose.';
+  String get noMatchesYetBody => '첫 대결은 이기든 지든 여기에 표시돼요.';
 
   @override
   String get searchByUsername => '사용자 이름으로 검색';

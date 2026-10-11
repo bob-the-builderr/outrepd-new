@@ -1094,45 +1094,45 @@ class LRu extends L {
       'Не уверен, что это было то движение — проверьте число.';
 
   @override
-  String get noRanksYet => 'No ranks yet';
+  String get noRanksYet => 'Рейтинга пока нет';
 
   @override
-  String get noRanksYetBody => 'Play a duel and the board fills in.';
+  String get noRanksYetBody => 'Сыграйте дуэль — и таблица заполнится.';
 
   @override
-  String get ranksTitle => 'Ranks';
+  String get ranksTitle => 'Ранги';
 
   @override
-  String get totalReps => 'Total reps';
+  String get totalReps => 'Всего повторений';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'Недавние';
 
   @override
   String wonVs(String name) {
-    return 'Won vs $name';
+    return 'Победа над ${name}';
   }
 
   @override
   String lostVs(String name) {
-    return 'Lost vs $name';
+    return 'Поражение от ${name}';
   }
 
   @override
   String hoursAgo(String n) {
-    return '${n}h ago';
+    return '${n} ч назад';
   }
 
   @override
   String toNextTier(String n, String tier) {
-    return '$n to $tier';
+    return '${n} до ${tier}';
   }
 
   @override
-  String get noMatchesYet => 'No duels yet';
+  String get noMatchesYet => 'Дуэлей пока нет';
 
   @override
-  String get noMatchesYetBody => 'Your first one shows up here, win or lose.';
+  String get noMatchesYetBody => 'Первая появится здесь — победа или поражение.';
 
   @override
   String get searchByUsername => 'Поиск по имени';

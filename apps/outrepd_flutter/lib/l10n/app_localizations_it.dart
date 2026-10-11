@@ -1098,45 +1098,45 @@ class LIt extends L {
       'Non sono sicuro fosse il movimento giusto — controlla il numero.';
 
   @override
-  String get noRanksYet => 'No ranks yet';
+  String get noRanksYet => 'Ancora nessuna classifica';
 
   @override
-  String get noRanksYetBody => 'Play a duel and the board fills in.';
+  String get noRanksYetBody => 'Gioca un duello e la classifica si riempie.';
 
   @override
-  String get ranksTitle => 'Ranks';
+  String get ranksTitle => 'Ranghi';
 
   @override
-  String get totalReps => 'Total reps';
+  String get totalReps => 'Ripetizioni totali';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'Recenti';
 
   @override
   String wonVs(String name) {
-    return 'Won vs $name';
+    return 'Vittoria contro ${name}';
   }
 
   @override
   String lostVs(String name) {
-    return 'Lost vs $name';
+    return 'Sconfitta contro ${name}';
   }
 
   @override
   String hoursAgo(String n) {
-    return '${n}h ago';
+    return '${n} h fa';
   }
 
   @override
   String toNextTier(String n, String tier) {
-    return '$n to $tier';
+    return '${n} a ${tier}';
   }
 
   @override
-  String get noMatchesYet => 'No duels yet';
+  String get noMatchesYet => 'Ancora nessun duello';
 
   @override
-  String get noMatchesYetBody => 'Your first one shows up here, win or lose.';
+  String get noMatchesYetBody => 'Il primo apparirà qui, che tu vinca o perda.';
 
   @override
   String get searchByUsername => 'Cerca per nome utente';

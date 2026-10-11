@@ -1099,45 +1099,45 @@ class LFr extends L {
       'Pas sûr que ce soit le bon mouvement — vérifiez le nombre.';
 
   @override
-  String get noRanksYet => 'No ranks yet';
+  String get noRanksYet => 'Pas encore de classement';
 
   @override
-  String get noRanksYetBody => 'Play a duel and the board fills in.';
+  String get noRanksYetBody => 'Joue un duel et le classement se remplit.';
 
   @override
-  String get ranksTitle => 'Ranks';
+  String get ranksTitle => 'Rangs';
 
   @override
-  String get totalReps => 'Total reps';
+  String get totalReps => 'Répétitions au total';
 
   @override
-  String get recent => 'Recent';
+  String get recent => 'Récents';
 
   @override
   String wonVs(String name) {
-    return 'Won vs $name';
+    return 'Victoire contre ${name}';
   }
 
   @override
   String lostVs(String name) {
-    return 'Lost vs $name';
+    return 'Défaite contre ${name}';
   }
 
   @override
   String hoursAgo(String n) {
-    return '${n}h ago';
+    return 'il y a ${n} h';
   }
 
   @override
   String toNextTier(String n, String tier) {
-    return '$n to $tier';
+    return '${n} avant ${tier}';
   }
 
   @override
-  String get noMatchesYet => 'No duels yet';
+  String get noMatchesYet => 'Pas encore de duels';
 
   @override
-  String get noMatchesYetBody => 'Your first one shows up here, win or lose.';
+  String get noMatchesYetBody => 'Le premier apparaîtra ici, victoire ou défaite.';
 
   @override
   String get searchByUsername => 'Rechercher par nom d\'utilisateur';

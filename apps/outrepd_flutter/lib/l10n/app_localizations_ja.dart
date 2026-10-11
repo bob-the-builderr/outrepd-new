@@ -1070,45 +1070,45 @@ class LJa extends L {
   String get unsureMovement => '正しい種目か確信が持てません。数を確認してください。';
 
   @override
-  String get noRanksYet => 'No ranks yet';
+  String get noRanksYet => 'まだランキングがありません';
 
   @override
-  String get noRanksYetBody => 'Play a duel and the board fills in.';
+  String get noRanksYetBody => '対戦するとボードが埋まっていきます。';
 
   @override
-  String get ranksTitle => 'Ranks';
+  String get ranksTitle => 'ランク';
 
   @override
-  String get totalReps => 'Total reps';
+  String get totalReps => '合計回数';
 
   @override
-  String get recent => 'Recent';
+  String get recent => '最近';
 
   @override
   String wonVs(String name) {
-    return 'Won vs $name';
+    return '${name}に勝利';
   }
 
   @override
   String lostVs(String name) {
-    return 'Lost vs $name';
+    return '${name}に敗北';
   }
 
   @override
   String hoursAgo(String n) {
-    return '${n}h ago';
+    return '${n}時間前';
   }
 
   @override
   String toNextTier(String n, String tier) {
-    return '$n to $tier';
+    return '${tier}まで${n}';
   }
 
   @override
-  String get noMatchesYet => 'No duels yet';
+  String get noMatchesYet => 'まだ対戦がありません';
 
   @override
-  String get noMatchesYetBody => 'Your first one shows up here, win or lose.';
+  String get noMatchesYetBody => '最初の対戦は勝っても負けてもここに表示されます。';
 
   @override
   String get searchByUsername => 'ユーザー名で検索';

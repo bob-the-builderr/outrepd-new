@@ -97,6 +97,8 @@ void main() {
     }
   });
 
+  // A test in all but folder: it lives in tool/ so `flutter test` skips it.
+  // ignore: invalid_use_of_visible_for_testing_member
   setUp(() => SharedPreferences.setMockInitialValues({}));
   tearDown(() => backend = const NoBackend());
 
