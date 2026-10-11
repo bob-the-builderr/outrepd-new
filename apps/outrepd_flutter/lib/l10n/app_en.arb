@@ -1432,5 +1432,33 @@
         "type": "String"
       }
     }
+  },
+  "dailyGoalTitle": "Today's goal",
+  "dailyGoalDone": "Done for today",
+  "dailyGoalProgress": "{progress} push-ups",
+  "@dailyGoalProgress": {
+    "placeholders": {
+      "progress": {
+        "type": "String"
+      }
+    }
+  },
+  "dailyGoalLeft": "{n} to go",
+  "@dailyGoalLeft": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "dailyGoalChange": "Change",
+  "dailyGoalPick": "Your daily goal",
+  "dailyGoalOption": "{n} push-ups a day",
+  "@dailyGoalOption": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -2228,4 +2228,31 @@ class LZh extends L {
   String inviteShareText(String code) {
     return '来 OUTREPD 和我比一场：60 秒俯卧撑，实时对战。注册时输入我的代码 ${code}，免费 7 天。';
   }
+
+  @override
+  String get dailyGoalTitle => '今日目标';
+
+  @override
+  String get dailyGoalDone => '今天已完成';
+
+  @override
+  String dailyGoalProgress(String progress) {
+    return '俯卧撑 ${progress}';
+  }
+
+  @override
+  String dailyGoalLeft(String n) {
+    return '还差 ${n}';
+  }
+
+  @override
+  String get dailyGoalChange => '更改';
+
+  @override
+  String get dailyGoalPick => '你的每日目标';
+
+  @override
+  String dailyGoalOption(String n) {
+    return '每天 ${n} 个';
+  }
 }

@@ -2283,4 +2283,31 @@ class LFr extends L {
   String inviteShareText(String code) {
     return 'Affronte-moi sur OUTREPD : 60 secondes de pompes, en direct. Utilise mon code ${code} à l\'inscription et profite de 7 jours gratuits.';
   }
+
+  @override
+  String get dailyGoalTitle => 'Objectif du jour';
+
+  @override
+  String get dailyGoalDone => 'C\'est fait pour aujourd\'hui';
+
+  @override
+  String dailyGoalProgress(String progress) {
+    return '${progress} pompes';
+  }
+
+  @override
+  String dailyGoalLeft(String n) {
+    return 'encore ${n}';
+  }
+
+  @override
+  String get dailyGoalChange => 'Modifier';
+
+  @override
+  String get dailyGoalPick => 'Ton objectif quotidien';
+
+  @override
+  String dailyGoalOption(String n) {
+    return '${n} pompes par jour';
+  }
 }

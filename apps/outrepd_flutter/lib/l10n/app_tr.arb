@@ -694,5 +694,12 @@
   "inviteYourCode": "Kodun",
   "inviteJoined": "{n} katıldı",
   "inviteSend": "Davet gönder",
-  "inviteShareText": "OUTREPD'de bana meydan oku: 60 saniye şınav, canlı. Kaydolurken {code} kodumu kullan, 7 gün ücretsiz kazan."
+  "inviteShareText": "OUTREPD'de bana meydan oku: 60 saniye şınav, canlı. Kaydolurken {code} kodumu kullan, 7 gün ücretsiz kazan.",
+  "dailyGoalTitle": "Bugünün hedefi",
+  "dailyGoalDone": "Bugünlük tamam",
+  "dailyGoalProgress": "{progress} şınav",
+  "dailyGoalLeft": "{n} kaldı",
+  "dailyGoalChange": "Değiştir",
+  "dailyGoalPick": "Günlük hedefin",
+  "dailyGoalOption": "Günde {n} şınav"
 }

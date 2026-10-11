@@ -694,5 +694,12 @@
   "inviteYourCode": "Ton code",
   "inviteJoined": "{n} inscrits",
   "inviteSend": "Envoyer l'invitation",
-  "inviteShareText": "Affronte-moi sur OUTREPD : 60 secondes de pompes, en direct. Utilise mon code {code} à l'inscription et profite de 7 jours gratuits."
+  "inviteShareText": "Affronte-moi sur OUTREPD : 60 secondes de pompes, en direct. Utilise mon code {code} à l'inscription et profite de 7 jours gratuits.",
+  "dailyGoalTitle": "Objectif du jour",
+  "dailyGoalDone": "C'est fait pour aujourd'hui",
+  "dailyGoalProgress": "{progress} pompes",
+  "dailyGoalLeft": "encore {n}",
+  "dailyGoalChange": "Modifier",
+  "dailyGoalPick": "Ton objectif quotidien",
+  "dailyGoalOption": "{n} pompes par jour"
 }

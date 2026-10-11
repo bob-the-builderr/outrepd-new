@@ -2284,4 +2284,31 @@ class LDe extends L {
   String inviteShareText(String code) {
     return 'Fordere mich auf OUTREPD heraus: 60 Sekunden Liegestütze, live. Nutz meinen Code ${code} bei der Anmeldung und bekomm 7 Tage gratis.';
   }
+
+  @override
+  String get dailyGoalTitle => 'Tagesziel';
+
+  @override
+  String get dailyGoalDone => 'Für heute geschafft';
+
+  @override
+  String dailyGoalProgress(String progress) {
+    return '${progress} Liegestütze';
+  }
+
+  @override
+  String dailyGoalLeft(String n) {
+    return 'noch ${n}';
+  }
+
+  @override
+  String get dailyGoalChange => 'Ändern';
+
+  @override
+  String get dailyGoalPick => 'Dein Tagesziel';
+
+  @override
+  String dailyGoalOption(String n) {
+    return '${n} Liegestütze am Tag';
+  }
 }

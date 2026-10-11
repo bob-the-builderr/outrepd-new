@@ -694,5 +694,12 @@
   "inviteYourCode": "あなたのコード",
   "inviteJoined": "{n}人が参加",
   "inviteSend": "招待を送る",
-  "inviteShareText": "OUTREPDで勝負しよう：60秒の腕立て伏せ、ライブ対戦。登録時にコード{code}を入れると7日間無料。"
+  "inviteShareText": "OUTREPDで勝負しよう：60秒の腕立て伏せ、ライブ対戦。登録時にコード{code}を入れると7日間無料。",
+  "dailyGoalTitle": "今日の目標",
+  "dailyGoalDone": "今日は達成",
+  "dailyGoalProgress": "腕立て {progress}",
+  "dailyGoalLeft": "あと{n}",
+  "dailyGoalChange": "変更",
+  "dailyGoalPick": "1日の目標",
+  "dailyGoalOption": "1日{n}回"
 }

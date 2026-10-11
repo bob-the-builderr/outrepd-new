@@ -694,5 +694,12 @@
   "inviteYourCode": "Kodemu",
   "inviteJoined": "{n} bergabung",
   "inviteSend": "Kirim undangan",
-  "inviteShareText": "Tantang aku di OUTREPD: 60 detik push-up, langsung. Pakai kodeku {code} saat daftar dan dapat 7 hari gratis."
+  "inviteShareText": "Tantang aku di OUTREPD: 60 detik push-up, langsung. Pakai kodeku {code} saat daftar dan dapat 7 hari gratis.",
+  "dailyGoalTitle": "Target hari ini",
+  "dailyGoalDone": "Selesai untuk hari ini",
+  "dailyGoalProgress": "{progress} push-up",
+  "dailyGoalLeft": "{n} lagi",
+  "dailyGoalChange": "Ubah",
+  "dailyGoalPick": "Target harianmu",
+  "dailyGoalOption": "{n} push-up sehari"
 }

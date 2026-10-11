@@ -2282,4 +2282,31 @@ class LIt extends L {
   String inviteShareText(String code) {
     return 'Sfidami su OUTREPD: 60 secondi di flessioni, live. Usa il mio codice ${code} all\'iscrizione e ottieni 7 giorni gratis.';
   }
+
+  @override
+  String get dailyGoalTitle => 'Obiettivo di oggi';
+
+  @override
+  String get dailyGoalDone => 'Fatto per oggi';
+
+  @override
+  String dailyGoalProgress(String progress) {
+    return '${progress} flessioni';
+  }
+
+  @override
+  String dailyGoalLeft(String n) {
+    return 'ne mancano ${n}';
+  }
+
+  @override
+  String get dailyGoalChange => 'Cambia';
+
+  @override
+  String get dailyGoalPick => 'Il tuo obiettivo giornaliero';
+
+  @override
+  String dailyGoalOption(String n) {
+    return '${n} flessioni al giorno';
+  }
 }

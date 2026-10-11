@@ -2277,4 +2277,31 @@ class LHi extends L {
   String inviteShareText(String code) {
     return 'OUTREPD पर मुझसे मुकाबला करो: 60 सेकंड पुश-अप, लाइव। साइन अप करते समय मेरा कोड ${code} डालो और 7 दिन मुफ़्त पाओ।';
   }
+
+  @override
+  String get dailyGoalTitle => 'आज का लक्ष्य';
+
+  @override
+  String get dailyGoalDone => 'आज का पूरा';
+
+  @override
+  String dailyGoalProgress(String progress) {
+    return '${progress} पुश-अप';
+  }
+
+  @override
+  String dailyGoalLeft(String n) {
+    return '${n} बाकी';
+  }
+
+  @override
+  String get dailyGoalChange => 'बदलें';
+
+  @override
+  String get dailyGoalPick => 'आपका रोज़ का लक्ष्य';
+
+  @override
+  String dailyGoalOption(String n) {
+    return 'रोज़ ${n} पुश-अप';
+  }
 }

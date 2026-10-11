@@ -694,5 +694,12 @@
   "inviteYourCode": "你的代码",
   "inviteJoined": "已加入 {n} 人",
   "inviteSend": "发送邀请",
-  "inviteShareText": "来 OUTREPD 和我比一场：60 秒俯卧撑，实时对战。注册时输入我的代码 {code}，免费 7 天。"
+  "inviteShareText": "来 OUTREPD 和我比一场：60 秒俯卧撑，实时对战。注册时输入我的代码 {code}，免费 7 天。",
+  "dailyGoalTitle": "今日目标",
+  "dailyGoalDone": "今天已完成",
+  "dailyGoalProgress": "俯卧撑 {progress}",
+  "dailyGoalLeft": "还差 {n}",
+  "dailyGoalChange": "更改",
+  "dailyGoalPick": "你的每日目标",
+  "dailyGoalOption": "每天 {n} 个"
 }

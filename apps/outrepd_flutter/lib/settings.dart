@@ -138,6 +138,11 @@ class AppSettings extends ChangeNotifier {
   /// when a rep does not count.
   bool showSkeleton = true;
 
+  /// Push-ups a day for today's goal on the Match tab — one of
+  /// [kDailyGoals] in daily_goal.dart. Fifty: a real day's work for most,
+  /// two or three sets.
+  int dailyGoal = 50;
+
   SharedPreferences? _store;
 
   /// Read what was saved last run. Call before the first frame so the app
@@ -171,6 +176,8 @@ class AppSettings extends ChangeNotifier {
       reminderMinutes = minutes;
     }
     showSkeleton = flag('showSkeleton', showSkeleton);
+    final goal = s.getInt('dailyGoal');
+    if (goal != null && goal > 0 && goal <= 1000) dailyGoal = goal;
   }
 
   /// The saved language, by name.
@@ -234,6 +241,7 @@ class AppSettings extends ChangeNotifier {
     s.setBool('reminder', reminder);
     s.setInt('reminderMinutes', reminderMinutes);
     s.setBool('showSkeleton', showSkeleton);
+    s.setInt('dailyGoal', dailyGoal);
   }
 
   /// What [themeMode] means right now, given the device setting.

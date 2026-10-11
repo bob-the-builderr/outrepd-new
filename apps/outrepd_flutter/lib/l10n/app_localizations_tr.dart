@@ -2272,4 +2272,31 @@ class LTr extends L {
   String inviteShareText(String code) {
     return 'OUTREPD\'de bana meydan oku: 60 saniye şınav, canlı. Kaydolurken ${code} kodumu kullan, 7 gün ücretsiz kazan.';
   }
+
+  @override
+  String get dailyGoalTitle => 'Bugünün hedefi';
+
+  @override
+  String get dailyGoalDone => 'Bugünlük tamam';
+
+  @override
+  String dailyGoalProgress(String progress) {
+    return '${progress} şınav';
+  }
+
+  @override
+  String dailyGoalLeft(String n) {
+    return '${n} kaldı';
+  }
+
+  @override
+  String get dailyGoalChange => 'Değiştir';
+
+  @override
+  String get dailyGoalPick => 'Günlük hedefin';
+
+  @override
+  String dailyGoalOption(String n) {
+    return 'Günde ${n} şınav';
+  }
 }

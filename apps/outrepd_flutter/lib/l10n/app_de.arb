@@ -694,5 +694,12 @@
   "inviteYourCode": "Dein Code",
   "inviteJoined": "{n} dabei",
   "inviteSend": "Einladung senden",
-  "inviteShareText": "Fordere mich auf OUTREPD heraus: 60 Sekunden Liegestütze, live. Nutz meinen Code {code} bei der Anmeldung und bekomm 7 Tage gratis."
+  "inviteShareText": "Fordere mich auf OUTREPD heraus: 60 Sekunden Liegestütze, live. Nutz meinen Code {code} bei der Anmeldung und bekomm 7 Tage gratis.",
+  "dailyGoalTitle": "Tagesziel",
+  "dailyGoalDone": "Für heute geschafft",
+  "dailyGoalProgress": "{progress} Liegestütze",
+  "dailyGoalLeft": "noch {n}",
+  "dailyGoalChange": "Ändern",
+  "dailyGoalPick": "Dein Tagesziel",
+  "dailyGoalOption": "{n} Liegestütze am Tag"
 }

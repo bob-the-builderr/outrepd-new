@@ -2277,4 +2277,31 @@ class LRu extends L {
   String inviteShareText(String code) {
     return 'Сразись со мной в OUTREPD: 60 секунд отжиманий вживую. Введи мой код ${code} при регистрации и получи 7 дней бесплатно.';
   }
+
+  @override
+  String get dailyGoalTitle => 'Цель на сегодня';
+
+  @override
+  String get dailyGoalDone => 'На сегодня готово';
+
+  @override
+  String dailyGoalProgress(String progress) {
+    return '${progress} отжиманий';
+  }
+
+  @override
+  String dailyGoalLeft(String n) {
+    return 'осталось ${n}';
+  }
+
+  @override
+  String get dailyGoalChange => 'Изменить';
+
+  @override
+  String get dailyGoalPick => 'Ваша цель на день';
+
+  @override
+  String dailyGoalOption(String n) {
+    return '${n} отжиманий в день';
+  }
 }

@@ -694,5 +694,12 @@
   "inviteYourCode": "Seu código",
   "inviteJoined": "{n} entraram",
   "inviteSend": "Enviar convite",
-  "inviteShareText": "Me desafie no OUTREPD: 60 segundos de flexões, ao vivo. Use meu código {code} ao se cadastrar e ganhe 7 dias grátis."
+  "inviteShareText": "Me desafie no OUTREPD: 60 segundos de flexões, ao vivo. Use meu código {code} ao se cadastrar e ganhe 7 dias grátis.",
+  "dailyGoalTitle": "Meta de hoje",
+  "dailyGoalDone": "Feito por hoje",
+  "dailyGoalProgress": "{progress} flexões",
+  "dailyGoalLeft": "faltam {n}",
+  "dailyGoalChange": "Alterar",
+  "dailyGoalPick": "Sua meta diária",
+  "dailyGoalOption": "{n} flexões por dia"
 }

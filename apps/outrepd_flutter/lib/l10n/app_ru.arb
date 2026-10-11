@@ -694,5 +694,12 @@
   "inviteYourCode": "Ваш код",
   "inviteJoined": "Присоединились: {n}",
   "inviteSend": "Отправить приглашение",
-  "inviteShareText": "Сразись со мной в OUTREPD: 60 секунд отжиманий вживую. Введи мой код {code} при регистрации и получи 7 дней бесплатно."
+  "inviteShareText": "Сразись со мной в OUTREPD: 60 секунд отжиманий вживую. Введи мой код {code} при регистрации и получи 7 дней бесплатно.",
+  "dailyGoalTitle": "Цель на сегодня",
+  "dailyGoalDone": "На сегодня готово",
+  "dailyGoalProgress": "{progress} отжиманий",
+  "dailyGoalLeft": "осталось {n}",
+  "dailyGoalChange": "Изменить",
+  "dailyGoalPick": "Ваша цель на день",
+  "dailyGoalOption": "{n} отжиманий в день"
 }

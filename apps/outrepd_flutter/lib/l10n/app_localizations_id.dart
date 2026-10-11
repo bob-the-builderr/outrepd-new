@@ -2276,4 +2276,31 @@ class LId extends L {
   String inviteShareText(String code) {
     return 'Tantang aku di OUTREPD: 60 detik push-up, langsung. Pakai kodeku ${code} saat daftar dan dapat 7 hari gratis.';
   }
+
+  @override
+  String get dailyGoalTitle => 'Target hari ini';
+
+  @override
+  String get dailyGoalDone => 'Selesai untuk hari ini';
+
+  @override
+  String dailyGoalProgress(String progress) {
+    return '${progress} push-up';
+  }
+
+  @override
+  String dailyGoalLeft(String n) {
+    return '${n} lagi';
+  }
+
+  @override
+  String get dailyGoalChange => 'Ubah';
+
+  @override
+  String get dailyGoalPick => 'Target harianmu';
+
+  @override
+  String dailyGoalOption(String n) {
+    return '${n} push-up sehari';
+  }
 }

@@ -694,5 +694,12 @@
   "inviteYourCode": "Il tuo codice",
   "inviteJoined": "{n} iscritti",
   "inviteSend": "Invia invito",
-  "inviteShareText": "Sfidami su OUTREPD: 60 secondi di flessioni, live. Usa il mio codice {code} all'iscrizione e ottieni 7 giorni gratis."
+  "inviteShareText": "Sfidami su OUTREPD: 60 secondi di flessioni, live. Usa il mio codice {code} all'iscrizione e ottieni 7 giorni gratis.",
+  "dailyGoalTitle": "Obiettivo di oggi",
+  "dailyGoalDone": "Fatto per oggi",
+  "dailyGoalProgress": "{progress} flessioni",
+  "dailyGoalLeft": "ne mancano {n}",
+  "dailyGoalChange": "Cambia",
+  "dailyGoalPick": "Il tuo obiettivo giornaliero",
+  "dailyGoalOption": "{n} flessioni al giorno"
 }

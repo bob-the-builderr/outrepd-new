@@ -2245,4 +2245,31 @@ class LKo extends L {
   String inviteShareText(String code) {
     return 'OUTREPD에서 나랑 대결해: 60초 푸시업, 실시간. 가입할 때 내 코드 ${code}를 입력하면 7일 무료야.';
   }
+
+  @override
+  String get dailyGoalTitle => '오늘의 목표';
+
+  @override
+  String get dailyGoalDone => '오늘 목표 달성';
+
+  @override
+  String dailyGoalProgress(String progress) {
+    return '푸시업 ${progress}';
+  }
+
+  @override
+  String dailyGoalLeft(String n) {
+    return '${n}개 남음';
+  }
+
+  @override
+  String get dailyGoalChange => '변경';
+
+  @override
+  String get dailyGoalPick => '하루 목표';
+
+  @override
+  String dailyGoalOption(String n) {
+    return '하루 ${n}개';
+  }
 }

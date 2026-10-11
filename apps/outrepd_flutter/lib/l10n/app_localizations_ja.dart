@@ -2238,4 +2238,31 @@ class LJa extends L {
   String inviteShareText(String code) {
     return 'OUTREPDで勝負しよう：60秒の腕立て伏せ、ライブ対戦。登録時にコード${code}を入れると7日間無料。';
   }
+
+  @override
+  String get dailyGoalTitle => '今日の目標';
+
+  @override
+  String get dailyGoalDone => '今日は達成';
+
+  @override
+  String dailyGoalProgress(String progress) {
+    return '腕立て ${progress}';
+  }
+
+  @override
+  String dailyGoalLeft(String n) {
+    return 'あと${n}';
+  }
+
+  @override
+  String get dailyGoalChange => '変更';
+
+  @override
+  String get dailyGoalPick => '1日の目標';
+
+  @override
+  String dailyGoalOption(String n) {
+    return '1日${n}回';
+  }
 }

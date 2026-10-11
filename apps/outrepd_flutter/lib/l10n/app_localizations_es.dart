@@ -2282,4 +2282,31 @@ class LEs extends L {
   String inviteShareText(String code) {
     return 'Rétame en OUTREPD: 60 segundos de flexiones, en vivo. Usa mi código ${code} al registrarte y consigue 7 días gratis.';
   }
+
+  @override
+  String get dailyGoalTitle => 'Objetivo de hoy';
+
+  @override
+  String get dailyGoalDone => 'Listo por hoy';
+
+  @override
+  String dailyGoalProgress(String progress) {
+    return '${progress} flexiones';
+  }
+
+  @override
+  String dailyGoalLeft(String n) {
+    return 'faltan ${n}';
+  }
+
+  @override
+  String get dailyGoalChange => 'Cambiar';
+
+  @override
+  String get dailyGoalPick => 'Tu objetivo diario';
+
+  @override
+  String dailyGoalOption(String n) {
+    return '${n} flexiones al día';
+  }
 }

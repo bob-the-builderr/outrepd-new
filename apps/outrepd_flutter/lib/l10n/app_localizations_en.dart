@@ -2275,4 +2275,31 @@ class LEn extends L {
   String inviteShareText(String code) {
     return 'Duel me on OUTREPD: 60 seconds of push-ups, live. Use my code ${code} when you sign up and get 7 days free.';
   }
+
+  @override
+  String get dailyGoalTitle => 'Today\'s goal';
+
+  @override
+  String get dailyGoalDone => 'Done for today';
+
+  @override
+  String dailyGoalProgress(String progress) {
+    return '${progress} push-ups';
+  }
+
+  @override
+  String dailyGoalLeft(String n) {
+    return '${n} to go';
+  }
+
+  @override
+  String get dailyGoalChange => 'Change';
+
+  @override
+  String get dailyGoalPick => 'Your daily goal';
+
+  @override
+  String dailyGoalOption(String n) {
+    return '${n} push-ups a day';
+  }
 }

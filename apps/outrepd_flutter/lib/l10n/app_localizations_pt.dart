@@ -2279,4 +2279,31 @@ class LPt extends L {
   String inviteShareText(String code) {
     return 'Me desafie no OUTREPD: 60 segundos de flexões, ao vivo. Use meu código ${code} ao se cadastrar e ganhe 7 dias grátis.';
   }
+
+  @override
+  String get dailyGoalTitle => 'Meta de hoje';
+
+  @override
+  String get dailyGoalDone => 'Feito por hoje';
+
+  @override
+  String dailyGoalProgress(String progress) {
+    return '${progress} flexões';
+  }
+
+  @override
+  String dailyGoalLeft(String n) {
+    return 'faltam ${n}';
+  }
+
+  @override
+  String get dailyGoalChange => 'Alterar';
+
+  @override
+  String get dailyGoalPick => 'Sua meta diária';
+
+  @override
+  String dailyGoalOption(String n) {
+    return '${n} flexões por dia';
+  }
 }

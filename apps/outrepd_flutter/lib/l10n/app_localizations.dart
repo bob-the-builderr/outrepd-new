@@ -4162,6 +4162,48 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Duel me on OUTREPD: 60 seconds of push-ups, live. Use my code {code} when you sign up and get 7 days free.'**
   String inviteShareText(String code);
+
+  /// No description provided for @dailyGoalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s goal'**
+  String get dailyGoalTitle;
+
+  /// No description provided for @dailyGoalDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done for today'**
+  String get dailyGoalDone;
+
+  /// No description provided for @dailyGoalProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{progress} push-ups'**
+  String dailyGoalProgress(String progress);
+
+  /// No description provided for @dailyGoalLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} to go'**
+  String dailyGoalLeft(String n);
+
+  /// No description provided for @dailyGoalChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get dailyGoalChange;
+
+  /// No description provided for @dailyGoalPick.
+  ///
+  /// In en, this message translates to:
+  /// **'Your daily goal'**
+  String get dailyGoalPick;
+
+  /// No description provided for @dailyGoalOption.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} push-ups a day'**
+  String dailyGoalOption(String n);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

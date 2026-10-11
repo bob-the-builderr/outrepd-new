@@ -18,6 +18,7 @@ import 'package:outrepd/screens/match.dart';
 import 'package:outrepd/screens/profile.dart';
 import 'package:outrepd/screens/ranks.dart';
 import 'package:outrepd/screens/settings.dart';
+import 'package:outrepd/screens/shell.dart';
 import 'package:outrepd/theme.dart';
 
 Future<void> _font(String family, String path) async {
@@ -84,6 +85,10 @@ void main() {
   }
 
   testWidgets('match', (tester) => shoot(tester, const MatchScreen(), 'match'));
+  testWidgets(
+    'match with the bar',
+    (tester) => shoot(tester, const AppShell(), 'shell_match'),
+  );
   testWidgets(
     'friends',
     (tester) => shoot(tester, const FriendsScreen(), 'friends'),

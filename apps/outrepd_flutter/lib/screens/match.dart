@@ -21,6 +21,7 @@ import '../push.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
 import '../widgets.dart';
+import 'daily_goal.dart';
 import 'match_entry.dart';
 import 'match_flow.dart';
 import 'notifications.dart';
@@ -73,6 +74,13 @@ class MatchScreen extends StatelessWidget {
                     child: _Rank(profile: p),
                   ),
                 const SizedBox(height: 26),
+                // Today's goal, above the button that works toward it. Not
+                // offline: practice still counts, but the screen there is
+                // about the connection.
+                if (!offline) ...[
+                  const DailyGoalCard(),
+                  const SizedBox(height: 16),
+                ],
                 if (offline)
                   const _OfflineActions()
                 else if (!p.isRanked)
