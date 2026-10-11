@@ -15,9 +15,10 @@
 -- backfill: POST {"backfill": true} to the revenuecat-webhook function with
 -- its secret (see the top of functions/revenuecat-webhook/index.ts).
 
--- On:
-update server_switches set enabled = true, changed_at = now()
- where name = 'paywall_enforced';
+-- On (commented out, so pasting this file never turns it on by accident;
+-- run the two lines without the leading -- when it is time):
+-- update server_switches set enabled = true, changed_at = now()
+--  where name = 'paywall_enforced';
 
 -- Off again, if anything goes wrong — paying lifters are never locked out
 -- by a switch that is off:
