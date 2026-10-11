@@ -6,6 +6,8 @@
 /// read back: the app only adds to the lifter's own record.
 library;
 
+import 'dart:io' show Platform;
+
 import 'package:flutter/foundation.dart';
 import 'package:health/health.dart';
 
@@ -16,10 +18,11 @@ abstract final class HealthSync {
   static bool _configured = false;
   static const _types = [HealthDataType.WORKOUT];
 
+  // dart:io's Platform, not defaultTargetPlatform: the plugin goes by the
+  // former, and under flutter test the two disagree (an Android target on a
+  // Linux host), which left the plugin waiting on a phone that is not there.
   static bool get _onPhone =>
-      !kIsWeb &&
-      (defaultTargetPlatform == TargetPlatform.iOS ||
-          defaultTargetPlatform == TargetPlatform.android);
+      !kIsWeb && (Platform.isIOS || Platform.isAndroid);
 
   static Future<bool> _configure() async {
     if (_configured) return true;
@@ -39,7 +42,7 @@ abstract final class HealthSync {
   static Future<bool> connect() async {
     if (!_onPhone || !await _configure()) return false;
     try {
-      if (defaultTargetPlatform == TargetPlatform.android) {
+      if (Platform.isAndroid) {
         final status = await _health.getHealthConnectSdkStatus();
         if (status != HealthConnectSdkStatus.sdkAvailable) {
           await _health.installHealthConnect();
@@ -65,7 +68,7 @@ abstract final class HealthSync {
     if (!_onPhone || !settings.saveToHealth || reps <= 0) return;
     if (!await _configure()) return;
     final end = DateTime.now();
-    final iPhone = defaultTargetPlatform == TargetPlatform.iOS;
+    final iPhone = Platform.isIOS;
     try {
       await _health.writeWorkoutData(
         activityType: iPhone
