@@ -16,6 +16,7 @@ import '../connection.dart';
 import '../backend/backend.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../motion.dart';
 import '../push.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
@@ -464,9 +465,11 @@ class _Rank extends StatelessWidget {
               builder: (_) => ProgressionScreen(profile: profile),
             ),
           ),
-          child: TierBadge(
-            tierIndex: profile.tierIdx,
-            size: _badgeSize(context),
+          child: PopIn(
+            child: TierBadge(
+              tierIndex: profile.tierIdx,
+              size: _badgeSize(context),
+            ),
           ),
         ),
         const SizedBox(height: 18),
@@ -479,14 +482,12 @@ class _Rank extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(3),
-          child: LinearProgressIndicator(
-            value: profile.lp / 100,
-            minHeight: 8,
-            backgroundColor: context.colors.surfaceRaised,
-            valueColor: AlwaysStoppedAnimation(context.colors.brand),
-          ),
+        // Fills to where the rank stands each time the tab is drawn.
+        GrowingBar(
+          value: profile.lp / 100,
+          colour: context.colors.brand,
+          background: context.colors.surfaceRaised,
+          radius: 4,
         ),
         const SizedBox(height: 8),
         // One line, not three. It used to be an LP number at display size, a
@@ -564,7 +565,8 @@ class _FilledAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return PressScale(
+      child: Material(
       color: context.colors.brand,
       borderRadius: BorderRadius.circular(14),
       child: InkWell(
@@ -585,6 +587,7 @@ class _FilledAction extends StatelessWidget {
             ),
           ),
         ),
+      ),
       ),
     );
   }

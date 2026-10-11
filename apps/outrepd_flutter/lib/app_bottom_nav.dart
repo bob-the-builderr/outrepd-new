@@ -1,15 +1,16 @@
 /// The four-item bottom navigation.
 ///
-/// Built from the supplied reference, with three changes: the colours come
-/// from the theme rather than from literals, the labels come from the ARB
-/// files, and each label is allowed to shrink — four fixed-width tabs have to
-/// hold a word in thirteen languages at whatever text size the reader has set,
-/// and an ellipsis through "プロフィール" is worse than a point smaller.
+/// The open tab is a cream pill with its name in it; the others are icons
+/// alone. The pill slides and widens to whichever tab is opened, so the bar
+/// says where you are by shape as well as colour, and the names that are not
+/// needed right now stop crowding it. Each label may still shrink — a word
+/// in thirteen languages, at whatever text size the reader has set.
 library;
 
 import 'package:flutter/material.dart';
 
 import 'l10n/app_localizations.dart';
+import 'motion.dart';
 import 'theme.dart';
 
 class AppBottomNav extends StatelessWidget {
@@ -33,24 +34,21 @@ class AppBottomNav extends StatelessWidget {
     final l = L.of(context);
 
     // A floating card rather than a bar welded to the bottom edge: hairline
-    // border all the way round, 14dp corners, and a gap on three sides.
-    //
-    // It still sits in the Scaffold's bottomNavigationBar slot, so the body is
-    // laid out above it and nothing is hidden underneath — the bar reserves
-    // its own height plus the margin, and the page colour showing through the
-    // gap is what makes it read as lifted.
+    // border all the way round, round ends, and a gap on three sides. It
+    // still sits in the Scaffold's bottomNavigationBar slot, so nothing is
+    // laid out underneath it.
     return SafeArea(
       top: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(12, 0, 12, 10),
+        padding: const EdgeInsets.fromLTRB(14, 0, 14, 12),
         child: DecoratedBox(
           decoration: BoxDecoration(
             color: context.colors.surface,
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(26),
             border: Border.all(color: context.colors.border, width: 0.5),
           ),
           child: Padding(
-            padding: const EdgeInsets.only(top: 11, bottom: 14),
+            padding: const EdgeInsets.all(8),
             child: Row(
               children: [
                 _NavItem(
@@ -61,20 +59,20 @@ class AppBottomNav extends StatelessWidget {
                 ),
                 _NavItem(
                   label: l.tabFriends,
-                  icon: const Icon(Icons.people_outline, size: 22),
+                  icon: const Icon(Icons.people_outline),
                   selected: currentIndex == 1,
                   badgeCount: friendRequestCount,
                   onTap: () => onTap(1),
                 ),
                 _NavItem(
                   label: l.tabRanks,
-                  icon: const Icon(Icons.emoji_events_outlined, size: 22),
+                  icon: const Icon(Icons.emoji_events_outlined),
                   selected: currentIndex == 2,
                   onTap: () => onTap(2),
                 ),
                 _NavItem(
                   label: l.tabProfile,
-                  icon: const Icon(Icons.person_outline, size: 22),
+                  icon: const Icon(Icons.person_outline),
                   selected: currentIndex == 3,
                   onTap: () => onTap(3),
                 ),
@@ -104,90 +102,131 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colour = selected ? context.colors.brand : context.colors.muted;
-
-    return Expanded(
-      child: Semantics(
-        button: true,
-        selected: selected,
-        label: label,
-        child: InkWell(
-          onTap: onTap,
-          // No ripple: it looks wrong over a warm dark bar.
-          splashFactory: NoSplash.splashFactory,
-          highlightColor: Colors.transparent,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Wide enough to hold the badge as well as the icon. The badge
-                // used to hang outside the stack on a negative offset, which
-                // is fine until something above it clips — and then it
-                // vanishes with nothing on screen to say why.
-                SizedBox(
-                  width: 44,
-                  height: 22,
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    alignment: Alignment.center,
-                    children: [
-                      IconTheme(
-                        data: IconThemeData(color: colour, size: 22),
-                        child: icon,
-                      ),
-                      if (badgeCount > 0)
-                        PositionedDirectional(
-                          top: -2,
-                          start: 24,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 5,
-                              vertical: 1,
-                            ),
-                            decoration: BoxDecoration(
-                              // Rival, not brand: somebody else is asking for
-                              // something, and it has to read differently
-                              // from the colour that means "you".
-                              color: context.colors.rival,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Text(
-                              badgeCount > 9 ? '9+' : '$badgeCount',
-                              style: TextStyle(
-                                color: context.colors.background,
-                                fontSize: 11,
-                                height: 1.2,
-                                fontFeatures: const [
-                                  FontFeature.tabularFigures(),
-                                ],
+    // 0 closed, 1 open: the slot's share of the bar, the pill's colour and
+    // how much of the name shows all move together.
+    return TweenAnimationBuilder<double>(
+      tween: Tween(end: selected ? 1 : 0),
+      duration: reduceMotion(context)
+          ? Duration.zero
+          : const Duration(milliseconds: 320),
+      curve: Curves.easeOutCubic,
+      builder: (context, t, _) {
+        final ink = Color.lerp(
+          context.colors.muted,
+          context.colors.background,
+          t,
+        )!;
+        return Expanded(
+          flex: 100 + (130 * t).round(),
+          child: Semantics(
+            button: true,
+            selected: selected,
+            label: label,
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                if (!selected) tap();
+                onTap();
+              },
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  color: context.colors.brand.withValues(alpha: t),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _IconWithBadge(icon: icon, colour: ink, count: badgeCount),
+                    // The name, as wide as the pill is open: all of it when
+                    // open, none of it closed, and in the tree either way.
+                    Flexible(
+                      child: ClipRect(
+                        child: Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          widthFactor: t,
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.only(start: 8),
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                label,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  color: ink,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.2,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 3),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 3),
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      label,
-                      maxLines: 1,
-                      style: TextStyle(
-                        color: colour,
-                        fontSize: 12,
-                        height: 1.2,
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
+        );
+      },
+    );
+  }
+}
+
+class _IconWithBadge extends StatelessWidget {
+  const _IconWithBadge({
+    required this.icon,
+    required this.colour,
+    required this.count,
+  });
+
+  final Widget icon;
+  final Color colour;
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    // Wide enough to hold the badge as well as the icon, so nothing above
+    // can clip it away.
+    return SizedBox(
+      width: 30,
+      height: 26,
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.center,
+        children: [
+          IconTheme(
+            data: IconThemeData(color: colour, size: 26),
+            child: icon,
+          ),
+          if (count > 0)
+            PositionedDirectional(
+              top: -5,
+              start: 17,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                decoration: BoxDecoration(
+                  // Rival, not brand: somebody else is asking for something,
+                  // and it has to read differently from the colour that
+                  // means "you".
+                  color: context.colors.rival,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  count > 9 ? '9+' : '$count',
+                  style: TextStyle(
+                    color: context.colors.background,
+                    fontSize: 11,
+                    height: 1.2,
+                    fontFeatures: const [FontFeature.tabularFigures()],
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }
@@ -200,9 +239,10 @@ class SwordsIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colour = IconTheme.of(context).color ?? context.colors.muted;
+    final size = IconTheme.of(context).size ?? 22;
     return SizedBox(
-      width: 22,
-      height: 22,
+      width: size,
+      height: size,
       child: CustomPaint(painter: _SwordsPainter(colour)),
     );
   }

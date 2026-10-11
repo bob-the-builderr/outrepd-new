@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import '../backend/backend.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../motion.dart';
 import '../season.dart';
 import '../theme.dart';
 import '../widgets.dart';
@@ -277,7 +278,13 @@ class _RanksScreenState extends State<RanksScreen> {
                         itemCount: entries.length,
                         separatorBuilder: (_, _) => const SizedBox(height: 7),
                         itemBuilder: (context, i) =>
-                            _RankRow(position: i + 1, entry: entries[i]),
+                            RiseIn(
+                              delay: staggered(i),
+                              child: _RankRow(
+                                position: i + 1,
+                                entry: entries[i],
+                              ),
+                            ),
                       ),
                     ),
             ),
@@ -736,7 +743,10 @@ class _MonthBoard extends StatelessWidget {
               if (row.place == 11) const _Top10Line(),
               Padding(
                 padding: const EdgeInsets.only(bottom: 7),
-                child: _MonthRankRow(row: row),
+                child: RiseIn(
+                  delay: staggered(row.place - 3),
+                  child: _MonthRankRow(row: row),
+                ),
               ),
             ],
           ],
@@ -801,7 +811,11 @@ class _Podium extends StatelessWidget {
 
     Widget slot(int place) => Expanded(
       child: switch (at(place)) {
-        final row? => _PodiumPlace(row: row),
+        // First up first, then second and third either side of it.
+        final row? => PopIn(
+          delay: Duration(milliseconds: place == 1 ? 0 : 90 * place),
+          child: _PodiumPlace(row: row),
+        ),
         null => const SizedBox.shrink(),
       },
     );

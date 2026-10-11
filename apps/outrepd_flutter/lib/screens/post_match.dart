@@ -21,6 +21,7 @@ import '../backend/backend.dart';
 import '../career.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../motion.dart';
 import '../player_avatar.dart';
 import '../ranking.dart';
 import '../theme.dart';
@@ -182,7 +183,9 @@ class DuelResultView extends StatelessWidget {
                     children: [
                   // One line whatever the language: "VOUS AVEZ GAGNÉ" shrinks
                   // to fit rather than breaking the verdict in two.
-                  FittedBox(
+                  PopIn(
+                    from: 0.6,
+                    child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
                       (won ? l.youWonPlain : l.youLostPlain).toUpperCase(),
@@ -198,6 +201,7 @@ class DuelResultView extends StatelessWidget {
                         height: 1.1,
                       ),
                     ),
+                  ),
                   ),
                   const SizedBox(height: 4),
                   Text(

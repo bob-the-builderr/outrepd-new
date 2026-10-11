@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import '../backend/backend.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../motion.dart';
 import '../player_avatar.dart';
 import '../theme.dart';
 import '../type_scale.dart';
@@ -292,14 +293,21 @@ class _FriendsScreenState extends State<FriendsScreen> {
                         _SectionLabel(
                           l.onlineNowCount(localNumber(context, online.length)),
                         ),
-                        for (final friend in online) _FriendRow(friend: friend),
+                        for (final (i, friend) in online.indexed)
+                          RiseIn(
+                            delay: staggered(i),
+                            child: _FriendRow(friend: friend),
+                          ),
                       ],
                       if (offline.isNotEmpty) ...[
                         _SectionLabel(
                           l.offlineCount(localNumber(context, offline.length)),
                         ),
-                        for (final friend in offline)
-                          _FriendRow(friend: friend),
+                        for (final (i, friend) in offline.indexed)
+                          RiseIn(
+                            delay: staggered(online.length + i),
+                            child: _FriendRow(friend: friend),
+                          ),
                       ],
                     ]),
                   ),

@@ -7,6 +7,7 @@ import '../app_bottom_nav.dart';
 import '../backend/backend.dart';
 import '../career.dart';
 import '../deep_links.dart';
+import '../motion.dart';
 import '../push.dart';
 import '../theme.dart';
 import 'friends.dart';
@@ -103,8 +104,7 @@ class _AppShellState extends State<AppShell> {
           // happens to rebuild it.
           body: ListenableBuilder(
             listenable: Career.instance,
-            builder: (context, _) =>
-                IndexedStack(index: _index, children: _tabs),
+            builder: (context, _) => _TabStack(index: _index, children: _tabs),
           ),
           bottomNavigationBar: AppBottomNav(
             currentIndex: _index,
@@ -112,6 +112,58 @@ class _AppShellState extends State<AppShell> {
             friendRequestCount: friendRequestCount,
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// The four tabs, every one kept alive as an IndexedStack keeps them, with
+/// the one being opened fading and rising in over a moment instead of
+/// cutting to it.
+class _TabStack extends StatefulWidget {
+  const _TabStack({required this.index, required this.children});
+
+  final int index;
+  final List<Widget> children;
+
+  @override
+  State<_TabStack> createState() => _TabStackState();
+}
+
+class _TabStackState extends State<_TabStack>
+    with SingleTickerProviderStateMixin {
+  late final _arrive = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 240),
+    value: 1,
+  );
+  late final _eased = CurvedAnimation(parent: _arrive, curve: Curves.easeOutCubic);
+
+  @override
+  void didUpdateWidget(_TabStack old) {
+    super.didUpdateWidget(old);
+    if (old.index != widget.index && !reduceMotion(context)) {
+      _arrive.forward(from: 0);
+    }
+  }
+
+  @override
+  void dispose() {
+    _eased.dispose();
+    _arrive.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeTransition(
+      opacity: _eased,
+      child: SlideTransition(
+        position: Tween(
+          begin: const Offset(0, 0.015),
+          end: Offset.zero,
+        ).animate(_eased),
+        child: IndexedStack(index: widget.index, children: widget.children),
       ),
     );
   }

@@ -27,6 +27,7 @@ import '../career.dart';
 import '../data.dart';
 import '../keep_awake.dart';
 import '../l10n/app_localizations.dart';
+import '../motion.dart';
 import '../reps/pose.dart';
 import '../reps/pose_source.dart';
 import '../reps/pushup_counter.dart';
@@ -221,7 +222,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                 ),
               Expanded(
-                child: switch (_step) {
+                child: _StepArrives(
+                  key: ValueKey(_step),
+                  child: switch (_step) {
                   _Step.welcome => _Welcome(
                     onStart: () => _go(_Step.idea),
                     onSignIn: _directLogIn,
@@ -257,7 +260,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     // last thing the app had to show before asking for one.
                     onNext: _openAuthGate,
                   ),
-                },
+                  },
+                ),
               ),
             ],
           ),
@@ -268,6 +272,32 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 }
 
 // ───────────────────────────── shared furniture ──────────────────────────────
+
+/// A step coming on: in from the side and up to full strength, so moving on
+/// reads as moving on rather than as the screen being swapped.
+class _StepArrives extends StatelessWidget {
+  const _StepArrives({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    if (reduceMotion(context)) return child;
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 1),
+      duration: const Duration(milliseconds: 380),
+      curve: Curves.easeOutCubic,
+      builder: (context, t, child) => Opacity(
+        opacity: t,
+        child: Transform.translate(
+          offset: Offset(28 * (1 - t), 0),
+          child: child,
+        ),
+      ),
+      child: child,
+    );
+  }
+}
 
 /// How far through the steps this is: one thin segment per step, lit up to
 /// and including the current one.
@@ -313,7 +343,8 @@ class _Primary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final on = onTap != null;
-    return SizedBox(
+    return PressScale(
+      child: SizedBox(
       width: double.infinity,
       child: Material(
         color: on ? context.colors.brand : context.colors.surfaceRaised,
@@ -336,6 +367,7 @@ class _Primary extends StatelessWidget {
             ),
           ),
         ),
+      ),
       ),
     );
   }
@@ -423,23 +455,26 @@ class _Title extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        TypeOut(
           text,
           style: TextStyle(
             color: context.colors.text,
-            fontSize: 22,
-            height: 1.35,
-            fontWeight: FontWeight.w500,
+            fontSize: 28,
+            height: 1.25,
+            fontWeight: FontWeight.w700,
           ),
         ),
         if (body case final body?) ...[
-          const SizedBox(height: 9),
-          Text(
-            body,
-            style: TextStyle(
-              color: context.colors.muted,
-              fontSize: 14,
-              height: 1.6,
+          const SizedBox(height: 10),
+          RiseIn(
+            delay: TypeOut.lengthOf(text),
+            child: Text(
+              body,
+              style: TextStyle(
+                color: context.colors.muted,
+                fontSize: 15,
+                height: 1.55,
+              ),
             ),
           ),
         ],
@@ -515,14 +550,17 @@ class _Welcome extends StatelessWidget {
             // The brand asset, mark and wordmark together, rather than a
             // drawn copy of them. Transparent, so it sits on the page in
             // either theme rather than carrying its own black square.
-            Image.asset(
-              'assets/images/logo-wordmark.png',
-              width: 240,
-              fit: BoxFit.contain,
+            PopIn(
+              child: Image.asset(
+                'assets/images/logo-wordmark.png',
+                width: 240,
+                fit: BoxFit.contain,
+              ),
             ),
             const SizedBox(height: 18),
-            Text(
+            TypeOut(
               l.obTagline,
+              delay: const Duration(milliseconds: 350),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: context.colors.muted,
@@ -565,7 +603,7 @@ class _Idea extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            TypeOut(
               l.obIdeaTitle,
               style: TextStyle(
                 color: context.colors.text,
@@ -575,9 +613,17 @@ class _Idea extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 36),
-            _IdeaLine(icon: Icons.groups_outlined, text: l.obIdeaRival),
-            _IdeaLine(icon: Icons.videocam_outlined, text: l.obIdeaCamera),
-            _IdeaLine(icon: Icons.emoji_events_outlined, text: l.paywallTitle),
+            for (final (i, (icon, line)) in [
+              (Icons.groups_outlined, l.obIdeaRival),
+              (Icons.videocam_outlined, l.obIdeaCamera),
+              (Icons.emoji_events_outlined, l.paywallTitle),
+            ].indexed)
+              RiseIn(
+                delay:
+                    TypeOut.lengthOf(l.obIdeaTitle) +
+                    Duration(milliseconds: 160 * i),
+                child: _IdeaLine(icon: icon, text: line),
+              ),
           ],
         ),
       ),

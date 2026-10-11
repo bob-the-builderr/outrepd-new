@@ -6,13 +6,18 @@
 /// position is read against the list as it was.
 library;
 
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:outrepd/settings.dart';
 
 Future<AppLanguage> _loaded(Map<String, Object> saved) async {
-  SharedPreferences.setMockInitialValues(saved);
+  SharedPreferences.setMockInitialValues({
+    // As a phone that has already had English made its default once.
+    'languageDefaultEnglish': true,
+    ...saved,
+  });
   final settings = AppSettings();
   await settings.load();
   return settings.language;
@@ -40,10 +45,41 @@ void main() {
     );
   });
 
-  test('nothing saved, or nonsense saved, is the default', () async {
-    expect(await _loaded({}), AppLanguage.system);
-    expect(await _loaded({'language': 99}), AppLanguage.system);
-    expect(await _loaded({'languageName': 'klingon'}), AppLanguage.system);
+  test('nothing saved, or nonsense saved, is English', () async {
+    expect(await _loaded({}), AppLanguage.english);
+    expect(await _loaded({'language': 99}), AppLanguage.english);
+    expect(await _loaded({'languageName': 'klingon'}), AppLanguage.english);
+  });
+
+  test('a fresh install is English, whatever the phone speaks', () async {
+    SharedPreferences.setMockInitialValues({});
+    final settings = AppSettings();
+    await settings.load();
+    expect(settings.language, AppLanguage.english);
+    expect(settings.language.locale, const Locale('en'));
+  });
+
+  test('the old default, saved, becomes English once', () async {
+    SharedPreferences.setMockInitialValues({'languageName': 'system'});
+    final first = AppSettings();
+    await first.load();
+    expect(first.language, AppLanguage.english);
+
+    // Chosen again afterwards, following the device is kept.
+    SharedPreferences.setMockInitialValues({
+      'languageName': 'system',
+      'languageDefaultEnglish': true,
+    });
+    final later = AppSettings();
+    await later.load();
+    expect(later.language, AppLanguage.system);
+  });
+
+  test('a language somebody chose is left alone', () async {
+    SharedPreferences.setMockInitialValues({'languageName': 'german'});
+    final settings = AppSettings();
+    await settings.load();
+    expect(settings.language, AppLanguage.german);
   });
 
   test('a choice is saved by name', () async {

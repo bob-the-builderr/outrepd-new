@@ -24,6 +24,7 @@ import '../backend/backend.dart';
 import '../career.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../motion.dart';
 import '../country_names.dart';
 import '../rewards.dart';
 import '../player_avatar.dart';
@@ -536,19 +537,25 @@ class _StatGrid extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Expanded(
-                  child: _Stat(
+                  child: CountUp(
+                    value: profile.bestSet,
+                    builder: (context, shown) => _Stat(
                     label: l.bestSet,
-                    value: localNumber(context, profile.bestSet),
+                    value: localNumber(context, shown),
                     // The one number a single good session can move, so it is
                     // the one wearing the colour that means "you".
                     colour: context.colors.brand,
                   ),
+                  ),
                 ),
                 const SizedBox(width: 7),
                 Expanded(
-                  child: _Stat(
-                    label: l.totalReps,
-                    value: localNumber(context, profile.totalReps),
+                  child: CountUp(
+                    value: profile.totalReps,
+                    builder: (context, shown) => _Stat(
+                      label: l.totalReps,
+                      value: localNumber(context, shown),
+                    ),
                   ),
                 ),
               ],

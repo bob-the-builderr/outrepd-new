@@ -9,8 +9,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'backend/backend.dart' show Challengeable;
 import 'l10n/app_localizations.dart';
 
-/// The languages the app ships in. Following the device is the default: most
-/// people never open a language picker, and a phone already knows.
+/// The languages the app ships in. English is the default, whatever the
+/// phone is set to: the app was written in it and every other language is a
+/// translation of it. Following the device is still one of the choices.
 enum AppLanguage {
   system,
   english,
@@ -94,7 +95,7 @@ extension ThemeModeLabel on ThemeMode {
 class AppSettings extends ChangeNotifier {
   // Appearance
   ThemeMode themeMode = ThemeMode.dark;
-  AppLanguage language = AppLanguage.system;
+  AppLanguage language = AppLanguage.english;
 
   // The duel, as it behaves on this phone.
   //
@@ -151,6 +152,14 @@ class AppSettings extends ChangeNotifier {
 
     themeMode = pickEnum('themeMode', ThemeMode.values, themeMode);
     language = _loadLanguage(s) ?? language;
+    // Following the device was the default until English took its place,
+    // and every settings change saved whatever the language was — so a saved
+    // "follow the device" is almost always the old default, not a choice.
+    // Once, it becomes English; picked again after that, it stays.
+    if (s.getBool('languageDefaultEnglish') != true) {
+      if (language == AppLanguage.system) language = AppLanguage.english;
+      s.setBool('languageDefaultEnglish', true);
+    }
 
     bool flag(String key, bool fallback) => s.getBool(key) ?? fallback;
 

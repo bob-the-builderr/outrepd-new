@@ -110,7 +110,13 @@ void main() {
 
     expect(find.text('Find a match'), findsOneWidget);
 
-    await tester.tap(find.text('Ranks'));
+    // The icon: only the open tab shows its name, the others are icons.
+    await tester.tap(
+      find.descendant(
+        of: find.byType(AppBottomNav),
+        matching: find.byIcon(Icons.emoji_events_outlined),
+      ),
+    );
     await tester.pumpAndSettle();
     expect(find.text('RANKS'), findsOneWidget);
     expect(find.text('Find a match'), findsNothing);

@@ -110,7 +110,8 @@ class GrowingBar extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(radius),
       child: TweenAnimationBuilder<double>(
-        tween: Tween(end: value.clamp(0.0, 1.0)),
+        // Empty the first time it is drawn, so it fills in front of you.
+        tween: Tween(begin: 0, end: value.clamp(0.0, 1.0)),
         duration: const Duration(milliseconds: 550),
         curve: Curves.easeOutCubic,
         builder: (context, grown, _) => LinearProgressIndicator(
@@ -140,6 +141,7 @@ class RiseIn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (reduceMotion(context)) return child;
     return TweenAnimationBuilder<double>(
       tween: Tween(begin: 0, end: 1),
       duration: kSettle + delay,
@@ -225,4 +227,225 @@ class SlideRoute<T> extends PageRouteBuilder<T> {
         );
 
   final Widget page;
+}
+
+/// Whether the phone asked for less motion. Every entrance below steps aside
+/// for it: the content is there at once, which is what that setting is for.
+bool reduceMotion(BuildContext context) =>
+    MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+
+/// The delay for the [index]th row of a list rising in: one after another,
+/// quickly, and no later than the ninth — a long list should not make
+/// somebody wait to see its bottom.
+Duration staggered(int index) =>
+    Duration(milliseconds: 55 * (index < 8 ? index : 8));
+
+/// Text that types itself out, a letter at a time, with a cursor while it
+/// does. For the one line a screen opens on, not for reading matter.
+///
+/// The whole text is laid out from the first frame, the unwritten part
+/// transparent, so the lines never re-wrap as the letters arrive and what
+/// follows it does not jump. Screen readers get the whole sentence at once.
+class TypeOut extends StatefulWidget {
+  const TypeOut(
+    this.text, {
+    super.key,
+    required this.style,
+    this.textAlign,
+    this.perLetter = const Duration(milliseconds: 38),
+    this.delay = Duration.zero,
+  });
+
+  final String text;
+  final TextStyle style;
+  final TextAlign? textAlign;
+  final Duration perLetter;
+  final Duration delay;
+
+  /// How long [text] takes to type, delay included — for timing what comes
+  /// in after it.
+  static Duration lengthOf(
+    String text, {
+    Duration perLetter = const Duration(milliseconds: 38),
+    Duration delay = Duration.zero,
+  }) {
+    final typing = perLetter * text.characters.length;
+    const most = Duration(milliseconds: 1400);
+    return delay + (typing > most ? most : typing);
+  }
+
+  @override
+  State<TypeOut> createState() => _TypeOutState();
+}
+
+class _TypeOutState extends State<TypeOut> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: TypeOut.lengthOf(
+        widget.text,
+        perLetter: widget.perLetter,
+        delay: widget.delay,
+      ),
+    )..forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (reduceMotion(context)) {
+      return Text(widget.text, style: widget.style, textAlign: widget.textAlign);
+    }
+    final letters = widget.text.characters.toList();
+    final total = _controller.duration!.inMilliseconds;
+    final wait = widget.delay.inMilliseconds;
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, _) {
+        final elapsed = _controller.value * total - wait;
+        final typing = total - wait;
+        final shown = elapsed <= 0
+            ? 0
+            : (letters.length * (elapsed / (typing <= 0 ? 1 : typing)))
+                  .ceil()
+                  .clamp(0, letters.length);
+        final done = shown >= letters.length;
+        final colour = widget.style.color ?? DefaultTextStyle.of(context).style.color;
+        return Semantics(
+          label: widget.text,
+          excludeSemantics: true,
+          child: Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(text: letters.take(shown).join()),
+                if (!done)
+                  TextSpan(
+                    text: '|',
+                    style: TextStyle(color: colour?.withValues(alpha: 0.7)),
+                  ),
+                TextSpan(
+                  text: letters.skip(shown).join(),
+                  style: const TextStyle(color: Colors.transparent),
+                ),
+              ],
+            ),
+            style: widget.style,
+            textAlign: widget.textAlign,
+          ),
+        );
+      },
+    );
+  }
+}
+
+/// A number that counts up to its value when it first appears, and from the
+/// old value to the new one when it changes.
+class CountUp extends StatelessWidget {
+  const CountUp({
+    super.key,
+    required this.value,
+    required this.builder,
+    this.duration = const Duration(milliseconds: 900),
+  });
+
+  final int value;
+
+  /// Draws the number as it is part-way there.
+  final Widget Function(BuildContext context, int shown) builder;
+  final Duration duration;
+
+  @override
+  Widget build(BuildContext context) {
+    if (reduceMotion(context)) return builder(context, value);
+    return TweenAnimationBuilder<double>(
+      // From nothing the first time, then from wherever it was.
+      tween: Tween(begin: 0, end: value.toDouble()),
+      duration: duration,
+      curve: Curves.easeOutCubic,
+      builder: (context, shown, _) => builder(context, shown.round()),
+    );
+  }
+}
+
+/// Presses in a little under the finger, and springs back. For buttons that
+/// start something, so the press is felt as well as seen.
+class PressScale extends StatefulWidget {
+  const PressScale({super.key, required this.child, this.scale = 0.96});
+
+  final Widget child;
+  final double scale;
+
+  @override
+  State<PressScale> createState() => _PressScaleState();
+}
+
+class _PressScaleState extends State<PressScale> {
+  bool _down = false;
+
+  void _set(bool down) {
+    if (_down != down) setState(() => _down = down);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // A listener, not a gesture detector: it watches the finger without
+    // taking the tap away from the button underneath.
+    return Listener(
+      onPointerDown: (_) => _set(true),
+      onPointerUp: (_) => _set(false),
+      onPointerCancel: (_) => _set(false),
+      child: AnimatedScale(
+        scale: _down ? widget.scale : 1,
+        duration: const Duration(milliseconds: 110),
+        curve: Curves.easeOut,
+        child: widget.child,
+      ),
+    );
+  }
+}
+
+/// Grows a widget in from a little smaller, with a slight overshoot — for
+/// the one thing a screen is about, the first time it is shown.
+class PopIn extends StatelessWidget {
+  const PopIn({
+    super.key,
+    required this.child,
+    this.delay = Duration.zero,
+    this.from = 0.82,
+  });
+
+  final Widget child;
+  final Duration delay;
+  final double from;
+
+  @override
+  Widget build(BuildContext context) {
+    if (reduceMotion(context)) return child;
+    const length = Duration(milliseconds: 520);
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 1),
+      duration: length + delay,
+      builder: (context, t, child) {
+        final started =
+            ((t * (length + delay).inMilliseconds) - delay.inMilliseconds) /
+            length.inMilliseconds;
+        final linear = started.clamp(0.0, 1.0);
+        final grown = Curves.easeOutBack.transform(linear);
+        return Opacity(
+          opacity: Curves.easeOut.transform(linear),
+          child: Transform.scale(scale: from + (1 - from) * grown, child: child),
+        );
+      },
+      child: child,
+    );
+  }
 }
