@@ -16,12 +16,10 @@
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/month_board_test.dart: month board
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/month_board_test.dart: season over
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_en_test.dart: paywall en small
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_en_test.dart: paywall en tall
 ::endgroup::
 ::group::✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/live_match_test.dart: store live match 1320x2868
 Could not keep the screen: PlatformException(channel-error, Unable to establish connection on channel: "dev.flutter.pigeon.wakelock_plus_platform_interface.WakelockPlusApi.toggle"., null, null)
-::endgroup::
-::group::✅ Passing tests
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_en_test.dart: paywall en tall
 ::endgroup::
 ::group::✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/live_match_test.dart: store live match 1080x1920
 Could not keep the screen: PlatformException(channel-error, Unable to establish connection on channel: "dev.flutter.pigeon.wakelock_plus_platform_interface.WakelockPlusApi.toggle"., null, null)
