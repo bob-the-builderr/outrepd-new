@@ -1,11 +1,3 @@
-    Target 'FBLPromises' in project 'Promises'
-        ➜ Explicit dependency on target 'FBLPromises' in project 'Promises'
-        ➜ Explicit dependency on target 'Promises_FBLPromises' in project 'Promises'
-    Target 'FBLPromises' in project 'Promises'
-        ➜ Explicit dependency on target 'Promises_FBLPromises' in project 'Promises'
-    Target 'Promises_FBLPromises' in project 'Promises' (no dependencies)
-    Target 'FirebaseCore' in project 'Firebase'
-        ➜ Explicit dependency on target 'Firebase_FirebaseCore' in project 'Firebase'
         ➜ Explicit dependency on target 'Firebase' in project 'Firebase'
         ➜ Explicit dependency on target 'FirebaseCoreInternal' in project 'Firebase'
         ➜ Explicit dependency on target 'GULNSData' in project 'GoogleUtilities'
@@ -43,6 +35,14 @@
     Target 'Firebase_FirebaseCoreInternal' in project 'Firebase' (no dependencies)
     Target 'Firebase' in project 'Firebase' (no dependencies)
     Target 'Firebase_FirebaseInstallations' in project 'Firebase' (no dependencies)
+    Target 'device-info-plus' in project 'device_info_plus'
+        ➜ Explicit dependency on target 'device_info_plus' in project 'device_info_plus'
+        ➜ Explicit dependency on target 'device_info_plus_device_info_plus' in project 'device_info_plus'
+        ➜ Explicit dependency on target 'FlutterFramework' in project 'FlutterFramework'
+    Target 'device_info_plus' in project 'device_info_plus'
+        ➜ Explicit dependency on target 'device_info_plus_device_info_plus' in project 'device_info_plus'
+        ➜ Explicit dependency on target 'FlutterFramework' in project 'FlutterFramework'
+    Target 'device_info_plus_device_info_plus' in project 'device_info_plus' (no dependencies)
     Target 'connectivity-plus' in project 'connectivity_plus'
         ➜ Explicit dependency on target 'connectivity_plus' in project 'connectivity_plus'
         ➜ Explicit dependency on target 'connectivity_plus_connectivity_plus' in project 'connectivity_plus'
@@ -186,8 +186,8 @@ ReadFileContents /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/Xcod
 
 ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool --version --output-format xml1
 
-Build description signature: 49ff144e9589a8b73be918c2504bf990
-Build description path: /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/XCBuildData/49ff144e9589a8b73be918c2504bf990.xcbuilddata
+Build description signature: af99e77ee6f3c56c67ceca06c46837c9
+Build description path: /Users/runner/Library/Developer/Xcode/DerivedData/Runner-grwheyeqrvmqqlhaqsrhuzztmecs/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/XCBuildData/af99e77ee6f3c56c67ceca06c46837c9.xcbuilddata
 /Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios/Runner.xcodeproj: error: Provisioning profile "iOS Team Provisioning Profile: com.outrepd.outrepd" doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement. (in target 'Runner' from project 'Runner')
 note: Run script build phase 'Run Script' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'Runner' from project 'Runner')
 note: Run script build phase 'Thin Binary' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'Runner' from project 'Runner')
