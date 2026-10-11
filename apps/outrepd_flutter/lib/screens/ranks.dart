@@ -890,20 +890,24 @@ class _PodiumPlace extends StatelessWidget {
                 top: Radius.circular(12),
               ),
             ),
-            child: Column(
-              children: [
-                Text(
-                  localNumber(context, row.place),
-                  style: TextStyle(
-                    color: context.colors.background,
-                    fontSize: first ? 30 : 24,
-                    fontWeight: FontWeight.w800,
-                    height: 1.1,
+            // Shrunk to the step rather than spilling out of it at large text:
+            // the steps' heights are the podium, and the podium is the point.
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.topCenter,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    localNumber(context, row.place),
+                    style: TextStyle(
+                      color: context.colors.background,
+                      fontSize: first ? 30 : 24,
+                      fontWeight: FontWeight.w800,
+                      height: 1.1,
+                    ),
                   ),
-                ),
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
+                  Text(
                     '${localNumber(context, row.points)} '
                     '${L.of(context).lpUnit}',
                     style: TextStyle(
@@ -913,8 +917,8 @@ class _PodiumPlace extends StatelessWidget {
                       fontFeatures: const [FontFeature.tabularFigures()],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],

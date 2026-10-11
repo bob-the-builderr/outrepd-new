@@ -2202,4 +2202,33 @@ class LDe extends L {
 
   @override
   String get seasonPlayCta => 'Den neuen Monat spielen';
+
+  @override
+  String get rematchLive => 'Live-Revanche';
+
+  @override
+  String rematchWaiting(String name) {
+    return 'Warte auf ${name}';
+  }
+
+  @override
+  String rematchAsked(String name) {
+    return '${name} will eine Revanche';
+  }
+
+  @override
+  String get rematchGone => 'Diesmal keine Revanche';
+
+  @override
+  String get twoRankedADay => 'Freundschaftlich · 2 gewertete pro Tag mit derselben Person';
+
+  @override
+  String monthMove(String move) {
+    return 'Dieser Monat · ${move}';
+  }
+
+  @override
+  String promotedFrom(String rank) {
+    return 'von ${rank}';
+  }
 }

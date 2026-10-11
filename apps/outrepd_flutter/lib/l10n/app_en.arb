@@ -1354,5 +1354,40 @@
   "monthlyAwards": "Monthly awards",
   "seasonOver": "Season over",
   "seasonOverBody": "It's on your profile now. The new month starts from zero.",
-  "seasonPlayCta": "Play the new month"
+  "seasonPlayCta": "Play the new month",
+  "rematchLive": "Rematch live",
+  "rematchWaiting": "Waiting for {name}",
+  "@rematchWaiting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "rematchAsked": "{name} wants a rematch",
+  "@rematchAsked": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "rematchGone": "No rematch this time",
+  "twoRankedADay": "Friendly · 2 ranked a day with the same lifter",
+  "monthMove": "This month · {move}",
+  "@monthMove": {
+    "placeholders": {
+      "move": {
+        "type": "String"
+      }
+    }
+  },
+  "promotedFrom": "from {rank}",
+  "@promotedFrom": {
+    "placeholders": {
+      "rank": {
+        "type": "String"
+      }
+    }
+  }
 }

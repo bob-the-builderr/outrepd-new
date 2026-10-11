@@ -2190,4 +2190,33 @@ class LTr extends L {
 
   @override
   String get seasonPlayCta => 'Yeni ayı oyna';
+
+  @override
+  String get rematchLive => 'Canlı rövanş';
+
+  @override
+  String rematchWaiting(String name) {
+    return '${name} bekleniyor';
+  }
+
+  @override
+  String rematchAsked(String name) {
+    return '${name} rövanş istiyor';
+  }
+
+  @override
+  String get rematchGone => 'Bu sefer rövanş yok';
+
+  @override
+  String get twoRankedADay => 'Dostça · aynı rakiple günde 2 dereceli';
+
+  @override
+  String monthMove(String move) {
+    return 'Bu ay · ${move}';
+  }
+
+  @override
+  String promotedFrom(String rank) {
+    return '${rank} seviyesinden';
+  }
 }

@@ -238,6 +238,10 @@ $$;
 -- decides the outcome — the reps, who gave up, both tiers — is read from the
 -- rows, never from arguments, because an argument is whatever the phone felt
 -- like sending.
+--
+-- Dropped first: a function's result columns cannot change in place, and
+-- `was_ranked` was added after the others.
+drop function if exists settle_duel(uuid, uuid, boolean);
 create or replace function settle_duel(
   my_set uuid,
   their_set uuid,
@@ -260,7 +264,11 @@ returns table (
   win_streak int,
   best_streak int,
   placements_done int,
-  placement_wins int
+  placement_wins int,
+  -- Whether it moved the ladder after all. The phone asks for ranked; the
+  -- rules above can still make it friendly — a rematch, a third duel in a
+  -- day with the same lifter — and the result screen has to say which.
+  was_ranked boolean
 )
 language plpgsql
 security definer
@@ -477,7 +485,7 @@ begin
                       after.tier_idx, after.div_idx, after.lp,
                       me_after.wins, me_after.losses, me_after.win_streak,
                       me_after.best_streak, me_after.placements_done,
-                      me_after.placement_wins;
+                      me_after.placement_wins, is_ranked;
 end;
 $$;
 

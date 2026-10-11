@@ -588,7 +588,8 @@ class LiveMatch {
   final String id;
 
   /// Ranked matches come from the live queue and move the ladder; a match
-  /// with a friend is friendly and moves nothing.
+  /// with a friend is friendly and moves nothing; a rematch is whatever the
+  /// match before it was.
   final bool ranked;
   final LiveOpponent opponent;
 }
@@ -599,10 +600,15 @@ class LiveInvite {
     required this.matchId,
     required this.from,
     required this.expiresIn,
+    this.ranked = false,
   });
 
   final String matchId;
   final LiveOpponent from;
+
+  /// A friend's invite is friendly; a rematch is as ranked as the match
+  /// before it.
+  final bool ranked;
 
   /// How long it has left, from when it was read.
   final Duration expiresIn;
@@ -673,6 +679,22 @@ class LiveFinish {
   final int? theirReps;
 
   bool get done => settled != null;
+}
+
+/// Where a live rematch stands, from the side that asked for it.
+class LiveRematch {
+  const LiveRematch({
+    required this.matchId,
+    required this.status,
+    required this.ranked,
+  });
+
+  final String matchId;
+
+  /// [LiveStatus.invited] while waiting on the other side,
+  /// [LiveStatus.ready] once both have asked.
+  final LiveStatus status;
+  final bool ranked;
 }
 
 /// One message between the two phones during a round.
@@ -867,11 +889,18 @@ class SettledDuel {
     required this.bestStreak,
     required this.placementsDone,
     required this.placementWins,
+    this.ranked = true,
   });
 
   final String duelId;
   final bool won;
   final int lpDelta;
+
+  /// Whether it moved the ladder. The phone asks for ranked; the server can
+  /// still make a duel friendly — a third in a day with the same lifter —
+  /// and the result screen has to say so rather than show a rank card for
+  /// nothing.
+  final bool ranked;
   final int tierIdx;
   final int divIdx;
   final int lp;
@@ -1169,6 +1198,10 @@ abstract interface class Backend {
 
   Future<void> cancelLiveInvite(String matchId);
 
+  /// Asks for another match with whoever [afterMatchId] was against, straight
+  /// after it. When they have already asked, this is the yes and it starts.
+  Future<LiveRematch> rematchLive(String afterMatchId);
+
   Future<LiveState> liveState(String matchId);
 
   /// This lifter is in position. How far away the round's start is once both
@@ -1419,6 +1452,10 @@ class NoBackend implements Backend {
 
   @override
   Future<void> cancelLiveInvite(String matchId) async {}
+
+  @override
+  Future<LiveRematch> rematchLive(String afterMatchId) =>
+      throw StateError('no server configured');
 
   @override
   Future<LiveState> liveState(String matchId) =>

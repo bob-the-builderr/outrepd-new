@@ -38,9 +38,10 @@ enum MatchMode {
   /// [MatchFlowScreen.isChallengeAccept].
   challengeAccept,
 
-  /// Live with a friend, both on camera now: an invite one of them sent and
-  /// the other accepted. Friendly — it moves no rank. See
-  /// [MatchFlowScreen.liveMatch].
+  /// Live with somebody already chosen, both on camera now: a friend's
+  /// invite one of them sent and the other accepted (friendly, it moves no
+  /// rank), or a rematch both asked for straight after a live match (as
+  /// ranked as that match was). See [MatchFlowScreen.liveMatch].
   liveFriend,
 }
 

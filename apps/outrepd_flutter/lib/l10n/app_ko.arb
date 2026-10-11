@@ -672,5 +672,12 @@
   "monthlyAwards": "월간 업적",
   "seasonOver": "시즌 종료",
   "seasonOverBody": "이제 프로필에 표시돼요. 새로운 달은 0부터 시작해요.",
-  "seasonPlayCta": "새로운 달 시작"
+  "seasonPlayCta": "새로운 달 시작",
+  "rematchLive": "라이브 재대결",
+  "rematchWaiting": "{name} 기다리는 중",
+  "rematchAsked": "{name}님이 재대결을 원해요",
+  "rematchGone": "이번엔 재대결이 없어요",
+  "twoRankedADay": "친선 · 같은 상대와 랭크전은 하루 2판",
+  "monthMove": "이번 달 · {move}",
+  "promotedFrom": "{rank}에서"
 }

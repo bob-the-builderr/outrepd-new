@@ -2195,4 +2195,33 @@ class LHi extends L {
 
   @override
   String get seasonPlayCta => 'नया महीना खेलें';
+
+  @override
+  String get rematchLive => 'लाइव रीमैच';
+
+  @override
+  String rematchWaiting(String name) {
+    return '${name} का इंतज़ार';
+  }
+
+  @override
+  String rematchAsked(String name) {
+    return '${name} रीमैच चाहता है';
+  }
+
+  @override
+  String get rematchGone => 'इस बार रीमैच नहीं';
+
+  @override
+  String get twoRankedADay => 'दोस्ताना · एक ही खिलाड़ी के साथ दिन में 2 रैंक्ड';
+
+  @override
+  String monthMove(String move) {
+    return 'इस महीने · ${move}';
+  }
+
+  @override
+  String promotedFrom(String rank) {
+    return '${rank} से';
+  }
 }

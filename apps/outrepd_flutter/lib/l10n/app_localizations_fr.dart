@@ -2201,4 +2201,33 @@ class LFr extends L {
 
   @override
   String get seasonPlayCta => 'Jouer le nouveau mois';
+
+  @override
+  String get rematchLive => 'Revanche en direct';
+
+  @override
+  String rematchWaiting(String name) {
+    return 'En attente de ${name}';
+  }
+
+  @override
+  String rematchAsked(String name) {
+    return '${name} veut une revanche';
+  }
+
+  @override
+  String get rematchGone => 'Pas de revanche cette fois';
+
+  @override
+  String get twoRankedADay => 'Amical · 2 classés par jour avec le même adversaire';
+
+  @override
+  String monthMove(String move) {
+    return 'Ce mois-ci · ${move}';
+  }
+
+  @override
+  String promotedFrom(String rank) {
+    return 'depuis ${rank}';
+  }
 }

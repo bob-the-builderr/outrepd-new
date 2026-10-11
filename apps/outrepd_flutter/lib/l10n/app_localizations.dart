@@ -4030,6 +4030,48 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Play the new month'**
   String get seasonPlayCta;
+
+  /// No description provided for @rematchLive.
+  ///
+  /// In en, this message translates to:
+  /// **'Rematch live'**
+  String get rematchLive;
+
+  /// No description provided for @rematchWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for {name}'**
+  String rematchWaiting(String name);
+
+  /// No description provided for @rematchAsked.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} wants a rematch'**
+  String rematchAsked(String name);
+
+  /// No description provided for @rematchGone.
+  ///
+  /// In en, this message translates to:
+  /// **'No rematch this time'**
+  String get rematchGone;
+
+  /// No description provided for @twoRankedADay.
+  ///
+  /// In en, this message translates to:
+  /// **'Friendly · 2 ranked a day with the same lifter'**
+  String get twoRankedADay;
+
+  /// No description provided for @monthMove.
+  ///
+  /// In en, this message translates to:
+  /// **'This month · {move}'**
+  String monthMove(String move);
+
+  /// No description provided for @promotedFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'from {rank}'**
+  String promotedFrom(String rank);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

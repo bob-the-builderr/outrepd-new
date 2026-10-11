@@ -2163,4 +2163,33 @@ class LKo extends L {
 
   @override
   String get seasonPlayCta => '새로운 달 시작';
+
+  @override
+  String get rematchLive => '라이브 재대결';
+
+  @override
+  String rematchWaiting(String name) {
+    return '${name} 기다리는 중';
+  }
+
+  @override
+  String rematchAsked(String name) {
+    return '${name}님이 재대결을 원해요';
+  }
+
+  @override
+  String get rematchGone => '이번엔 재대결이 없어요';
+
+  @override
+  String get twoRankedADay => '친선 · 같은 상대와 랭크전은 하루 2판';
+
+  @override
+  String monthMove(String move) {
+    return '이번 달 · ${move}';
+  }
+
+  @override
+  String promotedFrom(String rank) {
+    return '${rank}에서';
+  }
 }

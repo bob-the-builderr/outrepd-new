@@ -2146,4 +2146,33 @@ class LZh extends L {
 
   @override
   String get seasonPlayCta => '开始新的一个月';
+
+  @override
+  String get rematchLive => '实时再战';
+
+  @override
+  String rematchWaiting(String name) {
+    return '等待 ${name}';
+  }
+
+  @override
+  String rematchAsked(String name) {
+    return '${name} 想再战';
+  }
+
+  @override
+  String get rematchGone => '这次没有再战';
+
+  @override
+  String get twoRankedADay => '友谊赛 · 同一对手每天 2 场排位';
+
+  @override
+  String monthMove(String move) {
+    return '本月 · ${move}';
+  }
+
+  @override
+  String promotedFrom(String rank) {
+    return '从 ${rank}';
+  }
 }

@@ -672,5 +672,12 @@
   "monthlyAwards": "月度荣誉",
   "seasonOver": "赛季结束",
   "seasonOverBody": "已显示在你的主页上。新的一个月从零开始。",
-  "seasonPlayCta": "开始新的一个月"
+  "seasonPlayCta": "开始新的一个月",
+  "rematchLive": "实时再战",
+  "rematchWaiting": "等待 {name}",
+  "rematchAsked": "{name} 想再战",
+  "rematchGone": "这次没有再战",
+  "twoRankedADay": "友谊赛 · 同一对手每天 2 场排位",
+  "monthMove": "本月 · {move}",
+  "promotedFrom": "从 {rank}"
 }

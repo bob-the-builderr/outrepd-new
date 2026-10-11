@@ -40,7 +40,10 @@ Future<void> joinLiveInvite(BuildContext context, LiveInvite invite) async {
             mode: MatchMode.liveFriend,
             liveMatch: LiveMatch(
               id: invite.matchId,
-              ranked: false,
+              // A friend's invite is friendly; a rematch, accepted from the
+              // banner after leaving the result screen, is as ranked as the
+              // match before it.
+              ranked: invite.ranked,
               opponent: invite.from,
             ),
           ),

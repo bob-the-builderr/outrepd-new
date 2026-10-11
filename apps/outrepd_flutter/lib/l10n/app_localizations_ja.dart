@@ -2156,4 +2156,33 @@ class LJa extends L {
 
   @override
   String get seasonPlayCta => '新しい月をプレイ';
+
+  @override
+  String get rematchLive => 'ライブで再戦';
+
+  @override
+  String rematchWaiting(String name) {
+    return '${name}を待っています';
+  }
+
+  @override
+  String rematchAsked(String name) {
+    return '${name}が再戦を希望';
+  }
+
+  @override
+  String get rematchGone => '今回は再戦なし';
+
+  @override
+  String get twoRankedADay => 'フレンドリー · 同じ相手とのランク戦は1日2回まで';
+
+  @override
+  String monthMove(String move) {
+    return '今月 · ${move}';
+  }
+
+  @override
+  String promotedFrom(String rank) {
+    return '${rank}から';
+  }
 }

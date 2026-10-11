@@ -2200,4 +2200,33 @@ class LIt extends L {
 
   @override
   String get seasonPlayCta => 'Gioca il nuovo mese';
+
+  @override
+  String get rematchLive => 'Rivincita live';
+
+  @override
+  String rematchWaiting(String name) {
+    return 'In attesa di ${name}';
+  }
+
+  @override
+  String rematchAsked(String name) {
+    return '${name} vuole la rivincita';
+  }
+
+  @override
+  String get rematchGone => 'Niente rivincita stavolta';
+
+  @override
+  String get twoRankedADay => 'Amichevole · 2 classificate al giorno con lo stesso avversario';
+
+  @override
+  String monthMove(String move) {
+    return 'Questo mese · ${move}';
+  }
+
+  @override
+  String promotedFrom(String rank) {
+    return 'da ${rank}';
+  }
 }

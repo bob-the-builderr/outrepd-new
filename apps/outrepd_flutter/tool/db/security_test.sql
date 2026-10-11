@@ -484,9 +484,10 @@ select set_config('test.a3',
   (select id::text from sets where profile_id = :'A' order by created_at desc limit 1), false);
 select as_user(:'A'); set role authenticated;
 select check_that(
-  (select lp_delta from settle_duel(current_setting('test.a3')::uuid,
-                                    current_setting('test.d3')::uuid, true)) = 0,
-  'a third ranked duel in a day between the same two paid LP');
+  (select lp_delta = 0 and not was_ranked
+     from settle_duel(current_setting('test.a3')::uuid,
+                      current_setting('test.d3')::uuid, true)),
+  'a third ranked duel in a day between the same two paid LP, or said it was ranked');
 reset role;
 select check_that(
   (select not ranked from duels where challenger_set = current_setting('test.a3')::uuid),
@@ -502,6 +503,65 @@ select check_that((select searching >= 0 and online >= 0 from live_online()),
 select count(*) from find_live_opponent();
 select leave_live_queue();
 reset role;
+
+-- ── the live rematch ──────────────────────────────────────────────────────────
+
+-- A and D finished a ranked live match a couple of minutes ago — their
+-- third meeting today, after the two ranked duels above.
+insert into live_matches (ranked, a, b, status, starts_at)
+values (true, :'A', :'D', 'done', now() - interval '2 minutes');
+select set_config('test.lm',
+  (select id::text from live_matches
+    where a = :'A' and b = :'D' and status = 'done'
+    order by created_at desc limit 1), false);
+
+select as_user(:'C'); set role authenticated;
+select must_fail('a rematch of somebody else''s match',
+                 format('select * from rematch_live(%L)', current_setting('test.lm')));
+reset role;
+
+select as_user(:'A'); set role authenticated;
+select check_that(
+  (select match_status = 'invited' and not is_ranked
+     from rematch_live(current_setting('test.lm')::uuid)),
+  'a rematch after two ranked duels today was offered as ranked');
+select count(*) from rematch_live(current_setting('test.lm')::uuid);
+reset role;
+select check_that((select count(*) from live_matches
+                    where rematch_of = current_setting('test.lm')::uuid) = 1,
+                  'asking for the same rematch twice sent two');
+
+-- D asks too: that is the yes, and it starts.
+select as_user(:'D'); set role authenticated;
+select check_that(
+  (select match_status = 'ready'
+     from rematch_live(current_setting('test.lm')::uuid)),
+  'both asking for a rematch did not start it');
+reset role;
+
+-- Only straight after a finished match.
+insert into live_matches (ranked, a, b, status, starts_at)
+values (true, :'A', :'C', 'done', now() - interval '1 hour'),
+       (true, :'A', :'C', 'live', now() - interval '20 seconds');
+select as_user(:'A'); set role authenticated;
+select must_fail('a rematch of a match an hour old',
+  format('select * from rematch_live(%L)',
+    (select id from live_matches where a = :'A' and b = :'C' and status = 'done')));
+select must_fail('a rematch of a match still running',
+  format('select * from rematch_live(%L)',
+    (select id from live_matches where a = :'A' and b = :'C' and status = 'live')));
+reset role;
+
+-- Not with somebody either of them blocked.
+insert into live_matches (ranked, a, b, status, starts_at)
+values (false, :'C', :'A', 'done', now() - interval '1 minute');
+insert into blocks (blocker, blocked) values (:'C', :'A');
+select as_user(:'A'); set role authenticated;
+select must_fail('a rematch with somebody who blocked you',
+  format('select * from rematch_live(%L)',
+    (select id from live_matches where a = :'C' and b = :'A' and status = 'done')));
+reset role;
+delete from blocks where blocker = :'C' and blocked = :'A';
 
 -- ── closed-test testers ───────────────────────────────────────────────────────
 

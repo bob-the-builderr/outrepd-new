@@ -2193,4 +2193,33 @@ class LEn extends L {
 
   @override
   String get seasonPlayCta => 'Play the new month';
+
+  @override
+  String get rematchLive => 'Rematch live';
+
+  @override
+  String rematchWaiting(String name) {
+    return 'Waiting for ${name}';
+  }
+
+  @override
+  String rematchAsked(String name) {
+    return '${name} wants a rematch';
+  }
+
+  @override
+  String get rematchGone => 'No rematch this time';
+
+  @override
+  String get twoRankedADay => 'Friendly · 2 ranked a day with the same lifter';
+
+  @override
+  String monthMove(String move) {
+    return 'This month · ${move}';
+  }
+
+  @override
+  String promotedFrom(String rank) {
+    return 'from ${rank}';
+  }
 }

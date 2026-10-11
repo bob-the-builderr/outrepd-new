@@ -69,6 +69,12 @@ create index if not exists live_matches_b_set_idx
 create index if not exists live_matches_duel_idx
   on live_matches (duel) where duel is not null;
 
+-- The match a rematch was asked for after; null for every other match.
+alter table live_matches
+  add column if not exists rematch_of uuid references live_matches on delete set null;
+create index if not exists live_matches_rematch_of_idx
+  on live_matches (rematch_of) where rematch_of is not null;
+
 -- Nobody reads or writes it directly; the functions below are the only way.
 alter table live_matches enable row level security;
 
@@ -318,6 +324,10 @@ end;
 $$;
 
 -- Invites waiting on the caller, newest first, with how long each has left.
+-- A friend's invite is friendly; a rematch is whatever the match before it
+-- was, so the one being asked is told which. Dropped first because `ranked`
+-- was added after the other columns.
+drop function if exists my_live_invites();
 create or replace function my_live_invites()
 returns table (
   match_id uuid,
@@ -325,7 +335,8 @@ returns table (
   from_name text,
   from_tier int,
   from_div int,
-  expires_in_ms int
+  expires_in_ms int,
+  ranked boolean
 )
 language sql
 security definer
@@ -333,7 +344,8 @@ set search_path = public
 stable
 as $$
   select lm.id, p.id, p.username, p.tier_idx, p.div_idx,
-         greatest(0, (extract(epoch from lm.expires_at - now()) * 1000)::int)
+         greatest(0, (extract(epoch from lm.expires_at - now()) * 1000)::int),
+         lm.ranked
     from live_matches lm
     join profiles p on p.id = lm.a
    where lm.b = auth.uid()
@@ -390,6 +402,99 @@ set search_path = public
 as $$
   update live_matches lm set status = 'cancelled'
    where lm.id = invite and lm.a = auth.uid() and lm.status = 'invited';
+$$;
+
+-- ──────────────────────────────── both: the rematch ────────────────────────────
+
+-- Another one, straight after a live match, from the result screen: either of
+-- the two asks, and when the other asks too it starts. Not only for friends —
+-- the two were just on camera together — and as ranked as the match before
+-- it, with settle_duel's two-a-day rule still deciding whether it pays.
+--
+-- Answers with the rematch and where it stands: 'invited' while waiting on
+-- the other, 'ready' once both have asked.
+create or replace function rematch_live(after uuid)
+returns table (match_id uuid, match_status text, is_ranked boolean)
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  me uuid := auth.uid();
+  prev live_matches;
+  them uuid;
+  theirs live_matches;
+  mine live_matches;
+  pays boolean;
+  new_id uuid;
+begin
+  perform require_pro();
+  -- Both pressing at once would otherwise send two invites past each other,
+  -- each waiting on the other. One at a time, the second finds the first.
+  perform pg_advisory_xact_lock(hashtext('rematch:' || after::text));
+
+  select * into prev from live_matches lm
+   where lm.id = after and me in (lm.a, lm.b);
+  if prev.id is null or prev.status <> 'done' then
+    raise exception 'no finished live match to rematch';
+  end if;
+  -- Asked for on the result screen, not days later.
+  if coalesce(prev.starts_at, prev.created_at) < now() - interval '10 minutes' then
+    raise exception 'that match was too long ago to rematch';
+  end if;
+  them := case when prev.a = me then prev.b else prev.a end;
+  if exists (
+    select 1 from blocks bl
+     where (bl.blocker = me and bl.blocked = them)
+        or (bl.blocker = them and bl.blocked = me)
+  ) then
+    raise exception 'no rematch with this lifter';
+  end if;
+
+  -- They asked first: this is the yes.
+  select * into theirs from live_matches lm
+   where lm.rematch_of = after and lm.a = them and lm.b = me
+     and lm.status = 'invited' and lm.expires_at > now()
+   for update;
+  if theirs.id is not null then
+    update live_matches lm
+       set status = 'ready', ready_by = now() + interval '75 seconds'
+     where lm.id = theirs.id;
+    return query select theirs.id, 'ready'::text, theirs.ranked;
+    return;
+  end if;
+
+  -- Asked already: the same rematch, not a second one.
+  select * into mine from live_matches lm
+   where lm.rematch_of = after and lm.a = me
+     and lm.status in ('invited', 'ready', 'live')
+     and (lm.status <> 'invited' or lm.expires_at > now());
+  if mine.id is not null then
+    return query select mine.id, mine.status, mine.ranked;
+    return;
+  end if;
+
+  if not within_rate('live_rematch', interval '10 minutes', 6) then
+    raise exception 'too many rematches, wait a few minutes';
+  end if;
+
+  -- Ranked only if the match before was, and only if it could still pay:
+  -- the same count settle_duel makes, so the invite says what the result will.
+  pays := prev.ranked and (
+    select count(*) from duels d
+     where d.ranked
+       and d.created_at > now() - interval '24 hours'
+       and ((d.challenger = me and d.defender = them)
+         or (d.challenger = them and d.defender = me))
+  ) < 2;
+
+  update live_matches lm set status = 'cancelled'
+   where lm.a = me and lm.status = 'invited';
+  insert into live_matches (ranked, a, b, status, expires_at, rematch_of)
+  values (pays, me, them, 'invited', now() + interval '30 seconds', after)
+  returning id into new_id;
+  return query select new_id, 'invited'::text, pays;
+end;
 $$;
 
 -- ─────────────────────────────── both: the match ───────────────────────────────
@@ -508,6 +613,12 @@ as $$
    where lm.id = live and lm.status = 'live' and auth.uid() in (lm.a, lm.b);
 $$;
 
+-- The three below answer with the same columns, and `result_ranked` was added
+-- after the rest; a function's result columns cannot change in place.
+drop function if exists live_outcome(live_matches);
+drop function if exists finish_live_match(uuid, int, int, real, boolean, int, boolean, int[]);
+drop function if exists live_match_result(uuid);
+
 -- A finished match, from the caller's side: `settle_duel`'s answer for
 -- whoever settled it, read back off the duel and the account for the other.
 create or replace function live_outcome(m live_matches)
@@ -525,7 +636,9 @@ returns table (
   result_best_streak int,
   result_placements_done int,
   result_placement_wins int,
-  result_their_reps int
+  result_their_reps int,
+  -- Whether it moved the ladder: see settle_duel's was_ranked.
+  result_ranked boolean
 )
 language sql
 security definer
@@ -537,7 +650,8 @@ as $$
          p.tier_idx, p.div_idx, p.lp, p.wins, p.losses, p.win_streak,
          p.best_streak, p.placements_done, p.placement_wins,
          (select s.reps from sets s
-           where s.id = case when m.a = p.id then m.b_set else m.a_set end)
+           where s.id = case when m.a = p.id then m.b_set else m.a_set end),
+         d.ranked
     from duels d, profiles p
    where d.id = m.duel and p.id = auth.uid();
 $$;
@@ -594,7 +708,9 @@ returns table (
   result_best_streak int,
   result_placements_done int,
   result_placement_wins int,
-  result_their_reps int
+  result_their_reps int,
+  -- Whether it moved the ladder: see settle_duel's was_ranked.
+  result_ranked boolean
 )
 language plpgsql
 security definer
@@ -646,7 +762,8 @@ begin
   if m.duel is null then
     return query select false, null::uuid, null::boolean, null::int, null::int,
                         null::int, null::int, null::int, null::int, null::int,
-                        null::int, null::int, null::int, null::int;
+                        null::int, null::int, null::int, null::int,
+                        null::boolean;
     return;
   end if;
   return query select * from live_outcome(m);
@@ -672,7 +789,9 @@ returns table (
   result_best_streak int,
   result_placements_done int,
   result_placement_wins int,
-  result_their_reps int
+  result_their_reps int,
+  -- Whether it moved the ladder: see settle_duel's was_ranked.
+  result_ranked boolean
 )
 language plpgsql
 security definer
@@ -718,7 +837,8 @@ begin
   if m.duel is null then
     return query select false, null::uuid, null::boolean, null::int, null::int,
                         null::int, null::int, null::int, null::int, null::int,
-                        null::int, null::int, null::int, null::int;
+                        null::int, null::int, null::int, null::int,
+                        null::boolean;
     return;
   end if;
   return query select * from live_outcome(m);
@@ -737,6 +857,8 @@ revoke all on function answer_live_invite(uuid, boolean) from public, anon;
 grant execute on function answer_live_invite(uuid, boolean) to authenticated;
 revoke all on function cancel_live_invite(uuid) from public, anon;
 grant execute on function cancel_live_invite(uuid) to authenticated;
+revoke all on function rematch_live(uuid) from public, anon;
+grant execute on function rematch_live(uuid) to authenticated;
 revoke all on function live_match_state(uuid) from public, anon;
 grant execute on function live_match_state(uuid) to authenticated;
 revoke all on function live_ready(uuid) from public, anon;

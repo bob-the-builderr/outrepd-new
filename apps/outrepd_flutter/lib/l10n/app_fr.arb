@@ -672,5 +672,12 @@
   "monthlyAwards": "Récompenses du mois",
   "seasonOver": "Saison terminée",
   "seasonOverBody": "C'est sur ton profil maintenant. Le nouveau mois repart de zéro.",
-  "seasonPlayCta": "Jouer le nouveau mois"
+  "seasonPlayCta": "Jouer le nouveau mois",
+  "rematchLive": "Revanche en direct",
+  "rematchWaiting": "En attente de {name}",
+  "rematchAsked": "{name} veut une revanche",
+  "rematchGone": "Pas de revanche cette fois",
+  "twoRankedADay": "Amical · 2 classés par jour avec le même adversaire",
+  "monthMove": "Ce mois-ci · {move}",
+  "promotedFrom": "depuis {rank}"
 }

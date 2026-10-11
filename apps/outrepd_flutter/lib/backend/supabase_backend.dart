@@ -193,6 +193,8 @@ class SupabaseBackend implements Backend {
       bestStreak: row['best_streak'] as int,
       placementsDone: row['placements_done'] as int,
       placementWins: row['placement_wins'] as int,
+      // Missing from a server older than the column: what was asked for.
+      ranked: row['was_ranked'] as bool? ?? ranked,
     );
 
     _remember(settled);
@@ -973,6 +975,7 @@ class SupabaseBackend implements Backend {
           matchId: row['match_id'] as String,
           from: _opponentFrom(row, 'from'),
           expiresIn: _ms(row['expires_in_ms']) ?? Duration.zero,
+          ranked: row['ranked'] as bool? ?? false,
         ),
     ];
   }
@@ -991,6 +994,21 @@ class SupabaseBackend implements Backend {
   @override
   Future<void> cancelLiveInvite(String matchId) async {
     await _db.rpc<void>('cancel_live_invite', params: {'invite': matchId});
+  }
+
+  @override
+  Future<LiveRematch> rematchLive(String afterMatchId) async {
+    final rows = await _db.rpc<List<dynamic>>(
+      'rematch_live',
+      params: {'after': afterMatchId},
+    );
+    if (rows.isEmpty) throw StateError('the rematch came back empty');
+    final row = rows.first as Map<String, dynamic>;
+    return LiveRematch(
+      matchId: row['match_id'] as String,
+      status: LiveStatus.parse(row['match_status'] as String?),
+      ranked: row['is_ranked'] as bool? ?? false,
+    );
   }
 
   @override
@@ -1042,6 +1060,7 @@ class SupabaseBackend implements Backend {
       bestStreak: n('result_best_streak'),
       placementsDone: n('result_placements_done'),
       placementWins: n('result_placement_wins'),
+      ranked: row['result_ranked'] as bool? ?? true,
     );
     _remember(settled);
     return LiveFinish(

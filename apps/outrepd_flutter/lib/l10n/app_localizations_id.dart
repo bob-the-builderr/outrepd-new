@@ -2194,4 +2194,33 @@ class LId extends L {
 
   @override
   String get seasonPlayCta => 'Main bulan baru';
+
+  @override
+  String get rematchLive => 'Tanding ulang langsung';
+
+  @override
+  String rematchWaiting(String name) {
+    return 'Menunggu ${name}';
+  }
+
+  @override
+  String rematchAsked(String name) {
+    return '${name} mau tanding ulang';
+  }
+
+  @override
+  String get rematchGone => 'Tidak ada tanding ulang kali ini';
+
+  @override
+  String get twoRankedADay => 'Persahabatan · 2 berperingkat per hari dengan lawan yang sama';
+
+  @override
+  String monthMove(String move) {
+    return 'Bulan ini · ${move}';
+  }
+
+  @override
+  String promotedFrom(String rank) {
+    return 'dari ${rank}';
+  }
 }

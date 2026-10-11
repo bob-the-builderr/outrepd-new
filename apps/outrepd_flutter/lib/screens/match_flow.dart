@@ -184,8 +184,13 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   DuelOutcome? _outcome;
 
   /// The live match, when there is one: found by the ranked search, or the
-  /// friend's invite this screen was opened for.
+  /// friend's invite or rematch this screen was opened for.
   LiveMatch? _live;
+
+  /// This account's place on the month's board before the duel and after
+  /// it, for the result screen's "#14 → #11". Null when not known.
+  int? _monthBefore;
+  int? _monthAfter;
   LiveSession? _session;
 
   /// How long the ranked search looks for somebody live before it races a
@@ -231,6 +236,9 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     _theirReps = 0;
 
     _stage = widget.practice ? _Stage.live : _Stage.searching;
+    if (!widget.practice) {
+      unawaited(_readMonthPlace().then((place) => _monthBefore = place));
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.practice) {
         _lift();
@@ -652,6 +660,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           ? _Stage.promoted
           : _Stage.result;
     });
+    unawaited(_afterMonthPlace());
   }
 
   /// Both on camera at once. The other lifter's count comes from their phone
@@ -749,6 +758,25 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           ? _Stage.promoted
           : _Stage.result;
     });
+    unawaited(_afterMonthPlace());
+  }
+
+  /// Where this account stands on the month's board, or null when there is
+  /// no answer. Only ranked duels move it, so only they ask.
+  Future<int?> _readMonthPlace() async {
+    if (!backend.available || backend.me == null) return null;
+    try {
+      return (await backend.myMonthPlace())?.place;
+    } on Object catch (error) {
+      debugPrint('Could not read the month place: $error');
+      return null;
+    }
+  }
+
+  Future<void> _afterMonthPlace() async {
+    if (_outcome?.rank == null) return;
+    final place = await _readMonthPlace();
+    if (mounted && place != null) setState(() => _monthAfter = place);
   }
 
   /// Backing out before the camera ever opened — [_confirmQuit] below. No
@@ -899,6 +927,8 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
         return PromotionView(
           tierIdx: demoProfile.tierIdx,
           divIdx: demoProfile.divIdx,
+          fromTierIdx: _outcome?.rank?.before.tierIdx,
+          fromDivIdx: _outcome?.rank?.before.divIdx,
           // A tier nobody in this account has ever held before.
           highest: _outcome?.rank?.changedTier ?? false,
           onContinue: () => setState(() => _stage = _Stage.result),
@@ -926,6 +956,9 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           // send a challenge to, so the button can only honestly go back.
           realOpponentId: _realOpponent?.profileId ?? _live?.opponent.id,
           outcome: _outcome,
+          live: _live,
+          monthBefore: _monthBefore,
+          monthAfter: _monthAfter,
           onDone: () => Navigator.of(context).pop(),
         );
 
@@ -1799,6 +1832,13 @@ class _ResultView extends StatelessWidget {
   /// nothing to it by design.
   final DuelOutcome? outcome;
 
+  /// The live match this was, if it was one: its rematch is asked of the
+  /// other phone instead of recorded for later.
+  final LiveMatch? live;
+
+  final int? monthBefore;
+  final int? monthAfter;
+
   final VoidCallback onDone;
 
   const _ResultView({
@@ -1810,6 +1850,9 @@ class _ResultView extends StatelessWidget {
     required this.realOpponentId,
     required this.outcome,
     required this.onDone,
+    this.live,
+    this.monthBefore,
+    this.monthAfter,
   });
 
   @override
@@ -1822,6 +1865,17 @@ class _ResultView extends StatelessWidget {
       theirReps: opponentVolume.round(),
       opponent: opponent,
       outcome: outcome,
+      live: live,
+      monthBefore: monthBefore,
+      monthAfter: monthAfter,
+      // Both asked: the new match replaces this result, so finishing it
+      // lands where this one started.
+      onLiveRematch: (match) => Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) =>
+              MatchFlowScreen(mode: MatchMode.liveFriend, liveMatch: match),
+        ),
+      ),
       closestYet:
           !won && _closestLossYet(volume.round(), opponentVolume.round()),
       // Real opponent: replace this screen with a fresh challenge naming

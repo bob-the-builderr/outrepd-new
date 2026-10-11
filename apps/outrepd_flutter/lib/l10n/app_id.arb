@@ -672,5 +672,12 @@
   "monthlyAwards": "Penghargaan bulanan",
   "seasonOver": "Musim berakhir",
   "seasonOverBody": "Sekarang sudah ada di profilmu. Bulan baru mulai dari nol.",
-  "seasonPlayCta": "Main bulan baru"
+  "seasonPlayCta": "Main bulan baru",
+  "rematchLive": "Tanding ulang langsung",
+  "rematchWaiting": "Menunggu {name}",
+  "rematchAsked": "{name} mau tanding ulang",
+  "rematchGone": "Tidak ada tanding ulang kali ini",
+  "twoRankedADay": "Persahabatan · 2 berperingkat per hari dengan lawan yang sama",
+  "monthMove": "Bulan ini · {move}",
+  "promotedFrom": "dari {rank}"
 }

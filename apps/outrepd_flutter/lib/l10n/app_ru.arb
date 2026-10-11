@@ -672,5 +672,12 @@
   "monthlyAwards": "Награды месяца",
   "seasonOver": "Сезон завершён",
   "seasonOverBody": "Теперь это в вашем профиле. Новый месяц начинается с нуля.",
-  "seasonPlayCta": "Играть в новом месяце"
+  "seasonPlayCta": "Играть в новом месяце",
+  "rematchLive": "Реванш вживую",
+  "rematchWaiting": "Ждём {name}",
+  "rematchAsked": "{name} хочет реванш",
+  "rematchGone": "В этот раз без реванша",
+  "twoRankedADay": "Дружеский · 2 рейтинговых в день с одним соперником",
+  "monthMove": "Этот месяц · {move}",
+  "promotedFrom": "с уровня {rank}"
 }

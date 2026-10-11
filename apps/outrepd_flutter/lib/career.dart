@@ -66,9 +66,15 @@ class DuelOutcome {
     required this.record,
     required this.placementsFinished,
     required this.newBest,
+    this.madeFriendly = false,
   });
 
   final bool won;
+
+  /// Played as ranked, settled as friendly: the server's two-a-day rule with
+  /// the same lifter. The result screen says so instead of showing a rank
+  /// card that moved nothing.
+  final bool madeFriendly;
 
   /// How the rank moved. Null while the account is still in placements —
   /// there is no rank to move yet, which is the whole point of placements.
@@ -305,6 +311,9 @@ class Career extends ChangeNotifier {
     final wasRanked = p.isRanked;
     final previousBest = p.bestSet;
     final before = Rank(tierIdx: p.tierIdx, divIdx: p.divIdx, lp: p.lp);
+    // What the server settled, which can be less than what was asked for.
+    final madeFriendly = ranked && !settled.ranked;
+    final counted = ranked && settled.ranked;
 
     p
       ..tierIdx = settled.tierIdx
@@ -349,7 +358,7 @@ class Career extends ChangeNotifier {
       // No rank change while placements are still open, matching the local
       // path — even on the placement that just finished them, [recordDuel]
       // reports no RankChange either, so this stays consistent with it.
-      rank: (ranked && wasRanked)
+      rank: (counted && wasRanked)
           ? RankChange(
               before: before,
               after: Rank(
@@ -361,8 +370,9 @@ class Career extends ChangeNotifier {
             )
           : null,
       record: record,
-      placementsFinished: ranked && !wasRanked && p.isRanked,
+      placementsFinished: counted && !wasRanked && p.isRanked,
       newBest: newBest,
+      madeFriendly: madeFriendly,
     );
   }
 

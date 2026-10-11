@@ -672,5 +672,12 @@
   "monthlyAwards": "मासिक पुरस्कार",
   "seasonOver": "सीज़न खत्म",
   "seasonOverBody": "अब यह आपकी प्रोफ़ाइल पर है। नया महीना शून्य से शुरू होता है।",
-  "seasonPlayCta": "नया महीना खेलें"
+  "seasonPlayCta": "नया महीना खेलें",
+  "rematchLive": "लाइव रीमैच",
+  "rematchWaiting": "{name} का इंतज़ार",
+  "rematchAsked": "{name} रीमैच चाहता है",
+  "rematchGone": "इस बार रीमैच नहीं",
+  "twoRankedADay": "दोस्ताना · एक ही खिलाड़ी के साथ दिन में 2 रैंक्ड",
+  "monthMove": "इस महीने · {move}",
+  "promotedFrom": "{rank} से"
 }

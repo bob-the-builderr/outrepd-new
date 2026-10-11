@@ -672,5 +672,12 @@
   "monthlyAwards": "月間アワード",
   "seasonOver": "シーズン終了",
   "seasonOverBody": "プロフィールに追加されました。新しい月はゼロからスタートです。",
-  "seasonPlayCta": "新しい月をプレイ"
+  "seasonPlayCta": "新しい月をプレイ",
+  "rematchLive": "ライブで再戦",
+  "rematchWaiting": "{name}を待っています",
+  "rematchAsked": "{name}が再戦を希望",
+  "rematchGone": "今回は再戦なし",
+  "twoRankedADay": "フレンドリー · 同じ相手とのランク戦は1日2回まで",
+  "monthMove": "今月 · {move}",
+  "promotedFrom": "{rank}から"
 }

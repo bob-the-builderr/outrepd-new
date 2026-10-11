@@ -2195,4 +2195,33 @@ class LRu extends L {
 
   @override
   String get seasonPlayCta => 'Играть в новом месяце';
+
+  @override
+  String get rematchLive => 'Реванш вживую';
+
+  @override
+  String rematchWaiting(String name) {
+    return 'Ждём ${name}';
+  }
+
+  @override
+  String rematchAsked(String name) {
+    return '${name} хочет реванш';
+  }
+
+  @override
+  String get rematchGone => 'В этот раз без реванша';
+
+  @override
+  String get twoRankedADay => 'Дружеский · 2 рейтинговых в день с одним соперником';
+
+  @override
+  String monthMove(String move) {
+    return 'Этот месяц · ${move}';
+  }
+
+  @override
+  String promotedFrom(String rank) {
+    return 'с уровня ${rank}';
+  }
 }

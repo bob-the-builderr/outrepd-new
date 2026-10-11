@@ -672,5 +672,12 @@
   "monthlyAwards": "Aylık ödüller",
   "seasonOver": "Sezon bitti",
   "seasonOverBody": "Artık profilinde. Yeni ay sıfırdan başlıyor.",
-  "seasonPlayCta": "Yeni ayı oyna"
+  "seasonPlayCta": "Yeni ayı oyna",
+  "rematchLive": "Canlı rövanş",
+  "rematchWaiting": "{name} bekleniyor",
+  "rematchAsked": "{name} rövanş istiyor",
+  "rematchGone": "Bu sefer rövanş yok",
+  "twoRankedADay": "Dostça · aynı rakiple günde 2 dereceli",
+  "monthMove": "Bu ay · {move}",
+  "promotedFrom": "{rank} seviyesinden"
 }

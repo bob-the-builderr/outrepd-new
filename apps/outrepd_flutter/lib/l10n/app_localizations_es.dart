@@ -2200,4 +2200,33 @@ class LEs extends L {
 
   @override
   String get seasonPlayCta => 'Jugar el nuevo mes';
+
+  @override
+  String get rematchLive => 'Revancha en vivo';
+
+  @override
+  String rematchWaiting(String name) {
+    return 'Esperando a ${name}';
+  }
+
+  @override
+  String rematchAsked(String name) {
+    return '${name} quiere la revancha';
+  }
+
+  @override
+  String get rematchGone => 'Esta vez no hay revancha';
+
+  @override
+  String get twoRankedADay => 'Amistoso · 2 clasificatorios al día con el mismo rival';
+
+  @override
+  String monthMove(String move) {
+    return 'Este mes · ${move}';
+  }
+
+  @override
+  String promotedFrom(String rank) {
+    return 'desde ${rank}';
+  }
 }

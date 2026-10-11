@@ -12,6 +12,7 @@
 library;
 
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
@@ -26,6 +27,7 @@ import '../theme.dart';
 import '../tier_badge.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
+import 'live_rematch.dart';
 import 'match_flow.dart' show kDuelLength;
 import 'share_card.dart';
 
@@ -119,6 +121,10 @@ class DuelResultView extends StatelessWidget {
     required this.onRematch,
     required this.onDone,
     this.closestYet = false,
+    this.live,
+    this.onLiveRematch,
+    this.monthBefore,
+    this.monthAfter,
   });
 
   final bool won;
@@ -126,6 +132,19 @@ class DuelResultView extends StatelessWidget {
   final int theirReps;
   final Opponent opponent;
   final DuelOutcome? outcome;
+
+  /// The live match this was, when it was one. A live match's rematch is
+  /// asked of the other phone, still on its own result screen, instead of
+  /// recorded for them to race later.
+  final LiveMatch? live;
+
+  /// Both asked for the live rematch, and here it is.
+  final ValueChanged<LiveMatch>? onLiveRematch;
+
+  /// This account's place on the month's board before and after the duel,
+  /// when known.
+  final int? monthBefore;
+  final int? monthAfter;
 
   /// The narrowest defeat on record. Only ever true on a loss, and only when
   /// it is actually true — a consolation the app invents is worth nothing.
@@ -153,12 +172,23 @@ class DuelResultView extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(18, 24, 18, 8),
               child: Column(
                 children: [
-                  Text(
-                    won ? l.youWonPlain : l.youLostPlain,
-                    textAlign: TextAlign.center,
-                    style: context.type.title.copyWith(
-                      color: context.colors.text,
-                      fontSize: 34,
+                  // One line whatever the language: "VOUS AVEZ GAGNÉ" shrinks
+                  // to fit rather than breaking the verdict in two.
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      (won ? l.youWonPlain : l.youLostPlain).toUpperCase(),
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      style: context.type.title.copyWith(
+                        color: won
+                            ? context.colors.brand
+                            : context.colors.rival,
+                        fontSize: 46,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 0.5,
+                        height: 1.1,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -194,6 +224,29 @@ class DuelResultView extends StatelessWidget {
                   ],
                   const SizedBox(height: 24),
                   LpCard(outcome: outcome),
+                  if (outcome?.madeFriendly ?? false) ...[
+                    const SizedBox(height: 10),
+                    Text(
+                      l.twoRankedADay,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: context.colors.muted,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                  if (_monthMove(context) case final move?) ...[
+                    const SizedBox(height: 12),
+                    Text(
+                      l.monthMove(move),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: AppColors.gold,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -202,13 +255,22 @@ class DuelResultView extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(18, 8, 18, 18),
             child: Column(
               children: [
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton(
-                    onPressed: onRematch,
-                    child: Text(l.rematch),
+                if (live case final match? when onLiveRematch != null)
+                  LiveRematchButton(
+                    after: match,
+                    // Played as ranked and settled as friendly: the next one
+                    // would be friendly too, and it says so before the press.
+                    friendlyNext: outcome?.madeFriendly ?? false,
+                    onStart: onLiveRematch!,
+                  )
+                else
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton(
+                      onPressed: onRematch,
+                      child: Text(l.rematch),
+                    ),
                   ),
-                ),
                 const SizedBox(height: 11),
                 Row(
                   children: [
@@ -240,6 +302,20 @@ class DuelResultView extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+extension on DuelResultView {
+  /// "#14 → #11" on the month's board, "#11" when there was no place before,
+  /// or null when there is no place to show — a friendly duel moves nothing
+  /// on it, and neither does an account the server has no answer for.
+  String? _monthMove(BuildContext context) {
+    final after = monthAfter;
+    if (after == null || outcome?.rank == null) return null;
+    final now = '#${localNumber(context, after)}';
+    final before = monthBefore;
+    if (before == null || before == after) return now;
+    return '#${localNumber(context, before)} → $now';
   }
 }
 
@@ -448,6 +524,36 @@ class LpCard extends StatelessWidget {
     final after = (now.lp / 100).clamp(0.0, 1.0);
     final toGo = (100 - now.lp).clamp(0, 100);
 
+    // The LP lands in front of you: the number counts up and the bar fills
+    // to where it ends, rather than both simply being there. The end state
+    // is the same numbers the card always showed.
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 1),
+      duration: const Duration(milliseconds: 1100),
+      curve: Curves.easeOutCubic,
+      builder: (context, t, _) => _card(
+        context,
+        l: l,
+        now: now,
+        lpShown: (lp.abs() * t).round(),
+        gained: gained,
+        before: before,
+        after: before + (after - before) * t,
+        toGo: toGo,
+      ),
+    );
+  }
+
+  Widget _card(
+    BuildContext context, {
+    required L l,
+    required Rank now,
+    required int lpShown,
+    required bool gained,
+    required double before,
+    required double after,
+    required int toGo,
+  }) {
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
@@ -471,17 +577,18 @@ class LpCard extends StatelessWidget {
               ),
               Text(
                 '${gained ? '+' : '−'}'
-                '${l.lpAmount(localNumber(context, lp.abs()))}',
+                '${l.lpAmount(localNumber(context, lpShown))}',
                 style: TextStyle(
                   color: gained ? context.colors.brand : context.colors.rival,
-                  fontSize: 21,
+                  fontSize: 26,
+                  fontWeight: FontWeight.w700,
                   fontFeatures: const [FontFeature.tabularFigures()],
                 ),
               ),
             ],
           ),
           const SizedBox(height: 11),
-          _LpBar(before: before, after: after, gained: gained),
+          _LpBar(before: before, after: after.clamp(0.0, 1.0), gained: gained),
           const SizedBox(height: 6),
           ShrinkText(
             '${localNumber(context, now.lp)} '
@@ -569,10 +676,16 @@ class PromotionView extends StatelessWidget {
     required this.divIdx,
     required this.highest,
     required this.onContinue,
+    this.fromTierIdx,
+    this.fromDivIdx,
   });
 
   final int tierIdx;
   final int divIdx;
+
+  /// The rank it came up from, when known: "from Gold III".
+  final int? fromTierIdx;
+  final int? fromDivIdx;
 
   /// Further than this account has ever been.
   final bool highest;
@@ -599,17 +712,31 @@ class PromotionView extends StatelessWidget {
                       letterSpacing: 2,
                     ),
                   ),
-                  const SizedBox(height: 14),
-                  TierBadge(tierIndex: tierIdx, size: 96),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 18),
+                  _PromotedBadge(tierIdx: tierIdx, size: 140),
+                  const SizedBox(height: 18),
                   ShrinkText(
                     tierLabel(l, tierIdx, divIdx),
                     maxLines: 1,
                     style: context.type.title.copyWith(
                       color: context.colors.text,
-                      fontSize: 27,
+                      fontSize: 32,
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
+                  if (fromTierIdx case final fromTier?) ...[
+                    const SizedBox(height: 3),
+                    Text(
+                      l.promotedFrom(
+                        tierLabel(l, fromTier, fromDivIdx ?? 0),
+                      ),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: context.colors.muted,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ],
                   if (highest) ...[
                     const SizedBox(height: 7),
                     Text(
@@ -683,6 +810,57 @@ class PromotionView extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// The new tier's badge arriving: it lands from a little smaller, and a glow
+/// in its own colour rises behind it in the badge's own shape — blurred,
+/// tinted copies of the badge rather than a circle, which read as a sticker
+/// on a light rather than the crest itself shining.
+class _PromotedBadge extends StatelessWidget {
+  const _PromotedBadge({required this.tierIdx, required this.size});
+
+  final int tierIdx;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final colour = kTiers[tierIdx.clamp(0, kTiers.length - 1)].color;
+
+    Widget glow(double blur, double opacity) => ImageFiltered(
+      imageFilter: ui.ImageFilter.blur(sigmaX: blur, sigmaY: blur),
+      child: Opacity(
+        opacity: opacity,
+        child: ColorFiltered(
+          colorFilter: ColorFilter.mode(colour, BlendMode.srcATop),
+          child: TierBadge(tierIndex: tierIdx, size: size),
+        ),
+      ),
+    );
+
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 1),
+      duration: const Duration(milliseconds: 900),
+      curve: Curves.easeOutBack,
+      builder: (context, t, _) => SizedBox(
+        width: size,
+        height: size,
+        // The blur reaches past the badge; clipped, it would show as a
+        // square of light.
+        child: Stack(
+          clipBehavior: Clip.none,
+          alignment: Alignment.center,
+          children: [
+            glow(28, (0.55 * t).clamp(0.0, 1.0)),
+            glow(12, (0.7 * t).clamp(0.0, 1.0)),
+            Transform.scale(
+              scale: 0.7 + 0.3 * t,
+              child: TierBadge(tierIndex: tierIdx, size: size),
+            ),
+          ],
+        ),
       ),
     );
   }

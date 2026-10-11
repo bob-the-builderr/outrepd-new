@@ -2197,4 +2197,33 @@ class LPt extends L {
 
   @override
   String get seasonPlayCta => 'Jogar o novo mês';
+
+  @override
+  String get rematchLive => 'Revanche ao vivo';
+
+  @override
+  String rematchWaiting(String name) {
+    return 'Esperando ${name}';
+  }
+
+  @override
+  String rematchAsked(String name) {
+    return '${name} quer revanche';
+  }
+
+  @override
+  String get rematchGone => 'Sem revanche desta vez';
+
+  @override
+  String get twoRankedADay => 'Amistoso · 2 ranqueados por dia com o mesmo adversário';
+
+  @override
+  String monthMove(String move) {
+    return 'Este mês · ${move}';
+  }
+
+  @override
+  String promotedFrom(String rank) {
+    return 'de ${rank}';
+  }
 }
