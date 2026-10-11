@@ -398,6 +398,41 @@ reset role;
 update server_switches set enabled = false where name = 'paywall_enforced';
 delete from subscriptions where user_id = :'B';
 
+-- ── closed-test testers ───────────────────────────────────────────────────────
+
+-- The trigger on auth.users runs inside every sign-up, as whatever role the
+-- auth server uses. It must work for a role that has no EXECUTE on it —
+-- Postgres checks that when a trigger is made, not when it fires — and it
+-- must never be the reason a sign-up fails.
+do $$
+begin
+  create role auth_server_like nologin;
+exception when duplicate_object then
+  null;
+end;
+$$;
+grant usage on schema auth to auth_server_like;
+grant select, update on auth.users to auth_server_like;
+insert into beta_testers (email) values ('tester@example.com');
+set role auth_server_like;
+update auth.users set email_change = 'tester@example.com' where id = :'D';
+update auth.users set email_change = null where id = :'D';
+reset role;
+select check_that(true, 'a sign-up with a tester''s email went through');
+-- An address with capitals in it is refused rather than stored unmatched.
+select must_fail('a tester listed with capitals',
+                 'insert into beta_testers (email) values (''Someone@Example.com'')');
+
+select as_user(:'A'); set role authenticated;
+select must_fail('a lifter handing out tester passes',
+                 format('select grant_tester_pro(%L)', :'A'));
+select check_that((select count(*) from beta_testers) = 0,
+                  'a lifter can read the tester list');
+select must_fail('a lifter putting themselves on the tester list',
+                 'insert into beta_testers (email) values (''a@example.com'')');
+reset role;
+delete from beta_testers;
+
 -- ── signed out ────────────────────────────────────────────────────────────────
 
 -- A request with no session runs as anon. It may draw the website's share

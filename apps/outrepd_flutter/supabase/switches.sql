@@ -26,3 +26,28 @@ update server_switches set enabled = true, changed_at = now()
 
 -- Where it stands:
 -- select name, enabled, changed_at from server_switches;
+
+-- ───────────────────────────── closed-test testers ───────────────────────────
+--
+-- Each address on this list gets Pro for two months, free, as soon as an
+-- account signs up with it — or at once, if it already has (testers.sql).
+-- No purchase, so no store receipts. Put every address in the brackets, in
+-- quotes, separated by commas; capitals and spaces are taken care of.
+
+-- Add:
+insert into beta_testers (email)
+select lower(trim(address))
+  from unnest(array[
+    'first.tester@gmail.com',
+    'second.tester@gmail.com'
+  ]) as address
+on conflict (email) do nothing;
+
+-- Who is listed, and who has been given their pass:
+-- select b.email, g.granted_at
+--   from beta_testers b
+--   left join beta_tester_grants g on g.email = b.email
+--  order by b.added_at;
+
+-- Take somebody off the list (a pass already given runs its course):
+-- delete from beta_testers where email = 'someone@gmail.com';

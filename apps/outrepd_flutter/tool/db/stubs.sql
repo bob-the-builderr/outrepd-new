@@ -23,7 +23,9 @@ create schema auth;
 create table auth.users (
   id uuid primary key,
   email text,
-  email_confirmed_at timestamptz
+  email_confirmed_at timestamptz,
+  -- An address typed at sign-up and not yet confirmed (testers.sql).
+  email_change text
 );
 grant usage on schema auth to anon, authenticated;
 
