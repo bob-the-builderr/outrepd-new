@@ -702,5 +702,9 @@
   "dailyGoalChange": "Ubah",
   "dailyGoalPick": "Target harianmu",
   "dailyGoalOption": "{n} push-up sehari",
-  "widgetGoalOf": "dari {goal} hari ini"
+  "widgetGoalOf": "dari {goal} hari ini",
+  "saveToAppleHealth": "Simpan latihan ke Apple Health",
+  "saveToHealthConnect": "Simpan latihan ke Health Connect",
+  "saveToHealthHint": "Setiap set ditambahkan sebagai latihan kekuatan. Tidak ada yang dibaca.",
+  "healthNotAllowed": "Belum diizinkan. Kamu bisa mengizinkannya di pengaturan kesehatan ponsel."
 }

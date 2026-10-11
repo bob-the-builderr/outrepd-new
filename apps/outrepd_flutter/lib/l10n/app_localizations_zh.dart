@@ -2260,4 +2260,16 @@ class LZh extends L {
   String widgetGoalOf(String goal) {
     return '今日目标 ${goal}';
   }
+
+  @override
+  String get saveToAppleHealth => '将训练保存到 Apple 健康';
+
+  @override
+  String get saveToHealthConnect => '将训练保存到 Health Connect';
+
+  @override
+  String get saveToHealthHint => '每一组都会记为一次力量训练。不会读取任何数据。';
+
+  @override
+  String get healthNotAllowed => '尚未允许。你可以在手机的健康设置中允许。';
 }

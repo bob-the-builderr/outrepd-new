@@ -702,5 +702,9 @@
   "dailyGoalChange": "Değiştir",
   "dailyGoalPick": "Günlük hedefin",
   "dailyGoalOption": "Günde {n} şınav",
-  "widgetGoalOf": "bugün {goal} hedefin"
+  "widgetGoalOf": "bugün {goal} hedefin",
+  "saveToAppleHealth": "Antrenmanları Apple Sağlık'a kaydet",
+  "saveToHealthConnect": "Antrenmanları Health Connect'e kaydet",
+  "saveToHealthHint": "Her set kuvvet antrenmanı olarak eklenir. Hiçbir şey okunmaz.",
+  "healthNotAllowed": "Henüz izin verilmedi. Telefonunun sağlık ayarlarından izin verebilirsin."
 }

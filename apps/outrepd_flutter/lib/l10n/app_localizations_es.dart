@@ -2314,4 +2314,16 @@ class LEs extends L {
   String widgetGoalOf(String goal) {
     return 'de ${goal} hoy';
   }
+
+  @override
+  String get saveToAppleHealth => 'Guardar entrenamientos en Salud de Apple';
+
+  @override
+  String get saveToHealthConnect => 'Guardar entrenamientos en Health Connect';
+
+  @override
+  String get saveToHealthHint => 'Cada serie se añade como entrenamiento de fuerza. No se lee nada.';
+
+  @override
+  String get healthNotAllowed => 'Aún no está permitido. Puedes permitirlo en los ajustes de salud del teléfono.';
 }

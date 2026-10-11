@@ -3,3 +3,5 @@
 "NSPhotoLibraryUsageDescription" = "Profil fotoğrafın için galerinden bir fotoğraf seç.";
 "NSMicrophoneUsageDescription" = "outrepd asla ses kaydetmez. Kamera yalnızca hareketini görmek için kullanılır.";
 "NSPhotoLibraryAddUsageDescription" = "Paylaşım kartını fotoğraflarına kaydet.";
+"NSHealthShareUsageDescription" = "Ayarlar'dan açarsan outrepd her seti Sağlık'a antrenman olarak kaydeder. Hiçbir şey okunmaz.";
+"NSHealthUpdateUsageDescription" = "Ayarlar'dan açarsan outrepd her seti Sağlık'a antrenman olarak kaydeder.";

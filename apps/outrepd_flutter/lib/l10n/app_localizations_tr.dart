@@ -2304,4 +2304,16 @@ class LTr extends L {
   String widgetGoalOf(String goal) {
     return 'bugün ${goal} hedefin';
   }
+
+  @override
+  String get saveToAppleHealth => 'Antrenmanları Apple Sağlık\'a kaydet';
+
+  @override
+  String get saveToHealthConnect => 'Antrenmanları Health Connect\'e kaydet';
+
+  @override
+  String get saveToHealthHint => 'Her set kuvvet antrenmanı olarak eklenir. Hiçbir şey okunmaz.';
+
+  @override
+  String get healthNotAllowed => 'Henüz izin verilmedi. Telefonunun sağlık ayarlarından izin verebilirsin.';
 }

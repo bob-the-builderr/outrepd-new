@@ -2316,4 +2316,16 @@ class LDe extends L {
   String widgetGoalOf(String goal) {
     return 'von ${goal} heute';
   }
+
+  @override
+  String get saveToAppleHealth => 'Trainings in Apple Health sichern';
+
+  @override
+  String get saveToHealthConnect => 'Trainings in Health Connect sichern';
+
+  @override
+  String get saveToHealthHint => 'Jeder Satz wird als Krafttraining eingetragen. Gelesen wird nichts.';
+
+  @override
+  String get healthNotAllowed => 'Noch nicht erlaubt. Du kannst es in den Gesundheitseinstellungen deines Handys erlauben.';
 }

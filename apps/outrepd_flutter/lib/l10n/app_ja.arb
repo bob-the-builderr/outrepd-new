@@ -702,5 +702,9 @@
   "dailyGoalChange": "変更",
   "dailyGoalPick": "1日の目標",
   "dailyGoalOption": "1日{n}回",
-  "widgetGoalOf": "今日の目標 {goal}"
+  "widgetGoalOf": "今日の目標 {goal}",
+  "saveToAppleHealth": "ワークアウトをAppleヘルスケアに保存",
+  "saveToHealthConnect": "ワークアウトをヘルスコネクトに保存",
+  "saveToHealthHint": "セットごとに筋力トレーニングとして追加されます。読み取りは行いません。",
+  "healthNotAllowed": "まだ許可されていません。スマホのヘルスケア設定で許可できます。"
 }

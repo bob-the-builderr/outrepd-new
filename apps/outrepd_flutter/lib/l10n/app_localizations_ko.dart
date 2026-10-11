@@ -2277,4 +2277,16 @@ class LKo extends L {
   String widgetGoalOf(String goal) {
     return '오늘 ${goal}개 중';
   }
+
+  @override
+  String get saveToAppleHealth => '운동을 Apple 건강에 저장';
+
+  @override
+  String get saveToHealthConnect => '운동을 헬스 커넥트에 저장';
+
+  @override
+  String get saveToHealthHint => '세트마다 근력 운동으로 추가돼요. 아무것도 읽어 오지 않아요.';
+
+  @override
+  String get healthNotAllowed => '아직 허용되지 않았어요. 휴대폰의 건강 설정에서 허용할 수 있어요.';
 }

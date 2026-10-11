@@ -55,6 +55,8 @@ dependencies:
   app_links: ^7.2.1
   # The home-screen widgets: the app writes what they show (lib/home_widgets.dart).
   home_widget: ^0.10.0
+  # Each set saved to Apple Health or Health Connect, when turned on.
+  health: ^13.3.2
   # The rep counter judges time in milliseconds, and poses carry no timestamp.
   # A stopwatch from here follows a test's fake clock, so a scripted set in a
   # widget test takes as long as it says it does.

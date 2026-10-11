@@ -3,3 +3,5 @@
 "NSPhotoLibraryUsageDescription" = "Pick a photo from your library for your profile picture.";
 "NSMicrophoneUsageDescription" = "outrepd never records sound. The camera is used for pictures of your movement only.";
 "NSPhotoLibraryAddUsageDescription" = "Save your share card to your photos.";
+"NSHealthShareUsageDescription" = "outrepd saves each set you lift to Apple Health as a workout, when you turn it on in Settings. It reads nothing.";
+"NSHealthUpdateUsageDescription" = "outrepd saves each set you lift to Apple Health as a workout, when you turn it on in Settings.";

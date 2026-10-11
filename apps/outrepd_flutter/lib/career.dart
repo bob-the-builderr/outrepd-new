@@ -17,6 +17,7 @@
 /// numbers end up disagreeing.
 library;
 
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -24,6 +25,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'backend/backend.dart' show RemoteProfile, SettledDuel;
 import 'data.dart';
+import 'health_sync.dart';
 import 'ranking.dart';
 import 'rewards.dart';
 
@@ -399,6 +401,8 @@ class Career extends ChangeNotifier {
     final key = _key(DateTime.now());
     _days[key] = (_days[key] ?? 0) + reps;
     _trimDays();
+    // Copied to Apple Health or Health Connect, if the lifter asked for it.
+    unawaited(HealthSync.recordSet(reps));
   }
 
   /// Titles only the duel that just happened can judge — the server does not

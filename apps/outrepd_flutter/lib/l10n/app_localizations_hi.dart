@@ -2309,4 +2309,16 @@ class LHi extends L {
   String widgetGoalOf(String goal) {
     return 'आज ${goal} में से';
   }
+
+  @override
+  String get saveToAppleHealth => 'वर्कआउट Apple Health में सेव करें';
+
+  @override
+  String get saveToHealthConnect => 'वर्कआउट Health Connect में सेव करें';
+
+  @override
+  String get saveToHealthHint => 'हर सेट स्ट्रेंथ वर्कआउट के रूप में जुड़ता है। कुछ भी पढ़ा नहीं जाता।';
+
+  @override
+  String get healthNotAllowed => 'अभी अनुमति नहीं है। आप फ़ोन की हेल्थ सेटिंग में अनुमति दे सकते हैं।';
 }

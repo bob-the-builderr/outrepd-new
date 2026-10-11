@@ -3,3 +3,5 @@
 "NSPhotoLibraryUsageDescription" = "プロフィール写真にするため、ライブラリから写真を選びます。";
 "NSMicrophoneUsageDescription" = "outrepd は音声を録音しません。カメラは体の動きを見るためだけに使います。";
 "NSPhotoLibraryAddUsageDescription" = "シェア用カードを写真に保存します。";
+"NSHealthShareUsageDescription" = "設定でオンにすると、outrepdは各セットをワークアウトとしてヘルスケアに保存します。読み取りは行いません。";
+"NSHealthUpdateUsageDescription" = "設定でオンにすると、outrepdは各セットをワークアウトとしてヘルスケアに保存します。";

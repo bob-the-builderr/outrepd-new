@@ -597,6 +597,8 @@ select check_that(claim_invite(current_setting('test.dcode')) = 'already',
                   'one account used a code twice');
 select check_that((select inviter_name = 'dan_d1' from my_inviter()),
                   'the invitee is not told who brought them in');
+select check_that(my_data() -> 'invited_by' ->> 'username' = 'dan_d1',
+                  'the export left out who brought them in');
 select check_that((select count(*) from invites) = 0,
                   'a lifter can read the invites table');
 select must_fail('a lifter asking for a grant',
@@ -612,6 +614,9 @@ select check_that((select can_invite and joined = 1 from my_invites()),
                   'the yearly subscriber''s card is wrong');
 select check_that(claim_invite(current_setting('test.dcode')) = 'own_code',
                   'an account used its own code');
+select check_that(jsonb_array_length(my_data() -> 'invited') = 1
+                  and my_data() ? 'month_awards' and my_data() ? 'live_matches',
+                  'the export left out invites, month awards or live matches');
 reset role;
 
 select as_user(:'C'); set role authenticated;

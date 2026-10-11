@@ -2307,4 +2307,16 @@ class LEn extends L {
   String widgetGoalOf(String goal) {
     return 'of ${goal} today';
   }
+
+  @override
+  String get saveToAppleHealth => 'Save workouts to Apple Health';
+
+  @override
+  String get saveToHealthConnect => 'Save workouts to Health Connect';
+
+  @override
+  String get saveToHealthHint => 'Every set you lift is added as a strength workout. Nothing is read back.';
+
+  @override
+  String get healthNotAllowed => 'Not allowed yet. You can allow it in your phone\'s health settings.';
 }

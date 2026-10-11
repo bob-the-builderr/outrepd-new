@@ -2309,4 +2309,16 @@ class LRu extends L {
   String widgetGoalOf(String goal) {
     return 'из ${goal} сегодня';
   }
+
+  @override
+  String get saveToAppleHealth => 'Сохранять тренировки в Apple Здоровье';
+
+  @override
+  String get saveToHealthConnect => 'Сохранять тренировки в Health Connect';
+
+  @override
+  String get saveToHealthHint => 'Каждый подход добавляется как силовая тренировка. Ничего не считывается.';
+
+  @override
+  String get healthNotAllowed => 'Пока не разрешено. Разрешить можно в настройках здоровья телефона.';
 }

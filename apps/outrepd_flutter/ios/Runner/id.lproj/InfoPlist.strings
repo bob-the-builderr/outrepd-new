@@ -3,3 +3,5 @@
 "NSPhotoLibraryUsageDescription" = "Pilih foto dari galerimu untuk foto profil.";
 "NSMicrophoneUsageDescription" = "outrepd tidak pernah merekam suara. Kamera hanya dipakai untuk melihat gerakanmu.";
 "NSPhotoLibraryAddUsageDescription" = "Simpan kartu berbagimu ke foto.";
+"NSHealthShareUsageDescription" = "outrepd menyimpan setiap set ke Apple Health sebagai latihan, jika kamu menyalakannya di Pengaturan. Tidak ada yang dibaca.";
+"NSHealthUpdateUsageDescription" = "outrepd menyimpan setiap set ke Apple Health sebagai latihan, jika kamu menyalakannya di Pengaturan.";

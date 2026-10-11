@@ -20,6 +20,9 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Puts the daily reminder back after the phone restarts. -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- Saving sets to Health Connect, when turned on (lib/health_sync.dart):
+         workouts only, written, never read. -->
+    <uses-permission android:name="android.permission.health.WRITE_EXERCISE" />
     <application
         android:label="${appLabel}"
         android:name="${applicationName}"
@@ -57,11 +60,27 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="https" android:host="www.outrepd.com" android:pathPrefix="/u/"/>
             </intent-filter>
+            <!-- Health Connect asks the app to explain its permissions. -->
+            <intent-filter>
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+            </intent-filter>
             <!-- The link goes to lib/deep_links.dart, not to Flutter's own
                  routing, which would push /u/<name> as a route the app does
                  not have. -->
             <meta-data android:name="flutter_deeplinking_enabled" android:value="false"/>
         </activity>
+        <!-- Health Connect's "how this app uses your data" link, on Android
+             14 and later: opens the app, whose Settings say what is saved. -->
+        <activity-alias
+            android:name="ViewPermissionUsageActivity"
+            android:exported="true"
+            android:permission="android.permission.START_VIEW_PERMISSION_USAGE"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
+                <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
+            </intent-filter>
+        </activity-alias>
         <!-- The home-screen widgets (OutrepdWidgets.kt): today's goal, the
              streak, and in the bigger one the rank. -->
         <receiver
@@ -132,6 +151,11 @@
         <intent>
             <action android:name="android.intent.action.VIEW"/>
             <data android:scheme="https"/>
+        </intent>
+        <!-- Health Connect, for saving sets when turned on. -->
+        <package android:name="com.google.android.apps.healthdata" />
+        <intent>
+            <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
         </intent>
     </queries>
 </manifest>

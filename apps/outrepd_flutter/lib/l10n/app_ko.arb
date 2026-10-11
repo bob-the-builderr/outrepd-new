@@ -702,5 +702,9 @@
   "dailyGoalChange": "변경",
   "dailyGoalPick": "하루 목표",
   "dailyGoalOption": "하루 {n}개",
-  "widgetGoalOf": "오늘 {goal}개 중"
+  "widgetGoalOf": "오늘 {goal}개 중",
+  "saveToAppleHealth": "운동을 Apple 건강에 저장",
+  "saveToHealthConnect": "운동을 헬스 커넥트에 저장",
+  "saveToHealthHint": "세트마다 근력 운동으로 추가돼요. 아무것도 읽어 오지 않아요.",
+  "healthNotAllowed": "아직 허용되지 않았어요. 휴대폰의 건강 설정에서 허용할 수 있어요."
 }

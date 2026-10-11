@@ -3,3 +3,5 @@
 "NSPhotoLibraryUsageDescription" = "从相册中选择一张照片作为头像。";
 "NSMicrophoneUsageDescription" = "outrepd 从不录音。摄像头只用于识别你的动作。";
 "NSPhotoLibraryAddUsageDescription" = "将你的分享卡片保存到照片。";
+"NSHealthShareUsageDescription" = "在设置中开启后，outrepd 会把每一组作为训练保存到“健康”。不会读取任何数据。";
+"NSHealthUpdateUsageDescription" = "在设置中开启后，outrepd 会把每一组作为训练保存到“健康”。";

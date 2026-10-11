@@ -2270,4 +2270,16 @@ class LJa extends L {
   String widgetGoalOf(String goal) {
     return '今日の目標 ${goal}';
   }
+
+  @override
+  String get saveToAppleHealth => 'ワークアウトをAppleヘルスケアに保存';
+
+  @override
+  String get saveToHealthConnect => 'ワークアウトをヘルスコネクトに保存';
+
+  @override
+  String get saveToHealthHint => 'セットごとに筋力トレーニングとして追加されます。読み取りは行いません。';
+
+  @override
+  String get healthNotAllowed => 'まだ許可されていません。スマホのヘルスケア設定で許可できます。';
 }

@@ -11,6 +11,11 @@
 	     www only: the bare domain redirects, which Apple does not follow. -->
 	<!-- Shared with the home-screen widget (ios/OutrepdWidget), which reads
 	     what lib/home_widgets.dart writes here. -->
+	<!-- Saving sets to Apple Health, when turned on (lib/health_sync.dart). -->
+	<key>com.apple.developer.healthkit</key>
+	<true/>
+	<key>com.apple.developer.healthkit.access</key>
+	<array/>
 	<key>com.apple.security.application-groups</key>
 	<array>
 		<string>group.com.outrepd.outrepd</string>

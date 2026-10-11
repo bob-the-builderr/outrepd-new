@@ -2308,4 +2308,16 @@ class LId extends L {
   String widgetGoalOf(String goal) {
     return 'dari ${goal} hari ini';
   }
+
+  @override
+  String get saveToAppleHealth => 'Simpan latihan ke Apple Health';
+
+  @override
+  String get saveToHealthConnect => 'Simpan latihan ke Health Connect';
+
+  @override
+  String get saveToHealthHint => 'Setiap set ditambahkan sebagai latihan kekuatan. Tidak ada yang dibaca.';
+
+  @override
+  String get healthNotAllowed => 'Belum diizinkan. Kamu bisa mengizinkannya di pengaturan kesehatan ponsel.';
 }

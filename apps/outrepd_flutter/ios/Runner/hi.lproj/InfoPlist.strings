@@ -3,3 +3,5 @@
 "NSPhotoLibraryUsageDescription" = "अपनी प्रोफ़ाइल फ़ोटो के लिए अपनी लाइब्रेरी से एक फ़ोटो चुनें।";
 "NSMicrophoneUsageDescription" = "outrepd कभी आवाज़ रिकॉर्ड नहीं करता। कैमरा सिर्फ़ आपकी हरकत देखने के लिए है।";
 "NSPhotoLibraryAddUsageDescription" = "अपना शेयर कार्ड अपनी फ़ोटो में सेव करें।";
+"NSHealthShareUsageDescription" = "सेटिंग्स में चालू करने पर outrepd आपका हर सेट Apple Health में वर्कआउट के रूप में सेव करता है। कुछ भी पढ़ा नहीं जाता।";
+"NSHealthUpdateUsageDescription" = "सेटिंग्स में चालू करने पर outrepd आपका हर सेट Apple Health में वर्कआउट के रूप में सेव करता है।";

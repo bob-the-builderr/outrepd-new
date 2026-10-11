@@ -3,3 +3,5 @@
 "NSPhotoLibraryUsageDescription" = "Выберите фото из медиатеки для аватара профиля.";
 "NSMicrophoneUsageDescription" = "outrepd никогда не записывает звук. Камера нужна только чтобы видеть ваши движения.";
 "NSPhotoLibraryAddUsageDescription" = "Сохраните карточку для публикации в фото.";
+"NSHealthShareUsageDescription" = "outrepd сохраняет каждый подход в «Здоровье» как тренировку, если включить это в настройках. Ничего не считывается.";
+"NSHealthUpdateUsageDescription" = "outrepd сохраняет каждый подход в «Здоровье» как тренировку, если включить это в настройках.";

@@ -223,7 +223,7 @@ void recordCountCorrection({
 
   // Fire and forget: the round moves on immediately, and a write that lands a
   // moment later is fine. Losing one row to a kill mid-write costs nothing.
-  unawaited(_persist());
+  _quietly(_persist());
 }
 
 @visibleForTesting
@@ -237,7 +237,9 @@ Future<void> _persist() async {
   );
 }
 
-void unawaited(Future<void> future) {
+// Private: a public unawaited here once shadowed dart:async's in every file
+// that imported this one, and blamed their failures on the accuracy record.
+void _quietly(Future<void> future) {
   future.catchError((Object error) {
     debugPrint('Could not save the accuracy record: $error');
   });

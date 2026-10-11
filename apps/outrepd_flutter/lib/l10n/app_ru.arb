@@ -702,5 +702,9 @@
   "dailyGoalChange": "Изменить",
   "dailyGoalPick": "Ваша цель на день",
   "dailyGoalOption": "{n} отжиманий в день",
-  "widgetGoalOf": "из {goal} сегодня"
+  "widgetGoalOf": "из {goal} сегодня",
+  "saveToAppleHealth": "Сохранять тренировки в Apple Здоровье",
+  "saveToHealthConnect": "Сохранять тренировки в Health Connect",
+  "saveToHealthHint": "Каждый подход добавляется как силовая тренировка. Ничего не считывается.",
+  "healthNotAllowed": "Пока не разрешено. Разрешить можно в настройках здоровья телефона."
 }

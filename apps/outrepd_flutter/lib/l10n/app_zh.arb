@@ -702,5 +702,9 @@
   "dailyGoalChange": "更改",
   "dailyGoalPick": "你的每日目标",
   "dailyGoalOption": "每天 {n} 个",
-  "widgetGoalOf": "今日目标 {goal}"
+  "widgetGoalOf": "今日目标 {goal}",
+  "saveToAppleHealth": "将训练保存到 Apple 健康",
+  "saveToHealthConnect": "将训练保存到 Health Connect",
+  "saveToHealthHint": "每一组都会记为一次力量训练。不会读取任何数据。",
+  "healthNotAllowed": "尚未允许。你可以在手机的健康设置中允许。"
 }

@@ -60,6 +60,26 @@ as $$
       select jsonb_agg(to_jsonb(n) - 'profile_id' order by n.created_at)
         from notifications n where n.profile_id = auth.uid()
     ), '[]'::jsonb),
+    'live_matches', coalesce((
+      select jsonb_agg(to_jsonb(m) order by m.created_at)
+        from live_matches m where m.a = auth.uid() or m.b = auth.uid()
+    ), '[]'::jsonb),
+    'month_awards', coalesce((
+      select jsonb_agg(to_jsonb(w) - 'profile_id' order by w.season)
+        from season_awards w where w.profile_id = auth.uid()
+    ), '[]'::jsonb),
+    'invited_by', (
+      select jsonb_build_object('username', p.username, 'at', i.created_at)
+        from invites i join profiles p on p.id = i.inviter
+       where i.invitee = auth.uid()
+    ),
+    'invited', coalesce((
+      select jsonb_agg(jsonb_build_object(
+               'username', p.username, 'at', i.created_at)
+             order by i.created_at)
+        from invites i join profiles p on p.id = i.invitee
+       where i.inviter = auth.uid()
+    ), '[]'::jsonb),
     'reports_filed', coalesce((
       select count(*) from reports r where r.reporter = auth.uid()
     ), 0)

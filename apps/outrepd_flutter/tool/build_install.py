@@ -18,10 +18,11 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # The order they depend on each other. subscriptions.sql comes first because
 # the sets policy in schema.sql calls has_pro(); social.sql comes before
 # duel.sql because find_opponent_set has to check friendships to honour
-# 'friends only'.
+# 'friends only'. account.sql comes after every table, because my_data()
+# hands back all of them and a SQL function's tables must already exist.
 PARTS = ['subscriptions.sql', 'schema.sql', 'ladder.sql', 'social.sql',
-         'duel.sql', 'notify.sql', 'push.sql', 'live.sql', 'account.sql', 'seasons.sql', 'testers.sql', 'invites.sql',
-         'lockdown.sql']
+         'duel.sql', 'notify.sql', 'push.sql', 'live.sql', 'seasons.sql',
+         'testers.sql', 'invites.sql', 'account.sql', 'lockdown.sql']
 
 HEADER = """-- OUTREPD — everything the server needs, in one paste.
 --

@@ -2314,4 +2314,16 @@ class LIt extends L {
   String widgetGoalOf(String goal) {
     return 'su ${goal} oggi';
   }
+
+  @override
+  String get saveToAppleHealth => 'Salva gli allenamenti in Salute di Apple';
+
+  @override
+  String get saveToHealthConnect => 'Salva gli allenamenti in Connessione Salute';
+
+  @override
+  String get saveToHealthHint => 'Ogni serie viene aggiunta come allenamento di forza. Non viene letto nulla.';
+
+  @override
+  String get healthNotAllowed => 'Non ancora consentito. Puoi consentirlo nelle impostazioni salute del telefono.';
 }

@@ -17,6 +17,7 @@ void main() {
       before.themeMode = ThemeMode.light;
       before.vibration = false;
       before.showSkeleton = false;
+      before.saveToHealth = true;
     });
 
     // A second instance stands in for the next launch of the app.
@@ -26,6 +27,7 @@ void main() {
     expect(after.themeMode, ThemeMode.light);
     expect(after.vibration, isFalse);
     expect(after.showSkeleton, isFalse);
+    expect(after.saveToHealth, isTrue);
   });
 
   test('untouched settings keep their defaults', () async {
@@ -34,5 +36,7 @@ void main() {
 
     expect(fresh.themeMode, ThemeMode.dark);
     expect(fresh.showSkeleton, isTrue);
+    // Nothing goes to Health until the lifter turns it on and the phone asks.
+    expect(fresh.saveToHealth, isFalse);
   });
 }

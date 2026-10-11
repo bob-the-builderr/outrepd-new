@@ -13,11 +13,13 @@
 /// want are all decisions made where the phone cannot reach.
 library;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../backend/backend.dart';
 import '../data.dart';
+import '../health_sync.dart';
 import '../l10n/app_localizations.dart';
 import '../push.dart';
 import '../reps/count_accuracy.dart';
@@ -111,8 +113,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 caption: l.showSkeletonHint,
                 value: settings.showSkeleton,
                 onChanged: (v) => _set(() => settings.showSkeleton = v),
-                last: true,
+                last: kIsWeb,
               ),
+              // Asked for when turned on, not before: the phone's own prompt
+              // says what is shared, and turning it off asks nothing. A
+              // browser has no Health to save to.
+              if (!kIsWeb)
+                SwitchRow(
+                  key: const Key('healthSwitch'),
+                  icon: Icons.favorite_border,
+                  label: defaultTargetPlatform == TargetPlatform.iOS
+                      ? l.saveToAppleHealth
+                      : l.saveToHealthConnect,
+                  caption: l.saveToHealthHint,
+                  value: settings.saveToHealth,
+                  onChanged: (on) async {
+                    if (!on) {
+                      _set(() => settings.saveToHealth = false);
+                      return;
+                    }
+                    final messenger = ScaffoldMessenger.of(context);
+                    final allowed = await HealthSync.connect();
+                    if (!mounted) return;
+                    if (allowed) {
+                      _set(() => settings.saveToHealth = true);
+                    } else {
+                      messenger.showSnackBar(
+                        SnackBar(
+                          content: Text(l.healthNotAllowed),
+                          behavior: SnackBarBehavior.floating,
+                        ),
+                      );
+                    }
+                  },
+                  last: true,
+                ),
             ],
           ),
 

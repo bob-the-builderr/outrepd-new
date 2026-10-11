@@ -3,3 +3,5 @@
 "NSPhotoLibraryUsageDescription" = "Wähle ein Foto aus deiner Mediathek als Profilbild.";
 "NSMicrophoneUsageDescription" = "outrepd nimmt nie Ton auf. Die Kamera wird nur für Bilder deiner Bewegung genutzt.";
 "NSPhotoLibraryAddUsageDescription" = "Speichere deine Teilen-Karte in deinen Fotos.";
+"NSHealthShareUsageDescription" = "outrepd sichert jeden Satz als Training in Apple Health, wenn du es in den Einstellungen einschaltest. Gelesen wird nichts.";
+"NSHealthUpdateUsageDescription" = "outrepd sichert jeden Satz als Training in Apple Health, wenn du es in den Einstellungen einschaltest.";

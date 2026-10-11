@@ -132,6 +132,27 @@ void main() {
     expect(settings.sounds, isFalse);
   });
 
+  testWidgets('saving to Health stays off until the phone allows it',
+      (tester) async {
+    // The test has no Health Connect to ask, which is the same answer as a
+    // lifter saying no: the switch must not claim workouts are being saved.
+    addTearDown(() => settings.saveToHealth = false);
+    phone(tester);
+    await tester.pumpWidget(_app(const SettingsScreen()));
+    await tester.pumpAndSettle();
+    expect(settings.saveToHealth, isFalse);
+
+    final row = find.byKey(const Key('healthSwitch'));
+    await tester.scrollUntilVisible(row, 200,
+        scrollable: find.byType(Scrollable).first);
+    expect(find.text('Save workouts to Health Connect'), findsOneWidget);
+    await tester.tap(find.descendant(of: row, matching: find.byType(Switch)));
+    await tester.pumpAndSettle();
+
+    expect(settings.saveToHealth, isFalse);
+    expect(find.textContaining('Not allowed yet'), findsOneWidget);
+  });
+
   testWidgets('the daily reminder can be turned off, and its time goes with it',
       (tester) async {
     addTearDown(() => settings.reminder = true);

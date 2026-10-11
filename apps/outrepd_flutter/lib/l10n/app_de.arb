@@ -702,5 +702,9 @@
   "dailyGoalChange": "Ändern",
   "dailyGoalPick": "Dein Tagesziel",
   "dailyGoalOption": "{n} Liegestütze am Tag",
-  "widgetGoalOf": "von {goal} heute"
+  "widgetGoalOf": "von {goal} heute",
+  "saveToAppleHealth": "Trainings in Apple Health sichern",
+  "saveToHealthConnect": "Trainings in Health Connect sichern",
+  "saveToHealthHint": "Jeder Satz wird als Krafttraining eingetragen. Gelesen wird nichts.",
+  "healthNotAllowed": "Noch nicht erlaubt. Du kannst es in den Gesundheitseinstellungen deines Handys erlauben."
 }

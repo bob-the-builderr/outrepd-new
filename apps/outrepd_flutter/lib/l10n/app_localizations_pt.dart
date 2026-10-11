@@ -2311,4 +2311,16 @@ class LPt extends L {
   String widgetGoalOf(String goal) {
     return 'de ${goal} hoje';
   }
+
+  @override
+  String get saveToAppleHealth => 'Salvar treinos no Saúde da Apple';
+
+  @override
+  String get saveToHealthConnect => 'Salvar treinos no Conexão Saúde';
+
+  @override
+  String get saveToHealthHint => 'Cada série entra como treino de força. Nada é lido.';
+
+  @override
+  String get healthNotAllowed => 'Ainda não permitido. Você pode permitir nos ajustes de saúde do celular.';
 }

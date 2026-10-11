@@ -143,6 +143,10 @@ class AppSettings extends ChangeNotifier {
   /// two or three sets.
   int dailyGoal = 50;
 
+  /// Each set copied to Apple Health or Health Connect as a workout. Off
+  /// until turned on, which is when the phone asks (lib/health_sync.dart).
+  bool saveToHealth = false;
+
   SharedPreferences? _store;
 
   /// Read what was saved last run. Call before the first frame so the app
@@ -176,6 +180,7 @@ class AppSettings extends ChangeNotifier {
       reminderMinutes = minutes;
     }
     showSkeleton = flag('showSkeleton', showSkeleton);
+    saveToHealth = flag('saveToHealth', saveToHealth);
     final goal = s.getInt('dailyGoal');
     if (goal != null && goal > 0 && goal <= 1000) dailyGoal = goal;
   }
@@ -242,6 +247,7 @@ class AppSettings extends ChangeNotifier {
     s.setInt('reminderMinutes', reminderMinutes);
     s.setBool('showSkeleton', showSkeleton);
     s.setInt('dailyGoal', dailyGoal);
+    s.setBool('saveToHealth', saveToHealth);
   }
 
   /// What [themeMode] means right now, given the device setting.

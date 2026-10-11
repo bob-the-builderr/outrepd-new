@@ -2315,4 +2315,16 @@ class LFr extends L {
   String widgetGoalOf(String goal) {
     return 'sur ${goal} aujourd\'hui';
   }
+
+  @override
+  String get saveToAppleHealth => 'Enregistrer les séances dans Santé d\'Apple';
+
+  @override
+  String get saveToHealthConnect => 'Enregistrer les séances dans Santé Connect';
+
+  @override
+  String get saveToHealthHint => 'Chaque série est ajoutée comme séance de musculation. Rien n\'est lu.';
+
+  @override
+  String get healthNotAllowed => 'Pas encore autorisé. Tu peux l\'autoriser dans les réglages santé de ton téléphone.';
 }

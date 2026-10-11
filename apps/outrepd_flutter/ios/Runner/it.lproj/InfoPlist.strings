@@ -3,3 +3,5 @@
 "NSPhotoLibraryUsageDescription" = "Scegli una foto dalla tua libreria come immagine del profilo.";
 "NSMicrophoneUsageDescription" = "outrepd non registra mai l’audio. La fotocamera serve solo a vedere i tuoi movimenti.";
 "NSPhotoLibraryAddUsageDescription" = "Salva la tua scheda da condividere nelle foto.";
+"NSHealthShareUsageDescription" = "outrepd salva ogni serie in Salute come allenamento, se lo attivi nelle Impostazioni. Non legge nulla.";
+"NSHealthUpdateUsageDescription" = "outrepd salva ogni serie in Salute come allenamento, se lo attivi nelle Impostazioni.";

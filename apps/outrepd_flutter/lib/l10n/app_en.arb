@@ -1468,5 +1468,9 @@
         "type": "String"
       }
     }
-  }
+  },
+  "saveToAppleHealth": "Save workouts to Apple Health",
+  "saveToHealthConnect": "Save workouts to Health Connect",
+  "saveToHealthHint": "Every set you lift is added as a strength workout. Nothing is read back.",
+  "healthNotAllowed": "Not allowed yet. You can allow it in your phone's health settings."
 }

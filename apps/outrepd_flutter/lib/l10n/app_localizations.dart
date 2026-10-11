@@ -4210,6 +4210,30 @@ abstract class L {
   /// In en, this message translates to:
   /// **'of {goal} today'**
   String widgetGoalOf(String goal);
+
+  /// No description provided for @saveToAppleHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Save workouts to Apple Health'**
+  String get saveToAppleHealth;
+
+  /// No description provided for @saveToHealthConnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Save workouts to Health Connect'**
+  String get saveToHealthConnect;
+
+  /// No description provided for @saveToHealthHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Every set you lift is added as a strength workout. Nothing is read back.'**
+  String get saveToHealthHint;
+
+  /// No description provided for @healthNotAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Not allowed yet. You can allow it in your phone\'s health settings.'**
+  String get healthNotAllowed;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

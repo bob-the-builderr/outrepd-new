@@ -702,5 +702,9 @@
   "dailyGoalChange": "Alterar",
   "dailyGoalPick": "Sua meta diária",
   "dailyGoalOption": "{n} flexões por dia",
-  "widgetGoalOf": "de {goal} hoje"
+  "widgetGoalOf": "de {goal} hoje",
+  "saveToAppleHealth": "Salvar treinos no Saúde da Apple",
+  "saveToHealthConnect": "Salvar treinos no Conexão Saúde",
+  "saveToHealthHint": "Cada série entra como treino de força. Nada é lido.",
+  "healthNotAllowed": "Ainda não permitido. Você pode permitir nos ajustes de saúde do celular."
 }

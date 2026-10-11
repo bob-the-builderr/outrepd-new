@@ -702,5 +702,9 @@
   "dailyGoalChange": "बदलें",
   "dailyGoalPick": "आपका रोज़ का लक्ष्य",
   "dailyGoalOption": "रोज़ {n} पुश-अप",
-  "widgetGoalOf": "आज {goal} में से"
+  "widgetGoalOf": "आज {goal} में से",
+  "saveToAppleHealth": "वर्कआउट Apple Health में सेव करें",
+  "saveToHealthConnect": "वर्कआउट Health Connect में सेव करें",
+  "saveToHealthHint": "हर सेट स्ट्रेंथ वर्कआउट के रूप में जुड़ता है। कुछ भी पढ़ा नहीं जाता।",
+  "healthNotAllowed": "अभी अनुमति नहीं है। आप फ़ोन की हेल्थ सेटिंग में अनुमति दे सकते हैं।"
 }
