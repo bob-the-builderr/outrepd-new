@@ -247,11 +247,15 @@ class _OfflineActions extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.wifi_off, size: 14, color: context.colors.muted),
+              Icon(Icons.wifi_off, size: 16, color: context.colors.muted),
               const SizedBox(width: 7),
-              Text(
-                l.noConnection,
-                style: TextStyle(color: context.colors.muted, fontSize: 14),
+              Flexible(
+                child: Text(
+                  l.noConnection,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: context.colors.muted, fontSize: 14),
+                ),
               ),
             ],
           ),
@@ -359,15 +363,19 @@ class _TopRowState extends State<_TopRow> {
     return Row(
       children: [
         if (profile.dayStreak > 0)
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: context.colors.border, width: 0.5),
-            ),
-            child: Text(
-              l.dayStreakCount(localNumber(context, profile.dayStreak)),
-              style: TextStyle(color: context.colors.text, fontSize: 14),
+          Flexible(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: context.colors.border, width: 0.5),
+              ),
+              child: Text(
+                l.dayStreakCount(localNumber(context, profile.dayStreak)),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: context.colors.text, fontSize: 14),
+              ),
             ),
           ),
         const Spacer(),

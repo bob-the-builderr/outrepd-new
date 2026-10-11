@@ -1304,7 +1304,9 @@ class _LiveSearchViewState extends State<_LiveSearchView> {
         // waiting on a search nothing worth reading.
         if (_around case final around? when around.online > 0) ...[
           const SizedBox(height: 14),
-          Row(
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Row(
             key: const Key('liveOnline'),
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -1317,15 +1319,21 @@ class _LiveSearchViewState extends State<_LiveSearchView> {
                 ),
               ),
               const SizedBox(width: 7),
-              Text(
-                [
-                  l.liveOnlineNow(localNumber(context, around.online)),
-                  if (around.searching > 0)
-                    l.liveSearchingNow(localNumber(context, around.searching)),
-                ].join(' · '),
-                style: TextStyle(color: context.colors.text, fontSize: 15),
+              Flexible(
+                child: Text(
+                  [
+                    l.liveOnlineNow(localNumber(context, around.online)),
+                    if (around.searching > 0)
+                      l.liveSearchingNow(
+                        localNumber(context, around.searching),
+                      ),
+                  ].join(' · '),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: context.colors.text, fontSize: 15),
+                ),
               ),
             ],
+          ),
           ),
         ],
         const Spacer(flex: 3),

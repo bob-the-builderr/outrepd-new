@@ -43,6 +43,15 @@ Future<void> shareFriendCode(BuildContext context, String code) async {
   }
 }
 
+/// The card's own type. A card is fixed artwork, drawn at one size and laid
+/// out against these, so it keeps them when the app's own type goes up.
+abstract final class _CardType {
+  static TextStyle get body => kType.body.copyWith(fontSize: 15);
+  static TextStyle get heading => kType.heading.copyWith(fontSize: 18);
+  static TextStyle get label => kType.label.copyWith(fontSize: 13);
+  static TextStyle get micro => kType.micro.copyWith(fontSize: 11);
+}
+
 /// Where a shared card points: the lifter's own page on the site, their rank
 /// card with the stores under it — and, when the app is installed, their
 /// card in the app (lib/deep_links.dart).
@@ -382,14 +391,14 @@ class _ShareCardSheetState extends State<_ShareCardSheet> {
                               widget.profileUrl,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: context.type.label.copyWith(
+                              style: _CardType.label.copyWith(
                                 color: context.colors.muted,
                               ),
                             ),
                           ),
                           Text(
                             l.copyLink,
-                            style: context.type.label.copyWith(
+                            style: _CardType.label.copyWith(
                               color: context.colors.brand,
                             ),
                           ),
@@ -435,7 +444,7 @@ class _ShapeTab extends StatelessWidget {
         child: Text(
           label,
           textAlign: TextAlign.center,
-          style: context.type.label.copyWith(
+          style: _CardType.label.copyWith(
             color: selected ? context.colors.background : context.colors.muted,
           ),
         ),
@@ -493,7 +502,7 @@ class _StoryCard extends StatelessWidget {
               children: [
                 Text(
                   'outrepd',
-                  style: context.type.label.copyWith(
+                  style: _CardType.label.copyWith(
                     color: context.colors.muted,
                     letterSpacing: 0.5,
                   ),
@@ -501,7 +510,7 @@ class _StoryCard extends StatelessWidget {
                 const SizedBox(height: 20),
                 Text(
                   l.currentRankLabel.toUpperCase(),
-                  style: context.type.micro.copyWith(
+                  style: _CardType.micro.copyWith(
                     color: context.colors.faint,
                   ),
                 ),
@@ -511,14 +520,14 @@ class _StoryCard extends StatelessWidget {
                 ShrinkText(
                   tierLabel(l, data.tierIdx, data.divIdx),
                   maxLines: 1,
-                  style: context.type.heading.copyWith(
+                  style: _CardType.heading.copyWith(
                     color: context.colors.text,
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   l.lpAmount(localNumber(context, data.lp)),
-                  style: context.type.label.copyWith(color: tierColour),
+                  style: _CardType.label.copyWith(color: tierColour),
                 ),
                 const SizedBox(height: 16),
                 Container(height: 0.5, color: context.colors.border),
@@ -530,13 +539,13 @@ class _StoryCard extends StatelessWidget {
                 ShrinkText(
                   l.duelMeOnOutrepd,
                   maxLines: 1,
-                  style: context.type.body.copyWith(color: context.colors.text),
+                  style: _CardType.body.copyWith(color: context.colors.text),
                 ),
                 const SizedBox(height: 2),
                 ShrinkText(
                   data.profileUrl,
                   maxLines: 1,
-                  style: context.type.micro.copyWith(
+                  style: _CardType.micro.copyWith(
                     color: context.colors.muted,
                   ),
                 ),
@@ -596,14 +605,14 @@ class _PostCard extends StatelessWidget {
                                 ShrinkText(
                                   data.username,
                                   maxLines: 1,
-                                  style: context.type.body.copyWith(
+                                  style: _CardType.body.copyWith(
                                     color: context.colors.text,
                                   ),
                                 ),
                                 Text(
                                   '${tierLabel(l, data.tierIdx, data.divIdx)} · '
                                   '${l.lpAmount(localNumber(context, data.lp))}',
-                                  style: context.type.micro.copyWith(
+                                  style: _CardType.micro.copyWith(
                                     color: tierColour,
                                   ),
                                 ),
@@ -619,7 +628,7 @@ class _PostCard extends StatelessWidget {
                       const SizedBox(height: 12),
                       Text(
                         kShareSite,
-                        style: context.type.micro.copyWith(
+                        style: _CardType.micro.copyWith(
                           color: context.colors.faint,
                         ),
                       ),
@@ -663,12 +672,12 @@ class _IdentityRow extends StatelessWidget {
               ShrinkText(
                 data.username,
                 maxLines: 1,
-                style: context.type.body.copyWith(color: context.colors.text),
+                style: _CardType.body.copyWith(color: context.colors.text),
               ),
               if (places.isNotEmpty)
                 Text(
                   places,
-                  style: context.type.micro.copyWith(
+                  style: _CardType.micro.copyWith(
                     color: context.colors.muted,
                   ),
                 ),
@@ -709,7 +718,7 @@ class _Initial extends StatelessWidget {
       child: Text(
         name.isEmpty ? '?' : name.characters.first.toUpperCase(),
         // 15 at the original 32: the other cards draw exactly as before.
-        style: context.type.body.copyWith(
+        style: _CardType.body.copyWith(
           color: textColour ?? context.colors.text,
           fontSize: size * 15 / 32,
         ),
@@ -763,14 +772,14 @@ class _StatRow extends StatelessWidget {
                   ShrinkText(
                     value,
                     maxLines: 1,
-                    style: context.type.body.copyWith(
+                    style: _CardType.body.copyWith(
                       color: context.colors.text,
                     ),
                   ),
                   ShrinkText(
                     label,
                     maxLines: 1,
-                    style: context.type.micro.copyWith(
+                    style: _CardType.micro.copyWith(
                       color: context.colors.muted,
                     ),
                   ),
@@ -798,13 +807,13 @@ class _StatRow extends StatelessWidget {
                 children: [
                   Text(
                     value,
-                    style: context.type.body.copyWith(
+                    style: _CardType.body.copyWith(
                       color: context.colors.text,
                     ),
                   ),
                   Text(
                     label,
-                    style: context.type.micro.copyWith(
+                    style: _CardType.micro.copyWith(
                       color: context.colors.muted,
                     ),
                   ),
@@ -848,7 +857,7 @@ class _MatchStoryCard extends StatelessWidget {
               children: [
                 Text(
                   'outrepd',
-                  style: context.type.label.copyWith(
+                  style: _CardType.label.copyWith(
                     color: context.colors.muted,
                     letterSpacing: 0.5,
                   ),
@@ -884,7 +893,7 @@ class _MatchStoryCard extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(12, 0, 12, 36),
                       child: Text(
                         l.vs,
-                        style: context.type.label.copyWith(
+                        style: _CardType.label.copyWith(
                           color: context.colors.faint,
                           fontSize: 15,
                         ),
@@ -907,7 +916,7 @@ class _MatchStoryCard extends StatelessWidget {
                       .pushUpsInSeconds(localNumber(context, data.seconds))
                       .toUpperCase(),
                   maxLines: 1,
-                  style: context.type.micro.copyWith(
+                  style: _CardType.micro.copyWith(
                     color: context.colors.muted,
                     fontSize: 12,
                   ),
@@ -922,7 +931,7 @@ class _MatchStoryCard extends StatelessWidget {
                 ShrinkText(
                   data.won ? l.duelMeOnOutrepd : l.thinkYouCanBeatMe,
                   maxLines: 1,
-                  style: context.type.heading.copyWith(
+                  style: _CardType.heading.copyWith(
                     color: context.colors.text,
                   ),
                 ),
@@ -930,7 +939,7 @@ class _MatchStoryCard extends StatelessWidget {
                 ShrinkText(
                   data.profileUrl,
                   maxLines: 1,
-                  style: context.type.micro.copyWith(
+                  style: _CardType.micro.copyWith(
                     color: context.colors.muted,
                   ),
                 ),
@@ -967,7 +976,7 @@ class _Side extends StatelessWidget {
         ShrinkText(
           name,
           maxLines: 1,
-          style: context.type.label.copyWith(color: colour, fontSize: 15),
+          style: _CardType.label.copyWith(color: colour, fontSize: 15),
         ),
         const SizedBox(height: 4),
         FittedBox(
@@ -1065,7 +1074,7 @@ class _MatchPostCard extends StatelessWidget {
                       ShrinkText(
                         data.profileUrl,
                         maxLines: 1,
-                        style: context.type.micro.copyWith(
+                        style: _CardType.micro.copyWith(
                           color: context.colors.muted,
                         ),
                       ),
@@ -1111,7 +1120,7 @@ class _BigCount extends StatelessWidget {
         ShrinkText(
           l.pushUpsInSeconds(localNumber(context, data.seconds)).toUpperCase(),
           maxLines: 1,
-          style: context.type.micro.copyWith(color: context.colors.muted),
+          style: _CardType.micro.copyWith(color: context.colors.muted),
         ),
       ],
     );
@@ -1134,7 +1143,7 @@ class _ResultLine extends StatelessWidget {
         ? l.beatOpponent(data.opponent, score)
         : l.lostToOpponent(data.opponent, score);
     final at = line.indexOf(data.opponent);
-    final base = context.type.body.copyWith(color: context.colors.text);
+    final base = _CardType.body.copyWith(color: context.colors.text);
 
     return Text.rich(
       at < 0
@@ -1203,7 +1212,7 @@ class _RankLine extends StatelessWidget {
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: context.type.label.copyWith(
+            style: _CardType.label.copyWith(
               color: context.colors.muted,
               fontSize: 13 * scale,
             ),
@@ -1231,7 +1240,7 @@ class _BestChip extends StatelessWidget {
       ),
       child: Text(
         '★ $label',
-        style: context.type.micro.copyWith(
+        style: _CardType.micro.copyWith(
           color: context.colors.text,
           fontSize: 11 * scale,
         ),
