@@ -24,13 +24,47 @@ import '../type_scale.dart';
 import '../widgets.dart';
 import 'settings_account.dart';
 
-/// The paywall's own type. It already fills a small phone at these sizes and
-/// was laid out against them, so it keeps them when the app's type goes up.
-abstract final class _PaywallType {
-  static TextStyle get body => kType.body.copyWith(fontSize: 15);
-  static TextStyle get heading => kType.heading.copyWith(fontSize: 18);
-  static TextStyle get label => kType.label.copyWith(fontSize: 13);
-  static TextStyle get title => kType.title.copyWith(fontSize: 24);
+/// The paywall's sizes, between two ends. A short phone keeps the sizes the
+/// paywall was laid out at, because the way to pay has to fit on one without
+/// scrolling to it. A tall phone gets the app's own, two steps larger, and
+/// more room between the lines, so the pitch fills the screen rather than
+/// floating in the middle of it. Phones in between get sizes in between.
+class _Sizes {
+  const _Sizes._(this.t);
+
+  factory _Sizes.of(BuildContext context) =>
+      _Sizes._(((MediaQuery.sizeOf(context).height - 720) / 160).clamp(0, 1));
+
+  /// 0 on a phone 720 tall or shorter, 1 on one 880 tall or taller.
+  final double t;
+
+  double _lerp(double short, double tall) => short + (tall - short) * t;
+
+  // The pitch.
+  double get headline => _lerp(32, 36);
+  double get headlineGap => _lerp(30, 42);
+  double get stepTitle => _lerp(17, 19);
+  double get stepBody => _lerp(14, 16);
+  double get stepIcon => _lerp(22, 26);
+  double get stepGap => _lerp(22, 34);
+
+  // The plans.
+  double get planName => _lerp(16, 18);
+  double get planBadge => _lerp(11, 13);
+  double get planDetail => _lerp(12, 14);
+  double get planPrice => _lerp(20, 22);
+  double get planFree => _lerp(12, 14);
+  double get planPadding => _lerp(12, 15);
+  double get planGap => _lerp(8, 10);
+
+  // The button and the small print.
+  double get button => _lerp(56, 60);
+  double get buttonText => _lerp(17, 19);
+  double get body => _lerp(15, 17);
+  double get note => _lerp(13, 15);
+  double get renews => _lerp(11, 13);
+  double get link => _lerp(12, 14);
+  double get why => _lerp(10, 12);
 }
 
 const kTermsUrl = 'https://www.outrepd.com/terms';
@@ -367,12 +401,13 @@ class _PaywallScreenState extends State<PaywallScreen> {
   /// second one here, of crests and perks, and picking the other plan
   /// switched from one to the other.
   Widget _pitch(BuildContext context, L l) {
+    final sizes = _Sizes.of(context);
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _AccentHeadline(key: const Key('paywallTitle'), text: l.paywallTitle),
-        const SizedBox(height: 30),
+        SizedBox(height: sizes.headlineGap),
         _Rail(
           steps: [
             (Icons.videocam_outlined, l.paywallPerkDuels, null),
@@ -390,6 +425,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   /// Shown while the chosen plan has a trial, so the first thing read is that
   /// nothing is charged now.
   Widget _trialPitch(BuildContext context, L l, int days) {
+    final sizes = _Sizes.of(context);
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -398,7 +434,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
           key: const Key('trialHeadline'),
           text: l.trialHeadline(localNumber(context, days)),
         ),
-        const SizedBox(height: 30),
+        SizedBox(height: sizes.headlineGap),
         _TrialTimeline(days: days),
       ],
     );
@@ -406,6 +442,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
   Widget _purchaseArea(BuildContext context, L l) {
     final colors = context.colors;
+    final sizes = _Sizes.of(context);
     final weekly = _plan(PlanPeriod.weekly);
     final yearly = _plan(PlanPeriod.yearly);
     final saving =
@@ -432,7 +469,10 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 child: Text(
                   l.paywallLoadFailed,
                   textAlign: TextAlign.center,
-                  style: _PaywallType.body.copyWith(color: colors.muted),
+                  style: kType.body.copyWith(
+                    fontSize: sizes.body,
+                    color: colors.muted,
+                  ),
                 ),
               ),
               if (_loadError case final why? when _showLoadError)
@@ -444,7 +484,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                     textAlign: TextAlign.center,
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: colors.faint, fontSize: 10),
+                    style: TextStyle(color: colors.faint, fontSize: sizes.why),
                   ),
                 ),
               TextButton(
@@ -478,7 +518,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   selected: _chosen == PlanPeriod.yearly,
                   onTap: () => setState(() => _chosen = PlanPeriod.yearly),
                 ),
-              if (yearly != null && weekly != null) const SizedBox(height: 8),
+              if (yearly != null && weekly != null)
+                SizedBox(height: sizes.planGap),
               if (weekly != null)
                 _PlanRow(
                   key: const Key('planWeekly'),
@@ -493,7 +534,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
           ),
         const SizedBox(height: 12),
         SizedBox(
-          height: 56,
+          height: sizes.button,
           child: FilledButton(
             key: const Key('paywallBuy'),
             onPressed: ready && !_busy ? _buy : null,
@@ -521,8 +562,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
                           ? l.paywallStart
                           : l.trialCta(localNumber(context, trial)),
                       maxLines: 1,
-                      style: const TextStyle(
-                        fontSize: 17,
+                      style: TextStyle(
+                        fontSize: sizes.buttonText,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
@@ -535,7 +576,10 @@ class _PaywallScreenState extends State<PaywallScreen> {
             note,
             key: const Key('paywallNote'),
             textAlign: TextAlign.center,
-            style: _PaywallType.label.copyWith(color: AppColors.loss),
+            style: kType.label.copyWith(
+              fontSize: sizes.note,
+              color: AppColors.loss,
+            ),
           ),
         ],
         // What a trial costs, said plainly where the button is: nothing now,
@@ -549,14 +593,21 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 : l.trialThenWeekly(chosen.priceString),
             key: const Key('trialThen'),
             textAlign: TextAlign.center,
-            style: _PaywallType.label.copyWith(color: colors.text),
+            style: kType.label.copyWith(
+              fontSize: sizes.note,
+              color: colors.text,
+            ),
           ),
         ],
         const SizedBox(height: 8),
         Text(
           apple ? l.paywallRenewsApple : l.paywallRenewsPlay,
           textAlign: TextAlign.center,
-          style: TextStyle(color: colors.muted, fontSize: 11, height: 1.4),
+          style: TextStyle(
+            color: colors.muted,
+            fontSize: sizes.renews,
+            height: 1.4,
+          ),
         ),
         const SizedBox(height: 2),
         Wrap(
@@ -608,8 +659,8 @@ class _AccentHeadline extends StatelessWidget {
         ],
       ),
       textAlign: TextAlign.center,
-      style: _PaywallType.title.copyWith(
-        fontSize: 32,
+      style: kType.title.copyWith(
+        fontSize: _Sizes.of(context).headline,
         height: 1.15,
         color: context.colors.text,
       ),
@@ -661,6 +712,7 @@ class _Rail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    final sizes = _Sizes.of(context);
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -692,11 +744,15 @@ class _Rail extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 for (var i = 0; i < steps.length; i++) ...[
-                  if (i > 0) const SizedBox(height: 22),
+                  if (i > 0) SizedBox(height: sizes.stepGap),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(steps[i].$1, size: 22, color: colors.brand),
+                      Icon(
+                        steps[i].$1,
+                        size: sizes.stepIcon,
+                        color: colors.brand,
+                      ),
                       const SizedBox(width: 10),
                       Expanded(
                         child: Column(
@@ -704,8 +760,8 @@ class _Rail extends StatelessWidget {
                           children: [
                             Text(
                               steps[i].$2,
-                              style: _PaywallType.heading.copyWith(
-                                fontSize: 17,
+                              style: kType.heading.copyWith(
+                                fontSize: sizes.stepTitle,
                                 color: colors.text,
                               ),
                             ),
@@ -713,8 +769,8 @@ class _Rail extends StatelessWidget {
                               const SizedBox(height: 3),
                               Text(
                                 more,
-                                style: _PaywallType.body.copyWith(
-                                  fontSize: 14,
+                                style: kType.body.copyWith(
+                                  fontSize: sizes.stepBody,
                                   height: 1.4,
                                   color: colors.muted,
                                 ),
@@ -764,6 +820,7 @@ class _PlanRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
+    final sizes = _Sizes.of(context);
     return Semantics(
       selected: selected,
       button: true,
@@ -775,7 +832,10 @@ class _PlanRow extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 150),
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+            padding: EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: sizes.planPadding,
+            ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
@@ -804,8 +864,8 @@ class _PlanRow extends StatelessWidget {
                             Text(
                               label,
                               maxLines: 1,
-                              style: _PaywallType.heading.copyWith(
-                                fontSize: 16,
+                              style: kType.heading.copyWith(
+                                fontSize: sizes.planName,
                                 color: colors.text,
                               ),
                             ),
@@ -823,9 +883,9 @@ class _PlanRow extends StatelessWidget {
                                 child: Text(
                                   saving,
                                   maxLines: 1,
-                                  style: const TextStyle(
-                                    color: Color(0xFF2A1E05),
-                                    fontSize: 11,
+                                  style: TextStyle(
+                                    color: const Color(0xFF2A1E05),
+                                    fontSize: sizes.planBadge,
                                     fontWeight: FontWeight.w800,
                                   ),
                                 ),
@@ -839,7 +899,10 @@ class _PlanRow extends StatelessWidget {
                         detail,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: colors.muted, fontSize: 12),
+                        style: TextStyle(
+                          color: colors.muted,
+                          fontSize: sizes.planDetail,
+                        ),
                       ),
                     ],
                   ),
@@ -856,7 +919,7 @@ class _PlanRow extends StatelessWidget {
                         Text(
                           price,
                           style: context.type.statValue.copyWith(
-                            fontSize: 20,
+                            fontSize: sizes.planPrice,
                             color: colors.text,
                           ),
                         ),
@@ -866,7 +929,7 @@ class _PlanRow extends StatelessWidget {
                             free,
                             style: TextStyle(
                               color: colors.rival,
-                              fontSize: 12,
+                              fontSize: sizes.planFree,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -902,7 +965,7 @@ class _SmallLink extends StatelessWidget {
           label,
           style: TextStyle(
             color: context.colors.muted,
-            fontSize: 12,
+            fontSize: _Sizes.of(context).link,
             decoration: TextDecoration.underline,
             decorationColor: context.colors.faint,
           ),
@@ -916,6 +979,11 @@ class _Dot extends StatelessWidget {
   const _Dot();
 
   @override
-  Widget build(BuildContext context) =>
-      Text('·', style: TextStyle(color: context.colors.faint, fontSize: 12));
+  Widget build(BuildContext context) => Text(
+    '·',
+    style: TextStyle(
+      color: context.colors.faint,
+      fontSize: _Sizes.of(context).link,
+    ),
+  );
 }
