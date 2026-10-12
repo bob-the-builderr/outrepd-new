@@ -115,7 +115,9 @@ void main() {
     await tester.tap(
       find.descendant(
         of: find.byType(AppBottomNav),
-        matching: find.byIcon(Icons.emoji_events_outlined),
+        matching: find.byWidgetPredicate(
+          (w) => w is TablerIcon && identical(w.paths, TablerIcon.trophy),
+        ),
       ),
     );
     await tester.pumpAndSettle();
@@ -137,8 +139,8 @@ void main() {
     }
   }
 
-  test('the swords credit Tabler Icons on the licences page', () async {
-    // The Match icon is Tabler's, copied under MIT, which asks for its
+  test("the bar's icons credit Tabler Icons on the licences page", () async {
+    // The bar's icons are Tabler's, copied under MIT, which asks for its
     // notice wherever the work goes. Only this entry is read: the app's
     // own notices come from an asset the test does not have.
     LicenseRegistry.reset();
