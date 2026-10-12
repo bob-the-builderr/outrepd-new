@@ -7,6 +7,8 @@
 /// in thirteen languages, at whatever text size the reader has set.
 library;
 
+import 'package:flutter/foundation.dart'
+    show LicenseEntryWithLineBreaks, LicenseRegistry;
 import 'package:flutter/material.dart';
 
 import 'l10n/app_localizations.dart';
@@ -232,7 +234,10 @@ class _IconWithBadge extends StatelessWidget {
   }
 }
 
-/// Crossed swords. Material has no equivalent, so it is painted.
+/// Crossed swords: Tabler Icons' `swords`, the icon the bar was picked from
+/// (MIT; its licence is on the app's licences page, see
+/// [registerIconLicences]). Material has no equivalent, so it is painted from
+/// Tabler's own outline, on its 24-unit grid with its 2-unit stroke.
 class SwordsIcon extends StatelessWidget {
   const SwordsIcon({super.key});
 
@@ -252,40 +257,70 @@ class _SwordsPainter extends CustomPainter {
   _SwordsPainter(this.colour);
   final Color colour;
 
+  /// Tabler's four strokes, each a run of points on the 24-unit grid.
+  static const _strokes = [
+    // The sword in front, tip at the top right and hilt at the bottom
+    // left, as one closed outline.
+    [(21.0, 3.0), (21.0, 8.0), (10.0, 17.0), (6.0, 21.0), (3.0, 18.0),
+      (7.0, 14.0), (16.0, 3.0), (21.0, 3.0)],
+    // Its guard.
+    [(5.0, 13.0), (11.0, 19.0)],
+    // The sword behind it: its hilt end, bottom right...
+    [(14.32, 17.32), (18.0, 21.0), (21.0, 18.0), (17.635, 14.635)],
+    // ...and its tip, top left. Its middle is hidden by the front sword.
+    [(10.0, 5.5), (8.0, 3.0), (3.0, 3.0), (3.0, 8.0), (6.0, 10.5)],
+  ];
+
   @override
   void paint(Canvas canvas, Size size) {
-    final s = size.width;
-    final blade = Paint()
+    final unit = size.width / 24;
+    final pen = Paint()
       ..color = colour
-      ..strokeWidth = s * 0.09
+      ..strokeWidth = 2 * unit
       ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round
       ..style = PaintingStyle.stroke;
-
-    // Two blades crossing just above centre.
-    canvas.drawLine(
-      Offset(s * 0.16, s * 0.86),
-      Offset(s * 0.80, s * 0.14),
-      blade,
-    );
-    canvas.drawLine(
-      Offset(s * 0.84, s * 0.86),
-      Offset(s * 0.20, s * 0.14),
-      blade,
-    );
-
-    // Short hilts at the bottom of each blade.
-    canvas.drawLine(
-      Offset(s * 0.10, s * 0.66),
-      Offset(s * 0.30, s * 0.86),
-      blade,
-    );
-    canvas.drawLine(
-      Offset(s * 0.90, s * 0.66),
-      Offset(s * 0.70, s * 0.86),
-      blade,
-    );
+    for (final points in _strokes) {
+      final path = Path()..moveTo(points[0].$1 * unit, points[0].$2 * unit);
+      for (final (x, y) in points.skip(1)) {
+        path.lineTo(x * unit, y * unit);
+      }
+      canvas.drawPath(path, pen);
+    }
   }
 
   @override
   bool shouldRepaint(covariant _SwordsPainter old) => old.colour != colour;
 }
+
+/// Puts Tabler Icons' licence on the app's licences page, which MIT asks
+/// for wherever its work is copied — here, the swords above.
+void registerIconLicences() {
+  LicenseRegistry.addLicense(
+    () => Stream.value(
+      const LicenseEntryWithLineBreaks(['Tabler Icons'], _tablerLicence),
+    ),
+  );
+}
+
+const _tablerLicence = '''MIT License
+
+Copyright (c) 2020-2024 Paweł Kuna
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.''';

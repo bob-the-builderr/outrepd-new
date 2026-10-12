@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'l10n/app_localizations.dart';
 
+import 'app_bottom_nav.dart' show registerIconLicences;
 import 'avatar.dart';
 import 'backend/backend.dart';
 import 'backend/supabase_backend.dart';
@@ -45,6 +46,7 @@ import 'theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  registerIconLicences();
   // First, so a crash anywhere after it is reported. Quick — it reads config
   // already on the phone — and a build without Firebase skips it entirely.
   await startFirebase();

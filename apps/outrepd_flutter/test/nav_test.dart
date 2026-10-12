@@ -5,6 +5,7 @@
 /// already looking at the friends list.
 library;
 
+import 'package:flutter/foundation.dart' show LicenseRegistry;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -135,4 +136,19 @@ void main() {
       });
     }
   }
+
+  test('the swords credit Tabler Icons on the licences page', () async {
+    // The Match icon is Tabler's, copied under MIT, which asks for its
+    // notice wherever the work goes. Only this entry is read: the app's
+    // own notices come from an asset the test does not have.
+    LicenseRegistry.reset();
+    registerIconLicences();
+    final entries = await LicenseRegistry.licenses.toList();
+    expect(
+      entries.any((e) =>
+          e.packages.contains('Tabler Icons') &&
+          e.paragraphs.any((p) => p.text.contains('Paweł Kuna'))),
+      isTrue,
+    );
+  });
 }
