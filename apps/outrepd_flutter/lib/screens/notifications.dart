@@ -21,8 +21,27 @@ import '../widgets.dart';
 import 'match_entry.dart';
 import 'live_invite.dart';
 import 'match_flow.dart';
+import 'other_profile.dart';
 import 'share_card.dart';
+import 'shell.dart';
 
+/// Opens the list from inside the [AppShell], and follows a friend request
+/// tapped in it to the Friends tab: answering one happens there, under this
+/// screen rather than on top of it.
+Future<void> openNotifications(BuildContext context) async {
+  final exit = await Navigator.of(context).push<NoticeExit>(
+    MaterialPageRoute(builder: (_) => const NotificationsScreen()),
+  );
+  if (exit == NoticeExit.friendRequests && context.mounted) {
+    AppShell.goToFriendRequests(context);
+  }
+}
+
+/// What the screen under the list is asked to open as it closes.
+enum NoticeExit { friendRequests }
+
+/// Pops with a [NoticeExit] when a notice leads to a tab — open it with
+/// [openNotifications], which follows it there.
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
 
@@ -136,10 +155,11 @@ class _NoticeTile extends StatelessWidget {
       NoticeKind.liveInvite => l.nLiveBody(notice.actorName),
     };
 
-    // A challenge opens the duel it asks for. A raced set opens the card to
-    // share it — the lifter who raced could share from their result screen,
-    // and the one who was raced only ever hears about it here. Nothing else
-    // goes anywhere.
+    // Each one opens what it is about. A challenge opens the duel it asks
+    // for. A raced set opens the card to share it — the lifter who raced
+    // could share from their result screen, and the one who was raced only
+    // ever hears about it here. A friend request goes to the requests, a yes
+    // to the new friend. Only a notice whose account is gone opens nothing.
     final VoidCallback? onTap = switch (notice.kind) {
       // Still open, it joins; run out, it says so. The list keeps the notice
       // either way, as the record that they asked.
@@ -175,6 +195,16 @@ class _NoticeTile extends StatelessWidget {
                 avatarUrl: backend.me?.avatarUrl,
               ),
             ),
+      // An older result, from before notices carried the score: the
+      // opponent, at least.
+      NoticeKind.raced when notice.actorId != null => () =>
+          _openProfile(context, notice),
+      // Answered on the Friends tab, under this screen: back there, with the
+      // requests open.
+      NoticeKind.friendRequest => () =>
+          Navigator.of(context).pop(NoticeExit.friendRequests),
+      NoticeKind.friendAccepted when notice.actorId != null => () =>
+          _openProfile(context, notice),
       _ => null,
     };
 
@@ -291,6 +321,16 @@ class _Row extends StatelessWidget {
       ),
     );
   }
+}
+
+/// The lifter a notice is about, by the name it was sent under.
+void _openProfile(BuildContext context, Notice notice) {
+  Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (_) =>
+          OtherProfileScreen(id: notice.actorId!, username: notice.actorName),
+    ),
+  );
 }
 
 /// A live invite tapped in the list: joined if it is still open, and said so

@@ -1,6 +1,9 @@
+/// Where each notification leads.
+///
 /// The lifter whose set was raced hears about the duel from a notification,
 /// and can share it from there — the same card the other lifter shares from
-/// their result screen.
+/// their result screen. A friend request leads to the requests, a yes to the
+/// new friend.
 library;
 
 import 'package:flutter/material.dart';
@@ -10,7 +13,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:outrepd/backend/backend.dart';
 import 'package:outrepd/l10n/app_localizations.dart';
+import 'package:outrepd/screens/friends.dart';
 import 'package:outrepd/screens/notifications.dart';
+import 'package:outrepd/screens/other_profile.dart';
 import 'package:outrepd/theme.dart';
 
 class _Notices extends NoBackend {
@@ -25,7 +30,7 @@ class _Notices extends NoBackend {
   Future<List<Notice>> notices() async => list;
 }
 
-Widget _app() => MaterialApp(
+Widget _app({Widget home = const NotificationsScreen()}) => MaterialApp(
       theme: buildTheme(Brightness.dark),
       locale: const Locale('en'),
       localizationsDelegates: const [
@@ -35,7 +40,7 @@ Widget _app() => MaterialApp(
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: L.supportedLocales,
-      home: const NotificationsScreen(),
+      home: home,
     );
 
 void main() {
@@ -76,7 +81,10 @@ void main() {
     expect(find.textContaining('iron_mike'), findsWidgets);
   });
 
-  testWidgets('a friend request opens nothing', (tester) async {
+  testWidgets('a friend request goes back, asking for the requests',
+      (tester) async {
+    // Answered on the Friends tab, which is under the list: the list closes
+    // and says so, and openNotifications takes it from there.
     phone(tester);
     backend = _Notices([
       Notice(
@@ -85,6 +93,54 @@ void main() {
         at: DateTime.now(),
         unread: true,
         actorName: 'squat_queen',
+        actorId: 'q',
+      ),
+    ]);
+    NoticeExit? exit;
+    await tester.pumpWidget(_app(
+      home: Builder(
+        builder: (context) => TextButton(
+          onPressed: () async => exit = await Navigator.of(context).push(
+            MaterialPageRoute<NoticeExit>(
+              builder: (_) => const NotificationsScreen(),
+            ),
+          ),
+          child: const Text('open'),
+        ),
+      ),
+    ));
+    await tester.tap(find.text('open'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.textContaining('squat_queen').first);
+    await tester.pumpAndSettle();
+    expect(find.byType(NotificationsScreen), findsNothing);
+    expect(exit, NoticeExit.friendRequests);
+  });
+
+  testWidgets('the Friends tab opens its requests when asked from outside',
+      (tester) async {
+    phone(tester);
+    backend = _Notices(const []);
+    await tester.pumpWidget(_app(home: const FriendsScreen()));
+    await tester.pumpAndSettle();
+    expect(find.text('Incoming requests'), findsNothing);
+
+    FriendsScreen.showRequests();
+    await tester.pumpAndSettle();
+    expect(find.text('Incoming requests'), findsOneWidget);
+  });
+
+  testWidgets('a yes opens the new friend', (tester) async {
+    phone(tester);
+    backend = _Notices([
+      Notice(
+        id: '3',
+        kind: NoticeKind.friendAccepted,
+        at: DateTime.now(),
+        unread: true,
+        actorName: 'squat_queen',
+        actorId: 'q',
       ),
     ]);
     await tester.pumpWidget(_app());
@@ -92,6 +148,30 @@ void main() {
 
     await tester.tap(find.textContaining('squat_queen').first);
     await tester.pumpAndSettle();
-    expect(find.text('Story'), findsNothing);
+    final profile =
+        tester.widget<OtherProfileScreen>(find.byType(OtherProfileScreen));
+    expect(profile.id, 'q');
+    expect(profile.username, 'squat_queen');
+  });
+
+  testWidgets('an older result with no score opens the opponent',
+      (tester) async {
+    phone(tester);
+    backend = _Notices([
+      Notice(
+        id: '4',
+        kind: NoticeKind.raced,
+        at: DateTime.now(),
+        unread: false,
+        actorName: 'iron_mike',
+        actorId: 'x',
+      ),
+    ]);
+    await tester.pumpWidget(_app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.textContaining('iron_mike').first);
+    await tester.pumpAndSettle();
+    expect(find.byType(OtherProfileScreen), findsOneWidget);
   });
 }

@@ -40,6 +40,15 @@ class AppShell extends StatefulWidget {
   static void goToMatch(BuildContext context) =>
       context.findAncestorStateOfType<_AppShellState>()?._select(matchTabIndex);
 
+  static const int friendsTabIndex = 1;
+
+  /// Switch to the Friends tab with the waiting requests open — a friend
+  /// request tapped in the notifications.
+  static void goToFriendRequests(BuildContext context) {
+    context.findAncestorStateOfType<_AppShellState>()?._select(friendsTabIndex);
+    FriendsScreen.showRequests();
+  }
+
   @override
   State<AppShell> createState() => _AppShellState();
 }
@@ -270,9 +279,7 @@ class _InsideState extends State<_Inside> with WidgetsBindingObserver {
   Future<void> _openNotices() async {
     if (!mounted || _showingNotices) return;
     _showingNotices = true;
-    await Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const NotificationsScreen()),
-    );
+    await openNotifications(context);
     _showingNotices = false;
   }
 

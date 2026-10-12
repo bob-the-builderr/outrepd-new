@@ -29,6 +29,12 @@ import 'other_profile.dart';
 class FriendsScreen extends StatefulWidget {
   const FriendsScreen({super.key});
 
+  /// Opens the requests from outside the tab — a friend request tapped in
+  /// the notifications. The tab is kept alive under the others, so it hears
+  /// this rather than being built again.
+  static void showRequests() => _requestsAsked.value++;
+  static final _requestsAsked = ValueNotifier<int>(0);
+
   @override
   State<FriendsScreen> createState() => _FriendsScreenState();
 }
@@ -49,6 +55,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
   @override
   void initState() {
     super.initState();
+    FriendsScreen._requestsAsked.addListener(_showRequests);
     if (backend.available) {
       _load();
     } else {
@@ -58,8 +65,15 @@ class _FriendsScreenState extends State<FriendsScreen> {
 
   @override
   void dispose() {
+    FriendsScreen._requestsAsked.removeListener(_showRequests);
     _search.dispose();
     super.dispose();
+  }
+
+  /// The latest requests, then the sheet to answer them in.
+  Future<void> _showRequests() async {
+    await _load();
+    if (mounted) await _openRequests();
   }
 
   Future<void> _load() async {

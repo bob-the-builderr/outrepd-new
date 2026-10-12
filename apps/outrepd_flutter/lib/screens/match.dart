@@ -388,23 +388,38 @@ class _TopRowState extends State<_TopRow> {
 
     return Row(
       children: [
-        if (profile.dayStreak > 0)
-          Flexible(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: context.colors.border, width: 0.5),
-              ),
-              child: Text(
-                l.dayStreakCount(localNumber(context, profile.dayStreak)),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: context.colors.text, fontSize: 14),
-              ),
-            ),
+        // The pill takes what it needs from the room on the left and the bell
+        // keeps the right edge. A Flexible pill beside a Spacer split that
+        // room in half instead, and left the bell short of the edge.
+        Expanded(
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: profile.dayStreak <= 0
+                ? null
+                : Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: context.colors.border,
+                        width: 0.5,
+                      ),
+                    ),
+                    child: Text(
+                      l.dayStreakCount(localNumber(context, profile.dayStreak)),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: context.colors.text,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
           ),
-        const Spacer(),
+        ),
         Stack(
           alignment: Alignment.center,
           clipBehavior: Clip.none,
@@ -413,11 +428,7 @@ class _TopRowState extends State<_TopRow> {
               // The screen marks them read, so the dot has to be asked
               // again on the way back rather than left burning.
               onTap: () async {
-                await Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => const NotificationsScreen(),
-                  ),
-                );
+                await openNotifications(context);
                 await _countUnread();
               },
               customBorder: const CircleBorder(),
