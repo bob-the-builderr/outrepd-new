@@ -280,44 +280,62 @@ class _Row extends StatelessWidget {
     return Panel(
       padding: const EdgeInsets.all(14),
       onTap: onTap,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 8,
-            height: 8,
-            margin: const EdgeInsetsDirectional.only(top: 6, end: 12),
-            decoration: BoxDecoration(
-              color: unread ? context.colors.brand : Colors.transparent,
-              shape: BoxShape.circle,
+      // Its own height, so the arrow can sit in the middle of a row however
+      // many lines it runs to.
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 8,
+              height: 8,
+              margin: const EdgeInsetsDirectional.only(top: 6, end: 12),
+              decoration: BoxDecoration(
+                color: unread ? context.colors.brand : Colors.transparent,
+                shape: BoxShape.circle,
+              ),
             ),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  heading,
-                  style: context.type.body.copyWith(color: context.colors.text),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  detail,
-                  style: context.type.label.copyWith(
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    heading,
+                    style: context.type.body.copyWith(color: context.colors.text),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    detail,
+                    style: context.type.label.copyWith(
+                      color: context.colors.muted,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    when,
+                    style: context.type.label.copyWith(
+                      color: context.colors.muted,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // On every row that opens something, and only those: a row that
+            // looks like the others but does nothing reads as broken.
+            if (onTap != null)
+              Padding(
+                padding: const EdgeInsetsDirectional.only(start: 8),
+                child: Center(
+                  child: Icon(
+                    Icons.chevron_right_rounded,
+                    key: const Key('noticeOpens'),
+                    size: 22,
                     color: context.colors.muted,
                   ),
                 ),
-                const SizedBox(height: 6),
-                Text(
-                  when,
-                  style: context.type.label.copyWith(
-                    color: context.colors.muted,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+              ),
+          ],
+        ),
       ),
     );
   }

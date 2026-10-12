@@ -154,6 +154,43 @@ void main() {
     expect(profile.username, 'squat_queen');
   });
 
+  testWidgets('an arrow on each notice that opens something, and no other',
+      (tester) async {
+    phone(tester);
+    backend = _Notices([
+      Notice(
+        id: '5',
+        kind: NoticeKind.friendAccepted,
+        at: DateTime.now(),
+        unread: true,
+        actorName: 'squat_queen',
+        actorId: 'q',
+      ),
+      // The account is gone: nothing to open, so nothing pointing at it.
+      Notice(
+        id: '6',
+        kind: NoticeKind.friendAccepted,
+        at: DateTime.now(),
+        unread: false,
+        actorName: 'gone_lifter',
+      ),
+    ]);
+    await tester.pumpWidget(_app());
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('noticeOpens')), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.ancestor(
+          of: find.textContaining('gone_lifter'),
+          matching: find.byType(Row),
+        ),
+        matching: find.byKey(const Key('noticeOpens')),
+      ),
+      findsNothing,
+    );
+  });
+
   testWidgets('an older result with no score opens the opponent',
       (tester) async {
     phone(tester);
