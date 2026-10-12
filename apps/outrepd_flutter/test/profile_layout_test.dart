@@ -148,6 +148,12 @@ void main() {
     final week = Career.instance.weekReps;
     expect(week.length, 7);
     expect(week.where((d) => d == 0).length, 6);
+
+    // A set finished while the tab is up moves today's bar at once — the
+    // profile places the chart as a const, which a redraw would pass by.
+    await Career.instance.recordPractice(12);
+    await tester.pumpAndSettle();
+    expect(find.text('43 reps'), findsOneWidget);
   });
 
   testWidgets('achievements collapse to one row, not a sample of four',

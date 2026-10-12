@@ -663,8 +663,16 @@ class _Stat extends StatelessWidget {
 class _WeekChart extends StatelessWidget {
   const _WeekChart();
 
+  // The profile places it as a const, which the tab's own redraw after a duel
+  // passes by: so it listens for the reps itself, or today's bar stays where
+  // it was before the match.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => ListenableBuilder(
+    listenable: Career.instance,
+    builder: (context, _) => _chart(context),
+  );
+
+  Widget _chart(BuildContext context) {
     final l = L.of(context);
     final days = Career.instance.weekReps;
     final total = days.fold(0, (sum, d) => sum + d);
