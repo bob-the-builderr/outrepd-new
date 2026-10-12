@@ -11,6 +11,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:outrepd/career.dart';
 import 'package:outrepd/data.dart';
 import 'package:outrepd/l10n/app_localizations.dart';
 import 'package:outrepd/screens/post_match.dart';
@@ -103,6 +104,62 @@ void main() {
       final total = outcome.rank!.lpDelta;
       expect(total, lessThan(0));
       expect(_signedNumbers(tester), [total]);
+    });
+  });
+
+  group("today's goal", () {
+    DuelResultView passing({required int before, required int after}) {
+      final o = demoOutcome(won: true);
+      return DuelResultView(
+        won: true,
+        yourReps: after - before,
+        theirReps: 11,
+        opponent: demoOpponents.first,
+        outcome: DuelOutcome(
+          won: true,
+          rank: o.rank,
+          record: o.record,
+          placementsFinished: false,
+          newBest: false,
+          todayBefore: before,
+          todayAfter: after,
+        ),
+        onRematch: () {},
+        onDone: () {},
+      );
+    }
+
+    testWidgets('the duel that meets it says so', (tester) async {
+      phone(tester);
+      await tester.pumpWidget(_app(passing(before: 40, after: 58)));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('goalDone')), findsOneWidget);
+      expect(find.text('58 / 50 push-ups'), findsOneWidget);
+    });
+
+    testWidgets('a duel after it, the same day, does not', (tester) async {
+      // Met once a day: every match after it that evening would otherwise
+      // say the same thing again.
+      phone(tester);
+      await tester.pumpWidget(_app(passing(before: 58, after: 76)));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('goalDone')), findsNothing);
+    });
+
+    testWidgets('a duel short of it does not', (tester) async {
+      phone(tester);
+      await tester.pumpWidget(_app(passing(before: 10, after: 28)));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('goalDone')), findsNothing);
+    });
+
+    testWidgets('fits a small phone at 1.6x with the card', (tester) async {
+      phone(tester, size: const Size(360, 640));
+      await tester.pumpWidget(
+        _app(passing(before: 40, after: 58), scale: 1.6),
+      );
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
     });
   });
 

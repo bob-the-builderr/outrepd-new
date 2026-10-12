@@ -24,10 +24,12 @@ import '../l10n/app_localizations.dart';
 import '../motion.dart';
 import '../player_avatar.dart';
 import '../ranking.dart';
+import '../settings.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
+import 'daily_goal.dart';
 import 'live_rematch.dart';
 import 'match_flow.dart' show kDuelLength;
 import 'share_card.dart';
@@ -257,6 +259,16 @@ class DuelResultView extends StatelessWidget {
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
                       ),
+                    ),
+                  ],
+                  // Only on the duel that met it: the goal is a daily thing,
+                  // and saying so after every match that evening would turn
+                  // it into wallpaper.
+                  if (GoalDoneCard.reached(outcome, settings.dailyGoal)) ...[
+                    const SizedBox(height: 14),
+                    GoalDoneCard(
+                      done: outcome!.todayAfter,
+                      goal: settings.dailyGoal,
                     ),
                   ],
                     ],

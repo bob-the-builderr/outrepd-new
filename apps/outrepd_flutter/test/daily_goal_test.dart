@@ -81,6 +81,23 @@ void main() {
     );
   });
 
+  test('a duel carries today before and after it, for the result screen',
+      () async {
+    final before = Career.instance.repsToday;
+    final outcome = await Career.instance.recordDuel(
+      yourReps: 20,
+      theirReps: 10,
+      opponent: 'iron_mike',
+      opponentTier: 0,
+      ranked: false,
+    );
+    expect(outcome.todayBefore, before);
+    expect(outcome.todayAfter, before + 20);
+    expect(GoalDoneCard.reached(outcome, before + 15), isTrue);
+    expect(GoalDoneCard.reached(outcome, before + 25), isFalse);
+    expect(GoalDoneCard.reached(outcome, before), isFalse);
+  });
+
   testWidgets('a met goal says done for today', (tester) async {
     settings.dailyGoal = 25;
     await Career.instance.recordPractice(30);

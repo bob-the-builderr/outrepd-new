@@ -69,9 +69,16 @@ class DuelOutcome {
     required this.placementsFinished,
     required this.newBest,
     this.madeFriendly = false,
+    this.todayBefore = 0,
+    this.todayAfter = 0,
   });
 
   final bool won;
+
+  /// Today's push-ups before this duel and after it, every format counted:
+  /// what tells the result screen this was the set that met today's goal.
+  final int todayBefore;
+  final int todayAfter;
 
   /// Played as ranked, settled as friendly: the server's two-a-day rule with
   /// the same lifter. The result screen says so instead of showing a rank
@@ -159,6 +166,7 @@ class Career extends ChangeNotifier {
     bool ranked = true,
   }) async {
     final p = demoProfile;
+    final todayBefore = repsToday;
     // Captured before either branch below can move it — Giant Slayer asks
     // about the gap at the moment this account was racing them, not after
     // this duel's own result has already shifted it.
@@ -207,6 +215,8 @@ class Career extends ChangeNotifier {
         record: record,
         placementsFinished: false,
         newBest: yourReps > previousBest,
+        todayBefore: todayBefore,
+        todayAfter: repsToday,
       );
     }
 
@@ -284,6 +294,8 @@ class Career extends ChangeNotifier {
       record: record,
       placementsFinished: placementsFinished,
       newBest: newBest,
+      todayBefore: todayBefore,
+      todayAfter: repsToday,
     );
   }
 
@@ -310,6 +322,7 @@ class Career extends ChangeNotifier {
     bool clean = false,
   }) async {
     final p = demoProfile;
+    final todayBefore = repsToday;
     final wasRanked = p.isRanked;
     final previousBest = p.bestSet;
     final before = Rank(tierIdx: p.tierIdx, divIdx: p.divIdx, lp: p.lp);
@@ -375,6 +388,8 @@ class Career extends ChangeNotifier {
       placementsFinished: counted && !wasRanked && p.isRanked,
       newBest: newBest,
       madeFriendly: madeFriendly,
+      todayBefore: todayBefore,
+      todayAfter: repsToday,
     );
   }
 

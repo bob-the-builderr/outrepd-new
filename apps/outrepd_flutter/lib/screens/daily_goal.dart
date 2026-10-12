@@ -148,6 +148,83 @@ class DailyGoalCard extends StatelessWidget {
   }
 }
 
+/// Today's goal, met by the duel just finished: on the result screen, the
+/// Match tab's own card with its ring full and ticked, and one buzz as it
+/// arrives (when the lifter has the buzz on).
+class GoalDoneCard extends StatefulWidget {
+  const GoalDoneCard({super.key, required this.done, required this.goal});
+
+  /// Today's push-ups now, and the goal they passed.
+  final int done;
+  final int goal;
+
+  /// Whether [outcome]'s set was the one that took today past [goal] —
+  /// not one after it, which would say the same thing all evening.
+  static bool reached(DuelOutcome? outcome, int goal) =>
+      outcome != null &&
+      outcome.todayBefore < goal &&
+      outcome.todayAfter >= goal;
+
+  @override
+  State<GoalDoneCard> createState() => _GoalDoneCardState();
+}
+
+class _GoalDoneCardState extends State<GoalDoneCard> {
+  @override
+  void initState() {
+    super.initState();
+    tap(heavy: true);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final progress =
+        '${localNumber(context, widget.done)} / ${localNumber(context, widget.goal)}';
+    return PopIn(
+      child: Container(
+        key: const Key('goalDone'),
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: context.colors.surface,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: context.colors.brand),
+        ),
+        child: Row(
+          children: [
+            _GoalRing(done: widget.done, goal: widget.goal),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    l.dailyGoalDone,
+                    style: TextStyle(
+                      color: context.colors.brand,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    l.dailyGoalProgress(progress),
+                    style: TextStyle(
+                      color: context.colors.muted,
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 /// The ring: fills from empty each time it is drawn, to today's share of the
 /// goal, with the count inside — or a tick once the goal is met.
 class _GoalRing extends StatelessWidget {
