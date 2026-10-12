@@ -1421,7 +1421,6 @@ class _NobodyLiveView extends StatelessWidget {
                 tierIdx: opponent.tierIdx,
                 size: 60,
                 textColour: context.colors.rival,
-                ringColour: context.colors.surface,
               ),
               const SizedBox(width: 16),
               Expanded(

@@ -346,7 +346,6 @@ class _LiveInviteBannerState extends State<LiveInviteBanner> {
               tierIdx: from.tierIdx,
               size: 44,
               textColour: context.colors.rival,
-              ringColour: context.colors.surface,
             ),
             const SizedBox(width: 12),
             Expanded(

@@ -387,7 +387,6 @@ class _Scoreboard extends StatelessWidget {
                     ? FileImage(File(avatar.photoPath!))
                     : null,
                 size: 58,
-                ringColour: context.colors.surface,
               ),
               name: l.you,
               reps: yourReps,
@@ -409,7 +408,6 @@ class _Scoreboard extends StatelessWidget {
                 name: opponent.username,
                 tierIdx: opponent.tierIdx,
                 size: 58,
-                ringColour: context.colors.surface,
               ),
               name: opponent.username,
               reps: theirReps,

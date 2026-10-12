@@ -161,6 +161,33 @@ const _crests = <_Crest>[
   ),
 ];
 
+/// A tier's crest, for what is drawn to match its badge — the frame around a
+/// lifter's picture (lib/tier_frame.dart). Read from here so the two can
+/// never disagree about a tier's colours or how many feathers it has earned.
+({
+  Color base,
+  Color mid,
+  Color light,
+  Color wing,
+  List<List<double>> feathers,
+  Color? gem,
+  Color? laurel,
+  bool crown,
+})
+crestOf(int tierIdx) {
+  final c = _crests[tierIdx.clamp(0, _crests.length - 1)];
+  return (
+    base: c.base,
+    mid: c.mid,
+    light: c.light,
+    wing: c.wing,
+    feathers: c.feathers,
+    gem: c.gem,
+    laurel: c.laurel,
+    crown: c.crown,
+  );
+}
+
 class TierBadge extends StatelessWidget {
   const TierBadge({
     super.key,

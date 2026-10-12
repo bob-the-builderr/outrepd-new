@@ -1,11 +1,11 @@
-/// A person, as a circle with their rank hanging off it.
+/// A person, as a circle in the frame of their tier.
 ///
 /// The one treatment, used everywhere somebody's picture appears: the profile,
-/// the leaderboard, the score card in a duel. It replaced a set of
-/// painted tier frames — PNG rings from the old app, drawn around the picture
-/// — which survived the redesign in three screens after the rest of the app
-/// had moved on, so a lifter met two different ideas of what they look like
-/// depending on which tab they opened.
+/// the leaderboard, the score card in a duel. The frame (lib/tier_frame.dart)
+/// is drawn in the tier badges' language and replaced the badge that used to
+/// hang off the circle's corner. Long before that, PNG tier rings from the
+/// old app survived in three screens after the rest had moved on; the frame
+/// is drawn, not loaded, and it is the same everywhere.
 ///
 /// An initial, never gym clip-art. The one place that is supposed to be the
 /// person is the last place to put a picture of a dumbbell.
@@ -14,7 +14,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'theme.dart';
-import 'tier_badge.dart';
+import 'tier_frame.dart';
 
 class PlayerAvatar extends StatelessWidget {
   const PlayerAvatar({
@@ -23,7 +23,6 @@ class PlayerAvatar extends StatelessWidget {
     this.tierIdx,
     this.image,
     this.size = 48,
-    this.ringColour,
     this.textColour,
     this.onTap,
     this.onBadgeTap,
@@ -45,12 +44,9 @@ class PlayerAvatar extends StatelessWidget {
   /// does not need to know which one it was handed.
   final ImageProvider? image;
 
+  /// The circle's diameter. A framed picture's box is wider and taller than
+  /// this; see [TierFrame.widthFor].
   final double size;
-
-  /// What the badge is ringed with, so it reads as sitting on top of the
-  /// circle rather than cut out of it. Defaults to the page colour; a card
-  /// with its own background passes that instead.
-  final Color? ringColour;
 
   /// The initial's colour. Defaults to the body colour; the duel card uses it
   /// to tell the two lifters apart.
@@ -58,14 +54,12 @@ class PlayerAvatar extends StatelessWidget {
 
   final VoidCallback? onTap;
 
-  /// Tapping the badge alone, where the badge is a way into the rank rather
-  /// than decoration on the picture.
+  /// Tapping the frame rather than the picture, where the frame is a way
+  /// into the rank rather than decoration on it.
   final VoidCallback? onBadgeTap;
 
   @override
   Widget build(BuildContext context) {
-    // The badge overhangs the circle, so the box is a little wider than it.
-    final badge = size * 0.36;
     final initial = Container(
       width: size,
       height: size,
@@ -111,30 +105,11 @@ class PlayerAvatar extends StatelessWidget {
 
     final content = tierIdx == null
         ? SizedBox(width: size, height: size, child: circle)
-        : SizedBox(
-            width: size + badge * 0.2,
-            height: size + badge * 0.1,
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                circle,
-                PositionedDirectional(
-                  end: 0,
-                  bottom: 0,
-                  child: GestureDetector(
-                    onTap: onBadgeTap,
-                    child: Container(
-                      padding: EdgeInsets.all(size * 0.04),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: ringColour ?? context.colors.background,
-                      ),
-                      child: TierBadge(tierIndex: tierIdx!, size: badge),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+        : TierFrame(
+            tierIdx: tierIdx,
+            size: size,
+            onTap: onBadgeTap,
+            child: circle,
           );
 
     if (onTap == null) return content;

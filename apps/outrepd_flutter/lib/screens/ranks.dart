@@ -17,6 +17,7 @@ import '../l10n/app_localizations.dart';
 import '../motion.dart';
 import '../season.dart';
 import '../theme.dart';
+import '../tier_frame.dart';
 import '../widgets.dart';
 import 'other_profile.dart';
 import 'shell.dart';
@@ -411,6 +412,7 @@ class _RankRow extends StatelessWidget {
               size: 40,
               fontSize: 17,
               avatarUrl: entry.avatarUrl,
+              frame: entry.tierIdx,
             ),
             const SizedBox(width: 11),
             Expanded(
@@ -473,7 +475,12 @@ class _SelfRow extends StatelessWidget {
             ),
             const SizedBox(width: 11),
           ],
-          _Initial(name: username, size: 40, fontSize: 17),
+          _Initial(
+            name: username,
+            size: 40,
+            fontSize: 17,
+            frame: tierIdx,
+          ),
           const SizedBox(width: 11),
           Expanded(
             child: _Identity(
@@ -565,6 +572,7 @@ class _Initial extends StatelessWidget {
     required this.size,
     required this.fontSize,
     this.avatarUrl,
+    this.frame,
   });
 
   final String name;
@@ -572,8 +580,18 @@ class _Initial extends StatelessWidget {
   final double fontSize;
   final String? avatarUrl;
 
+  /// The tier to frame the picture in, in a row. Null on the podium, whose
+  /// pictures wear their place's medal ring instead.
+  final int? frame;
+
   @override
   Widget build(BuildContext context) {
+    final picture = _picture(context);
+    if (frame == null) return picture;
+    return TierFrame(tierIdx: frame, size: size, child: picture);
+  }
+
+  Widget _picture(BuildContext context) {
     final fallback = Container(
       width: size,
       height: size,
@@ -1013,6 +1031,7 @@ class _MonthRankRow extends StatelessWidget {
               size: 40,
               fontSize: 17,
               avatarUrl: row.avatarUrl,
+              frame: row.tierIdx,
             ),
             const SizedBox(width: 11),
             Expanded(
@@ -1106,6 +1125,7 @@ class _MonthSelfRow extends StatelessWidget {
             size: 40,
             fontSize: 17,
             avatarUrl: backend.me?.avatarUrl,
+            frame: demoProfile.isRanked ? demoProfile.tierIdx : null,
           ),
           const SizedBox(width: 11),
           Expanded(

@@ -20,6 +20,7 @@ import '../l10n/app_localizations.dart';
 import '../motion.dart';
 import '../player_avatar.dart';
 import '../theme.dart';
+import '../tier_frame.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
 import 'invite_card.dart';
@@ -594,7 +595,6 @@ class _RequestCard extends StatelessWidget {
                 image: photo == null ? null : NetworkImage(photo),
                 size: 52,
                 textColour: context.colors.rival,
-                ringColour: context.colors.surface,
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -998,6 +998,15 @@ class _Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return TierFrame(
+      tierIdx: friend.tierIdx,
+      size: 44,
+      child: _picture(context),
+    );
+  }
+
+  /// The circle and the online dot, which the frame goes around.
+  Widget _picture(BuildContext context) {
     return SizedBox(
       width: 44,
       height: 44,

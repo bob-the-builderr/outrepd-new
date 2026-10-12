@@ -1675,7 +1675,6 @@ class _Fighter extends StatelessWidget {
           textColour: colour,
           // The card has its own background, so the badge is ringed with that
           // rather than the page behind it.
-          ringColour: const Color(0xFF121110),
         ),
         const SizedBox(height: 6),
         ShrinkText(
