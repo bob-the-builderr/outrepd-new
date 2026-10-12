@@ -27,7 +27,9 @@ import '../theme.dart';
 import '../tier_badge.dart';
 import '../widgets.dart';
 import '../reps/count_accuracy.dart';
+import '../settings.dart';
 import 'confirm_count.dart';
+import 'daily_goal.dart';
 import 'match_entry.dart';
 import 'post_match.dart';
 import 'trainer.dart';
@@ -2042,6 +2044,10 @@ class _PracticeResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // The set is already counted by the time this shows, so today's total
+    // includes it and the total before it is that less these reps.
+    final after = Career.instance.repsToday;
+    final goal = settings.dailyGoal;
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Column(
@@ -2061,6 +2067,10 @@ class _PracticeResult extends StatelessWidget {
             L.of(context).totalReps.toUpperCase(),
             style: context.type.micro.copyWith(color: context.colors.muted),
           ),
+          if (GoalDoneCard.passed(after - reps, after, goal)) ...[
+            const SizedBox(height: 28),
+            GoalDoneCard(done: after, goal: goal),
+          ],
           const Spacer(),
           SizedBox(
             width: double.infinity,

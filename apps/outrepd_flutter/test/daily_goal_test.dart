@@ -96,6 +96,11 @@ void main() {
     expect(GoalDoneCard.reached(outcome, before + 15), isTrue);
     expect(GoalDoneCard.reached(outcome, before + 25), isFalse);
     expect(GoalDoneCard.reached(outcome, before), isFalse);
+
+    // The same call for a practice set, from its before and after.
+    expect(GoalDoneCard.passed(40, 58, 50), isTrue);
+    expect(GoalDoneCard.passed(50, 60, 50), isFalse);
+    expect(GoalDoneCard.passed(10, 30, 50), isFalse);
   });
 
   testWidgets('a met goal says done for today', (tester) async {

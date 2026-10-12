@@ -161,9 +161,11 @@ class GoalDoneCard extends StatefulWidget {
   /// Whether [outcome]'s set was the one that took today past [goal] —
   /// not one after it, which would say the same thing all evening.
   static bool reached(DuelOutcome? outcome, int goal) =>
-      outcome != null &&
-      outcome.todayBefore < goal &&
-      outcome.todayAfter >= goal;
+      outcome != null && passed(outcome.todayBefore, outcome.todayAfter, goal);
+
+  /// Whether a set that took today from [before] to [after] met [goal].
+  static bool passed(int before, int after, int goal) =>
+      before < goal && after >= goal;
 
   @override
   State<GoalDoneCard> createState() => _GoalDoneCardState();
