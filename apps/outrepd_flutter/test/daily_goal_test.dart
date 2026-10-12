@@ -63,6 +63,24 @@ void main() {
     expect(stored.getInt('dailyGoal'), 100);
   });
 
+  testWidgets('a set finished while the card is up moves it at once',
+      (tester) async {
+    // The card stays on the Match tab underneath the match, so it has to
+    // hear about the reps rather than wait to be built again.
+    await tester.pumpWidget(_app());
+    await tester.pumpAndSettle();
+    final before = Career.instance.repsToday;
+
+    await Career.instance.recordPractice(12);
+    await tester.pumpAndSettle();
+
+    final now = before + 12;
+    expect(
+      find.text('${now < 50 ? now : 50} / 50 push-ups · ${50 - now} to go'),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('a met goal says done for today', (tester) async {
     settings.dailyGoal = 25;
     await Career.instance.recordPractice(30);

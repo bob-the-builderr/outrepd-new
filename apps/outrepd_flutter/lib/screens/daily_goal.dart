@@ -68,8 +68,10 @@ class DailyGoalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
+    // The reps as well as the goal: listening to settings alone left the card
+    // on the count from before a match until something else redrew it.
     return ListenableBuilder(
-      listenable: settings,
+      listenable: Listenable.merge([settings, Career.instance]),
       builder: (context, _) {
         final goal = settings.dailyGoal;
         final done = Career.instance.repsToday;
