@@ -124,11 +124,19 @@ void main() {
     backend = _Notices(const []);
     await tester.pumpWidget(_app(home: const FriendsScreen()));
     await tester.pumpAndSettle();
-    expect(find.text('Incoming requests'), findsNothing);
+    // The sheet, not its title: the tab's own row is called the same.
+    expect(find.byType(BottomSheet), findsNothing);
 
     FriendsScreen.showRequests();
     await tester.pumpAndSettle();
-    expect(find.text('Incoming requests'), findsOneWidget);
+    expect(find.byType(BottomSheet), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byType(BottomSheet),
+        matching: find.text('Incoming requests'),
+      ),
+      findsOneWidget,
+    );
   });
 
   testWidgets('a yes opens the new friend', (tester) async {
