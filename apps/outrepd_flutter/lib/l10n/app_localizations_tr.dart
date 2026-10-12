@@ -1876,16 +1876,13 @@ class LTr extends L {
   String get dailyReminder => 'Günlük hatırlatıcı';
 
   @override
-  String get dailyReminderHint => 'Sadece henüz antrenman yapmadığın günlerde.';
+  String get dailyReminderHint => 'Yalnızca hedefini henüz tamamlamadığın günlerde.';
 
   @override
   String get reminderTime => 'Saat';
 
   @override
   String get reminderTitle => 'Bugünün şınavları zamanı';
-
-  @override
-  String get reminderBody => 'Kısa bir set serine sayılır.';
 
   @override
   String reminderStreakBody(String count) {
@@ -2316,4 +2313,9 @@ class LTr extends L {
 
   @override
   String get healthNotAllowed => 'Henüz izin verilmedi. Telefonunun sağlık ayarlarından izin verebilirsin.';
+
+  @override
+  String reminderLeft(String count) {
+    return 'Bugünkü hedefine ${count} şınav kaldı.';
+  }
 }

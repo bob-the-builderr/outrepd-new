@@ -587,10 +587,9 @@
   "allowNotificationsHint": "Sono disattivate per OUTREPD nelle impostazioni del telefono, quindi niente di quanto sotto ti arriverà.",
   "remindersSection": "Promemoria",
   "dailyReminder": "Promemoria giornaliero",
-  "dailyReminderHint": "Solo nei giorni in cui non ti sei ancora allenato.",
+  "dailyReminderHint": "Solo nei giorni in cui non hai ancora raggiunto l'obiettivo.",
   "reminderTime": "Ora",
   "reminderTitle": "È ora dei piegamenti di oggi",
-  "reminderBody": "Una serie veloce conta per la tua striscia.",
   "reminderStreakBody": "Tieni viva la tua striscia di {count} giorni. Basta una serie.",
   "channelMatches": "Sfide e amici",
   "channelReminders": "Promemoria giornaliero",
@@ -706,5 +705,6 @@
   "saveToAppleHealth": "Salva gli allenamenti in Salute di Apple",
   "saveToHealthConnect": "Salva gli allenamenti in Connessione Salute",
   "saveToHealthHint": "Ogni serie viene aggiunta come allenamento di forza. Non viene letto nulla.",
-  "healthNotAllowed": "Non ancora consentito. Puoi consentirlo nelle impostazioni salute del telefono."
+  "healthNotAllowed": "Non ancora consentito. Puoi consentirlo nelle impostazioni salute del telefono.",
+  "reminderLeft": "Mancano {count} piegamenti al tuo obiettivo di oggi."
 }

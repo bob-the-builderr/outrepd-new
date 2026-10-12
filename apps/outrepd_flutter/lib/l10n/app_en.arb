@@ -1066,10 +1066,9 @@
   "allowNotificationsHint": "They're off for OUTREPD in your phone's settings, so nothing below can reach you.",
   "remindersSection": "Reminder",
   "dailyReminder": "Daily reminder",
-  "dailyReminderHint": "Only on days you haven't trained yet.",
+  "dailyReminderHint": "Only on days you haven't met your goal yet.",
   "reminderTime": "Time",
   "reminderTitle": "Time for today's push-ups",
-  "reminderBody": "One quick set counts toward your streak.",
   "reminderStreakBody": "Keep your {count}-day streak going. One set is enough.",
   "@reminderStreakBody": {
     "placeholders": {
@@ -1472,5 +1471,13 @@
   "saveToAppleHealth": "Save workouts to Apple Health",
   "saveToHealthConnect": "Save workouts to Health Connect",
   "saveToHealthHint": "Every set you lift is added as a strength workout. Nothing is read back.",
-  "healthNotAllowed": "Not allowed yet. You can allow it in your phone's health settings."
+  "healthNotAllowed": "Not allowed yet. You can allow it in your phone's health settings.",
+  "reminderLeft": "{count} push-ups left for today's goal.",
+  "@reminderLeft": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  }
 }

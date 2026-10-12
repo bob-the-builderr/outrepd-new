@@ -587,10 +587,9 @@
   "allowNotificationsHint": "휴대폰 설정에서 OUTREPD 알림이 꺼져 있어 아래 알림을 받을 수 없습니다.",
   "remindersSection": "리마인더",
   "dailyReminder": "매일 리마인더",
-  "dailyReminderHint": "아직 운동하지 않은 날에만.",
+  "dailyReminderHint": "아직 목표를 채우지 못한 날에만요.",
   "reminderTime": "시간",
   "reminderTitle": "오늘의 푸시업 시간이에요",
-  "reminderBody": "짧은 한 세트도 연속 기록에 포함돼요.",
   "reminderStreakBody": "{count}일 연속 기록을 이어가세요. 한 세트면 충분해요.",
   "channelMatches": "대결과 친구",
   "channelReminders": "매일 리마인더",
@@ -706,5 +705,6 @@
   "saveToAppleHealth": "운동을 Apple 건강에 저장",
   "saveToHealthConnect": "운동을 헬스 커넥트에 저장",
   "saveToHealthHint": "세트마다 근력 운동으로 추가돼요. 아무것도 읽어 오지 않아요.",
-  "healthNotAllowed": "아직 허용되지 않았어요. 휴대폰의 건강 설정에서 허용할 수 있어요."
+  "healthNotAllowed": "아직 허용되지 않았어요. 휴대폰의 건강 설정에서 허용할 수 있어요.",
+  "reminderLeft": "오늘 목표까지 팔굽혀펴기 {count}개 남았어요."
 }

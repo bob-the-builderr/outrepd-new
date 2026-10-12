@@ -1,10 +1,11 @@
-/// The daily reminder: one notification at the lifter's chosen time, on a day
-/// they have not trained yet, so a streak is not lost to simply forgetting.
+/// The daily reminder: one notification at the lifter's chosen time, saying
+/// how many push-ups are left for the day's goal, on a day the goal is not
+/// met yet — so neither a streak nor a goal is lost to simply forgetting.
 ///
 /// Scheduled on the phone — no server, no account — a week ahead, and again
-/// whenever the app opens, a set is recorded, or the time is changed. A day
-/// already trained is skipped, so the reminder never nags somebody who has
-/// done their set.
+/// whenever the app opens, a set is recorded, or the time or the goal is
+/// changed. A day whose goal is met is skipped, so the reminder never nags
+/// somebody who has done what they set out to.
 ///
 /// Also creates the two notification channels Android lists under the app's
 /// settings, since this is the code that runs the plugin that makes them.
@@ -17,6 +18,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
 
+import 'career.dart';
 import 'l10n/app_localizations.dart';
 import 'push.dart';
 import 'rewards.dart';
@@ -25,10 +27,14 @@ import 'settings.dart';
 /// One reminder.
 @immutable
 class ReminderSlot {
-  const ReminderSlot(this.at, {this.streak = 0});
+  const ReminderSlot(this.at, {required this.left, this.streak = 0});
 
   /// When, on the phone's clock.
   final DateTime at;
+
+  /// Push-ups left for that day's goal: today's what is still to do, a day
+  /// further out the whole goal.
+  final int left;
 
   /// The run of days it keeps going, when it can say so truthfully — only
   /// today's, and only when yesterday was trained. Zero otherwise.
@@ -36,8 +42,8 @@ class ReminderSlot {
 }
 
 /// The reminders for the [days] days from [now]: at [minutes] past midnight
-/// each day, except a time already gone and except today if it has been
-/// trained.
+/// each day, except a time already gone and except today once [doneToday]
+/// has reached [goal].
 ///
 /// Only today's can name the streak. Further out, whether it is still alive
 /// depends on days that have not happened yet; the app schedules again each
@@ -47,6 +53,8 @@ List<ReminderSlot> reminderSlots({
   required int minutes,
   required DateTime? lastSession,
   required int streak,
+  required int doneToday,
+  required int goal,
   int days = 7,
 }) {
   final today = DateTime(now.year, now.month, now.day);
@@ -69,9 +77,14 @@ List<ReminderSlot> reminderSlots({
       minutes % 60,
     );
     if (!at.isAfter(now)) continue;
-    if (d == 0 && trainedToday) continue;
+    if (d == 0 && doneToday >= goal) continue;
     slots.add(
-      ReminderSlot(at, streak: d == 0 && trainedYesterday ? streak : 0),
+      ReminderSlot(
+        at,
+        left: d == 0 ? goal - doneToday : goal,
+        // A streak is only at stake on a day not trained yet.
+        streak: d == 0 && trainedYesterday && !trainedToday ? streak : 0,
+      ),
     );
   }
   return slots;
@@ -118,6 +131,7 @@ class Reminders {
       await _createChannels();
       settings.addListener(_soon);
       rewards.addListener(_soon);
+      Career.instance.addListener(_soon);
       await reschedule();
     } on Object catch (error) {
       debugPrint('Reminders are not available: $error');
@@ -204,6 +218,8 @@ class Reminders {
         minutes: settings.reminderMinutes,
         lastSession: rewards.lastSession,
         streak: rewards.streak,
+        doneToday: Career.instance.repsToday,
+        goal: settings.dailyGoal,
         days: _days,
       );
       for (var i = 0; i < slots.length; i++) {
@@ -213,7 +229,7 @@ class Reminders {
           title: l.reminderTitle,
           body: slot.streak >= 2
               ? l.reminderStreakBody('${slot.streak}')
-              : l.reminderBody,
+              : l.reminderLeft('${slot.left}'),
           scheduledDate: tz.TZDateTime.from(slot.at, tz.UTC),
           notificationDetails: NotificationDetails(
             android: AndroidNotificationDetails(

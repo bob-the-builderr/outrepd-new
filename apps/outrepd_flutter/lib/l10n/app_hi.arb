@@ -587,10 +587,9 @@
   "allowNotificationsHint": "फ़ोन की सेटिंग में OUTREPD के लिए ये बंद हैं, इसलिए नीचे की कोई सूचना आप तक नहीं पहुँचेगी।",
   "remindersSection": "रिमाइंडर",
   "dailyReminder": "रोज़ का रिमाइंडर",
-  "dailyReminderHint": "सिर्फ़ उन दिनों जब आपने अभी तक ट्रेनिंग नहीं की है।",
+  "dailyReminderHint": "सिर्फ़ उन दिनों जब आपका लक्ष्य अभी पूरा नहीं हुआ है।",
   "reminderTime": "समय",
   "reminderTitle": "आज के पुश-अप्स का समय",
-  "reminderBody": "एक छोटा सेट भी आपकी स्ट्रीक में गिना जाता है।",
   "reminderStreakBody": "अपनी {count} दिन की स्ट्रीक जारी रखें। एक सेट काफ़ी है।",
   "channelMatches": "मैच और दोस्त",
   "channelReminders": "रोज़ का रिमाइंडर",
@@ -706,5 +705,6 @@
   "saveToAppleHealth": "वर्कआउट Apple Health में सेव करें",
   "saveToHealthConnect": "वर्कआउट Health Connect में सेव करें",
   "saveToHealthHint": "हर सेट स्ट्रेंथ वर्कआउट के रूप में जुड़ता है। कुछ भी पढ़ा नहीं जाता।",
-  "healthNotAllowed": "अभी अनुमति नहीं है। आप फ़ोन की हेल्थ सेटिंग में अनुमति दे सकते हैं।"
+  "healthNotAllowed": "अभी अनुमति नहीं है। आप फ़ोन की हेल्थ सेटिंग में अनुमति दे सकते हैं।",
+  "reminderLeft": "आज के लक्ष्य के लिए {count} पुश-अप बाकी हैं।"
 }

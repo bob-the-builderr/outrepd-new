@@ -1886,16 +1886,13 @@ class LIt extends L {
   String get dailyReminder => 'Promemoria giornaliero';
 
   @override
-  String get dailyReminderHint => 'Solo nei giorni in cui non ti sei ancora allenato.';
+  String get dailyReminderHint => 'Solo nei giorni in cui non hai ancora raggiunto l\'obiettivo.';
 
   @override
   String get reminderTime => 'Ora';
 
   @override
   String get reminderTitle => 'È ora dei piegamenti di oggi';
-
-  @override
-  String get reminderBody => 'Una serie veloce conta per la tua striscia.';
 
   @override
   String reminderStreakBody(String count) {
@@ -2326,4 +2323,9 @@ class LIt extends L {
 
   @override
   String get healthNotAllowed => 'Non ancora consentito. Puoi consentirlo nelle impostazioni salute del telefono.';
+
+  @override
+  String reminderLeft(String count) {
+    return 'Mancano ${count} piegamenti al tuo obiettivo di oggi.';
+  }
 }

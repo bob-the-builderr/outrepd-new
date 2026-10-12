@@ -1881,16 +1881,13 @@ class LRu extends L {
   String get dailyReminder => 'Ежедневное напоминание';
 
   @override
-  String get dailyReminderHint => 'Только в дни, когда вы ещё не тренировались.';
+  String get dailyReminderHint => 'Только в дни, когда цель ещё не выполнена.';
 
   @override
   String get reminderTime => 'Время';
 
   @override
   String get reminderTitle => 'Время сегодняшних отжиманий';
-
-  @override
-  String get reminderBody => 'Один быстрый подход засчитывается в вашу серию.';
 
   @override
   String reminderStreakBody(String count) {
@@ -2321,4 +2318,9 @@ class LRu extends L {
 
   @override
   String get healthNotAllowed => 'Пока не разрешено. Разрешить можно в настройках здоровья телефона.';
+
+  @override
+  String reminderLeft(String count) {
+    return 'Осталось отжиманий до цели на сегодня: ${count}.';
+  }
 }

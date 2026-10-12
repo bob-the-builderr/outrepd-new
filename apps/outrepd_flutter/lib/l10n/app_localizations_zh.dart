@@ -1832,16 +1832,13 @@ class LZh extends L {
   String get dailyReminder => '每日提醒';
 
   @override
-  String get dailyReminderHint => '仅在你当天还没训练时提醒。';
+  String get dailyReminderHint => '只在当天目标还没完成时提醒。';
 
   @override
   String get reminderTime => '时间';
 
   @override
   String get reminderTitle => '该做今天的俯卧撑了';
-
-  @override
-  String get reminderBody => '做一组就能计入你的连续记录。';
 
   @override
   String reminderStreakBody(String count) {
@@ -2272,4 +2269,9 @@ class LZh extends L {
 
   @override
   String get healthNotAllowed => '尚未允许。你可以在手机的健康设置中允许。';
+
+  @override
+  String reminderLeft(String count) {
+    return '离今天的目标还差 ${count} 个俯卧撑。';
+  }
 }

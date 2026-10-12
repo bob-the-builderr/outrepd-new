@@ -1881,16 +1881,13 @@ class LHi extends L {
   String get dailyReminder => 'रोज़ का रिमाइंडर';
 
   @override
-  String get dailyReminderHint => 'सिर्फ़ उन दिनों जब आपने अभी तक ट्रेनिंग नहीं की है।';
+  String get dailyReminderHint => 'सिर्फ़ उन दिनों जब आपका लक्ष्य अभी पूरा नहीं हुआ है।';
 
   @override
   String get reminderTime => 'समय';
 
   @override
   String get reminderTitle => 'आज के पुश-अप्स का समय';
-
-  @override
-  String get reminderBody => 'एक छोटा सेट भी आपकी स्ट्रीक में गिना जाता है।';
 
   @override
   String reminderStreakBody(String count) {
@@ -2321,4 +2318,9 @@ class LHi extends L {
 
   @override
   String get healthNotAllowed => 'अभी अनुमति नहीं है। आप फ़ोन की हेल्थ सेटिंग में अनुमति दे सकते हैं।';
+
+  @override
+  String reminderLeft(String count) {
+    return 'आज के लक्ष्य के लिए ${count} पुश-अप बाकी हैं।';
+  }
 }

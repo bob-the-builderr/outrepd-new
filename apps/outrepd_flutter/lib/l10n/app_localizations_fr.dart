@@ -1887,16 +1887,13 @@ class LFr extends L {
   String get dailyReminder => 'Rappel quotidien';
 
   @override
-  String get dailyReminderHint => 'Seulement les jours où tu ne t\'es pas encore entraîné.';
+  String get dailyReminderHint => 'Seulement les jours où ton objectif n\'est pas encore atteint.';
 
   @override
   String get reminderTime => 'Heure';
 
   @override
   String get reminderTitle => 'C\'est l\'heure des pompes du jour';
-
-  @override
-  String get reminderBody => 'Une petite série compte pour ta série de jours.';
 
   @override
   String reminderStreakBody(String count) {
@@ -2327,4 +2324,9 @@ class LFr extends L {
 
   @override
   String get healthNotAllowed => 'Pas encore autorisé. Tu peux l\'autoriser dans les réglages santé de ton téléphone.';
+
+  @override
+  String reminderLeft(String count) {
+    return 'Plus que ${count} pompes pour ton objectif du jour.';
+  }
 }

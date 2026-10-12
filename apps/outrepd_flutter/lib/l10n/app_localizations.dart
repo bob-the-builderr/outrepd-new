@@ -3533,12 +3533,6 @@ abstract class L {
   /// **'Time for today\'s push-ups'**
   String get reminderTitle;
 
-  /// No description provided for @reminderBody.
-  ///
-  /// In en, this message translates to:
-  /// **'One quick set counts toward your streak.'**
-  String get reminderBody;
-
   /// No description provided for @reminderStreakBody.
   ///
   /// In en, this message translates to:
@@ -4234,6 +4228,12 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Not allowed yet. You can allow it in your phone\'s health settings.'**
   String get healthNotAllowed;
+
+  /// No description provided for @reminderLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} push-ups left for today\'s goal.'**
+  String reminderLeft(String count);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

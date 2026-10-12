@@ -587,10 +587,9 @@
   "allowNotificationsHint": "Estão desligadas para o OUTREPD nas definições do telemóvel, por isso nada abaixo te chega.",
   "remindersSection": "Lembrete",
   "dailyReminder": "Lembrete diário",
-  "dailyReminderHint": "Só nos dias em que ainda não treinaste.",
+  "dailyReminderHint": "Só nos dias em que você ainda não bateu a meta.",
   "reminderTime": "Hora",
   "reminderTitle": "Hora das flexões de hoje",
-  "reminderBody": "Uma série rápida conta para a tua sequência.",
   "reminderStreakBody": "Mantém a tua sequência de {count} dias. Basta uma série.",
   "channelMatches": "Partidas e amigos",
   "channelReminders": "Lembrete diário",
@@ -706,5 +705,6 @@
   "saveToAppleHealth": "Salvar treinos no Saúde da Apple",
   "saveToHealthConnect": "Salvar treinos no Conexão Saúde",
   "saveToHealthHint": "Cada série entra como treino de força. Nada é lido.",
-  "healthNotAllowed": "Ainda não permitido. Você pode permitir nos ajustes de saúde do celular."
+  "healthNotAllowed": "Ainda não permitido. Você pode permitir nos ajustes de saúde do celular.",
+  "reminderLeft": "Faltam {count} flexões para sua meta de hoje."
 }

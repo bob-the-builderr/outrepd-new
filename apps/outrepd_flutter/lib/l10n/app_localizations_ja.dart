@@ -1842,16 +1842,13 @@ class LJa extends L {
   String get dailyReminder => '毎日のリマインダー';
 
   @override
-  String get dailyReminderHint => 'まだトレーニングしていない日だけ。';
+  String get dailyReminderHint => '目標をまだ達成していない日だけ。';
 
   @override
   String get reminderTime => '時刻';
 
   @override
   String get reminderTitle => '今日の腕立て伏せの時間です';
-
-  @override
-  String get reminderBody => '1セットでも連続記録に数えられます。';
 
   @override
   String reminderStreakBody(String count) {
@@ -2282,4 +2279,9 @@ class LJa extends L {
 
   @override
   String get healthNotAllowed => 'まだ許可されていません。スマホのヘルスケア設定で許可できます。';
+
+  @override
+  String reminderLeft(String count) {
+    return '今日の目標まであと${count}回。';
+  }
 }

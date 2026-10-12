@@ -587,10 +587,9 @@
   "allowNotificationsHint": "Notifikasi OUTREPD mati di pengaturan ponselmu, jadi tidak ada yang di bawah ini bisa sampai.",
   "remindersSection": "Pengingat",
   "dailyReminder": "Pengingat harian",
-  "dailyReminderHint": "Hanya di hari kamu belum latihan.",
+  "dailyReminderHint": "Hanya di hari target kamu belum tercapai.",
   "reminderTime": "Waktu",
   "reminderTitle": "Waktunya push-up hari ini",
-  "reminderBody": "Satu set singkat dihitung untuk streak-mu.",
   "reminderStreakBody": "Pertahankan streak {count} harimu. Satu set sudah cukup.",
   "channelMatches": "Pertandingan dan teman",
   "channelReminders": "Pengingat harian",
@@ -706,5 +705,6 @@
   "saveToAppleHealth": "Simpan latihan ke Apple Health",
   "saveToHealthConnect": "Simpan latihan ke Health Connect",
   "saveToHealthHint": "Setiap set ditambahkan sebagai latihan kekuatan. Tidak ada yang dibaca.",
-  "healthNotAllowed": "Belum diizinkan. Kamu bisa mengizinkannya di pengaturan kesehatan ponsel."
+  "healthNotAllowed": "Belum diizinkan. Kamu bisa mengizinkannya di pengaturan kesehatan ponsel.",
+  "reminderLeft": "{count} push-up lagi untuk target hari ini."
 }

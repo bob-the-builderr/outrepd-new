@@ -1888,16 +1888,13 @@ class LDe extends L {
   String get dailyReminder => 'Tägliche Erinnerung';
 
   @override
-  String get dailyReminderHint => 'Nur an Tagen, an denen du noch nicht trainiert hast.';
+  String get dailyReminderHint => 'Nur an Tagen, an denen dein Ziel noch offen ist.';
 
   @override
   String get reminderTime => 'Uhrzeit';
 
   @override
   String get reminderTitle => 'Zeit für die Liegestütze von heute';
-
-  @override
-  String get reminderBody => 'Ein kurzer Satz zählt für deine Serie.';
 
   @override
   String reminderStreakBody(String count) {
@@ -2328,4 +2325,9 @@ class LDe extends L {
 
   @override
   String get healthNotAllowed => 'Noch nicht erlaubt. Du kannst es in den Gesundheitseinstellungen deines Handys erlauben.';
+
+  @override
+  String reminderLeft(String count) {
+    return 'Noch ${count} Liegestütze bis zu deinem Tagesziel.';
+  }
 }

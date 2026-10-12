@@ -1879,16 +1879,13 @@ class LEn extends L {
   String get dailyReminder => 'Daily reminder';
 
   @override
-  String get dailyReminderHint => 'Only on days you haven\'t trained yet.';
+  String get dailyReminderHint => 'Only on days you haven\'t met your goal yet.';
 
   @override
   String get reminderTime => 'Time';
 
   @override
   String get reminderTitle => 'Time for today\'s push-ups';
-
-  @override
-  String get reminderBody => 'One quick set counts toward your streak.';
 
   @override
   String reminderStreakBody(String count) {
@@ -2319,4 +2316,9 @@ class LEn extends L {
 
   @override
   String get healthNotAllowed => 'Not allowed yet. You can allow it in your phone\'s health settings.';
+
+  @override
+  String reminderLeft(String count) {
+    return '${count} push-ups left for today\'s goal.';
+  }
 }

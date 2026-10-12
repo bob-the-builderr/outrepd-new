@@ -587,10 +587,9 @@
   "allowNotificationsHint": "端末の設定で OUTREPD の通知がオフになっているため、以下の通知は届きません。",
   "remindersSection": "リマインダー",
   "dailyReminder": "毎日のリマインダー",
-  "dailyReminderHint": "まだトレーニングしていない日だけ。",
+  "dailyReminderHint": "目標をまだ達成していない日だけ。",
   "reminderTime": "時刻",
   "reminderTitle": "今日の腕立て伏せの時間です",
-  "reminderBody": "1セットでも連続記録に数えられます。",
   "reminderStreakBody": "{count}日連続の記録を続けましょう。1セットで十分です。",
   "channelMatches": "対戦とフレンド",
   "channelReminders": "毎日のリマインダー",
@@ -706,5 +705,6 @@
   "saveToAppleHealth": "ワークアウトをAppleヘルスケアに保存",
   "saveToHealthConnect": "ワークアウトをヘルスコネクトに保存",
   "saveToHealthHint": "セットごとに筋力トレーニングとして追加されます。読み取りは行いません。",
-  "healthNotAllowed": "まだ許可されていません。スマホのヘルスケア設定で許可できます。"
+  "healthNotAllowed": "まだ許可されていません。スマホのヘルスケア設定で許可できます。",
+  "reminderLeft": "今日の目標まであと{count}回。"
 }

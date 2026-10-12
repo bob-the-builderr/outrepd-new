@@ -1849,16 +1849,13 @@ class LKo extends L {
   String get dailyReminder => '매일 리마인더';
 
   @override
-  String get dailyReminderHint => '아직 운동하지 않은 날에만.';
+  String get dailyReminderHint => '아직 목표를 채우지 못한 날에만요.';
 
   @override
   String get reminderTime => '시간';
 
   @override
   String get reminderTitle => '오늘의 푸시업 시간이에요';
-
-  @override
-  String get reminderBody => '짧은 한 세트도 연속 기록에 포함돼요.';
 
   @override
   String reminderStreakBody(String count) {
@@ -2289,4 +2286,9 @@ class LKo extends L {
 
   @override
   String get healthNotAllowed => '아직 허용되지 않았어요. 휴대폰의 건강 설정에서 허용할 수 있어요.';
+
+  @override
+  String reminderLeft(String count) {
+    return '오늘 목표까지 팔굽혀펴기 ${count}개 남았어요.';
+  }
 }

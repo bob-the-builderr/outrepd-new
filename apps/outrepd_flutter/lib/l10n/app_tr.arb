@@ -587,10 +587,9 @@
   "allowNotificationsHint": "Telefon ayarlarında OUTREPD için kapalı, bu yüzden aşağıdakilerin hiçbiri sana ulaşamaz.",
   "remindersSection": "Hatırlatıcı",
   "dailyReminder": "Günlük hatırlatıcı",
-  "dailyReminderHint": "Sadece henüz antrenman yapmadığın günlerde.",
+  "dailyReminderHint": "Yalnızca hedefini henüz tamamlamadığın günlerde.",
   "reminderTime": "Saat",
   "reminderTitle": "Bugünün şınavları zamanı",
-  "reminderBody": "Kısa bir set serine sayılır.",
   "reminderStreakBody": "{count} günlük serini sürdür. Bir set yeter.",
   "channelMatches": "Maçlar ve arkadaşlar",
   "channelReminders": "Günlük hatırlatıcı",
@@ -706,5 +705,6 @@
   "saveToAppleHealth": "Antrenmanları Apple Sağlık'a kaydet",
   "saveToHealthConnect": "Antrenmanları Health Connect'e kaydet",
   "saveToHealthHint": "Her set kuvvet antrenmanı olarak eklenir. Hiçbir şey okunmaz.",
-  "healthNotAllowed": "Henüz izin verilmedi. Telefonunun sağlık ayarlarından izin verebilirsin."
+  "healthNotAllowed": "Henüz izin verilmedi. Telefonunun sağlık ayarlarından izin verebilirsin.",
+  "reminderLeft": "Bugünkü hedefine {count} şınav kaldı."
 }

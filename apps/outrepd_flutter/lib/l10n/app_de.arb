@@ -587,10 +587,9 @@
   "allowNotificationsHint": "Sie sind für OUTREPD in den Handy-Einstellungen aus, also kommt nichts von unten bei dir an.",
   "remindersSection": "Erinnerung",
   "dailyReminder": "Tägliche Erinnerung",
-  "dailyReminderHint": "Nur an Tagen, an denen du noch nicht trainiert hast.",
+  "dailyReminderHint": "Nur an Tagen, an denen dein Ziel noch offen ist.",
   "reminderTime": "Uhrzeit",
   "reminderTitle": "Zeit für die Liegestütze von heute",
-  "reminderBody": "Ein kurzer Satz zählt für deine Serie.",
   "reminderStreakBody": "Halte deine Serie von {count} Tagen. Ein Satz reicht.",
   "channelMatches": "Matches und Freunde",
   "channelReminders": "Tägliche Erinnerung",
@@ -706,5 +705,6 @@
   "saveToAppleHealth": "Trainings in Apple Health sichern",
   "saveToHealthConnect": "Trainings in Health Connect sichern",
   "saveToHealthHint": "Jeder Satz wird als Krafttraining eingetragen. Gelesen wird nichts.",
-  "healthNotAllowed": "Noch nicht erlaubt. Du kannst es in den Gesundheitseinstellungen deines Handys erlauben."
+  "healthNotAllowed": "Noch nicht erlaubt. Du kannst es in den Gesundheitseinstellungen deines Handys erlauben.",
+  "reminderLeft": "Noch {count} Liegestütze bis zu deinem Tagesziel."
 }

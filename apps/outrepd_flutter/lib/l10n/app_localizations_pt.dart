@@ -1883,16 +1883,13 @@ class LPt extends L {
   String get dailyReminder => 'Lembrete diário';
 
   @override
-  String get dailyReminderHint => 'Só nos dias em que ainda não treinaste.';
+  String get dailyReminderHint => 'Só nos dias em que você ainda não bateu a meta.';
 
   @override
   String get reminderTime => 'Hora';
 
   @override
   String get reminderTitle => 'Hora das flexões de hoje';
-
-  @override
-  String get reminderBody => 'Uma série rápida conta para a tua sequência.';
 
   @override
   String reminderStreakBody(String count) {
@@ -2323,4 +2320,9 @@ class LPt extends L {
 
   @override
   String get healthNotAllowed => 'Ainda não permitido. Você pode permitir nos ajustes de saúde do celular.';
+
+  @override
+  String reminderLeft(String count) {
+    return 'Faltam ${count} flexões para sua meta de hoje.';
+  }
 }

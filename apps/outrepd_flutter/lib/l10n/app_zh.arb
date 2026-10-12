@@ -587,10 +587,9 @@
   "allowNotificationsHint": "手机设置中已关闭 OUTREPD 的通知，因此下面的通知都无法送达。",
   "remindersSection": "提醒",
   "dailyReminder": "每日提醒",
-  "dailyReminderHint": "仅在你当天还没训练时提醒。",
+  "dailyReminderHint": "只在当天目标还没完成时提醒。",
   "reminderTime": "时间",
   "reminderTitle": "该做今天的俯卧撑了",
-  "reminderBody": "做一组就能计入你的连续记录。",
   "reminderStreakBody": "保持你 {count} 天的连续记录。做一组就够了。",
   "channelMatches": "对战与好友",
   "channelReminders": "每日提醒",
@@ -706,5 +705,6 @@
   "saveToAppleHealth": "将训练保存到 Apple 健康",
   "saveToHealthConnect": "将训练保存到 Health Connect",
   "saveToHealthHint": "每一组都会记为一次力量训练。不会读取任何数据。",
-  "healthNotAllowed": "尚未允许。你可以在手机的健康设置中允许。"
+  "healthNotAllowed": "尚未允许。你可以在手机的健康设置中允许。",
+  "reminderLeft": "离今天的目标还差 {count} 个俯卧撑。"
 }

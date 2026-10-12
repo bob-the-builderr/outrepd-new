@@ -1880,16 +1880,13 @@ class LId extends L {
   String get dailyReminder => 'Pengingat harian';
 
   @override
-  String get dailyReminderHint => 'Hanya di hari kamu belum latihan.';
+  String get dailyReminderHint => 'Hanya di hari target kamu belum tercapai.';
 
   @override
   String get reminderTime => 'Waktu';
 
   @override
   String get reminderTitle => 'Waktunya push-up hari ini';
-
-  @override
-  String get reminderBody => 'Satu set singkat dihitung untuk streak-mu.';
 
   @override
   String reminderStreakBody(String count) {
@@ -2320,4 +2317,9 @@ class LId extends L {
 
   @override
   String get healthNotAllowed => 'Belum diizinkan. Kamu bisa mengizinkannya di pengaturan kesehatan ponsel.';
+
+  @override
+  String reminderLeft(String count) {
+    return '${count} push-up lagi untuk target hari ini.';
+  }
 }

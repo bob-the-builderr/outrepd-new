@@ -1886,16 +1886,13 @@ class LEs extends L {
   String get dailyReminder => 'Recordatorio diario';
 
   @override
-  String get dailyReminderHint => 'Solo los días que aún no has entrenado.';
+  String get dailyReminderHint => 'Solo los días en que aún no has cumplido tu meta.';
 
   @override
   String get reminderTime => 'Hora';
 
   @override
   String get reminderTitle => 'Hora de las flexiones de hoy';
-
-  @override
-  String get reminderBody => 'Una serie rápida cuenta para tu racha.';
 
   @override
   String reminderStreakBody(String count) {
@@ -2326,4 +2323,9 @@ class LEs extends L {
 
   @override
   String get healthNotAllowed => 'Aún no está permitido. Puedes permitirlo en los ajustes de salud del teléfono.';
+
+  @override
+  String reminderLeft(String count) {
+    return 'Te faltan ${count} flexiones para tu meta de hoy.';
+  }
 }
