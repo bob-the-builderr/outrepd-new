@@ -1,0 +1,9 @@
+commit      17cf5e6d2b5b752d6d972d981c47d9f621878657
+platform    ios
+build       177
+compiled    cancelled
+signed      true
+uploaded    skipped
+paywall key yes — RevenueCat's public App Store key
+firebase    true — push notifications and crash reports are in
+run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/38254615547
