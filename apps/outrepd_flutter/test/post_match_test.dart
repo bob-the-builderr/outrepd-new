@@ -276,6 +276,9 @@ void main() {
       await tester.pumpWidget(_app(view(won: true, newBest: true)));
       await tester.pumpAndSettle();
       expect(find.textContaining('New personal best'), findsOneWidget);
+      // Its star drawn, not a character a phone's font may not have.
+      expect(find.byIcon(Icons.star_rounded), findsOneWidget);
+      expect(find.textContaining('★'), findsNothing);
     });
 
     testWidgets('the closest loss is a chip under the scores', (tester) async {

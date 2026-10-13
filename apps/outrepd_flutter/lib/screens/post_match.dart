@@ -163,9 +163,11 @@ class DuelResultView extends StatelessWidget {
     final margin = (yourReps - theirReps).abs();
     // Only what is true about this set. [DuelOutcome.newBest] is judged on
     // the set alone, so a best set in a loss still says so.
+    // The star drawn, not typed, for the same reason as the month's arrow.
     final chips = [
-      if (outcome?.newBest ?? false) '★ ${l.newPersonalBest}',
-      if (!won && closestYet) l.closestYet,
+      if (outcome?.newBest ?? false)
+        _Chip(label: l.newPersonalBest, icon: Icons.star_rounded),
+      if (!won && closestYet) _Chip(label: l.closestYet),
     ];
 
     return SafeArea(
@@ -234,7 +236,7 @@ class DuelResultView extends StatelessWidget {
                       alignment: WrapAlignment.center,
                       spacing: 6,
                       runSpacing: 6,
-                      children: [for (final c in chips) _Chip(label: c)],
+                      children: chips,
                     ),
                   ],
                   const SizedBox(height: 24),
@@ -524,20 +526,33 @@ class _Side extends StatelessWidget {
 }
 
 class _Chip extends StatelessWidget {
-  const _Chip({required this.label});
+  const _Chip({required this.label, this.icon});
 
   final String label;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
+    final icon = this.icon;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: context.colors.surfaceRaised,
         borderRadius: BorderRadius.circular(99),
       ),
-      child: Text(
-        label,
+      child: Text.rich(
+        TextSpan(
+          children: [
+            if (icon != null) ...[
+              WidgetSpan(
+                alignment: PlaceholderAlignment.middle,
+                child: Icon(icon, size: 15, color: AppColors.gold),
+              ),
+              const TextSpan(text: ' '),
+            ],
+            TextSpan(text: label),
+          ],
+        ),
         style: TextStyle(color: context.colors.text, fontSize: 13),
       ),
     );
