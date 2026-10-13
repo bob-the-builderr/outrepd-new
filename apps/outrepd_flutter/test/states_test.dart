@@ -117,6 +117,27 @@ void main() {
       expect(find.text('Gold III'), findsOneWidget);
       expect(find.text('Find a match'), findsOneWidget);
     });
+
+    testWidgets('the bell is a round button that counts what is waiting',
+        (tester) async {
+      phone(tester);
+      withPlacements(kPlacementDuels);
+      await tester.pumpWidget(_app(const MatchScreen(), 1.0, const Locale('en')));
+      await tester.pumpAndSettle();
+
+      expect(
+        tester.getSize(find.byKey(const Key('noticesButton'))),
+        const Size(48, 48),
+      );
+      // Two of the sample notices are unread: the count, not a dot.
+      expect(
+        find.descendant(
+          of: find.byKey(const Key('noticesCount')),
+          matching: find.text('2'),
+        ),
+        findsOneWidget,
+      );
+    });
   });
 
   group('with no connection', () {

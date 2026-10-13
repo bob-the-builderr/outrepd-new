@@ -107,6 +107,7 @@ void _shareMatch(
       lpDelta: change?.lpDelta,
       newBest: outcome?.newBest ?? false,
       avatarUrl: backend.me?.avatarUrl,
+      opponentTierIdx: opponent.tierIdx,
     ),
   );
 }

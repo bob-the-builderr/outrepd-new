@@ -1,5 +1,5 @@
 /// The card shared from a duel's result: the count, who it was against, and
-/// what it did to the rank.
+/// what it did to the rank — captured at the size the platforms ask for.
 library;
 
 import 'package:flutter/material.dart';
@@ -88,10 +88,9 @@ void main() {
     await open(tester, _win);
     expect(find.text('18'), findsWidgets);
     expect(find.text('PUSH-UPS IN 60 SECONDS'), findsWidgets);
-    expect(
-      find.textContaining('Beat iron_mike 18–11', findRichText: true),
-      findsWidgets,
-    );
+    // Both lifters, face to face, each by name.
+    expect(find.text('mokhtar_y'), findsWidgets);
+    expect(find.text('iron_mike'), findsWidgets);
     expect(find.textContaining('+7 LP', findRichText: true), findsWidgets);
     expect(find.textContaining('New personal best'), findsWidgets);
     expect(find.text('Duel me on outrepd'), findsWidgets);
@@ -106,10 +105,9 @@ void main() {
     tester,
   ) async {
     await open(tester, _loss);
-    expect(
-      find.textContaining('Lost to squat_queen 14–19', findRichText: true),
-      findsWidgets,
-    );
+    expect(find.text('squat_queen'), findsWidgets);
+    expect(find.text('14'), findsWidgets);
+    expect(find.text('19'), findsWidgets);
     expect(find.textContaining('−5 LP', findRichText: true), findsWidgets);
     expect(find.text('Think you can beat me?'), findsWidgets);
     expect(find.textContaining('New personal best'), findsNothing);
@@ -148,12 +146,24 @@ void main() {
     );
     final bytes = await tester.runAsync(() async {
       final image = await boundary.toImage();
-      expect(image.width, greaterThan(200));
+      expect(image.width, greaterThan(400));
       final data = await image.toByteData();
       return data!.buffer.asUint8List();
     });
     // Not one flat colour: the card's text and fill are in the capture.
     expect(bytes!.toSet().length, greaterThan(2));
+  });
+
+  testWidgets('the story is drawn a phone wide at 9:16, for 1080×1920',
+      (tester) async {
+    await open(tester, _win);
+    final card = find
+        .ancestor(
+          of: find.text('PUSH-UPS IN 60 SECONDS').first,
+          matching: find.byType(RepaintBoundary),
+        )
+        .first;
+    expect(tester.getSize(card), const Size(412, 732));
   });
 
   testWidgets('the post shape draws too', (tester) async {

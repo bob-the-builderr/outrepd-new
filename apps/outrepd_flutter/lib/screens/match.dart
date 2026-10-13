@@ -12,6 +12,7 @@ library;
 
 import 'package:flutter/material.dart';
 
+import '../app_bottom_nav.dart' show TablerIcon;
 import '../connection.dart';
 import '../backend/backend.dart';
 import '../data.dart';
@@ -420,41 +421,75 @@ class _TopRowState extends State<_TopRow> {
                   ),
           ),
         ),
-        Stack(
-          alignment: Alignment.center,
-          clipBehavior: Clip.none,
-          children: [
-            InkWell(
-              // The screen marks them read, so the dot has to be asked
-              // again on the way back rather than left burning.
-              onTap: () async {
-                await openNotifications(context);
-                await _countUnread();
-              },
-              customBorder: const CircleBorder(),
-              child: Padding(
-                padding: const EdgeInsets.all(6),
-                child: Icon(
-                  Icons.notifications_none,
-                  size: 21,
-                  color: context.colors.text,
-                ),
-              ),
-            ),
-            if (unread > 0)
-              Positioned(
-                top: 4,
-                right: 4,
-                child: Container(
-                  width: 7,
-                  height: 7,
-                  decoration: BoxDecoration(
-                    color: context.colors.rival,
-                    shape: BoxShape.circle,
+        // A round button the size of a thumb, like the streak pill beside
+        // it, with how many are waiting rather than a dot that only says
+        // something is.
+        Semantics(
+          button: true,
+          label: l.notifications,
+          child: SizedBox(
+            key: const Key('noticesButton'),
+            width: 48,
+            height: 48,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Material(
+                  color: context.colors.surface,
+                  shape: CircleBorder(
+                    side: BorderSide(color: context.colors.border),
+                  ),
+                  child: InkWell(
+                    // The screen marks them read, so the count has to be
+                    // asked again on the way back rather than left standing.
+                    onTap: () async {
+                      await openNotifications(context);
+                      await _countUnread();
+                    },
+                    customBorder: const CircleBorder(),
+                    child: Center(
+                      child: IconTheme(
+                        data: IconThemeData(
+                          color: context.colors.text,
+                          size: 26,
+                        ),
+                        child: const TablerIcon(TablerIcon.bell),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-          ],
+                if (unread > 0)
+                  PositionedDirectional(
+                    top: -4,
+                    end: -6,
+                    child: Container(
+                      key: const Key('noticesCount'),
+                      constraints: const BoxConstraints(minWidth: 22),
+                      height: 22,
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: context.colors.rival,
+                        borderRadius: BorderRadius.circular(11),
+                        border: Border.all(
+                          color: context.colors.background,
+                          width: 2,
+                        ),
+                      ),
+                      child: Text(
+                        unread > 9 ? '9+' : localNumber(context, unread),
+                        style: TextStyle(
+                          color: context.colors.background,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          height: 1,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
         ),
       ],
     );

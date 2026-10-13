@@ -19,6 +19,7 @@ import '../l10n/app_localizations.dart';
 import '../country_names.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
+import '../tier_frame.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
 
@@ -110,6 +111,7 @@ class MatchShareData {
     this.lpDelta,
     this.newBest = false,
     this.avatarUrl,
+    this.opponentTierIdx,
   });
 
   final String username;
@@ -128,6 +130,10 @@ class MatchShareData {
   final int? lpDelta;
   final bool newBest;
   final String? avatarUrl;
+
+  /// The opponent's tier, for the frame round their picture — or null when
+  /// it is not known, and their picture goes bare.
+  final int? opponentTierIdx;
 
   String get profileUrl => profilePath(username);
 }
@@ -208,10 +214,11 @@ class _ShareCardSheetState extends State<_ShareCardSheet> {
     final boundary =
         key.currentContext?.findRenderObject() as RenderRepaintBoundary?;
     if (boundary == null) return null;
-    // Twice the logical size: a card shared to a phone-filling story or a
-    // feed post is looked at closely, and a 1x capture reads soft next to
-    // the crisp UI it was cropped out of.
-    final image = await boundary.toImage(pixelRatio: 2.5);
+    // At the width the platforms ask for: 1080 across, so a story comes out
+    // 1080×1920 and a post 1080×1350, sharp on any phone that shows it.
+    final image = await boundary.toImage(
+      pixelRatio: _exportWidth / _cardWidth,
+    );
     final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
     return bytes?.buffer.asUint8List();
   }
@@ -316,15 +323,20 @@ class _ShareCardSheetState extends State<_ShareCardSheet> {
                   ),
                   Center(
                     child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxHeight: 260),
+                      constraints: const BoxConstraints(maxHeight: 300),
                       child: AspectRatio(
                         aspectRatio: _shape == _CardShape.story
-                            ? 272 / 560
-                            : 400 / 260,
-                        child: FittedBox(
-                          child: _shape == _CardShape.story
-                              ? widget.story
-                              : widget.post,
+                            ? _cardWidth / _storyHeight
+                            : _cardWidth / _postHeight,
+                        // Rounded on screen only: the card itself is drawn
+                        // edge to edge, the way it is posted.
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(14),
+                          child: FittedBox(
+                            child: _shape == _CardShape.story
+                                ? widget.story
+                                : widget.post,
+                          ),
                         ),
                       ),
                     ),
@@ -455,6 +467,16 @@ class _ShapeTab extends StatelessWidget {
 
 // ──────────────────────────────── the cards ────────────────────────────────
 
+/// A card's logical size: a phone's width, so it lays out the way a screen
+/// does. It is captured at the size each platform asks for — a story at
+/// 1080×1920 (9:16), a post at 1080×1350 (4:5) — and drawn edge to edge,
+/// because a rounded corner comes out of the capture as a transparent one
+/// that a story then fills with black.
+const _cardWidth = 412.0;
+const _storyHeight = 732.0;
+const _postHeight = 515.0;
+const _exportWidth = 1080.0;
+
 /// Both card shapes are built inside this, so a colour only ever has to be
 /// picked once and both always agree with the badge beside them.
 class _CardTheme extends StatelessWidget {
@@ -476,6 +498,67 @@ class _CardTheme extends StatelessWidget {
   }
 }
 
+/// The card's ground: the page colour, lit from behind its hero in the
+/// colour of the tier — or of the result, on a loss.
+class _Backdrop extends StatelessWidget {
+  const _Backdrop({
+    required this.height,
+    required this.glow,
+    required this.centre,
+    required this.padding,
+    required this.child,
+  });
+
+  final double height;
+  final Color glow;
+  final Alignment centre;
+  final EdgeInsets padding;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: _cardWidth,
+      height: height,
+      color: context.colors.background,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: RadialGradient(
+            center: centre,
+            radius: 1.1,
+            colors: [
+              glow.withValues(alpha: 0.3),
+              glow.withValues(alpha: 0),
+            ],
+            stops: const [0, 0.6],
+          ),
+        ),
+        child: Padding(padding: padding, child: child),
+      ),
+    );
+  }
+}
+
+class _Brand extends StatelessWidget {
+  const _Brand();
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      'OUTREPD',
+      style: _CardType.label.copyWith(
+        color: context.colors.muted,
+        letterSpacing: 6,
+        fontWeight: FontWeight.w600,
+      ),
+    );
+  }
+}
+
+/// The colour a tier's card glows in: its own metal.
+Color _tierGlow(int? tierIdx) =>
+    tierIdx == null ? AppColors.gold : crestOf(tierIdx).mid;
+
 class _StoryCard extends StatelessWidget {
   const _StoryCard({required this.data});
   final ShareCardData data;
@@ -486,69 +569,58 @@ class _StoryCard extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final l = L.of(context);
-          final tierColour =
-              kTiers[data.tierIdx.clamp(0, kTiers.length - 1)].color;
-
-          return Container(
-            width: 272,
-            height: 560,
-            padding: const EdgeInsets.fromLTRB(18, 22, 18, 20),
-            decoration: BoxDecoration(
-              color: context.colors.background,
-              borderRadius: BorderRadius.circular(22),
-              border: Border.all(color: context.colors.border, width: 0.5),
-            ),
+          return _Backdrop(
+            height: _storyHeight,
+            glow: _tierGlow(data.tierIdx),
+            centre: const Alignment(0, -0.55),
+            padding: const EdgeInsets.fromLTRB(22, 26, 22, 24),
             child: Column(
               children: [
-                Text(
-                  'outrepd',
-                  style: _CardType.label.copyWith(
-                    color: context.colors.muted,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  l.currentRankLabel.toUpperCase(),
-                  style: _CardType.micro.copyWith(
-                    color: context.colors.faint,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TierBadge(tierIndex: data.tierIdx, size: 116),
-                const SizedBox(height: 6),
+                const _Brand(),
+                const SizedBox(height: 14),
+                TierBadge(tierIndex: data.tierIdx, size: 205),
                 ShrinkText(
                   tierLabel(l, data.tierIdx, data.divIdx),
                   maxLines: 1,
-                  style: _CardType.heading.copyWith(
+                  style: TextStyle(
                     color: context.colors.text,
+                    fontSize: 44,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: _LpBar(lp: data.lp),
+                ),
+                const SizedBox(height: 6),
                 Text(
-                  l.lpAmount(localNumber(context, data.lp)),
-                  style: _CardType.label.copyWith(color: tierColour),
-                ),
-                const SizedBox(height: 16),
-                Container(height: 0.5, color: context.colors.border),
-                const SizedBox(height: 14),
-                _IdentityRow(data: data),
-                const SizedBox(height: 14),
-                _StatRow(data: data),
-                const Spacer(),
-                ShrinkText(
-                  l.duelMeOnOutrepd,
-                  maxLines: 1,
-                  style: _CardType.body.copyWith(color: context.colors.text),
-                ),
-                const SizedBox(height: 2),
-                ShrinkText(
-                  data.profileUrl,
-                  maxLines: 1,
-                  style: _CardType.micro.copyWith(
+                  _lpOfHundred(context, l, data.lp),
+                  style: _CardType.label.copyWith(
                     color: context.colors.muted,
+                    fontSize: 14,
                   ),
                 ),
+                const SizedBox(height: 14),
+                _Who(data: data, size: 52, nameSize: 19),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(child: _Tile(label: l.bestSet, value: localNumber(context, data.bestSet))),
+                    const SizedBox(width: 8),
+                    Expanded(child: _Tile(label: l.record, value: _record(context, data))),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(child: _Tile(label: l.streak, value: localNumber(context, data.winStreak))),
+                    const SizedBox(width: 8),
+                    Expanded(child: _Tile(label: l.global, value: _global(context, l, data))),
+                  ],
+                ),
+                const Spacer(),
+                _Cta(line: l.duelMeOnOutrepd, url: data.profileUrl),
               ],
             ),
           );
@@ -568,73 +640,63 @@ class _PostCard extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final l = L.of(context);
-          final tierColour =
-              kTiers[data.tierIdx.clamp(0, kTiers.length - 1)].color;
-
-          return Container(
-            width: 400,
-            height: 260,
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: context.colors.background,
-              borderRadius: BorderRadius.circular(22),
-              border: Border.all(color: context.colors.border, width: 0.5),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+          return _Backdrop(
+            height: _postHeight,
+            glow: _tierGlow(data.tierIdx),
+            centre: const Alignment(-0.5, -0.1),
+            padding: const EdgeInsets.fromLTRB(18, 18, 18, 20),
+            child: Column(
               children: [
-                TierBadge(tierIndex: data.tierIdx, size: 90),
-                const SizedBox(width: 20),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
+                const _Brand(),
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    TierBadge(tierIndex: data.tierIdx, size: 180),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          _Initial(
-                            name: data.username,
-                            avatarUrl: data.avatarUrl,
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ShrinkText(
-                                  data.username,
-                                  maxLines: 1,
-                                  style: _CardType.body.copyWith(
-                                    color: context.colors.text,
-                                  ),
-                                ),
-                                Text(
-                                  '${tierLabel(l, data.tierIdx, data.divIdx)} · '
-                                  '${l.lpAmount(localNumber(context, data.lp))}',
-                                  style: _CardType.micro.copyWith(
-                                    color: tierColour,
-                                  ),
-                                ),
-                              ],
+                          ShrinkText(
+                            tierLabel(l, data.tierIdx, data.divIdx),
+                            maxLines: 1,
+                            style: TextStyle(
+                              color: context.colors.text,
+                              fontSize: 34,
+                              fontWeight: FontWeight.w800,
                             ),
                           ),
+                          Text(
+                            _lpOfHundred(context, l, data.lp),
+                            style: _CardType.label.copyWith(
+                              color: context.colors.muted,
+                              fontSize: 14,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          _Who(data: data, size: 40, nameSize: 17, start: true),
                         ],
                       ),
-                      const SizedBox(height: 14),
-                      Container(height: 0.5, color: context.colors.border),
-                      const SizedBox(height: 14),
-                      _StatRow(data: data, compact: true),
-                      const SizedBox(height: 12),
-                      Text(
-                        kShareSite,
-                        style: _CardType.micro.copyWith(
-                          color: context.colors.faint,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    for (final (i, (label, value)) in [
+                      (l.bestSet, localNumber(context, data.bestSet)),
+                      (l.record, _record(context, data)),
+                      (l.streak, localNumber(context, data.winStreak)),
+                      (l.global, _global(context, l, data)),
+                    ].indexed) ...[
+                      if (i > 0) const SizedBox(width: 8),
+                      Expanded(child: _Tile(label: label, value: value, size: 22)),
+                    ],
+                  ],
+                ),
+                const Spacer(),
+                _Cta(line: l.duelMeOnOutrepd, url: data.profileUrl),
               ],
             ),
           );
@@ -644,27 +706,83 @@ class _PostCard extends StatelessWidget {
   }
 }
 
-class _IdentityRow extends StatelessWidget {
-  const _IdentityRow({required this.data});
+/// "64 / 100 LP".
+String _lpOfHundred(BuildContext context, L l, int lp) =>
+    '${localNumber(context, lp)} / ${l.lpAmount(localNumber(context, 100))}';
+
+/// Wins–losses, the way the profile writes a record.
+String _record(BuildContext context, ShareCardData data) =>
+    '${localNumber(context, data.wins)}–${localNumber(context, data.losses)}';
+
+/// The world place, or a dash where there is none yet.
+String _global(BuildContext context, L l, ShareCardData data) =>
+    switch (data.globalPlace) {
+      final g? => l.rankPosition(localNumber(context, g)),
+      null => '—',
+    };
+
+/// How far through the division: LP out of a hundred.
+class _LpBar extends StatelessWidget {
+  const _LpBar({required this.lp});
+  final int lp;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(4),
+      child: SizedBox(
+        height: 8,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            ColoredBox(color: context.colors.surfaceRaised),
+            FractionallySizedBox(
+              alignment: AlignmentDirectional.centerStart,
+              widthFactor: (lp / 100).clamp(0.0, 1.0),
+              child: ColoredBox(color: context.colors.brand),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// The lifter: their picture in their tier's frame, their name, and where
+/// they stand in their country when that is known.
+class _Who extends StatelessWidget {
+  const _Who({
+    required this.data,
+    required this.size,
+    required this.nameSize,
+    this.start = false,
+  });
+
   final ShareCardData data;
+  final double size;
+  final double nameSize;
+
+  /// Hung from the start rather than centred — beside the badge on a post.
+  final bool start;
 
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
-    final places = <String>[
-      if (data.globalPlace case final g?)
-        '${l.global} ${l.rankPosition(localNumber(context, g))}',
-      if (data.countryPlace case final c?)
-        if (data.country case final code?)
-          '${countryName(context, code)} '
-              '${l.rankPosition(localNumber(context, c))}',
-    ].join(' · ');
-
+    final place = switch ((data.countryPlace, data.country)) {
+      (final c?, final code?) =>
+        '${l.rankPosition(localNumber(context, c))} · ${countryName(context, code)}',
+      _ => null,
+    };
     return Row(
+      mainAxisAlignment: start ? MainAxisAlignment.start : MainAxisAlignment.center,
       children: [
-        _Initial(name: data.username, avatarUrl: data.avatarUrl),
-        const SizedBox(width: 10),
-        Expanded(
+        _Framed(
+          name: data.username,
+          avatarUrl: data.avatarUrl,
+          tierIdx: data.tierIdx,
+          size: size,
+        ),
+        Flexible(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -672,16 +790,140 @@ class _IdentityRow extends StatelessWidget {
               ShrinkText(
                 data.username,
                 maxLines: 1,
-                style: _CardType.body.copyWith(color: context.colors.text),
+                style: TextStyle(
+                  color: context.colors.text,
+                  fontSize: nameSize,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-              if (places.isNotEmpty)
-                Text(
-                  places,
-                  style: _CardType.micro.copyWith(
+              if (place != null)
+                ShrinkText(
+                  place,
+                  maxLines: 1,
+                  style: _CardType.label.copyWith(
                     color: context.colors.muted,
+                    fontSize: 14,
                   ),
                 ),
             ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// A picture in its tier's frame, or bare for somebody with no tier to show.
+class _Framed extends StatelessWidget {
+  const _Framed({
+    required this.name,
+    required this.tierIdx,
+    required this.size,
+    this.avatarUrl,
+    this.textColour,
+  });
+
+  final String name;
+  final int? tierIdx;
+  final double size;
+  final String? avatarUrl;
+  final Color? textColour;
+
+  @override
+  Widget build(BuildContext context) {
+    return TierFrame(
+      tierIdx: tierIdx,
+      size: size,
+      child: _Initial(
+        name: name,
+        avatarUrl: avatarUrl,
+        size: size,
+        textColour: textColour,
+      ),
+    );
+  }
+}
+
+class _Tile extends StatelessWidget {
+  const _Tile({required this.label, required this.value, this.size = 28});
+
+  final String label;
+  final String value;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(12, 8, 12, 9),
+      decoration: BoxDecoration(
+        color: context.colors.surface,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: context.colors.border),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ShrinkText(
+            label.toUpperCase(),
+            maxLines: 1,
+            style: _CardType.micro.copyWith(color: context.colors.muted),
+          ),
+          const SizedBox(height: 2),
+          ShrinkText(
+            value,
+            maxLines: 1,
+            style: TextStyle(
+              color: context.colors.text,
+              fontSize: size,
+              fontWeight: FontWeight.w700,
+              fontFeatures: const [FontFeature.tabularFigures()],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The invitation at the foot of a card, and where it leads.
+class _Cta extends StatelessWidget {
+  const _Cta({required this.url, this.line});
+
+  final String url;
+  final String? line;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (line case final words?) ...[
+          ShrinkText(
+            words,
+            maxLines: 1,
+            style: TextStyle(
+              color: context.colors.text,
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 6),
+        ],
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+          decoration: BoxDecoration(
+            color: context.colors.surface,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: context.colors.border),
+          ),
+          child: ShrinkText(
+            url,
+            maxLines: 1,
+            style: _CardType.label.copyWith(
+              color: context.colors.muted,
+              letterSpacing: 0.5,
+            ),
           ),
         ),
       ],
@@ -713,14 +955,12 @@ class _Initial extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: context.colors.surfaceRaised,
-        border: Border.all(color: context.colors.border, width: 1),
       ),
       child: Text(
         name.isEmpty ? '?' : name.characters.first.toUpperCase(),
-        // 15 at the original 32: the other cards draw exactly as before.
         style: _CardType.body.copyWith(
           color: textColour ?? context.colors.text,
-          fontSize: size * 15 / 32,
+          fontSize: size * 0.46,
         ),
       ),
     );
@@ -743,95 +983,13 @@ class _Initial extends StatelessWidget {
   }
 }
 
-class _StatRow extends StatelessWidget {
-  const _StatRow({required this.data, this.compact = false});
-  final ShareCardData data;
-  final bool compact;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = L.of(context);
-    final tiles = [
-      (
-        l.record,
-        '${localNumber(context, data.wins)}–${localNumber(context, data.losses)}',
-      ),
-      (l.bestSet, localNumber(context, data.bestSet)),
-      (l.streak, localNumber(context, data.winStreak)),
-    ];
-
-    if (compact) {
-      return Row(
-        children: [
-          for (final (label, value) in tiles) ...[
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ShrinkText(
-                    value,
-                    maxLines: 1,
-                    style: _CardType.body.copyWith(
-                      color: context.colors.text,
-                    ),
-                  ),
-                  ShrinkText(
-                    label,
-                    maxLines: 1,
-                    style: _CardType.micro.copyWith(
-                      color: context.colors.muted,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            if (label != tiles.last.$1) const SizedBox(width: 10),
-          ],
-        ],
-      );
-    }
-
-    return Row(
-      children: [
-        for (final (label, value) in tiles)
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 3),
-              padding: const EdgeInsets.symmetric(vertical: 9),
-              decoration: BoxDecoration(
-                color: context.colors.surfaceRaised,
-                borderRadius: BorderRadius.circular(11),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    value,
-                    style: _CardType.body.copyWith(
-                      color: context.colors.text,
-                    ),
-                  ),
-                  Text(
-                    label,
-                    style: _CardType.micro.copyWith(
-                      color: context.colors.muted,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-}
-
 // ─────────────────────────────── the match card ────────────────────────────
 
-/// The duel as a scoreboard: both lifters face to face, each with their count
-/// in their own colour, and a bar split by who pushed more. It reads as a
-/// duel at a glance in a feed — a count alone could be any set. A loss keeps
-/// the same board and asks for a rematch instead of claiming a win.
+/// The duel as a scoreboard: both lifters in their frames face to face, the
+/// two counts in their own colours, and a bar split by who pushed more. It
+/// reads as a duel at a glance in a feed — a count alone could be any set.
+/// A loss keeps the same board and asks for a rematch instead of claiming a
+/// win, glowing in the rival's colour rather than the tier's.
 class _MatchStoryCard extends StatelessWidget {
   const _MatchStoryCard({required this.data});
   final MatchShareData data;
@@ -842,194 +1000,50 @@ class _MatchStoryCard extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final l = L.of(context);
-          final you = context.colors.brand;
-          final them = context.colors.rival;
-          return Container(
-            width: 272,
-            height: 560,
-            padding: const EdgeInsets.fromLTRB(18, 22, 18, 20),
-            decoration: BoxDecoration(
-              color: context.colors.background,
-              borderRadius: BorderRadius.circular(22),
-              border: Border.all(color: context.colors.border, width: 0.5),
-            ),
+          return _Backdrop(
+            height: _storyHeight,
+            glow: data.won ? _tierGlow(data.tierIdx) : context.colors.rival,
+            centre: const Alignment(0, -0.4),
+            padding: const EdgeInsets.fromLTRB(22, 26, 22, 24),
             child: Column(
               children: [
-                Text(
-                  'outrepd',
-                  style: _CardType.label.copyWith(
-                    color: context.colors.muted,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-                // The gaps flex, so the card is filled top to bottom whether
-                // or not there is a new best to show.
-                const Spacer(flex: 2),
-                ShrinkText(
-                  data.won ? l.shareVictory : l.shareRematch,
-                  maxLines: 1,
-                  style: TextStyle(
-                    color: data.won ? AppColors.gold : them,
-                    fontSize: 38,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 6,
-                  ),
-                ),
-                const Spacer(flex: 2),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Expanded(
-                      child: _Side(
-                        name: data.username,
-                        avatarUrl: data.avatarUrl,
-                        reps: data.yourReps,
-                        colour: you,
-                      ),
-                    ),
-                    // Room either side, so the two counts read as two
-                    // numbers and not one run of digits.
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 0, 12, 36),
-                      child: Text(
-                        l.vs,
-                        style: _CardType.label.copyWith(
-                          color: context.colors.faint,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: _Side(
-                        name: data.opponent,
-                        reps: data.theirReps,
-                        colour: them,
-                      ),
-                    ),
-                  ],
-                ),
+                const _Brand(),
                 const SizedBox(height: 18),
-                _SplitBar(yours: data.yourReps, theirs: data.theirReps),
-                const SizedBox(height: 12),
+                _Verdict(data: data, size: 56),
+                const SizedBox(height: 8),
+                _Faces(data: data, size: 60),
+                const SizedBox(height: 6),
+                _Score(data: data, size: 120),
+                const SizedBox(height: 14),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: _SplitBar(yours: data.yourReps, theirs: data.theirReps),
+                ),
+                const SizedBox(height: 10),
                 ShrinkText(
-                  l
-                      .pushUpsInSeconds(localNumber(context, data.seconds))
-                      .toUpperCase(),
+                  l.pushUpsInSeconds(localNumber(context, data.seconds)).toUpperCase(),
                   maxLines: 1,
                   style: _CardType.micro.copyWith(
                     color: context.colors.muted,
                     fontSize: 12,
+                    letterSpacing: 2,
                   ),
                 ),
-                const Spacer(flex: 3),
-                _RankLine(data: data, scale: 1.45),
+                const SizedBox(height: 16),
+                _RankLine(data: data, badge: 44, text: 17),
                 if (data.newBest) ...[
                   const SizedBox(height: 14),
-                  _BestChip(label: l.newPersonalBest, scale: 1.35),
+                  _BestChip(label: l.newPersonalBest),
                 ],
-                const Spacer(flex: 4),
-                ShrinkText(
-                  data.won ? l.duelMeOnOutrepd : l.thinkYouCanBeatMe,
-                  maxLines: 1,
-                  style: _CardType.heading.copyWith(
-                    color: context.colors.text,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                ShrinkText(
-                  data.profileUrl,
-                  maxLines: 1,
-                  style: _CardType.micro.copyWith(
-                    color: context.colors.muted,
-                  ),
+                const Spacer(),
+                _Cta(
+                  line: data.won ? l.duelMeOnOutrepd : l.thinkYouCanBeatMe,
+                  url: data.profileUrl,
                 ),
               ],
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-/// One lifter on the scoreboard: picture, name, count, all in their colour.
-class _Side extends StatelessWidget {
-  const _Side({
-    required this.name,
-    required this.reps,
-    required this.colour,
-    this.avatarUrl,
-  });
-
-  final String name;
-  final int reps;
-  final Color colour;
-  final String? avatarUrl;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _Initial(name: name, avatarUrl: avatarUrl, size: 78, textColour: colour),
-        const SizedBox(height: 9),
-        ShrinkText(
-          name,
-          maxLines: 1,
-          style: _CardType.label.copyWith(color: colour, fontSize: 15),
-        ),
-        const SizedBox(height: 4),
-        FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Text(
-            localNumber(context, reps),
-            style: TextStyle(
-              color: colour,
-              fontSize: 104,
-              fontWeight: FontWeight.w900,
-              height: 0.95,
-              letterSpacing: -3,
-              fontFeatures: const [FontFeature.tabularFigures()],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-/// The two counts as one bar, split by who did more — the same bar the duel
-/// screen draws while the round is on.
-class _SplitBar extends StatelessWidget {
-  const _SplitBar({required this.yours, required this.theirs});
-
-  final int yours;
-  final int theirs;
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(6),
-      child: SizedBox(
-        height: 12,
-        width: double.infinity,
-        child: yours <= 0 && theirs <= 0
-            ? ColoredBox(color: context.colors.surfaceRaised)
-            : Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  if (yours > 0)
-                    Expanded(
-                      flex: yours,
-                      child: ColoredBox(color: context.colors.brand),
-                    ),
-                  if (theirs > 0)
-                    Expanded(
-                      flex: theirs,
-                      child: ColoredBox(color: context.colors.rival),
-                    ),
-                ],
-              ),
       ),
     );
   }
@@ -1045,42 +1059,39 @@ class _MatchPostCard extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final l = L.of(context);
-          return Container(
-            width: 400,
-            height: 260,
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: context.colors.background,
-              borderRadius: BorderRadius.circular(22),
-              border: Border.all(color: context.colors.border, width: 0.5),
-            ),
-            child: Row(
+          return _Backdrop(
+            height: _postHeight,
+            glow: data.won ? _tierGlow(data.tierIdx) : context.colors.rival,
+            centre: const Alignment(0, -0.25),
+            padding: const EdgeInsets.fromLTRB(18, 20, 18, 20),
+            child: Column(
               children: [
-                SizedBox(width: 150, child: _BigCount(data: data, size: 96)),
-                const SizedBox(width: 20),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      _ResultLine(data: data, centred: false),
-                      const SizedBox(height: 12),
-                      _RankLine(data: data, centred: false),
-                      if (data.newBest) ...[
-                        const SizedBox(height: 10),
-                        _BestChip(label: l.newPersonalBest),
-                      ],
-                      const SizedBox(height: 16),
-                      ShrinkText(
-                        data.profileUrl,
-                        maxLines: 1,
-                        style: _CardType.micro.copyWith(
-                          color: context.colors.muted,
-                        ),
-                      ),
-                    ],
-                  ),
+                const _Brand(),
+                const SizedBox(height: 6),
+                _Verdict(data: data, size: 40),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    Expanded(child: _Face(data: data, mine: true, size: 48)),
+                    _Score(data: data, size: 60),
+                    Expanded(child: _Face(data: data, mine: false, size: 48)),
+                  ],
                 ),
+                const SizedBox(height: 12),
+                _SplitBar(yours: data.yourReps, theirs: data.theirReps),
+                const SizedBox(height: 14),
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: 10,
+                  runSpacing: 8,
+                  children: [
+                    _RankLine(data: data, badge: 40, text: 16),
+                    if (data.newBest) _BestChip(label: l.newPersonalBest),
+                  ],
+                ),
+                const Spacer(),
+                _Cta(url: data.profileUrl),
               ],
             ),
           );
@@ -1090,77 +1101,170 @@ class _MatchPostCard extends StatelessWidget {
   }
 }
 
-/// The rep count and the clock it was done against.
-class _BigCount extends StatelessWidget {
-  const _BigCount({required this.data, required this.size});
+/// VICTORY, or the ask for a rematch after a loss.
+class _Verdict extends StatelessWidget {
+  const _Verdict({required this.data, required this.size});
   final MatchShareData data;
   final double size;
 
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
+    return ShrinkText(
+      data.won ? l.shareVictory : l.shareRematch,
+      maxLines: 1,
+      style: TextStyle(
+        color: data.won ? AppColors.gold : context.colors.rival,
+        fontSize: size,
+        fontWeight: FontWeight.w900,
+        letterSpacing: size / 7,
+      ),
+    );
+  }
+}
+
+/// Both lifters, framed, either side of "vs".
+class _Faces extends StatelessWidget {
+  const _Faces({required this.data, required this.size});
+  final MatchShareData data;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(child: _Face(data: data, mine: true, size: size)),
+        Text(
+          L.of(context).vs.toUpperCase(),
+          style: _CardType.label.copyWith(
+            color: context.colors.muted,
+            fontSize: 16,
+            letterSpacing: 2,
+          ),
+        ),
+        Expanded(child: _Face(data: data, mine: false, size: size)),
+      ],
+    );
+  }
+}
+
+/// One lifter on the scoreboard: picture in its frame, name in their colour.
+class _Face extends StatelessWidget {
+  const _Face({required this.data, required this.mine, required this.size});
+  final MatchShareData data;
+  final bool mine;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final colour = mine ? context.colors.text : context.colors.rival;
+    final name = mine ? data.username : data.opponent;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Text(
-            localNumber(context, data.yourReps),
-            style: TextStyle(
-              color: context.colors.text,
-              fontSize: size,
-              fontWeight: FontWeight.w800,
-              height: 0.95,
-              letterSpacing: -size / 40,
-              fontFeatures: const [FontFeature.tabularFigures()],
-            ),
-          ),
+        _Framed(
+          name: name,
+          avatarUrl: mine ? data.avatarUrl : null,
+          tierIdx: mine ? data.tierIdx : data.opponentTierIdx,
+          size: size,
+          textColour: colour,
         ),
-        const SizedBox(height: 4),
         ShrinkText(
-          l.pushUpsInSeconds(localNumber(context, data.seconds)).toUpperCase(),
+          name,
           maxLines: 1,
-          style: _CardType.micro.copyWith(color: context.colors.muted),
+          style: TextStyle(
+            color: colour,
+            fontSize: size >= 60 ? 17 : 15,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ],
     );
   }
 }
 
-/// "Beat iron_mike 18–11", with the opponent's name in their colour.
-class _ResultLine extends StatelessWidget {
-  const _ResultLine({required this.data, required this.centred});
+/// The two counts: yours, a dash, theirs.
+class _Score extends StatelessWidget {
+  const _Score({required this.data, required this.size});
   final MatchShareData data;
-  final bool centred;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
-    final l = L.of(context);
-    final score =
-        '${localNumber(context, data.yourReps)}–'
-        '${localNumber(context, data.theirReps)}';
-    final line = data.won
-        ? l.beatOpponent(data.opponent, score)
-        : l.lostToOpponent(data.opponent, score);
-    final at = line.indexOf(data.opponent);
-    final base = _CardType.body.copyWith(color: context.colors.text);
+    TextStyle style(Color colour, {FontWeight weight = FontWeight.w900}) =>
+        TextStyle(
+          color: colour,
+          fontSize: size,
+          fontWeight: weight,
+          height: 1,
+          fontFeatures: const [FontFeature.tabularFigures()],
+        );
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(localNumber(context, data.yourReps), style: style(context.colors.text)),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: size / 12),
+            child: Text(
+              '–',
+              style: style(context.colors.faint, weight: FontWeight.w300),
+            ),
+          ),
+          Text(localNumber(context, data.theirReps), style: style(context.colors.rival)),
+        ],
+      ),
+    );
+  }
+}
 
-    return Text.rich(
-      at < 0
-          ? TextSpan(text: line)
-          : TextSpan(
+/// The two counts as one bar, split by who did more — the same bar the duel
+/// screen draws while the round is on.
+class _SplitBar extends StatelessWidget {
+  const _SplitBar({required this.yours, required this.theirs});
+
+  final int yours;
+  final int theirs;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 10,
+      width: double.infinity,
+      child: yours <= 0 && theirs <= 0
+          ? DecoratedBox(
+              decoration: BoxDecoration(
+                color: context.colors.surfaceRaised,
+                borderRadius: BorderRadius.circular(5),
+              ),
+            )
+          : Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                TextSpan(text: line.substring(0, at)),
-                TextSpan(
-                  text: data.opponent,
-                  style: TextStyle(color: context.colors.rival),
-                ),
-                TextSpan(text: line.substring(at + data.opponent.length)),
+                if (yours > 0)
+                  Expanded(
+                    flex: yours,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: context.colors.text,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                  ),
+                if (yours > 0 && theirs > 0) const SizedBox(width: 4),
+                if (theirs > 0)
+                  Expanded(
+                    flex: theirs,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: context.colors.rival,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                  ),
               ],
             ),
-      style: base,
-      maxLines: 2,
-      textAlign: centred ? TextAlign.center : TextAlign.start,
     );
   }
 }
@@ -1168,12 +1272,10 @@ class _ResultLine extends StatelessWidget {
 /// The rank the duel left the account on, and what it moved. Nothing while
 /// still in placements: there is no rank yet to say.
 class _RankLine extends StatelessWidget {
-  const _RankLine({required this.data, this.centred = true, this.scale = 1});
+  const _RankLine({required this.data, required this.badge, required this.text});
   final MatchShareData data;
-  final bool centred;
-
-  /// Larger on the story card, which has the room.
-  final double scale;
+  final double badge;
+  final double text;
 
   @override
   Widget build(BuildContext context) {
@@ -1183,12 +1285,9 @@ class _RankLine extends StatelessWidget {
     final delta = data.lpDelta;
     return Row(
       mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: centred
-          ? MainAxisAlignment.center
-          : MainAxisAlignment.start,
       children: [
-        TierBadge(tierIndex: tier, size: 22 * scale),
-        SizedBox(width: 6 * scale),
+        TierBadge(tierIndex: tier, size: badge),
+        const SizedBox(width: 8),
         Flexible(
           child: Text.rich(
             TextSpan(
@@ -1202,9 +1301,9 @@ class _RankLine extends StatelessWidget {
                         '${l.lpAmount(localNumber(context, delta.abs()))}',
                     style: TextStyle(
                       color: delta >= 0
-                          ? context.colors.brand
+                          ? context.colors.text
                           : context.colors.rival,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ],
@@ -1214,7 +1313,7 @@ class _RankLine extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: _CardType.label.copyWith(
               color: context.colors.muted,
-              fontSize: 13 * scale,
+              fontSize: text,
             ),
           ),
         ),
@@ -1224,26 +1323,36 @@ class _RankLine extends StatelessWidget {
 }
 
 class _BestChip extends StatelessWidget {
-  const _BestChip({required this.label, this.scale = 1});
+  const _BestChip({required this.label});
   final String label;
-
-  /// Larger on the story card, which has the room.
-  final double scale;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10 * scale, vertical: 5 * scale),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
       decoration: BoxDecoration(
-        color: context.colors.surfaceRaised,
-        borderRadius: BorderRadius.circular(99),
+        color: context.colors.surface,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: context.colors.border),
       ),
-      child: Text(
-        '★ $label',
-        style: _CardType.micro.copyWith(
-          color: context.colors.text,
-          fontSize: 11 * scale,
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Drawn, not typed: a star character is a box in some fonts.
+          const Icon(Icons.star_rounded, color: AppColors.gold, size: 17),
+          const SizedBox(width: 6),
+          Flexible(
+            child: ShrinkText(
+              label,
+              maxLines: 1,
+              style: _CardType.label.copyWith(
+                color: context.colors.text,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
