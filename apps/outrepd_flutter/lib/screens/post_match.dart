@@ -252,8 +252,30 @@ class DuelResultView extends StatelessWidget {
                   ],
                   if (_monthMove(context) case final move?) ...[
                     const SizedBox(height: 12),
-                    Text(
-                      l.monthMove(move),
+                    // The arrow drawn, not typed: as a character it is a box
+                    // on phones whose font does not have it.
+                    Text.rich(
+                      TextSpan(
+                        children: [
+                          for (final (i, part)
+                              in l.monthMove(move).split('→').indexed) ...[
+                            if (i > 0)
+                              const WidgetSpan(
+                                alignment: PlaceholderAlignment.middle,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 2),
+                                  child: Icon(
+                                    Icons.arrow_forward_rounded,
+                                    size: 17,
+                                    color: AppColors.gold,
+                                  ),
+                                ),
+                              ),
+                            TextSpan(text: part),
+                          ],
+                        ],
+                      ),
+                      key: const Key('monthMove'),
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: AppColors.gold,

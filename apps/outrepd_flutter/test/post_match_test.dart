@@ -107,6 +107,31 @@ void main() {
     });
   });
 
+  testWidgets("the month's move draws its arrow rather than typing it",
+      (tester) async {
+    phone(tester);
+    await tester.pumpWidget(_app(DuelResultView(
+      won: true,
+      yourReps: 18,
+      theirReps: 11,
+      opponent: demoOpponents.first,
+      outcome: demoOutcome(won: true),
+      onRematch: () {},
+      onDone: () {},
+      monthBefore: 14,
+      monthAfter: 11,
+    )));
+    await tester.pumpAndSettle();
+    final line = find.byKey(const Key('monthMove'));
+    expect(line, findsOneWidget);
+    expect(
+      find.descendant(of: line, matching: find.byIcon(Icons.arrow_forward_rounded)),
+      findsOneWidget,
+    );
+    expect(find.textContaining('#14', findRichText: true), findsOneWidget);
+    expect(find.textContaining('#11', findRichText: true), findsOneWidget);
+  });
+
   group("today's goal", () {
     DuelResultView passing({required int before, required int after}) {
       final o = demoOutcome(won: true);
