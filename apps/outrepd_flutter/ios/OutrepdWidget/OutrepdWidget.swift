@@ -4,9 +4,11 @@
 // Nothing here is worked out: the app writes every word and number, in the
 // reader's language, into the app group both targets share
 // (lib/home_widgets.dart), and asks for a reload after each set. The one
-// thing decided here is a new day: yesterday's count is not today's.
+// thing decided here is a new day: yesterday's count is not today's. The
+// rank's badge is a picture the app drew and saved in the same group.
 
 import SwiftUI
+import UIKit
 import WidgetKit
 
 private let appGroup = "group.com.outrepd.outrepd"
@@ -27,13 +29,15 @@ struct GoalEntry: TimelineEntry {
     let rank: String
     let lp: String
     let lpShare: Double
+    let badge: UIImage?
 }
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> GoalEntry {
         GoalEntry(
             date: Date(), goalCount: "32", goalShare: 0.64, goalOf: "of 50 today",
-            streak: "5 day streak", rank: "Gold III", lp: "64 / 100 LP", lpShare: 0.64
+            streak: "5 day streak", rank: "Gold III", lp: "64 / 100 LP", lpShare: 0.64,
+            badge: nil
         )
     }
 
@@ -65,7 +69,10 @@ struct Provider: TimelineProvider {
             streak: text("streak"),
             rank: text("rank"),
             lp: text("lp"),
-            lpShare: (Double(text("lp_percent", "0")) ?? 0) / 100
+            lpShare: (Double(text("lp_percent", "0")) ?? 0) / 100,
+            // The path the app saved it at, in the group container both
+            // targets see at the same place.
+            badge: text("tier_badge").isEmpty ? nil : UIImage(contentsOfFile: text("tier_badge"))
         )
     }
 }
@@ -108,10 +115,17 @@ private struct MediumView: View {
     let entry: GoalEntry
 
     var body: some View {
-        HStack(spacing: 16) {
+        HStack(spacing: 12) {
+            if let badge = entry.badge {
+                Image(uiImage: badge)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 80, height: 80)
+            }
             VStack(alignment: .leading, spacing: 6) {
                 Text("OUTREPD").font(.system(size: 12, weight: .semibold)).tracking(1.2).foregroundColor(muted)
                 Text(entry.rank).font(.system(size: 22, weight: .bold)).foregroundColor(ink).lineLimit(1)
+                    .minimumScaleFactor(0.65)
                 if !entry.lp.isEmpty {
                     Text(entry.lp).font(.system(size: 13)).foregroundColor(muted).lineLimit(1)
                     GeometryReader { box in

@@ -5,6 +5,10 @@
 /// read it — Android's shared preferences, or the app group both the app and
 /// its iOS widget extension share. Saved again whenever the career or the
 /// goal changes, which is whenever a set lands.
+///
+/// The one picture is the rank badge on the medium widget. Neither platform's
+/// widget can run Flutter's painter, so the app draws the badge to a PNG and
+/// saves where the widget reads it, again only when the tier changes.
 library;
 
 import 'dart:async';
@@ -17,6 +21,7 @@ import 'career.dart';
 import 'data.dart';
 import 'l10n/app_localizations.dart';
 import 'settings.dart';
+import 'tier_badge.dart';
 import 'widgets.dart';
 
 abstract final class HomeWidgets {
@@ -31,6 +36,15 @@ abstract final class HomeWidgets {
 
   static bool _started = false;
   static Timer? _soon;
+
+  /// The badge picture's key, and its side in logical pixels: the widgets
+  /// fit it to their own box, so this only has to be at least as big.
+  static const badgeKey = 'tier_badge';
+  static const _badgeSize = 88.0;
+
+  /// The tier the saved badge shows, `unranked` or its index, so a set that
+  /// moves only the LP does not draw it again.
+  static String? _badgeFor;
 
   /// Called once at launch, on a phone. Nothing here may stop the app from
   /// opening, so every failure is only reported.
@@ -89,6 +103,7 @@ abstract final class HomeWidgets {
       for (final entry in contents(l).entries) {
         await HomeWidget.saveWidgetData<String>(entry.key, entry.value);
       }
+      await _saveBadge();
       await HomeWidget.updateWidget(
         iOSName: _iOSName,
         qualifiedAndroidName: _androidSmall,
@@ -98,6 +113,28 @@ abstract final class HomeWidgets {
       // No widget on the home screen, or none on this platform: nothing to
       // keep up to date, and nothing worth troubling anyone about.
       debugPrint('Could not update the home-screen widgets: $error');
+    }
+  }
+
+  /// Draws the badge for the current tier, if it is not the one already
+  /// saved. A widget left without it still shows the rank in words, so a
+  /// failure here only costs the picture.
+  static Future<void> _saveBadge() async {
+    final p = demoProfile;
+    final tier = p.isRanked ? p.tierIdx : null;
+    final shows = '${tier ?? 'unranked'}';
+    if (shows == _badgeFor) return;
+    try {
+      final png = await tierBadgePng(
+        tierIdx: tier,
+        size: _badgeSize,
+        pixelRatio:
+            PlatformDispatcher.instance.implicitView?.devicePixelRatio ?? 3,
+      );
+      await HomeWidget.saveFile(badgeKey, png, extension: 'png');
+      _badgeFor = shows;
+    } on Object catch (error) {
+      debugPrint('Could not draw the badge for the widget: $error');
     }
   }
 }

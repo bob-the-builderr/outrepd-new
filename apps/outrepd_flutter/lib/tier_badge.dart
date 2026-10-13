@@ -28,6 +28,7 @@
 library;
 
 import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
@@ -297,6 +298,37 @@ class TierBadge extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// The badge as a PNG [size] logical pixels square, for a place Flutter does
+/// not draw: the home-screen widgets show a picture the app saved for them.
+/// A null [tierIdx] is the unranked outline.
+///
+/// The widgets sit on the dark page whatever the app's theme, so the outline
+/// is the dark theme's.
+Future<Uint8List> tierBadgePng({
+  required int? tierIdx,
+  required double size,
+  required double pixelRatio,
+}) async {
+  final recorder = ui.PictureRecorder();
+  final canvas = Canvas(recorder)..scale(pixelRatio);
+  _CrestPainter(
+    crest: _crests[(tierIdx ?? 0).clamp(0, _crests.length - 1)],
+    hollow: tierIdx == null,
+    dashed: tierIdx == null,
+    outline: kDarkPalette.faint,
+  ).paint(canvas, Size.square(size));
+  final picture = recorder.endRecording();
+  final side = (size * pixelRatio).round();
+  final image = await picture.toImage(side, side);
+  try {
+    final data = await image.toByteData(format: ui.ImageByteFormat.png);
+    return data!.buffer.asUint8List();
+  } finally {
+    image.dispose();
+    picture.dispose();
   }
 }
 

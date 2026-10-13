@@ -3,6 +3,9 @@ package com.outrepd.outrepd
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.BitmapFactory
+import android.os.Bundle
+import android.view.View
 import android.widget.RemoteViews
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -55,7 +58,44 @@ class OutrepdSmallWidget : HomeWidgetProvider() {
     }
 }
 
+/**
+ * The badge the app drew for the current tier (HomeWidgets._saveBadge), if
+ * there is one and the widget is wide enough to keep the words beside it
+ * readable: below that, the rank in words is the better use of the room.
+ */
+private fun fillBadge(
+    views: RemoteViews,
+    data: SharedPreferences,
+    appWidgetManager: AppWidgetManager,
+    id: Int,
+) {
+    // Portrait width; 0 from a launcher that does not say, which gets the
+    // badge, since most four-cell widgets have the room.
+    val width = appWidgetManager.getAppWidgetOptions(id)
+        .getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 0)
+    val badge = data.getString("tier_badge", null)
+        ?.takeIf { width == 0 || width >= 290 }
+        ?.let { BitmapFactory.decodeFile(it) }
+    if (badge == null) {
+        views.setViewVisibility(R.id.badge, View.GONE)
+    } else {
+        views.setImageViewBitmap(R.id.badge, badge)
+        views.setViewVisibility(R.id.badge, View.VISIBLE)
+    }
+}
+
 class OutrepdMediumWidget : HomeWidgetProvider() {
+    /** Resized on the home screen: the badge may now fit, or no longer. */
+    override fun onAppWidgetOptionsChanged(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetId: Int,
+        newOptions: Bundle,
+    ) {
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions)
+        onUpdate(context, appWidgetManager, intArrayOf(appWidgetId))
+    }
+
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -65,6 +105,7 @@ class OutrepdMediumWidget : HomeWidgetProvider() {
         for (id in appWidgetIds) {
             val views = RemoteViews(context.packageName, R.layout.outrepd_widget_medium)
             fillGoal(views, widgetData)
+            fillBadge(views, widgetData, appWidgetManager, id)
             views.setTextViewText(R.id.rank, widgetData.getString("rank", ""))
             views.setTextViewText(R.id.lp, widgetData.getString("lp", ""))
             views.setProgressBar(

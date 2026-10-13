@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Medium: the rank and its LP on the left, today's goal ring on the right.
-     Filled in by OutrepdMediumWidget from what the app saved. -->
+<!-- Medium: the rank's badge, the rank and its LP, and today's goal ring on
+     the right. Filled in by OutrepdMediumWidget from what the app saved; the
+     badge is a picture the app drew, hidden until there is one and on a
+     widget too narrow to give the words room beside it. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
@@ -9,6 +11,15 @@
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/badge"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@null"
+        android:scaleType="fitCenter"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -24,50 +35,33 @@
             android:textColor="#8F8880"
             android:textSize="12sp" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/rank"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="2dp"
+            android:autoSizeMaxTextSize="22sp"
+            android:autoSizeMinTextSize="14sp"
+            android:autoSizeTextType="uniform"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:maxLines="1"
+            android:textColor="#F5EFE4"
+            android:textStyle="bold" />
 
-            <ImageView
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:contentDescription="@null"
-                android:src="@mipmap/ic_launcher" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/rank"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:textColor="#F5EFE4"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/lp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:textColor="#8F8880"
-                    android:textSize="13sp" />
-            </LinearLayout>
-        </LinearLayout>
+        <TextView
+            android:id="@+id/lp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColor="#8F8880"
+            android:textSize="13sp" />
 
         <ProgressBar
             android:id="@+id/lp_bar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="6dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="6dp"
             android:max="100"
             android:progress="0"
             android:progressDrawable="@drawable/widget_lp_bar" />
@@ -76,7 +70,7 @@
             android:id="@+id/streak"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             android:maxLines="1"
             android:textColor="#D9A94A"
             android:textSize="13sp" />
@@ -85,7 +79,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
+        android:layout_marginStart="12dp"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
