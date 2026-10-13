@@ -1,0 +1,1178 @@
+00:00 +0: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+00:00 +0 -1: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+00:00 +0 -1: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ladder_server_test.dart: (setUpAll)
+00:00 +0 -1: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ladder_server_test.dart: the server pays what the app promised
+no server configured — pass --dart-define=SUPABASE_URL and SUPABASE_ANON_KEY to check the ladder against it
+00:00 +1 -1: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ladder_server_test.dart: the server moves a rank the way the app says it will
+00:00 +2 -1: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ladder_server_test.dart: (tearDownAll)
+00:01 +2 -1: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/version_test.dart: kAppVersion matches pubspec
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+00:05 +3 -2: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/trainer_lifecycle_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/trainer_lifecycle_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/trainer_lifecycle_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+00:05 +3 -2: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+00:06 +3 -3: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+00:06 +3 -3: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+00:07 +3 -3: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notify_server_test.dart: the lifter who was raced finds out
+no server configured — skipping
+00:07 +4 -3: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notify_server_test.dart: holding somebody off reads as a win
+00:07 +5 -3: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notify_server_test.dart: a rematch challenge tells the one it names
+00:07 +6 -3: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notify_server_test.dart: an ordinary set challenges nobody
+00:07 +7 -3: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notify_server_test.dart: a friend request and its answer both land
+00:07 +8 -3: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notify_server_test.dart: the count is what the dot shows, and reading clears it
+00:07 +9 -3: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notify_server_test.dart: nobody reads anybody else
+00:08 +10 -3: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/posture_probe_test.dart: how a push-up reads, and how standing reads
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+00:12 +11 -4: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+00:12 +11 -4: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+00:14 +11 -5: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/failure_states_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/failure_states_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/failure_states_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+00:14 +11 -5: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+00:17 +11 -5: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/persistence_test.dart: settings survive a restart
+00:17 +12 -5: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/persistence_test.dart: untouched settings keep their defaults
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+00:21 +13 -6: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/post_match_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/post_match_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/post_match_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+00:21 +13 -6: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+00:27 +13 -7: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+00:27 +13 -7: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+00:33 +13 -8: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/reminders_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/reminders_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/reminders_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+00:33 +13 -8: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+00:34 +13 -8: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/account_server_test.dart: a valid new name is taken, and cannot be spent twice
+no server configured — skipping
+00:34 +14 -8: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/account_server_test.dart: under four characters is invalid
+00:34 +15 -8: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/account_server_test.dart: a symbol or space is invalid
+00:34 +16 -8: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/account_server_test.dart: somebody else already has it
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+00:38 +17 -9: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/worn_title_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/worn_title_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/worn_title_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+00:38 +17 -9: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+00:45 +17 -10: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+00:45 +17 -10: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+00:46 +17 -10: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/pushup_report_test.dart: a report somebody can check against the footage
+No pose recordings at D:/pushup-poses.
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+00:47 +18 -11: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_server_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_server_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_server_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+00:47 +18 -11: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+00:48 +18 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: the exercise-count titles are gone nothing in the list can no longer be earned
+00:48 +19 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: clean sets a session with no clean set does not move the tally
+00:48 +20 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: clean sets one clean set unlocks Clean Hands
+00:48 +21 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: clean sets ten clean sets unlocks Spotless too
+00:48 +22 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: the hours a session at midday counts towards neither
+00:48 +23 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: the hours ten sessions before seven unlocks Early Shift
+00:48 +24 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: the hours ten sessions after ten at night unlocks Night Shift
+00:48 +25 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: the hours seven in the morning itself is neither early nor late
+00:48 +26 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: the perfect week seven consecutive days with no rest unlocks Perfect Week
+00:48 +27 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: the perfect week a single rest day breaks it, even though the forgiving streak survives
+00:48 +28 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: the perfect week four straight perfect weeks unlocks Perfect Month
+00:48 +29 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: award unlocks exactly the id given, once
+00:48 +30 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: award the first title earned is worn automatically
+00:48 +31 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: surviving a restart every new tally comes back exactly as it was
+00:49 +32 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: opens with the current name already filled in
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+00:50 +33 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: the save button is disabled until the name actually changes
+00:50 +34 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: a name that is free shows available and can be saved
+00:51 +35 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: a name somebody else already has shows taken
+00:51 +36 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: a single character never even asks the server
+00:51 +37 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: under four characters never even asks the server
+00:51 +38 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: a symbol or space never even asks the server
+00:51 +39 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: the server saying taken after the screen said available still refuses to save
+00:51 +40 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: an account that already renamed sees the locked message, not a field
+00:51 +41 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: with no backend, saving shows it needs one rather than silently doing nothing
+00:52 +42 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: username editor lays out at 1.0x text scale
+00:52 +43 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: username editor lays out at 1.3x text scale
+00:52 +44 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: username editor lays out at 1.6x text scale
+00:52 +45 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: username editor lays out in hi
+00:52 +46 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: username editor lays out in de
+00:52 +47 -11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: username editor lays out in ja
+00:54 +48 -12: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+00:54 +48 -12: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+00:59 +48 -13: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/deep_links_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/deep_links_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/deep_links_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+00:59 +48 -13: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+01:00 +48 -13: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/push_messages_test.dart: the push function has the current translations
+01:01 +49 -13: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/push_messages_test.dart: every push can name who it is about
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+01:05 +50 -14: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+01:05 +50 -14: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+01:07 +50 -14: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/pushup_accuracy_test.dart: push-ups counted against what the footage says
+No pose recordings at D:/pushup-poses yet.
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+01:11 +51 -15: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/daily_goal_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/daily_goal_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/daily_goal_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+01:11 +51 -15: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+01:18 +51 -16: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+01:18 +51 -16: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+01:25 +51 -17: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+01:25 +51 -17: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+01:32 +51 -18: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+01:32 +51 -18: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+01:33 +51 -18: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sql_lint_test.dart: there is SQL to check
+01:33 +52 -18: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sql_lint_test.dart: no function names an input the same as an output
+01:34 +53 -18: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sql_lint_test.dart: an update never reads a column a RETURNS TABLE also names
+01:34 +54 -18: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sql_lint_test.dart: every function body is quoted with $$ at both ends
+01:34 +55 -18: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sql_lint_test.dart: every function declares a search path
+01:34 +56 -18: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sql_lint_test.dart: the installer is up to date with its parts
+01:34 +57 -18: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sql_lint_test.dart: policies can be applied twice
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+01:40 +58 -19: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+01:40 +58 -19: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+01:42 +58 -20: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+01:42 +58 -20: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+01:48 +58 -21: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/race_your_best_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/race_your_best_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/race_your_best_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+01:48 +58 -21: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+01:56 +58 -22: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+01:56 +58 -22: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+01:58 +58 -22: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/language_setting_test.dart: an old saved position still means the language it meant
+01:58 +59 -22: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: a block hides them both ways, and tells them nothing
+01:58 +60 -22: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: a block hides them both ways, and tells them nothing
+no server configured — skipping
+01:58 +61 -22: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: a block hides them both ways, and tells them nothing
+01:58 +62 -22: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/language_setting_test.dart: nothing saved, or nonsense saved, is English
+01:58 +63 -22: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: blocking ends the friendship
+01:58 +64 -22: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/language_setting_test.dart: a fresh install is English, whatever the phone speaks
+01:58 +65 -22: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: a blocked account is never handed over as an opponent
+01:58 +66 -22: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/language_setting_test.dart: the old default, saved, becomes English once
+01:58 +67 -22: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: "who can challenge me" decides who gets the set
+01:58 +68 -22: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/language_setting_test.dart: a language somebody chose is left alone
+01:58 +69 -22: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: asking to be off the board takes you off it
+01:58 +70 -22: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/language_setting_test.dart: a choice is saved by name
+01:58 +71 -22: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/language_setting_test.dart: a choice is saved by name
+01:58 +72 -22: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: a report is write-only
+01:58 +73 -22: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: my data is mine, and holds no pose landmarks
+01:58 +74 -22: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+02:05 +74 -23: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+02:05 +74 -23: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+02:06 +74 -23: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/user_probe_test.dart: what the checks read, second by second
+missing VID_20260921210358.json
+missing VID_20260921210455.json
+02:06 +75 -23: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/social_server_test.dart: a request is sent, seen, and accepted
+no server configured — skipping
+02:06 +76 -23: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/social_server_test.dart: asking back is the same as saying yes
+02:06 +77 -23: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/social_server_test.dart: declining forgets it, so they can ask again
+02:06 +78 -23: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/social_server_test.dart: nobody can read a friendship they are not in
+02:06 +79 -23: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/social_server_test.dart: a friend row carries the head-to-head
+02:06 +80 -23: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/social_server_test.dart: a search needs something to go on
+02:06 +81 -23: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/social_server_test.dart: asking for somebody who is not there says so
+02:06 +82 -23: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/social_server_test.dart: the board shows placed accounts and hides the rest
+02:06 +83 -23: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/social_server_test.dart: a board position is the row somebody is actually standing on
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+02:11 +84 -24: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+02:11 +84 -24: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+02:13 +84 -25: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ladder_vectors_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ladder_vectors_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ladder_vectors_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+02:13 +84 -25: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+02:20 +84 -26: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+02:20 +84 -26: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+02:26 +84 -27: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+02:26 +84 -27: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+02:33 +84 -28: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+02:33 +84 -28: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+02:34 +84 -28: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/pushup_wiring_test.dart: what the counter makes of the internet clips
+no recordings at D:/pushup-poses — nothing to measure
+02:34 +85 -28: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: the bench measures what it is given a synthetic set of known size is counted and compared
+02:34 +86 -28: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: the bench measures what it is given a clean set of a known size is counted exactly
+02:34 +87 -28: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: the bench measures what it is given an unlabelled session is skipped, not scored as nothing
+02:35 +88 -28: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: the bench measures what it is given a corrupt file is stepped over
+02:35 +89 -28: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: the bench measures what it is given the summary reports error, direction and the worst miss
+02:35 +90 -28: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: the bench measures what it is given an empty folder says so instead of claiming perfection
+02:35 +91 -28: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions every recording in test/recordings is scored
+
+--- push-up counter, measured against labelled sets ---
+sets            14
+exact           14  (100%)
+within 1        14  (100%)
+mean |error|    0.00 reps
+bias            +0.00 reps
+
+02:36 +92 -28: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions a set the counter gets wrong, it says it is unsure of
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+02:37 +93 -28: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions the lifter's own two sessions still score right
+02:41 +94 -29: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+02:41 +94 -29: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+02:48 +94 -30: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/match_share_card_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/match_share_card_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/match_share_card_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+02:48 +94 -30: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+02:54 +94 -31: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+02:54 +94 -31: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+03:01 +94 -32: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/month_board_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/month_board_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/month_board_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+03:01 +94 -32: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+03:03 +94 -32: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/country_names_test.dart: a code reads in the reader's language
+03:04 +95 -32: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/country_names_test.dart: something that is not a code is shown as it is
+03:04 +96 -32: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/country_names_test.dart: every app language has a name for every country English has
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+03:07 +97 -33: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/home_widgets_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/home_widgets_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/home_widgets_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+03:08 +97 -33: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+03:13 +97 -34: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+03:14 +97 -34: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+03:18 +97 -35: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_offline_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_offline_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_offline_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+03:18 +97 -35: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+Future<Uint8List> tierBadgePng({
+       ^^^^^^^^^
+03:24 +97 -36: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: lib/tier_badge.dart:332:8: Error: Type 'Uint8List' not found.
+  Future<Uint8List> tierBadgePng({
+         ^^^^^^^^^
+  .
+03:24 +97 -36: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+03:26 +97 -36: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friend_code_test.dart: a code is a code with or without its # and spaces
+03:26 +98 -36: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friend_code_test.dart: a name is a name
+03:26 +99 -36: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_rematch_test.dart: asking waits on them, and can be taken back
+03:27 +100 -36: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_rematch_test.dart: starts once they say yes
+03:27 +101 -36: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_rematch_test.dart: when they asked first, the button is the answer
+03:27 +102 -36: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_rematch_test.dart: an invite from somebody else is not their rematch
+03:27 +103 -36: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_rematch_test.dart: says so when the next one cannot be ranked
+03:27 +104 -36: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_rematch_test.dart: a lapsed ask says so, and can be asked again
+03:27 +105 -36: Some tests failed.
+
+Failing tests:
+  /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart
+  /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_offline_test.dart: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_offline_test.dart
+  /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart
+  /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart
+  ... and 32 more
