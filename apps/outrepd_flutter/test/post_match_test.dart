@@ -132,6 +132,28 @@ void main() {
     expect(find.textContaining('#11', findRichText: true), findsOneWidget);
   });
 
+  testWidgets('after a saved set the button finds a new match, not a rematch',
+      (tester) async {
+    // A saved set is somebody's minute, its number now known: racing it
+    // again would only hand its owner another loss.
+    phone(tester);
+    var pressed = false;
+    await tester.pumpWidget(_app(DuelResultView(
+      won: true,
+      yourReps: 18,
+      theirReps: 11,
+      opponent: demoOpponents.first,
+      outcome: demoOutcome(won: true),
+      onRematch: () => pressed = true,
+      onDone: () {},
+      rematchLabel: 'Find a match',
+    )));
+    await tester.pumpAndSettle();
+    expect(find.text('Rematch'), findsNothing);
+    await tester.tap(find.text('Find a match'));
+    expect(pressed, isTrue);
+  });
+
   group("today's goal", () {
     DuelResultView passing({required int before, required int after}) {
       final o = demoOutcome(won: true);

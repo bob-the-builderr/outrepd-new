@@ -1950,13 +1950,7 @@ class LEs extends L {
   String get raceIt => 'Competir';
 
   @override
-  String get sendASet => 'Enviar una serie';
-
-  @override
   String get onlineNow => 'En línea ahora';
-
-  @override
-  String get liveOrSetHint => 'En vivo requiere que estén en línea. Una serie espera hasta que la compitan.';
 
   @override
   String get friendlyNoRank => 'Amistoso · sin rango';
@@ -2328,4 +2322,10 @@ class LEs extends L {
   String reminderLeft(String count) {
     return 'Te faltan ${count} flexiones para tu meta de hoy.';
   }
+
+  @override
+  String get liveInviteHint => 'Los amigos en línea pueden unirse al momento. Los demás reciben un aviso y un minuto para unirse.';
+
+  @override
+  String get requestSentShort => 'Solicitud enviada';
 }

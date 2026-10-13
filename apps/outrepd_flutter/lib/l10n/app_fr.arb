@@ -605,9 +605,7 @@
   "didRepsIn": "A fait {reps} en 60 secondes",
   "sameRankPoints": "Autant de points de rang qu'en direct",
   "raceIt": "L'affronter",
-  "sendASet": "Envoyer une série",
   "onlineNow": "En ligne",
-  "liveOrSetHint": "Le direct demande qu'ils soient en ligne. Une série attend qu'ils l'affrontent.",
   "friendlyNoRank": "Amical · sans classement",
   "waitingForName": "En attente de {name}",
   "weSentThemANotice": "On lui a envoyé une notification",
@@ -706,5 +704,7 @@
   "saveToHealthConnect": "Enregistrer les séances dans Santé Connect",
   "saveToHealthHint": "Chaque série est ajoutée comme séance de musculation. Rien n'est lu.",
   "healthNotAllowed": "Pas encore autorisé. Tu peux l'autoriser dans les réglages santé de ton téléphone.",
-  "reminderLeft": "Plus que {count} pompes pour ton objectif du jour."
+  "reminderLeft": "Plus que {count} pompes pour ton objectif du jour.",
+  "liveInviteHint": "Les amis en ligne peuvent rejoindre tout de suite. Les autres reçoivent une notification et ont une minute pour rejoindre.",
+  "requestSentShort": "Demande envoyée"
 }

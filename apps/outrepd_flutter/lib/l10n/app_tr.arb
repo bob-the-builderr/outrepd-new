@@ -605,9 +605,7 @@
   "didRepsIn": "60 saniyede {reps} yaptı",
   "sameRankPoints": "Canlı maçla aynı sıralama puanı",
   "raceIt": "Yarış",
-  "sendASet": "Set gönder",
   "onlineNow": "Şu an çevrimiçi",
-  "liveOrSetHint": "Canlı maç için çevrimiçi olmaları gerekir. Set, yarışana kadar bekler.",
   "friendlyNoRank": "Dostça · sıralamasız",
   "waitingForName": "{name} bekleniyor",
   "weSentThemANotice": "Ona bildirim gönderdik",
@@ -706,5 +704,7 @@
   "saveToHealthConnect": "Antrenmanları Health Connect'e kaydet",
   "saveToHealthHint": "Her set kuvvet antrenmanı olarak eklenir. Hiçbir şey okunmaz.",
   "healthNotAllowed": "Henüz izin verilmedi. Telefonunun sağlık ayarlarından izin verebilirsin.",
-  "reminderLeft": "Bugünkü hedefine {count} şınav kaldı."
+  "reminderLeft": "Bugünkü hedefine {count} şınav kaldı.",
+  "liveInviteHint": "Çevrimiçi arkadaşlar hemen katılabilir. Diğerleri bir bildirim alır ve katılmak için bir dakikaları olur.",
+  "requestSentShort": "İstek gönderildi"
 }

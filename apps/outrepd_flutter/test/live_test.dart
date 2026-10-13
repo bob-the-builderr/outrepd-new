@@ -412,10 +412,19 @@ void main() {
     await tester.tap(find.text('open'));
     await tester.pumpAndSettle();
 
+    // Every friend is asked to go live, online or not: the one online by
+    // "Live", the one away by "Invite" — a push and a minute to join. No
+    // set to race later between friends any more.
     expect(find.byKey(const Key('goLive-o')), findsOneWidget);
-    expect(find.byKey(const Key('sendSet-o')), findsNothing);
-    expect(find.byKey(const Key('sendSet-y')), findsOneWidget);
-    expect(find.byKey(const Key('goLive-y')), findsNothing);
+    expect(find.byKey(const Key('goLive-y')), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byKey(const Key('goLive-y')),
+        matching: find.text('Invite'),
+      ),
+      findsOneWidget,
+    );
+    expect(find.text('Send a set'), findsNothing);
     expect(find.text('Online now'), findsOneWidget);
   });
 

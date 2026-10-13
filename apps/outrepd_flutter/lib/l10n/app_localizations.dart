@@ -3623,23 +3623,11 @@ abstract class L {
   /// **'Race it'**
   String get raceIt;
 
-  /// No description provided for @sendASet.
-  ///
-  /// In en, this message translates to:
-  /// **'Send a set'**
-  String get sendASet;
-
   /// No description provided for @onlineNow.
   ///
   /// In en, this message translates to:
   /// **'Online now'**
   String get onlineNow;
-
-  /// No description provided for @liveOrSetHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Live needs them online. A set waits until they race it.'**
-  String get liveOrSetHint;
 
   /// No description provided for @friendlyNoRank.
   ///
@@ -4234,6 +4222,18 @@ abstract class L {
   /// In en, this message translates to:
   /// **'{count} push-ups left for today\'s goal.'**
   String reminderLeft(String count);
+
+  /// No description provided for @liveInviteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Online friends can join right away. The rest get a notice and a minute to join.'**
+  String get liveInviteHint;
+
+  /// No description provided for @requestSentShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Request sent'**
+  String get requestSentShort;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

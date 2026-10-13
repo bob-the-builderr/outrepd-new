@@ -605,9 +605,7 @@
   "didRepsIn": "60초에 {reps}회",
   "sameRankPoints": "라이브 경기와 같은 랭크 포인트",
   "raceIt": "대결하기",
-  "sendASet": "세트 보내기",
   "onlineNow": "지금 온라인",
-  "liveOrSetHint": "라이브는 상대가 온라인일 때만 가능해요. 세트는 상대가 도전할 때까지 기다려요.",
   "friendlyNoRank": "친선 · 랭크 없음",
   "waitingForName": "{name} 님을 기다리는 중",
   "weSentThemANotice": "알림을 보냈어요",
@@ -706,5 +704,7 @@
   "saveToHealthConnect": "운동을 헬스 커넥트에 저장",
   "saveToHealthHint": "세트마다 근력 운동으로 추가돼요. 아무것도 읽어 오지 않아요.",
   "healthNotAllowed": "아직 허용되지 않았어요. 휴대폰의 건강 설정에서 허용할 수 있어요.",
-  "reminderLeft": "오늘 목표까지 팔굽혀펴기 {count}개 남았어요."
+  "reminderLeft": "오늘 목표까지 팔굽혀펴기 {count}개 남았어요.",
+  "liveInviteHint": "온라인 친구는 바로 참여할 수 있어요. 나머지 친구에게는 알림이 가고 1분 안에 참여할 수 있어요.",
+  "requestSentShort": "요청 보냄"
 }

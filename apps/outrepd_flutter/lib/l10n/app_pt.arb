@@ -605,9 +605,7 @@
   "didRepsIn": "Fez {reps} em 60 segundos",
   "sameRankPoints": "Os mesmos pontos de rank que ao vivo",
   "raceIt": "Competir",
-  "sendASet": "Enviar série",
   "onlineNow": "Online agora",
-  "liveOrSetHint": "Ao vivo precisa que estejam online. Uma série espera até competirem com ela.",
   "friendlyNoRank": "Amigável · sem rank",
   "waitingForName": "À espera de {name}",
   "weSentThemANotice": "Enviámos-lhe uma notificação",
@@ -706,5 +704,7 @@
   "saveToHealthConnect": "Salvar treinos no Conexão Saúde",
   "saveToHealthHint": "Cada série entra como treino de força. Nada é lido.",
   "healthNotAllowed": "Ainda não permitido. Você pode permitir nos ajustes de saúde do celular.",
-  "reminderLeft": "Faltam {count} flexões para sua meta de hoje."
+  "reminderLeft": "Faltam {count} flexões para sua meta de hoje.",
+  "liveInviteHint": "Amigos online podem entrar na hora. Os outros recebem um aviso e um minuto para entrar.",
+  "requestSentShort": "Pedido enviado"
 }

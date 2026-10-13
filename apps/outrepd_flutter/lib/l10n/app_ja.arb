@@ -605,9 +605,7 @@
   "didRepsIn": "60秒で {reps} 回",
   "sameRankPoints": "ライブ戦と同じランクポイント",
   "raceIt": "対戦する",
-  "sendASet": "セットを送る",
   "onlineNow": "オンライン",
-  "liveOrSetHint": "ライブは相手がオンラインのときだけ。セットは相手が挑むまで待ちます。",
   "friendlyNoRank": "フレンドリー · ランクなし",
   "waitingForName": "{name} を待っています",
   "weSentThemANotice": "通知を送りました",
@@ -706,5 +704,7 @@
   "saveToHealthConnect": "ワークアウトをヘルスコネクトに保存",
   "saveToHealthHint": "セットごとに筋力トレーニングとして追加されます。読み取りは行いません。",
   "healthNotAllowed": "まだ許可されていません。スマホのヘルスケア設定で許可できます。",
-  "reminderLeft": "今日の目標まであと{count}回。"
+  "reminderLeft": "今日の目標まであと{count}回。",
+  "liveInviteHint": "オンラインの友達はすぐに参加できます。それ以外の友達には通知が届き、1分以内に参加できます。",
+  "requestSentShort": "リクエスト送信済み"
 }

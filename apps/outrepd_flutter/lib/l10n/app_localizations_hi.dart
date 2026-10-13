@@ -1945,13 +1945,7 @@ class LHi extends L {
   String get raceIt => 'मुकाबला करें';
 
   @override
-  String get sendASet => 'सेट भेजें';
-
-  @override
   String get onlineNow => 'अभी ऑनलाइन';
-
-  @override
-  String get liveOrSetHint => 'लाइव के लिए उनका ऑनलाइन होना ज़रूरी है। सेट तब तक इंतज़ार करता है जब तक वे मुकाबला न करें।';
 
   @override
   String get friendlyNoRank => 'दोस्ताना · बिना रैंक';
@@ -2323,4 +2317,10 @@ class LHi extends L {
   String reminderLeft(String count) {
     return 'आज के लक्ष्य के लिए ${count} पुश-अप बाकी हैं।';
   }
+
+  @override
+  String get liveInviteHint => 'ऑनलाइन दोस्त तुरंत जुड़ सकते हैं। बाकियों को सूचना मिलती है और जुड़ने के लिए एक मिनट।';
+
+  @override
+  String get requestSentShort => 'अनुरोध भेजा गया';
 }

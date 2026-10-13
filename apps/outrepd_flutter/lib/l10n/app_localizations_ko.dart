@@ -1913,13 +1913,7 @@ class LKo extends L {
   String get raceIt => '대결하기';
 
   @override
-  String get sendASet => '세트 보내기';
-
-  @override
   String get onlineNow => '지금 온라인';
-
-  @override
-  String get liveOrSetHint => '라이브는 상대가 온라인일 때만 가능해요. 세트는 상대가 도전할 때까지 기다려요.';
 
   @override
   String get friendlyNoRank => '친선 · 랭크 없음';
@@ -2291,4 +2285,10 @@ class LKo extends L {
   String reminderLeft(String count) {
     return '오늘 목표까지 팔굽혀펴기 ${count}개 남았어요.';
   }
+
+  @override
+  String get liveInviteHint => '온라인 친구는 바로 참여할 수 있어요. 나머지 친구에게는 알림이 가고 1분 안에 참여할 수 있어요.';
+
+  @override
+  String get requestSentShort => '요청 보냄';
 }

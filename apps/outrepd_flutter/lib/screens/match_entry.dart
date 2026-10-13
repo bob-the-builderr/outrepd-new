@@ -69,12 +69,12 @@ Future<void> startMatch(
   );
 }
 
-/// Find somebody by username and send them a real challenge — the same
-/// reserved-set mechanism a rematch uses, reached here for anybody, friend
-/// or not. There used to be a room code here instead, generated on the
-/// phone and never checked against anything: two people "sharing" it could
-/// never actually have been paired by it. A username the server can look up
-/// is a code that already works.
+/// Challenge a friend: every friend is asked to go live, online or not
+/// (the ones away get a push and a minute to join). A set recorded for
+/// somebody to race later is no longer offered here — between friends it
+/// is live or nothing, and a stranger cannot be challenged at all: the
+/// search finds anybody, but only to send them a friend request, after
+/// which they can be asked to go live like any other friend.
 Future<void> showFriendRoomSheet(BuildContext context) {
   return showModalBottomSheet<void>(
     context: context,
@@ -99,8 +99,8 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
   List<FoundLifter> _found = const [];
   bool _searching = false;
 
-  /// Friends, shown before anything is typed: the ones online can be asked
-  /// to go live now, the rest sent a set to race when they are back.
+  /// Friends, shown before anything is typed, the ones online first: any of
+  /// them can be asked to go live.
   List<RemoteFriend> _friends = const [];
 
   @override
@@ -127,32 +127,24 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
   }
 
   void _goLive(RemoteFriend friend) {
-    final navigator = Navigator.of(context);
-    navigator.pop();
-    navigator.push(
-      MaterialPageRoute(
-        builder: (_) => LiveInviteScreen(
-          friend: LiveOpponent(
-            id: friend.id,
-            username: friend.username,
-            tierIdx: friend.tierIdx,
-            divIdx: friend.divIdx,
-          ),
-        ),
-      ),
+    // The sheet's own context goes with the sheet; the invite is pushed
+    // from the screen under it.
+    final under = Navigator.of(context).context;
+    Navigator.of(context).pop();
+    inviteFriendLive(
+      under,
+      id: friend.id,
+      username: friend.username,
+      tierIdx: friend.tierIdx,
+      divIdx: friend.divIdx,
     );
   }
 
-  void _sendSet(RemoteFriend friend) {
-    Navigator.of(context).pop();
-    startMatch(
-      context,
-      mode: MatchMode.challenge,
-      targetId: friend.id,
-      targetUsername: friend.username,
-      targetTierIdx: friend.tierIdx,
-      targetDivIdx: friend.divIdx,
-    );
+  RemoteFriend? _friendWithId(String id) {
+    for (final f in _friends) {
+      if (f.id == id) return f;
+    }
+    return null;
   }
 
   /// Distinct from an empty [_found]: nobody matching that name is a real
@@ -209,16 +201,41 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
     }
   }
 
-  void _challenge(FoundLifter lifter) {
-    Navigator.of(context).pop();
-    startMatch(
-      context,
-      mode: MatchMode.challenge,
-      targetId: lifter.id,
-      targetUsername: lifter.username,
-      targetTierIdx: lifter.tierIdx,
-      targetDivIdx: lifter.divIdx,
-    );
+  /// The ones asked from this sheet, so their row says so and is not asked
+  /// twice.
+  final _asked = <String>{};
+
+  /// A stranger is not challenged: they are asked to be friends, and once
+  /// they are, they can be asked to go live.
+  Future<void> _addFriend(FoundLifter lifter) async {
+    final l = L.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    try {
+      final result = await backend.askFriend(lifter.username);
+      if (!mounted) return;
+      if (result == AskResult.asked || result == AskResult.friends) {
+        setState(() => _asked.add(lifter.id));
+      }
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(switch (result) {
+            AskResult.asked => l.requestSent(lifter.username),
+            AskResult.friends => l.nowFriends(lifter.username),
+            AskResult.noSuchLifter || AskResult.thatIsYou => l.noOneFound,
+          }),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      if (result == AskResult.friends) await _loadFriends();
+    } on Object catch (error) {
+      debugPrint('Could not send a friend request: $error');
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(l.needsServer),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
   }
 
   @override
@@ -284,12 +301,11 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
                             _FriendChoiceRow(
                               friend: friend,
                               onLive: () => _goLive(friend),
-                              onSet: () => _sendSet(friend),
                             ),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(4, 6, 4, 0),
                             child: Text(
-                              l.liveOrSetHint,
+                              l.liveInviteHint,
                               style: context.type.micro.copyWith(
                                 color: context.colors.faint,
                               ),
@@ -320,7 +336,12 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
                           for (final lifter in _found)
                             _FoundLifterRow(
                               lifter: lifter,
-                              onChallenge: () => _challenge(lifter),
+                              // Already a friend: straight to live, as from
+                              // the list above.
+                              friend: _friendWithId(lifter.id),
+                              asked: _asked.contains(lifter.id),
+                              onLive: _goLive,
+                              onAdd: () => _addFriend(lifter),
                             ),
                         ],
                       ),
@@ -334,10 +355,23 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
 }
 
 class _FoundLifterRow extends StatelessWidget {
-  const _FoundLifterRow({required this.lifter, required this.onChallenge});
+  const _FoundLifterRow({
+    required this.lifter,
+    required this.friend,
+    required this.asked,
+    required this.onLive,
+    required this.onAdd,
+  });
 
   final FoundLifter lifter;
-  final VoidCallback onChallenge;
+
+  /// Them in the friends list, when they are in it.
+  final RemoteFriend? friend;
+
+  /// A friend request already went from this sheet.
+  final bool asked;
+  final ValueChanged<RemoteFriend> onLive;
+  final VoidCallback onAdd;
 
   @override
   Widget build(BuildContext context) {
@@ -346,54 +380,65 @@ class _FoundLifterRow extends StatelessWidget {
         ? tierLabel(l, lifter.tierIdx, lifter.divIdx)
         : l.unranked;
 
-    return InkWell(
-      onTap: onChallenge,
-      borderRadius: BorderRadius.circular(13),
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 8),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        decoration: BoxDecoration(
-          color: context.colors.surface,
-          borderRadius: BorderRadius.circular(13),
-          border: Border.all(color: context.colors.border, width: 0.5),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    lifter.username,
-                    style: context.type.body.copyWith(color: context.colors.text),
-                  ),
-                  Text(
-                    rank,
-                    style: context.type.micro.copyWith(color: context.colors.muted),
-                  ),
-                ],
-              ),
+    final friend = this.friend;
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: context.colors.surface,
+        borderRadius: BorderRadius.circular(13),
+        border: Border.all(color: context.colors.border, width: 0.5),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  lifter.username,
+                  style: context.type.body.copyWith(color: context.colors.text),
+                ),
+                Text(
+                  rank,
+                  style: context.type.micro.copyWith(color: context.colors.muted),
+                ),
+              ],
             ),
-            Icon(Icons.sports_mma, color: context.colors.brand, size: 18),
-          ],
-        ),
+          ),
+          const SizedBox(width: 8),
+          if (friend != null)
+            _PillButton(
+              key: Key('goLive-${lifter.id}'),
+              label: friend.online ? l.liveTag : l.invite,
+              filled: friend.online,
+              onTap: () => onLive(friend),
+            )
+          else if (asked)
+            Text(
+              l.requestSentShort,
+              style: context.type.label.copyWith(color: context.colors.muted),
+            )
+          else
+            _PillButton(
+              key: Key('addFriend-${lifter.id}'),
+              label: l.addFriendButton,
+              filled: false,
+              onTap: onAdd,
+            ),
+        ],
       ),
     );
   }
 }
 
-/// One friend, and the one thing worth doing with them right now: go live if
-/// they are around, send a set to race if they are not.
+/// One friend, asked to go live: straight away if they are around, by a
+/// push and a minute to join if they are not.
 class _FriendChoiceRow extends StatelessWidget {
-  const _FriendChoiceRow({
-    required this.friend,
-    required this.onLive,
-    required this.onSet,
-  });
+  const _FriendChoiceRow({required this.friend, required this.onLive});
 
   final RemoteFriend friend;
   final VoidCallback onLive;
-  final VoidCallback onSet;
 
   @override
   Widget build(BuildContext context) {
@@ -461,19 +506,12 @@ class _FriendChoiceRow extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8),
-          online
-              ? _PillButton(
-                  key: Key('goLive-${friend.id}'),
-                  label: l.liveTag,
-                  filled: true,
-                  onTap: onLive,
-                )
-              : _PillButton(
-                  key: Key('sendSet-${friend.id}'),
-                  label: l.sendASet,
-                  filled: false,
-                  onTap: onSet,
-                ),
+          _PillButton(
+            key: Key('goLive-${friend.id}'),
+            label: online ? l.liveTag : l.invite,
+            filled: online,
+            onTap: onLive,
+          ),
         ],
       ),
     );

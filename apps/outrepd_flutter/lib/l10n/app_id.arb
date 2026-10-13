@@ -605,9 +605,7 @@
   "didRepsIn": "Melakukan {reps} dalam 60 detik",
   "sameRankPoints": "Poin peringkat sama dengan pertandingan langsung",
   "raceIt": "Lawan",
-  "sendASet": "Kirim set",
   "onlineNow": "Sedang online",
-  "liveOrSetHint": "Langsung butuh mereka online. Set akan menunggu sampai mereka melawannya.",
   "friendlyNoRank": "Persahabatan · tanpa peringkat",
   "waitingForName": "Menunggu {name}",
   "weSentThemANotice": "Kami sudah mengirim notifikasi",
@@ -706,5 +704,7 @@
   "saveToHealthConnect": "Simpan latihan ke Health Connect",
   "saveToHealthHint": "Setiap set ditambahkan sebagai latihan kekuatan. Tidak ada yang dibaca.",
   "healthNotAllowed": "Belum diizinkan. Kamu bisa mengizinkannya di pengaturan kesehatan ponsel.",
-  "reminderLeft": "{count} push-up lagi untuk target hari ini."
+  "reminderLeft": "{count} push-up lagi untuk target hari ini.",
+  "liveInviteHint": "Teman yang online bisa langsung bergabung. Yang lain mendapat notifikasi dan satu menit untuk bergabung.",
+  "requestSentShort": "Permintaan terkirim"
 }

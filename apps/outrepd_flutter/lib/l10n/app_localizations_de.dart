@@ -1952,13 +1952,7 @@ class LDe extends L {
   String get raceIt => 'Antreten';
 
   @override
-  String get sendASet => 'Satz senden';
-
-  @override
   String get onlineNow => 'Gerade online';
-
-  @override
-  String get liveOrSetHint => 'Live müssen sie online sein. Ein Satz wartet, bis sie antreten.';
 
   @override
   String get friendlyNoRank => 'Freundschaftlich · ohne Wertung';
@@ -2330,4 +2324,10 @@ class LDe extends L {
   String reminderLeft(String count) {
     return 'Noch ${count} Liegestütze bis zu deinem Tagesziel.';
   }
+
+  @override
+  String get liveInviteHint => 'Freunde, die online sind, können sofort mitmachen. Die anderen bekommen eine Nachricht und eine Minute Zeit.';
+
+  @override
+  String get requestSentShort => 'Anfrage gesendet';
 }

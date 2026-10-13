@@ -23,6 +23,41 @@ import 'match_flow.dart';
 /// How long an invite lasts; supabase/live.sql holds the same minute.
 const kLiveInviteFor = Duration(seconds: 60);
 
+/// Asks [friend] to go live now: the one way a friend is challenged, from
+/// the Friends tab, the challenge sheet and their profile alike. Online or
+/// not, they get a notice and a push and have [kLiveInviteFor] to join; a
+/// set recorded for them to race later is no longer offered between
+/// friends. A sample friend, with no account behind it, is told so.
+Future<void> inviteFriendLive(
+  BuildContext context, {
+  required String id,
+  required String username,
+  required int tierIdx,
+  required int divIdx,
+}) async {
+  if (id.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(L.of(context).needsServer),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+    return;
+  }
+  await Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (_) => LiveInviteScreen(
+        friend: LiveOpponent(
+          id: id,
+          username: username,
+          tierIdx: tierIdx,
+          divIdx: divIdx,
+        ),
+      ),
+    ),
+  );
+}
+
 /// Accepts [invite] and opens the match, or says it has run out.
 Future<void> joinLiveInvite(BuildContext context, LiveInvite invite) async {
   final messenger = ScaffoldMessenger.of(context);

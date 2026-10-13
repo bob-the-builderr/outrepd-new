@@ -1945,13 +1945,7 @@ class LRu extends L {
   String get raceIt => 'Соревноваться';
 
   @override
-  String get sendASet => 'Отправить подход';
-
-  @override
   String get onlineNow => 'Сейчас в сети';
-
-  @override
-  String get liveOrSetHint => 'Для игры вживую друг должен быть в сети. Подход подождёт, пока он его не пройдёт.';
 
   @override
   String get friendlyNoRank => 'Дружеский · без рейтинга';
@@ -2323,4 +2317,10 @@ class LRu extends L {
   String reminderLeft(String count) {
     return 'Осталось отжиманий до цели на сегодня: ${count}.';
   }
+
+  @override
+  String get liveInviteHint => 'Друзья онлайн могут присоединиться сразу. Остальные получат уведомление и минуту, чтобы присоединиться.';
+
+  @override
+  String get requestSentShort => 'Запрос отправлен';
 }

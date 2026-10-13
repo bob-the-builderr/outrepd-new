@@ -605,9 +605,7 @@
   "didRepsIn": "Ne ha fatti {reps} in 60 secondi",
   "sameRankPoints": "Stessi punti classifica di una sfida live",
   "raceIt": "Sfidala",
-  "sendASet": "Invia una serie",
   "onlineNow": "Online ora",
-  "liveOrSetHint": "Il live richiede che siano online. Una serie aspetta finché non la sfidano.",
   "friendlyNoRank": "Amichevole · senza classifica",
   "waitingForName": "In attesa di {name}",
   "weSentThemANotice": "Gli abbiamo inviato una notifica",
@@ -706,5 +704,7 @@
   "saveToHealthConnect": "Salva gli allenamenti in Connessione Salute",
   "saveToHealthHint": "Ogni serie viene aggiunta come allenamento di forza. Non viene letto nulla.",
   "healthNotAllowed": "Non ancora consentito. Puoi consentirlo nelle impostazioni salute del telefono.",
-  "reminderLeft": "Mancano {count} piegamenti al tuo obiettivo di oggi."
+  "reminderLeft": "Mancano {count} piegamenti al tuo obiettivo di oggi.",
+  "liveInviteHint": "Gli amici online possono unirsi subito. Gli altri ricevono un avviso e hanno un minuto per unirsi.",
+  "requestSentShort": "Richiesta inviata"
 }

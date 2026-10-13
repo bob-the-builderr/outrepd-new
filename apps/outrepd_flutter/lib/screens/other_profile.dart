@@ -19,7 +19,7 @@ import '../theme.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
 import '../worn_title.dart';
-import 'match_entry.dart';
+import 'live_invite.dart';
 import 'settings_privacy.dart';
 import 'share_card.dart';
 
@@ -237,17 +237,23 @@ class _LifterPeekSheetState extends State<_LifterPeekSheet>
                   ),
                 ],
               ),
-              const SizedBox(height: 18),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton(
-                  onPressed: () => _challenge(context, p),
-                  style: FilledButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+              // A friend is challenged live; a stranger is not challenged
+              // at all — the full profile is where they are asked to be a
+              // friend first.
+              if (p.isFriend) ...[
+                const SizedBox(height: 18),
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    key: const Key('challengeLive'),
+                    onPressed: () => _challenge(context, p),
+                    style: FilledButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                    ),
+                    child: Text(l.challenge),
                   ),
-                  child: Text(l.challenge),
                 ),
-              ),
+              ],
               const SizedBox(height: 10),
               Center(
                 child: TextButton(
@@ -499,27 +505,43 @@ class _Body extends StatelessWidget {
         ),
 
         const SizedBox(height: 20),
-        SizedBox(
-          width: double.infinity,
-          child: FilledButton(
-            onPressed: onChallenge,
-            style: FilledButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 16),
+        // Friends go live; anybody else is asked to be a friend first, and
+        // that is the one thing offered here.
+        if (p.isFriend) ...[
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton(
+              key: const Key('challengeLive'),
+              onPressed: onChallenge,
+              style: FilledButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+              ),
+              child: Text(l.challenge),
             ),
-            child: Text(l.challenge),
           ),
-        ),
-        const SizedBox(height: 10),
-        SizedBox(
-          width: double.infinity,
-          child: OutlinedButton(
-            onPressed: p.isFriend || sendingRequest ? null : onAddFriend,
-            style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 15),
+          const SizedBox(height: 10),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton(
+              onPressed: null,
+              style: OutlinedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 15),
+              ),
+              child: Text(l.alreadyFriends),
             ),
-            child: Text(p.isFriend ? l.alreadyFriends : l.addFriendButton),
           ),
-        ),
+        ] else
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton(
+              key: const Key('addFriendButton'),
+              onPressed: sendingRequest ? null : onAddFriend,
+              style: FilledButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+              ),
+              child: Text(l.addFriendButton),
+            ),
+          ),
       ],
     );
   }
@@ -711,31 +733,15 @@ class _StatBox extends StatelessWidget {
 Color _tierColour(int tierIdx) =>
     kTiers[tierIdx.clamp(0, kTiers.length - 1)].color;
 
-/// Sends a real challenge at [profile] — the same targeted-set mechanism a
-/// rematch uses, just reached from a profile instead of a just-finished
-/// duel. There is nobody to search for: the challenge does not exist until
-/// the set this lifter is about to record uploads naming them, which is
-/// what [MatchMode.challenge] does, ending on its own confirmation screen
-/// once that upload actually happens — nothing here needs to say so first.
+/// Asks [profile] — a friend; nobody else is offered the button — to go
+/// live, the same invite as the Friends tab's Challenge.
 void _challenge(BuildContext context, LifterProfile profile) {
-  // A sample card has nobody behind it to send a challenge to — the same
-  // answer the Challenge button on a sample friend row gives.
-  if (profile.id.isEmpty) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(L.of(context).needsServer),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
-    return;
-  }
-  startMatch(
+  inviteFriendLive(
     context,
-    mode: MatchMode.challenge,
-    targetId: profile.id,
-    targetUsername: profile.username,
-    targetTierIdx: profile.tierIdx,
-    targetDivIdx: profile.divIdx,
+    id: profile.id,
+    username: profile.username,
+    tierIdx: profile.tierIdx,
+    divIdx: profile.divIdx,
   );
 }
 

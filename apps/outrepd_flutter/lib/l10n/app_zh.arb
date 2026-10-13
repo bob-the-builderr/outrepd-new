@@ -605,9 +605,7 @@
   "didRepsIn": "60 秒内完成 {reps} 个",
   "sameRankPoints": "与实时对战相同的排位分",
   "raceIt": "开始挑战",
-  "sendASet": "发送一组",
   "onlineNow": "在线",
-  "liveOrSetHint": "实时对战需要对方在线。发送的一组会一直等到对方来挑战。",
   "friendlyNoRank": "友谊赛 · 不计排位",
   "waitingForName": "正在等待 {name}",
   "weSentThemANotice": "已向对方发送通知",
@@ -706,5 +704,7 @@
   "saveToHealthConnect": "将训练保存到 Health Connect",
   "saveToHealthHint": "每一组都会记为一次力量训练。不会读取任何数据。",
   "healthNotAllowed": "尚未允许。你可以在手机的健康设置中允许。",
-  "reminderLeft": "离今天的目标还差 {count} 个俯卧撑。"
+  "reminderLeft": "离今天的目标还差 {count} 个俯卧撑。",
+  "liveInviteHint": "在线的好友可以马上加入。其他好友会收到通知，有一分钟时间加入。",
+  "requestSentShort": "已发送请求"
 }

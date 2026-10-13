@@ -1906,13 +1906,7 @@ class LJa extends L {
   String get raceIt => '対戦する';
 
   @override
-  String get sendASet => 'セットを送る';
-
-  @override
   String get onlineNow => 'オンライン';
-
-  @override
-  String get liveOrSetHint => 'ライブは相手がオンラインのときだけ。セットは相手が挑むまで待ちます。';
 
   @override
   String get friendlyNoRank => 'フレンドリー · ランクなし';
@@ -2284,4 +2278,10 @@ class LJa extends L {
   String reminderLeft(String count) {
     return '今日の目標まであと${count}回。';
   }
+
+  @override
+  String get liveInviteHint => 'オンラインの友達はすぐに参加できます。それ以外の友達には通知が届き、1分以内に参加できます。';
+
+  @override
+  String get requestSentShort => 'リクエスト送信済み';
 }

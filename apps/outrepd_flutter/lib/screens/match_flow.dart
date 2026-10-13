@@ -956,7 +956,6 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           opponent: _opponent,
           // Null for a local stand-in: nobody real is on the other end to
           // send a challenge to, so the button can only honestly go back.
-          realOpponentId: _realOpponent?.profileId ?? _live?.opponent.id,
           outcome: _outcome,
           live: _live,
           monthBefore: _monthBefore,
@@ -1877,11 +1876,6 @@ class _ResultView extends StatelessWidget {
   final double opponentVolume;
   final Opponent opponent;
 
-  /// Who to send a rematch challenge to. Null when [opponent] was a local
-  /// stand-in rather than somebody real — there was nobody to actually race,
-  /// so there is nobody a rematch could honestly reach either.
-  final String? realOpponentId;
-
   /// What the duel did to the account. Null only for practice, which does
   /// nothing to it by design.
   final DuelOutcome? outcome;
@@ -1901,7 +1895,6 @@ class _ResultView extends StatelessWidget {
     required this.volume,
     required this.opponentVolume,
     required this.opponent,
-    required this.realOpponentId,
     required this.outcome,
     required this.onDone,
     this.live,
@@ -1932,23 +1925,17 @@ class _ResultView extends StatelessWidget {
       ),
       closestYet:
           !won && _closestLossYet(volume.round(), opponentVolume.round()),
-      // Real opponent: replace this screen with a fresh challenge naming
-      // them, so finishing it lands back where this duel started rather than
-      // on this now-stale result. Stand-in: going back to the match tab is
-      // the only honest thing the button can do.
-      onRematch: realOpponentId == null
-          ? onDone
-          : () => Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (_) => MatchFlowScreen(
-                  mode: MatchMode.challenge,
-                  targetId: realOpponentId,
-                  targetUsername: opponent.username,
-                  targetTierIdx: opponent.tierIdx,
-                  targetDivIdx: opponent.divIdx,
-                ),
-              ),
-            ),
+      // Not live: the set raced was somebody's saved minute, and racing it
+      // again — its number now known — would only hand its owner another
+      // loss. So no rematch: a new search, which never pairs two who have
+      // already met. It replaces this screen, so finishing it lands where
+      // this duel started.
+      rematchLabel: L.of(context).findMatch,
+      onRematch: () => Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) => const MatchFlowScreen(mode: MatchMode.ranked),
+        ),
+      ),
       onDone: onDone,
     );
   }

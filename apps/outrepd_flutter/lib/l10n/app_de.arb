@@ -605,9 +605,7 @@
   "didRepsIn": "Hat {reps} in 60 Sekunden geschafft",
   "sameRankPoints": "Gleiche Rangpunkte wie ein Live-Match",
   "raceIt": "Antreten",
-  "sendASet": "Satz senden",
   "onlineNow": "Gerade online",
-  "liveOrSetHint": "Live müssen sie online sein. Ein Satz wartet, bis sie antreten.",
   "friendlyNoRank": "Freundschaftlich · ohne Wertung",
   "waitingForName": "Warte auf {name}",
   "weSentThemANotice": "Wir haben eine Mitteilung geschickt",
@@ -706,5 +704,7 @@
   "saveToHealthConnect": "Trainings in Health Connect sichern",
   "saveToHealthHint": "Jeder Satz wird als Krafttraining eingetragen. Gelesen wird nichts.",
   "healthNotAllowed": "Noch nicht erlaubt. Du kannst es in den Gesundheitseinstellungen deines Handys erlauben.",
-  "reminderLeft": "Noch {count} Liegestütze bis zu deinem Tagesziel."
+  "reminderLeft": "Noch {count} Liegestütze bis zu deinem Tagesziel.",
+  "liveInviteHint": "Freunde, die online sind, können sofort mitmachen. Die anderen bekommen eine Nachricht und eine Minute Zeit.",
+  "requestSentShort": "Anfrage gesendet"
 }

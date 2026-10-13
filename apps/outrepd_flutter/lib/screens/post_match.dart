@@ -129,6 +129,7 @@ class DuelResultView extends StatelessWidget {
     this.onLiveRematch,
     this.monthBefore,
     this.monthAfter,
+    this.rematchLabel,
   });
 
   final bool won;
@@ -156,6 +157,10 @@ class DuelResultView extends StatelessWidget {
 
   final VoidCallback onRematch;
   final VoidCallback onDone;
+
+  /// What the button under the result says when it is not a live rematch:
+  /// "Find a match" after a saved set, which is not raced twice.
+  final String? rematchLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -318,8 +323,9 @@ class DuelResultView extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: FilledButton(
+                      key: const Key('rematch'),
                       onPressed: onRematch,
-                      child: Text(l.rematch),
+                      child: Text(rematchLabel ?? l.rematch),
                     ),
                   ),
                 const SizedBox(height: 11),

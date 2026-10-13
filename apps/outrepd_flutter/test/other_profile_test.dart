@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:outrepd/backend/backend.dart';
 import 'package:outrepd/data.dart';
 import 'package:outrepd/l10n/app_localizations.dart';
+import 'package:outrepd/screens/live_invite.dart';
 import 'package:outrepd/screens/other_profile.dart';
 import 'package:outrepd/screens/settings_privacy.dart';
 import 'package:outrepd/theme.dart';
@@ -260,6 +261,8 @@ void main() {
       expect(find.text("Couldn't load this profile"), findsNothing);
       expect(find.textContaining('W '), findsNothing);
       expect(find.text('View full profile'), findsOneWidget);
+      // Nobody but a friend is challenged.
+      expect(find.byKey(const Key('challengeLive')), findsNothing);
     });
 
     testWidgets('challenging a sample card says it needs a server', (
@@ -357,6 +360,27 @@ void main() {
       await tester.drag(find.byType(ListView), const Offset(0, -300));
       await tester.pumpAndSettle();
       expect(find.text('Add friend'), findsOneWidget);
+      // A stranger is asked to be a friend, not challenged: live is between
+      // friends, and nothing else is offered.
+      expect(find.byKey(const Key('challengeLive')), findsNothing);
+      expect(find.text('Challenge'), findsNothing);
+    });
+
+    testWidgets('a friend is challenged live', (tester) async {
+      backend = _FakeBackend(_played(isFriend: true));
+      phone(tester);
+      await tester.pumpWidget(
+        _appDirect(const OtherProfileScreen(id: 'ayaan99-id', username: 'ayaan99')),
+      );
+      await tester.pumpAndSettle();
+      await tester.drag(find.byType(ListView), const Offset(0, -300));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('challengeLive')));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+      // The invite screen, waiting on them — not a camera for a set.
+      expect(find.byType(LiveInviteScreen), findsOneWidget);
     });
 
     for (final scale in [1.0, 1.3, 1.6]) {

@@ -1940,13 +1940,7 @@ class LTr extends L {
   String get raceIt => 'Yarış';
 
   @override
-  String get sendASet => 'Set gönder';
-
-  @override
   String get onlineNow => 'Şu an çevrimiçi';
-
-  @override
-  String get liveOrSetHint => 'Canlı maç için çevrimiçi olmaları gerekir. Set, yarışana kadar bekler.';
 
   @override
   String get friendlyNoRank => 'Dostça · sıralamasız';
@@ -2318,4 +2312,10 @@ class LTr extends L {
   String reminderLeft(String count) {
     return 'Bugünkü hedefine ${count} şınav kaldı.';
   }
+
+  @override
+  String get liveInviteHint => 'Çevrimiçi arkadaşlar hemen katılabilir. Diğerleri bir bildirim alır ve katılmak için bir dakikaları olur.';
+
+  @override
+  String get requestSentShort => 'İstek gönderildi';
 }

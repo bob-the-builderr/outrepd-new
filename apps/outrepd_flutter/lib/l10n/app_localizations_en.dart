@@ -1943,13 +1943,7 @@ class LEn extends L {
   String get raceIt => 'Race it';
 
   @override
-  String get sendASet => 'Send a set';
-
-  @override
   String get onlineNow => 'Online now';
-
-  @override
-  String get liveOrSetHint => 'Live needs them online. A set waits until they race it.';
 
   @override
   String get friendlyNoRank => 'Friendly · no rank';
@@ -2321,4 +2315,10 @@ class LEn extends L {
   String reminderLeft(String count) {
     return '${count} push-ups left for today\'s goal.';
   }
+
+  @override
+  String get liveInviteHint => 'Online friends can join right away. The rest get a notice and a minute to join.';
+
+  @override
+  String get requestSentShort => 'Request sent';
 }

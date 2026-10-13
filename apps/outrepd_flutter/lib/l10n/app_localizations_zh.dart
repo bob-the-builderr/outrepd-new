@@ -1896,13 +1896,7 @@ class LZh extends L {
   String get raceIt => '开始挑战';
 
   @override
-  String get sendASet => '发送一组';
-
-  @override
   String get onlineNow => '在线';
-
-  @override
-  String get liveOrSetHint => '实时对战需要对方在线。发送的一组会一直等到对方来挑战。';
 
   @override
   String get friendlyNoRank => '友谊赛 · 不计排位';
@@ -2274,4 +2268,10 @@ class LZh extends L {
   String reminderLeft(String count) {
     return '离今天的目标还差 ${count} 个俯卧撑。';
   }
+
+  @override
+  String get liveInviteHint => '在线的好友可以马上加入。其他好友会收到通知，有一分钟时间加入。';
+
+  @override
+  String get requestSentShort => '已发送请求';
 }

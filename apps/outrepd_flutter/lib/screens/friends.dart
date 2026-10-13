@@ -24,7 +24,7 @@ import '../tier_frame.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
 import 'invite_card.dart';
-import 'match_entry.dart';
+import 'live_invite.dart';
 import 'other_profile.dart';
 
 class FriendsScreen extends StatefulWidget {
@@ -1086,25 +1086,16 @@ class _ActionButton extends StatelessWidget {
     final online = friend.online;
 
     return InkWell(
-      // The reserved-set challenge a friend races later does not care
-      // whether they are online right now — "Invite" is the same action as
-      // "Challenge", just worded for somebody who is not around to answer at
-      // once. A demo row has no real id behind it to send one to.
-      onTap: friend.id.isEmpty
-          ? () => ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(l.needsServer),
-                behavior: SnackBarBehavior.floating,
-              ),
-            )
-          : () => startMatch(
-              context,
-              mode: MatchMode.challenge,
-              targetId: friend.id,
-              targetUsername: friend.username,
-              targetTierIdx: friend.tierIdx,
-              targetDivIdx: friend.divIdx,
-            ),
+      // Live either way: "Invite" is the same live invite as "Challenge",
+      // worded for somebody who is not around to answer at once — they get
+      // a push and a minute to join.
+      onTap: () => inviteFriendLive(
+        context,
+        id: friend.id,
+        username: friend.username,
+        tierIdx: friend.tierIdx,
+        divIdx: friend.divIdx,
+      ),
       borderRadius: BorderRadius.circular(11),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),

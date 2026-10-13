@@ -1119,9 +1119,7 @@
   },
   "sameRankPoints": "Same rank points as a live match",
   "raceIt": "Race it",
-  "sendASet": "Send a set",
   "onlineNow": "Online now",
-  "liveOrSetHint": "Live needs them online. A set waits until they race it.",
   "friendlyNoRank": "Friendly · no rank",
   "waitingForName": "Waiting for {name}",
   "@waitingForName": {
@@ -1479,5 +1477,7 @@
         "type": "String"
       }
     }
-  }
+  },
+  "liveInviteHint": "Online friends can join right away. The rest get a notice and a minute to join.",
+  "requestSentShort": "Request sent"
 }

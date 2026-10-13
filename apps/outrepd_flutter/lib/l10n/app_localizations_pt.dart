@@ -1947,13 +1947,7 @@ class LPt extends L {
   String get raceIt => 'Competir';
 
   @override
-  String get sendASet => 'Enviar série';
-
-  @override
   String get onlineNow => 'Online agora';
-
-  @override
-  String get liveOrSetHint => 'Ao vivo precisa que estejam online. Uma série espera até competirem com ela.';
 
   @override
   String get friendlyNoRank => 'Amigável · sem rank';
@@ -2325,4 +2319,10 @@ class LPt extends L {
   String reminderLeft(String count) {
     return 'Faltam ${count} flexões para sua meta de hoje.';
   }
+
+  @override
+  String get liveInviteHint => 'Amigos online podem entrar na hora. Os outros recebem um aviso e um minuto para entrar.';
+
+  @override
+  String get requestSentShort => 'Pedido enviado';
 }

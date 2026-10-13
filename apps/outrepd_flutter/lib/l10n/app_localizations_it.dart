@@ -1950,13 +1950,7 @@ class LIt extends L {
   String get raceIt => 'Sfidala';
 
   @override
-  String get sendASet => 'Invia una serie';
-
-  @override
   String get onlineNow => 'Online ora';
-
-  @override
-  String get liveOrSetHint => 'Il live richiede che siano online. Una serie aspetta finché non la sfidano.';
 
   @override
   String get friendlyNoRank => 'Amichevole · senza classifica';
@@ -2328,4 +2322,10 @@ class LIt extends L {
   String reminderLeft(String count) {
     return 'Mancano ${count} piegamenti al tuo obiettivo di oggi.';
   }
+
+  @override
+  String get liveInviteHint => 'Gli amici online possono unirsi subito. Gli altri ricevono un avviso e hanno un minuto per unirsi.';
+
+  @override
+  String get requestSentShort => 'Richiesta inviata';
 }

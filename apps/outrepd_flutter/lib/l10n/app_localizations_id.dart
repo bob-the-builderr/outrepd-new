@@ -1944,13 +1944,7 @@ class LId extends L {
   String get raceIt => 'Lawan';
 
   @override
-  String get sendASet => 'Kirim set';
-
-  @override
   String get onlineNow => 'Sedang online';
-
-  @override
-  String get liveOrSetHint => 'Langsung butuh mereka online. Set akan menunggu sampai mereka melawannya.';
 
   @override
   String get friendlyNoRank => 'Persahabatan · tanpa peringkat';
@@ -2322,4 +2316,10 @@ class LId extends L {
   String reminderLeft(String count) {
     return '${count} push-up lagi untuk target hari ini.';
   }
+
+  @override
+  String get liveInviteHint => 'Teman yang online bisa langsung bergabung. Yang lain mendapat notifikasi dan satu menit untuk bergabung.';
+
+  @override
+  String get requestSentShort => 'Permintaan terkirim';
 }

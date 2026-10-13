@@ -1951,13 +1951,7 @@ class LFr extends L {
   String get raceIt => 'L\'affronter';
 
   @override
-  String get sendASet => 'Envoyer une série';
-
-  @override
   String get onlineNow => 'En ligne';
-
-  @override
-  String get liveOrSetHint => 'Le direct demande qu\'ils soient en ligne. Une série attend qu\'ils l\'affrontent.';
 
   @override
   String get friendlyNoRank => 'Amical · sans classement';
@@ -2329,4 +2323,10 @@ class LFr extends L {
   String reminderLeft(String count) {
     return 'Plus que ${count} pompes pour ton objectif du jour.';
   }
+
+  @override
+  String get liveInviteHint => 'Les amis en ligne peuvent rejoindre tout de suite. Les autres reçoivent une notification et ont une minute pour rejoindre.';
+
+  @override
+  String get requestSentShort => 'Demande envoyée';
 }
