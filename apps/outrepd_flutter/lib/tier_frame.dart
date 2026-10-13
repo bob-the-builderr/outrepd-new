@@ -111,7 +111,7 @@ class _FramePainter extends CustomPainter {
     final ringW = math.max(3.0, r * 0.17);
     final tip = crest.crown ? _masterLight : crest.light;
 
-    final feathers = _feathers(crest.feathers, c, r, ringR, ringW);
+    final feathers = _feathers(crest.wingShapes, c, r, ringR, ringW);
     final leaves = crest.laurel == null ? const <Path>[] : _leaves(c, r, ringR, ringW);
     final crown = crest.crown ? _crown(c, r, ringR, ringW) : null;
 
@@ -147,7 +147,10 @@ class _FramePainter extends CustomPainter {
       ..color = tip.withValues(alpha: 0.55)
       ..style = PaintingStyle.stroke
       ..strokeWidth = math.max(0.6, r * 0.02);
-    for (final (:path, :side, :root, :end) in feathers) {
+    // Master's fan bottom feather first, so each lies over the one below,
+    // as on its badge.
+    final ordered = crest.crown ? feathers.reversed : feathers;
+    for (final (:path, :side, :root, :end) in ordered) {
       final inner = c.dx + side * ringR, outer = c.dx + side * reach;
       canvas.drawPath(
         path,
@@ -294,11 +297,15 @@ class _FramePainter extends CustomPainter {
 
   static double _rad(num degrees) => degrees * math.pi / 180;
 
-  /// The badge's feathers, from its 140×120 space to either side of the
-  /// ring: root on the ring, tip outwards. Each comes back with its side and
-  /// the two ends of its top edge, which catches the light.
+  /// The badge's wing, from its 140×120 space to either side of the ring:
+  /// the same feathers the tier's badge wears (Master's closed fan
+  /// included), tips outwards, and each root — the points the badge puts on
+  /// its shield — moved onto the ring at its own height, so a feather above
+  /// or below the middle still grows out of the ring rather than floating
+  /// off it. Each comes back with its side and the two ends of its top edge,
+  /// which catches the light.
   static List<({Path path, int side, Offset root, Offset end})> _feathers(
-    List<List<double>> feathers,
+    List<List<Offset>> shapes,
     Offset c,
     double r,
     double ringR,
@@ -306,22 +313,27 @@ class _FramePainter extends CustomPainter {
   ) {
     final scale = r * 0.86 / 42;
     final base = ringR + ringW * 0.2;
+    final outer = ringR + ringW / 2;
     final out = <({Path path, int side, Offset root, Offset end})>[];
     for (final side in const [-1, 1]) {
-      Offset at(double x, double y) => Offset(
-        c.dx + side * (base + (x - 98) * scale),
-        c.dy + (y - 53) * scale * 1.08,
-      );
-      for (final [x1, y1, x2, y2, x3, y3] in feathers) {
-        // The badge's blade, given a root as wide as its base, so it grows
-        // out of the ring rather than touching it at a point.
-        final root = at(x1, y1 - 1), end = at(x2, y2);
-        final inner = at(x3, y3), foot = at(98, y3 + 1);
+      Offset at(Offset p) {
+        final y = c.dy + (p.dy - 53) * scale * 1.08;
+        if (p.dx != 98) {
+          return Offset(c.dx + side * (base + (p.dx - 98) * scale), y);
+        }
+        // On the ring, just inside its outer edge, at this height.
+        final rise = (y - c.dy).abs();
+        final across = math.sqrt(math.max(0.0, outer * outer - rise * rise));
+        return Offset(c.dx + side * (across - ringW * 0.5), y);
+      }
+
+      for (final shape in shapes) {
+        final points = [for (final p in shape) at(p)];
         out.add((
-          path: Path()..addPolygon([root, end, inner, foot], true),
+          path: Path()..addPolygon(points, true),
           side: side,
-          root: root,
-          end: end,
+          root: points[0],
+          end: points[1],
         ));
       }
     }

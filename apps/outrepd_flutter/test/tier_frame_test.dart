@@ -34,6 +34,37 @@ void main() {
     });
   }
 
+  for (final size in [20.0, 34.0, 206.0]) {
+    testWidgets('every badge draws at $size, whole, hollow and unranked',
+        (tester) async {
+      await tester.pumpWidget(_app(SingleChildScrollView(
+        child: Wrap(
+          children: [
+            for (var tier = 0; tier < 7; tier++) ...[
+              TierBadge(tierIndex: tier, size: size),
+              TierBadge(tierIndex: tier, size: size, locked: true),
+            ],
+            TierBadge.unranked(size: size),
+          ],
+        ),
+      )));
+      expect(tester.takeException(), isNull);
+      expect(find.byType(TierBadge), findsNWidgets(15));
+    });
+  }
+
+  test("Master's frame wears the same closed wing as its badge", () {
+    // Five feathers a side either way; Master's are its fan, which the
+    // frame reads from the badge rather than keeping a copy.
+    expect(crestOf(6).wingShapes, hasLength(5));
+    expect(crestOf(0).wingShapes, isEmpty);
+    for (final shape in crestOf(6).wingShapes) {
+      expect(shape, hasLength(4));
+      expect(shape.first.dx, 98, reason: 'a root on the shield edge');
+      expect(shape.last.dx, 98, reason: 'a root on the shield edge');
+    }
+  });
+
   testWidgets('the same box for every tier, so a list lines up',
       (tester) async {
     await tester.pumpWidget(_app(Column(

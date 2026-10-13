@@ -17,7 +17,17 @@
 /// the caller gives. Master's shield sits two units lower than the rest to
 /// make room for the crown; the mock also widens its chevron by a unit, which
 /// is below anything visible and is not reproduced here.
+///
+/// Drawn as metal rather than flat colour: the shield shaded light at the top
+/// to dark at the point, with a bevel inside its rim and a dark edge round
+/// it; a chevron raised off it by its own shadow; feathers rooted on the
+/// shield's edge wherever they meet it, dark at the root and lit at the tip
+/// and along their top; a cut gem; a laurel of leaves; and a glow off the
+/// whole silhouette that grows with the tier. Master's wings are one closed
+/// fan a side rather than separate blades, and its crown sits on the shield.
 library;
+
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
@@ -40,6 +50,8 @@ class _Crest {
     this.laurel,
     this.crown = false,
     this.shieldDy = 0,
+    this.fan = const [],
+    this.glow = 0,
   });
 
   /// The shield, front to back: the body, the right facet, and the left facet
@@ -69,6 +81,14 @@ class _Crest {
 
   /// Master's shield drops to make room for the crown.
   final double shieldDy;
+
+  /// Master's wing, in place of [feathers]: one fan a side, each feather as
+  /// `[root height, angle from level in degrees (negative is up), length]`,
+  /// rooted close together so the five lie over each other as one wing.
+  final List<List<double>> fan;
+
+  /// How strongly the silhouette glows: nothing on Iron, more each tier.
+  final double glow;
 }
 
 /// Iron to Master, in ladder order. The index is the tier index.
@@ -86,6 +106,7 @@ const _crests = <_Crest>[
     mid: Color(0xFFC9834E),
     light: Color(0xFFE3A272),
     wing: Color(0xFF7E4A28),
+    glow: 0.3,
     feathers: [
       [98, 54, 132, 50, 118, 64],
     ],
@@ -95,6 +116,7 @@ const _crests = <_Crest>[
     mid: Color(0xFFAEBAC2),
     light: Color(0xFFD8E2E8),
     wing: Color(0xFF68747C),
+    glow: 0.35,
     feathers: [
       [98, 40, 130, 32, 120, 48],
       [98, 54, 132, 50, 118, 64],
@@ -105,6 +127,7 @@ const _crests = <_Crest>[
     mid: Color(0xFFE0B145),
     light: Color(0xFFF7D87F),
     wing: Color(0xFF8A6518),
+    glow: 0.5,
     feathers: [
       [98, 40, 130, 32, 120, 48],
       [98, 54, 132, 50, 118, 64],
@@ -116,6 +139,7 @@ const _crests = <_Crest>[
     mid: Color(0xFFBCC8D0),
     light: Color(0xFFEDF4F8),
     wing: Color(0xFF6F7C88),
+    glow: 0.55,
     feathers: [
       [98, 28, 128, 16, 121, 34],
       [98, 40, 132, 32, 121, 48],
@@ -129,6 +153,7 @@ const _crests = <_Crest>[
     mid: Color(0xFF5FC9C0),
     light: Color(0xFFA8EDE7),
     wing: Color(0xFF25716C),
+    glow: 0.65,
     feathers: [
       [98, 26, 132, 12, 124, 32],
       [98, 40, 136, 30, 124, 48],
@@ -158,6 +183,14 @@ const _crests = <_Crest>[
     laurel: Color(0xFFE8846B),
     crown: true,
     shieldDy: 2,
+    glow: 0.75,
+    fan: [
+      [37, -22, 50],
+      [45, -12, 49],
+      [53, -2, 46],
+      [61, 8, 42],
+      [69, 18, 36],
+    ],
   ),
 ];
 
@@ -169,7 +202,7 @@ const _crests = <_Crest>[
   Color mid,
   Color light,
   Color wing,
-  List<List<double>> feathers,
+  List<List<Offset>> wingShapes,
   Color? gem,
   Color? laurel,
   bool crown,
@@ -181,11 +214,43 @@ crestOf(int tierIdx) {
     mid: c.mid,
     light: c.light,
     wing: c.wing,
-    feathers: c.feathers,
+    wingShapes: _wingShapes(c),
     gem: c.gem,
     laurel: c.laurel,
     crown: c.crown,
   );
+}
+
+/// A crest's right wing, feather by feather, as shapes in the badge's space
+/// with their roots at x 98 — the shield's straight side — for whatever
+/// draws them to move onto its own edge: the shield's (this file) or the
+/// frame's ring (tier_frame.dart).
+List<List<Offset>> _wingShapes(_Crest c) {
+  if (c.fan.isNotEmpty) {
+    return [
+      for (final [rootY, degrees, length] in c.fan)
+        _blade(rootY + c.shieldDy, degrees, length),
+    ];
+  }
+  // The badge's own triangles, given a root as wide as their base so each
+  // grows out of the shield rather than touching it at a point.
+  return [
+    for (final [_, y1, x2, y2, x3, y3] in c.feathers)
+      [Offset(98, y1 - 1), Offset(x2, y2), Offset(x3, y3), Offset(98, y3 + 1)],
+  ];
+}
+
+/// One of Master's feathers: wide at the root, a long top edge to its
+/// point, and a cut back underneath the way the other tiers' feathers end.
+List<Offset> _blade(double y, double degrees, double length) {
+  final a = degrees * math.pi / 180;
+  final cos = math.cos(a), sin = math.sin(a);
+  return [
+    Offset(98, y - 8),
+    Offset(94 + length * cos, y + length * sin),
+    Offset(94 + length * 0.7 * cos - sin * 9, y + length * 0.7 * sin + cos * 9),
+    Offset(98, y + 8),
+  ];
 }
 
 class TierBadge extends StatelessWidget {
@@ -292,39 +357,340 @@ class _CrestPainter extends CustomPainter {
 
   void _paintCrest(Canvas canvas) {
     final dy = crest.shieldDy;
+    final master = crest.crown;
+    final tip = master ? _masterLight : crest.light;
+    final wings = [
+      for (final shape in _wingShapes(crest)) ...[
+        _anchored(shape, dy, 1),
+        _anchored(shape, dy, -1),
+      ],
+    ];
+    final leaves = crest.laurel == null ? const <Path>[] : _leaves(dy);
+    final shield = _shield(dy);
+
+    // The glow, off the whole silhouette and in the tier's own colour.
+    if (crest.glow > 0) {
+      final glow = Paint()
+        ..color = crest.mid.withValues(alpha: crest.glow)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5);
+      for (final feather in wings) {
+        canvas.drawPath(feather.path, glow);
+      }
+      for (final leaf in leaves) {
+        canvas.drawPath(leaf, glow);
+      }
+      canvas.drawPath(shield, glow);
+      if (master) canvas.drawPath(_crown(dy), glow);
+      if (crest.gem != null && !master) canvas.drawPath(_gem(), glow);
+    }
 
     // Wings first: the shield sits on top of where they meet it, so the
-    // feathers appear to come out from behind it.
-    final wing = Paint()..color = crest.wing;
-    for (final f in crest.feathers) {
-      canvas.drawPath(_triangle(f), wing);
-      canvas.drawPath(_triangle(_mirror(f)), wing);
-    }
-
-    if (crest.crown) canvas.drawPath(_crown(), wing);
-    if (crest.gem case final gem?) {
-      canvas.drawPath(_gem(), Paint()..color = gem);
-    }
-
-    // Under the shield, so the arc reads as sitting behind it.
-    if (crest.laurel case final laurel?) {
+    // feathers come out from behind it. Master's fan is drawn bottom
+    // feather first, so each lies over the one below.
+    final ordered = master ? wings.reversed.toList() : wings;
+    for (final (:path, :side, :root, :end) in ordered) {
+      final bounds = path.getBounds();
       canvas.drawPath(
-        _laurel(dy),
+        path,
         Paint()
-          ..color = laurel
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 2.5 + dy * 0.25
-          ..strokeCap = StrokeCap.round,
+          ..shader = LinearGradient(
+            colors: side > 0 ? [crest.wing, tip] : [tip, crest.wing],
+          ).createShader(bounds),
+      );
+      if (master) {
+        canvas.drawPath(
+          path,
+          Paint()
+            ..color = const Color(0xFF9E4733).withValues(alpha: 0.45)
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 0.6
+            ..strokeJoin = StrokeJoin.round,
+        );
+      }
+      canvas.drawLine(
+        root,
+        end,
+        Paint()
+          ..color = tip.withValues(alpha: master ? 0.8 : 0.7)
+          ..strokeWidth = 1,
       );
     }
 
-    canvas.drawPath(_shield(dy), Paint()..color = crest.base);
-    canvas.drawPath(_facetRight(dy), Paint()..color = crest.mid);
-    canvas.drawPath(_facetLeft(dy), Paint()..color = crest.light);
+    // The laurel: a stem under the shield and leaves along it.
+    if (crest.laurel case final laurel?) {
+      canvas.drawPath(
+        Path()
+          ..moveTo(46 - dy, 96 + dy)
+          ..quadraticBezierTo(70, 113 + dy * 2, 94 + dy, 96 + dy),
+        Paint()
+          ..color = laurel
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = master ? 1.7 : 1.6
+          ..strokeCap = StrokeCap.round,
+      );
+      final leafPaint = Paint()
+        ..shader = LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [tip, laurel],
+        ).createShader(Rect.fromLTRB(40, 86 + dy, 100, 112 + dy * 2));
+      for (final leaf in leaves) {
+        canvas.drawPath(leaf, leafPaint);
+      }
+    }
+
+    // Platinum's and Diamond's gem, cut into facets.
+    if (crest.gem case final gem? when !master) {
+      canvas.drawPath(_gem(), Paint()..color = crest.base);
+      canvas.drawPath(
+        Path()..addPolygon(const [Offset(70, 5), Offset(70, 14.5), Offset(63.5, 14.5)], true),
+        Paint()..color = Colors.white.withValues(alpha: 0.9),
+      );
+      canvas.drawPath(
+        Path()..addPolygon(const [Offset(70, 5), Offset(76.5, 14.5), Offset(70, 14.5)], true),
+        Paint()..color = gem,
+      );
+      canvas.drawPath(
+        Path()..addPolygon(const [Offset(63.5, 14.5), Offset(70, 14.5), Offset(70, 24)], true),
+        Paint()..color = crest.mid,
+      );
+      canvas.drawPath(
+        _gem(),
+        Paint()
+          ..color = _edge
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 0.7,
+      );
+    }
+
+    // The shield: shaded body and a dark edge, the two lit facets, and a
+    // bevel inside the rim.
+    final body = Rect.fromLTRB(42, 22 + dy, 98, 102 + dy);
     canvas.drawPath(
-      _chevron(dy),
-      Paint()..color = crest.chevron ?? crest.light,
+      shield,
+      Paint()
+        ..shader = LinearGradient(
+          begin: const Alignment(-0.7, -1),
+          end: const Alignment(0.7, 1),
+          colors: master
+              ? const [Colors.white, Color(0xFFEDE4D4), Color(0xFFB3A48B)]
+              : [crest.mid, crest.base, _darken(crest.base, 0.28)],
+          stops: const [0, 0.5, 1],
+        ).createShader(body),
     );
+    canvas.drawPath(
+      shield,
+      Paint()
+        ..color = const Color(0xFF0B0A09).withValues(alpha: master ? 0.65 : 0.6)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = master ? 1.7 : 1.6
+        ..strokeJoin = StrokeJoin.round,
+    );
+    final facetBox = Rect.fromLTRB(42, 22 + dy, 98, 48 + dy);
+    canvas.drawPath(
+      _facetRight(dy),
+      Paint()
+        ..shader = LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: master
+              ? const [Colors.white, Color(0xFFF0E9DC)]
+              : [crest.light, crest.mid],
+        ).createShader(facetBox),
+    );
+    canvas.drawPath(
+      _facetLeft(dy),
+      Paint()
+        ..shader = LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: master
+              ? [Colors.white, Colors.white.withValues(alpha: 0.85)]
+              : [Colors.white.withValues(alpha: 0.9), crest.light],
+        ).createShader(facetBox),
+    );
+    // The bevel: the shield's own outline, a tenth smaller, inside it.
+    canvas.save();
+    canvas.translate(70, 62 + dy);
+    canvas.scale(0.9);
+    canvas.translate(-70, -(62 + dy));
+    canvas.drawPath(
+      shield,
+      Paint()
+        ..color = master
+            ? crest.wing.withValues(alpha: 0.85)
+            : crest.light.withValues(alpha: 0.55)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = master ? 1.3 : 1.1,
+    );
+    canvas.restore();
+
+    // The chevron, raised: its shadow, its body lit from above, a bright
+    // top edge.
+    final chevron = _chevron(dy);
+    final chevronColour = crest.chevron ?? crest.light;
+    canvas.drawPath(
+      chevron.shift(const Offset(0, 2)),
+      Paint()
+        ..color = Colors.black.withValues(alpha: 0.45)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 1.2),
+    );
+    canvas.drawPath(
+      chevron,
+      Paint()
+        ..shader = LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            crest.chevron == null ? Colors.white : _lighten(chevronColour, 0.25),
+            chevronColour,
+          ],
+        ).createShader(Rect.fromLTRB(56, 64 + dy, 84, 80 + dy)),
+    );
+    canvas.drawPath(
+      Path()
+        ..moveTo(56, 74 + dy)
+        ..lineTo(70, 64 + dy)
+        ..lineTo(84, 74 + dy),
+      Paint()
+        ..color = Colors.white.withValues(alpha: 0.6)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 0.8,
+    );
+
+    // Master's crown, set on the shield's point.
+    if (master) {
+      final crown = _crown(dy);
+      canvas.drawPath(
+        crown,
+        Paint()
+          ..shader = const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [_masterLight, Color(0xFFC9644B)],
+          ).createShader(crown.getBounds()),
+      );
+      canvas.drawPath(
+        crown,
+        Paint()
+          ..color = _edge
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 0.9
+          ..strokeJoin = StrokeJoin.round,
+      );
+      final band = 22 + dy - 5;
+      canvas.drawLine(
+        Offset(52, band),
+        Offset(88, band),
+        Paint()
+          ..color = _edge.withValues(alpha: 0.5)
+          ..strokeWidth = 0.7,
+      );
+      for (final orb in [
+        Offset(57, 22 + dy - 19),
+        Offset(70, 22 + dy - 23),
+        Offset(83, 22 + dy - 19),
+      ]) {
+        canvas.drawCircle(orb, 2.1, Paint()..color = crest.mid);
+        canvas.drawCircle(
+          orb,
+          2.1,
+          Paint()
+            ..color = _edge
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 0.6,
+        );
+      }
+    }
+  }
+
+  /// The hairline that sets a gem or the crown off what is behind it.
+  static const _edge = Color(0xFF121110);
+
+  /// Master's terracotta, lighter: its feather tips and its leaves, where
+  /// every other tier uses the light of its own metal.
+  static const _masterLight = Color(0xFFF6B49F);
+
+  static Color _lighten(Color c, double t) => Color.lerp(c, Colors.white, t)!;
+  static Color _darken(Color c, double t) => Color.lerp(c, Colors.black, t)!;
+
+  /// Where the shield's right edge is at height [y]: the slope of its top,
+  /// the straight side, or the curve down to its point.
+  static double _edgeX(double y, double dy) {
+    if (y <= 34 + dy) return 70 + math.max(0.0, y - (22 + dy)) * 28 / 12;
+    if (y <= 62 + dy) return 98;
+    if (y >= 102 + dy) return 70;
+    double curve(double t, double a, double b, double c, double d) {
+      final u = 1 - t;
+      return u * u * u * a + 3 * u * u * t * b + 3 * u * t * t * c + t * t * t * d;
+    }
+    var lo = 0.0, hi = 1.0;
+    for (var i = 0; i < 30; i++) {
+      final mid = (lo + hi) / 2;
+      if (curve(mid, 62 + dy, 86 + dy, 102 + dy, 102 + dy) < y) {
+        lo = mid;
+      } else {
+        hi = mid;
+      }
+    }
+    return curve((lo + hi) / 2, 98, 98, 70, 70);
+  }
+
+  /// A right-side wing shape placed on [side]: its root points — the ones at
+  /// x 98 — moved onto the shield's edge at their own height, just behind
+  /// it, and the whole mirrored for the left. Comes back with the two ends
+  /// of its top edge, which catches the light.
+  static ({Path path, int side, Offset root, Offset end}) _anchored(
+    List<Offset> shape,
+    double dy,
+    int side,
+  ) {
+    final points = [
+      for (final p in shape)
+        Offset(
+          p.dx == 98 ? _edgeX(p.dy, dy) - 5 : p.dx,
+          p.dy,
+        ),
+    ].map((p) => side > 0 ? p : Offset(_viewWidth - p.dx, p.dy)).toList();
+    return (
+      path: Path()..addPolygon(points, true),
+      side: side,
+      root: points[0],
+      end: points[1],
+    );
+  }
+
+  /// Five leaves a side along the laurel's stem, alternating out and in.
+  List<Path> _leaves(double dy) {
+    final master = crest.crown;
+    final leaves = <Path>[];
+    for (final side in const [-1, 1]) {
+      for (var k = 0; k < 5; k++) {
+        final u = (master ? 0.1 : 0.12) + k * 0.17;
+        final at = Offset(
+          70 + side * ((master ? 25 : 24) * u + 2),
+          104.5 + dy * 2 - (master ? 9.5 : 9.0) * u * u - 4 * u,
+        );
+        final degrees =
+            (side > 0 ? -25 : 205) + (k.isOdd ? 1 : -1) * 38 * side - side * k * 9;
+        final angle = degrees * math.pi / 180;
+        final length = (master ? 15 : 13) - k * 0.8;
+        final width = master ? 4.8 : 4.2;
+        final cos = math.cos(angle), sin = math.sin(angle);
+        Offset p(double x, double y) =>
+            Offset(at.dx + x * cos - y * sin, at.dy + x * sin + y * cos);
+        final upper = p(length / 2, -width), lower = p(length / 2, width);
+        final point = p(length, 0);
+        leaves.add(
+          Path()
+            ..moveTo(at.dx, at.dy)
+            ..quadraticBezierTo(upper.dx, upper.dy, point.dx, point.dy)
+            ..quadraticBezierTo(lower.dx, lower.dy, at.dx, at.dy)
+            ..close(),
+        );
+      }
+    }
+    return leaves;
   }
 
   /// The silhouette alone: shield and wings, no facets and no chevron. What
@@ -341,9 +707,9 @@ class _CrestPainter extends CustomPainter {
     canvas.drawPath(dashed ? _dashes(shield) : shield, paint);
     if (dashed) return;
 
-    for (final f in crest.feathers) {
-      canvas.drawPath(_triangle(f), paint);
-      canvas.drawPath(_triangle(_mirror(f)), paint);
+    for (final shape in _wingShapes(crest)) {
+      canvas.drawPath(_anchored(shape, 0, 1).path, paint);
+      canvas.drawPath(_anchored(shape, 0, -1).path, paint);
     }
   }
 
@@ -388,36 +754,23 @@ class _CrestPainter extends CustomPainter {
     ..lineTo(63.5, 14.5)
     ..close();
 
-  Path _crown() => Path()
-    ..moveTo(50, 22)
-    ..lineTo(57, 7)
-    ..lineTo(64, 22)
-    ..lineTo(70, 2)
-    ..lineTo(76, 22)
-    ..lineTo(83, 7)
-    ..lineTo(90, 22)
-    ..close();
-
-  Path _laurel(double dy) => Path()
-    ..moveTo(44 - dy, 98 + dy)
-    ..quadraticBezierTo(70, 114 + dy * 2, 96 + dy, 98 + dy);
-
-  Path _triangle(List<double> t) => Path()
-    ..moveTo(t[0], t[1])
-    ..lineTo(t[2], t[3])
-    ..lineTo(t[4], t[5])
-    ..close();
-
-  /// The same feather on the other side. Mirrored rather than listed twice,
-  /// so the two wings cannot drift apart.
-  List<double> _mirror(List<double> t) => [
-    _viewWidth - t[0],
-    t[1],
-    _viewWidth - t[2],
-    t[3],
-    _viewWidth - t[4],
-    t[5],
-  ];
+  /// Master's crown: the three terracotta points on a band that sits on
+  /// the shield's point.
+  Path _crown(double dy) {
+    final by = 22 + dy;
+    return Path()
+      ..moveTo(52, by - 1)
+      ..lineTo(52, by - 5)
+      ..lineTo(57, by - 19)
+      ..lineTo(63, by - 6)
+      ..lineTo(70, by - 23)
+      ..lineTo(77, by - 6)
+      ..lineTo(83, by - 19)
+      ..lineTo(88, by - 5)
+      ..lineTo(88, by - 1)
+      ..quadraticBezierTo(70, by + 2, 52, by - 1)
+      ..close();
+  }
 
   /// Cuts a path into dashes. Flutter has no dash support on Paint, so they
   /// are built into the path itself.
