@@ -23,8 +23,9 @@
 /// it; a chevron raised off it by its own shadow; feathers rooted on the
 /// shield's edge wherever they meet it, dark at the root and lit at the tip
 /// and along their top; a cut gem; a laurel of leaves; and a glow off the
-/// whole silhouette that grows with the tier. Master's wings are one closed
-/// fan a side rather than separate blades, and its crown sits on the shield.
+/// whole silhouette that grows with the tier. From Gold up the wings are one
+/// closed fan a side rather than separate blades — the same count of
+/// feathers, lying over each other — and Master's crown sits on the shield.
 library;
 
 import 'dart:math' as math;
@@ -83,9 +84,10 @@ class _Crest {
   /// Master's shield drops to make room for the crown.
   final double shieldDy;
 
-  /// Master's wing, in place of [feathers]: one fan a side, each feather as
-  /// `[root height, angle from level in degrees (negative is up), length]`,
-  /// rooted close together so the five lie over each other as one wing.
+  /// The wing from Gold up, in place of [feathers]: one fan a side, each
+  /// feather as `[root height, angle from level in degrees (negative is up),
+  /// length]`, rooted close together so they lie over each other as one
+  /// wing. As many feathers as [feathers] has, spreading wider each tier.
   final List<List<double>> fan;
 
   /// How strongly the silhouette glows: nothing on Iron, more each tier.
@@ -134,6 +136,11 @@ const _crests = <_Crest>[
       [98, 54, 132, 50, 118, 64],
       [98, 68, 126, 70, 111, 80],
     ],
+    fan: [
+      [43, -15, 47],
+      [51, -4, 45],
+      [59, 7, 40],
+    ],
   ),
   _Crest(
     base: Color(0xFF8794A0),
@@ -146,6 +153,12 @@ const _crests = <_Crest>[
       [98, 40, 132, 32, 121, 48],
       [98, 54, 134, 50, 119, 64],
       [98, 68, 127, 70, 112, 80],
+    ],
+    fan: [
+      [40, -19, 49],
+      [48, -9, 47],
+      [56, 1, 44],
+      [64, 11, 39],
     ],
     gem: Color(0xFFDCE8EF),
   ),
@@ -161,6 +174,13 @@ const _crests = <_Crest>[
       [98, 54, 137, 50, 121, 65],
       [98, 68, 131, 70, 114, 81],
       [98, 80, 120, 88, 105, 92],
+    ],
+    fan: [
+      [37, -22, 50],
+      [45, -12, 49],
+      [53, -2, 46],
+      [61, 8, 42],
+      [69, 18, 36],
     ],
     chevron: Color(0xFFCFF7F3),
     gem: Color(0xFFA8EDE7),
@@ -207,6 +227,7 @@ const _crests = <_Crest>[
   Color? gem,
   Color? laurel,
   bool crown,
+  bool fanned,
 })
 crestOf(int tierIdx) {
   final c = _crests[tierIdx.clamp(0, _crests.length - 1)];
@@ -219,6 +240,7 @@ crestOf(int tierIdx) {
     gem: c.gem,
     laurel: c.laurel,
     crown: c.crown,
+    fanned: c.fan.isNotEmpty,
   );
 }
 
@@ -417,9 +439,14 @@ class _CrestPainter extends CustomPainter {
     }
 
     // Wings first: the shield sits on top of where they meet it, so the
-    // feathers come out from behind it. Master's fan is drawn bottom
-    // feather first, so each lies over the one below.
-    final ordered = master ? wings.reversed.toList() : wings;
+    // feathers come out from behind it. A fan is drawn bottom feather
+    // first, so each lies over the one below, with a dark hairline that
+    // keeps the count readable where they overlap.
+    final fanned = crest.fan.isNotEmpty;
+    final ordered = fanned ? wings.reversed.toList() : wings;
+    final hairline = master
+        ? const Color(0xFF9E4733)
+        : _darken(crest.wing, 0.45);
     for (final (:path, :side, :root, :end) in ordered) {
       final bounds = path.getBounds();
       canvas.drawPath(
@@ -429,11 +456,11 @@ class _CrestPainter extends CustomPainter {
             colors: side > 0 ? [crest.wing, tip] : [tip, crest.wing],
           ).createShader(bounds),
       );
-      if (master) {
+      if (fanned) {
         canvas.drawPath(
           path,
           Paint()
-            ..color = const Color(0xFF9E4733).withValues(alpha: 0.45)
+            ..color = hairline.withValues(alpha: 0.45)
             ..style = PaintingStyle.stroke
             ..strokeWidth = 0.6
             ..strokeJoin = StrokeJoin.round,

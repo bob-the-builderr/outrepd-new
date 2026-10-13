@@ -55,15 +55,23 @@ void main() {
     });
   }
 
-  test("Master's frame wears the same closed wing as its badge", () {
-    // Five feathers a side either way; Master's are its fan, which the
-    // frame reads from the badge rather than keeping a copy.
-    expect(crestOf(6).wingShapes, hasLength(5));
-    expect(crestOf(0).wingShapes, isEmpty);
-    for (final shape in crestOf(6).wingShapes) {
-      expect(shape, hasLength(4));
-      expect(shape.first.dx, 98, reason: 'a root on the shield edge');
-      expect(shape.last.dx, 98, reason: 'a root on the shield edge');
+  test('the frames wear the same wings as the badges', () {
+    // A feather more each tier, Iron none; from Gold up they are one closed
+    // fan, which the frame reads from the badge rather than keeping a copy.
+    expect(
+      [for (var t = 0; t <= 6; t++) crestOf(t).wingShapes.length],
+      [0, 1, 2, 3, 4, 5, 5],
+    );
+    expect(
+      [for (var t = 0; t <= 6; t++) crestOf(t).fanned],
+      [false, false, false, true, true, true, true],
+    );
+    for (var t = 1; t <= 6; t++) {
+      for (final shape in crestOf(t).wingShapes) {
+        expect(shape, hasLength(4));
+        expect(shape.first.dx, 98, reason: 'a root on the shield edge');
+        expect(shape.last.dx, 98, reason: 'a root on the shield edge');
+      }
     }
   });
 

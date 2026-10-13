@@ -147,9 +147,9 @@ class _FramePainter extends CustomPainter {
       ..color = tip.withValues(alpha: 0.55)
       ..style = PaintingStyle.stroke
       ..strokeWidth = math.max(0.6, r * 0.02);
-    // Master's fan bottom feather first, so each lies over the one below,
-    // as on its badge.
-    final ordered = crest.crown ? feathers.reversed : feathers;
+    // A fan bottom feather first, so each lies over the one below, as on
+    // the badge.
+    final ordered = crest.fanned ? feathers.reversed : feathers;
     for (final (:path, :side, :root, :end) in ordered) {
       final inner = c.dx + side * ringR, outer = c.dx + side * reach;
       canvas.drawPath(
@@ -298,8 +298,8 @@ class _FramePainter extends CustomPainter {
   static double _rad(num degrees) => degrees * math.pi / 180;
 
   /// The badge's wing, from its 140×120 space to either side of the ring:
-  /// the same feathers the tier's badge wears (Master's closed fan
-  /// included), tips outwards, and each root — the points the badge puts on
+  /// the same feathers the tier's badge wears (the closed fan from Gold
+  /// up included), tips outwards, and each root — the points the badge puts on
   /// its shield — moved onto the ring at its own height, so a feather above
   /// or below the middle still grows out of the ring rather than floating
   /// off it. Each comes back with its side and the two ends of its top edge,
