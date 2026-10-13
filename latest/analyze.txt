@@ -1,6 +1,2 @@
 Analyzing outrepd_flutter...                                    
-
-warning • The declaration 'heading' isn't referenced. Try removing the declaration of 'heading' • lib/screens/share_card.dart:51:24 • unused_element
-  error • The name 'Uint8List' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a type named 'Uint8List' • lib/tier_badge.dart:332:8 • non_type_as_type_argument
-
-2 issues found. (ran in 17.8s)
+No issues found! (ran in 18.2s)
