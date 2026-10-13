@@ -48,7 +48,6 @@ Future<void> shareFriendCode(BuildContext context, String code) async {
 /// out against these, so it keeps them when the app's own type goes up.
 abstract final class _CardType {
   static TextStyle get body => kType.body.copyWith(fontSize: 15);
-  static TextStyle get heading => kType.heading.copyWith(fontSize: 18);
   static TextStyle get label => kType.label.copyWith(fontSize: 13);
   static TextStyle get micro => kType.micro.copyWith(fontSize: 11);
 }
