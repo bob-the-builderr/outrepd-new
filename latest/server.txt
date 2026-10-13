@@ -320,12 +320,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- 784c881a-b388-402a-9942-477de862925b
+ 50f39120-9a30-4ee9-a0d9-79cb0ada6f8b
 (1 row)
 
               set_config              
 --------------------------------------
- 55ecfc4f-52f9-4f23-8c78-2044dd87982f
+ 71086d86-37cb-48bd-a876-6eaac1be5fb9
 (1 row)
 
  as_user 
@@ -367,12 +367,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- 784c881a-b388-402a-9942-477de862925b
+ 50f39120-9a30-4ee9-a0d9-79cb0ada6f8b
 (1 row)
 
               set_config              
 --------------------------------------
- fa721b5b-d9e0-4f3b-9d16-73e6a988bf5e
+ 346f6fd8-55a2-412c-ac0f-8cc69ccec200
 (1 row)
 
  as_user 
@@ -414,7 +414,7 @@ SET
 RESET
               set_config              
 --------------------------------------
- 2ad9c7e5-1e22-43c9-9fd5-8a455bc730f6
+ a29c1c95-bced-454f-b1aa-d10f092233f8
 (1 row)
 
  pg_sleep 
@@ -469,12 +469,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- ada30f6a-8b8e-49fa-877e-ec25c9140fc7
+ b5ce5497-4a0f-4f57-aa48-1b7aa85fc773
 (1 row)
 
               set_config              
 --------------------------------------
- 96242b32-e09d-4275-b5fd-efba8c5b49ac
+ 10ce2566-f7b5-4632-a529-46df13db31ae
 (1 row)
 
  as_user 
@@ -485,7 +485,7 @@ RESET
 SET
                           settle_duel                           
 ----------------------------------------------------------------
- (a74ba612-99ff-4cc6-9115-0f76e9b14fc4,t,0,0,0,0,1,0,1,1,1,1,f)
+ (fe678035-c562-424a-9184-03865001c778,t,0,0,0,0,1,0,1,1,1,1,f)
 (1 row)
 
 RESET
@@ -697,7 +697,7 @@ RESET
 SET
              invite_live              
 --------------------------------------
- 42addece-973c-466c-a395-d85098283063
+ 8cd2ca0c-a9ce-4b60-9427-79d7a21a7fbe
 (1 row)
 
 RESET
@@ -722,12 +722,12 @@ RESET
 SET
              invite_live              
 --------------------------------------
- d201ba7f-cc80-4efb-9099-1662058b24e9
+ 09aaf549-b60d-4a8a-b7e0-5a7a723f6766
 (1 row)
 
              invite_live              
 --------------------------------------
- 38cd44eb-d2db-4fe0-b735-778f3563ae80
+ 169bdc6c-1c86-4201-b667-65f8e88fbd57
 (1 row)
 
 psql:tool/db/security_test.sql:359: NOTICE:  refused, as it should be — a fourth live invite in ten minutes: too many invites, wait a few minutes
@@ -917,14 +917,14 @@ INSERT 0 2
 INSERT 0 1
               set_config              
 --------------------------------------
- 657d0fe4-0ec4-4c8d-b402-f9693f84018c
+ 97a6bcff-a2a5-4d85-a240-e89d7d3487cd
 (1 row)
 
 INSERT 0 1
 INSERT 0 1
               set_config              
 --------------------------------------
- 32cbeda5-eb31-401d-8030-bd1f8699a32c
+ 4dd699e1-5002-40f6-9376-8ff3053238a0
 (1 row)
 
  as_user 
@@ -974,7 +974,7 @@ RESET
 INSERT 0 1
               set_config              
 --------------------------------------
- bbf1b22b-e213-4421-bd67-12bfaab22dae
+ efb8869e-51aa-4ddf-8a48-a61ef08106eb
 (1 row)
 
  as_user 
@@ -1062,7 +1062,7 @@ RESET
 DELETE 1
  set_config 
 ------------
- 172100
+ 773450
 (1 row)
 
  as_user 
