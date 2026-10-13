@@ -973,7 +973,16 @@ class _FriendRow extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 10),
-                _ActionButton(friend: friend),
+                // The button gives way before the name does when the text is
+                // large: the frame round the picture already takes its share
+                // of the row.
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 104),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: _ActionButton(friend: friend),
+                  ),
+                ),
               ],
             ),
           ),

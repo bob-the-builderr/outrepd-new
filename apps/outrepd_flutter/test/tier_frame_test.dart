@@ -18,16 +18,18 @@ Widget _app(Widget child) => MaterialApp(
 void main() {
   for (final size in [40.0, 52.0, 78.0]) {
     testWidgets('every tier draws at $size', (tester) async {
-      await tester.pumpWidget(_app(Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          for (var tier = 0; tier < 7; tier++)
-            TierFrame(
-              tierIdx: tier,
-              size: size,
-              child: SizedBox(width: size, height: size),
-            ),
-        ],
+      await tester.pumpWidget(_app(SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            for (var tier = 0; tier < 7; tier++)
+              TierFrame(
+                tierIdx: tier,
+                size: size,
+                child: SizedBox(width: size, height: size),
+              ),
+          ],
+        ),
       )));
       expect(tester.takeException(), isNull);
       expect(find.byType(TierFrame), findsNWidgets(7));
