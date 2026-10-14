@@ -1577,7 +1577,7 @@ class LZh extends L {
   String get accNothingYet => '还没有测过';
 
   @override
-  String get accNothingYetBody => '每次对决结束后你确认次数，那一组就会和你报的数对照一次。结果会出现在这里。';
+  String get accNothingYetBody => '每次在练习组之后确认次数，这一组都会和你报的数字比对。结果会显示在这里。';
 
   @override
   String accNeedMore(String count) {
@@ -1690,7 +1690,7 @@ class LZh extends L {
 
   @override
   String get obWhyNeededBody =>
-      '每一次都根据你肩膀下降和抬起的幅度来判定，而只有摄像头能看到这些。没有摄像头就无法计数，没有计数就没有对决。摄像头只在做组时开启。';
+      '每一次都按你下得多低、起得多高来判定，而这只有摄像头能看到。没有它就没法计数，没有计数就没有对决。摄像头只在做组时开启。';
 
   @override
   String get obWelcomeBack => '欢迎回来';

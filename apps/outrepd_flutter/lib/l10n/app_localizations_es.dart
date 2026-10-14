@@ -1623,7 +1623,7 @@ class LEs extends L {
 
   @override
   String get accNothingYetBody =>
-      'Cada vez que confirmas el conteo tras un duelo, esa serie se compara con lo que dijiste. El número aparece aquí.';
+      'Cada vez que confirmas el conteo tras una serie de práctica, esa serie se compara con lo que dijiste. El número aparece aquí.';
 
   @override
   String accNeedMore(String count) {
@@ -1742,7 +1742,7 @@ class LEs extends L {
 
   @override
   String get obWhyNeededBody =>
-      'Cada repetición se valora por cuánto bajan y suben tus hombros, y solo la cámara puede verlo. Sin ella no hay conteo, y sin conteo no hay duelo. La cámara solo se enciende durante una serie.';
+      'Cada repetición se valora por cuánto bajas y cuánto vuelves a subir, y solo la cámara puede verlo. Sin ella no hay conteo, y sin conteo no hay duelo. La cámara solo se enciende durante una serie.';
 
   @override
   String get obWelcomeBack => 'Bienvenido de nuevo';

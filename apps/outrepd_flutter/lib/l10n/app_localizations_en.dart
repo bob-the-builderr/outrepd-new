@@ -1617,7 +1617,7 @@ class LEn extends L {
 
   @override
   String get accNothingYetBody =>
-      'Every time you confirm a count after a duel, that set is measured against what you said it was. The number appears here.';
+      'Every time you confirm a count after a practice set, that set is measured against what you said it was. The number appears here.';
 
   @override
   String accNeedMore(String count) {
@@ -1735,7 +1735,7 @@ class LEn extends L {
 
   @override
   String get obWhyNeededBody =>
-      'Each rep is judged by how far your shoulders drop and rise, and only the camera can see that. Without it there is no count, and without a count there is no duel. The camera is only on during a set.';
+      'Each rep is judged by how low you go and how high you come back up, and only the camera can see that. Without it there is no count, and without a count there is no duel. The camera is only on during a set.';
 
   @override
   String get obWelcomeBack => 'Welcome back';

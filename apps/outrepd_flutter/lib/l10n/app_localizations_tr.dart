@@ -1613,7 +1613,7 @@ class LTr extends L {
 
   @override
   String get accNothingYetBody =>
-      'Düellodan sonra sayıyı her onayladığında, o set senin söylediğinle karşılaştırılır. Sonuç burada görünür.';
+      'Bir antrenman setinden sonra sayıyı her onayladığında, o set senin söylediğinle karşılaştırılır. Sonuç burada görünür.';
 
   @override
   String accNeedMore(String count) {
@@ -1732,7 +1732,7 @@ class LTr extends L {
 
   @override
   String get obWhyNeededBody =>
-      'Her tekrar, omuzlarının ne kadar inip kalktığına göre değerlendirilir ve bunu yalnızca kamera görebilir. Kamera olmadan sayım olmaz, sayım olmadan düello olmaz. Kamera yalnızca set sırasında açıktır.';
+      'Her tekrar, ne kadar aşağı indiğine ve ne kadar yukarı geri çıktığına göre değerlendirilir; bunu yalnızca kamera görebilir. Kamera olmadan sayım olmaz, sayım olmadan da düello olmaz. Kamera yalnızca set sırasında açıktır.';
 
   @override
   String get obWelcomeBack => 'Tekrar hoş geldin';

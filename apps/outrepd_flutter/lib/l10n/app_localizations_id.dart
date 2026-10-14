@@ -1618,7 +1618,7 @@ class LId extends L {
 
   @override
   String get accNothingYetBody =>
-      'Setiap kali kamu mengonfirmasi hitungan setelah duel, set itu dibandingkan dengan angka yang kamu sebut. Hasilnya muncul di sini.';
+      'Setiap kali kamu mengonfirmasi hitungan setelah set latihan, set itu diukur dengan angka yang kamu sebutkan. Hasilnya muncul di sini.';
 
   @override
   String accNeedMore(String count) {
@@ -1736,7 +1736,7 @@ class LId extends L {
 
   @override
   String get obWhyNeededBody =>
-      'Setiap repetisi dinilai dari seberapa jauh bahumu turun dan naik, dan hanya kamera yang bisa melihatnya. Tanpa kamera tidak ada hitungan, dan tanpa hitungan tidak ada duel. Kamera hanya menyala saat satu set berlangsung.';
+      'Setiap repetisi dinilai dari seberapa rendah kamu turun dan seberapa tinggi kamu naik lagi, dan hanya kamera yang bisa melihatnya. Tanpa kamera tidak ada hitungan, dan tanpa hitungan tidak ada duel. Kamera hanya menyala selama set.';
 
   @override
   String get obWelcomeBack => 'Selamat datang kembali';

@@ -3062,7 +3062,7 @@ abstract class L {
   /// No description provided for @accNothingYetBody.
   ///
   /// In en, this message translates to:
-  /// **'Every time you confirm a count after a duel, that set is measured against what you said it was. The number appears here.'**
+  /// **'Every time you confirm a count after a practice set, that set is measured against what you said it was. The number appears here.'**
   String get accNothingYetBody;
 
   /// No description provided for @accNeedMore.
@@ -3254,7 +3254,7 @@ abstract class L {
   /// No description provided for @obWhyNeededBody.
   ///
   /// In en, this message translates to:
-  /// **'Each rep is judged by how far your shoulders drop and rise, and only the camera can see that. Without it there is no count, and without a count there is no duel. The camera is only on during a set.'**
+  /// **'Each rep is judged by how low you go and how high you come back up, and only the camera can see that. Without it there is no count, and without a count there is no duel. The camera is only on during a set.'**
   String get obWhyNeededBody;
 
   /// No description provided for @obWelcomeBack.

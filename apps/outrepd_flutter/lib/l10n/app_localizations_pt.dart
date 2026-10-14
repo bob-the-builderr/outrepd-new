@@ -1621,7 +1621,7 @@ class LPt extends L {
 
   @override
   String get accNothingYetBody =>
-      'Sempre que confirmas a contagem depois de um duelo, essa série é comparada com o que disseste. O número aparece aqui.';
+      'Sempre que você confirma a contagem depois de uma série de treino, essa série é comparada com o que você informou. O número aparece aqui.';
 
   @override
   String accNeedMore(String count) {
@@ -1739,7 +1739,7 @@ class LPt extends L {
 
   @override
   String get obWhyNeededBody =>
-      'Cada repetição é avaliada por quanto seus ombros descem e sobem, e só a câmera consegue ver isso. Sem ela não há contagem, e sem contagem não há duelo. A câmera só fica ligada durante uma série.';
+      'Cada repetição é avaliada por quanto você desce e quanto volta a subir, e só a câmera consegue ver isso. Sem ela não há contagem, e sem contagem não há duelo. A câmera só fica ligada durante uma série.';
 
   @override
   String get obWelcomeBack => 'Bem-vindo de volta';

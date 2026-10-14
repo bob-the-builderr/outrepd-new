@@ -1623,7 +1623,7 @@ class LIt extends L {
 
   @override
   String get accNothingYetBody =>
-      'Ogni volta che confermi il conteggio dopo una sfida, quella serie viene confrontata con quello che hai detto. Il numero compare qui.';
+      'Ogni volta che confermi il conteggio dopo una serie di allenamento, quella serie viene confrontata con quello che hai indicato. Il risultato compare qui.';
 
   @override
   String accNeedMore(String count) {
@@ -1742,7 +1742,7 @@ class LIt extends L {
 
   @override
   String get obWhyNeededBody =>
-      'Ogni ripetizione è valutata da quanto scendono e salgono le spalle, e solo la fotocamera può vederlo. Senza, niente conteggio, e senza conteggio niente sfida. La fotocamera è accesa solo durante una serie.';
+      'Ogni ripetizione è giudicata da quanto scendi e da quanto risali, e solo la fotocamera può vederlo. Senza di lei non c\'è conteggio, e senza conteggio non c\'è duello. La fotocamera è accesa solo durante una serie.';
 
   @override
   String get obWelcomeBack => 'Bentornato';

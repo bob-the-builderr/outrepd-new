@@ -1624,7 +1624,7 @@ class LFr extends L {
 
   @override
   String get accNothingYetBody =>
-      'Chaque fois que tu confirmes un décompte après un duel, cette série est comparée à ce que tu as annoncé. Le chiffre s’affiche ici.';
+      'Chaque fois que tu confirmes le compte après une série d\'entraînement, cette série est comparée à ce que tu as indiqué. Le chiffre apparaît ici.';
 
   @override
   String accNeedMore(String count) {
@@ -1743,7 +1743,7 @@ class LFr extends L {
 
   @override
   String get obWhyNeededBody =>
-      'Chaque répétition est jugée sur la descente et la remontée de tes épaules, et seule la caméra peut le voir. Sans elle, pas de comptage, et sans comptage, pas de duel. La caméra n\'est allumée que pendant une série.';
+      'Chaque répétition est jugée sur la profondeur de ta descente et la hauteur à laquelle tu remontes, et seule la caméra peut le voir. Sans elle, pas de compte, et sans compte, pas de duel. La caméra n\'est allumée que pendant une série.';
 
   @override
   String get obWelcomeBack => 'Content de te revoir';

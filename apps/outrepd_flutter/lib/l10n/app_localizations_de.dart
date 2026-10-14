@@ -1625,7 +1625,7 @@ class LDe extends L {
 
   @override
   String get accNothingYetBody =>
-      'Jedes Mal, wenn du nach einem Duell die Zahl bestätigst, wird dieser Satz an deiner Angabe gemessen. Das Ergebnis steht dann hier.';
+      'Jedes Mal, wenn du nach einem Trainingssatz die Zahl bestätigst, wird dieser Satz an deiner Angabe gemessen. Das Ergebnis steht dann hier.';
 
   @override
   String accNeedMore(String count) {
@@ -1744,7 +1744,7 @@ class LDe extends L {
 
   @override
   String get obWhyNeededBody =>
-      'Jede Wiederholung wird danach bewertet, wie weit deine Schultern sinken und steigen, und das sieht nur die Kamera. Ohne sie gibt es keine Zählung und ohne Zählung kein Duell. Die Kamera ist nur während eines Satzes an.';
+      'Jede Wiederholung wird danach bewertet, wie tief du runtergehst und wie hoch du wieder hochkommst, und das sieht nur die Kamera. Ohne sie gibt es keine Zählung und ohne Zählung kein Duell. Die Kamera ist nur während eines Satzes an.';
 
   @override
   String get obWelcomeBack => 'Willkommen zurück';

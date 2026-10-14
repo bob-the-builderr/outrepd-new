@@ -1584,7 +1584,7 @@ class LJa extends L {
 
   @override
   String get accNothingYetBody =>
-      '対戦後に回数を確認するたび、そのセットがあなたの申告と照らし合わされます。結果はここに出ます。';
+      '練習セットの後に回数を確認するたび、そのセットがあなたの申告と照らし合わされます。結果はここに出ます。';
 
   @override
   String accNeedMore(String count) {
@@ -1700,7 +1700,7 @@ class LJa extends L {
 
   @override
   String get obWhyNeededBody =>
-      '1回ごとに肩がどれだけ下がって上がったかで判定します。それを見られるのはカメラだけです。カメラがなければカウントできず、カウントがなければ対戦もできません。カメラが動くのはセット中だけです。';
+      '1回ごとに、どこまで下がってどこまで上がり直したかで判定します。それを見られるのはカメラだけです。カメラがなければカウントできず、カウントがなければ対戦もできません。カメラが動くのはセット中だけです。';
 
   @override
   String get obWelcomeBack => 'おかえり';

@@ -1590,7 +1590,7 @@ class LKo extends L {
 
   @override
   String get accNothingYetBody =>
-      '대결이 끝나고 횟수를 확인할 때마다, 그 세트가 당신이 말한 숫자와 비교됩니다. 결과가 여기에 나옵니다.';
+      '연습 세트 후 횟수를 확인할 때마다 그 세트를 입력한 숫자와 비교해요. 결과가 여기에 표시돼요.';
 
   @override
   String accNeedMore(String count) {
@@ -1706,7 +1706,7 @@ class LKo extends L {
 
   @override
   String get obWhyNeededBody =>
-      '한 번 한 번은 어깨가 얼마나 내려갔다 올라오는지로 판정하고, 그건 카메라만 볼 수 있어요. 카메라가 없으면 카운트가 없고, 카운트가 없으면 대결도 없어요. 카메라는 세트 중에만 켜져요.';
+      '한 번 한 번을 얼마나 내려가고 얼마나 다시 올라오는지로 판정해요. 그걸 볼 수 있는 건 카메라뿐이에요. 카메라가 없으면 카운트도 없고, 카운트가 없으면 대결도 없어요. 카메라는 세트 중에만 켜져요.';
 
   @override
   String get obWelcomeBack => '다시 오셨네요';
