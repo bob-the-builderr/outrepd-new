@@ -1537,9 +1537,6 @@ class LEs extends L {
   String get obFramingWrists => 'Muñecas';
 
   @override
-  String get obFramingAnkles => 'Tobillos';
-
-  @override
   String get obLooksGood => 'Se ve bien';
 
   @override

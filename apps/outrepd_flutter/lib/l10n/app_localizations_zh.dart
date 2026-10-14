@@ -1494,9 +1494,6 @@ class LZh extends L {
   String get obFramingWrists => '手腕';
 
   @override
-  String get obFramingAnkles => '脚踝';
-
-  @override
   String get obLooksGood => '看起来不错';
 
   @override

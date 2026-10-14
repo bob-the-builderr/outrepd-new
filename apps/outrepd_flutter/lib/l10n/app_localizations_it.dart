@@ -1537,9 +1537,6 @@ class LIt extends L {
   String get obFramingWrists => 'Polsi';
 
   @override
-  String get obFramingAnkles => 'Caviglie';
-
-  @override
   String get obLooksGood => 'Va bene così';
 
   @override

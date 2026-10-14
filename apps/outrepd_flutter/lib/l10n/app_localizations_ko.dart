@@ -1505,9 +1505,6 @@ class LKo extends L {
   String get obFramingWrists => '손목';
 
   @override
-  String get obFramingAnkles => '발목';
-
-  @override
   String get obLooksGood => '좋습니다';
 
   @override

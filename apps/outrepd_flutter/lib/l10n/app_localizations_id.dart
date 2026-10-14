@@ -1532,9 +1532,6 @@ class LId extends L {
   String get obFramingWrists => 'Pergelangan tangan';
 
   @override
-  String get obFramingAnkles => 'Pergelangan kaki';
-
-  @override
   String get obLooksGood => 'Sudah bagus';
 
   @override

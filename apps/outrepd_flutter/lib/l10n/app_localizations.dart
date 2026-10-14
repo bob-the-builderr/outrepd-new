@@ -2897,12 +2897,6 @@ abstract class L {
   /// **'Wrists'**
   String get obFramingWrists;
 
-  /// No description provided for @obFramingAnkles.
-  ///
-  /// In en, this message translates to:
-  /// **'Ankles'**
-  String get obFramingAnkles;
-
   /// No description provided for @obLooksGood.
   ///
   /// In en, this message translates to:

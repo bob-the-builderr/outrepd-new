@@ -197,7 +197,7 @@ void main() {
     expect(find.text('outrepd needs your camera'), findsNothing);
   });
 
-  testWidgets('the framing check waits for both ends of the body',
+  testWidgets('the framing check waits for the body and the hands',
       (tester) async {
     phone(tester);
     final source = _ScriptedSource();
@@ -216,19 +216,22 @@ void main() {
     await tap(tester, 'I’m set up');
 
     expect(find.text('Get into a push-up position'), findsOneWidget);
-    for (final mark in ['Shoulders and hips', 'Wrists', 'Ankles']) {
+    for (final mark in ['Shoulders and hips', 'Wrists']) {
       expect(find.text(mark), findsOneWidget);
     }
+    // Not the ankles: the counter never reads them, and a phone on the floor
+    // facing the lifter hides them.
+    expect(find.text('Ankles'), findsNothing);
 
-    // Feet out of shot: the step will not let anybody past.
-    source.emit(_feetOutOfShot());
+    // Hands out of shot: the step will not let anybody past.
+    source.emit(_handsOutOfShot());
     await tester.pump();
     await tester.pump();
     await tap(tester, 'Looks good');
     expect(find.text('Get into a push-up position'), findsOneWidget);
 
-    // Whole body, and it moves on.
-    source.emit(_framedBody());
+    // Feet out of shot is fine: shoulders, hips and hands are all it needs.
+    source.emit(_feetOutOfShot());
     await tester.pump();
     await tester.pump();
     await tap(tester, 'Looks good');
@@ -540,6 +543,14 @@ BodyPose _framedBody() {
     Joint.rightKnee: at(270, 440),
     Joint.leftAnkle: at(210, 540),
     Joint.rightAnkle: at(270, 540),
+  });
+}
+
+BodyPose _handsOutOfShot() {
+  final full = _framedBody().points;
+  return BodyPose({
+    for (final e in full.entries)
+      if (e.key != Joint.leftWrist && e.key != Joint.rightWrist) e.key: e.value,
   });
 }
 

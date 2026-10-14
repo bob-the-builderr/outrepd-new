@@ -1320,8 +1320,11 @@ class _FramingCheckState extends State<_FramingCheck> {
       _sees(_pose, [Joint.leftShoulder, Joint.rightShoulder]) &&
       _sees(_pose, [Joint.leftHip, Joint.rightHip]);
   bool get _wrists => _sees(_pose, [Joint.leftWrist, Joint.rightWrist]);
-  bool get _ankles => _sees(_pose, [Joint.leftAnkle, Joint.rightAnkle]);
-  bool get _ready => _core && _wrists && _ankles;
+
+  /// What the counter reads, and nothing it does not: not the ankles, which
+  /// a phone on the floor facing the lifter hides in most frames, so asking
+  /// for them only sent people backing the phone away to get their feet in.
+  bool get _ready => _core && _wrists;
 
   /// Since when the whole body has been in view without a break.
   DateTime? _readySince;
@@ -1378,11 +1381,10 @@ class _FramingCheckState extends State<_FramingCheck> {
                     l.obFramingTitle,
                     style: TextStyle(color: context.colors.text, fontSize: 15),
                   ),
-                  // Three ticks rather than one verdict: somebody whose feet
-                  // are out of shot is told which end to move.
+                  // Two ticks rather than one verdict: somebody whose hands
+                  // are out of shot is told which part to bring in.
                   _Mark(l.obFramingShoulders, on: _core),
                   _Mark(l.obFramingWrists, on: _wrists),
-                  _Mark(l.obFramingAnkles, on: _ankles),
                 ],
               ),
             ),

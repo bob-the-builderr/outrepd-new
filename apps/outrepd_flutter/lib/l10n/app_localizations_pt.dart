@@ -1536,9 +1536,6 @@ class LPt extends L {
   String get obFramingWrists => 'Pulsos';
 
   @override
-  String get obFramingAnkles => 'Tornozelos';
-
-  @override
   String get obLooksGood => 'Está bom';
 
   @override

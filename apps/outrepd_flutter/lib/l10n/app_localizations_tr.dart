@@ -1528,9 +1528,6 @@ class LTr extends L {
   String get obFramingWrists => 'Bilekler';
 
   @override
-  String get obFramingAnkles => 'Ayak bilekleri';
-
-  @override
   String get obLooksGood => 'İyi görünüyor';
 
   @override

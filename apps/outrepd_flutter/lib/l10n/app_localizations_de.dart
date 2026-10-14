@@ -1539,9 +1539,6 @@ class LDe extends L {
   String get obFramingWrists => 'Handgelenke';
 
   @override
-  String get obFramingAnkles => 'Knöchel';
-
-  @override
   String get obLooksGood => 'Sieht gut aus';
 
   @override

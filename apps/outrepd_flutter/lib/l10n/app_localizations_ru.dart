@@ -1532,9 +1532,6 @@ class LRu extends L {
   String get obFramingWrists => 'Запястья';
 
   @override
-  String get obFramingAnkles => 'Щиколотки';
-
-  @override
   String get obLooksGood => 'Отлично';
 
   @override

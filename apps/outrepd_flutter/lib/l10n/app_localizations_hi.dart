@@ -1533,9 +1533,6 @@ class LHi extends L {
   String get obFramingWrists => 'कलाइयाँ';
 
   @override
-  String get obFramingAnkles => 'टख़ने';
-
-  @override
   String get obLooksGood => 'सब ठीक लग रहा है';
 
   @override

@@ -1532,9 +1532,6 @@ class LEn extends L {
   String get obFramingWrists => 'Wrists';
 
   @override
-  String get obFramingAnkles => 'Ankles';
-
-  @override
   String get obLooksGood => 'Looks good';
 
   @override

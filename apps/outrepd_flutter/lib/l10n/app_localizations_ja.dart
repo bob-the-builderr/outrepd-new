@@ -1499,9 +1499,6 @@ class LJa extends L {
   String get obFramingWrists => '手首';
 
   @override
-  String get obFramingAnkles => '足首';
-
-  @override
   String get obLooksGood => 'いい感じ';
 
   @override

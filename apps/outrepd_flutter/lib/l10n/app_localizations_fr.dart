@@ -1538,9 +1538,6 @@ class LFr extends L {
   String get obFramingWrists => 'Poignets';
 
   @override
-  String get obFramingAnkles => 'Chevilles';
-
-  @override
   String get obLooksGood => 'C’est bon';
 
   @override
