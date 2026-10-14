@@ -955,30 +955,25 @@ class _TrainerScreenState extends State<TrainerScreen>
           _source?.buildPreview(context) ??
               const ColoredBox(color: Colors.black),
 
-          // The skeleton goes over whatever is behind it, green while the body
-          // holds a straight line. It is feedback on form, not a gate on the
-          // count: a rep with a sagging hip is still a rep somebody did, and a
-          // count that silently withheld it would be the app calling them a liar.
-          //
-          // Half strength until the bout starts. Getting into position is the
-          // one moment the overlay is the subject rather than the decoration —
-          // it is how you know the camera can see you — and a faint one asks to
-          // be looked at without claiming anything is being counted yet.
+          // The skeleton goes over whatever is behind it, in the app's cream:
+          // faint while the lifter is getting into position, bright once they
+          // are in it (and, mid-round, while the hands stay planted). It is
+          // feedback, not a gate on the count: a rep with a sagging hip is
+          // still a rep somebody did, and a count that silently withheld it
+          // would be the app calling them a liar. One colour throughout — red
+          // for "not yet" read as an error before anything had gone wrong.
           //
           // Hidden when the lifter has turned it off in settings. The count
           // does not change either way — this is the picture, not the
           // reading — but some people find it easier to lift without a
           // figure drawn over them.
           if (settings.showSkeleton)
-            Opacity(
-              opacity: _stage == _Stage.positioning ? 0.5 : 1,
-              child: CustomPaint(
-                painter: SkeletonPainter(
-                  pose: _pose,
-                  good: ready,
-                  mirror: live,
-                  sourceSize: _source?.sourceSize,
-                ),
+            CustomPaint(
+              painter: SkeletonPainter(
+                pose: _pose,
+                good: ready,
+                mirror: live,
+                sourceSize: _source?.sourceSize,
               ),
             ),
 

@@ -45,6 +45,10 @@ class SkeletonPainter extends CustomPainter {
   });
 
   final BodyPose pose;
+
+  /// In position, or mid-round with the hands planted: drawn bright. Faint
+  /// otherwise — the same colour, so not being there yet reads as "not yet"
+  /// rather than as an error.
   final bool good;
 
   /// The front camera shows a mirror image, so the overlay has to be flipped
@@ -58,7 +62,10 @@ class SkeletonPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (pose.points.isEmpty) return;
 
-    final colour = good ? AppColors.win : AppColors.loss;
+    // The app's own cream, whatever the theme: it is drawn over a camera
+    // picture, not over a page.
+    final colour = kDarkPalette.brand;
+    final strength = good ? 1.0 : 0.45;
 
     // The preview covers the screen: scaled until it fills, then centred and
     // clipped. The skeleton has to be put through the very same transform, or
@@ -81,12 +88,12 @@ class SkeletonPainter extends CustomPainter {
     }
 
     final bone = Paint()
-      ..color = colour.withValues(alpha: 0.85)
+      ..color = colour.withValues(alpha: 0.9 * strength)
       ..strokeWidth = 5
       ..strokeCap = StrokeCap.round;
 
     final glow = Paint()
-      ..color = colour.withValues(alpha: 0.28)
+      ..color = colour.withValues(alpha: 0.3 * strength)
       ..strokeWidth = 14
       ..strokeCap = StrokeCap.round;
 
@@ -98,8 +105,8 @@ class SkeletonPainter extends CustomPainter {
       canvas.drawLine(a, b, bone);
     }
 
-    final dot = Paint()..color = Colors.white;
-    final ring = Paint()..color = colour;
+    final dot = Paint()..color = Colors.white.withValues(alpha: strength);
+    final ring = Paint()..color = colour.withValues(alpha: strength);
 
     for (final joint in _dotted) {
       final p = at(joint);

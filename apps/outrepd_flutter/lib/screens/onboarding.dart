@@ -1193,12 +1193,17 @@ class _CameraStage extends StatefulWidget {
     required this.builder,
     required this.onPose,
     this.poseSource,
+    this.good = true,
   });
 
   /// Drawn over the preview.
   final Widget Function(BuildContext context, BodyPose pose) builder;
   final void Function(BodyPose pose) onPose;
   final PoseSource Function()? poseSource;
+
+  /// The skeleton bright, or faint while the step is still waiting on the
+  /// lifter — as on the camera screen.
+  final bool good;
 
   @override
   State<_CameraStage> createState() => _CameraStageState();
@@ -1288,7 +1293,7 @@ class _CameraStageState extends State<_CameraStage>
         CustomPaint(
           painter: SkeletonPainter(
             pose: _pose,
-            good: true,
+            good: widget.good,
             mirror: _source?.isLive ?? false,
             sourceSize: _source?.sourceSize,
           ),
@@ -1362,6 +1367,7 @@ class _FramingCheckState extends State<_FramingCheck> {
     return _CameraStage(
       poseSource: widget.poseSource,
       onPose: _onPose,
+      good: _ready,
       builder: (context, _) => Stack(
         children: [
           Positioned(
@@ -1572,6 +1578,7 @@ class _CalibrationState extends State<_Calibration> {
     return _CameraStage(
       poseSource: widget.poseSource,
       onPose: _onPose,
+      good: _counting,
       builder: (context, _) => Stack(
         children: [
           Positioned(
@@ -1652,7 +1659,8 @@ class _CalibrationState extends State<_Calibration> {
                   heightFactor: _progress.clamp(0.0, 1.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: AppColors.win,
+                      // The camera screen's own bar colour.
+                      color: context.colors.brand,
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
