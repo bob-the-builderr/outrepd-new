@@ -23,7 +23,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'backend/backend.dart' show RemoteProfile, SettledDuel;
+import 'backend/backend.dart'
+    show RacedSet, RemoteProfile, SettledDuel, backend;
 import 'data.dart';
 import 'health_sync.dart';
 import 'ranking.dart';
@@ -116,6 +117,12 @@ class Career extends ChangeNotifier {
   static const _kProfile = 'career.profile';
   static const _kHistory = 'career.history';
   static const _kDays = 'career.days';
+  static const _kRaced = 'career.raced';
+
+  /// The duels raced against this account's stored sets that are already in
+  /// the history, by id, so [syncRacedSets] adds each one once.
+  final Set<String> _raced = {};
+  Future<void>? _syncingRaced;
 
   /// Reps counted on each day, keyed by date. The key is a plain `yyyy-mm-dd`
   /// so it survives a timezone change without turning into a different day.
@@ -393,6 +400,72 @@ class Career extends ChangeNotifier {
     );
   }
 
+  /// Adds to the history the duels raced against this account's stored sets
+  /// while it was away, and takes the rank they moved from the server.
+  ///
+  /// A ranked match with nobody live and no saved set to race puts this
+  /// lifter's set in the pool, and the result comes when somebody races it —
+  /// on their phone, not this one. Everything else in the history is what
+  /// this phone watched happen, so those duels reached the bell and the rank
+  /// and never the history. Nothing is counted again here: the reps were
+  /// counted when the set was lifted, and the record and placements are the
+  /// server's, read back whole.
+  Future<void> syncRacedSets() =>
+      _syncingRaced ??= _syncRaced().whenComplete(() => _syncingRaced = null);
+
+  Future<void> _syncRaced() async {
+    if (!backend.available || backend.me == null) return;
+    final List<RacedSet> raced;
+    try {
+      raced = await backend.racedSets();
+    } on Object catch (error) {
+      debugPrint('Could not read the sets raced while away: $error');
+      return;
+    }
+    final fresh = [for (final r in raced) if (!_raced.contains(r.duelId)) r];
+    // Only what the server still lists: an id older than its last fifty is
+    // never handed back again, so it need not be remembered either.
+    final listed = {for (final r in raced) r.duelId};
+    if (fresh.isEmpty) {
+      if (listed.length != _raced.length) {
+        _raced
+          ..clear()
+          ..addAll(listed);
+        await save();
+      }
+      return;
+    }
+    _raced
+      ..clear()
+      ..addAll(listed);
+
+    for (final r in fresh) {
+      matchHistory.add(
+        MatchRecord(
+          won: r.won,
+          userReps: r.yourReps,
+          opponentReps: r.theirReps,
+          opponent: r.opponentName,
+          lpChange: r.lpDelta,
+          at: r.at,
+        ),
+      );
+    }
+    matchHistory.sort((a, b) => b.at.compareTo(a.at));
+    if (matchHistory.length > _kHistoryKept) {
+      matchHistory.removeRange(_kHistoryKept, matchHistory.length);
+    }
+
+    // The rank, the record and the placements those duels moved.
+    try {
+      applyServerProfile(await backend.signIn(username: demoProfile.username));
+    } on Object catch (error) {
+      debugPrint('Could not read the profile back: $error');
+    }
+    await save();
+    notifyListeners();
+  }
+
   /// Records a solo set. Reps and the streak count; nothing else does.
   ///
   /// Practice deliberately cannot move a rank. If it could, the ladder would
@@ -513,6 +586,7 @@ class Career extends ChangeNotifier {
       jsonEncode([for (final m in matchHistory) m.toJson()]),
     );
     await store.setString(_kDays, jsonEncode(_days));
+    await store.setStringList(_kRaced, _raced.toList());
   }
 
   /// Reads the account back.
@@ -569,6 +643,9 @@ class Career extends ChangeNotifier {
     } on Object catch (error) {
       debugPrint('Could not read the match history: $error');
     }
+    _raced
+      ..clear()
+      ..addAll(store.getStringList(_kRaced) ?? const []);
 
     try {
       final raw = store.getString(_kDays);
@@ -617,6 +694,7 @@ class Career extends ChangeNotifier {
       ..placementWins = 0;
     matchHistory.clear();
     _days.clear();
+    _raced.clear();
     await save();
     notifyListeners();
   }
@@ -632,6 +710,8 @@ class Career extends ChangeNotifier {
   Future<void> adoptServerProfile(RemoteProfile me) async {
     matchHistory.clear();
     _days.clear();
+    // The sets this account had raced are theirs to fetch afresh.
+    _raced.clear();
     applyServerProfile(me);
     await save();
     notifyListeners();
@@ -643,10 +723,12 @@ class Career extends ChangeNotifier {
   Future<void> reset() async {
     matchHistory.clear();
     _days.clear();
+    _raced.clear();
     final store = await SharedPreferences.getInstance();
     await store.remove(_kProfile);
     await store.remove(_kHistory);
     await store.remove(_kDays);
+    await store.remove(_kRaced);
     notifyListeners();
   }
 }

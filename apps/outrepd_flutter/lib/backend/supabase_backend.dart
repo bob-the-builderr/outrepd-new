@@ -529,6 +529,26 @@ class SupabaseBackend implements Backend {
   }
 
   @override
+  Future<List<RacedSet>> racedSets() async {
+    final rows = await _db.rpc<List<dynamic>>('my_raced_sets');
+    return [
+      for (final row in rows.cast<Map<String, dynamic>>())
+        RacedSet(
+          duelId: row['duel_id'] as String,
+          at:
+              DateTime.tryParse(row['raced_at'] as String? ?? '')?.toLocal() ??
+              DateTime.now(),
+          opponentName: row['opponent_name'] as String? ?? '',
+          opponentTier: (row['opponent_tier'] as num?)?.toInt() ?? 0,
+          won: row['you_won'] as bool? ?? false,
+          yourReps: (row['your_reps'] as num?)?.toInt() ?? 0,
+          theirReps: (row['their_reps'] as num?)?.toInt() ?? 0,
+          lpDelta: (row['lp_delta'] as num?)?.toInt() ?? 0,
+        ),
+    ];
+  }
+
+  @override
   Future<int> unreadNotices() async =>
       (await _db.rpc<int>('unread_notifications'));
 

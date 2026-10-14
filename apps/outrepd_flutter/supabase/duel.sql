@@ -500,6 +500,48 @@ begin
 end;
 $$;
 
+-- ─────────────────────────── raced while away ────────────────────────────────
+
+-- The duels somebody else settled against one of the caller's stored sets,
+-- newest first: the other half of "your set is in the pool". The phone keeps
+-- its own history of what it watched happen, and a set raced while its
+-- owner was away never happened on that phone — so without this, the duel
+-- that moved their rank reached the bell and never the history.
+--
+-- Not a live match: both phones were there for one of those, and each wrote
+-- it down already. Fifty, the length of the history the phone keeps.
+create or replace function my_raced_sets()
+returns table (
+  duel_id uuid,
+  raced_at timestamptz,
+  opponent_name text,
+  opponent_tier int,
+  you_won boolean,
+  your_reps int,
+  their_reps int,
+  lp_delta int
+)
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select d.id, d.created_at, p.username, p.tier_idx,
+         coalesce(d.winner = d.defender, false), ds.reps, cs.reps,
+         d.lp_defender
+    from duels d
+    join sets ds on ds.id = d.defender_set
+    join sets cs on cs.id = d.challenger_set
+    join profiles p on p.id = d.challenger
+   where d.defender = auth.uid()
+     and ds.live_match is null
+   order by d.created_at desc
+   limit 50;
+$$;
+
+revoke all on function my_raced_sets() from public, anon;
+grant execute on function my_raced_sets() to authenticated;
+
 revoke all on function settle_duel(uuid, uuid, boolean) from public;
 grant execute on function settle_duel(uuid, uuid, boolean) to authenticated;
 revoke all on function find_opponent_set(int) from public;

@@ -780,6 +780,30 @@ abstract interface class LiveLink {
   Future<void> close();
 }
 
+/// A duel somebody settled against one of this account's stored sets while
+/// it was away: the other half of "your set is in the pool".
+class RacedSet {
+  const RacedSet({
+    required this.duelId,
+    required this.at,
+    required this.opponentName,
+    required this.opponentTier,
+    required this.won,
+    required this.yourReps,
+    required this.theirReps,
+    required this.lpDelta,
+  });
+
+  final String duelId;
+  final DateTime at;
+  final String opponentName;
+  final int opponentTier;
+  final bool won;
+  final int yourReps;
+  final int theirReps;
+  final int lpDelta;
+}
+
 /// One thing the server has to tell somebody.
 class Notice {
   const Notice({
@@ -1112,6 +1136,10 @@ abstract interface class Backend {
   /// What happened while this lifter was away, newest first.
   Future<List<Notice>> notices();
 
+  /// The duels raced against this account's stored sets while it was away,
+  /// newest first, for the history: they never happened on this phone.
+  Future<List<RacedSet>> racedSets();
+
   /// How many of those have not been seen. What the dot on the bell counts.
   Future<int> unreadNotices();
 
@@ -1383,6 +1411,9 @@ class NoBackend implements Backend {
 
   @override
   Future<List<Notice>> notices() async => const [];
+
+  @override
+  Future<List<RacedSet>> racedSets() async => const [];
 
   @override
   Future<int> unreadNotices() async => 0;

@@ -194,6 +194,16 @@ select check_that(
   'an honest duel did not settle');
 reset role;
 
+-- D was away for that one: it reaches D's history, and nobody else's.
+select as_user(:'D'); set role authenticated;
+select check_that((select count(*) from my_raced_sets()) = 1,
+                  'a set raced while its owner was away never reached them');
+reset role;
+select as_user(:'A'); set role authenticated;
+select check_that((select count(*) from my_raced_sets()) = 0,
+                  'the lifter who raced was shown it as raced while away');
+reset role;
+
 -- Again with the same second account: the pool will not pair them twice,
 -- and a set it did not hand over does not settle.
 select pg_sleep(8.5);

@@ -210,6 +210,9 @@ class _InsideState extends State<_Inside> with WidgetsBindingObserver {
     _links = listenForLinks(() => context);
     Push.instance.openNotices.addListener(_openNotices);
     Push.instance.arrived.addListener(_checkInvites);
+    // A push is often somebody racing this lifter's set while they were
+    // away: the result goes into the history as it arrives.
+    Push.instance.arrived.addListener(_syncRaced);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await askForNotificationsOnce();
       // After the answer, so a phone that just said yes is registered with
@@ -235,6 +238,7 @@ class _InsideState extends State<_Inside> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     Push.instance.openNotices.removeListener(_openNotices);
     Push.instance.arrived.removeListener(_checkInvites);
+    Push.instance.arrived.removeListener(_syncRaced);
     _invitePoll?.cancel();
     _links?.cancel();
     super.dispose();
@@ -242,8 +246,13 @@ class _InsideState extends State<_Inside> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) _checkInvites();
+    if (state == AppLifecycleState.resumed) {
+      _checkInvites();
+      _syncRaced();
+    }
   }
+
+  void _syncRaced() => unawaited(Career.instance.syncRacedSets());
 
   Future<void> _checkInvites() async {
     if (!backend.available || backend.me == null) return;
