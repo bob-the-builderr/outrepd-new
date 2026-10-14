@@ -97,6 +97,19 @@ class SupabaseBackend implements Backend {
     return _me = _profileFrom(row);
   }
 
+  @override
+  Future<RemoteProfile?> refreshMe() async {
+    final user = _db.auth.currentUser;
+    if (user == null) return null;
+    final row = await _db
+        .from('profiles')
+        .select()
+        .eq('id', user.id)
+        .maybeSingle();
+    if (row == null) return null;
+    return _me = _profileFrom(row);
+  }
+
   /// Where this phone says it is, as a two-letter code.
   ///
   /// Read off the device rather than asked for. Nobody installs a push-up app

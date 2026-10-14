@@ -483,9 +483,7 @@ class Career extends ChangeNotifier {
       }
       // The rank, the record and the placements those duels moved.
       try {
-        applyServerProfile(
-          await backend.signIn(username: demoProfile.username),
-        );
+        if (await backend.refreshMe() case final me?) applyServerProfile(me);
       } on Object catch (error) {
         debugPrint('Could not read the profile back: $error');
       }

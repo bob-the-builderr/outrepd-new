@@ -1051,6 +1051,10 @@ abstract interface class Backend {
   /// Signs in and makes sure a profile row exists.
   Future<RemoteProfile> signIn({required String username});
 
+  /// This account's row read again, or null when nobody is signed in.
+  /// Unlike [signIn], never starts an account of its own.
+  Future<RemoteProfile?> refreshMe();
+
   /// Stores a finished set and returns its id.
   Future<String> uploadSet(SetUpload set);
 
@@ -1338,6 +1342,9 @@ class NoBackend implements Backend {
   @override
   Future<RemoteProfile> signIn({required String username}) =>
       throw StateError('no server configured');
+
+  @override
+  Future<RemoteProfile?> refreshMe() async => null;
 
   @override
   Future<String> uploadSet(SetUpload set) =>

@@ -41,7 +41,7 @@ class _Server extends NoBackend {
   }
 
   @override
-  Future<RemoteProfile> signIn({required String username}) async => after;
+  Future<RemoteProfile?> refreshMe() async => after;
 }
 
 ServerDuel _duel(
