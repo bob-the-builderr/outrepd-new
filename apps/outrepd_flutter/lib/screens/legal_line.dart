@@ -73,16 +73,19 @@ class _LegalLineState extends State<LegalLine> {
   }
 }
 
+/// What opens a page in the phone's browser. A test puts its own here, to
+/// see which page a tap asked for without a browser to open it in.
+@visibleForTesting
+Future<bool> Function(Uri url) openInBrowser =
+    (url) => launchUrl(url, mode: LaunchMode.externalApplication);
+
 /// The page in the phone's browser, the way Settings and the paywall open
 /// the same two; a short note if it could not be opened.
 Future<void> openLegalLink(BuildContext context, String url) async {
   final messenger = ScaffoldMessenger.maybeOf(context);
   final l = L.of(context);
   try {
-    final opened = await launchUrl(
-      Uri.parse(url),
-      mode: LaunchMode.externalApplication,
-    );
+    final opened = await openInBrowser(Uri.parse(url));
     if (!opened) throw StateError('launchUrl returned false');
   } on Object catch (error) {
     debugPrint('Could not open $url: $error');

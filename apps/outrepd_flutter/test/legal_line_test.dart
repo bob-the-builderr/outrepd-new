@@ -2,9 +2,8 @@
 /// when they are tapped.
 ///
 /// They were coloured like links and were plain text: tapping either did
-/// nothing. The page itself cannot open in a test, so what is checked is
-/// that each name answers a tap by trying to open it — here, with no browser
-/// behind it, that try ends in the note saying the link could not open.
+/// nothing. A test has no browser, so the opener is swapped for one that
+/// writes down what it was asked to open.
 library;
 
 import 'package:flutter/gestures.dart';
@@ -14,6 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:outrepd/l10n/app_localizations.dart';
 import 'package:outrepd/screens/legal_line.dart';
+import 'package:outrepd/screens/paywall.dart' show kPrivacyUrl, kTermsUrl;
 
 Widget _app(Widget child) => MaterialApp(
   locale: const Locale('en'),
@@ -27,33 +27,55 @@ Widget _app(Widget child) => MaterialApp(
   home: Scaffold(body: Center(child: child)),
 );
 
-/// The span in the line that says [text].
-TextSpan _span(WidgetTester tester, String text) {
+/// Taps the span in the line that says [text], as a finger on it would.
+void _tapSpan(WidgetTester tester, String text) {
   final rich = tester.widget<RichText>(find.byType(RichText).first);
   TextSpan? found;
   rich.text.visitChildren((span) {
     if (span is TextSpan && span.text == text) found = span;
     return found == null;
   });
-  return found!;
+  final recognizer = found!.recognizer;
+  expect(recognizer, isA<TapGestureRecognizer>(), reason: '$text is not a link');
+  (recognizer! as TapGestureRecognizer).onTap!();
 }
 
 void main() {
-  for (final name in ['Terms', 'Privacy Policy']) {
-    testWidgets('$name answers a tap', (tester) async {
-      await tester.pumpWidget(
-        _app(const LegalLine(style: TextStyle(), linkStyle: TextStyle())),
-      );
+  final opened = <String>[];
+  var answers = true;
+  final browser = openInBrowser;
+
+  setUp(() {
+    opened.clear();
+    answers = true;
+    openInBrowser = (url) async {
+      opened.add(url.toString());
+      return answers;
+    };
+  });
+  tearDown(() => openInBrowser = browser);
+
+  const line = LegalLine(style: TextStyle(), linkStyle: TextStyle());
+
+  for (final (name, url) in [('Terms', kTermsUrl), ('Privacy Policy', kPrivacyUrl)]) {
+    testWidgets('$name opens its page', (tester) async {
+      await tester.pumpWidget(_app(line));
       expect(
         find.textContaining('By continuing you agree to the'),
         findsOneWidget,
       );
-
-      final recognizer = _span(tester, name).recognizer;
-      expect(recognizer, isA<TapGestureRecognizer>());
-      (recognizer! as TapGestureRecognizer).onTap!();
+      _tapSpan(tester, name);
       await tester.pumpAndSettle();
-      expect(find.text('Could not open that link'), findsOneWidget);
+      expect(opened, [url]);
+      expect(find.text('Could not open that link'), findsNothing);
     });
   }
+
+  testWidgets('a page that cannot open says so', (tester) async {
+    answers = false;
+    await tester.pumpWidget(_app(line));
+    _tapSpan(tester, 'Terms');
+    await tester.pumpAndSettle();
+    expect(find.text('Could not open that link'), findsOneWidget);
+  });
 }
