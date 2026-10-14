@@ -152,6 +152,16 @@ void main() {
     testWidgets('store live match ${width}x$height', (tester) async {
       tester.view.physicalSize = Size(width.toDouble(), height.toDouble());
       tester.view.devicePixelRatio = 3;
+      // The App Store's size is an iPhone 16 Pro Max: its status bar and
+      // Dynamic Island take 62 points at the top and the home bar 34 at the
+      // bottom, and the screen keeps its card and labels clear of both, as
+      // it does on the phone. The store frame draws the status bar over the
+      // camera, so the picture is the one a lifter actually sees.
+      if (width == 1320) {
+        const insets = FakeViewPadding(top: 62 * 3, bottom: 34 * 3);
+        tester.view.padding = insets;
+        tester.view.viewPadding = insets;
+      }
       addTearDown(tester.view.reset);
 
       final bytes = File(

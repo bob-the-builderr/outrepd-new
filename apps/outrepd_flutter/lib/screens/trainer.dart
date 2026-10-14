@@ -942,6 +942,16 @@ class _TrainerScreenState extends State<TrainerScreen>
         ? (_tracker?.planted ?? false)
         : _inPosition;
 
+    // The camera fills the whole screen; what is drawn over it keeps clear of
+    // the phone's own furniture. On an iPhone with a Dynamic Island the
+    // status bar is about sixty points tall, so a card at a fixed 36 sat
+    // under the clock and the island, and a label 12 from the bottom sat
+    // under the home bar and the rounded corner. [top] and [bottom] are where
+    // the screen's free space starts, never less than the old fixed margins.
+    final insets = MediaQuery.paddingOf(context);
+    final top = math.max(36.0, insets.top + 8);
+    final bottom = insets.bottom;
+
     // A long press anywhere shows the numbers behind the position check.
     // It used to be a hidden sixty-pixel box in the corner of practice mode,
     // which is no use to somebody on the floor wondering why the skeleton is
@@ -988,8 +998,8 @@ class _TrainerScreenState extends State<TrainerScreen>
           Positioned(
             left: 14,
             right: 14,
-            top: 36,
-            bottom: 96,
+            top: top,
+            bottom: 96 + bottom,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -1070,7 +1080,7 @@ class _TrainerScreenState extends State<TrainerScreen>
             Positioned(
               left: 0,
               right: 0,
-              bottom: 60,
+              bottom: 60 + bottom,
               child: Column(
                 children: [
                   Container(
@@ -1200,7 +1210,7 @@ class _TrainerScreenState extends State<TrainerScreen>
           if (_showNumbers)
             Positioned(
               left: 14,
-              top: 110,
+              top: top + 74,
               child: _Diagnostics(
                 recent: _recent,
                 inPosition: _inPosition,
@@ -1220,7 +1230,7 @@ class _TrainerScreenState extends State<TrainerScreen>
             Positioned(
               left: 0,
               right: 0,
-              bottom: 44,
+              bottom: 44 + bottom,
               child: Center(child: _Cue(progress: _progress)),
             ),
 
@@ -1228,7 +1238,7 @@ class _TrainerScreenState extends State<TrainerScreen>
             Positioned(
               left: 0,
               right: 0,
-              bottom: 82,
+              bottom: 82 + bottom,
               child: Center(
                 // Not translated on purpose: this only ever appears in the
                 // web preview, where there is no camera to open. Nobody who
@@ -1245,7 +1255,7 @@ class _TrainerScreenState extends State<TrainerScreen>
           Positioned(
             left: 12,
             right: 12,
-            bottom: 12,
+            bottom: 12 + bottom,
             child: Row(
               children: [
                 if (widget.duel case final duel?)
