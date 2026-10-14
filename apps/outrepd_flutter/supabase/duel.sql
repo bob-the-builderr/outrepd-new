@@ -35,6 +35,13 @@ create index if not exists set_offers_offered_to_idx on set_offers (offered_to);
 
 -- ───────────────────────────── finding somebody ──────────────────────────────
 
+-- The open pool in the order find_opponent_set hands it out, oldest first:
+-- exactly the sets it may offer, so it reads them in order and stops at the
+-- first one that suits.
+create index if not exists sets_pool_idx
+  on sets (created_at)
+  where claimed_by is null and challenge_target is null and live_match is null;
+
 -- A stored set from somebody near your level that you have not faced.
 --
 -- Async on purpose: two people being free in the same minute is the hardest
@@ -56,6 +63,8 @@ set search_path = public
 as $$
 declare
   me profiles;
+  my_level int;
+  kept_apart uuid[];
   found_set record;
 begin
   -- Only a subscriber plays (see subscriptions.sql; off until switched on).
@@ -64,7 +73,29 @@ begin
   if me is null then
     raise exception 'no profile for this account';
   end if;
+  my_level := ladder_level(me.tier_idx, me.div_idx);
 
+  -- Everybody this account may not be handed, gathered once from its own
+  -- rows. Asked of each candidate in turn instead, as this used to be, it
+  -- read every duel of every lifter near this level before choosing one:
+  -- slower with each lifter who joined, and nearly a second at ten thousand.
+  --   * Not somebody already faced. A ladder that keeps pairing the same two
+  --     people is a ladder of two.
+  --   * A block works whichever of the two is holding the phone, so both
+  --     directions count. Neither is told which one it was.
+  --   * A mute is one-directional and only ever counts from the muter's own
+  --     side: it says "stop offering me them," not "stop offering them me."
+  kept_apart := array(
+    select d.defender from duels d where d.challenger = me.id
+    union select d.challenger from duels d where d.defender = me.id
+    union select b.blocked from blocks b where b.blocker = me.id
+    union select b.blocker from blocks b where b.blocked = me.id
+    union select m.muted from mutes m where m.muter = me.id
+  );
+
+  -- The pool oldest first (sets_pool_idx), stopping at the first set whose
+  -- lifter passes, so the cost is the sets read before a match rather than
+  -- everybody on the ladder.
   select s.id as set_id, p.id as profile_id, p.username, p.tier_idx,
          p.div_idx, s.reps, s.rep_times
     into found_set
@@ -82,15 +113,8 @@ begin
     -- Near your level, measured in rungs rather than tiers: the difference
     -- between the top and the bottom of one tier is five divisions, and
     -- matching "same tier" would pair those two.
-    and abs(ladder_level(p.tier_idx, p.div_idx)
-          - ladder_level(me.tier_idx, me.div_idx)) <= within_levels
-    -- Not somebody you have already faced. A ladder that keeps pairing the
-    -- same two people is a ladder of two.
-    and not exists (
-      select 1 from duels d
-      where (d.challenger = me.id and d.defender = p.id)
-         or (d.defender = me.id and d.challenger = p.id)
-    )
+    and abs(ladder_level(p.tier_idx, p.div_idx) - my_level) <= within_levels
+    and s.profile_id <> all (kept_apart)
     -- Whoever they said may challenge them. Enforced where the pairing is
     -- decided rather than on the phone, because a preference the client can
     -- skip is a preference in name only.
@@ -102,19 +126,6 @@ begin
               and ((f.requester = me.id and f.addressee = p.id)
                 or (f.addressee = me.id and f.requester = p.id))
           ))
-    )
-    -- A block works whichever of the two is holding the phone, so both
-    -- directions are checked. Neither is told which one it was.
-    and not exists (
-      select 1 from blocks b
-      where (b.blocker = me.id and b.blocked = p.id)
-         or (b.blocker = p.id and b.blocked = me.id)
-    )
-    -- A mute is one-directional and only ever checked from the muter's own
-    -- side: it says "stop offering me them," not "stop offering them me."
-    and not exists (
-      select 1 from mutes m
-      where m.muter = me.id and m.muted = p.id
     )
   -- Oldest first: a set that has been waiting is the one most likely to have
   -- been forgotten about, and its owner is owed a result.

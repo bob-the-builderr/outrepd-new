@@ -169,6 +169,13 @@ begin
   -- One pairing at a time, so two people can never both take the same third.
   perform pg_advisory_xact_lock(hashtext('outrepd.live_queue'));
 
+  -- Whoever stopped asking a minute ago has gone: the app was closed mid
+  -- search, or the phone lost its connection, and leave_live_queue never
+  -- came. Left there, the queue grows with everybody who ever did that, and
+  -- every search reads all of them; and coming back to search later would
+  -- start from the old row's joined_at, as if they had waited all along.
+  delete from live_queue q where q.seen_at < now() - interval '1 minute';
+
   -- Somebody else's call may already have paired this account.
   select * into paired from live_matches lm
    where lm.b = me.id and lm.ranked and lm.status = 'ready'

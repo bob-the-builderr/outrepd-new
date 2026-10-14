@@ -28,6 +28,11 @@
 alter table profiles add column if not exists
   last_seen timestamptz not null default now();
 
+-- "Who has had the app open in the last few minutes" (live_online in
+-- live.sql, asked every few seconds by everybody searching): the few rows at
+-- the recent end, instead of every profile there is.
+create index if not exists profiles_last_seen_idx on profiles (last_seen);
+
 -- ─────────────────────────────── friendships ─────────────────────────────────
 
 create table if not exists friendships (

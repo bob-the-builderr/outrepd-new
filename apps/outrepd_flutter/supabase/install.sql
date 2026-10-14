@@ -1279,6 +1279,11 @@ $$;
 alter table profiles add column if not exists
   last_seen timestamptz not null default now();
 
+-- "Who has had the app open in the last few minutes" (live_online in
+-- live.sql, asked every few seconds by everybody searching): the few rows at
+-- the recent end, instead of every profile there is.
+create index if not exists profiles_last_seen_idx on profiles (last_seen);
+
 -- ─────────────────────────────── friendships ─────────────────────────────────
 
 create table if not exists friendships (
@@ -2103,6 +2108,13 @@ create index if not exists set_offers_offered_to_idx on set_offers (offered_to);
 
 -- ───────────────────────────── finding somebody ──────────────────────────────
 
+-- The open pool in the order find_opponent_set hands it out, oldest first:
+-- exactly the sets it may offer, so it reads them in order and stops at the
+-- first one that suits.
+create index if not exists sets_pool_idx
+  on sets (created_at)
+  where claimed_by is null and challenge_target is null and live_match is null;
+
 -- A stored set from somebody near your level that you have not faced.
 --
 -- Async on purpose: two people being free in the same minute is the hardest
@@ -2124,6 +2136,8 @@ set search_path = public
 as $$
 declare
   me profiles;
+  my_level int;
+  kept_apart uuid[];
   found_set record;
 begin
   -- Only a subscriber plays (see subscriptions.sql; off until switched on).
@@ -2132,7 +2146,29 @@ begin
   if me is null then
     raise exception 'no profile for this account';
   end if;
+  my_level := ladder_level(me.tier_idx, me.div_idx);
 
+  -- Everybody this account may not be handed, gathered once from its own
+  -- rows. Asked of each candidate in turn instead, as this used to be, it
+  -- read every duel of every lifter near this level before choosing one:
+  -- slower with each lifter who joined, and nearly a second at ten thousand.
+  --   * Not somebody already faced. A ladder that keeps pairing the same two
+  --     people is a ladder of two.
+  --   * A block works whichever of the two is holding the phone, so both
+  --     directions count. Neither is told which one it was.
+  --   * A mute is one-directional and only ever counts from the muter's own
+  --     side: it says "stop offering me them," not "stop offering them me."
+  kept_apart := array(
+    select d.defender from duels d where d.challenger = me.id
+    union select d.challenger from duels d where d.defender = me.id
+    union select b.blocked from blocks b where b.blocker = me.id
+    union select b.blocker from blocks b where b.blocked = me.id
+    union select m.muted from mutes m where m.muter = me.id
+  );
+
+  -- The pool oldest first (sets_pool_idx), stopping at the first set whose
+  -- lifter passes, so the cost is the sets read before a match rather than
+  -- everybody on the ladder.
   select s.id as set_id, p.id as profile_id, p.username, p.tier_idx,
          p.div_idx, s.reps, s.rep_times
     into found_set
@@ -2150,15 +2186,8 @@ begin
     -- Near your level, measured in rungs rather than tiers: the difference
     -- between the top and the bottom of one tier is five divisions, and
     -- matching "same tier" would pair those two.
-    and abs(ladder_level(p.tier_idx, p.div_idx)
-          - ladder_level(me.tier_idx, me.div_idx)) <= within_levels
-    -- Not somebody you have already faced. A ladder that keeps pairing the
-    -- same two people is a ladder of two.
-    and not exists (
-      select 1 from duels d
-      where (d.challenger = me.id and d.defender = p.id)
-         or (d.defender = me.id and d.challenger = p.id)
-    )
+    and abs(ladder_level(p.tier_idx, p.div_idx) - my_level) <= within_levels
+    and s.profile_id <> all (kept_apart)
     -- Whoever they said may challenge them. Enforced where the pairing is
     -- decided rather than on the phone, because a preference the client can
     -- skip is a preference in name only.
@@ -2170,19 +2199,6 @@ begin
               and ((f.requester = me.id and f.addressee = p.id)
                 or (f.addressee = me.id and f.requester = p.id))
           ))
-    )
-    -- A block works whichever of the two is holding the phone, so both
-    -- directions are checked. Neither is told which one it was.
-    and not exists (
-      select 1 from blocks b
-      where (b.blocker = me.id and b.blocked = p.id)
-         or (b.blocker = p.id and b.blocked = me.id)
-    )
-    -- A mute is one-directional and only ever checked from the muter's own
-    -- side: it says "stop offering me them," not "stop offering them me."
-    and not exists (
-      select 1 from mutes m
-      where m.muter = me.id and m.muted = p.id
     )
   -- Oldest first: a set that has been waiting is the one most likely to have
   -- been forgotten about, and its owner is owed a result.
@@ -3278,6 +3294,13 @@ begin
   -- One pairing at a time, so two people can never both take the same third.
   perform pg_advisory_xact_lock(hashtext('outrepd.live_queue'));
 
+  -- Whoever stopped asking a minute ago has gone: the app was closed mid
+  -- search, or the phone lost its connection, and leave_live_queue never
+  -- came. Left there, the queue grows with everybody who ever did that, and
+  -- every search reads all of them; and coming back to search later would
+  -- start from the old row's joined_at, as if they had waited all along.
+  delete from live_queue q where q.seen_at < now() - interval '1 minute';
+
   -- Somebody else's call may already have paired this account.
   select * into paired from live_matches lm
    where lm.b = me.id and lm.ranked and lm.status = 'ready'
@@ -3994,7 +4017,8 @@ grant execute on function live_match_result(uuid) to authenticated;
 -- played twenty ranked duels in it.
 --
 -- Nothing new is recorded for it. Every duel already carries both sides' LP
--- and when it was played; the board is read from those.
+-- and when it was played; the board is read from those, through running
+-- totals each duel adds itself to (season_points below).
 --
 -- A month is a calendar month in UTC, named by its first day. It is closed —
 -- its awards written, once — by the first request after it ends, so nothing
@@ -4013,11 +4037,42 @@ as $$
   select (date_trunc('month', at at time zone 'UTC'))::date
 $$;
 
--- What each lifter did in one month. `played` counts only the duels they
--- lifted in: racing somebody's set, or either side of a live match. Being
--- raced while away moves their points, as it moves their LP, but it is not
--- a duel they played.
-create or replace function season_standings(of_season date)
+-- What each lifter did in one month, kept as it happens.
+--
+-- The board used to add up the month's duels every time anybody opened it:
+-- fine for a few hundred duels, and most of a second by the end of a month
+-- with ten thousand lifters in it, for every lifter who looked. Now each
+-- duel adds itself to this table when it is written, and the board reads
+-- the totals. Still nothing new is recorded: every row here can be worked
+-- out again from the duels (season_points_rebuild), and is, whenever a duel
+-- is deleted from under it.
+create table if not exists season_points (
+  season     date not null,
+  profile_id uuid not null references profiles on delete cascade,
+  points     int not null default 0,
+  wins       int not null default 0,
+  played     int not null default 0,
+  primary key (season, profile_id)
+);
+alter table season_points enable row level security;
+create index if not exists season_points_profile_idx on season_points (profile_id);
+-- The board's order, best first, so showing its top hundred reads a
+-- hundred-odd rows rather than sorting the month.
+create index if not exists season_points_board_idx
+  on season_points (season, points desc, wins desc);
+
+-- Months whose totals no longer match their duels, to be worked out again
+-- before anything reads them.
+create table if not exists season_points_stale (
+  season date primary key
+);
+alter table season_points_stale enable row level security;
+
+-- The month's totals as the duels have them. `played` counts only the duels
+-- they lifted in: racing somebody's set, or either side of a live match.
+-- Being raced while away moves their points, as it moves their LP, but it is
+-- not a duel they played.
+create or replace function season_points_from_duels(of_season date)
 returns table (profile_id uuid, points int, wins int, played int)
 language sql
 stable
@@ -4046,6 +4101,139 @@ as $$
          (count(*) filter (where played))::int
     from sides
    group by profile_id
+$$;
+
+-- One month's totals worked out again from its duels.
+create or replace function season_points_rebuild(of_season date)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  delete from season_points sp where sp.season = of_season;
+  insert into season_points (season, profile_id, points, wins, played)
+  select of_season, s.profile_id, s.points, s.wins, s.played
+    from season_points_from_duels(of_season) s
+    -- A side whose account is already gone.
+    join profiles p on p.id = s.profile_id;
+  delete from season_points_stale st where st.season = of_season;
+end;
+$$;
+
+-- Every month that needs it, worked out again. Called before the totals are
+-- read; nearly always there is nothing to do.
+create or replace function season_points_refresh()
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  stale date;
+begin
+  if not exists (select 1 from season_points_stale) then
+    return;
+  end if;
+  -- One at a time: two rebuilds of the same month would add it up twice.
+  perform pg_advisory_xact_lock(hashtext('outrepd.season_points'));
+  for stale in select st.season from season_points_stale st loop
+    perform season_points_rebuild(stale);
+  end loop;
+end;
+$$;
+
+-- A duel adds itself to its month. Deferred to the end of the transaction
+-- that wrote it: a live match names its duel only after the duel is written
+-- (settle_live), and whether it was live decides whether the defender
+-- played it. Read back from the table rather than from NEW, which is the row
+-- as it was first inserted.
+create or replace function season_points_add()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  d duels;
+  defender_played boolean;
+  this_season date;
+begin
+  select * into d from duels where id = new.id;
+  if d.id is null or not d.ranked then
+    return null;
+  end if;
+  this_season := season_of(d.created_at);
+  defender_played := exists (select 1 from live_matches m where m.duel = d.id);
+  insert into season_points as sp (season, profile_id, points, wins, played)
+  values (this_season, d.challenger, d.lp_challenger,
+          (d.winner = d.challenger)::int, 1)
+  on conflict (season, profile_id) do update
+    set points = sp.points + excluded.points,
+        wins = sp.wins + excluded.wins,
+        played = sp.played + excluded.played;
+  insert into season_points as sp (season, profile_id, points, wins, played)
+  values (this_season, d.defender, d.lp_defender,
+          (d.winner = d.defender)::int, defender_played::int)
+  on conflict (season, profile_id) do update
+    set points = sp.points + excluded.points,
+        wins = sp.wins + excluded.wins,
+        played = sp.played + excluded.played;
+  return null;
+end;
+$$;
+
+drop trigger if exists season_points_add on duels;
+create constraint trigger season_points_add
+  after insert on duels
+  deferrable initially deferred
+  for each row execute function season_points_add();
+
+-- A deleted duel (an account deleted, and its duels with it) leaves its
+-- month to be worked out again: the totals were always the duels that are
+-- there, and the other side's points from it go with it.
+create or replace function season_points_forget()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if old.ranked then
+    insert into season_points_stale (season) values (season_of(old.created_at))
+    on conflict (season) do nothing;
+  end if;
+  return null;
+end;
+$$;
+
+drop trigger if exists season_points_forget on duels;
+create trigger season_points_forget
+  after delete on duels
+  for each row execute function season_points_forget();
+
+-- The first install of this table: every month already played is worked
+-- out from its duels the first time it is read.
+do $$
+begin
+  if not exists (select 1 from season_points) then
+    insert into season_points_stale (season)
+    select distinct season_of(d.created_at) from duels d where d.ranked
+    on conflict (season) do nothing;
+  end if;
+end $$;
+
+-- What each lifter did in one month: the totals above.
+create or replace function season_standings(of_season date)
+returns table (profile_id uuid, points int, wins int, played int)
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select sp.profile_id, sp.points, sp.wins, sp.played
+    from season_points sp
+   where sp.season = of_season
 $$;
 
 -- The places, among the lifters a board shows: placed, and not asked to be
@@ -4081,17 +4269,32 @@ returns table (
   played int,
   avatar_url text
 )
-language sql
-stable
+language plpgsql
 security definer
 set search_path = public
 as $$
-  select s.place, p.id, p.username, p.tier_idx, p.div_idx, s.points, s.wins,
-         s.played, p.avatar_url
-    from season_places(season_of(now()), in_country) s
-    join profiles p on p.id = s.profile_id
-   order by s.place
+begin
+  perform season_points_refresh();
+  -- season_places' rules and order, written out rather than called: a
+  -- security definer function is never folded into the query that calls
+  -- it, so calling it ranked every lifter in the month to hand back a
+  -- hundred. Here the limit reaches the ranking, and it stops at the last
+  -- place shown (season_points_board_idx).
+  return query
+  select (row_number() over (order by sp.points desc, sp.wins desc, p.username))::int,
+         p.id, p.username, p.tier_idx, p.div_idx, sp.points, sp.wins,
+         sp.played, p.avatar_url
+    from season_points sp
+    join profiles p on p.id = sp.profile_id
+   where sp.season = season_of(now())
+     and p.placements_done >= 5
+     and p.show_on_board
+     and (in_country is null or (p.country = in_country and p.show_country))
+   -- The place's own order, spelled out: ordered by the place itself, the
+   -- whole month is ranked before the limit can stop it.
+   order by sp.points desc, sp.wins desc, p.username
    limit least(greatest(limit_to, 1), 500);
+end;
 $$;
 
 -- Where the caller stands this month, and when it ends. Also closes any month
@@ -4113,18 +4316,43 @@ set search_path = public
 as $$
 declare
   this_season date := season_of(now());
+  mine season_points;
+  me profiles;
 begin
+  perform season_points_refresh();
   perform close_finished_seasons();
+  select * into mine from season_points sp
+   where sp.season = this_season and sp.profile_id = auth.uid();
+  select * into me from profiles p where p.id = auth.uid();
+  -- The place is how many on the board are ahead, by season_places' order
+  -- (more points, then more wins, then the name), counted rather than
+  -- ranking everybody to find one row. Null off the board: no duel this
+  -- month, still in placements, or asked to be left off.
   return query
-  with places as (select * from season_places(this_season)),
-       mine as (select * from season_standings(this_season) s where s.profile_id = auth.uid())
   select this_season,
          ((this_season + interval '1 month')::timestamp at time zone 'UTC'),
-         (select pl.place from places pl where pl.profile_id = auth.uid()),
-         (select count(*)::int from places),
-         coalesce((select m.points from mine m), 0),
-         coalesce((select m.wins from mine m), 0),
-         coalesce((select m.played from mine m), 0);
+         case when mine.profile_id is not null
+                   and me.placements_done >= 5 and me.show_on_board then (
+           select count(*)::int + 1
+             from season_points sp
+             join profiles p on p.id = sp.profile_id
+            where sp.season = this_season
+              and p.placements_done >= 5
+              and p.show_on_board
+              and (sp.points > mine.points
+                or (sp.points = mine.points and sp.wins > mine.wins)
+                or (sp.points = mine.points and sp.wins = mine.wins
+                    and p.username < me.username))
+         ) end,
+         (select count(*)::int
+            from season_points sp
+            join profiles p on p.id = sp.profile_id
+           where sp.season = this_season
+             and p.placements_done >= 5
+             and p.show_on_board),
+         coalesce(mine.points, 0),
+         coalesce(mine.wins, 0),
+         coalesce(mine.played, 0);
 end;
 $$;
 
@@ -4173,6 +4401,8 @@ begin
     return;
   end if;
 
+  -- Awards are written from the totals, so they are made right first.
+  perform season_points_refresh();
   while next_open < this_season loop
     insert into season_closings (season) values (next_open)
     on conflict (season) do nothing;
@@ -4246,6 +4476,11 @@ as $$
    order by a.season desc, a.place nulls last;
 $$;
 
+revoke all on function season_points_from_duels(date) from public, anon, authenticated;
+revoke all on function season_points_rebuild(date) from public, anon, authenticated;
+revoke all on function season_points_refresh() from public, anon, authenticated;
+revoke all on function season_points_add() from public, anon, authenticated;
+revoke all on function season_points_forget() from public, anon, authenticated;
 revoke all on function season_standings(date) from public, anon, authenticated;
 revoke all on function season_places(date, text) from public, anon, authenticated;
 revoke all on function close_finished_seasons() from public, anon, authenticated;
