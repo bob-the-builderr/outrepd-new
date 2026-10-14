@@ -395,17 +395,8 @@ class _TrainerScreenState extends State<TrainerScreen>
   /// there in 100%. The old gate was asking for the one part of the body that
   /// a correct setup hides.
   ///
-  /// Either side of each pair will do — a body turned slightly to the camera
-  /// hides one wrist and is still perfectly countable.
-  bool _framed(BodyPose pose) {
-    final wrist =
-        pose.confident(Joint.leftWrist) ?? pose.confident(Joint.rightWrist);
-    final shoulder =
-        pose.confident(Joint.leftShoulder) ??
-        pose.confident(Joint.rightShoulder);
-    final hip = pose.confident(Joint.leftHip) ?? pose.confident(Joint.rightHip);
-    return wrist != null && shoulder != null && hip != null;
-  }
+  /// The check itself is [framedForPushUp], shared with the onboarding.
+  bool _framed(BodyPose pose) => framedForPushUp(pose);
 
   /// The last second or so of poses, for the checks that need more than one
   /// frame — chiefly whether the hands are staying planted, which is what
@@ -413,21 +404,9 @@ class _TrainerScreenState extends State<TrainerScreen>
   final _recent = <BodyPose>[];
   static const _recentKeep = 40;
 
-  /// Whether the lifter is down in position right now.
-  ///
-  /// A majority of the last few frames rather than the latest one: a single
-  /// frame the tracker fumbled should not flick the skeleton's colour, and a
-  /// colour that flickers is worse than one that is slightly late.
-  bool get _inPosition {
-    if (_recent.length < kPlantWindow + 5) return false;
-    final marks = inPushUpPosition(_recent);
-    final from = math.max(0, marks.length - 10);
-    var yes = 0;
-    for (var i = from; i < marks.length; i++) {
-      if (marks[i]) yes++;
-    }
-    return yes >= (marks.length - from) * 0.6;
-  }
+  /// Whether the lifter is down in position right now: [downInPosition],
+  /// shared with the onboarding's calibration.
+  bool get _inPosition => downInPosition(_recent);
 
   /// Running while a whole body is in shot but not yet in position.
   Timer? _graceTimer;

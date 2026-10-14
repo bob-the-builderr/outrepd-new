@@ -16,6 +16,10 @@ import 'package:flutter/material.dart';
 import '../theme.dart';
 import 'pose.dart';
 
+/// Arms and torso, ending at the hips. No legs: with the phone on the floor
+/// facing the lifter the knees and ankles are hidden in most frames, so the
+/// tracker guesses at them and their bones swung about over the floor; and
+/// the counter never reads them.
 const _bones = <List<Joint>>[
   [Joint.leftShoulder, Joint.rightShoulder],
   [Joint.leftShoulder, Joint.leftElbow],
@@ -25,11 +29,12 @@ const _bones = <List<Joint>>[
   [Joint.leftShoulder, Joint.leftHip],
   [Joint.rightShoulder, Joint.rightHip],
   [Joint.leftHip, Joint.rightHip],
-  [Joint.leftHip, Joint.leftKnee],
-  [Joint.leftKnee, Joint.leftAnkle],
-  [Joint.rightHip, Joint.rightKnee],
-  [Joint.rightKnee, Joint.rightAnkle],
 ];
+
+/// The joints given a dot: those the bones above join. The nose feeds the
+/// counter but has no bone to it, so its dot would float on the face; the
+/// legs are not drawn at all.
+final _dotted = {for (final bone in _bones) ...bone};
 
 class SkeletonPainter extends CustomPainter {
   SkeletonPainter({
@@ -96,11 +101,7 @@ class SkeletonPainter extends CustomPainter {
     final dot = Paint()..color = Colors.white;
     final ring = Paint()..color = colour;
 
-    for (final joint in Joint.values) {
-      // The nose feeds the counter but has no bone drawn to it — no line
-      // ever reaches it — so its own dot would float on the face with
-      // nothing connecting it to the body the rest of the skeleton draws.
-      if (joint == Joint.nose) continue;
+    for (final joint in _dotted) {
       final p = at(joint);
       if (p == null) continue;
       canvas.drawCircle(p, 8, ring);

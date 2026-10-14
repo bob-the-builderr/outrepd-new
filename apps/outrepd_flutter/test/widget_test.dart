@@ -311,6 +311,57 @@ void main() {
         reason: 'four push-ups went in and the step did not complete');
   });
 
+  testWidgets('the calibration counts once the lifter is down in position',
+      (tester) async {
+    // As a match does: the tracker watches from the camera's first frame and
+    // the count starts when the lifter is down, so the first rep is judged
+    // against hands and a lockout it has already seen.
+    phone(tester);
+    final sources = <_ScriptedSource>[];
+    _ScriptedSource open() {
+      final source = _ScriptedSource();
+      sources.add(source);
+      addTearDown(source.dispose);
+      return source;
+    }
+
+    await tester.pumpWidget(_app(open));
+    await tester.pumpAndSettle();
+
+    await tap(tester, 'Get started');
+    await tap(tester, 'Continue');
+    await tap(tester, '16 or over');
+    await tap(tester, 'I understand outrepd counts reps and does not give '
+        'medical or training advice. I’ll stop if something hurts.');
+    await tap(tester, 'Continue');
+    await tap(tester, 'Allow camera');
+    await tap(tester, 'I’m set up');
+    sources.last.emit(_framedBody());
+    await tester.pump();
+    await tester.pump();
+    await tap(tester, 'Looks good');
+
+    // Not counting yet: it asks for the position first.
+    expect(find.text('Get into position'), findsOneWidget);
+
+    // Held at the top, hands planted: the count starts.
+    for (var i = 0; i < 30; i++) {
+      sources.last.emit(pushUpPose(1));
+      await tester.pump(const Duration(milliseconds: kFrameMs));
+    }
+    expect(find.text('Get into position'), findsNothing);
+    expect(find.text('Do three push-ups at your normal depth'), findsOneWidget);
+
+    // Exactly three, every one of them counted.
+    for (final pose in pushUpSet(3, lead: 0)) {
+      sources.last.emit(pose);
+      await tester.pump(const Duration(milliseconds: kFrameMs));
+    }
+    await tester.pumpAndSettle();
+    expect(find.text('Calibrated.'), findsOneWidget,
+        reason: 'three push-ups after getting into position did not count');
+  });
+
   testWidgets('going straight to log in skips the camera and calibration',
       (tester) async {
     phone(tester);

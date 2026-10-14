@@ -119,6 +119,39 @@ bool? isStoodUp(BodyPose pose) {
 /// there is no sequence to look at.
 bool isPushUpPosition(BodyPose pose) => _bodyIsDown(pose);
 
+/// Whether the camera has what a push-up is measured between: a wrist, a
+/// shoulder and a hip, either side of each pair — a body turned slightly to
+/// the camera hides one wrist and is still perfectly countable.
+///
+/// Not the ankles, and not the knees: with the phone on the floor a metre
+/// away and the body pointing at it, the tracker saw knees in 26% of frames
+/// and ankles in 18%, while every joint the counter reads was there in 100%.
+bool framedForPushUp(BodyPose pose) {
+  final wrist =
+      pose.confident(Joint.leftWrist) ?? pose.confident(Joint.rightWrist);
+  final shoulder =
+      pose.confident(Joint.leftShoulder) ?? pose.confident(Joint.rightShoulder);
+  final hip = pose.confident(Joint.leftHip) ?? pose.confident(Joint.rightHip);
+  return wrist != null && shoulder != null && hip != null;
+}
+
+/// Whether the lifter is down in position now, from the last frames seen.
+///
+/// A majority of the last ten rather than the latest one: a single frame the
+/// tracker fumbled should not flick the answer, and an answer that flickers
+/// is worse than one that is slightly late. False until there are enough
+/// frames to judge the hands by.
+bool downInPosition(List<BodyPose> recent) {
+  if (recent.length < kPlantWindow + 5) return false;
+  final marks = inPushUpPosition(recent);
+  final from = math.max(0, marks.length - 10);
+  var yes = 0;
+  for (var i = from; i < marks.length; i++) {
+    if (marks[i]) yes++;
+  }
+  return yes >= (marks.length - from) * 0.6;
+}
+
 /// Frame by frame, whether somebody is down in a push-up position with their
 /// hands staying where they put them.
 List<bool> inPushUpPosition(List<BodyPose> frames) {

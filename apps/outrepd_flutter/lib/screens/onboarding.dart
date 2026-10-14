@@ -30,6 +30,7 @@ import '../l10n/app_localizations.dart';
 import '../motion.dart';
 import '../reps/pose.dart';
 import '../reps/pose_source.dart';
+import '../reps/posture.dart';
 import '../reps/pushup_counter.dart';
 import '../reps/skeleton.dart';
 import '../sounds.dart';
@@ -1486,14 +1487,60 @@ class _CalibrationState extends State<_Calibration> {
   double _progress = 0;
   bool _done = false;
 
+  /// The count has started. Until then the tracker only watches — as on the
+  /// camera screen before its countdown ends — learning where the hands are
+  /// planted and how high this lifter's lockout is, so the first rep is
+  /// judged against them and not against a guess. It used to count from the
+  /// camera's first frame, which judged the first rep blind and was why the
+  /// three here read worse than a match did.
+  bool _counting = false;
+
+  /// The last second or so of poses, for whether the lifter is down in
+  /// position — the camera screen's own check.
+  final _recent = <BodyPose>[];
+
+  /// Since when a whole body has been in shot, in [_clock] milliseconds.
+  int? _framedSince;
+
+  /// How long a framed body waits for the position check before the count
+  /// starts anyway: the camera screen's grace, so an angle where the position
+  /// never registers cannot leave a new lifter stuck here.
+  static const _positionGrace = Duration(seconds: 8);
+
   void _onPose(BodyPose pose) {
     if (_done) return;
     if (!mounted) return;
 
-    final reading = _tracker.add(_clock.elapsedMilliseconds, pose);
+    final atMs = _clock.elapsedMilliseconds;
+    final reading = _tracker.add(atMs, pose);
+    _recent.add(pose);
+    if (_recent.length > 40) _recent.removeAt(0);
+
+    if (!_counting) {
+      if (framedForPushUp(pose)) {
+        _framedSince ??= atMs;
+      } else {
+        _framedSince = null;
+      }
+      final waited =
+          _framedSince != null &&
+          atMs - _framedSince! >= _positionGrace.inMilliseconds;
+      if (downInPosition(_recent) || waited) {
+        // From nothing, keeping all it has learned; a rep already on its way
+        // up does not count.
+        _tracker.restartCount(atMs);
+        tap();
+        Sounds.instance.play(Cue.go);
+        _counting = true;
+      }
+      setState(() => _progress = reading.progress ?? _progress);
+      return;
+    }
+
     if (reading.counted) {
       _reps = reading.reps;
       _depth = _tracker.depth;
+      tap(heavy: true);
       Sounds.instance.play(Cue.rep);
     }
 
@@ -1575,7 +1622,11 @@ class _CalibrationState extends State<_Calibration> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    left == 1 ? l.obOneMoreRep : l.obCalibrationHint,
+                    !_counting
+                        ? l.getIntoPosition
+                        : left == 1
+                        ? l.obOneMoreRep
+                        : l.obCalibrationHint,
                     textAlign: TextAlign.center,
                     style: TextStyle(color: context.colors.muted, fontSize: 13),
                   ),
@@ -1607,6 +1658,8 @@ class _CalibrationState extends State<_Calibration> {
               ),
             ),
           ),
+          // The cue to go down or up, once there is a count for it to serve.
+          if (_counting)
           Positioned(
             left: 0,
             right: 0,
