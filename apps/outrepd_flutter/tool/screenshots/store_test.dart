@@ -128,6 +128,25 @@ Map<String, Object> _week() {
       for (var back = 0; back < reps.length; back++)
         key(today.subtract(Duration(days: back))): reps[back],
     }),
+    // The last few duels, so the profile's recent list is not "no duels
+    // yet" beside a record of eighteen wins.
+    'career.history': jsonEncode([
+      for (final (i, (opponent, won, you, them, lp)) in const [
+        ('iron_mike', true, 24, 19, 6),
+        ('squat_queen', false, 21, 23, -3),
+        ('benchgod', true, 22, 14, 9),
+        ('cardio_hater', true, 19, 17, 3),
+        ('delt_destroyer', true, 23, 16, 8),
+      ].indexed)
+        MatchRecord(
+          won: won,
+          userReps: you,
+          opponentReps: them,
+          opponent: opponent,
+          lpChange: lp,
+          at: today.subtract(Duration(hours: 5 + i * 20)),
+        ).toJson(),
+    ]),
     // A nine-day streak with that one rest day spent, and the titles the
     // sample record (27 duels, 18 won, 412 reps, Gold) would have earned.
     'streak': 9,
