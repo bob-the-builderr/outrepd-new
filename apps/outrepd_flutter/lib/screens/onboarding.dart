@@ -37,6 +37,7 @@ import '../sounds.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'auth_entry.dart';
+import 'legal_line.dart';
 import 'paywall.dart';
 import 'shell.dart';
 import 'welcome_inside.dart';
@@ -787,27 +788,13 @@ class _BeforeYouStart extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Text.rich(
-                TextSpan(
-                  style: TextStyle(
-                    color: context.colors.muted,
-                    fontSize: 13,
-                    height: 1.6,
-                  ),
-                  children: [
-                    TextSpan(text: '${l.obTermsIntro} '),
-                    TextSpan(
-                      text: l.obTerms,
-                      style: TextStyle(color: context.colors.text),
-                    ),
-                    TextSpan(text: ' ${l.obAnd} '),
-                    TextSpan(
-                      text: l.obPrivacy,
-                      style: TextStyle(color: context.colors.text),
-                    ),
-                    const TextSpan(text: '.'),
-                  ],
+              LegalLine(
+                style: TextStyle(
+                  color: context.colors.muted,
+                  fontSize: 13,
+                  height: 1.6,
                 ),
+                linkStyle: TextStyle(color: context.colors.text),
               ),
             ],
           ],

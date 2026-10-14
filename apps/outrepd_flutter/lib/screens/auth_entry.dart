@@ -19,6 +19,7 @@ import '../l10n/app_localizations.dart';
 import '../subscription.dart';
 import '../theme.dart';
 import '../type_scale.dart';
+import 'legal_line.dart';
 
 /// What this whole gate finished with, popped back to whoever opened
 /// [AuthEntryScreen]. Signing up keeps going with whatever was next —
@@ -116,23 +117,9 @@ class _AuthEntryScreenState extends State<AuthEntryScreen> {
                 ),
               ),
               const SizedBox(height: 6),
-              Text.rich(
-                TextSpan(
-                  style: TextStyle(color: context.colors.faint, fontSize: 13),
-                  children: [
-                    TextSpan(text: '${l.obTermsIntro} '),
-                    TextSpan(
-                      text: l.obTerms,
-                      style: TextStyle(color: context.colors.muted),
-                    ),
-                    TextSpan(text: ' ${l.obAnd} '),
-                    TextSpan(
-                      text: l.obPrivacy,
-                      style: TextStyle(color: context.colors.muted),
-                    ),
-                    const TextSpan(text: '.'),
-                  ],
-                ),
+              LegalLine(
+                style: TextStyle(color: context.colors.faint, fontSize: 13),
+                linkStyle: TextStyle(color: context.colors.muted),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -395,23 +382,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     : Text(l.createAccountAction),
               ),
               const SizedBox(height: 14),
-              Text.rich(
-                TextSpan(
-                  style: TextStyle(color: context.colors.faint, fontSize: 13),
-                  children: [
-                    TextSpan(text: '${l.obTermsIntro} '),
-                    TextSpan(
-                      text: l.obTerms,
-                      style: TextStyle(color: context.colors.muted),
-                    ),
-                    TextSpan(text: ' ${l.obAnd} '),
-                    TextSpan(
-                      text: l.obPrivacy,
-                      style: TextStyle(color: context.colors.muted),
-                    ),
-                    const TextSpan(text: '.'),
-                  ],
-                ),
+              LegalLine(
+                style: TextStyle(color: context.colors.faint, fontSize: 13),
+                linkStyle: TextStyle(color: context.colors.muted),
                 textAlign: TextAlign.center,
               ),
             ],
