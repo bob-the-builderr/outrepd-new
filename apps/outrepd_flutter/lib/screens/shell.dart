@@ -19,6 +19,13 @@ import 'profile.dart';
 import 'ranks.dart';
 import 'season_over.dart';
 
+/// Which of the four tabs is on screen, null with none. Every tab stays
+/// mounted under the others, so a tab cannot tell from its own state whether
+/// anybody is looking at it; the ones that read the server ask for
+/// themselves again when they are opened (ranks.dart, friends.dart,
+/// profile.dart).
+final shownTab = ValueNotifier<int?>(null);
+
 /// Bottom-tab container holding the four sections.
 ///
 /// The bar itself lives in `app_bottom_nav.dart`; this only owns which tab is
@@ -41,6 +48,8 @@ class AppShell extends StatefulWidget {
       context.findAncestorStateOfType<_AppShellState>()?._select(matchTabIndex);
 
   static const int friendsTabIndex = 1;
+  static const int ranksTabIndex = 2;
+  static const int profileTabIndex = 3;
 
   /// Switch to the Friends tab with the waiting requests open — a friend
   /// request tapped in the notifications.
@@ -74,7 +83,14 @@ class _AppShellState extends State<AppShell> {
   @override
   void initState() {
     super.initState();
+    shownTab.value = _index;
     _countFriendRequests();
+  }
+
+  @override
+  void dispose() {
+    shownTab.value = null;
+    super.dispose();
   }
 
   Future<void> _countFriendRequests() async {
@@ -90,6 +106,7 @@ class _AppShellState extends State<AppShell> {
 
   void _select(int index) {
     setState(() => _index = index);
+    shownTab.value = index;
     // Leaving the Friends tab is when a request most likely just got
     // answered, so the badge is only as stale as one tab switch.
     _countFriendRequests();
@@ -212,7 +229,7 @@ class _InsideState extends State<_Inside> with WidgetsBindingObserver {
     Push.instance.arrived.addListener(_checkInvites);
     // A push is often somebody racing this lifter's set while they were
     // away: the result goes into the history as it arrives.
-    Push.instance.arrived.addListener(_syncRaced);
+    Push.instance.arrived.addListener(_syncHistory);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await askForNotificationsOnce();
       // After the answer, so a phone that just said yes is registered with
@@ -238,7 +255,7 @@ class _InsideState extends State<_Inside> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     Push.instance.openNotices.removeListener(_openNotices);
     Push.instance.arrived.removeListener(_checkInvites);
-    Push.instance.arrived.removeListener(_syncRaced);
+    Push.instance.arrived.removeListener(_syncHistory);
     _invitePoll?.cancel();
     _links?.cancel();
     super.dispose();
@@ -248,11 +265,11 @@ class _InsideState extends State<_Inside> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       _checkInvites();
-      _syncRaced();
+      _syncHistory();
     }
   }
 
-  void _syncRaced() => unawaited(Career.instance.syncRacedSets());
+  void _syncHistory() => unawaited(Career.instance.syncHistory());
 
   Future<void> _checkInvites() async {
     if (!backend.available || backend.me == null) return;

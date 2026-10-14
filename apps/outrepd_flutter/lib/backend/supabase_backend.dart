@@ -529,14 +529,16 @@ class SupabaseBackend implements Backend {
   }
 
   @override
-  Future<List<RacedSet>> racedSets() async {
-    final rows = await _db.rpc<List<dynamic>>('my_raced_sets');
+  Future<List<ServerDuel>> myDuels() async {
+    final rows = await _db.rpc<List<dynamic>>('my_duels');
     return [
       for (final row in rows.cast<Map<String, dynamic>>())
-        RacedSet(
+        ServerDuel(
           duelId: row['duel_id'] as String,
           at:
-              DateTime.tryParse(row['raced_at'] as String? ?? '')?.toLocal() ??
+              DateTime.tryParse(
+                row['played_at'] as String? ?? '',
+              )?.toLocal() ??
               DateTime.now(),
           opponentName: row['opponent_name'] as String? ?? '',
           opponentTier: (row['opponent_tier'] as num?)?.toInt() ?? 0,
@@ -544,6 +546,7 @@ class SupabaseBackend implements Backend {
           yourReps: (row['your_reps'] as num?)?.toInt() ?? 0,
           theirReps: (row['their_reps'] as num?)?.toInt() ?? 0,
           lpDelta: (row['lp_delta'] as num?)?.toInt() ?? 0,
+          racedWhileAway: row['raced_while_away'] as bool? ?? false,
         ),
     ];
   }

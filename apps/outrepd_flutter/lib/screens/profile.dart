@@ -36,7 +36,9 @@ import 'avatar_picker.dart';
 import 'awards.dart';
 import 'match_history.dart';
 import 'progression.dart';
+import 'ranks.dart' show kBoardFreshFor;
 import 'settings.dart';
+import 'shell.dart' show AppShell, shownTab;
 import 'share_card.dart';
 import 'username_editor.dart';
 
@@ -58,11 +60,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
   /// the many who have none — the card only appears once there is one.
   List<SeasonAward> _seasonAwards = const [];
 
+  /// When the places were last read. Null once this account's own duel has
+  /// moved them, so the next look reads them again.
+  DateTime? _positionsAt;
+
   @override
   void initState() {
     super.initState();
     _loadPositions();
     _loadSeasonAwards();
+    if (backend.available) {
+      shownTab.addListener(_onShowing);
+      Career.instance.addListener(_onOwnResult);
+    }
+  }
+
+  @override
+  void dispose() {
+    shownTab.removeListener(_onShowing);
+    Career.instance.removeListener(_onOwnResult);
+    super.dispose();
+  }
+
+  /// Opened: the places again, if a duel has moved them or they are a while
+  /// old — other people's duels move them too.
+  void _onShowing() {
+    if (shownTab.value != AppShell.profileTabIndex) return;
+    final at = _positionsAt;
+    if (at == null || DateTime.now().difference(at) > kBoardFreshFor) {
+      _loadPositions();
+    }
+  }
+
+  void _onOwnResult() {
+    _positionsAt = null;
+    if (shownTab.value == AppShell.profileTabIndex) _onShowing();
   }
 
   Future<void> _loadSeasonAwards() async {
@@ -88,6 +120,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       setState(() {
         _globalPosition = places.first;
         _localPosition = places.last;
+        _positionsAt = DateTime.now();
       });
     } on Object catch (error) {
       // A position nobody could fetch is left blank rather than guessed at.

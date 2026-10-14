@@ -2573,47 +2573,63 @@ begin
 end;
 $$;
 
--- ─────────────────────────── raced while away ────────────────────────────────
+-- ──────────────────────────────── the history ────────────────────────────────
 
--- The duels somebody else settled against one of the caller's stored sets,
--- newest first: the other half of "your set is in the pool". The phone keeps
--- its own history of what it watched happen, and a set raced while its
--- owner was away never happened on that phone — so without this, the duel
--- that moved their rank reached the bell and never the history.
+-- The caller's duels, newest first, from the caller's side: what the phone's
+-- history is made of. The phone writes down what it watches happen, but not
+-- everything does: a set raced while its owner was away happens on the other
+-- phone, a live result can land after its screen was closed, and a result
+-- can be settled here and its answer lost on the way back. Each of those
+-- moved the rank and reached nobody's history. Fifty, the length of the
+-- history the phone keeps.
 --
--- Not a live match: both phones were there for one of those, and each wrote
--- it down already. Fifty, the length of the history the phone keeps.
-create or replace function my_raced_sets()
+-- `raced_while_away` marks the first kind: the only duels a phone that kept
+-- its own history before this existed never wrote down.
+drop function if exists my_raced_sets();
+create or replace function my_duels()
 returns table (
   duel_id uuid,
-  raced_at timestamptz,
+  played_at timestamptz,
   opponent_name text,
   opponent_tier int,
   you_won boolean,
   your_reps int,
   their_reps int,
-  lp_delta int
+  lp_delta int,
+  raced_while_away boolean
 )
 language sql
 stable
 security definer
 set search_path = public
 as $$
+  -- Each side read from its own index and cut at fifty before the two are
+  -- put together, so a lifter with thousands of duels costs a hundred rows.
+  with mine as (
+    (select d.* from duels d where d.challenger = auth.uid()
+      order by d.created_at desc limit 50)
+    union all
+    (select d.* from duels d where d.defender = auth.uid()
+      order by d.created_at desc limit 50)
+  )
   select d.id, d.created_at, p.username, p.tier_idx,
-         coalesce(d.winner = d.defender, false), ds.reps, cs.reps,
-         d.lp_defender
-    from duels d
-    join sets ds on ds.id = d.defender_set
+         coalesce(d.winner = auth.uid(), false),
+         case when d.challenger = auth.uid() then cs.reps else ds.reps end,
+         case when d.challenger = auth.uid() then ds.reps else cs.reps end,
+         case when d.challenger = auth.uid() then d.lp_challenger
+              else d.lp_defender end,
+         d.defender = auth.uid() and ds.live_match is null
+    from mine d
     join sets cs on cs.id = d.challenger_set
-    join profiles p on p.id = d.challenger
-   where d.defender = auth.uid()
-     and ds.live_match is null
+    join sets ds on ds.id = d.defender_set
+    join profiles p on p.id = case when d.challenger = auth.uid()
+                                   then d.defender else d.challenger end
    order by d.created_at desc
    limit 50;
 $$;
 
-revoke all on function my_raced_sets() from public, anon;
-grant execute on function my_raced_sets() to authenticated;
+revoke all on function my_duels() from public, anon;
+grant execute on function my_duels() to authenticated;
 
 revoke all on function settle_duel(uuid, uuid, boolean) from public;
 grant execute on function settle_duel(uuid, uuid, boolean) to authenticated;

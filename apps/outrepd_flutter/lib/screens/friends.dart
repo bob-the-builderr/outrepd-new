@@ -15,6 +15,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../backend/backend.dart';
+import '../career.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../motion.dart';
@@ -26,6 +27,11 @@ import '../widgets.dart';
 import 'invite_card.dart';
 import 'live_invite.dart';
 import 'other_profile.dart';
+import 'shell.dart';
+
+/// How long the list is shown before it is read again while somebody is
+/// looking at it.
+const kListFreshFor = Duration(seconds: 30);
 
 class FriendsScreen extends StatefulWidget {
   const FriendsScreen({super.key});
@@ -53,12 +59,23 @@ class _FriendsScreenState extends State<FriendsScreen> {
   bool _loading = false;
   Object? _error;
 
+  /// When the list was last read. Null is "read it before showing it again":
+  /// never read, or this account's own duel has moved a rank and a
+  /// head-to-head on it since.
+  DateTime? _fetchedAt;
+  Timer? _tick;
+
   @override
   void initState() {
     super.initState();
     FriendsScreen._requestsAsked.addListener(_showRequests);
     if (backend.available) {
       _load();
+      shownTab.addListener(_onShowing);
+      Career.instance.addListener(_onOwnResult);
+      // Who is online decides Challenge or Invite, and ranks move with every
+      // duel: read again while the list is being looked at.
+      _tick = Timer.periodic(kListFreshFor, (_) => _refreshIfShowing());
     } else {
       _friends = demoFriends;
     }
@@ -66,9 +83,35 @@ class _FriendsScreenState extends State<FriendsScreen> {
 
   @override
   void dispose() {
+    _tick?.cancel();
+    shownTab.removeListener(_onShowing);
+    Career.instance.removeListener(_onOwnResult);
     FriendsScreen._requestsAsked.removeListener(_showRequests);
     _search.dispose();
     super.dispose();
+  }
+
+  bool get _showing => shownTab.value == AppShell.friendsTabIndex;
+
+  void _onShowing() {
+    if (_showing) _refreshIfShowing();
+  }
+
+  void _onOwnResult() {
+    _fetchedAt = null;
+    _refreshIfShowing();
+  }
+
+  /// Read again, keeping the list on screen while it is, when it is in view
+  /// and out of date — not under another screen, nor in the background.
+  void _refreshIfShowing() {
+    if (!mounted || !_showing || _loading) return;
+    if (!(ModalRoute.of(context)?.isCurrent ?? true)) return;
+    final state = WidgetsBinding.instance.lifecycleState;
+    if (state != null && state != AppLifecycleState.resumed) return;
+    final at = _fetchedAt;
+    if (at != null && DateTime.now().difference(at) < kListFreshFor) return;
+    _load(withInvites: false);
   }
 
   /// The latest requests, then the sheet to answer them in.
@@ -77,9 +120,11 @@ class _FriendsScreenState extends State<FriendsScreen> {
     if (mounted) await _openRequests();
   }
 
-  Future<void> _load() async {
+  /// The list is kept on screen while it is read again; the spinner and the
+  /// error are only for an empty one (build).
+  Future<void> _load({bool withInvites = true}) async {
     if (!backend.available) return;
-    unawaited(_loadInvites());
+    if (withInvites) unawaited(_loadInvites());
     setState(() {
       _loading = true;
       _error = null;
@@ -105,6 +150,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
         ];
         _requests = requests;
         _loading = false;
+        _fetchedAt = DateTime.now();
       });
     } on Object catch (error) {
       if (!mounted) return;

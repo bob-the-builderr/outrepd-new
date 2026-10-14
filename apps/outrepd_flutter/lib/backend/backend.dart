@@ -780,10 +780,10 @@ abstract interface class LiveLink {
   Future<void> close();
 }
 
-/// A duel somebody settled against one of this account's stored sets while
-/// it was away: the other half of "your set is in the pool".
-class RacedSet {
-  const RacedSet({
+/// One of this account's duels as the server holds it, from this account's
+/// side: what the history is made of.
+class ServerDuel {
+  const ServerDuel({
     required this.duelId,
     required this.at,
     required this.opponentName,
@@ -792,6 +792,7 @@ class RacedSet {
     required this.yourReps,
     required this.theirReps,
     required this.lpDelta,
+    this.racedWhileAway = false,
   });
 
   final String duelId;
@@ -802,6 +803,11 @@ class RacedSet {
   final int yourReps;
   final int theirReps;
   final int lpDelta;
+
+  /// Somebody raced this account's stored set while it was away — the other
+  /// half of "your set is in the pool". The one kind of duel a phone never
+  /// wrote down itself before the history came from the server.
+  final bool racedWhileAway;
 }
 
 /// One thing the server has to tell somebody.
@@ -1136,9 +1142,8 @@ abstract interface class Backend {
   /// What happened while this lifter was away, newest first.
   Future<List<Notice>> notices();
 
-  /// The duels raced against this account's stored sets while it was away,
-  /// newest first, for the history: they never happened on this phone.
-  Future<List<RacedSet>> racedSets();
+  /// This account's last fifty duels, newest first, for the history.
+  Future<List<ServerDuel>> myDuels();
 
   /// How many of those have not been seen. What the dot on the bell counts.
   Future<int> unreadNotices();
@@ -1413,7 +1418,7 @@ class NoBackend implements Backend {
   Future<List<Notice>> notices() async => const [];
 
   @override
-  Future<List<RacedSet>> racedSets() async => const [];
+  Future<List<ServerDuel>> myDuels() async => const [];
 
   @override
   Future<int> unreadNotices() async => 0;

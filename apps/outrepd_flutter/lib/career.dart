@@ -24,7 +24,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'backend/backend.dart'
-    show RacedSet, RemoteProfile, SettledDuel, backend;
+    show RemoteProfile, ServerDuel, SettledDuel, backend;
 import 'data.dart';
 import 'health_sync.dart';
 import 'ranking.dart';
@@ -117,12 +117,19 @@ class Career extends ChangeNotifier {
   static const _kProfile = 'career.profile';
   static const _kHistory = 'career.history';
   static const _kDays = 'career.days';
-  static const _kRaced = 'career.raced';
+  static const _kDuelIds = 'career.duelIds';
+  static const _kHistorySynced = 'career.historySynced';
 
-  /// The duels raced against this account's stored sets that are already in
-  /// the history, by id, so [syncRacedSets] adds each one once.
-  final Set<String> _raced = {};
-  Future<void>? _syncingRaced;
+  /// The server's duels that are already in the history, by id, so each one
+  /// is written down once — by the screen that watched it, or by
+  /// [syncHistory] when no screen did.
+  final Set<String> _inHistory = {};
+
+  /// False only on a phone updated from before the history came from the
+  /// server, until [syncHistory] first runs: the history it kept holds its
+  /// own duels already, without their ids.
+  bool _historySynced = true;
+  Future<void>? _syncing;
 
   /// Reps counted on each day, keyed by date. The key is a plain `yyyy-mm-dd`
   /// so it survives a timezone change without turning into a different day.
@@ -362,9 +369,14 @@ class Career extends ChangeNotifier {
       lpChange: settled.lpDelta,
       at: DateTime.now(),
     );
-    matchHistory.insert(0, record);
-    if (matchHistory.length > _kHistoryKept) {
-      matchHistory.removeRange(_kHistoryKept, matchHistory.length);
+    // Once: syncHistory may have read it from the server first, when its
+    // answer and this screen's crossed.
+    if (_inHistory.add(settled.duelId)) {
+      _recordedSinceSync.add(settled.duelId);
+      matchHistory.insert(0, record);
+      if (matchHistory.length > _kHistoryKept) {
+        matchHistory.removeRange(_kHistoryKept, matchHistory.length);
+      }
     }
 
     await _checkMomentTitles(
@@ -400,70 +412,103 @@ class Career extends ChangeNotifier {
     );
   }
 
-  /// Adds to the history the duels raced against this account's stored sets
-  /// while it was away, and takes the rank they moved from the server.
+  /// Writes into the history every duel of this account's that no screen on
+  /// this phone wrote down, and takes the rank they moved from the server.
   ///
-  /// A ranked match with nobody live and no saved set to race puts this
-  /// lifter's set in the pool, and the result comes when somebody races it —
-  /// on their phone, not this one. Everything else in the history is what
-  /// this phone watched happen, so those duels reached the bell and the rank
-  /// and never the history. Nothing is counted again here: the reps were
-  /// counted when the set was lifted, and the record and placements are the
-  /// server's, read back whole.
-  Future<void> syncRacedSets() =>
-      _syncingRaced ??= _syncRaced().whenComplete(() => _syncingRaced = null);
+  /// The screens write down what they watch happen. Not everything does:
+  ///   * a ranked match with nobody live and no saved set to race puts the
+  ///     set in the pool, and its result comes when somebody races it — on
+  ///     their phone;
+  ///   * a live result can land after its screen was closed;
+  ///   * a result can be settled on the server and its answer lost on the
+  ///     way back.
+  /// Each of those moved the rank and reached no history. Nothing is counted
+  /// again here: the reps were counted when the set was lifted, and the
+  /// record and placements are the server's, read back whole.
+  ///
+  /// On a phone that kept a history before this existed, the first run takes
+  /// only what that history could never have had — the sets raced while
+  /// away — because the rest is already in it, without ids to tell. On an
+  /// empty one (a new phone, another account) it takes everything.
+  Future<void> syncHistory() =>
+      _syncing ??= _syncHistory().whenComplete(() => _syncing = null);
 
-  Future<void> _syncRaced() async {
+  Future<void> _syncHistory() async {
     if (!backend.available || backend.me == null) return;
-    final List<RacedSet> raced;
+    final List<ServerDuel> duels;
     try {
-      raced = await backend.racedSets();
+      duels = await backend.myDuels();
     } on Object catch (error) {
-      debugPrint('Could not read the sets raced while away: $error');
+      debugPrint('Could not read the duels for the history: $error');
       return;
     }
-    final fresh = [for (final r in raced) if (!_raced.contains(r.duelId)) r];
-    // Only what the server still lists: an id older than its last fifty is
-    // never handed back again, so it need not be remembered either.
-    final listed = {for (final r in raced) r.duelId};
-    if (fresh.isEmpty) {
-      if (listed.length != _raced.length) {
-        _raced
-          ..clear()
-          ..addAll(listed);
-        await save();
+
+    final firstOnAKeptHistory = !_historySynced && matchHistory.isNotEmpty;
+    final fresh = <ServerDuel>[];
+    for (final d in duels) {
+      if (_inHistory.contains(d.duelId)) continue;
+      if (firstOnAKeptHistory && !d.racedWhileAway) {
+        _inHistory.add(d.duelId);
+        continue;
       }
-      return;
+      fresh.add(d);
     }
-    _raced
-      ..clear()
-      ..addAll(listed);
+    // Only what the server still lists, plus whatever a screen wrote down
+    // since it asked: an id older than the last fifty is never handed back
+    // again, so it need not be remembered either.
+    final listed = {for (final d in duels) d.duelId};
+    _inHistory.retainWhere(
+      (id) => listed.contains(id) || _recordedSinceSync.contains(id),
+    );
+    _recordedSinceSync.clear();
+    _inHistory.addAll(fresh.map((d) => d.duelId));
+    _historySynced = true;
 
-    for (final r in fresh) {
-      matchHistory.add(
-        MatchRecord(
-          won: r.won,
-          userReps: r.yourReps,
-          opponentReps: r.theirReps,
-          opponent: r.opponentName,
-          lpChange: r.lpDelta,
-          at: r.at,
-        ),
-      );
-    }
-    matchHistory.sort((a, b) => b.at.compareTo(a.at));
-    if (matchHistory.length > _kHistoryKept) {
-      matchHistory.removeRange(_kHistoryKept, matchHistory.length);
-    }
-
-    // The rank, the record and the placements those duels moved.
-    try {
-      applyServerProfile(await backend.signIn(username: demoProfile.username));
-    } on Object catch (error) {
-      debugPrint('Could not read the profile back: $error');
+    if (fresh.isNotEmpty) {
+      for (final d in fresh) {
+        matchHistory.add(
+          MatchRecord(
+            won: d.won,
+            userReps: d.yourReps,
+            opponentReps: d.theirReps,
+            opponent: d.opponentName,
+            lpChange: d.lpDelta,
+            at: d.at,
+          ),
+        );
+      }
+      matchHistory.sort((a, b) => b.at.compareTo(a.at));
+      if (matchHistory.length > _kHistoryKept) {
+        matchHistory.removeRange(_kHistoryKept, matchHistory.length);
+      }
+      // The rank, the record and the placements those duels moved.
+      try {
+        applyServerProfile(
+          await backend.signIn(username: demoProfile.username),
+        );
+      } on Object catch (error) {
+        debugPrint('Could not read the profile back: $error');
+      }
     }
     await save();
-    notifyListeners();
+    if (fresh.isNotEmpty) notifyListeners();
+  }
+
+  /// Duel ids a screen wrote down while [syncHistory] was waiting on the
+  /// server, so its answer — read before they existed — does not forget them.
+  final Set<String> _recordedSinceSync = {};
+
+  /// Asks the server again a few times over the next couple of minutes: for
+  /// a live result whose screen was closed before it came, which the server
+  /// settles once the round is long overdue.
+  void syncHistorySoon() {
+    for (final wait in const [
+      Duration(seconds: 20),
+      Duration(seconds: 70),
+      Duration(seconds: 150),
+    ]) {
+      Timer(wait, () => unawaited(syncHistory()));
+    }
   }
 
   /// Records a solo set. Reps and the streak count; nothing else does.
@@ -586,7 +631,8 @@ class Career extends ChangeNotifier {
       jsonEncode([for (final m in matchHistory) m.toJson()]),
     );
     await store.setString(_kDays, jsonEncode(_days));
-    await store.setStringList(_kRaced, _raced.toList());
+    await store.setStringList(_kDuelIds, _inHistory.toList());
+    await store.setBool(_kHistorySynced, _historySynced);
   }
 
   /// Reads the account back.
@@ -643,9 +689,13 @@ class Career extends ChangeNotifier {
     } on Object catch (error) {
       debugPrint('Could not read the match history: $error');
     }
-    _raced
+    _inHistory
       ..clear()
-      ..addAll(store.getStringList(_kRaced) ?? const []);
+      ..addAll(store.getStringList(_kDuelIds) ?? const []);
+    // Unset on a phone updated from before the history came from the server:
+    // whatever history it kept holds its own duels without their ids.
+    _historySynced =
+        store.getBool(_kHistorySynced) ?? matchHistory.isEmpty;
 
     try {
       final raw = store.getString(_kDays);
@@ -694,9 +744,18 @@ class Career extends ChangeNotifier {
       ..placementWins = 0;
     matchHistory.clear();
     _days.clear();
-    _raced.clear();
+    _forgetServerDuels();
     await save();
     notifyListeners();
+  }
+
+  /// A history started again holds none of the server's duels, and the next
+  /// [syncHistory] takes them all: everything written into it from here on
+  /// carries its id.
+  void _forgetServerDuels() {
+    _inHistory.clear();
+    _recordedSinceSync.clear();
+    _historySynced = true;
   }
 
   /// Switches this device onto a different real account — signing into one
@@ -710,8 +769,8 @@ class Career extends ChangeNotifier {
   Future<void> adoptServerProfile(RemoteProfile me) async {
     matchHistory.clear();
     _days.clear();
-    // The sets this account had raced are theirs to fetch afresh.
-    _raced.clear();
+    // Their duels come from the server instead, on the next syncHistory.
+    _forgetServerDuels();
     applyServerProfile(me);
     await save();
     notifyListeners();
@@ -723,12 +782,13 @@ class Career extends ChangeNotifier {
   Future<void> reset() async {
     matchHistory.clear();
     _days.clear();
-    _raced.clear();
+    _forgetServerDuels();
     final store = await SharedPreferences.getInstance();
     await store.remove(_kProfile);
     await store.remove(_kHistory);
     await store.remove(_kDays);
-    await store.remove(_kRaced);
+    await store.remove(_kDuelIds);
+    await store.remove(_kHistorySynced);
     notifyListeners();
   }
 }

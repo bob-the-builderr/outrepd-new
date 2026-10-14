@@ -104,10 +104,10 @@ void main() async {
     // install or a second phone gets back to the ladder it has actually
     // been racing on.
     if (me case final signedIn?) applyServerProfile(signedIn);
-    // Duels raced against this account's sets while it was away. Not
-    // awaited: the history fills in a moment later rather than holding the
-    // launch on the network.
-    unawaited(Career.instance.syncRacedSets());
+    // Duels no screen on this phone wrote down: raced while away, or settled
+    // after their screen was closed. Not awaited: the history fills in a
+    // moment later rather than holding the launch on the network.
+    unawaited(Career.instance.syncHistory());
     await rewards.syncWithProfile(
       matches: demoProfile.totalMatches,
       wins: demoProfile.bestStreak,

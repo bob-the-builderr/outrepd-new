@@ -140,10 +140,14 @@ enum _Stage {
   /// Live: this set is in, and the other phone's is not yet.
   waitingResult,
 
+  /// A saved set raced: this set going to the server and the duel being
+  /// settled there, before anything is shown.
+  saving,
+
   /// Live: the other lifter never got into position. Nothing was recorded.
   calledOff,
 
-  /// Live: the server could not be reached to settle it.
+  /// The server could not be reached to settle it — live, or a saved set.
   liveFailed,
 }
 
@@ -264,6 +268,12 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       );
     }
     _session?.dispose();
+    // Left before the result came, or without one: the server settles it
+    // regardless, and the history picks it up from there.
+    // ([_Stage.liveFailed] already asked, when it was reached.)
+    if (_stage == _Stage.waitingResult || _stage == _Stage.saving) {
+      Career.instance.syncHistorySoon();
+    }
     super.dispose();
   }
 
@@ -552,11 +562,14 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
 
     await _settleAndRecord(
       reps: settled,
-      gaveUp: scored?.gaveUp ?? false,
-      // A camera session that never came back with a count never went onto
-      // the server either — exactly what this screen has always done when
-      // there was nothing to upload.
-      attempted: scored != null,
+      // A camera that came back with no count at all was walked away from.
+      gaveUp: scored?.gaveUp ?? true,
+      // Against a real set it still goes onto the server, as the loss
+      // walking away is — the same as backing out before the camera
+      // ([_forfeit]); a local result the server never heard of is a rank on
+      // this phone that the next launch takes back. With nobody real, a
+      // session with no count has nothing to upload.
+      attempted: scored != null || _realOpponent != null,
       repsCamera: scored?.reps ?? 0,
       depth: scored?.depth ?? 0,
       confident: scored?.confident ?? false,
@@ -585,38 +598,65 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     // half of the duel — `settle_duel` reads everything it decides from the
     // two rows, so the set has to exist before the result can.
     //
-    // Never fatal. A dropped connection here must not cost a finished set —
-    // it falls back to exactly what this screen has always done locally.
+    // A set with nobody real against it is never held up by a dropped
+    // connection: it is practice either way. A duel against a real set is
+    // tried again for a while — a dropped request is the usual reason it
+    // fails — and never stood in for with a result worked out here: the
+    // server is the one that moves both ranks, and a result it never settled
+    // would be a rank on this phone that the next launch takes back.
     SettledDuel? settledDuel;
+    var unsettled = false;
     if (attempted &&
         !widget.practice &&
         backend.available &&
         backend.me != null) {
-      try {
-        final mySetId = await backend.uploadSet(
-          SetUpload(
-            reps: reps,
-            repsCamera: repsCamera,
-            depth: depth,
-            confident: confident,
-            durationMs: durationMs,
-            gaveUp: gaveUp,
-            repTimes: repTimes,
-          ),
-        );
-        _pooled = _vsBest;
-        if (_realOpponent case final opponentSet?) {
-          settledDuel = await backend.settle(
-            mySetId: mySetId,
-            theirSetId: opponentSet.setId,
-            ranked: widget.ranked,
-          );
+      final opponentSet = _realOpponent;
+      if (opponentSet != null) setState(() => _stage = _Stage.saving);
+      String? mySetId;
+      // Waits of 3, 6 and 9 seconds: past the 8 the server keeps between
+      // one lifter's sets, should the first upload have landed unanswered.
+      final tries = opponentSet == null ? 1 : 4;
+      for (var attempt = 0; attempt < tries && mounted; attempt++) {
+        if (attempt > 0) {
+          await Future<void>.delayed(Duration(seconds: 3 * attempt));
+          if (!mounted) return;
         }
-      } on Object catch (error) {
-        debugPrint('Could not reach the server to record this set: $error');
+        try {
+          final setId = mySetId ??= await backend.uploadSet(
+            SetUpload(
+              reps: reps,
+              repsCamera: repsCamera,
+              depth: depth,
+              confident: confident,
+              durationMs: durationMs,
+              gaveUp: gaveUp,
+              repTimes: repTimes,
+            ),
+          );
+          _pooled = _vsBest;
+          if (opponentSet != null) {
+            settledDuel = await backend.settle(
+              mySetId: setId,
+              theirSetId: opponentSet.setId,
+              ranked: widget.ranked,
+            );
+          }
+          break;
+        } on Object catch (error) {
+          debugPrint('Could not reach the server to record this set: $error');
+        }
       }
+      unsettled = opponentSet != null && settledDuel == null;
     }
     if (!mounted) return;
+
+    // Not settled, as far as this phone heard. The answer may only have been
+    // lost on the way back, so the history asks the server again shortly.
+    if (unsettled) {
+      setState(() => _stage = _Stage.liveFailed);
+      Career.instance.syncHistorySoon();
+      return;
+    }
 
     // Written down before the result is shown, so what the screen reports and
     // what the account holds are the same thing. Showing first and saving
@@ -742,6 +782,9 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     final settled = finish?.settled;
     if (settled == null) {
       setState(() => _stage = _Stage.liveFailed);
+      // The server settles it on the last count it heard once the round is
+      // long overdue; the history takes it from there.
+      Career.instance.syncHistorySoon();
       return;
     }
     _theirReps = finish?.theirReps ?? theirs;
@@ -801,9 +844,11 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           _stage == _Stage.sent ||
           _stage == _Stage.calledOff ||
           _stage == _Stage.liveFailed ||
-          // The set is in; the server settles it whether or not this screen
-          // waits to see it.
+          // The set is in, or on its way; the server settles it whether or
+          // not this screen waits to see it, and the history takes it from
+          // there (dispose).
           _stage == _Stage.waitingResult ||
+          _stage == _Stage.saving ||
           _challengeGone,
       onPopInvokedWithResult: (didPop, _) {
         if (!didPop) _confirmQuit();
@@ -900,6 +945,12 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
               ],
             ),
           ),
+        );
+
+      // Usually a second or two; only a dropped connection makes it longer.
+      case _Stage.saving:
+        return Center(
+          child: CircularProgressIndicator(color: context.colors.brand),
         );
 
       case _Stage.calledOff:

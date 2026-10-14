@@ -8,10 +8,13 @@
 /// board you cannot find yourself on tells you only that other people exist.
 library;
 
+import 'dart:async';
+
 import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 
 import '../backend/backend.dart';
+import '../career.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../motion.dart';
@@ -35,6 +38,11 @@ enum _Scope {
   yourTier,
 }
 
+/// How long a board is shown before it is asked for again while somebody is
+/// looking at it: places move every time anybody finishes a duel, and the
+/// board is where people watch them move.
+const kBoardFreshFor = Duration(seconds: 30);
+
 class RanksScreen extends StatefulWidget {
   const RanksScreen({super.key});
 
@@ -45,33 +53,89 @@ class RanksScreen extends StatefulWidget {
 class _RanksScreenState extends State<RanksScreen> {
   _Scope _scope = _Scope.thisMonth;
 
-  /// Rows per scope, kept once fetched so flipping the toggle does not
-  /// re-query a board that does not change minute to minute.
+  /// Rows per scope, kept once fetched so flipping the toggle shows them at
+  /// once; asked for again behind them once they are [kBoardFreshFor] old.
   final _boards = <_Scope, List<BoardRow>>{};
+
+  /// When each scope was last fetched. Missing is "ask before showing it":
+  /// never fetched, or this account's own place has moved since.
+  final _fetchedAt = <_Scope, DateTime>{};
 
   /// The month's board and this account's place on it, fetched together.
   List<MonthRow>? _month;
   MonthPlace? _monthPlace;
 
+  /// This account's place on the whole board, for when it is below the
+  /// hundred rows the board shows.
+  int? _globalPlace;
+
   bool _loading = false;
   Object? _error;
+  Timer? _tick;
 
   @override
   void initState() {
     super.initState();
-    if (backend.available) _load();
+    if (backend.available) {
+      _load();
+      shownTab.addListener(_onShowing);
+      Career.instance.addListener(_onOwnResult);
+      _tick = Timer.periodic(kBoardFreshFor, (_) => _refreshIfShowing());
+    }
+  }
+
+  @override
+  void dispose() {
+    _tick?.cancel();
+    shownTab.removeListener(_onShowing);
+    Career.instance.removeListener(_onOwnResult);
+    super.dispose();
+  }
+
+  /// Opened: whatever moved since it was last looked at.
+  void _onShowing() {
+    if (_showing) _refreshIfShowing();
+  }
+
+  /// A duel of this account's own just changed its place on every board:
+  /// none of them is fresh any more, and the one in view is asked for now.
+  void _onOwnResult() {
+    _fetchedAt.clear();
+    _refreshIfShowing();
+  }
+
+  /// Asks for the board in view again, quietly, when it is on screen and has
+  /// been shown long enough to be out of date. Not while a match or any
+  /// other screen is on top of it, nor while the app is in the background.
+  void _refreshIfShowing() {
+    if (!mounted || !_showing) return;
+    if (!(ModalRoute.of(context)?.isCurrent ?? true)) return;
+    final state = WidgetsBinding.instance.lifecycleState;
+    if (state != null && state != AppLifecycleState.resumed) return;
+    if (_fresh(_scope) || _loading) return;
+    _load(quiet: true);
+  }
+
+  bool get _showing => shownTab.value == AppShell.ranksTabIndex;
+
+  bool _fresh(_Scope scope) {
+    final at = _fetchedAt[scope];
+    return at != null && clock.now().difference(at) < kBoardFreshFor;
   }
 
   bool get _loaded =>
       _scope == _Scope.thisMonth ? _month != null : _boards.containsKey(_scope);
 
-  Future<void> _load() async {
+  /// [quiet] keeps what is on screen while it is asked for again — no
+  /// spinner, and a failed read leaves the board as it was rather than
+  /// replacing it with an error.
+  Future<void> _load({bool quiet = false}) async {
     if (!backend.available) return;
     final scope = _scope;
     final me = demoProfile;
     setState(() {
       _loading = true;
-      _error = null;
+      if (!quiet) _error = null;
     });
     try {
       if (scope == _Scope.thisMonth) {
@@ -83,7 +147,9 @@ class _RanksScreenState extends State<RanksScreen> {
         setState(() {
           _monthPlace = place;
           _month = rows;
+          _fetchedAt[scope] = clock.now();
           _loading = false;
+          _error = null;
         });
         return;
       }
@@ -91,15 +157,23 @@ class _RanksScreenState extends State<RanksScreen> {
         tierIdx: scope == _Scope.yourTier ? me.tierIdx : null,
         divIdx: scope == _Scope.yourTier ? me.divIdx : null,
       );
+      // Below the hundred shown, the place still is one: asked for apart.
+      final global = scope == _Scope.topPlayers &&
+              !rows.any((row) => row.id == backend.me?.id)
+          ? await backend.boardPosition()
+          : null;
       if (!mounted) return;
       setState(() {
         _boards[scope] = rows;
+        if (scope == _Scope.topPlayers) _globalPlace = global;
+        _fetchedAt[scope] = clock.now();
         _loading = false;
+        _error = null;
       });
     } on Object catch (error) {
       if (!mounted) return;
       setState(() {
-        _error = error;
+        if (!quiet) _error = error;
         _loading = false;
       });
     }
@@ -110,7 +184,11 @@ class _RanksScreenState extends State<RanksScreen> {
       _scope = scope;
       _error = null;
     });
-    if (!_loaded) _load();
+    if (!_loaded) {
+      _load();
+    } else if (!_fresh(scope)) {
+      _load(quiet: true);
+    }
   }
 
   /// The month's rows, from whichever source this build is running on.
@@ -180,7 +258,8 @@ class _RanksScreenState extends State<RanksScreen> {
     final rows = _boards[_scope];
     if (id == null || rows == null) return null;
     final at = rows.indexWhere((row) => row.id == id);
-    return at < 0 ? null : at + 1;
+    if (at >= 0) return at + 1;
+    return _scope == _Scope.topPlayers ? _globalPlace : null;
   }
 
   @override
