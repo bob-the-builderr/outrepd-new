@@ -253,6 +253,12 @@ $$;
 -- Dropped first: a function's result columns cannot change in place, and
 -- `was_ranked` was added after the others.
 drop function if exists settle_duel(uuid, uuid, boolean);
+-- The two-argument one from before `ranked` existed. A new argument makes a
+-- second function beside the old rather than replacing it, and the old one
+-- stayed on the live database, callable, without the checks added since —
+-- found on 2026-10-15 by comparing the live schema with this file. No app
+-- that shipped calls it: every one sends `ranked`.
+drop function if exists settle_duel(uuid, uuid);
 create or replace function settle_duel(
   my_set uuid,
   their_set uuid,
