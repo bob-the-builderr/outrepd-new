@@ -48,25 +48,26 @@ psql:/home/runner/work/_temp/install.sql:1794: NOTICE:  function leaderboard(tex
 psql:/home/runner/work/_temp/install.sql:1891: NOTICE:  function lifter_profile(uuid) does not exist, skipping
 psql:/home/runner/work/_temp/install.sql:1988: NOTICE:  function public_lifter_card(text) does not exist, skipping
 psql:/home/runner/work/_temp/install.sql:2328: NOTICE:  function settle_duel(uuid,uuid,pg_catalog.bool) does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:2588: NOTICE:  function my_raced_sets() does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:2716: NOTICE:  policy "a lifter reads their own notifications" for relation "notifications" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:2722: NOTICE:  policy "a lifter clears their own notifications" for relation "notifications" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:2769: NOTICE:  trigger "duels_notify_defender" for relation "duels" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:2807: NOTICE:  trigger "friendships_notify_request" for relation "friendships" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:2842: NOTICE:  trigger "friendships_notify_accepted" for relation "friendships" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:2891: NOTICE:  trigger "sets_notify_challenged" for relation "sets" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:2904: NOTICE:  function my_notifications(pg_catalog.int4) does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:3117: NOTICE:  trigger "send_push" for relation "notifications" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:3173: NOTICE:  trigger "report-alert" for relation "reports" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:3174: NOTICE:  trigger "send_report_alert" for relation "reports" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:3519: NOTICE:  function my_live_invites() does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:3807: NOTICE:  function live_outcome(live_matches) does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:3808: NOTICE:  function finish_live_match(uuid,pg_catalog.int4,pg_catalog.int4,pg_catalog.float4,pg_catalog.bool,pg_catalog.int4,pg_catalog.bool,pg_catalog.int4[]) does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:3809: NOTICE:  function live_match_result(uuid) does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:4243: NOTICE:  trigger "season_points_add" for relation "duels" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:4267: NOTICE:  trigger "season_points_forget" for relation "duels" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:4635: NOTICE:  trigger "tester_signed_up" for relation "auth.users" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:4664: NOTICE:  trigger "tester_added" for relation "beta_testers" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:2334: NOTICE:  function settle_duel(uuid,uuid) does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:2594: NOTICE:  function my_raced_sets() does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:2722: NOTICE:  policy "a lifter reads their own notifications" for relation "notifications" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:2728: NOTICE:  policy "a lifter clears their own notifications" for relation "notifications" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:2775: NOTICE:  trigger "duels_notify_defender" for relation "duels" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:2813: NOTICE:  trigger "friendships_notify_request" for relation "friendships" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:2848: NOTICE:  trigger "friendships_notify_accepted" for relation "friendships" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:2897: NOTICE:  trigger "sets_notify_challenged" for relation "sets" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:2910: NOTICE:  function my_notifications(pg_catalog.int4) does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:3123: NOTICE:  trigger "send_push" for relation "notifications" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:3179: NOTICE:  trigger "report-alert" for relation "reports" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:3180: NOTICE:  trigger "send_report_alert" for relation "reports" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:3525: NOTICE:  function my_live_invites() does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:3813: NOTICE:  function live_outcome(live_matches) does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:3814: NOTICE:  function finish_live_match(uuid,pg_catalog.int4,pg_catalog.int4,pg_catalog.float4,pg_catalog.bool,pg_catalog.int4,pg_catalog.bool,pg_catalog.int4[]) does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:3815: NOTICE:  function live_match_result(uuid) does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:4249: NOTICE:  trigger "season_points_add" for relation "duels" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:4273: NOTICE:  trigger "season_points_forget" for relation "duels" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:4641: NOTICE:  trigger "tester_signed_up" for relation "auth.users" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:4670: NOTICE:  trigger "tester_added" for relation "beta_testers" does not exist, skipping
 installed once
 psql:/home/runner/work/_temp/install.sql:49: NOTICE:  relation "subscriptions" already exists, skipping
 psql:/home/runner/work/_temp/install.sql:55: NOTICE:  column "period_type" of relation "subscriptions" already exists, skipping
@@ -122,38 +123,39 @@ psql:/home/runner/work/_temp/install.sql:1794: NOTICE:  function leaderboard(tex
 psql:/home/runner/work/_temp/install.sql:2101: NOTICE:  relation "set_offers" already exists, skipping
 psql:/home/runner/work/_temp/install.sql:2107: NOTICE:  relation "set_offers_offered_to_idx" already exists, skipping
 psql:/home/runner/work/_temp/install.sql:2116: NOTICE:  relation "sets_pool_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:2588: NOTICE:  function my_raced_sets() does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:2686: NOTICE:  relation "notifications" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:2691: NOTICE:  column "lp_delta" of relation "notifications" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:2701: NOTICE:  relation "notifications_for_profile_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:2703: NOTICE:  relation "notifications_unread_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:2707: NOTICE:  relation "notifications_actor_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:2709: NOTICE:  relation "notifications_duel_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:3002: NOTICE:  relation "push_tokens" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:3004: NOTICE:  relation "push_tokens_profile_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:3012: NOTICE:  column "pushed_at" of relation "notifications" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:3173: NOTICE:  trigger "report-alert" for relation "reports" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:3242: NOTICE:  relation "live_matches" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:3244: NOTICE:  relation "live_matches_b_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:3245: NOTICE:  relation "live_matches_a_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:3248: NOTICE:  relation "live_matches_a_set_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:3250: NOTICE:  relation "live_matches_b_set_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:3252: NOTICE:  relation "live_matches_duel_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:3256: NOTICE:  column "rematch_of" of relation "live_matches" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:3258: NOTICE:  relation "live_matches_rematch_of_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:3271: NOTICE:  relation "live_queue" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4086: NOTICE:  relation "duels_ranked_month_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4113: NOTICE:  relation "season_points" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4115: NOTICE:  relation "season_points_profile_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4119: NOTICE:  relation "season_points_board_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4125: NOTICE:  relation "season_points_stale" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4430: NOTICE:  relation "season_awards" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4432: NOTICE:  relation "season_awards_profile_idx" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4437: NOTICE:  relation "season_closings" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4582: NOTICE:  relation "beta_testers" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4590: NOTICE:  relation "beta_tester_grants" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4698: NOTICE:  relation "invites" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:4699: NOTICE:  relation "invites_inviter_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:2334: NOTICE:  function settle_duel(uuid,uuid) does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:2594: NOTICE:  function my_raced_sets() does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:2692: NOTICE:  relation "notifications" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:2697: NOTICE:  column "lp_delta" of relation "notifications" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:2707: NOTICE:  relation "notifications_for_profile_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:2709: NOTICE:  relation "notifications_unread_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:2713: NOTICE:  relation "notifications_actor_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:2715: NOTICE:  relation "notifications_duel_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3008: NOTICE:  relation "push_tokens" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3010: NOTICE:  relation "push_tokens_profile_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3018: NOTICE:  column "pushed_at" of relation "notifications" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3179: NOTICE:  trigger "report-alert" for relation "reports" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:3248: NOTICE:  relation "live_matches" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3250: NOTICE:  relation "live_matches_b_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3251: NOTICE:  relation "live_matches_a_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3254: NOTICE:  relation "live_matches_a_set_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3256: NOTICE:  relation "live_matches_b_set_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3258: NOTICE:  relation "live_matches_duel_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3262: NOTICE:  column "rematch_of" of relation "live_matches" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3264: NOTICE:  relation "live_matches_rematch_of_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:3277: NOTICE:  relation "live_queue" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4092: NOTICE:  relation "duels_ranked_month_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4119: NOTICE:  relation "season_points" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4121: NOTICE:  relation "season_points_profile_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4125: NOTICE:  relation "season_points_board_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4131: NOTICE:  relation "season_points_stale" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4436: NOTICE:  relation "season_awards" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4438: NOTICE:  relation "season_awards_profile_idx" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4443: NOTICE:  relation "season_closings" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4588: NOTICE:  relation "beta_testers" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4596: NOTICE:  relation "beta_tester_grants" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4704: NOTICE:  relation "invites" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:4705: NOTICE:  relation "invites_inviter_idx" already exists, skipping
 installed twice
 CREATE FUNCTION
 CREATE FUNCTION
@@ -330,12 +332,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- 71ab39e8-0f6d-406f-8221-1727e94f5133
+ d0a3e23d-43a7-4726-8361-40dbf4368ad3
 (1 row)
 
               set_config              
 --------------------------------------
- 58928f2d-971c-4c21-8379-e55226d9b85d
+ 940e09cf-afc8-4c52-b845-8ef74d298d8a
 (1 row)
 
  as_user 
@@ -377,12 +379,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- 71ab39e8-0f6d-406f-8221-1727e94f5133
+ d0a3e23d-43a7-4726-8361-40dbf4368ad3
 (1 row)
 
               set_config              
 --------------------------------------
- 900337d6-ec9a-4e46-9e48-a07e33712e9e
+ fb0d98f2-235d-426e-a75d-824e9f058111
 (1 row)
 
  as_user 
@@ -460,7 +462,7 @@ SET
 RESET
               set_config              
 --------------------------------------
- a7ecbce6-8ccf-4aad-a320-2307f544d607
+ 5eb79b56-c28e-40b7-8349-020f699a2468
 (1 row)
 
  pg_sleep 
@@ -515,12 +517,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- 362bf2e6-417d-439e-bb96-9fef4e2558b0
+ 4de99837-dfec-453c-873b-5971a97e0736
 (1 row)
 
               set_config              
 --------------------------------------
- d9ca15c6-20c9-4a7c-afc1-c5868d00f2d0
+ cefaf197-df7b-4b93-a9ba-e1bc0ace177c
 (1 row)
 
  as_user 
@@ -531,7 +533,7 @@ RESET
 SET
                           settle_duel                           
 ----------------------------------------------------------------
- (40b387dd-bf2b-45a7-b9ee-2bd721079396,t,0,0,0,0,1,0,1,1,1,1,f)
+ (8561504f-f061-40d6-a5b9-f1c5a737bcd6,t,0,0,0,0,1,0,1,1,1,1,f)
 (1 row)
 
 RESET
@@ -743,7 +745,7 @@ RESET
 SET
              invite_live              
 --------------------------------------
- 23e0ab3a-8695-4b16-ab51-31634e904492
+ b9ace2fd-c215-4e30-acef-28b157b2104b
 (1 row)
 
 RESET
@@ -768,12 +770,12 @@ RESET
 SET
              invite_live              
 --------------------------------------
- a66bcf7b-ac43-4302-a5b3-7bd219068996
+ 0c482dfe-ce49-4204-8ec5-1824b04491bb
 (1 row)
 
              invite_live              
 --------------------------------------
- 2aeede1b-466f-4cd6-9214-2db693ad9f09
+ 355f1e46-8ee6-474f-b677-2597ef507e68
 (1 row)
 
 psql:tool/db/security_test.sql:375: NOTICE:  refused, as it should be — a fourth live invite in ten minutes: too many invites, wait a few minutes
@@ -963,14 +965,14 @@ INSERT 0 2
 INSERT 0 1
               set_config              
 --------------------------------------
- 52f6c3bd-d698-4085-8450-8debe2863d80
+ 4cfc03cd-0524-4b81-8130-dd9c646a5bdf
 (1 row)
 
 INSERT 0 1
 INSERT 0 1
               set_config              
 --------------------------------------
- c84fa027-d49a-4b44-a6ff-e075f772cbcf
+ 46da1081-fe49-4ccc-8828-2e67d87a52b7
 (1 row)
 
  as_user 
@@ -1020,7 +1022,7 @@ RESET
 INSERT 0 1
               set_config              
 --------------------------------------
- df68a2e8-7daf-4cab-8baf-cd1d032ea3d8
+ 95585c8f-b979-42f3-bbdd-766f81b1bd46
 (1 row)
 
  as_user 
@@ -1108,7 +1110,7 @@ RESET
 DELETE 1
  set_config 
 ------------
- 146657
+ 546034
 (1 row)
 
  as_user 
