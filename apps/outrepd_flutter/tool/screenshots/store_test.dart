@@ -21,6 +21,7 @@ import 'package:outrepd/backend/backend.dart';
 import 'package:outrepd/career.dart';
 import 'package:outrepd/data.dart';
 import 'package:outrepd/l10n/app_localizations.dart';
+import 'package:outrepd/rewards.dart';
 import 'package:outrepd/screens/awards.dart';
 import 'package:outrepd/screens/other_profile.dart';
 import 'package:outrepd/screens/post_match.dart';
@@ -74,6 +75,31 @@ class _Rival extends NoBackend {
   );
 }
 
+/// This month's board with the lifter on it, twelfth and four points off
+/// the top ten, instead of the "play a ranked duel" a build with no server
+/// shows in that row.
+class _Board extends NoBackend {
+  @override
+  bool get available => true;
+
+  @override
+  Future<List<MonthRow>> monthBoard({int limit = 100}) async => demoMonthBoard;
+
+  @override
+  Future<MonthPlace?> myMonthPlace() async {
+    final now = DateTime.now().toUtc();
+    return MonthPlace(
+      season: DateTime.utc(now.year, now.month),
+      endsAt: DateTime.utc(now.year, now.month + 1),
+      place: 12,
+      ofTotal: 1284,
+      points: 95,
+      wins: 12,
+      played: 15,
+    );
+  }
+}
+
 Widget _app(Widget home) => MaterialApp(
   debugShowCheckedModeBanner: false,
   theme: buildTheme(Brightness.dark),
@@ -102,6 +128,31 @@ Map<String, Object> _week() {
       for (var back = 0; back < reps.length; back++)
         key(today.subtract(Duration(days: back))): reps[back],
     }),
+    // A nine-day streak with that one rest day spent, and the titles the
+    // sample record (27 duels, 18 won, 412 reps, Gold) would have earned.
+    'streak': 9,
+    'bestStreak': 14,
+    'restUsed': 1,
+    'lastSession': today.millisecondsSinceEpoch,
+    'earnedTitles': const [
+      'first_blood',
+      'found_footing',
+      'regular',
+      'first_win',
+      'on_a_roll',
+      'five_straight',
+      'unstoppable',
+      'giant_slayer',
+      'hundred_reps',
+      'two_days',
+      'no_days_off',
+      'bronze_tier',
+      'silver_tier',
+      'golden_era',
+      'clean_hands',
+      'not_alone',
+    ],
+    'wearingTitle': 'golden_era',
   };
 }
 
@@ -130,6 +181,8 @@ void main() {
   setUp(() async {
     // ignore: invalid_use_of_visible_for_testing_member
     SharedPreferences.setMockInitialValues(_week());
+    // The streak first: the career copies it onto the profile as it loads.
+    await rewards.load();
     await Career.instance.load();
   });
   tearDown(() => backend = const NoBackend());
@@ -170,9 +223,10 @@ void main() {
         tester.view.physicalSize = Size(width.toDouble(), height.toDouble());
         tester.view.devicePixelRatio = 3;
         addTearDown(tester.view.reset);
-        // Only the rival's page asks a server; the tabs keep the sample
-        // data they show with none.
+        // Only the rival's page and the month's board ask a server; the
+        // other tabs keep the sample data they show with none.
         if (name == '04-otherprofile') backend = _Rival();
+        if (name == '02-ranks') backend = _Board();
 
         await tester.pumpWidget(_app(screen()));
         // Pumped for a fixed while rather than settled: some of these
