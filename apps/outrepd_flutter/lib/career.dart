@@ -525,7 +525,8 @@ class Career extends ChangeNotifier {
     if (reps <= 0) {
       // Nothing happened. Not even a streak day — showing up and doing none
       // is not a day of training, and pretending otherwise makes the streak
-      // mean nothing.
+      // mean nothing. Nor anything for Health, whatever went before.
+      _lastHealthSave = Future.value(false);
       return;
     }
     _countReps(reps);
@@ -545,7 +546,9 @@ class Career extends ChangeNotifier {
     _lastHealthSave = HealthSync.recordSet(reps);
   }
 
-  /// Whether the last set counted reached Apple Health or Health Connect.
+  /// Whether the last set counted reached Apple Health or Health Connect —
+  /// what a result screen says under the count.
+  Future<bool> get lastHealthSave => _lastHealthSave;
   Future<bool> _lastHealthSave = Future.value(false);
 
   /// Titles only the duel that just happened can judge — the server does not

@@ -579,6 +579,26 @@ class _Chip extends StatelessWidget {
   }
 }
 
+/// "Saved to Apple Health" under a result, once [saved] says the set is
+/// there: nothing until then, and nothing if it did not go. For the screens
+/// without the duel's row of chips — practice, and racing your own best.
+class SavedToHealthChip extends StatelessWidget {
+  const SavedToHealthChip({super.key, required this.saved});
+
+  final Future<bool>? saved;
+
+  @override
+  Widget build(BuildContext context) => FutureBuilder<bool>(
+    future: saved,
+    builder: (context, done) => (done.data ?? false)
+        ? const Padding(
+            padding: EdgeInsets.only(top: 14),
+            child: _HealthChip(),
+          )
+        : const SizedBox.shrink(),
+  );
+}
+
 /// "Saved to Apple Health", with the Health mark: a red heart on white.
 class _HealthChip extends StatelessWidget {
   const _HealthChip();

@@ -1853,6 +1853,7 @@ class _BestResultView extends StatelessWidget {
                         color: context.colors.muted,
                       ),
                     ),
+                    SavedToHealthChip(saved: Career.instance.lastHealthSave),
                     if (pooled) ...[
                       const SizedBox(height: 28),
                       Container(
@@ -2104,6 +2105,7 @@ class _PracticeResult extends StatelessWidget {
             L.of(context).totalReps.toUpperCase(),
             style: context.type.micro.copyWith(color: context.colors.muted),
           ),
+          SavedToHealthChip(saved: Career.instance.lastHealthSave),
           if (GoalDoneCard.passed(after - reps, after, goal)) ...[
             const SizedBox(height: 28),
             GoalDoneCard(done: after, goal: goal),
