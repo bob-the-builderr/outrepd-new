@@ -705,5 +705,8 @@
   "healthNotAllowed": "まだ許可されていません。スマホのヘルスケア設定で許可できます。",
   "reminderLeft": "今日の目標まであと{count}回。",
   "liveInviteHint": "オンラインの友達はすぐに参加できます。それ以外の友達には通知が届き、1分以内に参加できます。",
-  "requestSentShort": "リクエスト送信済み"
+  "requestSentShort": "リクエスト送信済み",
+  "healthWorksWith": "OUTREPDは{health}と連携します",
+  "healthCardBody": "終えたセットはすべて筋力トレーニングとして{health}に保存されます。OUTREPDがあなたのヘルスケアデータを読み取ることはありません。",
+  "savedToHealth": "{health}に保存しました"
 }

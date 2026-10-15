@@ -8,6 +8,7 @@
 /// alone or to leave.
 library;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -130,6 +131,28 @@ void main() {
     await tester.tap(find.descendant(of: row, matching: find.byType(Switch)));
     await tester.pumpAndSettle();
     expect(settings.sounds, isFalse);
+  });
+
+  testWidgets('Apple Health has a card of its own, first, saying what it does',
+      (tester) async {
+    // App Review (2.5.1) asks that an app using HealthKit says so plainly
+    // where people can see it. A switch among the duel's sounds was not that.
+    debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+    phone(tester);
+    await tester.pumpWidget(_app(const SettingsScreen()));
+    await tester.pumpAndSettle();
+
+    final card = find.byKey(const Key('healthCard'));
+    expect(card, findsOneWidget);
+    expect(find.descendant(of: card, matching: find.text('Apple Health')),
+        findsOneWidget);
+    expect(find.text('OUTREPD works with Apple Health'), findsOneWidget);
+    expect(find.textContaining('never reads your health data'), findsOneWidget);
+    expect(find.text('Save workouts to Apple Health'), findsOneWidget);
+    // Above every other section.
+    expect(tester.getTopLeft(card).dy,
+        lessThan(tester.getTopLeft(find.text('Account').first).dy));
+    debugDefaultTargetPlatformOverride = null;
   });
 
   testWidgets('saving to Health stays off until the phone allows it',

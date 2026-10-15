@@ -24,6 +24,7 @@ import '../l10n/app_localizations.dart';
 import '../motion.dart';
 import '../player_avatar.dart';
 import '../ranking.dart';
+import '../health_sync.dart';
 import '../settings.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
@@ -235,15 +236,28 @@ class DuelResultView extends StatelessWidget {
                         outcome?.rank?.after.tierIdx ??
                         (demoProfile.isRanked ? demoProfile.tierIdx : null),
                   ),
-                  if (chips.isNotEmpty) ...[
-                    const SizedBox(height: 14),
-                    Wrap(
-                      alignment: WrapAlignment.center,
-                      spacing: 6,
-                      runSpacing: 6,
-                      children: chips,
-                    ),
-                  ],
+                  // The set's copy in Apple Health, once it is there: the
+                  // reviewers asked to see the app say where it saves, and a
+                  // lifter who turned it on is owed the same.
+                  FutureBuilder<bool>(
+                    future: outcome?.savedToHealth,
+                    builder: (context, saved) {
+                      final all = [
+                        ...chips,
+                        if (saved.data ?? false) const _HealthChip(),
+                      ];
+                      if (all.isEmpty) return const SizedBox.shrink();
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 14),
+                        child: Wrap(
+                          alignment: WrapAlignment.center,
+                          spacing: 6,
+                          runSpacing: 6,
+                          children: all,
+                        ),
+                      );
+                    },
+                  ),
                   const SizedBox(height: 24),
                   LpCard(outcome: outcome),
                   if (outcome?.madeFriendly ?? false) ...[
@@ -560,6 +574,34 @@ class _Chip extends StatelessWidget {
           ],
         ),
         style: TextStyle(color: context.colors.text, fontSize: 13),
+      ),
+    );
+  }
+}
+
+/// "Saved to Apple Health", with the Health mark: a red heart on white.
+class _HealthChip extends StatelessWidget {
+  const _HealthChip();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      key: const Key('savedToHealth'),
+      padding: const EdgeInsets.fromLTRB(6, 5, 10, 5),
+      decoration: BoxDecoration(
+        color: context.colors.surfaceRaised,
+        borderRadius: BorderRadius.circular(99),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const HealthMark(size: 18),
+          const SizedBox(width: 6),
+          Text(
+            L.of(context).savedToHealth(HealthSync.name),
+            style: TextStyle(color: context.colors.text, fontSize: 13),
+          ),
+        ],
       ),
     );
   }
@@ -955,7 +997,11 @@ class _PromotedBadge extends StatelessWidget {
 ///
 /// Built from the real arithmetic rather than hand-written numbers, so what
 /// the preview shows is what a lifter would be shown for the same result.
-DuelOutcome demoOutcome({required bool won, bool newBest = false}) {
+DuelOutcome demoOutcome({
+  required bool won,
+  bool newBest = false,
+  Future<bool>? savedToHealth,
+}) {
   final yourReps = won ? 18 : 14;
   final theirReps = won ? 11 : 19;
   final delta = lpFor(won: won, yourReps: yourReps, theirReps: theirReps);
@@ -978,5 +1024,6 @@ DuelOutcome demoOutcome({required bool won, bool newBest = false}) {
     ),
     placementsFinished: false,
     newBest: newBest,
+    savedToHealth: savedToHealth,
   );
 }

@@ -705,5 +705,8 @@
   "healthNotAllowed": "尚未允许。你可以在手机的健康设置中允许。",
   "reminderLeft": "离今天的目标还差 {count} 个俯卧撑。",
   "liveInviteHint": "在线的好友可以马上加入。其他好友会收到通知，有一分钟时间加入。",
-  "requestSentShort": "已发送请求"
+  "requestSentShort": "已发送请求",
+  "healthWorksWith": "OUTREPD 可与 {health} 配合使用",
+  "healthCardBody": "你完成的每一组都会作为力量训练保存到 {health}。OUTREPD 从不读取你的健康数据。",
+  "savedToHealth": "已保存到 {health}"
 }

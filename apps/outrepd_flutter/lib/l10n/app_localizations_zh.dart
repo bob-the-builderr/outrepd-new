@@ -2271,4 +2271,19 @@ class LZh extends L {
 
   @override
   String get requestSentShort => '已发送请求';
+
+  @override
+  String healthWorksWith(String health) {
+    return 'OUTREPD 可与 ${health} 配合使用';
+  }
+
+  @override
+  String healthCardBody(String health) {
+    return '你完成的每一组都会作为力量训练保存到 ${health}。OUTREPD 从不读取你的健康数据。';
+  }
+
+  @override
+  String savedToHealth(String health) {
+    return '已保存到 ${health}';
+  }
 }

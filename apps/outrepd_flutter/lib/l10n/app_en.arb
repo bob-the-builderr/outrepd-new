@@ -1478,5 +1478,29 @@
     }
   },
   "liveInviteHint": "Online friends can join right away. The rest get a notice and a minute to join.",
-  "requestSentShort": "Request sent"
+  "requestSentShort": "Request sent",
+  "healthWorksWith": "OUTREPD works with {health}",
+  "@healthWorksWith": {
+    "placeholders": {
+      "health": {
+        "type": "String"
+      }
+    }
+  },
+  "healthCardBody": "Every set you finish is saved to {health} as a strength workout. OUTREPD never reads your health data.",
+  "@healthCardBody": {
+    "placeholders": {
+      "health": {
+        "type": "String"
+      }
+    }
+  },
+  "savedToHealth": "Saved to {health}",
+  "@savedToHealth": {
+    "placeholders": {
+      "health": {
+        "type": "String"
+      }
+    }
+  }
 }

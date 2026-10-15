@@ -705,5 +705,8 @@
   "healthNotAllowed": "Non ancora consentito. Puoi consentirlo nelle impostazioni salute del telefono.",
   "reminderLeft": "Mancano {count} piegamenti al tuo obiettivo di oggi.",
   "liveInviteHint": "Gli amici online possono unirsi subito. Gli altri ricevono un avviso e hanno un minuto per unirsi.",
-  "requestSentShort": "Richiesta inviata"
+  "requestSentShort": "Richiesta inviata",
+  "healthWorksWith": "OUTREPD funziona con {health}",
+  "healthCardBody": "Ogni serie che completi viene salvata in {health} come allenamento di forza. OUTREPD non legge mai i tuoi dati sulla salute.",
+  "savedToHealth": "Salvato in {health}"
 }

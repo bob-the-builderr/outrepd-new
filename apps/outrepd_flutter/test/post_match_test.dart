@@ -79,6 +79,36 @@ void main() {
     closestYet: closestYet,
   );
 
+  group('Health', () {
+    // App Review asked to see where the app says it saves to Apple Health.
+    // The result says so — once the set is really there, and only then.
+    DuelResultView saved(Future<bool> health) => DuelResultView(
+      won: true,
+      yourReps: 18,
+      theirReps: 11,
+      opponent: demoOpponents.first,
+      outcome: demoOutcome(won: true, savedToHealth: health),
+      onRematch: () {},
+      onDone: () {},
+    );
+
+    testWidgets('says the set was saved once it is there', (tester) async {
+      phone(tester);
+      await tester.pumpWidget(_app(saved(Future.value(true))));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('savedToHealth')), findsOneWidget);
+      // The test runs as Android, where it is Health Connect.
+      expect(find.text('Saved to Health Connect'), findsOneWidget);
+    });
+
+    testWidgets('says nothing when it did not go', (tester) async {
+      phone(tester);
+      await tester.pumpWidget(_app(saved(Future.value(false))));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('savedToHealth')), findsNothing);
+    });
+  });
+
   group('the LP card', () {
     testWidgets('the headline is exactly the rank change', (tester) async {
       phone(tester);

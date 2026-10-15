@@ -61,16 +61,19 @@ abstract final class HealthSync {
 
   /// One set, saved as a strength workout that ended now. A duel's round is
   /// a minute, which is what a set is taken to have lasted.
-  static Future<void> recordSet(
+  ///
+  /// True once it is in Health — what the result screen's "Saved to Apple
+  /// Health" waits for, so it is never shown for a set that did not go.
+  static Future<bool> recordSet(
     int reps, {
     Duration length = const Duration(seconds: 60),
   }) async {
-    if (!_onPhone || !settings.saveToHealth || reps <= 0) return;
-    if (!await _configure()) return;
+    if (!_onPhone || !settings.saveToHealth || reps <= 0) return false;
+    if (!await _configure()) return false;
     final end = DateTime.now();
     final iPhone = Platform.isIOS;
     try {
-      await _health.writeWorkoutData(
+      return await _health.writeWorkoutData(
         activityType: iPhone
             ? HealthWorkoutActivityType.FUNCTIONAL_STRENGTH_TRAINING
             : HealthWorkoutActivityType.STRENGTH_TRAINING,
@@ -86,6 +89,13 @@ abstract final class HealthSync {
       // Permission taken back in the Health app, or Health Connect removed:
       // the set still counts here, it is only not copied there.
       debugPrint('Could not save the set to Health: $error');
+      return false;
     }
   }
+
+  /// "Apple Health" on an iPhone, "Health Connect" on Android: names, never
+  /// translated.
+  static String get name => defaultTargetPlatform == TargetPlatform.iOS
+      ? 'Apple Health'
+      : 'Health Connect';
 }

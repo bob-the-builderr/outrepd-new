@@ -705,5 +705,8 @@
   "healthNotAllowed": "Pas encore autorisé. Tu peux l'autoriser dans les réglages santé de ton téléphone.",
   "reminderLeft": "Plus que {count} pompes pour ton objectif du jour.",
   "liveInviteHint": "Les amis en ligne peuvent rejoindre tout de suite. Les autres reçoivent une notification et ont une minute pour rejoindre.",
-  "requestSentShort": "Demande envoyée"
+  "requestSentShort": "Demande envoyée",
+  "healthWorksWith": "OUTREPD fonctionne avec {health}",
+  "healthCardBody": "Chaque série que tu termines est enregistrée dans {health} comme séance de renforcement. OUTREPD ne lit jamais tes données de santé.",
+  "savedToHealth": "Enregistré dans {health}"
 }

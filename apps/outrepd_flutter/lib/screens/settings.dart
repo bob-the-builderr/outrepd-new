@@ -25,6 +25,7 @@ import '../push.dart';
 import '../reps/count_accuracy.dart';
 import '../settings.dart';
 import '../theme.dart';
+import '../type_scale.dart';
 import '../widgets.dart';
 import 'auth_entry.dart';
 import 'counter_accuracy.dart';
@@ -44,6 +45,29 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   void _set(VoidCallback change) => settings.update(change);
 
+  /// Asked for when turned on, not before: the phone's own prompt says what
+  /// is shared, and turning it off asks nothing.
+  Future<void> _setHealth(bool on) async {
+    if (!on) {
+      _set(() => settings.saveToHealth = false);
+      return;
+    }
+    final messenger = ScaffoldMessenger.of(context);
+    final l = L.of(context);
+    final allowed = await HealthSync.connect();
+    if (!mounted) return;
+    if (allowed) {
+      _set(() => settings.saveToHealth = true);
+    } else {
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(l.healthNotAllowed),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
+  }
+
   /// Opens a screen and rebuilds on the way back, so a row's summary catches
   /// up with whatever was changed behind it.
   Future<void> _open(Widget screen) async {
@@ -61,6 +85,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
         children: [
+          // First, and a card of its own: App Review asks that an app using
+          // HealthKit says so plainly where people can see it, and a switch
+          // among the duel's sounds and vibration was not that (2.5.1,
+          // October 2026). A browser has no Health to save to.
+          if (!kIsWeb) _HealthCard(onChanged: _setHealth),
+
           SettingsSection(
             title: l.accountSection,
             children: [
@@ -113,41 +143,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 caption: l.showSkeletonHint,
                 value: settings.showSkeleton,
                 onChanged: (v) => _set(() => settings.showSkeleton = v),
-                last: kIsWeb,
+                last: true,
               ),
-              // Asked for when turned on, not before: the phone's own prompt
-              // says what is shared, and turning it off asks nothing. A
-              // browser has no Health to save to.
-              if (!kIsWeb)
-                SwitchRow(
-                  key: const Key('healthSwitch'),
-                  icon: Icons.favorite_border,
-                  label: defaultTargetPlatform == TargetPlatform.iOS
-                      ? l.saveToAppleHealth
-                      : l.saveToHealthConnect,
-                  caption: l.saveToHealthHint,
-                  value: settings.saveToHealth,
-                  onChanged: (on) async {
-                    if (!on) {
-                      _set(() => settings.saveToHealth = false);
-                      return;
-                    }
-                    final messenger = ScaffoldMessenger.of(context);
-                    final allowed = await HealthSync.connect();
-                    if (!mounted) return;
-                    if (allowed) {
-                      _set(() => settings.saveToHealth = true);
-                    } else {
-                      messenger.showSnackBar(
-                        SnackBar(
-                          content: Text(l.healthNotAllowed),
-                          behavior: SnackBarBehavior.floating,
-                        ),
-                      );
-                    }
-                  },
-                  last: true,
-                ),
             ],
           ),
 
@@ -399,4 +396,99 @@ class _Note extends StatelessWidget {
       style: TextStyle(color: context.colors.faint, fontSize: 13, height: 1.55),
     ),
   );
+}
+
+/// Apple Health on an iPhone, Health Connect on Android: a card of its own at
+/// the top of Settings, saying what the app does with it before the switch
+/// that turns it on.
+class _HealthCard extends StatelessWidget {
+  const _HealthCard({required this.onChanged});
+
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final name = HealthSync.name;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 22),
+      child: Container(
+        key: const Key('healthCard'),
+        padding: const EdgeInsets.fromLTRB(18, 18, 18, 6),
+        decoration: BoxDecoration(
+          color: context.colors.surface,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: context.colors.surfaceRaised),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const HealthMark(size: 46),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: context.type.heading.copyWith(
+                          color: context.colors.text,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      Text(
+                        l.healthWorksWith(name),
+                        style: context.type.label.copyWith(
+                          color: context.colors.muted,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 14),
+            Text(
+              l.healthCardBody(name),
+              style: context.type.label.copyWith(
+                color: context.colors.text.withValues(alpha: 0.78),
+                height: 1.45,
+              ),
+            ),
+            const SizedBox(height: 14),
+            Divider(height: 1, color: context.colors.surfaceRaised),
+            InkWell(
+              key: const Key('healthSwitch'),
+              onTap: () => onChanged(!settings.saveToHealth),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        defaultTargetPlatform == TargetPlatform.iOS
+                            ? l.saveToAppleHealth
+                            : l.saveToHealthConnect,
+                        style: context.type.body.copyWith(
+                          color: context.colors.text,
+                        ),
+                      ),
+                    ),
+                    Switch(
+                      value: settings.saveToHealth,
+                      onChanged: onChanged,
+                      activeThumbColor: Colors.white,
+                      activeTrackColor: context.colors.brand,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

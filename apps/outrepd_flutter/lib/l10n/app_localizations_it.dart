@@ -2325,4 +2325,19 @@ class LIt extends L {
 
   @override
   String get requestSentShort => 'Richiesta inviata';
+
+  @override
+  String healthWorksWith(String health) {
+    return 'OUTREPD funziona con ${health}';
+  }
+
+  @override
+  String healthCardBody(String health) {
+    return 'Ogni serie che completi viene salvata in ${health} come allenamento di forza. OUTREPD non legge mai i tuoi dati sulla salute.';
+  }
+
+  @override
+  String savedToHealth(String health) {
+    return 'Salvato in ${health}';
+  }
 }

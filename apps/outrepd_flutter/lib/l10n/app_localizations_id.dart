@@ -2319,4 +2319,19 @@ class LId extends L {
 
   @override
   String get requestSentShort => 'Permintaan terkirim';
+
+  @override
+  String healthWorksWith(String health) {
+    return 'OUTREPD bekerja dengan ${health}';
+  }
+
+  @override
+  String healthCardBody(String health) {
+    return 'Setiap set yang kamu selesaikan disimpan ke ${health} sebagai latihan kekuatan. OUTREPD tidak pernah membaca data kesehatanmu.';
+  }
+
+  @override
+  String savedToHealth(String health) {
+    return 'Tersimpan di ${health}';
+  }
 }

@@ -705,5 +705,8 @@
   "healthNotAllowed": "Noch nicht erlaubt. Du kannst es in den Gesundheitseinstellungen deines Handys erlauben.",
   "reminderLeft": "Noch {count} Liegestütze bis zu deinem Tagesziel.",
   "liveInviteHint": "Freunde, die online sind, können sofort mitmachen. Die anderen bekommen eine Nachricht und eine Minute Zeit.",
-  "requestSentShort": "Anfrage gesendet"
+  "requestSentShort": "Anfrage gesendet",
+  "healthWorksWith": "OUTREPD funktioniert mit {health}",
+  "healthCardBody": "Jeder Satz, den du beendest, wird in {health} als Krafttraining gespeichert. OUTREPD liest nie deine Gesundheitsdaten.",
+  "savedToHealth": "In {health} gespeichert"
 }

@@ -2327,4 +2327,19 @@ class LDe extends L {
 
   @override
   String get requestSentShort => 'Anfrage gesendet';
+
+  @override
+  String healthWorksWith(String health) {
+    return 'OUTREPD funktioniert mit ${health}';
+  }
+
+  @override
+  String healthCardBody(String health) {
+    return 'Jeder Satz, den du beendest, wird in ${health} als Krafttraining gespeichert. OUTREPD liest nie deine Gesundheitsdaten.';
+  }
+
+  @override
+  String savedToHealth(String health) {
+    return 'In ${health} gespeichert';
+  }
 }

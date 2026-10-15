@@ -705,5 +705,8 @@
   "healthNotAllowed": "Henüz izin verilmedi. Telefonunun sağlık ayarlarından izin verebilirsin.",
   "reminderLeft": "Bugünkü hedefine {count} şınav kaldı.",
   "liveInviteHint": "Çevrimiçi arkadaşlar hemen katılabilir. Diğerleri bir bildirim alır ve katılmak için bir dakikaları olur.",
-  "requestSentShort": "İstek gönderildi"
+  "requestSentShort": "İstek gönderildi",
+  "healthWorksWith": "OUTREPD, {health} ile çalışır",
+  "healthCardBody": "Bitirdiğin her set {health} uygulamasına kuvvet antrenmanı olarak kaydedilir. OUTREPD sağlık verilerini asla okumaz.",
+  "savedToHealth": "{health} uygulamasına kaydedildi"
 }

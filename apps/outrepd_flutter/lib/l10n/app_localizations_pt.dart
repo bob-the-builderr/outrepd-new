@@ -2322,4 +2322,19 @@ class LPt extends L {
 
   @override
   String get requestSentShort => 'Pedido enviado';
+
+  @override
+  String healthWorksWith(String health) {
+    return 'O OUTREPD funciona com o ${health}';
+  }
+
+  @override
+  String healthCardBody(String health) {
+    return 'Cada série que você termina é salva no ${health} como treino de força. O OUTREPD nunca lê seus dados de saúde.';
+  }
+
+  @override
+  String savedToHealth(String health) {
+    return 'Salvo no ${health}';
+  }
 }

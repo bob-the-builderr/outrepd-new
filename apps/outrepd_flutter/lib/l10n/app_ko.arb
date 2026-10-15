@@ -705,5 +705,8 @@
   "healthNotAllowed": "아직 허용되지 않았어요. 휴대폰의 건강 설정에서 허용할 수 있어요.",
   "reminderLeft": "오늘 목표까지 팔굽혀펴기 {count}개 남았어요.",
   "liveInviteHint": "온라인 친구는 바로 참여할 수 있어요. 나머지 친구에게는 알림이 가고 1분 안에 참여할 수 있어요.",
-  "requestSentShort": "요청 보냄"
+  "requestSentShort": "요청 보냄",
+  "healthWorksWith": "OUTREPD는 {health}와 연동됩니다",
+  "healthCardBody": "마친 세트는 모두 근력 운동으로 {health}에 저장됩니다. OUTREPD는 건강 데이터를 절대 읽지 않습니다.",
+  "savedToHealth": "{health}에 저장됨"
 }

@@ -2320,4 +2320,19 @@ class LRu extends L {
 
   @override
   String get requestSentShort => 'Запрос отправлен';
+
+  @override
+  String healthWorksWith(String health) {
+    return 'OUTREPD работает с ${health}';
+  }
+
+  @override
+  String healthCardBody(String health) {
+    return 'Каждый завершённый подход сохраняется в ${health} как силовая тренировка. OUTREPD никогда не читает ваши данные о здоровье.';
+  }
+
+  @override
+  String savedToHealth(String health) {
+    return 'Сохранено в ${health}';
+  }
 }

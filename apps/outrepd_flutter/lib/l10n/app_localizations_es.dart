@@ -2325,4 +2325,19 @@ class LEs extends L {
 
   @override
   String get requestSentShort => 'Solicitud enviada';
+
+  @override
+  String healthWorksWith(String health) {
+    return 'OUTREPD funciona con ${health}';
+  }
+
+  @override
+  String healthCardBody(String health) {
+    return 'Cada serie que terminas se guarda en ${health} como entrenamiento de fuerza. OUTREPD nunca lee tus datos de salud.';
+  }
+
+  @override
+  String savedToHealth(String health) {
+    return 'Guardado en ${health}';
+  }
 }

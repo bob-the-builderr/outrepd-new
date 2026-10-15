@@ -2326,4 +2326,19 @@ class LFr extends L {
 
   @override
   String get requestSentShort => 'Demande envoyée';
+
+  @override
+  String healthWorksWith(String health) {
+    return 'OUTREPD fonctionne avec ${health}';
+  }
+
+  @override
+  String healthCardBody(String health) {
+    return 'Chaque série que tu termines est enregistrée dans ${health} comme séance de renforcement. OUTREPD ne lit jamais tes données de santé.';
+  }
+
+  @override
+  String savedToHealth(String health) {
+    return 'Enregistré dans ${health}';
+  }
 }

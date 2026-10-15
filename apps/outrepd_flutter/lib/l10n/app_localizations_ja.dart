@@ -2281,4 +2281,19 @@ class LJa extends L {
 
   @override
   String get requestSentShort => 'リクエスト送信済み';
+
+  @override
+  String healthWorksWith(String health) {
+    return 'OUTREPDは${health}と連携します';
+  }
+
+  @override
+  String healthCardBody(String health) {
+    return '終えたセットはすべて筋力トレーニングとして${health}に保存されます。OUTREPDがあなたのヘルスケアデータを読み取ることはありません。';
+  }
+
+  @override
+  String savedToHealth(String health) {
+    return '${health}に保存しました';
+  }
 }

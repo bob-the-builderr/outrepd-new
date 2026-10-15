@@ -4228,6 +4228,24 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Request sent'**
   String get requestSentShort;
+
+  /// No description provided for @healthWorksWith.
+  ///
+  /// In en, this message translates to:
+  /// **'OUTREPD works with {health}'**
+  String healthWorksWith(String health);
+
+  /// No description provided for @healthCardBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Every set you finish is saved to {health} as a strength workout. OUTREPD never reads your health data.'**
+  String healthCardBody(String health);
+
+  /// No description provided for @savedToHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved to {health}'**
+  String savedToHealth(String health);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

@@ -2288,4 +2288,19 @@ class LKo extends L {
 
   @override
   String get requestSentShort => '요청 보냄';
+
+  @override
+  String healthWorksWith(String health) {
+    return 'OUTREPD는 ${health}와 연동됩니다';
+  }
+
+  @override
+  String healthCardBody(String health) {
+    return '마친 세트는 모두 근력 운동으로 ${health}에 저장됩니다. OUTREPD는 건강 데이터를 절대 읽지 않습니다.';
+  }
+
+  @override
+  String savedToHealth(String health) {
+    return '${health}에 저장됨';
+  }
 }

@@ -2320,4 +2320,19 @@ class LHi extends L {
 
   @override
   String get requestSentShort => 'अनुरोध भेजा गया';
+
+  @override
+  String healthWorksWith(String health) {
+    return 'OUTREPD ${health} के साथ काम करता है';
+  }
+
+  @override
+  String healthCardBody(String health) {
+    return 'आपका हर पूरा किया गया सेट ${health} में स्ट्रेंथ वर्कआउट के रूप में सेव होता है। OUTREPD आपका हेल्थ डेटा कभी नहीं पढ़ता।';
+  }
+
+  @override
+  String savedToHealth(String health) {
+    return '${health} में सेव किया गया';
+  }
 }

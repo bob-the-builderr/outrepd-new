@@ -568,3 +568,29 @@ class LiveTag extends StatelessWidget {
     );
   }
 }
+
+/// The mark apps that work with Apple Health show beside it: a red heart on
+/// a white rounded square. Drawn, not the Health app's own icon, which is
+/// Apple's.
+class HealthMark extends StatelessWidget {
+  const HealthMark({super.key, this.size = 30});
+
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(size * 0.24),
+      ),
+      child: Icon(
+        Icons.favorite,
+        size: size * 0.66,
+        color: const Color(0xFFFF2D55),
+      ),
+    );
+  }
+}

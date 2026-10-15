@@ -2315,4 +2315,19 @@ class LTr extends L {
 
   @override
   String get requestSentShort => 'İstek gönderildi';
+
+  @override
+  String healthWorksWith(String health) {
+    return 'OUTREPD, ${health} ile çalışır';
+  }
+
+  @override
+  String healthCardBody(String health) {
+    return 'Bitirdiğin her set ${health} uygulamasına kuvvet antrenmanı olarak kaydedilir. OUTREPD sağlık verilerini asla okumaz.';
+  }
+
+  @override
+  String savedToHealth(String health) {
+    return '${health} uygulamasına kaydedildi';
+  }
 }

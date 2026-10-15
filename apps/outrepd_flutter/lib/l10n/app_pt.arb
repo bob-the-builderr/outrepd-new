@@ -705,5 +705,8 @@
   "healthNotAllowed": "Ainda não permitido. Você pode permitir nos ajustes de saúde do celular.",
   "reminderLeft": "Faltam {count} flexões para sua meta de hoje.",
   "liveInviteHint": "Amigos online podem entrar na hora. Os outros recebem um aviso e um minuto para entrar.",
-  "requestSentShort": "Pedido enviado"
+  "requestSentShort": "Pedido enviado",
+  "healthWorksWith": "O OUTREPD funciona com o {health}",
+  "healthCardBody": "Cada série que você termina é salva no {health} como treino de força. O OUTREPD nunca lê seus dados de saúde.",
+  "savedToHealth": "Salvo no {health}"
 }

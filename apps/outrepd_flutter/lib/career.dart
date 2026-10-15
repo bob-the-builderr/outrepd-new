@@ -72,9 +72,14 @@ class DuelOutcome {
     this.madeFriendly = false,
     this.todayBefore = 0,
     this.todayAfter = 0,
+    this.savedToHealth,
   });
 
   final bool won;
+
+  /// Completes true once this set is in Apple Health or Health Connect;
+  /// false, or null, when it was not saved there.
+  final Future<bool>? savedToHealth;
 
   /// Today's push-ups before this duel and after it, every format counted:
   /// what tells the result screen this was the set that met today's goal.
@@ -231,6 +236,7 @@ class Career extends ChangeNotifier {
         newBest: yourReps > previousBest,
         todayBefore: todayBefore,
         todayAfter: repsToday,
+        savedToHealth: _lastHealthSave,
       );
     }
 
@@ -310,6 +316,7 @@ class Career extends ChangeNotifier {
       newBest: newBest,
       todayBefore: todayBefore,
       todayAfter: repsToday,
+      savedToHealth: _lastHealthSave,
     );
   }
 
@@ -409,6 +416,7 @@ class Career extends ChangeNotifier {
       madeFriendly: madeFriendly,
       todayBefore: todayBefore,
       todayAfter: repsToday,
+      savedToHealth: _lastHealthSave,
     );
   }
 
@@ -533,8 +541,12 @@ class Career extends ChangeNotifier {
     _days[key] = (_days[key] ?? 0) + reps;
     _trimDays();
     // Copied to Apple Health or Health Connect, if the lifter asked for it.
-    unawaited(HealthSync.recordSet(reps));
+    // Not waited on; the result screen hears whether it went from here.
+    _lastHealthSave = HealthSync.recordSet(reps);
   }
+
+  /// Whether the last set counted reached Apple Health or Health Connect.
+  Future<bool> _lastHealthSave = Future.value(false);
 
   /// Titles only the duel that just happened can judge — the server does not
   /// grade them and there is no running total to check them against, so this

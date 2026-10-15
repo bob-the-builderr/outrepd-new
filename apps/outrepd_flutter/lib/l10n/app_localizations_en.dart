@@ -2318,4 +2318,19 @@ class LEn extends L {
 
   @override
   String get requestSentShort => 'Request sent';
+
+  @override
+  String healthWorksWith(String health) {
+    return 'OUTREPD works with ${health}';
+  }
+
+  @override
+  String healthCardBody(String health) {
+    return 'Every set you finish is saved to ${health} as a strength workout. OUTREPD never reads your health data.';
+  }
+
+  @override
+  String savedToHealth(String health) {
+    return 'Saved to ${health}';
+  }
 }

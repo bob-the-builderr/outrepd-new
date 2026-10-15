@@ -705,5 +705,8 @@
   "healthNotAllowed": "Belum diizinkan. Kamu bisa mengizinkannya di pengaturan kesehatan ponsel.",
   "reminderLeft": "{count} push-up lagi untuk target hari ini.",
   "liveInviteHint": "Teman yang online bisa langsung bergabung. Yang lain mendapat notifikasi dan satu menit untuk bergabung.",
-  "requestSentShort": "Permintaan terkirim"
+  "requestSentShort": "Permintaan terkirim",
+  "healthWorksWith": "OUTREPD bekerja dengan {health}",
+  "healthCardBody": "Setiap set yang kamu selesaikan disimpan ke {health} sebagai latihan kekuatan. OUTREPD tidak pernah membaca data kesehatanmu.",
+  "savedToHealth": "Tersimpan di {health}"
 }
