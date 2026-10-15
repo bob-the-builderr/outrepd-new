@@ -230,6 +230,12 @@ void main() {
 
       // The number is on the row itself. Somebody who has just been miscounted
       // should not have to open a screen to find out whether that is usual.
+      // Scrolled to: the Apple Health card heads the list now.
+      await tester.scrollUntilVisible(
+        find.text('80%'),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
       expect(find.text('80%'), findsOneWidget);
 
       await tester.ensureVisible(find.text('Counter accuracy'));
