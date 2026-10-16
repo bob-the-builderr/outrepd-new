@@ -49,3 +49,50 @@ workflows:
       app_store_connect:
         auth: integration
         submit_to_testflight: true
+
+  # The same build plus the demo-opponent tools (see lib/bot.dart's kBotDemo),
+  # for filming. Kept as its own workflow rather than a checkbox so it can
+  # never be started by accident while building a real release, and so the
+  # plain `ios-release` above stays exactly what ships. Both ask Apple for the
+  # next free build number, so running them in either order still numbers
+  # correctly.
+  ios-demo:
+    name: iOS → TestFlight (demo tools)
+    working_directory: apps/outrepd_flutter
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    integrations:
+      app_store_connect: outrepd
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      groups:
+        - supabase
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.outrepd.outrepd
+    scripts:
+      - name: Packages
+        script: flutter pub get
+      - name: Pods
+        script: cd ios && pod install --repo-update
+      - name: Signing
+        script: xcode-project use-profiles
+      - name: Build
+        script: |
+          LATEST=$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID" 2>/dev/null || echo 0)
+          LATEST_TF=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID" 2>/dev/null || echo 0)
+          [ "$LATEST_TF" -gt "$LATEST" ] 2>/dev/null && LATEST=$LATEST_TF
+          flutter build ipa --release --no-tree-shake-icons \
+            --build-number=$((LATEST + 1)) \
+            --dart-define=SUPABASE_URL="$SUPABASE_URL" \
+            --dart-define=SUPABASE_ANON_KEY="$SUPABASE_ANON_KEY" \
+            --dart-define=BOT_DEMO=true \
+            --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true

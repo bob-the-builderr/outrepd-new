@@ -30,6 +30,15 @@ name: iOS
 
 on:
   workflow_dispatch:
+    inputs:
+      # A build for filming, for internal TestFlight only: it carries the
+      # demo-opponent tools (see lib/bot.dart's kBotDemo). Never turn this on
+      # for a build meant for the App Store — a match against somebody who
+      # does not exist is exactly what the listing promises against.
+      bot_demo:
+        description: Include the demo-opponent tools (internal filming builds only)
+        type: boolean
+        default: false
   push:
     branches: [camera-rep-counter]
     paths:
@@ -161,6 +170,7 @@ jobs:
           xcodebuild -version 2>&1 | tee "$RUNNER_TEMP/build.log"
           flutter build ios --release --no-codesign --no-tree-shake-icons \
             --dart-define-from-file=supabase/keys.env \
+            --dart-define=BOT_DEMO=${{ inputs.bot_demo || 'false' }} \
             --dart-define=BUILD_NUMBER=$((GITHUB_RUN_NUMBER + 100)) \
             --build-number=$((GITHUB_RUN_NUMBER + 100)) 2>&1 | tee -a "$RUNNER_TEMP/build.log"
 
@@ -199,6 +209,7 @@ jobs:
             echo "compiled    ${{ steps.build.outcome }}"
             echo "signed      ${{ steps.apple.outputs.signed }}"
             echo "uploaded    ${{ steps.upload.outcome }}"
+            echo "demo tools  ${{ inputs.bot_demo || 'false' }}"
             # The one upload failure that is nothing to do with the code:
             # Apple holds every upload until the account holder accepts an
             # updated agreement in App Store Connect.

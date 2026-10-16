@@ -12,6 +12,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../backend/backend.dart';
+import '../bot.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../player_avatar.dart';
@@ -43,6 +44,12 @@ enum MatchMode {
   /// rank), or a rematch both asked for straight after a live match (as
   /// ranked as that match was). See [MatchFlowScreen.liveMatch].
   liveFriend,
+
+  /// A demo opponent set up on this phone (lib/screens/bot_setup.dart), for
+  /// filming: there is a name, a face and a scripted timeline, but nobody on
+  /// the other end and nothing on the ladder. Only reachable in a build made
+  /// with [kBotDemo].
+  bot,
 }
 
 /// Straight into the duel.
@@ -54,6 +61,7 @@ Future<void> startMatch(
   int? targetTierIdx,
   int? targetDivIdx,
   LiveMatch? liveMatch,
+  BotOpponent? bot,
 }) async {
   await Navigator.of(context).push(
     MaterialPageRoute(
@@ -64,6 +72,7 @@ Future<void> startMatch(
         targetTierIdx: targetTierIdx,
         targetDivIdx: targetDivIdx,
         liveMatch: liveMatch,
+        bot: bot,
       ),
     ),
   );

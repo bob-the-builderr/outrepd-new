@@ -13,6 +13,7 @@ library;
 import 'package:flutter/material.dart';
 
 import '../app_bottom_nav.dart' show TablerIcon;
+import '../bot.dart';
 import '../connection.dart';
 import '../backend/backend.dart';
 import '../data.dart';
@@ -22,6 +23,7 @@ import '../push.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
 import '../widgets.dart';
+import 'bot_setup.dart';
 import 'daily_goal.dart';
 import 'match_entry.dart';
 import 'match_flow.dart';
@@ -88,6 +90,13 @@ class MatchScreen extends StatelessWidget {
                   _PlacementActions(profile: p)
                 else
                   const _Actions(),
+                // Only where the build was made for it (see [kBotDemo]). It
+                // sits under everything else so a real build never shows it
+                // and a demo build can always reach it, online or not.
+                if (kBotDemo) ...[
+                  const SizedBox(height: 18),
+                  const _DemoOpponentAction(),
+                ],
                 const Spacer(flex: 2),
                       ],
                     ),
@@ -607,6 +616,44 @@ class _Actions extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// A way into the demo opponent, only in a build made with [kBotDemo]. Plain
+/// text like practice, and under it, because it is a tool for filming rather
+/// than a fourth way to play.
+class _DemoOpponentAction extends StatelessWidget {
+  const _DemoOpponentAction();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: InkWell(
+        key: const Key('demoOpponent'),
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const BotSetupScreen()),
+        ),
+        borderRadius: BorderRadius.circular(8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.smart_display_outlined,
+                size: 16,
+                color: context.colors.faint,
+              ),
+              const SizedBox(width: 7),
+              Text(
+                'Demo opponent',
+                style: TextStyle(color: context.colors.faint, fontSize: 15),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

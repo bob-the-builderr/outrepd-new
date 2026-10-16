@@ -14,6 +14,7 @@ import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 
 import '../backend/backend.dart';
+import '../bot.dart';
 import '../career.dart';
 import '../connection.dart';
 import '../data.dart';
@@ -59,6 +60,11 @@ class MatchFlowScreen extends StatefulWidget {
   /// accepted by both. Ranked live matches are found by the search instead.
   final LiveMatch? liveMatch;
 
+  /// The demo opponent [MatchMode.bot] is racing: a name, a face and a
+  /// scripted timeline set up on this phone (lib/screens/bot_setup.dart).
+  /// Nobody is on the other end, so nothing here reaches the ladder.
+  final BotOpponent? bot;
+
   const MatchFlowScreen({
     super.key,
     this.mode = MatchMode.ranked,
@@ -67,6 +73,7 @@ class MatchFlowScreen extends StatefulWidget {
     this.targetTierIdx,
     this.targetDivIdx,
     this.liveMatch,
+    this.bot,
   }) : assert(
          mode != MatchMode.liveFriend || liveMatch != null,
          'a live match with a friend needs the match',
@@ -82,6 +89,10 @@ class MatchFlowScreen extends StatefulWidget {
        assert(
          mode != MatchMode.challengeAccept || targetId != null,
          'accepting a challenge needs to know whose it is',
+       ),
+       assert(
+         mode != MatchMode.bot || bot != null,
+         'a demo match needs the opponent it was set up with',
        );
 
   /// Nobody on the other side. The same clock and the same counting, with
@@ -111,6 +122,10 @@ class MatchFlowScreen extends StatefulWidget {
 
   /// Live with a friend, from an accepted invite.
   bool get isLiveFriend => mode == MatchMode.liveFriend;
+
+  /// A demo opponent set up on this phone, for filming. Nobody real is on the
+  /// other side, so the round moves nothing on the ladder.
+  bool get isBot => mode == MatchMode.bot;
 
   @override
   State<MatchFlowScreen> createState() => _MatchFlowScreenState();
@@ -228,6 +243,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   /// the screen says outright that it did not.
   bool get _vsBest =>
       !widget.practice &&
+      !widget.isBot &&
       _realOpponent == null &&
       _live == null &&
       !widget.isLiveFriend &&
@@ -242,7 +258,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     _theirReps = 0;
 
     _stage = widget.practice ? _Stage.live : _Stage.searching;
-    if (!widget.practice) {
+    if (!widget.practice && !widget.isBot) {
       unawaited(_readMonthPlace().then((place) => _monthBefore = place));
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -309,6 +325,19 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
 
   Future<void> _search() async {
     _timer?.cancel();
+
+    // A demo opponent: there is nobody to search for and no server to reach.
+    // The name, rank and count come from what was set up on this phone; the
+    // schedule of their reps rides along on the DuelContext in [_lift], which
+    // is what makes their bar move the way the recording needs it to.
+    if (widget.bot case final bot?) {
+      setState(() {
+        _opponent = Opponent(bot.name, demoProfile.tierIdx, demoProfile.divIdx);
+        _theirReps = bot.reps;
+      });
+      _goVersus(quick: true);
+      return;
+    }
 
     // A friend's live match: both already said yes, so there is nobody to
     // look for — straight to meeting them.
@@ -479,7 +508,10 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
                       ? L.of(context).yourBest
                       : _opponent.username,
                   opponentReps: _theirReps,
-                  opponentRepTimes: _realOpponent?.repTimes ?? const [],
+                  opponentRepTimes:
+                      widget.bot?.repTimesSorted ??
+                      _realOpponent?.repTimes ??
+                      const [],
                   opponentTierIdx: _opponent.tierIdx,
                   opponentDivIdx: _opponent.divIdx,
                   rankLabel: tierLabel(
@@ -608,6 +640,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     var unsettled = false;
     if (attempted &&
         !widget.practice &&
+        !widget.isBot &&
         backend.available &&
         backend.me != null) {
       final opponentSet = _realOpponent;
@@ -1011,6 +1044,21 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           live: _live,
           monthBefore: _monthBefore,
           monthAfter: _monthAfter,
+          // A demo opponent is right here on this phone: the rematch restarts
+          // the same script rather than searching for somebody who does not
+          // exist to it. A real set raced from the pool has no rematch at all
+          // (see _ResultView), because its number is now known.
+          onRematch: widget.isBot
+              ? () => Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (_) => MatchFlowScreen(
+                      mode: MatchMode.bot,
+                      bot: widget.bot,
+                    ),
+                  ),
+                )
+              : null,
+          rematchLabel: widget.isBot ? L.of(context).rematch : null,
           onDone: () => Navigator.of(context).pop(),
         );
 
@@ -1056,6 +1104,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     // lost: the round never began.
     if (widget.practice ||
         widget.isChallenge ||
+        widget.isBot ||
         _vsBest ||
         _live != null ||
         _stage == _Stage.nobodyLive) {
@@ -1941,6 +1990,12 @@ class _ResultView extends StatelessWidget {
 
   final VoidCallback onDone;
 
+  /// Overrides the default "find a match" action. A demo round restarts the
+  /// same opponent instead of going to look for a stranger who does not exist
+  /// to it.
+  final VoidCallback? onRematch;
+  final String? rematchLabel;
+
   const _ResultView({
     this.practice = false,
     required this.won,
@@ -1952,6 +2007,8 @@ class _ResultView extends StatelessWidget {
     this.live,
     this.monthBefore,
     this.monthAfter,
+    this.onRematch,
+    this.rematchLabel,
   });
 
   @override
@@ -1982,12 +2039,14 @@ class _ResultView extends StatelessWidget {
       // loss. So no rematch: a new search, which never pairs two who have
       // already met. It replaces this screen, so finishing it lands where
       // this duel started.
-      rematchLabel: L.of(context).findMatch,
-      onRematch: () => Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) => const MatchFlowScreen(mode: MatchMode.ranked),
-        ),
-      ),
+      rematchLabel: rematchLabel ?? L.of(context).findMatch,
+      onRematch:
+          onRematch ??
+          () => Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (_) => const MatchFlowScreen(mode: MatchMode.ranked),
+            ),
+          ),
       onDone: onDone,
     );
   }
