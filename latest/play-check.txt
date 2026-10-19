@@ -1,5 +1,5 @@
 build-tools 37.0.0
-package: name='com.outrepd.outrepd' versionCode='218' versionName='1.1.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'
+package: name='com.outrepd.outrepd' versionCode='220' versionName='1.1.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'
 targetSdkVersion:'36'
 permission  android.permission.INTERNET
 permission  android.permission.CAMERA
@@ -11,6 +11,8 @@ permission  android.permission.READ_EXTERNAL_STORAGE
 permission  android.permission.ACCESS_NETWORK_STATE
 permission  android.permission.WAKE_LOCK
 permission  android.permission.VIBRATE
+permission  android.permission.USE_BIOMETRIC
+permission  android.permission.USE_FINGERPRINT
 permission  com.google.android.c2dm.permission.RECEIVE
 permission  com.android.vending.BILLING
 permission  android.permission.FOREGROUND_SERVICE
