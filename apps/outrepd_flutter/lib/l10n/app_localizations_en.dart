@@ -370,8 +370,7 @@ class LEn extends L {
   String get usernameChanged => 'Username changed';
 
   @override
-  String get usernameAlreadyChangedBody =>
-      'You\'ve already used your one username change — every account gets exactly one.';
+  String get usernameAlreadyChangedBody => 'A username can be changed once every 14 days.';
 
   @override
   String get gallery => 'Gallery';
@@ -2333,4 +2332,33 @@ class LEn extends L {
   String savedToHealth(String health) {
     return 'Saved to ${health}';
   }
+
+  @override
+  String get usernameTooShort => 'Too short: at least 4 characters';
+
+  @override
+  String get usernameBadCharacters => 'Only letters, numbers and _';
+
+  @override
+  String get usernameNeedsLetter => 'Add at least one letter or number';
+
+  @override
+  String usernameChangeAgainOn(String date) {
+    return 'You can change it again on ${date}';
+  }
+
+  @override
+  String get continueWithApple => 'Continue with Apple';
+
+  @override
+  String get continueWithGoogle => 'Continue with Google';
+
+  @override
+  String get socialSignInFailed => 'Couldn\'t sign in. Try again.';
+
+  @override
+  String get chooseUsernameTitle => 'Choose your username';
+
+  @override
+  String get chooseUsernameSubtitle => 'It\'s how other lifters find you and see you on the boards.';
 }

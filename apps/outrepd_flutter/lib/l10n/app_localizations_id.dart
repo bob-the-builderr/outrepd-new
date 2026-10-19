@@ -369,8 +369,7 @@ class LId extends L {
   String get usernameChanged => 'Nama pengguna diubah';
 
   @override
-  String get usernameAlreadyChangedBody =>
-      'Anda sudah menggunakan satu-satunya kesempatan mengubah nama pengguna — setiap akun hanya mendapat satu kali.';
+  String get usernameAlreadyChangedBody => 'Nama pengguna bisa diubah sekali setiap 14 hari.';
 
   @override
   String get gallery => 'Galeri';
@@ -2334,4 +2333,33 @@ class LId extends L {
   String savedToHealth(String health) {
     return 'Tersimpan di ${health}';
   }
+
+  @override
+  String get usernameTooShort => 'Terlalu pendek: minimal 4 karakter';
+
+  @override
+  String get usernameBadCharacters => 'Hanya huruf, angka, dan _';
+
+  @override
+  String get usernameNeedsLetter => 'Tambahkan setidaknya satu huruf atau angka';
+
+  @override
+  String usernameChangeAgainOn(String date) {
+    return 'Kamu bisa mengubahnya lagi pada ${date}';
+  }
+
+  @override
+  String get continueWithApple => 'Lanjutkan dengan Apple';
+
+  @override
+  String get continueWithGoogle => 'Lanjutkan dengan Google';
+
+  @override
+  String get socialSignInFailed => 'Gagal masuk. Coba lagi.';
+
+  @override
+  String get chooseUsernameTitle => 'Pilih nama penggunamu';
+
+  @override
+  String get chooseUsernameSubtitle => 'Dengan nama ini orang lain menemukanmu dan melihatmu di papan peringkat.';
 }

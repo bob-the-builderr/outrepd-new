@@ -353,7 +353,7 @@ class LZh extends L {
   String get usernameChanged => '用户名已更改';
 
   @override
-  String get usernameAlreadyChangedBody => '你已经用过唯一一次改名机会——每个账号只能改一次用户名。';
+  String get usernameAlreadyChangedBody => '用户名每 14 天可更改一次。';
 
   @override
   String get gallery => '相册';
@@ -2286,4 +2286,33 @@ class LZh extends L {
   String savedToHealth(String health) {
     return '已保存到 ${health}';
   }
+
+  @override
+  String get usernameTooShort => '太短了：至少 4 个字符';
+
+  @override
+  String get usernameBadCharacters => '只能使用字母、数字和 _';
+
+  @override
+  String get usernameNeedsLetter => '至少包含一个字母或数字';
+
+  @override
+  String usernameChangeAgainOn(String date) {
+    return '你可以在 ${date} 再次更改';
+  }
+
+  @override
+  String get continueWithApple => '通过 Apple 继续';
+
+  @override
+  String get continueWithGoogle => '通过 Google 继续';
+
+  @override
+  String get socialSignInFailed => '无法登录，请重试。';
+
+  @override
+  String get chooseUsernameTitle => '选择你的用户名';
+
+  @override
+  String get chooseUsernameSubtitle => '其他人会通过它找到你，并在排行榜上看到你。';
 }

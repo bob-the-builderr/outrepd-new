@@ -130,7 +130,7 @@
   "couldNotCheckUsername": "O ad kontrol edilemedi — tekrar deneyin",
   "changeUsername": "Kullanıcı adını değiştir",
   "usernameInvalidLength": "4 ile 20 karakter arasında olmalı, yalnızca harf, rakam ve _",
-  "usernameAlreadyChangedBody": "Tek kullanıcı adı değişikliğinizi zaten kullandınız — her hesap tam olarak bir hak alır.",
+  "usernameAlreadyChangedBody": "Kullanıcı adı 14 günde bir değiştirilebilir.",
   "usernameChanged": "Kullanıcı adı değiştirildi",
   "gallery": "Galeri",
   "camera": "Kamera",
@@ -708,5 +708,14 @@
   "requestSentShort": "İstek gönderildi",
   "healthWorksWith": "OUTREPD, {health} ile çalışır",
   "healthCardBody": "Bitirdiğin her set {health} uygulamasına kuvvet antrenmanı olarak kaydedilir. OUTREPD sağlık verilerini asla okumaz.",
-  "savedToHealth": "{health} uygulamasına kaydedildi"
+  "savedToHealth": "{health} uygulamasına kaydedildi",
+  "usernameTooShort": "Çok kısa: en az 4 karakter",
+  "usernameBadCharacters": "Yalnızca harf, rakam ve _",
+  "usernameNeedsLetter": "En az bir harf veya rakam ekle",
+  "usernameChangeAgainOn": "{date} tarihinde tekrar değiştirebilirsin",
+  "continueWithApple": "Apple ile devam et",
+  "continueWithGoogle": "Google ile devam et",
+  "socialSignInFailed": "Giriş yapılamadı. Tekrar dene.",
+  "chooseUsernameTitle": "Kullanıcı adını seç",
+  "chooseUsernameSubtitle": "Diğerleri seni bu adla bulur ve sıralamalarda görür."
 }

@@ -11,6 +11,7 @@ library;
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../backend/backend.dart';
 import '../career.dart';
@@ -19,7 +20,9 @@ import '../l10n/app_localizations.dart';
 import '../subscription.dart';
 import '../theme.dart';
 import '../type_scale.dart';
+import '../username_rules.dart';
 import 'legal_line.dart';
+import 'social_sign_in.dart';
 
 /// What this whole gate finished with, popped back to whoever opened
 /// [AuthEntryScreen]. Signing up keeps going with whatever was next —
@@ -39,7 +42,8 @@ class AuthEntryScreen extends StatefulWidget {
   State<AuthEntryScreen> createState() => _AuthEntryScreenState();
 }
 
-class _AuthEntryScreenState extends State<AuthEntryScreen> {
+class _AuthEntryScreenState extends State<AuthEntryScreen>
+    with _SocialSignIn {
   Future<void> _openSignUp() async {
     final outcome = await Navigator.of(context).push<AuthOutcome>(
       MaterialPageRoute(builder: (_) => const SignUpScreen()),
@@ -87,6 +91,9 @@ class _AuthEntryScreenState extends State<AuthEntryScreen> {
                   ),
                 ),
               ),
+              // Apple and Google first, the quickest way in; the email way
+              // under them.
+              _socialButtons(),
               SizedBox(
                 width: double.infinity,
                 child: FilledButton(
@@ -139,8 +146,89 @@ class SignUpScreen extends StatefulWidget {
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+/// The username field and its live checks — red the moment the name is
+/// wrong, and whether it is free once typing pauses — shared by the sign-up
+/// screen and the one a new Apple or Google account names itself on.
+mixin _UsernameChecks<T extends StatefulWidget> on State<T> {
   final _username = TextEditingController();
+
+  /// Whether the name typed is free, once a pause in typing has asked; null
+  /// before that, and whenever the field has changed since.
+  bool? _available;
+  bool _checking = false;
+  Timer? _debounce;
+
+  /// The name was edited: anything said about the last one no longer holds.
+  void _usernameEdited() {}
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    _username.dispose();
+    super.dispose();
+  }
+
+  Widget _usernameField(L l) => _Field(
+    key: const Key('signUpUsername'),
+    controller: _username,
+    label: l.usernameLabel,
+    inputFormatters: usernameFormatters,
+    errorText: _usernameError(l),
+    suffix: _checking
+        ? SizedBox(
+            width: 16,
+            height: 16,
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              color: context.colors.muted,
+            ),
+          )
+        : _available == true && _usernameError(l) == null
+        ? const Icon(Icons.check, size: 20, color: AppColors.win)
+        : _available == false
+        ? const Icon(Icons.close, size: 20, color: AppColors.loss)
+        : null,
+    onChanged: _usernameChanged,
+  );
+
+  void _usernameChanged(String value) {
+    setState(() {
+      _usernameEdited();
+      _available = null;
+      _checking = false;
+    });
+    _debounce?.cancel();
+    if (!usernameValid(value) || !backend.available || backend.me == null) {
+      return;
+    }
+    // A pause in typing, not every letter.
+    _debounce = Timer(const Duration(milliseconds: 400), () async {
+      if (!mounted) return;
+      setState(() => _checking = true);
+      try {
+        final free = await backend.usernameAvailable(value);
+        if (mounted && _username.text == value) {
+          setState(() {
+            _available = free;
+            _checking = false;
+          });
+        }
+      } on Object catch (error) {
+        // Not knowing is not a reason to stop anybody: the server checks
+        // again when the account is made.
+        debugPrint('Could not check the username: $error');
+        if (mounted) setState(() => _checking = false);
+      }
+    });
+  }
+
+  /// What is wrong with the name, as it is typed, or null.
+  String? _usernameError(L l) =>
+      usernameProblem(l, _username.text) ??
+      (_available == false ? l.usernameTaken : null);
+}
+
+class _SignUpScreenState extends State<SignUpScreen> with _UsernameChecks {
   final _email = TextEditingController();
 
   /// A friend's code, optional. See supabase/invites.sql.
@@ -152,8 +240,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _inviteClaimed = false;
 
   @override
+  void _usernameEdited() => _error = null;
+
+  @override
   void dispose() {
-    _username.dispose();
     _email.dispose();
     _invite.dispose();
     super.dispose();
@@ -189,14 +279,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   bool get _canSubmit =>
-      _username.text.trim().length >= 4 &&
+      usernameValid(_username.text) &&
+      _available != false &&
       _email.text.trim().isNotEmpty &&
       !_busy;
 
   Future<void> _submit() async {
     if (!_canSubmit) return;
     final l = L.of(context);
-    final username = _username.text.trim();
+    final username = _username.text;
     final email = _email.text.trim();
 
     setState(() {
@@ -226,7 +317,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         case RenameResult.taken:
           setState(() {
             _busy = false;
-            _error = l.usernameTaken;
+            _available = false;
           });
           return;
         case RenameResult.invalid:
@@ -315,11 +406,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 subtitle: l.createAccountSubtitle,
               ),
               const SizedBox(height: 26),
-              _Field(
-                controller: _username,
-                label: l.usernameLabel,
-                onChanged: (_) => setState(() => _error = null),
-              ),
+              _usernameField(l),
               const SizedBox(height: 12),
               _Field(
                 controller: _email,
@@ -404,7 +491,7 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> with _SocialSignIn {
   final _email = TextEditingController();
   bool _busy = false;
   String? _error;
@@ -478,6 +565,10 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               _BackHeader(title: l.obWelcomeBack, subtitle: l.logInSubtitle),
               const SizedBox(height: 26),
+              if (socialSignInOffered) ...[
+                _socialButtons(),
+                const SizedBox(height: 14),
+              ],
               _Field(
                 controller: _email,
                 label: l.emailLabel,
@@ -854,7 +945,18 @@ class _Field extends StatelessWidget {
     this.keyboardType,
     this.onChanged,
     this.onSubmitted,
+    this.inputFormatters,
+    this.errorText,
+    this.suffix,
   });
+
+  final List<TextInputFormatter>? inputFormatters;
+
+  /// Said in red under the field, with a red edge, as soon as it is true.
+  final String? errorText;
+
+  /// At the end of the field: whether the name is free.
+  final Widget? suffix;
 
   /// Shown above the field and stays there — unlike a hint, it does not
   /// disappear the moment somebody starts typing, so what the field is for
@@ -882,7 +984,9 @@ class _Field extends StatelessWidget {
         TextField(
           controller: controller,
           autocorrect: false,
+          enableSuggestions: inputFormatters == null,
           keyboardType: keyboardType,
+          inputFormatters: inputFormatters,
           onChanged: onChanged,
           onSubmitted: onSubmitted,
           style: TextStyle(color: context.colors.text, fontSize: 18),
@@ -890,6 +994,24 @@ class _Field extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(color: context.colors.faint, fontSize: 18),
+            suffixIcon: suffix == null
+                ? null
+                : Padding(
+                    padding: const EdgeInsets.only(right: 12),
+                    child: suffix,
+                  ),
+            suffixIconConstraints: const BoxConstraints(minWidth: 24),
+            errorText: errorText,
+            errorStyle: context.type.label.copyWith(color: AppColors.loss),
+            errorMaxLines: 2,
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(13),
+              borderSide: const BorderSide(color: AppColors.loss),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(13),
+              borderSide: const BorderSide(color: AppColors.loss, width: 1.5),
+            ),
             filled: true,
             fillColor: context.colors.surface,
             contentPadding: const EdgeInsets.symmetric(
@@ -911,23 +1033,189 @@ class _Field extends StatelessWidget {
   }
 }
 
+// ──────────────────────────── Apple and Google ─────────────────────────────
+
+/// Continue with Apple or Google, from the entry screen or the log-in one.
+/// A new account names itself next and carries on as a sign-up; one that
+/// already existed is this phone's from now on, as a log-in.
+mixin _SocialSignIn<T extends StatefulWidget> on State<T> {
+  SocialProvider? _socialBusy;
+
+  Future<void> _continueWith(SocialProvider provider) async {
+    final l = L.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    setState(() => _socialBusy = provider);
+    final result = await signInWith(provider);
+    if (!mounted) return;
+    setState(() => _socialBusy = null);
+
+    void say(String message) => messenger.showSnackBar(
+      SnackBar(content: Text(message), behavior: SnackBarBehavior.floating),
+    );
+
+    switch (result) {
+      case null:
+        // The sheet was closed: nothing happened, nothing to say.
+        return;
+      case SocialSignInResult.newAccount:
+        await Navigator.of(context).push<void>(
+          MaterialPageRoute(builder: (_) => const ChooseUsernameScreen()),
+        );
+        if (mounted) Navigator.of(context).pop(AuthOutcome.signedUp);
+      case SocialSignInResult.existingAccount:
+        await Career.instance.adoptServerProfile(backend.me!);
+        if (mounted) Navigator.of(context).pop(AuthOutcome.signedIn);
+      case SocialSignInResult.failed:
+        say(l.socialSignInFailed);
+      case SocialSignInResult.offline:
+        say(l.cantReachServer);
+    }
+  }
+
+  Widget _socialButtons() =>
+      SocialSignInButtons(onPressed: _continueWith, busy: _socialBusy);
+}
+
+/// A new Apple or Google account's name, chosen before anything else. The
+/// account already exists by now, so there is no going back from here —
+/// only on, with a name.
+class ChooseUsernameScreen extends StatefulWidget {
+  const ChooseUsernameScreen({super.key});
+
+  @override
+  State<ChooseUsernameScreen> createState() => _ChooseUsernameScreenState();
+}
+
+class _ChooseUsernameScreenState extends State<ChooseUsernameScreen>
+    with _UsernameChecks {
+  bool _busy = false;
+  String? _error;
+
+  @override
+  void _usernameEdited() => _error = null;
+
+  bool get _canSave =>
+      usernameValid(_username.text) && _available != false && !_busy;
+
+  Future<void> _save() async {
+    if (!_canSave) return;
+    final l = L.of(context);
+    final name = _username.text;
+    setState(() {
+      _busy = true;
+      _error = null;
+    });
+    try {
+      final result = await backend.renameUsername(name);
+      if (!mounted) return;
+      switch (result) {
+        case RenameResult.ok:
+          demoProfile.username = name;
+          Navigator.of(context).pop();
+        case RenameResult.alreadyChanged:
+          // A name was already chosen on the sign-up screen before Apple or
+          // Google was: that is the name it keeps.
+          Navigator.of(context).pop();
+        case RenameResult.taken:
+          setState(() {
+            _busy = false;
+            _available = false;
+          });
+        case RenameResult.notAllowed:
+          setState(() {
+            _busy = false;
+            _error = l.usernameNotAllowed;
+          });
+        case RenameResult.invalid:
+          setState(() {
+            _busy = false;
+            _error = l.usernameInvalidLength;
+          });
+      }
+    } on Object catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _busy = false;
+        _error = l.cantReachServer;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: context.colors.background,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _BackHeader(
+                  title: l.chooseUsernameTitle,
+                  subtitle: l.chooseUsernameSubtitle,
+                  showBack: false,
+                ),
+                const SizedBox(height: 26),
+                _usernameField(l),
+                if (_error != null) ...[
+                  const SizedBox(height: 10),
+                  Text(
+                    _error!,
+                    style: context.type.label.copyWith(color: AppColors.loss),
+                  ),
+                ],
+                const SizedBox(height: 22),
+                FilledButton(
+                  key: const Key('chooseUsernameContinue'),
+                  onPressed: _canSave ? _save : null,
+                  style: FilledButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                  ),
+                  child: _busy
+                      ? const SizedBox(
+                          width: 18,
+                          height: 18,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : Text(l.continueAction),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 // ─────────────────────────────── shared header ──────────────────────────────
 
 /// The back button, the screen's own name, and what it is for — replacing an
 /// [AppBar] so the name reads as the page's own heading rather than a small
 /// title stamped into a bar above it.
 class _BackHeader extends StatelessWidget {
-  const _BackHeader({required this.title, required this.subtitle});
+  const _BackHeader({
+    required this.title,
+    required this.subtitle,
+    this.showBack = true,
+  });
 
   final String title;
   final String subtitle;
+
+  /// False where there is nowhere to go back to.
+  final bool showBack;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        InkWell(
+        if (showBack) InkWell(
           onTap: () => Navigator.of(context).pop(),
           customBorder: const CircleBorder(),
           child: Container(

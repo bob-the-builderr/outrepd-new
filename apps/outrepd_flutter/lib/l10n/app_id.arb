@@ -130,7 +130,7 @@
   "couldNotCheckUsername": "Nama itu tidak bisa diperiksa — coba lagi",
   "changeUsername": "Ubah nama pengguna",
   "usernameInvalidLength": "Harus 4 sampai 20 karakter, hanya huruf, angka, dan _",
-  "usernameAlreadyChangedBody": "Anda sudah menggunakan satu-satunya kesempatan mengubah nama pengguna — setiap akun hanya mendapat satu kali.",
+  "usernameAlreadyChangedBody": "Nama pengguna bisa diubah sekali setiap 14 hari.",
   "usernameChanged": "Nama pengguna diubah",
   "gallery": "Galeri",
   "camera": "Kamera",
@@ -708,5 +708,14 @@
   "requestSentShort": "Permintaan terkirim",
   "healthWorksWith": "OUTREPD bekerja dengan {health}",
   "healthCardBody": "Setiap set yang kamu selesaikan disimpan ke {health} sebagai latihan kekuatan. OUTREPD tidak pernah membaca data kesehatanmu.",
-  "savedToHealth": "Tersimpan di {health}"
+  "savedToHealth": "Tersimpan di {health}",
+  "usernameTooShort": "Terlalu pendek: minimal 4 karakter",
+  "usernameBadCharacters": "Hanya huruf, angka, dan _",
+  "usernameNeedsLetter": "Tambahkan setidaknya satu huruf atau angka",
+  "usernameChangeAgainOn": "Kamu bisa mengubahnya lagi pada {date}",
+  "continueWithApple": "Lanjutkan dengan Apple",
+  "continueWithGoogle": "Lanjutkan dengan Google",
+  "socialSignInFailed": "Gagal masuk. Coba lagi.",
+  "chooseUsernameTitle": "Pilih nama penggunamu",
+  "chooseUsernameSubtitle": "Dengan nama ini orang lain menemukanmu dan melihatmu di papan peringkat."
 }

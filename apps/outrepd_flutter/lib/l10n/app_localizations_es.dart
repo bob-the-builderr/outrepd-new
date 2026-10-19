@@ -373,8 +373,7 @@ class LEs extends L {
   String get usernameChanged => 'Nombre de usuario cambiado';
 
   @override
-  String get usernameAlreadyChangedBody =>
-      'Ya has usado tu único cambio de nombre de usuario — cada cuenta recibe exactamente uno.';
+  String get usernameAlreadyChangedBody => 'El nombre de usuario se puede cambiar una vez cada 14 días.';
 
   @override
   String get gallery => 'Galería';
@@ -2340,4 +2339,33 @@ class LEs extends L {
   String savedToHealth(String health) {
     return 'Guardado en ${health}';
   }
+
+  @override
+  String get usernameTooShort => 'Demasiado corto: mínimo 4 caracteres';
+
+  @override
+  String get usernameBadCharacters => 'Solo letras, números y _';
+
+  @override
+  String get usernameNeedsLetter => 'Añade al menos una letra o un número';
+
+  @override
+  String usernameChangeAgainOn(String date) {
+    return 'Podrás cambiarlo de nuevo el ${date}';
+  }
+
+  @override
+  String get continueWithApple => 'Continuar con Apple';
+
+  @override
+  String get continueWithGoogle => 'Continuar con Google';
+
+  @override
+  String get socialSignInFailed => 'No se pudo iniciar sesión. Inténtalo de nuevo.';
+
+  @override
+  String get chooseUsernameTitle => 'Elige tu nombre de usuario';
+
+  @override
+  String get chooseUsernameSubtitle => 'Así te encuentran otros y te ven en las clasificaciones.';
 }

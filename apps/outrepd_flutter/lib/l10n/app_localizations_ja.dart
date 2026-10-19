@@ -356,7 +356,7 @@ class LJa extends L {
   String get usernameChanged => 'ユーザー名を変更しました';
 
   @override
-  String get usernameAlreadyChangedBody => 'ユーザー名の変更は一度きりで、すでに使用済みです。';
+  String get usernameAlreadyChangedBody => 'ユーザー名は14日に1回変更できます。';
 
   @override
   String get gallery => 'ギャラリー';
@@ -2296,4 +2296,33 @@ class LJa extends L {
   String savedToHealth(String health) {
     return '${health}に保存しました';
   }
+
+  @override
+  String get usernameTooShort => '短すぎます：4文字以上にしてください';
+
+  @override
+  String get usernameBadCharacters => '使えるのは英数字と _ のみです';
+
+  @override
+  String get usernameNeedsLetter => '英字か数字を1つ以上入れてください';
+
+  @override
+  String usernameChangeAgainOn(String date) {
+    return '${date}にまた変更できます';
+  }
+
+  @override
+  String get continueWithApple => 'Appleで続ける';
+
+  @override
+  String get continueWithGoogle => 'Googleで続ける';
+
+  @override
+  String get socialSignInFailed => 'サインインできませんでした。もう一度お試しください。';
+
+  @override
+  String get chooseUsernameTitle => 'ユーザー名を選んでください';
+
+  @override
+  String get chooseUsernameSubtitle => 'ほかのユーザーがあなたを見つけたり、ランキングで見たりするための名前です。';
 }

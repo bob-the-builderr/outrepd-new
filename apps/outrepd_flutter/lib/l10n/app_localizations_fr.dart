@@ -373,8 +373,7 @@ class LFr extends L {
   String get usernameChanged => 'Nom d\'utilisateur modifié';
 
   @override
-  String get usernameAlreadyChangedBody =>
-      'Tu as déjà utilisé ton unique changement de nom d\'utilisateur — chaque compte n\'en reçoit qu\'un seul.';
+  String get usernameAlreadyChangedBody => 'Le nom d\'utilisateur peut être changé une fois tous les 14 jours.';
 
   @override
   String get gallery => 'Galerie';
@@ -2341,4 +2340,33 @@ class LFr extends L {
   String savedToHealth(String health) {
     return 'Enregistré dans ${health}';
   }
+
+  @override
+  String get usernameTooShort => 'Trop court : au moins 4 caractères';
+
+  @override
+  String get usernameBadCharacters => 'Uniquement des lettres, des chiffres et _';
+
+  @override
+  String get usernameNeedsLetter => 'Ajoute au moins une lettre ou un chiffre';
+
+  @override
+  String usernameChangeAgainOn(String date) {
+    return 'Tu pourras le changer à nouveau le ${date}';
+  }
+
+  @override
+  String get continueWithApple => 'Continuer avec Apple';
+
+  @override
+  String get continueWithGoogle => 'Continuer avec Google';
+
+  @override
+  String get socialSignInFailed => 'Connexion impossible. Réessaie.';
+
+  @override
+  String get chooseUsernameTitle => 'Choisis ton nom d\'utilisateur';
+
+  @override
+  String get chooseUsernameSubtitle => 'C\'est ainsi que les autres te trouvent et te voient dans les classements.';
 }

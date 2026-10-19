@@ -162,7 +162,7 @@
   "changeUsername": "Change username",
   "usernameInvalidLength": "4 to 20 characters: letters, numbers and _ only",
   "usernameChanged": "Username changed",
-  "usernameAlreadyChangedBody": "You've already used your one username change — every account gets exactly one.",
+  "usernameAlreadyChangedBody": "A username can be changed once every 14 days.",
   "gallery": "Gallery",
   "camera": "Camera",
   "awards": "Awards",
@@ -1502,5 +1502,21 @@
         "type": "String"
       }
     }
-  }
+  },
+  "usernameTooShort": "Too short: at least 4 characters",
+  "usernameBadCharacters": "Only letters, numbers and _",
+  "usernameNeedsLetter": "Add at least one letter or number",
+  "usernameChangeAgainOn": "You can change it again on {date}",
+  "@usernameChangeAgainOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "continueWithApple": "Continue with Apple",
+  "continueWithGoogle": "Continue with Google",
+  "socialSignInFailed": "Couldn't sign in. Try again.",
+  "chooseUsernameTitle": "Choose your username",
+  "chooseUsernameSubtitle": "It's how other lifters find you and see you on the boards."
 }

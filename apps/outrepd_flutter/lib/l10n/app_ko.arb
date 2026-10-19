@@ -130,7 +130,7 @@
   "couldNotCheckUsername": "그 이름을 확인할 수 없었어요 — 다시 시도해 주세요",
   "changeUsername": "사용자 이름 변경",
   "usernameInvalidLength": "4자에서 20자 사이의 영문자, 숫자, _만 사용할 수 있습니다",
-  "usernameAlreadyChangedBody": "이미 단 한 번뿐인 사용자 이름 변경을 사용하셨습니다 — 모든 계정은 정확히 한 번만 변경할 수 있습니다.",
+  "usernameAlreadyChangedBody": "사용자 이름은 14일에 한 번 변경할 수 있어요.",
   "usernameChanged": "사용자 이름이 변경되었습니다",
   "gallery": "갤러리",
   "camera": "카메라",
@@ -708,5 +708,14 @@
   "requestSentShort": "요청 보냄",
   "healthWorksWith": "OUTREPD는 {health}와 연동됩니다",
   "healthCardBody": "마친 세트는 모두 근력 운동으로 {health}에 저장됩니다. OUTREPD는 건강 데이터를 절대 읽지 않습니다.",
-  "savedToHealth": "{health}에 저장됨"
+  "savedToHealth": "{health}에 저장됨",
+  "usernameTooShort": "너무 짧아요: 4자 이상 입력하세요",
+  "usernameBadCharacters": "영문자, 숫자, _만 사용할 수 있어요",
+  "usernameNeedsLetter": "영문자나 숫자를 하나 이상 넣어 주세요",
+  "usernameChangeAgainOn": "{date}에 다시 변경할 수 있어요",
+  "continueWithApple": "Apple로 계속하기",
+  "continueWithGoogle": "Google로 계속하기",
+  "socialSignInFailed": "로그인하지 못했어요. 다시 시도해 주세요.",
+  "chooseUsernameTitle": "사용자 이름을 정하세요",
+  "chooseUsernameSubtitle": "다른 사람들이 이 이름으로 당신을 찾고 순위표에서 보게 돼요."
 }

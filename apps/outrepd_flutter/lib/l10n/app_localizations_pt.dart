@@ -371,8 +371,7 @@ class LPt extends L {
   String get usernameChanged => 'Nome de usuário alterado';
 
   @override
-  String get usernameAlreadyChangedBody =>
-      'Já usaste a tua única alteração de nome de utilizador — cada conta recebe exatamente uma.';
+  String get usernameAlreadyChangedBody => 'O nome de utilizador pode ser alterado uma vez a cada 14 dias.';
 
   @override
   String get gallery => 'Galeria';
@@ -2337,4 +2336,33 @@ class LPt extends L {
   String savedToHealth(String health) {
     return 'Salvo no ${health}';
   }
+
+  @override
+  String get usernameTooShort => 'Demasiado curto: pelo menos 4 caracteres';
+
+  @override
+  String get usernameBadCharacters => 'Apenas letras, números e _';
+
+  @override
+  String get usernameNeedsLetter => 'Adiciona pelo menos uma letra ou um número';
+
+  @override
+  String usernameChangeAgainOn(String date) {
+    return 'Podes alterá-lo novamente a ${date}';
+  }
+
+  @override
+  String get continueWithApple => 'Continuar com a Apple';
+
+  @override
+  String get continueWithGoogle => 'Continuar com o Google';
+
+  @override
+  String get socialSignInFailed => 'Não foi possível iniciar sessão. Tenta novamente.';
+
+  @override
+  String get chooseUsernameTitle => 'Escolhe o teu nome de utilizador';
+
+  @override
+  String get chooseUsernameSubtitle => 'É assim que os outros te encontram e te veem nas classificações.';
 }

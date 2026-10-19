@@ -370,8 +370,7 @@ class LRu extends L {
   String get usernameChanged => 'Имя пользователя изменено';
 
   @override
-  String get usernameAlreadyChangedBody =>
-      'Вы уже использовали своё единственное изменение имени пользователя — на каждый аккаунт даётся ровно одно.';
+  String get usernameAlreadyChangedBody => 'Имя пользователя можно менять раз в 14 дней.';
 
   @override
   String get gallery => 'Галерея';
@@ -2335,4 +2334,33 @@ class LRu extends L {
   String savedToHealth(String health) {
     return 'Сохранено в ${health}';
   }
+
+  @override
+  String get usernameTooShort => 'Слишком коротко: минимум 4 символа';
+
+  @override
+  String get usernameBadCharacters => 'Только буквы, цифры и _';
+
+  @override
+  String get usernameNeedsLetter => 'Добавьте хотя бы одну букву или цифру';
+
+  @override
+  String usernameChangeAgainOn(String date) {
+    return 'Изменить снова можно ${date}';
+  }
+
+  @override
+  String get continueWithApple => 'Продолжить с Apple';
+
+  @override
+  String get continueWithGoogle => 'Продолжить с Google';
+
+  @override
+  String get socialSignInFailed => 'Не удалось войти. Попробуйте ещё раз.';
+
+  @override
+  String get chooseUsernameTitle => 'Выберите имя пользователя';
+
+  @override
+  String get chooseUsernameSubtitle => 'По нему вас находят другие и видят в рейтингах.';
 }

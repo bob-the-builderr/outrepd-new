@@ -130,7 +130,7 @@
   "couldNotCheckUsername": "Не удалось проверить это имя — попробуйте снова",
   "changeUsername": "Изменить имя пользователя",
   "usernameInvalidLength": "Должно быть от 4 до 20 символов, только буквы, цифры и _",
-  "usernameAlreadyChangedBody": "Вы уже использовали своё единственное изменение имени пользователя — на каждый аккаунт даётся ровно одно.",
+  "usernameAlreadyChangedBody": "Имя пользователя можно менять раз в 14 дней.",
   "usernameChanged": "Имя пользователя изменено",
   "gallery": "Галерея",
   "camera": "Камера",
@@ -708,5 +708,14 @@
   "requestSentShort": "Запрос отправлен",
   "healthWorksWith": "OUTREPD работает с {health}",
   "healthCardBody": "Каждый завершённый подход сохраняется в {health} как силовая тренировка. OUTREPD никогда не читает ваши данные о здоровье.",
-  "savedToHealth": "Сохранено в {health}"
+  "savedToHealth": "Сохранено в {health}",
+  "usernameTooShort": "Слишком коротко: минимум 4 символа",
+  "usernameBadCharacters": "Только буквы, цифры и _",
+  "usernameNeedsLetter": "Добавьте хотя бы одну букву или цифру",
+  "usernameChangeAgainOn": "Изменить снова можно {date}",
+  "continueWithApple": "Продолжить с Apple",
+  "continueWithGoogle": "Продолжить с Google",
+  "socialSignInFailed": "Не удалось войти. Попробуйте ещё раз.",
+  "chooseUsernameTitle": "Выберите имя пользователя",
+  "chooseUsernameSubtitle": "По нему вас находят другие и видят в рейтингах."
 }

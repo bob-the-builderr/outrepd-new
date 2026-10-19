@@ -369,8 +369,7 @@ class LTr extends L {
   String get usernameChanged => 'Kullanıcı adı değiştirildi';
 
   @override
-  String get usernameAlreadyChangedBody =>
-      'Tek kullanıcı adı değişikliğinizi zaten kullandınız — her hesap tam olarak bir hak alır.';
+  String get usernameAlreadyChangedBody => 'Kullanıcı adı 14 günde bir değiştirilebilir.';
 
   @override
   String get gallery => 'Galeri';
@@ -2330,4 +2329,33 @@ class LTr extends L {
   String savedToHealth(String health) {
     return '${health} uygulamasına kaydedildi';
   }
+
+  @override
+  String get usernameTooShort => 'Çok kısa: en az 4 karakter';
+
+  @override
+  String get usernameBadCharacters => 'Yalnızca harf, rakam ve _';
+
+  @override
+  String get usernameNeedsLetter => 'En az bir harf veya rakam ekle';
+
+  @override
+  String usernameChangeAgainOn(String date) {
+    return '${date} tarihinde tekrar değiştirebilirsin';
+  }
+
+  @override
+  String get continueWithApple => 'Apple ile devam et';
+
+  @override
+  String get continueWithGoogle => 'Google ile devam et';
+
+  @override
+  String get socialSignInFailed => 'Giriş yapılamadı. Tekrar dene.';
+
+  @override
+  String get chooseUsernameTitle => 'Kullanıcı adını seç';
+
+  @override
+  String get chooseUsernameSubtitle => 'Diğerleri seni bu adla bulur ve sıralamalarda görür.';
 }

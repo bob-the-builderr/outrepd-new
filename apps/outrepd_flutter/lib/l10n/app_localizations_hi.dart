@@ -370,8 +370,7 @@ class LHi extends L {
   String get usernameChanged => 'यूज़रनेम बदल दिया गया';
 
   @override
-  String get usernameAlreadyChangedBody =>
-      'आप अपना एकमात्र यूज़रनेम बदलाव पहले ही इस्तेमाल कर चुके हैं — हर खाते को बिल्कुल एक बार मिलता है।';
+  String get usernameAlreadyChangedBody => 'यूज़रनेम हर 14 दिन में एक बार बदला जा सकता है।';
 
   @override
   String get gallery => 'गैलरी';
@@ -2335,4 +2334,33 @@ class LHi extends L {
   String savedToHealth(String health) {
     return '${health} में सेव किया गया';
   }
+
+  @override
+  String get usernameTooShort => 'बहुत छोटा: कम से कम 4 अक्षर';
+
+  @override
+  String get usernameBadCharacters => 'सिर्फ अक्षर, अंक और _';
+
+  @override
+  String get usernameNeedsLetter => 'कम से कम एक अक्षर या अंक जोड़ें';
+
+  @override
+  String usernameChangeAgainOn(String date) {
+    return 'आप इसे ${date} को फिर से बदल सकते हैं';
+  }
+
+  @override
+  String get continueWithApple => 'Apple के साथ जारी रखें';
+
+  @override
+  String get continueWithGoogle => 'Google के साथ जारी रखें';
+
+  @override
+  String get socialSignInFailed => 'साइन इन नहीं हो सका। फिर से कोशिश करें।';
+
+  @override
+  String get chooseUsernameTitle => 'अपना यूज़रनेम चुनें';
+
+  @override
+  String get chooseUsernameSubtitle => 'इसी से दूसरे लोग आपको ढूंढते हैं और रैंकिंग में देखते हैं।';
 }

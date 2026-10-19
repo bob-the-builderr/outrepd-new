@@ -61,6 +61,9 @@ jobs:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
       REVENUECAT_ANDROID_KEY: ${{ secrets.REVENUECAT_ANDROID_KEY }}
+      # Continue with Google: the web client id from Google Cloud. Without
+      # it the Google button is not shown.
+      GOOGLE_WEB_CLIENT_ID: ${{ secrets.GOOGLE_WEB_CLIENT_ID }}
       UPLOAD_KEYSTORE_BASE64: ${{ secrets.UPLOAD_KEYSTORE_BASE64 }}
       UPLOAD_KEYSTORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_PASSWORD }}
       UPLOAD_KEY_ALIAS: ${{ secrets.UPLOAD_KEY_ALIAS }}
@@ -88,6 +91,11 @@ jobs:
             printf 'REVENUECAT_ANDROID_KEY=%s\n' "$REVENUECAT_ANDROID_KEY" >> supabase/keys.env
           else
             echo "::warning::No REVENUECAT_ANDROID_KEY secret: this build has no paywall, and the whole app is open."
+          fi
+          if [ -n "$GOOGLE_WEB_CLIENT_ID" ]; then
+            printf 'GOOGLE_WEB_CLIENT_ID=%s\n' "$GOOGLE_WEB_CLIENT_ID" >> supabase/keys.env
+          else
+            echo "::warning::No GOOGLE_WEB_CLIENT_ID secret: no Continue with Google."
           fi
 
       # android/key.properties is what android/app/build.gradle.kts reads. It

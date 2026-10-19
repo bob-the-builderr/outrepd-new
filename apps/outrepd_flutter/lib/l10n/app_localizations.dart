@@ -4246,6 +4246,60 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Saved to {health}'**
   String savedToHealth(String health);
+
+  /// No description provided for @usernameTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Too short: at least 4 characters'**
+  String get usernameTooShort;
+
+  /// No description provided for @usernameBadCharacters.
+  ///
+  /// In en, this message translates to:
+  /// **'Only letters, numbers and _'**
+  String get usernameBadCharacters;
+
+  /// No description provided for @usernameNeedsLetter.
+  ///
+  /// In en, this message translates to:
+  /// **'Add at least one letter or number'**
+  String get usernameNeedsLetter;
+
+  /// No description provided for @usernameChangeAgainOn.
+  ///
+  /// In en, this message translates to:
+  /// **'You can change it again on {date}'**
+  String usernameChangeAgainOn(String date);
+
+  /// No description provided for @continueWithApple.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Apple'**
+  String get continueWithApple;
+
+  /// No description provided for @continueWithGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get continueWithGoogle;
+
+  /// No description provided for @socialSignInFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn't sign in. Try again.'**
+  String get socialSignInFailed;
+
+  /// No description provided for @chooseUsernameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your username'**
+  String get chooseUsernameTitle;
+
+  /// No description provided for @chooseUsernameSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'It's how other lifters find you and see you on the boards.'**
+  String get chooseUsernameSubtitle;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

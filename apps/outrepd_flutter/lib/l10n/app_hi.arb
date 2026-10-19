@@ -130,7 +130,7 @@
   "couldNotCheckUsername": "यह नाम जाँचा नहीं जा सका — फिर कोशिश करें",
   "changeUsername": "यूज़रनेम बदलें",
   "usernameInvalidLength": "4 से 20 अक्षर होने चाहिए, सिर्फ अक्षर, अंक और _",
-  "usernameAlreadyChangedBody": "आप अपना एकमात्र यूज़रनेम बदलाव पहले ही इस्तेमाल कर चुके हैं — हर खाते को बिल्कुल एक बार मिलता है।",
+  "usernameAlreadyChangedBody": "यूज़रनेम हर 14 दिन में एक बार बदला जा सकता है।",
   "usernameChanged": "यूज़रनेम बदल दिया गया",
   "gallery": "गैलरी",
   "camera": "कैमरा",
@@ -708,5 +708,14 @@
   "requestSentShort": "अनुरोध भेजा गया",
   "healthWorksWith": "OUTREPD {health} के साथ काम करता है",
   "healthCardBody": "आपका हर पूरा किया गया सेट {health} में स्ट्रेंथ वर्कआउट के रूप में सेव होता है। OUTREPD आपका हेल्थ डेटा कभी नहीं पढ़ता।",
-  "savedToHealth": "{health} में सेव किया गया"
+  "savedToHealth": "{health} में सेव किया गया",
+  "usernameTooShort": "बहुत छोटा: कम से कम 4 अक्षर",
+  "usernameBadCharacters": "सिर्फ अक्षर, अंक और _",
+  "usernameNeedsLetter": "कम से कम एक अक्षर या अंक जोड़ें",
+  "usernameChangeAgainOn": "आप इसे {date} को फिर से बदल सकते हैं",
+  "continueWithApple": "Apple के साथ जारी रखें",
+  "continueWithGoogle": "Google के साथ जारी रखें",
+  "socialSignInFailed": "साइन इन नहीं हो सका। फिर से कोशिश करें।",
+  "chooseUsernameTitle": "अपना यूज़रनेम चुनें",
+  "chooseUsernameSubtitle": "इसी से दूसरे लोग आपको ढूंढते हैं और रैंकिंग में देखते हैं।"
 }

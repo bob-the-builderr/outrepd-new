@@ -17,14 +17,18 @@ class _FakeBackend extends NoBackend {
     this.taken = const {},
     this.renameResult = RenameResult.ok,
     this.alreadyChanged = false,
+    this.changedAt,
   });
 
   final Set<String> taken;
   final RenameResult renameResult;
 
-  /// Mimics an account that already spent its one rename — [me] answers
-  /// with a non-null [RemoteProfile.usernameChangedAt].
+  /// Mimics an account that renamed three days ago, inside the fourteen
+  /// days the name is kept for.
   final bool alreadyChanged;
+
+  /// When the name was last chosen, when [alreadyChanged] does not say.
+  final DateTime? changedAt;
 
   String? lastRenameTo;
 
@@ -39,7 +43,9 @@ class _FakeBackend extends NoBackend {
     divIdx: 0,
     lp: 0,
     friendCode: '000000',
-    usernameChangedAt: alreadyChanged ? DateTime(2026, 1, 1) : null,
+    usernameChangedAt: alreadyChanged
+        ? DateTime.now().subtract(const Duration(days: 3))
+        : changedAt,
   );
 
   @override
@@ -189,6 +195,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Available'), findsNothing);
+    // Said as it is typed, not after a press.
+    expect(find.text('Too short: at least 4 characters'), findsOneWidget);
     final save = tester.widget<FilledButton>(find.byType(FilledButton));
     expect(save.onPressed, isNull);
   });
@@ -204,6 +212,10 @@ void main() {
     await tester.pump(const Duration(milliseconds: 500));
     await tester.pumpAndSettle();
 
+    // The space became an underscore as it was typed; the ! is still wrong,
+    // and says so.
+    expect(find.text('brand_new!'), findsOneWidget);
+    expect(find.text('Only letters, numbers and _'), findsOneWidget);
     expect(find.text('Available'), findsNothing);
     final save = tester.widget<FilledButton>(find.byType(FilledButton));
     expect(save.onPressed, isNull);
@@ -242,6 +254,11 @@ void main() {
 
       expect(find.byType(TextField), findsNothing);
       expect(find.byType(FilledButton), findsOneWidget);
+      // The rule, and the day it lifts.
+      expect(
+        find.textContaining('You can change it again on'),
+        findsOneWidget,
+      );
 
       await tester.tap(find.byType(FilledButton));
       await tester.pumpAndSettle();
@@ -250,6 +267,25 @@ void main() {
       expect(find.text('Change username'), findsNothing);
     },
   );
+
+  testWidgets('fourteen days on, the name can change again', (tester) async {
+    backend = _FakeBackend(
+      changedAt: DateTime.now().subtract(const Duration(days: 15)),
+    );
+    phone(tester);
+    await tester.pumpWidget(_appWithButton());
+    await tester.tap(find.text('open'));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byType(TextField), 'brandnewname');
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pumpAndSettle();
+    expect(find.text('Available'), findsOneWidget);
+
+    await tester.tap(find.byType(FilledButton));
+    await tester.pumpAndSettle();
+    expect(demoProfile.username, 'brandnewname');
+  });
 
   testWidgets('with no backend, saving shows it needs one rather than '
       'silently doing nothing', (tester) async {

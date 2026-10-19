@@ -1,10 +1,5 @@
-/// Renaming yourself.
-///
-/// Signing up appends a few characters from the account's own id to
-/// whatever name was typed, so two people can never collide on their first
-/// launch — see `_unique` in `supabase_backend.dart`. This is the lifter
-/// taking the clean name back, now that a server round trip is not standing
-/// between them and their first duel.
+/// Renaming yourself: once every fourteen days (set_my_username,
+/// supabase/account.sql), with the same live checks as the sign-up screen.
 library;
 
 import 'dart:async';
@@ -17,6 +12,7 @@ import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../type_scale.dart';
 import '../theme.dart';
+import '../username_rules.dart';
 
 Future<void> showUsernameEditor(BuildContext context) {
   return showModalBottomSheet<void>(
@@ -55,28 +51,14 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
     super.dispose();
   }
 
-  /// Once spent, spent — this account cannot ask the server again, so the
-  /// sheet does not offer to.
-  bool get _alreadyChanged => backend.me?.usernameChangedAt != null;
+  /// When the name may change again, while it may not yet. The sheet says
+  /// the day rather than offering a field nobody could save from.
+  DateTime? get _nextChange =>
+      usernameNextChange(backend.me?.usernameChangedAt);
 
-  /// The server's rule (set_my_username, account.sql): letters, numbers and
-  /// underscores, with at least one letter or number among them.
-  static final _validCharacters = RegExp(r'^[A-Za-z0-9_]+$');
-  static final _someLetterOrNumber = RegExp(r'[A-Za-z0-9]');
+  bool get _validFormat => usernameValid(_controller.text);
 
-  bool get _validLength {
-    final len = _controller.text.trim().length;
-    return len >= 4 && len <= 20;
-  }
-
-  bool get _validFormat {
-    final name = _controller.text.trim();
-    return _validLength &&
-        _validCharacters.hasMatch(name) &&
-        _someLetterOrNumber.hasMatch(name);
-  }
-
-  bool get _unchanged => _controller.text.trim() == demoProfile.username;
+  bool get _unchanged => _controller.text == demoProfile.username;
 
   void _onChanged(String value) {
     setState(() {
@@ -86,7 +68,7 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
     _debounce?.cancel();
     if (!_validFormat || _unchanged || !backend.available) return;
 
-    final checking = value.trim();
+    final checking = value;
     // A pause in typing, not every keystroke — asking the server once per
     // letter would make a rename screen the busiest thing this account ever
     // does to it.
@@ -95,7 +77,7 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
       setState(() => _checking = true);
       try {
         final ok = await backend.usernameAvailable(checking);
-        if (mounted && _controller.text.trim() == checking) {
+        if (mounted && _controller.text == checking) {
           setState(() {
             _available = ok;
             _checking = false;
@@ -103,7 +85,7 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
         }
       } on Object catch (error) {
         debugPrint('Could not check username availability: $error');
-        if (mounted && _controller.text.trim() == checking) {
+        if (mounted && _controller.text == checking) {
           setState(() {
             _checking = false;
             _error = L.of(context).couldNotCheckUsername;
@@ -115,9 +97,9 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
 
   Future<void> _save() async {
     final l = L.of(context);
-    final name = _controller.text.trim();
+    final name = _controller.text;
     if (!_validFormat) {
-      setState(() => _error = l.usernameInvalidLength);
+      setState(() => _error = usernameProblem(l, name) ?? l.usernameInvalidLength);
       return;
     }
     if (_unchanged || _saving) return;
@@ -170,7 +152,10 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
           // rather than trust the screen's own stale idea of the rule.
           setState(() {
             _saving = false;
-            _error = l.usernameAlreadyChangedBody;
+            final next = _nextChange;
+            _error = next == null
+                ? l.usernameAlreadyChangedBody
+                : usernameChangeAgainText(l, next);
           });
       }
     } on Object catch (_) {
@@ -186,7 +171,10 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
   Widget build(BuildContext context) {
     final l = L.of(context);
 
-    if (_alreadyChanged) return _AlreadyChangedSheet(heading: l.changeUsername);
+    if (_nextChange case final next?) {
+      return _AlreadyChangedSheet(heading: l.changeUsername, next: next);
+    }
+    final problem = usernameProblem(l, _controller.text);
 
     final canSave = _validFormat && !_unchanged && _available != false;
 
@@ -217,7 +205,7 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
                   color: context.colors.background,
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(
-                    color: _available == false
+                    color: _available == false || problem != null
                         ? AppColors.loss
                         : context.colors.brand,
                   ),
@@ -236,6 +224,9 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
                       child: TextField(
                         controller: _controller,
                         autofocus: true,
+                        autocorrect: false,
+                        enableSuggestions: false,
+                        inputFormatters: usernameFormatters,
                         onChanged: _onChanged,
                         style: TextStyle(
                           color: context.colors.text,
@@ -268,13 +259,14 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
               const SizedBox(height: 8),
               Text(
                 _error ??
+                    problem ??
                     (_available == false
                         ? l.obTaken
                         : _available == true
                         ? l.obAvailable
                         : ''),
                 style: context.type.micro.copyWith(
-                  color: _available == false || _error != null
+                  color: _available == false || _error != null || problem != null
                       ? AppColors.loss
                       : context.colors.muted,
                 ),
@@ -304,13 +296,13 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
   }
 }
 
-/// Shown instead of the editor once the one rename every account gets has
-/// already been spent — an explanation, not an empty field nobody could ever
-/// successfully save from.
+/// Shown instead of the editor inside the fourteen days — the rule and the
+/// day it lifts, not an empty field nobody could save from.
 class _AlreadyChangedSheet extends StatelessWidget {
-  const _AlreadyChangedSheet({required this.heading});
+  const _AlreadyChangedSheet({required this.heading, required this.next});
 
   final String heading;
+  final DateTime next;
 
   @override
   Widget build(BuildContext context) {
@@ -328,7 +320,8 @@ class _AlreadyChangedSheet extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              l.usernameAlreadyChangedBody,
+              '${l.usernameAlreadyChangedBody} ${usernameChangeAgainText(l, next)}.',
+              key: const Key('usernameNextChange'),
               style: context.type.body.copyWith(color: context.colors.muted),
             ),
             const SizedBox(height: 20),

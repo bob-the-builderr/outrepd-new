@@ -55,6 +55,11 @@ dependencies:
   app_links: ^7.2.1
   # The home-screen widgets: the app writes what they show (lib/home_widgets.dart).
   home_widget: ^0.10.0
+  # Continue with Apple and Continue with Google; see lib/screens/social_sign_in.dart.
+  sign_in_with_apple: ^7.0.1
+  google_sign_in: ^7.2.0
+  # The one-off value Apple signs into its token, hashed.
+  crypto: ^3.0.6
   # Each set saved to Apple Health or Health Connect, when turned on.
   health: ^13.3.2
   # The rep counter judges time in milliseconds, and poses carry no timestamp.

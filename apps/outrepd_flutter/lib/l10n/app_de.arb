@@ -130,7 +130,7 @@
   "couldNotCheckUsername": "Der Name konnte nicht geprüft werden — versuch es noch mal",
   "changeUsername": "Benutzernamen ändern",
   "usernameInvalidLength": "Muss 4 bis 20 Zeichen lang sein, nur Buchstaben, Zahlen und _",
-  "usernameAlreadyChangedBody": "Du hast deine einzige Namensänderung bereits genutzt — jedes Konto bekommt genau eine.",
+  "usernameAlreadyChangedBody": "Der Benutzername kann alle 14 Tage einmal geändert werden.",
   "usernameChanged": "Benutzername geändert",
   "gallery": "Galerie",
   "camera": "Kamera",
@@ -708,5 +708,14 @@
   "requestSentShort": "Anfrage gesendet",
   "healthWorksWith": "OUTREPD funktioniert mit {health}",
   "healthCardBody": "Jeder Satz, den du beendest, wird in {health} als Krafttraining gespeichert. OUTREPD liest nie deine Gesundheitsdaten.",
-  "savedToHealth": "In {health} gespeichert"
+  "savedToHealth": "In {health} gespeichert",
+  "usernameTooShort": "Zu kurz: mindestens 4 Zeichen",
+  "usernameBadCharacters": "Nur Buchstaben, Zahlen und _",
+  "usernameNeedsLetter": "Mindestens ein Buchstabe oder eine Zahl",
+  "usernameChangeAgainOn": "Du kannst ihn am {date} wieder ändern",
+  "continueWithApple": "Weiter mit Apple",
+  "continueWithGoogle": "Weiter mit Google",
+  "socialSignInFailed": "Anmeldung fehlgeschlagen. Versuch es noch mal.",
+  "chooseUsernameTitle": "Wähle deinen Benutzernamen",
+  "chooseUsernameSubtitle": "So finden dich andere und sehen dich in den Ranglisten."
 }

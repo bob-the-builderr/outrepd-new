@@ -356,8 +356,7 @@ class LKo extends L {
   String get usernameChanged => '사용자 이름이 변경되었습니다';
 
   @override
-  String get usernameAlreadyChangedBody =>
-      '이미 단 한 번뿐인 사용자 이름 변경을 사용하셨습니다 — 모든 계정은 정확히 한 번만 변경할 수 있습니다.';
+  String get usernameAlreadyChangedBody => '사용자 이름은 14일에 한 번 변경할 수 있어요.';
 
   @override
   String get gallery => '갤러리';
@@ -2303,4 +2302,33 @@ class LKo extends L {
   String savedToHealth(String health) {
     return '${health}에 저장됨';
   }
+
+  @override
+  String get usernameTooShort => '너무 짧아요: 4자 이상 입력하세요';
+
+  @override
+  String get usernameBadCharacters => '영문자, 숫자, _만 사용할 수 있어요';
+
+  @override
+  String get usernameNeedsLetter => '영문자나 숫자를 하나 이상 넣어 주세요';
+
+  @override
+  String usernameChangeAgainOn(String date) {
+    return '${date}에 다시 변경할 수 있어요';
+  }
+
+  @override
+  String get continueWithApple => 'Apple로 계속하기';
+
+  @override
+  String get continueWithGoogle => 'Google로 계속하기';
+
+  @override
+  String get socialSignInFailed => '로그인하지 못했어요. 다시 시도해 주세요.';
+
+  @override
+  String get chooseUsernameTitle => '사용자 이름을 정하세요';
+
+  @override
+  String get chooseUsernameSubtitle => '다른 사람들이 이 이름으로 당신을 찾고 순위표에서 보게 돼요.';
 }
