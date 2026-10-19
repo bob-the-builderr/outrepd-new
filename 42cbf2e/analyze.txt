@@ -1,0 +1,5 @@
+Analyzing outrepd_flutter...                                    
+
+warning • A value for optional parameter 'label' isn't ever given. Try removing the unused parameter • lib/screens/auth_entry.dart:1014:10 • unused_element_parameter
+
+1 issue found. (ran in 13.0s)
