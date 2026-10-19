@@ -287,9 +287,10 @@ void main() {
     // The rank moved on the screen, not in the plan: a retake starts the same.
     expect(plan.myLp, 40);
 
+    // Back on the setup, where it was left: scrolled down to Start.
     await tester.tap(find.byKey(const Key('done')));
     await tester.pumpAndSettle();
-    expect(find.text('OUTREPD Promo'), findsOneWidget);
+    expect(find.byKey(const Key('startPromo')), findsOneWidget);
   });
 
   testWidgets('a promotion comes first, then the result', (tester) async {
