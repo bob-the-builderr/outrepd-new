@@ -1,0 +1,196 @@
+# OUTREPD Promo Studio: the match screen staged for filming, built for iPhone
+# and uploaded to TestFlight as its own app (com.outrepd.promo).
+#
+# Lives on the `promo` branch, which holds nothing but the promo copy: the
+# app's own workflows only build pushes to camera-rep-counter, and this one
+# only builds pushes here. Reports go to the `promo-results` branch.
+#
+# The same repository secrets as the app's iOS build: APPLE_TEAM_ID,
+# ASC_KEY_ID, ASC_ISSUER_ID, ASC_KEY_P8. Nothing of the app's server.
+
+name: Promo iOS
+
+on:
+  push:
+    branches: [promo]
+
+concurrency:
+  group: promo-ios
+  cancel-in-progress: true
+
+jobs:
+  # On Linux first, where minutes are cheap: a copy that does not analyse or
+  # pass its tests never reaches the Mac.
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+
+      - name: Analyse
+        id: analyze
+        run: |
+          set -o pipefail
+          flutter analyze --no-fatal-infos --no-fatal-warnings 2>&1 | tee "$RUNNER_TEMP/analyze.txt"
+
+      - name: Test
+        id: test
+        if: always() && steps.analyze.outcome != 'skipped'
+        run: |
+          set -o pipefail
+          flutter test --reporter expanded 2>&1 | tee "$RUNNER_TEMP/test.txt"
+
+      - name: Report
+        if: always()
+        run: |
+          out="$RUNNER_TEMP/report"
+          mkdir -p "$out"
+          {
+            echo "commit    ${GITHUB_SHA}"
+            echo "analyze   ${{ steps.analyze.outcome }}"
+            echo "test      ${{ steps.test.outcome }}"
+            echo "run       ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          } > "$out/check-summary.txt"
+          tail -n 300 "$RUNNER_TEMP/analyze.txt" > "$out/analyze.txt" 2>/dev/null || true
+          tail -n 400 "$RUNNER_TEMP/test.txt" > "$out/test.txt" 2>/dev/null || true
+          bash ci/publish_results.sh "$out"
+
+  ios:
+    needs: check
+    runs-on: macos-26
+    timeout-minutes: 75
+    permissions:
+      contents: write
+    env:
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Apple signing key
+        id: apple
+        run: |
+          if [ -z "$APPLE_TEAM_ID" ] || [ -z "$ASC_KEY_ID" ] || [ -z "$ASC_ISSUER_ID" ] || [ -z "$ASC_KEY_P8" ]; then
+            echo "::warning::No Apple keys: building unsigned, to check it compiles."
+            echo "signed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          mkdir -p "$RUNNER_TEMP/keys"
+          printf '%s\n' "$ASC_KEY_P8" > "$RUNNER_TEMP/keys/AuthKey.p8"
+          echo "signed=true" >> "$GITHUB_OUTPUT"
+
+      # Registers the bundle id when Apple does not know it yet, and says
+      # whether App Store Connect has an app for it to upload to.
+      - name: App id
+        id: appid
+        if: steps.apple.outputs.signed == 'true'
+        run: node tool/ios/promo_app_id.mjs "$RUNNER_TEMP/keys/AuthKey.p8"
+
+      - name: Clear old development certificates
+        if: steps.apple.outputs.signed == 'true'
+        run: node tool/ios/revoke_dev_certs.mjs "$RUNNER_TEMP/keys/AuthKey.p8"
+
+      - name: Xcode
+        run: |
+          newest=$(ls -d /Applications/Xcode_*.app 2>/dev/null | grep -vi beta | sort -V | tail -1)
+          if [ -n "$newest" ]; then sudo xcode-select -s "$newest"; fi
+          xcodebuild -version
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      # The iPhone project is generated here rather than kept: the copy is
+      # Dart only, and this is the one place it becomes an app.
+      - name: iPhone project
+        run: |
+          set -e
+          flutter create --platforms=ios --org com.outrepd --project-name outrepd_promo .
+          rm -f test/widget_test.dart
+          flutter pub get
+
+          pbx=ios/Runner.xcodeproj/project.pbxproj
+          sed -i '' 's/com\.outrepd\.outrepdPromo/com.outrepd.promo/g' "$pbx"
+          sed -i '' -E 's/IPHONEOS_DEPLOYMENT_TARGET = [0-9.]+;/IPHONEOS_DEPLOYMENT_TARGET = 15.5;/g' "$pbx"
+          sed -i '' 's/TARGETED_DEVICE_FAMILY = "1,2";/TARGETED_DEVICE_FAMILY = 1;/g' "$pbx"
+          grep -q 'PRODUCT_BUNDLE_IDENTIFIER = com.outrepd.promo;' "$pbx"
+
+          cp ci/ios/Podfile ios/Podfile
+          rm -rf ios/Runner/Assets.xcassets/AppIcon.appiconset
+          cp -R ci/ios/AppIcon.appiconset ios/Runner/Assets.xcassets/AppIcon.appiconset
+
+          plist=ios/Runner/Info.plist
+          plutil -replace CFBundleDisplayName -string "OUTREPD Promo" "$plist"
+          plutil -replace CFBundleName -string "OUTREPD Promo" "$plist"
+          plutil -replace NSCameraUsageDescription -string "The match screen counts your push-ups by watching you move. Pose detection runs on this phone and nothing is uploaded." "$plist"
+          plutil -replace NSPhotoLibraryUsageDescription -string "Pick the pictures shown for you and your opponent." "$plist"
+          plutil -replace NSMicrophoneUsageDescription -string "No sound is ever recorded. The camera is used for pictures of your movement only." "$plist"
+          plutil -replace ITSAppUsesNonExemptEncryption -bool NO "$plist"
+          plutil -replace UISupportedInterfaceOrientations -json '["UIInterfaceOrientationPortrait"]' "$plist"
+          plutil -remove 'UISupportedInterfaceOrientations~ipad' "$plist" 2>/dev/null || true
+          plutil -lint "$plist"
+
+      - name: Build
+        id: build
+        run: |
+          set -o pipefail
+          flutter build ios --release --no-codesign \
+            --build-number=$GITHUB_RUN_NUMBER 2>&1 | tee "$RUNNER_TEMP/build.log"
+
+      - name: Archive, sign and upload to App Store Connect
+        id: upload
+        if: steps.apple.outputs.signed == 'true' && steps.appid.outputs.app_record == 'yes'
+        run: |
+          auth=(-allowProvisioningUpdates
+                -authenticationKeyPath "$RUNNER_TEMP/keys/AuthKey.p8"
+                -authenticationKeyID "$ASC_KEY_ID"
+                -authenticationKeyIssuerID "$ASC_ISSUER_ID")
+          xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner \
+            -configuration Release -destination 'generic/platform=iOS' \
+            -archivePath "$RUNNER_TEMP/Runner.xcarchive" archive \
+            DEVELOPMENT_TEAM="$APPLE_TEAM_ID" CODE_SIGN_STYLE=Automatic \
+            "${auth[@]}" > "$RUNNER_TEMP/archive.log" 2>&1 || { tail -n 150 "$RUNNER_TEMP/archive.log"; exit 1; }
+          test -d "$RUNNER_TEMP/Runner.xcarchive"
+          cp ci/ios/ExportOptions.plist "$RUNNER_TEMP/ExportOptions.plist"
+          /usr/libexec/PlistBuddy -c "Set :teamID $APPLE_TEAM_ID" "$RUNNER_TEMP/ExportOptions.plist"
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/Runner.xcarchive" \
+            -exportPath "$RUNNER_TEMP/export" \
+            -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
+            "${auth[@]}" > "$RUNNER_TEMP/export.log" 2>&1 || { tail -n 150 "$RUNNER_TEMP/export.log"; exit 1; }
+
+      - name: Report
+        if: always()
+        run: |
+          out="$RUNNER_TEMP/report"
+          mkdir -p "$out"
+          {
+            echo "commit      ${GITHUB_SHA}"
+            echo "build       ${GITHUB_RUN_NUMBER}"
+            echo "compiled    ${{ steps.build.outcome }}"
+            echo "signed      ${{ steps.apple.outputs.signed }}"
+            echo "app record  ${{ steps.appid.outputs.app_record }}"
+            echo "uploaded    ${{ steps.upload.outcome }}"
+            if grep -q "REQUIRED_AGREEMENTS" "$RUNNER_TEMP/export.log" 2>/dev/null; then
+              echo "upload note Apple wants an agreement accepted: App Store Connect > Business"
+            fi
+            echo "run         ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          } > "$out/ios-summary.txt"
+          for log in build archive export; do
+            if [ -f "$RUNNER_TEMP/$log.log" ]; then
+              tail -n 200 "$RUNNER_TEMP/$log.log" > "$out/$log-log.txt"
+            fi
+          done
+          bash ci/publish_results.sh "$out"

@@ -1,0 +1,9 @@
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.idea/
+*.iml
+build/
+# Generated on the build machine: see .github/workflows/promo-ios.yml.
+/ios/
+/android/
