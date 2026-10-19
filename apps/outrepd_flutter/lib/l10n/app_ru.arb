@@ -717,5 +717,11 @@
   "continueWithGoogle": "Продолжить с Google",
   "socialSignInFailed": "Не удалось войти. Попробуйте ещё раз.",
   "chooseUsernameTitle": "Выберите имя пользователя",
-  "chooseUsernameSubtitle": "По нему вас находят другие и видят в рейтингах."
+  "chooseUsernameSubtitle": "По нему вас находят другие и видят в рейтингах.",
+  "authHeroTitle": "ОБГОНИ ЛЮБОГО.",
+  "authHeroSubtitle": "Отжимания один на один в прямом эфире — считает ваша камера.",
+  "createAccountPitch": "Ваш ранг и дуэли — на любом телефоне.",
+  "usernameSpacesHint": "Пробелы становятся _",
+  "haveInviteCode": "Есть код приглашения?",
+  "emailCodeNote": "Мы пришлём 6-значный код на почту. Без пароля."
 }

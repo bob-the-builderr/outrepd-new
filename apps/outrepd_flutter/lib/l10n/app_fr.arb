@@ -717,5 +717,11 @@
   "continueWithGoogle": "Continuer avec Google",
   "socialSignInFailed": "Connexion impossible. Réessaie.",
   "chooseUsernameTitle": "Choisis ton nom d'utilisateur",
-  "chooseUsernameSubtitle": "C'est ainsi que les autres te trouvent et te voient dans les classements."
+  "chooseUsernameSubtitle": "C'est ainsi que les autres te trouvent et te voient dans les classements.",
+  "authHeroTitle": "BATS N'IMPORTE QUI.",
+  "authHeroSubtitle": "Des duels de pompes en direct, comptés par ta caméra.",
+  "createAccountPitch": "Ton rang et tes duels, sur n'importe quel téléphone.",
+  "usernameSpacesHint": "Les espaces deviennent _",
+  "haveInviteCode": "Tu as un code d'invitation ?",
+  "emailCodeNote": "On t'envoie un code à 6 chiffres par e-mail. Pas de mot de passe."
 }

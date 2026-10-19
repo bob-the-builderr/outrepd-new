@@ -717,5 +717,11 @@
   "continueWithGoogle": "通过 Google 继续",
   "socialSignInFailed": "无法登录，请重试。",
   "chooseUsernameTitle": "选择你的用户名",
-  "chooseUsernameSubtitle": "其他人会通过它找到你，并在排行榜上看到你。"
+  "chooseUsernameSubtitle": "其他人会通过它找到你，并在排行榜上看到你。",
+  "authHeroTitle": "超越任何人。",
+  "authHeroSubtitle": "实时俯卧撑对决，由你的摄像头计数。",
+  "createAccountPitch": "你的段位和对决，在任何手机上都在。",
+  "usernameSpacesHint": "空格会变成 _",
+  "haveInviteCode": "有邀请码吗？",
+  "emailCodeNote": "我们会给你发送 6 位数验证码邮件，无需密码。"
 }

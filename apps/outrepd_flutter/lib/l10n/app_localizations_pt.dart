@@ -2365,4 +2365,22 @@ class LPt extends L {
 
   @override
   String get chooseUsernameSubtitle => 'É assim que os outros te encontram e te veem nas classificações.';
+
+  @override
+  String get authHeroTitle => 'SUPERA QUALQUER UM.';
+
+  @override
+  String get authHeroSubtitle => 'Duelos de flexões ao vivo, contados pela tua câmara.';
+
+  @override
+  String get createAccountPitch => 'O teu rank e os teus duelos, em qualquer telemóvel.';
+
+  @override
+  String get usernameSpacesHint => 'Os espaços passam a _';
+
+  @override
+  String get haveInviteCode => 'Tens um código de convite?';
+
+  @override
+  String get emailCodeNote => 'Vamos enviar-te um código de 6 dígitos por email. Sem palavra-passe.';
 }

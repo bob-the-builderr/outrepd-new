@@ -717,5 +717,11 @@
   "continueWithGoogle": "Google ile devam et",
   "socialSignInFailed": "Giriş yapılamadı. Tekrar dene.",
   "chooseUsernameTitle": "Kullanıcı adını seç",
-  "chooseUsernameSubtitle": "Diğerleri seni bu adla bulur ve sıralamalarda görür."
+  "chooseUsernameSubtitle": "Diğerleri seni bu adla bulur ve sıralamalarda görür.",
+  "authHeroTitle": "HERKESİ GEÇ.",
+  "authHeroSubtitle": "Canlı şınav düelloları, kameran sayar.",
+  "createAccountPitch": "Rütben ve düelloların, her telefonda.",
+  "usernameSpacesHint": "Boşluklar _ olur",
+  "haveInviteCode": "Davet kodun var mı?",
+  "emailCodeNote": "Sana e-postayla 6 haneli bir kod göndereceğiz. Şifre yok."
 }

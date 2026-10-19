@@ -4300,6 +4300,42 @@ abstract class L {
   /// In en, this message translates to:
   /// **'It's how other lifters find you and see you on the boards.'**
   String get chooseUsernameSubtitle;
+
+  /// No description provided for @authHeroTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'OUT-REP ANYONE.'**
+  String get authHeroTitle;
+
+  /// No description provided for @authHeroSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Live push-up duels, counted by your camera.'**
+  String get authHeroSubtitle;
+
+  /// No description provided for @createAccountPitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Your rank, your duels, on every phone.'**
+  String get createAccountPitch;
+
+  /// No description provided for @usernameSpacesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Spaces become _'**
+  String get usernameSpacesHint;
+
+  /// No description provided for @haveInviteCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Have an invite code?'**
+  String get haveInviteCode;
+
+  /// No description provided for @emailCodeNote.
+  ///
+  /// In en, this message translates to:
+  /// **'We'll email you a 6-digit code. No password.'**
+  String get emailCodeNote;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

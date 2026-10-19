@@ -1518,5 +1518,11 @@
   "continueWithGoogle": "Continue with Google",
   "socialSignInFailed": "Couldn't sign in. Try again.",
   "chooseUsernameTitle": "Choose your username",
-  "chooseUsernameSubtitle": "It's how other lifters find you and see you on the boards."
+  "chooseUsernameSubtitle": "It's how other lifters find you and see you on the boards.",
+  "authHeroTitle": "OUT-REP ANYONE.",
+  "authHeroSubtitle": "Live push-up duels, counted by your camera.",
+  "createAccountPitch": "Your rank, your duels, on every phone.",
+  "usernameSpacesHint": "Spaces become _",
+  "haveInviteCode": "Have an invite code?",
+  "emailCodeNote": "We'll email you a 6-digit code. No password."
 }

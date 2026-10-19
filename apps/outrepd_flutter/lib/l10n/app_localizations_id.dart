@@ -2362,4 +2362,22 @@ class LId extends L {
 
   @override
   String get chooseUsernameSubtitle => 'Dengan nama ini orang lain menemukanmu dan melihatmu di papan peringkat.';
+
+  @override
+  String get authHeroTitle => 'KALAHKAN SIAPA PUN.';
+
+  @override
+  String get authHeroSubtitle => 'Duel push-up langsung, dihitung oleh kameramu.';
+
+  @override
+  String get createAccountPitch => 'Peringkat dan duelmu, di ponsel mana pun.';
+
+  @override
+  String get usernameSpacesHint => 'Spasi menjadi _';
+
+  @override
+  String get haveInviteCode => 'Punya kode undangan?';
+
+  @override
+  String get emailCodeNote => 'Kami akan mengirim kode 6 digit ke emailmu. Tanpa kata sandi.';
 }

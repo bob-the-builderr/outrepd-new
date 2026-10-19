@@ -717,5 +717,11 @@
   "continueWithGoogle": "Google के साथ जारी रखें",
   "socialSignInFailed": "साइन इन नहीं हो सका। फिर से कोशिश करें।",
   "chooseUsernameTitle": "अपना यूज़रनेम चुनें",
-  "chooseUsernameSubtitle": "इसी से दूसरे लोग आपको ढूंढते हैं और रैंकिंग में देखते हैं।"
+  "chooseUsernameSubtitle": "इसी से दूसरे लोग आपको ढूंढते हैं और रैंकिंग में देखते हैं।",
+  "authHeroTitle": "किसी को भी हराओ।",
+  "authHeroSubtitle": "लाइव पुश-अप मुकाबले, आपका कैमरा गिनता है।",
+  "createAccountPitch": "आपकी रैंक और मुकाबले, हर फ़ोन पर।",
+  "usernameSpacesHint": "स्पेस _ बन जाते हैं",
+  "haveInviteCode": "क्या आपके पास इनवाइट कोड है?",
+  "emailCodeNote": "हम आपको ईमेल पर 6 अंकों का कोड भेजेंगे। कोई पासवर्ड नहीं।"
 }

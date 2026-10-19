@@ -717,5 +717,11 @@
   "continueWithGoogle": "Continuar con Google",
   "socialSignInFailed": "No se pudo iniciar sesión. Inténtalo de nuevo.",
   "chooseUsernameTitle": "Elige tu nombre de usuario",
-  "chooseUsernameSubtitle": "Así te encuentran otros y te ven en las clasificaciones."
+  "chooseUsernameSubtitle": "Así te encuentran otros y te ven en las clasificaciones.",
+  "authHeroTitle": "SUPERA A CUALQUIERA.",
+  "authHeroSubtitle": "Duelos de flexiones en vivo, contados por tu cámara.",
+  "createAccountPitch": "Tu rango y tus duelos, en cualquier móvil.",
+  "usernameSpacesHint": "Los espacios se convierten en _",
+  "haveInviteCode": "¿Tienes un código de invitación?",
+  "emailCodeNote": "Te enviaremos un código de 6 dígitos por correo. Sin contraseña."
 }

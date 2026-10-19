@@ -2325,4 +2325,22 @@ class LJa extends L {
 
   @override
   String get chooseUsernameSubtitle => 'ほかのユーザーがあなたを見つけたり、ランキングで見たりするための名前です。';
+
+  @override
+  String get authHeroTitle => '誰にでも勝て。';
+
+  @override
+  String get authHeroSubtitle => 'ライブの腕立て対決。数えるのはあなたのカメラ。';
+
+  @override
+  String get createAccountPitch => 'ランクも対戦も、どのスマホでも。';
+
+  @override
+  String get usernameSpacesHint => 'スペースは _ になります';
+
+  @override
+  String get haveInviteCode => '招待コードをお持ちですか？';
+
+  @override
+  String get emailCodeNote => '6桁のコードをメールでお送りします。パスワードは不要です。';
 }

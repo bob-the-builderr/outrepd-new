@@ -2363,4 +2363,22 @@ class LHi extends L {
 
   @override
   String get chooseUsernameSubtitle => 'इसी से दूसरे लोग आपको ढूंढते हैं और रैंकिंग में देखते हैं।';
+
+  @override
+  String get authHeroTitle => 'किसी को भी हराओ।';
+
+  @override
+  String get authHeroSubtitle => 'लाइव पुश-अप मुकाबले, आपका कैमरा गिनता है।';
+
+  @override
+  String get createAccountPitch => 'आपकी रैंक और मुकाबले, हर फ़ोन पर।';
+
+  @override
+  String get usernameSpacesHint => 'स्पेस _ बन जाते हैं';
+
+  @override
+  String get haveInviteCode => 'क्या आपके पास इनवाइट कोड है?';
+
+  @override
+  String get emailCodeNote => 'हम आपको ईमेल पर 6 अंकों का कोड भेजेंगे। कोई पासवर्ड नहीं।';
 }

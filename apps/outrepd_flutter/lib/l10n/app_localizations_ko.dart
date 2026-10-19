@@ -2331,4 +2331,22 @@ class LKo extends L {
 
   @override
   String get chooseUsernameSubtitle => '다른 사람들이 이 이름으로 당신을 찾고 순위표에서 보게 돼요.';
+
+  @override
+  String get authHeroTitle => '누구든 이겨라.';
+
+  @override
+  String get authHeroSubtitle => '실시간 푸시업 대결, 카메라가 세어 줘요.';
+
+  @override
+  String get createAccountPitch => '내 랭크와 대결 기록을 어떤 폰에서든.';
+
+  @override
+  String get usernameSpacesHint => '띄어쓰기는 _로 바뀌어요';
+
+  @override
+  String get haveInviteCode => '초대 코드가 있나요?';
+
+  @override
+  String get emailCodeNote => '이메일로 6자리 코드를 보내 드려요. 비밀번호는 필요 없어요.';
 }

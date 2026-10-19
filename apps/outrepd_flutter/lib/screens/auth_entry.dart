@@ -9,6 +9,7 @@
 library;
 
 import 'dart:async';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +20,7 @@ import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../subscription.dart';
 import '../theme.dart';
+import '../tier_badge.dart';
 import '../type_scale.dart';
 import '../username_rules.dart';
 import 'legal_line.dart';
@@ -69,25 +71,48 @@ class _AuthEntryScreenState extends State<AuthEntryScreen>
           padding: const EdgeInsets.fromLTRB(28, 12, 28, 20),
           child: Column(
             children: [
+              // The rank is the hero: a badge with its own glow, and what
+              // the app is in two lines. Scaled down as a whole on a short
+              // phone rather than pushing the buttons off the screen.
               Expanded(
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset(
-                        'assets/images/logo-wordmark.png',
-                        width: 150,
-                        fit: BoxFit.contain,
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        l.authEntryTagline,
-                        textAlign: TextAlign.center,
-                        style: context.type.heading.copyWith(
-                          color: context.colors.text,
+                child: LayoutBuilder(
+                  builder: (context, box) => Center(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: SizedBox(
+                        width: box.maxWidth,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const _HeroBadge(size: 200),
+                            const SizedBox(height: 14),
+                            Text(
+                              l.authHeroTitle,
+                              key: const Key('authHeroTitle'),
+                              textAlign: TextAlign.center,
+                              style: context.type.title.copyWith(
+                                color: context.colors.text,
+                                fontSize: 38,
+                                fontWeight: FontWeight.w800,
+                                height: 1.05,
+                                letterSpacing: 0.5,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              l.authHeroSubtitle,
+                              textAlign: TextAlign.center,
+                              style: context.type.body.copyWith(
+                                color: context.colors.text.withValues(
+                                  alpha: 0.78,
+                                ),
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
@@ -171,9 +196,13 @@ mixin _UsernameChecks<T extends StatefulWidget> on State<T> {
   Widget _usernameField(L l) => _Field(
     key: const Key('signUpUsername'),
     controller: _username,
-    label: l.usernameLabel,
+    icon: Icons.alternate_email,
+    hint: l.usernameLabel,
     inputFormatters: usernameFormatters,
     errorText: _usernameError(l),
+    helperText: _available == true
+        ? '${l.obAvailable} · ${l.usernameSpacesHint}'
+        : l.usernameSpacesHint,
     suffix: _checking
         ? SizedBox(
             width: 16,
@@ -238,6 +267,9 @@ class _SignUpScreenState extends State<SignUpScreen> with _UsernameChecks {
 
   /// The code went through: the week is on its way.
   bool _inviteClaimed = false;
+
+  /// The invite field, opened from its line.
+  bool _showInvite = false;
 
   @override
   void _usernameEdited() => _error = null;
@@ -396,86 +428,125 @@ class _SignUpScreenState extends State<SignUpScreen> with _UsernameChecks {
     return Scaffold(
       backgroundColor: context.colors.background,
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _BackHeader(
-                title: l.createYourAccountTitle,
-                subtitle: l.createAccountSubtitle,
-              ),
-              const SizedBox(height: 26),
-              _usernameField(l),
-              const SizedBox(height: 12),
-              _Field(
-                controller: _email,
-                label: l.emailLabel,
-                hint: l.emailHint,
-                keyboardType: TextInputType.emailAddress,
-                onChanged: (_) => setState(() => _error = null),
-                onSubmitted: (_) => _submit(),
-              ),
-              const SizedBox(height: 12),
-              _Field(
-                key: const Key('inviteCode'),
-                controller: _invite,
-                label: l.inviteCodeLabel,
-                hint: '#482913',
-                keyboardType: TextInputType.number,
-                onChanged: (_) => setState(() => _error = null),
-                onSubmitted: (_) => _submit(),
-              ),
-              if (_inviteClaimed) ...[
-                const SizedBox(height: 8),
-                Row(
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Icon(
-                      Icons.check_circle,
-                      size: 16,
-                      color: AppColors.success,
+                    _BackHeader(
+                      title: l.createYourAccountTitle,
+                      subtitle: l.createAccountPitch,
                     ),
-                    const SizedBox(width: 6),
-                    Expanded(
-                      child: Text(
-                        l.inviteClaimed,
-                        style: context.type.label.copyWith(
-                          color: AppColors.success,
+                    const SizedBox(height: 26),
+                    _usernameField(l),
+                    const SizedBox(height: 12),
+                    _Field(
+                      controller: _email,
+                      icon: Icons.mail_outline,
+                      hint: l.emailHint,
+                      keyboardType: TextInputType.emailAddress,
+                      onChanged: (_) => setState(() => _error = null),
+                      onSubmitted: (_) => _submit(),
+                    ),
+                    const SizedBox(height: 12),
+                    // Most people have no code: a line to open, not a third
+                    // empty field to wonder about.
+                    if (_showInvite || _invite.text.isNotEmpty)
+                      _Field(
+                        key: const Key('inviteCode'),
+                        controller: _invite,
+                        icon: Icons.card_giftcard_outlined,
+                        hint: l.inviteCodeLabel,
+                        keyboardType: TextInputType.number,
+                        onChanged: (_) => setState(() => _error = null),
+                        onSubmitted: (_) => _submit(),
+                      )
+                    else
+                      Align(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: TextButton.icon(
+                          key: const Key('showInviteCode'),
+                          onPressed: () => setState(() => _showInvite = true),
+                          icon: const Icon(Icons.add, size: 18),
+                          label: Text(l.haveInviteCode),
+                          style: TextButton.styleFrom(
+                            foregroundColor: context.colors.brand,
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                          ),
                         ),
                       ),
-                    ),
+                    if (_inviteClaimed) ...[
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.check_circle,
+                            size: 16,
+                            color: AppColors.success,
+                          ),
+                          const SizedBox(width: 6),
+                          Expanded(
+                            child: Text(
+                              l.inviteClaimed,
+                              style: context.type.label.copyWith(
+                                color: AppColors.success,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                    if (_error != null) ...[
+                      const SizedBox(height: 10),
+                      Text(
+                        _error!,
+                        style: context.type.label.copyWith(
+                          color: AppColors.loss,
+                        ),
+                      ),
+                    ],
                   ],
                 ),
-              ],
-              if (_error != null) ...[
-                const SizedBox(height: 10),
-                Text(
-                  _error!,
-                  style: context.type.label.copyWith(color: AppColors.loss),
-                ),
-              ],
-              const SizedBox(height: 22),
-              FilledButton(
-                onPressed: _canSubmit ? _submit : null,
-                style: FilledButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                ),
-                child: _busy
-                    ? const SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : Text(l.createAccountAction),
               ),
-              const SizedBox(height: 14),
-              LegalLine(
-                style: TextStyle(color: context.colors.faint, fontSize: 13),
-                linkStyle: TextStyle(color: context.colors.muted),
-                textAlign: TextAlign.center,
+            ),
+            // The way on stays under the thumb, whatever is above it.
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, 14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  FilledButton(
+                    onPressed: _canSubmit ? _submit : null,
+                    style: FilledButton.styleFrom(
+                      minimumSize: const Size.fromHeight(56),
+                    ),
+                    child: _busy
+                        ? const SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : Text(l.createAccountAction),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    l.emailCodeNote,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: context.colors.muted, fontSize: 13),
+                  ),
+                  const SizedBox(height: 6),
+                  LegalLine(
+                    style: TextStyle(color: context.colors.faint, fontSize: 13),
+                    linkStyle: TextStyle(color: context.colors.muted),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -571,7 +642,7 @@ class _LoginScreenState extends State<LoginScreen> with _SocialSignIn {
               ],
               _Field(
                 controller: _email,
-                label: l.emailLabel,
+                icon: Icons.mail_outline,
                 hint: l.emailHint,
                 keyboardType: TextInputType.emailAddress,
                 onChanged: (_) => setState(() => _error = null),
@@ -948,7 +1019,15 @@ class _Field extends StatelessWidget {
     this.inputFormatters,
     this.errorText,
     this.suffix,
+    this.icon,
+    this.helperText,
   });
+
+  /// At the start of the field: what it is for, in place of a label above.
+  final IconData? icon;
+
+  /// Said quietly under the field while nothing is wrong.
+  final String? helperText;
 
   final List<TextInputFormatter>? inputFormatters;
 
@@ -1001,6 +1080,13 @@ class _Field extends StatelessWidget {
                     child: suffix,
                   ),
             suffixIconConstraints: const BoxConstraints(minWidth: 24),
+            prefixIcon: icon == null
+                ? null
+                : Icon(icon, size: 21, color: context.colors.muted),
+            helperText: helperText,
+            helperStyle: context.type.label.copyWith(
+              color: context.colors.muted,
+            ),
             errorText: errorText,
             errorStyle: context.type.label.copyWith(color: AppColors.loss),
             errorMaxLines: 2,
@@ -1029,6 +1115,49 @@ class _Field extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// The entry screen's hero: a Gold badge, its glow rising behind it in its
+/// own shape — blurred, tinted copies of the badge rather than a circle.
+class _HeroBadge extends StatelessWidget {
+  const _HeroBadge({required this.size});
+
+  final double size;
+
+  static const _tier = 3;
+
+  @override
+  Widget build(BuildContext context) {
+    final colour = kTiers[_tier].color;
+    Widget glow(double blur, double opacity) => ImageFiltered(
+      // Decal, not clamp: clamping drew a faint disc around the crest.
+      imageFilter: ui.ImageFilter.blur(
+        sigmaX: blur,
+        sigmaY: blur,
+        tileMode: ui.TileMode.decal,
+      ),
+      child: Opacity(
+        opacity: opacity,
+        child: ColorFiltered(
+          colorFilter: ColorFilter.mode(colour, BlendMode.srcATop),
+          child: TierBadge(tierIndex: _tier, size: size),
+        ),
+      ),
+    );
+    return SizedBox(
+      width: size,
+      height: size,
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.center,
+        children: [
+          glow(30, 0.6),
+          glow(12, 0.75),
+          TierBadge(tierIndex: _tier, size: size),
+        ],
+      ),
     );
   }
 }
@@ -1232,12 +1361,19 @@ class _BackHeader extends StatelessWidget {
         const SizedBox(height: 22),
         Text(
           title,
-          style: context.type.title.copyWith(color: context.colors.text),
+          style: context.type.title.copyWith(
+            color: context.colors.text,
+            fontSize: 32,
+            fontWeight: FontWeight.w800,
+            height: 1.08,
+          ),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: 8),
         Text(
           subtitle,
-          style: context.type.body.copyWith(color: context.colors.muted),
+          style: context.type.body.copyWith(
+            color: context.colors.text.withValues(alpha: 0.75),
+          ),
         ),
       ],
     );

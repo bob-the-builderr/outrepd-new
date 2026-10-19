@@ -2369,4 +2369,22 @@ class LFr extends L {
 
   @override
   String get chooseUsernameSubtitle => 'C\'est ainsi que les autres te trouvent et te voient dans les classements.';
+
+  @override
+  String get authHeroTitle => 'BATS N\'IMPORTE QUI.';
+
+  @override
+  String get authHeroSubtitle => 'Des duels de pompes en direct, comptés par ta caméra.';
+
+  @override
+  String get createAccountPitch => 'Ton rang et tes duels, sur n\'importe quel téléphone.';
+
+  @override
+  String get usernameSpacesHint => 'Les espaces deviennent _';
+
+  @override
+  String get haveInviteCode => 'Tu as un code d\'invitation ?';
+
+  @override
+  String get emailCodeNote => 'On t\'envoie un code à 6 chiffres par e-mail. Pas de mot de passe.';
 }

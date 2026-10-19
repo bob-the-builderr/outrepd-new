@@ -717,5 +717,11 @@
   "continueWithGoogle": "Weiter mit Google",
   "socialSignInFailed": "Anmeldung fehlgeschlagen. Versuch es noch mal.",
   "chooseUsernameTitle": "Wähle deinen Benutzernamen",
-  "chooseUsernameSubtitle": "So finden dich andere und sehen dich in den Ranglisten."
+  "chooseUsernameSubtitle": "So finden dich andere und sehen dich in den Ranglisten.",
+  "authHeroTitle": "SCHLAG JEDEN.",
+  "authHeroSubtitle": "Live-Liegestütz-Duelle, gezählt von deiner Kamera.",
+  "createAccountPitch": "Dein Rang und deine Duelle, auf jedem Handy.",
+  "usernameSpacesHint": "Leerzeichen werden zu _",
+  "haveInviteCode": "Hast du einen Einladungscode?",
+  "emailCodeNote": "Wir schicken dir einen 6-stelligen Code per E-Mail. Kein Passwort."
 }

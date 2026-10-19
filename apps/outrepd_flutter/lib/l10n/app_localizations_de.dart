@@ -2370,4 +2370,22 @@ class LDe extends L {
 
   @override
   String get chooseUsernameSubtitle => 'So finden dich andere und sehen dich in den Ranglisten.';
+
+  @override
+  String get authHeroTitle => 'SCHLAG JEDEN.';
+
+  @override
+  String get authHeroSubtitle => 'Live-Liegestütz-Duelle, gezählt von deiner Kamera.';
+
+  @override
+  String get createAccountPitch => 'Dein Rang und deine Duelle, auf jedem Handy.';
+
+  @override
+  String get usernameSpacesHint => 'Leerzeichen werden zu _';
+
+  @override
+  String get haveInviteCode => 'Hast du einen Einladungscode?';
+
+  @override
+  String get emailCodeNote => 'Wir schicken dir einen 6-stelligen Code per E-Mail. Kein Passwort.';
 }

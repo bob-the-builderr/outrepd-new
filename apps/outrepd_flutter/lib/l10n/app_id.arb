@@ -717,5 +717,11 @@
   "continueWithGoogle": "Lanjutkan dengan Google",
   "socialSignInFailed": "Gagal masuk. Coba lagi.",
   "chooseUsernameTitle": "Pilih nama penggunamu",
-  "chooseUsernameSubtitle": "Dengan nama ini orang lain menemukanmu dan melihatmu di papan peringkat."
+  "chooseUsernameSubtitle": "Dengan nama ini orang lain menemukanmu dan melihatmu di papan peringkat.",
+  "authHeroTitle": "KALAHKAN SIAPA PUN.",
+  "authHeroSubtitle": "Duel push-up langsung, dihitung oleh kameramu.",
+  "createAccountPitch": "Peringkat dan duelmu, di ponsel mana pun.",
+  "usernameSpacesHint": "Spasi menjadi _",
+  "haveInviteCode": "Punya kode undangan?",
+  "emailCodeNote": "Kami akan mengirim kode 6 digit ke emailmu. Tanpa kata sandi."
 }

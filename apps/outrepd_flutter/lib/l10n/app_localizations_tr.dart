@@ -2358,4 +2358,22 @@ class LTr extends L {
 
   @override
   String get chooseUsernameSubtitle => 'Diğerleri seni bu adla bulur ve sıralamalarda görür.';
+
+  @override
+  String get authHeroTitle => 'HERKESİ GEÇ.';
+
+  @override
+  String get authHeroSubtitle => 'Canlı şınav düelloları, kameran sayar.';
+
+  @override
+  String get createAccountPitch => 'Rütben ve düelloların, her telefonda.';
+
+  @override
+  String get usernameSpacesHint => 'Boşluklar _ olur';
+
+  @override
+  String get haveInviteCode => 'Davet kodun var mı?';
+
+  @override
+  String get emailCodeNote => 'Sana e-postayla 6 haneli bir kod göndereceğiz. Şifre yok.';
 }

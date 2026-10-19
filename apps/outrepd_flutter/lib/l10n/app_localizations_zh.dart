@@ -2315,4 +2315,22 @@ class LZh extends L {
 
   @override
   String get chooseUsernameSubtitle => '其他人会通过它找到你，并在排行榜上看到你。';
+
+  @override
+  String get authHeroTitle => '超越任何人。';
+
+  @override
+  String get authHeroSubtitle => '实时俯卧撑对决，由你的摄像头计数。';
+
+  @override
+  String get createAccountPitch => '你的段位和对决，在任何手机上都在。';
+
+  @override
+  String get usernameSpacesHint => '空格会变成 _';
+
+  @override
+  String get haveInviteCode => '有邀请码吗？';
+
+  @override
+  String get emailCodeNote => '我们会给你发送 6 位数验证码邮件，无需密码。';
 }

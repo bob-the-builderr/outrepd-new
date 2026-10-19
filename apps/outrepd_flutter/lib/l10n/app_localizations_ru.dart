@@ -2363,4 +2363,22 @@ class LRu extends L {
 
   @override
   String get chooseUsernameSubtitle => 'По нему вас находят другие и видят в рейтингах.';
+
+  @override
+  String get authHeroTitle => 'ОБГОНИ ЛЮБОГО.';
+
+  @override
+  String get authHeroSubtitle => 'Отжимания один на один в прямом эфире — считает ваша камера.';
+
+  @override
+  String get createAccountPitch => 'Ваш ранг и дуэли — на любом телефоне.';
+
+  @override
+  String get usernameSpacesHint => 'Пробелы становятся _';
+
+  @override
+  String get haveInviteCode => 'Есть код приглашения?';
+
+  @override
+  String get emailCodeNote => 'Мы пришлём 6-значный код на почту. Без пароля.';
 }

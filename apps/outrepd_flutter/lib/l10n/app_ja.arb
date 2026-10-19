@@ -717,5 +717,11 @@
   "continueWithGoogle": "Googleで続ける",
   "socialSignInFailed": "サインインできませんでした。もう一度お試しください。",
   "chooseUsernameTitle": "ユーザー名を選んでください",
-  "chooseUsernameSubtitle": "ほかのユーザーがあなたを見つけたり、ランキングで見たりするための名前です。"
+  "chooseUsernameSubtitle": "ほかのユーザーがあなたを見つけたり、ランキングで見たりするための名前です。",
+  "authHeroTitle": "誰にでも勝て。",
+  "authHeroSubtitle": "ライブの腕立て対決。数えるのはあなたのカメラ。",
+  "createAccountPitch": "ランクも対戦も、どのスマホでも。",
+  "usernameSpacesHint": "スペースは _ になります",
+  "haveInviteCode": "招待コードをお持ちですか？",
+  "emailCodeNote": "6桁のコードをメールでお送りします。パスワードは不要です。"
 }

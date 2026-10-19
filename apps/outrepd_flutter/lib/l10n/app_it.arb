@@ -717,5 +717,11 @@
   "continueWithGoogle": "Continua con Google",
   "socialSignInFailed": "Accesso non riuscito. Riprova.",
   "chooseUsernameTitle": "Scegli il tuo nome utente",
-  "chooseUsernameSubtitle": "È così che gli altri ti trovano e ti vedono nelle classifiche."
+  "chooseUsernameSubtitle": "È così che gli altri ti trovano e ti vedono nelle classifiche.",
+  "authHeroTitle": "BATTI CHIUNQUE.",
+  "authHeroSubtitle": "Sfide di flessioni dal vivo, contate dalla tua fotocamera.",
+  "createAccountPitch": "Il tuo grado e le tue sfide, su ogni telefono.",
+  "usernameSpacesHint": "Gli spazi diventano _",
+  "haveInviteCode": "Hai un codice invito?",
+  "emailCodeNote": "Ti invieremo via email un codice di 6 cifre. Nessuna password."
 }

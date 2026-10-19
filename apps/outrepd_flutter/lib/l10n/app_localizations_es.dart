@@ -2368,4 +2368,22 @@ class LEs extends L {
 
   @override
   String get chooseUsernameSubtitle => 'Así te encuentran otros y te ven en las clasificaciones.';
+
+  @override
+  String get authHeroTitle => 'SUPERA A CUALQUIERA.';
+
+  @override
+  String get authHeroSubtitle => 'Duelos de flexiones en vivo, contados por tu cámara.';
+
+  @override
+  String get createAccountPitch => 'Tu rango y tus duelos, en cualquier móvil.';
+
+  @override
+  String get usernameSpacesHint => 'Los espacios se convierten en _';
+
+  @override
+  String get haveInviteCode => '¿Tienes un código de invitación?';
+
+  @override
+  String get emailCodeNote => 'Te enviaremos un código de 6 dígitos por correo. Sin contraseña.';
 }

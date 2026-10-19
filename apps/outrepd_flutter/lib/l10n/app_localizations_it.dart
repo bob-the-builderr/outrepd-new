@@ -2368,4 +2368,22 @@ class LIt extends L {
 
   @override
   String get chooseUsernameSubtitle => 'È così che gli altri ti trovano e ti vedono nelle classifiche.';
+
+  @override
+  String get authHeroTitle => 'BATTI CHIUNQUE.';
+
+  @override
+  String get authHeroSubtitle => 'Sfide di flessioni dal vivo, contate dalla tua fotocamera.';
+
+  @override
+  String get createAccountPitch => 'Il tuo grado e le tue sfide, su ogni telefono.';
+
+  @override
+  String get usernameSpacesHint => 'Gli spazi diventano _';
+
+  @override
+  String get haveInviteCode => 'Hai un codice invito?';
+
+  @override
+  String get emailCodeNote => 'Ti invieremo via email un codice di 6 cifre. Nessuna password.';
 }

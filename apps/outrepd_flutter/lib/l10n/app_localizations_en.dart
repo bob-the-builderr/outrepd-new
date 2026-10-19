@@ -2361,4 +2361,22 @@ class LEn extends L {
 
   @override
   String get chooseUsernameSubtitle => 'It\'s how other lifters find you and see you on the boards.';
+
+  @override
+  String get authHeroTitle => 'OUT-REP ANYONE.';
+
+  @override
+  String get authHeroSubtitle => 'Live push-up duels, counted by your camera.';
+
+  @override
+  String get createAccountPitch => 'Your rank, your duels, on every phone.';
+
+  @override
+  String get usernameSpacesHint => 'Spaces become _';
+
+  @override
+  String get haveInviteCode => 'Have an invite code?';
+
+  @override
+  String get emailCodeNote => 'We\'ll email you a 6-digit code. No password.';
 }
