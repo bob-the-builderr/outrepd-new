@@ -9,4 +9,4 @@
 00:01 +7: a whole take: setup, the round, the result, and back
 00:04 +8: a promotion comes first, then the result
 00:04 +9: giving up is a loss whatever the count
-00:04 +10: All tests passed!
+00:05 +10: All tests passed!
