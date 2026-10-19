@@ -1242,6 +1242,22 @@ class SupabaseBackend implements Backend {
   LiveLink openLiveLink(String matchId) => _RealtimeLiveLink(_db, matchId);
 
   @override
+  bool get signedInWithApple =>
+      _db.auth.currentUser?.identities?.any((i) => i.provider == 'apple') ??
+      false;
+
+  @override
+  Future<void> revokeAppleSignIn(String authorizationCode) async {
+    final response = await _db.functions.invoke(
+      'revoke-apple',
+      body: {'code': authorizationCode},
+    );
+    if (response.status != 200) {
+      throw StateError('Apple sign-in not revoked: ${response.data}');
+    }
+  }
+
+  @override
   Future<void> deleteAccount() async {
     // The photo first, while this session can still prove it owns the file.
     // Deleting the account does not reach storage, and the bucket is public,

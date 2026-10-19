@@ -108,6 +108,20 @@ Future<SocialSignInResult> _google() async {
   );
 }
 
+/// A fresh authorization code from Apple's sheet, to revoke the account's
+/// Sign in with Apple as it is deleted. Null when the sheet was closed.
+Future<String?> appleAuthorizationCode() async {
+  try {
+    final credential = await SignInWithApple.getAppleIDCredential(scopes: []);
+    return credential.authorizationCode;
+  } on SignInWithAppleAuthorizationException catch (error) {
+    if (error.code != AuthorizationErrorCode.canceled) {
+      debugPrint('Apple sheet: ${error.message}');
+    }
+    return null;
+  }
+}
+
 String _nonce([int length = 32]) {
   const chars =
       '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';

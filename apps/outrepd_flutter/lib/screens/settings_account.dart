@@ -24,6 +24,7 @@ import '../theme.dart';
 import '../widgets.dart';
 import 'leave_account.dart';
 import 'settings_parts.dart';
+import 'social_sign_in.dart';
 
 // ──────────────────────────── download my data ───────────────────────────────
 
@@ -282,6 +283,19 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
       // address on the phone, so the next account here starts clean. If the
       // delete then fails, the next launch registers again.
       await Push.instance.stop();
+      // Signed in with Apple: Apple's access is revoked first, as the App
+      // Store asks, with a code from its sheet. Closing the sheet or a
+      // failure here does not keep an account its owner asked to delete.
+      if (backend.signedInWithApple) {
+        final code = await appleAuthorizationCode();
+        if (code != null) {
+          try {
+            await backend.revokeAppleSignIn(code);
+          } on Object catch (error) {
+            debugPrint('Could not revoke Sign in with Apple: $error');
+          }
+        }
+      }
       await backend.deleteAccount();
     } on Object catch (_) {
       if (!mounted) return;

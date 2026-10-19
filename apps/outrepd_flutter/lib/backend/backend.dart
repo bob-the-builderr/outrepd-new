@@ -1285,6 +1285,14 @@ abstract interface class Backend {
   /// Deletes the account and everything hanging off it. Irreversible.
   Future<void> deleteAccount();
 
+  /// This account signs in with Apple: deleting it must revoke that.
+  bool get signedInWithApple;
+
+  /// Ends the app's access to the Apple ID, with a fresh authorization code
+  /// from Apple's sheet (App Store guideline 5.1.1(v)). Throws when Apple or
+  /// the server would not.
+  Future<void> revokeAppleSignIn(String authorizationCode);
+
   /// Leaves the account on the server as it is and forgets it on this
   /// phone. [me] is null afterwards; [signIn] starts a fresh one.
   Future<void> signOut();
@@ -1565,6 +1573,12 @@ class NoBackend implements Backend {
 
   @override
   Future<void> deleteAccount() => throw StateError('no server configured');
+
+  @override
+  bool get signedInWithApple => false;
+
+  @override
+  Future<void> revokeAppleSignIn(String authorizationCode) async {}
 
   @override
   Future<void> signOut() async {}
