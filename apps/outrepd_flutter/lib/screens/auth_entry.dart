@@ -1119,14 +1119,15 @@ class _Field extends StatelessWidget {
   }
 }
 
-/// The entry screen's hero: a Gold badge, its glow rising behind it in its
-/// own shape — blurred, tinted copies of the badge rather than a circle.
+/// The entry screen's hero: the Master badge — the top of the ladder — its
+/// glow rising behind it in its own shape: blurred, tinted copies of the
+/// badge rather than a circle.
 class _HeroBadge extends StatelessWidget {
   const _HeroBadge({required this.size});
 
   final double size;
 
-  static const _tier = 3;
+  static final _tier = kTiers.length - 1;
 
   @override
   Widget build(BuildContext context) {
