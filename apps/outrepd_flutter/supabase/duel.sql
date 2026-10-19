@@ -47,6 +47,8 @@ create index if not exists sets_pool_idx
 -- Async on purpose: two people being free in the same minute is the hardest
 -- thing to arrange in a fitness app, and it is not needed. You race their
 -- minute, they find out they were raced.
+-- Dropped first: the picture was added to what it returns.
+drop function if exists find_opponent_set(int);
 create or replace function find_opponent_set(within_levels int default 6)
 returns table (
   set_id uuid,
@@ -55,7 +57,8 @@ returns table (
   tier_idx int,
   div_idx int,
   reps int,
-  rep_times int[]
+  rep_times int[],
+  avatar_url text
 )
 language plpgsql
 security definer
@@ -97,7 +100,7 @@ begin
   -- lifter passes, so the cost is the sets read before a match rather than
   -- everybody on the ladder.
   select s.id as set_id, p.id as profile_id, p.username, p.tier_idx,
-         p.div_idx, s.reps, s.rep_times
+         p.div_idx, s.reps, s.rep_times, p.avatar_url
     into found_set
   from sets s
   join profiles p on p.id = s.profile_id
@@ -149,7 +152,8 @@ begin
 
   return query select found_set.set_id, found_set.profile_id,
                       found_set.username, found_set.tier_idx,
-                      found_set.div_idx, found_set.reps, found_set.rep_times;
+                      found_set.div_idx, found_set.reps, found_set.rep_times,
+                      found_set.avatar_url;
 end;
 $$;
 
@@ -161,6 +165,7 @@ $$;
 -- Nothing about level or "not already faced" applies — a rematch is by
 -- definition the same two people again, which is the one thing the open pool
 -- refuses to pair.
+drop function if exists find_targeted_set(uuid);
 create or replace function find_targeted_set(from_id uuid)
 returns table (
   set_id uuid,
@@ -169,7 +174,8 @@ returns table (
   tier_idx int,
   div_idx int,
   reps int,
-  rep_times int[]
+  rep_times int[],
+  avatar_url text
 )
 language plpgsql
 security definer
@@ -181,7 +187,7 @@ begin
   -- Only a subscriber plays (see subscriptions.sql; off until switched on).
   perform require_pro();
   select s.id as set_id, p.id as profile_id, p.username, p.tier_idx,
-         p.div_idx, s.reps, s.rep_times
+         p.div_idx, s.reps, s.rep_times, p.avatar_url
     into found_set
   from sets s
   join profiles p on p.id = s.profile_id
@@ -209,7 +215,8 @@ begin
 
   return query select found_set.set_id, found_set.profile_id,
                       found_set.username, found_set.tier_idx,
-                      found_set.div_idx, found_set.reps, found_set.rep_times;
+                      found_set.div_idx, found_set.reps, found_set.rep_times,
+                      found_set.avatar_url;
 end;
 $$;
 
@@ -361,20 +368,9 @@ begin
     end if;
   end if;
 
-  -- Two ranked duels a day between the same two lifters, and no more: a third
-  -- pays nothing and counts for nothing. The live search lets two people meet
-  -- again a day after they last did, and two who can find each other could
-  -- otherwise trade LP between them; this keeps whatever they arrange to two
-  -- duels' worth in any twenty-four hours.
-  if is_ranked and (
-       select count(*) from duels d
-        where d.ranked
-          and d.created_at > now() - interval '24 hours'
-          and ((d.challenger = mine.profile_id and d.defender = theirs.profile_id)
-            or (d.challenger = theirs.profile_id and d.defender = mine.profile_id))
-     ) >= 2 then
-    is_ranked := false;
-  end if;
+  -- No cap on how often the same two can pay each other. There were two a
+  -- day; but two people the search pairs are a match like any other, and a
+  -- friend's match is friendly from the start, so every ranked one counts.
 
   select * into me   from profiles where id = mine.profile_id   for update;
   select * into them from profiles where id = theirs.profile_id for update;

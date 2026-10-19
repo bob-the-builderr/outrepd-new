@@ -2120,6 +2120,8 @@ create index if not exists sets_pool_idx
 -- Async on purpose: two people being free in the same minute is the hardest
 -- thing to arrange in a fitness app, and it is not needed. You race their
 -- minute, they find out they were raced.
+-- Dropped first: the picture was added to what it returns.
+drop function if exists find_opponent_set(int);
 create or replace function find_opponent_set(within_levels int default 6)
 returns table (
   set_id uuid,
@@ -2128,7 +2130,8 @@ returns table (
   tier_idx int,
   div_idx int,
   reps int,
-  rep_times int[]
+  rep_times int[],
+  avatar_url text
 )
 language plpgsql
 security definer
@@ -2170,7 +2173,7 @@ begin
   -- lifter passes, so the cost is the sets read before a match rather than
   -- everybody on the ladder.
   select s.id as set_id, p.id as profile_id, p.username, p.tier_idx,
-         p.div_idx, s.reps, s.rep_times
+         p.div_idx, s.reps, s.rep_times, p.avatar_url
     into found_set
   from sets s
   join profiles p on p.id = s.profile_id
@@ -2222,7 +2225,8 @@ begin
 
   return query select found_set.set_id, found_set.profile_id,
                       found_set.username, found_set.tier_idx,
-                      found_set.div_idx, found_set.reps, found_set.rep_times;
+                      found_set.div_idx, found_set.reps, found_set.rep_times,
+                      found_set.avatar_url;
 end;
 $$;
 
@@ -2234,6 +2238,7 @@ $$;
 -- Nothing about level or "not already faced" applies — a rematch is by
 -- definition the same two people again, which is the one thing the open pool
 -- refuses to pair.
+drop function if exists find_targeted_set(uuid);
 create or replace function find_targeted_set(from_id uuid)
 returns table (
   set_id uuid,
@@ -2242,7 +2247,8 @@ returns table (
   tier_idx int,
   div_idx int,
   reps int,
-  rep_times int[]
+  rep_times int[],
+  avatar_url text
 )
 language plpgsql
 security definer
@@ -2254,7 +2260,7 @@ begin
   -- Only a subscriber plays (see subscriptions.sql; off until switched on).
   perform require_pro();
   select s.id as set_id, p.id as profile_id, p.username, p.tier_idx,
-         p.div_idx, s.reps, s.rep_times
+         p.div_idx, s.reps, s.rep_times, p.avatar_url
     into found_set
   from sets s
   join profiles p on p.id = s.profile_id
@@ -2282,7 +2288,8 @@ begin
 
   return query select found_set.set_id, found_set.profile_id,
                       found_set.username, found_set.tier_idx,
-                      found_set.div_idx, found_set.reps, found_set.rep_times;
+                      found_set.div_idx, found_set.reps, found_set.rep_times,
+                      found_set.avatar_url;
 end;
 $$;
 
@@ -2434,20 +2441,9 @@ begin
     end if;
   end if;
 
-  -- Two ranked duels a day between the same two lifters, and no more: a third
-  -- pays nothing and counts for nothing. The live search lets two people meet
-  -- again a day after they last did, and two who can find each other could
-  -- otherwise trade LP between them; this keeps whatever they arrange to two
-  -- duels' worth in any twenty-four hours.
-  if is_ranked and (
-       select count(*) from duels d
-        where d.ranked
-          and d.created_at > now() - interval '24 hours'
-          and ((d.challenger = mine.profile_id and d.defender = theirs.profile_id)
-            or (d.challenger = theirs.profile_id and d.defender = mine.profile_id))
-     ) >= 2 then
-    is_ranked := false;
-  end if;
+  -- No cap on how often the same two can pay each other. There were two a
+  -- day; but two people the search pairs are a match like any other, and a
+  -- friend's match is friendly from the start, so every ranked one counts.
 
   select * into me   from profiles where id = mine.profile_id   for update;
   select * into them from profiles where id = theirs.profile_id for update;
@@ -3323,13 +3319,17 @@ grant execute on function live_online() to authenticated;
 
 -- Pairs the caller with somebody live, or waits in the queue. Returns one row
 -- once there is somebody to race, and nothing while there is not.
+-- Dropped first: the opponent's picture was added to what it returns, and a
+-- function's columns cannot change in place.
+drop function if exists find_live_opponent();
 create or replace function find_live_opponent()
 returns table (
   match_id uuid,
   opponent_id uuid,
   opponent_name text,
   opponent_tier int,
-  opponent_div int
+  opponent_div int,
+  opponent_avatar text
 )
 language plpgsql
 security definer
@@ -3374,15 +3374,16 @@ begin
   if paired.id is not null then
     delete from live_queue where live_queue.profile_id = me.id;
     return query
-      select paired.id, p.id, p.username, p.tier_idx, p.div_idx
+      select paired.id, p.id, p.username, p.tier_idx, p.div_idx, p.avatar_url
         from profiles p where p.id = paired.a;
     return;
   end if;
 
-  -- Whoever has waited longest, near this level, and still here. The same
-  -- limits the open pool keeps (find_opponent_set in duel.sql): not somebody
-  -- already faced, and no block or mute either way — a mute in a live match
-  -- would be offering each of them the other.
+  -- Whoever has waited longest, near this level, and still here, with no
+  -- block or mute either way — a mute in a live match would be offering each
+  -- of them the other. Two who have met before meet again: two people
+  -- searching at the same moment are a match whoever they are, and every one
+  -- of those matches counts (settle_duel).
   select q.* into waiting from live_queue q
     join profiles p on p.id = q.profile_id
    where q.profile_id <> me.id
@@ -3393,16 +3394,6 @@ begin
      and abs(q.level - my_level) <= greatest(
            live_reach(my_wait),
            live_reach(extract(epoch from now() - q.joined_at)))
-     -- Not somebody faced in the last day. It was never-again, which with
-     -- few people live at once left almost nobody to meet; a day apart is
-     -- room enough, and settle_duel caps what two lifters can win off each
-     -- other in any twenty-four hours.
-     and not exists (
-       select 1 from duels d
-        where d.created_at > now() - interval '24 hours'
-          and ((d.challenger = me.id and d.defender = p.id)
-            or (d.defender = me.id and d.challenger = p.id))
-     )
      and not exists (
        select 1 from blocks bl
         where (bl.blocker = me.id and bl.blocked = p.id)
@@ -3424,7 +3415,7 @@ begin
             now() + interval '75 seconds')
     returning * into paired;
     return query
-      select paired.id, p.id, p.username, p.tier_idx, p.div_idx
+      select paired.id, p.id, p.username, p.tier_idx, p.div_idx, p.avatar_url
         from profiles p where p.id = waiting.profile_id;
     return;
   end if;
@@ -3532,7 +3523,8 @@ returns table (
   from_tier int,
   from_div int,
   expires_in_ms int,
-  ranked boolean
+  ranked boolean,
+  from_avatar text
 )
 language sql
 security definer
@@ -3541,7 +3533,7 @@ stable
 as $$
   select lm.id, p.id, p.username, p.tier_idx, p.div_idx,
          greatest(0, (extract(epoch from lm.expires_at - now()) * 1000)::int),
-         lm.ranked
+         lm.ranked, p.avatar_url
     from live_matches lm
     join profiles p on p.id = lm.a
    where lm.b = auth.uid()
@@ -3605,7 +3597,7 @@ $$;
 -- Another one, straight after a live match, from the result screen: either of
 -- the two asks, and when the other asks too it starts. Not only for friends —
 -- the two were just on camera together — and as ranked as the match before
--- it, with settle_duel's two-a-day rule still deciding whether it pays.
+-- it.
 --
 -- Answers with the rematch and where it stands: 'invited' while waiting on
 -- the other, 'ready' once both have asked.
@@ -3674,15 +3666,9 @@ begin
     raise exception 'too many rematches, wait a few minutes';
   end if;
 
-  -- Ranked only if the match before was, and only if it could still pay:
-  -- the same count settle_duel makes, so the invite says what the result will.
-  pays := prev.ranked and (
-    select count(*) from duels d
-     where d.ranked
-       and d.created_at > now() - interval '24 hours'
-       and ((d.challenger = me and d.defender = them)
-         or (d.challenger = them and d.defender = me))
-  ) < 2;
+  -- Ranked if the match before was: a friend's match stays friendly, a
+  -- match the search found pays again.
+  pays := prev.ranked;
 
   update live_matches lm set status = 'cancelled'
    where lm.a = me and lm.status = 'invited';
@@ -3697,6 +3683,7 @@ $$;
 
 -- Where a match stands, from the caller's side of it. Also where lapsed
 -- invites and pairings are called off: nothing else runs on a timer.
+drop function if exists live_match_state(uuid);
 create or replace function live_match_state(live uuid)
 returns table (
   match_status text,
@@ -3708,7 +3695,8 @@ returns table (
   they_are_ready boolean,
   starts_in_ms int,
   expires_in_ms int,
-  their_reps int
+  their_reps int,
+  opponent_avatar text
 )
 language plpgsql
 security definer
@@ -3742,7 +3730,8 @@ begin
                 else (extract(epoch from m.starts_at - now()) * 1000)::int end,
            case when m.expires_at is null then null
                 else greatest(0, (extract(epoch from m.expires_at - now()) * 1000)::int) end,
-           case when i_am_a then m.b_reps else m.a_reps end
+           case when i_am_a then m.b_reps else m.a_reps end,
+           p.avatar_url
       from profiles p
      where p.id = case when i_am_a then m.b else m.a end;
 end;
@@ -5032,11 +5021,12 @@ $$;
 -- rename, the second was quietly refused and the account kept a name its
 -- owner had already changed their mind about.
 --
--- Once the email is confirmed the name is final if one was ever chosen
--- (username_changed_at is set), and an account that never chose one gets a
--- single rename. Re-checks availability itself — the gap between the
--- screen's own check and this call is exactly long enough for somebody else
--- to take it.
+-- Once the email is confirmed, a name can be changed again fourteen days after
+-- it was last chosen (username_changed_at): often enough to fix a name somebody
+-- regrets, not so often that nobody on a board knows who anybody is. The app
+-- reads the same column to say on which day. Re-checks availability itself —
+-- the gap between the screen's own check and this call is exactly long enough
+-- for somebody else to take it.
 --
 -- Letters and digits only, four characters minimum. A tag another lifter
 -- reads off a leaderboard or types into a search box, not a display name —
@@ -5066,7 +5056,8 @@ begin
 
   if coalesce(confirmed, false) and exists (
     select 1 from profiles
-     where id = auth.uid() and username_changed_at is not null
+     where id = auth.uid()
+       and username_changed_at > now() - interval '14 days'
   ) then
     return 'already_changed';
   end if;

@@ -312,15 +312,28 @@ select check_that(set_my_username('al ice') = 'invalid', 'a space in a name');
 select check_that(set_my_username('Alice3') = 'ok',
                   'a guest could not change the name they had just typed');
 reset role;
--- Then confirms the email: the name chosen is the name kept.
+-- Then confirms the email: the name chosen is kept for fourteen days.
 update auth.users set email = 'a@example.com', email_confirmed_at = now()
  where id = :'A';
 select as_user(:'A'); set role authenticated;
 select check_that(set_my_username('Alice4') = 'already_changed',
-                  'a confirmed account renamed a second time');
+                  'a confirmed account renamed again inside fourteen days');
 reset role;
 select check_that((select username from profiles where id = :'A') = 'Alice3',
                   'the name kept is not the last one chosen');
+-- Fourteen days on, it can change again, and the clock starts over.
+set session_replication_role = replica;
+update profiles set username_changed_at = now() - interval '15 days'
+ where id = :'A';
+set session_replication_role = default;
+select as_user(:'A'); set role authenticated;
+select check_that(set_my_username('Alice4') = 'ok',
+                  'a rename fourteen days after the last was refused');
+select check_that(set_my_username('Alice5') = 'already_changed',
+                  'a second rename straight after the first');
+reset role;
+select check_that((select username from profiles where id = :'A') = 'Alice4',
+                  'the name after a rename fourteen days on');
 
 -- A search matches what was typed: `_` and `%` are not wildcards.
 select as_user(:'B'); set role authenticated;
@@ -476,9 +489,10 @@ select check_that(not exists (
    where b.before < b.points), 'the monthly board is out of order');
 reset role;
 
--- ── two ranked duels a day between the same two lifters ───────────────────────
+-- ── the same two lifters, again and again ─────────────────────────────────────
 
--- A and D have met twice today already.
+-- A and D have met twice today already. There used to be a cap of two ranked
+-- a day between the same two; every ranked one counts now.
 insert into sets (profile_id, reps, reps_camera, duration_ms)
 values (:'A', 10, 10, 60000), (:'D', 10, 10, 60000);
 insert into duels (challenger, defender, challenger_set, defender_set,
@@ -488,7 +502,7 @@ select :'A'::uuid, :'D'::uuid,
        (select id from sets where profile_id = :'D' order by created_at desc limit 1),
        :'A'::uuid, true, 5, -5
   from generate_series(1, 2);
--- A third time, handed over the honest way: it settles, and pays nothing.
+-- A third time, handed over the honest way: it settles, and pays.
 insert into sets (profile_id, reps, reps_camera, duration_ms)
 values (:'D', 0, 0, 60000);
 select set_config('test.d3',
@@ -500,14 +514,14 @@ select set_config('test.a3',
   (select id::text from sets where profile_id = :'A' order by created_at desc limit 1), false);
 select as_user(:'A'); set role authenticated;
 select check_that(
-  (select lp_delta = 0 and not was_ranked
+  (select lp_delta <> 0 and was_ranked
      from settle_duel(current_setting('test.a3')::uuid,
                       current_setting('test.d3')::uuid, true)),
-  'a third ranked duel in a day between the same two paid LP, or said it was ranked');
+  'a third ranked duel in a day between the same two paid nothing');
 reset role;
 select check_that(
-  (select not ranked from duels where challenger_set = current_setting('test.a3')::uuid),
-  'a third duel in a day between the same two counted as ranked');
+  (select ranked from duels where challenger_set = current_setting('test.a3')::uuid),
+  'a third duel in a day between the same two was not ranked');
 
 -- ── the live search ───────────────────────────────────────────────────────────
 
@@ -519,6 +533,20 @@ select check_that((select searching >= 0 and online >= 0 from live_online()),
 select count(*) from find_live_opponent();
 select leave_live_queue();
 reset role;
+
+-- Met three times today, both searching: they are paired, and A is told who
+-- with their picture.
+update profiles set avatar_url = 'https://example.com/d.jpg' where id = :'D';
+insert into live_queue (profile_id, level)
+select :'D'::uuid, ladder_level(tier_idx, div_idx) from profiles where id = :'A';
+select as_user(:'A'); set role authenticated;
+select check_that(
+  (select opponent_id = :'D'::uuid and opponent_avatar = 'https://example.com/d.jpg'
+     from find_live_opponent()),
+  'two who met today were not paired, or the opponent came without a picture');
+reset role;
+update live_matches set status = 'cancelled'
+ where a = :'A' and b = :'D' and status = 'ready';
 
 -- ── the live rematch ──────────────────────────────────────────────────────────
 
@@ -538,9 +566,9 @@ reset role;
 
 select as_user(:'A'); set role authenticated;
 select check_that(
-  (select match_status = 'invited' and not is_ranked
+  (select match_status = 'invited' and is_ranked
      from rematch_live(current_setting('test.lm')::uuid)),
-  'a rematch after two ranked duels today was offered as ranked');
+  'a rematch of a ranked match was not offered as ranked');
 select count(*) from rematch_live(current_setting('test.lm')::uuid);
 reset role;
 select check_that((select count(*) from live_matches

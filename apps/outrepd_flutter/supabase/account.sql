@@ -179,11 +179,12 @@ $$;
 -- rename, the second was quietly refused and the account kept a name its
 -- owner had already changed their mind about.
 --
--- Once the email is confirmed the name is final if one was ever chosen
--- (username_changed_at is set), and an account that never chose one gets a
--- single rename. Re-checks availability itself — the gap between the
--- screen's own check and this call is exactly long enough for somebody else
--- to take it.
+-- Once the email is confirmed, a name can be changed again fourteen days after
+-- it was last chosen (username_changed_at): often enough to fix a name somebody
+-- regrets, not so often that nobody on a board knows who anybody is. The app
+-- reads the same column to say on which day. Re-checks availability itself —
+-- the gap between the screen's own check and this call is exactly long enough
+-- for somebody else to take it.
 --
 -- Letters and digits only, four characters minimum. A tag another lifter
 -- reads off a leaderboard or types into a search box, not a display name —
@@ -213,7 +214,8 @@ begin
 
   if coalesce(confirmed, false) and exists (
     select 1 from profiles
-     where id = auth.uid() and username_changed_at is not null
+     where id = auth.uid()
+       and username_changed_at > now() - interval '14 days'
   ) then
     return 'already_changed';
   end if;
