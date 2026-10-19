@@ -5,7 +5,6 @@ library;
 
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -61,13 +60,13 @@ void main() {
 
   for (final MapEntry(key: name, value: screen) in screens.entries) {
     testWidgets(name, (tester) async {
-      // An iPhone 15: Apple's button is an iPhone thing, and the build
-      // carries Google's ids.
+      // An iPhone 15's screen, with both buttons. The platform stays
+      // Android's: on iOS the theme asks for Apple's own font, which the
+      // test engine does not have, and every letter came out a box.
       tester.view.physicalSize = const Size(393 * 3, 852 * 3);
       tester.view.devicePixelRatio = 3;
       tester.view.padding = const FakeViewPadding(top: 59 * 3, bottom: 34 * 3);
       addTearDown(tester.view.reset);
-      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
       debugOfferAllSocialSignIn = true;
 
       await tester.pumpWidget(_app(screen));
@@ -78,7 +77,6 @@ void main() {
       );
 
       debugOfferAllSocialSignIn = false;
-      debugDefaultTargetPlatformOverride = null;
     });
   }
 }

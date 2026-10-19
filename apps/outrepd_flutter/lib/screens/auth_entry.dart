@@ -1011,7 +1011,6 @@ class _Field extends StatelessWidget {
   const _Field({
     super.key,
     required this.controller,
-    this.label,
     this.hint,
     this.keyboardType,
     this.onChanged,
@@ -1037,11 +1036,6 @@ class _Field extends StatelessWidget {
   /// At the end of the field: whether the name is free.
   final Widget? suffix;
 
-  /// Shown above the field and stays there — unlike a hint, it does not
-  /// disappear the moment somebody starts typing, so what the field is for
-  /// is still on screen once it is full.
-  final String? label;
-
   final TextEditingController controller;
   final String? hint;
   final TextInputType? keyboardType;
@@ -1053,13 +1047,6 @@ class _Field extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (label case final label?) ...[
-          Text(
-            label,
-            style: context.type.label.copyWith(color: context.colors.muted),
-          ),
-          const SizedBox(height: 6),
-        ],
         TextField(
           controller: controller,
           autocorrect: false,
@@ -1105,6 +1092,11 @@ class _Field extends StatelessWidget {
               vertical: 14,
             ),
             border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(13),
+              borderSide: BorderSide(color: context.colors.border),
+            ),
+            // A hairline at rest; the brand colour only on the field in use.
+            enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(13),
               borderSide: BorderSide(color: context.colors.border),
             ),
