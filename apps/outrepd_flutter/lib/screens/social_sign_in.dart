@@ -29,15 +29,21 @@ import '../theme.dart';
 const _googleIosClientId = String.fromEnvironment('GOOGLE_IOS_CLIENT_ID');
 const _googleWebClientId = String.fromEnvironment('GOOGLE_WEB_CLIENT_ID');
 
+/// Both buttons, whatever the build carries: for the screenshots only.
+@visibleForTesting
+bool debugOfferAllSocialSignIn = false;
+
 bool get appleSignInOffered =>
-    !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
+    debugOfferAllSocialSignIn ||
+    (!kIsWeb && defaultTargetPlatform == TargetPlatform.iOS);
 
 bool get googleSignInOffered =>
-    !kIsWeb &&
-    _googleWebClientId.isNotEmpty &&
-    (defaultTargetPlatform == TargetPlatform.android ||
-        (defaultTargetPlatform == TargetPlatform.iOS &&
-            _googleIosClientId.isNotEmpty));
+    debugOfferAllSocialSignIn ||
+    (!kIsWeb &&
+        _googleWebClientId.isNotEmpty &&
+        (defaultTargetPlatform == TargetPlatform.android ||
+            (defaultTargetPlatform == TargetPlatform.iOS &&
+                _googleIosClientId.isNotEmpty)));
 
 bool get socialSignInOffered => appleSignInOffered || googleSignInOffered;
 
