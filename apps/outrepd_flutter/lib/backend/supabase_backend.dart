@@ -177,6 +177,7 @@ class SupabaseBackend implements Backend {
         for (final t in (row['rep_times'] as List? ?? const []))
           (t as num).toInt(),
       ],
+      avatarUrl: row['avatar_url'] as String?,
     );
   }
 
@@ -700,6 +701,74 @@ class SupabaseBackend implements Backend {
   }
 
   @override
+  Future<SocialSignInResult> signInWithIdToken({
+    required SocialProvider provider,
+    required String idToken,
+    String? accessToken,
+    String? nonce,
+  }) async {
+    final oauth = switch (provider) {
+      SocialProvider.apple => OAuthProvider.apple,
+      SocialProvider.google => OAuthProvider.google,
+    };
+    try {
+      // This phone's guest takes the identity on: the same account, its
+      // placements and its row, now with a way back in.
+      final current = _db.auth.currentUser;
+      if (current != null && current.isAnonymous) {
+        try {
+          await _db.auth.linkIdentityWithIdToken(
+            provider: oauth,
+            idToken: idToken,
+            accessToken: accessToken,
+            nonce: nonce,
+          );
+          await refreshMe();
+          return SocialSignInResult.newAccount;
+        } on AuthException catch (error) {
+          // Somebody's already: signed in to below instead.
+          if (error.code != 'identity_already_exists') rethrow;
+        }
+      }
+
+      final response = await _db.auth.signInWithIdToken(
+        provider: oauth,
+        idToken: idToken,
+        accessToken: accessToken,
+        nonce: nonce,
+      );
+      final user = response.user;
+      if (user == null) return SocialSignInResult.failed;
+      // A row made here when the account is new, as a first launch would.
+      final existing = await _db
+          .from('profiles')
+          .select()
+          .eq('id', user.id)
+          .maybeSingle();
+      final row =
+          existing ??
+          await _db
+              .from('profiles')
+              .insert({
+                'id': user.id,
+                'username': _unique('lifter', user.id),
+                'country': _country,
+              })
+              .select()
+              .single();
+      _me = _profileFrom(row);
+      return existing == null
+          ? SocialSignInResult.newAccount
+          : SocialSignInResult.existingAccount;
+    } on AuthRetryableFetchException catch (_) {
+      return SocialSignInResult.offline;
+    } on AuthException catch (error) {
+      debugPrint('Could not sign in with ${provider.name}: ${error.message}');
+      return SocialSignInResult.failed;
+    }
+  }
+
+  @override
   Future<RenameResult> renameUsername(String name) async {
     final result = await _db.rpc<String>(
       'set_my_username',
@@ -976,6 +1045,7 @@ class SupabaseBackend implements Backend {
         username: row['${prefix}_name'] as String? ?? '',
         tierIdx: (row['${prefix}_tier'] as num?)?.toInt() ?? 0,
         divIdx: (row['${prefix}_div'] as num?)?.toInt() ?? 0,
+        avatarUrl: row['${prefix}_avatar'] as String?,
       );
 
   static Duration? _ms(Object? value) =>

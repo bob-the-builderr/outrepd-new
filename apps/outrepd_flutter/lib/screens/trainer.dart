@@ -20,6 +20,7 @@ import '../motion.dart';
 import '../settings.dart';
 import '../sounds.dart';
 import '../ranking.dart';
+import '../avatar.dart';
 import '../player_avatar.dart';
 import '../l10n/app_localizations.dart';
 import '../type_scale.dart';
@@ -39,7 +40,11 @@ class DuelContext {
     required this.opponentTierIdx,
     required this.opponentDivIdx,
     required this.rankLabel,
+    this.opponentImage,
   });
+
+  /// Their picture, when they have uploaded one; the drawn initial when not.
+  final ImageProvider? opponentImage;
 
   final String opponentName;
   final int opponentReps;
@@ -1473,6 +1478,7 @@ class _ScoreCard extends StatelessWidget {
                   tierIdx: demoProfile.tierIdx,
                   divIdx: demoProfile.divIdx,
                   colour: Colors.white,
+                  image: avatar.picture,
                 ),
               ),
               // The middle column: whether this is live, the clock, and the
@@ -1524,6 +1530,7 @@ class _ScoreCard extends StatelessWidget {
                           tierIdx: duel.opponentTierIdx,
                           divIdx: duel.opponentDivIdx,
                           colour: context.colors.rival,
+                          image: duel.opponentImage,
                         ),
                       ),
               ),
@@ -1636,7 +1643,10 @@ class _Fighter extends StatelessWidget {
     required this.tierIdx,
     required this.divIdx,
     required this.colour,
+    this.image,
   });
+
+  final ImageProvider? image;
 
   final String name;
   final int reps;
@@ -1655,6 +1665,7 @@ class _Fighter extends StatelessWidget {
         PlayerAvatar(
           name: name,
           tierIdx: tierIdx,
+          image: image,
           size: 48,
           textColour: colour,
           // The card has its own background, so the badge is ringed with that

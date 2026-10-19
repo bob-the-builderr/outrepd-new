@@ -13,7 +13,6 @@
 ///     kilo total would be a number nobody could act on.
 library;
 
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -289,7 +288,7 @@ class _Identity extends StatelessWidget {
           builder: (context, _) => PlayerAvatar(
             name: profile.username,
             tierIdx: profile.tierIdx,
-            image: avatar.hasPhoto ? FileImage(File(avatar.photoPath!)) : null,
+            image: avatar.picture,
             size: 78,
             onTap: () => showAvatarPicker(context, profile.tierIdx),
             onBadgeTap: onTapRank,

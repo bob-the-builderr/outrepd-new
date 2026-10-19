@@ -137,6 +137,7 @@ class _FriendRoomSheetState extends State<_FriendRoomSheet> {
       username: friend.username,
       tierIdx: friend.tierIdx,
       divIdx: friend.divIdx,
+      avatarUrl: friend.avatarUrl,
     );
   }
 

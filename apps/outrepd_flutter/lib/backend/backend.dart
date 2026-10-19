@@ -142,9 +142,9 @@ class RemoteProfile {
   /// fallback everywhere this is shown, not a broken image.
   final String? avatarUrl;
 
-  /// Null until this account has used its one username change. Not null
-  /// means [Backend.renameUsername] will only ever answer
-  /// [RenameResult.alreadyChanged] from here on.
+  /// When the username was last chosen, or null when it never was. For
+  /// fourteen days after it, [Backend.renameUsername] answers
+  /// [RenameResult.alreadyChanged].
   final DateTime? usernameChangedAt;
 
   /// Everything but the field or two an update actually changed. A backend
@@ -569,12 +569,16 @@ class LiveOpponent {
     required this.username,
     required this.tierIdx,
     required this.divIdx,
+    this.avatarUrl,
   });
 
   final String id;
   final String username;
   final int tierIdx;
   final int divIdx;
+
+  /// Their uploaded picture, or null for the drawn initial.
+  final String? avatarUrl;
 }
 
 /// A live match this account is in: both lifters on camera at once.
@@ -866,6 +870,22 @@ enum AskResult {
 }
 
 /// What happened to a rename.
+/// Where an Apple or Google identity comes from.
+enum SocialProvider { apple, google }
+
+/// What signing in with Apple or Google did.
+enum SocialSignInResult {
+  /// A new account: this phone's guest, now carrying the identity and
+  /// everything it had already earned. It still has to choose a name.
+  newAccount,
+
+  /// An account that already had this identity, now signed in to.
+  existingAccount,
+
+  failed,
+  offline,
+}
+
 enum RenameResult {
   ok,
 
@@ -940,7 +960,11 @@ class OpponentSet {
     required this.divIdx,
     required this.reps,
     this.repTimes = const [],
+    this.avatarUrl,
   });
+
+  /// Their uploaded picture, or null for the drawn initial.
+  final String? avatarUrl;
 
   final String setId;
   final String profileId;
@@ -1196,6 +1220,17 @@ abstract interface class Backend {
 
   /// Renames this account.
   Future<RenameResult> renameUsername(String name);
+
+  /// Signs in with an identity token from Apple or Google. On this phone's
+  /// guest the identity is linked to it, so the guest becomes the account
+  /// and keeps what it has — unless the identity already belongs to an
+  /// account, which is then signed in to instead.
+  Future<SocialSignInResult> signInWithIdToken({
+    required SocialProvider provider,
+    required String idToken,
+    String? accessToken,
+    String? nonce,
+  });
 
   /// Uploads a new avatar photo and returns its public URL, already saved
   /// as this account's [RemoteProfile.avatarUrl].
@@ -1474,6 +1509,14 @@ class NoBackend implements Backend {
 
   @override
   Future<bool> usernameAvailable(String name) async => true;
+
+  @override
+  Future<SocialSignInResult> signInWithIdToken({
+    required SocialProvider provider,
+    required String idToken,
+    String? accessToken,
+    String? nonce,
+  }) async => SocialSignInResult.failed;
 
   @override
   Future<RenameResult> renameUsername(String name) =>

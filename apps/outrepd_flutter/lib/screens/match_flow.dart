@@ -19,6 +19,7 @@ import '../connection.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../live.dart';
+import '../avatar.dart';
 import '../player_avatar.dart';
 import '../reps/recording.dart';
 import '../reps/pushup_counter.dart';
@@ -319,6 +320,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           match.opponent.username,
           match.opponent.tierIdx,
           match.opponent.divIdx,
+          avatarUrl: match.opponent.avatarUrl,
         );
         _theirReps = 0;
       });
@@ -357,7 +359,12 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
         }
         setState(() {
           _realOpponent = found;
-          _opponent = Opponent(found.username, found.tierIdx, found.divIdx);
+          _opponent = Opponent(
+            found.username,
+            found.tierIdx,
+            found.divIdx,
+            avatarUrl: found.avatarUrl,
+          );
           _theirReps = found.reps;
         });
       } on Object catch (error) {
@@ -389,6 +396,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
               live.opponent.username,
               live.opponent.tierIdx,
               live.opponent.divIdx,
+              avatarUrl: live.opponent.avatarUrl,
             );
             _theirReps = 0;
           });
@@ -401,7 +409,12 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
         if (found != null && mounted) {
           setState(() {
             _realOpponent = found;
-            _opponent = Opponent(found.username, found.tierIdx, found.divIdx);
+            _opponent = Opponent(
+            found.username,
+            found.tierIdx,
+            found.divIdx,
+            avatarUrl: found.avatarUrl,
+          );
             _theirReps = found.reps;
           });
         }
@@ -482,6 +495,10 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
                   opponentRepTimes: _realOpponent?.repTimes ?? const [],
                   opponentTierIdx: _opponent.tierIdx,
                   opponentDivIdx: _opponent.divIdx,
+                  // Racing your own best: your own picture across from you.
+                  opponentImage: _vsBest
+                      ? avatar.picture
+                      : pictureAt(_opponent.avatarUrl),
                   rankLabel: tierLabel(
                     L.of(context),
                     demoProfile.tierIdx,
@@ -725,6 +742,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
             opponentReps: 0,
             opponentTierIdx: _opponent.tierIdx,
             opponentDivIdx: _opponent.divIdx,
+            opponentImage: pictureAt(_opponent.avatarUrl),
             rankLabel: live.ranked
                 ? tierLabel(l, demoProfile.tierIdx, demoProfile.divIdx)
                 : l.friendlyNoRank,

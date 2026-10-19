@@ -444,11 +444,14 @@ extension AppNotificationText on AppNotification {
 
 /// Stand-ins for real players until matchmaking is wired to a server.
 class Opponent {
-  const Opponent(this.username, this.tierIdx, this.divIdx);
+  const Opponent(this.username, this.tierIdx, this.divIdx, {this.avatarUrl});
 
   final String username;
   final int tierIdx;
   final int divIdx;
+
+  /// Their uploaded picture, or null for the drawn initial.
+  final String? avatarUrl;
 }
 
 const demoOpponents = <Opponent>[

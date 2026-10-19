@@ -11,7 +11,6 @@
 /// reps, which the two scores above the card already say in full.
 library;
 
-import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -428,9 +427,7 @@ class _Scoreboard extends StatelessWidget {
               avatar: PlayerAvatar(
                 name: demoProfile.username,
                 tierIdx: yourTierIdx,
-                image: avatar.hasPhoto
-                    ? FileImage(File(avatar.photoPath!))
-                    : null,
+                image: avatar.picture,
                 size: 58,
               ),
               name: l.you,
@@ -452,6 +449,7 @@ class _Scoreboard extends StatelessWidget {
               avatar: PlayerAvatar(
                 name: opponent.username,
                 tierIdx: opponent.tierIdx,
+                image: pictureAt(opponent.avatarUrl),
                 size: 58,
               ),
               name: opponent.username,

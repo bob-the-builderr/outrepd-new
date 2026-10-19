@@ -742,6 +742,7 @@ void _challenge(BuildContext context, LifterProfile profile) {
     username: profile.username,
     tierIdx: profile.tierIdx,
     divIdx: profile.divIdx,
+    avatarUrl: profile.avatarUrl,
   );
 }
 

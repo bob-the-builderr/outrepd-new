@@ -34,6 +34,7 @@ Future<void> inviteFriendLive(
   required String username,
   required int tierIdx,
   required int divIdx,
+  String? avatarUrl,
 }) async {
   if (id.isEmpty) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -52,6 +53,7 @@ Future<void> inviteFriendLive(
           username: username,
           tierIdx: tierIdx,
           divIdx: divIdx,
+          avatarUrl: avatarUrl,
         ),
       ),
     ),

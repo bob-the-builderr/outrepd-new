@@ -1141,6 +1141,7 @@ class _ActionButton extends StatelessWidget {
         username: friend.username,
         tierIdx: friend.tierIdx,
         divIdx: friend.divIdx,
+        avatarUrl: friend.avatarUrl,
       ),
       borderRadius: BorderRadius.circular(11),
       child: Container(

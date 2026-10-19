@@ -102,9 +102,7 @@ class _AvatarSheetState extends State<_AvatarSheet> {
                 child: PlayerAvatar(
                   name: demoProfile.username,
                   tierIdx: widget.tierIdx,
-                  image: avatar.hasPhoto
-                      ? FileImage(File(avatar.photoPath!))
-                      : null,
+                  image: avatar.picture,
                   size: 110,
                 ),
               ),

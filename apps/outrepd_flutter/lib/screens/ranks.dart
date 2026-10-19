@@ -13,6 +13,7 @@ import 'dart:async';
 import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 
+import '../avatar.dart';
 import '../backend/backend.dart';
 import '../career.dart';
 import '../data.dart';
@@ -491,6 +492,7 @@ class _RankRow extends StatelessWidget {
               size: 40,
               fontSize: 17,
               avatarUrl: entry.avatarUrl,
+              mine: entry.id == backend.me?.id,
               frame: entry.tierIdx,
             ),
             const SizedBox(width: 11),
@@ -651,6 +653,7 @@ class _Initial extends StatelessWidget {
     required this.size,
     required this.fontSize,
     this.avatarUrl,
+    this.mine = false,
     this.frame,
   });
 
@@ -658,6 +661,11 @@ class _Initial extends StatelessWidget {
   final double size;
   final double fontSize;
   final String? avatarUrl;
+
+  /// This account's own row: drawn from the picture on this phone, so a new
+  /// one is on the board the moment it is picked, before the board is read
+  /// again from the server.
+  final bool mine;
 
   /// The tier to frame the picture in, in a row. Null on the podium, whose
   /// pictures wear their place's medal ring instead.
@@ -685,10 +693,12 @@ class _Initial extends StatelessWidget {
       ),
     );
 
-    if (avatarUrl == null) return fallback;
+    final own = mine ? avatar.picture : null;
+    final url = avatarUrl;
+    if (own == null && url == null) return fallback;
     return ClipOval(
-      child: Image.network(
-        avatarUrl!,
+      child: Image(
+        image: own ?? NetworkImage(url!),
         width: size,
         height: size,
         fit: BoxFit.cover,
@@ -977,6 +987,7 @@ class _PodiumPlace extends StatelessWidget {
               size: avatar,
               fontSize: first ? 26 : 21,
               avatarUrl: row.avatarUrl,
+              mine: row.id == backend.me?.id,
             ),
           ),
           const SizedBox(height: 6),
@@ -1110,6 +1121,7 @@ class _MonthRankRow extends StatelessWidget {
               size: 40,
               fontSize: 17,
               avatarUrl: row.avatarUrl,
+              mine: row.id == backend.me?.id,
               frame: row.tierIdx,
             ),
             const SizedBox(width: 11),
