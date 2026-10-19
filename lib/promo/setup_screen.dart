@@ -303,28 +303,32 @@ class _Box extends StatelessWidget {
   final String title;
   final List<Widget> children;
 
+  // A Material rather than a coloured box: the switches inside draw their
+  // ink on the nearest one.
   @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.all(16),
-    decoration: BoxDecoration(
-      color: context.colors.surface,
+  Widget build(BuildContext context) => Material(
+    color: context.colors.surface,
+    shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(18),
-      border: Border.all(color: context.colors.surfaceRaised),
+      side: BorderSide(color: context.colors.surfaceRaised),
     ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-            color: context.colors.text,
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              color: context.colors.text,
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-        ),
-        const SizedBox(height: 12),
-        ...children,
-      ],
+          const SizedBox(height: 12),
+          ...children,
+        ],
+      ),
     ),
   );
 }

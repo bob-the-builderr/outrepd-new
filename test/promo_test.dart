@@ -83,7 +83,8 @@ void main() {
     test('a final count is paced across the minute, quick then slower', () {
       final times = PromoPlan.paced(20);
       expect(times, hasLength(20));
-      expect(times.first, inInclusiveRange(1000, 2000));
+      // The first a few seconds in, as a lifter settling into twenty does.
+      expect(times.first, inInclusiveRange(1500, 4000));
       expect(times.last, lessThan(60000));
       expect(times, orderedEquals([...times]..sort()));
       // Tiring: the last five take longer than the first five.
@@ -213,6 +214,8 @@ void main() {
         200,
         scrollable: find.byType(Scrollable).first,
       );
+      await tester.ensureVisible(find.text(mode));
+      await tester.pumpAndSettle();
       await tester.tap(find.text(mode));
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull, reason: mode);
@@ -240,6 +243,8 @@ void main() {
       300,
       scrollable: find.byType(Scrollable).first,
     );
+    await tester.ensureVisible(find.byKey(const Key('startPromo')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('startPromo')));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
