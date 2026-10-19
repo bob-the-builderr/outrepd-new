@@ -723,5 +723,6 @@
   "createAccountPitch": "Il tuo grado e le tue sfide, su ogni telefono.",
   "usernameSpacesHint": "Gli spazi diventano _",
   "haveInviteCode": "Hai un codice invito?",
-  "emailCodeNote": "Ti invieremo via email un codice di 6 cifre. Nessuna password."
+  "emailCodeNote": "Ti invieremo via email un codice di 6 cifre. Nessuna password.",
+  "continueWithEmail": "Continua con l'email"
 }

@@ -2386,4 +2386,7 @@ class LIt extends L {
 
   @override
   String get emailCodeNote => 'Ti invieremo via email un codice di 6 cifre. Nessuna password.';
+
+  @override
+  String get continueWithEmail => 'Continua con l\'email';
 }

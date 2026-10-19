@@ -723,5 +723,6 @@
   "createAccountPitch": "내 랭크와 대결 기록을 어떤 폰에서든.",
   "usernameSpacesHint": "띄어쓰기는 _로 바뀌어요",
   "haveInviteCode": "초대 코드가 있나요?",
-  "emailCodeNote": "이메일로 6자리 코드를 보내 드려요. 비밀번호는 필요 없어요."
+  "emailCodeNote": "이메일로 6자리 코드를 보내 드려요. 비밀번호는 필요 없어요.",
+  "continueWithEmail": "이메일로 계속하기"
 }

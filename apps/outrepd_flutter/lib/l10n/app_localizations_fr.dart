@@ -2387,4 +2387,7 @@ class LFr extends L {
 
   @override
   String get emailCodeNote => 'On t\'envoie un code à 6 chiffres par e-mail. Pas de mot de passe.';
+
+  @override
+  String get continueWithEmail => 'Continuer avec l\'e-mail';
 }

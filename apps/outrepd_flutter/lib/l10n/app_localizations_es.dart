@@ -2386,4 +2386,7 @@ class LEs extends L {
 
   @override
   String get emailCodeNote => 'Te enviaremos un código de 6 dígitos por correo. Sin contraseña.';
+
+  @override
+  String get continueWithEmail => 'Continuar con correo';
 }

@@ -2383,4 +2383,7 @@ class LPt extends L {
 
   @override
   String get emailCodeNote => 'Vamos enviar-te um código de 6 dígitos por email. Sem palavra-passe.';
+
+  @override
+  String get continueWithEmail => 'Continuar com email';
 }

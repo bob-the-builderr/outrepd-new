@@ -2380,4 +2380,7 @@ class LId extends L {
 
   @override
   String get emailCodeNote => 'Kami akan mengirim kode 6 digit ke emailmu. Tanpa kata sandi.';
+
+  @override
+  String get continueWithEmail => 'Lanjutkan dengan email';
 }

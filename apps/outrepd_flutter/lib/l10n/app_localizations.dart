@@ -4336,6 +4336,12 @@ abstract class L {
   /// In en, this message translates to:
   /// **'We'll email you a 6-digit code. No password.'**
   String get emailCodeNote;
+
+  /// No description provided for @continueWithEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with email'**
+  String get continueWithEmail;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

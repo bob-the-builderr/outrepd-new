@@ -723,5 +723,6 @@
   "createAccountPitch": "ランクも対戦も、どのスマホでも。",
   "usernameSpacesHint": "スペースは _ になります",
   "haveInviteCode": "招待コードをお持ちですか？",
-  "emailCodeNote": "6桁のコードをメールでお送りします。パスワードは不要です。"
+  "emailCodeNote": "6桁のコードをメールでお送りします。パスワードは不要です。",
+  "continueWithEmail": "メールで続ける"
 }

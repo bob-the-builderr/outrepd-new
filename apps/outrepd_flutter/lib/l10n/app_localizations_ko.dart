@@ -2349,4 +2349,7 @@ class LKo extends L {
 
   @override
   String get emailCodeNote => '이메일로 6자리 코드를 보내 드려요. 비밀번호는 필요 없어요.';
+
+  @override
+  String get continueWithEmail => '이메일로 계속하기';
 }

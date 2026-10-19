@@ -556,7 +556,11 @@ class _SignUpScreenState extends State<SignUpScreen> with _UsernameChecks {
 // ──────────────────────────────── log in ───────────────────────────────────
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({super.key, this.emailOnly = false});
+
+  /// The email form on its own page, opened from "Continue with email".
+  /// Without Apple or Google to offer, the log-in screen is this page.
+  final bool emailOnly;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -636,10 +640,19 @@ class _LoginScreenState extends State<LoginScreen> with _SocialSignIn {
             children: [
               _BackHeader(title: l.obWelcomeBack, subtitle: l.logInSubtitle),
               const SizedBox(height: 26),
-              if (socialSignInOffered) ...[
+              // Three ways in, each a button; the email form is a page of
+              // its own behind the third, not a field under the other two.
+              if (!widget.emailOnly && socialSignInOffered) ...[
                 _socialButtons(),
-                const SizedBox(height: 14),
-              ],
+                FilledButton(
+                  key: const Key('continueWithEmail'),
+                  onPressed: _socialBusy == null ? _openEmail : null,
+                  style: FilledButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                  ),
+                  child: Text(l.continueWithEmail),
+                ),
+              ] else ...[
               _Field(
                 controller: _email,
                 icon: Icons.mail_outline,
@@ -669,11 +682,19 @@ class _LoginScreenState extends State<LoginScreen> with _SocialSignIn {
                       )
                     : Text(l.sendCodeAction),
               ),
+              ],
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _openEmail() async {
+    final outcome = await Navigator.of(context).push<AuthOutcome>(
+      MaterialPageRoute(builder: (_) => const LoginScreen(emailOnly: true)),
+    );
+    if (outcome != null && mounted) Navigator.of(context).pop(outcome);
   }
 }
 

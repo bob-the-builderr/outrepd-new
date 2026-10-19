@@ -723,5 +723,6 @@
   "createAccountPitch": "O teu rank e os teus duelos, em qualquer telemóvel.",
   "usernameSpacesHint": "Os espaços passam a _",
   "haveInviteCode": "Tens um código de convite?",
-  "emailCodeNote": "Vamos enviar-te um código de 6 dígitos por email. Sem palavra-passe."
+  "emailCodeNote": "Vamos enviar-te um código de 6 dígitos por email. Sem palavra-passe.",
+  "continueWithEmail": "Continuar com email"
 }

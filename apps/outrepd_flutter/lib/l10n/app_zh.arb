@@ -723,5 +723,6 @@
   "createAccountPitch": "你的段位和对决，在任何手机上都在。",
   "usernameSpacesHint": "空格会变成 _",
   "haveInviteCode": "有邀请码吗？",
-  "emailCodeNote": "我们会给你发送 6 位数验证码邮件，无需密码。"
+  "emailCodeNote": "我们会给你发送 6 位数验证码邮件，无需密码。",
+  "continueWithEmail": "通过邮箱继续"
 }

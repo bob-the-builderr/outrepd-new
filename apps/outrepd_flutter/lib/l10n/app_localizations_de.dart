@@ -2388,4 +2388,7 @@ class LDe extends L {
 
   @override
   String get emailCodeNote => 'Wir schicken dir einen 6-stelligen Code per E-Mail. Kein Passwort.';
+
+  @override
+  String get continueWithEmail => 'Weiter mit E-Mail';
 }

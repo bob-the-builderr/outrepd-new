@@ -2381,4 +2381,7 @@ class LHi extends L {
 
   @override
   String get emailCodeNote => 'हम आपको ईमेल पर 6 अंकों का कोड भेजेंगे। कोई पासवर्ड नहीं।';
+
+  @override
+  String get continueWithEmail => 'ईमेल के साथ जारी रखें';
 }

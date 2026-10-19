@@ -723,5 +723,6 @@
   "createAccountPitch": "Peringkat dan duelmu, di ponsel mana pun.",
   "usernameSpacesHint": "Spasi menjadi _",
   "haveInviteCode": "Punya kode undangan?",
-  "emailCodeNote": "Kami akan mengirim kode 6 digit ke emailmu. Tanpa kata sandi."
+  "emailCodeNote": "Kami akan mengirim kode 6 digit ke emailmu. Tanpa kata sandi.",
+  "continueWithEmail": "Lanjutkan dengan email"
 }

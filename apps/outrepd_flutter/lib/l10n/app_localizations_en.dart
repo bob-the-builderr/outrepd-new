@@ -2379,4 +2379,7 @@ class LEn extends L {
 
   @override
   String get emailCodeNote => 'We\'ll email you a 6-digit code. No password.';
+
+  @override
+  String get continueWithEmail => 'Continue with email';
 }

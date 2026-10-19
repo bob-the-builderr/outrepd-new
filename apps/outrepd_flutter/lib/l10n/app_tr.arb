@@ -723,5 +723,6 @@
   "createAccountPitch": "Rütben ve düelloların, her telefonda.",
   "usernameSpacesHint": "Boşluklar _ olur",
   "haveInviteCode": "Davet kodun var mı?",
-  "emailCodeNote": "Sana e-postayla 6 haneli bir kod göndereceğiz. Şifre yok."
+  "emailCodeNote": "Sana e-postayla 6 haneli bir kod göndereceğiz. Şifre yok.",
+  "continueWithEmail": "E-posta ile devam et"
 }

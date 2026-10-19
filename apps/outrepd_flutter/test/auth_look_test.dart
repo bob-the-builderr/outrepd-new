@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:outrepd/l10n/app_localizations.dart';
 import 'package:outrepd/screens/auth_entry.dart';
+import 'package:outrepd/screens/social_sign_in.dart';
 import 'package:outrepd/theme.dart';
 
 Widget _app(Widget home, {double scale = 1.0}) => MaterialApp(
@@ -68,6 +69,20 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('inviteCode')), findsOneWidget);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('log in: email is a button to its own page', (tester) async {
+    smallPhone(tester);
+    debugOfferAllSocialSignIn = true;
+    addTearDown(() => debugOfferAllSocialSignIn = false);
+    await tester.pumpWidget(_app(const LoginScreen()));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TextField), findsNothing);
+    await tester.tap(find.byKey(const Key('continueWithEmail')));
+    await tester.pumpAndSettle();
+    expect(find.byType(TextField), findsOneWidget);
+    expect(find.text('Send code'), findsOneWidget);
   });
 
   testWidgets('the sign-up form fits at 1.3x', (tester) async {

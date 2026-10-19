@@ -723,5 +723,6 @@
   "createAccountPitch": "Dein Rang und deine Duelle, auf jedem Handy.",
   "usernameSpacesHint": "Leerzeichen werden zu _",
   "haveInviteCode": "Hast du einen Einladungscode?",
-  "emailCodeNote": "Wir schicken dir einen 6-stelligen Code per E-Mail. Kein Passwort."
+  "emailCodeNote": "Wir schicken dir einen 6-stelligen Code per E-Mail. Kein Passwort.",
+  "continueWithEmail": "Weiter mit E-Mail"
 }

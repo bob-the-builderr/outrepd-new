@@ -2343,4 +2343,7 @@ class LJa extends L {
 
   @override
   String get emailCodeNote => '6桁のコードをメールでお送りします。パスワードは不要です。';
+
+  @override
+  String get continueWithEmail => 'メールで続ける';
 }

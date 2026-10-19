@@ -2333,4 +2333,7 @@ class LZh extends L {
 
   @override
   String get emailCodeNote => '我们会给你发送 6 位数验证码邮件，无需密码。';
+
+  @override
+  String get continueWithEmail => '通过邮箱继续';
 }

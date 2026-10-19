@@ -2381,4 +2381,7 @@ class LRu extends L {
 
   @override
   String get emailCodeNote => 'Мы пришлём 6-значный код на почту. Без пароля.';
+
+  @override
+  String get continueWithEmail => 'Продолжить с почтой';
 }

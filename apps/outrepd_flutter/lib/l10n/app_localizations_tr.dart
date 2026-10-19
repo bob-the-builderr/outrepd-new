@@ -2376,4 +2376,7 @@ class LTr extends L {
 
   @override
   String get emailCodeNote => 'Sana e-postayla 6 haneli bir kod göndereceğiz. Şifre yok.';
+
+  @override
+  String get continueWithEmail => 'E-posta ile devam et';
 }

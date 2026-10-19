@@ -723,5 +723,6 @@
   "createAccountPitch": "Tu rango y tus duelos, en cualquier móvil.",
   "usernameSpacesHint": "Los espacios se convierten en _",
   "haveInviteCode": "¿Tienes un código de invitación?",
-  "emailCodeNote": "Te enviaremos un código de 6 dígitos por correo. Sin contraseña."
+  "emailCodeNote": "Te enviaremos un código de 6 dígitos por correo. Sin contraseña.",
+  "continueWithEmail": "Continuar con correo"
 }
