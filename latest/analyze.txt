@@ -1,7 +1,2 @@
 Analyzing outrepd_flutter...                                    
-
-warning • A value for optional parameter 'label' isn't ever given. Try removing the unused parameter • lib/screens/auth_entry.dart:1014:10 • unused_element_parameter
-warning • The member 'debugOfferAllSocialSignIn' can only be used within 'package:outrepd/screens/social_sign_in.dart' or a test • tool/screenshots/sign_in_test.dart:71:7 • invalid_use_of_visible_for_testing_member
-warning • The member 'debugOfferAllSocialSignIn' can only be used within 'package:outrepd/screens/social_sign_in.dart' or a test • tool/screenshots/sign_in_test.dart:80:7 • invalid_use_of_visible_for_testing_member
-
-3 issues found. (ran in 15.2s)
+No issues found! (ran in 15.0s)
