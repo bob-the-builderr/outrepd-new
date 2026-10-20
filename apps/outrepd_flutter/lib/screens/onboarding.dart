@@ -159,6 +159,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   /// The gate at the end of the flow: no duel, this device's own placements
   /// included, is reachable without going through it.
   Future<void> _openAuthGate() async {
+    // Made already, with Apple or Google from the welcome screen's log-in:
+    // nothing to sign up for at the end.
+    if (_accountMade) {
+      await _finish();
+      return;
+    }
     final outcome = await Navigator.of(context).push<AuthOutcome>(
       MaterialPageRoute(builder: (_) => const AuthEntryScreen()),
     );
@@ -181,8 +187,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final outcome = await Navigator.of(
       context,
     ).push<AuthOutcome>(MaterialPageRoute(builder: (_) => const LoginScreen()));
-    if (outcome == AuthOutcome.signedIn) await _finishAfterSignIn();
+    switch (outcome) {
+      case AuthOutcome.signedIn:
+        await _finishAfterSignIn();
+      case AuthOutcome.signedUp:
+        // Apple or Google made a new account from the log-in page. It still
+        // needs what every new account does — the age check, the camera,
+        // the calibration — so the flow carries on from the welcome, and its
+        // end skips the sign-up it no longer needs. It used to land back on
+        // the welcome as if nothing had happened.
+        setState(() => _accountMade = true);
+        _go(_Step.idea);
+      case null:
+        break;
+    }
   }
+
+  /// A new account was made from the welcome screen's log-in.
+  bool _accountMade = false;
 
   @override
   Widget build(BuildContext context) {
