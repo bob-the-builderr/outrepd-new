@@ -125,7 +125,7 @@ Health Connect ولا بيانات طبية.
 | | Product ID | Base plan ID | المدة | السعر |
 |---|---|---|---|---|
 | أسبوعي | `pro_weekly` | `weekly` | 1 week, auto-renewing | $4.99 |
-| سنوي | `pro_yearly` | `yearly` | 1 year, auto-renewing | $39.99 |
+| سنوي | `pro_yearly` | `yearly` | 1 year, auto-renewing | $29.99 |
 
 في كل base plan ← **Add offer** ← Offer ID `trial3` ← Eligibility: **New
 customer acquisition** ← Phase: **Free trial, 3 days** ← **Activate**.

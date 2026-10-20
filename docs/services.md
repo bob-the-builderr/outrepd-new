@@ -109,7 +109,7 @@ functions بس. اللي مالوش أكونت ممنوع من كل حاجة غ�
 ## ٣. App Store Connect
 
 - **App:** `OUTREPD : Push-up Duels` · Apple ID `6817853725` · Bundle `com.outrepd.outrepd`
-- **Subscription group:** `OUTREPD Pro`: `Pro Weekly` ($4.99)، `Pro Yearly` ($39.99)، الاتنين فيهم Free 3 days
+- **Subscription group:** `OUTREPD Pro`: `Pro Weekly` ($4.99)، `Pro Yearly` ($29.99)، الاتنين فيهم Free 3 days
 - **Sandbox tester:** `mokhtar200301sandbox1@gmail.com`
 - **App Review account:** `appreview@outrepd.com`
 - **Server notifications:** لينك RevenueCat (Production + Sandbox، Version 2)
@@ -119,7 +119,7 @@ functions بس. اللي مالوش أكونت ممنوع من كل حاجة غ�
 ## ٤. Google Play Console
 
 - **Package:** `com.outrepd.outrepd` · **Developer name:** `OUTREPD`
-- **Subscriptions:** `pro_weekly` (base plan `weekly`، $4.99) · `pro_yearly` (`yearly`، $39.99)، الاتنين فيهم offer `trial3` (٣ أيام، Never had any subscription)
+- **Subscriptions:** `pro_weekly` (base plan `weekly`، $4.99) · `pro_yearly` (`yearly`، $29.99)، الاتنين فيهم offer `trial3` (٣ أيام، Never had any subscription)
 - **Tracks:** Internal testing (إيميلك بس) · Closed testing - Alpha (التيسترز)
 - **License testing:** إيميلك وإيميلات التيسترز
 - **Service account لـRevenueCat:** في Google Cloud، متدي صلاحيات في Users and permissions

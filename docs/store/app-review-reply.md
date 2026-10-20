@@ -83,7 +83,7 @@ Not applicable. OUTREPD is not a medical device, gives no medical or training ad
 7. IN-APP PURCHASES
 One auto-renewable subscription group, "OUTREPD Pro", that unlocks the whole app:
 - Pro Weekly: 1 week, $4.99 (US)
-- Pro Yearly: 1 year, $39.99 (US)
+- Pro Yearly: 1 year, $29.99 (US)
 Each has a 3-day free trial for eligible new subscribers. The subscription screen appears by itself after signing up or signing in without an active subscription, and shows each plan's name, length and price, the price after the trial, Restore, and the Terms of Use and Privacy Policy links. Subscriptions are managed in Settings > Apple Account > Subscriptions.
 
 Thank you.
@@ -109,7 +109,7 @@ USER CONTENT: usernames and profile photos only. Report and Block are in the top
 
 ACCOUNT DELETION: Profile > gear > Delete account, or the paywall's "Account" link.
 
-IN-APP PURCHASES: subscription group "OUTREPD Pro": Pro Weekly (1 week, $4.99) and Pro Yearly (1 year, $39.99), each with a 3-day free trial for eligible new subscribers; unlocks the whole app. The paywall appears after sign-up or sign-in for any account without a subscription, with plan names, lengths, prices, Restore, Terms of Use and Privacy Policy.
+IN-APP PURCHASES: subscription group "OUTREPD Pro": Pro Weekly (1 week, $4.99) and Pro Yearly (1 year, $29.99), each with a 3-day free trial for eligible new subscribers; unlocks the whole app. The paywall appears after sign-up or sign-in for any account without a subscription, with plan names, lengths, prices, Restore, Terms of Use and Privacy Policy.
 
 SERVICES: Supabase (auth with email codes, database, storage, realtime), Apple In-App Purchase, RevenueCat (subscriptions), Google ML Kit Pose Detection (on-device only; no images leave the phone), Firebase Cloud Messaging and Crashlytics, Resend (data export emails). No generative AI.
 
