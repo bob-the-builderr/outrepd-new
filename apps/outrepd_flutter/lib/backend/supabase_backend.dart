@@ -725,9 +725,12 @@ class SupabaseBackend implements Backend {
           );
           await refreshMe();
           return SocialSignInResult.newAccount;
+        } on AuthRetryableFetchException {
+          rethrow;
         } on AuthException catch (error) {
-          // Somebody's already: signed in to below instead.
-          if (error.code != 'identity_already_exists') rethrow;
+          // Not this guest's to take: the identity, or its email, already
+          // belongs to an account. That account is signed in to below.
+          debugPrint('Could not link ${provider.name}: ${error.code} ${error.message}');
         }
       }
 
@@ -764,6 +767,7 @@ class SupabaseBackend implements Backend {
       return SocialSignInResult.offline;
     } on AuthException catch (error) {
       debugPrint('Could not sign in with ${provider.name}: ${error.message}');
+      lastSocialSignInError = error.message;
       return SocialSignInResult.failed;
     }
   }
@@ -1242,9 +1246,12 @@ class SupabaseBackend implements Backend {
   LiveLink openLiveLink(String matchId) => _RealtimeLiveLink(_db, matchId);
 
   @override
-  bool get signedInWithApple =>
-      _db.auth.currentUser?.identities?.any((i) => i.provider == 'apple') ??
-      false;
+  Future<bool> signedInWithApple() async {
+    final user = (await _db.auth.getUser()).user ?? _db.auth.currentUser;
+    final providers = user?.appMetadata['providers'];
+    return (user?.identities?.any((i) => i.provider == 'apple') ?? false) ||
+        (providers is List && providers.contains('apple'));
+  }
 
   @override
   Future<void> revokeAppleSignIn(String authorizationCode) async {

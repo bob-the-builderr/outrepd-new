@@ -286,7 +286,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
       // Signed in with Apple: Apple's access is revoked first, as the App
       // Store asks, with a code from its sheet. Closing the sheet or a
       // failure here does not keep an account its owner asked to delete.
-      if (backend.signedInWithApple) {
+      if (await backend.signedInWithApple()) {
         final code = await appleAuthorizationCode();
         if (code != null) {
           try {

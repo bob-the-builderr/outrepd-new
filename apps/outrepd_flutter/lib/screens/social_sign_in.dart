@@ -50,6 +50,7 @@ bool get socialSignInOffered => appleSignInOffered || googleSignInOffered;
 /// Asks the phone for the person's Apple or Google identity and signs in
 /// with it. Null when they closed the sheet: nothing to say about that.
 Future<SocialSignInResult?> signInWith(SocialProvider provider) async {
+  lastSocialSignInError = null;
   try {
     return switch (provider) {
       SocialProvider.apple => await _apple(),
@@ -58,13 +59,16 @@ Future<SocialSignInResult?> signInWith(SocialProvider provider) async {
   } on SignInWithAppleAuthorizationException catch (error) {
     if (error.code == AuthorizationErrorCode.canceled) return null;
     debugPrint('Apple sign-in: ${error.message}');
+    lastSocialSignInError = error.message;
     return SocialSignInResult.failed;
   } on GoogleSignInException catch (error) {
     if (error.code == GoogleSignInExceptionCode.canceled) return null;
     debugPrint('Google sign-in: ${error.description}');
+    lastSocialSignInError = '${error.code.name}: ${error.description ?? ''}';
     return SocialSignInResult.failed;
   } on Object catch (error) {
     debugPrint('Sign-in with ${provider.name} failed: $error');
+    lastSocialSignInError = '$error';
     return SocialSignInResult.failed;
   }
 }
@@ -97,14 +101,20 @@ Future<SocialSignInResult> _google() async {
   final account = await google.authenticate();
   final token = account.authentication.idToken;
   if (token == null) return SocialSignInResult.failed;
-  // Asked for quietly: when it comes without a sheet the server checks the
-  // token against it, and when it does not the token is enough.
-  final access = await account.authorizationClient
-      .authorizationForScopes(const ['email']);
+  // Asked for quietly: when it comes, the server checks the token against
+  // it; when it does not, or asking fails, the token is enough.
+  String? access;
+  try {
+    access = (await account.authorizationClient.authorizationForScopes(
+      const ['email'],
+    ))?.accessToken;
+  } on Object catch (error) {
+    debugPrint('Google access token: $error');
+  }
   return backend.signInWithIdToken(
     provider: SocialProvider.google,
     idToken: token,
-    accessToken: access?.accessToken,
+    accessToken: access,
   );
 }
 

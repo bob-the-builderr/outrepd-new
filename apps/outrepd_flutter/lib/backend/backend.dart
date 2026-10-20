@@ -873,6 +873,10 @@ enum AskResult {
 /// Where an Apple or Google identity comes from.
 enum SocialProvider { apple, google }
 
+/// Why the last Apple or Google sign-in failed, in the words it failed
+/// with, for the message on the screen. Null when it did not.
+String? lastSocialSignInError;
+
 /// What signing in with Apple or Google did.
 enum SocialSignInResult {
   /// A new account: this phone's guest, now carrying the identity and
@@ -1285,8 +1289,10 @@ abstract interface class Backend {
   /// Deletes the account and everything hanging off it. Irreversible.
   Future<void> deleteAccount();
 
-  /// This account signs in with Apple: deleting it must revoke that.
-  bool get signedInWithApple;
+  /// This account signs in with Apple: deleting it must revoke that. Asked
+  /// of the server, not read off the session on the phone, which can be
+  /// older than the account's last sign-in.
+  Future<bool> signedInWithApple();
 
   /// Ends the app's access to the Apple ID, with a fresh authorization code
   /// from Apple's sheet (App Store guideline 5.1.1(v)). Throws when Apple or
@@ -1575,7 +1581,7 @@ class NoBackend implements Backend {
   Future<void> deleteAccount() => throw StateError('no server configured');
 
   @override
-  bool get signedInWithApple => false;
+  Future<bool> signedInWithApple() async => false;
 
   @override
   Future<void> revokeAppleSignIn(String authorizationCode) async {}

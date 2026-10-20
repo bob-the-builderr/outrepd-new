@@ -1209,7 +1209,13 @@ mixin _SocialSignIn<T extends StatefulWidget> on State<T> {
         await Career.instance.adoptServerProfile(backend.me!);
         if (mounted) Navigator.of(context).pop(AuthOutcome.signedIn);
       case SocialSignInResult.failed:
-        say(l.socialSignInFailed);
+        // With the reason, short: a failure only setup can fix says which.
+        final why = lastSocialSignInError;
+        say(
+          why == null || why.isEmpty
+              ? l.socialSignInFailed
+              : '${l.socialSignInFailed} (${why.length > 120 ? why.substring(0, 120) : why})',
+        );
       case SocialSignInResult.offline:
         say(l.cantReachServer);
     }
