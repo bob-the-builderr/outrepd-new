@@ -1,392 +1,589 @@
-00:00 +0: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_look_test.dart
-00:00 +0: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_look_test.dart: the entry screen fits a small iPhone at 1.0x
-00:00 +1: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_look_test.dart: the entry screen fits a small iPhone at 1.3x
-00:00 +2: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_look_test.dart: the invite code opens from its line
-00:00 +3: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_look_test.dart: log in: email is a button to its own page
-00:00 +4: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_look_test.dart: the sign-up form fits at 1.3x
-00:00 +5: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart: the friend code can be sent on, not just copied
-00:01 +5: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ladder_server_test.dart: the server pays what the app promised
-no server configured — pass --dart-define=SUPABASE_URL and SUPABASE_ANON_KEY to check the ladder against it
-00:01 +6: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart: the friend code can be sent on, not just copied
-00:01 +7: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart: the friend code can be sent on, not just copied
-00:01 +8: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart: shows the titles and friends, and goes on
-00:01 +9: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart: lays out in hi
-00:01 +10: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart: lays out in de
-00:01 +11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart: lays out in ja
-00:01 +12: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/version_test.dart: kAppVersion matches pubspec
-00:02 +13: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/trainer_lifecycle_test.dart: the camera is let go when the app leaves, and reopened on return
-00:03 +13: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notify_server_test.dart: the lifter who was raced finds out
+00:00 +0: loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/worn_title_test.dart
+00:00 +0: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/worn_title_test.dart: sending it wearing a title tells the server, once per change
+00:00 +1: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/worn_title_test.dart: sending it nothing is sent without a server
+00:00 +2: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/worn_title_test.dart: showing it their title sits under their name
+00:00 +3: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: a brand new account is unranked rather than bottom-ranked
+00:01 +4: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: a brand new account is unranked rather than bottom-ranked
+00:01 +5: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: a brand new account shows progress once placements are under way
+00:01 +6: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: a brand new account gets a rank once the placements are done
+00:02 +7: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: a brand new account the bell is a round button that counts what is waiting
+00:02 +8: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: with no connection the ranked button is dead and practice is promoted
+00:02 +9: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: with no connection retry brings the normal screen back
+00:02 +10: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out at 1.0x text scale
+00:02 +11: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out at 1.0x text scale
+00:02 +12: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out at 1.0x text scale
+00:02 +13: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out at 1.0x text scale
+00:02 +14: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out at 1.0x text scale
+00:02 +15: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out at 1.0x text scale
+00:02 +16: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out at 1.0x text scale
+00:02 +17: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out at 1.0x text scale
+00:02 +18: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out at 1.0x text scale
+00:02 +19: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out at 1.0x text scale
+00:02 +20: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out at 1.0x text scale
+00:02 +21: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out at 1.0x text scale
+00:03 +22: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out at 1.0x text scale
+00:03 +23: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out at 1.3x text scale
+00:03 +24: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out at 1.6x text scale
+00:03 +25: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out in Hindi
+00:03 +26: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: shows both ranks, at the same size
+00:03 +27: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/country_names_test.dart: a code reads in the reader's language
+00:03 +28: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/country_names_test.dart: a code reads in the reader's language
+00:04 +29: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/country_names_test.dart: a code reads in the reader's language
+00:04 +30: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/country_names_test.dart: a code reads in the reader's language
+00:04 +31: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/country_names_test.dart: a code reads in the reader's language
+00:04 +32: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/country_names_test.dart: a code reads in the reader's language
+00:04 +33: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/country_names_test.dart: something that is not a code is shown as it is
+00:04 +34: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/country_names_test.dart: every app language has a name for every country English has
+00:04 +35: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/persistence_test.dart: settings survive a restart
+00:04 +36: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/persistence_test.dart: untouched settings keep their defaults
+00:05 +37: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: opens with the current name already filled in
+00:05 +38: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: opens with the current name already filled in
+00:05 +39: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: opens with the current name already filled in
+00:06 +40: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: opens with the current name already filled in
+00:06 +41: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: opens with the current name already filled in
+00:06 +42: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: opens with the current name already filled in
+00:06 +43: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: opens with the current name already filled in
+00:06 +44: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: opens with the current name already filled in
+00:06 +45: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: opens with the current name already filled in
+00:06 +46: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: opens with the current name already filled in
+00:06 +47: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: opens with the current name already filled in
+00:06 +48: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: the save button is disabled until the name actually changes
+00:06 +49: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: a name that is free shows available and can be saved
+00:06 +49: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notify_server_test.dart: the lifter who was raced finds out
 no server configured — skipping
-00:03 +14: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/trainer_lifecycle_test.dart: the camera is let go when the app leaves, and reopened on return
-00:03 +15: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/trainer_lifecycle_test.dart: the camera is let go when the app leaves, and reopened on return
-00:03 +16: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/trainer_lifecycle_test.dart: the camera is let go when the app leaves, and reopened on return
-00:03 +17: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/trainer_lifecycle_test.dart: the camera is let go when the app leaves, and reopened on return
-00:03 +18: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/trainer_lifecycle_test.dart: the camera is let go when the app leaves, and reopened on return
-00:03 +19: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/trainer_lifecycle_test.dart: the camera is let go when the app leaves, and reopened on return
-00:03 +20: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/trainer_lifecycle_test.dart: the camera is let go when the app leaves, and reopened on return
-00:03 +21: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/trainer_lifecycle_test.dart: a round ends on its clock when no pose comes to end it
-Could not save the session: Unsupported operation: Functionality only available on Android
-00:04 +22: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: every tier draws at 40.0
-00:04 +23: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: every tier draws at 52.0
-00:04 +24: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: every tier draws at 78.0
-00:04 +25: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: every badge draws at 20.0, whole, hollow and unranked
-00:04 +26: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: every badge draws at 34.0, whole, hollow and unranked
-00:04 +27: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: every badge draws at 206.0, whole, hollow and unranked
-00:04 +28: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: the frames wear the same wings as the badges
-00:04 +29: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: the same box for every tier, so a list lines up
-00:04 +30: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: a ranked picture wears the frame, not the badge
-00:04 +31: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: a picture still in its placements wears nothing
-00:04 +32: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: the picture changes the photo, the frame opens the rank
-00:05 +33: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/posture_probe_test.dart: how a push-up reads, and how standing reads
-00:05 +34: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: opens on the story card, with the record and best set
-00:06 +35: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: switching to Post keeps showing the same data
-00:06 +36: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: copy link confirms with a snackbar
-00:06 +37: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: copy link confirms with a snackbar
-00:06 +38: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: copy link confirms with a snackbar
-00:06 +39: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/failure_states_test.dart: the blocking notice always offers a way out as well as a way through
-00:06 +40: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/failure_states_test.dart: the blocking notice always offers a way out as well as a way through
-00:06 +41: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/failure_states_test.dart: the blocking notice always offers a way out as well as a way through
-00:06 +42: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/failure_states_test.dart: the blocking notice always offers a way out as well as a way through
-00:06 +43: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/failure_states_test.dart: the blocking notice always offers a way out as well as a way through
-00:07 +44: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/failure_states_test.dart: the blocking notice always offers a way out as well as a way through
-00:07 +45: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/failure_states_test.dart: the blocking notice always offers a way out as well as a way through
-00:07 +46: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in hi
-00:07 +47: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in hi
-00:07 +48: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/failure_states_test.dart: the blocking notice a real alternative reads louder than a dismissal
-00:07 +49: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in id
-00:07 +50: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in it
-00:07 +51: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in ja
-00:07 +52: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in ko
-00:07 +53: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in pt
-00:07 +54: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in ru
-00:07 +55: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in tr
-00:07 +56: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in zh
-00:07 +57: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: an unranked account shows no tier badge crash
-00:07 +58: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/persistence_test.dart: settings survive a restart
-00:07 +59: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/persistence_test.dart: untouched settings keep their defaults
-00:08 +60: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/post_match_test.dart: Health says the set was saved once it is there
-00:09 +61: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/post_match_test.dart: Health says nothing when it did not go
-00:09 +62: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/post_match_test.dart: the LP card the headline is exactly the rank change
-00:09 +63: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/post_match_test.dart: the LP card a loss reads the same way
-00:09 +64: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/post_match_test.dart: the month's move draws its arrow rather than typing it
-00:09 +65: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/post_match_test.dart: after a saved set the button finds a new match, not a rematch
-00:09 +66: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/post_match_test.dart: today's goal the duel that meets it says so
-00:09 +67: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
-00:09 +68: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
-00:09 +69: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
-00:10 +70: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
-00:10 +71: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
-00:10 +72: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
-00:10 +73: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
-00:10 +74: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
-00:10 +75: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
-00:10 +76: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
-00:10 +77: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/post_match_test.dart: the screens lay out a win in ja
-00:10 +78: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: back goes to the step before, not out of the app
-00:10 +79: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: back goes to the step before, not out of the app
-00:10 +80: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: back goes to the step before, not out of the app
-00:10 +81: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: back goes to the step before, not out of the app
-00:10 +82: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: back goes to the step before, not out of the app
-00:10 +83: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/post_match_test.dart: the scoreboard a new best gets its chip, and only then
-00:10 +84: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: a back button on every step after the first
-00:10 +85: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: a back button on every step after the first
-00:10 +86: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: a back button on every step after the first
-00:11 +87: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: a back button on every step after the first
-00:11 +88: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: a back button on every step after the first
-00:11 +89: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: says what the camera is for before asking for it
-00:11 +90: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: under sixteen is turned away without a way around it
-00:11 +91: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: the framing check waits for the body and the hands
-00:11 +92: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: held in frame a moment, the framing check moves on by itself
-00:11 +93: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: three push-ups finish the calibration
-00:12 +94: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: three push-ups finish the calibration
-00:12 +95: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: three push-ups finish the calibration
-00:12 +96: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: three push-ups finish the calibration
-00:12 +97: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: three push-ups finish the calibration
-00:12 +98: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: three push-ups finish the calibration
-00:12 +99: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: three push-ups finish the calibration
-00:12 +100: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: the calibration counts once the lifter is down in position
-00:12 +101: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: going straight to log in skips the camera and calibration
-00:12 +101: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/account_server_test.dart: a valid new name is taken, and cannot be spent twice
-no server configured — skipping
-00:12 +102: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: going straight to log in skips the camera and calibration
-00:12 +103: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: going straight to log in skips the camera and calibration
-00:12 +104: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: going straight to log in skips the camera and calibration
-00:12 +105: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: going straight to log in skips the camera and calibration
-00:12 +106: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: signs up straight from the calibration result
-00:13 +107: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: every step lays out at 1.3x
-00:13 +108: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: every step lays out at 1.6x
-00:13 +109: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: every step lays out at 1.6x
-00:13 +110: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: every step lays out at 1.6x
-00:13 +111: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/worn_title_test.dart: showing it their title sits under their name
-00:13 +112: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/worn_title_test.dart: showing it their title sits under their name
-00:13 +113: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/worn_title_test.dart: showing it their title sits under their name
-00:13 +114: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/worn_title_test.dart: showing it a title this build does not know shows nothing
-00:14 +115: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the duel is one bout of a fixed length
-00:14 +116: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the duel counts push-ups and nothing else
-00:14 +117: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the duel a stored record says what it measured
-00:14 +118: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen waits for the whole body before counting anything
-00:14 +118: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/pushup_report_test.dart: a report somebody can check against the footage
-No pose recordings at D:/pushup-poses.
-00:14 +119: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen waits for the whole body before counting anything
-00:14 +120: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen a position it cannot read still lets the round start
-00:14 +121: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen counts down three, then starts the clock
-00:14 +122: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen shows the clock, both counts and the rank
-00:14 +123: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen giving up asks first, and staying keeps the round going
-00:15 +124: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen the score bar has height once the bout is running
-00:15 +125: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen a solo session has nothing at stake on screen
-00:15 +126: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen never names the movement
-00:15 +127: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen the duel HUD lays out in hi
-00:15 +128: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen the duel HUD lays out in hi
-00:15 +129: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: clean sets a session with no clean set does not move the tally
-00:15 +130: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen the duel HUD lays out in de
-00:15 +131: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen the duel HUD lays out in de
-00:15 +132: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen the duel HUD lays out in de
-00:15 +133: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen the duel HUD lays out in de
-00:15 +134: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen the duel HUD lays out in de
-00:15 +135: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen the duel HUD lays out in de
-00:15 +136: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen the duel HUD lays out in de
-00:15 +137: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen the duel HUD lays out in de
-00:15 +138: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen the duel HUD lays out in de
-00:15 +139: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen the duel HUD lays out in de
-00:15 +140: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen the duel HUD lays out in de
-00:15 +141: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen the duel HUD lays out in de
-00:15 +142: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen the duel HUD lays out in de
-00:15 +143: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen the duel HUD lays out in ja
-00:16 +144: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_server_test.dart: two lifters, two sets, one duel
-no server configured — skipping
-00:16 +145: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_server_test.dart: once placed, the server pays what the app would
-00:16 +146: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_server_test.dart: nobody can write their own rank
-00:16 +147: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_server_test.dart: giving up loses even with more reps
-00:16 +148: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_server_test.dart: being given up on wins even with fewer reps
-00:16 +149: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_server_test.dart: a rematch finds exactly the set reserved for it
-00:16 +150: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_server_test.dart: a block still holds over a rematch challenge
-00:16 +151: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_server_test.dart: a friend duel moves nothing
-00:16 +152: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: opens with the current name already filled in
-00:17 +153: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: quick peek shows a couldn't-load state with no backend
-00:17 +154: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: quick peek shows a couldn't-load state with no backend
-00:17 +155: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: quick peek shows a couldn't-load state with no backend
-00:17 +156: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: quick peek shows a couldn't-load state with no backend
-00:17 +157: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: quick peek shows a couldn't-load state with no backend
-00:17 +158: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: under four characters never even asks the server
-00:17 +159: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: quick peek shows the record, best set and win rate once loaded
-00:17 +160: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: a symbol or space never even asks the server
-00:17 +161: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: quick peek a stranger's peek leaves out the record against you
-00:17 +162: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: the server saying taken after the screen said available still refuses to save
-00:17 +163: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: the server saying taken after the screen said available still refuses to save
-00:17 +164: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: quick peek view full profile opens the full screen
-00:17 +165: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: quick peek view full profile opens the full screen
-00:17 +166: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: quick peek view full profile opens the full screen
-00:17 +167: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: with no backend, saving shows it needs one rather than silently doing nothing
-00:17 +168: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: sample rows a sample friend opens a card with the record against you
-00:17 +169: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: username editor lays out at 1.0x text scale
-00:17 +170: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: sample rows a sample stranger opens a card without one
-00:17 +171: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: username editor lays out at 1.3x text scale
-00:17 +172: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: sample rows challenging a sample card says it needs a server
-00:17 +173: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: username editor lays out at 1.6x text scale
-00:17 +174: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: full profile shows the head-to-head, stat grid and last score
-00:17 +175: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: username editor lays out in hi
-00:17 +176: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: full profile an account already friends shows Friends, not Add friend
-00:18 +177: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: full profile an account already friends shows Friends, not Add friend
-00:18 +178: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: username editor lays out in ja
-00:18 +179: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: username editor lays out in ja
-00:18 +180: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: full profile a stranger shows no head-to-head, only their own numbers
-00:18 +181: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: full profile a friend is challenged live
-Could not send the live invite: Bad state: no server configured
-00:18 +182: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: full profile full profile lays out at 1.0x text scale
-00:18 +183: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: full profile full profile lays out at 1.3x text scale
-00:18 +184: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: full profile full profile lays out at 1.6x text scale
-00:18 +185: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: full profile full profile lays out in hi
-00:18 +186: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: full profile full profile lays out in de
-00:18 +187: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: full profile full profile lays out in ja
-00:18 +188: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: the more menu lists share, mute, block and report
-00:18 +189: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: the more menu mute calls the backend and closes the sheet
-00:18 +190: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: the more menu a stranger has no Remove friend; a friend does, and it asks first
-00:18 +191: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: the more menu a stranger has no Remove friend; a friend does, and it asks first
-00:18 +192: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: the more menu a stranger has no Remove friend; a friend does, and it asks first
-00:18 +193: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: the more menu block calls the backend and closes the sheet
-00:18 +194: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: the more menu report opens the report screen for this account
-00:19 +195: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: the more menu cancel dismisses without calling anything
-00:19 +196: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/push_messages_test.dart: the push function has the current translations
-00:19 +197: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/push_messages_test.dart: every push can name who it is about
-00:19 +198: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: an account with no email is not offered a sign-out
-00:20 +198: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/pushup_accuracy_test.dart: push-ups counted against what the footage says
+00:06 +50: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: a name that is free shows available and can be saved
+00:06 +51: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: a name that is free shows available and can be saved
+00:06 +52: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: a name that is free shows available and can be saved
+00:06 +53: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: a name that is free shows available and can be saved
+00:06 +54: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: a name that is free shows available and can be saved
+00:06 +55: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: a name that is free shows available and can be saved
+00:06 +56: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: a name that is free shows available and can be saved
+00:07 +57: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: a name somebody else already has shows taken
+00:07 +58: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: a single character never even asks the server
+00:07 +59: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: under four characters never even asks the server
+00:07 +60: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: a symbol or space never even asks the server
+00:07 +61: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: the server saying taken after the screen said available still refuses to save
+00:07 +62: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: an account that already renamed sees the locked message, not a field
+00:07 +63: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: fourteen days on, the name can change again
+00:07 +64: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: with no backend, saving shows it needs one rather than silently doing nothing
+00:07 +65: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: with no backend, saving shows it needs one rather than silently doing nothing
+00:07 +66: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_editor_test.dart: with no backend, saving shows it needs one rather than silently doing nothing
+00:07 +67: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/failure_states_test.dart: the blocking notice always offers a way out as well as a way through
+00:07 +68: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/failure_states_test.dart: the blocking notice always offers a way out as well as a way through
+00:07 +69: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/failure_states_test.dart: the blocking notice always offers a way out as well as a way through
+00:08 +70: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/failure_states_test.dart: the blocking notice always offers a way out as well as a way through
+00:08 +71: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/failure_states_test.dart: the blocking notice always offers a way out as well as a way through
+00:08 +72: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/failure_states_test.dart: the blocking notice always offers a way out as well as a way through
+00:08 +73: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/failure_states_test.dart: the blocking notice always offers a way out as well as a way through
+00:08 +74: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/failure_states_test.dart: the blocking notice survives long copy on a small phone at 1.6x
+00:08 +75: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/failure_states_test.dart: the blocking notice a real alternative reads louder than a dismissal
+00:08 +76: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/user_probe_test.dart: what the checks read, second by second
+missing VID_20260921210358.json
+missing VID_20260921210455.json
+00:09 +77: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sql_lint_test.dart: there is SQL to check
+00:09 +78: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sql_lint_test.dart: no function names an input the same as an output
+00:09 +79: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sql_lint_test.dart: an update never reads a column a RETURNS TABLE also names
+00:09 +80: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sql_lint_test.dart: every function body is quoted with $$ at both ends
+00:09 +81: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sql_lint_test.dart: every function declares a search path
+00:09 +82: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sql_lint_test.dart: the installer is up to date with its parts
+00:09 +83: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sql_lint_test.dart: policies can be applied twice
+00:10 +84: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/home_widgets_test.dart: today, the goal and the rank, ready to draw
+00:10 +85: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/home_widgets_test.dart: in the reader's language
+00:10 +86: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/home_widgets_test.dart: the medium widget's badge is a PNG for every tier
+00:10 +86: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/pushup_accuracy_test.dart: push-ups counted against what the footage says
 No pose recordings at D:/pushup-poses yet.
-00:20 +199: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: an account with no email is not offered a sign-out
-00:20 +200: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: changing your mind leaves you signed in
-00:20 +201: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: signing out lands on the welcome screen, like a fresh install
-Could not start a new session: Bad state: no server in a test
-00:20 +202: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: deleting the account lands on the welcome screen too, not inside with no account
-Could not start a new session: Bad state: no server in a test
-00:21 +203: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/daily_goal_test.dart: says how far today is from the goal
-00:21 +204: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/daily_goal_test.dart: another goal can be picked, and is kept
-00:21 +205: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/daily_goal_test.dart: a set finished while the card is up moves it at once
-00:21 +206: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/daily_goal_test.dart: a duel carries today before and after it, for the result screen
-00:21 +207: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/daily_goal_test.dart: a met goal says done for today
-00:21 +208: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_rules_test.dart: spaces become underscores, and the name stops at twenty
-00:21 +209: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_rules_test.dart: the rule is the server's
-00:21 +210: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_rules_test.dart: a name chosen is kept fourteen days
-00:21 +211: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_rules_test.dart: sign-up says what is wrong with the name as it is typed
-00:22 +212: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart: friends lays out at 1.0x text scale
-00:23 +213: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart: friends lays out at 1.3x text scale
-00:23 +214: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart: friends lays out at 1.6x text scale
-00:23 +215: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart: friends lays out in hi
-00:23 +216: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: a wrong code is caught before the email code goes out
-00:23 +217: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: a wrong code is caught before the email code goes out
-00:23 +218: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: a wrong code is caught before the email code goes out
-00:23 +219: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: a wrong code is caught before the email code goes out
-00:23 +220: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: a wrong code is caught before the email code goes out
-00:23 +221: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: a wrong code is caught before the email code goes out
-00:23 +222: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: a wrong code is caught before the email code goes out
-00:23 +223: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: a wrong code is caught before the email code goes out
-00:23 +224: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: a wrong code is caught before the email code goes out
-00:24 +225: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: a good code says so, and sign-up goes on
-00:24 +226: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: no code, no claim
-00:24 +227: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: the Friends tab offers the code only on the yearly plan
-00:24 +228: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the gate a build with no store has no paywall
-00:24 +229: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the gate a build with no store has no paywall
-00:24 +230: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the gate a build with no store has no paywall
-00:24 +231: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the gate a build with no store has no paywall
-00:24 +232: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the gate a build with no store has no paywall
-00:24 +233: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the gate a build with no store has no paywall
-00:24 +234: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the gate a build with no store has no paywall
-00:24 +235: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the gate a build with no store has no paywall
-00:25 +236: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the gate an account with the subscription goes straight in
-00:25 +237: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the gate an account without it sees only the paywall
-00:25 +238: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the gate the store is started once, however often the gate is built
-00:25 +239: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the free trial says the first days are free, when the charge comes, and what it will be
-00:25 +240: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the free trial a plan this account has no trial on promises no free days, on the same paywall
-00:25 +241: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the free trial nothing is promised before the store has said whether the days are still free
-00:25 +242: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the plans both prices, the saving, and the yearly plan chosen
-00:25 +243: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the plans the button buys the yearly plan unless weekly is picked
-00:25 +244: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the plans plans that cannot load say so and can be tried again
+00:10 +87: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/home_widgets_test.dart: the medium widget's badge is a PNG for every tier
+00:11 +88: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: the exercise-count titles are gone nothing in the list can no longer be earned
+00:11 +89: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: clean sets a session with no clean set does not move the tally
+00:11 +90: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: clean sets one clean set unlocks Clean Hands
+00:11 +91: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: clean sets ten clean sets unlocks Spotless too
+00:11 +92: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: the hours a session at midday counts towards neither
+00:11 +93: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: the hours ten sessions before seven unlocks Early Shift
+00:11 +94: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: the hours ten sessions after ten at night unlocks Night Shift
+00:11 +95: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: the hours seven in the morning itself is neither early nor late
+00:11 +96: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: the perfect week seven consecutive days with no rest unlocks Perfect Week
+00:11 +97: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: the perfect week a single rest day breaks it, even though the forgiving streak survives
+00:11 +98: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: the perfect week four straight perfect weeks unlocks Perfect Month
+00:11 +99: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: award unlocks exactly the id given, once
+00:11 +100: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: award the first title earned is worn automatically
+00:11 +101: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/rewards_test.dart: surviving a restart every new tally comes back exactly as it was
+00:11 +102: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/reminders_test.dart: a week of reminders at the chosen time
+00:11 +103: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/reminders_test.dart: not today once the goal is met
+00:11 +104: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/reminders_test.dart: today, part done, says what is left; other days the whole goal
+00:11 +105: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/reminders_test.dart: not a time already gone
+00:11 +106: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/reminders_test.dart: names the streak only when yesterday kept it alive
+00:11 +107: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/reminders_test.dart: across the end of a month
+00:12 +108: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: a block hides them both ways, and tells them nothing
+no server configured — skipping
+00:12 +109: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: blocking ends the friendship
+00:12 +110: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: a blocked account is never handed over as an opponent
+00:12 +111: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: "who can challenge me" decides who gets the set
+00:12 +112: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: asking to be off the board takes you off it
+00:12 +113: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: a notification nobody wants is never written
+00:12 +114: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: a report is write-only
+00:12 +115: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: my data is mine, and holds no pose landmarks
+00:12 +116: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/legal_line_test.dart: Terms opens its page
+00:13 +117: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart: friends lays out at 1.0x text scale
+00:13 +118: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart: friends lays out at 1.0x text scale
+00:13 +118: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/legal_line_test.dart: a page that cannot open says so
+Could not open https://www.outrepd.com/terms: Bad state: launchUrl returned false
+00:13 +119: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart: friends lays out at 1.0x text scale
+00:14 +120: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart: friends lays out at 1.3x text scale
+00:14 +121: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart: friends lays out at 1.3x text scale
+00:14 +122: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart: friends lays out at 1.6x text scale
+00:14 +123: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart: friends lays out in hi
+00:14 +124: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart: friends lays out in de
+00:14 +125: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart: friends lays out in ja
+00:14 +126: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart: friends lays out in ru
+00:14 +127: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart: friends lays out in tr
+00:14 +128: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart: every friend shows a rank and a record
+00:15 +129: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart: online friends are challenged, offline ones invited
+00:15 +130: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/friends_layout_test.dart: the search box filters the list
+00:15 +131: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/race_your_best_test.dart: the other side is your best, and it says so
+00:15 +132: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/race_your_best_test.dart: the other side is your best, and it says so
+00:16 +133: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/race_your_best_test.dart: with no best yet, it is only the clock
+00:16 +133: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_server_test.dart: two lifters, two sets, one duel
+no server configured — skipping
+00:16 +134: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/race_your_best_test.dart: with no best yet, it is only the clock
+00:16 +135: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/race_your_best_test.dart: with no best yet, it is only the clock
+00:16 +136: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/race_your_best_test.dart: with no best yet, it is only the clock
+00:16 +137: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/race_your_best_test.dart: with no best yet, it is only the clock
+00:16 +138: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/race_your_best_test.dart: with no best yet, it is only the clock
+00:16 +139: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/race_your_best_test.dart: with no best yet, it is only the clock
+00:16 +140: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/race_your_best_test.dart: with no best yet, it is only the clock
+00:16 +141: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/race_your_best_test.dart: with no best yet, it is only the clock
+00:16 +142: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/race_your_best_test.dart: lays out in hi
+00:16 +143: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/race_your_best_test.dart: lays out in de
+00:16 +144: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/race_your_best_test.dart: lays out in ja
+00:16 +145: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/version_test.dart: kAppVersion matches pubspec
+00:17 +146: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the gate a build with no store has no paywall
+00:17 +147: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/daily_goal_test.dart: says how far today is from the goal
+00:18 +148: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/daily_goal_test.dart: says how far today is from the goal
+00:18 +149: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the gate an account without it sees only the paywall
+00:18 +150: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/daily_goal_test.dart: another goal can be picked, and is kept
+00:18 +151: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/daily_goal_test.dart: another goal can be picked, and is kept
+00:18 +152: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the free trial says the first days are free, when the charge comes, and what it will be
+00:18 +153: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/daily_goal_test.dart: a set finished while the card is up moves it at once
+00:18 +154: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the free trial a plan this account has no trial on promises no free days, on the same paywall
+00:18 +155: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the free trial a plan this account has no trial on promises no free days, on the same paywall
+00:18 +156: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the free trial a plan this account has no trial on promises no free days, on the same paywall
+00:18 +157: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the free trial nothing is promised before the store has said whether the days are still free
+00:18 +158: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the plans both prices, the saving, and the yearly plan chosen
+00:18 +159: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the plans the button buys the yearly plan unless weekly is picked
+00:18 +160: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the plans plans that cannot load say so and can be tried again
 Could not load the plans: Bad state: offline
-00:25 +245: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: buying a purchase opens the app
-00:25 +246: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: a brand new account is unranked rather than bottom-ranked
-00:25 +247: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: a brand new account is unranked rather than bottom-ranked
-00:25 +248: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: a brand new account is unranked rather than bottom-ranked
-00:25 +249: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: a brand new account is unranked rather than bottom-ranked
-00:25 +250: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: a brand new account is unranked rather than bottom-ranked
-00:25 +251: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: a brand new account is unranked rather than bottom-ranked
-00:26 +252: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: a brand new account is unranked rather than bottom-ranked
-00:26 +253: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: a brand new account is unranked rather than bottom-ranked
-00:26 +254: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: a brand new account is unranked rather than bottom-ranked
-00:26 +255: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: a brand new account is unranked rather than bottom-ranked
-00:26 +256: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in es at 1.3x text
-00:26 +257: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: a brand new account shows progress once placements are under way
-00:26 +258: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in es at 1.3x text, with the trial
-00:26 +259: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: a brand new account gets a rank once the placements are done
-00:26 +260: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in fr at 1.3x text
-00:26 +261: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: a brand new account the bell is a round button that counts what is waiting
-00:26 +262: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: a brand new account the bell is a round button that counts what is waiting
-00:26 +263: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in de at 1.3x text
-00:26 +264: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: with no connection the ranked button is dead and practice is promoted
-00:26 +265: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in de at 1.3x text, with the trial
-00:26 +266: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: with no connection retry brings the normal screen back
-00:26 +267: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: with no connection retry brings the normal screen back
-00:26 +268: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in pt at 1.3x text, with the trial
-00:26 +269: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: the ranks board tells an unranked account how to get on it
-00:26 +270: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in it at 1.3x text
-00:26 +271: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: the ranks board shows the board to a ranked account
-00:26 +272: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: the ranks board shows the board to a ranked account
-00:26 +273: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: the ranks board shows the board to a ranked account
-00:26 +274: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in ru at 1.3x text, with the trial
-00:26 +275: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: layout survives a new account at 1.3x
-00:26 +276: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in tr at 1.3x text
-00:26 +277: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: layout survives the offline screen at 1.3x
-00:26 +278: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in tr at 1.3x text, with the trial
-00:26 +279: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in tr at 1.3x text, with the trial
-00:26 +280: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: layout survives the offline screen at 1.6x
-00:26 +281: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in id at 1.3x text
-00:26 +282: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: layout survives a new account in hi
-00:26 +283: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in id at 1.3x text, with the trial
-00:26 +284: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: layout survives the unranked board in hi
-00:26 +285: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in hi at 1.3x text
-00:26 +286: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: layout survives a new account in de
-00:26 +287: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in hi at 1.3x text, with the trial
-00:26 +288: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in hi at 1.3x text, with the trial
-00:26 +289: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: layout survives a new account in ru
-00:26 +290: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in ja at 1.3x text
-00:26 +291: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/states_test.dart: layout survives the unranked board in ru
-00:26 +292: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in ja at 1.3x text, with the trial
-00:26 +293: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in ko at 1.3x text
-00:26 +294: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in ko at 1.3x text, with the trial
-00:27 +295: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in zh at 1.3x text
-00:27 +296: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in zh at 1.3x text, with the trial
-00:27 +297: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the numbers the saving is against paying weekly for a year
-00:27 +298: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the numbers no saving is claimed across two currencies
-00:27 +299: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: the numbers a yearly plan without a store per-week price works one out
-00:27 +300: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: inside a division a win adds LP and nothing else moves
-00:27 +301: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: inside a division a loss takes LP and nothing else moves
-00:27 +302: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: crossing a division a hundred promotes and carries the remainder
-00:27 +303: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: crossing a division below zero demotes and carries the remainder
-00:27 +304: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: crossing a division the top division promotes into the next tier at its bottom
-00:27 +305: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: crossing a division the bottom division demotes into the tier below at its top
-00:27 +306: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: crossing a division a very large gain walks up as many steps as it earns
-00:27 +307: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: the floor a tier once reached is never lost
-00:27 +308: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: the floor a tier above the floor can still be lost
-00:27 +309: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: the floor the very bottom cannot go below zero
-00:27 +310: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: the ceiling the top of the ladder holds instead of rolling over
-00:27 +311: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: what a result is worth a win pays exactly what it won by
-00:27 +312: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: what a result is worth a loss costs exactly what it lost by
-00:27 +313: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: what a result is worth a tie moves nothing
-00:27 +314: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: what a result is worth tier plays no part in it — the two sides of the same duel mirror
-00:27 +315: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: what a result is worth walking out while still ahead stays a loss
-00:27 +316: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: what a result is worth a forfeit pays a flat win with no margin in it
-00:27 +317: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: placements more wins never means a worse start
-00:27 +318: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: placements nobody is placed outside the ladder
-00:27 +319: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: placements a clean sweep still has most of the ladder left to climb
-00:27 +320: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: placements losing every placement still puts somebody on the board
-00:27 +321: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: a long season never breaks the ladder a thousand mixed results stay inside the rails
-00:27 +322: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: the level counts rungs from the bottom of the ladder
-00:27 +323: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: the level never goes backwards on the way up
-00:27 +324: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: the level a rank off the end of the ladder still reads as a level
-00:27 +325: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: what a duel pays it is exactly the rep gap, nothing added and nothing taken away
-00:27 +326: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: what a duel pays a narrow loss costs less than a thrashing
-00:27 +327: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ranking_test.dart: what a duel pays nothing caps a blowout — the ladder itself absorbs it
-00:28 +328: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/race_your_best_test.dart: the other side is your best, and it says so
-00:28 +329: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: settings lays out
-00:28 +330: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: settings lays out
-00:28 +331: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: settings lays out
-00:28 +332: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: settings lays out
-00:28 +333: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: settings lays out
-00:28 +334: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: settings lays out at 1.6x
-00:28 +335: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: settings lays out in Hindi
-00:29 +336: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: notifications lays out
-00:29 +337: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: notifications lays out at 1.6x
-00:29 +338: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: notifications lays out in Hindi
-00:29 +339: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: privacy lays out
-00:29 +340: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: privacy lays out at 1.6x
-00:29 +341: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: privacy lays out in Hindi
-00:29 +342: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: blocked lays out
-00:29 +343: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: blocked lays out at 1.6x
-00:29 +344: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: blocked lays out in Hindi
-00:29 +345: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: download lays out
-00:29 +346: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: download lays out
-00:29 +347: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: download lays out
-00:29 +348: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: download lays out
-00:29 +349: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: download lays out
-00:29 +350: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: download lays out
-00:29 +351: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: download lays out
-00:29 +352: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: download lays out
-00:29 +353: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: download lays out
-00:29 +354: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: download lays out at 1.6x
-00:29 +355: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: download lays out in Hindi
-00:29 +356: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: delete lays out
-00:29 +357: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: delete lays out at 1.6x
-00:29 +358: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: delete lays out in Hindi
-00:29 +359: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: report lays out
-00:29 +360: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: report lays out at 1.6x
-00:29 +361: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: report lays out in Hindi
-00:29 +362: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: deleting says it does not cancel the subscription
-00:29 +363: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: support and rating are real rows, not a "needs a server" note
+00:19 +161: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: buying a purchase opens the app
+00:19 +162: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: buying a purchase has the server catch up at once
+00:19 +163: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: buying backing out of the store says nothing and stays
+00:19 +164: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: buying a failed purchase says so
+00:19 +165: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: buying a pending payment says it is pending
+00:19 +166: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
+00:19 +167: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
+00:19 +168: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
+00:19 +169: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
+00:19 +170: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
+00:19 +171: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
+00:20 +172: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
+00:20 +173: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
+00:20 +174: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
+00:20 +175: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
+00:20 +176: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
+00:20 +177: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
+00:20 +178: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: opens on the brand, not on a permission prompt
+00:20 +179: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in pt at 1.3x text, with the trial
+00:20 +180: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: back goes to the step before, not out of the app
+00:20 +181: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: back goes to the step before, not out of the app
+00:20 +182: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: back goes to the step before, not out of the app
+00:20 +183: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: back goes to the step before, not out of the app
+00:20 +184: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: back goes to the step before, not out of the app
+00:20 +185: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: back goes to the step before, not out of the app
+00:20 +186: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/paywall_test.dart: layout fits a small phone in tr at 1.3x text, with the trial
+00:20 +187: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: a back button on every step after the first
+00:20 +188: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: a back button on every step after the first
+00:21 +189: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: a back button on every step after the first
+00:21 +190: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: a back button on every step after the first
+00:21 +191: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: a back button on every step after the first
+00:21 +192: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: a back button on every step after the first
+00:21 +193: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: a back button on every step after the first
+00:21 +194: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: a back button on every step after the first
+00:21 +195: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: a back button on every step after the first
+00:21 +196: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: a back button on every step after the first
+00:21 +197: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: a back button on every step after the first
+00:21 +198: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: a back button on every step after the first
+00:21 +199: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: a back button on every step after the first
+00:21 +200: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: a back button on every step after the first
+00:21 +201: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: says what the camera is for before asking for it
+00:22 +202: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: under sixteen is turned away without a way around it
+00:22 +203: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: the framing check waits for the body and the hands
+00:22 +204: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: the framing check waits for the body and the hands
+00:22 +205: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: the framing check waits for the body and the hands
+00:22 +206: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the duel a stored record says what it measured
+00:22 +207: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: held in frame a moment, the framing check moves on by itself
+00:23 +208: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen waits for the whole body before counting anything
+00:23 +209: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen waits for the whole body before counting anything
+00:23 +210: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: the calibration counts once the lifter is down in position
+00:23 +211: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: the calibration counts once the lifter is down in position
+00:23 +212: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: the calibration counts once the lifter is down in position
+00:24 +213: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: the calibration counts once the lifter is down in position
+00:24 +214: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen giving up asks first, and staying keeps the round going
+00:24 +215: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: going straight to log in skips the camera and calibration
+00:24 +216: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/duel_test.dart: the camera screen the score bar has height once the bout is running
+00:24 +217: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: signs up straight from the calibration result
+00:24 +218: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: signs up straight from the calibration result
+00:24 +219: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: signs up straight from the calibration result
+00:24 +220: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: signs up straight from the calibration result
+00:25 +221: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: signs up straight from the calibration result
+00:25 +222: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: signs up straight from the calibration result
+00:25 +223: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: every step lays out at 1.3x
+00:25 +224: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: every step lays out at 1.6x
+00:25 +225: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: lays out in Hindi
+00:25 +226: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/widget_test.dart: lays out in German at 1.6x
+00:25 +227: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/pushup_wiring_test.dart: what the counter makes of the internet clips
+no recordings at D:/pushup-poses — nothing to measure
+00:26 +228: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: a duel is written down a win moves the rank, the record and the totals
+00:26 +229: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: a duel is written down a loss costs LP and breaks the win streak
+00:26 +230: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: a duel is written down the reps count even when the duel is lost
+00:26 +231: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: a duel is written down a best set is a best set
+00:26 +232: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: a duel is written down a forfeit is a win worth a flat amount
+00:26 +233: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: placements give no rank until all five are done
+00:26 +234: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: placements winning more places you higher
+00:26 +235: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: placements the placed tier becomes the floor
+00:26 +236: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: placements they still count as matches and reps
+00:26 +237: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: practice counts reps and never touches the rank
+00:26 +238: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: practice a set of nothing is not a day of training
+00:26 +239: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the week always has seven days, rest days included
+00:26 +240: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the week two sets on one day add up
+00:26 +241: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: it survives a restart rank, record, history and days all come back
+00:26 +242: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: it survives a restart a history entry remembers when, not how long ago
+00:26 +243: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: it survives a restart rubbish on disk is dropped, not fatal
+Could not read the stored rank: FormatException: Unexpected character (at character 1)
+not json
+^
+
+Could not read the match history: type '_Map<String, dynamic>' is not a subtype of type 'List<Object?>' in type cast
+Could not read the training days: type 'List<dynamic>' is not a subtype of type 'Map<String, Object?>' in type cast
+00:26 +244: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: LP is exactly the gap in reps a win pays exactly what it won by
+00:26 +245: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: LP is exactly the gap in reps a loss costs exactly what it lost by, whatever the opponent's tier
+00:26 +246: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the floor holds across a career a losing streak cannot cost a tier that was earned
+00:26 +247: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the two rules the user settled giving up is a loss even when you were ahead
+00:26 +248: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the two rules the user settled quitting early costs more than fighting to a close finish
+00:26 +249: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the two rules the user settled a friend match moves nothing but the reps
+00:26 +250: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the titles only a duel's own history can judge beating someone two tiers up unlocks Giant Slayer
+00:26 +251: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the titles only a duel's own history can judge beating someone one tier up does not
+00:26 +252: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the titles only a duel's own history can judge losing to someone above you is not a Giant Slayer moment
+00:26 +253: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the titles only a duel's own history can judge a win straight after three losses unlocks Comeback
+00:26 +254: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the titles only a duel's own history can judge a win after only two losses does not unlock Comeback
+00:26 +255: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the titles only a duel's own history can judge beating the same lifter five times unlocks Nemesis
+00:26 +256: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the titles only a duel's own history can judge four wins against the same lifter is not Nemesis yet
+00:26 +257: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the titles only a duel's own history can judge five wins spread across different lifters is not Nemesis
+00:26 +258: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the titles only a duel's own history can judge a clean set threads through to the clean-set tally
+00:26 +259: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: a duel the server already settled copies its numbers rather than recomputing them
+00:26 +260: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: a duel the server already settled reports no rank while placements are still open
+00:26 +261: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: a duel the server already settled a friend duel gets no RankChange even though it was settled
+00:26 +262: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: a duel the server already settled a best set is still a best set
+00:26 +263: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: applyServerProfile overwrites the ladder identity local storage restored
+00:26 +264: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: applyServerProfile a phone that would not say the country keeps the one it had
+00:26 +265: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/match_share_card_test.dart: a win shows the count, who it beat, and the LP it paid
+00:27 +265: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/pushup_report_test.dart: a report somebody can check against the footage
+No pose recordings at D:/pushup-poses.
+00:27 +266: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/match_share_card_test.dart: a win shows the count, who it beat, and the LP it paid
+00:28 +267: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/match_share_card_test.dart: a loss asks to be beaten, and shows what it cost
+00:28 +268: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/match_share_card_test.dart: in placements there is no rank to show
+00:28 +269: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/match_share_card_test.dart: the hidden cards still paint something to capture
+00:28 +270: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/match_share_card_test.dart: the hidden cards still paint something to capture
+00:28 +271: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/match_share_card_test.dart: the hidden cards still paint something to capture
+00:28 +272: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/match_share_card_test.dart: the hidden cards still paint something to capture
+00:28 +273: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/match_share_card_test.dart: the hidden cards still paint something to capture
+00:28 +274: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/match_share_card_test.dart: the hidden cards still paint something to capture
+00:28 +275: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the measurement the record is bounded and keeps the newest
+00:28 +276: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the measurement the record is bounded and keeps the newest
+00:28 +277: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the measurement the record is bounded and keeps the newest
+00:28 +278: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/match_share_card_test.dart: lays out in hi
+00:28 +279: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/match_share_card_test.dart: lays out in hi
+00:28 +280: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the screen says nothing is measured rather than showing zeroes
+00:28 +281: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the screen says nothing is measured rather than showing zeroes
+00:28 +282: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the screen says nothing is measured rather than showing zeroes
+00:28 +283: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the screen says nothing is measured rather than showing zeroes
+00:29 +284: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the screen says nothing is measured rather than showing zeroes
+00:29 +285: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the screen warns while the sample is too small to mean anything
+00:29 +286: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the screen shows the four figures and the sets behind them
+00:29 +287: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the screen lays out at 1.3x
+00:29 +288: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the screen lays out at 1.6x
+00:29 +289: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/account_server_test.dart: a valid new name is taken, and cannot be spent twice
+no server configured — skipping
+00:29 +290: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the screen lays out in Hindi
+00:29 +291: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the screen lays out in Hindi
+00:29 +292: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the screen lays out in Hindi
+00:29 +293: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the screen lays out in Hindi
+00:30 +294: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the way in settings carries the figure, and opens the screen
+00:30 +295: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: has four tabs and opens on Match
+00:31 +296: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: has four tabs and opens on Match
+00:32 +297: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_look_test.dart: the entry screen fits a small iPhone at 1.3x
+00:32 +298: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: shows no request badge offline, matching the empty demo Friends list
+00:32 +299: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_look_test.dart: the invite code opens from its line
+00:32 +300: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: floats: inset from the edges, with rounded corners
+00:32 +301: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_look_test.dart: log in: email is a button to its own page
+00:32 +302: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: switching tabs changes the screen
+00:32 +303: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: switching tabs changes the screen
+00:32 +304: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: the bar survives en at 1.3x
+00:33 +305: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: the bar survives hi at 1.3x
+00:33 +306: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: the bar survives ja at 1.3x
+00:33 +307: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_rules_test.dart: spaces become underscores, and the name stops at twenty
+00:33 +308: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: the bar survives en at 1.6x
+00:33 +309: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: the bar survives en at 1.6x
+00:33 +310: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: the bar survives en at 1.6x
+00:33 +311: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_rules_test.dart: sign-up says what is wrong with the name as it is typed
+00:33 +312: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_rules_test.dart: sign-up says what is wrong with the name as it is typed
+00:34 +313: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_rules_test.dart: sign-up says what is wrong with the name as it is typed
+00:34 +314: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/username_rules_test.dart: sign-up says what is wrong with the name as it is typed
+00:34 +315: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: the climb lays out at 1.0x
+00:35 +315: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ladder_server_test.dart: the server pays what the app promised
+no server configured — pass --dart-define=SUPABASE_URL and SUPABASE_ANON_KEY to check the ladder against it
+00:35 +316: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: the climb lays out at 1.0x
+00:35 +317: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: the climb lays out at 1.0x
+00:35 +318: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: home lays out at 1.0x
+00:36 +319: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: the climb lays out at 1.3x
+00:36 +320: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a raced set opens its result card to share
+00:36 +321: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a raced set opens its result card to share
+00:36 +322: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a raced set opens its result card to share
+00:36 +323: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a raced set opens its result card to share
+00:36 +324: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a raced set opens its result card to share
+00:36 +325: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a raced set opens its result card to share
+00:36 +326: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a raced set opens its result card to share
+00:36 +327: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a raced set opens its result card to share
+00:36 +328: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a raced set opens its result card to share
+00:36 +329: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a raced set opens its result card to share
+00:36 +330: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a raced set opens its result card to share
+00:36 +331: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a raced set opens its result card to share
+00:36 +332: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a raced set opens its result card to share
+00:36 +333: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a raced set opens its result card to share
+00:36 +334: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a raced set opens its result card to share
+00:36 +335: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a raced set opens its result card to share
+00:37 +336: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a raced set opens its result card to share
+00:37 +337: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a raced set opens its result card to share
+00:37 +338: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a friend request goes back, asking for the requests
+00:37 +339: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: the Friends tab opens its requests when asked from outside
+00:37 +340: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a yes opens the new friend
+00:37 +341: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: an arrow on each notice that opens something, and no other
+00:38 +342: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart: the friend code can be sent on, not just copied
+00:38 +343: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart: the friend code can be sent on, not just copied
+00:38 +344: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart: shows the titles and friends, and goes on
+00:38 +345: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_test.dart: their count moves with their phone, and freezes when it goes quiet
+00:38 +346: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_test.dart: their count moves with their phone, and freezes when it goes quiet
+00:39 +347: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_test.dart: their count moves with their phone, and freezes when it goes quiet
+00:39 +348: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/welcome_inside_test.dart: lays out in ja
+00:39 +349: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_test.dart: a round starts once both are ready and shows their count as it moves
+00:39 +350: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_test.dart: a round starts once both are ready and shows their count as it moves
+00:39 +351: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_test.dart: a round starts once both are ready and shows their count as it moves
+00:40 +352: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/push_messages_test.dart: the push function has the current translations
+00:40 +353: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_test.dart: the round starts ten seconds after both are there, down in position or not
+00:40 +354: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_test.dart: the round starts ten seconds after both are there, down in position or not
+00:42 +355: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: a wrong code is caught before the email code goes out
+00:42 +356: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: a wrong code is caught before the email code goes out
+00:42 +357: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: a wrong code is caught before the email code goes out
+00:42 +358: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_test.dart: a friend online can be asked live; one who is not, sent a set
+00:42 +359: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: a good code says so, and sign-up goes on
+00:42 +360: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: a good code says so, and sign-up goes on
+00:42 +361: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: a good code says so, and sign-up goes on
+00:43 +362: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: no code, no claim
+00:43 +363: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/invite_test.dart: the Friends tab offers the code only on the yearly plan
+00:43 +364: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: the bench measures what it is given a synthetic set of known size is counted and compared
+00:43 +365: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: the bench measures what it is given a clean set of a known size is counted exactly
+00:43 +366: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: the bench measures what it is given an unlabelled session is skipped, not scored as nothing
+00:43 +367: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: the bench measures what it is given a corrupt file is stepped over
+00:43 +368: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: the bench measures what it is given the summary reports error, direction and the worst miss
+00:43 +369: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: the bench measures what it is given an empty folder says so instead of claiming perfection
+00:43 +370: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions every recording in test/recordings is scored
+
+--- push-up counter, measured against labelled sets ---
+sets            14
+exact           14  (100%)
+within 1        14  (100%)
+mean |error|    0.00 reps
+bias            +0.00 reps
+
+00:45 +371: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_rematch_test.dart: asking waits on them, and can be taken back
+00:45 +372: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions a set the counter gets wrong, it says it is unsure of
+00:45 +373: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions a set the counter gets wrong, it says it is unsure of
+00:45 +374: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions a set the counter gets wrong, it says it is unsure of
+00:45 +375: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions a set the counter gets wrong, it says it is unsure of
+00:45 +376: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions a set the counter gets wrong, it says it is unsure of
+00:45 +377: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions a set the counter gets wrong, it says it is unsure of
+00:45 +377: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/social_server_test.dart: a request is sent, seen, and accepted
+no server configured — skipping
+00:45 +378: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions a set the counter gets wrong, it says it is unsure of
+00:45 +379: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions a set the counter gets wrong, it says it is unsure of
+00:45 +380: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions a set the counter gets wrong, it says it is unsure of
+00:45 +381: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions a set the counter gets wrong, it says it is unsure of
+00:45 +382: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions a set the counter gets wrong, it says it is unsure of
+00:45 +383: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions a set the counter gets wrong, it says it is unsure of
+00:45 +384: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions a set the counter gets wrong, it says it is unsure of
+00:45 +385: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions a set the counter gets wrong, it says it is unsure of
+00:45 +386: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions a set the counter gets wrong, it says it is unsure of
+00:46 +387: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions the lifter's own two sessions still score right
+00:47 +388: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/post_match_test.dart: Health says the set was saved once it is there
+00:47 +389: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/post_match_test.dart: Health says nothing when it did not go
+00:47 +390: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/post_match_test.dart: the LP card the headline is exactly the rank change
+00:47 +391: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/post_match_test.dart: the LP card a loss reads the same way
+00:48 +392: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:48 +393: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:48 +394: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:48 +395: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:48 +396: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:48 +397: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:48 +398: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:48 +399: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:49 +400: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:49 +401: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:49 +402: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:49 +403: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:49 +404: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:49 +405: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:49 +406: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:49 +407: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:49 +408: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:49 +409: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:50 +410: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:50 +411: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:50 +412: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:50 +413: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:50 +414: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
+00:51 +415: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +416: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +417: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +418: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +419: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +420: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +421: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +422: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +423: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +424: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +425: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +426: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +427: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +428: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +429: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +430: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +431: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +432: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +433: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +434: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +435: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +436: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +437: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +438: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +439: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +440: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +441: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +442: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:51 +443: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the number moves on the rep, not a rep later
+00:52 +444: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the bar goes down and up with the body
+00:52 +445: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/trainer_lifecycle_test.dart: the camera is let go when the app leaves, and reopened on return
+00:53 +446: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen half reps move the bar and not the number
+00:54 +447: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/trainer_lifecycle_test.dart: a round ends on its clock when no pose comes to end it
+Could not save the session: Unsupported operation: Functionality only available on Android
+00:54 +448: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen getting up at the end does not add one
+00:54 +449: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen stays at zero when nobody is moving
+00:55 +450: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen stays at zero when nobody is moving
+00:55 +451: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen stays at zero when nobody is moving
+00:55 +452: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen stays at zero when nobody is moving
+00:55 +453: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen stays at zero when nobody is moving
+00:55 +454: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen stays at zero when nobody is moving
+00:55 +455: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen stays at zero when nobody is moving
+00:55 +456: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen stays at zero when nobody is moving
+00:55 +456: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/raced_sets_test.dart: a failed read changes nothing
+Could not read the duels for the history: Exception: offline
+00:55 +457: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen stays at zero when nobody is moving
+00:55 +458: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen stays at zero when nobody is moving
+00:55 +459: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen stays at zero when nobody is moving
+00:55 +460: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the depth bar is big enough to read from the floor
+00:55 +461: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: getting into position standing in front of the camera is not a push-up position
+00:55 +462: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: getting into position lowering yourself onto the floor does not score a rep
+00:55 +463: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: getting into position starting the moment you are down loses nothing
+00:55 +464: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: getting into position a set of nothing but standing scores nothing
+00:55 +465: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: getting into position bobbing up and down on your feet is not a push-up
+00:55 +466: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: getting into position on their feet, bowing toward hands held still, is not a rep
+00:55 +467: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: getting into position a hip nobody can see is no reason to refuse a rep
+00:55 +468: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: getting into position a set that begins already in position loses nothing off the front
+00:55 +469: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: getting into position reps before the round starts do not count
+00:55 +470: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: whole reps, not half reps a set of half reps scores nothing
+00:56 +471: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: whole reps, not half reps half reps in the middle of a set are left out of it
+00:56 +472: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: whole reps, not half reps a dip that only just stops short makes the set unsure
+00:56 +473: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: whole reps, not half reps a clean set is a confident one
+00:56 +474: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: whole reps, not half reps getting up off the floor after the set is not a rep
+00:56 +475: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: whole reps, not half reps fast reps count
+00:56 +476: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the frame rate does not change the count 15 frames a second
+00:56 +477: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the frame rate does not change the count 30 frames a second
+00:56 +478: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the frame rate does not change the count 60 frames a second
+00:56 +479: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the frame rate does not change the count 120 frames a second
+00:56 +480: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: quick peek shows a couldn't-load state with no backend
+00:57 +481: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: quick peek shows the record, best set and win rate once loaded
+00:57 +482: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: quick peek a stranger's peek leaves out the record against you
+00:57 +483: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: quick peek an unranked account reads unranked, not tier zero
+00:57 +484: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: quick peek view full profile opens the full screen
+00:57 +485: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: sample rows a sample friend opens a card with the record against you
+00:57 +486: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: sample rows a sample stranger opens a card without one
+00:58 +487: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: sample rows challenging a sample card says it needs a server
+00:58 +488: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: full profile shows the head-to-head, stat grid and last score
+00:58 +489: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: a fresh install opens on onboarding
+00:58 +490: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: a fresh install opens on onboarding
+00:58 +491: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: a fresh install opens on onboarding
+00:58 +492: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: a fresh install opens on onboarding
+00:58 +492: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: full profile a friend is challenged live
+Could not send the live invite: Bad state: no server configured
+00:58 +493: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: a fresh install opens on onboarding
+00:58 +494: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: a fresh install opens on onboarding
+00:58 +495: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: a fresh install opens on onboarding
+00:58 +496: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: a fresh install opens on onboarding
+00:58 +497: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: a fresh install opens on onboarding
+00:58 +498: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: a fresh install opens on onboarding
+00:58 +499: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: a fresh install opens on onboarding
+00:58 +500: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: a fresh install opens on onboarding
+00:59 +501: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: the more menu mute calls the backend and closes the sheet
+00:59 +502: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: an account that already exists goes straight in
+00:59 +503: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: an account that already exists goes straight in
+00:59 +504: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: an account that already exists goes straight in
+00:59 +505: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: the more menu report opens the report screen for this account
+00:59 +506: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: the more menu report opens the report screen for this account
+00:59 +507: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/other_profile_test.dart: the more menu cancel dismisses without calling anything
+01:00 +508: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/ladder_vectors_test.dart: the ladder writes down what it does
+01:00 +509: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: an account with no email is not offered a sign-out
+01:01 +510: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: settings lays out
+01:02 +511: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: changing your mind leaves you signed in
+01:02 +512: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: settings lays out at 1.6x
+01:02 +513: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: signing out lands on the welcome screen, like a fresh install
+Could not start a new session: Bad state: no server in a test
+01:02 +514: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: signing out lands on the welcome screen, like a fresh install
+01:02 +515: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: signing out lands on the welcome screen, like a fresh install
+01:02 +516: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: signing out lands on the welcome screen, like a fresh install
+01:02 +517: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: notifications lays out in Hindi
+01:02 +518: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: deleting the account lands on the welcome screen too, not inside with no account
+01:02 +519: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: deleting the account lands on the welcome screen too, not inside with no account
+01:02 +520: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: deleting the account lands on the welcome screen too, not inside with no account
+01:02 +521: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: deleting the account lands on the welcome screen too, not inside with no account
+01:02 +522: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: deleting the account lands on the welcome screen too, not inside with no account
+01:02 +523: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: deleting the account lands on the welcome screen too, not inside with no account
+01:02 +524: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: deleting the account lands on the welcome screen too, not inside with no account
+Could not start a new session: Bad state: no server in a test
+01:02 +525: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: deleting the account lands on the welcome screen too, not inside with no account
+01:02 +526: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/sign_out_test.dart: deleting the account lands on the welcome screen too, not inside with no account
+01:02 +527: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: download lays out in Hindi
+01:02 +528: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: delete lays out
+01:03 +529: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: delete lays out at 1.6x
+01:03 +530: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: delete lays out in Hindi
+01:03 +531: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: report lays out
+01:03 +532: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: report lays out at 1.6x
+01:03 +533: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: report lays out in Hindi
+01:03 +534: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: deleting says it does not cancel the subscription
+01:03 +535: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: support and rating are real rows, not a "needs a server" note
 
 Warning: A call to tap() with finder "Found 1 widget with text "Contact support": [
   Text("Contact support", inherit: true, color: Color(alpha: 1.0000, red: 0.9608, green: 0.9373, blue: 0.8941, colorSpace: ColorSpace.sRGB), size: 17.0, weight: 500, dependencies: [DefaultSelectionStyle, DefaultTextStyle, MediaQuery, _ScrollableScope]),
 ]" derived an Offset (Offset(194.4, 1456.0)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
 Indeed, Offset(194.4, 1456.0) is outside the bounds of the root of the render tree, Size(400.0, 1400.0).
-The finder corresponds to this RenderBox: RenderParagraph#aec7f relayoutBoundary=up18
-The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#c1398(_ReusableRenderView#a79d9), HitTestEntry<HitTestTarget>#4fbe4(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: RenderParagraph#fefd6 relayoutBoundary=up18
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#87c8b(_ReusableRenderView#cf220), HitTestEntry<HitTestTarget>#93f3d(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
 #2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
@@ -401,255 +598,59 @@ The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>
 To silence this warning, pass "warnIfMissed: false" to "tap()".
 To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
 
-00:29 +364: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: sounds can be turned off
-00:29 +365: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: Apple Health has a card of its own, first, saying what it does
-00:30 +366: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: saving to Health stays off until the phone allows it
-00:30 +367: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: the daily reminder can be turned off, and its time goes with it
-00:30 +368: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/legal_line_test.dart: Terms opens its page
-00:30 +369: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/legal_line_test.dart: Terms opens its page
-00:30 +370: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/legal_line_test.dart: Terms opens its page
-00:30 +371: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/legal_line_test.dart: Privacy Policy opens its page
-00:30 +372: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/legal_line_test.dart: a page that cannot open says so
-Could not open https://www.outrepd.com/terms: Bad state: launchUrl returned false
-00:30 +373: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: a block hides them both ways, and tells them nothing
-no server configured — skipping
-00:30 +374: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: blocking ends the friendship
-00:30 +375: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: a blocked account is never handed over as an opponent
-00:30 +376: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: "who can challenge me" decides who gets the set
-00:30 +377: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: asking to be off the board takes you off it
-00:30 +378: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: a notification nobody wants is never written
-00:30 +379: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: a report is write-only
-00:30 +380: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/safety_server_test.dart: my data is mine, and holds no pose landmarks
-00:32 +381: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: a fresh install opens on onboarding
-00:33 +381: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/user_probe_test.dart: what the checks read, second by second
-missing VID_20260921210358.json
-missing VID_20260921210455.json
-00:33 +382: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: a fresh install opens on onboarding
-00:33 +383: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: an account that already exists goes straight in
-00:33 +383: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/social_server_test.dart: a request is sent, seen, and accepted
-no server configured — skipping
-00:33 +384: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: an account that already exists goes straight in
-00:33 +385: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: an account that already exists goes straight in
-00:33 +386: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: an account that already exists goes straight in
-00:33 +387: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: an account that already exists goes straight in
-00:33 +388: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: an account that already exists goes straight in
-00:33 +389: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: an account that already exists goes straight in
-00:33 +390: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: an account that already exists goes straight in
-00:33 +391: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: an account that already exists goes straight in
-00:33 +392: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: an account that already exists goes straight in
-00:33 +393: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/launch_test.dart: a career stored before the flag existed still counts as set up
-00:34 +394: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_test.dart: their count moves with their phone, and freezes when it goes quiet
-00:34 +395: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_test.dart: a round starts once both are ready and shows their count as it moves
-00:34 +396: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_test.dart: a round starts once both are ready and shows their count as it moves
-00:34 +397: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_test.dart: the round starts ten seconds after both are there, down in position or not
-00:35 +398: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out at 1.0x text scale
-00:35 +399: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out at 1.0x text scale
-00:35 +400: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out at 1.0x text scale
-00:35 +401: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_test.dart: a friend online can be asked live; one who is not, sent a set
-00:36 +402: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_test.dart: a friend online can be asked live; one who is not, sent a set
-00:36 +403: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_test.dart: a friend online can be asked live; one who is not, sent a set
-00:36 +404: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out in Hindi
-00:36 +405: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out in Hindi
-00:36 +406: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: profile lays out in Hindi
-00:36 +407: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: shows both ranks, at the same size
-00:36 +408: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: leads the grid with the stat one session can move
-00:36 +409: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: the week chart shows what was actually done
-00:36 +410: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: achievements collapse to one row, not a sample of four
-00:36 +411: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: a long word shrinks rather than breaking in half
-00:36 +412: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/profile_layout_test.dart: short text is left at full size
-00:36 +413: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: a duel is written down a win moves the rank, the record and the totals
-00:36 +414: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: a duel is written down a loss costs LP and breaks the win streak
-00:36 +415: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: a duel is written down the reps count even when the duel is lost
-00:36 +416: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: a duel is written down a best set is a best set
-00:36 +417: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: a duel is written down a forfeit is a win worth a flat amount
-00:36 +418: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: placements give no rank until all five are done
-00:36 +419: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: placements winning more places you higher
-00:36 +420: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: placements the placed tier becomes the floor
-00:36 +421: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: placements they still count as matches and reps
-00:36 +422: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: practice counts reps and never touches the rank
-00:36 +423: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: practice a set of nothing is not a day of training
-00:36 +424: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the week always has seven days, rest days included
-00:36 +425: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the week two sets on one day add up
-00:36 +426: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: it survives a restart rank, record, history and days all come back
-00:36 +427: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: it survives a restart a history entry remembers when, not how long ago
-00:36 +428: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: it survives a restart rubbish on disk is dropped, not fatal
-Could not read the stored rank: FormatException: Unexpected character (at character 1)
-not json
-^
-
-Could not read the match history: type '_Map<String, dynamic>' is not a subtype of type 'List<Object?>' in type cast
-Could not read the training days: type 'List<dynamic>' is not a subtype of type 'Map<String, Object?>' in type cast
-00:36 +429: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: LP is exactly the gap in reps a win pays exactly what it won by
-00:36 +430: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: LP is exactly the gap in reps a loss costs exactly what it lost by, whatever the opponent's tier
-00:36 +431: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the floor holds across a career a losing streak cannot cost a tier that was earned
-00:36 +432: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the two rules the user settled giving up is a loss even when you were ahead
-00:36 +433: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the two rules the user settled quitting early costs more than fighting to a close finish
-00:36 +434: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the two rules the user settled a friend match moves nothing but the reps
-00:36 +435: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the titles only a duel's own history can judge beating someone two tiers up unlocks Giant Slayer
-00:36 +436: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the titles only a duel's own history can judge beating someone one tier up does not
-00:36 +437: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the titles only a duel's own history can judge losing to someone above you is not a Giant Slayer moment
-00:36 +438: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the titles only a duel's own history can judge a win straight after three losses unlocks Comeback
-00:36 +439: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the titles only a duel's own history can judge a win after only two losses does not unlock Comeback
-00:36 +440: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the titles only a duel's own history can judge beating the same lifter five times unlocks Nemesis
-00:36 +441: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the titles only a duel's own history can judge four wins against the same lifter is not Nemesis yet
-00:36 +442: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the titles only a duel's own history can judge five wins spread across different lifters is not Nemesis
-00:36 +443: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: the titles only a duel's own history can judge a clean set threads through to the clean-set tally
-00:36 +444: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: a duel the server already settled copies its numbers rather than recomputing them
-00:36 +445: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: a duel the server already settled reports no rank while placements are still open
-00:36 +446: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: a duel the server already settled a friend duel gets no RankChange even though it was settled
-00:36 +447: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: a duel the server already settled a best set is still a best set
-00:36 +448: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: applyServerProfile overwrites the ladder identity local storage restored
-00:36 +449: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/career_test.dart: applyServerProfile a phone that would not say the country keeps the one it had
-00:37 +450: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the measurement a perfect run is exact, unbiased and never misses
-00:37 +451: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the measurement scatter and steady drift are told apart
-00:37 +452: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the measurement direction is kept, not just size
-00:37 +453: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the measurement within one is not the same as exact
-00:37 +454: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the measurement nothing measured is not a perfect score
-00:37 +455: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the measurement the record is bounded and keeps the newest
-00:37 +456: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the measurement the recent window moves before the lifetime figure does
-00:37 +457: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the screen says nothing is measured rather than showing zeroes
-00:37 +457: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/pushup_wiring_test.dart: what the counter makes of the internet clips
-no recordings at D:/pushup-poses — nothing to measure
-00:37 +458: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the screen says nothing is measured rather than showing zeroes
-00:37 +459: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the screen warns while the sample is too small to mean anything
-00:37 +460: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the screen shows the four figures and the sets behind them
-00:37 +461: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the screen lays out at 1.3x
-00:37 +462: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the screen lays out at 1.6x
-00:37 +463: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the screen lays out in Hindi
-00:38 +464: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the way in settings carries the figure, and opens the screen
-00:38 +465: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/accuracy_test.dart: the way in settings carries the figure, and opens the screen
-00:38 +466: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: the bench measures what it is given a clean set of a known size is counted exactly
-00:38 +467: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: the bench measures what it is given an unlabelled session is skipped, not scored as nothing
-00:38 +468: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: the bench measures what it is given a corrupt file is stepped over
-00:38 +469: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: the bench measures what it is given the summary reports error, direction and the worst miss
-00:38 +470: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: the bench measures what it is given an empty folder says so instead of claiming perfection
-00:38 +471: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions every recording in test/recordings is scored
-
---- push-up counter, measured against labelled sets ---
-sets            14
-exact           14  (100%)
-within 1        14  (100%)
-mean |error|    0.00 reps
-bias            +0.00 reps
-
-00:39 +472: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions a set the counter gets wrong, it says it is unsure of
-00:39 +473: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/notifications_share_test.dart: a raced set opens its result card to share
-00:39 +474: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions the lifter's own two sessions still score right
-00:39 +475: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions the lifter's own two sessions still score right
-00:39 +476: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions the lifter's own two sessions still score right
-00:40 +477: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions the lifter's own two sessions still score right
-00:40 +478: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions the lifter's own two sessions still score right
-00:40 +479: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/replay_test.dart: real sessions the lifter's own two sessions still score right
-00:40 +480: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/raced_sets_test.dart: a set raced while away is in the history, in its place by time
-00:40 +481: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/raced_sets_test.dart: a result whose screen was closed comes in from the server
-00:40 +482: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/raced_sets_test.dart: each one once, even after the app is opened again
-00:40 +483: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/raced_sets_test.dart: a duel this phone wrote down is not added again from the server
-00:40 +484: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/raced_sets_test.dart: nor the other way round, when the server answered first
-00:40 +485: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/raced_sets_test.dart: a history kept before ids were takes only what it never had
-00:40 +486: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/raced_sets_test.dart: nothing but the history is counted again
-00:40 +487: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/raced_sets_test.dart: a failed read changes nothing
-Could not read the duels for the history: Exception: offline
-00:40 +488: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/raced_sets_test.dart: with no server there is nothing to add
-00:40 +489: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/raced_sets_test.dart: another account signed into gets its whole history
-00:41 +490: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/match_share_card_test.dart: a win shows the count, who it beat, and the LP it paid
-00:41 +491: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
-00:41 +492: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
-00:41 +493: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
-00:41 +494: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
-00:42 +495: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
-00:42 +496: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
-00:42 +497: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
-00:42 +498: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
-00:42 +499: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
-00:42 +500: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
-00:42 +501: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen shows every push-up, and only those
-00:43 +502: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/month_board_test.dart: the month board opens first, with the podium and the time left
-00:43 +503: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/month_board_test.dart: the month board opens first, with the podium and the time left
-00:43 +504: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the bar goes down and up with the body
-00:44 +505: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the bar goes down and up with the body
-00:44 +506: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/month_board_test.dart: the month board tells somebody past tenth how far the top ten is
-00:44 +507: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen half reps move the bar and not the number
-00:44 +508: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen half reps move the bar and not the number
-00:44 +509: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen half reps move the bar and not the number
-00:44 +510: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen half reps move the bar and not the number
-00:44 +511: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen half reps move the bar and not the number
-00:44 +512: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen half reps move the bar and not the number
-00:44 +513: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen half reps move the bar and not the number
-00:44 +514: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen half reps move the bar and not the number
-00:44 +515: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen half reps move the bar and not the number
-00:44 +516: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen half reps move the bar and not the number
-00:44 +517: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen half reps move the bar and not the number
-00:44 +518: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/month_board_test.dart: the end of a month is told once, then marked seen
-00:44 +519: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen getting up at the end does not add one
-00:44 +520: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen getting up at the end does not add one
-00:45 +521: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen stays at zero when nobody is moving
-00:45 +522: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/country_names_test.dart: a code reads in the reader's language
-00:45 +523: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the depth bar is big enough to read from the floor
-00:45 +524: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the depth bar is big enough to read from the floor
-00:45 +525: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the screen the depth bar is big enough to read from the floor
-00:45 +526: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: getting into position standing in front of the camera is not a push-up position
-00:45 +527: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: getting into position lowering yourself onto the floor does not score a rep
-00:45 +528: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: getting into position starting the moment you are down loses nothing
-00:45 +529: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: getting into position a set of nothing but standing scores nothing
-00:45 +530: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: getting into position bobbing up and down on your feet is not a push-up
-00:45 +531: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: getting into position on their feet, bowing toward hands held still, is not a rep
-00:45 +532: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: getting into position a hip nobody can see is no reason to refuse a rep
-00:45 +533: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: getting into position a set that begins already in position loses nothing off the front
-00:45 +534: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: getting into position reps before the round starts do not count
-00:45 +535: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: whole reps, not half reps a set of half reps scores nothing
-00:46 +536: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: whole reps, not half reps half reps in the middle of a set are left out of it
-00:46 +537: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: whole reps, not half reps a dip that only just stops short makes the set unsure
-00:46 +538: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: whole reps, not half reps a clean set is a confident one
-00:46 +539: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: whole reps, not half reps getting up off the floor after the set is not a rep
-00:46 +540: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: whole reps, not half reps fast reps count
-00:46 +541: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the frame rate does not change the count 15 frames a second
-00:46 +542: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the frame rate does not change the count 30 frames a second
-00:46 +543: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the frame rate does not change the count 60 frames a second
-00:46 +544: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/counting_test.dart: the frame rate does not change the count 120 frames a second
-00:46 +545: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/home_widgets_test.dart: today, the goal and the rank, ready to draw
-00:46 +546: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/home_widgets_test.dart: in the reader's language
-00:46 +547: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/home_widgets_test.dart: the medium widget's badge is a PNG for every tier
-00:47 +548: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: has four tabs and opens on Match
-00:47 +549: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_offline_test.dart: logging in offline says so, not that the account is missing
-00:48 +550: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_offline_test.dart: logging in offline says so, not that the account is missing
-00:48 +551: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_offline_test.dart: logging in offline says so, not that the account is missing
-00:48 +552: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_offline_test.dart: logging in offline says so, not that the account is missing
-00:48 +553: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: the bar survives en at 1.3x
-00:48 +554: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_offline_test.dart: signing up offline says so, not that the email is invalid
-00:48 +555: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: the bar survives hi at 1.3x
-00:48 +556: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_offline_test.dart: a phone whose session did not start at launch starts one before the name is claimed, rather than calling the name wrong
-00:48 +557: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: the bar survives ja at 1.3x
-00:48 +558: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_offline_test.dart: a phone whose session did not start at launch says it is the connection when no session can be had
-00:48 +559: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: the bar survives en at 1.6x
-00:48 +560: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: the bar survives hi at 1.6x
-00:49 +561: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: the bar survives ja at 1.6x
-00:49 +562: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/nav_test.dart: the bar's icons credit Tabler Icons on the licences page
-00:49 +563: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: the climb lays out at 1.0x
-00:50 +564: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: the climb lays out at 1.0x
-00:50 +565: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: the climb lays out at 1.0x
-00:50 +566: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: home lays out at 1.0x
-00:50 +567: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: the climb lays out at 1.3x
-00:50 +568: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: home lays out at 1.3x
-00:50 +569: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: the climb lays out at 1.6x
-00:50 +570: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: home lays out at 1.6x
-00:50 +571: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: the climb lays out in hi
-00:50 +572: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: home lays out in hi
-00:50 +573: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: the climb lays out in de
-00:50 +574: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: home lays out in de
-00:50 +575: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: the climb lays out in ru
-00:50 +576: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: home lays out in ru
-00:50 +577: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/climb_layout_test.dart: the climb lays out in ja
-00:50 +578: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_rematch_test.dart: asking waits on them, and can be taken back
-00:50 +579: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_rematch_test.dart: asking waits on them, and can be taken back
-00:50 +580: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_rematch_test.dart: asking waits on them, and can be taken back
-00:50 +581: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_rematch_test.dart: asking waits on them, and can be taken back
-00:50 +582: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_rematch_test.dart: asking waits on them, and can be taken back
-00:50 +583: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_rematch_test.dart: asking waits on them, and can be taken back
-00:50 +584: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_rematch_test.dart: asking waits on them, and can be taken back
-00:50 +585: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_rematch_test.dart: asking waits on them, and can be taken back
-00:51 +586: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_rematch_test.dart: starts once they say yes
-00:51 +587: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_rematch_test.dart: when they asked first, the button is the answer
-00:51 +588: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_rematch_test.dart: an invite from somebody else is not their rematch
-00:51 +589: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_rematch_test.dart: says so when the next one cannot be ranked
-00:51 +590: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/live_rematch_test.dart: a lapsed ask says so, and can be asked again
-00:51 +591: All tests passed!
+01:03 +536: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/settings_test.dart: sounds can be turned off
+01:03 +537: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_offline_test.dart: logging in offline says so, not that the account is missing
+01:03 +538: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_offline_test.dart: logging in offline says so, not that the account is missing
+01:03 +539: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_offline_test.dart: logging in offline says so, not that the account is missing
+01:04 +540: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_offline_test.dart: logging in offline says so, not that the account is missing
+01:04 +541: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_offline_test.dart: logging in offline says so, not that the account is missing
+01:04 +542: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_offline_test.dart: logging in offline says so, not that the account is missing
+01:05 +543: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/auth_offline_test.dart: signing up offline says so, not that the email is invalid
+01:05 +544: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: every tier draws at 40.0
+01:05 +545: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: every tier draws at 40.0
+01:05 +546: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: every tier draws at 40.0
+01:05 +547: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: every tier draws at 52.0
+01:05 +548: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: every tier draws at 78.0
+01:05 +549: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: every badge draws at 20.0, whole, hollow and unranked
+01:06 +550: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: every badge draws at 34.0, whole, hollow and unranked
+01:06 +551: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: every badge draws at 206.0, whole, hollow and unranked
+01:06 +552: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: the frames wear the same wings as the badges
+01:06 +553: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: the same box for every tier, so a list lines up
+01:06 +554: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: a ranked picture wears the frame, not the badge
+01:06 +555: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: a picture still in its placements wears nothing
+01:06 +556: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/tier_frame_test.dart: the picture changes the photo, the frame opens the rank
+01:06 +557: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/month_board_test.dart: the month board opens first, with the podium and the time left
+01:07 +558: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: opens on the story card, with the record and best set
+01:07 +559: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: opens on the story card, with the record and best set
+01:07 +560: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: opens on the story card, with the record and best set
+01:08 +561: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: opens on the story card, with the record and best set
+01:08 +562: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/month_board_test.dart: the month board tells somebody not on it yet how to get on
+01:08 +563: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: switching to Post keeps showing the same data
+01:08 +564: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: switching to Post keeps showing the same data
+01:08 +565: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/month_board_test.dart: the month board shows the badge once it is earned
+01:08 +566: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: copy link confirms with a snackbar
+01:08 +567: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/month_board_test.dart: the month board still has the all-time boards a tap away
+01:08 +568: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out at 1.0x text scale
+01:08 +569: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out at 1.0x text scale
+01:08 +570: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/month_board_test.dart: the month board fits at 1.6x in en
+01:08 +571: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out at 1.3x text scale
+01:08 +572: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out at 1.3x text scale
+01:08 +573: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/month_board_test.dart: the month board fits at 1.3x in ru
+01:08 +574: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out at 1.6x text scale
+01:08 +575: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out at 1.6x text scale
+01:08 +576: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/month_board_test.dart: the end of a month is told once, then marked seen
+01:09 +577: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in de
+01:09 +578: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/month_board_test.dart: the end of a month says nothing when there is nothing new
+01:09 +579: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in es
+01:09 +580: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in fr
+01:09 +581: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in hi
+01:09 +582: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in id
+01:09 +583: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in it
+01:09 +584: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in ja
+01:09 +585: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in ko
+01:09 +586: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in pt
+01:09 +587: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in ru
+01:09 +588: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in tr
+01:09 +589: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: share sheet lays out in zh
+01:09 +590: /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/test/share_card_test.dart: an unranked account shows no tier badge crash
+01:09 +591: All tests passed!
