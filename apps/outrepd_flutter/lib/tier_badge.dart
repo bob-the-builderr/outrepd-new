@@ -283,6 +283,7 @@ class TierBadge extends StatelessWidget {
     required this.tierIndex,
     required this.size,
     this.locked = false,
+    this.glow = true,
   }) : unranked = false;
 
   /// The badge for an account that has no tier yet: the crest's outline with
@@ -294,6 +295,7 @@ class TierBadge extends StatelessWidget {
   const TierBadge.unranked({super.key, required this.size})
     : tierIndex = 0,
       locked = false,
+      glow = true,
       unranked = true;
 
   final int tierIndex;
@@ -305,6 +307,10 @@ class TierBadge extends StatelessWidget {
 
   final bool unranked;
 
+  /// The silhouette's glow. Off where the crest is drawn large enough for
+  /// the blur to read as a soft edge rather than light — the sign-up hero.
+  final bool glow;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -315,6 +321,7 @@ class TierBadge extends StatelessWidget {
           crest: _crests[tierIndex.clamp(0, _crests.length - 1)],
           hollow: locked || unranked,
           dashed: unranked,
+          glow: glow,
           outline: locked
               ? context.colors.muted.withValues(alpha: 0.35)
               : context.colors.faint,
@@ -361,9 +368,13 @@ class _CrestPainter extends CustomPainter {
     required this.hollow,
     required this.dashed,
     required this.outline,
+    this.glow = true,
   });
 
   final _Crest crest;
+
+  /// Whether to draw [_Crest.glow] at all.
+  final bool glow;
 
   /// Draw the silhouette only — a locked tier, or an account with no tier.
   final bool hollow;
@@ -424,19 +435,19 @@ class _CrestPainter extends CustomPainter {
     final shield = _shield(dy);
 
     // The glow, off the whole silhouette and in the tier's own colour.
-    if (crest.glow > 0) {
-      final glow = Paint()
+    if (glow && crest.glow > 0) {
+      final halo = Paint()
         ..color = crest.mid.withValues(alpha: crest.glow)
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5);
       for (final feather in wings) {
-        canvas.drawPath(feather.path, glow);
+        canvas.drawPath(feather.path, halo);
       }
       for (final leaf in leaves) {
-        canvas.drawPath(leaf, glow);
+        canvas.drawPath(leaf, halo);
       }
-      canvas.drawPath(shield, glow);
-      if (master) canvas.drawPath(_crown(dy), glow);
-      if (crest.gem != null && !master) canvas.drawPath(_gem(), glow);
+      canvas.drawPath(shield, halo);
+      if (master) canvas.drawPath(_crown(dy), halo);
+      if (crest.gem != null && !master) canvas.drawPath(_gem(), halo);
     }
 
     // Wings first: the shield sits on top of where they meet it, so the
@@ -853,5 +864,6 @@ class _CrestPainter extends CustomPainter {
       old.crest != crest ||
       old.hollow != hollow ||
       old.dashed != dashed ||
+      old.glow != glow ||
       old.outline != outline;
 }

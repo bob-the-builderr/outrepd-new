@@ -116,6 +116,7 @@ class _AuthEntryScreenState extends State<AuthEntryScreen>
                   ),
                 ),
               ),
+              const SizedBox(height: 18),
               // Apple and Google first, the quickest way in; the email way
               // under them.
               _socialButtons(),
@@ -1134,24 +1135,24 @@ class _Field extends StatelessWidget {
 
 /// The entry screen's hero: every crest on the ladder, scattered and tilted
 /// as if tossed on a table, and the Master crest — the top of it — large in
-/// the middle over them. No glow: a blurred copy behind a crest softened its
-/// edges, and the crests are sharpest drawn as they are.
+/// the middle over them. No glow, not even the crests' own: drawn this
+/// large it reads as a soft edge, and the crests are sharpest as they are.
 class _HeroCrests extends StatelessWidget {
   const _HeroCrests();
 
   static const _width = 340.0;
-  static const _height = 300.0;
+  static const _height = 290.0;
 
   /// Where each crest below the top lies, by tier: its centre in the box,
   /// its size and its tilt in degrees. Fixed, so the scatter is the same on
   /// every phone and every launch.
   static const _scatter = <(int, double, double, double, double)>[
-    (0, 48, 66, 74, -14),
-    (1, 292, 52, 80, 12),
-    (2, 44, 192, 84, 9),
-    (3, 296, 200, 88, -10),
-    (4, 108, 262, 70, -5),
-    (5, 236, 260, 76, 7),
+    (0, 64, 66, 74, -14),
+    (1, 278, 58, 80, 12),
+    (2, 54, 184, 84, 9),
+    (3, 288, 190, 88, -10),
+    (4, 120, 250, 72, -5),
+    (5, 224, 252, 78, 7),
   ];
 
   @override
@@ -1170,13 +1171,13 @@ class _HeroCrests extends StatelessWidget {
               top: y - size / 2,
               child: Transform.rotate(
                 angle: tilt * math.pi / 180,
-                child: TierBadge(tierIndex: tier, size: size),
+                child: TierBadge(tierIndex: tier, size: size, glow: false),
               ),
             ),
           Positioned(
             left: (_width - master) / 2,
             top: (_height - master) / 2,
-            child: TierBadge(tierIndex: top, size: master),
+            child: TierBadge(tierIndex: top, size: master, glow: false),
           ),
         ],
       ),
