@@ -267,6 +267,19 @@ void main() {
         matchesGoldenFile('goldens/store_live_match_${width}x$height.png'),
       );
 
+      // The give up card, over the same moment: 10 to 7, the clock at 0:18.
+      if (width == 1080) {
+        await tester.tap(find.byKey(const Key('stopButton')));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 300));
+        await expectLater(
+          find.byType(MaterialApp),
+          matchesGoldenFile('goldens/give_up_card.png'),
+        );
+        await tester.tap(find.byKey(const Key('keepGoing')));
+        await tester.pump(const Duration(milliseconds: 300));
+      }
+
       await tester.pumpWidget(const SizedBox());
       await session.close();
     });
