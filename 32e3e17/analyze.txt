@@ -1,0 +1,5 @@
+Analyzing outrepd_flutter...                                    
+
+  error • The getter 'stay' isn't defined for the type 'L'. Try importing the library that defines 'stay', correcting the name to the name of an existing getter, or defining a getter or field named 'stay' • lib/screens/match_flow.dart:1093:39 • undefined_getter
+
+1 issue found. (ran in 17.4s)
