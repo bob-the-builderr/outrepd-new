@@ -85,11 +85,14 @@ void main() {
       await _emit(tester, source, pushUpPose(1));
       await _emit(tester, source, pushUpPose(1));
       tops.add(_bar(tester));
+      // Drawn from the bottom of a real rep: empty there, full at the top.
       for (final b in bottoms) {
-        expect(b, lessThan(0.25), reason: 'at the bottom the bar read $b');
+        expect(b, lessThanOrEqualTo(barFill(0.25)),
+            reason: 'at the bottom the bar read $b');
       }
       for (final t in tops) {
-        expect(t, greaterThan(0.9), reason: 'at the top the bar read $t');
+        expect(t, greaterThan(barFill(0.9)),
+            reason: 'at the top the bar read $t');
       }
     });
 
@@ -105,8 +108,8 @@ void main() {
       }
       expect(_count(tester), 0);
       // And the bar showed the dip, so the lifter can see why.
-      expect(lowest, lessThan(0.7));
-      expect(lowest, greaterThan(0.5));
+      expect(lowest, lessThan(barFill(0.7)));
+      expect(lowest, greaterThan(barFill(kBottomShare)));
     });
 
     testWidgets('getting up at the end does not add one', (tester) async {

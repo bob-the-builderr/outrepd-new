@@ -66,6 +66,12 @@ bottom of a full rep.
 - **The bar** is that height as a share of *this lifter's* lockout (median of
   the last five tops, seeded with two priors of 1.0; tops outside 0.6–1.8× the
   reference are not tops). 0 on the floor, 1 at the top.
+- **Drawn from the bottom of a real rep, not the floor** (`kBarFloor`, a
+  quarter of lockout; `barFill`): nobody's head reaches the hands, so a bar
+  drawn from the floor never emptied. Drawing only — every rule below reads
+  the share itself. The two lines drawn across it are the counter's own,
+  through the same mapping (a third and two thirds), and the one still to
+  reach is lit off the tracker's own phase (`PushupReading.pastBottom`).
 - **The number and the bar come from the same tracker on the same frame.**
   Never add a second counter for the screen, and never re-score the set at the
   end with something else: a lifter watching one number and being handed

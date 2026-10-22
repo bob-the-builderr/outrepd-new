@@ -1665,7 +1665,9 @@ class _CalibrationState extends State<_Calibration> {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: FractionallySizedBox(
-                  heightFactor: _progress.clamp(0.0, 1.0),
+                  // Drawn the camera screen's way, from the bottom of a
+                  // real rep.
+                  heightFactor: barFill(_progress),
                   child: Container(
                     decoration: BoxDecoration(
                       // The camera screen's own bar colour.

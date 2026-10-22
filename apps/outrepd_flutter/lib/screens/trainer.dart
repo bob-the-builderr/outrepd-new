@@ -1731,8 +1731,9 @@ class _Fighter extends StatelessWidget {
 /// it: down past the bottom one ([kBottomShare]), then back up past the top
 /// one ([kTopShare]). The line still to reach is lit gold; the bottom one
 /// turns green once it is passed, until the rep counts and it is next again.
-/// Where the counter's own lines are, not further apart: the bar must never
-/// promise a rep the counter will not give, or ask for more than it does.
+/// Where the counter's own lines are, on a bar drawn from the bottom of a
+/// real rep ([barFill]): the bar must never promise a rep the counter will
+/// not give, or ask for more than it does.
 class _DepthBar extends StatelessWidget {
   const _DepthBar({
     super.key,
@@ -1761,7 +1762,7 @@ class _DepthBar extends StatelessWidget {
               key: Key(key),
               left: -5,
               right: -5,
-              bottom: share * box.maxHeight - thick / 2,
+              bottom: barFill(share) * box.maxHeight - thick / 2,
               height: thick,
               child: DecoratedBox(
                 decoration: BoxDecoration(
@@ -1785,7 +1786,7 @@ class _DepthBar extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: FractionallySizedBox(
-                      heightFactor: progress.clamp(0.0, 1.0),
+                      heightFactor: barFill(progress),
                       child: Container(
                         decoration: BoxDecoration(
                           // Same colour rule as the skeleton: it goes off when
