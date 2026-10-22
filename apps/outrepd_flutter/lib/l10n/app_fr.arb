@@ -724,5 +724,16 @@
   "usernameSpacesHint": "Les espaces deviennent _",
   "haveInviteCode": "Tu as un code d'invitation ?",
   "emailCodeNote": "On t'envoie un code à 6 chiffres par e-mail. Pas de mot de passe.",
-  "continueWithEmail": "Continuer avec l'e-mail"
+  "continueWithEmail": "Continuer avec l'e-mail",
+  "thisSeason": "Cette saison",
+  "thisWeek": "Cette semaine",
+  "weekStartsAgain": "Recommence chaque lundi",
+  "lengthWeek": "Semaine",
+  "lengthMonth": "Mois",
+  "weekJoinHint": "Gagne un duel classé cette semaine pour entrer au classement",
+  "weekInTop3": "Dans le top 3 cette semaine",
+  "weekToTop3": "{n} LP jusqu'au top 3",
+  "boardActiveNote": "Joueurs actifs ces 30 derniers jours",
+  "boardTieNote": "égalité : plus de victoires d'abord",
+  "lpBreakdown": "{reps} pour les répétitions · {adjust} pour un adversaire {rank}"
 }

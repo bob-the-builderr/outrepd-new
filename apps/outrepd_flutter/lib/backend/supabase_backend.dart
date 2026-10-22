@@ -285,9 +285,33 @@ class SupabaseBackend implements Backend {
   }
 
   @override
-  Future<List<MonthRow>> monthBoard({int limit = 100}) async {
+  Future<List<MonthRow>> monthBoard({int limit = 100}) =>
+      _seasonBoard('month_board', limit);
+
+  @override
+  Future<List<MonthRow>> weekBoard({int limit = 100}) =>
+      _seasonBoard('week_board', limit);
+
+  @override
+  Future<MonthPlace?> myWeekPlace() async {
+    if (_db.auth.currentUser == null) return null;
+    final rows = await _db.rpc<List<dynamic>>('my_week_place');
+    if (rows.isEmpty) return null;
+    final row = rows.first as Map<String, dynamic>;
+    return MonthPlace(
+      season: _seasonDate(row['week'] as String),
+      endsAt: DateTime.parse(row['ends_at'] as String),
+      place: (row['place'] as num?)?.toInt(),
+      ofTotal: (row['of_total'] as num?)?.toInt() ?? 0,
+      points: (row['points'] as num?)?.toInt() ?? 0,
+      wins: (row['wins'] as num?)?.toInt() ?? 0,
+      played: (row['played'] as num?)?.toInt() ?? 0,
+    );
+  }
+
+  Future<List<MonthRow>> _seasonBoard(String function, int limit) async {
     final rows = await _db.rpc<List<dynamic>>(
-      'month_board',
+      function,
       params: {'limit_to': limit},
     );
     return [

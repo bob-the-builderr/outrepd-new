@@ -2390,4 +2390,41 @@ class LFr extends L {
 
   @override
   String get continueWithEmail => 'Continuer avec l\'e-mail';
+
+  @override
+  String get thisSeason => 'Cette saison';
+
+  @override
+  String get thisWeek => 'Cette semaine';
+
+  @override
+  String get weekStartsAgain => 'Recommence chaque lundi';
+
+  @override
+  String get lengthWeek => 'Semaine';
+
+  @override
+  String get lengthMonth => 'Mois';
+
+  @override
+  String get weekJoinHint => 'Gagne un duel classé cette semaine pour entrer au classement';
+
+  @override
+  String get weekInTop3 => 'Dans le top 3 cette semaine';
+
+  @override
+  String weekToTop3(String n) {
+    return '${n} LP jusqu\'au top 3';
+  }
+
+  @override
+  String get boardActiveNote => 'Joueurs actifs ces 30 derniers jours';
+
+  @override
+  String get boardTieNote => 'égalité : plus de victoires d\'abord';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '${reps} pour les répétitions · ${adjust} pour un adversaire ${rank}';
+  }
 }

@@ -1132,6 +1132,12 @@ abstract interface class Backend {
   /// account to ask about.
   Future<MonthPlace?> myMonthPlace();
 
+  /// The week's board (supabase/seasons.sql): the month's points since
+  /// Monday, 00:00 UTC. Rows and the caller's place come back in the month's
+  /// shapes, [MonthPlace.season] being the Monday.
+  Future<List<MonthRow>> weekBoard({int limit = 100});
+  Future<MonthPlace?> myWeekPlace();
+
   /// This account's awards from finished months, newest first.
   Future<List<SeasonAward>> mySeasonAwards();
 
@@ -1430,6 +1436,12 @@ class NoBackend implements Backend {
 
   @override
   Future<MonthPlace?> myMonthPlace() async => null;
+
+  @override
+  Future<List<MonthRow>> weekBoard({int limit = 100}) async => const [];
+
+  @override
+  Future<MonthPlace?> myWeekPlace() async => null;
 
   @override
   Future<List<SeasonAward>> mySeasonAwards() async => const [];

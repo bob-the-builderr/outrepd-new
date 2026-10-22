@@ -2384,4 +2384,41 @@ class LRu extends L {
 
   @override
   String get continueWithEmail => 'Продолжить с почтой';
+
+  @override
+  String get thisSeason => 'Этот сезон';
+
+  @override
+  String get thisWeek => 'Эта неделя';
+
+  @override
+  String get weekStartsAgain => 'Начинается заново каждый понедельник';
+
+  @override
+  String get lengthWeek => 'Неделя';
+
+  @override
+  String get lengthMonth => 'Месяц';
+
+  @override
+  String get weekJoinHint => 'Выиграйте рейтинговую дуэль на этой неделе, чтобы попасть в таблицу';
+
+  @override
+  String get weekInTop3 => 'В топ-3 на этой неделе';
+
+  @override
+  String weekToTop3(String n) {
+    return '${n} LP до топ-3';
+  }
+
+  @override
+  String get boardActiveNote => 'Игроки, активные за последние 30 дней';
+
+  @override
+  String get boardTieNote => 'при равенстве: больше побед выше';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '${reps} за повторения · ${adjust} за соперника ${rank}';
+  }
 }

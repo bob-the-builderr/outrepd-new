@@ -27,8 +27,13 @@ import 'other_profile.dart';
 import 'shell.dart';
 
 enum _Scope {
-  /// The month's race: LP won in ranked duels since the 1st. First, because
-  /// it is the one board everybody starts level on, whatever their rank.
+  /// The week's race, the month's board a week at a time: LP won in ranked
+  /// duels since Monday. Shown first, under the same tab as the month, since
+  /// a week is a race more people can win.
+  thisWeek,
+
+  /// The month's race: LP won in ranked duels since the 1st. The one board
+  /// everybody starts level on, whatever their rank, and the one with awards.
   thisMonth,
 
   /// Everyone, ranked by LP alone — the whole ladder in one list.
@@ -52,7 +57,10 @@ class RanksScreen extends StatefulWidget {
 }
 
 class _RanksScreenState extends State<RanksScreen> {
-  _Scope _scope = _Scope.thisMonth;
+  _Scope _scope = _Scope.thisWeek;
+
+  /// The tab that holds the week and the month: the one race, two lengths.
+  bool get _season => _scope == _Scope.thisWeek || _scope == _Scope.thisMonth;
 
   /// Rows per scope, kept once fetched so flipping the toggle shows them at
   /// once; asked for again behind them once they are [kBoardFreshFor] old.
@@ -62,9 +70,12 @@ class _RanksScreenState extends State<RanksScreen> {
   /// never fetched, or this account's own place has moved since.
   final _fetchedAt = <_Scope, DateTime>{};
 
-  /// The month's board and this account's place on it, fetched together.
+  /// The month's board and this account's place on it, fetched together;
+  /// the week's the same way.
   List<MonthRow>? _month;
   MonthPlace? _monthPlace;
+  List<MonthRow>? _week;
+  MonthPlace? _weekPlace;
 
   /// This account's place on the whole board, for when it is below the
   /// hundred rows the board shows.
@@ -124,8 +135,11 @@ class _RanksScreenState extends State<RanksScreen> {
     return at != null && clock.now().difference(at) < kBoardFreshFor;
   }
 
-  bool get _loaded =>
-      _scope == _Scope.thisMonth ? _month != null : _boards.containsKey(_scope);
+  bool get _loaded => switch (_scope) {
+    _Scope.thisWeek => _week != null,
+    _Scope.thisMonth => _month != null,
+    _ => _boards.containsKey(_scope),
+  };
 
   /// [quiet] keeps what is on screen while it is asked for again — no
   /// spinner, and a failed read leaves the board as it was rather than
@@ -139,6 +153,19 @@ class _RanksScreenState extends State<RanksScreen> {
       if (!quiet) _error = null;
     });
     try {
+      if (scope == _Scope.thisWeek) {
+        final place = await backend.myWeekPlace();
+        final rows = await backend.weekBoard();
+        if (!mounted) return;
+        setState(() {
+          _weekPlace = place;
+          _week = rows;
+          _fetchedAt[scope] = clock.now();
+          _loading = false;
+          _error = null;
+        });
+        return;
+      }
       if (scope == _Scope.thisMonth) {
         // The place first: asking for it is what closes a month that has
         // ended, so the board read after it is already the new month's.
@@ -192,18 +219,24 @@ class _RanksScreenState extends State<RanksScreen> {
     }
   }
 
-  /// The month's rows, from whichever source this build is running on.
-  List<MonthRow> get _monthRows =>
-      backend.available ? _month ?? const [] : demoMonthBoard;
+  /// The month's rows — or the week's — from whichever source this build is
+  /// running on.
+  List<MonthRow> get _monthRows => !backend.available
+      ? demoMonthBoard
+      : (_scope == _Scope.thisWeek ? _week : _month) ?? const [];
 
   /// This account on the month's board. With no server it is somebody who
   /// has not played this month yet: the sample has no real place to give.
   MonthPlace get _myMonth {
-    if (_monthPlace case final place?) return place;
+    final week = _scope == _Scope.thisWeek;
+    if ((week ? _weekPlace : _monthPlace) case final place?) return place;
     final now = clock.now().toUtc();
+    final monday = DateTime.utc(now.year, now.month, now.day - (now.weekday - 1));
     return MonthPlace(
-      season: DateTime.utc(now.year, now.month),
-      endsAt: DateTime.utc(now.year, now.month + 1),
+      season: week ? monday : DateTime.utc(now.year, now.month),
+      endsAt: week
+          ? monday.add(const Duration(days: 7))
+          : DateTime.utc(now.year, now.month + 1),
       place: null,
       ofTotal: 0,
       points: 0,
@@ -267,13 +300,14 @@ class _RanksScreenState extends State<RanksScreen> {
   Widget build(BuildContext context) {
     final entries = _entries;
     final me = demoProfile;
-    final month = _scope == _Scope.thisMonth;
+    final month = _season;
+    final week = _scope == _Scope.thisWeek;
 
     // Nothing to draw yet. The month's board can be empty and still be an
     // answer — a new month, nobody has won a duel — so it is "not fetched"
     // that matters there, not "no rows".
     final nothingYet = month
-        ? backend.available && _month == null
+        ? backend.available && (week ? _week : _month) == null
         : entries.isEmpty;
 
     return Scaffold(
@@ -344,6 +378,10 @@ class _RanksScreenState extends State<RanksScreen> {
                   ? _MonthBoard(
                       rows: _monthRows,
                       mine: _myMonth,
+                      week: week,
+                      onLength: (toWeek) => _switchTo(
+                        toWeek ? _Scope.thisWeek : _Scope.thisMonth,
+                      ),
                       onRefresh: _load,
                     )
                   : entries.isEmpty
@@ -356,16 +394,19 @@ class _RanksScreenState extends State<RanksScreen> {
                       onRefresh: _load,
                       child: ListView.separated(
                         padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
-                        itemCount: entries.length,
+                        // Above the list on Top Players: who is on it, and
+                        // how a tie is settled.
+                        itemCount: entries.length + 1,
                         separatorBuilder: (_, _) => const SizedBox(height: 7),
-                        itemBuilder: (context, i) =>
-                            RiseIn(
-                              delay: staggered(i),
-                              child: _RankRow(
-                                position: i + 1,
-                                entry: entries[i],
+                        itemBuilder: (context, i) => i == 0
+                            ? const _BoardNote()
+                            : RiseIn(
+                                delay: staggered(i - 1),
+                                child: _RankRow(
+                                  position: i,
+                                  entry: entries[i - 1],
+                                ),
                               ),
-                            ),
                       ),
                     ),
             ),
@@ -382,6 +423,7 @@ class _RanksScreenState extends State<RanksScreen> {
                         mine: _myMonth,
                         rows: _monthRows,
                         username: me.username,
+                        week: week,
                       )
                     : _SelfRow(
                         position: _myPosition,
@@ -411,7 +453,8 @@ class _ScopeToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget pill(_Scope value, String label) {
-      final selected = scope == value;
+      final selected = scope == value ||
+          (value == _Scope.thisWeek && scope == _Scope.thisMonth);
       return Expanded(
         child: InkWell(
           onTap: () => onChanged(value),
@@ -452,12 +495,83 @@ class _ScopeToggle extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: [
-          pill(_Scope.thisMonth, l.thisMonth),
+          pill(_Scope.thisWeek, l.thisSeason),
           const SizedBox(width: 8),
           pill(_Scope.topPlayers, l.topPlayers),
           const SizedBox(width: 8),
           pill(_Scope.yourTier, l.yourTier),
         ],
+      ),
+    );
+  }
+}
+
+/// Week or month, inside the first tab: the same race, two lengths.
+class _LengthSwitch extends StatelessWidget {
+  const _LengthSwitch({required this.week, required this.onChanged});
+
+  final bool week;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    Widget half(bool value, String label) {
+      final selected = week == value;
+      return Expanded(
+        child: GestureDetector(
+          key: Key(value ? 'lengthWeek' : 'lengthMonth'),
+          onTap: () => onChanged(value),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 7),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: selected ? context.colors.surfaceRaised : null,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Text(
+              label,
+              style: TextStyle(
+                color: selected ? context.colors.text : context.colors.muted,
+                fontSize: 14,
+                fontWeight: selected ? FontWeight.w600 : null,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Center(
+      child: Container(
+        width: 200,
+        padding: const EdgeInsets.all(3),
+        decoration: BoxDecoration(
+          color: context.colors.surface,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          children: [half(true, l.lengthWeek), half(false, l.lengthMonth)],
+        ),
+      ),
+    );
+  }
+}
+
+/// Above Top Players and Your Tier: who is on the board, and how a tie on
+/// rank and LP is settled (social.sql, leaderboard).
+class _BoardNote extends StatelessWidget {
+  const _BoardNote();
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 2),
+      child: Text(
+        '${l.boardActiveNote} · ${l.boardTieNote}',
+        textAlign: TextAlign.center,
+        style: TextStyle(color: context.colors.muted, fontSize: 12),
       ),
     );
   }
@@ -818,11 +932,19 @@ class _MonthBoard extends StatelessWidget {
     required this.rows,
     required this.mine,
     required this.onRefresh,
+    this.week = false,
+    this.onLength,
   });
 
   final List<MonthRow> rows;
   final MonthPlace mine;
   final Future<void> Function() onRefresh;
+
+  /// The week's board rather than the month's: no awards at its end.
+  final bool week;
+
+  /// Week or month, from the switch at the top.
+  final ValueChanged<bool>? onLength;
 
   @override
   Widget build(BuildContext context) {
@@ -835,7 +957,11 @@ class _MonthBoard extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
         children: [
-          _SeasonHeader(mine: mine),
+          if (onLength case final onLength?) ...[
+            _LengthSwitch(week: week, onChanged: onLength),
+            const SizedBox(height: 12),
+          ],
+          _SeasonHeader(mine: mine, week: week),
           if (rows.isEmpty)
             EmptyState(
               icon: Icons.calendar_month_outlined,
@@ -847,12 +973,12 @@ class _MonthBoard extends StatelessWidget {
             _Podium(rows: podium),
             const SizedBox(height: 12),
             for (final row in rest) ...[
-              if (row.place == 11) const _Top10Line(),
+              if (row.place == 11 && !week) const _Top10Line(),
               Padding(
                 padding: const EdgeInsets.only(bottom: 7),
                 child: RiseIn(
                   delay: staggered(row.place - 3),
-                  child: _MonthRankRow(row: row),
+                  child: _MonthRankRow(row: row, week: week),
                 ),
               ),
             ],
@@ -864,9 +990,10 @@ class _MonthBoard extends StatelessWidget {
 }
 
 class _SeasonHeader extends StatelessWidget {
-  const _SeasonHeader({required this.mine});
+  const _SeasonHeader({required this.mine, this.week = false});
 
   final MonthPlace mine;
+  final bool week;
 
   @override
   Widget build(BuildContext context) {
@@ -877,7 +1004,7 @@ class _SeasonHeader extends StatelessWidget {
     return Column(
       children: [
         Text(
-          '${monthName(context, mine.season)} · '
+          '${week ? l.thisWeek : monthName(context, mine.season)} · '
           '${monthLeft(context, mine.endsAt, clock.now())}',
           textAlign: TextAlign.center,
           style: const TextStyle(
@@ -888,7 +1015,9 @@ class _SeasonHeader extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          earned
+          week
+              ? l.weekStartsAgain
+              : earned
               ? l.monthRegularEarned
               : l.monthRegularProgress(
                   '${localNumber(context, played)}/'
@@ -896,7 +1025,9 @@ class _SeasonHeader extends StatelessWidget {
                 ),
           textAlign: TextAlign.center,
           style: TextStyle(
-            color: earned ? context.colors.brand : context.colors.muted,
+            color: earned && !week
+                ? context.colors.brand
+                : context.colors.muted,
             fontSize: 13,
           ),
         ),
@@ -1094,14 +1225,16 @@ class _Top10Line extends StatelessWidget {
 }
 
 class _MonthRankRow extends StatelessWidget {
-  const _MonthRankRow({required this.row});
+  const _MonthRankRow({required this.row, this.week = false});
 
   final MonthRow row;
+  final bool week;
 
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
-    final award = awardForPlace(row.place);
+    // A week names nobody at its end: the rank under the name instead.
+    final award = week ? null : awardForPlace(row.place);
 
     return InkWell(
       borderRadius: BorderRadius.circular(12),
@@ -1170,15 +1303,25 @@ class _MonthSelfRow extends StatelessWidget {
     required this.mine,
     required this.rows,
     required this.username,
+    this.week = false,
   });
 
   final MonthPlace mine;
   final List<MonthRow> rows;
   final String username;
+  final bool week;
 
   String _hint(BuildContext context) {
     final l = L.of(context);
     final place = mine.place;
+    if (week) {
+      // The week has no awards: how far from the top three, or there.
+      if (place == null) return l.weekJoinHint;
+      final third = rows.where((r) => r.place == 3).firstOrNull;
+      if (place <= 3 || third == null) return l.weekInTop3;
+      final gap = third.points - mine.points + 1;
+      return l.weekToTop3(localNumber(context, gap < 1 ? 1 : gap));
+    }
     if (place == null) return l.monthJoinHint;
     if (awardForPlace(place) case final award?) {
       return l.monthIfEndedNow(awardName(l, award));

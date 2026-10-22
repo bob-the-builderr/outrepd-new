@@ -724,5 +724,16 @@
   "usernameSpacesHint": "空格会变成 _",
   "haveInviteCode": "有邀请码吗？",
   "emailCodeNote": "我们会给你发送 6 位数验证码邮件，无需密码。",
-  "continueWithEmail": "通过邮箱继续"
+  "continueWithEmail": "通过邮箱继续",
+  "thisSeason": "本赛季",
+  "thisWeek": "本周",
+  "weekStartsAgain": "每周一重新开始",
+  "lengthWeek": "周",
+  "lengthMonth": "月",
+  "weekJoinHint": "本周赢一场排位对决即可上榜",
+  "weekInTop3": "本周前三",
+  "weekToTop3": "距前三还差 {n} LP",
+  "boardActiveNote": "过去 30 天内活跃的玩家",
+  "boardTieNote": "并列时胜场多者在前",
+  "lpBreakdown": "次数差 {reps} · {rank} 对手 {adjust}"
 }

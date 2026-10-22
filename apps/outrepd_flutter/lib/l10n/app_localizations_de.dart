@@ -2391,4 +2391,41 @@ class LDe extends L {
 
   @override
   String get continueWithEmail => 'Weiter mit E-Mail';
+
+  @override
+  String get thisSeason => 'Diese Saison';
+
+  @override
+  String get thisWeek => 'Diese Woche';
+
+  @override
+  String get weekStartsAgain => 'Beginnt jeden Montag neu';
+
+  @override
+  String get lengthWeek => 'Woche';
+
+  @override
+  String get lengthMonth => 'Monat';
+
+  @override
+  String get weekJoinHint => 'Gewinn diese Woche ein Ranglisten-Duell, um auf die Liste zu kommen';
+
+  @override
+  String get weekInTop3 => 'Diese Woche in den Top 3';
+
+  @override
+  String weekToTop3(String n) {
+    return '${n} LP bis zu den Top 3';
+  }
+
+  @override
+  String get boardActiveNote => 'Spieler, die in den letzten 30 Tagen aktiv waren';
+
+  @override
+  String get boardTieNote => 'bei Gleichstand: mehr Siege zuerst';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '${reps} für die Wiederholungen · ${adjust} für einen Gegner auf ${rank}';
+  }
 }

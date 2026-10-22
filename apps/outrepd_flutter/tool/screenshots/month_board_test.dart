@@ -113,6 +113,9 @@ void main() {
 
     await tester.pumpWidget(_app(const RanksScreen()));
     await tester.pumpAndSettle();
+    // The board opens on the week; this is the month's.
+    await tester.tap(find.byKey(const Key('lengthMonth')));
+    await tester.pumpAndSettle();
     await expectLater(
       find.byType(MaterialApp),
       matchesGoldenFile('goldens/month_board.png'),

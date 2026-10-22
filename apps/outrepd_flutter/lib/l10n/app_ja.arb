@@ -724,5 +724,16 @@
   "usernameSpacesHint": "スペースは _ になります",
   "haveInviteCode": "招待コードをお持ちですか？",
   "emailCodeNote": "6桁のコードをメールでお送りします。パスワードは不要です。",
-  "continueWithEmail": "メールで続ける"
+  "continueWithEmail": "メールで続ける",
+  "thisSeason": "今シーズン",
+  "thisWeek": "今週",
+  "weekStartsAgain": "毎週月曜日にリセット",
+  "lengthWeek": "週",
+  "lengthMonth": "月",
+  "weekJoinHint": "今週ランク戦で1勝すると掲載されます",
+  "weekInTop3": "今週トップ3入り",
+  "weekToTop3": "トップ3まであと{n} LP",
+  "boardActiveNote": "過去30日間にプレイした人",
+  "boardTieNote": "同点なら勝利数が多い方が上",
+  "lpBreakdown": "回数差で{reps} · {rank}の相手で{adjust}"
 }

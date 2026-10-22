@@ -39,6 +39,31 @@ void main() {
             },
     ];
 
+    // Weighed by the two ranks: level, a little apart, and further apart
+    // than the weighing reaches, both ways, won and lost.
+    final weighed = <Map<String, Object?>>[
+      for (final won in [true, false])
+        for (var yourReps = 0; yourReps <= 40; yourReps += 8)
+          for (var theirReps = 0; theirReps <= 40; theirReps += 8)
+            for (final yourLevel in [1, 12, 30])
+              for (final apart in [-8, -5, -2, -1, 0, 1, 3, 5, 9])
+                if (yourLevel + apart >= 1 && yourLevel + apart <= kLadderLevels)
+                  {
+                    'won': won,
+                    'your_reps': yourReps,
+                    'their_reps': theirReps,
+                    'your_level': yourLevel,
+                    'their_level': yourLevel + apart,
+                    'total': lpFor(
+                      won: won,
+                      yourReps: yourReps,
+                      theirReps: theirReps,
+                      yourLevel: yourLevel,
+                      theirLevel: yourLevel + apart,
+                    ),
+                  },
+    ];
+
     final applied = <Map<String, Object?>>[];
     for (final from in [
       (0, 0, 0),
@@ -89,12 +114,25 @@ void main() {
     ];
 
     File(_vectors).writeAsStringSync(
-      '${const JsonEncoder.withIndent('  ').convert({'generated_by': 'flutter test test/ladder_vectors_test.dart', 'lp_for': pay, 'apply_lp': applied, 'ladder_level': levels, 'placement_rank': placements})}\n',
+      '${const JsonEncoder.withIndent('  ').convert({'generated_by': 'flutter test test/ladder_vectors_test.dart', 'lp_for': pay, 'lp_for_levels': weighed, 'apply_lp': applied, 'ladder_level': levels, 'placement_rank': placements})}\n',
     );
 
     // A grid that misses a branch proves nothing, so the shape is asserted
     // rather than assumed.
     expect(pay.length, greaterThan(200));
+    expect(weighed.length, greaterThan(500));
+    // Weighed, a duel never pays more than half again the gap, nor less than
+    // half of it, and level ranks pay the gap exactly.
+    for (final row in weighed) {
+      final gap =
+          ((row['your_reps']! as int) - (row['their_reps']! as int)).abs();
+      final paid = (row['total']! as int).abs();
+      expect(paid, inInclusiveRange((gap * 5 + 5) ~/ 10, (gap * 15 + 5) ~/ 10),
+          reason: 'weighed past the reach: $row');
+      if (row['your_level'] == row['their_level']) {
+        expect(paid, gap, reason: 'level ranks paid other than the gap: $row');
+      }
+    }
     expect(applied.length, greaterThan(150));
     expect(levels.length, kLadderLevels);
     expect(placements.length, 6);

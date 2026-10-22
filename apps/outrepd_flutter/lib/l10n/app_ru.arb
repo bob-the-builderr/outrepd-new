@@ -724,5 +724,16 @@
   "usernameSpacesHint": "Пробелы становятся _",
   "haveInviteCode": "Есть код приглашения?",
   "emailCodeNote": "Мы пришлём 6-значный код на почту. Без пароля.",
-  "continueWithEmail": "Продолжить с почтой"
+  "continueWithEmail": "Продолжить с почтой",
+  "thisSeason": "Этот сезон",
+  "thisWeek": "Эта неделя",
+  "weekStartsAgain": "Начинается заново каждый понедельник",
+  "lengthWeek": "Неделя",
+  "lengthMonth": "Месяц",
+  "weekJoinHint": "Выиграйте рейтинговую дуэль на этой неделе, чтобы попасть в таблицу",
+  "weekInTop3": "В топ-3 на этой неделе",
+  "weekToTop3": "{n} LP до топ-3",
+  "boardActiveNote": "Игроки, активные за последние 30 дней",
+  "boardTieNote": "при равенстве: больше побед выше",
+  "lpBreakdown": "{reps} за повторения · {adjust} за соперника {rank}"
 }

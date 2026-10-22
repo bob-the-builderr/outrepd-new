@@ -724,5 +724,16 @@
   "usernameSpacesHint": "Spasi menjadi _",
   "haveInviteCode": "Punya kode undangan?",
   "emailCodeNote": "Kami akan mengirim kode 6 digit ke emailmu. Tanpa kata sandi.",
-  "continueWithEmail": "Lanjutkan dengan email"
+  "continueWithEmail": "Lanjutkan dengan email",
+  "thisSeason": "Musim ini",
+  "thisWeek": "Minggu ini",
+  "weekStartsAgain": "Mulai lagi setiap Senin",
+  "lengthWeek": "Minggu",
+  "lengthMonth": "Bulan",
+  "weekJoinHint": "Menangkan satu duel peringkat minggu ini untuk masuk papan",
+  "weekInTop3": "Di 3 besar minggu ini",
+  "weekToTop3": "{n} LP lagi ke 3 besar",
+  "boardActiveNote": "Pemain yang aktif dalam 30 hari terakhir",
+  "boardTieNote": "seri: kemenangan terbanyak di atas",
+  "lpBreakdown": "{reps} dari repetisi · {adjust} untuk lawan {rank}"
 }

@@ -724,5 +724,16 @@
   "usernameSpacesHint": "Gli spazi diventano _",
   "haveInviteCode": "Hai un codice invito?",
   "emailCodeNote": "Ti invieremo via email un codice di 6 cifre. Nessuna password.",
-  "continueWithEmail": "Continua con l'email"
+  "continueWithEmail": "Continua con l'email",
+  "thisSeason": "Questa stagione",
+  "thisWeek": "Questa settimana",
+  "weekStartsAgain": "Ricomincia ogni lunedì",
+  "lengthWeek": "Settimana",
+  "lengthMonth": "Mese",
+  "weekJoinHint": "Vinci una sfida classificata questa settimana per entrare in classifica",
+  "weekInTop3": "Nella top 3 questa settimana",
+  "weekToTop3": "{n} LP alla top 3",
+  "boardActiveNote": "Giocatori attivi negli ultimi 30 giorni",
+  "boardTieNote": "a pari merito: prima chi ha più vittorie",
+  "lpBreakdown": "{reps} per le ripetizioni · {adjust} per un avversario {rank}"
 }

@@ -724,5 +724,16 @@
   "usernameSpacesHint": "स्पेस _ बन जाते हैं",
   "haveInviteCode": "क्या आपके पास इनवाइट कोड है?",
   "emailCodeNote": "हम आपको ईमेल पर 6 अंकों का कोड भेजेंगे। कोई पासवर्ड नहीं।",
-  "continueWithEmail": "ईमेल के साथ जारी रखें"
+  "continueWithEmail": "ईमेल के साथ जारी रखें",
+  "thisSeason": "यह सीज़न",
+  "thisWeek": "यह हफ़्ता",
+  "weekStartsAgain": "हर सोमवार फिर से शुरू होता है",
+  "lengthWeek": "हफ़्ता",
+  "lengthMonth": "महीना",
+  "weekJoinHint": "बोर्ड पर आने के लिए इस हफ़्ते एक रैंक्ड मुकाबला जीतें",
+  "weekInTop3": "इस हफ़्ते टॉप 3 में",
+  "weekToTop3": "टॉप 3 तक {n} LP",
+  "boardActiveNote": "पिछले 30 दिनों में सक्रिय खिलाड़ी",
+  "boardTieNote": "बराबरी पर: ज़्यादा जीत वाले पहले",
+  "lpBreakdown": "रेप्स के लिए {reps} · {rank} विरोधी के लिए {adjust}"
 }

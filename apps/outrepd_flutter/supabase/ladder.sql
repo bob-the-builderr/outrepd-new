@@ -57,6 +57,26 @@ as $$
               else -abs(your_reps - their_reps) end;
 $$;
 
+-- The same, weighed by who it was against: ten percent more or less for each
+-- division between the two, up to half again or half as much. Beating
+-- somebody above you pays more and losing to them costs less; the other way
+-- round, less and more. Level with each other, it is the rep gap exactly.
+-- Whole LP, rounded half up — the app's lpFor does the same arithmetic.
+create or replace function lp_for(
+  won boolean, your_reps int, their_reps int, your_level int, their_level int
+)
+returns int
+language sql
+immutable
+set search_path = public
+as $$
+  select (case when won then 1 else -1 end)
+       * ((abs(your_reps - their_reps)
+           * (10 + (case when won then 1 else -1 end)
+                 * greatest(-5, least(5, coalesce(their_level - your_level, 0))))
+           + 5) / 10);
+$$;
+
 -- ───────────────────────── applying it to a rank ─────────────────────────────
 
 -- Carries a change through as many promotions or demotions as it earns, and

@@ -348,6 +348,119 @@ begin
 end;
 $$;
 
+-- ── the week ──────────────────────────────────────────────────────────────────
+--
+-- The month's board, a week at a time: the same points (LP won less LP lost
+-- in ranked duels), the same order, starting again every Monday at 00:00
+-- UTC. A shorter race more people can win. Nothing is kept for it and no
+-- award is named at its end: it is added up from the week's duels, which the
+-- ranked-duel index on created_at finds without reading the rest.
+
+create or replace function week_start(at timestamptz)
+returns timestamptz
+language sql
+immutable
+set search_path = public
+as $$
+  select date_trunc('week', at at time zone 'UTC') at time zone 'UTC'
+$$;
+
+-- Each lifter's week: both sides of every ranked duel since Monday, the side
+-- that was raced counted as played only when it was there, live.
+create or replace function week_points(since timestamptz)
+returns table (profile_id uuid, points int, wins int, played int)
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select s.pid, sum(s.lp)::int, sum(s.won)::int, sum(s.played)::int
+    from (
+      select d.challenger as pid, coalesce(d.lp_challenger, 0) as lp,
+             (d.winner = d.challenger)::int as won, 1 as played
+        from duels d
+       where d.ranked and d.created_at >= since
+      union all
+      select d.defender, coalesce(d.lp_defender, 0),
+             (d.winner = d.defender)::int,
+             (exists (select 1 from live_matches m where m.duel = d.id))::int
+        from duels d
+       where d.ranked and d.created_at >= since
+    ) s
+   group by s.pid;
+$$;
+
+create or replace function week_board(in_country text default null, limit_to int default 100)
+returns table (
+  place int,
+  id uuid,
+  username text,
+  tier_idx int,
+  div_idx int,
+  points int,
+  wins int,
+  played int,
+  avatar_url text
+)
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select (row_number() over (order by w.points desc, w.wins desc, p.username))::int,
+         p.id, p.username, p.tier_idx, p.div_idx, w.points, w.wins, w.played,
+         p.avatar_url
+    from week_points(week_start(now())) w
+    join profiles p on p.id = w.profile_id
+   where p.placements_done >= 5
+     and p.show_on_board
+     and (in_country is null or (p.country = in_country and p.show_country))
+   order by w.points desc, w.wins desc, p.username
+   limit least(greatest(limit_to, 1), 500);
+$$;
+
+-- Where the caller stands this week, and when it ends.
+create or replace function my_week_place()
+returns table (
+  week date,
+  ends_at timestamptz,
+  place int,
+  of_total int,
+  points int,
+  wins int,
+  played int
+)
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  with board as (
+    select w.*, p.username
+      from week_points(week_start(now())) w
+      join profiles p on p.id = w.profile_id
+     where p.placements_done >= 5
+       and p.show_on_board
+  ),
+  mine as (select * from board where profile_id = auth.uid())
+  select (week_start(now()) at time zone 'UTC')::date,
+         week_start(now()) + interval '7 days',
+         -- Null off the board: no ranked duel this week, still in
+         -- placements, or asked to be left off.
+         case when exists (select 1 from mine) then
+           (select count(*)::int + 1
+              from board b, mine m
+             where b.points > m.points
+                or (b.points = m.points and b.wins > m.wins)
+                or (b.points = m.points and b.wins = m.wins
+                    and b.username < m.username))
+         end,
+         (select count(*)::int from board),
+         coalesce((select m.points from mine m), 0),
+         coalesce((select m.wins from mine m), 0),
+         coalesce((select m.played from mine m), 0);
+$$;
+
 -- ── closing a month ───────────────────────────────────────────────────────────
 
 create table if not exists season_awards (
@@ -480,6 +593,11 @@ revoke all on function month_board(text, int) from public, anon;
 grant execute on function month_board(text, int) to authenticated;
 revoke all on function my_month_place() from public, anon;
 grant execute on function my_month_place() to authenticated;
+revoke all on function week_points(timestamptz) from public, anon, authenticated;
+revoke all on function week_board(text, int) from public, anon;
+grant execute on function week_board(text, int) to authenticated;
+revoke all on function my_week_place() from public, anon;
+grant execute on function my_week_place() to authenticated;
 revoke all on function my_season_awards() from public, anon;
 grant execute on function my_season_awards() to authenticated;
 revoke all on function mark_season_awards_seen() from public, anon;

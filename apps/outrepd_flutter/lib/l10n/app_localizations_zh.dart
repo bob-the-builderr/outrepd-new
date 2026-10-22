@@ -2336,4 +2336,41 @@ class LZh extends L {
 
   @override
   String get continueWithEmail => '通过邮箱继续';
+
+  @override
+  String get thisSeason => '本赛季';
+
+  @override
+  String get thisWeek => '本周';
+
+  @override
+  String get weekStartsAgain => '每周一重新开始';
+
+  @override
+  String get lengthWeek => '周';
+
+  @override
+  String get lengthMonth => '月';
+
+  @override
+  String get weekJoinHint => '本周赢一场排位对决即可上榜';
+
+  @override
+  String get weekInTop3 => '本周前三';
+
+  @override
+  String weekToTop3(String n) {
+    return '距前三还差 ${n} LP';
+  }
+
+  @override
+  String get boardActiveNote => '过去 30 天内活跃的玩家';
+
+  @override
+  String get boardTieNote => '并列时胜场多者在前';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '次数差 ${reps} · ${rank} 对手 ${adjust}';
+  }
 }

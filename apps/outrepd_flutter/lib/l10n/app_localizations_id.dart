@@ -2383,4 +2383,41 @@ class LId extends L {
 
   @override
   String get continueWithEmail => 'Lanjutkan dengan email';
+
+  @override
+  String get thisSeason => 'Musim ini';
+
+  @override
+  String get thisWeek => 'Minggu ini';
+
+  @override
+  String get weekStartsAgain => 'Mulai lagi setiap Senin';
+
+  @override
+  String get lengthWeek => 'Minggu';
+
+  @override
+  String get lengthMonth => 'Bulan';
+
+  @override
+  String get weekJoinHint => 'Menangkan satu duel peringkat minggu ini untuk masuk papan';
+
+  @override
+  String get weekInTop3 => 'Di 3 besar minggu ini';
+
+  @override
+  String weekToTop3(String n) {
+    return '${n} LP lagi ke 3 besar';
+  }
+
+  @override
+  String get boardActiveNote => 'Pemain yang aktif dalam 30 hari terakhir';
+
+  @override
+  String get boardTieNote => 'seri: kemenangan terbanyak di atas';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '${reps} dari repetisi · ${adjust} untuk lawan ${rank}';
+  }
 }

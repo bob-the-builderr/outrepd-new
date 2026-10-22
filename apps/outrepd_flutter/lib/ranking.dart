@@ -162,7 +162,13 @@ RankChange applyLp(Rank from, int delta, {required int floorTierIdx}) {
   );
 }
 
-/// What a duel pays: exactly the gap in reps, signed by who actually won.
+/// What a duel pays: the gap in reps, signed by who actually won, and weighed
+/// by who it was against when both ranks are known — ten percent more or less
+/// for each division between the two, up to half again or half as much
+/// ([kLpLevelReach]). Beating somebody above you pays more and losing to them
+/// costs less; the other way round, less and more. Level with each other, or
+/// with a rank unknown, it is the rep gap exactly. Whole LP, rounded half up,
+/// the same arithmetic as lp_for in supabase/ladder.sql.
 ///
 /// [won] and the reps normally agree — more reps than the other side is a
 /// win — so this only matters in the one place they can split: walking out
@@ -170,10 +176,24 @@ RankChange applyLp(Rank from, int delta, {required int floorTierIdx}) {
 /// quitting, and a loss must never pay a gain. Elsewhere this is nothing more
 /// than the rep gap: no tier, no form, no cap, no promise the card could make
 /// before the round is over.
-int lpFor({required bool won, required int yourReps, required int theirReps}) {
+int lpFor({
+  required bool won,
+  required int yourReps,
+  required int theirReps,
+  int? yourLevel,
+  int? theirLevel,
+}) {
   final gap = (yourReps - theirReps).abs();
-  return won ? gap : -gap;
+  final apart = yourLevel == null || theirLevel == null
+      ? 0
+      : (theirLevel - yourLevel).clamp(-kLpLevelReach, kLpLevelReach);
+  final paid = (gap * (10 + (won ? apart : -apart)) + 5) ~/ 10;
+  return won ? paid : -paid;
 }
+
+/// How many divisions apart still change what a duel pays: five, so the most
+/// it can do is half again, or half as much.
+const kLpLevelReach = 5;
 
 /// A forfeit has no reps to compare, so it cannot be paid the way an ordinary
 /// duel is — there is no gap to be exactly. A flat win, same as before.

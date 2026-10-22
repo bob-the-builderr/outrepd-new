@@ -406,7 +406,10 @@ begin
       me.tier_idx, me.div_idx, me.lp
     );
   else
-    my_delta := lp_for(i_won, mine.reps, theirs.reps);
+    -- Weighed by the two ranks as they stood when the duel was played.
+    my_delta := lp_for(i_won, mine.reps, theirs.reps,
+                       ladder_level(me.tier_idx, me.div_idx),
+                       ladder_level(them.tier_idx, them.div_idx));
     select * into after from apply_lp(
       me.tier_idx, me.div_idx, me.lp, my_delta, me.peak_tier_idx
     );
@@ -420,7 +423,9 @@ begin
       them.tier_idx, them.div_idx, them.lp
     );
   elsif is_ranked then
-    their_delta := lp_for(not i_won, theirs.reps, mine.reps);
+    their_delta := lp_for(not i_won, theirs.reps, mine.reps,
+                          ladder_level(them.tier_idx, them.div_idx),
+                          ladder_level(me.tier_idx, me.div_idx));
     select * into their_after from apply_lp(
       them.tier_idx, them.div_idx, them.lp, their_delta, them.peak_tier_idx
     );

@@ -47,6 +47,27 @@ select
 from computed
 where total is distinct from got_total;
 
+-- ── what a duel pays, weighed by the two ranks ───────────────────────────────
+
+with cases as (
+  select * from vectors, jsonb_to_recordset(data -> 'lp_for_levels') as c(
+    won boolean, your_reps int, their_reps int, your_level int,
+    their_level int, total int
+  )
+),
+computed as (
+  select c.*, lp_for(c.won, c.your_reps, c.their_reps, c.your_level,
+                     c.their_level) as got_total
+  from cases c
+)
+select
+  case when count(*) = 0 then 'lp_for with levels: agrees on every case'
+  else
+    (raise_disagreement('lp_for with levels', count(*)))
+  end
+from computed
+where total is distinct from got_total;
+
 -- ── applying it to a rank ────────────────────────────────────────────────────
 
 with cases as (

@@ -523,6 +523,15 @@ select check_that(
   (select ranked from duels where challenger_set = current_setting('test.a3')::uuid),
   'a third duel in a day between the same two was not ranked');
 
+-- ── the week's board ───────────────────────────────────────────────────────────
+
+select as_user(:'A'); set role authenticated;
+select check_that((select count(*) >= 0 from week_board()), 'week_board');
+select check_that((select played >= 0 from my_week_place()), 'my_week_place');
+select must_fail('reading week_points directly',
+  'select * from week_points(now() - interval ''7 days'')');
+reset role;
+
 -- ── the live search ───────────────────────────────────────────────────────────
 
 select check_that(live_reach(0) = 2 and live_reach(7) = 6 and live_reach(20) = 12,

@@ -105,13 +105,34 @@ void main() {
     addTearDown(() => demoProfile.placementsDone = was);
   }
 
-  group('the month board', () {
-    testWidgets('opens first, with the podium and the time left', (tester) async {
+    /// The board opens on the week; the month is the switch's other half.
+  Future<void> toMonth(WidgetTester tester) async {
+    await tester.tap(find.byKey(const Key('lengthMonth')));
+    await tester.pumpAndSettle();
+  }
+
+  group('the week board', () {
+    testWidgets('opens first, with the switch to the month', (tester) async {
       phone(tester);
       ranked();
       backend = _Month(rows: _board(13), place: 14);
       await tester.pumpWidget(_app(const RanksScreen()));
       await tester.pumpAndSettle();
+
+      expect(find.textContaining('This week'), findsOneWidget);
+      expect(find.text('Starts again every Monday'), findsOneWidget);
+      expect(find.byKey(const Key('lengthMonth')), findsOneWidget);
+    });
+  });
+
+group('the month board', () {
+    testWidgets('a tap away, with the podium and the time left', (tester) async {
+      phone(tester);
+      ranked();
+      backend = _Month(rows: _board(13), place: 14);
+      await tester.pumpWidget(_app(const RanksScreen()));
+      await tester.pumpAndSettle();
+      await toMonth(tester);
 
       expect(find.text('October · 20d 4h left'), findsOneWidget);
       expect(find.text('karimfit'), findsOneWidget);
@@ -125,6 +146,7 @@ void main() {
       backend = _Month(rows: _board(13), place: 14);
       await tester.pumpWidget(_app(const RanksScreen()));
       await tester.pumpAndSettle();
+      await toMonth(tester);
 
       await tester.scrollUntilVisible(
         find.text('adam.f'),
@@ -142,6 +164,7 @@ void main() {
       backend = _Month(rows: _board(13), place: 14);
       await tester.pumpWidget(_app(const RanksScreen()));
       await tester.pumpAndSettle();
+      await toMonth(tester);
 
       // Tenth has 98; 86 needs 13 more to be sure of passing, not 12 —
       // level on points goes to whoever has more wins.
@@ -155,6 +178,7 @@ void main() {
       backend = _Month(rows: _board(13), place: 2, points: 131);
       await tester.pumpWidget(_app(const RanksScreen()));
       await tester.pumpAndSettle();
+      await toMonth(tester);
 
       expect(find.text('Podium if the month ended now'), findsOneWidget);
     });
@@ -165,6 +189,7 @@ void main() {
       backend = _Month(rows: _board(13), place: null, played: 0, points: 0);
       await tester.pumpWidget(_app(const RanksScreen()));
       await tester.pumpAndSettle();
+      await toMonth(tester);
 
       expect(
         find.text("Play a ranked duel to get on this month's board"),
@@ -178,6 +203,7 @@ void main() {
       backend = _Month(rows: const [], place: null, played: 0, points: 0);
       await tester.pumpWidget(_app(const RanksScreen()));
       await tester.pumpAndSettle();
+      await toMonth(tester);
 
       expect(find.text('A fresh month'), findsOneWidget);
       expect(find.text('No connection'), findsNothing);
@@ -189,6 +215,7 @@ void main() {
       backend = _Month(rows: _board(13), place: 14, played: 23);
       await tester.pumpWidget(_app(const RanksScreen()));
       await tester.pumpAndSettle();
+      await toMonth(tester);
 
       expect(find.text('20 Club badge earned this month'), findsOneWidget);
     });
@@ -199,6 +226,7 @@ void main() {
       backend = _Month(rows: _board(13), place: 14);
       await tester.pumpWidget(_app(const RanksScreen()));
       await tester.pumpAndSettle();
+      await toMonth(tester);
 
       await tester.tap(find.text('Top Players'));
       await tester.pumpAndSettle();
@@ -214,6 +242,7 @@ void main() {
           _app(const RanksScreen(), scale: scale, locale: Locale(code)),
         );
         await tester.pumpAndSettle();
+        await toMonth(tester);
         expect(tester.takeException(), isNull);
       });
     }

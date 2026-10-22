@@ -2389,4 +2389,41 @@ class LIt extends L {
 
   @override
   String get continueWithEmail => 'Continua con l\'email';
+
+  @override
+  String get thisSeason => 'Questa stagione';
+
+  @override
+  String get thisWeek => 'Questa settimana';
+
+  @override
+  String get weekStartsAgain => 'Ricomincia ogni lunedì';
+
+  @override
+  String get lengthWeek => 'Settimana';
+
+  @override
+  String get lengthMonth => 'Mese';
+
+  @override
+  String get weekJoinHint => 'Vinci una sfida classificata questa settimana per entrare in classifica';
+
+  @override
+  String get weekInTop3 => 'Nella top 3 questa settimana';
+
+  @override
+  String weekToTop3(String n) {
+    return '${n} LP alla top 3';
+  }
+
+  @override
+  String get boardActiveNote => 'Giocatori attivi negli ultimi 30 giorni';
+
+  @override
+  String get boardTieNote => 'a pari merito: prima chi ha più vittorie';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '${reps} per le ripetizioni · ${adjust} per un avversario ${rank}';
+  }
 }

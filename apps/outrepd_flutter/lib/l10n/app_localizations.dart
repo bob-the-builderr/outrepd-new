@@ -4342,6 +4342,72 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Continue with email'**
   String get continueWithEmail;
+
+  /// No description provided for @thisSeason.
+  ///
+  /// In en, this message translates to:
+  /// **'This Season'**
+  String get thisSeason;
+
+  /// No description provided for @thisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get thisWeek;
+
+  /// No description provided for @weekStartsAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Starts again every Monday'**
+  String get weekStartsAgain;
+
+  /// No description provided for @lengthWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get lengthWeek;
+
+  /// No description provided for @lengthMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get lengthMonth;
+
+  /// No description provided for @weekJoinHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Win a ranked duel this week to get on the board'**
+  String get weekJoinHint;
+
+  /// No description provided for @weekInTop3.
+  ///
+  /// In en, this message translates to:
+  /// **'In the top 3 this week'**
+  String get weekInTop3;
+
+  /// No description provided for @weekToTop3.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} LP to the top 3'**
+  String weekToTop3(String n);
+
+  /// No description provided for @boardActiveNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Players active in the last 30 days'**
+  String get boardActiveNote;
+
+  /// No description provided for @boardTieNote.
+  ///
+  /// In en, this message translates to:
+  /// **'ties: more wins first'**
+  String get boardTieNote;
+
+  /// No description provided for @lpBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'{reps} for the reps · {adjust} for a {rank} opponent'**
+  String lpBreakdown(String reps, String adjust, String rank);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

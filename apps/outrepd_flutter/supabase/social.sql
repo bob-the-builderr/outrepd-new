@@ -567,11 +567,18 @@ as $$
     from profiles p
    where p.placements_done >= 5
      and p.show_on_board
+     -- Here this month: an account nobody has opened in thirty days does not
+     -- hold a place on a board the people still playing are climbing. It
+     -- keeps its rank, and is back on the board the day it opens the app.
+     and p.last_seen > now() - interval '30 days'
      and (in_country is null
           or (p.country = in_country and p.show_country))
      and (in_tier_idx is null or p.tier_idx = in_tier_idx)
      and (in_div_idx is null or p.div_idx = in_div_idx)
-   order by p.tier_idx desc, p.div_idx desc, p.lp desc
+   -- Level on rank and LP: more wins first, then fewer losses, then the name,
+   -- so the order is the same every time the board is opened.
+   order by p.tier_idx desc, p.div_idx desc, p.lp desc,
+            p.wins desc, p.losses asc, p.username
    limit least(greatest(limit_to, 1), 500);
 $$;
 
@@ -595,6 +602,7 @@ as $$
        where who.id = for_id
          and who.placements_done >= 5
          and who.show_on_board
+         and who.last_seen > now() - interval '30 days'
          and (in_country is null
               or (who.country = in_country and who.show_country))
     ) then null
@@ -604,12 +612,19 @@ as $$
        where who.id = for_id
          and p.placements_done >= 5
          and p.show_on_board
+         and p.last_seen > now() - interval '30 days'
          and (in_country is null
               or (p.country = in_country and p.show_country))
+         -- leaderboard's order, one comparison at a time.
          and (p.tier_idx > who.tier_idx
            or (p.tier_idx = who.tier_idx and p.div_idx > who.div_idx)
            or (p.tier_idx = who.tier_idx and p.div_idx = who.div_idx
-               and p.lp > who.lp))
+               and (p.lp > who.lp
+                 or (p.lp = who.lp and p.wins > who.wins)
+                 or (p.lp = who.lp and p.wins = who.wins
+                     and p.losses < who.losses)
+                 or (p.lp = who.lp and p.wins = who.wins
+                     and p.losses = who.losses and p.username < who.username))))
     )
   end;
 $$;

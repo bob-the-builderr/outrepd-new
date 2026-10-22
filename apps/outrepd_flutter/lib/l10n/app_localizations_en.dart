@@ -2382,4 +2382,41 @@ class LEn extends L {
 
   @override
   String get continueWithEmail => 'Continue with email';
+
+  @override
+  String get thisSeason => 'This Season';
+
+  @override
+  String get thisWeek => 'This week';
+
+  @override
+  String get weekStartsAgain => 'Starts again every Monday';
+
+  @override
+  String get lengthWeek => 'Week';
+
+  @override
+  String get lengthMonth => 'Month';
+
+  @override
+  String get weekJoinHint => 'Win a ranked duel this week to get on the board';
+
+  @override
+  String get weekInTop3 => 'In the top 3 this week';
+
+  @override
+  String weekToTop3(String n) {
+    return '${n} LP to the top 3';
+  }
+
+  @override
+  String get boardActiveNote => 'Players active in the last 30 days';
+
+  @override
+  String get boardTieNote => 'ties: more wins first';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '${reps} for the reps · ${adjust} for a ${rank} opponent';
+  }
 }

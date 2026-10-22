@@ -724,5 +724,16 @@
   "usernameSpacesHint": "Los espacios se convierten en _",
   "haveInviteCode": "¿Tienes un código de invitación?",
   "emailCodeNote": "Te enviaremos un código de 6 dígitos por correo. Sin contraseña.",
-  "continueWithEmail": "Continuar con correo"
+  "continueWithEmail": "Continuar con correo",
+  "thisSeason": "Esta temporada",
+  "thisWeek": "Esta semana",
+  "weekStartsAgain": "Empieza de nuevo cada lunes",
+  "lengthWeek": "Semana",
+  "lengthMonth": "Mes",
+  "weekJoinHint": "Gana un duelo clasificatorio esta semana para entrar en la tabla",
+  "weekInTop3": "En el top 3 esta semana",
+  "weekToTop3": "{n} LP para el top 3",
+  "boardActiveNote": "Jugadores activos en los últimos 30 días",
+  "boardTieNote": "empates: más victorias primero",
+  "lpBreakdown": "{reps} por las repeticiones · {adjust} por un rival {rank}"
 }

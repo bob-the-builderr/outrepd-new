@@ -2389,4 +2389,41 @@ class LEs extends L {
 
   @override
   String get continueWithEmail => 'Continuar con correo';
+
+  @override
+  String get thisSeason => 'Esta temporada';
+
+  @override
+  String get thisWeek => 'Esta semana';
+
+  @override
+  String get weekStartsAgain => 'Empieza de nuevo cada lunes';
+
+  @override
+  String get lengthWeek => 'Semana';
+
+  @override
+  String get lengthMonth => 'Mes';
+
+  @override
+  String get weekJoinHint => 'Gana un duelo clasificatorio esta semana para entrar en la tabla';
+
+  @override
+  String get weekInTop3 => 'En el top 3 esta semana';
+
+  @override
+  String weekToTop3(String n) {
+    return '${n} LP para el top 3';
+  }
+
+  @override
+  String get boardActiveNote => 'Jugadores activos en los últimos 30 días';
+
+  @override
+  String get boardTieNote => 'empates: más victorias primero';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '${reps} por las repeticiones · ${adjust} por un rival ${rank}';
+  }
 }

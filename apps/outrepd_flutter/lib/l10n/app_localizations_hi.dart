@@ -2384,4 +2384,41 @@ class LHi extends L {
 
   @override
   String get continueWithEmail => 'ईमेल के साथ जारी रखें';
+
+  @override
+  String get thisSeason => 'यह सीज़न';
+
+  @override
+  String get thisWeek => 'यह हफ़्ता';
+
+  @override
+  String get weekStartsAgain => 'हर सोमवार फिर से शुरू होता है';
+
+  @override
+  String get lengthWeek => 'हफ़्ता';
+
+  @override
+  String get lengthMonth => 'महीना';
+
+  @override
+  String get weekJoinHint => 'बोर्ड पर आने के लिए इस हफ़्ते एक रैंक्ड मुकाबला जीतें';
+
+  @override
+  String get weekInTop3 => 'इस हफ़्ते टॉप 3 में';
+
+  @override
+  String weekToTop3(String n) {
+    return 'टॉप 3 तक ${n} LP';
+  }
+
+  @override
+  String get boardActiveNote => 'पिछले 30 दिनों में सक्रिय खिलाड़ी';
+
+  @override
+  String get boardTieNote => 'बराबरी पर: ज़्यादा जीत वाले पहले';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return 'रेप्स के लिए ${reps} · ${rank} विरोधी के लिए ${adjust}';
+  }
 }

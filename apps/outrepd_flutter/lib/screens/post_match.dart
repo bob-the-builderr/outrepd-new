@@ -258,7 +258,7 @@ class DuelResultView extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 24),
-                  LpCard(outcome: outcome),
+                  LpCard(outcome: outcome, breakdown: _lpBreakdown(context)),
                   if (outcome?.madeFriendly ?? false) ...[
                     const SizedBox(height: 10),
                     Text(
@@ -376,6 +376,29 @@ class DuelResultView extends StatelessWidget {
 }
 
 extension on DuelResultView {
+  /// "+4 for the reps · +2 for a Platinum IV opponent": said only when the
+  /// opponent's rank moved what the duel paid (lp_for, supabase/ladder.sql),
+  /// so the number on the card is never a mystery. Level ranks pay the rep
+  /// gap exactly, and there is nothing to explain.
+  String? _lpBreakdown(BuildContext context) {
+    final change = outcome?.rank;
+    if (change == null) return null;
+    final gap = (yourReps - theirReps).abs();
+    final forReps = won ? gap : -gap;
+    final adjust = change.lpDelta - forReps;
+    // A forfeit pays flat and is not a weighed rep gap: nothing to explain.
+    if (gap == 0 || adjust == 0 || adjust.abs() * 2 > gap + 1) return null;
+    final l = L.of(context);
+    String signed(int n) => n > 0
+        ? '+${localNumber(context, n)}'
+        : '−${localNumber(context, -n)}';
+    return l.lpBreakdown(
+      signed(forReps),
+      signed(adjust),
+      tierLabel(l, opponent.tierIdx, opponent.divIdx),
+    );
+  }
+
   /// "#14 → #11" on the month's board, "#11" when there was no place before,
   /// or null when there is no place to show — a friendly duel moves nothing
   /// on it, and neither does an account the server has no answer for.
@@ -628,9 +651,12 @@ class _HealthChip extends StatelessWidget {
 /// What the duel did to the rank: the total, where it leaves you, and what the
 /// total was made of.
 class LpCard extends StatelessWidget {
-  const LpCard({super.key, required this.outcome});
+  const LpCard({super.key, required this.outcome, this.breakdown});
 
   final DuelOutcome? outcome;
+
+  /// What the total was made of, when the opponent's rank changed it.
+  final String? breakdown;
 
   @override
   Widget build(BuildContext context) {
@@ -726,6 +752,14 @@ class LpCard extends StatelessWidget {
             maxLines: 1,
             style: TextStyle(color: context.colors.muted, fontSize: 13),
           ),
+          if (breakdown case final breakdown?) ...[
+            const SizedBox(height: 6),
+            Text(
+              breakdown,
+              key: const Key('lpBreakdown'),
+              style: const TextStyle(color: AppColors.gold, fontSize: 13),
+            ),
+          ],
         ],
       ),
     );

@@ -1525,5 +1525,36 @@
   "usernameSpacesHint": "Spaces become _",
   "haveInviteCode": "Have an invite code?",
   "emailCodeNote": "We'll email you a 6-digit code. No password.",
-  "continueWithEmail": "Continue with email"
+  "continueWithEmail": "Continue with email",
+  "thisSeason": "This Season",
+  "thisWeek": "This week",
+  "weekStartsAgain": "Starts again every Monday",
+  "lengthWeek": "Week",
+  "lengthMonth": "Month",
+  "weekJoinHint": "Win a ranked duel this week to get on the board",
+  "weekInTop3": "In the top 3 this week",
+  "weekToTop3": "{n} LP to the top 3",
+  "@weekToTop3": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "boardActiveNote": "Players active in the last 30 days",
+  "boardTieNote": "ties: more wins first",
+  "lpBreakdown": "{reps} for the reps · {adjust} for a {rank} opponent",
+  "@lpBreakdown": {
+    "placeholders": {
+      "reps": {
+        "type": "String"
+      },
+      "adjust": {
+        "type": "String"
+      },
+      "rank": {
+        "type": "String"
+      }
+    }
+  }
 }

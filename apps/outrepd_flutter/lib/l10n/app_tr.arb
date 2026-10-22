@@ -724,5 +724,16 @@
   "usernameSpacesHint": "Boşluklar _ olur",
   "haveInviteCode": "Davet kodun var mı?",
   "emailCodeNote": "Sana e-postayla 6 haneli bir kod göndereceğiz. Şifre yok.",
-  "continueWithEmail": "E-posta ile devam et"
+  "continueWithEmail": "E-posta ile devam et",
+  "thisSeason": "Bu sezon",
+  "thisWeek": "Bu hafta",
+  "weekStartsAgain": "Her pazartesi yeniden başlar",
+  "lengthWeek": "Hafta",
+  "lengthMonth": "Ay",
+  "weekJoinHint": "Tabloya girmek için bu hafta bir dereceli düello kazan",
+  "weekInTop3": "Bu hafta ilk 3'te",
+  "weekToTop3": "İlk 3'e {n} LP",
+  "boardActiveNote": "Son 30 günde aktif oyuncular",
+  "boardTieNote": "eşitlikte: daha çok galibiyet önde",
+  "lpBreakdown": "Tekrarlar için {reps} · {rank} rakip için {adjust}"
 }

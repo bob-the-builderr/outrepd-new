@@ -2346,4 +2346,41 @@ class LJa extends L {
 
   @override
   String get continueWithEmail => 'メールで続ける';
+
+  @override
+  String get thisSeason => '今シーズン';
+
+  @override
+  String get thisWeek => '今週';
+
+  @override
+  String get weekStartsAgain => '毎週月曜日にリセット';
+
+  @override
+  String get lengthWeek => '週';
+
+  @override
+  String get lengthMonth => '月';
+
+  @override
+  String get weekJoinHint => '今週ランク戦で1勝すると掲載されます';
+
+  @override
+  String get weekInTop3 => '今週トップ3入り';
+
+  @override
+  String weekToTop3(String n) {
+    return 'トップ3まであと${n} LP';
+  }
+
+  @override
+  String get boardActiveNote => '過去30日間にプレイした人';
+
+  @override
+  String get boardTieNote => '同点なら勝利数が多い方が上';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '回数差で${reps} · ${rank}の相手で${adjust}';
+  }
 }

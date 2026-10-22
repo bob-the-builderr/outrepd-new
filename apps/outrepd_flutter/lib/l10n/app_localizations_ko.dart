@@ -2352,4 +2352,41 @@ class LKo extends L {
 
   @override
   String get continueWithEmail => '이메일로 계속하기';
+
+  @override
+  String get thisSeason => '이번 시즌';
+
+  @override
+  String get thisWeek => '이번 주';
+
+  @override
+  String get weekStartsAgain => '매주 월요일에 새로 시작해요';
+
+  @override
+  String get lengthWeek => '주간';
+
+  @override
+  String get lengthMonth => '월간';
+
+  @override
+  String get weekJoinHint => '이번 주 랭크 대결에서 이기면 순위표에 올라요';
+
+  @override
+  String get weekInTop3 => '이번 주 톱 3';
+
+  @override
+  String weekToTop3(String n) {
+    return '톱 3까지 ${n} LP';
+  }
+
+  @override
+  String get boardActiveNote => '최근 30일 동안 활동한 플레이어';
+
+  @override
+  String get boardTieNote => '동점이면 승리가 많은 순';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '횟수 차이로 ${reps} · ${rank} 상대로 ${adjust}';
+  }
 }

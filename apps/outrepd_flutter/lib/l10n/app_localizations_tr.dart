@@ -2379,4 +2379,41 @@ class LTr extends L {
 
   @override
   String get continueWithEmail => 'E-posta ile devam et';
+
+  @override
+  String get thisSeason => 'Bu sezon';
+
+  @override
+  String get thisWeek => 'Bu hafta';
+
+  @override
+  String get weekStartsAgain => 'Her pazartesi yeniden başlar';
+
+  @override
+  String get lengthWeek => 'Hafta';
+
+  @override
+  String get lengthMonth => 'Ay';
+
+  @override
+  String get weekJoinHint => 'Tabloya girmek için bu hafta bir dereceli düello kazan';
+
+  @override
+  String get weekInTop3 => 'Bu hafta ilk 3\'te';
+
+  @override
+  String weekToTop3(String n) {
+    return 'İlk 3\'e ${n} LP';
+  }
+
+  @override
+  String get boardActiveNote => 'Son 30 günde aktif oyuncular';
+
+  @override
+  String get boardTieNote => 'eşitlikte: daha çok galibiyet önde';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return 'Tekrarlar için ${reps} · ${rank} rakip için ${adjust}';
+  }
 }

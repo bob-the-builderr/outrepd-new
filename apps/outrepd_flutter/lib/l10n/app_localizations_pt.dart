@@ -2386,4 +2386,41 @@ class LPt extends L {
 
   @override
   String get continueWithEmail => 'Continuar com email';
+
+  @override
+  String get thisSeason => 'Esta temporada';
+
+  @override
+  String get thisWeek => 'Esta semana';
+
+  @override
+  String get weekStartsAgain => 'Recomeça todas as segundas-feiras';
+
+  @override
+  String get lengthWeek => 'Semana';
+
+  @override
+  String get lengthMonth => 'Mês';
+
+  @override
+  String get weekJoinHint => 'Vence um duelo classificado esta semana para entrar na tabela';
+
+  @override
+  String get weekInTop3 => 'No top 3 esta semana';
+
+  @override
+  String weekToTop3(String n) {
+    return '${n} LP para o top 3';
+  }
+
+  @override
+  String get boardActiveNote => 'Jogadores ativos nos últimos 30 dias';
+
+  @override
+  String get boardTieNote => 'empates: mais vitórias primeiro';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '${reps} pelas repetições · ${adjust} por um adversário ${rank}';
+  }
 }
