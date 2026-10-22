@@ -74,6 +74,28 @@ void main() {
     expect(find.text('—'), findsOneWidget);
   });
 
+  testWidgets('the newest match is at the right end of the form',
+      (tester) async {
+    await tester.pumpWidget(_app());
+    await tester.pumpAndSettle();
+
+    final colours = [
+      for (final box in tester.widgetList<Container>(
+        find.descendant(
+          of: find.byKey(const Key('historyForm')),
+          matching: find.byType(Container),
+        ),
+      ))
+        (box.decoration! as BoxDecoration).color,
+    ];
+    expect(colours, hasLength(10));
+    // Five played: the five places on the left are still empty.
+    expect(colours.take(5).toSet(), hasLength(1));
+    // Newest last: karimfit won today, sara.lifts lost before that.
+    expect(colours.last, AppColors.win);
+    expect(colours[8], AppColors.loss);
+  });
+
   for (final (scale, locale) in [
     (1.6, const Locale('en')),
     (1.3, const Locale('de')),

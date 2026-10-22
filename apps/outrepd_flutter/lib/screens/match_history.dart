@@ -59,8 +59,7 @@ class MatchHistoryScreen extends StatelessWidget {
   }
 }
 
-/// The record, the win rate, and the last ten as a strip — newest first, the
-/// way the list under it reads.
+/// The record, the win rate, and the last ten as a strip.
 class _Form extends StatelessWidget {
   const _Form();
 
@@ -163,10 +162,10 @@ class _DayHeading extends StatelessWidget {
   }
 }
 
-/// The last ten matches as a strip of wins and losses, newest first — the
-/// way the list under it reads. Ten places whatever has been played, so a
-/// new account sees the strip it is filling rather than three bars stretched
-/// across it.
+/// The last ten matches as a strip of wins and losses, the newest at the
+/// right end, the way a form guide reads. Ten places whatever has been
+/// played, so a new account sees the strip filling in from the right rather
+/// than three bars stretched across it.
 class FormStrip extends StatelessWidget {
   const FormStrip({super.key, this.height = 26, this.gap = 6});
 
@@ -177,7 +176,9 @@ class FormStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final last = matchHistory.take(shown).toList();
+    // Oldest first, and the empty places before them.
+    final last = matchHistory.take(shown).toList().reversed.toList();
+    final empty = shown - last.length;
     return Row(
       children: [
         for (var i = 0; i < shown; i++) ...[
@@ -186,9 +187,9 @@ class FormStrip extends StatelessWidget {
             child: Container(
               height: height,
               decoration: BoxDecoration(
-                color: i < last.length
-                    ? (last[i].won ? AppColors.win : AppColors.loss)
-                    : context.colors.surfaceRaised,
+                color: i < empty
+                    ? context.colors.surfaceRaised
+                    : (last[i - empty].won ? AppColors.win : AppColors.loss),
                 borderRadius: BorderRadius.circular(height / 4.4),
               ),
             ),
