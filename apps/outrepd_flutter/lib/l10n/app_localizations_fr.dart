@@ -1020,7 +1020,7 @@ class LFr extends L {
 
   @override
   String weeksAgo(String n) {
-    return 'il y a $n semaines';
+    return 'il y a ${n} semaines';
   }
 
   @override

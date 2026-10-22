@@ -880,93 +880,46 @@ class _Recent extends StatelessWidget {
               body: l.noMatchesYetBody,
             )
           else
-            for (final match in matchHistory.take(2))
-              Padding(
-                padding: const EdgeInsets.only(bottom: 6),
-                child: _RecentRow(match: match),
+            // The history screen's own pieces, so the two read as one: the
+            // last ten as a strip, then the latest two a line each.
+            _Card(
+              padding: EdgeInsets.zero,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(14, 14, 14, 4),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l.lastN(localNumber(context, FormStrip.shown)),
+                          style: TextStyle(
+                            color: context.colors.muted,
+                            fontSize: 12,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        const FormStrip(
+                          key: Key('recentForm'),
+                          height: 22,
+                          gap: 5,
+                        ),
+                      ],
+                    ),
+                  ),
+                  for (final (i, match) in matchHistory.take(2).indexed)
+                    MatchRow(
+                      m: match,
+                      inset: 14,
+                      divider: i == 0 && matchHistory.length > 1,
+                    ),
+                ],
               ),
+            ),
         ],
       ),
     );
-  }
-}
-
-class _RecentRow extends StatelessWidget {
-  const _RecentRow({required this.match});
-
-  final MatchRecord match;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = L.of(context);
-    final colour = match.won ? context.colors.brand : context.colors.rival;
-
-    return _Card(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
-      child: Row(
-        children: [
-          // A bar rather than a tick or a cross: it reads at a glance down a
-          // column without anybody having to look at it directly.
-          Container(
-            width: 5,
-            height: 26,
-            decoration: BoxDecoration(
-              color: colour,
-              borderRadius: BorderRadius.circular(3),
-            ),
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  match.won
-                      ? l.wonVs(match.opponent)
-                      : l.lostVs(match.opponent),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: context.colors.text, fontSize: 14),
-                ),
-                Text(
-                  '${localNumber(context, match.userReps)} – '
-                  '${localNumber(context, match.opponentReps)} · '
-                  '${_ago(context, match)}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: context.colors.muted, fontSize: 12),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 10),
-          Text(
-            '${match.lpChange >= 0 ? '+' : '−'}'
-            '${localNumber(context, match.lpChange.abs())}',
-            style: TextStyle(
-              color: colour,
-              fontSize: 14,
-              fontFeatures: const [FontFeature.tabularFigures()],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  /// Minutes are not worth a unit of their own, hours are while it is still
-  /// today, and days after that.
-  ///
-  /// "0h ago" is what the hours branch says for the first sixty minutes, which
-  /// is both wrong and the most common case there is — the duel you just
-  /// finished.
-  String _ago(BuildContext context, MatchRecord match) {
-    final l = L.of(context);
-    final hours = match.hoursAgo;
-    if (hours == null) return relativeDays(context, match.daysAgo);
-    if (hours < 1) return l.justNow;
-    return l.hoursAgo(localNumber(context, hours));
   }
 }
 

@@ -1015,7 +1015,7 @@ class LEn extends L {
 
   @override
   String weeksAgo(String n) {
-    return '$n weeks ago';
+    return '${n}w ago';
   }
 
   @override

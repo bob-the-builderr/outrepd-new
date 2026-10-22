@@ -1015,7 +1015,7 @@ class LRu extends L {
 
   @override
   String weeksAgo(String n) {
-    return '$n недель назад';
+    return '${n} недель назад';
   }
 
   @override

@@ -1019,7 +1019,7 @@ class LDe extends L {
 
   @override
   String weeksAgo(String n) {
-    return 'vor $n Wochen';
+    return 'vor ${n} Wochen';
   }
 
   @override

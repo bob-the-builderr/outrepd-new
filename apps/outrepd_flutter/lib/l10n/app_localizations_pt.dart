@@ -1018,7 +1018,7 @@ class LPt extends L {
 
   @override
   String weeksAgo(String n) {
-    return 'há $n semanas';
+    return 'há ${n} semanas';
   }
 
   @override

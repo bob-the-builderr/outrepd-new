@@ -1016,7 +1016,7 @@ class LHi extends L {
 
   @override
   String weeksAgo(String n) {
-    return '$n हफ़्ते पहले';
+    return '${n} हफ़्ते पहले';
   }
 
   @override

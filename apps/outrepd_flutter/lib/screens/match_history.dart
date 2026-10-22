@@ -64,13 +64,12 @@ class MatchHistoryScreen extends StatelessWidget {
 class _Form extends StatelessWidget {
   const _Form();
 
-  static const _shown = 10;
+  static const _shown = FormStrip.shown;
 
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
     final p = demoProfile;
-    final last = matchHistory.take(_shown).toList();
     const big = TextStyle(fontSize: 34, fontWeight: FontWeight.w800, height: 1.1);
 
     return Container(
@@ -135,27 +134,7 @@ class _Form extends StatelessWidget {
             style: TextStyle(color: context.colors.muted, fontSize: 13),
           ),
           const SizedBox(height: 6),
-          // Ten places whatever has been played, so a new account sees the
-          // strip it is filling rather than three bars stretched across it.
-          Row(
-            key: const Key('historyForm'),
-            children: [
-              for (var i = 0; i < _shown; i++) ...[
-                if (i > 0) const SizedBox(width: 6),
-                Expanded(
-                  child: Container(
-                    height: 26,
-                    decoration: BoxDecoration(
-                      color: i < last.length
-                          ? (last[i].won ? AppColors.win : AppColors.loss)
-                          : context.colors.surfaceRaised,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                  ),
-                ),
-              ],
-            ],
-          ),
+          const FormStrip(key: Key('historyForm')),
         ],
       ),
     );
@@ -184,11 +163,55 @@ class _DayHeading extends StatelessWidget {
   }
 }
 
+/// The last ten matches as a strip of wins and losses, newest first — the
+/// way the list under it reads. Ten places whatever has been played, so a
+/// new account sees the strip it is filling rather than three bars stretched
+/// across it.
+class FormStrip extends StatelessWidget {
+  const FormStrip({super.key, this.height = 26, this.gap = 6});
+
+  static const shown = 10;
+
+  final double height;
+  final double gap;
+
+  @override
+  Widget build(BuildContext context) {
+    final last = matchHistory.take(shown).toList();
+    return Row(
+      children: [
+        for (var i = 0; i < shown; i++) ...[
+          if (i > 0) SizedBox(width: gap),
+          Expanded(
+            child: Container(
+              height: height,
+              decoration: BoxDecoration(
+                color: i < last.length
+                    ? (last[i].won ? AppColors.win : AppColors.loss)
+                    : context.colors.surfaceRaised,
+                borderRadius: BorderRadius.circular(height / 4.4),
+              ),
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
 /// One result on a line: won or lost, who, the score, and the LP it moved.
 class MatchRow extends StatelessWidget {
-  const MatchRow({super.key, required this.m, this.divider = false});
+  const MatchRow({
+    super.key,
+    required this.m,
+    this.divider = false,
+    this.inset = 4,
+  });
 
   final MatchRecord m;
+
+  /// Room either side: a little in the list, a card's worth inside one.
+  final double inset;
 
   /// A hairline under it, when the next match is on the same day.
   final bool divider;
@@ -199,7 +222,7 @@ class MatchRow extends StatelessWidget {
     final lp = m.lpChange;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
+      padding: EdgeInsets.symmetric(horizontal: inset, vertical: 12),
       decoration: divider
           ? BoxDecoration(
               border: Border(

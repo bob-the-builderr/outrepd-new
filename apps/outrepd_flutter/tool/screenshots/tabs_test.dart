@@ -12,6 +12,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:outrepd/data.dart';
 import 'package:outrepd/l10n/app_localizations.dart';
 import 'package:outrepd/screens/friends.dart';
 import 'package:outrepd/screens/match.dart';
@@ -114,6 +115,47 @@ void main() {
     'profile',
     (tester) => shoot(tester, const ProfileScreen(), 'profile'),
   );
+  testWidgets('profile recent', (tester) async {
+    phone(tester);
+    final was = [...matchHistory];
+    addTearDown(() => matchHistory..clear()..addAll(was));
+    matchHistory
+      ..clear()
+      ..addAll([
+        for (final (who, mine, theirs, lp) in const [
+          ('karimfit', 18, 11, 7),
+          ('sara.lifts', 14, 19, -5),
+          ('aly99', 22, 20, 2),
+          ('nour_x', 25, 12, 13),
+          ('omarpush', 9, 16, -7),
+          ('youssef_r', 20, 14, 6),
+        ])
+          MatchRecord(
+            won: mine >= theirs,
+            userReps: mine,
+            opponentReps: theirs,
+            opponent: who,
+            lpChange: lp,
+            at: DateTime.now(),
+          ),
+      ]);
+    await tester.pumpWidget(_app(const ProfileScreen()));
+    await tester.pump(const Duration(milliseconds: 300));
+    await tester.dragUntilVisible(
+      find.byKey(const Key('recentForm')),
+      find.byType(ListView).first,
+      const Offset(0, -300),
+    );
+    for (var i = 0; i < 10; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    await expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile('goldens/tab_profile_recent.png'),
+    );
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump(const Duration(seconds: 1));
+  });
   testWidgets(
     'settings',
     (tester) => shoot(tester, const SettingsScreen(), 'settings'),

@@ -1013,7 +1013,7 @@ class LTr extends L {
 
   @override
   String weeksAgo(String n) {
-    return '$n hafta önce';
+    return '${n} hafta önce';
   }
 
   @override

@@ -1019,7 +1019,7 @@ class LIt extends L {
 
   @override
   String weeksAgo(String n) {
-    return '$n settimane fa';
+    return '${n} settimane fa';
   }
 
   @override

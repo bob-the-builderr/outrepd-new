@@ -1013,7 +1013,7 @@ class LId extends L {
 
   @override
   String weeksAgo(String n) {
-    return '$n minggu lalu';
+    return '${n} minggu lalu';
   }
 
   @override

@@ -995,7 +995,7 @@ class LJa extends L {
 
   @override
   String weeksAgo(String n) {
-    return '$n 週間前';
+    return '${n} 週間前';
   }
 
   @override

@@ -481,7 +481,7 @@
       }
     }
   },
-  "weeksAgo": "{n} weeks ago",
+  "weeksAgo": "{n}w ago",
   "@weeksAgo": {
     "placeholders": {
       "n": {

@@ -996,7 +996,7 @@ class LKo extends L {
 
   @override
   String weeksAgo(String n) {
-    return '$n주 전';
+    return '${n}주 전';
   }
 
   @override

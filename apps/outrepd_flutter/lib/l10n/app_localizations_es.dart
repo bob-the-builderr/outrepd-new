@@ -1019,7 +1019,7 @@ class LEs extends L {
 
   @override
   String weeksAgo(String n) {
-    return 'hace $n semanas';
+    return 'hace ${n} semanas';
   }
 
   @override

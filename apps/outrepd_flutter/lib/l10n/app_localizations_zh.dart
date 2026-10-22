@@ -992,7 +992,7 @@ class LZh extends L {
 
   @override
   String weeksAgo(String n) {
-    return '$n 周前';
+    return '${n} 周前';
   }
 
   @override
