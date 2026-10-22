@@ -748,5 +748,6 @@
   "giveUpBehind": "Kamu tertinggal {n}",
   "giveUpTied": "Seri",
   "keepGoing": "Lanjut",
-  "stay": "Tetap"
+  "stay": "Tetap",
+  "lastN": "{n} terakhir"
 }

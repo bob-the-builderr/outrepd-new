@@ -748,5 +748,6 @@
   "giveUpBehind": "你落后 {n} 个",
   "giveUpTied": "平手",
   "keepGoing": "继续",
-  "stay": "留下"
+  "stay": "留下",
+  "lastN": "最近 {n} 场"
 }

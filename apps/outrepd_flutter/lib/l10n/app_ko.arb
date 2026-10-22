@@ -748,5 +748,6 @@
   "giveUpBehind": "{n}개 뒤지고 있어요",
   "giveUpTied": "동점",
   "keepGoing": "계속하기",
-  "stay": "남기"
+  "stay": "남기",
+  "lastN": "최근 {n}경기"
 }

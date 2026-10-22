@@ -2483,4 +2483,9 @@ class LIt extends L {
 
   @override
   String get stay => 'Resta';
+
+  @override
+  String lastN(String n) {
+    return 'Ultimi ${n}';
+  }
 }

@@ -1641,5 +1641,13 @@
   },
   "giveUpTied": "Tied",
   "keepGoing": "Keep going",
-  "stay": "Stay"
+  "stay": "Stay",
+  "lastN": "Last {n}",
+  "@lastN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  }
 }

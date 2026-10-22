@@ -2476,4 +2476,9 @@ class LEn extends L {
 
   @override
   String get stay => 'Stay';
+
+  @override
+  String lastN(String n) {
+    return 'Last ${n}';
+  }
 }

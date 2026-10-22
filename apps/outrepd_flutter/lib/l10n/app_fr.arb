@@ -748,5 +748,6 @@
   "giveUpBehind": "Tu as {n} de retard",
   "giveUpTied": "Égalité",
   "keepGoing": "Continuer",
-  "stay": "Rester"
+  "stay": "Rester",
+  "lastN": "{n} derniers"
 }

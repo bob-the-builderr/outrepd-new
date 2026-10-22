@@ -2484,4 +2484,9 @@ class LFr extends L {
 
   @override
   String get stay => 'Rester';
+
+  @override
+  String lastN(String n) {
+    return '${n} derniers';
+  }
 }

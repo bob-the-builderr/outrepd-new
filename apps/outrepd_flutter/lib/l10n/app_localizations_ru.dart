@@ -2478,4 +2478,9 @@ class LRu extends L {
 
   @override
   String get stay => 'Остаться';
+
+  @override
+  String lastN(String n) {
+    return 'Последние ${n}';
+  }
 }

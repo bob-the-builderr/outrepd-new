@@ -2446,4 +2446,9 @@ class LKo extends L {
 
   @override
   String get stay => '남기';
+
+  @override
+  String lastN(String n) {
+    return '최근 ${n}경기';
+  }
 }

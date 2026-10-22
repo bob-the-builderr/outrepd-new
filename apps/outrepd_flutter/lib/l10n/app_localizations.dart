@@ -4486,6 +4486,12 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Stay'**
   String get stay;
+
+  /// No description provided for @lastN.
+  ///
+  /// In en, this message translates to:
+  /// **'Last {n}'**
+  String lastN(String n);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

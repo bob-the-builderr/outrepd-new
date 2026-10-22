@@ -2440,4 +2440,9 @@ class LJa extends L {
 
   @override
   String get stay => '残る';
+
+  @override
+  String lastN(String n) {
+    return '直近${n}試合';
+  }
 }

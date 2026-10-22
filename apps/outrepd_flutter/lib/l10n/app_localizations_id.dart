@@ -2477,4 +2477,9 @@ class LId extends L {
 
   @override
   String get stay => 'Tetap';
+
+  @override
+  String lastN(String n) {
+    return '${n} terakhir';
+  }
 }

@@ -2430,4 +2430,9 @@ class LZh extends L {
 
   @override
   String get stay => '留下';
+
+  @override
+  String lastN(String n) {
+    return '最近 ${n} 场';
+  }
 }

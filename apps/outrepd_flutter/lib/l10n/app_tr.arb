@@ -748,5 +748,6 @@
   "giveUpBehind": "{n} geridesin",
   "giveUpTied": "Berabere",
   "keepGoing": "Devam et",
-  "stay": "Kal"
+  "stay": "Kal",
+  "lastN": "Son {n}"
 }

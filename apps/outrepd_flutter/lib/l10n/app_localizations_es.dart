@@ -2483,4 +2483,9 @@ class LEs extends L {
 
   @override
   String get stay => 'Quedarme';
+
+  @override
+  String lastN(String n) {
+    return 'Últimos ${n}';
+  }
 }

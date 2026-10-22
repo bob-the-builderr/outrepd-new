@@ -748,5 +748,6 @@
   "giveUpBehind": "{n}回ビハインド",
   "giveUpTied": "同点",
   "keepGoing": "続ける",
-  "stay": "残る"
+  "stay": "残る",
+  "lastN": "直近{n}試合"
 }

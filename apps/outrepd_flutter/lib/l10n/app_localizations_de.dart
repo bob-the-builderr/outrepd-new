@@ -2485,4 +2485,9 @@ class LDe extends L {
 
   @override
   String get stay => 'Bleiben';
+
+  @override
+  String lastN(String n) {
+    return 'Letzte ${n}';
+  }
 }

@@ -748,5 +748,6 @@
   "giveUpBehind": "Du liegst {n} zurück",
   "giveUpTied": "Gleichstand",
   "keepGoing": "Weitermachen",
-  "stay": "Bleiben"
+  "stay": "Bleiben",
+  "lastN": "Letzte {n}"
 }

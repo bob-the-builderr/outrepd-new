@@ -2480,4 +2480,9 @@ class LPt extends L {
 
   @override
   String get stay => 'Ficar';
+
+  @override
+  String lastN(String n) {
+    return 'Últimos ${n}';
+  }
 }

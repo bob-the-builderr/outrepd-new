@@ -2478,4 +2478,9 @@ class LHi extends L {
 
   @override
   String get stay => 'रुकें';
+
+  @override
+  String lastN(String n) {
+    return 'पिछले ${n}';
+  }
 }

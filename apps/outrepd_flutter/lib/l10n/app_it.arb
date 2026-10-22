@@ -748,5 +748,6 @@
   "giveUpBehind": "Sei indietro di {n}",
   "giveUpTied": "Pari",
   "keepGoing": "Continua",
-  "stay": "Resta"
+  "stay": "Resta",
+  "lastN": "Ultimi {n}"
 }

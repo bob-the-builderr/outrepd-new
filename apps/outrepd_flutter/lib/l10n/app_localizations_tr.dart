@@ -2473,4 +2473,9 @@ class LTr extends L {
 
   @override
   String get stay => 'Kal';
+
+  @override
+  String lastN(String n) {
+    return 'Son ${n}';
+  }
 }
