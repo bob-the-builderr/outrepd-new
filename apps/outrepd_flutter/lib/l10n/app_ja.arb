@@ -747,5 +747,6 @@
   "giveUpAhead": "{n}回リード中",
   "giveUpBehind": "{n}回ビハインド",
   "giveUpTied": "同点",
-  "keepGoing": "続ける"
+  "keepGoing": "続ける",
+  "stay": "残る"
 }

@@ -747,5 +747,6 @@
   "giveUpAhead": "Tu as {n} d'avance",
   "giveUpBehind": "Tu as {n} de retard",
   "giveUpTied": "Égalité",
-  "keepGoing": "Continuer"
+  "keepGoing": "Continuer",
+  "stay": "Rester"
 }

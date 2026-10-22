@@ -2470,4 +2470,7 @@ class LTr extends L {
 
   @override
   String get keepGoing => 'Devam et';
+
+  @override
+  String get stay => 'Kal';
 }

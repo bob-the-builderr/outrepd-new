@@ -747,5 +747,6 @@
   "giveUpAhead": "Sei avanti di {n}",
   "giveUpBehind": "Sei indietro di {n}",
   "giveUpTied": "Pari",
-  "keepGoing": "Continua"
+  "keepGoing": "Continua",
+  "stay": "Resta"
 }

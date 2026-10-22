@@ -2482,4 +2482,7 @@ class LDe extends L {
 
   @override
   String get keepGoing => 'Weitermachen';
+
+  @override
+  String get stay => 'Bleiben';
 }

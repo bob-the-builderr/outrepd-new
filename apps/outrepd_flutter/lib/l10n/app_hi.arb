@@ -747,5 +747,6 @@
   "giveUpAhead": "आप {n} आगे हैं",
   "giveUpBehind": "आप {n} पीछे हैं",
   "giveUpTied": "बराबरी",
-  "keepGoing": "जारी रखें"
+  "keepGoing": "जारी रखें",
+  "stay": "रुकें"
 }

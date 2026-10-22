@@ -1640,5 +1640,6 @@
     }
   },
   "giveUpTied": "Tied",
-  "keepGoing": "Keep going"
+  "keepGoing": "Keep going",
+  "stay": "Stay"
 }

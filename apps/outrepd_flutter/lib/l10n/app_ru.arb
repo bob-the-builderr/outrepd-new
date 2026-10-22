@@ -747,5 +747,6 @@
   "giveUpAhead": "Ты впереди на {n}",
   "giveUpBehind": "Ты отстаёшь на {n}",
   "giveUpTied": "Ничья",
-  "keepGoing": "Продолжить"
+  "keepGoing": "Продолжить",
+  "stay": "Остаться"
 }

@@ -4480,6 +4480,12 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Keep going'**
   String get keepGoing;
+
+  /// No description provided for @stay.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay'**
+  String get stay;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

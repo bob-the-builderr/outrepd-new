@@ -2481,4 +2481,7 @@ class LFr extends L {
 
   @override
   String get keepGoing => 'Continuer';
+
+  @override
+  String get stay => 'Rester';
 }

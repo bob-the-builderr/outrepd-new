@@ -2474,4 +2474,7 @@ class LId extends L {
 
   @override
   String get keepGoing => 'Lanjut';
+
+  @override
+  String get stay => 'Tetap';
 }

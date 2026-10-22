@@ -747,5 +747,6 @@
   "giveUpAhead": "{n} öndesin",
   "giveUpBehind": "{n} geridesin",
   "giveUpTied": "Berabere",
-  "keepGoing": "Devam et"
+  "keepGoing": "Devam et",
+  "stay": "Kal"
 }

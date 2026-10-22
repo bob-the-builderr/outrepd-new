@@ -2437,4 +2437,7 @@ class LJa extends L {
 
   @override
   String get keepGoing => '続ける';
+
+  @override
+  String get stay => '残る';
 }

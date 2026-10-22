@@ -2475,4 +2475,7 @@ class LRu extends L {
 
   @override
   String get keepGoing => 'Продолжить';
+
+  @override
+  String get stay => 'Остаться';
 }

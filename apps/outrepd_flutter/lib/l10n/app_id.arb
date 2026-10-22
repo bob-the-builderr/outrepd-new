@@ -747,5 +747,6 @@
   "giveUpAhead": "Kamu unggul {n}",
   "giveUpBehind": "Kamu tertinggal {n}",
   "giveUpTied": "Seri",
-  "keepGoing": "Lanjut"
+  "keepGoing": "Lanjut",
+  "stay": "Tetap"
 }

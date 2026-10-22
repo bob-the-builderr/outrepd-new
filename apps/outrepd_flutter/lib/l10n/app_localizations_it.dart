@@ -2480,4 +2480,7 @@ class LIt extends L {
 
   @override
   String get keepGoing => 'Continua';
+
+  @override
+  String get stay => 'Resta';
 }

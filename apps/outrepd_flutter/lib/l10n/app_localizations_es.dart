@@ -2480,4 +2480,7 @@ class LEs extends L {
 
   @override
   String get keepGoing => 'Seguir';
+
+  @override
+  String get stay => 'Quedarme';
 }

@@ -2473,4 +2473,7 @@ class LEn extends L {
 
   @override
   String get keepGoing => 'Keep going';
+
+  @override
+  String get stay => 'Stay';
 }

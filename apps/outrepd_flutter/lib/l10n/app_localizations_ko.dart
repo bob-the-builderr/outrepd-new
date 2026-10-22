@@ -2443,4 +2443,7 @@ class LKo extends L {
 
   @override
   String get keepGoing => '계속하기';
+
+  @override
+  String get stay => '남기';
 }

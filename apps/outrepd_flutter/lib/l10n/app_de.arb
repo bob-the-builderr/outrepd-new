@@ -747,5 +747,6 @@
   "giveUpAhead": "Du liegst {n} vorn",
   "giveUpBehind": "Du liegst {n} zurück",
   "giveUpTied": "Gleichstand",
-  "keepGoing": "Weitermachen"
+  "keepGoing": "Weitermachen",
+  "stay": "Bleiben"
 }

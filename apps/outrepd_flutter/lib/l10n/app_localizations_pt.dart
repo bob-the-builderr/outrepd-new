@@ -2477,4 +2477,7 @@ class LPt extends L {
 
   @override
   String get keepGoing => 'Continuar';
+
+  @override
+  String get stay => 'Ficar';
 }

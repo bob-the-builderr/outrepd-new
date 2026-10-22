@@ -2475,4 +2475,7 @@ class LHi extends L {
 
   @override
   String get keepGoing => 'जारी रखें';
+
+  @override
+  String get stay => 'रुकें';
 }

@@ -2427,4 +2427,7 @@ class LZh extends L {
 
   @override
   String get keepGoing => '继续';
+
+  @override
+  String get stay => '留下';
 }
