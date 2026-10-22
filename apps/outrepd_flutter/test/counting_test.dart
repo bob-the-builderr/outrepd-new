@@ -130,6 +130,26 @@ void main() {
       expect(_count(tester), 0);
     });
 
+    testWidgets('the line to reach next is the one lit', (tester) async {
+      // Two lines across the bar, where the counter's own are: down past the
+      // bottom one, back up past the top one. Gold is the next to reach.
+      final source = await _startRound(tester);
+      expect(_line(tester, 'depthLineBottom'), AppColors.gold);
+
+      var upNext = false;
+      for (final pose in pushUpSet(1, lead: 0)) {
+        await _emit(tester, source, pose);
+        if (_line(tester, 'depthLineTop') == AppColors.gold) {
+          upNext = true;
+          expect(_line(tester, 'depthLineBottom'), AppColors.win);
+        }
+      }
+      expect(upNext, isTrue, reason: 'the top line never lit on the way up');
+      expect(_count(tester), 1);
+      // Counted: the way down is next again.
+      expect(_line(tester, 'depthLineBottom'), AppColors.gold);
+    });
+
     testWidgets('the depth bar is big enough to read from the floor',
         (tester) async {
       // The phone is on the floor and the lifter is looking down the screen
@@ -381,6 +401,19 @@ double _bar(WidgetTester tester) => tester
       ),
     )
     .heightFactor!;
+
+/// The colour one of the depth bar's two lines is drawn in.
+Color? _line(WidgetTester tester, String key) =>
+    (tester
+                .widget<DecoratedBox>(
+                  find.descendant(
+                    of: find.byKey(Key(key)),
+                    matching: find.byType(DecoratedBox),
+                  ),
+                )
+                .decoration
+            as BoxDecoration)
+        .color;
 
 /// One pose, and a frame's worth of time for the screen to take it in.
 Future<void> _emit(

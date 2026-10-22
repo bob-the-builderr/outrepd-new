@@ -296,6 +296,7 @@ class PushupReading {
     required this.counted,
     required this.reps,
     required this.planted,
+    this.pastBottom = false,
   });
 
   /// The bar: the nose's height above the hands as a share of lockout, 0 at
@@ -309,6 +310,11 @@ class PushupReading {
 
   /// The hands are on the floor — the one thing a push-up cannot do without.
   final bool planted;
+
+  /// This rep has been down past the bottom line, and the top line is the
+  /// one left to reach. What the bar lights, so the lifter sees which line
+  /// is next — read off the same tracker as the count, never guessed.
+  final bool pastBottom;
 }
 
 /// Counts push-ups one frame at a time, and drives the bar.
@@ -545,6 +551,7 @@ class PushupTracker {
     counted: counted,
     reps: _reps,
     planted: _planted,
+    pastBottom: _phase == _Phase.down,
   );
 }
 

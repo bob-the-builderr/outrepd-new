@@ -164,6 +164,9 @@ class _TrainerScreenState extends State<TrainerScreen>
   /// has a floor and a head to measure between.
   double? _progress;
 
+  /// Down past the bottom line this rep: the top line is the one lit.
+  bool _pastBottom = false;
+
   /// Hidden by default — it is for working out why the counter is misbehaving,
   /// not something to have on screen while lifting. A long press on the count
   /// reveals it.
@@ -338,6 +341,7 @@ class _TrainerScreenState extends State<TrainerScreen>
       _source = source;
       _tracker = tracker;
       _progress = null;
+      _pastBottom = false;
       _stage = _Stage.positioning;
       _error = null;
       _failure = null;
@@ -685,6 +689,7 @@ class _TrainerScreenState extends State<TrainerScreen>
     setState(() {
       _pose = pose;
       if (reading.progress != null) _progress = reading.progress;
+      _pastBottom = reading.pastBottom;
     });
   }
 
@@ -828,6 +833,7 @@ class _TrainerScreenState extends State<TrainerScreen>
       _source = null;
       _tracker = null;
       _progress = null;
+      _pastBottom = false;
       _pose = BodyPose.empty;
       _stage = _Stage.setup;
     });
@@ -1076,6 +1082,7 @@ class _TrainerScreenState extends State<TrainerScreen>
                             key: const Key('depthBar'),
                             progress: _progress ?? 0,
                             good: ready,
+                            pastBottom: _pastBottom,
                           ),
                         ),
                       ),
@@ -1720,35 +1727,95 @@ class _Fighter extends StatelessWidget {
   }
 }
 
+/// How deep this rep is, with the two lines a rep has to cross drawn across
+/// it: down past the bottom one ([kBottomShare]), then back up past the top
+/// one ([kTopShare]). The line still to reach is lit gold; the bottom one
+/// turns green once it is passed, until the rep counts and it is next again.
+/// Where the counter's own lines are, not further apart: the bar must never
+/// promise a rep the counter will not give, or ask for more than it does.
 class _DepthBar extends StatelessWidget {
-  const _DepthBar({super.key, required this.progress, required this.good});
+  const _DepthBar({
+    super.key,
+    required this.progress,
+    required this.good,
+    this.pastBottom = false,
+  });
 
   final double progress;
   final bool good;
+  final bool pastBottom;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    const dim = Color(0xB38F8880);
+    return SizedBox(
       width: 16,
       height: 250,
-      decoration: BoxDecoration(
-        color: const Color(0xFF121110).withValues(alpha: 0.45),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: FractionallySizedBox(
-          heightFactor: progress.clamp(0.0, 1.0),
-          child: Container(
-            decoration: BoxDecoration(
-              // Same colour rule as the skeleton: it goes off when the shape
-              // is wrong, so the two never disagree about whether this rep is
-              // going to count.
-              color: good ? context.colors.brand : context.colors.rival,
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-        ),
+      child: LayoutBuilder(
+        builder: (context, box) {
+          // Across the bar and a little either side of it, ringed in the
+          // card's black so it reads over the fill as well as the camera.
+          Widget line(String key, double share, Color colour, {bool lit = false}) {
+            final thick = lit ? 6.0 : 5.0;
+            return Positioned(
+              key: Key(key),
+              left: -5,
+              right: -5,
+              bottom: share * box.maxHeight - thick / 2,
+              height: thick,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: colour,
+                  borderRadius: BorderRadius.circular(3),
+                  border: Border.all(color: const Color(0xFF121110)),
+                ),
+              ),
+            );
+          }
+
+          return Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Positioned.fill(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF121110).withValues(alpha: 0.45),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: FractionallySizedBox(
+                      heightFactor: progress.clamp(0.0, 1.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          // Same colour rule as the skeleton: it goes off when
+                          // the shape is wrong, so the two never disagree about
+                          // whether this rep is going to count.
+                          color: good
+                              ? context.colors.brand
+                              : context.colors.rival,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              line(
+                'depthLineBottom',
+                kBottomShare,
+                pastBottom ? AppColors.win : AppColors.gold,
+                lit: !pastBottom,
+              ),
+              line(
+                'depthLineTop',
+                kTopShare,
+                pastBottom ? AppColors.gold : dim,
+                lit: pastBottom,
+              ),
+            ],
+          );
+        },
       ),
     );
   }
