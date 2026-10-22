@@ -4408,6 +4408,60 @@ abstract class L {
   /// In en, this message translates to:
   /// **'{reps} for the reps · {adjust} for a {rank} opponent'**
   String lpBreakdown(String reps, String adjust, String rank);
+
+  /// No description provided for @levelShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Lv {n}'**
+  String levelShort(String n);
+
+  /// No description provided for @xpOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{into} / {span} XP'**
+  String xpOf(String into, String span);
+
+  /// No description provided for @xpToLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} XP to Level {level}'**
+  String xpToLevel(String n, String level);
+
+  /// No description provided for @xpHow.
+  ///
+  /// In en, this message translates to:
+  /// **'{rep} XP a rep, {match} a match'**
+  String xpHow(String rep, String match);
+
+  /// No description provided for @xpGained.
+  ///
+  /// In en, this message translates to:
+  /// **'+{n} XP'**
+  String xpGained(String n);
+
+  /// No description provided for @xpForReps.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} for the reps'**
+  String xpForReps(String n);
+
+  /// No description provided for @xpForMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} for the match'**
+  String xpForMatch(String n);
+
+  /// No description provided for @levelUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Level up'**
+  String get levelUp;
+
+  /// No description provided for @levelUpBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Every rep counts. Keep going.'**
+  String get levelUpBody;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

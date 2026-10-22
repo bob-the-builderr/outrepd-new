@@ -2421,4 +2421,45 @@ class LRu extends L {
   String lpBreakdown(String reps, String adjust, String rank) {
     return '${reps} за повторения · ${adjust} за соперника ${rank}';
   }
+
+  @override
+  String levelShort(String n) {
+    return 'Ур. ${n}';
+  }
+
+  @override
+  String xpOf(String into, String span) {
+    return '${into} / ${span} XP';
+  }
+
+  @override
+  String xpToLevel(String n, String level) {
+    return '${n} XP до уровня ${level}';
+  }
+
+  @override
+  String xpHow(String rep, String match) {
+    return '${rep} XP за повторение, ${match} за матч';
+  }
+
+  @override
+  String xpGained(String n) {
+    return '+${n} XP';
+  }
+
+  @override
+  String xpForReps(String n) {
+    return '${n} за повторения';
+  }
+
+  @override
+  String xpForMatch(String n) {
+    return '${n} за матч';
+  }
+
+  @override
+  String get levelUp => 'Новый уровень';
+
+  @override
+  String get levelUpBody => 'Каждое повторение на счету. Так держать.';
 }

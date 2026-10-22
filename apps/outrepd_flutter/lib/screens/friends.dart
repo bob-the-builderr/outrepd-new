@@ -146,6 +146,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
               winsVsYou: f.winsVsYou,
               lossesVsYou: f.lossesVsYou,
               avatarUrl: f.avatarUrl,
+              xp: f.xp,
             ),
         ];
         _requests = requests;
@@ -997,10 +998,9 @@ class _FriendRow extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        friend.username,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                      NameWithLevel(
+                        name: friend.username,
+                        xp: friend.xp,
                         style: TextStyle(
                           color: context.colors.text,
                           fontSize: 15,

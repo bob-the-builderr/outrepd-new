@@ -735,5 +735,14 @@
   "weekToTop3": "टॉप 3 तक {n} LP",
   "boardActiveNote": "पिछले 30 दिनों में सक्रिय खिलाड़ी",
   "boardTieNote": "बराबरी पर: ज़्यादा जीत वाले पहले",
-  "lpBreakdown": "रेप्स के लिए {reps} · {rank} विरोधी के लिए {adjust}"
+  "lpBreakdown": "रेप्स के लिए {reps} · {rank} विरोधी के लिए {adjust}",
+  "levelShort": "Lv {n}",
+  "xpOf": "{into} / {span} XP",
+  "xpToLevel": "लेवल {level} तक {n} XP",
+  "xpHow": "हर रेप पर {rep} XP, हर मुक़ाबले पर {match}",
+  "xpGained": "+{n} XP",
+  "xpForReps": "रेप्स के लिए {n}",
+  "xpForMatch": "मुक़ाबले के लिए {n}",
+  "levelUp": "लेवल अप",
+  "levelUpBody": "हर रेप मायने रखता है। लगे रहो।"
 }

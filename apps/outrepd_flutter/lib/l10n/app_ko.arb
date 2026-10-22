@@ -735,5 +735,14 @@
   "weekToTop3": "톱 3까지 {n} LP",
   "boardActiveNote": "최근 30일 동안 활동한 플레이어",
   "boardTieNote": "동점이면 승리가 많은 순",
-  "lpBreakdown": "횟수 차이로 {reps} · {rank} 상대로 {adjust}"
+  "lpBreakdown": "횟수 차이로 {reps} · {rank} 상대로 {adjust}",
+  "levelShort": "Lv.{n}",
+  "xpOf": "{into} / {span} XP",
+  "xpToLevel": "레벨 {level}까지 {n} XP",
+  "xpHow": "1회당 {rep} XP, 대결당 {match}",
+  "xpGained": "+{n} XP",
+  "xpForReps": "횟수로 {n}",
+  "xpForMatch": "대결로 {n}",
+  "levelUp": "레벨 업",
+  "levelUpBody": "한 번 한 번이 쌓여요. 계속 가요."
 }

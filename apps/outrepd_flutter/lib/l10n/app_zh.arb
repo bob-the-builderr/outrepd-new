@@ -735,5 +735,14 @@
   "weekToTop3": "距前三还差 {n} LP",
   "boardActiveNote": "过去 30 天内活跃的玩家",
   "boardTieNote": "并列时胜场多者在前",
-  "lpBreakdown": "次数差 {reps} · {rank} 对手 {adjust}"
+  "lpBreakdown": "次数差 {reps} · {rank} 对手 {adjust}",
+  "levelShort": "Lv.{n}",
+  "xpOf": "{into} / {span} XP",
+  "xpToLevel": "距等级 {level} 还差 {n} XP",
+  "xpHow": "每次 {rep} XP，每场对决 {match}",
+  "xpGained": "+{n} XP",
+  "xpForReps": "次数 {n}",
+  "xpForMatch": "对决 {n}",
+  "levelUp": "升级",
+  "levelUpBody": "每一次都算数。继续加油。"
 }

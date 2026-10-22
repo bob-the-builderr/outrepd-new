@@ -2427,4 +2427,45 @@ class LFr extends L {
   String lpBreakdown(String reps, String adjust, String rank) {
     return '${reps} pour les répétitions · ${adjust} pour un adversaire ${rank}';
   }
+
+  @override
+  String levelShort(String n) {
+    return 'Niv. ${n}';
+  }
+
+  @override
+  String xpOf(String into, String span) {
+    return '${into} / ${span} XP';
+  }
+
+  @override
+  String xpToLevel(String n, String level) {
+    return '${n} XP avant le niveau ${level}';
+  }
+
+  @override
+  String xpHow(String rep, String match) {
+    return '${rep} XP par répétition, ${match} par duel';
+  }
+
+  @override
+  String xpGained(String n) {
+    return '+${n} XP';
+  }
+
+  @override
+  String xpForReps(String n) {
+    return '${n} pour les répétitions';
+  }
+
+  @override
+  String xpForMatch(String n) {
+    return '${n} pour le duel';
+  }
+
+  @override
+  String get levelUp => 'Niveau supérieur';
+
+  @override
+  String get levelUpBody => 'Chaque répétition compte. Continue.';
 }

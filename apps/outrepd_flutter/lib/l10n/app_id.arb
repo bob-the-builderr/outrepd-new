@@ -735,5 +735,14 @@
   "weekToTop3": "{n} LP lagi ke 3 besar",
   "boardActiveNote": "Pemain yang aktif dalam 30 hari terakhir",
   "boardTieNote": "seri: kemenangan terbanyak di atas",
-  "lpBreakdown": "{reps} dari repetisi · {adjust} untuk lawan {rank}"
+  "lpBreakdown": "{reps} dari repetisi · {adjust} untuk lawan {rank}",
+  "levelShort": "Lv {n}",
+  "xpOf": "{into} / {span} XP",
+  "xpToLevel": "{n} XP lagi ke Level {level}",
+  "xpHow": "{rep} XP per repetisi, {match} per duel",
+  "xpGained": "+{n} XP",
+  "xpForReps": "{n} dari repetisi",
+  "xpForMatch": "{n} dari duel",
+  "levelUp": "Naik level",
+  "levelUpBody": "Setiap repetisi berarti. Terus lanjut."
 }

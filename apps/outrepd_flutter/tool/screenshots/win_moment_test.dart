@@ -14,8 +14,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:outrepd/backend/backend.dart';
 import 'package:outrepd/data.dart';
 import 'package:outrepd/l10n/app_localizations.dart';
+import 'package:outrepd/screens/level.dart';
 import 'package:outrepd/screens/post_match.dart';
 import 'package:outrepd/theme.dart';
+import 'package:outrepd/xp.dart';
 
 Future<void> _font(String family, String path) async {
   final file = File(path);
@@ -81,6 +83,11 @@ DuelResultView _result({required bool won, bool live = true}) => DuelResultView(
   onLiveRematch: live ? (_) {} : null,
   monthBefore: 14,
   monthAfter: won ? 11 : 16,
+  xp: XpGain(
+    before: 4200,
+    after: 4200 + (won ? 18 : 14) + kXpPerMatch,
+    reps: won ? 18 : 14,
+  ),
 );
 
 void main() {
@@ -160,6 +167,41 @@ void main() {
     await expectLater(
       find.byType(MaterialApp),
       matchesGoldenFile('goldens/result_promotion.png'),
+    );
+  });
+
+  testWidgets('level up', (tester) async {
+    phone(tester);
+    await tester.pumpWidget(_app(LevelUpView(level: 13, onContinue: () {})));
+    await tester.pumpAndSettle();
+    await expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile('goldens/result_level_up.png'),
+    );
+  });
+
+  testWidgets('level card', (tester) async {
+    phone(tester);
+    await tester.pumpWidget(
+      _app(
+        const SafeArea(
+          child: Padding(
+            padding: EdgeInsets.all(12),
+            child: Column(
+              children: [
+                XpCard(xp: 4240),
+                SizedBox(height: 12),
+                XpGainCard(gain: XpGain(before: 4240, after: 4283, reps: 23)),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile('goldens/level_cards.png'),
     );
   });
 }

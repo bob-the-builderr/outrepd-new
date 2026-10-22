@@ -27,10 +27,12 @@ import '../type_scale.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
 import '../widgets.dart';
+import '../xp.dart';
 import '../reps/count_accuracy.dart';
 import '../settings.dart';
 import 'confirm_count.dart';
 import 'daily_goal.dart';
+import 'level.dart';
 import 'match_entry.dart';
 import 'post_match.dart';
 import 'trainer.dart';
@@ -127,6 +129,10 @@ enum _Stage {
   /// reads better once the headline has landed.
   promoted,
 
+  /// After the promotion, if there was one, and before the result: the
+  /// session crossed a level. Once, here, and never again for that level.
+  levelUp,
+
   result,
 
   /// [MatchMode.challenge] ends here instead of at [result] — reps landed,
@@ -189,6 +195,9 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
 
   /// What the duel did to the account, once it has been recorded.
   DuelOutcome? _outcome;
+
+  /// What the session added to the level, once it has been recorded.
+  XpGain? _xp;
 
   /// The live match, when there is one: found by the ranked search, or the
   /// friend's invite or rematch this screen was opened for.
@@ -321,6 +330,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           match.opponent.tierIdx,
           match.opponent.divIdx,
           avatarUrl: match.opponent.avatarUrl,
+          xp: match.opponent.xp,
         );
         _theirReps = 0;
       });
@@ -364,6 +374,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
             found.tierIdx,
             found.divIdx,
             avatarUrl: found.avatarUrl,
+            xp: found.xp,
           );
           _theirReps = found.reps;
         });
@@ -397,6 +408,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
               live.opponent.tierIdx,
               live.opponent.divIdx,
               avatarUrl: live.opponent.avatarUrl,
+              xp: live.opponent.xp,
             );
             _theirReps = 0;
           });
@@ -414,6 +426,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
             found.tierIdx,
             found.divIdx,
             avatarUrl: found.avatarUrl,
+            xp: found.xp,
           );
             _theirReps = found.reps;
           });
@@ -499,6 +512,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
                   opponentImage: _vsBest
                       ? avatar.picture
                       : pictureAt(_opponent.avatarUrl),
+                  opponentXp: _vsBest ? demoProfile.xp : _opponent.xp,
                   rankLabel: tierLabel(
                     L.of(context),
                     demoProfile.tierIdx,
@@ -623,8 +637,10 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     // would be a rank on this phone that the next launch takes back.
     SettledDuel? settledDuel;
     var unsettled = false;
+    // Practice goes up too, when it counted anything: never to be raced,
+    // but its reps are on the profile and in the level like any others.
     if (attempted &&
-        !widget.practice &&
+        (!widget.practice || reps > 0) &&
         backend.available &&
         backend.me != null) {
       final opponentSet = _realOpponent;
@@ -648,6 +664,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
               durationMs: durationMs,
               gaveUp: gaveUp,
               repTimes: repTimes,
+              practice: widget.practice,
             ),
           );
           _pooled = _vsBest;
@@ -679,6 +696,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     // what the account holds are the same thing. Showing first and saving
     // afterwards is how a duel ends with a win on screen and nothing in the
     // history behind it.
+    final xpBefore = demoProfile.xp;
     if (widget.practice || _vsBest) {
       await Career.instance.recordPractice(reps, clean: depth >= kCleanDepth);
     } else if (settledDuel case final settledResult?) {
@@ -710,14 +728,13 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
         clean: depth >= kCleanDepth,
       );
     }
+    _xp = XpGain(before: xpBefore, after: demoProfile.xp, reps: reps);
     if (!mounted) return;
 
     setState(() {
       _myReps = reps;
       // A promotion is announced on its own screen first.
-      _stage = (_outcome?.rank?.promoted ?? false)
-          ? _Stage.promoted
-          : _Stage.result;
+      _stage = _afterRecorded;
     });
     unawaited(_afterMonthPlace());
   }
@@ -743,6 +760,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
             opponentTierIdx: _opponent.tierIdx,
             opponentDivIdx: _opponent.divIdx,
             opponentImage: pictureAt(_opponent.avatarUrl),
+            opponentXp: _opponent.xp,
             rankLabel: live.ranked
                 ? tierLabel(l, demoProfile.tierIdx, demoProfile.divIdx)
                 : l.friendlyNoRank,
@@ -806,6 +824,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       return;
     }
     _theirReps = finish?.theirReps ?? theirs;
+    final xpBefore = demoProfile.xp;
     _outcome = await Career.instance.recordSettledDuel(
       settled: settled,
       yourReps: scored.reps,
@@ -815,14 +834,24 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       ranked: live.ranked,
       clean: scored.depth >= kCleanDepth,
     );
+    _xp = XpGain(
+      before: xpBefore,
+      after: demoProfile.xp,
+      reps: scored.reps,
+    );
     if (!mounted) return;
-    setState(() {
-      _stage = (_outcome?.rank?.promoted ?? false)
-          ? _Stage.promoted
-          : _Stage.result;
-    });
+    setState(() => _stage = _afterRecorded);
     unawaited(_afterMonthPlace());
   }
+
+  /// What follows a recorded session: the promotion, then the level, then
+  /// the result — each news before the detail behind it.
+  _Stage get _afterRecorded => (_outcome?.rank?.promoted ?? false)
+      ? _Stage.promoted
+      : _afterPromotion;
+
+  _Stage get _afterPromotion =>
+      (_xp?.leveledUp ?? false) ? _Stage.levelUp : _Stage.result;
 
   /// Where this account stands on the month's board, or null when there is
   /// no answer. Only ranked duels move it, so only they ask.
@@ -859,6 +888,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       canPop:
           _stage == _Stage.result ||
           _stage == _Stage.promoted ||
+          _stage == _Stage.levelUp ||
           _stage == _Stage.sent ||
           _stage == _Stage.calledOff ||
           _stage == _Stage.liveFailed ||
@@ -1002,6 +1032,12 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           fromDivIdx: _outcome?.rank?.before.divIdx,
           // A tier nobody in this account has ever held before.
           highest: _outcome?.rank?.changedTier ?? false,
+          onContinue: () => setState(() => _stage = _afterPromotion),
+        );
+
+      case _Stage.levelUp:
+        return LevelUpView(
+          level: levelOf(_xp?.after ?? demoProfile.xp),
           onContinue: () => setState(() => _stage = _Stage.result),
         );
 
@@ -1011,6 +1047,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
             reps: _myReps,
             bestBefore: _bestBefore,
             pooled: _pooled,
+            xp: _xp,
             onAgain: () => Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (_) => const MatchFlowScreen()),
             ),
@@ -1029,6 +1066,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           live: _live,
           monthBefore: _monthBefore,
           monthAfter: _monthAfter,
+          xp: _xp,
           onDone: () => Navigator.of(context).pop(),
         );
 
@@ -1608,6 +1646,7 @@ class _VersusView extends StatelessWidget {
               name: l.you,
               tierIdx: me.tierIdx,
               divIdx: me.divIdx,
+              xp: me.xp,
               ring: context.colors.brand,
             ),
             Padding(
@@ -1629,6 +1668,7 @@ class _VersusView extends StatelessWidget {
                 name: opponent.username,
                 tierIdx: opponent.tierIdx,
                 divIdx: opponent.divIdx,
+                xp: opponent.xp,
                 ring: context.colors.rival,
               ),
           ],
@@ -1702,6 +1742,7 @@ class _Fighter extends StatelessWidget {
     required this.tierIdx,
     required this.divIdx,
     required this.ring,
+    this.xp,
   });
 
   final String initial;
@@ -1709,6 +1750,9 @@ class _Fighter extends StatelessWidget {
   final int tierIdx;
   final int divIdx;
   final Color ring;
+
+  /// For the level under the rank; null when not known.
+  final int? xp;
 
   @override
   Widget build(BuildContext context) {
@@ -1746,6 +1790,10 @@ class _Fighter extends StatelessWidget {
               fontSize: 12,
             ),
           ),
+          if (xp case final xp?) ...[
+            const SizedBox(height: 4),
+            LevelChip(xp: xp),
+          ],
         ],
       ),
     );
@@ -1812,11 +1860,13 @@ class _BestResultView extends StatelessWidget {
     required this.pooled,
     required this.onAgain,
     required this.onDone,
+    this.xp,
   });
 
   final int reps;
   final int bestBefore;
   final bool pooled;
+  final XpGain? xp;
   final VoidCallback onAgain;
   final VoidCallback onDone;
 
@@ -1872,6 +1922,10 @@ class _BestResultView extends StatelessWidget {
                       ),
                     ),
                     SavedToHealthChip(saved: Career.instance.lastHealthSave),
+                    if (xp case final gain?) ...[
+                      const SizedBox(height: 24),
+                      XpGainCard(gain: gain),
+                    ],
                     if (pooled) ...[
                       const SizedBox(height: 28),
                       Container(
@@ -1957,6 +2011,9 @@ class _ResultView extends StatelessWidget {
   final int? monthBefore;
   final int? monthAfter;
 
+  /// What the session added to the level.
+  final XpGain? xp;
+
   final VoidCallback onDone;
 
   const _ResultView({
@@ -1970,11 +2027,14 @@ class _ResultView extends StatelessWidget {
     this.live,
     this.monthBefore,
     this.monthAfter,
+    this.xp,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (practice) return _PracticeResult(reps: volume.round(), onDone: onDone);
+    if (practice) {
+      return _PracticeResult(reps: volume.round(), xp: xp, onDone: onDone);
+    }
 
     return DuelResultView(
       won: won,
@@ -1985,6 +2045,7 @@ class _ResultView extends StatelessWidget {
       live: live,
       monthBefore: monthBefore,
       monthAfter: monthAfter,
+      xp: xp,
       // Both asked: the new match replaces this result, so finishing it
       // lands where this one started.
       onLiveRematch: (match) => Navigator.of(context).pushReplacement(
@@ -2093,9 +2154,10 @@ class _ChallengeSentView extends StatelessWidget {
 }
 
 class _PracticeResult extends StatelessWidget {
-  const _PracticeResult({required this.reps, required this.onDone});
+  const _PracticeResult({required this.reps, required this.onDone, this.xp});
 
   final int reps;
+  final XpGain? xp;
   final VoidCallback onDone;
 
   @override
@@ -2124,6 +2186,10 @@ class _PracticeResult extends StatelessWidget {
             style: context.type.micro.copyWith(color: context.colors.muted),
           ),
           SavedToHealthChip(saved: Career.instance.lastHealthSave),
+          if (xp case final gain? when gain.total > 0) ...[
+            const SizedBox(height: 24),
+            XpGainCard(gain: gain),
+          ],
           if (GoalDoneCard.passed(after - reps, after, goal)) ...[
             const SizedBox(height: 28),
             GoalDoneCard(done: after, goal: goal),

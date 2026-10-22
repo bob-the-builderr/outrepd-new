@@ -29,7 +29,9 @@ import '../theme.dart';
 import '../tier_badge.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
+import '../xp.dart';
 import 'daily_goal.dart';
+import 'level.dart';
 import 'live_rematch.dart';
 import 'match_flow.dart' show kDuelLength;
 import 'share_card.dart';
@@ -130,6 +132,7 @@ class DuelResultView extends StatelessWidget {
     this.monthBefore,
     this.monthAfter,
     this.rematchLabel,
+    this.xp,
   });
 
   final bool won;
@@ -161,6 +164,9 @@ class DuelResultView extends StatelessWidget {
   /// What the button under the result says when it is not a live rematch:
   /// "Find a match" after a saved set, which is not raced twice.
   final String? rematchLabel;
+
+  /// What the duel added to the level: every rep, and the match.
+  final XpGain? xp;
 
   @override
   Widget build(BuildContext context) {
@@ -269,6 +275,10 @@ class DuelResultView extends StatelessWidget {
                         fontSize: 14,
                       ),
                     ),
+                  ],
+                  if (xp case final gain?) ...[
+                    const SizedBox(height: 10),
+                    XpGainCard(gain: gain),
                   ],
                   if (_monthMove(context) case final move?) ...[
                     const SizedBox(height: 12),

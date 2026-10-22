@@ -735,5 +735,14 @@
   "weekToTop3": "{n} LP до топ-3",
   "boardActiveNote": "Игроки, активные за последние 30 дней",
   "boardTieNote": "при равенстве: больше побед выше",
-  "lpBreakdown": "{reps} за повторения · {adjust} за соперника {rank}"
+  "lpBreakdown": "{reps} за повторения · {adjust} за соперника {rank}",
+  "levelShort": "Ур. {n}",
+  "xpOf": "{into} / {span} XP",
+  "xpToLevel": "{n} XP до уровня {level}",
+  "xpHow": "{rep} XP за повторение, {match} за матч",
+  "xpGained": "+{n} XP",
+  "xpForReps": "{n} за повторения",
+  "xpForMatch": "{n} за матч",
+  "levelUp": "Новый уровень",
+  "levelUpBody": "Каждое повторение на счету. Так держать."
 }

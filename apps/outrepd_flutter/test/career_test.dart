@@ -14,6 +14,7 @@ import 'package:outrepd/career.dart';
 import 'package:outrepd/data.dart';
 import 'package:outrepd/ranking.dart';
 import 'package:outrepd/rewards.dart';
+import 'package:outrepd/xp.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -227,6 +228,37 @@ void main() {
     });
   });
 
+  group('experience', () {
+    test('a rep is one, practice included', () async {
+      await career.recordPractice(18);
+      expect(demoProfile.xp, 18);
+    });
+
+    test('a match is its reps and twenty, won or lost', () async {
+      await career.recordDuel(
+        yourReps: 14,
+        theirReps: 20,
+        opponent: 'iron_mike',
+        opponentTier: 2,
+      );
+      expect(demoProfile.xp, 14 + kXpPerMatch);
+      await career.recordDuel(
+        yourReps: 9,
+        theirReps: 3,
+        opponent: 'iron_mike',
+        opponentTier: 2,
+        ranked: false,
+      );
+      expect(demoProfile.xp, 14 + 9 + 2 * kXpPerMatch);
+    });
+
+    test('starting again starts it from nothing', () async {
+      await career.recordPractice(30);
+      await career.startFresh();
+      expect(demoProfile.xp, 0);
+    });
+  });
+
   group('the week', () {
     test('always has seven days, rest days included', () async {
       expect(career.weekReps.length, 7);
@@ -259,6 +291,7 @@ void main() {
       final wins = demoProfile.wins;
       final reps = demoProfile.totalReps;
       final best = demoProfile.bestSet;
+      final xp = demoProfile.xp;
       final history = matchHistory.length;
       final today = career.repsToday;
 
@@ -270,7 +303,8 @@ void main() {
         ..lp = 0
         ..wins = 0
         ..totalReps = 0
-        ..bestSet = 0;
+        ..bestSet = 0
+        ..xp = 0;
       matchHistory.clear();
       await career.load();
 
@@ -278,6 +312,7 @@ void main() {
       expect(demoProfile.wins, wins);
       expect(demoProfile.totalReps, reps);
       expect(demoProfile.bestSet, best);
+      expect(demoProfile.xp, xp);
       expect(matchHistory.length, history);
       expect(matchHistory.first.opponent, 'iron_mike');
       expect(career.repsToday, today);

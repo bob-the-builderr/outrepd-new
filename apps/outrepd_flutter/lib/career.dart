@@ -29,6 +29,7 @@ import 'data.dart';
 import 'health_sync.dart';
 import 'ranking.dart';
 import 'rewards.dart';
+import 'xp.dart';
 
 /// Overwrites this account's ladder identity with the server's.
 ///
@@ -57,7 +58,8 @@ void applyServerProfile(RemoteProfile me) {
     ..placementsDone = me.placementsDone
     ..placementWins = me.placementWins
     ..totalReps = me.totalReps
-    ..bestSet = me.bestSet;
+    ..bestSet = me.bestSet
+    ..xp = me.xp;
   if (me.country case final code?) demoProfile.country = code;
 }
 
@@ -209,6 +211,7 @@ class Career extends ChangeNotifier {
       // comparison taken afterwards always false.
       final previousBest = p.bestSet;
       _countReps(yourReps);
+      p.xp += kXpPerMatch;
       final record = MatchRecord(
         won: won,
         userReps: yourReps,
@@ -286,6 +289,7 @@ class Career extends ChangeNotifier {
 
     final newBest = yourReps > p.bestSet;
     _countReps(yourReps);
+    p.xp += kXpPerMatch;
 
     final record = MatchRecord(
       won: won,
@@ -367,6 +371,9 @@ class Career extends ChangeNotifier {
 
     final newBest = yourReps > previousBest;
     _countReps(yourReps);
+    // What xp_for_duel pays on the server, which the next read of the
+    // profile brings back anyway.
+    p.xp += kXpPerMatch;
 
     final record = MatchRecord(
       won: settled.won,
@@ -536,6 +543,7 @@ class Career extends ChangeNotifier {
   void _countReps(int reps) {
     final p = demoProfile;
     p.totalReps += reps;
+    p.xp += reps;
     if (reps > p.bestSet) p.bestSet = reps;
 
     final key = _key(DateTime.now());
@@ -637,6 +645,7 @@ class Career extends ChangeNotifier {
         'bestSet': p.bestSet,
         'placementsDone': p.placementsDone,
         'placementWins': p.placementWins,
+        'xp': p.xp,
       }),
     );
     await store.setString(
@@ -678,7 +687,10 @@ class Career extends ChangeNotifier {
           ..totalReps = read('totalReps', p.totalReps)
           ..bestSet = read('bestSet', p.bestSet)
           ..placementsDone = read('placementsDone', p.placementsDone)
-          ..placementWins = read('placementWins', p.placementWins);
+          ..placementWins = read('placementWins', p.placementWins)
+          // Kept from before there was experience: what those reps and
+          // matches would have paid, until the server's own number arrives.
+          ..xp = read('xp', p.totalReps + kXpPerMatch * p.totalMatches);
 
         // A stored peak below the stored tier would let the floor rule hand
         // back a tier the account has earned.
@@ -754,7 +766,8 @@ class Career extends ChangeNotifier {
       ..totalReps = 0
       ..bestSet = 0
       ..placementsDone = 0
-      ..placementWins = 0;
+      ..placementWins = 0
+      ..xp = 0;
     matchHistory.clear();
     _days.clear();
     _forgetServerDuels();

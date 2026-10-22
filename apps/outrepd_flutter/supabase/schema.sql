@@ -106,6 +106,9 @@ alter table profiles add column if not exists notify_live_invite bool not null
   default true;
 alter table profiles add column if not exists avatar_url text;
 alter table profiles add column if not exists username_changed_at timestamptz;
+-- Experience: one for every rep of every set, twenty for every match played
+-- (count_reps_of_set below; xp_for_duel, live.sql). Only ever goes up.
+alter table profiles add column if not exists xp int not null default 0;
 
 -- The title this lifter wears beside their name, by its id in the app's list
 -- (`first_blood`). Titles are earned on the phone, so all the server can check
@@ -266,6 +269,10 @@ alter table sets add column if not exists challenge_target uuid
 -- Set when the set was lifted in a live match (live.sql). It already has its
 -- opponent, so it is never offered to the open pool.
 alter table sets add column if not exists live_match uuid;
+-- A practice minute: nobody on the other side, and nobody ever will be. Stored
+-- for what it adds to the totals and to experience, never offered to the pool
+-- or raced.
+alter table sets add column if not exists practice boolean not null default false;
 
 create index if not exists sets_open_idx
   on sets (profile_id, created_at desc)
@@ -295,7 +302,8 @@ begin
   perform set_config('outrepd.settling', 'on', true);
   update profiles set
     total_reps = total_reps + new.reps,
-    best_set   = greatest(best_set, new.reps)
+    best_set   = greatest(best_set, new.reps),
+    xp         = xp + new.reps
   where id = new.profile_id;
   perform set_config('outrepd.settling', 'off', true);
   return new;
@@ -359,6 +367,10 @@ begin
        and s.created_at > now() - interval '1 hour'
   ) >= 40 then
     raise exception 'sets are arriving faster than anybody lifts them';
+  end if;
+
+  if new.practice and new.challenge_target is not null then
+    raise exception 'a practice set challenges nobody';
   end if;
 
   if new.challenge_target is not null then
@@ -527,7 +539,8 @@ begin
   or new.placements_done is distinct from old.placements_done
   or new.placement_wins  is distinct from old.placement_wins
   or new.total_reps      is distinct from old.total_reps
-  or new.best_set        is distinct from old.best_set then
+  or new.best_set        is distinct from old.best_set
+  or new.xp              is distinct from old.xp then
     raise exception 'rank and record are settled by the server, not the client';
   end if;
 
@@ -600,6 +613,7 @@ begin
   new.best_streak     := 0;
   new.total_reps      := 0;
   new.best_set        := 0;
+  new.xp              := 0;
   new.friend_code     := generate_friend_code();
   new.username_changed_at := null;
   new.avatar_url      := null;

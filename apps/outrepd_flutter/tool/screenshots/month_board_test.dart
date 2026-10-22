@@ -57,6 +57,7 @@ class _Month extends NoBackend {
         points: points,
         wins: 12,
         played: 18,
+        xp: 600 + 900 * (12 - i),
       ),
   ];
 

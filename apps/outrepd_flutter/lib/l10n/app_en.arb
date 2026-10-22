@@ -1556,5 +1556,72 @@
         "type": "String"
       }
     }
-  }
+  },
+  "levelShort": "Lv {n}",
+  "@levelShort": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "xpOf": "{into} / {span} XP",
+  "@xpOf": {
+    "placeholders": {
+      "into": {
+        "type": "String"
+      },
+      "span": {
+        "type": "String"
+      }
+    }
+  },
+  "xpToLevel": "{n} XP to Level {level}",
+  "@xpToLevel": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "xpHow": "{rep} XP a rep, {match} a match",
+  "@xpHow": {
+    "placeholders": {
+      "rep": {
+        "type": "String"
+      },
+      "match": {
+        "type": "String"
+      }
+    }
+  },
+  "xpGained": "+{n} XP",
+  "@xpGained": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "xpForReps": "{n} for the reps",
+  "@xpForReps": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "xpForMatch": "{n} for the match",
+  "@xpForMatch": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "levelUp": "Level up",
+  "levelUpBody": "Every rep counts. Keep going."
 }

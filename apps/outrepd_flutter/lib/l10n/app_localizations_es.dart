@@ -2426,4 +2426,45 @@ class LEs extends L {
   String lpBreakdown(String reps, String adjust, String rank) {
     return '${reps} por las repeticiones · ${adjust} por un rival ${rank}';
   }
+
+  @override
+  String levelShort(String n) {
+    return 'Nv. ${n}';
+  }
+
+  @override
+  String xpOf(String into, String span) {
+    return '${into} / ${span} XP';
+  }
+
+  @override
+  String xpToLevel(String n, String level) {
+    return '${n} XP para el nivel ${level}';
+  }
+
+  @override
+  String xpHow(String rep, String match) {
+    return '${rep} XP por repetición, ${match} por duelo';
+  }
+
+  @override
+  String xpGained(String n) {
+    return '+${n} XP';
+  }
+
+  @override
+  String xpForReps(String n) {
+    return '${n} por las repeticiones';
+  }
+
+  @override
+  String xpForMatch(String n) {
+    return '${n} por el duelo';
+  }
+
+  @override
+  String get levelUp => 'Subes de nivel';
+
+  @override
+  String get levelUpBody => 'Cada repetición cuenta. Sigue así.';
 }

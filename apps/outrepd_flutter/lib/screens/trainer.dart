@@ -19,13 +19,13 @@ import '../live.dart';
 import '../motion.dart';
 import '../settings.dart';
 import '../sounds.dart';
-import '../ranking.dart';
 import '../avatar.dart';
 import '../player_avatar.dart';
 import '../l10n/app_localizations.dart';
 import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
+import '../xp.dart';
 
 /// Everything the camera screen needs to know about the duel it is part of.
 ///
@@ -41,6 +41,7 @@ class DuelContext {
     required this.opponentDivIdx,
     required this.rankLabel,
     this.opponentImage,
+    this.opponentXp,
   });
 
   /// Their picture, when they have uploaded one; the drawn initial when not.
@@ -60,6 +61,9 @@ class DuelContext {
   /// card. A label alone cannot draw a badge.
   final int opponentTierIdx;
   final int opponentDivIdx;
+
+  /// Their experience, for the level beside the rank; null when unknown.
+  final int? opponentXp;
 
   final String rankLabel;
 }
@@ -1477,6 +1481,8 @@ class _ScoreCard extends StatelessWidget {
                   reps: yours,
                   tierIdx: demoProfile.tierIdx,
                   divIdx: demoProfile.divIdx,
+                  ranked: demoProfile.isRanked,
+                  xp: demoProfile.xp,
                   colour: Colors.white,
                   image: avatar.picture,
                 ),
@@ -1529,6 +1535,7 @@ class _ScoreCard extends StatelessWidget {
                           reps: theirs,
                           tierIdx: duel.opponentTierIdx,
                           divIdx: duel.opponentDivIdx,
+                          xp: duel.opponentXp,
                           colour: context.colors.rival,
                           image: duel.opponentImage,
                         ),
@@ -1644,6 +1651,8 @@ class _Fighter extends StatelessWidget {
     required this.divIdx,
     required this.colour,
     this.image,
+    this.ranked = true,
+    this.xp,
   });
 
   final ImageProvider? image;
@@ -1653,6 +1662,12 @@ class _Fighter extends StatelessWidget {
   final int tierIdx;
   final int divIdx;
   final Color colour;
+
+  /// False while placements are still open: no rank to name yet.
+  final bool ranked;
+
+  /// Experience, for the level after the rank; null when not known.
+  final int? xp;
 
   @override
   Widget build(BuildContext context) {
@@ -1677,8 +1692,13 @@ class _Fighter extends StatelessWidget {
           maxLines: 1,
           style: TextStyle(color: colour, fontSize: 14),
         ),
+        // The rank, then the level: "Gold III · Lv 12".
         ShrinkText(
-          l.levelNumber(localNumber(context, ladderLevel(tierIdx, divIdx))),
+          [
+            ranked ? tierLabel(l, tierIdx, divIdx) : l.unranked,
+            if (xp case final xp?)
+              l.levelShort(localNumber(context, levelOf(xp))),
+          ].join(' · '),
           maxLines: 1,
           style: TextStyle(color: context.colors.muted, fontSize: 13),
         ),

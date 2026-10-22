@@ -150,9 +150,10 @@ class _LifterPeekSheetState extends State<_LifterPeekSheet>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      ShrinkText(
-                        widget.username,
-                        maxLines: 1,
+                      NameWithLevel(
+                        name: widget.username,
+                        xp: p?.xp,
+                        chipFontSize: 12,
                         style: context.type.heading.copyWith(
                           color: context.colors.text,
                         ),
@@ -444,10 +445,13 @@ class _Body extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 12),
-        Text(
-          username,
-          textAlign: TextAlign.center,
-          style: context.type.title.copyWith(color: context.colors.text),
+        Center(
+          child: NameWithLevel(
+            name: username,
+            xp: p.xp,
+            chipFontSize: 13,
+            style: context.type.title.copyWith(color: context.colors.text),
+          ),
         ),
         // Beside the name, the same as on your own profile.
         if (titleById(p.title) case final title?) ...[

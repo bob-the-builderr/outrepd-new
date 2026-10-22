@@ -34,6 +34,7 @@ class Profile {
     required this.country,
     this.placementsDone = kPlacementDuels,
     this.friendCode = '000000',
+    this.xp = 0,
   });
 
   String username;
@@ -67,6 +68,10 @@ class Profile {
   /// The most ever counted in one bout. The number people quote at each other,
   /// and the only stat here that a single good session can move.
   int bestSet;
+
+  /// Experience: one for every rep, twenty for every match (xp.dart). The
+  /// level beside the name is read off it.
+  int xp;
 
   /// Where this account sits on the whole board, and on its country's.
   ///
@@ -128,6 +133,7 @@ final demoProfile = Profile(
   country: 'US',
   placementsDone: kPlacementDuels,
   friendCode: '482910',
+  xp: 4240,
 );
 
 /// Duels a new account plays before it is given a tier. Five is enough to see
@@ -259,6 +265,7 @@ class LeaderboardEntry {
     this.losses, {
     this.id = '',
     this.avatarUrl,
+    this.xp = 0,
   });
 
   /// Empty for the sample board, which has nobody real behind it to open a
@@ -271,6 +278,7 @@ class LeaderboardEntry {
   final int wins;
   final int losses;
   final String? avatarUrl;
+  final int xp;
 }
 
 // Other lifters only. "You" already has a pinned row of your own at the
@@ -279,29 +287,29 @@ class LeaderboardEntry {
 // pinned number, said two different things about the same lifter on one
 // screen.
 const demoLeaderboard = <LeaderboardEntry>[
-  LeaderboardEntry('iron_mike', 5, 1, 88, 41, 12),
-  LeaderboardEntry('squat_queen', 4, 3, 72, 35, 15),
-  LeaderboardEntry('benchgod', 3, 2, 51, 22, 20),
-  LeaderboardEntry('cardio_hater', 2, 4, 39, 14, 17),
-  LeaderboardEntry('delt_destroyer', 2, 2, 33, 11, 14),
-  LeaderboardEntry('newbie_gains', 1, 2, 21, 6, 11),
+  LeaderboardEntry('iron_mike', 5, 1, 88, 41, 12, xp: 12900),
+  LeaderboardEntry('squat_queen', 4, 3, 72, 35, 15, xp: 9800),
+  LeaderboardEntry('benchgod', 3, 2, 51, 22, 20, xp: 6100),
+  LeaderboardEntry('cardio_hater', 2, 4, 39, 14, 17, xp: 3400),
+  LeaderboardEntry('delt_destroyer', 2, 2, 33, 11, 14, xp: 2900),
+  LeaderboardEntry('newbie_gains', 1, 2, 21, 6, 11, xp: 900),
 ];
 
 /// This month's board with no server: the same people as [demoLeaderboard]
 /// and a few more, so the podium, the top ten and the line under it all have
 /// somebody in them.
 const demoMonthBoard = <MonthRow>[
-  MonthRow(place: 1, id: '', username: 'squat_queen', tierIdx: 4, divIdx: 3, points: 142, wins: 19, played: 24),
-  MonthRow(place: 2, id: '', username: 'iron_mike', tierIdx: 5, divIdx: 1, points: 131, wins: 17, played: 22),
-  MonthRow(place: 3, id: '', username: 'benchgod', tierIdx: 3, divIdx: 2, points: 124, wins: 16, played: 21),
-  MonthRow(place: 4, id: '', username: 'cardio_hater', tierIdx: 2, divIdx: 4, points: 117, wins: 15, played: 20),
-  MonthRow(place: 5, id: '', username: 'delt_destroyer', tierIdx: 2, divIdx: 2, points: 109, wins: 14, played: 19),
-  MonthRow(place: 6, id: '', username: 'plank_ninja', tierIdx: 3, divIdx: 0, points: 104, wins: 13, played: 18),
-  MonthRow(place: 7, id: '', username: 'rep_machine', tierIdx: 2, divIdx: 1, points: 101, wins: 13, played: 17),
-  MonthRow(place: 8, id: '', username: 'chest_day', tierIdx: 1, divIdx: 3, points: 99, wins: 12, played: 16),
-  MonthRow(place: 9, id: '', username: 'gravity_no', tierIdx: 1, divIdx: 1, points: 98, wins: 12, played: 15),
-  MonthRow(place: 10, id: '', username: 'newbie_gains', tierIdx: 1, divIdx: 2, points: 98, wins: 11, played: 15),
-  MonthRow(place: 11, id: '', username: 'floor_fan', tierIdx: 1, divIdx: 4, points: 91, wins: 11, played: 14),
+  MonthRow(place: 1, id: '', username: 'squat_queen', tierIdx: 4, divIdx: 3, points: 142, wins: 19, played: 24, xp: 9800),
+  MonthRow(place: 2, id: '', username: 'iron_mike', tierIdx: 5, divIdx: 1, points: 131, wins: 17, played: 22, xp: 12900),
+  MonthRow(place: 3, id: '', username: 'benchgod', tierIdx: 3, divIdx: 2, points: 124, wins: 16, played: 21, xp: 6100),
+  MonthRow(place: 4, id: '', username: 'cardio_hater', tierIdx: 2, divIdx: 4, points: 117, wins: 15, played: 20, xp: 3400),
+  MonthRow(place: 5, id: '', username: 'delt_destroyer', tierIdx: 2, divIdx: 2, points: 109, wins: 14, played: 19, xp: 2900),
+  MonthRow(place: 6, id: '', username: 'plank_ninja', tierIdx: 3, divIdx: 0, points: 104, wins: 13, played: 18, xp: 5200),
+  MonthRow(place: 7, id: '', username: 'rep_machine', tierIdx: 2, divIdx: 1, points: 101, wins: 13, played: 17, xp: 2600),
+  MonthRow(place: 8, id: '', username: 'chest_day', tierIdx: 1, divIdx: 3, points: 99, wins: 12, played: 16, xp: 1800),
+  MonthRow(place: 9, id: '', username: 'gravity_no', tierIdx: 1, divIdx: 1, points: 98, wins: 12, played: 15, xp: 1500),
+  MonthRow(place: 10, id: '', username: 'newbie_gains', tierIdx: 1, divIdx: 2, points: 98, wins: 11, played: 15, xp: 900),
+  MonthRow(place: 11, id: '', username: 'floor_fan', tierIdx: 1, divIdx: 4, points: 91, wins: 11, played: 14, xp: 1100),
 ];
 
 class Friend {
@@ -315,6 +323,7 @@ class Friend {
     this.winsVsYou = 0,
     this.lossesVsYou = 0,
     this.avatarUrl,
+    this.xp = 0,
   });
 
   /// Empty for the sample data, which has nobody real behind it to open a
@@ -338,16 +347,17 @@ class Friend {
   final int lossesVsYou;
 
   final String? avatarUrl;
+  final int xp;
 
   bool get hasPlayedYou => winsVsYou + lossesVsYou > 0;
 }
 
 const demoFriends = <Friend>[
-  Friend('iron_mike', 5, 2, 88, true, winsVsYou: 3, lossesVsYou: 1),
-  Friend('benchgod', 3, 2, 51, true, winsVsYou: 1, lossesVsYou: 2),
-  Friend('squat_queen', 4, 0, 72, false, winsVsYou: 2, lossesVsYou: 2),
-  Friend('newbie_gains', 1, 3, 21, false),
-  Friend('delt_destroyer', 3, 4, 64, false, winsVsYou: 0, lossesVsYou: 4),
+  Friend('iron_mike', 5, 2, 88, true, winsVsYou: 3, lossesVsYou: 1, xp: 12900),
+  Friend('benchgod', 3, 2, 51, true, winsVsYou: 1, lossesVsYou: 2, xp: 6100),
+  Friend('squat_queen', 4, 0, 72, false, winsVsYou: 2, lossesVsYou: 2, xp: 9800),
+  Friend('newbie_gains', 1, 3, 21, false, xp: 900),
+  Friend('delt_destroyer', 3, 4, 64, false, winsVsYou: 0, lossesVsYou: 4, xp: 2900),
 ];
 
 /// The card a sample row opens, so the profile peek can be tried without a
@@ -384,6 +394,7 @@ LifterProfile demoLifterProfile(String username) {
     lastYourReps: played ? 15 : null,
     lastTheirReps: played ? 17 : null,
     title: _demoTitles[username],
+    xp: board?.xp ?? friend?.xp ?? 1200,
   );
 }
 
@@ -444,7 +455,13 @@ extension AppNotificationText on AppNotification {
 
 /// Stand-ins for real players until matchmaking is wired to a server.
 class Opponent {
-  const Opponent(this.username, this.tierIdx, this.divIdx, {this.avatarUrl});
+  const Opponent(
+    this.username,
+    this.tierIdx,
+    this.divIdx, {
+    this.avatarUrl,
+    this.xp,
+  });
 
   final String username;
   final int tierIdx;
@@ -452,6 +469,10 @@ class Opponent {
 
   /// Their uploaded picture, or null for the drawn initial.
   final String? avatarUrl;
+
+  /// Their experience, or null when this screen was never told it — a
+  /// challenge names who it is for, and nothing more.
+  final int? xp;
 }
 
 const demoOpponents = <Opponent>[

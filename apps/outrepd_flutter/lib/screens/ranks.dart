@@ -270,6 +270,7 @@ class _RanksScreenState extends State<RanksScreen> {
           row.losses,
           id: row.id,
           avatarUrl: row.avatarUrl,
+          xp: row.xp,
         ),
     ];
   }
@@ -433,6 +434,7 @@ class _RanksScreenState extends State<RanksScreen> {
                         lp: me.lp,
                         wins: me.wins,
                         losses: me.losses,
+                        xp: me.xp,
                       ),
               ),
           ],
@@ -617,6 +619,7 @@ class _RankRow extends StatelessWidget {
                 divIdx: entry.divIdx,
                 wins: entry.wins,
                 losses: entry.losses,
+                xp: entry.xp,
               ),
             ),
             const SizedBox(width: 11),
@@ -637,6 +640,7 @@ class _SelfRow extends StatelessWidget {
     required this.lp,
     required this.wins,
     required this.losses,
+    required this.xp,
   });
 
   /// Null when the board this account is on has not said where they are.
@@ -649,6 +653,7 @@ class _SelfRow extends StatelessWidget {
   final int lp;
   final int wins;
   final int losses;
+  final int xp;
 
   @override
   Widget build(BuildContext context) {
@@ -684,6 +689,7 @@ class _SelfRow extends StatelessWidget {
               divIdx: divIdx,
               wins: wins,
               losses: losses,
+              xp: xp,
               trailing: const _YouChip(),
             ),
           ),
@@ -832,6 +838,7 @@ class _Identity extends StatelessWidget {
     required this.wins,
     required this.losses,
     this.trailing,
+    this.xp,
   });
 
   final String username;
@@ -840,6 +847,9 @@ class _Identity extends StatelessWidget {
   final int wins;
   final int losses;
   final Widget? trailing;
+
+  /// For the level after the name.
+  final int? xp;
 
   @override
   Widget build(BuildContext context) {
@@ -857,6 +867,10 @@ class _Identity extends StatelessWidget {
                 style: TextStyle(color: context.colors.text, fontSize: 15),
               ),
             ),
+            if (xp case final xp?) ...[
+              const SizedBox(width: 6),
+              LevelChip(xp: xp),
+            ],
             if (trailing case final chip?) ...[const SizedBox(width: 6), chip],
           ],
         ),
@@ -1132,6 +1146,8 @@ class _PodiumPlace extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
+          const SizedBox(height: 3),
+          LevelChip(xp: row.xp),
           const SizedBox(height: 6),
           Container(
             height: block,
@@ -1263,10 +1279,9 @@ class _MonthRankRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    row.username,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  NameWithLevel(
+                    name: row.username,
+                    xp: row.xp,
                     style: TextStyle(color: context.colors.text, fontSize: 15),
                   ),
                   const SizedBox(height: 2),
@@ -1380,6 +1395,8 @@ class _MonthSelfRow extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const SizedBox(width: 6),
+                    LevelChip(xp: demoProfile.xp),
                     const SizedBox(width: 6),
                     const _YouChip(),
                   ],

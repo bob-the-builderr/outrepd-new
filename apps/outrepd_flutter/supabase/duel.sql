@@ -58,7 +58,8 @@ returns table (
   div_idx int,
   reps int,
   rep_times int[],
-  avatar_url text
+  avatar_url text,
+  xp int
 )
 language plpgsql
 security definer
@@ -100,7 +101,7 @@ begin
   -- lifter passes, so the cost is the sets read before a match rather than
   -- everybody on the ladder.
   select s.id as set_id, p.id as profile_id, p.username, p.tier_idx,
-         p.div_idx, s.reps, s.rep_times, p.avatar_url
+         p.div_idx, s.reps, s.rep_times, p.avatar_url, p.xp
     into found_set
   from sets s
   join profiles p on p.id = s.profile_id
@@ -113,6 +114,8 @@ begin
     -- Lifted live against somebody already (live.sql): it is settled against
     -- them, not left for the pool.
     and s.live_match is null
+    -- Practice was lifted against nobody, and is not for racing.
+    and not s.practice
     -- Near your level, measured in rungs rather than tiers: the difference
     -- between the top and the bottom of one tier is five divisions, and
     -- matching "same tier" would pair those two.
@@ -153,7 +156,7 @@ begin
   return query select found_set.set_id, found_set.profile_id,
                       found_set.username, found_set.tier_idx,
                       found_set.div_idx, found_set.reps, found_set.rep_times,
-                      found_set.avatar_url;
+                      found_set.avatar_url, found_set.xp;
 end;
 $$;
 
@@ -175,7 +178,8 @@ returns table (
   div_idx int,
   reps int,
   rep_times int[],
-  avatar_url text
+  avatar_url text,
+  xp int
 )
 language plpgsql
 security definer
@@ -187,13 +191,14 @@ begin
   -- Only a subscriber plays (see subscriptions.sql; off until switched on).
   perform require_pro();
   select s.id as set_id, p.id as profile_id, p.username, p.tier_idx,
-         p.div_idx, s.reps, s.rep_times, p.avatar_url
+         p.div_idx, s.reps, s.rep_times, p.avatar_url, p.xp
     into found_set
   from sets s
   join profiles p on p.id = s.profile_id
   where s.claimed_by is null
     and s.profile_id = from_id
     and s.challenge_target = auth.uid()
+    and not s.practice
     -- A block still holds even over a challenge sent before it happened.
     and not exists (
       select 1 from blocks b
@@ -216,7 +221,7 @@ begin
   return query select found_set.set_id, found_set.profile_id,
                       found_set.username, found_set.tier_idx,
                       found_set.div_idx, found_set.reps, found_set.rep_times,
-                      found_set.avatar_url;
+                      found_set.avatar_url, found_set.xp;
 end;
 $$;
 
@@ -333,6 +338,9 @@ begin
   end if;
   if mine.profile_id = theirs.profile_id then
     raise exception 'cannot duel yourself';
+  end if;
+  if mine.practice or theirs.practice then
+    raise exception 'a practice set is not raced';
   end if;
 
   -- How the two sets met decides whether they may be settled at all, and

@@ -2383,4 +2383,45 @@ class LJa extends L {
   String lpBreakdown(String reps, String adjust, String rank) {
     return '回数差で${reps} · ${rank}の相手で${adjust}';
   }
+
+  @override
+  String levelShort(String n) {
+    return 'Lv.${n}';
+  }
+
+  @override
+  String xpOf(String into, String span) {
+    return '${into} / ${span} XP';
+  }
+
+  @override
+  String xpToLevel(String n, String level) {
+    return 'レベル ${level} まであと ${n} XP';
+  }
+
+  @override
+  String xpHow(String rep, String match) {
+    return '1回ごとに ${rep} XP、マッチごとに ${match}';
+  }
+
+  @override
+  String xpGained(String n) {
+    return '+${n} XP';
+  }
+
+  @override
+  String xpForReps(String n) {
+    return '回数で ${n}';
+  }
+
+  @override
+  String xpForMatch(String n) {
+    return 'マッチで ${n}';
+  }
+
+  @override
+  String get levelUp => 'レベルアップ';
+
+  @override
+  String get levelUpBody => '1回1回が積み重なる。この調子で。';
 }

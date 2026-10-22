@@ -64,13 +64,13 @@ insert into profiles (id, username, country) values (:'C', 'carol c!', 'FR');
 reset role;
 select as_user(:'D'); set role authenticated;
 -- And one trying to arrive already a Master.
-insert into profiles (id, username, country, tier_idx, wins)
-values (:'D', 'dan_d1', 'EG', 6, 999);
+insert into profiles (id, username, country, tier_idx, wins, xp)
+values (:'D', 'dan_d1', 'EG', 6, 999, 50000);
 reset role;
 
 select check_that((select username from profiles where id = :'C') like 'lifter%',
                   'a name with a space in it was stored as typed');
-select check_that((select tier_idx = 0 and wins = 0 from profiles where id = :'D'),
+select check_that((select tier_idx = 0 and wins = 0 and xp = 0 from profiles where id = :'D'),
                   'a new account arrived with a rank it never earned');
 
 -- ── profiles: your own row only ───────────────────────────────────────────────
@@ -726,6 +726,84 @@ select must_fail('a lifter putting themselves on the tester list',
                  'insert into beta_testers (email) values (''a@example.com'')');
 reset role;
 delete from beta_testers;
+
+-- ── experience ────────────────────────────────────────────────────────────────
+
+select as_user(:'A'); set role authenticated;
+select must_fail('raising your own experience',
+                 'update profiles set xp = xp + 1000 where id = auth.uid()');
+reset role;
+
+-- A friendly live match between B and C: each is paid their reps and twenty
+-- for playing it, the one who lost as much as the one who won.
+select set_config('test.xp_b', (select xp::text from profiles where id = :'B'), false);
+select set_config('test.xp_c', (select xp::text from profiles where id = :'C'), false);
+insert into live_matches (ranked, a, b, status, starts_at)
+values (false, :'B', :'C', 'live', now() - interval '65 seconds');
+select set_config('test.lm_xp',
+  (select id::text from live_matches
+    where a = :'B' and b = :'C' and status = 'live'), false);
+select as_user(:'B'); set role authenticated;
+select count(*) from finish_live_match(current_setting('test.lm_xp')::uuid,
+                                       12, 12, 0.3, true, 60000, false, '{}');
+reset role;
+select as_user(:'C'); set role authenticated;
+select check_that(
+  (select is_settled from finish_live_match(current_setting('test.lm_xp')::uuid,
+                                            8, 8, 0.3, true, 60000, false, '{}')),
+  'a live match with both sets in did not settle');
+reset role;
+select check_that(
+  (select xp from profiles where id = :'B') = current_setting('test.xp_b')::int + 12 + 20,
+  'the winner of a live match was not paid their reps and twenty');
+select check_that(
+  (select xp from profiles where id = :'C') = current_setting('test.xp_c')::int + 8 + 20,
+  'the loser of a live match was not paid their reps and twenty');
+
+-- Practice: the reps count, and nothing else happens to the set.
+select set_config('test.xp_a', (select xp::text from profiles where id = :'A'), false);
+select pg_sleep(8.5);
+select as_user(:'A'); set role authenticated;
+select must_fail('a practice set sent as a challenge',
+  format($q$insert into sets (profile_id, reps, reps_camera, duration_ms,
+                              practice, challenge_target)
+            values (auth.uid(), 10, 10, 60000, true, %L)$q$, :'B'));
+insert into sets (profile_id, reps, reps_camera, duration_ms, practice)
+values (auth.uid(), 25, 25, 60000, true);
+reset role;
+select check_that(
+  (select xp from profiles where id = :'A') = current_setting('test.xp_a')::int + 25,
+  'a practice set was not paid its reps');
+select set_config('test.practice',
+  (select id::text from sets where profile_id = :'A' and practice limit 1), false);
+select as_user(:'C'); set role authenticated;
+select check_that(
+  not exists (select 1 from find_opponent_set(1000)
+               where set_id = current_setting('test.practice')::uuid),
+  'the pool handed out a practice set');
+reset role;
+select pg_sleep(8.5);
+select as_user(:'C'); set role authenticated;
+insert into sets (profile_id, reps, reps_camera, duration_ms)
+values (auth.uid(), 20, 20, 60000);
+select must_fail('racing a practice set',
+  format('select settle_duel(%L, %L, false)',
+         (select id from sets where profile_id = auth.uid()
+           order by created_at desc limit 1),
+         current_setting('test.practice')));
+reset role;
+
+-- Everybody, after everything above: one for every rep, twenty for every
+-- match they played, and nothing for a set raced while they were away. The
+-- same sum the install works out for accounts from before experience.
+select check_that(count(*) = 0,
+                  'experience off for: ' || coalesce(string_agg(p.username, ', '), ''))
+  from profiles p
+ where p.xp <> p.total_reps + 20 * (
+         (select count(*) from duels d where d.challenger = p.id)
+         + (select count(*) from duels d
+              join live_matches m on m.duel = d.id
+             where d.defender = p.id));
 
 -- ── signed out ────────────────────────────────────────────────────────────────
 

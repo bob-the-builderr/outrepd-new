@@ -249,6 +249,8 @@ $$;
 
 -- ── the board ─────────────────────────────────────────────────────────────────
 
+-- Dropped first: xp was added to what it returns.
+drop function if exists month_board(text, int);
 create or replace function month_board(in_country text default null, limit_to int default 100)
 returns table (
   place int,
@@ -259,7 +261,8 @@ returns table (
   points int,
   wins int,
   played int,
-  avatar_url text
+  avatar_url text,
+  xp int
 )
 language plpgsql
 security definer
@@ -275,7 +278,7 @@ begin
   return query
   select (row_number() over (order by sp.points desc, sp.wins desc, p.username))::int,
          p.id, p.username, p.tier_idx, p.div_idx, sp.points, sp.wins,
-         sp.played, p.avatar_url
+         sp.played, p.avatar_url, p.xp
     from season_points sp
     join profiles p on p.id = sp.profile_id
    where sp.season = season_of(now())
@@ -390,6 +393,7 @@ as $$
    group by s.pid;
 $$;
 
+drop function if exists week_board(text, int);
 create or replace function week_board(in_country text default null, limit_to int default 100)
 returns table (
   place int,
@@ -400,7 +404,8 @@ returns table (
   points int,
   wins int,
   played int,
-  avatar_url text
+  avatar_url text,
+  xp int
 )
 language sql
 stable
@@ -409,7 +414,7 @@ set search_path = public
 as $$
   select (row_number() over (order by w.points desc, w.wins desc, p.username))::int,
          p.id, p.username, p.tier_idx, p.div_idx, w.points, w.wins, w.played,
-         p.avatar_url
+         p.avatar_url, p.xp
     from week_points(week_start(now())) w
     join profiles p on p.id = w.profile_id
    where p.placements_done >= 5

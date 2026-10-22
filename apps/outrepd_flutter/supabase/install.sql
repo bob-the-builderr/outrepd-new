@@ -249,6 +249,9 @@ alter table profiles add column if not exists notify_live_invite bool not null
   default true;
 alter table profiles add column if not exists avatar_url text;
 alter table profiles add column if not exists username_changed_at timestamptz;
+-- Experience: one for every rep of every set, twenty for every match played
+-- (count_reps_of_set below; xp_for_duel, live.sql). Only ever goes up.
+alter table profiles add column if not exists xp int not null default 0;
 
 -- The title this lifter wears beside their name, by its id in the app's list
 -- (`first_blood`). Titles are earned on the phone, so all the server can check
@@ -409,6 +412,10 @@ alter table sets add column if not exists challenge_target uuid
 -- Set when the set was lifted in a live match (live.sql). It already has its
 -- opponent, so it is never offered to the open pool.
 alter table sets add column if not exists live_match uuid;
+-- A practice minute: nobody on the other side, and nobody ever will be. Stored
+-- for what it adds to the totals and to experience, never offered to the pool
+-- or raced.
+alter table sets add column if not exists practice boolean not null default false;
 
 create index if not exists sets_open_idx
   on sets (profile_id, created_at desc)
@@ -438,7 +445,8 @@ begin
   perform set_config('outrepd.settling', 'on', true);
   update profiles set
     total_reps = total_reps + new.reps,
-    best_set   = greatest(best_set, new.reps)
+    best_set   = greatest(best_set, new.reps),
+    xp         = xp + new.reps
   where id = new.profile_id;
   perform set_config('outrepd.settling', 'off', true);
   return new;
@@ -502,6 +510,10 @@ begin
        and s.created_at > now() - interval '1 hour'
   ) >= 40 then
     raise exception 'sets are arriving faster than anybody lifts them';
+  end if;
+
+  if new.practice and new.challenge_target is not null then
+    raise exception 'a practice set challenges nobody';
   end if;
 
   if new.challenge_target is not null then
@@ -670,7 +682,8 @@ begin
   or new.placements_done is distinct from old.placements_done
   or new.placement_wins  is distinct from old.placement_wins
   or new.total_reps      is distinct from old.total_reps
-  or new.best_set        is distinct from old.best_set then
+  or new.best_set        is distinct from old.best_set
+  or new.xp              is distinct from old.xp then
     raise exception 'rank and record are settled by the server, not the client';
   end if;
 
@@ -743,6 +756,7 @@ begin
   new.best_streak     := 0;
   new.total_reps      := 0;
   new.best_set        := 0;
+  new.xp              := 0;
   new.friend_code     := generate_friend_code();
   new.username_changed_at := null;
   new.avatar_url      := null;
@@ -1555,7 +1569,8 @@ returns table (
   last_seen timestamptz,
   wins_vs_you int,
   losses_vs_you int,
-  avatar_url text
+  avatar_url text,
+  xp int
 )
 language sql
 stable
@@ -1580,14 +1595,15 @@ as $$
          -- exactly the ones the caller was part of without needing to say so.
          coalesce(count(*) filter (where d.winner = p.id), 0)::int,
          coalesce(count(*) filter (where d.winner = auth.uid()), 0)::int,
-         p.avatar_url
+         p.avatar_url,
+         p.xp
     from mine
     join profiles p on p.id = mine.friend_id
     left join duels d
       on (d.challenger = auth.uid() and d.defender = p.id)
       or (d.defender = auth.uid() and d.challenger = p.id)
    group by p.id, p.username, p.tier_idx, p.div_idx, p.lp,
-            p.placements_done, p.last_seen, p.avatar_url
+            p.placements_done, p.last_seen, p.avatar_url, p.xp
    order by p.last_seen desc;
 $$;
 
@@ -1812,6 +1828,8 @@ $$;
 -- "ranked within your tier" list, where everybody on it is already level
 -- with everybody else, and lp is what is left to tell them apart.
 drop function if exists leaderboard(text, int);
+-- And the one before xp was in what it returns.
+drop function if exists leaderboard(text, int, int, int);
 create or replace function leaderboard(
   in_country text default null,
   limit_to int default 100,
@@ -1826,7 +1844,8 @@ returns table (
   lp int,
   wins int,
   losses int,
-  avatar_url text
+  avatar_url text,
+  xp int
 )
 language sql
 stable
@@ -1834,7 +1853,7 @@ security definer
 set search_path = public
 as $$
   select p.id, p.username, p.tier_idx, p.div_idx, p.lp, p.wins, p.losses,
-         p.avatar_url
+         p.avatar_url, p.xp
     from profiles p
    where p.placements_done >= 5
      and p.show_on_board
@@ -1948,7 +1967,8 @@ returns table (
   last_your_reps int,
   last_their_reps int,
   avatar_url text,
-  title text
+  title text,
+  xp int
 )
 language plpgsql
 security definer
@@ -2003,7 +2023,8 @@ begin
     (select your_reps from last),
     (select their_reps from last),
     p.avatar_url,
-    p.title
+    p.title,
+    p.xp
   from profiles p
   where p.id = their_id;
 end;
@@ -2166,7 +2187,8 @@ returns table (
   div_idx int,
   reps int,
   rep_times int[],
-  avatar_url text
+  avatar_url text,
+  xp int
 )
 language plpgsql
 security definer
@@ -2208,7 +2230,7 @@ begin
   -- lifter passes, so the cost is the sets read before a match rather than
   -- everybody on the ladder.
   select s.id as set_id, p.id as profile_id, p.username, p.tier_idx,
-         p.div_idx, s.reps, s.rep_times, p.avatar_url
+         p.div_idx, s.reps, s.rep_times, p.avatar_url, p.xp
     into found_set
   from sets s
   join profiles p on p.id = s.profile_id
@@ -2221,6 +2243,8 @@ begin
     -- Lifted live against somebody already (live.sql): it is settled against
     -- them, not left for the pool.
     and s.live_match is null
+    -- Practice was lifted against nobody, and is not for racing.
+    and not s.practice
     -- Near your level, measured in rungs rather than tiers: the difference
     -- between the top and the bottom of one tier is five divisions, and
     -- matching "same tier" would pair those two.
@@ -2261,7 +2285,7 @@ begin
   return query select found_set.set_id, found_set.profile_id,
                       found_set.username, found_set.tier_idx,
                       found_set.div_idx, found_set.reps, found_set.rep_times,
-                      found_set.avatar_url;
+                      found_set.avatar_url, found_set.xp;
 end;
 $$;
 
@@ -2283,7 +2307,8 @@ returns table (
   div_idx int,
   reps int,
   rep_times int[],
-  avatar_url text
+  avatar_url text,
+  xp int
 )
 language plpgsql
 security definer
@@ -2295,13 +2320,14 @@ begin
   -- Only a subscriber plays (see subscriptions.sql; off until switched on).
   perform require_pro();
   select s.id as set_id, p.id as profile_id, p.username, p.tier_idx,
-         p.div_idx, s.reps, s.rep_times, p.avatar_url
+         p.div_idx, s.reps, s.rep_times, p.avatar_url, p.xp
     into found_set
   from sets s
   join profiles p on p.id = s.profile_id
   where s.claimed_by is null
     and s.profile_id = from_id
     and s.challenge_target = auth.uid()
+    and not s.practice
     -- A block still holds even over a challenge sent before it happened.
     and not exists (
       select 1 from blocks b
@@ -2324,7 +2350,7 @@ begin
   return query select found_set.set_id, found_set.profile_id,
                       found_set.username, found_set.tier_idx,
                       found_set.div_idx, found_set.reps, found_set.rep_times,
-                      found_set.avatar_url;
+                      found_set.avatar_url, found_set.xp;
 end;
 $$;
 
@@ -2441,6 +2467,9 @@ begin
   end if;
   if mine.profile_id = theirs.profile_id then
     raise exception 'cannot duel yourself';
+  end if;
+  if mine.practice or theirs.practice then
+    raise exception 'a practice set is not raced';
   end if;
 
   -- How the two sets met decides whether they may be settled at all, and
@@ -3369,7 +3398,8 @@ returns table (
   opponent_name text,
   opponent_tier int,
   opponent_div int,
-  opponent_avatar text
+  opponent_avatar text,
+  opponent_xp int
 )
 language plpgsql
 security definer
@@ -3414,7 +3444,8 @@ begin
   if paired.id is not null then
     delete from live_queue where live_queue.profile_id = me.id;
     return query
-      select paired.id, p.id, p.username, p.tier_idx, p.div_idx, p.avatar_url
+      select paired.id, p.id, p.username, p.tier_idx, p.div_idx, p.avatar_url,
+             p.xp
         from profiles p where p.id = paired.a;
     return;
   end if;
@@ -3455,7 +3486,8 @@ begin
             now() + interval '75 seconds')
     returning * into paired;
     return query
-      select paired.id, p.id, p.username, p.tier_idx, p.div_idx, p.avatar_url
+      select paired.id, p.id, p.username, p.tier_idx, p.div_idx, p.avatar_url,
+             p.xp
         from profiles p where p.id = waiting.profile_id;
     return;
   end if;
@@ -3564,7 +3596,8 @@ returns table (
   from_div int,
   expires_in_ms int,
   ranked boolean,
-  from_avatar text
+  from_avatar text,
+  from_xp int
 )
 language sql
 security definer
@@ -3573,7 +3606,7 @@ stable
 as $$
   select lm.id, p.id, p.username, p.tier_idx, p.div_idx,
          greatest(0, (extract(epoch from lm.expires_at - now()) * 1000)::int),
-         lm.ranked, p.avatar_url
+         lm.ranked, p.avatar_url, p.xp
     from live_matches lm
     join profiles p on p.id = lm.a
    where lm.b = auth.uid()
@@ -3736,7 +3769,8 @@ returns table (
   starts_in_ms int,
   expires_in_ms int,
   their_reps int,
-  opponent_avatar text
+  opponent_avatar text,
+  opponent_xp int
 )
 language plpgsql
 security definer
@@ -3771,7 +3805,7 @@ begin
            case when m.expires_at is null then null
                 else greatest(0, (extract(epoch from m.expires_at - now()) * 1000)::int) end,
            case when i_am_a then m.b_reps else m.a_reps end,
-           p.avatar_url
+           p.avatar_url, p.xp
       from profiles p
      where p.id = case when i_am_a then m.b else m.a end;
 end;
@@ -4095,6 +4129,70 @@ grant execute on function finish_live_match(uuid, int, int, real, boolean, int, 
 revoke all on function live_match_result(uuid) from public, anon;
 grant execute on function live_match_result(uuid) to authenticated;
 
+-- ──────────────────────────────────── XP ─────────────────────────────────────
+
+-- Twenty XP for every match played, won or lost, ranked or friendly; the reps
+-- themselves arrive with each set (count_reps_of_set, schema.sql). The side
+-- of a duel that was only raced — a stored set somebody else took on — did
+-- not play it, and is paid nothing for it. Deferred, as season_points is: a
+-- live match names its duel only after the duel is written.
+create or replace function xp_for_duel()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  d duels;
+begin
+  select * into d from duels where id = new.id;
+  if d.id is null then
+    return null;
+  end if;
+  perform set_config('outrepd.settling', 'on', true);
+  update profiles set xp = xp + 20 where id = d.challenger;
+  if exists (select 1 from live_matches m where m.duel = d.id) then
+    update profiles set xp = xp + 20 where id = d.defender;
+  end if;
+  perform set_config('outrepd.settling', 'off', true);
+  return null;
+end;
+$$;
+
+drop trigger if exists duels_xp on duels;
+create constraint trigger duels_xp
+  after insert on duels
+  deferrable initially deferred
+  for each row execute function xp_for_duel();
+
+revoke all on function xp_for_duel() from public, anon, authenticated;
+
+-- Accounts from before XP: what they would have earned, worked out from what
+-- is kept — every rep of every set, and twenty for every match played. The
+-- same sum the triggers keep, so running it again changes nothing. In a block
+-- of its own, so the guard on profiles reads the flag for this update alone.
+do $$
+begin
+  perform set_config('outrepd.settling', 'on', true);
+  with earned as (
+    select p.id,
+           p.total_reps + 20 * (
+             (select count(*) from duels d where d.challenger = p.id)
+             + (select count(*) from duels d
+                  join live_matches m on m.duel = d.id
+                 where d.defender = p.id)
+           )::int as xp
+      from profiles p
+  )
+  update profiles p
+     set xp = earned.xp
+    from earned
+   where earned.id = p.id
+     and p.xp is distinct from earned.xp;
+  perform set_config('outrepd.settling', 'off', true);
+end;
+$$;
+
 -- ========================================================================
 -- seasons.sql
 -- ========================================================================
@@ -4350,6 +4448,8 @@ $$;
 
 -- ── the board ─────────────────────────────────────────────────────────────────
 
+-- Dropped first: xp was added to what it returns.
+drop function if exists month_board(text, int);
 create or replace function month_board(in_country text default null, limit_to int default 100)
 returns table (
   place int,
@@ -4360,7 +4460,8 @@ returns table (
   points int,
   wins int,
   played int,
-  avatar_url text
+  avatar_url text,
+  xp int
 )
 language plpgsql
 security definer
@@ -4376,7 +4477,7 @@ begin
   return query
   select (row_number() over (order by sp.points desc, sp.wins desc, p.username))::int,
          p.id, p.username, p.tier_idx, p.div_idx, sp.points, sp.wins,
-         sp.played, p.avatar_url
+         sp.played, p.avatar_url, p.xp
     from season_points sp
     join profiles p on p.id = sp.profile_id
    where sp.season = season_of(now())
@@ -4491,6 +4592,7 @@ as $$
    group by s.pid;
 $$;
 
+drop function if exists week_board(text, int);
 create or replace function week_board(in_country text default null, limit_to int default 100)
 returns table (
   place int,
@@ -4501,7 +4603,8 @@ returns table (
   points int,
   wins int,
   played int,
-  avatar_url text
+  avatar_url text,
+  xp int
 )
 language sql
 stable
@@ -4510,7 +4613,7 @@ set search_path = public
 as $$
   select (row_number() over (order by w.points desc, w.wins desc, p.username))::int,
          p.id, p.username, p.tier_idx, p.div_idx, w.points, w.wins, w.played,
-         p.avatar_url
+         p.avatar_url, p.xp
     from week_points(week_start(now())) w
     join profiles p on p.id = w.profile_id
    where p.placements_done >= 5

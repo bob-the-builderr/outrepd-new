@@ -144,7 +144,8 @@ returns table (
   opponent_name text,
   opponent_tier int,
   opponent_div int,
-  opponent_avatar text
+  opponent_avatar text,
+  opponent_xp int
 )
 language plpgsql
 security definer
@@ -189,7 +190,8 @@ begin
   if paired.id is not null then
     delete from live_queue where live_queue.profile_id = me.id;
     return query
-      select paired.id, p.id, p.username, p.tier_idx, p.div_idx, p.avatar_url
+      select paired.id, p.id, p.username, p.tier_idx, p.div_idx, p.avatar_url,
+             p.xp
         from profiles p where p.id = paired.a;
     return;
   end if;
@@ -230,7 +232,8 @@ begin
             now() + interval '75 seconds')
     returning * into paired;
     return query
-      select paired.id, p.id, p.username, p.tier_idx, p.div_idx, p.avatar_url
+      select paired.id, p.id, p.username, p.tier_idx, p.div_idx, p.avatar_url,
+             p.xp
         from profiles p where p.id = waiting.profile_id;
     return;
   end if;
@@ -339,7 +342,8 @@ returns table (
   from_div int,
   expires_in_ms int,
   ranked boolean,
-  from_avatar text
+  from_avatar text,
+  from_xp int
 )
 language sql
 security definer
@@ -348,7 +352,7 @@ stable
 as $$
   select lm.id, p.id, p.username, p.tier_idx, p.div_idx,
          greatest(0, (extract(epoch from lm.expires_at - now()) * 1000)::int),
-         lm.ranked, p.avatar_url
+         lm.ranked, p.avatar_url, p.xp
     from live_matches lm
     join profiles p on p.id = lm.a
    where lm.b = auth.uid()
@@ -511,7 +515,8 @@ returns table (
   starts_in_ms int,
   expires_in_ms int,
   their_reps int,
-  opponent_avatar text
+  opponent_avatar text,
+  opponent_xp int
 )
 language plpgsql
 security definer
@@ -546,7 +551,7 @@ begin
            case when m.expires_at is null then null
                 else greatest(0, (extract(epoch from m.expires_at - now()) * 1000)::int) end,
            case when i_am_a then m.b_reps else m.a_reps end,
-           p.avatar_url
+           p.avatar_url, p.xp
       from profiles p
      where p.id = case when i_am_a then m.b else m.a end;
 end;
@@ -869,3 +874,67 @@ revoke all on function finish_live_match(uuid, int, int, real, boolean, int, boo
 grant execute on function finish_live_match(uuid, int, int, real, boolean, int, boolean, int[]) to authenticated;
 revoke all on function live_match_result(uuid) from public, anon;
 grant execute on function live_match_result(uuid) to authenticated;
+
+-- ──────────────────────────────────── XP ─────────────────────────────────────
+
+-- Twenty XP for every match played, won or lost, ranked or friendly; the reps
+-- themselves arrive with each set (count_reps_of_set, schema.sql). The side
+-- of a duel that was only raced — a stored set somebody else took on — did
+-- not play it, and is paid nothing for it. Deferred, as season_points is: a
+-- live match names its duel only after the duel is written.
+create or replace function xp_for_duel()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  d duels;
+begin
+  select * into d from duels where id = new.id;
+  if d.id is null then
+    return null;
+  end if;
+  perform set_config('outrepd.settling', 'on', true);
+  update profiles set xp = xp + 20 where id = d.challenger;
+  if exists (select 1 from live_matches m where m.duel = d.id) then
+    update profiles set xp = xp + 20 where id = d.defender;
+  end if;
+  perform set_config('outrepd.settling', 'off', true);
+  return null;
+end;
+$$;
+
+drop trigger if exists duels_xp on duels;
+create constraint trigger duels_xp
+  after insert on duels
+  deferrable initially deferred
+  for each row execute function xp_for_duel();
+
+revoke all on function xp_for_duel() from public, anon, authenticated;
+
+-- Accounts from before XP: what they would have earned, worked out from what
+-- is kept — every rep of every set, and twenty for every match played. The
+-- same sum the triggers keep, so running it again changes nothing. In a block
+-- of its own, so the guard on profiles reads the flag for this update alone.
+do $$
+begin
+  perform set_config('outrepd.settling', 'on', true);
+  with earned as (
+    select p.id,
+           p.total_reps + 20 * (
+             (select count(*) from duels d where d.challenger = p.id)
+             + (select count(*) from duels d
+                  join live_matches m on m.duel = d.id
+                 where d.defender = p.id)
+           )::int as xp
+      from profiles p
+  )
+  update profiles p
+     set xp = earned.xp
+    from earned
+   where earned.id = p.id
+     and p.xp is distinct from earned.xp;
+  perform set_config('outrepd.settling', 'off', true);
+end;
+$$;

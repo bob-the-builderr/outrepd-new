@@ -735,5 +735,14 @@
   "weekToTop3": "{n} LP para el top 3",
   "boardActiveNote": "Jugadores activos en los últimos 30 días",
   "boardTieNote": "empates: más victorias primero",
-  "lpBreakdown": "{reps} por las repeticiones · {adjust} por un rival {rank}"
+  "lpBreakdown": "{reps} por las repeticiones · {adjust} por un rival {rank}",
+  "levelShort": "Nv. {n}",
+  "xpOf": "{into} / {span} XP",
+  "xpToLevel": "{n} XP para el nivel {level}",
+  "xpHow": "{rep} XP por repetición, {match} por duelo",
+  "xpGained": "+{n} XP",
+  "xpForReps": "{n} por las repeticiones",
+  "xpForMatch": "{n} por el duelo",
+  "levelUp": "Subes de nivel",
+  "levelUpBody": "Cada repetición cuenta. Sigue así."
 }

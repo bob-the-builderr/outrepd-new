@@ -141,6 +141,9 @@ class SupabaseBackend implements Backend {
           'gave_up': set.gaveUp,
           'rep_times': set.repTimes,
           'challenge_target': set.challengeTarget,
+          // Only when it is one: a server from before practice was stored
+          // has no such column, and refuses a row naming it.
+          if (set.practice) 'practice': true,
         })
         .select('id')
         .single();
@@ -178,6 +181,7 @@ class SupabaseBackend implements Backend {
           (t as num).toInt(),
       ],
       avatarUrl: row['avatar_url'] as String?,
+      xp: (row['xp'] as num?)?.toInt() ?? 0,
     );
   }
 
@@ -271,6 +275,7 @@ class SupabaseBackend implements Backend {
           wins: (row['wins'] as num?)?.toInt() ?? 0,
           losses: (row['losses'] as num?)?.toInt() ?? 0,
           avatarUrl: row['avatar_url'] as String?,
+          xp: (row['xp'] as num?)?.toInt() ?? 0,
         ),
     ];
   }
@@ -326,6 +331,7 @@ class SupabaseBackend implements Backend {
           wins: (row['wins'] as num?)?.toInt() ?? 0,
           played: (row['played'] as num?)?.toInt() ?? 0,
           avatarUrl: row['avatar_url'] as String?,
+          xp: (row['xp'] as num?)?.toInt() ?? 0,
         ),
     ];
   }
@@ -434,6 +440,7 @@ class SupabaseBackend implements Backend {
       lastTheirReps: (row['last_their_reps'] as num?)?.toInt(),
       avatarUrl: row['avatar_url'] as String?,
       title: row['title'] as String?,
+      xp: (row['xp'] as num?)?.toInt() ?? 0,
     );
   }
 
@@ -457,6 +464,7 @@ class SupabaseBackend implements Backend {
           winsVsYou: (row['wins_vs_you'] as num?)?.toInt() ?? 0,
           lossesVsYou: (row['losses_vs_you'] as num?)?.toInt() ?? 0,
           avatarUrl: row['avatar_url'] as String?,
+          xp: (row['xp'] as num?)?.toInt() ?? 0,
         ),
     ];
   }
@@ -1074,6 +1082,7 @@ class SupabaseBackend implements Backend {
         tierIdx: (row['${prefix}_tier'] as num?)?.toInt() ?? 0,
         divIdx: (row['${prefix}_div'] as num?)?.toInt() ?? 0,
         avatarUrl: row['${prefix}_avatar'] as String?,
+        xp: (row['${prefix}_xp'] as num?)?.toInt() ?? 0,
       );
 
   static Duration? _ms(Object? value) =>
@@ -1337,6 +1346,7 @@ class SupabaseBackend implements Backend {
     country: row['country'] as String?,
     prefs: _prefsFrom(row),
     avatarUrl: row['avatar_url'] as String?,
+    xp: (row['xp'] as num?)?.toInt() ?? 0,
     usernameChangedAt: DateTime.tryParse(
       row['username_changed_at'] as String? ?? '',
     ),

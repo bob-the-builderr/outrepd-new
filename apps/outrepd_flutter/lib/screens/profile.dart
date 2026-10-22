@@ -33,6 +33,7 @@ import '../widgets.dart';
 import '../worn_title.dart';
 import 'avatar_picker.dart';
 import 'awards.dart';
+import 'level.dart';
 import 'match_history.dart';
 import 'progression.dart';
 import 'ranks.dart' show kBoardFreshFor;
@@ -168,6 +169,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onTapRank: () => _open(ProgressionScreen(profile: p)),
             ),
             const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: XpCard(xp: p.xp),
+            ),
+            const SizedBox(height: 9),
             _RankCards(
               profile: p,
               global: _globalPosition,

@@ -735,5 +735,14 @@
   "weekToTop3": "トップ3まであと{n} LP",
   "boardActiveNote": "過去30日間にプレイした人",
   "boardTieNote": "同点なら勝利数が多い方が上",
-  "lpBreakdown": "回数差で{reps} · {rank}の相手で{adjust}"
+  "lpBreakdown": "回数差で{reps} · {rank}の相手で{adjust}",
+  "levelShort": "Lv.{n}",
+  "xpOf": "{into} / {span} XP",
+  "xpToLevel": "レベル {level} まであと {n} XP",
+  "xpHow": "1回ごとに {rep} XP、マッチごとに {match}",
+  "xpGained": "+{n} XP",
+  "xpForReps": "回数で {n}",
+  "xpForMatch": "マッチで {n}",
+  "levelUp": "レベルアップ",
+  "levelUpBody": "1回1回が積み重なる。この調子で。"
 }

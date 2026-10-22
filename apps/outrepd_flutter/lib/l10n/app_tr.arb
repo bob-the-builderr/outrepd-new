@@ -735,5 +735,14 @@
   "weekToTop3": "İlk 3'e {n} LP",
   "boardActiveNote": "Son 30 günde aktif oyuncular",
   "boardTieNote": "eşitlikte: daha çok galibiyet önde",
-  "lpBreakdown": "Tekrarlar için {reps} · {rank} rakip için {adjust}"
+  "lpBreakdown": "Tekrarlar için {reps} · {rank} rakip için {adjust}",
+  "levelShort": "Sv. {n}",
+  "xpOf": "{into} / {span} XP",
+  "xpToLevel": "Seviye {level} için {n} XP",
+  "xpHow": "Tekrar başına {rep} XP, düello başına {match}",
+  "xpGained": "+{n} XP",
+  "xpForReps": "Tekrarlar için {n}",
+  "xpForMatch": "Düello için {n}",
+  "levelUp": "Seviye atladın",
+  "levelUpBody": "Her tekrar sayılır. Devam et."
 }

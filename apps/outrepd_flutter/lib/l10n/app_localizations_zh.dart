@@ -2373,4 +2373,45 @@ class LZh extends L {
   String lpBreakdown(String reps, String adjust, String rank) {
     return '次数差 ${reps} · ${rank} 对手 ${adjust}';
   }
+
+  @override
+  String levelShort(String n) {
+    return 'Lv.${n}';
+  }
+
+  @override
+  String xpOf(String into, String span) {
+    return '${into} / ${span} XP';
+  }
+
+  @override
+  String xpToLevel(String n, String level) {
+    return '距等级 ${level} 还差 ${n} XP';
+  }
+
+  @override
+  String xpHow(String rep, String match) {
+    return '每次 ${rep} XP，每场对决 ${match}';
+  }
+
+  @override
+  String xpGained(String n) {
+    return '+${n} XP';
+  }
+
+  @override
+  String xpForReps(String n) {
+    return '次数 ${n}';
+  }
+
+  @override
+  String xpForMatch(String n) {
+    return '对决 ${n}';
+  }
+
+  @override
+  String get levelUp => '升级';
+
+  @override
+  String get levelUpBody => '每一次都算数。继续加油。';
 }

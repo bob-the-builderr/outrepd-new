@@ -103,6 +103,7 @@ class RemoteProfile {
     this.placementWins = 0,
     this.totalReps = 0,
     this.bestSet = 0,
+    this.xp = 0,
   });
 
   final String id;
@@ -110,6 +111,9 @@ class RemoteProfile {
   final int tierIdx;
   final int divIdx;
   final int lp;
+
+  /// Experience: every rep and every match played (xp.dart).
+  final int xp;
 
   /// Assigned by the server once, at sign-up — see the comment on the
   /// friend_code column in schema.sql.
@@ -169,6 +173,7 @@ class RemoteProfile {
     int? placementWins,
     int? totalReps,
     int? bestSet,
+    int? xp,
   }) => RemoteProfile(
     id: id,
     username: username ?? this.username,
@@ -189,6 +194,7 @@ class RemoteProfile {
     placementWins: placementWins ?? this.placementWins,
     totalReps: totalReps ?? this.totalReps,
     bestSet: bestSet ?? this.bestSet,
+    xp: xp ?? this.xp,
   );
 }
 
@@ -262,6 +268,7 @@ class BoardRow {
     required this.wins,
     required this.losses,
     this.avatarUrl,
+    this.xp = 0,
   });
 
   final String id;
@@ -272,6 +279,7 @@ class BoardRow {
   final int wins;
   final int losses;
   final String? avatarUrl;
+  final int xp;
 }
 
 /// One row of this month's board.
@@ -289,6 +297,7 @@ class MonthRow {
     required this.wins,
     required this.played,
     this.avatarUrl,
+    this.xp = 0,
   });
 
   final int place;
@@ -300,6 +309,7 @@ class MonthRow {
   final int wins;
   final int played;
   final String? avatarUrl;
+  final int xp;
 }
 
 /// Where this account stands in the month that is running, and when it ends.
@@ -385,6 +395,7 @@ class LifterProfile {
     this.lastTheirReps,
     this.avatarUrl,
     this.title,
+    this.xp = 0,
   });
 
   final String id;
@@ -424,6 +435,8 @@ class LifterProfile {
   /// The id of the title they wear, or null for none.
   final String? title;
 
+  final int xp;
+
   bool get ranked => placementsDone >= 5;
   bool get hasPlayedThem => lastDuelAt != null;
 }
@@ -441,6 +454,7 @@ class RemoteFriend {
     required this.winsVsYou,
     required this.lossesVsYou,
     this.avatarUrl,
+    this.xp = 0,
   });
 
   final String id;
@@ -448,6 +462,7 @@ class RemoteFriend {
   final int tierIdx;
   final int divIdx;
   final int lp;
+  final int xp;
 
   /// Below five they have no rank yet, and a row must say "Unranked" rather
   /// than read their placeholder tier as a rank.
@@ -570,6 +585,7 @@ class LiveOpponent {
     required this.tierIdx,
     required this.divIdx,
     this.avatarUrl,
+    this.xp = 0,
   });
 
   final String id;
@@ -579,6 +595,7 @@ class LiveOpponent {
 
   /// Their uploaded picture, or null for the drawn initial.
   final String? avatarUrl;
+  final int xp;
 }
 
 /// A live match this account is in: both lifters on camera at once.
@@ -965,10 +982,12 @@ class OpponentSet {
     required this.reps,
     this.repTimes = const [],
     this.avatarUrl,
+    this.xp = 0,
   });
 
   /// Their uploaded picture, or null for the drawn initial.
   final String? avatarUrl;
+  final int xp;
 
   final String setId;
   final String profileId;
@@ -1048,6 +1067,7 @@ class SetUpload {
     this.gaveUp = false,
     this.repTimes = const [],
     this.challengeTarget,
+    this.practice = false,
   });
 
   /// When each rep landed, milliseconds from the start of the set. Read off
@@ -1066,6 +1086,10 @@ class SetUpload {
   /// find with [Backend.findTargetedOpponent], not for the open pool
   /// [Backend.findOpponent] hands out from.
   final String? challengeTarget;
+
+  /// A practice minute: stored for the totals and the experience it adds,
+  /// never offered to anybody to race.
+  final bool practice;
 }
 
 abstract interface class Backend {

@@ -284,7 +284,8 @@ returns table (
   last_seen timestamptz,
   wins_vs_you int,
   losses_vs_you int,
-  avatar_url text
+  avatar_url text,
+  xp int
 )
 language sql
 stable
@@ -309,14 +310,15 @@ as $$
          -- exactly the ones the caller was part of without needing to say so.
          coalesce(count(*) filter (where d.winner = p.id), 0)::int,
          coalesce(count(*) filter (where d.winner = auth.uid()), 0)::int,
-         p.avatar_url
+         p.avatar_url,
+         p.xp
     from mine
     join profiles p on p.id = mine.friend_id
     left join duels d
       on (d.challenger = auth.uid() and d.defender = p.id)
       or (d.defender = auth.uid() and d.challenger = p.id)
    group by p.id, p.username, p.tier_idx, p.div_idx, p.lp,
-            p.placements_done, p.last_seen, p.avatar_url
+            p.placements_done, p.last_seen, p.avatar_url, p.xp
    order by p.last_seen desc;
 $$;
 
@@ -541,6 +543,8 @@ $$;
 -- "ranked within your tier" list, where everybody on it is already level
 -- with everybody else, and lp is what is left to tell them apart.
 drop function if exists leaderboard(text, int);
+-- And the one before xp was in what it returns.
+drop function if exists leaderboard(text, int, int, int);
 create or replace function leaderboard(
   in_country text default null,
   limit_to int default 100,
@@ -555,7 +559,8 @@ returns table (
   lp int,
   wins int,
   losses int,
-  avatar_url text
+  avatar_url text,
+  xp int
 )
 language sql
 stable
@@ -563,7 +568,7 @@ security definer
 set search_path = public
 as $$
   select p.id, p.username, p.tier_idx, p.div_idx, p.lp, p.wins, p.losses,
-         p.avatar_url
+         p.avatar_url, p.xp
     from profiles p
    where p.placements_done >= 5
      and p.show_on_board
@@ -677,7 +682,8 @@ returns table (
   last_your_reps int,
   last_their_reps int,
   avatar_url text,
-  title text
+  title text,
+  xp int
 )
 language plpgsql
 security definer
@@ -732,7 +738,8 @@ begin
     (select your_reps from last),
     (select their_reps from last),
     p.avatar_url,
-    p.title
+    p.title,
+    p.xp
   from profiles p
   where p.id = their_id;
 end;
