@@ -304,7 +304,6 @@
   "tdesc_the_gym_knows": "Cinquante amis",
   "forfeitQ": "Abandonner le duel ?",
   "forfeitBody": "Vous perdrez des PL si vous partez maintenant.",
-  "stay": "Rester",
   "forfeit": "Abandonner",
   "getReady": "PRÊT",
   "you": "VOUS",
@@ -744,5 +743,9 @@
   "xpForReps": "{n} pour les répétitions",
   "xpForMatch": "{n} pour le duel",
   "levelUp": "Niveau supérieur",
-  "levelUpBody": "Chaque répétition compte. Continue."
+  "levelUpBody": "Chaque répétition compte. Continue.",
+  "giveUpAhead": "Tu as {n} d'avance",
+  "giveUpBehind": "Tu as {n} de retard",
+  "giveUpTied": "Égalité",
+  "keepGoing": "Continuer"
 }

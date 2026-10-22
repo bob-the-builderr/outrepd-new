@@ -304,7 +304,6 @@
   "tdesc_the_gym_knows": "पचास दोस्त",
   "forfeitQ": "मैच छोड़ें?",
   "forfeitBody": "अभी निकले तो आप LP गँवा देंगे।",
-  "stay": "रुकें",
   "forfeit": "हार मानें",
   "getReady": "तैयार हो जाइए",
   "you": "आप",
@@ -744,5 +743,9 @@
   "xpForReps": "रेप्स के लिए {n}",
   "xpForMatch": "मुक़ाबले के लिए {n}",
   "levelUp": "लेवल अप",
-  "levelUpBody": "हर रेप मायने रखता है। लगे रहो।"
+  "levelUpBody": "हर रेप मायने रखता है। लगे रहो।",
+  "giveUpAhead": "आप {n} आगे हैं",
+  "giveUpBehind": "आप {n} पीछे हैं",
+  "giveUpTied": "बराबरी",
+  "keepGoing": "जारी रखें"
 }

@@ -304,7 +304,6 @@
   "tdesc_the_gym_knows": "친구 50명",
   "forfeitQ": "대결을 기권할까요?",
   "forfeitBody": "지금 나가면 LP를 잃습니다.",
-  "stay": "남기",
   "forfeit": "기권",
   "getReady": "준비",
   "you": "나",
@@ -744,5 +743,9 @@
   "xpForReps": "횟수로 {n}",
   "xpForMatch": "대결로 {n}",
   "levelUp": "레벨 업",
-  "levelUpBody": "한 번 한 번이 쌓여요. 계속 가요."
+  "levelUpBody": "한 번 한 번이 쌓여요. 계속 가요.",
+  "giveUpAhead": "{n}개 앞서고 있어요",
+  "giveUpBehind": "{n}개 뒤지고 있어요",
+  "giveUpTied": "동점",
+  "keepGoing": "계속하기"
 }

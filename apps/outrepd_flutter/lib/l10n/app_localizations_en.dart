@@ -897,9 +897,6 @@ class LEn extends L {
   String get forfeitBody => 'You will lose LP if you leave now.';
 
   @override
-  String get stay => 'Stay';
-
-  @override
   String get forfeit => 'Forfeit';
 
   @override
@@ -2460,4 +2457,20 @@ class LEn extends L {
 
   @override
   String get levelUpBody => 'Every rep counts. Keep going.';
+
+  @override
+  String giveUpAhead(String n) {
+    return 'You\'re ${n} ahead';
+  }
+
+  @override
+  String giveUpBehind(String n) {
+    return 'You\'re ${n} behind';
+  }
+
+  @override
+  String get giveUpTied => 'Tied';
+
+  @override
+  String get keepGoing => 'Keep going';
 }

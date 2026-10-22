@@ -898,9 +898,6 @@ class LRu extends L {
   String get forfeitBody => 'Если выйти сейчас, вы потеряете очки.';
 
   @override
-  String get stay => 'Остаться';
-
-  @override
   String get forfeit => 'Сдаться';
 
   @override
@@ -2462,4 +2459,20 @@ class LRu extends L {
 
   @override
   String get levelUpBody => 'Каждое повторение на счету. Так держать.';
+
+  @override
+  String giveUpAhead(String n) {
+    return 'Ты впереди на ${n}';
+  }
+
+  @override
+  String giveUpBehind(String n) {
+    return 'Ты отстаёшь на ${n}';
+  }
+
+  @override
+  String get giveUpTied => 'Ничья';
+
+  @override
+  String get keepGoing => 'Продолжить';
 }

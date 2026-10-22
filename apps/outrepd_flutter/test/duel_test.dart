@@ -251,8 +251,14 @@ void main() {
       await tester.tap(find.byKey(const Key('stopButton')));
       await tester.pumpAndSettle();
       expect(find.text('Give up this round?'), findsOneWidget);
+      // With the score it would throw away, and the time still on the clock.
+      final card = find.byType(Dialog);
+      expect(find.descendant(of: card, matching: find.textContaining('Tied')),
+          findsOneWidget);
+      expect(find.descendant(of: card, matching: find.textContaining('left')),
+          findsOneWidget);
 
-      await tester.tap(find.text('Stay'));
+      await tester.tap(find.byKey(const Key('keepGoing')));
       await tester.pumpAndSettle();
       expect(find.text('Give up this round?'), findsNothing);
       expect(find.text('Give up'), findsOneWidget);

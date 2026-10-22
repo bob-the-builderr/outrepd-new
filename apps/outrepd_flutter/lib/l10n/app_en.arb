@@ -355,7 +355,6 @@
   "tdesc_the_gym_knows": "Fifty friends",
   "forfeitQ": "Forfeit match?",
   "forfeitBody": "You will lose LP if you leave now.",
-  "stay": "Stay",
   "forfeit": "Forfeit",
   "getReady": "GET READY",
   "you": "You",
@@ -1623,5 +1622,23 @@
     }
   },
   "levelUp": "Level up",
-  "levelUpBody": "Every rep counts. Keep going."
+  "levelUpBody": "Every rep counts. Keep going.",
+  "giveUpAhead": "You're {n} ahead",
+  "@giveUpAhead": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "giveUpBehind": "You're {n} behind",
+  "@giveUpBehind": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "giveUpTied": "Tied",
+  "keepGoing": "Keep going"
 }

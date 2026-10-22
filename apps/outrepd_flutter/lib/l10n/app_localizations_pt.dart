@@ -901,9 +901,6 @@ class LPt extends L {
   String get forfeitBody => 'Vais perder PL se saíres agora.';
 
   @override
-  String get stay => 'Ficar';
-
-  @override
   String get forfeit => 'Desistir';
 
   @override
@@ -2464,4 +2461,20 @@ class LPt extends L {
 
   @override
   String get levelUpBody => 'Cada repetição conta. Continua.';
+
+  @override
+  String giveUpAhead(String n) {
+    return 'Estás ${n} à frente';
+  }
+
+  @override
+  String giveUpBehind(String n) {
+    return 'Estás ${n} atrás';
+  }
+
+  @override
+  String get giveUpTied => 'Empate';
+
+  @override
+  String get keepGoing => 'Continuar';
 }

@@ -304,7 +304,6 @@
   "tdesc_the_gym_knows": "Cinquanta amici",
   "forfeitQ": "Ritirarsi dalla sfida?",
   "forfeitBody": "Perderai PL se esci adesso.",
-  "stay": "Resta",
   "forfeit": "Ritirati",
   "getReady": "PRONTI",
   "you": "TU",
@@ -744,5 +743,9 @@
   "xpForReps": "{n} per le ripetizioni",
   "xpForMatch": "{n} per la sfida",
   "levelUp": "Livello superiore",
-  "levelUpBody": "Ogni ripetizione conta. Continua così."
+  "levelUpBody": "Ogni ripetizione conta. Continua così.",
+  "giveUpAhead": "Sei avanti di {n}",
+  "giveUpBehind": "Sei indietro di {n}",
+  "giveUpTied": "Pari",
+  "keepGoing": "Continua"
 }

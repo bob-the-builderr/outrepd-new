@@ -535,33 +535,12 @@ class _TrainerScreenState extends State<TrainerScreen>
   /// is easy to find, which is the point, and easy to hit by mistake, which
   /// is not: one tap used to end the round as a loss on the spot.
   Future<void> _confirmGiveUp() async {
-    final l = L.of(context);
     final sure = await showDialog<bool>(
       context: context,
-      builder: (dialog) => AlertDialog(
-        backgroundColor: _panel,
-        title: Text(
-          l.giveUpQuestion,
-          style: context.type.heading.copyWith(color: Colors.white),
-        ),
-        content: Text(
-          l.giveUpBody,
-          style: const TextStyle(color: _dim),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialog).pop(false),
-            child: Text(l.stay, style: const TextStyle(color: Colors.white)),
-          ),
-          TextButton(
-            key: const Key('confirmGiveUp'),
-            onPressed: () => Navigator.of(dialog).pop(true),
-            child: Text(
-              l.giveUp,
-              style: const TextStyle(color: _giveUpRed),
-            ),
-          ),
-        ],
+      builder: (_) => _GiveUpCard(
+        yours: () => _liveReps,
+        theirs: () => _opponentReps,
+        remaining: () => _remaining,
       ),
     );
     if (sure == true && mounted) await _stop(gaveUp: true);
@@ -1639,6 +1618,175 @@ class _StopButton extends StatelessWidget {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// What giving up throws away: the score as it stands and the time still on
+/// the clock, kept live — the round does not stop while this is open. Keep
+/// going is the big button; giving up is there, in red, and harder to hit.
+class _GiveUpCard extends StatefulWidget {
+  const _GiveUpCard({
+    required this.yours,
+    required this.theirs,
+    required this.remaining,
+  });
+
+  final int Function() yours;
+  final int Function() theirs;
+  final Duration Function() remaining;
+
+  @override
+  State<_GiveUpCard> createState() => _GiveUpCardState();
+}
+
+class _GiveUpCardState extends State<_GiveUpCard> {
+  Timer? _tick;
+  (int, int, int)? _shown;
+
+  @override
+  void initState() {
+    super.initState();
+    // Redrawn only when a number on it moves, so a card left open on a
+    // clock that is not running asks for no frames at all.
+    _tick = Timer.periodic(const Duration(milliseconds: 250), (_) {
+      if (mounted && _now != _shown) setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _tick?.cancel();
+    super.dispose();
+  }
+
+  (int, int, int) get _now =>
+      (widget.yours(), widget.theirs(), widget.remaining().inSeconds);
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final now = _shown = _now;
+    final (yours, theirs, seconds) = now;
+    final gap = yours - theirs;
+    final (status, statusColour) = gap > 0
+        ? (l.giveUpAhead(localNumber(context, gap)), AppColors.win)
+        : gap < 0
+        ? (l.giveUpBehind(localNumber(context, -gap)), context.colors.rival)
+        : (l.giveUpTied, const Color(0xFF8F8880));
+    const cream = Color(0xFFF5EFE4);
+    const muted = Color(0xFF8F8880);
+    const big = TextStyle(
+      fontSize: 46,
+      fontWeight: FontWeight.w800,
+      height: 1.1,
+      fontFeatures: [FontFeature.tabularFigures()],
+    );
+
+    return Dialog(
+      backgroundColor: const Color(0xFF121110),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
+        side: const BorderSide(color: Color(0xFF2C2926), width: 0.5),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 22, 20, 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              l.giveUpQuestion,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: cream,
+                fontSize: 24,
+                fontWeight: FontWeight.w800,
+                height: 1.2,
+              ),
+            ),
+            const SizedBox(height: 12),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                textBaseline: TextBaseline.alphabetic,
+                children: [
+                  Text(
+                    localNumber(context, yours),
+                    style: big.copyWith(color: Colors.white),
+                  ),
+                  const SizedBox(width: 14),
+                  const Text('–', style: TextStyle(color: muted, fontSize: 22)),
+                  const SizedBox(width: 14),
+                  Text(
+                    localNumber(context, theirs),
+                    style: big.copyWith(color: context.colors.rival),
+                  ),
+                ],
+              ),
+            ),
+            Text(
+              '$status · ${l.timeLeft(formatClock(context, seconds))}',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: statusColour,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              l.giveUpBody,
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: muted, fontSize: 15, height: 1.45),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton(
+                key: const Key('keepGoing'),
+                onPressed: () => Navigator.of(context).pop(false),
+                style: FilledButton.styleFrom(
+                  backgroundColor: const Color(0xFFE8DCC8),
+                  foregroundColor: const Color(0xFF121110),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: const StadiumBorder(),
+                ),
+                child: Text(
+                  l.keepGoing,
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton(
+                key: const Key('confirmGiveUp'),
+                onPressed: () => Navigator.of(context).pop(true),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: _giveUpRed,
+                  side: const BorderSide(color: _giveUpRed, width: 1.5),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: const StadiumBorder(),
+                ),
+                child: Text(
+                  l.giveUp,
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

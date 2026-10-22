@@ -876,9 +876,6 @@ class LZh extends L {
   String get forfeitBody => '现在离开会扣除 LP。';
 
   @override
-  String get stay => '留下';
-
-  @override
   String get forfeit => '认输';
 
   @override
@@ -2414,4 +2411,20 @@ class LZh extends L {
 
   @override
   String get levelUpBody => '每一次都算数。继续加油。';
+
+  @override
+  String giveUpAhead(String n) {
+    return '你领先 ${n} 个';
+  }
+
+  @override
+  String giveUpBehind(String n) {
+    return '你落后 ${n} 个';
+  }
+
+  @override
+  String get giveUpTied => '平手';
+
+  @override
+  String get keepGoing => '继续';
 }

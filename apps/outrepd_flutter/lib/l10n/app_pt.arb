@@ -304,7 +304,6 @@
   "tdesc_the_gym_knows": "Cinquenta amigos",
   "forfeitQ": "Desistir do duelo?",
   "forfeitBody": "Vais perder PL se saíres agora.",
-  "stay": "Ficar",
   "forfeit": "Desistir",
   "getReady": "PREPARA-TE",
   "you": "TU",
@@ -744,5 +743,9 @@
   "xpForReps": "{n} pelas repetições",
   "xpForMatch": "{n} pelo duelo",
   "levelUp": "Subiste de nível",
-  "levelUpBody": "Cada repetição conta. Continua."
+  "levelUpBody": "Cada repetição conta. Continua.",
+  "giveUpAhead": "Estás {n} à frente",
+  "giveUpBehind": "Estás {n} atrás",
+  "giveUpTied": "Empate",
+  "keepGoing": "Continuar"
 }

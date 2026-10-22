@@ -896,9 +896,6 @@ class LId extends L {
   String get forfeitBody => 'Anda akan kehilangan LP jika keluar sekarang.';
 
   @override
-  String get stay => 'Tetap';
-
-  @override
   String get forfeit => 'Mundur';
 
   @override
@@ -2461,4 +2458,20 @@ class LId extends L {
 
   @override
   String get levelUpBody => 'Setiap repetisi berarti. Terus lanjut.';
+
+  @override
+  String giveUpAhead(String n) {
+    return 'Kamu unggul ${n}';
+  }
+
+  @override
+  String giveUpBehind(String n) {
+    return 'Kamu tertinggal ${n}';
+  }
+
+  @override
+  String get giveUpTied => 'Seri';
+
+  @override
+  String get keepGoing => 'Lanjut';
 }

@@ -896,9 +896,6 @@ class LTr extends L {
   String get forfeitBody => 'Şimdi çıkarsanız LP kaybedersiniz.';
 
   @override
-  String get stay => 'Kal';
-
-  @override
   String get forfeit => 'Çekil';
 
   @override
@@ -2457,4 +2454,20 @@ class LTr extends L {
 
   @override
   String get levelUpBody => 'Her tekrar sayılır. Devam et.';
+
+  @override
+  String giveUpAhead(String n) {
+    return '${n} öndesin';
+  }
+
+  @override
+  String giveUpBehind(String n) {
+    return '${n} geridesin';
+  }
+
+  @override
+  String get giveUpTied => 'Berabere';
+
+  @override
+  String get keepGoing => 'Devam et';
 }

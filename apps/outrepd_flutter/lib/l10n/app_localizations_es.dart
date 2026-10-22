@@ -902,9 +902,6 @@ class LEs extends L {
   String get forfeitBody => 'Perderás PL si te vas ahora.';
 
   @override
-  String get stay => 'Quedarme';
-
-  @override
   String get forfeit => 'Abandonar';
 
   @override
@@ -2467,4 +2464,20 @@ class LEs extends L {
 
   @override
   String get levelUpBody => 'Cada repetición cuenta. Sigue así.';
+
+  @override
+  String giveUpAhead(String n) {
+    return 'Vas ${n} por delante';
+  }
+
+  @override
+  String giveUpBehind(String n) {
+    return 'Vas ${n} por detrás';
+  }
+
+  @override
+  String get giveUpTied => 'Empate';
+
+  @override
+  String get keepGoing => 'Seguir';
 }

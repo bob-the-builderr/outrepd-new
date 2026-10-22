@@ -304,7 +304,6 @@
   "tdesc_the_gym_knows": "Fünfzig Freunde",
   "forfeitQ": "Duell aufgeben?",
   "forfeitBody": "Du verlierst LP, wenn du jetzt gehst.",
-  "stay": "Bleiben",
   "forfeit": "Aufgeben",
   "getReady": "BEREIT MACHEN",
   "you": "DU",
@@ -744,5 +743,9 @@
   "xpForReps": "{n} für die Wiederholungen",
   "xpForMatch": "{n} für das Match",
   "levelUp": "Level-Up",
-  "levelUpBody": "Jede Wiederholung zählt. Weiter so."
+  "levelUpBody": "Jede Wiederholung zählt. Weiter so.",
+  "giveUpAhead": "Du liegst {n} vorn",
+  "giveUpBehind": "Du liegst {n} zurück",
+  "giveUpTied": "Gleichstand",
+  "keepGoing": "Weitermachen"
 }

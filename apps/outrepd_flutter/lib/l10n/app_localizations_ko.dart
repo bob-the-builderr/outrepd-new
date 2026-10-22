@@ -880,9 +880,6 @@ class LKo extends L {
   String get forfeitBody => '지금 나가면 LP를 잃습니다.';
 
   @override
-  String get stay => '남기';
-
-  @override
   String get forfeit => '기권';
 
   @override
@@ -2430,4 +2427,20 @@ class LKo extends L {
 
   @override
   String get levelUpBody => '한 번 한 번이 쌓여요. 계속 가요.';
+
+  @override
+  String giveUpAhead(String n) {
+    return '${n}개 앞서고 있어요';
+  }
+
+  @override
+  String giveUpBehind(String n) {
+    return '${n}개 뒤지고 있어요';
+  }
+
+  @override
+  String get giveUpTied => '동점';
+
+  @override
+  String get keepGoing => '계속하기';
 }

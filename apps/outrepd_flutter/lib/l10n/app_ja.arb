@@ -304,7 +304,6 @@
   "tdesc_the_gym_knows": "フレンド50人",
   "forfeitQ": "マッチを棄権しますか？",
   "forfeitBody": "いま抜けると LP を失います。",
-  "stay": "残る",
   "forfeit": "棄権",
   "getReady": "準備",
   "you": "あなた",
@@ -744,5 +743,9 @@
   "xpForReps": "回数で {n}",
   "xpForMatch": "マッチで {n}",
   "levelUp": "レベルアップ",
-  "levelUpBody": "1回1回が積み重なる。この調子で。"
+  "levelUpBody": "1回1回が積み重なる。この調子で。",
+  "giveUpAhead": "{n}回リード中",
+  "giveUpBehind": "{n}回ビハインド",
+  "giveUpTied": "同点",
+  "keepGoing": "続ける"
 }

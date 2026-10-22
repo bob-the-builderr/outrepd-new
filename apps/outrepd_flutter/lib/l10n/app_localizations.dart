@@ -1817,12 +1817,6 @@ abstract class L {
   /// **'You will lose LP if you leave now.'**
   String get forfeitBody;
 
-  /// No description provided for @stay.
-  ///
-  /// In en, this message translates to:
-  /// **'Stay'**
-  String get stay;
-
   /// No description provided for @forfeit.
   ///
   /// In en, this message translates to:
@@ -4462,6 +4456,30 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Every rep counts. Keep going.'**
   String get levelUpBody;
+
+  /// No description provided for @giveUpAhead.
+  ///
+  /// In en, this message translates to:
+  /// **'You're {n} ahead'**
+  String giveUpAhead(String n);
+
+  /// No description provided for @giveUpBehind.
+  ///
+  /// In en, this message translates to:
+  /// **'You're {n} behind'**
+  String giveUpBehind(String n);
+
+  /// No description provided for @giveUpTied.
+  ///
+  /// In en, this message translates to:
+  /// **'Tied'**
+  String get giveUpTied;
+
+  /// No description provided for @keepGoing.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep going'**
+  String get keepGoing;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

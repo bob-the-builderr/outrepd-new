@@ -304,7 +304,6 @@
   "tdesc_the_gym_knows": "Elli arkadaş",
   "forfeitQ": "Maçtan çekilinsin mi?",
   "forfeitBody": "Şimdi çıkarsanız LP kaybedersiniz.",
-  "stay": "Kal",
   "forfeit": "Çekil",
   "getReady": "HAZIR OL",
   "you": "SİZ",
@@ -744,5 +743,9 @@
   "xpForReps": "Tekrarlar için {n}",
   "xpForMatch": "Düello için {n}",
   "levelUp": "Seviye atladın",
-  "levelUpBody": "Her tekrar sayılır. Devam et."
+  "levelUpBody": "Her tekrar sayılır. Devam et.",
+  "giveUpAhead": "{n} öndesin",
+  "giveUpBehind": "{n} geridesin",
+  "giveUpTied": "Berabere",
+  "keepGoing": "Devam et"
 }

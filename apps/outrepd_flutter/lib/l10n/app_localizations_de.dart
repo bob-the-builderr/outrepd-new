@@ -901,9 +901,6 @@ class LDe extends L {
   String get forfeitBody => 'Du verlierst LP, wenn du jetzt gehst.';
 
   @override
-  String get stay => 'Bleiben';
-
-  @override
   String get forfeit => 'Aufgeben';
 
   @override
@@ -2469,4 +2466,20 @@ class LDe extends L {
 
   @override
   String get levelUpBody => 'Jede Wiederholung zählt. Weiter so.';
+
+  @override
+  String giveUpAhead(String n) {
+    return 'Du liegst ${n} vorn';
+  }
+
+  @override
+  String giveUpBehind(String n) {
+    return 'Du liegst ${n} zurück';
+  }
+
+  @override
+  String get giveUpTied => 'Gleichstand';
+
+  @override
+  String get keepGoing => 'Weitermachen';
 }

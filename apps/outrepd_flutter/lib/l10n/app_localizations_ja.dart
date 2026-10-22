@@ -879,9 +879,6 @@ class LJa extends L {
   String get forfeitBody => 'いま抜けると LP を失います。';
 
   @override
-  String get stay => '残る';
-
-  @override
   String get forfeit => '棄権';
 
   @override
@@ -2424,4 +2421,20 @@ class LJa extends L {
 
   @override
   String get levelUpBody => '1回1回が積み重なる。この調子で。';
+
+  @override
+  String giveUpAhead(String n) {
+    return '${n}回リード中';
+  }
+
+  @override
+  String giveUpBehind(String n) {
+    return '${n}回ビハインド';
+  }
+
+  @override
+  String get giveUpTied => '同点';
+
+  @override
+  String get keepGoing => '続ける';
 }

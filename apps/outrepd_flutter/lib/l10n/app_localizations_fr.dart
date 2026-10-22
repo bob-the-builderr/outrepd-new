@@ -903,9 +903,6 @@ class LFr extends L {
   String get forfeitBody => 'Vous perdrez des PL si vous partez maintenant.';
 
   @override
-  String get stay => 'Rester';
-
-  @override
   String get forfeit => 'Abandonner';
 
   @override
@@ -2468,4 +2465,20 @@ class LFr extends L {
 
   @override
   String get levelUpBody => 'Chaque répétition compte. Continue.';
+
+  @override
+  String giveUpAhead(String n) {
+    return 'Tu as ${n} d\'avance';
+  }
+
+  @override
+  String giveUpBehind(String n) {
+    return 'Tu as ${n} de retard';
+  }
+
+  @override
+  String get giveUpTied => 'Égalité';
+
+  @override
+  String get keepGoing => 'Continuer';
 }

@@ -901,9 +901,6 @@ class LIt extends L {
   String get forfeitBody => 'Perderai PL se esci adesso.';
 
   @override
-  String get stay => 'Resta';
-
-  @override
   String get forfeit => 'Ritirati';
 
   @override
@@ -2467,4 +2464,20 @@ class LIt extends L {
 
   @override
   String get levelUpBody => 'Ogni ripetizione conta. Continua così.';
+
+  @override
+  String giveUpAhead(String n) {
+    return 'Sei avanti di ${n}';
+  }
+
+  @override
+  String giveUpBehind(String n) {
+    return 'Sei indietro di ${n}';
+  }
+
+  @override
+  String get giveUpTied => 'Pari';
+
+  @override
+  String get keepGoing => 'Continua';
 }

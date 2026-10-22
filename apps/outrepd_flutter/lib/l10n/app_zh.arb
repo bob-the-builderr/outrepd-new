@@ -304,7 +304,6 @@
   "tdesc_the_gym_knows": "五十位好友",
   "forfeitQ": "认输退出？",
   "forfeitBody": "现在离开会扣除 LP。",
-  "stay": "留下",
   "forfeit": "认输",
   "getReady": "准备",
   "you": "你",
@@ -744,5 +743,9 @@
   "xpForReps": "次数 {n}",
   "xpForMatch": "对决 {n}",
   "levelUp": "升级",
-  "levelUpBody": "每一次都算数。继续加油。"
+  "levelUpBody": "每一次都算数。继续加油。",
+  "giveUpAhead": "你领先 {n} 个",
+  "giveUpBehind": "你落后 {n} 个",
+  "giveUpTied": "平手",
+  "keepGoing": "继续"
 }

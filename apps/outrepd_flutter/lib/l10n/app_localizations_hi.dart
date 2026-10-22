@@ -898,9 +898,6 @@ class LHi extends L {
   String get forfeitBody => 'अभी निकले तो आप LP गँवा देंगे।';
 
   @override
-  String get stay => 'रुकें';
-
-  @override
   String get forfeit => 'हार मानें';
 
   @override
@@ -2462,4 +2459,20 @@ class LHi extends L {
 
   @override
   String get levelUpBody => 'हर रेप मायने रखता है। लगे रहो।';
+
+  @override
+  String giveUpAhead(String n) {
+    return 'आप ${n} आगे हैं';
+  }
+
+  @override
+  String giveUpBehind(String n) {
+    return 'आप ${n} पीछे हैं';
+  }
+
+  @override
+  String get giveUpTied => 'बराबरी';
+
+  @override
+  String get keepGoing => 'जारी रखें';
 }

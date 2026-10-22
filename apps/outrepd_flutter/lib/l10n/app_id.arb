@@ -304,7 +304,6 @@
   "tdesc_the_gym_knows": "Lima puluh teman",
   "forfeitQ": "Mundur dari duel?",
   "forfeitBody": "Anda akan kehilangan LP jika keluar sekarang.",
-  "stay": "Tetap",
   "forfeit": "Mundur",
   "getReady": "BERSIAP",
   "you": "ANDA",
@@ -744,5 +743,9 @@
   "xpForReps": "{n} dari repetisi",
   "xpForMatch": "{n} dari duel",
   "levelUp": "Naik level",
-  "levelUpBody": "Setiap repetisi berarti. Terus lanjut."
+  "levelUpBody": "Setiap repetisi berarti. Terus lanjut.",
+  "giveUpAhead": "Kamu unggul {n}",
+  "giveUpBehind": "Kamu tertinggal {n}",
+  "giveUpTied": "Seri",
+  "keepGoing": "Lanjut"
 }
