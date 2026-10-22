@@ -9,7 +9,7 @@
 library;
 
 import 'dart:async';
-import 'dart:ui' as ui;
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -71,8 +71,8 @@ class _AuthEntryScreenState extends State<AuthEntryScreen>
           padding: const EdgeInsets.fromLTRB(28, 12, 28, 20),
           child: Column(
             children: [
-              // The rank is the hero: a badge with its own glow, and what
-              // the app is in two lines. Scaled down as a whole on a short
+              // The ranks are the hero — every crest on the ladder, the top
+              // one over them — and what the app is in two lines. Scaled down as a whole on a short
               // phone rather than pushing the buttons off the screen.
               Expanded(
                 child: LayoutBuilder(
@@ -84,7 +84,7 @@ class _AuthEntryScreenState extends State<AuthEntryScreen>
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const _HeroBadge(size: 200),
+                            const _HeroCrests(),
                             const SizedBox(height: 14),
                             Text(
                               l.authHeroTitle,
@@ -1132,44 +1132,52 @@ class _Field extends StatelessWidget {
   }
 }
 
-/// The entry screen's hero: the Master badge — the top of the ladder — its
-/// glow rising behind it in its own shape: blurred, tinted copies of the
-/// badge rather than a circle.
-class _HeroBadge extends StatelessWidget {
-  const _HeroBadge({required this.size});
+/// The entry screen's hero: every crest on the ladder, scattered and tilted
+/// as if tossed on a table, and the Master crest — the top of it — large in
+/// the middle over them. No glow: a blurred copy behind a crest softened its
+/// edges, and the crests are sharpest drawn as they are.
+class _HeroCrests extends StatelessWidget {
+  const _HeroCrests();
 
-  final double size;
+  static const _width = 340.0;
+  static const _height = 300.0;
 
-  static final _tier = kTiers.length - 1;
+  /// Where each crest below the top lies, by tier: its centre in the box,
+  /// its size and its tilt in degrees. Fixed, so the scatter is the same on
+  /// every phone and every launch.
+  static const _scatter = <(int, double, double, double, double)>[
+    (0, 48, 66, 74, -14),
+    (1, 292, 52, 80, 12),
+    (2, 44, 192, 84, 9),
+    (3, 296, 200, 88, -10),
+    (4, 108, 262, 70, -5),
+    (5, 236, 260, 76, 7),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    final colour = kTiers[_tier].color;
-    Widget glow(double blur, double opacity) => ImageFiltered(
-      // Decal, not clamp: clamping drew a faint disc around the crest.
-      imageFilter: ui.ImageFilter.blur(
-        sigmaX: blur,
-        sigmaY: blur,
-        tileMode: ui.TileMode.decal,
-      ),
-      child: Opacity(
-        opacity: opacity,
-        child: ColorFiltered(
-          colorFilter: ColorFilter.mode(colour, BlendMode.srcATop),
-          child: TierBadge(tierIndex: _tier, size: size),
-        ),
-      ),
-    );
+    final top = kTiers.length - 1;
+    const master = 196.0;
     return SizedBox(
-      width: size,
-      height: size,
+      width: _width,
+      height: _height,
       child: Stack(
         clipBehavior: Clip.none,
-        alignment: Alignment.center,
         children: [
-          glow(30, 0.6),
-          glow(12, 0.75),
-          TierBadge(tierIndex: _tier, size: size),
+          for (final (tier, x, y, size, tilt) in _scatter)
+            Positioned(
+              left: x - size / 2,
+              top: y - size / 2,
+              child: Transform.rotate(
+                angle: tilt * math.pi / 180,
+                child: TierBadge(tierIndex: tier, size: size),
+              ),
+            ),
+          Positioned(
+            left: (_width - master) / 2,
+            top: (_height - master) / 2,
+            child: TierBadge(tierIndex: top, size: master),
+          ),
         ],
       ),
     );
