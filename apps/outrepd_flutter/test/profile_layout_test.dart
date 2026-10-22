@@ -138,6 +138,13 @@ void main() {
 
     await tester.pumpWidget(_app(1.0, const Locale('en')));
     await tester.pumpAndSettle();
+    // Below the level card, so a short phone scrolls to it.
+    await tester.dragUntilVisible(
+      find.text('LAST 7 DAYS'),
+      find.byType(ListView).first,
+      const Offset(0, -200),
+    );
+    await tester.pumpAndSettle();
 
     expect(find.text('LAST 7 DAYS'), findsOneWidget);
     // The total is read off the log, not written into the screen.

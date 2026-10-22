@@ -1792,7 +1792,7 @@ class _Fighter extends StatelessWidget {
           ),
           if (xp case final xp?) ...[
             const SizedBox(height: 4),
-            LevelChip(xp: xp),
+            FittedBox(fit: BoxFit.scaleDown, child: LevelChip(xp: xp)),
           ],
         ],
       ),

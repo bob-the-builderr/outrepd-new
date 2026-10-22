@@ -860,17 +860,12 @@ class _Identity extends StatelessWidget {
         Row(
           children: [
             Flexible(
-              child: Text(
-                username,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+              child: NameWithLevel(
+                name: username,
+                xp: xp,
                 style: TextStyle(color: context.colors.text, fontSize: 15),
               ),
             ),
-            if (xp case final xp?) ...[
-              const SizedBox(width: 6),
-              LevelChip(xp: xp),
-            ],
             if (trailing case final chip?) ...[const SizedBox(width: 6), chip],
           ],
         ),
@@ -1147,7 +1142,7 @@ class _PodiumPlace extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 3),
-          LevelChip(xp: row.xp),
+          FittedBox(fit: BoxFit.scaleDown, child: LevelChip(xp: row.xp)),
           const SizedBox(height: 6),
           Container(
             height: block,
@@ -1385,18 +1380,15 @@ class _MonthSelfRow extends StatelessWidget {
                 Row(
                   children: [
                     Flexible(
-                      child: Text(
-                        username,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                      child: NameWithLevel(
+                        name: username,
+                        xp: demoProfile.xp,
                         style: TextStyle(
                           color: context.colors.text,
                           fontSize: 15,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 6),
-                    LevelChip(xp: demoProfile.xp),
                     const SizedBox(width: 6),
                     const _YouChip(),
                   ],

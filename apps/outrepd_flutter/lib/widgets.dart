@@ -605,6 +605,25 @@ class LevelChip extends StatelessWidget {
   final int xp;
   final double fontSize;
 
+  /// How wide the chip draws here, at this text size.
+  static double widthOf(BuildContext context, int xp, double fontSize) {
+    final painter = TextPainter(
+      text: TextSpan(
+        text: L.of(context).levelShort(localNumber(context, levelOf(xp))),
+        style: DefaultTextStyle.of(
+          context,
+        ).style.copyWith(fontSize: fontSize, fontWeight: FontWeight.w700),
+      ),
+      textDirection: Directionality.of(context),
+      textScaler: MediaQuery.textScalerOf(context),
+      maxLines: 1,
+    )..layout();
+    final width = painter.width;
+    painter.dispose();
+    // The padding and the border either side.
+    return width + 14;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -656,13 +675,25 @@ class NameWithLevel extends StatelessWidget {
     );
     final xp = this.xp;
     if (xp == null) return text;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Flexible(child: text),
-        const SizedBox(width: 6),
-        LevelChip(xp: xp, fontSize: chipFontSize),
-      ],
+    return LayoutBuilder(
+      builder: (context, box) {
+        // The chip and a few letters of the name, or the name alone: a busy
+        // row at a large text size has no room for both, and the name is
+        // what the row is for.
+        final needs =
+            LevelChip.widthOf(context, xp, chipFontSize) +
+            6 +
+            MediaQuery.textScalerOf(context).scale(36);
+        if (box.maxWidth < needs) return text;
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(child: text),
+            const SizedBox(width: 6),
+            LevelChip(xp: xp, fontSize: chipFontSize),
+          ],
+        );
+      },
     );
   }
 }
