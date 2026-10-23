@@ -255,6 +255,21 @@ class _SetupScreenState extends State<SetupScreen> {
                       setState(() => settings.update(() => settings.showSkeleton = on)),
                 ),
                 SwitchListTile(
+                  key: const Key('recordSwitch'),
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(
+                    'Film the take into Photos',
+                    style: TextStyle(color: context.colors.text, fontSize: 16),
+                  ),
+                  value: plan.record,
+                  onChanged: (on) => _change(() => plan.record = on),
+                ),
+                const _Hint(
+                  "At the screen's full resolution, with the app's sound and "
+                  'no status bar, from the countdown to the result. iOS asks '
+                  'to allow it the first time.',
+                ),
+                SwitchListTile(
                   contentPadding: EdgeInsets.zero,
                   title: Text(
                     'Sounds',

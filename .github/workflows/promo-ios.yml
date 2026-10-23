@@ -138,6 +138,7 @@ jobs:
           plutil -replace CFBundleName -string "OUTREPD Promo" "$plist"
           plutil -replace NSCameraUsageDescription -string "The match screen counts your push-ups by watching you move. Pose detection runs on this phone and nothing is uploaded." "$plist"
           plutil -replace NSPhotoLibraryUsageDescription -string "Pick the pictures shown for you and your opponent." "$plist"
+          plutil -replace NSPhotoLibraryAddUsageDescription -string "Each filmed take is saved to your Photos." "$plist"
           plutil -replace NSMicrophoneUsageDescription -string "No sound is ever recorded. The camera is used for pictures of your movement only." "$plist"
           plutil -replace ITSAppUsesNonExemptEncryption -bool NO "$plist"
           plutil -replace UISupportedInterfaceOrientations -json '["UIInterfaceOrientationPortrait"]' "$plist"

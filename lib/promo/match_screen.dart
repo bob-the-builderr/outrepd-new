@@ -6,6 +6,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:promo_recorder/promo_recorder.dart';
 
 import '../backend/backend.dart';
 import '../l10n/app_localizations.dart';
@@ -29,11 +31,49 @@ ImageProvider? photoOf(String? path) {
   return FileImage(File(path));
 }
 
-/// The round, then its result, for as long as Rematch is pressed.
+/// Films a take when the plan asks, the status bar put away first so the film
+/// is the app and nothing else. Says so when iOS will not let it.
+Future<bool> _startFilming(ScaffoldMessengerState messenger) async {
+  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+  try {
+    await PromoRecorder.start();
+    return true;
+  } on MissingPluginException {
+    // No recorder on this platform: the tests, or a build without it.
+  } on PlatformException catch (e) {
+    messenger.showSnackBar(
+      SnackBar(content: Text('Not filming: ${e.message ?? e.code}')),
+    );
+  }
+  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  return false;
+}
+
+/// Stops filming and says whether the take reached Photos.
+Future<void> _stopFilming(ScaffoldMessengerState messenger) async {
+  try {
+    if (await PromoRecorder.stop()) {
+      messenger.showSnackBar(const SnackBar(content: Text('Saved to Photos')));
+    }
+  } on MissingPluginException {
+    // Nothing was filming.
+  } on PlatformException catch (e) {
+    messenger.showSnackBar(
+      SnackBar(content: Text('Not saved: ${e.message ?? e.code}')),
+    );
+  } finally {
+    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  }
+}
+
+/// The round, then its result, for as long as Rematch is pressed. Each take
+/// filmed on its own, from before the countdown to the result left behind.
 Future<void> playPromoMatch(BuildContext context, PromoPlan plan) async {
   final navigator = Navigator.of(context);
+  final messenger = ScaffoldMessenger.of(context);
   final l = L.of(context);
   while (true) {
+    final filming = plan.record && await _startFilming(messenger);
     final promo = PromoBackend(plan);
     backend = promo;
     final session = LiveSession(
@@ -72,7 +112,10 @@ Future<void> playPromoMatch(BuildContext context, PromoPlan plan) async {
     unawaited(session.close());
     backend = const NoBackend();
     // Back out of the camera, or nobody there: straight back to the setup.
-    if (count == null) return;
+    if (count == null) {
+      if (filming) await _stopFilming(messenger);
+      return;
+    }
 
     final again = await navigator.push<bool>(
       MaterialPageRoute(
@@ -84,6 +127,7 @@ Future<void> playPromoMatch(BuildContext context, PromoPlan plan) async {
         ),
       ),
     );
+    if (filming) await _stopFilming(messenger);
     if (again != true) return;
   }
 }

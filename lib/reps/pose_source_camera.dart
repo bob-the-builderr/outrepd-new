@@ -130,9 +130,9 @@ class CameraPoseSource implements PoseSource {
 
     final controller = CameraController(
       camera,
-      // Detection accuracy plateaus well below full resolution, and a smaller
-      // frame is the difference between 30fps and a slideshow on a mid phone.
-      ResolutionPreset.medium,
+      // The promo copy films what this shows, so it is sharp first: the app's
+      // own medium is 640x480 stretched to the whole screen.
+      ResolutionPreset.veryHigh,
       enableAudio: false,
       imageFormatGroup:
           Platform.isAndroid ? ImageFormatGroup.nv21 : ImageFormatGroup.bgra8888,

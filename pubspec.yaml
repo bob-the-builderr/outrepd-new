@@ -26,6 +26,9 @@ dependencies:
   clock: ^1.1.2
   wakelock_plus: ^1.8.0
   audioplayers: ^6.5.0
+  # Films the take itself into Photos (packages/promo_recorder).
+  promo_recorder:
+    path: packages/promo_recorder
 
 dev_dependencies:
   flutter_test:

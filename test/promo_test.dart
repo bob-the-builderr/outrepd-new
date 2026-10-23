@@ -80,6 +80,13 @@ void main() {
   }
 
   group('the plan', () {
+    test('films each take unless told not to, and keeps the choice', () {
+      expect(PromoPlan().record, isTrue);
+      expect(PromoPlan.fromJson(const {}).record, isTrue);
+      expect(PromoPlan.fromJson(const {'record': false}).record, isFalse);
+      expect(PromoPlan(record: false).toJson()['record'], isFalse);
+    });
+
     test('a final count is paced across the minute, quick then slower', () {
       final times = PromoPlan.paced(20);
       expect(times, hasLength(20));

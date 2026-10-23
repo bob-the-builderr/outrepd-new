@@ -42,6 +42,7 @@ class PromoPlan {
     this.myLevel = 12,
     this.oppLevel = 27,
     this.levelUp = false,
+    this.record = true,
   });
 
   String myName;
@@ -74,6 +75,10 @@ class PromoPlan {
   /// Whether this take ends on the level-up screen: the match pays just
   /// enough to reach the next level.
   bool levelUp;
+
+  /// Film each take into Photos from inside the app, rather than with the
+  /// phone's own screen recorder.
+  bool record;
 
   /// Experience at the very start of [level].
   static int xpAt(int level) {
@@ -157,6 +162,7 @@ class PromoPlan {
     'myLevel': myLevel,
     'oppLevel': oppLevel,
     'levelUp': levelUp,
+    'record': record,
   };
 
   static PromoPlan fromJson(Map<String, Object?> j) {
@@ -175,6 +181,7 @@ class PromoPlan {
       ..myLevel = read('myLevel', plan.myLevel).clamp(1, 99)
       ..oppLevel = read('oppLevel', plan.oppLevel).clamp(1, 99)
       ..levelUp = j['levelUp'] as bool? ?? plan.levelUp
+      ..record = j['record'] as bool? ?? plan.record
       ..mode = OpponentMode.values.firstWhere(
         (m) => m.name == j['mode'],
         orElse: () => plan.mode,
