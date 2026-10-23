@@ -1,0 +1,1819 @@
+{
+ "en-US": {
+  "store": "US",
+  "seeds": {
+   "push up": {
+    "hints": [
+     "push up arena",
+     "push up counter & tracker",
+     "push up alarm",
+     "push up app blocker",
+     "push-up tracker app",
+     "push up playground",
+     "push up",
+     "push up time",
+     "push ups for screen time",
+     "push up lock"
+    ]
+   },
+   "push up counter": {
+    "hints": [
+     "push up counter & tracker",
+     "push up counter free",
+     "push up counter app",
+     "push up counter & tracker free",
+     "push-up counter for workout progress",
+     "pumptounlock: push up counter",
+     "repstreak - push-up counter",
+     "pupg: push up counter & tracker",
+     "ai push up counter",
+     "top pushup: ai push up counter"
+    ]
+   },
+   "push up challenge": {
+    "hints": [
+     "the push up challenge",
+     "the push-up challenge",
+     "push up challenge - push ups",
+     "push up challenge: pushwar",
+     "push up challenge: pusharena",
+     "push-up challenge & workout",
+     "push-up challenge!",
+     "push-up challenge: 30 days",
+     "30 day - push up challenge",
+     "30 day push up challenge - arm & bicep workouts"
+    ]
+   }
+  },
+  "top": [
+   "Push Up Arena - Fitness Game [3782]",
+   "PushUpLock - Push Up Blocker [1213]",
+   "Push Up Counter & Tracker [3436]",
+   "100 Push Ups: Just 6 Weeks [9451]",
+   "Pushup RPG: Fitness Quest [1116]"
+  ]
+ },
+ "en-GB": {
+  "store": "GB",
+  "seeds": {
+   "press up": {
+    "hints": [
+     "press up challenge",
+     "press up counter",
+     "press up screen time",
+     "press up",
+     "press up alarm",
+     "press up counter: pushanova",
+     "100 pushups: press up tracker",
+     "counterups: press up counter",
+     "push up duel: press up counter",
+     "push up legend: press up coach"
+    ]
+   },
+   "push up": {
+    "hints": [
+     "push-up-counter",
+     "the push-up challenge",
+     "push up app blocker",
+     "push up alarm",
+     "push up",
+     "push up time",
+     "push up playground",
+     "push up counter and tracker",
+     "push up time app blocker",
+     "push up tracker"
+    ]
+   },
+   "push up counter": {
+    "hints": [
+     "push-up-counter",
+     "push up counter and tracker",
+     "pumptounlock: push up counter",
+     "repstreak - push-up counter",
+     "push up counter: arena",
+     "push up counter golden pushups",
+     "push up counter trainer",
+     "push up counter!",
+     "push-up counter : ia tracker",
+     "push-up counter: daily reps"
+    ]
+   },
+   "push up challenge": {
+    "hints": [
+     "the push-up challenge",
+     "app for push-up challenges",
+     "push up challenge - push ups",
+     "push up challenge: pushwar",
+     "push-up challenge & workout",
+     "push up challenge: pusharena",
+     "push-up challenge!",
+     "30 day - push up challenge",
+     "30 day push up challenge",
+     "30 day push up challenge - arm & bicep workouts"
+    ]
+   }
+  },
+  "top": [
+   "100 Push Ups: Just 6 Weeks [1448]",
+   "PushFit [406]",
+   "Push Up Legend: Press Up Coach [1]",
+   "Push Ups Challenge [8]",
+   "Push ups: 100 pushups pro [1759]"
+  ]
+ },
+ "en-AU": {
+  "store": "AU",
+  "seeds": {
+   "push up": {
+    "hints": [
+     "push-up-counter",
+     "the push-up challenge",
+     "push up screen time",
+     "push up alarm",
+     "push up time",
+     "push up tracker",
+     "push up",
+     "push up app blocker",
+     "push up for better",
+     "push up counter and tracker"
+    ]
+   },
+   "push up counter": {
+    "hints": [
+     "push-up-counter",
+     "push up counter and tracker",
+     "pumptounlock: push up counter",
+     "repstreak - push-up counter",
+     "push up counter: pushanova",
+     "push up counter: arena",
+     "push-up counter: daily reps",
+     "push up counter golden pushups",
+     "push up counter! - auto count",
+     "push up counter trainer"
+    ]
+   },
+   "push up challenge": {
+    "hints": [
+     "the push-up challenge",
+     "push up challenge - push ups",
+     "push up challenge: pushwar",
+     "push-up challenge & workout",
+     "push up challenge: pusharena",
+     "push-up challenge!",
+     "push-up challenge: 30 days",
+     "100 pushups: push up challenge",
+     "30 day - push up challenge",
+     "30 day push up challenge"
+    ]
+   }
+  },
+  "top": [
+   "Push Up Arena - Fitness Game [179]",
+   "Push For Better [1566]",
+   "PushUp App Blocker - PushBlock [81]",
+   "Push Up Counter and Tracker [225]",
+   "Pushup RPG: Fitness Quest [48]"
+  ]
+ },
+ "en-CA": {
+  "store": "CA",
+  "seeds": {
+   "push up": {
+    "hints": [
+     "the push-up challenge",
+     "push-up counter",
+     "push up app blocker",
+     "push up alarm clock",
+     "push up",
+     "push up time",
+     "push up tracker",
+     "push ups for screen time",
+     "push up counter and tracker",
+     "push up alarm"
+    ]
+   },
+   "push up counter": {
+    "hints": [
+     "push up counter and tracker",
+     "push-up counter",
+     "pumptounlock: push up counter",
+     "repstreak - push-up counter",
+     "push up counter: arena",
+     "push up counter golden pushups",
+     "push-up-counter",
+     "push up counter!",
+     "push up counter: pushanova",
+     "push up counter! - auto count"
+    ]
+   },
+   "push up challenge": {
+    "hints": [
+     "the push-up challenge",
+     "push up challenge: pushwar",
+     "push up challenge - push ups",
+     "push-up challenge & workout",
+     "push up challenge: pusharena",
+     "push-up challenge!",
+     "30 day - push up challenge",
+     "30 day push up challenge",
+     "30 day push up challenge - arm & bicep workouts",
+     "30 day push up challenge!"
+    ]
+   }
+  },
+  "top": [
+   "Push Up Arena - Fitness Game [304]",
+   "PushUp App Blocker - PushBlock [199]",
+   "Push Up Counter and Tracker [435]",
+   "PushUpLock - Push Up Blocker [101]",
+   "Pushoff - Ranked Pushup [20]"
+  ]
+ },
+ "de-DE": {
+  "store": "DE",
+  "seeds": {
+   "liegestütze": {
+    "hints": [
+     "liegestütze zähler",
+     "liegestütze bildschirmzeit",
+     "liegestütze lernen",
+     "liegestütze",
+     "liegestütze zähler kostenlos",
+     "liegestützen zähler",
+     "100 liegestütze",
+     "liegestützen",
+     "liegestütze herausforderung",
+     "wecker liegestütze"
+    ]
+   },
+   "liegestütze zähler": {
+    "hints": [
+     "liegestütze zähler kostenlos",
+     "liegestütze zähler",
+     "liegestütze zähler - push up",
+     "liegestütze-zähler",
+     "liegestütze zähler: trainii",
+     "liegestütze zähler fitness",
+     "liegestütze zähler training",
+     "liegestütze – zähler & tracker",
+     "beastie: liegestütze zähler",
+     "bestchest: liegestütze-zähler"
+    ]
+   },
+   "liegestütze challenge": {
+    "hints": []
+   }
+  },
+  "top": [
+   "100 Push-Ups Liegestütz Coach [4284]",
+   "Pushie: 100 Liegestütze [346]",
+   "GOLDEN Push Ups Liegestütze [102]",
+   "Liegestütze zähler - Push up [376]",
+   "Liegestütztrainer [132]"
+  ]
+ },
+ "fr-FR": {
+  "store": "FR",
+  "seeds": {
+   "pompes": {
+    "hints": [
+     "pompes: push-ups",
+     "compteur de pompes",
+     "pompes à essence",
+     "pompes",
+     "alarm drill: mission pompes",
+     "100 pompes",
+     "100 push-ups pompes",
+     "pushr – pompes app",
+     "dopa : réveil ia et pompes",
+     "chestify: pompes & pectoraux"
+    ]
+   },
+   "compteur pompes": {
+    "hints": [
+     "compteur pompes",
+     "compteur pompes: ia coach",
+     "compteur pompes ia - maison",
+     "counterups : compteur pompes",
+     "golden push up compteur pompes",
+     "push up duel: compteur pompes",
+     "pushupking: compteur pompes",
+     "pushups now: compteur pompes"
+    ]
+   },
+   "défi pompes": {
+    "hints": [
+     "défi pompes : 30 jours",
+     "onerep: défi pompes 30 jours",
+     "push up streak : défi pompes"
+    ]
+   }
+  },
+  "top": [
+   "Pushie: Défi 100 Pompes [160]",
+   "BlockIt - Pompes Temps d'écran [1159]",
+   "Compteur de Pompes : Arena [87]",
+   "100 Push-Ups Pompes [206]",
+   "Compteur de pompe / push up [784]"
+  ]
+ },
+ "fr-CA": {
+  "store": "CA",
+  "seeds": {
+   "pompes": {
+    "hints": [
+     "alarm drill: mission pompes",
+     "dopa : réveil ia et pompes",
+     "la plage des six pompes",
+     "winpushup - pompes en duel"
+    ]
+   },
+   "push up": {
+    "hints": [
+     "the push-up challenge",
+     "push-up counter",
+     "push up app blocker",
+     "push up alarm clock",
+     "push up",
+     "push up time",
+     "push up tracker",
+     "push ups for screen time",
+     "push up counter and tracker",
+     "push up alarm"
+    ]
+   },
+   "défi pompes": {
+    "hints": []
+   }
+  },
+  "top": [
+   "Push Up Counter: Arena [27]",
+   "100 Push Ups: Just 6 Weeks [552]",
+   "Push Ups Counter and Tracker [87]",
+   "Pushie: 100 Pushups Challenge [27]",
+   "BlockIt - Pushups Screen Time [94]"
+  ]
+ },
+ "es-ES": {
+  "store": "ES",
+  "seeds": {
+   "flexiones": {
+    "hints": [
+     "flexiones",
+     "alarm drill: misión flexiones",
+     "dopa: alarma ia flexiones",
+     "100 flexiones",
+     "contador de flexiones",
+     "alarma flexiones",
+     "contador flexiones",
+     "100 push-ups flexiones",
+     "flexiones 100+ lite",
+     "flexiones 100+"
+    ]
+   },
+   "contador flexiones": {
+    "hints": [
+     "contador flexiones",
+     "contador flexiones: ia",
+     "contador flexiones hoy",
+     "contador flexiones ia-casa",
+     "contador flexiones: motionfit",
+     "go gob! ai contador flexiones",
+     "pumpduel: contador flexiones",
+     "pushcount: contador flexiones",
+     "pushup365: contador flexiones",
+     "pushupking: contador flexiones"
+    ]
+   },
+   "reto flexiones": {
+    "hints": [
+     "reto flexiones de 30 días",
+     "reto flexiones",
+     "push up duel: reto flexiones"
+    ]
+   }
+  },
+  "top": [
+   "PushPush: Coach flexiones IA [8]",
+   "BlockIt - Flexiones Pantalla [6]",
+   "100 Push-Ups Flexiones [84]",
+   "Pushup RPG: Reto de Flexiones [35]",
+   "Ejercicios en Casa -Sin Equipo [9327]"
+  ]
+ },
+ "es-MX": {
+  "store": "MX",
+  "seeds": {
+   "lagartijas": {
+    "hints": [
+     "contador de lagartijas",
+     "alarm drill: misión lagartijas",
+     "dopa: alarma ia lagartijas",
+     "lagartijas",
+     "lagartijas: pushanova",
+     "lagartijas por apps: repunlock",
+     "100 lagartijas: just 6 weeks",
+     "100 lagartijas: reto en casa",
+     "alarma con lagartijas: bouldy",
+     "beastie: contador lagartijas"
+    ]
+   },
+   "flexiones": {
+    "hints": [
+     "flexiones",
+     "flexiones 100+ lite",
+     "flexiones 100+",
+     "flexiones: contador fitness",
+     "flexiones 0 a 100: entrenador",
+     "100 flexiones bestronger",
+     "200 flexiones ejercicios",
+     "30 días de flexiones",
+     "blockit - flexiones pantalla",
+     "contador de flexiones"
+    ]
+   },
+   "contador de lagartijas": {
+    "hints": [
+     "contador de lagartijas",
+     "contador de lagartijas y racha",
+     "contador de lagartijas: series"
+    ]
+   }
+  },
+  "top": [
+   "Pushup RPG: Reto Lagartijas [46]",
+   "Ejercicios en Casa -Sin Equipo [21348]",
+   "Push Up Duel: Reto Lagartijas [0]",
+   "Rastreador de Flexiones: Arena [1]",
+   "RepSAGA: Juego de Lagartijas [0]"
+  ]
+ },
+ "ca": {
+  "store": "ES",
+  "seeds": {
+   "flexions": {
+    "hints": [
+     "flexiones",
+     "alarm drill: misión flexiones",
+     "dopa: alarma ia flexiones",
+     "100 flexiones",
+     "contador de flexiones",
+     "alarma flexiones",
+     "contador flexiones",
+     "100 push-ups flexiones",
+     "flexiones 100+ lite",
+     "flexiones 100+"
+    ]
+   },
+   "flexiones": {
+    "hints": [
+     "flexiones",
+     "alarm drill: misión flexiones",
+     "dopa: alarma ia flexiones",
+     "100 flexiones",
+     "contador de flexiones",
+     "alarma flexiones",
+     "contador flexiones",
+     "100 push-ups flexiones",
+     "flexiones 100+ lite",
+     "flexiones 100+"
+    ]
+   },
+   "push up": {
+    "hints": [
+     "push up time",
+     "push up counter",
+     "push up",
+     "push up blocker",
+     "pumptounlock: push up counter",
+     "pushkey: push up app blocker",
+     "repstreak - push-up counter",
+     "100 push ups",
+     "100 push-ups flexiones",
+     "golden push up / flexiones"
+    ]
+   }
+  },
+  "top": [
+   "Pushup RPG: Reto de Flexiones [35]",
+   "Flexiones 100+ Lite [6]",
+   "100 flexiones: Just 6 Weeks [168]",
+   "Pullups 20+ Lite (flexiones de brazos en barra) [1]",
+   "De entrenamiento 100 flexiones [15]"
+  ]
+ },
+ "pt-BR": {
+  "store": "BR",
+  "seeds": {
+   "flexão": {
+    "hints": [
+     "app de flexão",
+     "alarm drill: missão flexão",
+     "flexão em casa",
+     "aplicativo de flexão",
+     "flexão lite",
+     "flexão",
+     "flexão desbloqueia: repunlock",
+     "flexão pro",
+     "flexão de adjetivos alemães",
+     "bodybird: jogo de flexão"
+    ]
+   },
+   "flexões": {
+    "hints": [
+     "dopa: despertador ia flexões",
+     "contador de flexões",
+     "flexões de braços - 30 dias",
+     "flexões sensor",
+     "flexões com o nariz: condicionamento do tórax",
+     "flexões diário de calistenia",
+     "flexões agora!",
+     "flexões-streak: contador",
+     "flexões: push-ups",
+     "flexões 100 treinador"
+    ]
+   },
+   "contador de flexões": {
+    "hints": [
+     "contador de flexões",
+     "contador de flexões: ia",
+     "contador de flexões: treino",
+     "contador de flexões fitness",
+     "contador de flexões: ironreps",
+     "pumpduel: contador de flexões",
+     "pushr – contador de flexões",
+     "repsaga: contador de flexões"
+    ]
+   }
+  },
+  "top": [
+   "Fit Arena - Jogo de Flexão [21]",
+   "Exercícios em Casa: Treino [26805]",
+   "Desafio de Flexão de Braço [1]",
+   "Push Up Contador GOLDEN PushUp [0]",
+   "Tacet: Flexão para desbloquear [0]"
+  ]
+ },
+ "pt-PT": {
+  "store": "PT",
+  "seeds": {
+   "flexões": {
+    "hints": [
+     "alarm drill: missão flexões",
+     "contador de flexões",
+     "flexões sensor",
+     "flexões com o nariz: condicionamento do tórax",
+     "flexões-streak: contador",
+     "flexões abrem apps: repunlock",
+     "flexões 100 treinador",
+     "flexões agora!",
+     "flexões: push-ups",
+     "100 flexões na barra fixa"
+    ]
+   },
+   "contador flexões": {
+    "hints": [
+     "contador flexões ia-casa",
+     "pushups contador flexões"
+    ]
+   },
+   "push up": {
+    "hints": [
+     "push up counter",
+     "push up",
+     "push up time",
+     "push up blocker",
+     "pumptounlock: push up counter",
+     "pushkey: push up app blocker",
+     "repstreak - push-up counter",
+     "dopa: ai push-up alarm",
+     "push ups: 100 pushups pro",
+     "push up arena - fitness game"
+    ]
+   }
+  },
+  "top": [
+   "PushPush: Coach flexões IA [4]",
+   "Treino de Flexões de 30 dias [0]",
+   "Treino de flexões [4]",
+   "Push Up Boss: Multiplayer [1]",
+   "100 flexões: Just 6 Weeks [32]"
+  ]
+ },
+ "it": {
+  "store": "IT",
+  "seeds": {
+   "flessioni": {
+    "hints": [
+     "app flessioni",
+     "flessioni",
+     "100 push-ups flessioni",
+     "conta flessioni",
+     "contatore di flessioni",
+     "contatore flessioni",
+     "blocco app flessioni",
+     "flessioni idle",
+     "flessioni - sfida: piegamenti sulle braccia",
+     "flessioni: pushanova"
+    ]
+   },
+   "contatore flessioni": {
+    "hints": [
+     "contatore flessioni",
+     "contatore flessioni: ia",
+     "contatore flessioni fitness",
+     "contatore flessioni piegamenti",
+     "contatore flessioni: ironreps",
+     "pushr - contatore flessioni",
+     "repsaga: contatore flessioni"
+    ]
+   },
+   "sfida flessioni": {
+    "hints": []
+   }
+  },
+  "top": [
+   "Pushes - flessioni allenatrice [102]",
+   "BlockIt - Flessioni Schermo [7]",
+   "100 Push-Ups Flessioni [77]",
+   "Push Up Boss: Multiplayer Game [5]",
+   "Allenamento a Casa [9883]"
+  ]
+ },
+ "nl-NL": {
+  "store": "NL",
+  "seeds": {
+   "opdrukken": {
+    "hints": [
+     "opdrukken",
+     "opdrukken: pushanova",
+     "opdrukken nu!",
+     "opdrukken voor apps: repunlock",
+     "opdrukken teller & fitness",
+     "opdrukken teller en reeks",
+     "counterups: opdrukken teller",
+     "push up legend: opdrukken",
+     "push up teller opdrukken reps",
+     "pushblock: opdrukken-blokker"
+    ]
+   },
+   "push ups": {
+    "hints": [
+     "push ups",
+     "push ups: 100 pushups trainer",
+     "push ups: 100 pushups pro",
+     "push-ups",
+     "push ups trainer challenge",
+     "push ups challenge",
+     "push ups counter - trainer",
+     "push-ups sensor",
+     "push ups workouts & tracker",
+     "push ups tracker: onemore"
+    ]
+   },
+   "push up teller": {
+    "hints": [
+     "push-up teller",
+     "push-up teller dagelijks",
+     "push-up teller: ironreps",
+     "push up teller opdrukken reps",
+     "striga: push-up teller"
+    ]
+   }
+  },
+  "top": [
+   "100 push-ups: Just 6 Weeks [318]",
+   "30 Dagen Push Up Uitdaging [4]",
+   "100 Push-Ups Teller & Trainer [52]",
+   "Workouts voor Thuis [2804]",
+   "Opdrukken [17]"
+  ]
+ },
+ "sv": {
+  "store": "SE",
+  "seeds": {
+   "armhävningar": {
+    "hints": [
+     "dopa: ai-larm armhävningar",
+     "armhävningar utmaning",
+     "armhävningar - utmaning",
+     "armhävningar: pushanova",
+     "armhävningar sensor",
+     "armhävningar: dagligen",
+     "100 armhävningar: just 6 weeks",
+     "100 armhävningar: stegträning",
+     "30 dagar armhävningar",
+     "bodybird: armhävningar spel"
+    ]
+   },
+   "push ups": {
+    "hints": [
+     "push ups",
+     "push ups: 100 pushups trainer",
+     "push ups: 100 pushups pro",
+     "push ups challenge",
+     "push ups trainer challenge",
+     "push ups counter - trainer",
+     "push-ups",
+     "push ups - nu!",
+     "push ups hero: workout plan",
+     "push ups workouts & tracker"
+    ]
+   },
+   "armhävning": {
+    "hints": [
+     "armhävningsträning",
+     "dopa: ai-larm armhävningar",
+     "armhävningar utmaning",
+     "armhävningar - utmaning",
+     "armhävningar: pushanova",
+     "armhävningar sensor",
+     "armhävning lås upp: repunlock",
+     "armhävningsräknare",
+     "armhävningsräknare hemma",
+     "armhävningar: dagligen"
+    ]
+   }
+  },
+  "top": [
+   "100 armhävningar: Just 6 Weeks [675]",
+   "Pushie: 100 Armhävningar [18]",
+   "Armhävningar - utmaning [0]",
+   "Armhävningar Utmaning [1]",
+   "Chestify: Bröstträning Hemma [1]"
+  ]
+ },
+ "no": {
+  "store": "NO",
+  "seeds": {
+   "armhevinger": {
+    "hints": [
+     "dopa: ai-alarm armhevinger"
+    ]
+   },
+   "push ups": {
+    "hints": [
+     "push ups",
+     "push ups: 100 pushups trainer",
+     "push ups: 100 pushups pro",
+     "push ups counter and tracker",
+     "push-ups",
+     "push ups challenge",
+     "push ups counter - trainer",
+     "push ups trainer challenge",
+     "push-ups sensor",
+     "push ups now!"
+    ]
+   },
+   "armheving": {
+    "hints": [
+     "dopa: ai-alarm armhevinger"
+    ]
+   }
+  },
+  "top": [
+   "Press Up Counter: Pushanova [15]",
+   "Push up workout [13]",
+   "Chestify: Chest & Push Ups [4]",
+   "Pushie: 100 Pushups Challenge [5]",
+   "Nose Push Ups: Chest Fitness & Breast Workout [3]"
+  ]
+ },
+ "da": {
+  "store": "DK",
+  "seeds": {
+   "armbøjninger": {
+    "hints": [
+     "armbøjninger",
+     "alarm drill: armbøjninger",
+     "dopa: ai-alarm armbøjninger"
+    ]
+   },
+   "push ups": {
+    "hints": [
+     "push ups: 100 pushups trainer",
+     "push ups: 100 pushups pro",
+     "push ups counter and tracker",
+     "push ups challenge",
+     "push ups now!",
+     "push ups trainer challenge",
+     "push-ups",
+     "push ups counter - trainer",
+     "push-ups sensor",
+     "push ups workouts & tracker"
+    ]
+   },
+   "armbøjning": {
+    "hints": [
+     "armbøjninger",
+     "alarm drill: armbøjninger",
+     "dopa: ai-alarm armbøjninger"
+    ]
+   }
+  },
+  "top": [
+   "Fit to Scroll: App Blocker [3]",
+   "Push Ups Counter and Tracker [21]",
+   "Pushie: 100 Pushups Challenge [3]",
+   "100 Push Ups: Just 6 Weeks [201]",
+   "Pushup RPG: Fitness Quest [33]"
+  ]
+ },
+ "fi": {
+  "store": "FI",
+  "seeds": {
+   "punnerrukset": {
+    "hints": []
+   },
+   "punnerrus": {
+    "hints": []
+   },
+   "push up": {
+    "hints": [
+     "push up counter",
+     "push up",
+     "push up time",
+     "pumptounlock: push up counter",
+     "pushkey: push up app blocker",
+     "repstreak - push-up counter",
+     "push ups: 100 pushups pro",
+     "push ups: 100 pushups trainer",
+     "push up workout",
+     "push up arena - fitness game"
+    ]
+   }
+  },
+  "top": [
+   "30 Day Push Up Challenge - Arm & Bicep Workouts [0]",
+   "Press Up Counter: Pushanova [0]",
+   "Push Up Log: Press Up Tracker [0]",
+   "Wayk: Alarm Clock to Wake Up [76]",
+   "PushMax: Push-Up Counter [0]"
+  ]
+ },
+ "pl": {
+  "store": "PL",
+  "seeds": {
+   "pompki": {
+    "hints": [
+     "pompki",
+     "alarm drill: misja pompki",
+     "wyzwanie pompki"
+    ]
+   },
+   "licznik pompek": {
+    "hints": [
+     "licznik pompek"
+    ]
+   },
+   "wyzwanie pompki": {
+    "hints": [
+     "wyzwanie pompki"
+    ]
+   }
+  },
+  "top": [
+   "Fitnesster - 100 Push-ups [407]",
+   "Push Ups Counter and Tracker [55]",
+   "100 Pushups Be Stronger [61]",
+   "Home Workout - No Equipments [2851]",
+   "Push Up Boss: Multiplayer Game [8]"
+  ]
+ },
+ "cs": {
+  "store": "CZ",
+  "seeds": {
+   "kliky": {
+    "hints": [
+     "kliky"
+    ]
+   },
+   "počítadlo kliků": {
+    "hints": []
+   },
+   "push up": {
+    "hints": [
+     "push up counter",
+     "push up time",
+     "push up",
+     "pumptounlock: push up counter",
+     "pushkey: push up app blocker",
+     "repstreak - push-up counter",
+     "dopa: ai push-up alarm",
+     "100 push ups",
+     "push up arena - fitness game",
+     "push ups: 100 pushups pro"
+    ]
+   }
+  },
+  "top": [
+   "Push Ups Counter and Tracker [77]",
+   "Push Ups Now! [0]",
+   "PushFit [31]",
+   "Pushup RPG: Fitness Quest [26]",
+   "30 Day Push Up Challenge [0]"
+  ]
+ },
+ "sk": {
+  "store": "SK",
+  "seeds": {
+   "kľuky": {
+    "hints": []
+   },
+   "kliky": {
+    "hints": [
+     "kliky"
+    ]
+   },
+   "push up": {
+    "hints": [
+     "push up",
+     "push up time – app blocker",
+     "push up time",
+     "pumptounlock: push up counter",
+     "pushkey: push up app blocker",
+     "repstreak - push-up counter",
+     "dopa: ai push-up alarm",
+     "push up challenge - push ups",
+     "push ups: 100 pushups pro",
+     "push up arena - fitness game"
+    ]
+   }
+  },
+  "top": [
+   "BodyBird: Push Up Game [0]",
+   "iBoys [5]",
+   "Klub Bambule [1]",
+   "Push Up Counter GOLDEN PushUps [2]",
+   "Push Ups Now! [0]"
+  ]
+ },
+ "hu": {
+  "store": "HU",
+  "seeds": {
+   "fekvőtámasz": {
+    "hints": [
+     "fekvőtámasz",
+     "alarm drill: fekvőtámasz"
+    ]
+   },
+   "fekvőtámasz számláló": {
+    "hints": []
+   },
+   "push up": {
+    "hints": [
+     "push up counter",
+     "push up",
+     "push up time",
+     "pumptounlock: push up counter",
+     "pushkey: push up app blocker",
+     "repstreak - push-up counter",
+     "dopa: ai push-up alarm",
+     "push ups: 100 pushups pro",
+     "push up arena - fitness game",
+     "push ups: 100 pushups trainer"
+    ]
+   }
+  },
+  "top": [
+   "Push Up Counter & Fitness [0]",
+   "Repito: Push-ups & Squats AI [2]",
+   "30 Day Push Up Challenge [0]",
+   "Press Up Counter: Pushanova [1]",
+   "Military Calisthenics Men [0]"
+  ]
+ },
+ "ro": {
+  "store": "RO",
+  "seeds": {
+   "flotări": {
+    "hints": [
+     "alarm drill: misiune flotări"
+    ]
+   },
+   "flotari": {
+    "hints": [
+     "aplicatie de flotari",
+     "alarm drill: misiune flotări",
+     "flotari",
+     "aplicatie flotari"
+    ]
+   },
+   "push up": {
+    "hints": [
+     "push up counter",
+     "push up",
+     "push up time",
+     "push up counter and tracker",
+     "pumptounlock: push up counter",
+     "pushkey: push up app blocker",
+     "repstreak - push-up counter",
+     "dopa: ai push-up alarm",
+     "push up arena - fitness game",
+     "push ups: 100 pushups pro"
+    ]
+   }
+  },
+  "top": [
+   "Fit Arena - Push Up Battles [3]",
+   "Push Ups Counter and Tracker [18]",
+   "Push Ups Now! [3]",
+   "Arm Workout [60]",
+   "Push Up Counter GOLDEN PushUps [4]"
+  ]
+ },
+ "hr": {
+  "store": "HR",
+  "seeds": {
+   "sklekovi": {
+    "hints": []
+   },
+   "sklek": {
+    "hints": []
+   },
+   "push up": {
+    "hints": [
+     "push up time",
+     "push up",
+     "push up counter and tracker",
+     "pumptounlock: push up counter",
+     "pushkey: push up app blocker",
+     "repstreak - push-up counter",
+     "dopa: ai push-up alarm",
+     "push ups: 100 pushups pro",
+     "push ups: 100 pushups trainer",
+     "push up arena - fitness game"
+    ]
+   }
+  },
+  "top": [
+   "30 Day Push Up Challenge [0]",
+   "Push Up Legend: Press Up Coach [0]",
+   "Chestify: Chest & Push Ups [2]",
+   "Push Ups Now! [0]",
+   "Press Up Counter: Pushanova [1]"
+  ]
+ },
+ "sl-SI": {
+  "store": "SI",
+  "seeds": {
+   "sklece": {
+    "hints": []
+   },
+   "push up": {
+    "hints": [
+     "push up time",
+     "pumptounlock: push up counter",
+     "pushkey: push up app blocker",
+     "repstreak - push-up counter",
+     "alarm drill: push up mission",
+     "dopa: ai push-up alarm",
+     "push ups: 100 pushups pro",
+     "push ups counter and tracker",
+     "push ups: 100 pushups trainer",
+     "push up counter and tracker"
+    ]
+   },
+   "sklec": {
+    "hints": []
+   }
+  },
+  "top": []
+ },
+ "el": {
+  "store": "GR",
+  "seeds": {
+   "κάμψεις": {
+    "hints": []
+   },
+   "push ups": {
+    "hints": [
+     "push ups",
+     "push ups: 100 pushups pro",
+     "push ups: 100 pushups trainer",
+     "push ups counter - trainer",
+     "push ups challenge",
+     "push ups counter and tracker",
+     "push ups trainer challenge",
+     "push-ups",
+     "push-ups sensor",
+     "push-ups workout"
+    ]
+   },
+   "push up": {
+    "hints": [
+     "push up counter",
+     "push up",
+     "push up time",
+     "pumptounlock: push up counter",
+     "pushkey: push up app blocker",
+     "repstreak - push-up counter",
+     "dopa: ai push-up alarm",
+     "push ups: 100 pushups pro",
+     "push up arena - fitness game",
+     "push ups: 100 pushups trainer"
+    ]
+   }
+  },
+  "top": [
+   "Press Up Counter: Pushanova [0]",
+   "30 Day Push Up Challenge - Arm & Bicep Workouts [0]",
+   "Push Ups Now! [0]",
+   "Pushups - Do More Pushups [0]",
+   "PushMax: Push-Up Counter [0]"
+  ]
+ },
+ "tr": {
+  "store": "TR",
+  "seeds": {
+   "şınav": {
+    "hints": [
+     "şınav çekme",
+     "şınav programı",
+     "100 şınav",
+     "alarm drill: şınav görevi",
+     "şınav"
+    ]
+   },
+   "şınav sayacı": {
+    "hints": []
+   },
+   "şınav challenge": {
+    "hints": []
+   }
+  },
+  "top": [
+   "Push Up Counter: AI Tracker [2]",
+   "Pushie: 100 Pushups Challenge [19]",
+   "100 Push Ups: Just 6 Weeks [113]",
+   "Home Workout - No Equipments [17493]",
+   "30 Day Push Up Challenge [1]"
+  ]
+ },
+ "ru": {
+  "store": "RU",
+  "seeds": {
+   "отжимания": {
+    "hints": [
+     "отжимания от пола",
+     "отжимания челлендж на 30 дней",
+     "отжимания",
+     "отжимания 100",
+     "отжимания на брусьях",
+     "отжимания 30 дней",
+     "отжимания счетчик",
+     "отжимания и пресс",
+     "отжимания дома",
+     "отжимания тренер бесплатно"
+    ]
+   },
+   "счетчик отжиманий": {
+    "hints": [
+     "счетчик отжиманий",
+     "счетчик отжиманий: pushanova",
+     "counterups: счетчик отжиманий",
+     "pushcount: счетчик отжиманий"
+    ]
+   },
+   "отжимания челлендж": {
+    "hints": [
+     "отжимания челлендж на 30 дней",
+     "отжимания: челлендж 30 дней"
+    ]
+   }
+  },
+  "top": [
+   "Тренировки дома -фитнес тренер [18791]",
+   "Pushie: 100 отжиманий [380]",
+   "Pushup RPG: Отжимания дома [32]",
+   "200 Отжиманий: тренировки дома [810]",
+   "100 отжиманий: Just 6 Weeks [1062]"
+  ]
+ },
+ "uk": {
+  "store": "UA",
+  "seeds": {
+   "віджимання": {
+    "hints": [
+     "програма для віджимання",
+     "віджимання"
+    ]
+   },
+   "лічильник віджимань": {
+    "hints": []
+   },
+   "push up": {
+    "hints": [
+     "push up time",
+     "push ups",
+     "push up playground",
+     "push up counter and tracker",
+     "pumptounlock: push up counter",
+     "pushkey: push up app blocker",
+     "repstreak - push-up counter",
+     "dopa: ai push-up alarm",
+     "push up arena - fitness game",
+     "push ups counter and tracker"
+    ]
+   }
+  },
+  "top": [
+   "200 Push Ups - Home Workout [357]",
+   "Home Workout - No Equipments [4737]",
+   "100 Pushups Be Stronger [93]",
+   "Titan - Home Workout & Fitness [587]",
+   "BeStronger Home workouts [121]"
+  ]
+ },
+ "ja": {
+  "store": "JP",
+  "seeds": {
+   "腕立て伏せ": {
+    "hints": [
+     "腕立て伏せカウンター",
+     "腕立て伏せ",
+     "腕立て伏せカウンター 毎日の筋トレに。",
+     "腕立て伏せの時間",
+     "腕立て伏せタイム",
+     "腕立て伏せカウンター  毎日の筋トレに。",
+     "chestify: 腕立て伏せ・上半身",
+     "腕立て伏せワークアウト",
+     "腕立て伏せセンサー",
+     "腕立て伏せ 200+ lite"
+    ]
+   },
+   "腕立て カウンター": {
+    "hints": []
+   },
+   "プッシュアップ": {
+    "hints": [
+     "プッシュアップ",
+     "プッシュアップタイム",
+     "alarm drill: プッシュアップミッション",
+     "プッシュアップ 100+ lite",
+     "プッシュアップチャレンジ",
+     "プッシュアップ 100+",
+     "プッシュアップクエスト",
+     "pushpush：ai プッシュアップコーチ"
+    ]
+   }
+  },
+  "top": [
+   "Pushup RPG: 腕立て伏せ・筋トレ冒険 [19]",
+   "365日 腕立てアプリ｜自宅で筋トレ [347]",
+   "腕立てカウンター！ [649]",
+   "腕立て伏せカウンター  毎日の筋トレに。 [24]",
+   "30日腕立てチャレンジ！ [679]"
+  ]
+ },
+ "ko": {
+  "store": "KR",
+  "seeds": {
+   "팔굽혀펴기": {
+    "hints": [
+     "팔굽혀펴기",
+     "팔굽혀펴기 카운터 및 추적기",
+     "팔굽혀펴기 운동",
+     "alarm drill: 팔굽혀펴기 미션",
+     "dopa: ai 팔굽혀펴기 알람",
+     "팔굽혀펴기 100개: just 6 weeks",
+     "팔굽혀펴기 - 홈트레이닝 도전",
+     "팔굽혀펴기 100 트레이너",
+     "팔굽혀펴기로 앱 잠금 해제: repunlock",
+     "팔굽혀펴기 카운터 푸시업 횟수기록 홈트 타이머"
+    ]
+   },
+   "푸시업": {
+    "hints": [
+     "푸시업 카운터",
+     "푸쉬업",
+     "푸시업 타임",
+     "머슬배틀 - 푸시업 카운터 대결",
+     "푸시업 카운터: pushanova",
+     "푸시업 알람: bouldy",
+     "푸시업 카운터: ai 트래커",
+     "푸시업 카운터 ai - 홈트",
+     "푸시업 카운터 & 피트니스",
+     "푸시업 트레이너"
+    ]
+   },
+   "푸쉬업": {
+    "hints": [
+     "푸쉬업 카운터",
+     "푸쉬업 100",
+     "푸쉬업",
+     "푸쉬업 타임",
+     "푸쉬업 100+ lite",
+     "푸쉬업스타: 팔굽혀펴기 운동",
+     "푸쉬업30일 몸변화",
+     "푸쉬업 카운터 - 자동 카운팅, 스마트 홈트레이닝",
+     "푸쉬업 100+",
+     "푸쉬업 마스터 - ai 자세 분석 & 맞춤형 운동플랜"
+    ]
+   }
+  },
+  "top": [
+   "푸쉬즈 - 당신의 팔굽혀펴기 트레이너, 근육 만들기 [906]",
+   "PushRank: Push Up Counter Game [2]",
+   "Push100 [115]",
+   "Pushup RPG: 팔굽혀펴기·스쿼트 모험 [8]",
+   "팔굽혀펴기 카운터 및 추적기 [103]"
+  ]
+ },
+ "zh-Hans": {
+  "store": "CN",
+  "seeds": {
+   "俯卧撑": {
+    "hints": [
+     "俯卧撑计数器",
+     "俯卧撑打卡",
+     "俯卧撑教练",
+     "俯卧撑",
+     "俯卧撑计数器-ai健身教练",
+     "俯卧撑计数",
+     "俯卧撑记录",
+     "alarm drill: 俯卧撑任务",
+     "俯卧撑 100+ lite",
+     "chestify: 胸肌训练 俯卧撑"
+    ]
+   },
+   "俯卧撑计数": {
+    "hints": [
+     "俯卧撑计数器",
+     "俯卧撑计数器-ai健身教练",
+     "俯卧撑计数",
+     "俯卧撑计数器－每日极速版",
+     "俯卧撑计数器: ai健身",
+     "俯卧撑计数: pushanova",
+     "俯卧撑计数器 健身",
+     "俯卧撑计数器 训练记录 每日打卡目标",
+     "俯卧撑计数器: motionfit",
+     "俯卧撑计数器：ironreps"
+    ]
+   },
+   "俯卧撑挑战": {
+    "hints": [
+     "俯卧撑挑战"
+    ]
+   }
+  },
+  "top": [
+   "Pushie: 100 个俯卧撑挑战 [27]",
+   "每日俯卧撑 - 力量训练增肌小助手 [115]",
+   "Lean - 肌肉力量训练自动计数 [1217]",
+   "100 Push-Ups 个俯卧撑计数器和训练器 [50]",
+   "Keep - AI 运动教练 [2947625]"
+  ]
+ },
+ "zh-Hant": {
+  "store": "TW",
+  "seeds": {
+   "伏地挺身": {
+    "hints": [
+     "伏地挺身",
+     "alarm drill: 伏地挺身任務",
+     "伏地挺身感應器",
+     "伏地挺身姿勢計數器: ai 計次",
+     "伏地挺身計數: pushanova",
+     "伏地挺身計數器 健身",
+     "伏地挺身運動器",
+     "伏地挺身計數器：ironreps",
+     "伏地挺身 : push-ups",
+     "伏地挺身解鎖app 運動賺螢幕時間: repunlock"
+    ]
+   },
+   "伏地挺身計數": {
+    "hints": [
+     "伏地挺身計數: pushanova",
+     "伏地挺身計數器 健身",
+     "伏地挺身計數器：ironreps",
+     "伏地挺身計數器 訓練紀錄 每日打卡目標",
+     "伏地挺身計數器: motionfit",
+     "motionfit: 伏地挺身計數器",
+     "push up legend: 伏地挺身計數器",
+     "pushupking: 伏地挺身計數器",
+     "reup: 伏地挺身計數紀錄"
+    ]
+   },
+   "伏地挺身挑戰": {
+    "hints": []
+   }
+  },
+  "top": [
+   "Pushup RPG: 伏地挺身冒險 [81]",
+   "RepSAGA：伏地挺身追蹤遊戲 [0]",
+   "伏地挺身姿勢計數器: AI 計次 [0]",
+   "reUP: 伏地挺身計數紀錄 [0]",
+   "Push-up Caly: 伏地挺身習慣養成 [1]"
+  ]
+ },
+ "th": {
+  "store": "TH",
+  "seeds": {
+   "วิดพื้น": {
+    "hints": [
+     "วิดพื้น"
+    ]
+   },
+   "push up": {
+    "hints": [
+     "push up arena",
+     "push up",
+     "push up time",
+     "push up to unlock",
+     "push up playground",
+     "push up counter",
+     "pumptounlock: push up counter",
+     "pushkey: push up app blocker",
+     "repstreak - push-up counter",
+     "dopa: ai push-up alarm"
+    ]
+   },
+   "นับวิดพื้น": {
+    "hints": [
+     "นับวิดพื้น"
+    ]
+   }
+  },
+  "top": [
+   "RepSAGA: Push-Up Tracker [1]",
+   "Push Ups Counter and Tracker [13]",
+   "Home Workout - No Equipments [4129]",
+   "RepScroll: Screen Time Blocker [5]",
+   "Push Up Counter & Fitness [0]"
+  ]
+ },
+ "vi": {
+  "store": "VN",
+  "seeds": {
+   "hít đất": {
+    "hints": [
+     "hít đất",
+     "alarm drill: nhiệm vụ hít đất"
+    ]
+   },
+   "chống đẩy": {
+    "hints": [
+     "chống đẩy"
+    ]
+   },
+   "push up": {
+    "hints": [
+     "push up time",
+     "push up counter!",
+     "push up playground",
+     "push up",
+     "push up counter and tracker",
+     "pumptounlock: push up counter",
+     "pushkey: push up app blocker",
+     "repstreak - push-up counter",
+     "dopa: ai push-up alarm",
+     "idle push up"
+    ]
+   }
+  },
+  "top": [
+   "Repito: Push-ups & Squats AI [6]",
+   "Home Workout - No Equipments [8705]",
+   "PushRank: Push Up Counter Game [3]",
+   "Fit Arena - Push Up Battles [4]",
+   "Push Up Counter: IronReps [0]"
+  ]
+ },
+ "id": {
+  "store": "ID",
+  "seeds": {
+   "push up": {
+    "hints": [
+     "push up time",
+     "push up counter",
+     "push up",
+     "push up counter and tracker",
+     "pumptounlock: push up counter",
+     "pushkey: push up app blocker",
+     "repstreak - push-up counter",
+     "dopa: ai push-up alarm",
+     "alarm drill: misi push up",
+     "push up arena - fitness game"
+    ]
+   },
+   "push up counter": {
+    "hints": [
+     "push up counter and tracker",
+     "push up counter",
+     "pumptounlock: push up counter",
+     "repstreak - push-up counter",
+     "push up counter: arena",
+     "push-up-counter",
+     "push up counter golden pushups",
+     "push up counter pushups coach",
+     "push-up counter: daily reps",
+     "push up counter!"
+    ]
+   },
+   "tantangan push up": {
+    "hints": []
+   }
+  },
+  "top": [
+   "Home Workout - No Equipments [8459]",
+   "Push Up Arena - Fitness Game [28]",
+   "RepChamp: Fitness Duel [1]",
+   "PushUp Time: App Blocker [238]",
+   "Push Up Counter and Tracker [58]"
+  ]
+ },
+ "ms": {
+  "store": "MY",
+  "seeds": {
+   "tekan tubi": {
+    "hints": [
+     "alarm drill: misi tekan tubi"
+    ]
+   },
+   "push up": {
+    "hints": [
+     "push up counter and tracker",
+     "push-up-counter",
+     "push up",
+     "push up time",
+     "pumptounlock: push up counter",
+     "pushkey: push up app blocker",
+     "repstreak - push-up counter",
+     "dopa: ai push-up alarm",
+     "push ups: 100 pushups pro",
+     "push up arena - fitness game"
+    ]
+   },
+   "push up counter": {
+    "hints": [
+     "push up counter and tracker",
+     "push-up-counter",
+     "pumptounlock: push up counter",
+     "repstreak - push-up counter",
+     "push up counter: arena",
+     "push up counter golden pushups",
+     "push up counter!",
+     "push-up counter: daily reps",
+     "push up counter: ai tracker",
+     "push up counter pushups coach"
+    ]
+   }
+  },
+  "top": [
+   "Press Up Counter: Pushanova [5]",
+   "Pushie: 100 Pushups Challenge [0]",
+   "BodyBird: Push Up Game [0]",
+   "Pushups - Do More Pushups [0]",
+   "PushMax: Push-Up Counter [0]"
+  ]
+ },
+ "hi": {
+  "store": "IN",
+  "seeds": {
+   "push up": {
+    "hints": [
+     "push up counter",
+     "push up alarm",
+     "push up time",
+     "the push-up challenge",
+     "push up",
+     "pushr – push-up workouts",
+     "pumptounlock: push up counter",
+     "pushkey: push up app blocker",
+     "repstreak - push-up counter",
+     "dopa: ai push-up alarm"
+    ]
+   },
+   "पुश अप": {
+    "hints": [
+     "alarm drill: पुश-अप मिशन"
+    ]
+   },
+   "push up counter": {
+    "hints": [
+     "push up counter",
+     "push-up counter & tracker",
+     "pumptounlock: push up counter",
+     "repstreak - push-up counter",
+     "push up counter and tracker",
+     "push up counter: arena",
+     "push up counter golden pushups",
+     "push-up-counter",
+     "push up counter: ironreps",
+     "push up counter trainer"
+    ]
+   }
+  },
+  "top": [
+   "PushUp Rivals [0]",
+   "Push Ups Counter and Tracker [33]",
+   "Home Workout - No Equipments [19126]",
+   "Push Ups Challenge [1]",
+   "PushUp Time: App Blocker [294]"
+  ]
+ },
+ "gu-IN": {
+  "store": "IN",
+  "seeds": {
+   "push up": {
+    "hints": [
+     "push up counter",
+     "push up alarm",
+     "push up time",
+     "the push-up challenge",
+     "push up",
+     "pushr – push-up workouts",
+     "pumptounlock: push up counter",
+     "pushkey: push up app blocker",
+     "repstreak - push-up counter",
+     "dopa: ai push-up alarm"
+    ]
+   },
+   "push up counter": {
+    "hints": [
+     "push up counter",
+     "push-up counter & tracker",
+     "pumptounlock: push up counter",
+     "repstreak - push-up counter",
+     "push up counter and tracker",
+     "push up counter: arena",
+     "push up counter golden pushups",
+     "push-up-counter",
+     "push up counter: ironreps",
+     "push up counter trainer"
+    ]
+   },
+   "push up challenge": {
+    "hints": [
+     "the push-up challenge",
+     "push up challenge - push ups",
+     "push-up challenge & workout",
+     "push up challenge: pushwar",
+     "push-up challenge!",
+     "push up challenge: pusharena",
+     "30 day - push up challenge",
+     "30 day push up challenge",
+     "30 day push up challenge - arm & bicep workouts",
+     "30 days push-up challenge"
+    ]
+   }
+  },
+  "top": [
+   "PushUp Rivals [0]",
+   "Push Ups Counter and Tracker [33]",
+   "Home Workout - No Equipments [19126]",
+   "Push Ups Challenge [1]",
+   "PushUp Time: App Blocker [294]"
+  ]
+ },
+ "bn-BD": {
+  "store": "BD",
+  "seeds": {
+   "push up": {
+    "hints": []
+   },
+   "পুশ আপ": {
+    "hints": []
+   },
+   "push up counter": {
+    "hints": []
+   }
+  },
+  "top": []
+ },
+ "ur-PK": {
+  "store": "PK",
+  "seeds": {
+   "push up": {
+    "hints": [
+     "push up time",
+     "push up",
+     "pumptounlock: push up counter",
+     "pushkey: push up app blocker",
+     "repstreak - push-up counter",
+     "alarm drill: push up mission",
+     "dopa: ai push-up alarm",
+     "push ups: 100 pushups trainer",
+     "push up arena - fitness game",
+     "push ups: 100 pushups pro"
+    ]
+   },
+   "پش اپ": {
+    "hints": []
+   },
+   "push up counter": {
+    "hints": [
+     "pumptounlock: push up counter",
+     "repstreak - push-up counter",
+     "push up counter and tracker",
+     "push up counter: arena",
+     "push up counter!",
+     "push-up-counter",
+     "push up counter golden pushups",
+     "push up counter trainer",
+     "push up counter: ai tracker",
+     "push-up counter: daily reps"
+    ]
+   }
+  },
+  "top": [
+   "Push Up Arena - Fitness Game [13]",
+   "PushUp Time: App Blocker [55]",
+   "PushUp App Blocker - PushBlock [0]",
+   "Push Up Counter and Tracker [5]",
+   "Home Workout - No Equipments [2331]"
+  ]
+ },
+ "ar-SA": {
+  "store": "SA",
+  "seeds": {
+   "تمارين الضغط": {
+    "hints": [
+     "alarm drill: مهمة تمارين الضغط"
+    ]
+   },
+   "ضغط": {
+    "hints": [
+     "ضغط ملف pdf",
+     "ضغط الفيديو",
+     "ضغط ملف pdf مجانا",
+     "ضغط الصور",
+     "ضغط ملف pdf مجاني",
+     "ضغط الملفات",
+     "ضغط ملفات pdf",
+     "ضغط الملفات مجاني",
+     "ضغط تلقائي",
+     "ضغط ملفات"
+    ]
+   },
+   "push up": {
+    "hints": [
+     "push up counter",
+     "push up",
+     "push up time",
+     "pumptounlock: push up counter",
+     "pushkey: push up app blocker",
+     "repstreak - push-up counter",
+     "dopa: ai push-up alarm",
+     "push ups: 100 pushups pro",
+     "push up arena - fitness game",
+     "push up counter and tracker"
+    ]
+   }
+  },
+  "top": [
+   "Home Workout - No Equipments [12900]",
+   "Workout for Women: Fit at Home [3667]",
+   "Chestify: Chest & Push Ups [10]",
+   "ElCoach - Workout & Meal Plans [2835]",
+   "Daily Ab Workout - Abs & Core [2181]"
+  ]
+ },
+ "he": {
+  "store": "IL",
+  "seeds": {
+   "שכיבות סמיכה": {
+    "hints": [
+     "שכיבות סמיכה",
+     "alarm drill: שכיבות סמיכה"
+    ]
+   },
+   "push up": {
+    "hints": [
+     "push up time",
+     "push up counter",
+     "push up",
+     "push ups: 100 pushups trainer",
+     "pumptounlock: push up counter",
+     "pushkey: push up app blocker",
+     "repstreak - push-up counter",
+     "dopa: ai push-up alarm",
+     "push up arena - fitness game",
+     "push up time - block apps"
+    ]
+   },
+   "push ups": {
+    "hints": [
+     "push ups",
+     "push ups: 100 pushups trainer",
+     "push ups: 100 pushups pro",
+     "push ups counter and tracker",
+     "push-ups sensor",
+     "push ups counter - trainer",
+     "push ups trainer challenge",
+     "push-ups",
+     "push ups challenge",
+     "push ups workouts & tracker"
+    ]
+   }
+  },
+  "top": [
+   "PushRank: Push Up Counter Game [4]",
+   "Push Up Legend: Press Up Coach [1]",
+   "RepScroll: Screen Time Blocker [7]",
+   "PushUP Challenges [3]",
+   "Push-ups Sensor [0]"
+  ]
+ }
+}
