@@ -5,6 +5,7 @@ import 'l10n/app_localizations.dart';
 import 'tier_badge.dart';
 import 'type_scale.dart';
 import 'theme.dart';
+import 'xp.dart';
 
 /// Rounded dark panel used for most content blocks.
 class Panel extends StatelessWidget {
@@ -591,6 +592,108 @@ class HealthMark extends StatelessWidget {
         size: size * 0.66,
         color: const Color(0xFFFF2D55),
       ),
+    );
+  }
+}
+
+/// The level beside a name: "Lv 12". Read off experience (xp.dart), so it
+/// only ever climbs — the badge is the rank, and this is how much somebody
+/// has put in.
+class LevelChip extends StatelessWidget {
+  const LevelChip({super.key, required this.xp, this.fontSize = 11});
+
+  final int xp;
+  final double fontSize;
+
+  /// How wide the chip draws here, at this text size.
+  static double widthOf(BuildContext context, int xp, double fontSize) {
+    final painter = TextPainter(
+      text: TextSpan(
+        text: L.of(context).levelShort(localNumber(context, levelOf(xp))),
+        style: DefaultTextStyle.of(
+          context,
+        ).style.copyWith(fontSize: fontSize, fontWeight: FontWeight.w700),
+      ),
+      textDirection: Directionality.of(context),
+      textScaler: MediaQuery.textScalerOf(context),
+      maxLines: 1,
+    )..layout();
+    final width = painter.width;
+    painter.dispose();
+    // The padding and the border either side.
+    return width + 14;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
+      decoration: BoxDecoration(
+        color: context.colors.surfaceRaised,
+        border: Border.all(color: context.colors.border),
+        borderRadius: BorderRadius.circular(7),
+      ),
+      child: Text(
+        L.of(context).levelShort(localNumber(context, levelOf(xp))),
+        maxLines: 1,
+        style: TextStyle(
+          color: context.colors.text,
+          fontSize: fontSize,
+          fontWeight: FontWeight.w700,
+          height: 1.3,
+        ),
+      ),
+    );
+  }
+}
+
+/// A name with the level after it, the name giving way first when the row
+/// is short of room.
+class NameWithLevel extends StatelessWidget {
+  const NameWithLevel({
+    super.key,
+    required this.name,
+    required this.xp,
+    this.style,
+    this.chipFontSize = 11,
+  });
+
+  final String name;
+
+  /// Null when it is not known, and then only the name.
+  final int? xp;
+  final TextStyle? style;
+  final double chipFontSize;
+
+  @override
+  Widget build(BuildContext context) {
+    final text = Text(
+      name,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: style,
+    );
+    final xp = this.xp;
+    if (xp == null) return text;
+    return LayoutBuilder(
+      builder: (context, box) {
+        // The chip and a few letters of the name, or the name alone: a busy
+        // row at a large text size has no room for both, and the name is
+        // what the row is for.
+        final needs =
+            LevelChip.widthOf(context, xp, chipFontSize) +
+            6 +
+            MediaQuery.textScalerOf(context).scale(36);
+        if (box.maxWidth < needs) return text;
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(child: text),
+            const SizedBox(width: 6),
+            LevelChip(xp: xp, fontSize: chipFontSize),
+          ],
+        );
+      },
     );
   }
 }

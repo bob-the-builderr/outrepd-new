@@ -59,6 +59,8 @@ Future<void> playPromoMatch(BuildContext context, PromoPlan plan) async {
             myTierIdx: plan.myTier,
             myDivIdx: plan.myDiv,
             myImage: photoOf(plan.myPhoto),
+            myXp: PromoPlan.xpAt(plan.myLevel),
+            opponentXp: PromoPlan.xpAt(plan.oppLevel),
           ),
         ),
       ),

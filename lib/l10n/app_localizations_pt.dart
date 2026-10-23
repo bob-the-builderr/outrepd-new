@@ -2337,4 +2337,66 @@ class LPt extends L {
   String savedToHealth(String health) {
     return 'Salvo no ${health}';
   }
+
+  @override
+  String levelShort(String n) {
+    return 'Nv. ${n}';
+  }
+
+  @override
+  String xpOf(String into, String span) {
+    return '${into} / ${span} XP';
+  }
+
+  @override
+  String xpToLevel(String n, String level) {
+    return '${n} XP para o nível ${level}';
+  }
+
+  @override
+  String xpHow(String rep, String match) {
+    return '${rep} XP por repetição, ${match} por duelo';
+  }
+
+  @override
+  String xpGained(String n) {
+    return '+${n} XP';
+  }
+
+  @override
+  String xpForReps(String n) {
+    return '${n} pelas repetições';
+  }
+
+  @override
+  String xpForMatch(String n) {
+    return '${n} pelo duelo';
+  }
+
+  @override
+  String get levelUp => 'Subiste de nível';
+
+  @override
+  String get levelUpBody => 'Cada repetição conta. Continua.';
+
+  @override
+  String giveUpAhead(String n) {
+    return 'Estás ${n} à frente';
+  }
+
+  @override
+  String giveUpBehind(String n) {
+    return 'Estás ${n} atrás';
+  }
+
+  @override
+  String get giveUpTied => 'Empate';
+
+  @override
+  String get keepGoing => 'Continuar';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '${reps} pelas repetições · ${adjust} por um adversário ${rank}';
+  }
 }

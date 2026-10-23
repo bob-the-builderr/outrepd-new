@@ -19,12 +19,12 @@ import '../live.dart';
 import '../motion.dart';
 import '../settings.dart';
 import '../sounds.dart';
-import '../ranking.dart';
 import '../player_avatar.dart';
 import '../l10n/app_localizations.dart';
 import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
+import '../xp.dart';
 
 /// Everything the camera screen needs to know about the duel it is part of.
 ///
@@ -44,6 +44,8 @@ class DuelContext {
     this.myTierIdx,
     this.myDivIdx,
     this.myImage,
+    this.myXp,
+    this.opponentXp,
   });
 
   // The promo copy: both sides as chosen before the match, pictures and all.
@@ -54,6 +56,10 @@ class DuelContext {
   final int? myTierIdx;
   final int? myDivIdx;
   final ImageProvider? myImage;
+
+  /// Experience, for the level beside each rank; null to leave it off.
+  final int? myXp;
+  final int? opponentXp;
 
   final String opponentName;
   final int opponentReps;
@@ -69,6 +75,9 @@ class DuelContext {
   /// card. A label alone cannot draw a badge.
   final int opponentTierIdx;
   final int opponentDivIdx;
+
+  /// Their experience, for the level beside the rank; null when unknown.
+  final int? opponentXp;
 
   final String rankLabel;
 }
@@ -168,6 +177,9 @@ class _TrainerScreenState extends State<TrainerScreen>
   /// How far through a rep the body is, 1 at the top. Null until the tracker
   /// has a floor and a head to measure between.
   double? _progress;
+
+  /// Down past the bottom line this rep: the top line is the one lit.
+  bool _pastBottom = false;
 
   /// Hidden by default — it is for working out why the counter is misbehaving,
   /// not something to have on screen while lifting. A long press on the count
@@ -343,6 +355,7 @@ class _TrainerScreenState extends State<TrainerScreen>
       _source = source;
       _tracker = tracker;
       _progress = null;
+      _pastBottom = false;
       _stage = _Stage.positioning;
       _error = null;
       _failure = null;
@@ -537,33 +550,12 @@ class _TrainerScreenState extends State<TrainerScreen>
   /// is easy to find, which is the point, and easy to hit by mistake, which
   /// is not: one tap used to end the round as a loss on the spot.
   Future<void> _confirmGiveUp() async {
-    final l = L.of(context);
     final sure = await showDialog<bool>(
       context: context,
-      builder: (dialog) => AlertDialog(
-        backgroundColor: _panel,
-        title: Text(
-          l.giveUpQuestion,
-          style: context.type.heading.copyWith(color: Colors.white),
-        ),
-        content: Text(
-          l.giveUpBody,
-          style: const TextStyle(color: _dim),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialog).pop(false),
-            child: Text(l.stay, style: const TextStyle(color: Colors.white)),
-          ),
-          TextButton(
-            key: const Key('confirmGiveUp'),
-            onPressed: () => Navigator.of(dialog).pop(true),
-            child: Text(
-              l.giveUp,
-              style: const TextStyle(color: _giveUpRed),
-            ),
-          ),
-        ],
+      builder: (_) => _GiveUpCard(
+        yours: () => _liveReps,
+        theirs: () => _opponentReps,
+        remaining: () => _remaining,
       ),
     );
     if (sure == true && mounted) await _stop(gaveUp: true);
@@ -691,6 +683,7 @@ class _TrainerScreenState extends State<TrainerScreen>
     setState(() {
       _pose = pose;
       if (reading.progress != null) _progress = reading.progress;
+      _pastBottom = reading.pastBottom;
     });
   }
 
@@ -835,6 +828,7 @@ class _TrainerScreenState extends State<TrainerScreen>
       _source = null;
       _tracker = null;
       _progress = null;
+      _pastBottom = false;
       _pose = BodyPose.empty;
       _stage = _Stage.setup;
     });
@@ -1083,6 +1077,7 @@ class _TrainerScreenState extends State<TrainerScreen>
                             key: const Key('depthBar'),
                             progress: _progress ?? 0,
                             good: ready,
+                            pastBottom: _pastBottom,
                           ),
                         ),
                       ),
@@ -1488,6 +1483,7 @@ class _ScoreCard extends StatelessWidget {
                   reps: yours,
                   tierIdx: duel?.myTierIdx ?? demoProfile.tierIdx,
                   divIdx: duel?.myDivIdx ?? demoProfile.divIdx,
+                  xp: duel?.myXp,
                   colour: Colors.white,
                   image: duel?.myImage,
                 ),
@@ -1540,6 +1536,7 @@ class _ScoreCard extends StatelessWidget {
                           reps: theirs,
                           tierIdx: duel.opponentTierIdx,
                           divIdx: duel.opponentDivIdx,
+                          xp: duel.opponentXp,
                           colour: context.colors.rival,
                           image: duel.opponentImage,
                         ),
@@ -1642,6 +1639,175 @@ class _StopButton extends StatelessWidget {
   }
 }
 
+/// What giving up throws away: the score as it stands and the time still on
+/// the clock, kept live — the round does not stop while this is open. Keep
+/// going is the big button; giving up is there, in red, and harder to hit.
+class _GiveUpCard extends StatefulWidget {
+  const _GiveUpCard({
+    required this.yours,
+    required this.theirs,
+    required this.remaining,
+  });
+
+  final int Function() yours;
+  final int Function() theirs;
+  final Duration Function() remaining;
+
+  @override
+  State<_GiveUpCard> createState() => _GiveUpCardState();
+}
+
+class _GiveUpCardState extends State<_GiveUpCard> {
+  Timer? _tick;
+  (int, int, int)? _shown;
+
+  @override
+  void initState() {
+    super.initState();
+    // Redrawn only when a number on it moves, so a card left open on a
+    // clock that is not running asks for no frames at all.
+    _tick = Timer.periodic(const Duration(milliseconds: 250), (_) {
+      if (mounted && _now != _shown) setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _tick?.cancel();
+    super.dispose();
+  }
+
+  (int, int, int) get _now =>
+      (widget.yours(), widget.theirs(), widget.remaining().inSeconds);
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final now = _shown = _now;
+    final (yours, theirs, seconds) = now;
+    final gap = yours - theirs;
+    final (status, statusColour) = gap > 0
+        ? (l.giveUpAhead(localNumber(context, gap)), AppColors.win)
+        : gap < 0
+        ? (l.giveUpBehind(localNumber(context, -gap)), context.colors.rival)
+        : (l.giveUpTied, const Color(0xFF8F8880));
+    const cream = Color(0xFFF5EFE4);
+    const muted = Color(0xFF8F8880);
+    const big = TextStyle(
+      fontSize: 46,
+      fontWeight: FontWeight.w800,
+      height: 1.1,
+      fontFeatures: [FontFeature.tabularFigures()],
+    );
+
+    return Dialog(
+      backgroundColor: const Color(0xFF121110),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
+        side: const BorderSide(color: Color(0xFF2C2926), width: 0.5),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 22, 20, 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              l.giveUpQuestion,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: cream,
+                fontSize: 24,
+                fontWeight: FontWeight.w800,
+                height: 1.2,
+              ),
+            ),
+            const SizedBox(height: 12),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                textBaseline: TextBaseline.alphabetic,
+                children: [
+                  Text(
+                    localNumber(context, yours),
+                    style: big.copyWith(color: Colors.white),
+                  ),
+                  const SizedBox(width: 14),
+                  const Text('–', style: TextStyle(color: muted, fontSize: 22)),
+                  const SizedBox(width: 14),
+                  Text(
+                    localNumber(context, theirs),
+                    style: big.copyWith(color: context.colors.rival),
+                  ),
+                ],
+              ),
+            ),
+            Text(
+              '$status · ${l.timeLeft(formatClock(context, seconds))}',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: statusColour,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              l.giveUpBody,
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: muted, fontSize: 15, height: 1.45),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton(
+                key: const Key('keepGoing'),
+                onPressed: () => Navigator.of(context).pop(false),
+                style: FilledButton.styleFrom(
+                  backgroundColor: const Color(0xFFE8DCC8),
+                  foregroundColor: const Color(0xFF121110),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: const StadiumBorder(),
+                ),
+                child: Text(
+                  l.keepGoing,
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton(
+                key: const Key('confirmGiveUp'),
+                onPressed: () => Navigator.of(context).pop(true),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: _giveUpRed,
+                  side: const BorderSide(color: _giveUpRed, width: 1.5),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: const StadiumBorder(),
+                ),
+                child: Text(
+                  l.giveUp,
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 /// One side of the card: who they are, where they stand, and their count.
 ///
 /// The picture and the badge are the same pairing the profile screen uses —
@@ -1655,6 +1821,8 @@ class _Fighter extends StatelessWidget {
     required this.divIdx,
     required this.colour,
     this.image,
+    this.ranked = true,
+    this.xp,
   });
 
   final String name;
@@ -1663,6 +1831,12 @@ class _Fighter extends StatelessWidget {
   final int divIdx;
   final Color colour;
   final ImageProvider? image;
+
+  /// False while placements are still open: no rank to name yet.
+  final bool ranked;
+
+  /// Experience, for the level after the rank; null when not known.
+  final int? xp;
 
   @override
   Widget build(BuildContext context) {
@@ -1687,8 +1861,13 @@ class _Fighter extends StatelessWidget {
           maxLines: 1,
           style: TextStyle(color: colour, fontSize: 14),
         ),
+        // The rank, then the level: "Gold III · Lv 12".
         ShrinkText(
-          l.levelNumber(localNumber(context, ladderLevel(tierIdx, divIdx))),
+          [
+            ranked ? tierLabel(l, tierIdx, divIdx) : l.unranked,
+            if (xp case final xp?)
+              l.levelShort(localNumber(context, levelOf(xp))),
+          ].join(' · '),
           maxLines: 1,
           style: TextStyle(color: context.colors.muted, fontSize: 13),
         ),
@@ -1710,35 +1889,96 @@ class _Fighter extends StatelessWidget {
   }
 }
 
+/// How deep this rep is, with the two lines a rep has to cross drawn across
+/// it: down past the bottom one ([kBottomShare]), then back up past the top
+/// one ([kTopShare]). The line still to reach is lit gold; the bottom one
+/// turns green once it is passed, until the rep counts and it is next again.
+/// Where the counter's own lines are, on a bar drawn from the bottom of a
+/// real rep ([barFill]): the bar must never promise a rep the counter will
+/// not give, or ask for more than it does.
 class _DepthBar extends StatelessWidget {
-  const _DepthBar({super.key, required this.progress, required this.good});
+  const _DepthBar({
+    super.key,
+    required this.progress,
+    required this.good,
+    this.pastBottom = false,
+  });
 
   final double progress;
   final bool good;
+  final bool pastBottom;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    const dim = Color(0xB38F8880);
+    return SizedBox(
       width: 16,
       height: 250,
-      decoration: BoxDecoration(
-        color: const Color(0xFF121110).withValues(alpha: 0.45),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: FractionallySizedBox(
-          heightFactor: progress.clamp(0.0, 1.0),
-          child: Container(
-            decoration: BoxDecoration(
-              // Same colour rule as the skeleton: it goes off when the shape
-              // is wrong, so the two never disagree about whether this rep is
-              // going to count.
-              color: good ? context.colors.brand : context.colors.rival,
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-        ),
+      child: LayoutBuilder(
+        builder: (context, box) {
+          // Across the bar and a little either side of it, ringed in the
+          // card's black so it reads over the fill as well as the camera.
+          Widget line(String key, double share, Color colour, {bool lit = false}) {
+            final thick = lit ? 6.0 : 5.0;
+            return Positioned(
+              key: Key(key),
+              left: -5,
+              right: -5,
+              bottom: barFill(share) * box.maxHeight - thick / 2,
+              height: thick,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: colour,
+                  borderRadius: BorderRadius.circular(3),
+                  border: Border.all(color: const Color(0xFF121110)),
+                ),
+              ),
+            );
+          }
+
+          return Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Positioned.fill(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF121110).withValues(alpha: 0.45),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: FractionallySizedBox(
+                      heightFactor: barFill(progress),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          // Same colour rule as the skeleton: it goes off when
+                          // the shape is wrong, so the two never disagree about
+                          // whether this rep is going to count.
+                          color: good
+                              ? context.colors.brand
+                              : context.colors.rival,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              line(
+                'depthLineBottom',
+                kBottomShare,
+                pastBottom ? AppColors.win : AppColors.gold,
+                lit: !pastBottom,
+              ),
+              line(
+                'depthLineTop',
+                kTopShare,
+                pastBottom ? AppColors.gold : dim,
+                lit: pastBottom,
+              ),
+            ],
+          );
+        },
       ),
     );
   }

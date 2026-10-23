@@ -8,6 +8,8 @@ import 'dart:math' as math;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../xp.dart';
+
 /// How the opponent's count moves through the minute.
 enum OpponentMode {
   /// Follows yours, always [PromoPlan.behindBy] behind: you win by that much.
@@ -37,6 +39,9 @@ class PromoPlan {
     this.finalCount = 20,
     this.customSeconds = '2, 4, 6, 8, 10, 13, 16, 19, 22, 25',
     this.countdownSeconds = 10,
+    this.myLevel = 12,
+    this.oppLevel = 27,
+    this.levelUp = false,
   });
 
   String myName;
@@ -61,6 +66,33 @@ class PromoPlan {
   /// From both lifters being on the camera screen to the round starting:
   /// ten in the real app.
   int countdownSeconds;
+
+  /// The level beside each name, as the app shows it (xp.dart).
+  int myLevel;
+  int oppLevel;
+
+  /// Whether this take ends on the level-up screen: the match pays just
+  /// enough to reach the next level.
+  bool levelUp;
+
+  /// Experience at the very start of [level].
+  static int xpAt(int level) {
+    var xp = 0;
+    for (var n = 1; n < level; n++) {
+      xp += xpToLevelUp(n);
+    }
+    return xp;
+  }
+
+  /// Where the experience stood before a take that paid [gained]: just short
+  /// of the next level when the plan asks for a level-up, a third of the way
+  /// into this one when not.
+  int myXpBefore(int gained) {
+    final start = xpAt(myLevel);
+    final span = xpToLevelUp(myLevel);
+    if (levelUp) return start + math.max(0, span - gained + 3);
+    return start + math.max(0, math.min(span ~/ 3, span - gained - 1));
+  }
 
   static const roundMs = 60000;
 
@@ -122,6 +154,9 @@ class PromoPlan {
     'finalCount': finalCount,
     'customSeconds': customSeconds,
     'countdownSeconds': countdownSeconds,
+    'myLevel': myLevel,
+    'oppLevel': oppLevel,
+    'levelUp': levelUp,
   };
 
   static PromoPlan fromJson(Map<String, Object?> j) {
@@ -137,6 +172,9 @@ class PromoPlan {
       ..oppPhoto = j['oppPhoto'] as String?
       ..oppTier = read('oppTier', plan.oppTier)
       ..oppDiv = read('oppDiv', plan.oppDiv)
+      ..myLevel = read('myLevel', plan.myLevel).clamp(1, 99)
+      ..oppLevel = read('oppLevel', plan.oppLevel).clamp(1, 99)
+      ..levelUp = j['levelUp'] as bool? ?? plan.levelUp
       ..mode = OpponentMode.values.firstWhere(
         (m) => m.name == j['mode'],
         orElse: () => plan.mode,

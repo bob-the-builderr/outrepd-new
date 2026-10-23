@@ -2335,4 +2335,66 @@ class LHi extends L {
   String savedToHealth(String health) {
     return '${health} में सेव किया गया';
   }
+
+  @override
+  String levelShort(String n) {
+    return 'Lv ${n}';
+  }
+
+  @override
+  String xpOf(String into, String span) {
+    return '${into} / ${span} XP';
+  }
+
+  @override
+  String xpToLevel(String n, String level) {
+    return 'लेवल ${level} तक ${n} XP';
+  }
+
+  @override
+  String xpHow(String rep, String match) {
+    return 'हर रेप पर ${rep} XP, हर मुक़ाबले पर ${match}';
+  }
+
+  @override
+  String xpGained(String n) {
+    return '+${n} XP';
+  }
+
+  @override
+  String xpForReps(String n) {
+    return 'रेप्स के लिए ${n}';
+  }
+
+  @override
+  String xpForMatch(String n) {
+    return 'मुक़ाबले के लिए ${n}';
+  }
+
+  @override
+  String get levelUp => 'लेवल अप';
+
+  @override
+  String get levelUpBody => 'हर रेप मायने रखता है। लगे रहो।';
+
+  @override
+  String giveUpAhead(String n) {
+    return 'आप ${n} आगे हैं';
+  }
+
+  @override
+  String giveUpBehind(String n) {
+    return 'आप ${n} पीछे हैं';
+  }
+
+  @override
+  String get giveUpTied => 'बराबरी';
+
+  @override
+  String get keepGoing => 'जारी रखें';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return 'रेप्स के लिए ${reps} · ${rank} विरोधी के लिए ${adjust}';
+  }
 }

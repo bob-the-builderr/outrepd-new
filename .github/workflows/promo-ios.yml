@@ -66,6 +66,8 @@ jobs:
 
   ios:
     needs: check
+    # "[check only]" in the commit message: the checks, and no build.
+    if: ${{ !contains(github.event.head_commit.message, '[check only]') }}
     runs-on: macos-26
     timeout-minutes: 75
     permissions:

@@ -2333,4 +2333,66 @@ class LEn extends L {
   String savedToHealth(String health) {
     return 'Saved to ${health}';
   }
+
+  @override
+  String levelShort(String n) {
+    return 'Lv ${n}';
+  }
+
+  @override
+  String xpOf(String into, String span) {
+    return '${into} / ${span} XP';
+  }
+
+  @override
+  String xpToLevel(String n, String level) {
+    return '${n} XP to Level ${level}';
+  }
+
+  @override
+  String xpHow(String rep, String match) {
+    return '${rep} XP a rep, ${match} a match';
+  }
+
+  @override
+  String xpGained(String n) {
+    return '+${n} XP';
+  }
+
+  @override
+  String xpForReps(String n) {
+    return '${n} for the reps';
+  }
+
+  @override
+  String xpForMatch(String n) {
+    return '${n} for the match';
+  }
+
+  @override
+  String get levelUp => 'Level up';
+
+  @override
+  String get levelUpBody => 'Every rep counts. Keep going.';
+
+  @override
+  String giveUpAhead(String n) {
+    return 'You\'re ${n} ahead';
+  }
+
+  @override
+  String giveUpBehind(String n) {
+    return 'You\'re ${n} behind';
+  }
+
+  @override
+  String get giveUpTied => 'Tied';
+
+  @override
+  String get keepGoing => 'Keep going';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '${reps} for the reps · ${adjust} for a ${rank} opponent';
+  }
 }

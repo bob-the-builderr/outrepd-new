@@ -2334,4 +2334,66 @@ class LId extends L {
   String savedToHealth(String health) {
     return 'Tersimpan di ${health}';
   }
+
+  @override
+  String levelShort(String n) {
+    return 'Lv ${n}';
+  }
+
+  @override
+  String xpOf(String into, String span) {
+    return '${into} / ${span} XP';
+  }
+
+  @override
+  String xpToLevel(String n, String level) {
+    return '${n} XP lagi ke Level ${level}';
+  }
+
+  @override
+  String xpHow(String rep, String match) {
+    return '${rep} XP per repetisi, ${match} per duel';
+  }
+
+  @override
+  String xpGained(String n) {
+    return '+${n} XP';
+  }
+
+  @override
+  String xpForReps(String n) {
+    return '${n} dari repetisi';
+  }
+
+  @override
+  String xpForMatch(String n) {
+    return '${n} dari duel';
+  }
+
+  @override
+  String get levelUp => 'Naik level';
+
+  @override
+  String get levelUpBody => 'Setiap repetisi berarti. Terus lanjut.';
+
+  @override
+  String giveUpAhead(String n) {
+    return 'Kamu unggul ${n}';
+  }
+
+  @override
+  String giveUpBehind(String n) {
+    return 'Kamu tertinggal ${n}';
+  }
+
+  @override
+  String get giveUpTied => 'Seri';
+
+  @override
+  String get keepGoing => 'Lanjut';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '${reps} dari repetisi · ${adjust} untuk lawan ${rank}';
+  }
 }

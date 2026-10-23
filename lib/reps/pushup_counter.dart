@@ -45,6 +45,18 @@ const kBottomShare = 0.5;
 /// that went all the way down and most of the way up was a rep.
 const kTopShare = 0.75;
 
+/// Where the drawn bar is empty: a quarter of lockout height, about the
+/// bottom of a real push-up, not the floor nobody's head reaches. Drawn from
+/// the floor, the bar never got below a quarter full in a real set, and its
+/// two lines sat squeezed into the middle; drawn from here it empties and
+/// fills with every rep, and [kBottomShare] and [kTopShare] land on a third
+/// and two thirds of it. Drawing only — nothing is counted off this.
+const kBarFloor = 0.25;
+
+/// How full to draw the bar for a [PushupReading.progress].
+double barFill(double share) =>
+    ((share - kBarFloor) / (1 - kBarFloor)).clamp(0.0, 1.0);
+
 /// Time constant of the smoothing on the reading, seconds.
 ///
 /// Short, because fast sets are fast: a hundred-rep set runs at 1.9 reps a
@@ -296,6 +308,7 @@ class PushupReading {
     required this.counted,
     required this.reps,
     required this.planted,
+    this.pastBottom = false,
   });
 
   /// The bar: the nose's height above the hands as a share of lockout, 0 at
@@ -309,6 +322,11 @@ class PushupReading {
 
   /// The hands are on the floor — the one thing a push-up cannot do without.
   final bool planted;
+
+  /// This rep has been down past the bottom line, and the top line is the
+  /// one left to reach. What the bar lights, so the lifter sees which line
+  /// is next — read off the same tracker as the count, never guessed.
+  final bool pastBottom;
 }
 
 /// Counts push-ups one frame at a time, and drives the bar.
@@ -545,6 +563,7 @@ class PushupTracker {
     counted: counted,
     reps: _reps,
     planted: _planted,
+    pastBottom: _phase == _Phase.down,
   );
 }
 

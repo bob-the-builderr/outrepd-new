@@ -281,7 +281,10 @@ void main() {
     expect(find.text('2 reps ahead.'), findsOneWidget);
     expect(find.text('5'), findsOneWidget);
     expect(find.text('3'), findsOneWidget);
-    expect(find.text('+2 LP'), findsOneWidget);
+    // Two reps ahead of a Diamond IV, from Gold III: weighed up, as the app
+    // pays it.
+    expect(find.text('+3 LP'), findsOneWidget);
+    expect(find.text('+25 XP'), findsOneWidget);
     expect(tester.takeException(), isNull);
 
     // The rank moved on the screen, not in the plan: a retake starts the same.
@@ -308,7 +311,27 @@ void main() {
     await tester.tap(find.byKey(const Key('continue')));
     await tester.pumpAndSettle();
     expect(find.text('YOU WON'), findsOneWidget);
-    expect(find.text('+5 LP'), findsOneWidget);
+    expect(find.text('+8 LP'), findsOneWidget);
+  });
+
+  testWidgets('a level-up, when planned, comes before the result', (
+    tester,
+  ) async {
+    phone(tester);
+    final plan = PromoPlan(myLevel: 12, levelUp: true);
+    await tester.pumpWidget(
+      _app(PromoResultScreen(plan: plan, yours: 10, theirs: 5, gaveUp: false)),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('LEVEL UP'), findsOneWidget);
+    expect(find.text('13'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+
+    await tester.tap(find.byKey(const Key('levelUpContinue')));
+    await tester.pumpAndSettle();
+    expect(find.text('YOU WON'), findsOneWidget);
+    expect(find.text('+30 XP'), findsOneWidget);
   });
 
   testWidgets('giving up is a loss whatever the count', (tester) async {

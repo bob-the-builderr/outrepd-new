@@ -2303,4 +2303,66 @@ class LKo extends L {
   String savedToHealth(String health) {
     return '${health}에 저장됨';
   }
+
+  @override
+  String levelShort(String n) {
+    return 'Lv.${n}';
+  }
+
+  @override
+  String xpOf(String into, String span) {
+    return '${into} / ${span} XP';
+  }
+
+  @override
+  String xpToLevel(String n, String level) {
+    return '레벨 ${level}까지 ${n} XP';
+  }
+
+  @override
+  String xpHow(String rep, String match) {
+    return '1회당 ${rep} XP, 대결당 ${match}';
+  }
+
+  @override
+  String xpGained(String n) {
+    return '+${n} XP';
+  }
+
+  @override
+  String xpForReps(String n) {
+    return '횟수로 ${n}';
+  }
+
+  @override
+  String xpForMatch(String n) {
+    return '대결로 ${n}';
+  }
+
+  @override
+  String get levelUp => '레벨 업';
+
+  @override
+  String get levelUpBody => '한 번 한 번이 쌓여요. 계속 가요.';
+
+  @override
+  String giveUpAhead(String n) {
+    return '${n}개 앞서고 있어요';
+  }
+
+  @override
+  String giveUpBehind(String n) {
+    return '${n}개 뒤지고 있어요';
+  }
+
+  @override
+  String get giveUpTied => '동점';
+
+  @override
+  String get keepGoing => '계속하기';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '횟수 차이로 ${reps} · ${rank} 상대로 ${adjust}';
+  }
 }

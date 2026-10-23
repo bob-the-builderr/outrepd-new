@@ -2340,4 +2340,66 @@ class LIt extends L {
   String savedToHealth(String health) {
     return 'Salvato in ${health}';
   }
+
+  @override
+  String levelShort(String n) {
+    return 'Liv. ${n}';
+  }
+
+  @override
+  String xpOf(String into, String span) {
+    return '${into} / ${span} XP';
+  }
+
+  @override
+  String xpToLevel(String n, String level) {
+    return '${n} XP al livello ${level}';
+  }
+
+  @override
+  String xpHow(String rep, String match) {
+    return '${rep} XP a ripetizione, ${match} a sfida';
+  }
+
+  @override
+  String xpGained(String n) {
+    return '+${n} XP';
+  }
+
+  @override
+  String xpForReps(String n) {
+    return '${n} per le ripetizioni';
+  }
+
+  @override
+  String xpForMatch(String n) {
+    return '${n} per la sfida';
+  }
+
+  @override
+  String get levelUp => 'Livello superiore';
+
+  @override
+  String get levelUpBody => 'Ogni ripetizione conta. Continua così.';
+
+  @override
+  String giveUpAhead(String n) {
+    return 'Sei avanti di ${n}';
+  }
+
+  @override
+  String giveUpBehind(String n) {
+    return 'Sei indietro di ${n}';
+  }
+
+  @override
+  String get giveUpTied => 'Pari';
+
+  @override
+  String get keepGoing => 'Continua';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '${reps} per le ripetizioni · ${adjust} per un avversario ${rank}';
+  }
 }

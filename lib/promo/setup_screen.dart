@@ -125,6 +125,10 @@ class _SetupScreenState extends State<SetupScreen> {
               onDiv: (d) => _change(() => plan.myDiv = d),
               lp: plan.myLp,
               onLp: (v) => _change(() => plan.myLp = v),
+              level: plan.myLevel,
+              onLevel: (v) => _change(() => plan.myLevel = v),
+              levelUp: plan.levelUp,
+              onLevelUp: (on) => _change(() => plan.levelUp = on),
             ),
             const SizedBox(height: 14),
             _PlayerCard(
@@ -137,6 +141,8 @@ class _SetupScreenState extends State<SetupScreen> {
               onClearPhoto: () => _change(() => plan.oppPhoto = null),
               onTier: (t) => _change(() => plan.oppTier = t),
               onDiv: (d) => _change(() => plan.oppDiv = d),
+              level: plan.oppLevel,
+              onLevel: (v) => _change(() => plan.oppLevel = v),
             ),
             const SizedBox(height: 14),
             _Box(
@@ -344,8 +350,12 @@ class _PlayerCard extends StatelessWidget {
     required this.onClearPhoto,
     required this.onTier,
     required this.onDiv,
+    required this.level,
+    required this.onLevel,
     this.lp,
     this.onLp,
+    this.levelUp,
+    this.onLevelUp,
   });
 
   final String title;
@@ -359,6 +369,12 @@ class _PlayerCard extends StatelessWidget {
   final ValueChanged<int> onDiv;
   final int? lp;
   final ValueChanged<int>? onLp;
+  final int level;
+  final ValueChanged<int> onLevel;
+
+  /// Yours only: whether the take ends on the level-up screen.
+  final bool? levelUp;
+  final ValueChanged<bool>? onLevelUp;
 
   @override
   Widget build(BuildContext context) {
@@ -466,6 +482,24 @@ class _PlayerCard extends StatelessWidget {
             onChanged: onLp!,
           ),
         ],
+        const SizedBox(height: 6),
+        _Stepper(
+          label: 'Level',
+          value: level,
+          min: 1,
+          max: 99,
+          onChanged: onLevel,
+        ),
+        if (levelUp case final up?)
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text(
+              'Level up at the end',
+              style: TextStyle(color: context.colors.text, fontSize: 16),
+            ),
+            value: up,
+            onChanged: onLevelUp,
+          ),
       ],
     );
   }

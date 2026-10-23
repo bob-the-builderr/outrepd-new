@@ -1,6 +1,6 @@
 /// What the take ends on: the app's own result screen, with both sides as
-/// chosen before the match. A promotion, when the LP earns one, comes first —
-/// in that order in the app too.
+/// chosen before the match. A promotion, when the LP earns one, comes first,
+/// then a level-up when the plan asks for one — in that order in the app too.
 ///
 /// Drawn from lib/screens/post_match.dart in the app, so a video of this is a
 /// video of the real thing. The rank moves for the screen only: the plan keeps
@@ -18,7 +18,9 @@ import '../ranking.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
 import '../type_scale.dart';
+import '../screens/level.dart';
 import '../widgets.dart';
+import '../xp.dart';
 import 'match_screen.dart' show photoOf;
 import 'plan.dart';
 
@@ -49,11 +51,27 @@ class _PromoResultScreenState extends State<PromoResultScreen> {
       divIdx: widget.plan.myDiv,
       lp: widget.plan.myLp,
     ),
-    lpFor(won: _won, yourReps: widget.yours, theirReps: widget.theirs),
+    // Weighed by the two ranks, as the app pays it.
+    lpFor(
+      won: _won,
+      yourReps: widget.yours,
+      theirReps: widget.theirs,
+      yourLevel: ladderLevel(widget.plan.myTier, widget.plan.myDiv),
+      theirLevel: ladderLevel(widget.plan.oppTier, widget.plan.oppDiv),
+    ),
     floorTierIdx: widget.plan.myTier,
   );
 
   late bool _promotion = _change.promoted;
+
+  /// The reps and twenty for the match, from where the plan puts the level.
+  late final XpGain _xp = () {
+    final gained = widget.yours + kXpPerMatch;
+    final before = widget.plan.myXpBefore(gained);
+    return XpGain(before: before, after: before + gained, reps: widget.yours);
+  }();
+
+  late bool _levelUp = _xp.leveledUp;
 
   @override
   Widget build(BuildContext context) {
@@ -64,12 +82,18 @@ class _PromoResultScreenState extends State<PromoResultScreen> {
               change: _change,
               onContinue: () => setState(() => _promotion = false),
             )
+          : _levelUp
+          ? LevelUpView(
+              level: levelOf(_xp.after),
+              onContinue: () => setState(() => _levelUp = false),
+            )
           : _ResultView(
               plan: widget.plan,
               won: _won,
               yourReps: widget.yours,
               theirReps: widget.theirs,
               change: _change,
+              xp: _xp,
               onRematch: () => Navigator.of(context).pop(true),
               onDone: () => Navigator.of(context).pop(false),
             ),
@@ -84,6 +108,7 @@ class _ResultView extends StatelessWidget {
     required this.yourReps,
     required this.theirReps,
     required this.change,
+    required this.xp,
     required this.onRematch,
     required this.onDone,
   });
@@ -93,6 +118,25 @@ class _ResultView extends StatelessWidget {
   final int yourReps;
   final int theirReps;
   final RankChange change;
+  final XpGain xp;
+
+  /// "+4 for the reps · +2 for a Platinum IV opponent": said only when the
+  /// opponent's rank moved what the duel paid, the way the app says it.
+  String? _breakdown(BuildContext context) {
+    final gap = (yourReps - theirReps).abs();
+    final forReps = won ? gap : -gap;
+    final adjust = change.lpDelta - forReps;
+    if (gap == 0 || adjust == 0 || adjust.abs() * 2 > gap + 1) return null;
+    final l = L.of(context);
+    String signed(int n) => n > 0
+        ? '+${localNumber(context, n)}'
+        : '−${localNumber(context, -n)}';
+    return l.lpBreakdown(
+      signed(forReps),
+      signed(adjust),
+      tierLabel(l, plan.oppTier, plan.oppDiv),
+    );
+  }
   final VoidCallback onRematch;
   final VoidCallback onDone;
 
@@ -157,7 +201,9 @@ class _ResultView extends StatelessWidget {
                         yourTierIdx: change.after.tierIdx,
                       ),
                       const SizedBox(height: 24),
-                      _LpCard(change: change),
+                      _LpCard(change: change, breakdown: _breakdown(context)),
+                      const SizedBox(height: 10),
+                      XpGainCard(gain: xp),
                     ],
                   ),
                 ),
@@ -354,9 +400,12 @@ class _Side extends StatelessWidget {
 /// What the match did to the rank: the total, where it leaves you, and the
 /// bar filling to it.
 class _LpCard extends StatelessWidget {
-  const _LpCard({required this.change});
+  const _LpCard({required this.change, this.breakdown});
 
   final RankChange change;
+
+  /// What the total was made of, when the opponent's rank changed it.
+  final String? breakdown;
 
   @override
   Widget build(BuildContext context) {
@@ -422,6 +471,13 @@ class _LpCard extends StatelessWidget {
               maxLines: 1,
               style: TextStyle(color: context.colors.muted, fontSize: 13),
             ),
+            if (breakdown case final breakdown?) ...[
+              const SizedBox(height: 6),
+              Text(
+                breakdown,
+                style: const TextStyle(color: AppColors.gold, fontSize: 13),
+              ),
+            ],
           ],
         ),
       ),

@@ -2330,4 +2330,66 @@ class LTr extends L {
   String savedToHealth(String health) {
     return '${health} uygulamasına kaydedildi';
   }
+
+  @override
+  String levelShort(String n) {
+    return 'Sv. ${n}';
+  }
+
+  @override
+  String xpOf(String into, String span) {
+    return '${into} / ${span} XP';
+  }
+
+  @override
+  String xpToLevel(String n, String level) {
+    return 'Seviye ${level} için ${n} XP';
+  }
+
+  @override
+  String xpHow(String rep, String match) {
+    return 'Tekrar başına ${rep} XP, düello başına ${match}';
+  }
+
+  @override
+  String xpGained(String n) {
+    return '+${n} XP';
+  }
+
+  @override
+  String xpForReps(String n) {
+    return 'Tekrarlar için ${n}';
+  }
+
+  @override
+  String xpForMatch(String n) {
+    return 'Düello için ${n}';
+  }
+
+  @override
+  String get levelUp => 'Seviye atladın';
+
+  @override
+  String get levelUpBody => 'Her tekrar sayılır. Devam et.';
+
+  @override
+  String giveUpAhead(String n) {
+    return '${n} öndesin';
+  }
+
+  @override
+  String giveUpBehind(String n) {
+    return '${n} geridesin';
+  }
+
+  @override
+  String get giveUpTied => 'Berabere';
+
+  @override
+  String get keepGoing => 'Devam et';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return 'Tekrarlar için ${reps} · ${rank} rakip için ${adjust}';
+  }
 }
