@@ -57,9 +57,8 @@ class DuelContext {
   final int? myDivIdx;
   final ImageProvider? myImage;
 
-  /// Experience, for the level beside each rank; null to leave it off.
+  /// Experience, for the level beside the rank; null to leave it off.
   final int? myXp;
-  final int? opponentXp;
 
   final String opponentName;
   final int opponentReps;
@@ -1483,6 +1482,8 @@ class _ScoreCard extends StatelessWidget {
                   reps: yours,
                   tierIdx: duel?.myTierIdx ?? demoProfile.tierIdx,
                   divIdx: duel?.myDivIdx ?? demoProfile.divIdx,
+                  // A staged match is always a ranked one.
+                  ranked: true,
                   xp: duel?.myXp,
                   colour: Colors.white,
                   image: duel?.myImage,
