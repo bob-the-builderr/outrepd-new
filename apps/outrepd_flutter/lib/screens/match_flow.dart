@@ -29,6 +29,7 @@ import '../tier_badge.dart';
 import '../widgets.dart';
 import '../xp.dart';
 import '../reps/count_accuracy.dart';
+import '../review_prompt.dart';
 import '../settings.dart';
 import 'confirm_count.dart';
 import 'daily_goal.dart';
@@ -193,6 +194,10 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   int _myReps = 0;
   Timer? _timer;
 
+  /// Once the result has been on screen a moment: the rating prompt, when
+  /// this was a good moment for it (ReviewPrompt).
+  Timer? _ratingTimer;
+
   /// What the duel did to the account, once it has been recorded.
   DuelOutcome? _outcome;
 
@@ -267,6 +272,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   @override
   void dispose() {
     _timer?.cancel();
+    _ratingTimer?.cancel();
     // Gone mid-search: out of the queue, so nobody is paired with a lifter
     // who has already left.
     if (_liveSearchFrom != null && _live == null && !_searchCancelled) {
@@ -844,6 +850,20 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     unawaited(_afterMonthPlace());
   }
 
+  /// A win, a new level or a new best, with the result in front of them: the
+  /// moment to ask for a rating, if it has not been asked lately.
+  void _askForRating() {
+    if (!mounted || _stage != _Stage.result) return;
+    final won = !widget.practice && !_vsBest && _won;
+    final best = _outcome?.newBest ?? (_vsBest && _myReps > _bestBefore);
+    unawaited(
+      ReviewPrompt.maybeAsk(
+        goodMoment: won || best || (_xp?.leveledUp ?? false),
+        matchesPlayed: demoProfile.totalMatches,
+      ),
+    );
+  }
+
   /// What follows a recorded session: the promotion, then the level, then
   /// the result — each news before the detail behind it.
   _Stage get _afterRecorded => (_outcome?.rank?.promoted ?? false)
@@ -1042,6 +1062,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
         );
 
       case _Stage.result:
+        _ratingTimer ??= Timer(const Duration(seconds: 2), _askForRating);
         if (_vsBest) {
           return _BestResultView(
             reps: _myReps,

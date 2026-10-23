@@ -35,6 +35,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   shared_preferences: ^2.5.5
+  # The App Store / Google Play rating prompt, at a good moment
+  # (lib/review_prompt.dart).
+  in_app_review: ^2.0.9
   camera: ^0.12.0+2
   # Only for opening the OS settings page when the camera has been refused
   # for good. Without it the 'Open settings' button is a button that does
