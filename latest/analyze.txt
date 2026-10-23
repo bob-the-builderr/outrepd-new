@@ -1,2 +1,6 @@
 Analyzing outrepd-new...                                        
-No issues found! (ran in 13.7s)
+
+  error • The name 'opponentXp' is already defined. Try renaming one of the declarations • lib/screens/trainer.dart:80:14 • duplicate_definition
+warning • A value for optional parameter 'ranked' isn't ever given. Try removing the unused parameter • lib/screens/trainer.dart:1824:10 • unused_element_parameter
+
+2 issues found. (ran in 12.2s)
