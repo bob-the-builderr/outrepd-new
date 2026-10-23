@@ -241,6 +241,8 @@ void main() {
       behindBy: 2,
       countdownSeconds: 3,
       myLp: 40,
+      // Filming is ReplayKit's, and there is no iPhone here.
+      record: false,
     );
 
     await tester.pumpWidget(_app(SetupScreen(plan: plan)));
