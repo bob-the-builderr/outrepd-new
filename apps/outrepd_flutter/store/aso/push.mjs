@@ -187,6 +187,14 @@ for (const locale of locales) {
       });
       infoLocs[locale] = made.data;
     }
+    // Adding a locale's app info makes Apple open the version's localization
+    // for it too, empty: find that one rather than make a second.
+    if (!versionLocs[locale]) {
+      const found = await all(
+        `/appStoreVersions/${version.id}/appStoreVersionLocalizations?filter[locale]=${locale}`,
+      );
+      if (found.length) versionLocs[locale] = found[0];
+    }
     if (versionLocs[locale]) {
       await call('PATCH', `/appStoreVersionLocalizations/${versionLocs[locale].id}`, {
         data: { type: 'appStoreVersionLocalizations', id: versionLocs[locale].id, attributes: w.version },
