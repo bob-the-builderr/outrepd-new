@@ -73,6 +73,7 @@ Future<void> playPromoMatch(BuildContext context, PromoPlan plan) async {
   final messenger = ScaffoldMessenger.of(context);
   final l = L.of(context);
   while (true) {
+    cameraIn4k = plan.camera4k;
     final filming = plan.record && await _startFilming(messenger);
     final promo = PromoBackend(plan);
     backend = promo;

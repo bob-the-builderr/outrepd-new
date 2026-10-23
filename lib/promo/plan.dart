@@ -43,6 +43,7 @@ class PromoPlan {
     this.oppLevel = 27,
     this.levelUp = false,
     this.record = true,
+    this.camera4k = false,
   });
 
   String myName;
@@ -79,6 +80,9 @@ class PromoPlan {
   /// Film each take into Photos from inside the app, rather than with the
   /// phone's own screen recorder.
   bool record;
+
+  /// The camera at the most the lens gives (4K) rather than 1080p.
+  bool camera4k;
 
   /// Experience at the very start of [level].
   static int xpAt(int level) {
@@ -163,6 +167,7 @@ class PromoPlan {
     'oppLevel': oppLevel,
     'levelUp': levelUp,
     'record': record,
+    'camera4k': camera4k,
   };
 
   static PromoPlan fromJson(Map<String, Object?> j) {
@@ -182,6 +187,7 @@ class PromoPlan {
       ..oppLevel = read('oppLevel', plan.oppLevel).clamp(1, 99)
       ..levelUp = j['levelUp'] as bool? ?? plan.levelUp
       ..record = j['record'] as bool? ?? plan.record
+      ..camera4k = j['camera4k'] as bool? ?? plan.camera4k
       ..mode = OpponentMode.values.firstWhere(
         (m) => m.name == j['mode'],
         orElse: () => plan.mode,

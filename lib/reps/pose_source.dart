@@ -9,6 +9,11 @@ import 'pose.dart';
 import 'pose_source_demo.dart'
     if (dart.library.io) 'pose_source_camera.dart' as impl;
 
+/// The promo copy's camera: 1080p, or the most the lens gives (4K on a
+/// recent iPhone) when the body has to be sharpest in the film. Set by the
+/// setup before each take; more pixels ask more of the pose detection.
+bool cameraIn4k = false;
+
 abstract class PoseSource {
   Stream<BodyPose> get poses;
 

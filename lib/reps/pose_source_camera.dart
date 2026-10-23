@@ -132,7 +132,7 @@ class CameraPoseSource implements PoseSource {
       camera,
       // The promo copy films what this shows, so it is sharp first: the app's
       // own medium is 640x480 stretched to the whole screen.
-      ResolutionPreset.veryHigh,
+      cameraIn4k ? ResolutionPreset.max : ResolutionPreset.veryHigh,
       enableAudio: false,
       imageFormatGroup:
           Platform.isAndroid ? ImageFormatGroup.nv21 : ImageFormatGroup.bgra8888,

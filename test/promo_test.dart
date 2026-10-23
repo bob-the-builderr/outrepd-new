@@ -85,6 +85,9 @@ void main() {
       expect(PromoPlan.fromJson(const {}).record, isTrue);
       expect(PromoPlan.fromJson(const {'record': false}).record, isFalse);
       expect(PromoPlan(record: false).toJson()['record'], isFalse);
+      // 1080p unless asked: 4K asks more of the pose detection.
+      expect(PromoPlan().camera4k, isFalse);
+      expect(PromoPlan.fromJson(const {'camera4k': true}).camera4k, isTrue);
     });
 
     test('a final count is paced across the minute, quick then slower', () {

@@ -255,6 +255,20 @@ class _SetupScreenState extends State<SetupScreen> {
                       setState(() => settings.update(() => settings.showSkeleton = on)),
                 ),
                 SwitchListTile(
+                  key: const Key('camera4kSwitch'),
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(
+                    'Camera in 4K',
+                    style: TextStyle(color: context.colors.text, fontSize: 16),
+                  ),
+                  value: plan.camera4k,
+                  onChanged: (on) => _change(() => plan.camera4k = on),
+                ),
+                const _Hint(
+                  'A sharper body in the film. The counter works harder at '
+                  '4K: check the bar still keeps up with you.',
+                ),
+                SwitchListTile(
                   key: const Key('recordSwitch'),
                   contentPadding: EdgeInsets.zero,
                   title: Text(
