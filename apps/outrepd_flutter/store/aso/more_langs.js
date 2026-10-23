@@ -1,13 +1,13 @@
 // The listing in the storefront languages the app itself does not speak.
 // Short, and honest about it: it says the app is in English and twelve other
 // languages, so nobody installs expecting their own. Tier names stay English,
-// as the app shows them there. Where a market types the English words (the
-// research found "push up" searched across the Nordics, central Europe, Greece,
-// South-East Asia and India), the English descriptor leads the name and the
+// as the app shows them there. The name is the English one everywhere; where
+// a market types the English words (the research found "push up" searched
+// across the Nordics, central Europe, Greece, South-East Asia and India), the
 // subtitle carries the local words. URLs never change.
 const T = 'https://www.outrepd.com/terms';
 const P = 'https://www.outrepd.com/privacy';
-const EN_NAME = 'Push Up Challenge: OUTREPD';
+const EN_NAME = 'OUTREPD: Push-up Battles';
 
 // hook / body / device / langs / sub / terms label / privacy label
 const d = (x) =>
@@ -15,7 +15,7 @@ const d = (x) =>
 
 module.exports = {
   ca: {
-    name: 'Comptador Flexions: OUTREPD',
+    name: 'OUTREPD: Push-up Battles',
     subtitle: 'Repte push-up i duels 1v1',
     keywords: 'flexio,flexiones,pushups,entrenament,fitness,joc,ia,camera,diari,100,ratxa,ranking,força,nivell',
     promo: 'Dues persones. 60 segons. Un guanyador. La càmera compta cada flexió. Nou: puja de nivell amb cada repetició i una cursa setmanal que comença cada dilluns.',
@@ -30,7 +30,7 @@ module.exports = {
     }),
   },
   'nl-NL': {
-    name: 'Opdrukken Teller: OUTREPD',
+    name: 'OUTREPD: Push-up Battles',
     subtitle: 'Push-up uitdaging & 1v1 duels',
     keywords: 'pushups,tracker,training,fitness,spel,ai,camera,dagelijks,100,reeks,ranglijst,kracht,level,challenge',
     promo: 'Twee mensen. 60 seconden. Eén winnaar. Je camera telt elke push-up. Nieuw: level up met elke herhaling, en een wekelijkse race die elke maandag opnieuw begint.',
@@ -45,7 +45,7 @@ module.exports = {
     }),
   },
   sv: {
-    name: 'Armhävningar Utmaning: OUTREPD',
+    name: 'OUTREPD: Push-up Battles',
     subtitle: 'Push-up räknare & 1v1-dueller',
     keywords: 'armhävning,pushups,tracker,träning,fitness,spel,ai,kamera,daglig,100,svit,rankning,styrka,nivå',
     promo: 'Två personer. 60 sekunder. En vinnare. Kameran räknar varje armhävning. Nytt: gå upp i nivå med varje rep och ett veckorace som börjar om varje måndag.',
@@ -105,7 +105,7 @@ module.exports = {
     }),
   },
   pl: {
-    name: 'Wyzwanie Pompki: OUTREPD',
+    name: 'OUTREPD: Push-up Battles',
     subtitle: 'Licznik pompek i pojedynki 1v1',
     keywords: 'pompka,pushups,tracker,trening,fitness,gra,ai,kamera,codziennie,100,seria,ranking,siła,poziom',
     promo: 'Dwie osoby. 60 sekund. Jeden zwycięzca. Kamera liczy każdą pompkę. Nowość: awansuj z każdym powtórzeniem i tygodniowy wyścig, który startuje w każdy poniedziałek.',
@@ -225,7 +225,7 @@ module.exports = {
     }),
   },
   uk: {
-    name: 'Челендж віджимань: OUTREPD',
+    name: 'OUTREPD: Push-up Battles',
     subtitle: 'Лічильник віджимань, дуелі 1v1',
     keywords: 'віджимання,pushups,трекер,тренування,фітнес,гра,ші,камера,щодня,100,серія,рейтинг,сила,рівень',
     promo: 'Двоє. 60 секунд. Один переможець. Камера рахує кожне віджимання. Нове: рівень росте з кожним повторенням, а тижнева гонка стартує щопонеділка.',
@@ -285,7 +285,7 @@ module.exports = {
     }),
   },
   'ar-SA': {
-    name: 'تحدي تمارين الضغط: OUTREPD',
+    name: 'OUTREPD: Push-up Battles',
     subtitle: 'عداد الضغط ونزالات 1v1 مباشرة',
     keywords: 'pushups,push up,counter,تمرين,لياقة,رياضة,لعبة,كاميرا,يومي,100,ترتيب,قوة,مستوى',
     promo: 'شخصان. 60 ثانية. فائز واحد. الكاميرا تعدّ كل ضغطة. جديد: ارتقِ بمستواك مع كل تكرار، وسباق أسبوعي يبدأ من جديد كل يوم اثنين.',
@@ -300,7 +300,7 @@ module.exports = {
     }),
   },
   he: {
-    name: 'אתגר שכיבות סמיכה: OUTREPD',
+    name: 'OUTREPD: Push-up Battles',
     subtitle: 'מונה חזרות וקרבות 1v1 בזמן אמת',
     keywords: 'pushups,push up,counter,אימון,כושר,משחק,מצלמה,יומי,100,רצף,דירוג,כוח,רמה',
     promo: 'שני אנשים. 60 שניות. מנצח אחד. המצלמה סופרת כל שכיבת סמיכה. חדש: עולים רמה עם כל חזרה, ומרוץ שבועי שמתחיל מחדש בכל יום שני.',

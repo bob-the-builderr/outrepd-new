@@ -1,6 +1,7 @@
-// The en-US source, and the English storefronts that share it. Keyword-led
-// name (vibe-aso phase 1, approved 2026-10-24): "push up challenge" first,
-// the brand second; the subtitle carries "rep counter", "1v1" and "battles".
+// The en-US source, and the English storefronts that share it. The name is
+// the original, brand first, in every locale (the keyword-led "Push Up
+// Challenge: OUTREPD" was tried and taken back, 2026-10-24); the subtitle
+// carries "rep counter", "1v1" and "battles".
 const description = `One minute. One opponent. Every push-up counts.
 
 OUTREPD turns push-ups into a live 1v1 challenge. Prop your phone up, get into position, and go for 60 seconds while the camera counts your reps. Your opponent is a real person, and whoever does more wins.
@@ -40,7 +41,7 @@ const promo =
   'Two people. 60 seconds. One winner. Your camera counts every push-up. New: level up with every rep, and a weekly race that starts fresh each Monday.';
 
 const base = {
-  name: 'Push Up Challenge: OUTREPD',
+  name: 'OUTREPD: Push-up Battles',
   subtitle: 'Rep Counter & Live 1v1 Battles',
   keywords: 'pushups,tracker,duel,ai,camera,workout,game,fitness,daily,100,streak,compete,ranked,strength,level',
   promo,
