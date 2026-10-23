@@ -167,9 +167,19 @@ const infoLocs = Object.fromEntries(
   (await all(`/appInfos/${editableInfo.id}/appInfoLocalizations?limit=200`)).map((l) => [l.attributes.locale, l]),
 );
 
+// Every locale needs a support URL, and a locale Apple opened for us has
+// none: the English one's, everywhere it is missing.
+const supportUrl =
+  versionLocs['en-US']?.attributes?.supportUrl ??
+  (await all(`/appStoreVersions/${version.id}/appStoreVersionLocalizations?filter[locale]=en-US`))[0]
+    ?.attributes?.supportUrl ??
+  null;
+console.log(`support url ${supportUrl ?? 'none in en-US'}`);
+
 let failed = 0;
 for (const locale of locales) {
   const w = want(locale);
+  if (supportUrl) w.version.supportUrl = supportUrl;
   try {
     // Name first: a locale needs its app info localization before Apple
     // accepts the version's.
