@@ -33,10 +33,13 @@ ImageProvider? photoOf(String? path) {
 
 /// Films a take when the plan asks, the status bar put away first so the film
 /// is the app and nothing else. Says so when iOS will not let it.
-Future<bool> _startFilming(ScaffoldMessengerState messenger) async {
+Future<bool> _startFilming(
+  ScaffoldMessengerState messenger, {
+  double? aspect,
+}) async {
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
   try {
-    await PromoRecorder.start();
+    await PromoRecorder.start(aspect: aspect);
     return true;
   } on MissingPluginException {
     // No recorder on this platform: the tests, or a build without it.
@@ -74,7 +77,15 @@ Future<void> playPromoMatch(BuildContext context, PromoPlan plan) async {
   final l = L.of(context);
   while (true) {
     cameraIn4k = plan.camera4k;
-    final filming = plan.record && await _startFilming(messenger);
+    final filming =
+        plan.record &&
+        await _startFilming(
+          messenger,
+          aspect: plan.film916 ? _FilmFrame.aspect : null,
+        );
+    // The take in the frame the film keeps, while it is being filmed.
+    Widget framed(Widget screen) =>
+        filming && plan.film916 ? _FilmFrame(child: screen) : screen;
     final promo = PromoBackend(plan);
     backend = promo;
     final session = LiveSession(
@@ -83,7 +94,7 @@ Future<void> playPromoMatch(BuildContext context, PromoPlan plan) async {
 
     final count = await navigator.push<PushupCount>(
       MaterialPageRoute(
-        builder: (_) => TrainerScreen(
+        builder: (_) => framed(TrainerScreen(
           autoStart: true,
           forMatch: true,
           limit: const Duration(seconds: 60),
@@ -103,7 +114,7 @@ Future<void> playPromoMatch(BuildContext context, PromoPlan plan) async {
             myXp: PromoPlan.xpAt(plan.myLevel),
             opponentXp: PromoPlan.xpAt(plan.oppLevel),
           ),
-        ),
+        )),
       ),
     );
 
@@ -120,15 +131,52 @@ Future<void> playPromoMatch(BuildContext context, PromoPlan plan) async {
 
     final again = await navigator.push<bool>(
       MaterialPageRoute(
-        builder: (_) => PromoResultScreen(
+        builder: (_) => framed(PromoResultScreen(
           plan: plan,
           yours: count.reps,
           theirs: theirs,
           gaveUp: count.gaveUp,
-        ),
+        )),
       ),
     );
     if (filming) await _stopFilming(messenger);
     if (again != true) return;
+  }
+}
+
+/// The take drawn in a 9:16 frame across the screen's width, black above and
+/// below: the shape TikTok and Reels show, so nothing is cut when the film is
+/// posted. The recorder keeps the same band of the screen and nothing else.
+class _FilmFrame extends StatelessWidget {
+  const _FilmFrame({required this.child});
+
+  static const aspect = 9 / 16;
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final media = MediaQuery.of(context);
+    final width = media.size.width;
+    final height = width / aspect;
+    // A screen no taller than 9:16 is the frame already.
+    if (height >= media.size.height) return child;
+    return ColoredBox(
+      color: Colors.black,
+      child: Center(
+        child: SizedBox(
+          width: width,
+          height: height,
+          child: MediaQuery(
+            data: media.copyWith(
+              size: Size(width, height),
+              padding: EdgeInsets.zero,
+              viewPadding: EdgeInsets.zero,
+            ),
+            child: child,
+          ),
+        ),
+      ),
+    );
   }
 }

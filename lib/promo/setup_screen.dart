@@ -255,6 +255,21 @@ class _SetupScreenState extends State<SetupScreen> {
                       setState(() => settings.update(() => settings.showSkeleton = on)),
                 ),
                 SwitchListTile(
+                  key: const Key('film916Switch'),
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(
+                    'Film in 9:16 (TikTok, Reels)',
+                    style: TextStyle(color: context.colors.text, fontSize: 16),
+                  ),
+                  value: plan.film916,
+                  onChanged: (on) => _change(() => plan.film916 = on),
+                ),
+                const _Hint(
+                  'While filming, the take is drawn in a 9:16 frame across '
+                  'the screen, black above and below, and only the frame is '
+                  'kept: nothing is cut, and nothing needs cropping after.',
+                ),
+                SwitchListTile(
                   key: const Key('camera4kSwitch'),
                   contentPadding: EdgeInsets.zero,
                   title: Text(

@@ -1,4 +1,5 @@
 import AVFoundation
+import CoreImage
 import Flutter
 import Photos
 import ReplayKit
@@ -6,13 +7,20 @@ import UIKit
 
 /// The app's own frames from ReplayKit, written as HEVC at the screen's full
 /// resolution and a high bitrate, with the app's sound, then saved to Photos.
+/// Given an aspect ratio, only the band of that shape across the middle of
+/// the screen is kept — the app draws the take inside it.
 public class PromoRecorderPlugin: NSObject, FlutterPlugin {
   private let queue = DispatchQueue(label: "outrepd.promo.recorder")
+  private let context = CIContext(options: [.cacheIntermediates: false])
   private var writer: AVAssetWriter?
   private var video: AVAssetWriterInput?
   private var audio: AVAssetWriterInput?
+  private var adaptor: AVAssetWriterInputPixelBufferAdaptor?
+  private var crop: CGRect?
+  private var aspect: Double?
   private var url: URL?
   private var started = false
+  private var failed = false
 
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(
@@ -22,13 +30,15 @@ public class PromoRecorderPlugin: NSObject, FlutterPlugin {
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     switch call.method {
-    case "start": start(result)
+    case "start":
+      let aspect = (call.arguments as? [String: Any])?["aspect"] as? Double
+      start(aspect: aspect, result)
     case "stop": stop(result)
     default: result(FlutterMethodNotImplemented)
     }
   }
 
-  private func start(_ result: @escaping FlutterResult) {
+  private func start(aspect: Double?, _ result: @escaping FlutterResult) {
     let recorder = RPScreenRecorder.shared()
     guard recorder.isAvailable else {
       result(FlutterError(
@@ -41,46 +51,13 @@ public class PromoRecorderPlugin: NSObject, FlutterPlugin {
     }
     recorder.isMicrophoneEnabled = false
 
-    // Portrait pixels, made even: the encoder takes whole pairs.
-    let native = UIScreen.main.nativeBounds.size
-    let width = Int(native.width) / 2 * 2
-    let height = Int(native.height) / 2 * 2
     let url = FileManager.default.temporaryDirectory
       .appendingPathComponent("outrepd-take-\(Int(Date().timeIntervalSince1970)).mp4")
     try? FileManager.default.removeItem(at: url)
-
-    do {
-      let writer = try AVAssetWriter(outputURL: url, fileType: .mp4)
-      let video = AVAssetWriterInput(mediaType: .video, outputSettings: [
-        AVVideoCodecKey: AVVideoCodecType.hevc,
-        AVVideoWidthKey: width,
-        AVVideoHeightKey: height,
-        AVVideoCompressionPropertiesKey: [
-          AVVideoAverageBitRateKey: 40_000_000,
-          AVVideoExpectedSourceFrameRateKey: 60,
-          AVVideoMaxKeyFrameIntervalKey: 60,
-        ],
-      ])
-      video.expectsMediaDataInRealTime = true
-      let audio = AVAssetWriterInput(mediaType: .audio, outputSettings: [
-        AVFormatIDKey: kAudioFormatMPEG4AAC,
-        AVNumberOfChannelsKey: 2,
-        AVSampleRateKey: 44_100,
-        AVEncoderBitRateKey: 192_000,
-      ])
-      audio.expectsMediaDataInRealTime = true
-      if writer.canAdd(video) { writer.add(video) }
-      if writer.canAdd(audio) { writer.add(audio) }
-      queue.sync {
-        self.writer = writer
-        self.video = video
-        self.audio = audio
-        self.url = url
-        self.started = false
-      }
-    } catch {
-      result(FlutterError(code: "writer", message: error.localizedDescription, details: nil))
-      return
+    queue.sync {
+      self.reset()
+      self.url = url
+      self.aspect = aspect
     }
 
     recorder.startCapture(handler: { [weak self] buffer, type, error in
@@ -97,19 +74,94 @@ public class PromoRecorderPlugin: NSObject, FlutterPlugin {
     })
   }
 
+  /// The writer is made on the first picture, sized from it: what ReplayKit
+  /// hands over is what gets kept, never a guess at the screen.
+  private func open(on pixels: CVPixelBuffer, at time: CMTime) -> Bool {
+    guard let url = url else { return false }
+    let sourceWidth = CVPixelBufferGetWidth(pixels)
+    let sourceHeight = CVPixelBufferGetHeight(pixels)
+    // Whole pairs of pixels: the encoder takes nothing else.
+    let width = sourceWidth / 2 * 2
+    var height = sourceHeight / 2 * 2
+    if let aspect = aspect, aspect > 0 {
+      let band = Int((Double(width) / aspect).rounded()) / 2 * 2
+      if band < height {
+        height = band
+        let top = Double(sourceHeight - band) / 2
+        crop = CGRect(x: 0, y: top, width: Double(width), height: Double(band))
+      }
+    }
+
+    do {
+      let writer = try AVAssetWriter(outputURL: url, fileType: .mp4)
+      let video = AVAssetWriterInput(mediaType: .video, outputSettings: [
+        AVVideoCodecKey: AVVideoCodecType.hevc,
+        AVVideoWidthKey: width,
+        AVVideoHeightKey: height,
+        AVVideoCompressionPropertiesKey: [
+          AVVideoAverageBitRateKey: 40_000_000,
+          AVVideoExpectedSourceFrameRateKey: 60,
+          AVVideoMaxKeyFrameIntervalKey: 60,
+        ],
+      ])
+      video.expectsMediaDataInRealTime = true
+      let adaptor = AVAssetWriterInputPixelBufferAdaptor(
+        assetWriterInput: video,
+        sourcePixelBufferAttributes: [
+          kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA,
+          kCVPixelBufferWidthKey as String: width,
+          kCVPixelBufferHeightKey as String: height,
+        ])
+      let audio = AVAssetWriterInput(mediaType: .audio, outputSettings: [
+        AVFormatIDKey: kAudioFormatMPEG4AAC,
+        AVNumberOfChannelsKey: 2,
+        AVSampleRateKey: 44_100,
+        AVEncoderBitRateKey: 192_000,
+      ])
+      audio.expectsMediaDataInRealTime = true
+      if writer.canAdd(video) { writer.add(video) }
+      if writer.canAdd(audio) { writer.add(audio) }
+      guard writer.startWriting() else { return false }
+      writer.startSession(atSourceTime: time)
+      self.writer = writer
+      self.video = video
+      self.audio = audio
+      self.adaptor = adaptor
+      return true
+    } catch {
+      return false
+    }
+  }
+
   private func append(_ buffer: CMSampleBuffer, _ type: RPSampleBufferType) {
-    guard let writer = writer, CMSampleBufferDataIsReady(buffer) else { return }
+    guard !failed, CMSampleBufferDataIsReady(buffer) else { return }
+    let time = CMSampleBufferGetPresentationTimeStamp(buffer)
     if !started {
       // The film starts on a picture, never on sound.
-      guard type == .video else { return }
-      writer.startWriting()
-      writer.startSession(atSourceTime: CMSampleBufferGetPresentationTimeStamp(buffer))
+      guard type == .video, let pixels = CMSampleBufferGetImageBuffer(buffer) else { return }
+      guard open(on: pixels, at: time) else {
+        failed = true
+        return
+      }
       started = true
     }
-    guard writer.status == .writing else { return }
+    guard let writer = writer, writer.status == .writing else { return }
     switch type {
     case .video:
-      if video?.isReadyForMoreMediaData == true { video?.append(buffer) }
+      guard let video = video, video.isReadyForMoreMediaData,
+            let pixels = CMSampleBufferGetImageBuffer(buffer) else { return }
+      if let crop = crop, let adaptor = adaptor, let pool = adaptor.pixelBufferPool {
+        var out: CVPixelBuffer?
+        CVPixelBufferPoolCreatePixelBuffer(nil, pool, &out)
+        guard let out = out else { return }
+        let image = CIImage(cvPixelBuffer: pixels)
+          .cropped(to: crop)
+          .transformed(by: CGAffineTransform(translationX: -crop.minX, y: -crop.minY))
+        context.render(image, to: out)
+        adaptor.append(out, withPresentationTime: time)
+      } else {
+        video.append(buffer)
+      }
     case .audioApp:
       if audio?.isReadyForMoreMediaData == true { audio?.append(buffer) }
     default:
@@ -170,7 +222,11 @@ public class PromoRecorderPlugin: NSObject, FlutterPlugin {
     writer = nil
     video = nil
     audio = nil
+    adaptor = nil
+    crop = nil
+    aspect = nil
     url = nil
     started = false
+    failed = false
   }
 }

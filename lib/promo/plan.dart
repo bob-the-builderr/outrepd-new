@@ -44,6 +44,7 @@ class PromoPlan {
     this.levelUp = false,
     this.record = true,
     this.camera4k = false,
+    this.film916 = true,
   });
 
   String myName;
@@ -83,6 +84,10 @@ class PromoPlan {
 
   /// The camera at the most the lens gives (4K) rather than 1080p.
   bool camera4k;
+
+  /// Film in 9:16, the shape TikTok and Reels show: the take is drawn in a
+  /// 9:16 frame across the screen, and only the frame is kept.
+  bool film916;
 
   /// Experience at the very start of [level].
   static int xpAt(int level) {
@@ -168,6 +173,7 @@ class PromoPlan {
     'levelUp': levelUp,
     'record': record,
     'camera4k': camera4k,
+    'film916': film916,
   };
 
   static PromoPlan fromJson(Map<String, Object?> j) {
@@ -188,6 +194,7 @@ class PromoPlan {
       ..levelUp = j['levelUp'] as bool? ?? plan.levelUp
       ..record = j['record'] as bool? ?? plan.record
       ..camera4k = j['camera4k'] as bool? ?? plan.camera4k
+      ..film916 = j['film916'] as bool? ?? plan.film916
       ..mode = OpponentMode.values.firstWhere(
         (m) => m.name == j['mode'],
         orElse: () => plan.mode,

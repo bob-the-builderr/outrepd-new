@@ -12,7 +12,11 @@ abstract final class PromoRecorder {
   static const _channel = MethodChannel('outrepd/promo_recorder');
 
   /// Starts filming. iOS asks the first time in a while; a refusal throws.
-  static Future<void> start() => _channel.invokeMethod<void>('start');
+  ///
+  /// With an [aspect] (width over height), only the band of that shape
+  /// across the middle of the screen is kept: 9 / 16 for TikTok and Reels.
+  static Future<void> start({double? aspect}) =>
+      _channel.invokeMethod<void>('start', {'aspect': aspect});
 
   /// Stops, and saves what was filmed to Photos. True once it is there.
   static Future<bool> stop() async =>

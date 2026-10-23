@@ -88,6 +88,9 @@ void main() {
       // 1080p unless asked: 4K asks more of the pose detection.
       expect(PromoPlan().camera4k, isFalse);
       expect(PromoPlan.fromJson(const {'camera4k': true}).camera4k, isTrue);
+      // 9:16 unless asked: the shape TikTok and Reels show.
+      expect(PromoPlan().film916, isTrue);
+      expect(PromoPlan.fromJson(const {'film916': false}).film916, isFalse);
     });
 
     test('a final count is paced across the minute, quick then slower', () {
