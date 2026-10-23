@@ -12,8 +12,18 @@ const locales = {
   ...(fs.existsSync(path.join(__dirname, 'more_langs.js')) ? require('./more_langs.js') : {}),
 };
 
+// What's New for the version being prepared, per locale (notes.js).
+const notes = fs.existsSync(path.join(__dirname, 'notes.js')) ? require('./notes.js') : {};
+
 const out = path.join(__dirname, '..', '..', 'fastlane', 'metadata');
-const limits = { name: 30, subtitle: 30, keywords: 100, promotional_text: 170, description: 4000 };
+const limits = {
+  name: 30,
+  subtitle: 30,
+  keywords: 100,
+  promotional_text: 170,
+  description: 4000,
+  release_notes: 4000,
+};
 const atoms = ['https://www.outrepd.com/terms', 'https://www.outrepd.com/privacy'];
 // Apple bounces pricing language in a paywalled app's listing (3.1.2/5.6).
 const pricing = /\bfree\b|gratis|kostenlos|gratuit|\$|€|£|¥|₹/i;
@@ -34,6 +44,7 @@ for (const [locale, raw] of Object.entries(locales)) {
     promotional_text: f.promo,
     description: f.description,
     privacy_url: 'https://www.outrepd.com/privacy',
+    release_notes: (notes[locale] ?? '').normalize('NFC'),
   };
   for (const [field, limit] of Object.entries(limits)) {
     const value = fields[field] ?? '';
@@ -50,7 +61,7 @@ for (const [locale, raw] of Object.entries(locales)) {
   for (const atom of atoms) {
     if (!fields.description.includes(atom)) say(locale, `description lost ${atom}`);
   }
-  for (const field of ['promotional_text', 'description', 'subtitle']) {
+  for (const field of ['promotional_text', 'description', 'subtitle', 'release_notes']) {
     const m = fields[field].match(pricing);
     if (m) say(locale, `pricing word "${m[0]}" in ${field}`);
   }
