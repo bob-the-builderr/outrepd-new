@@ -10,5 +10,5 @@
 00:01 +8: a whole take: setup, the round, the result, and back
 00:05 +9: a promotion comes first, then the result
 00:05 +10: a level-up, when planned, comes before the result
-00:05 +11: giving up is a loss whatever the count
-00:05 +12: All tests passed!
+00:06 +11: giving up is a loss whatever the count
+00:06 +12: All tests passed!
