@@ -1,0 +1,110 @@
+asked       2026-10-23 23:10 UTC
+en-US    name 26  subtitle 30  keywords  98  promo 148  description 2122
+en-GB    name 26  subtitle 30  keywords  98  promo 148  description 2122
+en-AU    name 26  subtitle 30  keywords  98  promo 148  description 2122
+en-CA    name 26  subtitle 30  keywords  98  promo 148  description 2122
+de-DE    name 27  subtitle 30  keywords  95  promo 162  description 2473
+fr-FR    name 27  subtitle 30  keywords  98  promo 157  description 2401
+fr-CA    name 27  subtitle 30  keywords  98  promo 157  description 2401
+es-ES    name 27  subtitle 30  keywords 100  promo 156  description 2275
+es-MX    name 28  subtitle 27  keywords  96  promo 150  description 2285
+it       name 28  subtitle 26  keywords  95  promo 153  description 2339
+pt-BR    name 28  subtitle 30  keywords  97  promo 155  description 2228
+pt-PT    name 28  subtitle 28  keywords  95  promo 152  description 2243
+ru       name 27  subtitle 29  keywords  91  promo 157  description 2234
+tr       name 29  subtitle 29  keywords  96  promo 140  description 2108
+ja       name 19  subtitle 18  keywords  70  promo  70  description 1082
+ko       name 16  subtitle 22  keywords  55  promo  85  description 1178
+zh-Hans  name 15  subtitle 13  keywords  61  promo  54  description 790
+zh-Hant  name 16  subtitle 14  keywords  57  promo  54  description 795
+hi       name 26  subtitle 28  keywords  90  promo 136  description 2073
+id       name 26  subtitle 30  keywords  98  promo 157  description 2289
+ca       name 27  subtitle 25  keywords  95  promo 155  description 786
+nl-NL    name 25  subtitle 29  keywords 100  promo 159  description 792
+sv       name 30  subtitle 29  keywords  94  promo 151  description 765
+no       name 26  subtitle 25  keywords  98  promo 155  description 761
+da       name 26  subtitle 30  keywords  98  promo 154  description 750
+fi       name 26  subtitle 29  keywords  98  promo 163  description 752
+pl       name 24  subtitle 30  keywords  93  promo 162  description 795
+cs       name 26  subtitle 29  keywords  88  promo 158  description 730
+sk       name 26  subtitle 29  keywords  87  promo 168  description 752
+hu       name 26  subtitle 27  keywords  94  promo 158  description 803
+ro       name 26  subtitle 29  keywords  96  promo 163  description 808
+hr       name 26  subtitle 29  keywords  92  promo 166  description 761
+sl-SI    name 26  subtitle 27  keywords  92  promo 161  description 734
+el       name 26  subtitle 28  keywords  99  promo 153  description 813
+uk       name 26  subtitle 30  keywords  93  promo 142  description 801
+th       name 26  subtitle 24  keywords  79  promo 133  description 650
+vi       name 26  subtitle 30  keywords  92  promo 141  description 757
+ms       name 26  subtitle 26  keywords  96  promo 169  description 822
+ar-SA    name 26  subtitle 29  keywords  78  promo 123  description 631
+he       name 26  subtitle 30  keywords  72  promo 123  description 610
+bn-BD    name 26  subtitle 27  keywords  86  promo 146  description 743
+ur-PK    name 26  subtitle 27  keywords  69  promo 134  description 701
+gu-IN    name 26  subtitle 30  keywords  73  promo 132  description 688
+kn-IN    name 26  subtitle 28  keywords  79  promo 147  description 760
+ml-IN    name 26  subtitle 27  keywords  79  promo 157  description 853
+mr-IN    name 26  subtitle 27  keywords  73  promo 142  description 731
+or-IN    name 26  subtitle 27  keywords  72  promo 147  description 775
+pa-IN    name 26  subtitle 30  keywords  72  promo 140  description 746
+ta-IN    name 26  subtitle 29  keywords  74  promo 153  description 876
+te-IN    name 26  subtitle 27  keywords  75  promo 147  description 787
+50 locales, 0 problems
+app OUTREPD: Push-up Battles (6817853725)
+version 1.1.3  PREPARE_FOR_SUBMISSION
+version 1.1.2  READY_FOR_SALE
+version 1.1.1  READY_FOR_SALE
+version 1.1  READY_FOR_SALE
+app info 1a1a974e-462d-4732-ad16-37c54e4fc59c  READY_FOR_SALE
+app info ed665173-b420-4cba-9341-439feb88e527  PREPARE_FOR_SUBMISSION
+  ar-SA: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: ar-SA already exists. Try updating.
+  bn-BD: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: bn-BD already exists. Try updating.
+  ca: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: ca already exists. Try updating.
+  cs: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: cs already exists. Try updating.
+  da: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: da already exists. Try updating.
+  de-DE: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: de-DE already exists. Try updating.
+  el: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: el already exists. Try updating.
+  en-AU: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: en-AU already exists. Try updating.
+  en-CA: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: en-CA already exists. Try updating.
+  en-GB: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: en-GB already exists. Try updating.
+  en-US: verified
+  es-ES: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: es-ES already exists. Try updating.
+  es-MX: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: es-MX already exists. Try updating.
+  fi: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: fi already exists. Try updating.
+  fr-CA: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: fr-CA already exists. Try updating.
+  fr-FR: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: fr-FR already exists. Try updating.
+  gu-IN: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: gu-IN already exists. Try updating.
+  he: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: he already exists. Try updating.
+  hi: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: hi already exists. Try updating.
+  hr: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: hr already exists. Try updating.
+  hu: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: hu already exists. Try updating.
+  id: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: id already exists. Try updating.
+  it: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: it already exists. Try updating.
+  ja: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: ja already exists. Try updating.
+  kn-IN: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: kn-IN already exists. Try updating.
+  ko: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: ko already exists. Try updating.
+  ml-IN: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: ml-IN already exists. Try updating.
+  mr-IN: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: mr-IN already exists. Try updating.
+  ms: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: ms already exists. Try updating.
+  nl-NL: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: nl-NL already exists. Try updating.
+  no: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: no already exists. Try updating.
+  or-IN: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: or-IN already exists. Try updating.
+  pa-IN: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: pa-IN already exists. Try updating.
+  pl: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: pl already exists. Try updating.
+  pt-BR: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: pt-BR already exists. Try updating.
+  pt-PT: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: pt-PT already exists. Try updating.
+  ro: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: ro already exists. Try updating.
+  ru: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: ru already exists. Try updating.
+  sk: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: sk already exists. Try updating.
+  sl-SI: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: sl-SI already exists. Try updating.
+  sv: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: sv already exists. Try updating.
+  ta-IN: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: ta-IN already exists. Try updating.
+  te-IN: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: te-IN already exists. Try updating.
+  th: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: th already exists. Try updating.
+  tr: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: tr already exists. Try updating.
+  uk: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: uk already exists. Try updating.
+  ur-PK: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: ur-PK already exists. Try updating.
+  vi: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: vi already exists. Try updating.
+  zh-Hans: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: zh-Hans already exists. Try updating.
+  zh-Hant: POST /appStoreVersionLocalizations -> 409 The provided entity includes an attribute with a value that has already been used: Entity with locale: zh-Hant already exists. Try updating.
+1 of 50 locales verified
