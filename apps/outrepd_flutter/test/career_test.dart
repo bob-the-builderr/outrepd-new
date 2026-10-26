@@ -76,7 +76,8 @@ void main() {
     });
 
     test('a loss costs LP and breaks the win streak', () async {
-      await place();
+      // A lost placement, so the streak below starts from nothing.
+      await place(wins: 0);
       // Placements are real duels and their losses are on the record too, so
       // this counts from where they left it rather than from zero.
       final losses = demoProfile.losses;

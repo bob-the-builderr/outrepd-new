@@ -9,6 +9,7 @@ library;
 import 'package:flutter/material.dart';
 
 import '../country_names.dart';
+import '../country_names.g.dart';
 import '../l10n/app_localizations.dart';
 import '../theme.dart';
 
