@@ -1,1 +1,1 @@
-Small improvements and fixes. Enjoying OUTREPD? A rating helps more people find it.
+Your first ranked match now puts you straight on the ladder at Iron V. Also new: a level-up screen, a chart of how each match went, your week on the home screen, and picking your country for its leaderboard.
