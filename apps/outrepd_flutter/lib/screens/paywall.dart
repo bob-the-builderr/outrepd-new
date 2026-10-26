@@ -430,11 +430,19 @@ class _PaywallScreenState extends State<PaywallScreen> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _AccentHeadline(key: const Key('paywallTitle'), text: l.paywallTitle),
-        SizedBox(height: sizes.headlineGap * 0.6),
+        _AccentHeadline(
+          key: const Key('paywallTitle'),
+          text: l.paywallTitle,
+          scale: 0.88,
+        ),
+        SizedBox(height: sizes.headlineGap * 0.45),
         const _PerkGrid(),
-        SizedBox(height: sizes.headlineGap * 0.8),
-        _TrialTimeline(key: const Key('trialTimeline'), days: days),
+        SizedBox(height: sizes.headlineGap * 0.55),
+        _TrialTimeline(
+          key: const Key('trialTimeline'),
+          days: days,
+          compact: true,
+        ),
       ],
     );
   }
@@ -640,9 +648,12 @@ class _PaywallScreenState extends State<PaywallScreen> {
 /// the string rather than split into pieces, because where the word falls in
 /// the sentence is different in every language.
 class _AccentHeadline extends StatelessWidget {
-  const _AccentHeadline({super.key, required this.text});
+  const _AccentHeadline({super.key, required this.text, this.scale = 1});
 
   final String text;
+
+  /// Of the usual headline size: less than one where the pitch is fuller.
+  final double scale;
 
   @override
   Widget build(BuildContext context) {
@@ -659,7 +670,7 @@ class _AccentHeadline extends StatelessWidget {
       ),
       textAlign: TextAlign.center,
       style: kType.title.copyWith(
-        fontSize: _Sizes.of(context).headline,
+        fontSize: _Sizes.of(context).headline * scale,
         height: 1.15,
         color: context.colors.text,
       ),
@@ -680,7 +691,7 @@ class _PerkGrid extends StatelessWidget {
     final sizes = _Sizes.of(context);
     Widget tile(IconData icon, String text) => Expanded(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
         decoration: BoxDecoration(
           color: colors.surface,
           border: Border.all(color: colors.border, width: 0.5),
@@ -730,7 +741,7 @@ class _PerkGrid extends StatelessWidget {
 /// Today, the reminder, the first charge — down a bar that is lit for the
 /// part already under way.
 class _TrialTimeline extends StatelessWidget {
-  const _TrialTimeline({super.key, required this.days});
+  const _TrialTimeline({super.key, required this.days, this.compact = false});
 
   final int days;
 
@@ -753,14 +764,17 @@ class _TrialTimeline extends StatelessWidget {
       ),
     ];
 
-    return _Rail(steps: steps, fades: true);
+    return _Rail(steps: steps, fades: true, compact: compact);
   }
 }
 
 /// Steps down a bar, each an icon, a line and, if it needs one, a sentence
 /// under it — the shape the whole paywall is told in, trial or not.
 class _Rail extends StatelessWidget {
-  const _Rail({required this.steps, this.fades = false});
+  const _Rail({required this.steps, this.fades = false, this.compact = false});
+
+  /// Steps closer together, for a rail sharing the pitch with the perks.
+  final bool compact;
 
   final List<(IconData, String, String?)> steps;
 
@@ -803,7 +817,10 @@ class _Rail extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 for (var i = 0; i < steps.length; i++) ...[
-                  if (i > 0) SizedBox(height: sizes.stepGap),
+                  if (i > 0)
+                    SizedBox(
+                      height: compact ? sizes.stepGap * 0.45 : sizes.stepGap,
+                    ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

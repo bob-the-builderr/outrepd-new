@@ -468,20 +468,24 @@ class _BesideYourName extends StatelessWidget {
             size: 40,
           ),
           const SizedBox(width: 12),
+          // The name gets the whole width; what the row is for sits under
+          // it, rather than beside it squeezing the name to "demo…".
           Expanded(
-            child: NameWithLevel(
-              name: p.username,
-              xp: xp,
-              chipFontSize: 13,
-              style: TextStyle(color: context.colors.text, fontSize: 17),
-            ),
-          ),
-          const SizedBox(width: 10),
-          Flexible(
-            child: Text(
-              l.levelBesideName,
-              textAlign: TextAlign.end,
-              style: TextStyle(color: context.colors.muted, fontSize: 13),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                NameWithLevel(
+                  name: p.username,
+                  xp: xp,
+                  chipFontSize: 13,
+                  style: TextStyle(color: context.colors.text, fontSize: 17),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  l.levelBesideName,
+                  style: TextStyle(color: context.colors.muted, fontSize: 13),
+                ),
+              ],
             ),
           ),
         ],
