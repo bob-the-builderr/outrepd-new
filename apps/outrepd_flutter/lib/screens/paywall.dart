@@ -745,6 +745,9 @@ class _TrialTimeline extends StatelessWidget {
 
   final int days;
 
+  /// The days closer together, beside the perks.
+  final bool compact;
+
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
