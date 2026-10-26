@@ -1,6 +1,2 @@
 Analyzing outrepd_flutter...                                    
-
-  error • 'compact' isn't a field in the enclosing class. Try correcting the name to match an existing field, or defining a field named 'compact' • lib/screens/paywall.dart:744:56 • initializing_formal_for_non_existent_field
-  error • Undefined name 'compact'. Try correcting the name to one that is defined, or defining the name • lib/screens/paywall.dart:767:54 • undefined_identifier
-
-2 issues found. (ran in 16.9s)
+No issues found! (ran in 18.0s)
