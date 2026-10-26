@@ -1,2 +1,5 @@
 Analyzing outrepd_flutter...                                    
-No issues found! (ran in 18.0s)
+
+  error • Undefined name 'kCountryNames'. Try correcting the name to one that is defined, or defining the name • lib/screens/country_picker.dart:63:22 • undefined_identifier
+
+1 issue found. (ran in 17.9s)
