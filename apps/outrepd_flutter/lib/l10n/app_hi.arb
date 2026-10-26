@@ -407,15 +407,8 @@
   "practiceTerms": "अभ्यास — न रैंक, न विरोधी",
   "practiceComplete": "अभ्यास पूरा",
   "noRankYet": "अभी कोई रैंक नहीं",
-  "placementsForFirstTier": "पहला रैंक पाने के लिए {count} प्लेसमेंट मुक़ाबले पूरे करें।",
-  "startPlacements": "प्लेसमेंट शुरू करें",
   "unranked": "अनरैंक्ड",
-  "placementsTerms": "{total} में से {done} · हर एक {seconds} सेकंड",
-  "placementsLeft": "{total} में से {done} · रैंक के लिए {left} और",
-  "placementsForTier": "अपनी रैंक जानने के लिए {count} प्लेसमेंट मुक़ाबले पूरे करें।",
-  "placementsDoneCount": "{total} में से {done} प्लेसमेंट पूरे",
   "practiceFirst": "पहले अभ्यास",
-  "nextPlacement": "अगला प्लेसमेंट",
   "noConnection": "कोई कनेक्शन नहीं",
   "practiceOffline": "ऑफ़लाइन अभ्यास",
   "retry": "फिर कोशिश करें",
@@ -749,5 +742,9 @@
   "giveUpTied": "बराबरी",
   "keepGoing": "जारी रखें",
   "stay": "रुकें",
-  "lastN": "पिछले {n}"
+  "lastN": "पिछले {n}",
+  "firstMatchForTier": "रैंकिंग में आने के लिए अपना पहला मुक़ाबला खेलें। सब Iron V से शुरू करते हैं।",
+  "firstMatchForBoard": "बोर्ड पर आने के लिए अपना पहला मुक़ाबला खेलें। सब Iron V से शुरू करते हैं।",
+  "playFirstMatch": "पहला मुक़ाबला खेलें",
+  "firstMatchTerms": "एक मुक़ाबला · {seconds} सेकंड"
 }

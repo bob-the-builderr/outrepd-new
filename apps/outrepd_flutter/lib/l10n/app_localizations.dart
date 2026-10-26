@@ -2435,59 +2435,17 @@ abstract class L {
   /// **'No rank yet'**
   String get noRankYet;
 
-  /// No description provided for @placementsForFirstTier.
-  ///
-  /// In en, this message translates to:
-  /// **'Finish {count} placement duels to earn your first tier.'**
-  String placementsForFirstTier(String count);
-
-  /// No description provided for @startPlacements.
-  ///
-  /// In en, this message translates to:
-  /// **'Start placements'**
-  String get startPlacements;
-
   /// No description provided for @unranked.
   ///
   /// In en, this message translates to:
   /// **'Unranked'**
   String get unranked;
 
-  /// No description provided for @placementsTerms.
-  ///
-  /// In en, this message translates to:
-  /// **'{done} of {total} · {seconds} seconds each'**
-  String placementsTerms(String done, String total, String seconds);
-
-  /// No description provided for @placementsLeft.
-  ///
-  /// In en, this message translates to:
-  /// **'{done} of {total} · {left} more to get your tier'**
-  String placementsLeft(String done, String total, String left);
-
-  /// No description provided for @placementsForTier.
-  ///
-  /// In en, this message translates to:
-  /// **'Finish {count} placement duels to see where you land.'**
-  String placementsForTier(String count);
-
-  /// No description provided for @placementsDoneCount.
-  ///
-  /// In en, this message translates to:
-  /// **'{done} of {total} done'**
-  String placementsDoneCount(String done, String total);
-
   /// No description provided for @practiceFirst.
   ///
   /// In en, this message translates to:
   /// **'Practice first'**
   String get practiceFirst;
-
-  /// No description provided for @nextPlacement.
-  ///
-  /// In en, this message translates to:
-  /// **'Next placement'**
-  String get nextPlacement;
 
   /// No description provided for @noConnection.
   ///
@@ -4492,6 +4450,30 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Last {n}'**
   String lastN(String n);
+
+  /// No description provided for @firstMatchForTier.
+  ///
+  /// In en, this message translates to:
+  /// **'Play your first match to get on the ladder. Everyone starts at Iron V.'**
+  String get firstMatchForTier;
+
+  /// No description provided for @firstMatchForBoard.
+  ///
+  /// In en, this message translates to:
+  /// **'Play your first match to get on the board. Everyone starts at Iron V.'**
+  String get firstMatchForBoard;
+
+  /// No description provided for @playFirstMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Play first match'**
+  String get playFirstMatch;
+
+  /// No description provided for @firstMatchTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'One match · {seconds} seconds'**
+  String firstMatchTerms(String seconds);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

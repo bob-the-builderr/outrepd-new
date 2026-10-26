@@ -178,7 +178,7 @@ void main() {
           tierIdx: 0,
           divIdx: 0,
           lp: 0,
-          placementsDone: 2,
+          placementsDone: 0,
           totalReps: 40,
           bestSet: 8,
           wins: 0,

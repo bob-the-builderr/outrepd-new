@@ -1253,41 +1253,10 @@ class LKo extends L {
   String get noRankYet => '아직 랭크 없음';
 
   @override
-  String placementsForFirstTier(String count) {
-    return '첫 랭크를 얻으려면 배치 대결 $count판을 끝내세요.';
-  }
-
-  @override
-  String get startPlacements => '배치 시작';
-
-  @override
   String get unranked => '랭크 없음';
 
   @override
-  String placementsTerms(String done, String total, String seconds) {
-    return '$total판 중 $done판 · 판당 $seconds초';
-  }
-
-  @override
-  String placementsLeft(String done, String total, String left) {
-    return '$total판 중 $done판 · 랭크까지 $left판';
-  }
-
-  @override
-  String placementsForTier(String count) {
-    return '내 랭크를 알아보려면 배치 대결 $count판을 끝내세요.';
-  }
-
-  @override
-  String placementsDoneCount(String done, String total) {
-    return '배치 $total판 중 $done판 완료';
-  }
-
-  @override
   String get practiceFirst => '먼저 연습';
-
-  @override
-  String get nextPlacement => '다음 배치';
 
   @override
   String get noConnection => '연결 없음';
@@ -2450,5 +2419,19 @@ class LKo extends L {
   @override
   String lastN(String n) {
     return '최근 ${n}경기';
+  }
+
+  @override
+  String get firstMatchForTier => '첫 대결을 하면 랭킹에 들어갑니다. 모두 Iron V에서 시작해요.';
+
+  @override
+  String get firstMatchForBoard => '첫 대결을 하면 순위표에 올라갑니다. 모두 Iron V에서 시작해요.';
+
+  @override
+  String get playFirstMatch => '첫 대결 시작';
+
+  @override
+  String firstMatchTerms(String seconds) {
+    return '대결 1판 · ${seconds}초';
   }
 }

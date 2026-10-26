@@ -1276,41 +1276,10 @@ class LRu extends L {
   String get noRankYet => 'Ранга пока нет';
 
   @override
-  String placementsForFirstTier(String count) {
-    return 'Сыграйте $count квалификационных дуэлей, чтобы получить первый ранг.';
-  }
-
-  @override
-  String get startPlacements => 'Начать квалификацию';
-
-  @override
   String get unranked => 'Без ранга';
 
   @override
-  String placementsTerms(String done, String total, String seconds) {
-    return '$done из $total · по $seconds секунд';
-  }
-
-  @override
-  String placementsLeft(String done, String total, String left) {
-    return '$done из $total · ещё $left до ранга';
-  }
-
-  @override
-  String placementsForTier(String count) {
-    return 'Сыграйте $count квалификационных дуэлей, чтобы узнать свой ранг.';
-  }
-
-  @override
-  String placementsDoneCount(String done, String total) {
-    return '$done из $total квалификаций сыграно';
-  }
-
-  @override
   String get practiceFirst => 'Сначала тренировка';
-
-  @override
-  String get nextPlacement => 'Следующая квалификация';
 
   @override
   String get noConnection => 'Нет соединения';
@@ -2482,5 +2451,19 @@ class LRu extends L {
   @override
   String lastN(String n) {
     return 'Последние ${n}';
+  }
+
+  @override
+  String get firstMatchForTier => 'Сыграйте первый матч, чтобы попасть в рейтинг. Все начинают с Iron V.';
+
+  @override
+  String get firstMatchForBoard => 'Сыграйте первый матч, чтобы появиться в таблице. Все начинают с Iron V.';
+
+  @override
+  String get playFirstMatch => 'Сыграть первый матч';
+
+  @override
+  String firstMatchTerms(String seconds) {
+    return 'Один матч · ${seconds} секунд';
   }
 }

@@ -227,11 +227,12 @@ $$;
 
 -- ─────────────────────────────── placements ─────────────────────────────────
 
--- Where an account stands after a placement duel.
+-- Where an account stands after its placement duel.
 --
--- Nothing moves until the fifth one, and then the whole rank is set at once
--- from how many were won. A tier handed out after one duel is a tier decided
--- by one opponent.
+-- One ranked duel places an account, and placement_rank puts everybody at
+-- Iron V whatever the result. `done` is how many have been played counting
+-- this one, so it is always at least one here; the guard is for a caller
+-- that asks before any.
 -- The parameters are named `from_*` because the returned columns are called
 -- `tier_idx`, `div_idx` and `lp`, and Postgres refuses a function whose
 -- inputs and outputs share a name.
@@ -244,14 +245,25 @@ immutable
 set search_path = public
 as $$
 begin
-  if done < 5 then
-    -- Nothing moves until the fifth. The account stays exactly where it was.
+  if done < 1 then
     return query select from_tier, from_div, from_lp;
   else
     return query select * from placement_rank(wins);
   end if;
 end;
 $$;
+
+-- Accounts caught part-way through the old five placements when one became
+-- enough: they have played their placement, so they are placed — Iron V, no
+-- LP, and marked done the way every placed account is.
+do $$
+begin
+  perform set_config('outrepd.settling', 'on', true);
+  update profiles
+     set placements_done = 5, tier_idx = 0, div_idx = 0, lp = 0
+   where placements_done between 1 and 4;
+  perform set_config('outrepd.settling', 'off', true);
+end $$;
 
 -- ───────────────────────────── settling a duel ───────────────────────────────
 
@@ -393,9 +405,11 @@ begin
   -- The guard on profiles lets these two updates through, and only these.
   perform set_config('outrepd.settling', 'on', true);
 
-  -- Placements move no rank, because there is not one yet. Five duels decide
-  -- where an account starts and nothing is paid until they are done — which
-  -- is the whole point of them, and the app says so on screen.
+  -- An account's first ranked duel places it: no LP is paid on it, and
+  -- whatever the result it starts at Iron V (place_after). A placed account
+  -- is marked with placements_done = 5, not 1 — five is what every check on
+  -- the server reads as placed, and what an app from before one duel was
+  -- enough reads that way too.
   my_placing    := is_ranked and me.placements_done   < 5;
   their_placing := is_ranked and them.placements_done < 5;
 
@@ -457,11 +471,13 @@ begin
       div_idx  = after.div_idx,
       lp       = after.lp,
       peak_tier_idx = greatest(peak_tier_idx, after.tier_idx),
-      placements_done = least(profiles.placements_done + 1, 5),
+      -- Every ranked duel leaves an account placed: it was already, or this
+      -- was its placement.
+      placements_done = 5,
       placement_wins  = profiles.placement_wins
                         + (case when my_placing and i_won then 1 else 0 end),
       -- A placement is a real duel and its result is a real result, so the
-      -- record counts it even though the rank does not move yet.
+      -- record counts it even though it pays no LP.
       wins        = profiles.wins   + (case when i_won then 1 else 0 end),
       losses      = profiles.losses + (case when i_won then 0 else 1 end),
       win_streak  = case when i_won then profiles.win_streak + 1 else 0 end,
@@ -476,7 +492,7 @@ begin
       div_idx  = their_after.div_idx,
       lp       = their_after.lp,
       peak_tier_idx = greatest(peak_tier_idx, their_after.tier_idx),
-      placements_done = least(profiles.placements_done + 1, 5),
+      placements_done = 5,
       placement_wins  = profiles.placement_wins
                         + (case when their_placing and not i_won then 1 else 0 end),
       wins        = profiles.wins   + (case when i_won then 0 else 1 end),

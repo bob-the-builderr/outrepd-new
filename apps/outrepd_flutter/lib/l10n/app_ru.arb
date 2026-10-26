@@ -407,15 +407,8 @@
   "practiceTerms": "Тренировка — без рейтинга и соперника",
   "practiceComplete": "ТРЕНИРОВКА ЗАВЕРШЕНА",
   "noRankYet": "Ранга пока нет",
-  "placementsForFirstTier": "Сыграйте {count} квалификационных дуэлей, чтобы получить первый ранг.",
-  "startPlacements": "Начать квалификацию",
   "unranked": "Без ранга",
-  "placementsTerms": "{done} из {total} · по {seconds} секунд",
-  "placementsLeft": "{done} из {total} · ещё {left} до ранга",
-  "placementsForTier": "Сыграйте {count} квалификационных дуэлей, чтобы узнать свой ранг.",
-  "placementsDoneCount": "{done} из {total} квалификаций сыграно",
   "practiceFirst": "Сначала тренировка",
-  "nextPlacement": "Следующая квалификация",
   "noConnection": "Нет соединения",
   "practiceOffline": "Тренировка офлайн",
   "retry": "Повторить",
@@ -749,5 +742,9 @@
   "giveUpTied": "Ничья",
   "keepGoing": "Продолжить",
   "stay": "Остаться",
-  "lastN": "Последние {n}"
+  "lastN": "Последние {n}",
+  "firstMatchForTier": "Сыграйте первый матч, чтобы попасть в рейтинг. Все начинают с Iron V.",
+  "firstMatchForBoard": "Сыграйте первый матч, чтобы появиться в таблице. Все начинают с Iron V.",
+  "playFirstMatch": "Сыграть первый матч",
+  "firstMatchTerms": "Один матч · {seconds} секунд"
 }

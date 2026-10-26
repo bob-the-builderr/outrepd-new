@@ -9,7 +9,7 @@ SFIDA PERSONE VERE, DAL VIVO
 Una partita classificata trova qualcuno davanti alla fotocamera nello stesso momento. Partite insieme e vedete salire il conteggio dell'altro. Se nessuno del tuo grado è online entro quindici secondi, sfidi la serie registrata di una persona vera, al suo vero ritmo. Niente bot, niente numeri inventati.
 
 SCALA LA CLASSIFICA
-Cinque partite di piazzamento fissano il tuo grado iniziale. Poi sali da Ferro a Bronzo, Argento, Oro, Platino e Diamante fino a Maestro. Batti un grado più alto e guadagni più LP. Un livello raggiunto resta tuo.
+La tua prima partita ti mette in classifica, a Ferro V. Poi sali da Ferro a Bronzo, Argento, Oro, Platino e Diamante fino a Maestro. Batti un grado più alto e guadagni più LP. Un livello raggiunto resta tuo.
 
 SALI DI LIVELLO A OGNI RIPETIZIONE
 Ogni flessione e ogni partita danno XP, che tu vinca o perda. Il tuo livello appare accanto al tuo nome ovunque e non scende mai.

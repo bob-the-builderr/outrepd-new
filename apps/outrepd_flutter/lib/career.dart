@@ -93,13 +93,13 @@ class DuelOutcome {
   /// card that moved nothing.
   final bool madeFriendly;
 
-  /// How the rank moved. Null while the account is still in placements —
-  /// there is no rank to move yet, which is the whole point of placements.
+  /// How the rank moved. Null on the placement duel — there is no rank to
+  /// move until it is played.
   final RankChange? rank;
 
   final MatchRecord record;
 
-  /// This duel was the last placement, and a tier has just been set.
+  /// This duel was the placement, and a tier has just been set.
   final bool placementsFinished;
 
   /// The set beat the lifter's previous best.
@@ -244,8 +244,8 @@ class Career extends ChangeNotifier {
     }
 
     if (!p.isRanked) {
-      // Placements do not move a rank, because there is not one yet. They
-      // only count towards the tier that will be set at the end.
+      // The placement pays no LP, because there is no rank yet. Played, it
+      // sets one: Iron V, whatever the result.
       p.placementsDone += 1;
       if (won) p.placementWins += 1;
 

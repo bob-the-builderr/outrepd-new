@@ -407,15 +407,8 @@
   "practiceTerms": "练习 — 不计排位，没有对手",
   "practiceComplete": "练习结束",
   "noRankYet": "还没有段位",
-  "placementsForFirstTier": "完成 {count} 场定位赛即可获得首个段位。",
-  "startPlacements": "开始定位赛",
   "unranked": "未定级",
-  "placementsTerms": "{done}/{total} · 每场 {seconds} 秒",
-  "placementsLeft": "{done}/{total} · 还差 {left} 场定段",
-  "placementsForTier": "完成 {count} 场定位赛即可查看你的段位。",
-  "placementsDoneCount": "已完成 {done}/{total} 场定位赛",
   "practiceFirst": "先练一下",
-  "nextPlacement": "下一场定位赛",
   "noConnection": "没有网络",
   "practiceOffline": "离线练习",
   "retry": "重试",
@@ -749,5 +742,9 @@
   "giveUpTied": "平手",
   "keepGoing": "继续",
   "stay": "留下",
-  "lastN": "最近 {n} 场"
+  "lastN": "最近 {n} 场",
+  "firstMatchForTier": "打完第一场比赛即可进入排名。所有人都从 Iron V 开始。",
+  "firstMatchForBoard": "打完第一场比赛即可登上排行榜。所有人都从 Iron V 开始。",
+  "playFirstMatch": "开始第一场比赛",
+  "firstMatchTerms": "1 场 · {seconds} 秒"
 }

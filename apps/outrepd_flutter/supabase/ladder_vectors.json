@@ -17431,37 +17431,37 @@
     {
       "wins": 0,
       "tier_idx": 0,
-      "div_idx": 2,
+      "div_idx": 0,
       "lp": 0
     },
     {
       "wins": 1,
       "tier_idx": 0,
-      "div_idx": 4,
+      "div_idx": 0,
       "lp": 0
     },
     {
       "wins": 2,
-      "tier_idx": 1,
-      "div_idx": 2,
+      "tier_idx": 0,
+      "div_idx": 0,
       "lp": 0
     },
     {
       "wins": 3,
-      "tier_idx": 1,
-      "div_idx": 4,
+      "tier_idx": 0,
+      "div_idx": 0,
       "lp": 0
     },
     {
       "wins": 4,
-      "tier_idx": 2,
-      "div_idx": 2,
+      "tier_idx": 0,
+      "div_idx": 0,
       "lp": 0
     },
     {
       "wins": 5,
-      "tier_idx": 2,
-      "div_idx": 4,
+      "tier_idx": 0,
+      "div_idx": 0,
       "lp": 0
     }
   ]

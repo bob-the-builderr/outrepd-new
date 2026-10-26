@@ -1273,41 +1273,10 @@ class LTr extends L {
   String get noRankYet => 'Henüz derece yok';
 
   @override
-  String placementsForFirstTier(String count) {
-    return 'İlk dereceni kazanmak için $count yerleştirme düellosu bitir.';
-  }
-
-  @override
-  String get startPlacements => 'Yerleştirmeye başla';
-
-  @override
   String get unranked => 'Derecesiz';
 
   @override
-  String placementsTerms(String done, String total, String seconds) {
-    return '$total maçtan $done · her biri $seconds saniye';
-  }
-
-  @override
-  String placementsLeft(String done, String total, String left) {
-    return '$total maçtan $done · derece için $left tane daha';
-  }
-
-  @override
-  String placementsForTier(String count) {
-    return 'Derecenizi görmek için $count yerleştirme düellosu bitirin.';
-  }
-
-  @override
-  String placementsDoneCount(String done, String total) {
-    return '$total yerleştirmeden $done tanesi tamamlandı';
-  }
-
-  @override
   String get practiceFirst => 'Önce alıştırma';
-
-  @override
-  String get nextPlacement => 'Sonraki yerleştirme';
 
   @override
   String get noConnection => 'Bağlantı yok';
@@ -2477,5 +2446,19 @@ class LTr extends L {
   @override
   String lastN(String n) {
     return 'Son ${n}';
+  }
+
+  @override
+  String get firstMatchForTier => 'Sıralamaya girmek için ilk maçını oyna. Herkes Iron V\'den başlar.';
+
+  @override
+  String get firstMatchForBoard => 'Tabloya girmek için ilk maçını oyna. Herkes Iron V\'den başlar.';
+
+  @override
+  String get playFirstMatch => 'İlk maçı oyna';
+
+  @override
+  String firstMatchTerms(String seconds) {
+    return 'Tek maç · ${seconds} saniye';
   }
 }

@@ -407,15 +407,8 @@
   "practiceTerms": "Latihan — tanpa peringkat, tanpa lawan",
   "practiceComplete": "LATIHAN SELESAI",
   "noRankYet": "Belum ada peringkat",
-  "placementsForFirstTier": "Selesaikan {count} duel penempatan untuk meraih peringkat pertamamu.",
-  "startPlacements": "Mulai penempatan",
   "unranked": "Tanpa peringkat",
-  "placementsTerms": "{done} dari {total} · {seconds} detik tiap duel",
-  "placementsLeft": "{done} dari {total} · {left} lagi untuk peringkatmu",
-  "placementsForTier": "Selesaikan {count} duel penempatan untuk melihat peringkatmu.",
-  "placementsDoneCount": "{done} dari {total} penempatan selesai",
   "practiceFirst": "Latihan dulu",
-  "nextPlacement": "Penempatan berikutnya",
   "noConnection": "Tidak ada koneksi",
   "practiceOffline": "Latihan offline",
   "retry": "Coba lagi",
@@ -749,5 +742,9 @@
   "giveUpTied": "Seri",
   "keepGoing": "Lanjut",
   "stay": "Tetap",
-  "lastN": "{n} terakhir"
+  "lastN": "{n} terakhir",
+  "firstMatchForTier": "Mainkan pertandingan pertamamu untuk masuk peringkat. Semua mulai dari Iron V.",
+  "firstMatchForBoard": "Mainkan pertandingan pertamamu untuk masuk papan peringkat. Semua mulai dari Iron V.",
+  "playFirstMatch": "Main pertandingan pertama",
+  "firstMatchTerms": "Satu pertandingan · {seconds} detik"
 }

@@ -1252,41 +1252,10 @@ class LJa extends L {
   String get noRankYet => 'まだランクなし';
 
   @override
-  String placementsForFirstTier(String count) {
-    return '最初のランクを得るには配置マッチを$count回こなしてください。';
-  }
-
-  @override
-  String get startPlacements => '配置マッチを始める';
-
-  @override
   String get unranked => 'ランクなし';
 
   @override
-  String placementsTerms(String done, String total, String seconds) {
-    return '$total回中$done回 · 各$seconds秒';
-  }
-
-  @override
-  String placementsLeft(String done, String total, String left) {
-    return '$total回中$done回 · ランクまであと$left回';
-  }
-
-  @override
-  String placementsForTier(String count) {
-    return '自分のランクを知るには配置マッチを$count回こなしてください。';
-  }
-
-  @override
-  String placementsDoneCount(String done, String total) {
-    return '配置$total回中$done回完了';
-  }
-
-  @override
   String get practiceFirst => 'まず練習';
-
-  @override
-  String get nextPlacement => '次の配置マッチ';
 
   @override
   String get noConnection => '接続なし';
@@ -2444,5 +2413,19 @@ class LJa extends L {
   @override
   String lastN(String n) {
     return '直近${n}試合';
+  }
+
+  @override
+  String get firstMatchForTier => '最初のマッチをプレイするとランキングに参加できます。全員 Iron V からスタートです。';
+
+  @override
+  String get firstMatchForBoard => '最初のマッチをプレイするとランキングに載ります。全員 Iron V からスタートです。';
+
+  @override
+  String get playFirstMatch => '最初のマッチをプレイ';
+
+  @override
+  String firstMatchTerms(String seconds) {
+    return '1マッチ · ${seconds}秒';
   }
 }

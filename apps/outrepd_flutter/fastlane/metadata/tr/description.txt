@@ -9,7 +9,7 @@ GERÇEK İNSANLARLA CANLI YARIŞ
 Dereceli maç, seninle aynı anda kamerada olan birini bulur. Birlikte başlarsınız ve birbirinizin sayısının arttığını görürsünüz. On beş saniye içinde senin seviyende kimse yoksa, gerçek bir insanın kayıtlı setiyle, onun gerçek temposunda yarışırsın. Bot yok, uydurma sayı yok.
 
 SIRALAMADA YÜKSEL
-Beş yerleştirme maçı başlangıç rütbeni belirler. Sonra Demir'den Bronz, Gümüş, Altın, Platin ve Elmas'a, oradan Usta'ya yüksel. Daha yüksek bir rütbeyi yen, daha çok LP kazan. Ulaştığın kademe senin kalır.
+İlk maçınla sıralamaya Demir V'ten girersin. Sonra Demir'den Bronz, Gümüş, Altın, Platin ve Elmas'a, oradan Usta'ya yüksel. Daha yüksek bir rütbeyi yen, daha çok LP kazan. Ulaştığın kademe senin kalır.
 
 HER TEKRARLA SEVİYE ATLA
 Her şınav ve her maç, kazansan da kaybetsen de XP kazandırır. Seviyen her yerde adının yanında görünür ve asla düşmez.

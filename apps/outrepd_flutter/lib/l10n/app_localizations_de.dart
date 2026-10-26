@@ -1282,41 +1282,10 @@ class LDe extends L {
   String get noRankYet => 'Noch kein Rang';
 
   @override
-  String placementsForFirstTier(String count) {
-    return 'Schließe $count Platzierungsduelle ab, um deinen ersten Rang zu erhalten.';
-  }
-
-  @override
-  String get startPlacements => 'Platzierungen starten';
-
-  @override
   String get unranked => 'Ohne Rang';
 
   @override
-  String placementsTerms(String done, String total, String seconds) {
-    return '$done von $total · je $seconds Sekunden';
-  }
-
-  @override
-  String placementsLeft(String done, String total, String left) {
-    return '$done von $total · noch $left bis zu deinem Rang';
-  }
-
-  @override
-  String placementsForTier(String count) {
-    return 'Schließe $count Platzierungsduelle ab, um zu sehen, wo du landest.';
-  }
-
-  @override
-  String placementsDoneCount(String done, String total) {
-    return '$done von $total Platzierungen abgeschlossen';
-  }
-
-  @override
   String get practiceFirst => 'Erst üben';
-
-  @override
-  String get nextPlacement => 'Nächste Platzierung';
 
   @override
   String get noConnection => 'Keine Verbindung';
@@ -2489,5 +2458,19 @@ class LDe extends L {
   @override
   String lastN(String n) {
     return 'Letzte ${n}';
+  }
+
+  @override
+  String get firstMatchForTier => 'Spiel dein erstes Match, um auf die Rangliste zu kommen. Alle starten bei Iron V.';
+
+  @override
+  String get firstMatchForBoard => 'Spiel dein erstes Match, dann stehst du auf der Liste. Alle starten bei Iron V.';
+
+  @override
+  String get playFirstMatch => 'Erstes Match spielen';
+
+  @override
+  String firstMatchTerms(String seconds) {
+    return 'Ein Match · ${seconds} Sekunden';
   }
 }

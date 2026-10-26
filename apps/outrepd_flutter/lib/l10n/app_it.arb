@@ -407,15 +407,8 @@
   "practiceTerms": "Allenati — senza rango, senza avversario",
   "practiceComplete": "ALLENAMENTO COMPLETATO",
   "noRankYet": "Ancora senza rango",
-  "placementsForFirstTier": "Completa {count} sfide di piazzamento per ottenere il tuo primo rango.",
-  "startPlacements": "Inizia i piazzamenti",
   "unranked": "Senza rango",
-  "placementsTerms": "{done} su {total} · {seconds} secondi ciascuna",
-  "placementsLeft": "{done} su {total} · altre {left} per il tuo rango",
-  "placementsForTier": "Completa {count} sfide di piazzamento per scoprire il tuo rango.",
-  "placementsDoneCount": "{done} su {total} piazzamenti completati",
   "practiceFirst": "Prima allenati",
-  "nextPlacement": "Piazzamento successivo",
   "noConnection": "Nessuna connessione",
   "practiceOffline": "Allenati offline",
   "retry": "Riprova",
@@ -749,5 +742,9 @@
   "giveUpTied": "Pari",
   "keepGoing": "Continua",
   "stay": "Resta",
-  "lastN": "Ultimi {n}"
+  "lastN": "Ultimi {n}",
+  "firstMatchForTier": "Gioca la tua prima sfida per entrare in classifica. Tutti partono da Iron V.",
+  "firstMatchForBoard": "Gioca la tua prima sfida per comparire in classifica. Tutti partono da Iron V.",
+  "playFirstMatch": "Gioca la prima sfida",
+  "firstMatchTerms": "Una sfida · {seconds} secondi"
 }

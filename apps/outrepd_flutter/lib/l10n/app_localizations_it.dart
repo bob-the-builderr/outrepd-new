@@ -1280,41 +1280,10 @@ class LIt extends L {
   String get noRankYet => 'Ancora senza rango';
 
   @override
-  String placementsForFirstTier(String count) {
-    return 'Completa $count sfide di piazzamento per ottenere il tuo primo rango.';
-  }
-
-  @override
-  String get startPlacements => 'Inizia i piazzamenti';
-
-  @override
   String get unranked => 'Senza rango';
 
   @override
-  String placementsTerms(String done, String total, String seconds) {
-    return '$done su $total · $seconds secondi ciascuna';
-  }
-
-  @override
-  String placementsLeft(String done, String total, String left) {
-    return '$done su $total · altre $left per il tuo rango';
-  }
-
-  @override
-  String placementsForTier(String count) {
-    return 'Completa $count sfide di piazzamento per scoprire il tuo rango.';
-  }
-
-  @override
-  String placementsDoneCount(String done, String total) {
-    return '$done su $total piazzamenti completati';
-  }
-
-  @override
   String get practiceFirst => 'Prima allenati';
-
-  @override
-  String get nextPlacement => 'Piazzamento successivo';
 
   @override
   String get noConnection => 'Nessuna connessione';
@@ -2487,5 +2456,19 @@ class LIt extends L {
   @override
   String lastN(String n) {
     return 'Ultimi ${n}';
+  }
+
+  @override
+  String get firstMatchForTier => 'Gioca la tua prima sfida per entrare in classifica. Tutti partono da Iron V.';
+
+  @override
+  String get firstMatchForBoard => 'Gioca la tua prima sfida per comparire in classifica. Tutti partono da Iron V.';
+
+  @override
+  String get playFirstMatch => 'Gioca la prima sfida';
+
+  @override
+  String firstMatchTerms(String seconds) {
+    return 'Una sfida · ${seconds} secondi';
   }
 }

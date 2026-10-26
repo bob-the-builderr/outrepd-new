@@ -407,15 +407,8 @@
   "practiceTerms": "Üben — ohne Wertung, ohne Gegner",
   "practiceComplete": "ÜBUNG BEENDET",
   "noRankYet": "Noch kein Rang",
-  "placementsForFirstTier": "Schließe {count} Platzierungsduelle ab, um deinen ersten Rang zu erhalten.",
-  "startPlacements": "Platzierungen starten",
   "unranked": "Ohne Rang",
-  "placementsTerms": "{done} von {total} · je {seconds} Sekunden",
-  "placementsLeft": "{done} von {total} · noch {left} bis zu deinem Rang",
-  "placementsForTier": "Schließe {count} Platzierungsduelle ab, um zu sehen, wo du landest.",
-  "placementsDoneCount": "{done} von {total} Platzierungen abgeschlossen",
   "practiceFirst": "Erst üben",
-  "nextPlacement": "Nächste Platzierung",
   "noConnection": "Keine Verbindung",
   "practiceOffline": "Offline üben",
   "retry": "Erneut versuchen",
@@ -749,5 +742,9 @@
   "giveUpTied": "Gleichstand",
   "keepGoing": "Weitermachen",
   "stay": "Bleiben",
-  "lastN": "Letzte {n}"
+  "lastN": "Letzte {n}",
+  "firstMatchForTier": "Spiel dein erstes Match, um auf die Rangliste zu kommen. Alle starten bei Iron V.",
+  "firstMatchForBoard": "Spiel dein erstes Match, dann stehst du auf der Liste. Alle starten bei Iron V.",
+  "playFirstMatch": "Erstes Match spielen",
+  "firstMatchTerms": "Ein Match · {seconds} Sekunden"
 }

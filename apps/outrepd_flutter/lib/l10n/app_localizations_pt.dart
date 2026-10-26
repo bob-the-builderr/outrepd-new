@@ -1279,41 +1279,10 @@ class LPt extends L {
   String get noRankYet => 'Ainda sem rank';
 
   @override
-  String placementsForFirstTier(String count) {
-    return 'Conclua $count duelos de colocação para ganhar seu primeiro rank.';
-  }
-
-  @override
-  String get startPlacements => 'Começar colocação';
-
-  @override
   String get unranked => 'Sem rank';
 
   @override
-  String placementsTerms(String done, String total, String seconds) {
-    return '$done de $total · $seconds segundos cada';
-  }
-
-  @override
-  String placementsLeft(String done, String total, String left) {
-    return '$done de $total · mais $left para o seu rank';
-  }
-
-  @override
-  String placementsForTier(String count) {
-    return 'Conclua $count duelos de colocação para ver seu rank.';
-  }
-
-  @override
-  String placementsDoneCount(String done, String total) {
-    return '$done de $total colocações concluídas';
-  }
-
-  @override
   String get practiceFirst => 'Treinar primeiro';
-
-  @override
-  String get nextPlacement => 'Próxima colocação';
 
   @override
   String get noConnection => 'Sem conexão';
@@ -2484,5 +2453,19 @@ class LPt extends L {
   @override
   String lastN(String n) {
     return 'Últimos ${n}';
+  }
+
+  @override
+  String get firstMatchForTier => 'Jogue sua primeira partida para entrar no ranking. Todo mundo começa no Iron V.';
+
+  @override
+  String get firstMatchForBoard => 'Jogue sua primeira partida para aparecer no ranking. Todo mundo começa no Iron V.';
+
+  @override
+  String get playFirstMatch => 'Jogar primeira partida';
+
+  @override
+  String firstMatchTerms(String seconds) {
+    return 'Uma partida · ${seconds} segundos';
   }
 }

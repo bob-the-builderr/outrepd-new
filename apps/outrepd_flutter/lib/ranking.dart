@@ -12,7 +12,6 @@
 /// hands out a rank the app cannot draw.
 library;
 
-import 'data.dart' show kPlacementDuels;
 import 'theme.dart' show kTiers;
 import 'widgets.dart' show kDivisions;
 
@@ -199,36 +198,8 @@ const kLpLevelReach = 5;
 /// duel is — there is no gap to be exactly. A flat win, same as before.
 const kForfeitLp = 20;
 
-/// Where an account starts once its placement duels are done.
-///
-/// Wins decide it, and nothing else. Margin would let somebody farm a start
-/// by picking soft opponents, and five duels is far too small a sample to
-/// read anything finer than "how often did they win".
-///
-/// The top of the range is Gold IV: placements can find a strong beginner
-/// quickly, but the tiers above that are meant to be climbed, not granted.
-Rank placementRank(int wins, {int duels = kPlacementDuels}) {
-  final safeDuels = duels <= 0 ? 1 : duels;
-  final share = wins.clamp(0, safeDuels) / safeDuels;
-
-  // tier, division — read as a ladder rather than computed, so the outcome of
-  // each result is obvious to anybody reading it.
-  //
-  // Re-spaced when the ladder went from nine tiers to seven. A clean sweep
-  // used to land at Gold IV, which was below the middle of nine and is the
-  // middle of seven — and placements handing somebody the middle of the app
-  // on their first afternoon is the thing this table exists not to do. The
-  // top of it is Silver I, which leaves four of the seven tiers to climb.
-  const ladder = <(int, int)>[
-    (0, 2), // no wins        → Iron III
-    (0, 4), // one in five    → Iron I
-    (1, 2), // two            → Bronze III
-    (1, 4), // three          → Bronze I
-    (2, 2), // four           → Silver III
-    (2, 4), // all five       → Silver I
-  ];
-
-  final step = (share * (ladder.length - 1)).round();
-  final (tier, div) = ladder[step.clamp(0, ladder.length - 1)];
-  return Rank(tierIdx: tier, divIdx: div, lp: 0);
-}
+/// Where an account starts once its placement duel is done: Iron V with no
+/// LP, whatever the result. One duel says nothing about a lifter, so it
+/// decides nothing but that the climb has begun. The twin of
+/// `placement_rank` in supabase/ladder.sql.
+Rank placementRank(int wins) => Rank.start;

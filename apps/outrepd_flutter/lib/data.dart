@@ -92,16 +92,16 @@ class Profile {
   /// deriving it means a bad month cannot quietly erase it.
   int peakTierIdx;
 
-  /// Placement duels won so far. Only meaningful while [isRanked] is false —
-  /// it is what decides the starting tier.
+  /// Placement duels won. Kept for the record; the starting tier no longer
+  /// depends on it.
   int placementWins;
 
-  /// How many of the placement duels are behind you.
+  /// How many placement duels are behind you: none, or done. The server
+  /// marks a placed account with five, from when it took five duels, and
+  /// anything from [kPlacementDuels] up reads as placed.
   ///
-  /// A new account has no tier at all rather than a bad one: being handed the
-  /// bottom rank before anybody has seen you lift is a judgement, and it is the
-  /// judgement people quit over. Until these are done the app says "Unranked",
-  /// which is a statement about the app's knowledge, not about the lifter.
+  /// Before the first ranked duel the app says "Unranked": the account has
+  /// not lifted against anybody yet, so there is nothing to put it on.
   int placementsDone;
 
   int get totalMatches => wins + losses;
@@ -110,8 +110,6 @@ class Profile {
   /// ask first — an unranked account's [tierIdx] is a placeholder, not a rank.
   bool get isRanked => placementsDone >= kPlacementDuels;
 
-  int get placementsLeft =>
-      (kPlacementDuels - placementsDone).clamp(0, kPlacementDuels);
   double get winRate => totalMatches == 0 ? 0 : wins / totalMatches;
 }
 
@@ -136,10 +134,11 @@ final demoProfile = Profile(
   xp: 4240,
 );
 
-/// Duels a new account plays before it is given a tier. Five is enough to see
-/// past one bad session and few enough that nobody is grinding for a week to
-/// find out where they stand.
-const kPlacementDuels = 5;
+/// Duels a new account plays before it is given a tier: one, and whatever
+/// its result everybody starts at Iron V (placementRank). It used to be five,
+/// which placed an account anywhere from Iron III to Silver I — a climb handed
+/// out instead of made.
+const kPlacementDuels = 1;
 
 /// The name this phone last knew, and whether it has been set up. Everything
 /// else about the profile comes from the server or the saved career.

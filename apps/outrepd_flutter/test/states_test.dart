@@ -1,4 +1,4 @@
-/// The six states from the mockups: a brand new account, placements running,
+/// The six states from the mockups: a brand new account, its first match,
 /// no connection, no friends, no rank, and an opponent who left.
 ///
 /// These are the screens almost nobody building the app ever sees, because the
@@ -84,30 +84,34 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Unranked'), findsOneWidget);
-      // Never handed a tier it has not earned — that is a judgement, and the
-      // whole point of placements is to withhold it.
+      // No tier before it has lifted against anybody.
       expect(find.textContaining('Stone'), findsNothing);
       expect(find.textContaining('LP'), findsNothing);
 
-      expect(find.text('Start placements'), findsOneWidget);
+      expect(
+        find.text(
+          'Play your first match to get on the ladder. Everyone starts at Iron V.',
+        ),
+        findsOneWidget,
+      );
+      expect(find.text('Play first match'), findsOneWidget);
       expect(find.text('Practice first'), findsOneWidget);
-      expect(find.text('0 of 5 · 60 seconds each'), findsOneWidget);
+      expect(find.text('One match · 60 seconds'), findsOneWidget);
     });
 
-    testWidgets('shows progress once placements are under way', (tester) async {
+    testWidgets('is placed by the five the server writes', (tester) async {
+      // The server marks a placed account with five, from when placing took
+      // five duels; the app reads that as placed, not as five of one.
       phone(tester);
-      withPlacements(3);
+      withPlacements(5);
       await tester.pumpWidget(_app(const MatchScreen(), 1.0, const Locale('en')));
       await tester.pumpAndSettle();
 
-      expect(find.text('Unranked'), findsOneWidget);
-      expect(find.text('Next placement'), findsOneWidget);
-      expect(find.text('3 of 5 · 2 more to get your tier'), findsOneWidget);
-      // The invitation to start is gone; they have started.
-      expect(find.text('Start placements'), findsNothing);
+      expect(find.text('Unranked'), findsNothing);
+      expect(find.text('Play first match'), findsNothing);
     });
 
-    testWidgets('gets a rank once the placements are done', (tester) async {
+    testWidgets('gets a rank once the first match is played', (tester) async {
       phone(tester);
       withPlacements(kPlacementDuels);
       await tester.pumpWidget(_app(const MatchScreen(), 1.0, const Locale('en')));
@@ -180,8 +184,13 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('No rank yet'), findsOneWidget);
-      expect(find.text('Start placements'), findsOneWidget);
-      expect(find.text('0 of 5 done'), findsOneWidget);
+      expect(
+        find.text(
+          'Play your first match to get on the board. Everyone starts at Iron V.',
+        ),
+        findsOneWidget,
+      );
+      expect(find.text('Play first match'), findsOneWidget);
       // "No ranks yet" would be a lie — the board is full, they are not on it.
       expect(find.text('No ranks yet'), findsNothing);
 
@@ -229,7 +238,7 @@ void main() {
     for (final code in ['hi', 'de', 'ru']) {
       testWidgets('a new account in $code', (tester) async {
         phone(tester);
-        withPlacements(2);
+        withPlacements(0);
         await tester.pumpWidget(_app(const MatchScreen(), 1.3, Locale(code)));
         await tester.pumpAndSettle();
         expect(tester.takeException(), isNull);

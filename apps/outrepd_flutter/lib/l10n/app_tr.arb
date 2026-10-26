@@ -407,15 +407,8 @@
   "practiceTerms": "Alıştırma — derece yok, rakip yok",
   "practiceComplete": "ALIŞTIRMA BİTTİ",
   "noRankYet": "Henüz derece yok",
-  "placementsForFirstTier": "İlk dereceni kazanmak için {count} yerleştirme düellosu bitir.",
-  "startPlacements": "Yerleştirmeye başla",
   "unranked": "Derecesiz",
-  "placementsTerms": "{total} maçtan {done} · her biri {seconds} saniye",
-  "placementsLeft": "{total} maçtan {done} · derece için {left} tane daha",
-  "placementsForTier": "Derecenizi görmek için {count} yerleştirme düellosu bitirin.",
-  "placementsDoneCount": "{total} yerleştirmeden {done} tanesi tamamlandı",
   "practiceFirst": "Önce alıştırma",
-  "nextPlacement": "Sonraki yerleştirme",
   "noConnection": "Bağlantı yok",
   "practiceOffline": "Çevrimdışı alıştırma",
   "retry": "Tekrar dene",
@@ -749,5 +742,9 @@
   "giveUpTied": "Berabere",
   "keepGoing": "Devam et",
   "stay": "Kal",
-  "lastN": "Son {n}"
+  "lastN": "Son {n}",
+  "firstMatchForTier": "Sıralamaya girmek için ilk maçını oyna. Herkes Iron V'den başlar.",
+  "firstMatchForBoard": "Tabloya girmek için ilk maçını oyna. Herkes Iron V'den başlar.",
+  "playFirstMatch": "İlk maçı oyna",
+  "firstMatchTerms": "Tek maç · {seconds} saniye"
 }

@@ -346,21 +346,11 @@ class _RanksScreenState extends State<RanksScreen> {
                   ? EmptyState(
                       icon: Icons.emoji_events_outlined,
                       title: L.of(context).noRankYet,
-                      body: L
-                          .of(context)
-                          .placementsForTier(
-                            localNumber(context, kPlacementDuels),
-                          ),
+                      body: L.of(context).firstMatchForBoard,
                       action: PillButton(
-                        label: L.of(context).startPlacements,
+                        label: L.of(context).playFirstMatch,
                         onTap: () => AppShell.goToMatch(context),
                       ),
-                      footnote: L
-                          .of(context)
-                          .placementsDoneCount(
-                            localNumber(context, me.placementsDone),
-                            localNumber(context, kPlacementDuels),
-                          ),
                     )
                   : _loading && nothingYet
                   ? const Center(child: CircularProgressIndicator())

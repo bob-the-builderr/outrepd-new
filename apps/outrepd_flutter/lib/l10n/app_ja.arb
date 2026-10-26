@@ -407,15 +407,8 @@
   "practiceTerms": "練習 — ランクなし、対戦相手なし",
   "practiceComplete": "練習終了",
   "noRankYet": "まだランクなし",
-  "placementsForFirstTier": "最初のランクを得るには配置マッチを{count}回こなしてください。",
-  "startPlacements": "配置マッチを始める",
   "unranked": "ランクなし",
-  "placementsTerms": "{total}回中{done}回 · 各{seconds}秒",
-  "placementsLeft": "{total}回中{done}回 · ランクまであと{left}回",
-  "placementsForTier": "自分のランクを知るには配置マッチを{count}回こなしてください。",
-  "placementsDoneCount": "配置{total}回中{done}回完了",
   "practiceFirst": "まず練習",
-  "nextPlacement": "次の配置マッチ",
   "noConnection": "接続なし",
   "practiceOffline": "オフラインで練習",
   "retry": "再試行",
@@ -749,5 +742,9 @@
   "giveUpTied": "同点",
   "keepGoing": "続ける",
   "stay": "残る",
-  "lastN": "直近{n}試合"
+  "lastN": "直近{n}試合",
+  "firstMatchForTier": "最初のマッチをプレイするとランキングに参加できます。全員 Iron V からスタートです。",
+  "firstMatchForBoard": "最初のマッチをプレイするとランキングに載ります。全員 Iron V からスタートです。",
+  "playFirstMatch": "最初のマッチをプレイ",
+  "firstMatchTerms": "1マッチ · {seconds}秒"
 }

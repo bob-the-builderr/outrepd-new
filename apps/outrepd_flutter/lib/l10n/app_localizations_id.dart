@@ -1275,41 +1275,10 @@ class LId extends L {
   String get noRankYet => 'Belum ada peringkat';
 
   @override
-  String placementsForFirstTier(String count) {
-    return 'Selesaikan $count duel penempatan untuk meraih peringkat pertamamu.';
-  }
-
-  @override
-  String get startPlacements => 'Mulai penempatan';
-
-  @override
   String get unranked => 'Tanpa peringkat';
 
   @override
-  String placementsTerms(String done, String total, String seconds) {
-    return '$done dari $total · $seconds detik tiap duel';
-  }
-
-  @override
-  String placementsLeft(String done, String total, String left) {
-    return '$done dari $total · $left lagi untuk peringkatmu';
-  }
-
-  @override
-  String placementsForTier(String count) {
-    return 'Selesaikan $count duel penempatan untuk melihat peringkatmu.';
-  }
-
-  @override
-  String placementsDoneCount(String done, String total) {
-    return '$done dari $total penempatan selesai';
-  }
-
-  @override
   String get practiceFirst => 'Latihan dulu';
-
-  @override
-  String get nextPlacement => 'Penempatan berikutnya';
 
   @override
   String get noConnection => 'Tidak ada koneksi';
@@ -2481,5 +2450,19 @@ class LId extends L {
   @override
   String lastN(String n) {
     return '${n} terakhir';
+  }
+
+  @override
+  String get firstMatchForTier => 'Mainkan pertandingan pertamamu untuk masuk peringkat. Semua mulai dari Iron V.';
+
+  @override
+  String get firstMatchForBoard => 'Mainkan pertandingan pertamamu untuk masuk papan peringkat. Semua mulai dari Iron V.';
+
+  @override
+  String get playFirstMatch => 'Main pertandingan pertama';
+
+  @override
+  String firstMatchTerms(String seconds) {
+    return 'Satu pertandingan · ${seconds} detik';
   }
 }

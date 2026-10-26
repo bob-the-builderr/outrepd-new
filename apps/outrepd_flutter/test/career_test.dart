@@ -156,48 +156,41 @@ void main() {
     });
   });
 
-  group('placements', () {
-    test('give no rank until all five are done', () async {
-      for (var i = 0; i < kPlacementDuels - 1; i++) {
-        final outcome = await career.recordDuel(
-          yourReps: 20,
-          theirReps: 5,
-          opponent: 'x',
-          opponentTier: 2,
-        );
-        expect(outcome.rank, isNull, reason: 'placement ${i + 1} moved a rank');
-        expect(outcome.placementsFinished, isFalse);
-        expect(demoProfile.isRanked, isFalse);
-      }
+  group('the placement', () {
+    test('one duel places an account, and pays no LP', () async {
+      expect(demoProfile.isRanked, isFalse);
 
-      final last = await career.recordDuel(
+      final outcome = await career.recordDuel(
         yourReps: 20,
         theirReps: 5,
         opponent: 'x',
         opponentTier: 2,
       );
-      expect(last.placementsFinished, isTrue);
+
+      expect(outcome.rank, isNull, reason: 'the placement moved a rank');
+      expect(outcome.placementsFinished, isTrue);
       expect(demoProfile.isRanked, isTrue);
     });
 
-    test('winning more places you higher', () async {
-      await place(wins: 5);
-      final strong = career.rank;
+    test('winning or losing it, everybody starts at Iron V', () async {
+      await place(wins: 1);
+      final won = career.rank;
 
       await career.startFresh();
       await place(wins: 0);
-      final weak = career.rank;
+      final lost = career.rank;
 
-      expect(strong.tierIdx, greaterThan(weak.tierIdx));
+      expect(won, Rank.start);
+      expect(lost, Rank.start);
     });
 
     test('the placed tier becomes the floor', () async {
-      await place(wins: 5);
+      await place(wins: 1);
       expect(demoProfile.peakTierIdx, demoProfile.tierIdx);
     });
 
-    test('they still count as matches and reps', () async {
-      await place(wins: 3);
+    test('it still counts as a match and as reps', () async {
+      await place(wins: 1);
       expect(demoProfile.totalMatches, kPlacementDuels);
       expect(demoProfile.totalReps, greaterThan(0));
       expect(matchHistory.length, kPlacementDuels);
@@ -667,10 +660,11 @@ void main() {
       expect(demoProfile.totalReps, reps + 25);
     });
 
-    test('reports no rank while placements are still open', () async {
-      // Not placed yet: recordSettledDuel must not treat the server's numbers
-      // as a real rank until the account actually has one, matching what
-      // recordDuel already does for a locally-computed placement duel.
+    test('reports no rank change on the placement itself', () async {
+      // The placement sets a rank rather than moving one: recordSettledDuel
+      // reports no RankChange for it, matching what recordDuel does for a
+      // locally-computed placement. The server marks the account placed with
+      // five.
       final settled = SettledDuel(
         duelId: 'd2',
         won: true,
@@ -682,7 +676,7 @@ void main() {
         losses: 0,
         winStreak: 1,
         bestStreak: 1,
-        placementsDone: 1,
+        placementsDone: 5,
         placementWins: 1,
       );
 
@@ -696,8 +690,9 @@ void main() {
       );
 
       expect(outcome.rank, isNull);
-      expect(outcome.placementsFinished, isFalse);
-      expect(demoProfile.placementsDone, 1);
+      expect(outcome.placementsFinished, isTrue);
+      expect(demoProfile.isRanked, isTrue);
+      expect(career.rank, Rank.start);
     });
 
     test(

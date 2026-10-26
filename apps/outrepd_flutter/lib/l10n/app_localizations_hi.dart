@@ -1278,41 +1278,10 @@ class LHi extends L {
   String get noRankYet => 'अभी कोई रैंक नहीं';
 
   @override
-  String placementsForFirstTier(String count) {
-    return 'पहला रैंक पाने के लिए $count प्लेसमेंट मुक़ाबले पूरे करें।';
-  }
-
-  @override
-  String get startPlacements => 'प्लेसमेंट शुरू करें';
-
-  @override
   String get unranked => 'अनरैंक्ड';
 
   @override
-  String placementsTerms(String done, String total, String seconds) {
-    return '$total में से $done · हर एक $seconds सेकंड';
-  }
-
-  @override
-  String placementsLeft(String done, String total, String left) {
-    return '$total में से $done · रैंक के लिए $left और';
-  }
-
-  @override
-  String placementsForTier(String count) {
-    return 'अपनी रैंक जानने के लिए $count प्लेसमेंट मुक़ाबले पूरे करें।';
-  }
-
-  @override
-  String placementsDoneCount(String done, String total) {
-    return '$total में से $done प्लेसमेंट पूरे';
-  }
-
-  @override
   String get practiceFirst => 'पहले अभ्यास';
-
-  @override
-  String get nextPlacement => 'अगला प्लेसमेंट';
 
   @override
   String get noConnection => 'कोई कनेक्शन नहीं';
@@ -2482,5 +2451,19 @@ class LHi extends L {
   @override
   String lastN(String n) {
     return 'पिछले ${n}';
+  }
+
+  @override
+  String get firstMatchForTier => 'रैंकिंग में आने के लिए अपना पहला मुक़ाबला खेलें। सब Iron V से शुरू करते हैं।';
+
+  @override
+  String get firstMatchForBoard => 'बोर्ड पर आने के लिए अपना पहला मुक़ाबला खेलें। सब Iron V से शुरू करते हैं।';
+
+  @override
+  String get playFirstMatch => 'पहला मुक़ाबला खेलें';
+
+  @override
+  String firstMatchTerms(String seconds) {
+    return 'एक मुक़ाबला · ${seconds} सेकंड';
   }
 }

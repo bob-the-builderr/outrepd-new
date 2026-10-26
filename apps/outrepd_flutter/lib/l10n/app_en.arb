@@ -715,65 +715,8 @@
   "practiceTerms": "Practice — no rank, no opponent",
   "practiceComplete": "PRACTICE COMPLETE",
   "noRankYet": "No rank yet",
-  "placementsForFirstTier": "Finish {count} placement duels to earn your first tier.",
-  "@placementsForFirstTier": {
-    "placeholders": {
-      "count": {
-        "type": "String"
-      }
-    }
-  },
-  "startPlacements": "Start placements",
   "unranked": "Unranked",
-  "placementsTerms": "{done} of {total} · {seconds} seconds each",
-  "@placementsTerms": {
-    "placeholders": {
-      "done": {
-        "type": "String"
-      },
-      "total": {
-        "type": "String"
-      },
-      "seconds": {
-        "type": "String"
-      }
-    }
-  },
-  "placementsLeft": "{done} of {total} · {left} more to get your tier",
-  "@placementsLeft": {
-    "placeholders": {
-      "done": {
-        "type": "String"
-      },
-      "total": {
-        "type": "String"
-      },
-      "left": {
-        "type": "String"
-      }
-    }
-  },
-  "placementsForTier": "Finish {count} placement duels to see where you land.",
-  "@placementsForTier": {
-    "placeholders": {
-      "count": {
-        "type": "String"
-      }
-    }
-  },
-  "placementsDoneCount": "{done} of {total} done",
-  "@placementsDoneCount": {
-    "placeholders": {
-      "done": {
-        "type": "String"
-      },
-      "total": {
-        "type": "String"
-      }
-    }
-  },
   "practiceFirst": "Practice first",
-  "nextPlacement": "Next placement",
   "noConnection": "No connection",
   "practiceOffline": "Practice offline",
   "retry": "Retry",
@@ -1646,6 +1589,17 @@
   "@lastN": {
     "placeholders": {
       "n": {
+        "type": "String"
+      }
+    }
+  },
+  "firstMatchForTier": "Play your first match to get on the ladder. Everyone starts at Iron V.",
+  "firstMatchForBoard": "Play your first match to get on the board. Everyone starts at Iron V.",
+  "playFirstMatch": "Play first match",
+  "firstMatchTerms": "One match · {seconds} seconds",
+  "@firstMatchTerms": {
+    "placeholders": {
+      "seconds": {
         "type": "String"
       }
     }

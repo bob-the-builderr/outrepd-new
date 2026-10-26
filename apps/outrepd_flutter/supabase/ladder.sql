@@ -134,26 +134,18 @@ $$;
 
 -- ───────────────────────────── where placements land ─────────────────────────
 
--- Wins decide it and nothing else. Margin would let somebody buy a start by
--- picking soft opponents, and five duels is far too small a sample to read
--- anything finer than "how often did they win".
+-- Everybody starts in the same place. `wins` stays in the signature so a
+-- caller from before the change still finds the function.
 create or replace function placement_rank(wins int)
 returns table (tier_idx int, div_idx int, lp int)
 language sql
 immutable
 set search_path = public
 as $$
-  -- The twin of the table in `lib/ranking.dart`. Re-spaced when the ladder
-  -- went from nine tiers to seven: a clean sweep used to land at Gold IV,
-  -- which is the middle of seven, and placements are not meant to hand
-  -- anybody the middle of the app on their first afternoon.
-  select * from (values
-    (0, 2, 0),  -- no wins     → Iron III
-    (0, 4, 0),  -- one in five → Iron I
-    (1, 2, 0),  -- two         → Bronze III
-    (1, 4, 0),  -- three       → Bronze I
-    (2, 2, 0),  -- four        → Silver III
-    (2, 4, 0)   -- all five    → Silver I
-  ) as ladder(tier_idx, div_idx, lp)
-  offset least(greatest(wins, 0), 5) limit 1;
+  -- The twin of `placementRank` in `lib/ranking.dart`. One duel places an
+  -- account, and it lands at the bottom whatever the result: Iron V with no
+  -- LP. A single result says nothing about a lifter, so it decides nothing
+  -- but that the climb has begun. (Until 1.1.4 five duels placed an account
+  -- anywhere from Iron III to Silver I by how many were won.)
+  select 0, 0, 0;
 $$;

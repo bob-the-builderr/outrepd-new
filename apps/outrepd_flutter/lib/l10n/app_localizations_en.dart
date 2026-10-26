@@ -1275,41 +1275,10 @@ class LEn extends L {
   String get noRankYet => 'No rank yet';
 
   @override
-  String placementsForFirstTier(String count) {
-    return 'Finish $count placement duels to earn your first tier.';
-  }
-
-  @override
-  String get startPlacements => 'Start placements';
-
-  @override
   String get unranked => 'Unranked';
 
   @override
-  String placementsTerms(String done, String total, String seconds) {
-    return '$done of $total · $seconds seconds each';
-  }
-
-  @override
-  String placementsLeft(String done, String total, String left) {
-    return '$done of $total · $left more to get your tier';
-  }
-
-  @override
-  String placementsForTier(String count) {
-    return 'Finish $count placement duels to see where you land.';
-  }
-
-  @override
-  String placementsDoneCount(String done, String total) {
-    return '$done of $total done';
-  }
-
-  @override
   String get practiceFirst => 'Practice first';
-
-  @override
-  String get nextPlacement => 'Next placement';
 
   @override
   String get noConnection => 'No connection';
@@ -2480,5 +2449,19 @@ class LEn extends L {
   @override
   String lastN(String n) {
     return 'Last ${n}';
+  }
+
+  @override
+  String get firstMatchForTier => 'Play your first match to get on the ladder. Everyone starts at Iron V.';
+
+  @override
+  String get firstMatchForBoard => 'Play your first match to get on the board. Everyone starts at Iron V.';
+
+  @override
+  String get playFirstMatch => 'Play first match';
+
+  @override
+  String firstMatchTerms(String seconds) {
+    return 'One match · ${seconds} seconds';
   }
 }

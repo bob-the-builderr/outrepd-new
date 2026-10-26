@@ -407,15 +407,8 @@
   "practiceTerms": "S’entraîner — sans classement, sans adversaire",
   "practiceComplete": "ENTRAÎNEMENT TERMINÉ",
   "noRankYet": "Pas encore classé",
-  "placementsForFirstTier": "Termine {count} duels de placement pour obtenir ton premier rang.",
-  "startPlacements": "Commencer les placements",
   "unranked": "Non classé",
-  "placementsTerms": "{done} sur {total} · {seconds} secondes chacun",
-  "placementsLeft": "{done} sur {total} · encore {left} avant ton rang",
-  "placementsForTier": "Termine {count} duels de placement pour voir où tu te situes.",
-  "placementsDoneCount": "{done} sur {total} placements terminés",
   "practiceFirst": "S’entraîner d’abord",
-  "nextPlacement": "Placement suivant",
   "noConnection": "Pas de connexion",
   "practiceOffline": "S’entraîner hors ligne",
   "retry": "Réessayer",
@@ -749,5 +742,9 @@
   "giveUpTied": "Égalité",
   "keepGoing": "Continuer",
   "stay": "Rester",
-  "lastN": "{n} derniers"
+  "lastN": "{n} derniers",
+  "firstMatchForTier": "Joue ton premier match pour entrer dans le classement. Tout le monde commence en Iron V.",
+  "firstMatchForBoard": "Joue ton premier match pour apparaître au classement. Tout le monde commence en Iron V.",
+  "playFirstMatch": "Jouer mon premier match",
+  "firstMatchTerms": "Un match · {seconds} secondes"
 }

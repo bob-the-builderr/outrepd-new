@@ -407,15 +407,8 @@
   "practiceTerms": "연습 — 랭크 없음, 상대 없음",
   "practiceComplete": "연습 완료",
   "noRankYet": "아직 랭크 없음",
-  "placementsForFirstTier": "첫 랭크를 얻으려면 배치 대결 {count}판을 끝내세요.",
-  "startPlacements": "배치 시작",
   "unranked": "랭크 없음",
-  "placementsTerms": "{total}판 중 {done}판 · 판당 {seconds}초",
-  "placementsLeft": "{total}판 중 {done}판 · 랭크까지 {left}판",
-  "placementsForTier": "내 랭크를 알아보려면 배치 대결 {count}판을 끝내세요.",
-  "placementsDoneCount": "배치 {total}판 중 {done}판 완료",
   "practiceFirst": "먼저 연습",
-  "nextPlacement": "다음 배치",
   "noConnection": "연결 없음",
   "practiceOffline": "오프라인 연습",
   "retry": "다시 시도",
@@ -749,5 +742,9 @@
   "giveUpTied": "동점",
   "keepGoing": "계속하기",
   "stay": "남기",
-  "lastN": "최근 {n}경기"
+  "lastN": "최근 {n}경기",
+  "firstMatchForTier": "첫 대결을 하면 랭킹에 들어갑니다. 모두 Iron V에서 시작해요.",
+  "firstMatchForBoard": "첫 대결을 하면 순위표에 올라갑니다. 모두 Iron V에서 시작해요.",
+  "playFirstMatch": "첫 대결 시작",
+  "firstMatchTerms": "대결 1판 · {seconds}초"
 }

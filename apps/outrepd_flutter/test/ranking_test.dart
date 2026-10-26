@@ -162,41 +162,18 @@ void main() {
     });
   });
 
-  group('placements', () {
-    test('more wins never means a worse start', () {
-      var previous = placementRank(0);
-      for (var wins = 1; wins <= kPlacementDuels; wins++) {
-        final next = placementRank(wins);
-        final climbed = next.tierIdx > previous.tierIdx ||
-            (next.tierIdx == previous.tierIdx && next.divIdx >= previous.divIdx);
-        expect(climbed, isTrue,
-            reason: '$wins wins placed below ${wins - 1}: $next vs $previous');
-        previous = next;
+  group('placement', () {
+    test('one duel places an account', () {
+      expect(kPlacementDuels, 1);
+    });
+
+    test('everybody starts at Iron V with no LP, whatever the result', () {
+      for (final wins in [0, 1]) {
+        expect(placementRank(wins), Rank.start, reason: 'with $wins won');
       }
-    });
-
-    test('nobody is placed outside the ladder', () {
-      for (var wins = 0; wins <= kPlacementDuels; wins++) {
-        final rank = placementRank(wins);
-        expect(rank.tierIdx, inInclusiveRange(0, kTiers.length - 1));
-        expect(rank.divIdx, inInclusiveRange(0, kDivisions.length - 1));
-        expect(rank.lp, inInclusiveRange(0, 99));
-      }
-    });
-
-    test('a clean sweep still has most of the ladder left to climb', () {
-      // Placements find a strong beginner quickly; they do not hand anybody
-      // the top of the app on their first afternoon.
-      expect(placementRank(kPlacementDuels).tierIdx,
-          lessThan(kTiers.length ~/ 2));
-    });
-
-    test('losing every placement still puts somebody on the board', () {
-      final rank = placementRank(0);
-      expect(rank.tierIdx, 0);
-      // Not at the very bottom of the bottom tier: starting on the floor with
-      // nowhere to fall is a worse first impression than it needs to be.
-      expect(rank.divIdx, greaterThan(0));
+      expect(Rank.start.tierIdx, 0);
+      expect(Rank.start.divIdx, 0);
+      expect(Rank.start.lp, 0);
     });
   });
 

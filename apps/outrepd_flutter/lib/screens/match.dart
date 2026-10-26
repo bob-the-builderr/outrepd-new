@@ -66,7 +66,7 @@ class MatchScreen extends StatelessWidget {
                 const Spacer(),
                 const SizedBox(height: 18),
                 if (!p.isRanked)
-                  _Unranked(profile: p)
+                  const _Unranked()
                 else
                   // Offline the rank is still true, it just cannot change, so
                   // it steps back rather than disappearing.
@@ -85,7 +85,7 @@ class MatchScreen extends StatelessWidget {
                 if (offline)
                   const _OfflineActions()
                 else if (!p.isRanked)
-                  _PlacementActions(profile: p)
+                  const _PlacementActions()
                 else
                   const _Actions(),
                 const Spacer(flex: 2),
@@ -114,17 +114,14 @@ double _badgeSize(BuildContext context) {
 
 // ─────────────────────────────── unranked ────────────────────────────────────
 
-/// A new account: no tier, a dashed outline where the badge goes, and either
-/// an invitation to start placements or how far through them you are.
+/// A new account: no tier yet, a dashed outline where the badge goes, and
+/// what the first match does — it puts you on the ladder at Iron V.
 class _Unranked extends StatelessWidget {
-  const _Unranked({required this.profile});
-
-  final Profile profile;
+  const _Unranked();
 
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
-    final started = profile.placementsDone > 0;
 
     return Column(
       children: [
@@ -139,112 +136,59 @@ class _Unranked extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 6),
-
-        if (!started)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 34),
-            child: Text(
-              l.placementsForFirstTier(localNumber(context, kPlacementDuels)),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: context.colors.muted,
-                fontSize: 13,
-                height: 1.6,
-              ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 34),
+          child: Text(
+            l.firstMatchForTier,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: context.colors.muted,
+              fontSize: 13,
+              height: 1.6,
             ),
-          )
-        else ...[
-          // One pip per duel. A bar would say "some progress"; five pips say
-          // exactly how many are left, which is the number people want.
-          const SizedBox(height: 6),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              for (var i = 0; i < kPlacementDuels; i++) ...[
-                if (i > 0) const SizedBox(width: 6),
-                Container(
-                  width: 26,
-                  height: 5,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(3),
-                    color: i < profile.placementsDone
-                        ? context.colors.brand
-                        : context.colors.surfaceRaised,
-                  ),
-                ),
-              ],
-            ],
           ),
-          const SizedBox(height: 9),
-          Text(
-            l.placementsLeft(
-              localNumber(context, profile.placementsDone),
-              localNumber(context, kPlacementDuels),
-              localNumber(context, profile.placementsLeft),
-            ),
-            style: TextStyle(color: context.colors.muted, fontSize: 13),
-          ),
-        ],
+        ),
       ],
     );
   }
 }
 
 class _PlacementActions extends StatelessWidget {
-  const _PlacementActions({required this.profile});
-
-  final Profile profile;
+  const _PlacementActions();
 
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
-    final started = profile.placementsDone > 0;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _FilledAction(
-          label: started ? l.nextPlacement : l.startPlacements,
+          label: l.playFirstMatch,
           onTap: () => startMatch(context, mode: MatchMode.ranked),
         ),
-
-        if (!started) ...[
-          const SizedBox(height: 8),
-          Text(
-            l.placementsTerms(
-              localNumber(context, profile.placementsDone),
-              localNumber(context, kPlacementDuels),
-              localNumber(context, kDuelLength.inSeconds),
-            ),
-            textAlign: TextAlign.center,
-            style: TextStyle(color: context.colors.muted, fontSize: 13),
-          ),
-          const SizedBox(height: 18),
-          // Before the first duel the useful second option is a dry run, not
-          // another ranked game.
-          Center(
-            child: InkWell(
-              onTap: () => startMatch(context, mode: MatchMode.practice),
-              borderRadius: BorderRadius.circular(8),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 8,
-                ),
-                child: Text(
-                  l.practiceFirst,
-                  style: TextStyle(color: context.colors.muted, fontSize: 14),
-                ),
+        const SizedBox(height: 8),
+        Text(
+          l.firstMatchTerms(localNumber(context, kDuelLength.inSeconds)),
+          textAlign: TextAlign.center,
+          style: TextStyle(color: context.colors.muted, fontSize: 13),
+        ),
+        const SizedBox(height: 18),
+        // Before the first duel the useful second option is a dry run, not
+        // another ranked game.
+        Center(
+          child: InkWell(
+            onTap: () => startMatch(context, mode: MatchMode.practice),
+            borderRadius: BorderRadius.circular(8),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              child: Text(
+                l.practiceFirst,
+                style: TextStyle(color: context.colors.muted, fontSize: 14),
               ),
             ),
           ),
-        ] else ...[
-          const SizedBox(height: 12),
-          _OutlinedAction(
-            label: l.challengeFriend,
-            onTap: () => showFriendRoomSheet(context),
-          ),
-        ],
+        ),
       ],
     );
   }

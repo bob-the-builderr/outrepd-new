@@ -1249,41 +1249,10 @@ class LZh extends L {
   String get noRankYet => '还没有段位';
 
   @override
-  String placementsForFirstTier(String count) {
-    return '完成 $count 场定位赛即可获得首个段位。';
-  }
-
-  @override
-  String get startPlacements => '开始定位赛';
-
-  @override
   String get unranked => '未定级';
 
   @override
-  String placementsTerms(String done, String total, String seconds) {
-    return '$done/$total · 每场 $seconds 秒';
-  }
-
-  @override
-  String placementsLeft(String done, String total, String left) {
-    return '$done/$total · 还差 $left 场定段';
-  }
-
-  @override
-  String placementsForTier(String count) {
-    return '完成 $count 场定位赛即可查看你的段位。';
-  }
-
-  @override
-  String placementsDoneCount(String done, String total) {
-    return '已完成 $done/$total 场定位赛';
-  }
-
-  @override
   String get practiceFirst => '先练一下';
-
-  @override
-  String get nextPlacement => '下一场定位赛';
 
   @override
   String get noConnection => '没有网络';
@@ -2434,5 +2403,19 @@ class LZh extends L {
   @override
   String lastN(String n) {
     return '最近 ${n} 场';
+  }
+
+  @override
+  String get firstMatchForTier => '打完第一场比赛即可进入排名。所有人都从 Iron V 开始。';
+
+  @override
+  String get firstMatchForBoard => '打完第一场比赛即可登上排行榜。所有人都从 Iron V 开始。';
+
+  @override
+  String get playFirstMatch => '开始第一场比赛';
+
+  @override
+  String firstMatchTerms(String seconds) {
+    return '1 场 · ${seconds} 秒';
   }
 }

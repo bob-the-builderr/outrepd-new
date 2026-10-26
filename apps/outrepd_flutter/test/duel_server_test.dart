@@ -72,14 +72,19 @@ void main() {
     final settled = await a.settle(aSet, bSet);
     expect(settled['won'], isTrue, reason: '18 beats 11');
 
-    // Both are still in placements, so nothing is paid and no rank moves —
-    // which is what placements are for.
+    // This was the placement for both, so nothing is paid, and both are
+    // placed at Iron V whatever the result — marked with the five every check
+    // reads as placed.
     expect(settled['lp_delta'], 0);
 
     final aAfter = await a.profile();
     final bAfter = await b.profile();
-    expect(aAfter['placements_done'], 1);
-    expect(bAfter['placements_done'], 1);
+    expect(aAfter['placements_done'], 5);
+    expect(bAfter['placements_done'], 5);
+    for (final placed in [aAfter, bAfter]) {
+      expect(placed['tier_idx'], Rank.start.tierIdx);
+      expect(placed['div_idx'], Rank.start.divIdx);
+    }
     expect(aAfter['placement_wins'], 1);
     expect(bAfter['placement_wins'], 0);
 
@@ -115,21 +120,16 @@ void main() {
       final a = await Lifter.signUp('t_p$tag');
       final b = await Lifter.signUp('t_q$tag');
 
-      // Five duels each to clear placements. Fresh sets every time, because a
-      // set is faced once.
-      for (var i = 0; i < 5; i++) {
-        final mine = await a.uploadSet(reps: 20);
-        final theirs = await b.uploadSet(reps: 10);
-        await a.settle(mine, theirs);
-      }
+      // One duel each to clear the placement.
+      await a.settle(await a.uploadSet(reps: 20), await b.uploadSet(reps: 10));
 
       final placedA = await a.profile();
       final placedB = await b.profile();
       expect(placedA['placements_done'], 5);
       expect(placedB['placements_done'], 5);
 
-      // Five wins puts an account at the top of what placements can give.
-      final expected = placementRank(5);
+      // Won or lost, the placement puts everybody at Iron V.
+      final expected = placementRank(1);
       expect(placedA['tier_idx'], expected.tierIdx);
       expect(placedA['div_idx'], expected.divIdx);
 

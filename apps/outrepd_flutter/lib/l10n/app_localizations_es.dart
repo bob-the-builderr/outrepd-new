@@ -1280,41 +1280,10 @@ class LEs extends L {
   String get noRankYet => 'Aún sin rango';
 
   @override
-  String placementsForFirstTier(String count) {
-    return 'Termina $count duelos de colocación para ganar tu primer rango.';
-  }
-
-  @override
-  String get startPlacements => 'Empezar colocación';
-
-  @override
   String get unranked => 'Sin rango';
 
   @override
-  String placementsTerms(String done, String total, String seconds) {
-    return '$done de $total · $seconds segundos cada uno';
-  }
-
-  @override
-  String placementsLeft(String done, String total, String left) {
-    return '$done de $total · $left más para tu rango';
-  }
-
-  @override
-  String placementsForTier(String count) {
-    return 'Termina $count duelos de colocación para ver dónde quedas.';
-  }
-
-  @override
-  String placementsDoneCount(String done, String total) {
-    return '$done de $total colocaciones completadas';
-  }
-
-  @override
   String get practiceFirst => 'Practicar primero';
-
-  @override
-  String get nextPlacement => 'Siguiente colocación';
 
   @override
   String get noConnection => 'Sin conexión';
@@ -2487,5 +2456,19 @@ class LEs extends L {
   @override
   String lastN(String n) {
     return 'Últimos ${n}';
+  }
+
+  @override
+  String get firstMatchForTier => 'Juega tu primera partida para entrar en la clasificación. Todos empiezan en Iron V.';
+
+  @override
+  String get firstMatchForBoard => 'Juega tu primera partida para aparecer en la clasificación. Todos empiezan en Iron V.';
+
+  @override
+  String get playFirstMatch => 'Jugar primera partida';
+
+  @override
+  String firstMatchTerms(String seconds) {
+    return 'Una partida · ${seconds} segundos';
   }
 }
