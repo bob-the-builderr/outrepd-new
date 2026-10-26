@@ -431,8 +431,11 @@ void main() {
     await tap(tester, 'Continue');
     await tap(tester, 'Sign up with email');
 
-    await tester.enterText(find.byType(TextField).at(0), 'lifter_one');
-    await tester.enterText(find.byType(TextField).at(1), 'lifter@example.com');
+    // The email alone: the name comes once the email is confirmed.
+    await tester.enterText(
+      find.byKey(const Key('signUpEmail')),
+      'lifter@example.com',
+    );
     await tester.pump();
     await tester.tap(find.byType(FilledButton));
     await tester.pumpAndSettle();
@@ -450,6 +453,22 @@ void main() {
     expect(find.text('9'), findsNothing);
     expect(find.text('3'), findsNothing);
     await tester.enterText(code, '123456');
+    await tester.pumpAndSettle();
+
+    // Then the name and the country, on the screen every new account picks
+    // them on.
+    await tester.enterText(
+      find.descendant(
+        of: find.byKey(const Key('signUpUsername')),
+        matching: find.byType(TextField),
+      ),
+      'lifter_one',
+    );
+    await tester.pump();
+    expect(find.byKey(const Key('countryField')), findsOneWidget);
+    final save = find.byKey(const Key('chooseUsernameContinue'));
+    await tester.ensureVisible(save);
+    await tester.tap(save);
     await tester.pumpAndSettle();
 
     // Signed up: the onboarding hands over to the app's own welcome.

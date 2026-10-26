@@ -64,7 +64,9 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const Key('inviteCode')), findsNothing);
-    expect(find.text('Spaces become _'), findsOneWidget);
+    // The email alone: the name is chosen after it is confirmed.
+    expect(find.byKey(const Key('signUpEmail')), findsOneWidget);
+    expect(find.text('Spaces become _'), findsNothing);
     await tester.tap(find.byKey(const Key('showInviteCode')));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('inviteCode')), findsOneWidget);
