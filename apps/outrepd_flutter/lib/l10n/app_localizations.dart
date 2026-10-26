@@ -3755,12 +3755,6 @@ abstract class L {
   /// **'A friend asked me to go live'**
   String get noticeLiveInvite;
 
-  /// No description provided for @trialHeadline.
-  ///
-  /// In en, this message translates to:
-  /// **'Your first {days} days are *free*'**
-  String trialHeadline(String days);
-
   /// No description provided for @trialToday.
   ///
   /// In en, this message translates to:
@@ -4474,6 +4468,30 @@ abstract class L {
   /// In en, this message translates to:
   /// **'One match · {seconds} seconds'**
   String firstMatchTerms(String seconds);
+
+  /// No description provided for @placedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'You're on the ladder'**
+  String get placedLabel;
+
+  /// No description provided for @placedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone starts here. Only wins move you up.'**
+  String get placedBody;
+
+  /// No description provided for @placedHow.
+  ///
+  /// In en, this message translates to:
+  /// **'Win matches to earn LP. Beat someone ranked higher for more.'**
+  String get placedHow;
+
+  /// No description provided for @levelBesideName.
+  ///
+  /// In en, this message translates to:
+  /// **'Beside your name, everywhere'**
+  String get levelBesideName;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

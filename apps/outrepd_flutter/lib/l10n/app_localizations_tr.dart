@@ -2019,11 +2019,6 @@ class LTr extends L {
   String get noticeLiveInvite => 'Bir arkadaşım beni canlı maça davet etti';
 
   @override
-  String trialHeadline(String days) {
-    return 'İlk ${days} gün *ücretsiz*';
-  }
-
-  @override
   String get trialToday => 'Bugün';
 
   @override
@@ -2461,4 +2456,16 @@ class LTr extends L {
   String firstMatchTerms(String seconds) {
     return 'Tek maç · ${seconds} saniye';
   }
+
+  @override
+  String get placedLabel => 'Sıralamadasın';
+
+  @override
+  String get placedBody => 'Herkes buradan başlar. Seni sadece galibiyetler yükseltir.';
+
+  @override
+  String get placedHow => 'LP kazanmak için maç kazan. Daha yüksek dereceyi yenersen daha fazla alırsın.';
+
+  @override
+  String get levelBesideName => 'Adının yanında, her yerde';
 }

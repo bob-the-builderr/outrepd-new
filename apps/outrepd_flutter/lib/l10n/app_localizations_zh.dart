@@ -1976,11 +1976,6 @@ class LZh extends L {
   String get noticeLiveInvite => '好友邀请我进行实时对战';
 
   @override
-  String trialHeadline(String days) {
-    return '前 ${days} 天*免费*';
-  }
-
-  @override
   String get trialToday => '今天';
 
   @override
@@ -2418,4 +2413,16 @@ class LZh extends L {
   String firstMatchTerms(String seconds) {
     return '1 场 · ${seconds} 秒';
   }
+
+  @override
+  String get placedLabel => '你已进入排名';
+
+  @override
+  String get placedBody => '所有人都从这里开始。只有赢才能往上爬。';
+
+  @override
+  String get placedHow => '赢下比赛获得 LP。击败段位更高的对手得到更多。';
+
+  @override
+  String get levelBesideName => '显示在你的名字旁，随处可见';
 }

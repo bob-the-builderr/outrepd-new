@@ -627,7 +627,6 @@
   "removedFriend": "{username}をフレンドから解除しました",
   "noticeChallenged": "リマッチを挑まれた",
   "noticeLiveInvite": "フレンドからライブ対戦に誘われた",
-  "trialHeadline": "最初の{days}日間は*無料*",
   "trialToday": "今日",
   "trialTodayBody": "ライブもランクも、すべての対戦が解放。",
   "trialDay": "{day}日目",
@@ -746,5 +745,9 @@
   "firstMatchForTier": "最初のマッチをプレイするとランキングに参加できます。全員 Iron V からスタートです。",
   "firstMatchForBoard": "最初のマッチをプレイするとランキングに載ります。全員 Iron V からスタートです。",
   "playFirstMatch": "最初のマッチをプレイ",
-  "firstMatchTerms": "1マッチ · {seconds}秒"
+  "firstMatchTerms": "1マッチ · {seconds}秒",
+  "placedLabel": "ランキングに参加しました",
+  "placedBody": "全員ここからスタート。勝つことでしか上がれません。",
+  "placedHow": "マッチに勝ってLPを獲得。格上に勝てばもっと多く。",
+  "levelBesideName": "あなたの名前の横に、どこでも"
 }

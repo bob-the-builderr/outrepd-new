@@ -627,7 +627,6 @@
   "removedFriend": "{username}님을 친구에서 삭제했어요",
   "noticeChallenged": "누군가 재대결을 신청했어요",
   "noticeLiveInvite": "친구가 라이브 대결에 초대했어요",
-  "trialHeadline": "처음 {days}일은 *무료*",
   "trialToday": "오늘",
   "trialTodayBody": "라이브와 랭크, 모든 대결이 열려요.",
   "trialDay": "{day}일째",
@@ -746,5 +745,9 @@
   "firstMatchForTier": "첫 대결을 하면 랭킹에 들어갑니다. 모두 Iron V에서 시작해요.",
   "firstMatchForBoard": "첫 대결을 하면 순위표에 올라갑니다. 모두 Iron V에서 시작해요.",
   "playFirstMatch": "첫 대결 시작",
-  "firstMatchTerms": "대결 1판 · {seconds}초"
+  "firstMatchTerms": "대결 1판 · {seconds}초",
+  "placedLabel": "랭킹에 들어왔어요",
+  "placedBody": "모두 여기서 시작해요. 이겨야만 올라갑니다.",
+  "placedHow": "대결에서 이겨 LP를 얻으세요. 더 높은 랭크를 이기면 더 많이 얻어요.",
+  "levelBesideName": "어디서나 이름 옆에"
 }

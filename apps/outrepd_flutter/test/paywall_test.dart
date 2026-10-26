@@ -215,7 +215,9 @@ void main() {
       await tester.pumpWidget(_app());
       await _settle(tester);
 
-      expect(find.text('Your first 3 days are free'), findsOneWidget);
+      expect(find.text('Climb from Iron to Master'), findsOneWidget);
+      expect(find.text('Camera-judged duels'), findsOneWidget);
+      expect(find.byKey(const Key('trialTimeline')), findsOneWidget);
       expect(find.text('Today'), findsOneWidget);
       expect(find.text('Day 2'), findsOneWidget);
       expect(find.text('Day 3'), findsOneWidget);
@@ -252,7 +254,7 @@ void main() {
 
       await tester.tap(find.byKey(const Key('planWeekly')));
       await tester.pump();
-      expect(find.text('Your first 3 days are free'), findsOneWidget);
+      expect(find.byKey(const Key('trialTimeline')), findsOneWidget);
       expect(find.text('Start my 3-day free trial'), findsOneWidget);
       expect(find.byType(TierBadge), findsNothing);
     });
@@ -266,12 +268,12 @@ void main() {
       await _settle(tester);
 
       expect(find.byKey(const Key('paywallTitle')), findsNothing);
-      expect(find.byKey(const Key('trialHeadline')), findsNothing);
+      expect(find.byKey(const Key('trialTimeline')), findsNothing);
       expect(find.byType(TierBadge), findsNothing);
 
       plans.complete(const [_weeklyTrial, _yearlyTrial]);
       await _settle(tester);
-      expect(find.text('Your first 3 days are free'), findsOneWidget);
+      expect(find.byKey(const Key('trialTimeline')), findsOneWidget);
     });
   });
 
@@ -333,7 +335,7 @@ void main() {
       expect(find.textContaining('offline'), findsOneWidget);
       // Still the one paywall, with what it opens, and no free days claimed.
       expect(find.byKey(const Key('paywallTitle')), findsOneWidget);
-      expect(find.byKey(const Key('trialHeadline')), findsNothing);
+      expect(find.byKey(const Key('trialTimeline')), findsNothing);
       expect(find.byType(TierBadge), findsNothing);
       store.failPlans = false;
       await tester.tap(find.byKey(const Key('paywallRetry')));

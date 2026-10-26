@@ -2030,11 +2030,6 @@ class LFr extends L {
   String get noticeLiveInvite => 'Un ami m\'a invité à un duel en direct';
 
   @override
-  String trialHeadline(String days) {
-    return 'Tes ${days} premiers jours sont *gratuits*';
-  }
-
-  @override
   String get trialToday => 'Aujourd\'hui';
 
   @override
@@ -2472,4 +2467,16 @@ class LFr extends L {
   String firstMatchTerms(String seconds) {
     return 'Un match · ${seconds} secondes';
   }
+
+  @override
+  String get placedLabel => 'Tu es dans le classement';
+
+  @override
+  String get placedBody => 'Tout le monde commence ici. Seules les victoires te font monter.';
+
+  @override
+  String get placedHow => 'Gagne des matchs pour gagner des LP. Bats quelqu\'un mieux classé pour en gagner plus.';
+
+  @override
+  String get levelBesideName => 'À côté de ton nom, partout';
 }

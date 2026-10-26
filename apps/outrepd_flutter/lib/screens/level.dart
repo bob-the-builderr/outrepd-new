@@ -8,8 +8,11 @@ library;
 
 import 'package:flutter/material.dart';
 
+import '../avatar.dart';
+import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../motion.dart';
+import '../player_avatar.dart';
 import '../theme.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
@@ -191,79 +194,76 @@ class _XpBar extends StatelessWidget {
 }
 
 /// The screen a new level earns, once, straight after the session that
-/// crossed it.
+/// crossed it: the level on its badge, what the session paid, how far the
+/// next one is, and where the level shows — beside the name, everywhere.
 class LevelUpView extends StatelessWidget {
-  const LevelUpView({super.key, required this.level, required this.onContinue});
+  const LevelUpView({super.key, required this.gain, required this.onContinue});
 
-  final int level;
+  final XpGain gain;
   final VoidCallback onContinue;
 
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
+    final now = xpLevel(gain.after);
+
     return SafeArea(
       child: Column(
         children: [
           Expanded(
-            child: Center(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(24, 16, 24, 8),
-                child: Column(
-                  key: const Key('levelUp'),
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      l.levelUp.toUpperCase(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: context.colors.muted,
-                        fontSize: 15,
-                        letterSpacing: 2.5,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    PopIn(
-                      from: 0.5,
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          localNumber(context, level),
-                          style: TextStyle(
-                            color: const Color(0xFFF2D27A),
-                            fontSize: 132,
-                            fontWeight: FontWeight.w900,
-                            height: 1.05,
-                            shadows: [
-                              Shadow(
-                                color: AppColors.gold.withValues(alpha: 0.75),
-                                blurRadius: 34,
-                              ),
-                            ],
-                          ),
+            // Centred in the space above the button when it fits, rather than
+            // a number floating in the middle of an empty screen.
+            child: LayoutBuilder(
+              builder: (context, box) => SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(22, 16, 22, 8),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: (box.maxHeight - 24).clamp(0, double.infinity),
+                  ),
+                  child: Column(
+                    key: const Key('levelUp'),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        l.levelUp.toUpperCase(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: context.colors.muted,
+                          fontSize: 15,
+                          letterSpacing: 2.5,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                    ),
-                    ShrinkText(
-                      l.levelNumber(localNumber(context, level)),
-                      maxLines: 1,
-                      style: context.type.title.copyWith(
-                        color: context.colors.text,
-                        fontSize: 28,
-                        fontWeight: FontWeight.w800,
+                      const SizedBox(height: 14),
+                      PopIn(
+                        from: 0.5,
+                        child: _LevelBadge(level: now.level, size: 210),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      l.levelUpBody,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: context.colors.muted,
-                        fontSize: 16,
-                        height: 1.4,
+                      const SizedBox(height: 12),
+                      ShrinkText(
+                        l.levelNumber(localNumber(context, now.level)),
+                        maxLines: 1,
+                        style: context.type.title.copyWith(
+                          color: context.colors.text,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w800,
+                        ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 4),
+                      Text(
+                        l.xpGained(localNumber(context, gain.total)),
+                        style: const TextStyle(
+                          color: AppColors.gold,
+                          fontSize: 26,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 26),
+                      _NextLevelCard(now: now),
+                      const SizedBox(height: 12),
+                      _BesideYourName(xp: gain.after),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -277,6 +277,211 @@ class LevelUpView extends StatelessWidget {
                 onPressed: onContinue,
                 child: Text(l.continueAction),
               ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The new level on a gold hexagon, glowing along its own edge.
+class _LevelBadge extends StatelessWidget {
+  const _LevelBadge({required this.level, required this.size});
+
+  final int level;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: size,
+      height: size * 1.08,
+      child: CustomPaint(
+        painter: _HexPainter(fill: context.colors.surface),
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: size * 0.16),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                localNumber(context, level),
+                style: TextStyle(
+                  color: const Color(0xFFF2D27A),
+                  fontSize: size * 0.46,
+                  fontWeight: FontWeight.w900,
+                  height: 1,
+                  shadows: [
+                    Shadow(
+                      color: AppColors.gold.withValues(alpha: 0.6),
+                      blurRadius: 24,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _HexPainter extends CustomPainter {
+  const _HexPainter({required this.fill});
+
+  final Color fill;
+
+  Path _hex(Size size, double inset) {
+    final w = size.width, h = size.height;
+    return Path()
+      ..moveTo(w / 2, inset)
+      ..lineTo(w - inset, h * 0.25)
+      ..lineTo(w - inset, h * 0.75)
+      ..lineTo(w / 2, h - inset)
+      ..lineTo(inset, h * 0.75)
+      ..lineTo(inset, h * 0.25)
+      ..close();
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final outer = _hex(size, 6);
+    // The glow follows the hexagon's edge, not a circle behind it.
+    canvas.drawPath(
+      outer,
+      Paint()
+        ..color = AppColors.gold.withValues(alpha: 0.55)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 10
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 14),
+    );
+    canvas.drawPath(outer, Paint()..color = fill);
+    canvas.drawPath(
+      outer,
+      Paint()
+        ..color = AppColors.gold
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 7
+        ..strokeJoin = StrokeJoin.round,
+    );
+    canvas.drawPath(
+      _hex(size, size.width * 0.1),
+      Paint()
+        ..color = const Color(0xFF8A6518)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_HexPainter old) => old.fill != fill;
+}
+
+/// Where the new level stands: the bar to the next one, filling from empty.
+class _NextLevelCard extends StatelessWidget {
+  const _NextLevelCard({required this.now});
+
+  final XpLevel now;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: reduceMotion(context) ? 1.0 : 0.0, end: 1.0),
+      duration: const Duration(milliseconds: 900),
+      curve: Curves.easeOutCubic,
+      builder: (context, t, _) => Container(
+        key: const Key('levelUpNext'),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: context.colors.surface,
+          border: Border.all(color: context.colors.border, width: 0.5),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Expanded(
+                  child: ShrinkText(
+                    l.levelNumber(localNumber(context, now.level)),
+                    maxLines: 1,
+                    style: TextStyle(color: context.colors.text, fontSize: 17),
+                  ),
+                ),
+                Text(
+                  l.xpOf(
+                    localNumber(context, now.into),
+                    localNumber(context, now.span),
+                  ),
+                  style: TextStyle(color: context.colors.muted, fontSize: 14),
+                ),
+              ],
+            ),
+            const SizedBox(height: 11),
+            _XpBar(from: 0, to: now.progress * t, colour: AppColors.gold),
+            const SizedBox(height: 9),
+            ShrinkText(
+              l.xpToLevel(
+                localNumber(context, now.toNext),
+                localNumber(context, now.level + 1),
+              ),
+              maxLines: 1,
+              style: TextStyle(color: context.colors.muted, fontSize: 14),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// The level where everyone else sees it: this lifter's own row — picture,
+/// name, and the chip that now carries the new number.
+class _BesideYourName extends StatelessWidget {
+  const _BesideYourName({required this.xp});
+
+  final int xp;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final p = demoProfile;
+    return Container(
+      key: const Key('levelUpBeside'),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
+      decoration: BoxDecoration(
+        color: context.colors.surface,
+        border: Border.all(color: context.colors.border, width: 0.5),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        children: [
+          PlayerAvatar(
+            name: p.username,
+            tierIdx: p.isRanked ? p.tierIdx : null,
+            image: avatar.picture,
+            size: 40,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: NameWithLevel(
+              name: p.username,
+              xp: xp,
+              chipFontSize: 13,
+              style: TextStyle(color: context.colors.text, fontSize: 17),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Flexible(
+            child: Text(
+              l.levelBesideName,
+              textAlign: TextAlign.end,
+              style: TextStyle(color: context.colors.muted, fontSize: 13),
             ),
           ),
         ],

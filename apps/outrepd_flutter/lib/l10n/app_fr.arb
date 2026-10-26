@@ -627,7 +627,6 @@
   "removedFriend": "{username} a été retiré de tes amis",
   "noticeChallenged": "Quelqu'un m'a défié en revanche",
   "noticeLiveInvite": "Un ami m'a invité à un duel en direct",
-  "trialHeadline": "Tes {days} premiers jours sont *gratuits*",
   "trialToday": "Aujourd'hui",
   "trialTodayBody": "Tous les duels, en direct et classés, débloqués.",
   "trialDay": "Jour {day}",
@@ -746,5 +745,9 @@
   "firstMatchForTier": "Joue ton premier match pour entrer dans le classement. Tout le monde commence en Iron V.",
   "firstMatchForBoard": "Joue ton premier match pour apparaître au classement. Tout le monde commence en Iron V.",
   "playFirstMatch": "Jouer mon premier match",
-  "firstMatchTerms": "Un match · {seconds} secondes"
+  "firstMatchTerms": "Un match · {seconds} secondes",
+  "placedLabel": "Tu es dans le classement",
+  "placedBody": "Tout le monde commence ici. Seules les victoires te font monter.",
+  "placedHow": "Gagne des matchs pour gagner des LP. Bats quelqu'un mieux classé pour en gagner plus.",
+  "levelBesideName": "À côté de ton nom, partout"
 }

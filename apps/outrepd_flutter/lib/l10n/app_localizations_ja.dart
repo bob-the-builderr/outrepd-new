@@ -1986,11 +1986,6 @@ class LJa extends L {
   String get noticeLiveInvite => 'フレンドからライブ対戦に誘われた';
 
   @override
-  String trialHeadline(String days) {
-    return '最初の${days}日間は*無料*';
-  }
-
-  @override
   String get trialToday => '今日';
 
   @override
@@ -2428,4 +2423,16 @@ class LJa extends L {
   String firstMatchTerms(String seconds) {
     return '1マッチ · ${seconds}秒';
   }
+
+  @override
+  String get placedLabel => 'ランキングに参加しました';
+
+  @override
+  String get placedBody => '全員ここからスタート。勝つことでしか上がれません。';
+
+  @override
+  String get placedHow => 'マッチに勝ってLPを獲得。格上に勝てばもっと多く。';
+
+  @override
+  String get levelBesideName => 'あなたの名前の横に、どこでも';
 }

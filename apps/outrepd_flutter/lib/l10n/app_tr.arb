@@ -627,7 +627,6 @@
   "removedFriend": "{username} arkadaşlarından çıkarıldı",
   "noticeChallenged": "Biri bana rövanş teklif etti",
   "noticeLiveInvite": "Bir arkadaşım beni canlı maça davet etti",
-  "trialHeadline": "İlk {days} gün *ücretsiz*",
   "trialToday": "Bugün",
   "trialTodayBody": "Tüm düellolar, canlı ve dereceli, açık.",
   "trialDay": "{day}. gün",
@@ -746,5 +745,9 @@
   "firstMatchForTier": "Sıralamaya girmek için ilk maçını oyna. Herkes Iron V'den başlar.",
   "firstMatchForBoard": "Tabloya girmek için ilk maçını oyna. Herkes Iron V'den başlar.",
   "playFirstMatch": "İlk maçı oyna",
-  "firstMatchTerms": "Tek maç · {seconds} saniye"
+  "firstMatchTerms": "Tek maç · {seconds} saniye",
+  "placedLabel": "Sıralamadasın",
+  "placedBody": "Herkes buradan başlar. Seni sadece galibiyetler yükseltir.",
+  "placedHow": "LP kazanmak için maç kazan. Daha yüksek dereceyi yenersen daha fazla alırsın.",
+  "levelBesideName": "Adının yanında, her yerde"
 }

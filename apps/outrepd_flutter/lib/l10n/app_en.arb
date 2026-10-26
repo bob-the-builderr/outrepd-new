@@ -1175,14 +1175,6 @@
   },
   "noticeChallenged": "Someone challenged me to a rematch",
   "noticeLiveInvite": "A friend asked me to go live",
-  "trialHeadline": "Your first {days} days are *free*",
-  "@trialHeadline": {
-    "placeholders": {
-      "days": {
-        "type": "String"
-      }
-    }
-  },
   "trialToday": "Today",
   "trialTodayBody": "Every duel, live and ranked, unlocked.",
   "trialDay": "Day {day}",
@@ -1603,5 +1595,9 @@
         "type": "String"
       }
     }
-  }
+  },
+  "placedLabel": "You're on the ladder",
+  "placedBody": "Everyone starts here. Only wins move you up.",
+  "placedHow": "Win matches to earn LP. Beat someone ranked higher for more.",
+  "levelBesideName": "Beside your name, everywhere"
 }

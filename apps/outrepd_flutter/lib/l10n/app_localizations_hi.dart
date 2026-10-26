@@ -2024,11 +2024,6 @@ class LHi extends L {
   String get noticeLiveInvite => 'किसी दोस्त ने मुझे लाइव मैच में बुलाया';
 
   @override
-  String trialHeadline(String days) {
-    return 'आपके पहले ${days} दिन *मुफ़्त* हैं';
-  }
-
-  @override
   String get trialToday => 'आज';
 
   @override
@@ -2466,4 +2461,16 @@ class LHi extends L {
   String firstMatchTerms(String seconds) {
     return 'एक मुक़ाबला · ${seconds} सेकंड';
   }
+
+  @override
+  String get placedLabel => 'आप रैंकिंग में आ गए';
+
+  @override
+  String get placedBody => 'सब यहीं से शुरू करते हैं। सिर्फ़ जीत आपको ऊपर ले जाती है।';
+
+  @override
+  String get placedHow => 'LP पाने के लिए मुक़ाबले जीतें। ऊँची रैंक वाले को हराएँ तो ज़्यादा मिलेंगे।';
+
+  @override
+  String get levelBesideName => 'आपके नाम के साथ, हर जगह';
 }

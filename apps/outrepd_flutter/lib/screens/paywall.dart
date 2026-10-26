@@ -420,22 +420,21 @@ class _PaywallScreenState extends State<PaywallScreen> {
     );
   }
 
-  /// The free trial, told as what happens when: today everything opens, the
-  /// day before it ends the app says so, and the day it ends the plan starts.
-  /// Shown while the chosen plan has a trial, so the first thing read is that
-  /// nothing is charged now.
+  /// While the chosen plan has a trial: what the subscription opens, as four
+  /// tiles, and the trial told as what happens when — today everything
+  /// opens, the day before it ends the app says so, and the day it ends the
+  /// plan starts. The free days are on the plan and the button as well.
   Widget _trialPitch(BuildContext context, L l, int days) {
     final sizes = _Sizes.of(context);
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _AccentHeadline(
-          key: const Key('trialHeadline'),
-          text: l.trialHeadline(localNumber(context, days)),
-        ),
-        SizedBox(height: sizes.headlineGap),
-        _TrialTimeline(days: days),
+        _AccentHeadline(key: const Key('paywallTitle'), text: l.paywallTitle),
+        SizedBox(height: sizes.headlineGap * 0.6),
+        const _PerkGrid(),
+        SizedBox(height: sizes.headlineGap * 0.8),
+        _TrialTimeline(key: const Key('trialTimeline'), days: days),
       ],
     );
   }
@@ -668,10 +667,70 @@ class _AccentHeadline extends StatelessWidget {
   }
 }
 
+/// What the subscription opens, as two rows of two tiles: the same four
+/// things the rail says when there is no trial, small enough to leave the
+/// trial's days room under them.
+class _PerkGrid extends StatelessWidget {
+  const _PerkGrid();
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final colors = context.colors;
+    final sizes = _Sizes.of(context);
+    Widget tile(IconData icon, String text) => Expanded(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
+        decoration: BoxDecoration(
+          color: colors.surface,
+          border: Border.all(color: colors.border, width: 0.5),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, size: sizes.stepIcon * 0.8, color: colors.brand),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                text,
+                style: kType.body.copyWith(
+                  fontSize: sizes.stepBody,
+                  height: 1.25,
+                  color: colors.text,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    Widget row(Widget a, Widget b) => IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [a, const SizedBox(width: 8), b],
+      ),
+    );
+    return Column(
+      key: const Key('perkGrid'),
+      children: [
+        row(
+          tile(Icons.videocam_outlined, l.paywallPerkDuels),
+          tile(Icons.emoji_events_outlined, l.paywallPerkLadder),
+        ),
+        const SizedBox(height: 8),
+        row(
+          tile(Icons.group_outlined, l.paywallPerkFriends),
+          tile(Icons.insights_outlined, l.paywallPerkHistory),
+        ),
+      ],
+    );
+  }
+}
+
 /// Today, the reminder, the first charge — down a bar that is lit for the
 /// part already under way.
 class _TrialTimeline extends StatelessWidget {
-  const _TrialTimeline({required this.days});
+  const _TrialTimeline({super.key, required this.days});
 
   final int days;
 

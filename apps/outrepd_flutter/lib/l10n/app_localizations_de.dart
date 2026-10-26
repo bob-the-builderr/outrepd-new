@@ -2031,11 +2031,6 @@ class LDe extends L {
   String get noticeLiveInvite => 'Ein Freund hat mich zu einem Live-Duell eingeladen';
 
   @override
-  String trialHeadline(String days) {
-    return 'Deine ersten ${days} Tage sind *kostenlos*';
-  }
-
-  @override
   String get trialToday => 'Heute';
 
   @override
@@ -2473,4 +2468,16 @@ class LDe extends L {
   String firstMatchTerms(String seconds) {
     return 'Ein Match · ${seconds} Sekunden';
   }
+
+  @override
+  String get placedLabel => 'Du bist auf der Rangliste';
+
+  @override
+  String get placedBody => 'Hier fangen alle an. Nur Siege bringen dich nach oben.';
+
+  @override
+  String get placedHow => 'Gewinne Matches, um LP zu holen. Schlag jemanden mit höherem Rang für mehr.';
+
+  @override
+  String get levelBesideName => 'Neben deinem Namen, überall';
 }

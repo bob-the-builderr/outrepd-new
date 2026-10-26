@@ -2023,11 +2023,6 @@ class LId extends L {
   String get noticeLiveInvite => 'Teman mengajakku bertanding langsung';
 
   @override
-  String trialHeadline(String days) {
-    return '${days} hari pertamamu *gratis*';
-  }
-
-  @override
   String get trialToday => 'Hari ini';
 
   @override
@@ -2465,4 +2460,16 @@ class LId extends L {
   String firstMatchTerms(String seconds) {
     return 'Satu pertandingan · ${seconds} detik';
   }
+
+  @override
+  String get placedLabel => 'Kamu sudah masuk peringkat';
+
+  @override
+  String get placedBody => 'Semua mulai dari sini. Hanya kemenangan yang membawamu naik.';
+
+  @override
+  String get placedHow => 'Menangkan pertandingan untuk dapat LP. Kalahkan peringkat lebih tinggi untuk dapat lebih.';
+
+  @override
+  String get levelBesideName => 'Di samping namamu, di mana saja';
 }

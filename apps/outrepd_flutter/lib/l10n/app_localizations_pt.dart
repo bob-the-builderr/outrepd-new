@@ -2026,11 +2026,6 @@ class LPt extends L {
   String get noticeLiveInvite => 'Um amigo convidou-me para um duelo ao vivo';
 
   @override
-  String trialHeadline(String days) {
-    return 'Os teus primeiros ${days} dias são *grátis*';
-  }
-
-  @override
   String get trialToday => 'Hoje';
 
   @override
@@ -2468,4 +2463,16 @@ class LPt extends L {
   String firstMatchTerms(String seconds) {
     return 'Uma partida · ${seconds} segundos';
   }
+
+  @override
+  String get placedLabel => 'Você está no ranking';
+
+  @override
+  String get placedBody => 'Todo mundo começa aqui. Só vitórias fazem você subir.';
+
+  @override
+  String get placedHow => 'Vença partidas para ganhar LP. Vença alguém de nível mais alto para ganhar mais.';
+
+  @override
+  String get levelBesideName => 'Ao lado do seu nome, em todo lugar';
 }

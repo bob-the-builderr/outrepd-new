@@ -2024,11 +2024,6 @@ class LRu extends L {
   String get noticeLiveInvite => 'Друг позвал меня на живой матч';
 
   @override
-  String trialHeadline(String days) {
-    return 'Первые ${days} дня — *бесплатно*';
-  }
-
-  @override
   String get trialToday => 'Сегодня';
 
   @override
@@ -2466,4 +2461,16 @@ class LRu extends L {
   String firstMatchTerms(String seconds) {
     return 'Один матч · ${seconds} секунд';
   }
+
+  @override
+  String get placedLabel => 'Вы в рейтинге';
+
+  @override
+  String get placedBody => 'Все начинают отсюда. Подниматься можно только победами.';
+
+  @override
+  String get placedHow => 'Побеждайте в матчах, чтобы получать LP. За победу над рангом выше — больше.';
+
+  @override
+  String get levelBesideName => 'Рядом с вашим именем, везде';
 }

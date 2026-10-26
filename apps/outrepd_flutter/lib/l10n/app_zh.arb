@@ -627,7 +627,6 @@
   "removedFriend": "已将 {username} 从好友中删除",
   "noticeChallenged": "有人向我发起复赛挑战",
   "noticeLiveInvite": "好友邀请我进行实时对战",
-  "trialHeadline": "前 {days} 天*免费*",
   "trialToday": "今天",
   "trialTodayBody": "所有对决，实时与排位，全部解锁。",
   "trialDay": "第 {day} 天",
@@ -746,5 +745,9 @@
   "firstMatchForTier": "打完第一场比赛即可进入排名。所有人都从 Iron V 开始。",
   "firstMatchForBoard": "打完第一场比赛即可登上排行榜。所有人都从 Iron V 开始。",
   "playFirstMatch": "开始第一场比赛",
-  "firstMatchTerms": "1 场 · {seconds} 秒"
+  "firstMatchTerms": "1 场 · {seconds} 秒",
+  "placedLabel": "你已进入排名",
+  "placedBody": "所有人都从这里开始。只有赢才能往上爬。",
+  "placedHow": "赢下比赛获得 LP。击败段位更高的对手得到更多。",
+  "levelBesideName": "显示在你的名字旁，随处可见"
 }

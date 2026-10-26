@@ -128,7 +128,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 50));
     }
     // Apple's wording, not Google Play's, and the trial's terms.
-    expect(find.text('Your first 3 days are free'), findsOneWidget);
+    expect(find.byKey(const Key('trialTimeline')), findsOneWidget);
     expect(find.textContaining('Apple account'), findsWidgets);
 
     await expectLater(

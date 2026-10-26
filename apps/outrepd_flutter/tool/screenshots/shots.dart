@@ -42,10 +42,11 @@ class _Store implements Storefront {
         ),
         Plan(
           period: PlanPeriod.yearly,
-          price: 39.99,
-          priceString: r'$39.99',
+          price: 29.99,
+          priceString: r'$29.99',
           currencyCode: 'USD',
-          pricePerWeekString: r'$0.77',
+          pricePerWeekString: r'$0.58',
+          trialDays: 3,
         ),
       ];
   @override

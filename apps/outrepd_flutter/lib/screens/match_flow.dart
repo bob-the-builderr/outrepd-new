@@ -21,6 +21,7 @@ import '../l10n/app_localizations.dart';
 import '../live.dart';
 import '../avatar.dart';
 import '../player_avatar.dart';
+import '../ranking.dart';
 import '../reps/recording.dart';
 import '../reps/pushup_counter.dart';
 import '../type_scale.dart';
@@ -124,6 +125,10 @@ enum _Stage {
   searching,
   versus,
   live,
+
+  /// The placement just put the account on the ladder: shown first, before
+  /// anything else this session earned, because it is the bigger news.
+  placed,
 
   /// Shown before the result when the duel moved the lifter up a division.
   /// It is the news; the breakdown behind it is the detail, and the detail
@@ -864,9 +869,11 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     );
   }
 
-  /// What follows a recorded session: the promotion, then the level, then
-  /// the result — each news before the detail behind it.
-  _Stage get _afterRecorded => (_outcome?.rank?.promoted ?? false)
+  /// What follows a recorded session: the placement or the promotion, then
+  /// the level, then the result — each news before the detail behind it.
+  _Stage get _afterRecorded => (_outcome?.placementsFinished ?? false)
+      ? _Stage.placed
+      : (_outcome?.rank?.promoted ?? false)
       ? _Stage.promoted
       : _afterPromotion;
 
@@ -907,6 +914,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       // challenge never started a match to forfeit.
       canPop:
           _stage == _Stage.result ||
+          _stage == _Stage.placed ||
           _stage == _Stage.promoted ||
           _stage == _Stage.levelUp ||
           _stage == _Stage.sent ||
@@ -1044,6 +1052,19 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       case _Stage.live:
         return const SizedBox.shrink();
 
+      case _Stage.placed:
+        return PlacedView(
+          rank: Rank(
+            tierIdx: demoProfile.tierIdx,
+            divIdx: demoProfile.divIdx,
+            lp: demoProfile.lp,
+          ),
+          onFindMatch: () => Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (_) => const MatchFlowScreen()),
+          ),
+          onContinue: () => setState(() => _stage = _afterPromotion),
+        );
+
       case _Stage.promoted:
         return PromotionView(
           tierIdx: demoProfile.tierIdx,
@@ -1057,7 +1078,9 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
 
       case _Stage.levelUp:
         return LevelUpView(
-          level: levelOf(_xp?.after ?? demoProfile.xp),
+          gain:
+              _xp ??
+              XpGain(before: demoProfile.xp, after: demoProfile.xp, reps: 0),
           onContinue: () => setState(() => _stage = _Stage.result),
         );
 

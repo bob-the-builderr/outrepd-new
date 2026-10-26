@@ -627,7 +627,6 @@
   "removedFriend": "{username} dihapus dari temanmu",
   "noticeChallenged": "Seseorang menantangku tanding ulang",
   "noticeLiveInvite": "Teman mengajakku bertanding langsung",
-  "trialHeadline": "{days} hari pertamamu *gratis*",
   "trialToday": "Hari ini",
   "trialTodayBody": "Semua duel, langsung dan peringkat, terbuka.",
   "trialDay": "Hari {day}",
@@ -746,5 +745,9 @@
   "firstMatchForTier": "Mainkan pertandingan pertamamu untuk masuk peringkat. Semua mulai dari Iron V.",
   "firstMatchForBoard": "Mainkan pertandingan pertamamu untuk masuk papan peringkat. Semua mulai dari Iron V.",
   "playFirstMatch": "Main pertandingan pertama",
-  "firstMatchTerms": "Satu pertandingan · {seconds} detik"
+  "firstMatchTerms": "Satu pertandingan · {seconds} detik",
+  "placedLabel": "Kamu sudah masuk peringkat",
+  "placedBody": "Semua mulai dari sini. Hanya kemenangan yang membawamu naik.",
+  "placedHow": "Menangkan pertandingan untuk dapat LP. Kalahkan peringkat lebih tinggi untuk dapat lebih.",
+  "levelBesideName": "Di samping namamu, di mana saja"
 }

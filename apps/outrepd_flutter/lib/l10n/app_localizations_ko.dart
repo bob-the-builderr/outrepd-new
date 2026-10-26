@@ -1992,11 +1992,6 @@ class LKo extends L {
   String get noticeLiveInvite => '친구가 라이브 대결에 초대했어요';
 
   @override
-  String trialHeadline(String days) {
-    return '처음 ${days}일은 *무료*';
-  }
-
-  @override
   String get trialToday => '오늘';
 
   @override
@@ -2434,4 +2429,16 @@ class LKo extends L {
   String firstMatchTerms(String seconds) {
     return '대결 1판 · ${seconds}초';
   }
+
+  @override
+  String get placedLabel => '랭킹에 들어왔어요';
+
+  @override
+  String get placedBody => '모두 여기서 시작해요. 이겨야만 올라갑니다.';
+
+  @override
+  String get placedHow => '대결에서 이겨 LP를 얻으세요. 더 높은 랭크를 이기면 더 많이 얻어요.';
+
+  @override
+  String get levelBesideName => '어디서나 이름 옆에';
 }

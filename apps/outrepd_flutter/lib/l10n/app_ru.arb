@@ -627,7 +627,6 @@
   "removedFriend": "{username} удалён из друзей",
   "noticeChallenged": "Меня вызвали на реванш",
   "noticeLiveInvite": "Друг позвал меня на живой матч",
-  "trialHeadline": "Первые {days} дня — *бесплатно*",
   "trialToday": "Сегодня",
   "trialTodayBody": "Все дуэли, живые и рейтинговые, открыты.",
   "trialDay": "День {day}",
@@ -746,5 +745,9 @@
   "firstMatchForTier": "Сыграйте первый матч, чтобы попасть в рейтинг. Все начинают с Iron V.",
   "firstMatchForBoard": "Сыграйте первый матч, чтобы появиться в таблице. Все начинают с Iron V.",
   "playFirstMatch": "Сыграть первый матч",
-  "firstMatchTerms": "Один матч · {seconds} секунд"
+  "firstMatchTerms": "Один матч · {seconds} секунд",
+  "placedLabel": "Вы в рейтинге",
+  "placedBody": "Все начинают отсюда. Подниматься можно только победами.",
+  "placedHow": "Побеждайте в матчах, чтобы получать LP. За победу над рангом выше — больше.",
+  "levelBesideName": "Рядом с вашим именем, везде"
 }

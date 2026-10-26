@@ -2029,11 +2029,6 @@ class LEs extends L {
   String get noticeLiveInvite => 'Un amigo me invitó a un duelo en vivo';
 
   @override
-  String trialHeadline(String days) {
-    return 'Tus primeros ${days} días son *gratis*';
-  }
-
-  @override
   String get trialToday => 'Hoy';
 
   @override
@@ -2471,4 +2466,16 @@ class LEs extends L {
   String firstMatchTerms(String seconds) {
     return 'Una partida · ${seconds} segundos';
   }
+
+  @override
+  String get placedLabel => 'Ya estás en la clasificación';
+
+  @override
+  String get placedBody => 'Todos empiezan aquí. Solo las victorias te hacen subir.';
+
+  @override
+  String get placedHow => 'Gana partidas para sumar LP. Vence a alguien de rango más alto para ganar más.';
+
+  @override
+  String get levelBesideName => 'Junto a tu nombre, en todas partes';
 }

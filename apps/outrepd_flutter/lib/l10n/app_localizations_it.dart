@@ -2029,11 +2029,6 @@ class LIt extends L {
   String get noticeLiveInvite => 'Un amico mi ha invitato a un duello dal vivo';
 
   @override
-  String trialHeadline(String days) {
-    return 'I tuoi primi ${days} giorni sono *gratis*';
-  }
-
-  @override
   String get trialToday => 'Oggi';
 
   @override
@@ -2471,4 +2466,16 @@ class LIt extends L {
   String firstMatchTerms(String seconds) {
     return 'Una sfida · ${seconds} secondi';
   }
+
+  @override
+  String get placedLabel => 'Sei in classifica';
+
+  @override
+  String get placedBody => 'Tutti partono da qui. Solo le vittorie ti fanno salire.';
+
+  @override
+  String get placedHow => 'Vinci sfide per guadagnare LP. Batti chi ha un grado più alto per averne di più.';
+
+  @override
+  String get levelBesideName => 'Accanto al tuo nome, ovunque';
 }

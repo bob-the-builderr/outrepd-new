@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:outrepd/backend/backend.dart';
 import 'package:outrepd/data.dart';
 import 'package:outrepd/l10n/app_localizations.dart';
+import 'package:outrepd/ranking.dart';
 import 'package:outrepd/screens/level.dart';
 import 'package:outrepd/screens/post_match.dart';
 import 'package:outrepd/theme.dart';
@@ -170,9 +171,27 @@ void main() {
     );
   });
 
+  testWidgets('placed', (tester) async {
+    phone(tester);
+    await tester.pumpWidget(
+      _app(
+        PlacedView(rank: Rank.start, onFindMatch: () {}, onContinue: () {}),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile('goldens/result_placed.png'),
+    );
+  });
+
   testWidgets('level up', (tester) async {
     phone(tester);
-    await tester.pumpWidget(_app(LevelUpView(level: 13, onContinue: () {})));
+    await tester.pumpWidget(_app(LevelUpView(
+        // Level 13 starts at 4,500 XP: 18 into it after a 38 XP session.
+        gain: const XpGain(before: 4480, after: 4518, reps: 18),
+        onContinue: () {},
+      )));
     await tester.pumpAndSettle();
     await expectLater(
       find.byType(MaterialApp),

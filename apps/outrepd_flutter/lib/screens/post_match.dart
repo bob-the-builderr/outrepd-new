@@ -997,6 +997,170 @@ class PromotionView extends StatelessWidget {
   }
 }
 
+/// The screen the placement earns: the account is on the ladder, at Iron V
+/// like everybody, and the first rung up is right there.
+class PlacedView extends StatelessWidget {
+  const PlacedView({
+    super.key,
+    required this.rank,
+    required this.onFindMatch,
+    required this.onContinue,
+  });
+
+  /// Where the placement put the account — Iron V with no LP, unless the
+  /// server ever says otherwise.
+  final Rank rank;
+
+  final VoidCallback onFindMatch;
+  final VoidCallback onContinue;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final toGo = 100 - rank.lp;
+
+    return SafeArea(
+      child: Column(
+        children: [
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, box) => SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(24, 16, 24, 8),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: (box.maxHeight - 40).clamp(0, double.infinity),
+                  ),
+                  child: Column(
+                    key: const Key('placed'),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        l.placedLabel.toUpperCase(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: context.colors.muted,
+                          fontSize: 14,
+                          letterSpacing: 2,
+                        ),
+                      ),
+                      const SizedBox(height: 18),
+                      _PromotedBadge(tierIdx: rank.tierIdx, size: 200),
+                      const SizedBox(height: 14),
+                      ShrinkText(
+                        tierLabel(l, rank.tierIdx, rank.divIdx),
+                        maxLines: 1,
+                        style: context.type.title.copyWith(
+                          color: context.colors.text,
+                          fontSize: 40,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        l.placedBody,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: context.colors.muted,
+                          fontSize: 16,
+                          height: 1.4,
+                        ),
+                      ),
+                      const SizedBox(height: 26),
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: context.colors.surface,
+                          border: Border.all(
+                            color: context.colors.border,
+                            width: 0.5,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.baseline,
+                              textBaseline: TextBaseline.alphabetic,
+                              children: [
+                                Expanded(
+                                  child: ShrinkText(
+                                    l.toNextTier(
+                                      localNumber(context, toGo),
+                                      nextRankName(
+                                        l,
+                                        rank.tierIdx,
+                                        rank.divIdx,
+                                      ),
+                                    ),
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                      color: context.colors.text,
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  '${localNumber(context, rank.lp)} '
+                                  '${l.lpOutOf(localNumber(context, 100))}',
+                                  style: TextStyle(
+                                    color: context.colors.muted,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 11),
+                            _LpBar(
+                              before: rank.lp / 100,
+                              after: rank.lp / 100,
+                              gained: true,
+                            ),
+                            const SizedBox(height: 9),
+                            Text(
+                              l.placedHow,
+                              style: TextStyle(
+                                color: context.colors.muted,
+                                fontSize: 14,
+                                height: 1.4,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(18, 8, 18, 18),
+            child: Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    key: const Key('placedFindMatch'),
+                    onPressed: onFindMatch,
+                    child: Text(l.findMatch),
+                  ),
+                ),
+                const SizedBox(height: 6),
+                TextButton(
+                  key: const Key('placedContinue'),
+                  onPressed: onContinue,
+                  child: Text(l.continueAction),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 /// The new tier's badge arriving: it lands from a little smaller, and a glow
 /// in its own colour rises behind it in the badge's own shape — blurred,
 /// tinted copies of the badge rather than a circle, which read as a sticker

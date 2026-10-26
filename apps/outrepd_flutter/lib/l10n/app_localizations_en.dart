@@ -2022,11 +2022,6 @@ class LEn extends L {
   String get noticeLiveInvite => 'A friend asked me to go live';
 
   @override
-  String trialHeadline(String days) {
-    return 'Your first ${days} days are *free*';
-  }
-
-  @override
   String get trialToday => 'Today';
 
   @override
@@ -2464,4 +2459,16 @@ class LEn extends L {
   String firstMatchTerms(String seconds) {
     return 'One match · ${seconds} seconds';
   }
+
+  @override
+  String get placedLabel => 'You\'re on the ladder';
+
+  @override
+  String get placedBody => 'Everyone starts here. Only wins move you up.';
+
+  @override
+  String get placedHow => 'Win matches to earn LP. Beat someone ranked higher for more.';
+
+  @override
+  String get levelBesideName => 'Beside your name, everywhere';
 }
