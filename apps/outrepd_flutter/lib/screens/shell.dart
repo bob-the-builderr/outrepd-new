@@ -51,6 +51,10 @@ class AppShell extends StatefulWidget {
   static const int ranksTabIndex = 2;
   static const int profileTabIndex = 3;
 
+  /// Switch to the Ranks tab, which opens on this week's board.
+  static void goToRanks(BuildContext context) =>
+      context.findAncestorStateOfType<_AppShellState>()?._select(ranksTabIndex);
+
   /// Switch to the Friends tab with the waiting requests open — a friend
   /// request tapped in the notifications.
   static void goToFriendRequests(BuildContext context) {

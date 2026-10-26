@@ -749,5 +749,16 @@
   "placedLabel": "랭킹에 들어왔어요",
   "placedBody": "모두 여기서 시작해요. 이겨야만 올라갑니다.",
   "placedHow": "대결에서 이겨 LP를 얻으세요. 더 높은 랭크를 이기면 더 많이 얻어요.",
-  "levelBesideName": "어디서나 이름 옆에"
+  "levelBesideName": "어디서나 이름 옆에",
+  "weekRaceTitle": "이번 주 레이스",
+  "streakDoneToday": "오늘 완료",
+  "streakTrainToday": "오늘 하면 하루 추가",
+  "raceChartTitle": "1분이 흘러간 방식",
+  "raceYouLead": "{time} · 내가 앞서기 시작",
+  "raceTheyLead": "{time} · {name} 앞서기 시작",
+  "bringFriendTitle": "친구를 데려오세요",
+  "bringFriendBody": "링크를 보내세요. 내 프로필이 열리고, 거기서 나를 추가할 수 있어요.",
+  "bringFriendShare": "내 링크 공유",
+  "bringFriendShareText": "OUTREPD에서 푸시업으로 나랑 붙자. 60초, 실시간, 카메라가 세어 줘.",
+  "orFriendCode": "또는 친구 코드 {code}"
 }

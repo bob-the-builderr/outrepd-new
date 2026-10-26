@@ -749,5 +749,16 @@
   "placedLabel": "Sei in classifica",
   "placedBody": "Tutti partono da qui. Solo le vittorie ti fanno salire.",
   "placedHow": "Vinci sfide per guadagnare LP. Batti chi ha un grado più alto per averne di più.",
-  "levelBesideName": "Accanto al tuo nome, ovunque"
+  "levelBesideName": "Accanto al tuo nome, ovunque",
+  "weekRaceTitle": "La gara della settimana",
+  "streakDoneToday": "fatto oggi",
+  "streakTrainToday": "allenati oggi per aggiungere un giorno",
+  "raceChartTitle": "Com'è andato il minuto",
+  "raceYouLead": "{time} · sei passato in testa",
+  "raceTheyLead": "{time} · {name} è passato in testa",
+  "bringFriendTitle": "Porta un amico",
+  "bringFriendBody": "Manda il tuo link. Apre il tuo profilo, dove possono aggiungerti.",
+  "bringFriendShare": "Condividi il mio link",
+  "bringFriendShareText": "Sfidami alle flessioni su OUTREPD. 60 secondi, dal vivo, e conta la fotocamera.",
+  "orFriendCode": "o codice amico {code}"
 }

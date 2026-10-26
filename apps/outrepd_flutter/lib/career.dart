@@ -160,6 +160,21 @@ class Career extends ChangeNotifier {
     ];
   }
 
+  /// Reps for each day of this calendar week, Monday first, through Sunday.
+  /// Days still to come are zero.
+  List<int> get thisWeekReps {
+    final now = DateTime.now();
+    final monday = DateTime(
+      now.year,
+      now.month,
+      now.day,
+    ).subtract(Duration(days: now.weekday - DateTime.monday));
+    return [
+      for (var i = 0; i < 7; i++)
+        _days[_key(monday.add(Duration(days: i)))] ?? 0,
+    ];
+  }
+
   int get repsToday => _days[_key(DateTime.now())] ?? 0;
 
   Rank get rank => Rank(

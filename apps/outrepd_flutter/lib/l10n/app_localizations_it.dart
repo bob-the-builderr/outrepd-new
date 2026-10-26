@@ -2478,4 +2478,43 @@ class LIt extends L {
 
   @override
   String get levelBesideName => 'Accanto al tuo nome, ovunque';
+
+  @override
+  String get weekRaceTitle => 'La gara della settimana';
+
+  @override
+  String get streakDoneToday => 'fatto oggi';
+
+  @override
+  String get streakTrainToday => 'allenati oggi per aggiungere un giorno';
+
+  @override
+  String get raceChartTitle => 'Com\'è andato il minuto';
+
+  @override
+  String raceYouLead(String time) {
+    return '${time} · sei passato in testa';
+  }
+
+  @override
+  String raceTheyLead(String time, String name) {
+    return '${time} · ${name} è passato in testa';
+  }
+
+  @override
+  String get bringFriendTitle => 'Porta un amico';
+
+  @override
+  String get bringFriendBody => 'Manda il tuo link. Apre il tuo profilo, dove possono aggiungerti.';
+
+  @override
+  String get bringFriendShare => 'Condividi il mio link';
+
+  @override
+  String get bringFriendShareText => 'Sfidami alle flessioni su OUTREPD. 60 secondi, dal vivo, e conta la fotocamera.';
+
+  @override
+  String orFriendCode(String code) {
+    return 'o codice amico ${code}';
+  }
 }

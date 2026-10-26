@@ -2471,4 +2471,43 @@ class LEn extends L {
 
   @override
   String get levelBesideName => 'Beside your name, everywhere';
+
+  @override
+  String get weekRaceTitle => 'This week\'s race';
+
+  @override
+  String get streakDoneToday => 'done today';
+
+  @override
+  String get streakTrainToday => 'train today to add a day';
+
+  @override
+  String get raceChartTitle => 'How the minute went';
+
+  @override
+  String raceYouLead(String time) {
+    return '${time} · you took the lead';
+  }
+
+  @override
+  String raceTheyLead(String time, String name) {
+    return '${time} · ${name} took the lead';
+  }
+
+  @override
+  String get bringFriendTitle => 'Bring a friend';
+
+  @override
+  String get bringFriendBody => 'Send your link. It opens your profile, where they can add you.';
+
+  @override
+  String get bringFriendShare => 'Share my link';
+
+  @override
+  String get bringFriendShareText => 'Race me at push-ups on OUTREPD. 60 seconds, live, and the camera counts.';
+
+  @override
+  String orFriendCode(String code) {
+    return 'or friend code ${code}';
+  }
 }

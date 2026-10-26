@@ -749,5 +749,16 @@
   "placedLabel": "Ya estás en la clasificación",
   "placedBody": "Todos empiezan aquí. Solo las victorias te hacen subir.",
   "placedHow": "Gana partidas para sumar LP. Vence a alguien de rango más alto para ganar más.",
-  "levelBesideName": "Junto a tu nombre, en todas partes"
+  "levelBesideName": "Junto a tu nombre, en todas partes",
+  "weekRaceTitle": "La carrera de esta semana",
+  "streakDoneToday": "hecho hoy",
+  "streakTrainToday": "entrena hoy para sumar un día",
+  "raceChartTitle": "Así fue el minuto",
+  "raceYouLead": "{time} · te pusiste por delante",
+  "raceTheyLead": "{time} · {name} se puso por delante",
+  "bringFriendTitle": "Trae a un amigo",
+  "bringFriendBody": "Envía tu enlace. Abre tu perfil, donde pueden agregarte.",
+  "bringFriendShare": "Compartir mi enlace",
+  "bringFriendShareText": "Compite conmigo a flexiones en OUTREPD. 60 segundos, en directo, y la cámara cuenta.",
+  "orFriendCode": "o código de amigo {code}"
 }

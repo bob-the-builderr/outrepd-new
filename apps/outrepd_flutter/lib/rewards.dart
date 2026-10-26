@@ -526,6 +526,28 @@ class Rewards extends ChangeNotifier {
 
   int restUsedThisWeek = 0;
 
+  /// Whole days between the last session and today, or null before the first.
+  int? get _daysSinceSession {
+    final last = lastSession;
+    if (last == null) return null;
+    final now = DateTime.now();
+    return DateTime(now.year, now.month, now.day)
+        .difference(DateTime(last.year, last.month, last.day))
+        .inDays;
+  }
+
+  /// A session has already counted today.
+  bool get trainedToday => _daysSinceSession == 0;
+
+  /// Whether training today would carry [streak] on: the days missed since
+  /// the last session are still within the rest days it forgives. False once
+  /// they are not — the number on record is then one the next session resets.
+  bool get streakAlive {
+    final gap = _daysSinceSession;
+    if (gap == null || streak <= 0) return false;
+    return gap <= 1 || gap - 1 <= kRestDaysPerWeek - restUsedThisWeek;
+  }
+
   /// Sets confirmed with every rep counted — [TitleKind.cleanSet]'s tally.
   int cleanSets = 0;
 

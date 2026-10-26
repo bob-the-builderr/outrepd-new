@@ -2472,4 +2472,43 @@ class LId extends L {
 
   @override
   String get levelBesideName => 'Di samping namamu, di mana saja';
+
+  @override
+  String get weekRaceTitle => 'Balapan minggu ini';
+
+  @override
+  String get streakDoneToday => 'hari ini beres';
+
+  @override
+  String get streakTrainToday => 'latihan hari ini untuk menambah sehari';
+
+  @override
+  String get raceChartTitle => 'Jalannya satu menit';
+
+  @override
+  String raceYouLead(String time) {
+    return '${time} · kamu memimpin';
+  }
+
+  @override
+  String raceTheyLead(String time, String name) {
+    return '${time} · ${name} memimpin';
+  }
+
+  @override
+  String get bringFriendTitle => 'Ajak teman';
+
+  @override
+  String get bringFriendBody => 'Kirim tautanmu. Tautan itu membuka profilmu, tempat mereka bisa menambahkanmu.';
+
+  @override
+  String get bringFriendShare => 'Bagikan tautanku';
+
+  @override
+  String get bringFriendShareText => 'Tanding push-up denganku di OUTREPD. 60 detik, langsung, dan kamera yang menghitung.';
+
+  @override
+  String orFriendCode(String code) {
+    return 'atau kode teman ${code}';
+  }
 }

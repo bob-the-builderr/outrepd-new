@@ -749,5 +749,16 @@
   "placedLabel": "Sıralamadasın",
   "placedBody": "Herkes buradan başlar. Seni sadece galibiyetler yükseltir.",
   "placedHow": "LP kazanmak için maç kazan. Daha yüksek dereceyi yenersen daha fazla alırsın.",
-  "levelBesideName": "Adının yanında, her yerde"
+  "levelBesideName": "Adının yanında, her yerde",
+  "weekRaceTitle": "Bu haftanın yarışı",
+  "streakDoneToday": "bugün tamam",
+  "streakTrainToday": "bir gün eklemek için bugün antrenman yap",
+  "raceChartTitle": "Dakika nasıl geçti",
+  "raceYouLead": "{time} · öne geçtin",
+  "raceTheyLead": "{time} · {name} öne geçti",
+  "bringFriendTitle": "Bir arkadaşını getir",
+  "bringFriendBody": "Bağlantını gönder. Profilini açar, oradan seni ekleyebilirler.",
+  "bringFriendShare": "Bağlantımı paylaş",
+  "bringFriendShareText": "OUTREPD'de şınavda benimle yarış. 60 saniye, canlı, kamera sayar.",
+  "orFriendCode": "veya arkadaş kodu {code}"
 }

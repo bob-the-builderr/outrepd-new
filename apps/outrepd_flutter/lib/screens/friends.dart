@@ -371,6 +371,12 @@ class _FriendsScreenState extends State<FriendsScreen> {
                             child: _FriendRow(friend: friend),
                           ),
                       ],
+                      // A way to bring somebody in, for everyone whose code
+                      // gives no free week (they have the card above).
+                      if (!(_invites?.canInvite ?? false)) ...[
+                        const SizedBox(height: 18),
+                        const BringFriendCard(),
+                      ],
                     ]),
                   ),
                 ),

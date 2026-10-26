@@ -2468,4 +2468,43 @@ class LTr extends L {
 
   @override
   String get levelBesideName => 'Adının yanında, her yerde';
+
+  @override
+  String get weekRaceTitle => 'Bu haftanın yarışı';
+
+  @override
+  String get streakDoneToday => 'bugün tamam';
+
+  @override
+  String get streakTrainToday => 'bir gün eklemek için bugün antrenman yap';
+
+  @override
+  String get raceChartTitle => 'Dakika nasıl geçti';
+
+  @override
+  String raceYouLead(String time) {
+    return '${time} · öne geçtin';
+  }
+
+  @override
+  String raceTheyLead(String time, String name) {
+    return '${time} · ${name} öne geçti';
+  }
+
+  @override
+  String get bringFriendTitle => 'Bir arkadaşını getir';
+
+  @override
+  String get bringFriendBody => 'Bağlantını gönder. Profilini açar, oradan seni ekleyebilirler.';
+
+  @override
+  String get bringFriendShare => 'Bağlantımı paylaş';
+
+  @override
+  String get bringFriendShareText => 'OUTREPD\'de şınavda benimle yarış. 60 saniye, canlı, kamera sayar.';
+
+  @override
+  String orFriendCode(String code) {
+    return 'veya arkadaş kodu ${code}';
+  }
 }

@@ -2441,4 +2441,43 @@ class LKo extends L {
 
   @override
   String get levelBesideName => '어디서나 이름 옆에';
+
+  @override
+  String get weekRaceTitle => '이번 주 레이스';
+
+  @override
+  String get streakDoneToday => '오늘 완료';
+
+  @override
+  String get streakTrainToday => '오늘 하면 하루 추가';
+
+  @override
+  String get raceChartTitle => '1분이 흘러간 방식';
+
+  @override
+  String raceYouLead(String time) {
+    return '${time} · 내가 앞서기 시작';
+  }
+
+  @override
+  String raceTheyLead(String time, String name) {
+    return '${time} · ${name} 앞서기 시작';
+  }
+
+  @override
+  String get bringFriendTitle => '친구를 데려오세요';
+
+  @override
+  String get bringFriendBody => '링크를 보내세요. 내 프로필이 열리고, 거기서 나를 추가할 수 있어요.';
+
+  @override
+  String get bringFriendShare => '내 링크 공유';
+
+  @override
+  String get bringFriendShareText => 'OUTREPD에서 푸시업으로 나랑 붙자. 60초, 실시간, 카메라가 세어 줘.';
+
+  @override
+  String orFriendCode(String code) {
+    return '또는 친구 코드 ${code}';
+  }
 }

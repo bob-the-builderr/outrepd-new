@@ -34,6 +34,7 @@ import 'daily_goal.dart';
 import 'level.dart';
 import 'live_rematch.dart';
 import 'match_flow.dart' show kDuelLength;
+import 'race_chart.dart';
 import 'share_card.dart';
 
 /// The current account, as [showShareCardSheet] needs it — the same shape
@@ -133,11 +134,19 @@ class DuelResultView extends StatelessWidget {
     this.monthAfter,
     this.rematchLabel,
     this.xp,
+    this.yourRepTimes = const [],
+    this.theirRepTimes = const [],
   });
 
   final bool won;
   final int yourReps;
   final int theirReps;
+
+  /// When each rep of each set landed, in milliseconds from the start of the
+  /// minute — the race chart, shown only when both are whole: one time for
+  /// every rep in the result.
+  final List<int> yourRepTimes;
+  final List<int> theirRepTimes;
   final Opponent opponent;
   final DuelOutcome? outcome;
 
@@ -263,6 +272,17 @@ class DuelResultView extends StatelessWidget {
                       );
                     },
                   ),
+                  if (yourRepTimes.isNotEmpty &&
+                      theirRepTimes.isNotEmpty &&
+                      yourRepTimes.length == yourReps &&
+                      theirRepTimes.length == theirReps) ...[
+                    const SizedBox(height: 14),
+                    RaceChart(
+                      yours: yourRepTimes,
+                      theirs: theirRepTimes,
+                      opponent: opponent.username,
+                    ),
+                  ],
                   const SizedBox(height: 24),
                   LpCard(outcome: outcome, breakdown: _lpBreakdown(context)),
                   if (outcome?.madeFriendly ?? false) ...[

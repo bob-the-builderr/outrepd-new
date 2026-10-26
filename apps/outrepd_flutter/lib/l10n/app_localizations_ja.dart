@@ -2435,4 +2435,43 @@ class LJa extends L {
 
   @override
   String get levelBesideName => 'あなたの名前の横に、どこでも';
+
+  @override
+  String get weekRaceTitle => '今週のレース';
+
+  @override
+  String get streakDoneToday => '今日は達成';
+
+  @override
+  String get streakTrainToday => '今日やれば1日追加';
+
+  @override
+  String get raceChartTitle => '1分間の流れ';
+
+  @override
+  String raceYouLead(String time) {
+    return '${time} · あなたがリード';
+  }
+
+  @override
+  String raceTheyLead(String time, String name) {
+    return '${time} · ${name} がリード';
+  }
+
+  @override
+  String get bringFriendTitle => '友だちを誘おう';
+
+  @override
+  String get bringFriendBody => 'リンクを送ろう。あなたのプロフィールが開き、そこから追加してもらえます。';
+
+  @override
+  String get bringFriendShare => 'リンクを共有';
+
+  @override
+  String get bringFriendShareText => 'OUTREPDで腕立て伏せ勝負しよう。60秒、ライブ、カメラがカウント。';
+
+  @override
+  String orFriendCode(String code) {
+    return 'またはフレンドコード ${code}';
+  }
 }

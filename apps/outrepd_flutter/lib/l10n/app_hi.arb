@@ -749,5 +749,16 @@
   "placedLabel": "आप रैंकिंग में आ गए",
   "placedBody": "सब यहीं से शुरू करते हैं। सिर्फ़ जीत आपको ऊपर ले जाती है।",
   "placedHow": "LP पाने के लिए मुक़ाबले जीतें। ऊँची रैंक वाले को हराएँ तो ज़्यादा मिलेंगे।",
-  "levelBesideName": "आपके नाम के साथ, हर जगह"
+  "levelBesideName": "आपके नाम के साथ, हर जगह",
+  "weekRaceTitle": "इस हफ़्ते की रेस",
+  "streakDoneToday": "आज हो गया",
+  "streakTrainToday": "आज ट्रेन करें, एक दिन और जुड़ेगा",
+  "raceChartTitle": "मिनट कैसे बीता",
+  "raceYouLead": "{time} · आप आगे निकल गए",
+  "raceTheyLead": "{time} · {name} आगे निकल गए",
+  "bringFriendTitle": "किसी दोस्त को लाएँ",
+  "bringFriendBody": "अपना लिंक भेजें। यह आपकी प्रोफ़ाइल खोलता है, जहाँ वे आपको जोड़ सकते हैं।",
+  "bringFriendShare": "मेरा लिंक शेयर करें",
+  "bringFriendShareText": "OUTREPD पर पुश-अप में मुझसे मुक़ाबला करो। 60 सेकंड, लाइव, और कैमरा गिनता है।",
+  "orFriendCode": "या फ़्रेंड कोड {code}"
 }

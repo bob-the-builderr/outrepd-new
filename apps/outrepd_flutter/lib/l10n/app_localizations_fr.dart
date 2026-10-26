@@ -2479,4 +2479,43 @@ class LFr extends L {
 
   @override
   String get levelBesideName => 'À côté de ton nom, partout';
+
+  @override
+  String get weekRaceTitle => 'La course de la semaine';
+
+  @override
+  String get streakDoneToday => 'fait aujourd\'hui';
+
+  @override
+  String get streakTrainToday => 'entraîne-toi aujourd\'hui pour ajouter un jour';
+
+  @override
+  String get raceChartTitle => 'Comment s\'est passée la minute';
+
+  @override
+  String raceYouLead(String time) {
+    return '${time} · tu prends la tête';
+  }
+
+  @override
+  String raceTheyLead(String time, String name) {
+    return '${time} · ${name} prend la tête';
+  }
+
+  @override
+  String get bringFriendTitle => 'Invite un ami';
+
+  @override
+  String get bringFriendBody => 'Envoie ton lien. Il ouvre ton profil, où l\'on peut t\'ajouter.';
+
+  @override
+  String get bringFriendShare => 'Partager mon lien';
+
+  @override
+  String get bringFriendShareText => 'Affronte-moi aux pompes sur OUTREPD. 60 secondes, en direct, et la caméra compte.';
+
+  @override
+  String orFriendCode(String code) {
+    return 'ou code ami ${code}';
+  }
 }

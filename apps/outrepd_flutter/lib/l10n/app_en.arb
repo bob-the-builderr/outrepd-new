@@ -1599,5 +1599,40 @@
   "placedLabel": "You're on the ladder",
   "placedBody": "Everyone starts here. Only wins move you up.",
   "placedHow": "Win matches to earn LP. Beat someone ranked higher for more.",
-  "levelBesideName": "Beside your name, everywhere"
+  "levelBesideName": "Beside your name, everywhere",
+  "weekRaceTitle": "This week's race",
+  "streakDoneToday": "done today",
+  "streakTrainToday": "train today to add a day",
+  "raceChartTitle": "How the minute went",
+  "raceYouLead": "{time} · you took the lead",
+  "@raceYouLead": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "raceTheyLead": "{time} · {name} took the lead",
+  "@raceTheyLead": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "bringFriendTitle": "Bring a friend",
+  "bringFriendBody": "Send your link. It opens your profile, where they can add you.",
+  "bringFriendShare": "Share my link",
+  "bringFriendShareText": "Race me at push-ups on OUTREPD. 60 seconds, live, and the camera counts.",
+  "orFriendCode": "or friend code {code}",
+  "@orFriendCode": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  }
 }

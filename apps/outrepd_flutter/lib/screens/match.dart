@@ -10,15 +10,20 @@
 /// shape, name, bar, one line of numbers.
 library;
 
+import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../app_bottom_nav.dart' show TablerIcon;
 import '../connection.dart';
 import '../backend/backend.dart';
+import '../career.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../motion.dart';
 import '../push.dart';
+import '../rewards.dart';
+import '../season.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
 import '../widgets.dart';
@@ -27,6 +32,7 @@ import 'match_entry.dart';
 import 'match_flow.dart';
 import 'notifications.dart';
 import 'progression.dart';
+import 'shell.dart';
 
 class MatchScreen extends StatelessWidget {
   const MatchScreen({super.key});
@@ -63,6 +69,7 @@ class MatchScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                 _TopRow(profile: p),
+                _StreakLine(profile: p),
                 const Spacer(),
                 const SizedBox(height: 18),
                 if (!p.isRanked)
@@ -86,8 +93,11 @@ class MatchScreen extends StatelessWidget {
                   const _OfflineActions()
                 else if (!p.isRanked)
                   const _PlacementActions()
-                else
+                else ...[
                   const _Actions(),
+                  const SizedBox(height: 16),
+                  const _WeekRaceCard(),
+                ],
                 const Spacer(flex: 2),
                       ],
                     ),
@@ -277,7 +287,8 @@ class _OfflineActions extends StatelessWidget {
 
 // ──────────────────────────────── top row ────────────────────────────────────
 
-/// The streak on the left, notifications on the right, and no title.
+/// The week's training days on the left, notifications on the right, and no
+/// title.
 ///
 /// The app's name sat here for a while. It is the one thing on the screen the
 /// reader already knows — they opened it — so it was spending the best line on
@@ -326,48 +337,17 @@ class _TopRowState extends State<_TopRow> {
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
-    final profile = widget.profile;
     final unread = backend.available
         ? _unread
         : demoNotifications.where((n) => n.unread).length;
 
     return Row(
       children: [
-        // The pill takes what it needs from the room on the left and the bell
-        // keeps the right edge. A Flexible pill beside a Spacer split that
-        // room in half instead, and left the bell short of the edge.
-        Expanded(
-          child: Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: profile.dayStreak <= 0
-                ? null
-                : Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: context.colors.border,
-                        width: 0.5,
-                      ),
-                    ),
-                    child: Text(
-                      l.dayStreakCount(localNumber(context, profile.dayStreak)),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: context.colors.text,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-          ),
-        ),
-        // A round button the size of a thumb, like the streak pill beside
-        // it, with how many are waiting rather than a dot that only says
-        // something is.
+        // The week on the left, the bell keeping the right edge.
+        const Expanded(child: _WeekRow()),
+        const SizedBox(width: 12),
+        // A round button the size of a thumb, with how many are waiting
+        // rather than a dot that only says something is.
         Semantics(
           button: true,
           label: l.notifications,
@@ -616,6 +596,276 @@ class _OutlinedAction extends StatelessWidget {
               fontSize: 18,
               fontWeight: FontWeight.w500,
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ──────────────────────────────── the week ───────────────────────────────────
+
+/// This calendar week, Monday to Sunday: a filled dot for each day trained, an
+/// open ring for today until it is, and faint rings for the rest.
+class _WeekRow extends StatelessWidget {
+  const _WeekRow();
+
+  /// The first character of the weekday name, as the profile's chart writes it.
+  static String _initial(String weekday) =>
+      weekday.isEmpty ? '' : weekday.characters.first;
+
+  @override
+  Widget build(BuildContext context) {
+    final format = DateFormat.E(Localizations.localeOf(context).toString());
+    final now = DateTime.now();
+    final monday = DateTime(
+      now.year,
+      now.month,
+      now.day,
+    ).subtract(Duration(days: now.weekday - DateTime.monday));
+    final today = now.weekday - DateTime.monday;
+
+    return ListenableBuilder(
+      listenable: Career.instance,
+      builder: (context, _) {
+        final reps = Career.instance.thisWeekReps;
+        return Container(
+          key: const Key('weekRow'),
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+          decoration: BoxDecoration(
+            color: context.colors.surface,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: context.colors.border, width: 0.5),
+          ),
+          child: Row(
+            children: [
+              for (var i = 0; i < 7; i++)
+                Expanded(
+                  child: _DayDot(
+                    trained: reps[i] > 0,
+                    today: i == today,
+                    letter: _initial(
+                      format.format(monday.add(Duration(days: i))),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _DayDot extends StatelessWidget {
+  const _DayDot({
+    required this.trained,
+    required this.today,
+    required this.letter,
+  });
+
+  final bool trained;
+  final bool today;
+  final String letter;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 22,
+          height: 22,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: trained ? colors.rival : null,
+            border: trained
+                ? null
+                : Border.all(
+                    color: today ? colors.rival : colors.surfaceRaised,
+                    width: today ? 2 : 1.5,
+                  ),
+          ),
+        ),
+        const SizedBox(height: 3),
+        Text(
+          letter,
+          style: TextStyle(
+            color: today ? colors.text : colors.muted,
+            fontSize: 11,
+            fontWeight: today ? FontWeight.w700 : FontWeight.w400,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// The streak under the week, and what today does to it — said only while
+/// training today would still carry it on.
+class _StreakLine extends StatelessWidget {
+  const _StreakLine({required this.profile});
+
+  final Profile profile;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    return ListenableBuilder(
+      listenable: rewards,
+      builder: (context, _) {
+        if (profile.dayStreak <= 0 || !rewards.streakAlive) {
+          return const SizedBox.shrink();
+        }
+        return Padding(
+          padding: const EdgeInsets.only(top: 9),
+          child: Text(
+            '${l.dayStreakCount(localNumber(context, profile.dayStreak))}'
+            ' · '
+            '${rewards.trainedToday ? l.streakDoneToday : l.streakTrainToday}',
+            key: const Key('streakLine'),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: context.colors.rival,
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+/// This week's race, under the buttons: where this lifter stands, how long
+/// is left, and how far it is to the top three. Opens the week's board.
+class _WeekRaceCard extends StatefulWidget {
+  const _WeekRaceCard();
+
+  @override
+  State<_WeekRaceCard> createState() => _WeekRaceCardState();
+}
+
+class _WeekRaceCardState extends State<_WeekRaceCard> {
+  MonthPlace? _mine;
+  List<MonthRow> _top = const [];
+
+  @override
+  void initState() {
+    super.initState();
+    if (backend.available) {
+      _load();
+      return;
+    }
+    // The preview and the screenshots, which have no server: the sample
+    // lifter, fourteenth, with two days of the week left.
+    final now = clock.now();
+    _mine = MonthPlace(
+      season: now,
+      endsAt: now.add(const Duration(days: 2, hours: 4, minutes: 30)),
+      place: 14,
+      ofTotal: 120,
+      points: 41,
+      wins: 3,
+      played: 5,
+    );
+    _top = [
+      for (final (place, points) in const [(1, 140), (2, 96), (3, 79)])
+        MonthRow(
+          place: place,
+          id: '$place',
+          username: '',
+          tierIdx: 0,
+          divIdx: 0,
+          points: points,
+          wins: 0,
+          played: 0,
+        ),
+    ];
+  }
+
+  Future<void> _load() async {
+    try {
+      final mine = await backend.myWeekPlace();
+      final top = await backend.weekBoard(limit: 3);
+      if (mounted) {
+        setState(() {
+          _mine = mine;
+          _top = top;
+        });
+      }
+    } on Object catch (error) {
+      // No card rather than a wrong one.
+      debugPrint('Could not read the week: $error');
+    }
+  }
+
+  /// The same hint the week's board gives its own row.
+  String _hint(BuildContext context, L l, MonthPlace mine) {
+    final place = mine.place;
+    if (place == null) return l.weekJoinHint;
+    final third = _top.where((r) => r.place == 3).firstOrNull;
+    if (place <= 3 || third == null) return l.weekInTop3;
+    final gap = third.points - mine.points + 1;
+    return l.weekToTop3(localNumber(context, gap < 1 ? 1 : gap));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final mine = _mine;
+    if (mine == null) return const SizedBox.shrink();
+    final l = L.of(context);
+    final colors = context.colors;
+    final place = mine.place;
+
+    return Material(
+      key: const Key('weekRaceCard'),
+      color: colors.surface,
+      borderRadius: BorderRadius.circular(18),
+      child: InkWell(
+        onTap: () => AppShell.goToRanks(context),
+        borderRadius: BorderRadius.circular(18),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: colors.border, width: 0.5),
+          ),
+          child: Row(
+            children: [
+              Text(
+                place == null ? '–' : '#${localNumber(context, place)}',
+                style: const TextStyle(
+                  color: AppColors.gold,
+                  fontSize: 28,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l.weekRaceTitle,
+                      style: TextStyle(
+                        color: colors.text,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      '${monthLeft(context, mine.endsAt, clock.now())}'
+                      ' · ${_hint(context, l, mine)}',
+                      style: TextStyle(color: colors.muted, fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+              Icon(Icons.chevron_right, color: colors.muted),
+            ],
           ),
         ),
       ),

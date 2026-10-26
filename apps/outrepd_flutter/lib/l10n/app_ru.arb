@@ -749,5 +749,16 @@
   "placedLabel": "Вы в рейтинге",
   "placedBody": "Все начинают отсюда. Подниматься можно только победами.",
   "placedHow": "Побеждайте в матчах, чтобы получать LP. За победу над рангом выше — больше.",
-  "levelBesideName": "Рядом с вашим именем, везде"
+  "levelBesideName": "Рядом с вашим именем, везде",
+  "weekRaceTitle": "Гонка этой недели",
+  "streakDoneToday": "сегодня выполнено",
+  "streakTrainToday": "потренируйтесь сегодня, чтобы добавить день",
+  "raceChartTitle": "Как прошла минута",
+  "raceYouLead": "{time} · вы вышли вперёд",
+  "raceTheyLead": "{time} · {name} вышел вперёд",
+  "bringFriendTitle": "Позовите друга",
+  "bringFriendBody": "Отправьте свою ссылку. Она откроет ваш профиль, где вас можно добавить.",
+  "bringFriendShare": "Поделиться ссылкой",
+  "bringFriendShareText": "Сразись со мной в отжиманиях в OUTREPD. 60 секунд, вживую, камера считает.",
+  "orFriendCode": "или код друга {code}"
 }

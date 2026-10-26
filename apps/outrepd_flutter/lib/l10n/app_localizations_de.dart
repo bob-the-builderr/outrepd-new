@@ -2480,4 +2480,43 @@ class LDe extends L {
 
   @override
   String get levelBesideName => 'Neben deinem Namen, überall';
+
+  @override
+  String get weekRaceTitle => 'Rennen dieser Woche';
+
+  @override
+  String get streakDoneToday => 'heute erledigt';
+
+  @override
+  String get streakTrainToday => 'trainier heute für einen Tag mehr';
+
+  @override
+  String get raceChartTitle => 'So lief die Minute';
+
+  @override
+  String raceYouLead(String time) {
+    return '${time} · du gehst in Führung';
+  }
+
+  @override
+  String raceTheyLead(String time, String name) {
+    return '${time} · ${name} geht in Führung';
+  }
+
+  @override
+  String get bringFriendTitle => 'Hol einen Freund dazu';
+
+  @override
+  String get bringFriendBody => 'Schick deinen Link. Er öffnet dein Profil, wo man dich hinzufügen kann.';
+
+  @override
+  String get bringFriendShare => 'Meinen Link teilen';
+
+  @override
+  String get bringFriendShareText => 'Tritt bei OUTREPD im Liegestütz gegen mich an. 60 Sekunden, live, die Kamera zählt.';
+
+  @override
+  String orFriendCode(String code) {
+    return 'oder Freundescode ${code}';
+  }
 }

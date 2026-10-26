@@ -2473,4 +2473,43 @@ class LRu extends L {
 
   @override
   String get levelBesideName => 'Рядом с вашим именем, везде';
+
+  @override
+  String get weekRaceTitle => 'Гонка этой недели';
+
+  @override
+  String get streakDoneToday => 'сегодня выполнено';
+
+  @override
+  String get streakTrainToday => 'потренируйтесь сегодня, чтобы добавить день';
+
+  @override
+  String get raceChartTitle => 'Как прошла минута';
+
+  @override
+  String raceYouLead(String time) {
+    return '${time} · вы вышли вперёд';
+  }
+
+  @override
+  String raceTheyLead(String time, String name) {
+    return '${time} · ${name} вышел вперёд';
+  }
+
+  @override
+  String get bringFriendTitle => 'Позовите друга';
+
+  @override
+  String get bringFriendBody => 'Отправьте свою ссылку. Она откроет ваш профиль, где вас можно добавить.';
+
+  @override
+  String get bringFriendShare => 'Поделиться ссылкой';
+
+  @override
+  String get bringFriendShareText => 'Сразись со мной в отжиманиях в OUTREPD. 60 секунд, вживую, камера считает.';
+
+  @override
+  String orFriendCode(String code) {
+    return 'или код друга ${code}';
+  }
 }

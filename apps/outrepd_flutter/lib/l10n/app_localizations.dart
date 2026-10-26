@@ -4492,6 +4492,72 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Beside your name, everywhere'**
   String get levelBesideName;
+
+  /// No description provided for @weekRaceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This week's race'**
+  String get weekRaceTitle;
+
+  /// No description provided for @streakDoneToday.
+  ///
+  /// In en, this message translates to:
+  /// **'done today'**
+  String get streakDoneToday;
+
+  /// No description provided for @streakTrainToday.
+  ///
+  /// In en, this message translates to:
+  /// **'train today to add a day'**
+  String get streakTrainToday;
+
+  /// No description provided for @raceChartTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How the minute went'**
+  String get raceChartTitle;
+
+  /// No description provided for @raceYouLead.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} · you took the lead'**
+  String raceYouLead(String time);
+
+  /// No description provided for @raceTheyLead.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} · {name} took the lead'**
+  String raceTheyLead(String time, String name);
+
+  /// No description provided for @bringFriendTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bring a friend'**
+  String get bringFriendTitle;
+
+  /// No description provided for @bringFriendBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Send your link. It opens your profile, where they can add you.'**
+  String get bringFriendBody;
+
+  /// No description provided for @bringFriendShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share my link'**
+  String get bringFriendShare;
+
+  /// No description provided for @bringFriendShareText.
+  ///
+  /// In en, this message translates to:
+  /// **'Race me at push-ups on OUTREPD. 60 seconds, live, and the camera counts.'**
+  String get bringFriendShareText;
+
+  /// No description provided for @orFriendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'or friend code {code}'**
+  String orFriendCode(String code);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

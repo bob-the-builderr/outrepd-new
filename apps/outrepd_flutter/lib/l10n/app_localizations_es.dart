@@ -2478,4 +2478,43 @@ class LEs extends L {
 
   @override
   String get levelBesideName => 'Junto a tu nombre, en todas partes';
+
+  @override
+  String get weekRaceTitle => 'La carrera de esta semana';
+
+  @override
+  String get streakDoneToday => 'hecho hoy';
+
+  @override
+  String get streakTrainToday => 'entrena hoy para sumar un día';
+
+  @override
+  String get raceChartTitle => 'Así fue el minuto';
+
+  @override
+  String raceYouLead(String time) {
+    return '${time} · te pusiste por delante';
+  }
+
+  @override
+  String raceTheyLead(String time, String name) {
+    return '${time} · ${name} se puso por delante';
+  }
+
+  @override
+  String get bringFriendTitle => 'Trae a un amigo';
+
+  @override
+  String get bringFriendBody => 'Envía tu enlace. Abre tu perfil, donde pueden agregarte.';
+
+  @override
+  String get bringFriendShare => 'Compartir mi enlace';
+
+  @override
+  String get bringFriendShareText => 'Compite conmigo a flexiones en OUTREPD. 60 segundos, en directo, y la cámara cuenta.';
+
+  @override
+  String orFriendCode(String code) {
+    return 'o código de amigo ${code}';
+  }
 }

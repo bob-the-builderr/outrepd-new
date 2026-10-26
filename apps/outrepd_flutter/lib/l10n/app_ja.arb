@@ -749,5 +749,16 @@
   "placedLabel": "ランキングに参加しました",
   "placedBody": "全員ここからスタート。勝つことでしか上がれません。",
   "placedHow": "マッチに勝ってLPを獲得。格上に勝てばもっと多く。",
-  "levelBesideName": "あなたの名前の横に、どこでも"
+  "levelBesideName": "あなたの名前の横に、どこでも",
+  "weekRaceTitle": "今週のレース",
+  "streakDoneToday": "今日は達成",
+  "streakTrainToday": "今日やれば1日追加",
+  "raceChartTitle": "1分間の流れ",
+  "raceYouLead": "{time} · あなたがリード",
+  "raceTheyLead": "{time} · {name} がリード",
+  "bringFriendTitle": "友だちを誘おう",
+  "bringFriendBody": "リンクを送ろう。あなたのプロフィールが開き、そこから追加してもらえます。",
+  "bringFriendShare": "リンクを共有",
+  "bringFriendShareText": "OUTREPDで腕立て伏せ勝負しよう。60秒、ライブ、カメラがカウント。",
+  "orFriendCode": "またはフレンドコード {code}"
 }

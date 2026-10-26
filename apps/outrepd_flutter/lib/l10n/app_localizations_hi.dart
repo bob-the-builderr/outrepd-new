@@ -2473,4 +2473,43 @@ class LHi extends L {
 
   @override
   String get levelBesideName => 'आपके नाम के साथ, हर जगह';
+
+  @override
+  String get weekRaceTitle => 'इस हफ़्ते की रेस';
+
+  @override
+  String get streakDoneToday => 'आज हो गया';
+
+  @override
+  String get streakTrainToday => 'आज ट्रेन करें, एक दिन और जुड़ेगा';
+
+  @override
+  String get raceChartTitle => 'मिनट कैसे बीता';
+
+  @override
+  String raceYouLead(String time) {
+    return '${time} · आप आगे निकल गए';
+  }
+
+  @override
+  String raceTheyLead(String time, String name) {
+    return '${time} · ${name} आगे निकल गए';
+  }
+
+  @override
+  String get bringFriendTitle => 'किसी दोस्त को लाएँ';
+
+  @override
+  String get bringFriendBody => 'अपना लिंक भेजें। यह आपकी प्रोफ़ाइल खोलता है, जहाँ वे आपको जोड़ सकते हैं।';
+
+  @override
+  String get bringFriendShare => 'मेरा लिंक शेयर करें';
+
+  @override
+  String get bringFriendShareText => 'OUTREPD पर पुश-अप में मुझसे मुक़ाबला करो। 60 सेकंड, लाइव, और कैमरा गिनता है।';
+
+  @override
+  String orFriendCode(String code) {
+    return 'या फ़्रेंड कोड ${code}';
+  }
 }

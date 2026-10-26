@@ -84,6 +84,13 @@ DuelResultView _result({required bool won, bool live = true}) => DuelResultView(
   onLiveRematch: live ? (_) {} : null,
   monthBefore: 14,
   monthAfter: won ? 11 : 16,
+  // A minute that turns at the half: level at 0:25, then they pull away.
+  yourRepTimes: won
+      ? [for (var i = 1; i <= 18; i++) i * 3200]
+      : const [2000, 5000, 8000, 11000, 14000, 17500, 21000, 25000, 29000, 33500, 38500, 44000, 50000, 56500],
+  theirRepTimes: won
+      ? [for (var i = 1; i <= 11; i++) i * 5200]
+      : const [3000, 6500, 10000, 13500, 17000, 20000, 22500, 25000, 27500, 30000, 32500, 35000, 37500, 40000, 43000, 46000, 49000, 52500, 56000],
   xp: XpGain(
     before: 4200,
     after: 4200 + (won ? 18 : 14) + kXpPerMatch,

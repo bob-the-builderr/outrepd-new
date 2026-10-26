@@ -2475,4 +2475,43 @@ class LPt extends L {
 
   @override
   String get levelBesideName => 'Ao lado do seu nome, em todo lugar';
+
+  @override
+  String get weekRaceTitle => 'A corrida da semana';
+
+  @override
+  String get streakDoneToday => 'feito hoje';
+
+  @override
+  String get streakTrainToday => 'treine hoje para somar um dia';
+
+  @override
+  String get raceChartTitle => 'Como foi o minuto';
+
+  @override
+  String raceYouLead(String time) {
+    return '${time} · você assumiu a liderança';
+  }
+
+  @override
+  String raceTheyLead(String time, String name) {
+    return '${time} · ${name} assumiu a liderança';
+  }
+
+  @override
+  String get bringFriendTitle => 'Traga um amigo';
+
+  @override
+  String get bringFriendBody => 'Envie seu link. Ele abre seu perfil, onde podem adicionar você.';
+
+  @override
+  String get bringFriendShare => 'Compartilhar meu link';
+
+  @override
+  String get bringFriendShareText => 'Dispute flexões comigo no OUTREPD. 60 segundos, ao vivo, e a câmera conta.';
+
+  @override
+  String orFriendCode(String code) {
+    return 'ou código de amigo ${code}';
+  }
 }

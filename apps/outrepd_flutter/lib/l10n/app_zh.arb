@@ -749,5 +749,16 @@
   "placedLabel": "你已进入排名",
   "placedBody": "所有人都从这里开始。只有赢才能往上爬。",
   "placedHow": "赢下比赛获得 LP。击败段位更高的对手得到更多。",
-  "levelBesideName": "显示在你的名字旁，随处可见"
+  "levelBesideName": "显示在你的名字旁，随处可见",
+  "weekRaceTitle": "本周竞赛",
+  "streakDoneToday": "今天已完成",
+  "streakTrainToday": "今天练一次，多加一天",
+  "raceChartTitle": "这一分钟的走势",
+  "raceYouLead": "{time} · 你取得领先",
+  "raceTheyLead": "{time} · {name} 取得领先",
+  "bringFriendTitle": "叫上朋友",
+  "bringFriendBody": "发送你的链接。它会打开你的主页，对方可以在那里加你。",
+  "bringFriendShare": "分享我的链接",
+  "bringFriendShareText": "来 OUTREPD 和我比俯卧撑。60 秒，实时，摄像头计数。",
+  "orFriendCode": "或好友码 {code}"
 }

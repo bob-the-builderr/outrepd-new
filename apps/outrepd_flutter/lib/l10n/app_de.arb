@@ -749,5 +749,16 @@
   "placedLabel": "Du bist auf der Rangliste",
   "placedBody": "Hier fangen alle an. Nur Siege bringen dich nach oben.",
   "placedHow": "Gewinne Matches, um LP zu holen. Schlag jemanden mit höherem Rang für mehr.",
-  "levelBesideName": "Neben deinem Namen, überall"
+  "levelBesideName": "Neben deinem Namen, überall",
+  "weekRaceTitle": "Rennen dieser Woche",
+  "streakDoneToday": "heute erledigt",
+  "streakTrainToday": "trainier heute für einen Tag mehr",
+  "raceChartTitle": "So lief die Minute",
+  "raceYouLead": "{time} · du gehst in Führung",
+  "raceTheyLead": "{time} · {name} geht in Führung",
+  "bringFriendTitle": "Hol einen Freund dazu",
+  "bringFriendBody": "Schick deinen Link. Er öffnet dein Profil, wo man dich hinzufügen kann.",
+  "bringFriendShare": "Meinen Link teilen",
+  "bringFriendShareText": "Tritt bei OUTREPD im Liegestütz gegen mich an. 60 Sekunden, live, die Kamera zählt.",
+  "orFriendCode": "oder Freundescode {code}"
 }

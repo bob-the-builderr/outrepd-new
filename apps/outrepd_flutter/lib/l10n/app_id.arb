@@ -749,5 +749,16 @@
   "placedLabel": "Kamu sudah masuk peringkat",
   "placedBody": "Semua mulai dari sini. Hanya kemenangan yang membawamu naik.",
   "placedHow": "Menangkan pertandingan untuk dapat LP. Kalahkan peringkat lebih tinggi untuk dapat lebih.",
-  "levelBesideName": "Di samping namamu, di mana saja"
+  "levelBesideName": "Di samping namamu, di mana saja",
+  "weekRaceTitle": "Balapan minggu ini",
+  "streakDoneToday": "hari ini beres",
+  "streakTrainToday": "latihan hari ini untuk menambah sehari",
+  "raceChartTitle": "Jalannya satu menit",
+  "raceYouLead": "{time} · kamu memimpin",
+  "raceTheyLead": "{time} · {name} memimpin",
+  "bringFriendTitle": "Ajak teman",
+  "bringFriendBody": "Kirim tautanmu. Tautan itu membuka profilmu, tempat mereka bisa menambahkanmu.",
+  "bringFriendShare": "Bagikan tautanku",
+  "bringFriendShareText": "Tanding push-up denganku di OUTREPD. 60 detik, langsung, dan kamera yang menghitung.",
+  "orFriendCode": "atau kode teman {code}"
 }

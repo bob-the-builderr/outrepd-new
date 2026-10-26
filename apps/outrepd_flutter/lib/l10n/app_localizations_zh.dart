@@ -2425,4 +2425,43 @@ class LZh extends L {
 
   @override
   String get levelBesideName => '显示在你的名字旁，随处可见';
+
+  @override
+  String get weekRaceTitle => '本周竞赛';
+
+  @override
+  String get streakDoneToday => '今天已完成';
+
+  @override
+  String get streakTrainToday => '今天练一次，多加一天';
+
+  @override
+  String get raceChartTitle => '这一分钟的走势';
+
+  @override
+  String raceYouLead(String time) {
+    return '${time} · 你取得领先';
+  }
+
+  @override
+  String raceTheyLead(String time, String name) {
+    return '${time} · ${name} 取得领先';
+  }
+
+  @override
+  String get bringFriendTitle => '叫上朋友';
+
+  @override
+  String get bringFriendBody => '发送你的链接。它会打开你的主页，对方可以在那里加你。';
+
+  @override
+  String get bringFriendShare => '分享我的链接';
+
+  @override
+  String get bringFriendShareText => '来 OUTREPD 和我比俯卧撑。60 秒，实时，摄像头计数。';
+
+  @override
+  String orFriendCode(String code) {
+    return '或好友码 ${code}';
+  }
 }

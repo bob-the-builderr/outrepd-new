@@ -197,6 +197,9 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   bool _challengeSent = false;
 
   int _myReps = 0;
+
+  /// When each of this lifter's reps landed, for the result's race chart.
+  List<int> _myRepTimes = const [];
   Timer? _timer;
 
   /// Once the result has been on screen a moment: the rating prompt, when
@@ -634,6 +637,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     int durationMs = 1,
     List<int> repTimes = const [],
   }) async {
+    _myRepTimes = repTimes;
     // Onto the server, if there is one to reach: the set is stored regardless
     // of whether today's opponent was real, so whoever searches next finds
     // one. Raced against a real opponent, the upload is also this lifter's
@@ -792,6 +796,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
 
     setState(() {
       _myReps = scored.reps;
+      _myRepTimes = scored.repTimes;
       _theirReps = theirs;
       _stage = _Stage.waitingResult;
     });
@@ -1111,6 +1116,11 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           monthBefore: _monthBefore,
           monthAfter: _monthAfter,
           xp: _xp,
+          yourRepTimes: _myRepTimes,
+          theirRepTimes:
+              _session?.opponentRepTimes ??
+              _realOpponent?.repTimes ??
+              const [],
           onDone: () => Navigator.of(context).pop(),
         );
 
@@ -2072,7 +2082,13 @@ class _ResultView extends StatelessWidget {
     this.monthBefore,
     this.monthAfter,
     this.xp,
+    this.yourRepTimes = const [],
+    this.theirRepTimes = const [],
   });
+
+  /// For the race chart: see [DuelResultView.yourRepTimes].
+  final List<int> yourRepTimes;
+  final List<int> theirRepTimes;
 
   @override
   Widget build(BuildContext context) {
@@ -2090,6 +2106,8 @@ class _ResultView extends StatelessWidget {
       monthBefore: monthBefore,
       monthAfter: monthAfter,
       xp: xp,
+      yourRepTimes: yourRepTimes,
+      theirRepTimes: theirRepTimes,
       // Both asked: the new match replaces this result, so finishing it
       // lands where this one started.
       onLiveRematch: (match) => Navigator.of(context).pushReplacement(
