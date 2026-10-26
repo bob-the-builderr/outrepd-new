@@ -2512,4 +2512,37 @@ class LRu extends L {
   String orFriendCode(String code) {
     return 'или код друга ${code}';
   }
+
+  @override
+  String get countryPickerTitle => 'Ваша страна';
+
+  @override
+  String get countrySearch => 'Поиск';
+
+  @override
+  String get countryFromPhone => 'Из настроек телефона';
+
+  @override
+  String get countryAll => 'Все страны';
+
+  @override
+  String get countryChoose => 'Выберите страну';
+
+  @override
+  String get countryChange => 'Изменить';
+
+  @override
+  String get countryForBoard => 'Для рейтинга вашей страны';
+
+  @override
+  String get countryLabel => 'Страна';
+
+  @override
+  String get countryChanged => 'Страна изменена';
+
+  @override
+  String get countryEvery14 => 'Раз в 14 дней, как и имя';
+
+  @override
+  String get countryNotSaved => 'Не удалось сохранить страну. Попробуйте ещё раз.';
 }

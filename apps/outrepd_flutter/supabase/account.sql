@@ -256,6 +256,59 @@ begin
 end;
 $$;
 
+-- The country this lifter chooses, by its two-letter code. Free while the
+-- account is a guest, as the name is; once it has a confirmed email, once
+-- every fourteen days, for the same reason as the name — the country board
+-- is one a lifter could hop between to sit on top of a small one.
+create or replace function set_my_country(new_country text)
+returns text
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  code text := upper(trim(coalesce(new_country, '')));
+  confirmed boolean;
+begin
+  if auth.uid() is null or code !~ '^[A-Z]{2}$' then
+    return 'invalid';
+  end if;
+
+  select coalesce(u.email, '') <> '' and u.email_confirmed_at is not null
+    into confirmed
+    from auth.users u where u.id = auth.uid();
+
+  if coalesce(confirmed, false) and exists (
+    select 1 from profiles
+     where id = auth.uid()
+       and country_changed_at > now() - interval '14 days'
+  ) then
+    return 'too_soon';
+  end if;
+
+  if not within_rate('country', interval '1 hour', 30) then
+    return 'too_often';
+  end if;
+
+  -- The guard on profiles refuses a country written any other way. The
+  -- fourteen days start from a choice made with a confirmed account, so a
+  -- guest who picks one on the way to signing up can still fix it after.
+  perform set_config('outrepd.recountry', 'on', true);
+  update profiles
+     set country = code,
+         country_changed_at = case
+           when coalesce(confirmed, false) then now()
+           else country_changed_at
+         end
+   where id = auth.uid();
+  perform set_config('outrepd.recountry', 'off', true);
+  return 'ok';
+end;
+$$;
+
+revoke all on function set_my_country(text) from public, anon;
+grant execute on function set_my_country(text) to authenticated;
+
 revoke all on function my_data() from public;
 grant execute on function my_data() to authenticated;
 revoke all on function claim_data_export() from public, anon;

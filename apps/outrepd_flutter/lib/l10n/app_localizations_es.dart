@@ -2517,4 +2517,37 @@ class LEs extends L {
   String orFriendCode(String code) {
     return 'o código de amigo ${code}';
   }
+
+  @override
+  String get countryPickerTitle => 'Tu país';
+
+  @override
+  String get countrySearch => 'Buscar';
+
+  @override
+  String get countryFromPhone => 'De tu teléfono';
+
+  @override
+  String get countryAll => 'Todos los países';
+
+  @override
+  String get countryChoose => 'Elige tu país';
+
+  @override
+  String get countryChange => 'Cambiar';
+
+  @override
+  String get countryForBoard => 'Para la clasificación de tu país';
+
+  @override
+  String get countryLabel => 'País';
+
+  @override
+  String get countryChanged => 'País cambiado';
+
+  @override
+  String get countryEvery14 => 'Una vez cada 14 días, como tu nombre';
+
+  @override
+  String get countryNotSaved => 'No se pudo guardar tu país. Inténtalo de nuevo.';
 }

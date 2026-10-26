@@ -760,5 +760,16 @@
   "bringFriendBody": "Bağlantını gönder. Profilini açar, oradan seni ekleyebilirler.",
   "bringFriendShare": "Bağlantımı paylaş",
   "bringFriendShareText": "OUTREPD'de şınavda benimle yarış. 60 saniye, canlı, kamera sayar.",
-  "orFriendCode": "veya arkadaş kodu {code}"
+  "orFriendCode": "veya arkadaş kodu {code}",
+  "countryPickerTitle": "Ülken",
+  "countrySearch": "Ara",
+  "countryFromPhone": "Telefonundan",
+  "countryAll": "Tüm ülkeler",
+  "countryChoose": "Ülkeni seç",
+  "countryChange": "Değiştir",
+  "countryForBoard": "Ülkenin sıralaması için",
+  "countryLabel": "Ülke",
+  "countryChanged": "Ülke değiştirildi",
+  "countryEvery14": "Adın gibi 14 günde bir",
+  "countryNotSaved": "Ülken kaydedilemedi. Tekrar dene."
 }

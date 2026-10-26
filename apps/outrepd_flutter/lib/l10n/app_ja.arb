@@ -760,5 +760,16 @@
   "bringFriendBody": "リンクを送ろう。あなたのプロフィールが開き、そこから追加してもらえます。",
   "bringFriendShare": "リンクを共有",
   "bringFriendShareText": "OUTREPDで腕立て伏せ勝負しよう。60秒、ライブ、カメラがカウント。",
-  "orFriendCode": "またはフレンドコード {code}"
+  "orFriendCode": "またはフレンドコード {code}",
+  "countryPickerTitle": "あなたの国",
+  "countrySearch": "検索",
+  "countryFromPhone": "スマホの設定から",
+  "countryAll": "すべての国",
+  "countryChoose": "国を選ぶ",
+  "countryChange": "変更",
+  "countryForBoard": "あなたの国のランキング用",
+  "countryLabel": "国",
+  "countryChanged": "国を変更しました",
+  "countryEvery14": "名前と同じく14日に1回",
+  "countryNotSaved": "国を保存できませんでした。もう一度お試しください。"
 }

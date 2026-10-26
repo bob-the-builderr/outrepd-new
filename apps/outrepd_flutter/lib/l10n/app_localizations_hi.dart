@@ -2512,4 +2512,37 @@ class LHi extends L {
   String orFriendCode(String code) {
     return 'या फ़्रेंड कोड ${code}';
   }
+
+  @override
+  String get countryPickerTitle => 'आपका देश';
+
+  @override
+  String get countrySearch => 'खोजें';
+
+  @override
+  String get countryFromPhone => 'आपके फ़ोन से';
+
+  @override
+  String get countryAll => 'सभी देश';
+
+  @override
+  String get countryChoose => 'अपना देश चुनें';
+
+  @override
+  String get countryChange => 'बदलें';
+
+  @override
+  String get countryForBoard => 'आपके देश के लीडरबोर्ड के लिए';
+
+  @override
+  String get countryLabel => 'देश';
+
+  @override
+  String get countryChanged => 'देश बदल गया';
+
+  @override
+  String get countryEvery14 => 'हर 14 दिन में एक बार, आपके नाम की तरह';
+
+  @override
+  String get countryNotSaved => 'आपका देश सेव नहीं हो सका। फिर से कोशिश करें।';
 }

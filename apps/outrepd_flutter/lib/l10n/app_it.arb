@@ -760,5 +760,16 @@
   "bringFriendBody": "Manda il tuo link. Apre il tuo profilo, dove possono aggiungerti.",
   "bringFriendShare": "Condividi il mio link",
   "bringFriendShareText": "Sfidami alle flessioni su OUTREPD. 60 secondi, dal vivo, e conta la fotocamera.",
-  "orFriendCode": "o codice amico {code}"
+  "orFriendCode": "o codice amico {code}",
+  "countryPickerTitle": "Il tuo paese",
+  "countrySearch": "Cerca",
+  "countryFromPhone": "Dal tuo telefono",
+  "countryAll": "Tutti i paesi",
+  "countryChoose": "Scegli il tuo paese",
+  "countryChange": "Cambia",
+  "countryForBoard": "Per la classifica del tuo paese",
+  "countryLabel": "Paese",
+  "countryChanged": "Paese cambiato",
+  "countryEvery14": "Una volta ogni 14 giorni, come il nome",
+  "countryNotSaved": "Impossibile salvare il paese. Riprova."
 }

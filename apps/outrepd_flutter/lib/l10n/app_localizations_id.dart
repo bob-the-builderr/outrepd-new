@@ -2511,4 +2511,37 @@ class LId extends L {
   String orFriendCode(String code) {
     return 'atau kode teman ${code}';
   }
+
+  @override
+  String get countryPickerTitle => 'Negaramu';
+
+  @override
+  String get countrySearch => 'Cari';
+
+  @override
+  String get countryFromPhone => 'Dari ponselmu';
+
+  @override
+  String get countryAll => 'Semua negara';
+
+  @override
+  String get countryChoose => 'Pilih negaramu';
+
+  @override
+  String get countryChange => 'Ubah';
+
+  @override
+  String get countryForBoard => 'Untuk papan peringkat negaramu';
+
+  @override
+  String get countryLabel => 'Negara';
+
+  @override
+  String get countryChanged => 'Negara diubah';
+
+  @override
+  String get countryEvery14 => 'Sekali setiap 14 hari, seperti namamu';
+
+  @override
+  String get countryNotSaved => 'Negaramu tidak bisa disimpan. Coba lagi.';
 }

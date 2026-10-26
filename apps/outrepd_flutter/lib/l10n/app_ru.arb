@@ -760,5 +760,16 @@
   "bringFriendBody": "Отправьте свою ссылку. Она откроет ваш профиль, где вас можно добавить.",
   "bringFriendShare": "Поделиться ссылкой",
   "bringFriendShareText": "Сразись со мной в отжиманиях в OUTREPD. 60 секунд, вживую, камера считает.",
-  "orFriendCode": "или код друга {code}"
+  "orFriendCode": "или код друга {code}",
+  "countryPickerTitle": "Ваша страна",
+  "countrySearch": "Поиск",
+  "countryFromPhone": "Из настроек телефона",
+  "countryAll": "Все страны",
+  "countryChoose": "Выберите страну",
+  "countryChange": "Изменить",
+  "countryForBoard": "Для рейтинга вашей страны",
+  "countryLabel": "Страна",
+  "countryChanged": "Страна изменена",
+  "countryEvery14": "Раз в 14 дней, как и имя",
+  "countryNotSaved": "Не удалось сохранить страну. Попробуйте ещё раз."
 }

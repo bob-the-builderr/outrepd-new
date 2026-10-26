@@ -2480,4 +2480,37 @@ class LKo extends L {
   String orFriendCode(String code) {
     return '또는 친구 코드 ${code}';
   }
+
+  @override
+  String get countryPickerTitle => '내 국가';
+
+  @override
+  String get countrySearch => '검색';
+
+  @override
+  String get countryFromPhone => '휴대폰 설정에서';
+
+  @override
+  String get countryAll => '모든 국가';
+
+  @override
+  String get countryChoose => '국가를 선택하세요';
+
+  @override
+  String get countryChange => '변경';
+
+  @override
+  String get countryForBoard => '내 국가 순위표에 쓰여요';
+
+  @override
+  String get countryLabel => '국가';
+
+  @override
+  String get countryChanged => '국가가 변경됐어요';
+
+  @override
+  String get countryEvery14 => '이름처럼 14일에 한 번';
+
+  @override
+  String get countryNotSaved => '국가를 저장하지 못했어요. 다시 시도해 주세요.';
 }

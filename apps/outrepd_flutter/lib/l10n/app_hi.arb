@@ -760,5 +760,16 @@
   "bringFriendBody": "अपना लिंक भेजें। यह आपकी प्रोफ़ाइल खोलता है, जहाँ वे आपको जोड़ सकते हैं।",
   "bringFriendShare": "मेरा लिंक शेयर करें",
   "bringFriendShareText": "OUTREPD पर पुश-अप में मुझसे मुक़ाबला करो। 60 सेकंड, लाइव, और कैमरा गिनता है।",
-  "orFriendCode": "या फ़्रेंड कोड {code}"
+  "orFriendCode": "या फ़्रेंड कोड {code}",
+  "countryPickerTitle": "आपका देश",
+  "countrySearch": "खोजें",
+  "countryFromPhone": "आपके फ़ोन से",
+  "countryAll": "सभी देश",
+  "countryChoose": "अपना देश चुनें",
+  "countryChange": "बदलें",
+  "countryForBoard": "आपके देश के लीडरबोर्ड के लिए",
+  "countryLabel": "देश",
+  "countryChanged": "देश बदल गया",
+  "countryEvery14": "हर 14 दिन में एक बार, आपके नाम की तरह",
+  "countryNotSaved": "आपका देश सेव नहीं हो सका। फिर से कोशिश करें।"
 }

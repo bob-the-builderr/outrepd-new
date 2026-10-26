@@ -106,6 +106,10 @@ alter table profiles add column if not exists notify_live_invite bool not null
   default true;
 alter table profiles add column if not exists avatar_url text;
 alter table profiles add column if not exists username_changed_at timestamptz;
+-- When this lifter last chose a country themselves (set_my_country). Null
+-- until then: the phone's own region fills the column in, and that is not a
+-- choice anybody made.
+alter table profiles add column if not exists country_changed_at timestamptz;
 -- Experience: one for every rep of every set, twenty for every match played
 -- (count_reps_of_set below; xp_for_duel, live.sql). Only ever goes up.
 alter table profiles add column if not exists xp int not null default 0;
@@ -510,6 +514,17 @@ begin
         or new.username_changed_at is distinct from old.username_changed_at)
        and current_setting('outrepd.renaming', true) is distinct from 'on' then
       raise exception 'a username changes through set_my_username only';
+    end if;
+
+    -- The country decides which country board somebody is on, and a board
+    -- for a small country is one a lifter could move onto to top it. Once
+    -- there it changes through set_my_country and its fourteen days. An
+    -- empty one is still filled in from the phone, as it always has been.
+    if (new.country is distinct from old.country
+        or new.country_changed_at is distinct from old.country_changed_at)
+       and old.country is not null
+       and current_setting('outrepd.recountry', true) is distinct from 'on' then
+      raise exception 'a country changes through set_my_country only';
     end if;
 
     if new.avatar_url is distinct from old.avatar_url

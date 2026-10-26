@@ -760,5 +760,16 @@
   "bringFriendBody": "Kirim tautanmu. Tautan itu membuka profilmu, tempat mereka bisa menambahkanmu.",
   "bringFriendShare": "Bagikan tautanku",
   "bringFriendShareText": "Tanding push-up denganku di OUTREPD. 60 detik, langsung, dan kamera yang menghitung.",
-  "orFriendCode": "atau kode teman {code}"
+  "orFriendCode": "atau kode teman {code}",
+  "countryPickerTitle": "Negaramu",
+  "countrySearch": "Cari",
+  "countryFromPhone": "Dari ponselmu",
+  "countryAll": "Semua negara",
+  "countryChoose": "Pilih negaramu",
+  "countryChange": "Ubah",
+  "countryForBoard": "Untuk papan peringkat negaramu",
+  "countryLabel": "Negara",
+  "countryChanged": "Negara diubah",
+  "countryEvery14": "Sekali setiap 14 hari, seperti namamu",
+  "countryNotSaved": "Negaramu tidak bisa disimpan. Coba lagi."
 }

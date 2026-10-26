@@ -760,5 +760,16 @@
   "bringFriendBody": "发送你的链接。它会打开你的主页，对方可以在那里加你。",
   "bringFriendShare": "分享我的链接",
   "bringFriendShareText": "来 OUTREPD 和我比俯卧撑。60 秒，实时，摄像头计数。",
-  "orFriendCode": "或好友码 {code}"
+  "orFriendCode": "或好友码 {code}",
+  "countryPickerTitle": "你的国家/地区",
+  "countrySearch": "搜索",
+  "countryFromPhone": "来自你的手机",
+  "countryAll": "所有国家/地区",
+  "countryChoose": "选择你的国家/地区",
+  "countryChange": "更改",
+  "countryForBoard": "用于你所在国家/地区的排行榜",
+  "countryLabel": "国家/地区",
+  "countryChanged": "国家/地区已更改",
+  "countryEvery14": "和名字一样，每 14 天一次",
+  "countryNotSaved": "无法保存国家/地区，请重试。"
 }

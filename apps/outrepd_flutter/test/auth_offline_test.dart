@@ -74,9 +74,7 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(_app(const SignUpScreen()));
-    final fields = find.byType(TextField);
-    await tester.enterText(fields.at(0), 'mokhtar');
-    await tester.enterText(fields.at(1), 'me@example.com');
+    await tester.enterText(find.byKey(const Key('signUpEmail')), 'me@example.com');
     await tester.pump();
     await tester.tap(find.text('Create account'));
     await tester.pumpAndSettle();
@@ -85,21 +83,21 @@ void main() {
   });
 
   group('a phone whose session did not start at launch', () {
-    testWidgets('starts one before the name is claimed, rather than calling '
-        'the name wrong', (tester) async {
+    testWidgets('starts one before the email goes out', (tester) async {
       final server = _NoSessionYet();
       backend = server;
       await tester.pumpWidget(_app(const SignUpScreen()));
-      final fields = find.byType(TextField);
-      await tester.enterText(fields.at(0), 'lynzzzz');
-      await tester.enterText(fields.at(1), 'me@example.com');
+      await tester.enterText(
+        find.byKey(const Key('signUpEmail')),
+        'me@example.com',
+      );
       await tester.pump();
       await tester.tap(find.text('Create account'));
       await tester.pumpAndSettle();
 
       expect(server.signIns, 1);
-      expect(server.renamedWithSession, isTrue);
-      expect(find.text(_badName), findsNothing);
+      expect(server.emailedWithSession, isTrue);
+      expect(find.text(_cantReach), findsNothing);
     });
 
     testWidgets('says it is the connection when no session can be had', (
@@ -107,28 +105,25 @@ void main() {
     ) async {
       backend = _NoSessionYet()..sessionsRefused = true;
       await tester.pumpWidget(_app(const SignUpScreen()));
-      final fields = find.byType(TextField);
-      await tester.enterText(fields.at(0), 'lynzzzz');
-      await tester.enterText(fields.at(1), 'me@example.com');
+      await tester.enterText(
+        find.byKey(const Key('signUpEmail')),
+        'me@example.com',
+      );
       await tester.pump();
       await tester.tap(find.text('Create account'));
       await tester.pumpAndSettle();
 
       expect(find.text(_cantReach), findsOneWidget);
-      expect(find.text(_badName), findsNothing);
     });
   });
 }
 
-const _badName = '4 to 20 characters, letters and numbers only';
-
-/// The server as a phone with no session finds it: it answers a perfectly
-/// good name as invalid, because it has nobody to give it to — until a
-/// session is started.
+/// The server as a phone with no session finds it: there is no account to
+/// give an email to until a session is started.
 class _NoSessionYet extends NoBackend {
   bool sessionsRefused = false;
   int signIns = 0;
-  bool renamedWithSession = false;
+  bool emailedWithSession = false;
   RemoteProfile? _me;
 
   @override
@@ -152,13 +147,9 @@ class _NoSessionYet extends NoBackend {
   }
 
   @override
-  Future<RenameResult> renameUsername(String name) async {
-    if (_me == null) return RenameResult.invalid;
-    renamedWithSession = true;
-    return RenameResult.ok;
+  Future<EmailSignUpResult> startEmailSignUp({required String email}) async {
+    if (_me == null) return EmailSignUpResult.invalid;
+    emailedWithSession = true;
+    return EmailSignUpResult.ok;
   }
-
-  @override
-  Future<EmailSignUpResult> startEmailSignUp({required String email}) async =>
-      EmailSignUpResult.ok;
 }

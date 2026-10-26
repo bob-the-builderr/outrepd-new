@@ -760,5 +760,16 @@
   "bringFriendBody": "Schick deinen Link. Er öffnet dein Profil, wo man dich hinzufügen kann.",
   "bringFriendShare": "Meinen Link teilen",
   "bringFriendShareText": "Tritt bei OUTREPD im Liegestütz gegen mich an. 60 Sekunden, live, die Kamera zählt.",
-  "orFriendCode": "oder Freundescode {code}"
+  "orFriendCode": "oder Freundescode {code}",
+  "countryPickerTitle": "Dein Land",
+  "countrySearch": "Suchen",
+  "countryFromPhone": "Von deinem Handy",
+  "countryAll": "Alle Länder",
+  "countryChoose": "Wähle dein Land",
+  "countryChange": "Ändern",
+  "countryForBoard": "Für die Rangliste deines Landes",
+  "countryLabel": "Land",
+  "countryChanged": "Land geändert",
+  "countryEvery14": "Einmal alle 14 Tage, wie dein Name",
+  "countryNotSaved": "Dein Land konnte nicht gespeichert werden. Versuch es noch mal."
 }

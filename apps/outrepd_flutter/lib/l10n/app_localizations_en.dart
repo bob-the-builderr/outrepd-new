@@ -2510,4 +2510,37 @@ class LEn extends L {
   String orFriendCode(String code) {
     return 'or friend code ${code}';
   }
+
+  @override
+  String get countryPickerTitle => 'Your country';
+
+  @override
+  String get countrySearch => 'Search';
+
+  @override
+  String get countryFromPhone => 'From your phone';
+
+  @override
+  String get countryAll => 'All countries';
+
+  @override
+  String get countryChoose => 'Choose your country';
+
+  @override
+  String get countryChange => 'Change';
+
+  @override
+  String get countryForBoard => 'For your country\'s leaderboard';
+
+  @override
+  String get countryLabel => 'Country';
+
+  @override
+  String get countryChanged => 'Country changed';
+
+  @override
+  String get countryEvery14 => 'Once every 14 days, like your name';
+
+  @override
+  String get countryNotSaved => 'Couldn\'t save your country. Try again.';
 }

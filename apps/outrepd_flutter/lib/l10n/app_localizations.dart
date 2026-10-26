@@ -4558,6 +4558,72 @@ abstract class L {
   /// In en, this message translates to:
   /// **'or friend code {code}'**
   String orFriendCode(String code);
+
+  /// No description provided for @countryPickerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your country'**
+  String get countryPickerTitle;
+
+  /// No description provided for @countrySearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get countrySearch;
+
+  /// No description provided for @countryFromPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'From your phone'**
+  String get countryFromPhone;
+
+  /// No description provided for @countryAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All countries'**
+  String get countryAll;
+
+  /// No description provided for @countryChoose.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your country'**
+  String get countryChoose;
+
+  /// No description provided for @countryChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get countryChange;
+
+  /// No description provided for @countryForBoard.
+  ///
+  /// In en, this message translates to:
+  /// **'For your country's leaderboard'**
+  String get countryForBoard;
+
+  /// No description provided for @countryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get countryLabel;
+
+  /// No description provided for @countryChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Country changed'**
+  String get countryChanged;
+
+  /// No description provided for @countryEvery14.
+  ///
+  /// In en, this message translates to:
+  /// **'Once every 14 days, like your name'**
+  String get countryEvery14;
+
+  /// No description provided for @countryNotSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn't save your country. Try again.'**
+  String get countryNotSaved;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

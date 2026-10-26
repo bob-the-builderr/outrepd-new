@@ -760,5 +760,16 @@
   "bringFriendBody": "링크를 보내세요. 내 프로필이 열리고, 거기서 나를 추가할 수 있어요.",
   "bringFriendShare": "내 링크 공유",
   "bringFriendShareText": "OUTREPD에서 푸시업으로 나랑 붙자. 60초, 실시간, 카메라가 세어 줘.",
-  "orFriendCode": "또는 친구 코드 {code}"
+  "orFriendCode": "또는 친구 코드 {code}",
+  "countryPickerTitle": "내 국가",
+  "countrySearch": "검색",
+  "countryFromPhone": "휴대폰 설정에서",
+  "countryAll": "모든 국가",
+  "countryChoose": "국가를 선택하세요",
+  "countryChange": "변경",
+  "countryForBoard": "내 국가 순위표에 쓰여요",
+  "countryLabel": "국가",
+  "countryChanged": "국가가 변경됐어요",
+  "countryEvery14": "이름처럼 14일에 한 번",
+  "countryNotSaved": "국가를 저장하지 못했어요. 다시 시도해 주세요."
 }

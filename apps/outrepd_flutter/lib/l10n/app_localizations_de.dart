@@ -2519,4 +2519,37 @@ class LDe extends L {
   String orFriendCode(String code) {
     return 'oder Freundescode ${code}';
   }
+
+  @override
+  String get countryPickerTitle => 'Dein Land';
+
+  @override
+  String get countrySearch => 'Suchen';
+
+  @override
+  String get countryFromPhone => 'Von deinem Handy';
+
+  @override
+  String get countryAll => 'Alle Länder';
+
+  @override
+  String get countryChoose => 'Wähle dein Land';
+
+  @override
+  String get countryChange => 'Ändern';
+
+  @override
+  String get countryForBoard => 'Für die Rangliste deines Landes';
+
+  @override
+  String get countryLabel => 'Land';
+
+  @override
+  String get countryChanged => 'Land geändert';
+
+  @override
+  String get countryEvery14 => 'Einmal alle 14 Tage, wie dein Name';
+
+  @override
+  String get countryNotSaved => 'Dein Land konnte nicht gespeichert werden. Versuch es noch mal.';
 }

@@ -2517,4 +2517,37 @@ class LIt extends L {
   String orFriendCode(String code) {
     return 'o codice amico ${code}';
   }
+
+  @override
+  String get countryPickerTitle => 'Il tuo paese';
+
+  @override
+  String get countrySearch => 'Cerca';
+
+  @override
+  String get countryFromPhone => 'Dal tuo telefono';
+
+  @override
+  String get countryAll => 'Tutti i paesi';
+
+  @override
+  String get countryChoose => 'Scegli il tuo paese';
+
+  @override
+  String get countryChange => 'Cambia';
+
+  @override
+  String get countryForBoard => 'Per la classifica del tuo paese';
+
+  @override
+  String get countryLabel => 'Paese';
+
+  @override
+  String get countryChanged => 'Paese cambiato';
+
+  @override
+  String get countryEvery14 => 'Una volta ogni 14 giorni, come il nome';
+
+  @override
+  String get countryNotSaved => 'Impossibile salvare il paese. Riprova.';
 }

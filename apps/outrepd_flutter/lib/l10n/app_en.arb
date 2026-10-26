@@ -1634,5 +1634,16 @@
         "type": "String"
       }
     }
-  }
+  },
+  "countryPickerTitle": "Your country",
+  "countrySearch": "Search",
+  "countryFromPhone": "From your phone",
+  "countryAll": "All countries",
+  "countryChoose": "Choose your country",
+  "countryChange": "Change",
+  "countryForBoard": "For your country's leaderboard",
+  "countryLabel": "Country",
+  "countryChanged": "Country changed",
+  "countryEvery14": "Once every 14 days, like your name",
+  "countryNotSaved": "Couldn't save your country. Try again."
 }

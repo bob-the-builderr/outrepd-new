@@ -2514,4 +2514,37 @@ class LPt extends L {
   String orFriendCode(String code) {
     return 'ou código de amigo ${code}';
   }
+
+  @override
+  String get countryPickerTitle => 'Seu país';
+
+  @override
+  String get countrySearch => 'Buscar';
+
+  @override
+  String get countryFromPhone => 'Do seu celular';
+
+  @override
+  String get countryAll => 'Todos os países';
+
+  @override
+  String get countryChoose => 'Escolha seu país';
+
+  @override
+  String get countryChange => 'Alterar';
+
+  @override
+  String get countryForBoard => 'Para o ranking do seu país';
+
+  @override
+  String get countryLabel => 'País';
+
+  @override
+  String get countryChanged => 'País alterado';
+
+  @override
+  String get countryEvery14 => 'Uma vez a cada 14 dias, como seu nome';
+
+  @override
+  String get countryNotSaved => 'Não foi possível salvar seu país. Tente de novo.';
 }

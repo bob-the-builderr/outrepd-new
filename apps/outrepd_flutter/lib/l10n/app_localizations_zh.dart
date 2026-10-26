@@ -2464,4 +2464,37 @@ class LZh extends L {
   String orFriendCode(String code) {
     return '或好友码 ${code}';
   }
+
+  @override
+  String get countryPickerTitle => '你的国家/地区';
+
+  @override
+  String get countrySearch => '搜索';
+
+  @override
+  String get countryFromPhone => '来自你的手机';
+
+  @override
+  String get countryAll => '所有国家/地区';
+
+  @override
+  String get countryChoose => '选择你的国家/地区';
+
+  @override
+  String get countryChange => '更改';
+
+  @override
+  String get countryForBoard => '用于你所在国家/地区的排行榜';
+
+  @override
+  String get countryLabel => '国家/地区';
+
+  @override
+  String get countryChanged => '国家/地区已更改';
+
+  @override
+  String get countryEvery14 => '和名字一样，每 14 天一次';
+
+  @override
+  String get countryNotSaved => '无法保存国家/地区，请重试。';
 }

@@ -94,6 +94,7 @@ class RemoteProfile {
     this.prefs = const RemotePrefs(),
     this.avatarUrl,
     this.usernameChangedAt,
+    this.countryChangedAt,
     this.peakTierIdx = 0,
     this.wins = 0,
     this.losses = 0,
@@ -151,6 +152,11 @@ class RemoteProfile {
   /// [RenameResult.alreadyChanged].
   final DateTime? usernameChangedAt;
 
+  /// When this lifter last chose their country, or null when it was never
+  /// chosen. Like the name, it can change again fourteen days after, once the
+  /// account has an email ([Backend.setMyCountry]).
+  final DateTime? countryChangedAt;
+
   /// Everything but the field or two an update actually changed. A backend
   /// method rebuilding this by hand, one field at a time, is exactly how a
   /// new field here goes missing from an update that has no reason to touch
@@ -164,6 +170,7 @@ class RemoteProfile {
     RemotePrefs? prefs,
     String? avatarUrl,
     DateTime? usernameChangedAt,
+    DateTime? countryChangedAt,
     int? peakTierIdx,
     int? wins,
     int? losses,
@@ -185,6 +192,7 @@ class RemoteProfile {
     prefs: prefs ?? this.prefs,
     avatarUrl: avatarUrl ?? this.avatarUrl,
     usernameChangedAt: usernameChangedAt ?? this.usernameChangedAt,
+    countryChangedAt: countryChangedAt ?? this.countryChangedAt,
     peakTierIdx: peakTierIdx ?? this.peakTierIdx,
     wins: wins ?? this.wins,
     losses: losses ?? this.losses,
@@ -927,6 +935,16 @@ enum RenameResult {
   notAllowed,
 }
 
+enum CountryResult {
+  ok,
+
+  /// Chosen less than fourteen days ago, on an account with an email.
+  tooSoon,
+
+  /// Not a two-letter code, or asked too often in an hour.
+  invalid,
+}
+
 /// What happened trying to attach an email to this account.
 enum EmailSignUpResult {
   ok,
@@ -1255,6 +1273,9 @@ abstract interface class Backend {
   /// Renames this account.
   Future<RenameResult> renameUsername(String name);
 
+  /// Sets this account's country, by its two-letter code.
+  Future<CountryResult> setMyCountry(String code);
+
   /// Signs in with an identity token from Apple or Google. On this phone's
   /// guest the identity is linked to it, so the guest becomes the account
   /// and keeps what it has — unless the identity already belongs to an
@@ -1571,6 +1592,10 @@ class NoBackend implements Backend {
   @override
   Future<RenameResult> renameUsername(String name) =>
       throw StateError('no server configured');
+
+  /// No server: nothing to refuse it, and the caller keeps it on the phone.
+  @override
+  Future<CountryResult> setMyCountry(String code) async => CountryResult.ok;
 
   @override
   Future<String> uploadAvatar(Uint8List bytes) =>

@@ -16,6 +16,7 @@ import 'package:flutter/services.dart';
 
 import '../backend/backend.dart';
 import '../career.dart';
+import '../country_names.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../subscription.dart';
@@ -23,6 +24,7 @@ import '../theme.dart';
 import '../tier_badge.dart';
 import '../type_scale.dart';
 import '../username_rules.dart';
+import 'country_picker.dart';
 import 'legal_line.dart';
 import 'social_sign_in.dart';
 
@@ -173,8 +175,8 @@ class SignUpScreen extends StatefulWidget {
 }
 
 /// The username field and its live checks — red the moment the name is
-/// wrong, and whether it is free once typing pauses — shared by the sign-up
-/// screen and the one a new Apple or Google account names itself on.
+/// wrong, and whether it is free once typing pauses — on the screen every
+/// new account names itself on, after its email or Apple or Google.
 mixin _UsernameChecks<T extends StatefulWidget> on State<T> {
   final _username = TextEditingController();
 
@@ -258,7 +260,7 @@ mixin _UsernameChecks<T extends StatefulWidget> on State<T> {
       (_available == false ? l.usernameTaken : null);
 }
 
-class _SignUpScreenState extends State<SignUpScreen> with _UsernameChecks {
+class _SignUpScreenState extends State<SignUpScreen> {
   final _email = TextEditingController();
 
   /// A friend's code, optional. See supabase/invites.sql.
@@ -271,9 +273,6 @@ class _SignUpScreenState extends State<SignUpScreen> with _UsernameChecks {
 
   /// The invite field, opened from its line.
   bool _showInvite = false;
-
-  @override
-  void _usernameEdited() => _error = null;
 
   @override
   void dispose() {
@@ -311,16 +310,11 @@ class _SignUpScreenState extends State<SignUpScreen> with _UsernameChecks {
     }
   }
 
-  bool get _canSubmit =>
-      usernameValid(_username.text) &&
-      _available != false &&
-      _email.text.trim().isNotEmpty &&
-      !_busy;
+  bool get _canSubmit => _email.text.trim().isNotEmpty && !_busy;
 
   Future<void> _submit() async {
     if (!_canSubmit) return;
     final l = L.of(context);
-    final username = _username.text;
     final email = _email.text.trim();
 
     setState(() {
@@ -331,45 +325,11 @@ class _SignUpScreenState extends State<SignUpScreen> with _UsernameChecks {
     try {
       // A phone whose session did not start at launch — offline then, or
       // turned away by the server's hourly limit on new guests — has no
-      // account to name or to give an email to, and the server answered the
-      // name as if it were wrong. One more try, and a failure is reported as
-      // the connection it is, not as the name.
+      // account to give an email to. One more try, under the name the guest
+      // already has; the real one is chosen once the email is confirmed.
       if (backend.available && backend.me == null) {
-        await backend.signIn(username: username);
+        await backend.signIn(username: demoProfile.username);
         if (!mounted) return;
-      }
-
-      // Claimed first, so the code only goes out once the name is known to
-      // be free. The account is still a guest here, and a guest may rename
-      // as often as it likes: coming back to this screen to fix the name, or
-      // because the email was taken, renames again. The name becomes final
-      // when the code is confirmed (set_my_username, account.sql).
-      final renamed = await backend.renameUsername(username);
-      if (!mounted) return;
-      switch (renamed) {
-        case RenameResult.taken:
-          setState(() {
-            _busy = false;
-            _available = false;
-          });
-          return;
-        case RenameResult.invalid:
-          setState(() {
-            _busy = false;
-            _error = l.usernameInvalidLength;
-          });
-          return;
-        case RenameResult.notAllowed:
-          setState(() {
-            _busy = false;
-            _error = l.usernameNotAllowed;
-          });
-          return;
-        case RenameResult.ok:
-          demoProfile.username = username;
-        case RenameResult.alreadyChanged:
-        // Only an account with a confirmed email gets this, and one with a
-        // confirmed email is not signing up. Not an error: it keeps its name.
       }
 
       final inviteError = await _claimInvite(l);
@@ -390,6 +350,13 @@ class _SignUpScreenState extends State<SignUpScreen> with _UsernameChecks {
           final outcome = await Navigator.of(context).push<AuthOutcome>(
             MaterialPageRoute(builder: (_) => VerifyCodeScreen(email: email)),
           );
+          // A new account is named once its email is confirmed — its name
+          // and its country — the way an Apple or Google one is.
+          if (outcome == AuthOutcome.signedUp && mounted) {
+            await Navigator.of(context).push<void>(
+              MaterialPageRoute(builder: (_) => const ChooseUsernameScreen()),
+            );
+          }
           if (outcome != null && mounted) Navigator.of(context).pop(outcome);
           if (mounted) setState(() => _busy = false);
         case EmailSignUpResult.taken:
@@ -442,9 +409,8 @@ class _SignUpScreenState extends State<SignUpScreen> with _UsernameChecks {
                       subtitle: l.createAccountPitch,
                     ),
                     const SizedBox(height: 26),
-                    _usernameField(l),
-                    const SizedBox(height: 12),
                     _Field(
+                      key: const Key('signUpEmail'),
                       controller: _email,
                       icon: Icons.mail_outline,
                       hint: l.emailHint,
@@ -1249,6 +1215,10 @@ class _ChooseUsernameScreenState extends State<ChooseUsernameScreen>
   bool _busy = false;
   String? _error;
 
+  /// The country board this account goes on: the phone's own region to
+  /// begin with, which the lifter can change here.
+  String? _country = backend.me?.country ?? deviceCountryCode();
+
   @override
   void _usernameEdited() => _error = null;
 
@@ -1269,11 +1239,13 @@ class _ChooseUsernameScreenState extends State<ChooseUsernameScreen>
       switch (result) {
         case RenameResult.ok:
           demoProfile.username = name;
-          Navigator.of(context).pop();
+          await _saveCountry();
+          if (mounted) Navigator.of(context).pop();
         case RenameResult.alreadyChanged:
-          // A name was already chosen on the sign-up screen before Apple or
-          // Google was: that is the name it keeps.
-          Navigator.of(context).pop();
+          // A name was already chosen before the account was: that is the
+          // name it keeps. The country is still this screen's to set.
+          await _saveCountry();
+          if (mounted) Navigator.of(context).pop();
         case RenameResult.taken:
           setState(() {
             _busy = false;
@@ -1299,6 +1271,20 @@ class _ChooseUsernameScreenState extends State<ChooseUsernameScreen>
     }
   }
 
+  /// The country, when it is not the one the account already has. A new
+  /// account cannot be refused this, so a failure only leaves the phone's.
+  Future<void> _saveCountry() async {
+    final country = _country;
+    if (country == null || country == backend.me?.country) return;
+    try {
+      if (await backend.setMyCountry(country) == CountryResult.ok) {
+        demoProfile.country = country;
+      }
+    } on Object catch (error) {
+      debugPrint('Could not save the country: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
@@ -1319,6 +1305,11 @@ class _ChooseUsernameScreenState extends State<ChooseUsernameScreen>
                 ),
                 const SizedBox(height: 26),
                 _usernameField(l),
+                const SizedBox(height: 14),
+                CountryField(
+                  code: _country,
+                  onChanged: (code) => setState(() => _country = code),
+                ),
                 if (_error != null) ...[
                   const SizedBox(height: 10),
                   Text(

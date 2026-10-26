@@ -84,14 +84,15 @@ void main() {
   }
 
   Future<void> fillIn(WidgetTester tester, {String code = ''}) async {
-    final fields = find.byType(TextField);
-    await tester.enterText(fields.at(0), 'lifter_one');
-    await tester.enterText(fields.at(1), 'one@example.com');
+    await tester.enterText(
+      find.byKey(const Key('signUpEmail')),
+      'one@example.com',
+    );
     if (code.isNotEmpty) {
       // The code's field opens from its line; most people have none.
       await tester.tap(find.byKey(const Key('showInviteCode')));
       await tester.pump();
-      await tester.enterText(fields.at(2), code);
+      await tester.enterText(find.byKey(const Key('inviteCode')), code);
     }
     await tester.pump();
   }

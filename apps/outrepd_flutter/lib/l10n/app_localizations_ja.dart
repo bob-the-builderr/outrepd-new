@@ -2474,4 +2474,37 @@ class LJa extends L {
   String orFriendCode(String code) {
     return 'またはフレンドコード ${code}';
   }
+
+  @override
+  String get countryPickerTitle => 'あなたの国';
+
+  @override
+  String get countrySearch => '検索';
+
+  @override
+  String get countryFromPhone => 'スマホの設定から';
+
+  @override
+  String get countryAll => 'すべての国';
+
+  @override
+  String get countryChoose => '国を選ぶ';
+
+  @override
+  String get countryChange => '変更';
+
+  @override
+  String get countryForBoard => 'あなたの国のランキング用';
+
+  @override
+  String get countryLabel => '国';
+
+  @override
+  String get countryChanged => '国を変更しました';
+
+  @override
+  String get countryEvery14 => '名前と同じく14日に1回';
+
+  @override
+  String get countryNotSaved => '国を保存できませんでした。もう一度お試しください。';
 }

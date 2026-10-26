@@ -2507,4 +2507,37 @@ class LTr extends L {
   String orFriendCode(String code) {
     return 'veya arkadaş kodu ${code}';
   }
+
+  @override
+  String get countryPickerTitle => 'Ülken';
+
+  @override
+  String get countrySearch => 'Ara';
+
+  @override
+  String get countryFromPhone => 'Telefonundan';
+
+  @override
+  String get countryAll => 'Tüm ülkeler';
+
+  @override
+  String get countryChoose => 'Ülkeni seç';
+
+  @override
+  String get countryChange => 'Değiştir';
+
+  @override
+  String get countryForBoard => 'Ülkenin sıralaması için';
+
+  @override
+  String get countryLabel => 'Ülke';
+
+  @override
+  String get countryChanged => 'Ülke değiştirildi';
+
+  @override
+  String get countryEvery14 => 'Adın gibi 14 günde bir';
+
+  @override
+  String get countryNotSaved => 'Ülken kaydedilemedi. Tekrar dene.';
 }

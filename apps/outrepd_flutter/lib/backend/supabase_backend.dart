@@ -11,6 +11,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../country_names.dart';
 import 'backend.dart';
 
 /// Supplied at build time, never committed:
@@ -110,16 +111,9 @@ class SupabaseBackend implements Backend {
     return _me = _profileFrom(row);
   }
 
-  /// Where this phone says it is, as a two-letter code.
-  ///
-  /// Read off the device rather than asked for. Nobody installs a push-up app
-  /// to fill in a country field, and a board that quietly works is worth more
-  /// than one more question during sign-up.
-  static String? get _country {
-    final locale = PlatformDispatcher.instance.locale;
-    final code = locale.countryCode;
-    return (code == null || code.isEmpty) ? null : code.toUpperCase();
-  }
+  /// Where this phone says it is: the country a new account starts with,
+  /// until its lifter picks another (set_my_country).
+  static String? get _country => deviceCountryCode();
 
   @override
   Future<String> uploadSet(SetUpload set) async {
@@ -805,6 +799,25 @@ class SupabaseBackend implements Backend {
   }
 
   @override
+  Future<CountryResult> setMyCountry(String code) async {
+    final result = await _db.rpc<String>(
+      'set_my_country',
+      params: {'new_country': code},
+    );
+    switch (result) {
+      case 'ok':
+        // Read back rather than guessed: whether the fourteen days started
+        // depends on whether the server counts this account as confirmed.
+        await refreshMe();
+        return CountryResult.ok;
+      case 'too_soon':
+        return CountryResult.tooSoon;
+      default:
+        return CountryResult.invalid;
+    }
+  }
+
+  @override
   Future<RenameResult> renameUsername(String name) async {
     final result = await _db.rpc<String>(
       'set_my_username',
@@ -1349,6 +1362,9 @@ class SupabaseBackend implements Backend {
     xp: (row['xp'] as num?)?.toInt() ?? 0,
     usernameChangedAt: DateTime.tryParse(
       row['username_changed_at'] as String? ?? '',
+    ),
+    countryChangedAt: DateTime.tryParse(
+      row['country_changed_at'] as String? ?? '',
     ),
     peakTierIdx: (row['peak_tier_idx'] as num?)?.toInt() ?? 0,
     wins: (row['wins'] as num?)?.toInt() ?? 0,

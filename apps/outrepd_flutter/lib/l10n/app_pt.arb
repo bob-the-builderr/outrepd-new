@@ -760,5 +760,16 @@
   "bringFriendBody": "Envie seu link. Ele abre seu perfil, onde podem adicionar você.",
   "bringFriendShare": "Compartilhar meu link",
   "bringFriendShareText": "Dispute flexões comigo no OUTREPD. 60 segundos, ao vivo, e a câmera conta.",
-  "orFriendCode": "ou código de amigo {code}"
+  "orFriendCode": "ou código de amigo {code}",
+  "countryPickerTitle": "Seu país",
+  "countrySearch": "Buscar",
+  "countryFromPhone": "Do seu celular",
+  "countryAll": "Todos os países",
+  "countryChoose": "Escolha seu país",
+  "countryChange": "Alterar",
+  "countryForBoard": "Para o ranking do seu país",
+  "countryLabel": "País",
+  "countryChanged": "País alterado",
+  "countryEvery14": "Uma vez a cada 14 dias, como seu nome",
+  "countryNotSaved": "Não foi possível salvar seu país. Tente de novo."
 }

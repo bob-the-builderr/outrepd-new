@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../backend/backend.dart';
+import '../country_names.dart';
 import '../data.dart';
 import '../health_sync.dart';
 import '../l10n/app_localizations.dart';
@@ -26,14 +27,17 @@ import '../reps/count_accuracy.dart';
 import '../settings.dart';
 import '../theme.dart';
 import '../type_scale.dart';
+import '../username_rules.dart';
 import '../widgets.dart';
 import 'auth_entry.dart';
 import 'counter_accuracy.dart';
+import 'country_picker.dart';
 import 'leave_account.dart';
 import 'settings_account.dart';
 import 'settings_notices.dart';
 import 'settings_parts.dart';
 import 'settings_privacy.dart';
+import 'username_editor.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -70,6 +74,44 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   /// Opens a screen and rebuilds on the way back, so a row's summary catches
   /// up with whatever was changed behind it.
+  /// When this account's country can change again, or null when it can now.
+  /// The fourteen days hold only once the account has an email, as the
+  /// name's do.
+  DateTime? _countryNext(RemoteProfile me) =>
+      backend.hasRealAccount ? usernameNextChange(me.countryChangedAt) : null;
+
+  Future<void> _changeCountry() async {
+    final l = L.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    void say(String text) => messenger.showSnackBar(
+      SnackBar(content: Text(text), behavior: SnackBarBehavior.floating),
+    );
+    final me = backend.me;
+    if (me == null) return;
+    if (_countryNext(me) case final next?) {
+      say(usernameChangeAgainText(l, next));
+      return;
+    }
+    final picked = await showCountryPicker(context, selected: me.country);
+    if (picked == null || picked == me.country || !mounted) return;
+    try {
+      final result = await backend.setMyCountry(picked);
+      if (!mounted) return;
+      switch (result) {
+        case CountryResult.ok:
+          demoProfile.country = picked;
+          setState(() {});
+          say(l.countryChanged);
+        case CountryResult.tooSoon:
+          say(l.countryEvery14);
+        case CountryResult.invalid:
+          say(l.countryNotSaved);
+      }
+    } on Object catch (_) {
+      if (mounted) say(l.cantReachServer);
+    }
+  }
+
   Future<void> _open(Widget screen) async {
     await Navigator.of(context).push(MaterialPageRoute(builder: (_) => screen));
     if (mounted) setState(() {});
@@ -94,6 +136,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
           SettingsSection(
             title: l.accountSection,
             children: [
+              if (backend.me case final me?) ...[
+                NavRow(
+                  key: const Key('usernameRow'),
+                  icon: Icons.alternate_email,
+                  label: l.usernameLabel,
+                  value: me.username,
+                  onTap: () async {
+                    await showUsernameEditor(context);
+                    if (mounted) setState(() {});
+                  },
+                ),
+                NavRow(
+                  key: const Key('countryRow'),
+                  icon: Icons.public,
+                  label: l.countryLabel,
+                  value: me.country == null
+                      ? null
+                      : '${countryFlag(me.country!)} '
+                            '${countryName(context, me.country!)}',
+                  caption: switch (_countryNext(me)) {
+                    final next? => usernameChangeAgainText(l, next),
+                    null => l.countryEvery14,
+                  },
+                  onTap: _changeCountry,
+                ),
+              ],
               if (backend.hasRealAccount) ...[
                 NavRow(
                   icon: Icons.verified_user_outlined,

@@ -2518,4 +2518,37 @@ class LFr extends L {
   String orFriendCode(String code) {
     return 'ou code ami ${code}';
   }
+
+  @override
+  String get countryPickerTitle => 'Ton pays';
+
+  @override
+  String get countrySearch => 'Rechercher';
+
+  @override
+  String get countryFromPhone => 'D\'après ton téléphone';
+
+  @override
+  String get countryAll => 'Tous les pays';
+
+  @override
+  String get countryChoose => 'Choisis ton pays';
+
+  @override
+  String get countryChange => 'Changer';
+
+  @override
+  String get countryForBoard => 'Pour le classement de ton pays';
+
+  @override
+  String get countryLabel => 'Pays';
+
+  @override
+  String get countryChanged => 'Pays modifié';
+
+  @override
+  String get countryEvery14 => 'Une fois tous les 14 jours, comme ton nom';
+
+  @override
+  String get countryNotSaved => 'Impossible d\'enregistrer ton pays. Réessaie.';
 }

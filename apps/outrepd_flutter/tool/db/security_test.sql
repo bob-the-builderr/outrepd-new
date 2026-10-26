@@ -335,6 +335,36 @@ reset role;
 select check_that((select username from profiles where id = :'A') = 'Alice4',
                   'the name after a rename fourteen days on');
 
+-- The country: chosen through set_my_country, under the same fourteen days
+-- once the account is confirmed, and never written around it.
+select as_user(:'A'); set role authenticated;
+select must_fail('writing a country around set_my_country',
+  $q$update profiles set country = 'US' where id = auth.uid()$q$);
+select check_that(set_my_country('us') = 'ok',
+                  'a confirmed account choosing its country');
+select check_that(set_my_country('FR') = 'too_soon',
+                  'a second country inside fourteen days');
+select check_that(set_my_country('Egypt') = 'invalid',
+                  'a country that is not a two-letter code');
+reset role;
+select check_that((select country from profiles where id = :'A') = 'US',
+                  'the country kept is not the one chosen');
+set session_replication_role = replica;
+update profiles set country_changed_at = now() - interval '15 days'
+ where id = :'A';
+set session_replication_role = default;
+select as_user(:'A'); set role authenticated;
+select check_that(set_my_country('FR') = 'ok',
+                  'a country change fourteen days after the last was refused');
+reset role;
+-- A guest picks freely, and nothing starts the fourteen days.
+select as_user(:'B'); set role authenticated;
+select check_that(set_my_country('DE') = 'ok', 'a guest choosing a country');
+select check_that(set_my_country('AT') = 'ok', 'a guest changing it again');
+reset role;
+select check_that((select country_changed_at from profiles where id = :'B') is null,
+                  'a guest''s choice started the fourteen days');
+
 -- A search matches what was typed: `_` and `%` are not wildcards.
 select as_user(:'B'); set role authenticated;
 select check_that((select count(*) from find_lifters('dan_')) = 1,

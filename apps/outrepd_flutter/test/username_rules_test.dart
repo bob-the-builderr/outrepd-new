@@ -57,7 +57,7 @@ void main() {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: L.supportedLocales,
-        home: const SignUpScreen(),
+        home: const ChooseUsernameScreen(),
       ),
     );
     await tester.pumpAndSettle();

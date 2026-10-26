@@ -760,5 +760,16 @@
   "bringFriendBody": "Envoie ton lien. Il ouvre ton profil, où l'on peut t'ajouter.",
   "bringFriendShare": "Partager mon lien",
   "bringFriendShareText": "Affronte-moi aux pompes sur OUTREPD. 60 secondes, en direct, et la caméra compte.",
-  "orFriendCode": "ou code ami {code}"
+  "orFriendCode": "ou code ami {code}",
+  "countryPickerTitle": "Ton pays",
+  "countrySearch": "Rechercher",
+  "countryFromPhone": "D'après ton téléphone",
+  "countryAll": "Tous les pays",
+  "countryChoose": "Choisis ton pays",
+  "countryChange": "Changer",
+  "countryForBoard": "Pour le classement de ton pays",
+  "countryLabel": "Pays",
+  "countryChanged": "Pays modifié",
+  "countryEvery14": "Une fois tous les 14 jours, comme ton nom",
+  "countryNotSaved": "Impossible d'enregistrer ton pays. Réessaie."
 }
