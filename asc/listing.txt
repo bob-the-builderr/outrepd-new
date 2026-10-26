@@ -1,24 +1,24 @@
-asked       2026-10-23 23:56 UTC
-en-US    name 24  subtitle 30  keywords  98  promo 148  description 2122
-en-GB    name 24  subtitle 30  keywords  98  promo 148  description 2122
-en-AU    name 24  subtitle 30  keywords  98  promo 148  description 2122
-en-CA    name 24  subtitle 30  keywords  98  promo 148  description 2122
-de-DE    name 24  subtitle 30  keywords  95  promo 162  description 2473
+asked       2026-10-26 23:45 UTC
+en-US    name 24  subtitle 30  keywords  98  promo 148  description 2126
+en-GB    name 24  subtitle 30  keywords  98  promo 148  description 2126
+en-AU    name 24  subtitle 30  keywords  98  promo 148  description 2126
+en-CA    name 24  subtitle 30  keywords  98  promo 148  description 2126
+de-DE    name 24  subtitle 30  keywords  95  promo 162  description 2481
 fr-FR    name 24  subtitle 30  keywords  98  promo 157  description 2401
 fr-CA    name 24  subtitle 30  keywords  98  promo 157  description 2401
-es-ES    name 24  subtitle 30  keywords 100  promo 156  description 2275
-es-MX    name 24  subtitle 27  keywords  96  promo 150  description 2285
-it       name 24  subtitle 26  keywords  95  promo 153  description 2339
-pt-BR    name 24  subtitle 30  keywords  97  promo 155  description 2228
-pt-PT    name 24  subtitle 28  keywords  95  promo 152  description 2243
-ru       name 24  subtitle 29  keywords  91  promo 157  description 2234
-tr       name 24  subtitle 29  keywords  96  promo 140  description 2108
-ja       name 24  subtitle 18  keywords  70  promo  70  description 1082
-ko       name 24  subtitle 22  keywords  55  promo  85  description 1178
-zh-Hans  name 24  subtitle 13  keywords  61  promo  54  description 790
-zh-Hant  name 24  subtitle 14  keywords  57  promo  54  description 795
-hi       name 24  subtitle 28  keywords  90  promo 136  description 2073
-id       name 24  subtitle 30  keywords  98  promo 157  description 2289
+es-ES    name 24  subtitle 30  keywords 100  promo 156  description 2282
+es-MX    name 24  subtitle 27  keywords  96  promo 150  description 2292
+it       name 24  subtitle 26  keywords  95  promo 153  description 2334
+pt-BR    name 24  subtitle 30  keywords  97  promo 155  description 2226
+pt-PT    name 24  subtitle 28  keywords  95  promo 152  description 2241
+ru       name 24  subtitle 29  keywords  91  promo 157  description 2227
+tr       name 24  subtitle 29  keywords  96  promo 140  description 2104
+ja       name 24  subtitle 18  keywords  70  promo  70  description 1092
+ko       name 24  subtitle 22  keywords  55  promo  85  description 1181
+zh-Hans  name 24  subtitle 13  keywords  61  promo  54  description 799
+zh-Hant  name 24  subtitle 14  keywords  57  promo  54  description 804
+hi       name 24  subtitle 28  keywords  90  promo 136  description 2078
+id       name 24  subtitle 30  keywords  98  promo 157  description 2300
 ca       name 24  subtitle 25  keywords  95  promo 155  description 786
 nl-NL    name 24  subtitle 29  keywords 100  promo 159  description 792
 sv       name 24  subtitle 29  keywords  94  promo 151  description 765
@@ -50,13 +50,13 @@ pa-IN    name 24  subtitle 30  keywords  72  promo 140  description 746
 ta-IN    name 24  subtitle 29  keywords  74  promo 153  description 876
 te-IN    name 24  subtitle 27  keywords  75  promo 147  description 787
 50 locales, 0 problems
-app Push Up Challenge: OUTREPD (6817853725)
-version 1.1.3  PREPARE_FOR_SUBMISSION
+app OUTREPD: Push-up Battles (6817853725)
+version 1.1.4  PREPARE_FOR_SUBMISSION
+version 1.1.3  READY_FOR_SALE
 version 1.1.2  READY_FOR_SALE
 version 1.1.1  READY_FOR_SALE
-version 1.1  READY_FOR_SALE
-app info 1a1a974e-462d-4732-ad16-37c54e4fc59c  READY_FOR_SALE
-app info ed665173-b420-4cba-9341-439feb88e527  PREPARE_FOR_SUBMISSION
+app info ed665173-b420-4cba-9341-439feb88e527  READY_FOR_SALE
+app info 61c1a80c-0ffb-43d8-81e3-013dedc2fc5d  PREPARE_FOR_SUBMISSION
 support url https://www.outrepd.com/contact
   ar-SA: verified
   bn-BD: verified
