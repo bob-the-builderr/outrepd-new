@@ -1,6 +1,6 @@
-/// The entry and sign-up screens as redesigned (layout A): the badge hero,
-/// Apple first on an iPhone, and the sign-up form with its invite code
-/// behind a line — on a small phone and at a large text size.
+/// The entry screen as it is since the email way in went (2026-10-27): the
+/// badge hero, and Apple and Google as the only ways in — on a small phone
+/// and at a large text size.
 library;
 
 import 'package:flutter/foundation.dart';
@@ -11,7 +11,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:outrepd/l10n/app_localizations.dart';
 import 'package:outrepd/screens/auth_entry.dart';
-import 'package:outrepd/screens/social_sign_in.dart';
 import 'package:outrepd/theme.dart';
 
 Widget _app(Widget home, {double scale = 1.0}) => MaterialApp(
@@ -52,46 +51,12 @@ void main() {
 
       expect(find.byKey(const Key('authHeroTitle')), findsOneWidget);
       expect(find.byKey(const Key('continueWithApple')), findsOneWidget);
-      expect(find.text('Sign up with email'), findsOneWidget);
+      // No email way in, and nothing that leads to one.
+      expect(find.text('Sign up with email'), findsNothing);
+      expect(find.textContaining('Log in'), findsNothing);
+      expect(find.byType(TextField), findsNothing);
       expect(tester.takeException(), isNull);
       debugDefaultTargetPlatformOverride = null;
     });
   }
-
-  testWidgets('the invite code opens from its line', (tester) async {
-    smallPhone(tester);
-    await tester.pumpWidget(_app(const SignUpScreen()));
-    await tester.pumpAndSettle();
-
-    expect(find.byKey(const Key('inviteCode')), findsNothing);
-    // The email alone: the name is chosen after it is confirmed.
-    expect(find.byKey(const Key('signUpEmail')), findsOneWidget);
-    expect(find.text('Spaces become _'), findsNothing);
-    await tester.tap(find.byKey(const Key('showInviteCode')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const Key('inviteCode')), findsOneWidget);
-    expect(tester.takeException(), isNull);
-  });
-
-  testWidgets('log in: email is a button to its own page', (tester) async {
-    smallPhone(tester);
-    debugOfferAllSocialSignIn = true;
-    addTearDown(() => debugOfferAllSocialSignIn = false);
-    await tester.pumpWidget(_app(const LoginScreen()));
-    await tester.pumpAndSettle();
-
-    expect(find.byType(TextField), findsNothing);
-    await tester.tap(find.byKey(const Key('continueWithEmail')));
-    await tester.pumpAndSettle();
-    expect(find.byType(TextField), findsOneWidget);
-    expect(find.text('Send code'), findsOneWidget);
-  });
-
-  testWidgets('the sign-up form fits at 1.3x', (tester) async {
-    smallPhone(tester);
-    await tester.pumpWidget(_app(const SignUpScreen(), scale: 1.3));
-    await tester.pumpAndSettle();
-    expect(find.text('Create account'), findsOneWidget);
-    expect(tester.takeException(), isNull);
-  });
 }

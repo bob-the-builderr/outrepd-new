@@ -195,8 +195,7 @@ class LJa extends L {
   String get createAccountTitle => 'アカウントを作成';
 
   @override
-  String get createAccountBody =>
-      'メールアドレスとパスワードを追加して、このアカウントが1台の端末だけに頼らないようにしましょう。';
+  String get createAccountBody => 'サインインすれば、このアカウントがこの端末だけに頼ることはありません。';
 
   @override
   String get createAccountAction => 'アカウントを作成';
@@ -1770,7 +1769,7 @@ class LJa extends L {
   String get signOutQuestion => 'サインアウトしますか？';
 
   @override
-  String get signOutBody => 'アカウントはランク、履歴、サブスクリプションごとそのまま残ります。メールアドレスでいつでも再びサインインできます。';
+  String get signOutBody => 'アカウントはランク、履歴、サブスクリプションごとそのまま残ります。いつでも同じ方法でサインインし直せます。';
 
   @override
   String get shareVictory => '勝利';

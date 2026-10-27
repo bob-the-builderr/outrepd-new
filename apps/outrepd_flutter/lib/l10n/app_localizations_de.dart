@@ -200,8 +200,7 @@ class LDe extends L {
   String get createAccountTitle => 'Konto erstellen';
 
   @override
-  String get createAccountBody =>
-      'Füge eine E-Mail-Adresse und ein Passwort hinzu, damit dieses Konto nicht nur an ein Telefon gebunden ist.';
+  String get createAccountBody => 'Melde dich an, damit dieses Konto nicht an einem einzigen Handy hängt.';
 
   @override
   String get createAccountAction => 'Konto erstellen';
@@ -1815,7 +1814,7 @@ class LDe extends L {
   String get signOutQuestion => 'Abmelden?';
 
   @override
-  String get signOutBody => 'Dein Konto bleibt, wie es ist – mit Rang, Verlauf und Abo. Melde dich jederzeit mit deiner E-Mail wieder an.';
+  String get signOutBody => 'Dein Konto bleibt, wie es ist – mit Rang, Verlauf und Abo. Melde dich jederzeit wieder so an wie zuvor.';
 
   @override
   String get shareVictory => 'SIEG';

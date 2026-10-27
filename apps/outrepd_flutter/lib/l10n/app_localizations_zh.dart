@@ -193,7 +193,7 @@ class LZh extends L {
   String get createAccountTitle => '创建账户';
 
   @override
-  String get createAccountBody => '添加邮箱和密码，让这个账户不再只依赖这一部手机。';
+  String get createAccountBody => '登录后，这个账户就不会只存在于一部手机上。';
 
   @override
   String get createAccountAction => '创建账户';
@@ -1760,7 +1760,7 @@ class LZh extends L {
   String get signOutQuestion => '要退出登录吗？';
 
   @override
-  String get signOutBody => '你的账户会原样保留，包括段位、记录和订阅。随时可以用邮箱重新登录。';
+  String get signOutBody => '你的账户会保持原样，排位、记录和订阅都在。随时可以用同样的方式重新登录。';
 
   @override
   String get shareVictory => '胜利';

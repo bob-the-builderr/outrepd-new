@@ -179,7 +179,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ] else
                 NavRow(
-                  icon: Icons.mail_outline,
+                  icon: Icons.person_add_alt_1,
                   label: l.createAccountTitle,
                   caption: l.createAccountBody,
                   onTap: () => _open(const AuthEntryScreen()),

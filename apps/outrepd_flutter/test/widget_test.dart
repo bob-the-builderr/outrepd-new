@@ -376,13 +376,15 @@ void main() {
     // exists to set up for the first time.
     await tap(tester, 'I already have an account');
 
-    expect(find.text('Welcome back'), findsOneWidget);
-    expect(find.text('Log in to keep your rank.'), findsOneWidget);
-    expect(find.text('Send code'), findsOneWidget);
+    // Apple and Google, which sign an existing account back in: no email.
+    expect(find.byKey(const Key('authHeroTitle')), findsOneWidget);
+    expect(find.text('Send code'), findsNothing);
+    expect(find.byType(TextField), findsNothing);
     expect(find.text('Allow camera'), findsNothing);
   });
 
-  testWidgets('signs up straight from the calibration result', (tester) async {
+  testWidgets('goes from the calibration result straight to Apple and Google',
+      (tester) async {
     // The end of onboarding writes to this phone's storage; without a
     // stand-in for it the hand-over failed quietly and the test went on
     // reading the screen it had never left.
@@ -429,50 +431,13 @@ void main() {
     // there is an account to place. Nothing past here is reachable without
     // going through it.
     await tap(tester, 'Continue');
-    await tap(tester, 'Sign up with email');
 
-    // The email alone: the name comes once the email is confirmed.
-    await tester.enterText(
-      find.byKey(const Key('signUpEmail')),
-      'lifter@example.com',
-    );
-    await tester.pump();
-    await tester.tap(find.byType(FilledButton));
-    await tester.pumpAndSettle();
-
-    // The code stage: six boxes over one field. Typed a digit at a time, a
-    // mistake deleted straight back across a box — which six separate fields
-    // could not do from a phone keyboard — and the sixth digit submits on
-    // its own rather than waiting on a button.
-    final code = find.byKey(const Key('codeField'));
-    await tester.enterText(code, '1239');
-    await tester.pump();
-    expect(find.text('9'), findsOneWidget);
-    await tester.enterText(code, '12');
-    await tester.pump();
-    expect(find.text('9'), findsNothing);
-    expect(find.text('3'), findsNothing);
-    await tester.enterText(code, '123456');
-    await tester.pumpAndSettle();
-
-    // Then the name and the country, on the screen every new account picks
-    // them on.
-    await tester.enterText(
-      find.descendant(
-        of: find.byKey(const Key('signUpUsername')),
-        matching: find.byType(TextField),
-      ),
-      'lifter_one',
-    );
-    await tester.pump();
-    expect(find.byKey(const Key('countryField')), findsOneWidget);
-    final save = find.byKey(const Key('chooseUsernameContinue'));
-    await tester.ensureVisible(save);
-    await tester.tap(save);
-    await tester.pumpAndSettle();
-
-    // Signed up: the onboarding hands over to the app's own welcome.
-    expect(find.text('Settle it with friends'), findsOneWidget);
+    // Apple and Google only: the email way in, its code and its form went
+    // (2026-10-27). What they lead to — the name and the country — is
+    // username_rules_test's.
+    expect(find.byKey(const Key('authHeroTitle')), findsOneWidget);
+    expect(find.text('Sign up with email'), findsNothing);
+    expect(find.byType(TextField), findsNothing);
   });
 
   for (final scale in [1.3, 1.6]) {

@@ -199,8 +199,7 @@ class LPt extends L {
   String get createAccountTitle => 'Criar conta';
 
   @override
-  String get createAccountBody =>
-      'Adiciona um email e uma palavra-passe para que esta conta não dependa só deste telemóvel.';
+  String get createAccountBody => 'Entre para que esta conta não dependa de um só celular.';
 
   @override
   String get createAccountAction => 'Criar conta';
@@ -1810,7 +1809,7 @@ class LPt extends L {
   String get signOutQuestion => 'Sair da conta?';
 
   @override
-  String get signOutBody => 'Sua conta fica como está, com seu rank, histórico e assinatura. Entre de novo quando quiser com seu e-mail.';
+  String get signOutBody => 'Sua conta fica como está, com rank, histórico e assinatura. Entre de novo quando quiser do mesmo jeito que entrou.';
 
   @override
   String get shareVictory => 'VITÓRIA';

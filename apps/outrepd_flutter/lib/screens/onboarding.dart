@@ -184,9 +184,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   /// account that already has its own range on file, so this skips straight
   /// to signing in rather than joining the rest of the flow at its end.
   Future<void> _directLogIn() async {
-    final outcome = await Navigator.of(
-      context,
-    ).push<AuthOutcome>(MaterialPageRoute(builder: (_) => const LoginScreen()));
+    // The same Apple and Google buttons the end of the flow offers: they sign
+    // an existing account back in, or make a new one.
+    final outcome = await Navigator.of(context).push<AuthOutcome>(
+      MaterialPageRoute(builder: (_) => const AuthEntryScreen()),
+    );
     switch (outcome) {
       case AuthOutcome.signedIn:
         await _finishAfterSignIn();

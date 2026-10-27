@@ -200,8 +200,7 @@ class LIt extends L {
   String get createAccountTitle => 'Crea account';
 
   @override
-  String get createAccountBody =>
-      'Aggiungi un\'email e una password così questo account non dipende solo da questo telefono.';
+  String get createAccountBody => 'Accedi perché questo account non dipenda da un solo telefono.';
 
   @override
   String get createAccountAction => 'Crea account';
@@ -1813,7 +1812,7 @@ class LIt extends L {
   String get signOutQuestion => 'Uscire?';
 
   @override
-  String get signOutBody => 'Il tuo account resta com’è, con grado, cronologia e abbonamento. Rientra quando vuoi con la tua email.';
+  String get signOutBody => 'Il tuo account resta com’è, con rango, cronologia e abbonamento. Rientra quando vuoi nello stesso modo.';
 
   @override
   String get shareVictory => 'VITTORIA';

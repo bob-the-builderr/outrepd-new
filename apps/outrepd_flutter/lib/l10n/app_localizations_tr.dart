@@ -199,8 +199,7 @@ class LTr extends L {
   String get createAccountTitle => 'Hesap oluştur';
 
   @override
-  String get createAccountBody =>
-      'Bu hesabın tek bir telefona bağlı kalmaması için bir e-posta ve şifre ekle.';
+  String get createAccountBody => 'Bu hesap tek bir telefona bağlı kalmasın diye giriş yap.';
 
   @override
   String get createAccountAction => 'Hesap oluştur';
@@ -1803,7 +1802,7 @@ class LTr extends L {
   String get signOutQuestion => 'Çıkış yapılsın mı?';
 
   @override
-  String get signOutBody => 'Hesabın rütbesi, geçmişi ve aboneliğiyle olduğu gibi kalır. İstediğin zaman e-postanla tekrar giriş yap.';
+  String get signOutBody => 'Hesabın derecesi, geçmişi ve aboneliğiyle olduğu gibi kalır. İstediğin zaman aynı yolla tekrar giriş yap.';
 
   @override
   String get shareVictory => 'ZAFER';

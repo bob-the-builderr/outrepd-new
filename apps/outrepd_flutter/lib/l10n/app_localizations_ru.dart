@@ -198,8 +198,7 @@ class LRu extends L {
   String get createAccountTitle => 'Создать аккаунт';
 
   @override
-  String get createAccountBody =>
-      'Добавьте email и пароль, чтобы этот аккаунт не зависел только от одного телефона.';
+  String get createAccountBody => 'Войдите, чтобы аккаунт не зависел от одного телефона.';
 
   @override
   String get createAccountAction => 'Создать аккаунт';
@@ -1808,7 +1807,7 @@ class LRu extends L {
   String get signOutQuestion => 'Выйти из аккаунта?';
 
   @override
-  String get signOutBody => 'Аккаунт останется как есть — с рангом, историей и подпиской. Войдите снова в любой момент по своей почте.';
+  String get signOutBody => 'Аккаунт останется как есть — с рангом, историей и подпиской. Войти снова можно в любой момент тем же способом.';
 
   @override
   String get shareVictory => 'ПОБЕДА';

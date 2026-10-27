@@ -52,10 +52,6 @@ class _FriendsScreenState extends State<FriendsScreen> {
   List<Friend> _friends = const [];
   List<FriendRequest> _requests = const [];
 
-  /// This account's code, as an invite — shown only when its plan carries
-  /// one (a paid yearly subscription).
-  MyInvites? _invites;
-
   bool _loading = false;
   Object? _error;
 
@@ -111,7 +107,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
     if (state != null && state != AppLifecycleState.resumed) return;
     final at = _fetchedAt;
     if (at != null && DateTime.now().difference(at) < kListFreshFor) return;
-    _load(withInvites: false);
+    _load();
   }
 
   /// The latest requests, then the sheet to answer them in.
@@ -122,9 +118,8 @@ class _FriendsScreenState extends State<FriendsScreen> {
 
   /// The list is kept on screen while it is read again; the spinner and the
   /// error are only for an empty one (build).
-  Future<void> _load({bool withInvites = true}) async {
+  Future<void> _load() async {
     if (!backend.available) return;
-    if (withInvites) unawaited(_loadInvites());
     setState(() {
       _loading = true;
       _error = null;
@@ -159,17 +154,6 @@ class _FriendsScreenState extends State<FriendsScreen> {
         _error = error;
         _loading = false;
       });
-    }
-  }
-
-  /// Beside the list, not in it: a card that could not be read is simply not
-  /// shown, and the friends are no less there.
-  Future<void> _loadInvites() async {
-    try {
-      final invites = await backend.myInvites();
-      if (mounted) setState(() => _invites = invites);
-    } on Object catch (error) {
-      debugPrint('Could not read the invite card: $error');
     }
   }
 
@@ -329,11 +313,6 @@ class _FriendsScreenState extends State<FriendsScreen> {
                         count: _requests.length,
                         onTap: _openRequests,
                       ),
-                      if (_invites case final invites? when invites.canInvite)
-                        ...[
-                          const SizedBox(height: 9),
-                          InviteCard(invites: invites),
-                        ],
                     ],
                   ),
                 ),
@@ -371,12 +350,12 @@ class _FriendsScreenState extends State<FriendsScreen> {
                             child: _FriendRow(friend: friend),
                           ),
                       ],
-                      // A way to bring somebody in, for everyone whose code
-                      // gives no free week (they have the card above).
-                      if (!(_invites?.canInvite ?? false)) ...[
-                        const SizedBox(height: 18),
-                        const BringFriendCard(),
-                      ],
+                      // A way to bring somebody in, for everyone. The yearly
+                      // plan's "give a friend 7 days free" card went with the
+                      // email sign-up (2026-10-27): its code was typed there,
+                      // and Apple and Google have nowhere to type one.
+                      const SizedBox(height: 18),
+                      const BringFriendCard(),
                     ]),
                   ),
                 ),

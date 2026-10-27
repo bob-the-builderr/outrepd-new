@@ -201,8 +201,7 @@ class LFr extends L {
   String get createAccountTitle => 'Créer un compte';
 
   @override
-  String get createAccountBody =>
-      'Ajoute un e-mail et un mot de passe pour que ce compte ne tienne pas qu\'à ce téléphone.';
+  String get createAccountBody => 'Connecte-toi pour que ce compte ne dépende pas d’un seul téléphone.';
 
   @override
   String get createAccountAction => 'Créer un compte';
@@ -1814,7 +1813,7 @@ class LFr extends L {
   String get signOutQuestion => 'Se déconnecter ?';
 
   @override
-  String get signOutBody => 'Ton compte reste tel quel, avec son rang, son historique et son abonnement. Reconnecte-toi quand tu veux avec ton e-mail.';
+  String get signOutBody => 'Ton compte reste tel quel, avec son rang, son historique et son abonnement. Reconnecte-toi quand tu veux de la même façon.';
 
   @override
   String get shareVictory => 'VICTOIRE';

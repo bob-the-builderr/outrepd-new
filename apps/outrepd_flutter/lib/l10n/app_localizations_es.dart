@@ -201,8 +201,7 @@ class LEs extends L {
   String get createAccountTitle => 'Crear cuenta';
 
   @override
-  String get createAccountBody =>
-      'Añade un correo y una contraseña para que esta cuenta no dependa solo de este teléfono.';
+  String get createAccountBody => 'Inicia sesión para que esta cuenta no dependa de un solo teléfono.';
 
   @override
   String get createAccountAction => 'Crear cuenta';
@@ -1813,7 +1812,7 @@ class LEs extends L {
   String get signOutQuestion => '¿Cerrar sesión?';
 
   @override
-  String get signOutBody => 'Tu cuenta queda como está, con su rango, su historial y su suscripción. Vuelve a entrar cuando quieras con tu correo.';
+  String get signOutBody => 'Tu cuenta queda como está, con su rango, historial y suscripción. Vuelve a entrar cuando quieras del mismo modo que entraste.';
 
   @override
   String get shareVictory => 'VICTORIA';

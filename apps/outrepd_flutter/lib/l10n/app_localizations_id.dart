@@ -199,8 +199,7 @@ class LId extends L {
   String get createAccountTitle => 'Buat akun';
 
   @override
-  String get createAccountBody =>
-      'Tambahkan email dan kata sandi agar akun ini tidak hanya bergantung pada satu ponsel.';
+  String get createAccountBody => 'Masuk supaya akun ini tidak bergantung pada satu ponsel saja.';
 
   @override
   String get createAccountAction => 'Buat akun';
@@ -1807,7 +1806,7 @@ class LId extends L {
   String get signOutQuestion => 'Keluar dari akun?';
 
   @override
-  String get signOutBody => 'Akunmu tetap seperti sekarang, dengan peringkat, riwayat, dan langganannya. Masuk lagi kapan saja dengan emailmu.';
+  String get signOutBody => 'Akunmu tetap seperti sekarang, dengan peringkat, riwayat, dan langganannya. Masuk lagi kapan saja dengan cara yang sama.';
 
   @override
   String get shareVictory => 'MENANG';

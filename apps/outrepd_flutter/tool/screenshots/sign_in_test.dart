@@ -54,9 +54,7 @@ void main() {
 
   final screens = <String, Widget>{
     'sign_in_entry': const AuthEntryScreen(),
-    'sign_in_sign_up': const SignUpScreen(),
     'sign_in_choose_name': const ChooseUsernameScreen(),
-    'sign_in_log_in': const LoginScreen(),
   };
 
   for (final MapEntry(key: name, value: screen) in screens.entries) {

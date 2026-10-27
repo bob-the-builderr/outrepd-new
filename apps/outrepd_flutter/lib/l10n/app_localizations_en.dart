@@ -199,8 +199,7 @@ class LEn extends L {
   String get createAccountTitle => 'Create account';
 
   @override
-  String get createAccountBody =>
-      'Add an email and password so this account is never just one phone away from gone.';
+  String get createAccountBody => 'Sign in so this account is never just one phone away from gone.';
 
   @override
   String get createAccountAction => 'Create account';
@@ -1806,7 +1805,7 @@ class LEn extends L {
   String get signOutQuestion => 'Sign out?';
 
   @override
-  String get signOutBody => 'Your account stays as it is, with its rank, history and subscription. Sign back in any time with your email.';
+  String get signOutBody => 'Your account stays as it is, with its rank, history and subscription. Sign back in any time the way you signed in.';
 
   @override
   String get shareVictory => 'VICTORY';

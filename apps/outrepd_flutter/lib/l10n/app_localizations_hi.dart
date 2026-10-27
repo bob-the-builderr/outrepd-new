@@ -199,8 +199,7 @@ class LHi extends L {
   String get createAccountTitle => 'खाता बनाएं';
 
   @override
-  String get createAccountBody =>
-      'एक ईमेल और पासवर्ड जोड़ें ताकि यह खाता सिर्फ़ एक फ़ोन की दूरी पर न रहे।';
+  String get createAccountBody => 'साइन इन करें, ताकि यह अकाउंट सिर्फ़ एक फ़ोन पर निर्भर न रहे।';
 
   @override
   String get createAccountAction => 'खाता बनाएं';
@@ -1808,7 +1807,7 @@ class LHi extends L {
   String get signOutQuestion => 'साइन आउट करें?';
 
   @override
-  String get signOutBody => 'आपका खाता अपनी रैंक, इतिहास और सदस्यता के साथ वैसा ही रहेगा। अपने ईमेल से कभी भी फिर से साइन इन करें।';
+  String get signOutBody => 'आपका अकाउंट वैसा ही रहेगा, अपनी रैंक, हिस्ट्री और सब्सक्रिप्शन के साथ। कभी भी उसी तरीके से फिर साइन इन करें जैसे पहले किया था।';
 
   @override
   String get shareVictory => 'जीत';

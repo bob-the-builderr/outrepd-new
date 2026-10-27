@@ -195,8 +195,7 @@ class LKo extends L {
   String get createAccountTitle => '계정 만들기';
 
   @override
-  String get createAccountBody =>
-      '이메일과 비밀번호를 추가해서 이 계정이 휴대폰 하나에만 의존하지 않도록 하세요.';
+  String get createAccountBody => '로그인하면 이 계정이 휴대폰 한 대에만 묶이지 않아요.';
 
   @override
   String get createAccountAction => '계정 만들기';
@@ -1776,7 +1775,7 @@ class LKo extends L {
   String get signOutQuestion => '로그아웃할까요?';
 
   @override
-  String get signOutBody => '계정은 랭크, 기록, 구독과 함께 그대로 남습니다. 언제든 이메일로 다시 로그인하세요.';
+  String get signOutBody => '계정은 랭크, 기록, 구독까지 그대로 남아요. 언제든 처음과 같은 방법으로 다시 로그인하세요.';
 
   @override
   String get shareVictory => '승리';
