@@ -1783,7 +1783,7 @@
     }
   },
   "armory": "Armory",
-  "armoryBody": "Stars unlock weapons. Every push-up hits with the best one you have.",
+  "armoryBody": "Stars unlock weapons. Each world’s monsters only take hits from its own weapon or better.",
   "equipped": "EQUIPPED",
   "perPushUp": "{damage} per push-up",
   "@perPushUp": {
@@ -1841,6 +1841,36 @@
   "@clearFirst": {
     "placeholders": {
       "level": {
+        "type": "String"
+      }
+    }
+  },
+  "needsWeapon": "Needs {weapon}",
+  "@needsWeapon": {
+    "placeholders": {
+      "weapon": {
+        "type": "String"
+      }
+    }
+  },
+  "hurtOnlyBy": "Only {weapon} or better can hurt it",
+  "@hurtOnlyBy": {
+    "placeholders": {
+      "weapon": {
+        "type": "String"
+      }
+    }
+  },
+  "worldNeedsWeapon": "{world} needs {weapon} · {count} more stars",
+  "@worldNeedsWeapon": {
+    "placeholders": {
+      "world": {
+        "type": "String"
+      },
+      "weapon": {
+        "type": "String"
+      },
+      "count": {
         "type": "String"
       }
     }

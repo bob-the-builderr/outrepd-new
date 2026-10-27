@@ -25,6 +25,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'backend/backend.dart'
     show RemoteProfile, ServerDuel, SettledDuel, backend;
+import 'adventure/adventure.dart';
 import 'data.dart';
 import 'health_sync.dart';
 import 'ranking.dart';
@@ -815,6 +816,8 @@ class Career extends ChangeNotifier {
     applyServerProfile(me);
     await save();
     notifyListeners();
+    // And the adventure: that account's stars, not the ones on this phone.
+    await Adventure.instance.adopt();
   }
 
   /// Wipes the account. Used by tests, and by whatever ends up offering a

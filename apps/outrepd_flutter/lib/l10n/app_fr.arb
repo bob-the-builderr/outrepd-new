@@ -806,7 +806,7 @@
   "nextKicker": "SUIVANT",
   "nextLevelLine": "Niveau {level} · HP {hp}",
   "armory": "Armurerie",
-  "armoryBody": "Les étoiles débloquent des armes. Chaque pompe frappe avec la meilleure que tu as.",
+  "armoryBody": "Les étoiles débloquent des armes. Les monstres de chaque monde ne craignent que son arme ou une meilleure.",
   "equipped": "ÉQUIPÉE",
   "perPushUp": "{damage} par pompe",
   "damagePerPushUp": "{damage} dégâts par pompe",
@@ -822,5 +822,8 @@
   "weaponSpear": "Lance de diamant",
   "weaponSword": "Épée du Maître",
   "weaponCrownbreaker": "Brise-Couronne",
-  "clearFirst": "Gagne d’abord le niveau {level}"
+  "clearFirst": "Gagne d’abord le niveau {level}",
+  "needsWeapon": "Il faut {weapon}",
+  "hurtOnlyBy": "Seul {weapon} ou mieux peut le blesser",
+  "worldNeedsWeapon": "{world} demande {weapon} · encore {count} étoiles"
 }

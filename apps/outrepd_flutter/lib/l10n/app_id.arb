@@ -806,7 +806,7 @@
   "nextKicker": "BERIKUTNYA",
   "nextLevelLine": "Level {level} · HP {hp}",
   "armory": "Gudang Senjata",
-  "armoryBody": "Bintang membuka senjata. Setiap push-up memukul dengan senjata terbaik yang kamu punya.",
+  "armoryBody": "Bintang membuka senjata. Monster di tiap dunia hanya terluka oleh senjata dunia itu atau yang lebih kuat.",
   "equipped": "DIPAKAI",
   "perPushUp": "{damage} per push-up",
   "damagePerPushUp": "{damage} damage per push-up",
@@ -822,5 +822,8 @@
   "weaponSpear": "Tombak Berlian",
   "weaponSword": "Pedang Master",
   "weaponCrownbreaker": "Penghancur Mahkota",
-  "clearFirst": "Menangkan level {level} dulu"
+  "clearFirst": "Menangkan level {level} dulu",
+  "needsWeapon": "Butuh {weapon}",
+  "hurtOnlyBy": "Hanya {weapon} atau lebih kuat yang bisa melukainya",
+  "worldNeedsWeapon": "{world} butuh {weapon} · {count} bintang lagi"
 }

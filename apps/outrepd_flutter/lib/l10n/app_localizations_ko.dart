@@ -2643,7 +2643,7 @@ class LKo extends L {
   String get armory => '무기고';
 
   @override
-  String get armoryBody => '별을 모으면 무기가 열려요. 팔굽혀펴기 한 번마다 가진 무기 중 가장 강한 무기로 공격해요.';
+  String get armoryBody => '별을 모으면 무기가 열려요. 각 월드의 몬스터는 그 월드의 무기나 더 강한 무기에만 피해를 입어요.';
 
   @override
   String get equipped => '장착 중';
@@ -2703,5 +2703,20 @@ class LKo extends L {
   @override
   String clearFirst(String level) {
     return '스테이지 ${level} 먼저 클리어하세요';
+  }
+
+  @override
+  String needsWeapon(String weapon) {
+    return '${weapon} 필요';
+  }
+
+  @override
+  String hurtOnlyBy(String weapon) {
+    return '${weapon} 이상의 무기만 통해요';
+  }
+
+  @override
+  String worldNeedsWeapon(String world, String weapon, String count) {
+    return '${world}에는 ${weapon} 필요 · 별 ${count}개 더';
   }
 }

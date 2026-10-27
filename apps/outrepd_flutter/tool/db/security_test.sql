@@ -365,6 +365,45 @@ reset role;
 select check_that((select country_changed_at from profiles where id = :'B') is null,
                   'a guest''s choice started the fourteen days');
 
+-- The adventure: kept per account, reached only through its two functions,
+-- and a save never takes a star away.
+select as_user(:'A'); set role authenticated;
+select check_that(cardinality(my_adventure()) = 0,
+                  'a new account started with an adventure');
+select check_that(save_adventure('{3,1,2}') = '{3,1,2}'::smallint[],
+                  'saving the first three levels');
+select check_that(save_adventure('{1,3}') = '{3,3,2}'::smallint[],
+                  'a save took stars off a level, or lost the ones it did not send');
+select check_that(save_adventure('{0,0,0,9}') = '{3,3,2,3}'::smallint[],
+                  'a level saved with more than three stars');
+select must_fail('an adventure longer than the map',
+  $q$select save_adventure(array_fill(1::smallint, array[141]))$q$);
+select must_fail('writing the adventure around save_adventure',
+  $q$insert into adventure_progress (profile_id, stars) values (auth.uid(), '{3,3,3,3}')$q$);
+do $$
+declare
+  seen int;
+begin
+  begin
+    select count(*) into seen from adventure_progress;
+  exception when insufficient_privilege then
+    seen := 0;
+  end;
+  if seen <> 0 then
+    raise exception 'FAIL: the adventure table read around my_adventure';
+  end if;
+end;
+$$;
+reset role;
+select as_user(:'B'); set role authenticated;
+select check_that(cardinality(my_adventure()) = 0,
+                  'one account read another''s adventure');
+reset role;
+select as_user(:'A'); set role authenticated;
+select check_that(my_adventure() = '{3,3,2,3}'::smallint[],
+                  'the adventure kept on the account is not the one saved');
+reset role;
+
 -- A search matches what was typed: `_` and `%` are not wildcards.
 select as_user(:'B'); set role authenticated;
 select check_that((select count(*) from find_lifters('dan_')) = 1,

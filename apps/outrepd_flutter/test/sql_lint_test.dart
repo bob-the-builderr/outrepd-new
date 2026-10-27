@@ -281,6 +281,7 @@ void main() {
       'notify.sql',
       'push.sql',
       'live.sql',
+      'adventure.sql',
       'account.sql',
     ];
     final installer = File('supabase/install.sql');

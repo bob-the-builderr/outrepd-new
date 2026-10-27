@@ -2637,7 +2637,7 @@ class LJa extends L {
   String get armory => '武器庫';
 
   @override
-  String get armoryBody => '星で武器が解放される。腕立て1回ごとに、持っている最強の武器で攻撃。';
+  String get armoryBody => '星で武器が解放される。各ワールドの敵には、そのワールドの武器以上でしかダメージを与えられない。';
 
   @override
   String get equipped => '装備中';
@@ -2697,5 +2697,20 @@ class LJa extends L {
   @override
   String clearFirst(String level) {
     return 'まずステージ${level}をクリアしよう';
+  }
+
+  @override
+  String needsWeapon(String weapon) {
+    return '${weapon}が必要';
+  }
+
+  @override
+  String hurtOnlyBy(String weapon) {
+    return '${weapon}以上の武器でしかダメージを与えられない';
+  }
+
+  @override
+  String worldNeedsWeapon(String world, String weapon, String count) {
+    return '${world}には${weapon}が必要 · あと星${count}個';
   }
 }

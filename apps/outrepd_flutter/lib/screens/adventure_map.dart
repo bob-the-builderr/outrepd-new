@@ -111,13 +111,27 @@ class AdventureCard extends StatelessWidget {
                             colour: colors.rival,
                           ),
                           const SizedBox(height: 5),
-                          Text(
-                            l.adventureClearedOf(
-                              localNumber(context, adventure.clearedCount),
-                              localNumber(context, kAdventureLevels),
+                          // At a world's door without its weapon: what opens it.
+                          if (!level.canBeHurtBy(adventure.weapon))
+                            Text(
+                              '${l.needsWeapon(weaponName(l, level.weaponNeeded))}'
+                              ' · ${l.moreStars(localNumber(context, level.weaponNeeded.stars - adventure.totalStars))}',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: colors.rival,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            )
+                          else
+                            Text(
+                              l.adventureClearedOf(
+                                localNumber(context, adventure.clearedCount),
+                                localNumber(context, kAdventureLevels),
+                              ),
+                              style: TextStyle(color: colors.muted, fontSize: 12),
                             ),
-                            style: TextStyle(color: colors.muted, fontSize: 12),
-                          ),
                         ],
                       ),
                     ),
@@ -511,9 +525,24 @@ class _WorldPath extends StatelessWidget {
                     Expanded(child: Divider(color: colors.border)),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Text(
-                        '${l.worldNumber(localNumber(context, world + 1))} · ${worldName(l, world)}',
-                        style: TextStyle(color: colors.faint, fontSize: 12),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // The weapon this world's monsters answer to, dark
+                          // until it is won.
+                          if (world > 0) ...[
+                            WeaponArt(
+                              weapon: kWeapons[world],
+                              size: 20,
+                              locked: Adventure.instance.weapon.index < world,
+                            ),
+                            const SizedBox(width: 6),
+                          ],
+                          Text(
+                            '${l.worldNumber(localNumber(context, world + 1))} · ${worldName(l, world)}',
+                            style: TextStyle(color: colors.faint, fontSize: 12),
+                          ),
+                        ],
                       ),
                     ),
                     Expanded(child: Divider(color: colors.border)),
@@ -754,11 +783,22 @@ class _Panel extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        l.levelHpLine(
-                          localNumber(context, level.hp),
-                          localNumber(context, level.repsWith(weapon)),
+                        switch (level.repsWith(weapon)) {
+                          final reps? => l.levelHpLine(
+                            localNumber(context, level.hp),
+                            localNumber(context, reps),
+                          ),
+                          // The weapon in hand does nothing to it.
+                          null => l.hurtOnlyBy(
+                            weaponName(l, level.weaponNeeded),
+                          ),
+                        },
+                        style: TextStyle(
+                          color: level.canBeHurtBy(weapon)
+                              ? colors.muted
+                              : colors.rival,
+                          fontSize: 13,
                         ),
-                        style: TextStyle(color: colors.muted, fontSize: 13),
                       ),
                     ],
                   ),
@@ -843,8 +883,14 @@ class _Panel extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              onPressed: onFight,
-              child: Text(l.fightLevel(localNumber(context, level.number))),
+              // Shut until the stars for this world's weapon are won: a fight
+              // that cannot take a single point off the monster is not one.
+              onPressed: level.canBeHurtBy(weapon) ? onFight : null,
+              child: Text(
+                level.canBeHurtBy(weapon)
+                    ? l.fightLevel(localNumber(context, level.number))
+                    : l.needsWeapon(weaponName(l, level.weaponNeeded)),
+              ),
             ),
           ),
         ],

@@ -2670,7 +2670,7 @@ class LTr extends L {
   String get armory => 'Cephanelik';
 
   @override
-  String get armoryBody => 'Yıldızlar silah açar. Her şınav, sahip olduğun en iyi silahla vurur.';
+  String get armoryBody => 'Yıldızlar silah açar. Her dünyanın canavarları yalnızca o dünyanın silahından veya daha iyisinden hasar alır.';
 
   @override
   String get equipped => 'KUŞANILDI';
@@ -2730,5 +2730,20 @@ class LTr extends L {
   @override
   String clearFirst(String level) {
     return 'Önce şu seviyeyi kazan: ${level}';
+  }
+
+  @override
+  String needsWeapon(String weapon) {
+    return 'Gerekli: ${weapon}';
+  }
+
+  @override
+  String hurtOnlyBy(String weapon) {
+    return 'Ona sadece ${weapon} veya daha iyisi zarar verebilir';
+  }
+
+  @override
+  String worldNeedsWeapon(String world, String weapon, String count) {
+    return '${world} için ${weapon} gerekli · ${count} yıldız daha';
   }
 }

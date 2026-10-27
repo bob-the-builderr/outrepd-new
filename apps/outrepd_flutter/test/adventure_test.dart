@@ -1,6 +1,7 @@
 /// The adventure: a hundred and forty fights that each ask for more than the
-/// last, stars for time to spare, weapons for stars — and the camera screen
-/// stopping the moment the monster is down.
+/// last, stars for time to spare, weapons for stars that open each world —
+/// the camera screen stopping the moment the monster is down, and the stars
+/// kept on the account.
 library;
 
 import 'dart:async';
@@ -11,6 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:outrepd/adventure/adventure.dart';
+import 'package:outrepd/backend/backend.dart';
 import 'package:outrepd/l10n/app_localizations.dart';
 import 'package:outrepd/reps/pose.dart';
 import 'package:outrepd/reps/pose_source.dart';
@@ -34,6 +36,38 @@ Widget _app(Widget home, {Locale locale = const Locale('en')}) => MaterialApp(
   supportedLocales: L.supportedLocales,
   home: home,
 );
+
+/// An account on a server that keeps adventure stars the way save_adventure
+/// does: the best of what it held and what it was sent.
+class _Account extends NoBackend {
+  _Account(this.held);
+
+  List<int> held;
+  int saves = 0;
+
+  @override
+  bool get available => true;
+
+  @override
+  RemoteProfile? get me => const RemoteProfile(
+    id: 'acct',
+    username: 'lifter',
+    tierIdx: 0,
+    divIdx: 0,
+    lp: 0,
+    friendCode: 'ABC123',
+  );
+
+  @override
+  Future<List<int>> myAdventure() async => held;
+
+  @override
+  Future<List<int>> saveAdventure(List<int> stars) async {
+    saves++;
+    held = Adventure.merge(held, stars);
+    return held;
+  }
+}
 
 void main() {
   group('the levels', () {
@@ -68,14 +102,40 @@ void main() {
       expect(parReps(1), closeTo(5, 0.001));
       expect(parReps(140), closeTo(60, 0.001));
       expect(levels.first.repsWith(kWeapons.first), 5);
+      expect(levels.last.repsWith(levels.last.weaponNeeded), 60);
     });
 
-    test('the push-ups asked for never go down on two stars a level', () {
+    test("with each world's own weapon the push-ups never go down", () {
       var last = 0;
       for (final level in levels) {
-        final reps = level.repsWith(weaponFor(2 * (level.number - 1)));
+        final reps = level.repsWith(level.weaponNeeded)!;
         expect(reps, greaterThanOrEqualTo(last), reason: 'level ${level.number}');
         last = reps;
+      }
+    });
+
+    test("a world's monsters feel only its own weapon or better", () {
+      final bronze = AdventureLevel.of(21);
+      expect(bronze.weaponNeeded.index, 1);
+      expect(bronze.canBeHurtBy(kWeapons[0]), isFalse);
+      expect(bronze.damageFrom(kWeapons[0]), 0);
+      expect(bronze.repsWith(kWeapons[0]), isNull);
+      expect(bronze.canBeHurtBy(kWeapons[1]), isTrue);
+      expect(AdventureLevel.of(140).weaponNeeded.index, 6);
+    });
+
+    test('a better weapon than needed helps, but only a little', () {
+      for (final level in levels) {
+        final needed = level.weaponNeeded;
+        final withIt = level.repsWith(needed)!;
+        final better = level.repsWith(kWeapons[needed.index + 1])!;
+        expect(better, lessThanOrEqualTo(withIt));
+        // Never much more than a fifth off.
+        expect(
+          better,
+          greaterThanOrEqualTo((withIt * 0.74).floor()),
+          reason: 'level ${level.number}: $withIt with its own, $better better',
+        );
       }
     });
   });
@@ -91,12 +151,21 @@ void main() {
 
     test('stars unlock weapons, and each hits harder', () {
       expect(weaponFor(0).index, 0);
-      expect(weaponFor(11).index, 0);
-      expect(weaponFor(12).index, 1);
+      expect(weaponFor(29).index, 0);
+      expect(weaponFor(30).index, 1);
       expect(weaponFor(kMaxStars).index, kWeapons.length - 1);
       for (var i = 1; i < kWeapons.length; i++) {
         expect(kWeapons[i].damage, greaterThan(kWeapons[i - 1].damage));
         expect(kWeapons[i].stars, greaterThan(kWeapons[i - 1].stars));
+      }
+    });
+
+    test("each world's weapon takes more than a star a level to earn", () {
+      for (var world = 1; world < kWorlds; world++) {
+        final before = world * kLevelsPerWorld;
+        // Reachable on the levels before it, but not on one star apiece.
+        expect(kWeapons[world].stars, lessThanOrEqualTo(before * 3));
+        expect(kWeapons[world].stars, greaterThan(before));
       }
     });
   });
@@ -106,6 +175,7 @@ void main() {
       SharedPreferences.setMockInitialValues({});
       Adventure.instance.debugSet(const []);
     });
+    tearDown(() => backend = const NoBackend());
 
     test('a new phone starts at level one with the gauntlets', () async {
       await Adventure.instance.load();
@@ -123,14 +193,27 @@ void main() {
       expect(a.starsAt(1), 2);
       expect(a.current, 2);
 
-      for (var n = 2; n <= 3; n++) {
+      for (var n = 2; n <= 10; n++) {
         await a.record(n, 3);
       }
-      expect(a.totalStars, 8);
-      await a.record(4, 3);
-      // Eleven: one short of the knuckles.
-      expect(await a.record(1, 3), isNotNull, reason: '12 stars unlock weapon 1');
+      // Twenty-nine: one short of the knuckles.
+      expect(a.totalStars, 29);
+      expect(a.weapon.index, 0);
+      expect(await a.record(1, 3), isNotNull, reason: '30 stars unlock weapon 1');
       expect(a.weapon.index, 1);
+    });
+
+    test('a world stays shut until its weapon is won', () {
+      final a = Adventure.instance;
+      // Every Iron level won on one star: twenty, short of thirty.
+      a.debugSet(List.filled(20, 1));
+      expect(a.current, 21);
+      expect(a.playable(21), isTrue);
+      expect(a.canFight(21), isFalse);
+      // Five of them fought again for three stars each.
+      a.debugSet([...List.filled(5, 3), ...List.filled(15, 1)]);
+      expect(a.totalStars, 30);
+      expect(a.canFight(21), isTrue);
     });
 
     test('is still there after a restart', () async {
@@ -141,6 +224,43 @@ void main() {
       expect(Adventure.instance.starsAt(1), 3);
       expect(Adventure.instance.starsAt(2), 1);
       expect(Adventure.instance.current, 3);
+    });
+
+    test('merging keeps the best of each level', () {
+      expect(Adventure.merge([3, 1], [1, 2, 3]), [3, 2, 3]);
+      expect(Adventure.merge([], [2]), [2]);
+      expect(Adventure.merge([5], []), [3]);
+    });
+
+    test('the phone and the account end up with the best of both', () async {
+      final account = _Account([1, 3]);
+      backend = account;
+      Adventure.instance.debugSet([3, 0, 2]);
+      await Adventure.instance.sync();
+      expect(account.held, [3, 3, 2]);
+      expect(
+        [for (var n = 1; n <= 3; n++) Adventure.instance.starsAt(n)],
+        [3, 3, 2],
+      );
+    });
+
+    test("another account's stars on this phone stay with it", () async {
+      final account = _Account([1]);
+      backend = account;
+      Adventure.instance.debugSet([3, 3, 3], owner: 'somebody-else');
+      await Adventure.instance.sync();
+      expect(Adventure.instance.totalStars, 1);
+      expect(account.held, [1]);
+      expect(account.saves, 0);
+    });
+
+    test('a won fight reaches the account', () async {
+      final account = _Account([]);
+      backend = account;
+      Adventure.instance.debugSet(const [], owner: 'acct');
+      await Adventure.instance.record(1, 2);
+      await pumpEventQueue();
+      expect(account.held, [2]);
     });
   });
 
@@ -218,6 +338,12 @@ void main() {
       Adventure.instance.debugSet(const [3, 2, 3, 1, 3, 3]);
     });
 
+    void phone(WidgetTester tester) {
+      tester.view.physicalSize = const Size(412, 915);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+    }
+
     testWidgets('the Match tab card says where the climb is', (tester) async {
       await tester.pumpWidget(_app(const Scaffold(body: AdventureCard())));
       await tester.pumpAndSettle();
@@ -227,10 +353,7 @@ void main() {
     });
 
     testWidgets('the map opens on the next fight', (tester) async {
-      tester.view.physicalSize = const Size(412, 915);
-      tester.view.devicePixelRatio = 1.0;
-      addTearDown(tester.view.reset);
-
+      phone(tester);
       await tester.pumpWidget(_app(const AdventureMapScreen()));
       await tester.pumpAndSettle();
       expect(find.text('Fight level 7'), findsOneWidget);
@@ -249,11 +372,29 @@ void main() {
       expect(find.text('Fight level 4'), findsOneWidget);
     });
 
-    testWidgets('the armory lists every weapon', (tester) async {
-      tester.view.physicalSize = const Size(412, 915);
-      tester.view.devicePixelRatio = 1.0;
-      addTearDown(tester.view.reset);
+    testWidgets("at a world's door without its weapon, the fight waits",
+        (tester) async {
+      phone(tester);
+      // All twenty Iron levels on one star: twenty of the thirty needed.
+      Adventure.instance.debugSet(List.filled(20, 1));
+      await tester.pumpWidget(_app(const AdventureMapScreen()));
+      await tester.pumpAndSettle();
 
+      expect(find.text('Needs Bronze Knuckles'), findsOneWidget);
+      expect(find.text('Only Bronze Knuckles or better can hurt it'),
+          findsOneWidget);
+      final fight = tester.widget<FilledButton>(
+        find.byKey(const Key('fightLevel')),
+      );
+      expect(fight.onPressed, isNull);
+
+      await tester.pumpWidget(_app(const Scaffold(body: AdventureCard())));
+      await tester.pumpAndSettle();
+      expect(find.text('Needs Bronze Knuckles · 10 more stars'), findsOneWidget);
+    });
+
+    testWidgets('the armory lists every weapon', (tester) async {
+      phone(tester);
       await tester.pumpWidget(_app(const AdventureMapScreen()));
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const Key('weaponChip')));
@@ -263,6 +404,33 @@ void main() {
       expect(find.text('Crownbreaker'), findsOneWidget);
       expect(find.text('EQUIPPED'), findsOneWidget);
       expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('a win at the last level of a world points at its weapon',
+        (tester) async {
+      phone(tester);
+      Adventure.instance.debugSet(List.filled(20, 1));
+      await tester.pumpWidget(_app(Scaffold(
+        body: AdventureResultView(
+          outcome: FightOutcome(
+            level: AdventureLevel.of(20),
+            weapon: kWeapons.first,
+            reps: 20,
+            timeLeft: const Duration(seconds: 3),
+            starsBefore: 0,
+          ),
+          xp: null,
+          onNext: () {},
+          onAgain: () {},
+          onMap: () {},
+        ),
+      )));
+      await tester.pumpAndSettle();
+      expect(
+        find.text('Bronze Dunes needs Bronze Knuckles · 10 more stars'),
+        findsOneWidget,
+      );
+      expect(find.text('Next level'), findsNothing);
     });
 
     for (final code in ['de', 'hi', 'ja', 'ru']) {

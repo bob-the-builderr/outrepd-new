@@ -806,7 +806,7 @@
   "nextKicker": "ALS NÄCHSTES",
   "nextLevelLine": "Level {level} · HP {hp}",
   "armory": "Waffenkammer",
-  "armoryBody": "Sterne schalten Waffen frei. Jeder Liegestütz trifft mit der besten, die du hast.",
+  "armoryBody": "Sterne schalten Waffen frei. Die Monster jeder Welt spüren nur deren eigene Waffe oder eine bessere.",
   "equipped": "AUSGERÜSTET",
   "perPushUp": "{damage} pro Liegestütz",
   "damagePerPushUp": "{damage} Schaden pro Liegestütz",
@@ -822,5 +822,8 @@
   "weaponSpear": "Diamantspeer",
   "weaponSword": "Meisterschwert",
   "weaponCrownbreaker": "Kronenbrecher",
-  "clearFirst": "Gewinne zuerst Level {level}"
+  "clearFirst": "Gewinne zuerst Level {level}",
+  "needsWeapon": "Braucht {weapon}",
+  "hurtOnlyBy": "Nur {weapon} oder besser kann ihm schaden",
+  "worldNeedsWeapon": "{world} braucht {weapon} · noch {count} Sterne"
 }

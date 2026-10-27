@@ -2675,7 +2675,7 @@ class LHi extends L {
   String get armory => 'शस्त्रागार';
 
   @override
-  String get armoryBody => 'सितारों से हथियार खुलते हैं। हर पुश-अप आपके सबसे अच्छे हथियार से वार करता है।';
+  String get armoryBody => 'सितारों से हथियार खुलते हैं। हर दुनिया के राक्षसों पर सिर्फ़ उसी दुनिया का हथियार या उससे बेहतर असर करता है।';
 
   @override
   String get equipped => 'चालू';
@@ -2735,5 +2735,20 @@ class LHi extends L {
   @override
   String clearFirst(String level) {
     return 'पहले लेवल ${level} जीतें';
+  }
+
+  @override
+  String needsWeapon(String weapon) {
+    return '${weapon} चाहिए';
+  }
+
+  @override
+  String hurtOnlyBy(String weapon) {
+    return 'इसे सिर्फ़ ${weapon} या उससे बेहतर हथियार ही चोट पहुँचा सकता है';
+  }
+
+  @override
+  String worldNeedsWeapon(String world, String weapon, String count) {
+    return '${world} के लिए ${weapon} चाहिए · ${count} और सितारे';
   }
 }

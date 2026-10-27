@@ -26,7 +26,7 @@ class FightGame implements CameraGame {
   final Weapon weapon;
 
   @override
-  bool wonAt(int reps) => reps * weapon.damage >= level.hp;
+  bool wonAt(int reps) => reps * level.damageFrom(weapon) >= level.hp;
 
   @override
   Widget card(
@@ -110,7 +110,10 @@ class _FightCardState extends State<FightCard>
     final l = L.of(context);
     final level = widget.level;
     final look = WorldLook.of(level.world);
-    final dealt = math.min(level.hp, widget.reps * widget.weapon.damage);
+    final dealt = math.min(
+      level.hp,
+      widget.reps * level.damageFrom(widget.weapon),
+    );
     final left = level.hp - dealt;
 
     return AnimatedBuilder(
@@ -181,7 +184,7 @@ class _FightCardState extends State<FightCard>
                                   child: Opacity(
                                     opacity: (1 - t * t).clamp(0.0, 1.0),
                                     child: Text(
-                                      '−${localNumber(context, widget.weapon.damage)}',
+                                      '−${localNumber(context, level.damageFrom(widget.weapon))}',
                                       style: const TextStyle(
                                         color: AppColors.gold,
                                         fontSize: 28,
@@ -424,7 +427,7 @@ class FightOutcome {
   /// The best this level had before this fight.
   final int starsBefore;
 
-  int get dealt => math.min(level.hp, reps * weapon.damage);
+  int get dealt => math.min(level.hp, reps * level.damageFrom(weapon));
 
   bool get won => dealt >= level.hp;
 
@@ -458,10 +461,24 @@ class AdventureResultView extends StatelessWidget {
     final won = outcome.won;
     final stars = outcome.stars;
     final next = level.isLast ? null : AdventureLevel.of(level.number + 1);
+    final adventure = Adventure.instance;
+
+    // Won, but the next world's monsters do not feel the weapon in hand:
+    // the way on is more stars, not the next fight.
+    final nextShut =
+        won && next != null && !next.canBeHurtBy(adventure.weapon);
+    final canNext = won && onNext != null && !nextShut;
 
     // What would have earned one more star: seconds that had to be left.
     String? hint;
-    if (won && stars < 3) {
+    if (nextShut) {
+      final shut = next!;
+      hint = l.worldNeedsWeapon(
+        worldName(l, shut.world),
+        weaponName(l, shut.weaponNeeded),
+        localNumber(context, shut.weaponNeeded.stars - adventure.totalStars),
+      );
+    } else if (won && stars < 3) {
       final need = leftFor(stars + 1, level.time).inSeconds;
       hint = stars == 1
           ? l.secondStarHint(localNumber(context, need))
@@ -580,7 +597,7 @@ class AdventureResultView extends StatelessWidget {
                       ),
                     ),
                   ],
-                  if (won && next != null) ...[
+                  if (canNext && next != null) ...[
                     const SizedBox(height: 18),
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -638,19 +655,19 @@ class AdventureResultView extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: FilledButton(
-                    key: Key(won && onNext != null ? 'adventureNext' : 'adventureAgain'),
+                    key: Key(canNext ? 'adventureNext' : 'adventureAgain'),
                     style: FilledButton.styleFrom(
                       backgroundColor: colors.rival,
                       foregroundColor: colors.background,
                     ),
-                    onPressed: won && onNext != null ? onNext : onAgain,
-                    child: Text(won && onNext != null ? l.nextLevel : l.tryAgain),
+                    onPressed: canNext ? onNext : onAgain,
+                    child: Text(canNext ? l.nextLevel : l.tryAgain),
                   ),
                 ),
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    if (won && onNext != null) ...[
+                    if (canNext) ...[
                       Expanded(
                         child: OutlinedButton(
                           onPressed: onAgain,

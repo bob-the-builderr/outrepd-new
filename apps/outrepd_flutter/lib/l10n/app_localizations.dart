@@ -4930,6 +4930,24 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Win level {level} first'**
   String clearFirst(String level);
+
+  /// No description provided for @needsWeapon.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs {weapon}'**
+  String needsWeapon(String weapon);
+
+  /// No description provided for @hurtOnlyBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Only {weapon} or better can hurt it'**
+  String hurtOnlyBy(String weapon);
+
+  /// No description provided for @worldNeedsWeapon.
+  ///
+  /// In en, this message translates to:
+  /// **'{world} needs {weapon} · {count} more stars'**
+  String worldNeedsWeapon(String world, String weapon, String count);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

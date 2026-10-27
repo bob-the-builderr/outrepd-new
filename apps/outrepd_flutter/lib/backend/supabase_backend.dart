@@ -799,6 +799,22 @@ class SupabaseBackend implements Backend {
   }
 
   @override
+  Future<List<int>> myAdventure() async =>
+      _stars(await _db.rpc<dynamic>('my_adventure'));
+
+  @override
+  Future<List<int>> saveAdventure(List<int> stars) async => _stars(
+    await _db.rpc<dynamic>('save_adventure', params: {'new_stars': stars}),
+  );
+
+  /// A smallint[] as the client hands it over: a list of numbers, or null
+  /// for an account that has never saved one.
+  static List<int> _stars(dynamic raw) => [
+    if (raw is List)
+      for (final s in raw) (s is num ? s.toInt() : 0).clamp(0, 3),
+  ];
+
+  @override
   Future<CountryResult> setMyCountry(String code) async {
     final result = await _db.rpc<String>(
       'set_my_country',

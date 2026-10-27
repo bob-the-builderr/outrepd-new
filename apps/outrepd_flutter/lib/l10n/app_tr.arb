@@ -806,7 +806,7 @@
   "nextKicker": "SIRADAKİ",
   "nextLevelLine": "Seviye {level} · HP {hp}",
   "armory": "Cephanelik",
-  "armoryBody": "Yıldızlar silah açar. Her şınav, sahip olduğun en iyi silahla vurur.",
+  "armoryBody": "Yıldızlar silah açar. Her dünyanın canavarları yalnızca o dünyanın silahından veya daha iyisinden hasar alır.",
   "equipped": "KUŞANILDI",
   "perPushUp": "Şınav başına {damage}",
   "damagePerPushUp": "Şınav başına {damage} hasar",
@@ -822,5 +822,8 @@
   "weaponSpear": "Elmas Mızrak",
   "weaponSword": "Usta Kılıcı",
   "weaponCrownbreaker": "Taç Kıran",
-  "clearFirst": "Önce şu seviyeyi kazan: {level}"
+  "clearFirst": "Önce şu seviyeyi kazan: {level}",
+  "needsWeapon": "Gerekli: {weapon}",
+  "hurtOnlyBy": "Ona sadece {weapon} veya daha iyisi zarar verebilir",
+  "worldNeedsWeapon": "{world} için {weapon} gerekli · {count} yıldız daha"
 }

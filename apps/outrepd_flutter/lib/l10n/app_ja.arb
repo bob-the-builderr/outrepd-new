@@ -806,7 +806,7 @@
   "nextKicker": "次",
   "nextLevelLine": "ステージ{level} · HP {hp}",
   "armory": "武器庫",
-  "armoryBody": "星で武器が解放される。腕立て1回ごとに、持っている最強の武器で攻撃。",
+  "armoryBody": "星で武器が解放される。各ワールドの敵には、そのワールドの武器以上でしかダメージを与えられない。",
   "equipped": "装備中",
   "perPushUp": "1回{damage}",
   "damagePerPushUp": "腕立て1回で{damage}ダメージ",
@@ -822,5 +822,8 @@
   "weaponSpear": "ダイヤモンドスピア",
   "weaponSword": "マスターソード",
   "weaponCrownbreaker": "クラウンブレイカー",
-  "clearFirst": "まずステージ{level}をクリアしよう"
+  "clearFirst": "まずステージ{level}をクリアしよう",
+  "needsWeapon": "{weapon}が必要",
+  "hurtOnlyBy": "{weapon}以上の武器でしかダメージを与えられない",
+  "worldNeedsWeapon": "{world}には{weapon}が必要 · あと星{count}個"
 }

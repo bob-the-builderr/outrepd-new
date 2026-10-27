@@ -2673,7 +2673,7 @@ class LEn extends L {
   String get armory => 'Armory';
 
   @override
-  String get armoryBody => 'Stars unlock weapons. Every push-up hits with the best one you have.';
+  String get armoryBody => 'Stars unlock weapons. Each world’s monsters only take hits from its own weapon or better.';
 
   @override
   String get equipped => 'EQUIPPED';
@@ -2733,5 +2733,20 @@ class LEn extends L {
   @override
   String clearFirst(String level) {
     return 'Win level ${level} first';
+  }
+
+  @override
+  String needsWeapon(String weapon) {
+    return 'Needs ${weapon}';
+  }
+
+  @override
+  String hurtOnlyBy(String weapon) {
+    return 'Only ${weapon} or better can hurt it';
+  }
+
+  @override
+  String worldNeedsWeapon(String world, String weapon, String count) {
+    return '${world} needs ${weapon} · ${count} more stars';
   }
 }

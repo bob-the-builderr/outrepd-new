@@ -1276,6 +1276,15 @@ abstract interface class Backend {
   /// Sets this account's country, by its two-letter code.
   Future<CountryResult> setMyCountry(String code);
 
+  /// The adventure's stars on this account, one per level from the first,
+  /// 0 for a level not won.
+  Future<List<int>> myAdventure();
+
+  /// Writes [stars] onto the account. The server keeps the best of what it
+  /// had and what it is sent on every level, so two phones never take stars
+  /// off each other; it hands back what it now holds.
+  Future<List<int>> saveAdventure(List<int> stars);
+
   /// Signs in with an identity token from Apple or Google. On this phone's
   /// guest the identity is linked to it, so the guest becomes the account
   /// and keeps what it has — unless the identity already belongs to an
@@ -1596,6 +1605,13 @@ class NoBackend implements Backend {
   /// No server: nothing to refuse it, and the caller keeps it on the phone.
   @override
   Future<CountryResult> setMyCountry(String code) async => CountryResult.ok;
+
+  @override
+  Future<List<int>> myAdventure() => throw StateError('no server configured');
+
+  @override
+  Future<List<int>> saveAdventure(List<int> stars) =>
+      throw StateError('no server configured');
 
   @override
   Future<String> uploadAvatar(Uint8List bytes) =>

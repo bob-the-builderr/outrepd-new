@@ -106,6 +106,9 @@ void main() async {
     // install or a second phone gets back to the ladder it has actually
     // been racing on.
     if (me case final signedIn?) applyServerProfile(signedIn);
+    // The adventure's stars: this phone's and the account's, the best of
+    // each. Not awaited, like the history below.
+    unawaited(Adventure.instance.sync());
     // Duels no screen on this phone wrote down: raced while away, or settled
     // after their screen was closed. Not awaited: the history fills in a
     // moment later rather than holding the launch on the network.

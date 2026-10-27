@@ -2627,7 +2627,7 @@ class LZh extends L {
   String get armory => '武器库';
 
   @override
-  String get armoryBody => '星星可解锁武器。每个俯卧撑都用你最好的武器攻击。';
+  String get armoryBody => '星星可解锁武器。每个世界的怪物只会被该世界的武器或更强的武器伤到。';
 
   @override
   String get equipped => '已装备';
@@ -2687,5 +2687,20 @@ class LZh extends L {
   @override
   String clearFirst(String level) {
     return '先通过第 ${level} 关';
+  }
+
+  @override
+  String needsWeapon(String weapon) {
+    return '需要${weapon}';
+  }
+
+  @override
+  String hurtOnlyBy(String weapon) {
+    return '只有${weapon}或更强的武器才能伤到它';
+  }
+
+  @override
+  String worldNeedsWeapon(String world, String weapon, String count) {
+    return '${world}需要${weapon} · 还差 ${count} 颗星';
   }
 }

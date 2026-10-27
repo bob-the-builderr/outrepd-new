@@ -7,10 +7,13 @@
 /// adventure is practice with something to hit.
 library;
 
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../backend/backend.dart';
 
 const kWorlds = 7;
 const kLevelsPerWorld = 20;
@@ -34,6 +37,12 @@ enum FightKind {
 
 /// What the lifter hits with. Unlocked by stars, never bought: the best one
 /// unlocked is the one in hand, so there is nothing to equip by mistake.
+///
+/// Each world's monsters are made of that world's metal and only take hits
+/// from a weapon of it or better (see [AdventureLevel.weaponNeeded]). That is
+/// what a weapon is for: the next world stays shut until its stars are won.
+/// Past that a better weapon helps, but only a little — each hits about a
+/// fifth harder than the one before it.
 class Weapon {
   const Weapon(this.index, this.damage, this.stars);
 
@@ -47,16 +56,19 @@ class Weapon {
   final int stars;
 }
 
-/// One per tier and a last one past Master.
+/// One per world, and a last one past Master for whoever three-stars enough.
+/// Each world's weapon asks for a star and a half a level over the worlds
+/// before it: a world won on one star a fight leaves the next one shut, and
+/// earlier levels have to be fought again, faster, to open it.
 const kWeapons = <Weapon>[
   Weapon(0, 10, 0),
-  Weapon(1, 13, 12),
-  Weapon(2, 17, 30),
-  Weapon(3, 22, 60),
-  Weapon(4, 28, 100),
-  Weapon(5, 36, 150),
-  Weapon(6, 46, 220),
-  Weapon(7, 60, 300),
+  Weapon(1, 12, 30),
+  Weapon(2, 15, 60),
+  Weapon(3, 18, 90),
+  Weapon(4, 22, 120),
+  Weapon(5, 27, 150),
+  Weapon(6, 33, 180),
+  Weapon(7, 40, 300),
 ];
 
 /// The best weapon [stars] unlock.
@@ -86,8 +98,18 @@ class AdventureLevel {
 
   Duration get time => kFightLength;
 
-  /// Push-ups it takes with [weapon].
-  int repsWith(Weapon weapon) => (hp / weapon.damage).ceil();
+  /// The weakest weapon that hurts this world's monsters: its own metal.
+  Weapon get weaponNeeded => kWeapons[world];
+
+  /// Whether [weapon] can hurt it at all.
+  bool canBeHurtBy(Weapon weapon) => weapon.index >= weaponNeeded.index;
+
+  /// What each push-up takes off it with [weapon]: nothing below its metal.
+  int damageFrom(Weapon weapon) => canBeHurtBy(weapon) ? weapon.damage : 0;
+
+  /// Push-ups it takes with [weapon], or null when [weapon] cannot hurt it.
+  int? repsWith(Weapon weapon) =>
+      canBeHurtBy(weapon) ? (hp / weapon.damage).ceil() : null;
 
   bool get isLast => number == kAdventureLevels;
 
@@ -97,12 +119,11 @@ class AdventureLevel {
   static List<AdventureLevel> get all => _levels;
 }
 
-/// How many push-ups level [n] asks for in its minute, with the weapon a
-/// lifter earning two stars a level would be holding by then: five at the
-/// first level and sixty at the last, climbing faster as it goes, with a step
-/// into every fifth fight and a bigger one into each boss. The steps are
-/// counted in, never subtracted out again, so the level after a boss is
-/// still harder than the boss.
+/// How many push-ups level [n] asks for in its minute with its world's own
+/// weapon: five at the first level and sixty at the last, climbing faster as
+/// it goes, with a step into every fifth fight and a bigger one into each
+/// boss. The steps are counted in, never subtracted out again, so the level
+/// after a boss is still harder than the boss.
 @visibleForTesting
 double parReps(int n) {
   double steps(int n) => (n - 1) + 1.5 * (n ~/ 5) + 4.0 * (n ~/ kLevelsPerWorld);
@@ -114,10 +135,11 @@ final List<AdventureLevel> _levels = () {
   final out = <AdventureLevel>[];
   var last = 0;
   for (var n = 1; n <= kAdventureLevels; n++) {
-    // Damage rises in jumps as weapons unlock, and HP rises with it, so the
-    // push-ups asked for stay on the curve above for a lifter on two stars a
-    // level. More stars than that make it easier; fewer, harder.
-    var hp = (parReps(n) * weaponFor(2 * (n - 1)).damage).round();
+    // Sized for the world's own weapon, the weakest that can hurt it, so the
+    // push-ups asked for stay on the curve above; a better weapon takes a
+    // fifth or so off them.
+    final world = (n - 1) ~/ kLevelsPerWorld;
+    var hp = (parReps(n) * kWeapons[world].damage).round();
     if (hp <= last) hp = last + 1;
     out.add(AdventureLevel._(n, hp));
     last = hp;
@@ -147,10 +169,12 @@ Duration leftFor(int stars, Duration time) => switch (stars) {
   _ => Duration.zero,
 };
 
-/// How far this phone has got: the best stars on every level won.
+/// How far this account has got: the best stars on every level won.
 ///
-/// Kept on the phone, like the streak. An adventure moves nothing anybody
-/// else can see, so there is nothing for a server to referee.
+/// Kept on the phone so a fight with no signal still counts, and on the
+/// account so a new phone, or a reinstall, picks up where the last one left
+/// off. The two are merged level by level, the best of each, so neither side
+/// ever takes stars off the other.
 class Adventure extends ChangeNotifier {
   Adventure._();
 
@@ -158,7 +182,12 @@ class Adventure extends ChangeNotifier {
 
   static const _key = 'adventureStars';
 
+  /// Whose stars these are: the account they were last merged with. Stars on
+  /// this phone from a different account are that account's, not this one's.
+  static const _ownerKey = 'adventureOwner';
+
   List<int> _stars = [];
+  String? _owner;
 
   int starsAt(int level) =>
       level >= 1 && level <= _stars.length ? _stars[level - 1] : 0;
@@ -182,6 +211,10 @@ class Adventure extends ChangeNotifier {
   /// everything past it waits.
   bool playable(int level) => level >= 1 && level <= current;
 
+  /// Open, and the weapon in hand can hurt what is in it.
+  bool canFight(int level) =>
+      playable(level) && AdventureLevel.of(level).canBeHurtBy(weapon);
+
   Weapon get weapon => weaponFor(totalStars);
 
   Weapon? get nextWeapon =>
@@ -190,6 +223,7 @@ class Adventure extends ChangeNotifier {
   Future<void> load() async {
     final store = await SharedPreferences.getInstance();
     _stars = _parse(store.getString(_key));
+    _owner = store.getString(_ownerKey);
     notifyListeners();
   }
 
@@ -198,8 +232,69 @@ class Adventure extends ChangeNotifier {
       if (int.tryParse(part.trim()) case final s?) s.clamp(0, 3),
   ];
 
+  /// The best of [a] and [b] on every level.
+  @visibleForTesting
+  static List<int> merge(List<int> a, List<int> b) => [
+    for (var i = 0; i < math.max(a.length, b.length); i++)
+      math.max(i < a.length ? a[i] : 0, i < b.length ? b[i] : 0).clamp(0, 3),
+  ];
+
+  static bool _same(List<int> a, List<int> b) =>
+      a.length == b.length &&
+      [for (var i = 0; i < a.length; i++) a[i] == b[i]].every((same) => same);
+
+  Future<void> _save() async {
+    try {
+      final store = await SharedPreferences.getInstance();
+      await store.setString(_key, _stars.join(','));
+      if (_owner case final owner?) {
+        await store.setString(_ownerKey, owner);
+      } else {
+        await store.remove(_ownerKey);
+      }
+    } on Object catch (error) {
+      // The fight still happened on screen; a phone that cannot write it down
+      // loses the stars at the next launch, not the session.
+      debugPrint('Could not save the adventure: $error');
+    }
+  }
+
+  /// Brings this phone and the account to the same stars: the best either
+  /// has on each level, written to both. At launch, once signed in.
+  Future<void> sync() async {
+    final me = backend.me;
+    if (!backend.available || me == null) return;
+    try {
+      // Another account's stars on this phone stay with that account.
+      final mine = _owner == null || _owner == me.id ? _stars : <int>[];
+      final server = await backend.myAdventure();
+      var merged = merge(mine, server);
+      if (!_same(merged, server)) {
+        merged = merge(merged, await backend.saveAdventure(merged));
+      }
+      _stars = merged;
+      _owner = me.id;
+      await _save();
+      notifyListeners();
+    } on Object catch (error) {
+      // Kept on the phone; the next launch tries again.
+      debugPrint('Could not sync the adventure: $error');
+    }
+  }
+
+  /// Signed into a different account on this phone: its stars, from the
+  /// server, in place of the ones here.
+  Future<void> adopt() async {
+    _stars = [];
+    _owner = null;
+    await _save();
+    notifyListeners();
+    await sync();
+  }
+
   /// Writes down a fight won with [stars]. Keeps the best of the old and the
-  /// new, and hands back the weapon this unlocked, if it unlocked one.
+  /// new, and hands back the weapon this unlocked, if it unlocked one. The
+  /// account is told straight after, without holding the result up.
   Future<Weapon?> record(int level, int stars) async {
     if (level < 1 || level > kAdventureLevels || stars < 1) return null;
     final before = weapon;
@@ -209,22 +304,36 @@ class Adventure extends ChangeNotifier {
     if (stars <= _stars[level - 1]) return null;
     _stars[level - 1] = stars;
     notifyListeners();
-    try {
-      final store = await SharedPreferences.getInstance();
-      await store.setString(_key, _stars.join(','));
-    } on Object catch (error) {
-      // The fight still happened on screen; a phone that cannot write it down
-      // loses the stars at the next launch, not the session.
-      debugPrint('Could not save the adventure: $error');
-    }
+    await _save();
+    unawaited(_push());
     final after = weapon;
     return after.index > before.index ? after : null;
   }
 
+  Future<void> _push() async {
+    final me = backend.me;
+    if (!backend.available || me == null) return;
+    if (_owner != null && _owner != me.id) return;
+    try {
+      final held = await backend.saveAdventure(_stars);
+      _owner = me.id;
+      final merged = merge(_stars, held);
+      if (!_same(merged, _stars)) {
+        _stars = merged;
+        notifyListeners();
+      }
+      await _save();
+    } on Object catch (error) {
+      // Kept on the phone; the next launch's sync sends it.
+      debugPrint('Could not save the adventure to the account: $error');
+    }
+  }
+
   /// Puts the map in a known state for a test or a screenshot.
   @visibleForTesting
-  void debugSet(List<int> stars) {
+  void debugSet(List<int> stars, {String? owner}) {
     _stars = List.of(stars);
+    _owner = owner;
     notifyListeners();
   }
 }

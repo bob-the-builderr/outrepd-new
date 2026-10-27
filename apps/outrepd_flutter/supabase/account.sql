@@ -68,6 +68,10 @@ as $$
       select jsonb_agg(to_jsonb(w) - 'profile_id' order by w.season)
         from season_awards w where w.profile_id = auth.uid()
     ), '[]'::jsonb),
+    'adventure_stars', (
+      select to_jsonb(a.stars)
+        from adventure_progress a where a.profile_id = auth.uid()
+    ),
     'invited_by', (
       select jsonb_build_object('username', p.username, 'at', i.created_at)
         from invites i join profiles p on p.id = i.inviter

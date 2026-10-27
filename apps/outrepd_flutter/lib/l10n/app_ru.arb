@@ -806,7 +806,7 @@
   "nextKicker": "ДАЛЕЕ",
   "nextLevelLine": "Уровень {level} · HP {hp}",
   "armory": "Арсенал",
-  "armoryBody": "Звёзды открывают оружие. Каждое отжимание бьёт лучшим из того, что у тебя есть.",
+  "armoryBody": "Звёзды открывают оружие. Монстров каждого мира берёт только оружие этого мира или сильнее.",
   "equipped": "В РУКАХ",
   "perPushUp": "{damage} за отжимание",
   "damagePerPushUp": "{damage} урона за отжимание",
@@ -822,5 +822,8 @@
   "weaponSpear": "Алмазное копьё",
   "weaponSword": "Меч Мастера",
   "weaponCrownbreaker": "Сокрушитель корон",
-  "clearFirst": "Сначала пройди уровень {level}"
+  "clearFirst": "Сначала пройди уровень {level}",
+  "needsWeapon": "Нужно оружие «{weapon}»",
+  "hurtOnlyBy": "Его берёт только «{weapon}» или сильнее",
+  "worldNeedsWeapon": "Для «{world}» нужно «{weapon}» · ещё звёзд: {count}"
 }

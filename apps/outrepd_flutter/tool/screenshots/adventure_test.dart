@@ -130,6 +130,20 @@ void main() {
     );
   });
 
+  testWidgets('map at a world gate', (tester) async {
+    phone(tester);
+    // Every Iron level won on one star: twenty of the thirty the knuckles
+    // need, and Bronze Dunes shut until they are won.
+    // ignore: invalid_use_of_visible_for_testing_member
+    Adventure.instance.debugSet(List.filled(20, 1));
+    await tester.pumpWidget(_app(const AdventureMapScreen()));
+    await tester.pumpAndSettle();
+    await expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile('goldens/adventure_map_gate.png'),
+    );
+  });
+
   testWidgets('armory', (tester) async {
     phone(tester);
     await tester.pumpWidget(_app(const AdventureMapScreen()));

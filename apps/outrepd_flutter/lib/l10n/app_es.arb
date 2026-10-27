@@ -806,7 +806,7 @@
   "nextKicker": "SIGUIENTE",
   "nextLevelLine": "Nivel {level} · HP {hp}",
   "armory": "Armería",
-  "armoryBody": "Las estrellas desbloquean armas. Cada flexión golpea con la mejor que tengas.",
+  "armoryBody": "Las estrellas desbloquean armas. Los monstruos de cada mundo solo reciben golpes de su propia arma o de una mejor.",
   "equipped": "EQUIPADA",
   "perPushUp": "{damage} por flexión",
   "damagePerPushUp": "{damage} de daño por flexión",
@@ -822,5 +822,8 @@
   "weaponSpear": "Lanza de Diamante",
   "weaponSword": "Espada del Maestro",
   "weaponCrownbreaker": "Rompecoronas",
-  "clearFirst": "Primero gana el nivel {level}"
+  "clearFirst": "Primero gana el nivel {level}",
+  "needsWeapon": "Necesitas {weapon}",
+  "hurtOnlyBy": "Solo {weapon} o mejor puede herirlo",
+  "worldNeedsWeapon": "{world} necesita {weapon} · faltan {count} estrellas"
 }

@@ -2681,7 +2681,7 @@ class LFr extends L {
   String get armory => 'Armurerie';
 
   @override
-  String get armoryBody => 'Les étoiles débloquent des armes. Chaque pompe frappe avec la meilleure que tu as.';
+  String get armoryBody => 'Les étoiles débloquent des armes. Les monstres de chaque monde ne craignent que son arme ou une meilleure.';
 
   @override
   String get equipped => 'ÉQUIPÉE';
@@ -2741,5 +2741,20 @@ class LFr extends L {
   @override
   String clearFirst(String level) {
     return 'Gagne d’abord le niveau ${level}';
+  }
+
+  @override
+  String needsWeapon(String weapon) {
+    return 'Il faut ${weapon}';
+  }
+
+  @override
+  String hurtOnlyBy(String weapon) {
+    return 'Seul ${weapon} ou mieux peut le blesser';
+  }
+
+  @override
+  String worldNeedsWeapon(String world, String weapon, String count) {
+    return '${world} demande ${weapon} · encore ${count} étoiles';
   }
 }

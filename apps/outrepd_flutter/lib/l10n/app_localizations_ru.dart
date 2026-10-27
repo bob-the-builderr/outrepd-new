@@ -2675,7 +2675,7 @@ class LRu extends L {
   String get armory => 'Арсенал';
 
   @override
-  String get armoryBody => 'Звёзды открывают оружие. Каждое отжимание бьёт лучшим из того, что у тебя есть.';
+  String get armoryBody => 'Звёзды открывают оружие. Монстров каждого мира берёт только оружие этого мира или сильнее.';
 
   @override
   String get equipped => 'В РУКАХ';
@@ -2735,5 +2735,20 @@ class LRu extends L {
   @override
   String clearFirst(String level) {
     return 'Сначала пройди уровень ${level}';
+  }
+
+  @override
+  String needsWeapon(String weapon) {
+    return 'Нужно оружие «${weapon}»';
+  }
+
+  @override
+  String hurtOnlyBy(String weapon) {
+    return 'Его берёт только «${weapon}» или сильнее';
+  }
+
+  @override
+  String worldNeedsWeapon(String world, String weapon, String count) {
+    return 'Для «${world}» нужно «${weapon}» · ещё звёзд: ${count}';
   }
 }

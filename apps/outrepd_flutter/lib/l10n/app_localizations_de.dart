@@ -2682,7 +2682,7 @@ class LDe extends L {
   String get armory => 'Waffenkammer';
 
   @override
-  String get armoryBody => 'Sterne schalten Waffen frei. Jeder Liegestütz trifft mit der besten, die du hast.';
+  String get armoryBody => 'Sterne schalten Waffen frei. Die Monster jeder Welt spüren nur deren eigene Waffe oder eine bessere.';
 
   @override
   String get equipped => 'AUSGERÜSTET';
@@ -2742,5 +2742,20 @@ class LDe extends L {
   @override
   String clearFirst(String level) {
     return 'Gewinne zuerst Level ${level}';
+  }
+
+  @override
+  String needsWeapon(String weapon) {
+    return 'Braucht ${weapon}';
+  }
+
+  @override
+  String hurtOnlyBy(String weapon) {
+    return 'Nur ${weapon} oder besser kann ihm schaden';
+  }
+
+  @override
+  String worldNeedsWeapon(String world, String weapon, String count) {
+    return '${world} braucht ${weapon} · noch ${count} Sterne';
   }
 }

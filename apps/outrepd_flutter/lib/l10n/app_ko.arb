@@ -806,7 +806,7 @@
   "nextKicker": "다음",
   "nextLevelLine": "스테이지 {level} · HP {hp}",
   "armory": "무기고",
-  "armoryBody": "별을 모으면 무기가 열려요. 팔굽혀펴기 한 번마다 가진 무기 중 가장 강한 무기로 공격해요.",
+  "armoryBody": "별을 모으면 무기가 열려요. 각 월드의 몬스터는 그 월드의 무기나 더 강한 무기에만 피해를 입어요.",
   "equipped": "장착 중",
   "perPushUp": "1회 {damage}",
   "damagePerPushUp": "팔굽혀펴기 1회당 {damage} 피해",
@@ -822,5 +822,8 @@
   "weaponSpear": "다이아몬드 창",
   "weaponSword": "마스터 소드",
   "weaponCrownbreaker": "크라운브레이커",
-  "clearFirst": "스테이지 {level} 먼저 클리어하세요"
+  "clearFirst": "스테이지 {level} 먼저 클리어하세요",
+  "needsWeapon": "{weapon} 필요",
+  "hurtOnlyBy": "{weapon} 이상의 무기만 통해요",
+  "worldNeedsWeapon": "{world}에는 {weapon} 필요 · 별 {count}개 더"
 }

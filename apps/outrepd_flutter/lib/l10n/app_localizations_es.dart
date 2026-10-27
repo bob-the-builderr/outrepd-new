@@ -2680,7 +2680,7 @@ class LEs extends L {
   String get armory => 'Armería';
 
   @override
-  String get armoryBody => 'Las estrellas desbloquean armas. Cada flexión golpea con la mejor que tengas.';
+  String get armoryBody => 'Las estrellas desbloquean armas. Los monstruos de cada mundo solo reciben golpes de su propia arma o de una mejor.';
 
   @override
   String get equipped => 'EQUIPADA';
@@ -2740,5 +2740,20 @@ class LEs extends L {
   @override
   String clearFirst(String level) {
     return 'Primero gana el nivel ${level}';
+  }
+
+  @override
+  String needsWeapon(String weapon) {
+    return 'Necesitas ${weapon}';
+  }
+
+  @override
+  String hurtOnlyBy(String weapon) {
+    return 'Solo ${weapon} o mejor puede herirlo';
+  }
+
+  @override
+  String worldNeedsWeapon(String world, String weapon, String count) {
+    return '${world} necesita ${weapon} · faltan ${count} estrellas';
   }
 }

@@ -806,7 +806,7 @@
   "nextKicker": "PROSSIMO",
   "nextLevelLine": "Livello {level} · HP {hp}",
   "armory": "Armeria",
-  "armoryBody": "Le stelle sbloccano armi. Ogni piegamento colpisce con la migliore che hai.",
+  "armoryBody": "Le stelle sbloccano armi. I mostri di ogni mondo sentono solo la sua arma o una migliore.",
   "equipped": "EQUIPAGGIATA",
   "perPushUp": "{damage} per piegamento",
   "damagePerPushUp": "{damage} danni per piegamento",
@@ -822,5 +822,8 @@
   "weaponSpear": "Lancia di Diamante",
   "weaponSword": "Spada del Maestro",
   "weaponCrownbreaker": "Spezzacorone",
-  "clearFirst": "Prima vinci il livello {level}"
+  "clearFirst": "Prima vinci il livello {level}",
+  "needsWeapon": "Serve {weapon}",
+  "hurtOnlyBy": "Solo {weapon} o meglio può ferirlo",
+  "worldNeedsWeapon": "{world} richiede {weapon} · ancora {count} stelle"
 }

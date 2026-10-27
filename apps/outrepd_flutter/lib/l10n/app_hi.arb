@@ -806,7 +806,7 @@
   "nextKicker": "अगला",
   "nextLevelLine": "लेवल {level} · HP {hp}",
   "armory": "शस्त्रागार",
-  "armoryBody": "सितारों से हथियार खुलते हैं। हर पुश-अप आपके सबसे अच्छे हथियार से वार करता है।",
+  "armoryBody": "सितारों से हथियार खुलते हैं। हर दुनिया के राक्षसों पर सिर्फ़ उसी दुनिया का हथियार या उससे बेहतर असर करता है।",
   "equipped": "चालू",
   "perPushUp": "हर पुश-अप पर {damage}",
   "damagePerPushUp": "हर पुश-अप पर {damage} नुकसान",
@@ -822,5 +822,8 @@
   "weaponSpear": "हीरे का भाला",
   "weaponSword": "मास्टर तलवार",
   "weaponCrownbreaker": "ताजभंजक",
-  "clearFirst": "पहले लेवल {level} जीतें"
+  "clearFirst": "पहले लेवल {level} जीतें",
+  "needsWeapon": "{weapon} चाहिए",
+  "hurtOnlyBy": "इसे सिर्फ़ {weapon} या उससे बेहतर हथियार ही चोट पहुँचा सकता है",
+  "worldNeedsWeapon": "{world} के लिए {weapon} चाहिए · {count} और सितारे"
 }

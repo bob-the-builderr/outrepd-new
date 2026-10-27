@@ -806,7 +806,7 @@
   "nextKicker": "下一关",
   "nextLevelLine": "第 {level} 关 · HP {hp}",
   "armory": "武器库",
-  "armoryBody": "星星可解锁武器。每个俯卧撑都用你最好的武器攻击。",
+  "armoryBody": "星星可解锁武器。每个世界的怪物只会被该世界的武器或更强的武器伤到。",
   "equipped": "已装备",
   "perPushUp": "每个俯卧撑 {damage}",
   "damagePerPushUp": "每个俯卧撑造成 {damage} 伤害",
@@ -822,5 +822,8 @@
   "weaponSpear": "钻石长矛",
   "weaponSword": "大师之剑",
   "weaponCrownbreaker": "碎冠者",
-  "clearFirst": "先通过第 {level} 关"
+  "clearFirst": "先通过第 {level} 关",
+  "needsWeapon": "需要{weapon}",
+  "hurtOnlyBy": "只有{weapon}或更强的武器才能伤到它",
+  "worldNeedsWeapon": "{world}需要{weapon} · 还差 {count} 颗星"
 }

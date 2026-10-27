@@ -806,7 +806,7 @@
   "nextKicker": "PRÓXIMO",
   "nextLevelLine": "Nível {level} · HP {hp}",
   "armory": "Arsenal",
-  "armoryBody": "Estrelas liberam armas. Cada flexão acerta com a melhor que você tem.",
+  "armoryBody": "Estrelas liberam armas. Os monstros de cada mundo só sentem a arma desse mundo ou uma melhor.",
   "equipped": "EQUIPADA",
   "perPushUp": "{damage} por flexão",
   "damagePerPushUp": "{damage} de dano por flexão",
@@ -822,5 +822,8 @@
   "weaponSpear": "Lança de Diamante",
   "weaponSword": "Espada do Mestre",
   "weaponCrownbreaker": "Quebra-Coroas",
-  "clearFirst": "Vença o nível {level} primeiro"
+  "clearFirst": "Vença o nível {level} primeiro",
+  "needsWeapon": "Precisa de {weapon}",
+  "hurtOnlyBy": "Só {weapon} ou melhor consegue feri-lo",
+  "worldNeedsWeapon": "{world} exige {weapon} · faltam {count} estrelas"
 }

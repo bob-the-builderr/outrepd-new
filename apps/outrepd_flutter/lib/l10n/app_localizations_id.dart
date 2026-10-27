@@ -2674,7 +2674,7 @@ class LId extends L {
   String get armory => 'Gudang Senjata';
 
   @override
-  String get armoryBody => 'Bintang membuka senjata. Setiap push-up memukul dengan senjata terbaik yang kamu punya.';
+  String get armoryBody => 'Bintang membuka senjata. Monster di tiap dunia hanya terluka oleh senjata dunia itu atau yang lebih kuat.';
 
   @override
   String get equipped => 'DIPAKAI';
@@ -2734,5 +2734,20 @@ class LId extends L {
   @override
   String clearFirst(String level) {
     return 'Menangkan level ${level} dulu';
+  }
+
+  @override
+  String needsWeapon(String weapon) {
+    return 'Butuh ${weapon}';
+  }
+
+  @override
+  String hurtOnlyBy(String weapon) {
+    return 'Hanya ${weapon} atau lebih kuat yang bisa melukainya';
+  }
+
+  @override
+  String worldNeedsWeapon(String world, String weapon, String count) {
+    return '${world} butuh ${weapon} · ${count} bintang lagi';
   }
 }

@@ -2680,7 +2680,7 @@ class LIt extends L {
   String get armory => 'Armeria';
 
   @override
-  String get armoryBody => 'Le stelle sbloccano armi. Ogni piegamento colpisce con la migliore che hai.';
+  String get armoryBody => 'Le stelle sbloccano armi. I mostri di ogni mondo sentono solo la sua arma o una migliore.';
 
   @override
   String get equipped => 'EQUIPAGGIATA';
@@ -2740,5 +2740,20 @@ class LIt extends L {
   @override
   String clearFirst(String level) {
     return 'Prima vinci il livello ${level}';
+  }
+
+  @override
+  String needsWeapon(String weapon) {
+    return 'Serve ${weapon}';
+  }
+
+  @override
+  String hurtOnlyBy(String weapon) {
+    return 'Solo ${weapon} o meglio può ferirlo';
+  }
+
+  @override
+  String worldNeedsWeapon(String world, String weapon, String count) {
+    return '${world} richiede ${weapon} · ancora ${count} stelle';
   }
 }

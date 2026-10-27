@@ -2677,7 +2677,7 @@ class LPt extends L {
   String get armory => 'Arsenal';
 
   @override
-  String get armoryBody => 'Estrelas liberam armas. Cada flexão acerta com a melhor que você tem.';
+  String get armoryBody => 'Estrelas liberam armas. Os monstros de cada mundo só sentem a arma desse mundo ou uma melhor.';
 
   @override
   String get equipped => 'EQUIPADA';
@@ -2737,5 +2737,20 @@ class LPt extends L {
   @override
   String clearFirst(String level) {
     return 'Vença o nível ${level} primeiro';
+  }
+
+  @override
+  String needsWeapon(String weapon) {
+    return 'Precisa de ${weapon}';
+  }
+
+  @override
+  String hurtOnlyBy(String weapon) {
+    return 'Só ${weapon} ou melhor consegue feri-lo';
+  }
+
+  @override
+  String worldNeedsWeapon(String world, String weapon, String count) {
+    return '${world} exige ${weapon} · faltam ${count} estrelas';
   }
 }
