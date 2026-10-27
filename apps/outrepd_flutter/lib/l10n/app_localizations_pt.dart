@@ -2185,49 +2185,6 @@ class LPt extends L {
   }
 
   @override
-  String get inviteCodeLabel => 'Código de um amigo (opcional)';
-
-  @override
-  String get inviteClaimed => 'Código adicionado · 7 dias grátis para você';
-
-  @override
-  String get inviteUnknownCode => 'Ninguém tem esse código';
-
-  @override
-  String get inviteNotYearly => 'Esse código não pode dar dias grátis agora';
-
-  @override
-  String get inviteOwnCode => 'Esse é o seu próprio código';
-
-  @override
-  String get inviteTooLate => 'Os códigos valem na primeira semana da conta';
-
-  @override
-  String get inviteFull => 'Esse código foi muito usado este mês. Tente outro';
-
-  @override
-  String get inviteTitle => 'Dê 7 dias grátis a um amigo';
-
-  @override
-  String get inviteBody => 'Seu código vem com o plano anual. Seu amigo digita ao se cadastrar.';
-
-  @override
-  String get inviteYourCode => 'Seu código';
-
-  @override
-  String inviteJoined(String n) {
-    return '${n} entraram';
-  }
-
-  @override
-  String get inviteSend => 'Enviar convite';
-
-  @override
-  String inviteShareText(String code) {
-    return 'Me desafie no OUTREPD: 60 segundos de flexões, ao vivo. Use meu código ${code} ao se cadastrar e ganhe 7 dias grátis.';
-  }
-
-  @override
   String get dailyGoalTitle => 'Meta de hoje';
 
   @override
@@ -2337,9 +2294,6 @@ class LPt extends L {
 
   @override
   String get usernameSpacesHint => 'Os espaços passam a _';
-
-  @override
-  String get haveInviteCode => 'Tens um código de convite?';
 
   @override
   String get emailCodeNote => 'Vamos enviar-te um código de 6 dígitos por email. Sem palavra-passe.';

@@ -2151,49 +2151,6 @@ class LKo extends L {
   }
 
   @override
-  String get inviteCodeLabel => '친구 코드 (선택)';
-
-  @override
-  String get inviteClaimed => '코드 추가됨 · 7일 무료';
-
-  @override
-  String get inviteUnknownCode => '그 코드를 가진 사람이 없어요';
-
-  @override
-  String get inviteNotYearly => '이 코드는 지금 무료 기간을 줄 수 없어요';
-
-  @override
-  String get inviteOwnCode => '내 코드예요';
-
-  @override
-  String get inviteTooLate => '코드는 계정 생성 후 첫 주에만 쓸 수 있어요';
-
-  @override
-  String get inviteFull => '이번 달에 많이 쓰인 코드예요. 다른 코드를 써 보세요';
-
-  @override
-  String get inviteTitle => '친구에게 7일 무료 선물하기';
-
-  @override
-  String get inviteBody => '코드는 연간 플랜에 포함돼요. 친구가 가입할 때 입력하면 돼요.';
-
-  @override
-  String get inviteYourCode => '내 코드';
-
-  @override
-  String inviteJoined(String n) {
-    return '${n}명 가입';
-  }
-
-  @override
-  String get inviteSend => '초대 보내기';
-
-  @override
-  String inviteShareText(String code) {
-    return 'OUTREPD에서 나랑 대결해: 60초 푸시업, 실시간. 가입할 때 내 코드 ${code}를 입력하면 7일 무료야.';
-  }
-
-  @override
   String get dailyGoalTitle => '오늘의 목표';
 
   @override
@@ -2303,9 +2260,6 @@ class LKo extends L {
 
   @override
   String get usernameSpacesHint => '띄어쓰기는 _로 바뀌어요';
-
-  @override
-  String get haveInviteCode => '초대 코드가 있나요?';
 
   @override
   String get emailCodeNote => '이메일로 6자리 코드를 보내 드려요. 비밀번호는 필요 없어요.';

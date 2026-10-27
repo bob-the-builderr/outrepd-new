@@ -24,7 +24,7 @@ import '../theme.dart';
 import '../tier_frame.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
-import 'invite_card.dart';
+import 'bring_friend_card.dart';
 import 'live_invite.dart';
 import 'other_profile.dart';
 import 'shell.dart';

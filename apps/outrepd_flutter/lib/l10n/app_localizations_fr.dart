@@ -2189,49 +2189,6 @@ class LFr extends L {
   }
 
   @override
-  String get inviteCodeLabel => 'Code d\'un ami (facultatif)';
-
-  @override
-  String get inviteClaimed => 'Code ajouté · 7 jours gratuits pour toi';
-
-  @override
-  String get inviteUnknownCode => 'Aucun joueur n\'a ce code';
-
-  @override
-  String get inviteNotYearly => 'Ce code ne peut pas offrir de jours gratuits pour l\'instant';
-
-  @override
-  String get inviteOwnCode => 'C\'est ton propre code';
-
-  @override
-  String get inviteTooLate => 'Les codes marchent pendant la première semaine du compte';
-
-  @override
-  String get inviteFull => 'Ce code a beaucoup servi ce mois-ci. Essaie-en un autre';
-
-  @override
-  String get inviteTitle => 'Offre 7 jours gratuits à un ami';
-
-  @override
-  String get inviteBody => 'Ton code est inclus dans l\'abonnement annuel. Ton ami le saisit à l\'inscription.';
-
-  @override
-  String get inviteYourCode => 'Ton code';
-
-  @override
-  String inviteJoined(String n) {
-    return '${n} inscrits';
-  }
-
-  @override
-  String get inviteSend => 'Envoyer l\'invitation';
-
-  @override
-  String inviteShareText(String code) {
-    return 'Affronte-moi sur OUTREPD : 60 secondes de pompes, en direct. Utilise mon code ${code} à l\'inscription et profite de 7 jours gratuits.';
-  }
-
-  @override
   String get dailyGoalTitle => 'Objectif du jour';
 
   @override
@@ -2341,9 +2298,6 @@ class LFr extends L {
 
   @override
   String get usernameSpacesHint => 'Les espaces deviennent _';
-
-  @override
-  String get haveInviteCode => 'Tu as un code d\'invitation ?';
 
   @override
   String get emailCodeNote => 'On t\'envoie un code à 6 chiffres par e-mail. Pas de mot de passe.';

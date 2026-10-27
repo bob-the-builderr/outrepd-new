@@ -2183,49 +2183,6 @@ class LRu extends L {
   }
 
   @override
-  String get inviteCodeLabel => 'Код друга (необязательно)';
-
-  @override
-  String get inviteClaimed => 'Код добавлен · 7 дней бесплатно';
-
-  @override
-  String get inviteUnknownCode => 'Ни у кого нет такого кода';
-
-  @override
-  String get inviteNotYearly => 'Этот код сейчас не даёт бесплатных дней';
-
-  @override
-  String get inviteOwnCode => 'Это ваш собственный код';
-
-  @override
-  String get inviteTooLate => 'Коды работают в первую неделю аккаунта';
-
-  @override
-  String get inviteFull => 'Этот код часто использовали в этом месяце. Попробуйте другой';
-
-  @override
-  String get inviteTitle => 'Подарите другу 7 дней бесплатно';
-
-  @override
-  String get inviteBody => 'Код входит в годовой план. Друг вводит его при регистрации.';
-
-  @override
-  String get inviteYourCode => 'Ваш код';
-
-  @override
-  String inviteJoined(String n) {
-    return 'Присоединились: ${n}';
-  }
-
-  @override
-  String get inviteSend => 'Отправить приглашение';
-
-  @override
-  String inviteShareText(String code) {
-    return 'Сразись со мной в OUTREPD: 60 секунд отжиманий вживую. Введи мой код ${code} при регистрации и получи 7 дней бесплатно.';
-  }
-
-  @override
   String get dailyGoalTitle => 'Цель на сегодня';
 
   @override
@@ -2335,9 +2292,6 @@ class LRu extends L {
 
   @override
   String get usernameSpacesHint => 'Пробелы становятся _';
-
-  @override
-  String get haveInviteCode => 'Есть код приглашения?';
 
   @override
   String get emailCodeNote => 'Мы пришлём 6-значный код на почту. Без пароля.';

@@ -2182,49 +2182,6 @@ class LId extends L {
   }
 
   @override
-  String get inviteCodeLabel => 'Kode teman (opsional)';
-
-  @override
-  String get inviteClaimed => 'Kode ditambahkan · 7 hari gratis untukmu';
-
-  @override
-  String get inviteUnknownCode => 'Tidak ada yang punya kode itu';
-
-  @override
-  String get inviteNotYearly => 'Kode itu sedang tidak bisa memberi hari gratis';
-
-  @override
-  String get inviteOwnCode => 'Itu kodemu sendiri';
-
-  @override
-  String get inviteTooLate => 'Kode berlaku di minggu pertama akun';
-
-  @override
-  String get inviteFull => 'Kode itu sudah sering dipakai bulan ini. Coba yang lain';
-
-  @override
-  String get inviteTitle => 'Beri teman 7 hari gratis';
-
-  @override
-  String get inviteBody => 'Kodemu termasuk dalam paket tahunan. Temanmu mengetiknya saat mendaftar.';
-
-  @override
-  String get inviteYourCode => 'Kodemu';
-
-  @override
-  String inviteJoined(String n) {
-    return '${n} bergabung';
-  }
-
-  @override
-  String get inviteSend => 'Kirim undangan';
-
-  @override
-  String inviteShareText(String code) {
-    return 'Tantang aku di OUTREPD: 60 detik push-up, langsung. Pakai kodeku ${code} saat daftar dan dapat 7 hari gratis.';
-  }
-
-  @override
   String get dailyGoalTitle => 'Target hari ini';
 
   @override
@@ -2334,9 +2291,6 @@ class LId extends L {
 
   @override
   String get usernameSpacesHint => 'Spasi menjadi _';
-
-  @override
-  String get haveInviteCode => 'Punya kode undangan?';
 
   @override
   String get emailCodeNote => 'Kami akan mengirim kode 6 digit ke emailmu. Tanpa kata sandi.';

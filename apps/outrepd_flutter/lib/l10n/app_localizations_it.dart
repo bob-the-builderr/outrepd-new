@@ -2188,49 +2188,6 @@ class LIt extends L {
   }
 
   @override
-  String get inviteCodeLabel => 'Codice di un amico (facoltativo)';
-
-  @override
-  String get inviteClaimed => 'Codice aggiunto · 7 giorni gratis per te';
-
-  @override
-  String get inviteUnknownCode => 'Nessuno ha questo codice';
-
-  @override
-  String get inviteNotYearly => 'Questo codice ora non può dare giorni gratis';
-
-  @override
-  String get inviteOwnCode => 'Questo è il tuo codice';
-
-  @override
-  String get inviteTooLate => 'I codici valgono nella prima settimana dell\'account';
-
-  @override
-  String get inviteFull => 'Questo codice è stato usato molto questo mese. Provane un altro';
-
-  @override
-  String get inviteTitle => 'Regala a un amico 7 giorni gratis';
-
-  @override
-  String get inviteBody => 'Il tuo codice è incluso nel piano annuale. Il tuo amico lo inserisce all\'iscrizione.';
-
-  @override
-  String get inviteYourCode => 'Il tuo codice';
-
-  @override
-  String inviteJoined(String n) {
-    return '${n} iscritti';
-  }
-
-  @override
-  String get inviteSend => 'Invia invito';
-
-  @override
-  String inviteShareText(String code) {
-    return 'Sfidami su OUTREPD: 60 secondi di flessioni, live. Usa il mio codice ${code} all\'iscrizione e ottieni 7 giorni gratis.';
-  }
-
-  @override
   String get dailyGoalTitle => 'Obiettivo di oggi';
 
   @override
@@ -2340,9 +2297,6 @@ class LIt extends L {
 
   @override
   String get usernameSpacesHint => 'Gli spazi diventano _';
-
-  @override
-  String get haveInviteCode => 'Hai un codice invito?';
 
   @override
   String get emailCodeNote => 'Ti invieremo via email un codice di 6 cifre. Nessuna password.';

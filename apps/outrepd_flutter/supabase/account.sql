@@ -72,18 +72,6 @@ as $$
       select to_jsonb(a.stars)
         from adventure_progress a where a.profile_id = auth.uid()
     ),
-    'invited_by', (
-      select jsonb_build_object('username', p.username, 'at', i.created_at)
-        from invites i join profiles p on p.id = i.inviter
-       where i.invitee = auth.uid()
-    ),
-    'invited', coalesce((
-      select jsonb_agg(jsonb_build_object(
-               'username', p.username, 'at', i.created_at)
-             order by i.created_at)
-        from invites i join profiles p on p.id = i.invitee
-       where i.inviter = auth.uid()
-    ), '[]'::jsonb),
     'reports_filed', coalesce((
       select count(*) from reports r where r.reporter = auth.uid()
     ), 0)

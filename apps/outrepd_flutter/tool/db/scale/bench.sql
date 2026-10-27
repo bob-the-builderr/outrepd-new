@@ -56,7 +56,6 @@ select bench('find_lifters', 'select * from find_lifters(''lifter_12'')') as res
 select bench('find_opponent_set', 'select * from find_opponent_set()', 5) as result;
 select bench('find_live_opponent (every 3 s)', 'select * from find_live_opponent()', 10) as result;
 select bench('my_season_awards', 'select * from my_season_awards()') as result;
-select bench('my_invites', 'select * from my_invites()') as result;
 select bench('my_account_summary', 'select * from my_account_summary()') as result;
 select bench('my_data (export)', 'select my_data()', 3) as result;
 reset role;

@@ -2136,49 +2136,6 @@ class LZh extends L {
   }
 
   @override
-  String get inviteCodeLabel => '好友代码（可选）';
-
-  @override
-  String get inviteClaimed => '已添加代码 · 免费 7 天';
-
-  @override
-  String get inviteUnknownCode => '没有人使用这个代码';
-
-  @override
-  String get inviteNotYearly => '这个代码暂时无法提供免费天数';
-
-  @override
-  String get inviteOwnCode => '这是你自己的代码';
-
-  @override
-  String get inviteTooLate => '代码仅在账号创建后的第一周内有效';
-
-  @override
-  String get inviteFull => '这个代码本月使用次数过多，请换一个';
-
-  @override
-  String get inviteTitle => '送好友 7 天免费';
-
-  @override
-  String get inviteBody => '代码是年度方案的福利。好友注册时输入即可。';
-
-  @override
-  String get inviteYourCode => '你的代码';
-
-  @override
-  String inviteJoined(String n) {
-    return '已加入 ${n} 人';
-  }
-
-  @override
-  String get inviteSend => '发送邀请';
-
-  @override
-  String inviteShareText(String code) {
-    return '来 OUTREPD 和我比一场：60 秒俯卧撑，实时对战。注册时输入我的代码 ${code}，免费 7 天。';
-  }
-
-  @override
   String get dailyGoalTitle => '今日目标';
 
   @override
@@ -2288,9 +2245,6 @@ class LZh extends L {
 
   @override
   String get usernameSpacesHint => '空格会变成 _';
-
-  @override
-  String get haveInviteCode => '有邀请码吗？';
 
   @override
   String get emailCodeNote => '我们会给你发送 6 位数验证码邮件，无需密码。';

@@ -260,25 +260,6 @@ class Subscription extends ChangeNotifier {
   /// Records a purchase or a restore the paywall just finished.
   void settle(bool active) => _set(active);
 
-  /// A friend's code was just accepted: the server is giving this account a
-  /// week of Pro, and the store will know in a few seconds. Asks afresh a
-  /// few times until it does, so the paywall steps aside on its own.
-  Future<void> expectGrant() async {
-    final store = _store;
-    if (store == null) return;
-    for (final wait in const [3, 5, 8, 15]) {
-      await Future<void>.delayed(Duration(seconds: wait));
-      try {
-        if (!_started) continue;
-        final active = await store.checkFresh();
-        _set(active);
-        if (active) return;
-      } on Object catch (error) {
-        debugPrint('Could not check for the invite week: $error');
-      }
-    }
-  }
-
   /// Signing out: the store lets go of the account, and nothing is known
   /// about the next one until the gate asks.
   Future<void> forget() async {

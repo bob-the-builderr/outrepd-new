@@ -2183,49 +2183,6 @@ class LHi extends L {
   }
 
   @override
-  String get inviteCodeLabel => 'दोस्त का कोड (वैकल्पिक)';
-
-  @override
-  String get inviteClaimed => 'कोड जुड़ गया · 7 दिन मुफ़्त आपके';
-
-  @override
-  String get inviteUnknownCode => 'यह कोड किसी का नहीं है';
-
-  @override
-  String get inviteNotYearly => 'यह कोड अभी मुफ़्त दिन नहीं दे सकता';
-
-  @override
-  String get inviteOwnCode => 'यह आपका अपना कोड है';
-
-  @override
-  String get inviteTooLate => 'कोड खाते के पहले हफ़्ते में ही चलते हैं';
-
-  @override
-  String get inviteFull => 'इस महीने यह कोड बहुत इस्तेमाल हुआ। दूसरा आज़माएँ';
-
-  @override
-  String get inviteTitle => 'किसी दोस्त को 7 दिन मुफ़्त दें';
-
-  @override
-  String get inviteBody => 'आपका कोड सालाना प्लान के साथ आता है। आपका दोस्त साइन अप करते समय इसे डालता है।';
-
-  @override
-  String get inviteYourCode => 'आपका कोड';
-
-  @override
-  String inviteJoined(String n) {
-    return '${n} जुड़े';
-  }
-
-  @override
-  String get inviteSend => 'न्योता भेजें';
-
-  @override
-  String inviteShareText(String code) {
-    return 'OUTREPD पर मुझसे मुकाबला करो: 60 सेकंड पुश-अप, लाइव। साइन अप करते समय मेरा कोड ${code} डालो और 7 दिन मुफ़्त पाओ।';
-  }
-
-  @override
   String get dailyGoalTitle => 'आज का लक्ष्य';
 
   @override
@@ -2335,9 +2292,6 @@ class LHi extends L {
 
   @override
   String get usernameSpacesHint => 'स्पेस _ बन जाते हैं';
-
-  @override
-  String get haveInviteCode => 'क्या आपके पास इनवाइट कोड है?';
 
   @override
   String get emailCodeNote => 'हम आपको ईमेल पर 6 अंकों का कोड भेजेंगे। कोई पासवर्ड नहीं।';

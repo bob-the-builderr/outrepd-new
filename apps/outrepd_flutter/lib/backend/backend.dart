@@ -710,52 +710,6 @@ class LiveFinish {
   bool get done => settled != null;
 }
 
-/// What typing a friend's code at sign-up did. See supabase/invites.sql.
-enum InviteResult {
-  /// Seven days of Pro are on their way.
-  claimed,
-
-  /// No lifter has that code.
-  unknownCode,
-
-  /// That lifter's plan does not carry a code: only a paid yearly one does.
-  notYearly,
-
-  ownCode,
-
-  /// This account already used one.
-  already,
-
-  /// Codes are for an account's first week.
-  tooLate,
-
-  /// That code has been used as much as a month allows.
-  full,
-
-  /// The server could not be asked.
-  offline;
-
-  static InviteResult parse(String? value) => switch (value) {
-    'claimed' => claimed,
-    'unknown_code' => unknownCode,
-    'not_yearly' => notYearly,
-    'own_code' => ownCode,
-    'already' => already,
-    'too_late' => tooLate,
-    'full' => full,
-    _ => unknownCode,
-  };
-}
-
-/// This account's own code, as an invite: whether its plan carries one and
-/// how many friends have come in on it.
-class MyInvites {
-  const MyInvites({required this.canInvite, required this.joined});
-
-  final bool canInvite;
-  final int joined;
-}
-
 /// Who else is around while the live search waits. Counts only.
 class LiveOnline {
   const LiveOnline({required this.searching, required this.online});
@@ -1407,12 +1361,6 @@ abstract interface class Backend {
   /// Null when there is nobody to ask.
   Future<LiveOnline?> liveOnline();
 
-  /// A friend's code, typed at sign-up.
-  Future<InviteResult> claimInvite(String code);
-
-  /// This account's own code, as an invite. Null when there is nobody to ask.
-  Future<MyInvites?> myInvites();
-
   /// Asks a friend to go live now. Returns the match's id.
   Future<String> inviteLive(String friendId);
 
@@ -1710,12 +1658,6 @@ class NoBackend implements Backend {
 
   @override
   Future<LiveOnline?> liveOnline() async => null;
-
-  @override
-  Future<InviteResult> claimInvite(String code) async => InviteResult.offline;
-
-  @override
-  Future<MyInvites?> myInvites() async => null;
 
   @override
   Future<String> inviteLive(String friendId) =>

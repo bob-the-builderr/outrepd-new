@@ -2181,49 +2181,6 @@ class LEn extends L {
   }
 
   @override
-  String get inviteCodeLabel => 'Friend\'s code (optional)';
-
-  @override
-  String get inviteClaimed => 'Code added · 7 days free are yours';
-
-  @override
-  String get inviteUnknownCode => 'No lifter has that code';
-
-  @override
-  String get inviteNotYearly => 'That code can\'t give free days right now';
-
-  @override
-  String get inviteOwnCode => 'That\'s your own code';
-
-  @override
-  String get inviteTooLate => 'Codes work in an account\'s first week';
-
-  @override
-  String get inviteFull => 'That code has been used a lot this month. Try another';
-
-  @override
-  String get inviteTitle => 'Give a friend 7 days free';
-
-  @override
-  String get inviteBody => 'Your code comes with the yearly plan. Your friend types it when they sign up.';
-
-  @override
-  String get inviteYourCode => 'Your code';
-
-  @override
-  String inviteJoined(String n) {
-    return '${n} joined';
-  }
-
-  @override
-  String get inviteSend => 'Send invite';
-
-  @override
-  String inviteShareText(String code) {
-    return 'Duel me on OUTREPD: 60 seconds of push-ups, live. Use my code ${code} when you sign up and get 7 days free.';
-  }
-
-  @override
   String get dailyGoalTitle => 'Today\'s goal';
 
   @override
@@ -2333,9 +2290,6 @@ class LEn extends L {
 
   @override
   String get usernameSpacesHint => 'Spaces become _';
-
-  @override
-  String get haveInviteCode => 'Have an invite code?';
 
   @override
   String get emailCodeNote => 'We\'ll email you a 6-digit code. No password.';

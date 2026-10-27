@@ -38,12 +38,12 @@
 //      statement in supabase/switches.sql, run in the SQL Editor. A
 //      re-install leaves it on.
 //
-// Five callers. A body of {"tester": <account id>} comes from the triggers in
+// Four callers. A body of {"tester": <account id>} comes from the triggers in
 // supabase/testers.sql and gives a listed closed-test tester Pro as a
-// RevenueCat promotional grant -- see grantTesterPass. A body of
-// {"invite_grant": <account id>} comes from supabase/invites.sql and gives
-// that account the week a friend's code owes it -- see grantInviteWeek. The
-// other three are told apart by the Authorization header:
+// RevenueCat promotional grant -- see grantTesterPass. (A friend's code gave
+// a week the same way until 2026-10-28, when the app became free and Pro
+// came to mean no ads.) The other three are told apart by the Authorization
+// header:
 //   - RevenueCat, with REVENUECAT_WEBHOOK_AUTH: syncs the accounts the event
 //     names.
 //   - The same secret with {"backfill": true}: syncs every account.
@@ -230,46 +230,6 @@ async function promote(id: string, duration: string, secretKey: string) {
   );
 }
 
-/// What an invitee gets (supabase/invites.sql): a week.
-const INVITEE_PASS = 'weekly';
-
-/// Gives [who] the week a friend's code owes them, if the invite table says
-/// it is owed and not yet given. The row is claimed before RevenueCat is
-/// asked and released if it says no, so two calls at once give it once, and
-/// a refusal can be tried again.
-async function grantInviteWeek(
-  db: ReturnType<typeof createClient>,
-  who: unknown,
-  secretKey: string,
-) {
-  if (typeof who !== 'string' || !uuid.test(who)) {
-    return reply(400, { error: 'not an account id' });
-  }
-  const { data: claimed, error } = await db
-    .from('invites')
-    .update({ granted_at: new Date().toISOString() })
-    .eq('invitee', who)
-    .is('granted_at', null)
-    .select('invitee');
-  if (error) return reply(500, { error: error.message });
-  if (!claimed || claimed.length === 0) {
-    return reply(200, { skipped: 'nothing owed' });
-  }
-  const granted = await promote(who, INVITEE_PASS, secretKey);
-  if (!granted.ok) {
-    await db.from('invites').update({ granted_at: null }).eq('invitee', who);
-    console.error(`RevenueCat refused the invite week: ${await granted.text()}`);
-    return reply(502, { error: `RevenueCat answered ${granted.status}` });
-  }
-  try {
-    await sync(db, [who], secretKey);
-  } catch (e) {
-    // The grant stands; the webhook writes the row when RevenueCat reports.
-    console.error(e);
-  }
-  return reply(200, { granted: true });
-}
-
 /// Equal, without stopping at the first difference: how long a comparison
 /// takes says nothing about how much of the secret a guess got right.
 function sameSecret(a: string, b: string) {
@@ -315,15 +275,6 @@ Deno.serve(async (request) => {
   // is granted once.
   if (body.tester !== undefined) {
     return await grantTesterPass(db, body.tester, secretKey);
-  }
-
-  // -- a friend's code (supabase/invites.sql) ---------------------------------
-  //
-  // Also with no secret, and for the same reason it needs none: what is
-  // given is read from the invite table, so a caller naming any account
-  // gives it only what it was already owed.
-  if (body.invite_grant !== undefined) {
-    return await grantInviteWeek(db, body.invite_grant, secretKey);
   }
 
   // -- the app, right after a purchase or a restore --------------------------

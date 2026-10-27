@@ -1336,33 +1336,6 @@
       }
     }
   },
-  "inviteCodeLabel": "Friend's code (optional)",
-  "inviteClaimed": "Code added · 7 days free are yours",
-  "inviteUnknownCode": "No lifter has that code",
-  "inviteNotYearly": "That code can't give free days right now",
-  "inviteOwnCode": "That's your own code",
-  "inviteTooLate": "Codes work in an account's first week",
-  "inviteFull": "That code has been used a lot this month. Try another",
-  "inviteTitle": "Give a friend 7 days free",
-  "inviteBody": "Your code comes with the yearly plan. Your friend types it when they sign up.",
-  "inviteYourCode": "Your code",
-  "inviteJoined": "{n} joined",
-  "@inviteJoined": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
-  "inviteSend": "Send invite",
-  "inviteShareText": "Duel me on OUTREPD: 60 seconds of push-ups, live. Use my code {code} when you sign up and get 7 days free.",
-  "@inviteShareText": {
-    "placeholders": {
-      "code": {
-        "type": "String"
-      }
-    }
-  },
   "dailyGoalTitle": "Today's goal",
   "dailyGoalDone": "Done for today",
   "dailyGoalProgress": "{progress} push-ups",
@@ -1457,7 +1430,6 @@
   "authHeroSubtitle": "Live push-up duels, counted by your camera.",
   "createAccountPitch": "Your rank, your duels, on every phone.",
   "usernameSpacesHint": "Spaces become _",
-  "haveInviteCode": "Have an invite code?",
   "emailCodeNote": "We'll email you a 6-digit code. No password.",
   "continueWithEmail": "Continue with email",
   "thisSeason": "This Season",

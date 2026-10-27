@@ -2190,49 +2190,6 @@ class LDe extends L {
   }
 
   @override
-  String get inviteCodeLabel => 'Code von Freund:in (optional)';
-
-  @override
-  String get inviteClaimed => 'Code hinzugefügt · 7 Tage gratis für dich';
-
-  @override
-  String get inviteUnknownCode => 'Diesen Code hat niemand';
-
-  @override
-  String get inviteNotYearly => 'Dieser Code kann gerade keine Gratistage geben';
-
-  @override
-  String get inviteOwnCode => 'Das ist dein eigener Code';
-
-  @override
-  String get inviteTooLate => 'Codes gelten in der ersten Woche eines Kontos';
-
-  @override
-  String get inviteFull => 'Dieser Code wurde diesen Monat oft genutzt. Versuch einen anderen';
-
-  @override
-  String get inviteTitle => 'Schenk Freund:innen 7 Tage gratis';
-
-  @override
-  String get inviteBody => 'Dein Code gehört zum Jahresabo. Deine Freund:innen geben ihn bei der Anmeldung ein.';
-
-  @override
-  String get inviteYourCode => 'Dein Code';
-
-  @override
-  String inviteJoined(String n) {
-    return '${n} dabei';
-  }
-
-  @override
-  String get inviteSend => 'Einladung senden';
-
-  @override
-  String inviteShareText(String code) {
-    return 'Fordere mich auf OUTREPD heraus: 60 Sekunden Liegestütze, live. Nutz meinen Code ${code} bei der Anmeldung und bekomm 7 Tage gratis.';
-  }
-
-  @override
   String get dailyGoalTitle => 'Tagesziel';
 
   @override
@@ -2342,9 +2299,6 @@ class LDe extends L {
 
   @override
   String get usernameSpacesHint => 'Leerzeichen werden zu _';
-
-  @override
-  String get haveInviteCode => 'Hast du einen Einladungscode?';
 
   @override
   String get emailCodeNote => 'Wir schicken dir einen 6-stelligen Code per E-Mail. Kein Passwort.';

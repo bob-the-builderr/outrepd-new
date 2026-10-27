@@ -2145,49 +2145,6 @@ class LJa extends L {
   }
 
   @override
-  String get inviteCodeLabel => '友達のコード（任意）';
-
-  @override
-  String get inviteClaimed => 'コードを追加 · 7日間無料';
-
-  @override
-  String get inviteUnknownCode => 'そのコードのユーザーはいません';
-
-  @override
-  String get inviteNotYearly => 'このコードでは今は無料期間を受け取れません';
-
-  @override
-  String get inviteOwnCode => 'それはあなた自身のコードです';
-
-  @override
-  String get inviteTooLate => 'コードはアカウント作成から1週間以内のみ有効です';
-
-  @override
-  String get inviteFull => 'このコードは今月の上限に達しました。別のコードをお試しください';
-
-  @override
-  String get inviteTitle => '友達に7日間無料をプレゼント';
-
-  @override
-  String get inviteBody => 'コードは年間プランの特典です。友達は登録時に入力します。';
-
-  @override
-  String get inviteYourCode => 'あなたのコード';
-
-  @override
-  String inviteJoined(String n) {
-    return '${n}人が参加';
-  }
-
-  @override
-  String get inviteSend => '招待を送る';
-
-  @override
-  String inviteShareText(String code) {
-    return 'OUTREPDで勝負しよう：60秒の腕立て伏せ、ライブ対戦。登録時にコード${code}を入れると7日間無料。';
-  }
-
-  @override
   String get dailyGoalTitle => '今日の目標';
 
   @override
@@ -2297,9 +2254,6 @@ class LJa extends L {
 
   @override
   String get usernameSpacesHint => 'スペースは _ になります';
-
-  @override
-  String get haveInviteCode => '招待コードをお持ちですか？';
 
   @override
   String get emailCodeNote => '6桁のコードをメールでお送りします。パスワードは不要です。';

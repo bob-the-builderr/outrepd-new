@@ -22,7 +22,7 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # hands back all of them and a SQL function's tables must already exist.
 PARTS = ['subscriptions.sql', 'schema.sql', 'ladder.sql', 'social.sql',
          'duel.sql', 'notify.sql', 'push.sql', 'live.sql', 'seasons.sql',
-         'testers.sql', 'invites.sql', 'adventure.sql', 'account.sql',
+         'testers.sql', 'adventure.sql', 'account.sql',
          'lockdown.sql']
 
 HEADER = """-- OUTREPD — everything the server needs, in one paste.
