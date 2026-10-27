@@ -2757,4 +2757,51 @@ class LPt extends L {
   String rematchOpponentLeft(String name) {
     return '${name} saiu · sem revanche desta vez';
   }
+
+  @override
+  String get obNext => 'Próximo';
+
+  @override
+  String get obRaceTitle => 'Enfrente uma pessoa de verdade.';
+
+  @override
+  String get obRaceBody => 'Vence quem fizer mais repetições em 60 segundos. Ao vivo, cada um no seu celular — ou contra uma série gravada quando não há ninguém online.';
+
+  @override
+  String get obRepsTitle => 'Só contam repetições completas.';
+
+  @override
+  String get obRepsBody => 'A câmera vê até onde você desce e até onde volta a subir.';
+
+  @override
+  String get obRepsDown => 'Desça além da linha dourada';
+
+  @override
+  String get obRepsUp => 'Suba de novo além da linha de cima';
+
+  @override
+  String get obRepsBoth => 'As duas coisas, com as mãos no chão. Meia repetição não conta — nem no seu celular, nem no do outro.';
+
+  @override
+  String get obClimbTitle => 'Suba até Master.';
+
+  @override
+  String get obClimbBody => 'Vença para subir na escada: sete níveis, cinco degraus cada.';
+
+  @override
+  String get obAdventureTitle => 'Treinando sozinho?';
+
+  @override
+  String get obAdventureBody => 'Aventura tem 140 níveis de lutas de flexões, cada um mais difícil que o anterior.';
+
+  @override
+  String get obCountedHere => 'Contado neste celular';
+
+  @override
+  String get obGoldLine => 'linha dourada';
+
+  @override
+  String obCalibrationRule(String gold) {
+    return 'Desça além da ${gold} e suba de novo além da de cima';
+  }
 }

@@ -77,6 +77,13 @@ void main() {
     await tester.pumpAndSettle();
   }
 
+  /// The idea's three cards: Next, Next, and Continue on the last.
+  Future<void> throughIdea(WidgetTester tester) async {
+    await tap(tester, 'Next');
+    await tap(tester, 'Next');
+    await tap(tester, 'Continue');
+  }
+
   testWidgets('opens on the brand, not on a permission prompt',
       (tester) async {
     phone(tester);
@@ -101,7 +108,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await tap(tester, 'Get started');
-    expect(find.text('60 seconds. One opponent.'), findsOneWidget);
+    expect(find.text('Race a real person.'), findsOneWidget);
 
     await tester.binding.handlePopRoute();
     await tester.pumpAndSettle();
@@ -120,14 +127,14 @@ void main() {
     expect(back, findsNothing);
 
     await tap(tester, 'Get started');
-    await tap(tester, 'Continue');
+    await throughIdea(tester);
     expect(find.text('Two quick things.'), findsOneWidget);
     await tester.tap(back);
     await tester.pumpAndSettle();
-    expect(find.text('60 seconds. One opponent.'), findsOneWidget);
+    expect(find.text('Race a real person.'), findsOneWidget);
 
     // On the camera steps too, where the screen is the camera.
-    await tap(tester, 'Continue');
+    await throughIdea(tester);
     await tap(tester, '16 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
@@ -156,10 +163,16 @@ void main() {
     await tester.pumpAndSettle();
 
     await tap(tester, 'Get started');
-    // The whole idea on one screen — who, what counts, what for — before
+    // The idea as three cards — who, what counts, what for — before
     // anything is asked.
-    expect(find.text('60 seconds. One opponent.'), findsOneWidget);
-    expect(find.text('Climb from Iron to Master'), findsOneWidget);
+    expect(find.text('Race a real person.'), findsOneWidget);
+    await tap(tester, 'Next');
+    expect(find.text('Only full reps count.'), findsOneWidget);
+    expect(find.text('Down past the gold line'), findsOneWidget);
+    expect(find.text('Back up past the top line'), findsOneWidget);
+    await tap(tester, 'Next');
+    expect(find.text('Climb to Master.'), findsOneWidget);
+    expect(find.text('Training alone?'), findsOneWidget);
 
     await tap(tester, 'Continue');
     expect(find.text('Two quick things.'), findsOneWidget);
@@ -185,7 +198,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await tap(tester, 'Get started');
-    await tap(tester, 'Continue');
+    await throughIdea(tester);
     await tap(tester, 'Under 16');
 
     expect(find.textContaining('outrepd is for 16 and over'), findsOneWidget);
@@ -207,7 +220,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await tap(tester, 'Get started');
-    await tap(tester, 'Continue');
+    await throughIdea(tester);
     await tap(tester, '16 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
@@ -250,7 +263,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await tap(tester, 'Get started');
-    await tap(tester, 'Continue');
+    await throughIdea(tester);
     await tap(tester, '16 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
@@ -289,7 +302,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await tap(tester, 'Get started');
-    await tap(tester, 'Continue');
+    await throughIdea(tester);
     await tap(tester, '16 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
@@ -332,7 +345,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await tap(tester, 'Get started');
-    await tap(tester, 'Continue');
+    await throughIdea(tester);
     await tap(tester, '16 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
@@ -353,7 +366,11 @@ void main() {
       await tester.pump(const Duration(milliseconds: kFrameMs));
     }
     expect(find.text('Get into position'), findsNothing);
-    expect(find.text('Do three push-ups at your normal depth'), findsOneWidget);
+    // The rule, as the match's bar draws it.
+    expect(
+      find.textContaining('gold line', findRichText: true),
+      findsOneWidget,
+    );
 
     // Exactly three, every one of them counted.
     for (final pose in pushUpSet(3, lead: 0)) {
@@ -407,7 +424,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await tap(tester, 'Get started');
-    await tap(tester, 'Continue');
+    await throughIdea(tester);
     await tap(tester, '16 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
@@ -449,8 +466,8 @@ void main() {
 
       await tap(tester, 'Get started');
       expect(tester.takeException(), isNull);
-      for (var i = 0; i < 1; i++) {
-        await tap(tester, 'Continue');
+      for (final label in ['Next', 'Next', 'Continue']) {
+        await tap(tester, label);
         expect(tester.takeException(), isNull);
       }
       await tap(tester, '16 or over');

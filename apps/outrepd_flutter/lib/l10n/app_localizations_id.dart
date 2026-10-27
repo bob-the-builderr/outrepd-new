@@ -2754,4 +2754,51 @@ class LId extends L {
   String rematchOpponentLeft(String name) {
     return '${name} keluar · tidak ada tanding ulang kali ini';
   }
+
+  @override
+  String get obNext => 'Berikutnya';
+
+  @override
+  String get obRaceTitle => 'Lawan orang sungguhan.';
+
+  @override
+  String get obRaceBody => 'Repetisi terbanyak dalam 60 detik yang menang. Live, di ponsel masing-masing — atau lawan set rekaman saat tidak ada yang online.';
+
+  @override
+  String get obRepsTitle => 'Hanya repetisi penuh yang dihitung.';
+
+  @override
+  String get obRepsBody => 'Kamera melihat seberapa rendah kamu turun dan seberapa tinggi kamu naik lagi.';
+
+  @override
+  String get obRepsDown => 'Turun melewati garis emas';
+
+  @override
+  String get obRepsUp => 'Naik lagi melewati garis atas';
+
+  @override
+  String get obRepsBoth => 'Keduanya, dengan tangan di lantai. Setengah repetisi tidak dihitung — di ponselmu maupun ponsel lawan.';
+
+  @override
+  String get obClimbTitle => 'Naik sampai Master.';
+
+  @override
+  String get obClimbBody => 'Menang untuk naik tangga: tujuh tingkat, masing-masing lima anak tangga.';
+
+  @override
+  String get obAdventureTitle => 'Latihan sendiri?';
+
+  @override
+  String get obAdventureBody => 'Petualangan punya 140 level pertarungan push-up, tiap level lebih sulit dari sebelumnya.';
+
+  @override
+  String get obCountedHere => 'Dihitung di ponsel ini';
+
+  @override
+  String get obGoldLine => 'garis emas';
+
+  @override
+  String obCalibrationRule(String gold) {
+    return 'Turun melewati ${gold}, lalu naik lagi melewati garis atas';
+  }
 }

@@ -2760,4 +2760,51 @@ class LIt extends L {
   String rematchOpponentLeft(String name) {
     return '${name} è uscito · niente rivincita stavolta';
   }
+
+  @override
+  String get obNext => 'Avanti';
+
+  @override
+  String get obRaceTitle => 'Sfida una persona vera.';
+
+  @override
+  String get obRaceBody => 'Vince chi fa più ripetizioni in 60 secondi. In diretta, ognuno sul proprio telefono, o contro una serie registrata quando non c’è nessuno online.';
+
+  @override
+  String get obRepsTitle => 'Contano solo le ripetizioni complete.';
+
+  @override
+  String get obRepsBody => 'La fotocamera vede quanto scendi e quanto torni su.';
+
+  @override
+  String get obRepsDown => 'Scendi oltre la linea dorata';
+
+  @override
+  String get obRepsUp => 'Torna su oltre la linea in alto';
+
+  @override
+  String get obRepsBoth => 'Entrambe, con le mani a terra. Mezza ripetizione non conta, né sul tuo telefono né sul suo.';
+
+  @override
+  String get obClimbTitle => 'Sali fino a Master.';
+
+  @override
+  String get obClimbBody => 'Vinci per salire la scala: sette gradi, cinque livelli ciascuno.';
+
+  @override
+  String get obAdventureTitle => 'Ti alleni da solo?';
+
+  @override
+  String get obAdventureBody => 'Avventura ha 140 livelli di sfide a flessioni, ognuno più difficile del precedente.';
+
+  @override
+  String get obCountedHere => 'Contato su questo telefono';
+
+  @override
+  String get obGoldLine => 'linea dorata';
+
+  @override
+  String obCalibrationRule(String gold) {
+    return 'Scendi oltre la ${gold}, torna su oltre quella in alto';
+  }
 }

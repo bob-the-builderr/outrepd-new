@@ -826,5 +826,20 @@
   "needsWeapon": "{weapon} 필요",
   "hurtOnlyBy": "{weapon} 이상의 무기만 통해요",
   "worldNeedsWeapon": "{world}에는 {weapon} 필요 · 별 {count}개 더",
-  "rematchOpponentLeft": "{name}님이 나갔어요 · 이번엔 재대결이 없어요"
+  "rematchOpponentLeft": "{name}님이 나갔어요 · 이번엔 재대결이 없어요",
+  "obNext": "다음",
+  "obRaceTitle": "진짜 사람과 겨루세요.",
+  "obRaceBody": "60초 동안 더 많이 하면 이겨요. 상대는 자기 휴대폰으로 실시간 참여하고, 접속한 사람이 없으면 녹화된 세트와 겨뤄요.",
+  "obRepsTitle": "완전한 반복만 인정돼요.",
+  "obRepsBody": "카메라가 얼마나 내려가고 얼마나 다시 올라오는지 봐요.",
+  "obRepsDown": "금색 선 아래로 내려가기",
+  "obRepsUp": "위쪽 선 위로 다시 올라오기",
+  "obRepsBoth": "둘 다 손을 바닥에 댄 채로요. 반만 한 건 인정되지 않아요. 내 휴대폰에서도, 상대 휴대폰에서도요.",
+  "obClimbTitle": "Master까지 올라가세요.",
+  "obClimbBody": "이겨서 사다리를 올라가세요. 7개 티어, 티어마다 5단계예요.",
+  "obAdventureTitle": "혼자 훈련하나요?",
+  "obAdventureBody": "어드벤처에는 팔굽혀펴기 대결이 140레벨 있어요. 레벨마다 점점 어려워져요.",
+  "obCountedHere": "이 휴대폰에서 세요",
+  "obGoldLine": "금색 선",
+  "obCalibrationRule": "{gold} 아래로 내려갔다가 위쪽 선 위로 올라오기"
 }

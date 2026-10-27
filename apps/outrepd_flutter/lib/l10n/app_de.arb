@@ -826,5 +826,20 @@
   "needsWeapon": "Braucht {weapon}",
   "hurtOnlyBy": "Nur {weapon} oder besser kann ihm schaden",
   "worldNeedsWeapon": "{world} braucht {weapon} · noch {count} Sterne",
-  "rematchOpponentLeft": "{name} ist gegangen · diesmal keine Revanche"
+  "rematchOpponentLeft": "{name} ist gegangen · diesmal keine Revanche",
+  "obNext": "Weiter",
+  "obRaceTitle": "Tritt gegen einen echten Menschen an.",
+  "obRaceBody": "Wer in 60 Sekunden mehr Wiederholungen schafft, gewinnt. Live auf dem eigenen Handy – oder gegen einen aufgezeichneten Satz, wenn gerade niemand online ist.",
+  "obRepsTitle": "Nur ganze Wiederholungen zählen.",
+  "obRepsBody": "Die Kamera sieht, wie tief du runtergehst und wie weit du wieder hochkommst.",
+  "obRepsDown": "Runter bis unter die goldene Linie",
+  "obRepsUp": "Wieder hoch über die obere Linie",
+  "obRepsBoth": "Beides, mit den Händen am Boden. Eine halbe Wiederholung zählt nicht – weder bei dir noch beim Gegner.",
+  "obClimbTitle": "Steig auf bis Master.",
+  "obClimbBody": "Gewinne, um aufzusteigen: sieben Ränge mit je fünf Stufen.",
+  "obAdventureTitle": "Allein trainieren?",
+  "obAdventureBody": "Abenteuer hat 140 Level mit Liegestütz-Kämpfen, jedes schwerer als das davor.",
+  "obCountedHere": "Gezählt auf diesem Handy",
+  "obGoldLine": "goldene Linie",
+  "obCalibrationRule": "Runter unter die {gold}, wieder hoch über die obere"
 }

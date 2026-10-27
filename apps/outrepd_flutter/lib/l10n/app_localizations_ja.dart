@@ -2717,4 +2717,51 @@ class LJa extends L {
   String rematchOpponentLeft(String name) {
     return '${name}が退出しました · 今回は再戦なし';
   }
+
+  @override
+  String get obNext => '次へ';
+
+  @override
+  String get obRaceTitle => '本物の相手と競う。';
+
+  @override
+  String get obRaceBody => '60秒で回数が多い方の勝ち。相手は自分のスマホからライブで参加。誰もオンラインでなければ、録画されたセットと勝負します。';
+
+  @override
+  String get obRepsTitle => '数えるのはフルレップだけ。';
+
+  @override
+  String get obRepsBody => 'カメラが、どこまで下がってどこまで戻ったかを見ています。';
+
+  @override
+  String get obRepsDown => '金のラインより下まで';
+
+  @override
+  String get obRepsUp => '上のラインより上まで戻る';
+
+  @override
+  String get obRepsBoth => 'どちらも手を床につけたまま。半端なレップは数えません。あなたのスマホでも、相手のスマホでも。';
+
+  @override
+  String get obClimbTitle => 'Masterを目指そう。';
+
+  @override
+  String get obClimbBody => '勝ってランクを上げよう。7つのティアに、それぞれ5段階。';
+
+  @override
+  String get obAdventureTitle => 'ひとりで練習するなら';
+
+  @override
+  String get obAdventureBody => 'アドベンチャーには腕立てバトルが140レベル。進むほど難しくなります。';
+
+  @override
+  String get obCountedHere => 'このスマホの中でカウント';
+
+  @override
+  String get obGoldLine => '金のライン';
+
+  @override
+  String obCalibrationRule(String gold) {
+    return '${gold}より下まで下げて、上のラインより上まで戻る';
+  }
 }

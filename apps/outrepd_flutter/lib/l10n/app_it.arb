@@ -826,5 +826,20 @@
   "needsWeapon": "Serve {weapon}",
   "hurtOnlyBy": "Solo {weapon} o meglio può ferirlo",
   "worldNeedsWeapon": "{world} richiede {weapon} · ancora {count} stelle",
-  "rematchOpponentLeft": "{name} è uscito · niente rivincita stavolta"
+  "rematchOpponentLeft": "{name} è uscito · niente rivincita stavolta",
+  "obNext": "Avanti",
+  "obRaceTitle": "Sfida una persona vera.",
+  "obRaceBody": "Vince chi fa più ripetizioni in 60 secondi. In diretta, ognuno sul proprio telefono, o contro una serie registrata quando non c’è nessuno online.",
+  "obRepsTitle": "Contano solo le ripetizioni complete.",
+  "obRepsBody": "La fotocamera vede quanto scendi e quanto torni su.",
+  "obRepsDown": "Scendi oltre la linea dorata",
+  "obRepsUp": "Torna su oltre la linea in alto",
+  "obRepsBoth": "Entrambe, con le mani a terra. Mezza ripetizione non conta, né sul tuo telefono né sul suo.",
+  "obClimbTitle": "Sali fino a Master.",
+  "obClimbBody": "Vinci per salire la scala: sette gradi, cinque livelli ciascuno.",
+  "obAdventureTitle": "Ti alleni da solo?",
+  "obAdventureBody": "Avventura ha 140 livelli di sfide a flessioni, ognuno più difficile del precedente.",
+  "obCountedHere": "Contato su questo telefono",
+  "obGoldLine": "linea dorata",
+  "obCalibrationRule": "Scendi oltre la {gold}, torna su oltre quella in alto"
 }

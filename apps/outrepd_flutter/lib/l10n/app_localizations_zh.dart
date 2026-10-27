@@ -2708,4 +2708,51 @@ class LZh extends L {
   String rematchOpponentLeft(String name) {
     return '${name} 已离开 · 这次没有再战';
   }
+
+  @override
+  String get obNext => '下一步';
+
+  @override
+  String get obRaceTitle => '和真人比拼。';
+
+  @override
+  String get obRaceBody => '60秒内做得多的人赢。对手用自己的手机实时参赛；没人在线时，你挑战的是对方录好的一组。';
+
+  @override
+  String get obRepsTitle => '只算完整的一次。';
+
+  @override
+  String get obRepsBody => '摄像头会看你下得多低、又起得多高。';
+
+  @override
+  String get obRepsDown => '下到金线以下';
+
+  @override
+  String get obRepsUp => '再起到上线以上';
+
+  @override
+  String get obRepsBoth => '两步都要双手撑地。只做一半不算——你的手机和对手的手机都一样。';
+
+  @override
+  String get obClimbTitle => '一路冲到 Master。';
+
+  @override
+  String get obClimbBody => '赢下比赛往上爬：七个段位，每个五级。';
+
+  @override
+  String get obAdventureTitle => '一个人练？';
+
+  @override
+  String get obAdventureBody => '冒险模式有140关俯卧撑对决，一关比一关难。';
+
+  @override
+  String get obCountedHere => '就在这部手机上计数';
+
+  @override
+  String get obGoldLine => '金线';
+
+  @override
+  String obCalibrationRule(String gold) {
+    return '下到${gold}以下，再起到上线以上';
+  }
 }

@@ -2762,4 +2762,51 @@ class LDe extends L {
   String rematchOpponentLeft(String name) {
     return '${name} ist gegangen · diesmal keine Revanche';
   }
+
+  @override
+  String get obNext => 'Weiter';
+
+  @override
+  String get obRaceTitle => 'Tritt gegen einen echten Menschen an.';
+
+  @override
+  String get obRaceBody => 'Wer in 60 Sekunden mehr Wiederholungen schafft, gewinnt. Live auf dem eigenen Handy – oder gegen einen aufgezeichneten Satz, wenn gerade niemand online ist.';
+
+  @override
+  String get obRepsTitle => 'Nur ganze Wiederholungen zählen.';
+
+  @override
+  String get obRepsBody => 'Die Kamera sieht, wie tief du runtergehst und wie weit du wieder hochkommst.';
+
+  @override
+  String get obRepsDown => 'Runter bis unter die goldene Linie';
+
+  @override
+  String get obRepsUp => 'Wieder hoch über die obere Linie';
+
+  @override
+  String get obRepsBoth => 'Beides, mit den Händen am Boden. Eine halbe Wiederholung zählt nicht – weder bei dir noch beim Gegner.';
+
+  @override
+  String get obClimbTitle => 'Steig auf bis Master.';
+
+  @override
+  String get obClimbBody => 'Gewinne, um aufzusteigen: sieben Ränge mit je fünf Stufen.';
+
+  @override
+  String get obAdventureTitle => 'Allein trainieren?';
+
+  @override
+  String get obAdventureBody => 'Abenteuer hat 140 Level mit Liegestütz-Kämpfen, jedes schwerer als das davor.';
+
+  @override
+  String get obCountedHere => 'Gezählt auf diesem Handy';
+
+  @override
+  String get obGoldLine => 'goldene Linie';
+
+  @override
+  String obCalibrationRule(String gold) {
+    return 'Runter unter die ${gold}, wieder hoch über die obere';
+  }
 }

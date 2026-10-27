@@ -1,6 +1,7 @@
-/// Screenshots of onboarding's first two screens, the welcome and the idea on
-/// one screen, as the app draws them. See shots.dart for how these are run
-/// and published.
+/// Screenshots of onboarding's first screens as the app draws them: the
+/// welcome, the idea's three cards — the live match, the rep rule part way
+/// through a rep, the ladder — and the camera's question. See shots.dart for
+/// how these are run and published.
 library;
 
 import 'dart:io';
@@ -57,6 +58,21 @@ void main() {
         home: const OnboardingScreen(),
       ),
     );
+
+    // Pictures decode outside the test's fake time, so they are loaded
+    // first; otherwise every one of them is a blank box in the shot.
+    final context = tester.element(find.byType(OnboardingScreen));
+    await tester.runAsync(
+      () => Future.wait([
+        for (final name in [
+          'logo-wordmark.png',
+          'onboarding_live.jpg',
+          'onboarding_camera.jpg',
+        ])
+          precacheImage(AssetImage('assets/images/$name'), context),
+      ]),
+    );
+
     await tester.pumpAndSettle();
     await expectLater(
       find.byType(MaterialApp),
@@ -67,7 +83,38 @@ void main() {
     await tester.pumpAndSettle();
     await expectLater(
       find.byType(MaterialApp),
-      matchesGoldenFile('goldens/onboarding_idea.png'),
+      matchesGoldenFile('goldens/onboarding_idea_1.png'),
+    );
+
+    // Part way back up, past the gold line: the bottom line green, the top
+    // one lit, the second step named.
+    await tester.tap(find.text('Next'));
+    for (var i = 0; i < 15; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    await expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile('goldens/onboarding_idea_2.png'),
+    );
+
+    await tester.tap(find.text('Next'));
+    await tester.pumpAndSettle();
+    await expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile('goldens/onboarding_idea_3.png'),
+    );
+
+    await tester.tap(find.text('Continue'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('16 or over'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.textContaining('I understand outrepd counts reps'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Continue'));
+    await tester.pumpAndSettle();
+    await expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile('goldens/onboarding_camera.png'),
     );
   });
 }

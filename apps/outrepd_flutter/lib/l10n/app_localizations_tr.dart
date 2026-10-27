@@ -2750,4 +2750,51 @@ class LTr extends L {
   String rematchOpponentLeft(String name) {
     return '${name} ayrıldı · bu sefer rövanş yok';
   }
+
+  @override
+  String get obNext => 'İleri';
+
+  @override
+  String get obRaceTitle => 'Gerçek biriyle yarış.';
+
+  @override
+  String get obRaceBody => '60 saniyede en çok tekrarı yapan kazanır. Canlı, herkes kendi telefonunda — ya da kimse çevrimiçi değilse kayıtlı bir sete karşı.';
+
+  @override
+  String get obRepsTitle => 'Yalnızca tam tekrarlar sayılır.';
+
+  @override
+  String get obRepsBody => 'Kamera ne kadar aşağı indiğini ve ne kadar geri çıktığını görür.';
+
+  @override
+  String get obRepsDown => 'Altın çizginin altına in';
+
+  @override
+  String get obRepsUp => 'Üst çizginin üstüne geri çık';
+
+  @override
+  String get obRepsBoth => 'İkisi de, eller yerdeyken. Yarım tekrar sayılmaz — ne senin telefonunda ne de rakibininkinde.';
+
+  @override
+  String get obClimbTitle => 'Master’a tırman.';
+
+  @override
+  String get obClimbBody => 'Kazandıkça merdivende yüksel: yedi kademe, her birinde beş basamak.';
+
+  @override
+  String get obAdventureTitle => 'Tek başına mı çalışıyorsun?';
+
+  @override
+  String get obAdventureBody => 'Macera’da her biri öncekinden zor 140 şınav dövüşü seviyesi var.';
+
+  @override
+  String get obCountedHere => 'Bu telefonda sayılır';
+
+  @override
+  String get obGoldLine => 'altın çizgi';
+
+  @override
+  String obCalibrationRule(String gold) {
+    return '${gold}nin altına in, üstteki çizginin üstüne çık';
+  }
 }

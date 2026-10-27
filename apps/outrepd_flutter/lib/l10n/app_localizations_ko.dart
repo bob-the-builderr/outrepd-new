@@ -2723,4 +2723,51 @@ class LKo extends L {
   String rematchOpponentLeft(String name) {
     return '${name}님이 나갔어요 · 이번엔 재대결이 없어요';
   }
+
+  @override
+  String get obNext => '다음';
+
+  @override
+  String get obRaceTitle => '진짜 사람과 겨루세요.';
+
+  @override
+  String get obRaceBody => '60초 동안 더 많이 하면 이겨요. 상대는 자기 휴대폰으로 실시간 참여하고, 접속한 사람이 없으면 녹화된 세트와 겨뤄요.';
+
+  @override
+  String get obRepsTitle => '완전한 반복만 인정돼요.';
+
+  @override
+  String get obRepsBody => '카메라가 얼마나 내려가고 얼마나 다시 올라오는지 봐요.';
+
+  @override
+  String get obRepsDown => '금색 선 아래로 내려가기';
+
+  @override
+  String get obRepsUp => '위쪽 선 위로 다시 올라오기';
+
+  @override
+  String get obRepsBoth => '둘 다 손을 바닥에 댄 채로요. 반만 한 건 인정되지 않아요. 내 휴대폰에서도, 상대 휴대폰에서도요.';
+
+  @override
+  String get obClimbTitle => 'Master까지 올라가세요.';
+
+  @override
+  String get obClimbBody => '이겨서 사다리를 올라가세요. 7개 티어, 티어마다 5단계예요.';
+
+  @override
+  String get obAdventureTitle => '혼자 훈련하나요?';
+
+  @override
+  String get obAdventureBody => '어드벤처에는 팔굽혀펴기 대결이 140레벨 있어요. 레벨마다 점점 어려워져요.';
+
+  @override
+  String get obCountedHere => '이 휴대폰에서 세요';
+
+  @override
+  String get obGoldLine => '금색 선';
+
+  @override
+  String obCalibrationRule(String gold) {
+    return '${gold} 아래로 내려갔다가 위쪽 선 위로 올라오기';
+  }
 }

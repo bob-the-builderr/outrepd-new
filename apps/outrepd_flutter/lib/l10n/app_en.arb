@@ -1882,5 +1882,27 @@
         "type": "String"
       }
     }
+  },
+  "obNext": "Next",
+  "obRaceTitle": "Race a real person.",
+  "obRaceBody": "Most reps in 60 seconds wins. Live, on their own phone — or their recorded set when nobody is online.",
+  "obRepsTitle": "Only full reps count.",
+  "obRepsBody": "Your camera watches how low you go and how high you come back.",
+  "obRepsDown": "Down past the gold line",
+  "obRepsUp": "Back up past the top line",
+  "obRepsBoth": "Both, with your hands on the floor. A half rep is not a rep — on your phone or theirs.",
+  "obClimbTitle": "Climb to Master.",
+  "obClimbBody": "Win to move up the ladder: seven tiers, five steps each.",
+  "obAdventureTitle": "Training alone?",
+  "obAdventureBody": "Adventure has 140 levels of push-up fights, each harder than the last.",
+  "obCountedHere": "Counted on this phone",
+  "obGoldLine": "gold line",
+  "obCalibrationRule": "Down past the {gold}, back up past the top one",
+  "@obCalibrationRule": {
+    "placeholders": {
+      "gold": {
+        "type": "String"
+      }
+    }
   }
 }

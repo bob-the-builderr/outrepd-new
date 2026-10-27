@@ -35,6 +35,7 @@ import '../reps/pushup_counter.dart';
 import '../reps/skeleton.dart';
 import '../sounds.dart';
 import '../theme.dart';
+import '../tier_badge.dart';
 import '../widgets.dart';
 import 'auth_entry.dart';
 import 'legal_line.dart';
@@ -529,32 +530,6 @@ class _Panel extends StatelessWidget {
   }
 }
 
-class _Tick extends StatelessWidget {
-  const _Tick(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(Icons.check, size: 14, color: context.colors.brand),
-          const SizedBox(width: 9),
-          Expanded(
-            child: Text(
-              label,
-              style: TextStyle(color: context.colors.text, fontSize: 14),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 // ──────────────────────────────── 1 welcome ──────────────────────────────────
 
 class _Welcome extends StatelessWidget {
@@ -610,82 +585,543 @@ class _Welcome extends StatelessWidget {
 
 // ──────────────────────────────── 2 the idea ─────────────────────────────────
 
-/// What the app is, on one screen: who you race, what counts, what for. It
-/// used to take three — how it works, what a duel is, the ladder — and every
-/// screen before the camera is one more place to put the phone down.
-class _Idea extends StatelessWidget {
+/// What the app is, as three cards swiped through on one step: who you race,
+/// what counts as a rep, and what winning is for. The first shows a live
+/// match the way it looks; the second the depth bar's two lines, the one rule
+/// a new lifter needs before their first set; the third the ladder and, for
+/// training alone, Adventure. It used to be three lines of text beside icons,
+/// which said what the app was without showing any of it.
+///
+/// One step still, so the bar above does not grow by three.
+class _Idea extends StatefulWidget {
   const _Idea({required this.onNext});
 
   final VoidCallback onNext;
 
   @override
+  State<_Idea> createState() => _IdeaState();
+}
+
+class _IdeaState extends State<_Idea> {
+  static const _count = 3;
+
+  final _pages = PageController();
+  int _page = 0;
+
+  @override
+  void dispose() {
+    _pages.dispose();
+    super.dispose();
+  }
+
+  void _next() {
+    if (_page == _count - 1) {
+      widget.onNext();
+    } else if (reduceMotion(context)) {
+      _pages.jumpToPage(_page + 1);
+    } else {
+      _pages.nextPage(duration: kSettle, curve: Curves.easeOutCubic);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l = L.of(context);
 
-    return _Step0(
-      centred: true,
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TypeOut(
-              l.obIdeaTitle,
-              style: TextStyle(
-                color: context.colors.text,
-                fontSize: 38,
-                height: 1.15,
-                fontWeight: FontWeight.w800,
+    return Column(
+      children: [
+        Expanded(
+          child: PageView(
+            controller: _pages,
+            onPageChanged: (page) => setState(() => _page = page),
+            children: [
+              _IdeaPage(
+                title: l.obRaceTitle,
+                body: l.obRaceBody,
+                // A live match as it looks from the floor: both counts, the
+                // clock, the depth bar and the line over the lifter's arms.
+                picture: Center(
+                  child: AspectRatio(
+                    aspectRatio: 880 / 1912,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24),
+                        border: Border.all(color: context.colors.border),
+                        boxShadow: [
+                          BoxShadow(
+                            color: context.colors.brand.withValues(alpha: 0.25),
+                            blurRadius: 36,
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(23),
+                        child: Image.asset(
+                          'assets/images/onboarding_live.jpg',
+                          fit: BoxFit.cover,
+                          excludeFromSemantics: true,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 36),
-            for (final (i, (icon, line)) in [
-              (Icons.groups_outlined, l.obIdeaRival),
-              (Icons.videocam_outlined, l.obIdeaCamera),
-              (Icons.emoji_events_outlined, l.paywallTitle),
-            ].indexed)
-              RiseIn(
-                delay:
-                    TypeOut.lengthOf(l.obIdeaTitle) +
-                    Duration(milliseconds: 160 * i),
-                child: _IdeaLine(icon: icon, text: line),
+              _IdeaPage(
+                title: l.obRepsTitle,
+                body: l.obRepsBody,
+                picture: const _RepRule(),
+                footer: _Panel(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 18,
+                    vertical: 16,
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        '+1',
+                        style: TextStyle(
+                          color: context.colors.text,
+                          fontSize: 40,
+                          height: 1,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Text(
+                          l.obRepsBoth,
+                          style: TextStyle(
+                            color: context.colors.muted,
+                            fontSize: 14.5,
+                            height: 1.5,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-          ],
+              _IdeaPage(
+                title: l.obClimbTitle,
+                body: l.obClimbBody,
+                picture: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxWidth: 240,
+                      maxHeight: 240,
+                    ),
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: TierBadge(tierIndex: kTiers.length - 1, size: 240),
+                    ),
+                  ),
+                ),
+                footer: Column(
+                  children: [
+                    // The tiers under the top one, Iron up to Diamond.
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        for (var tier = 0; tier < kTiers.length - 1; tier++)
+                          Expanded(
+                            child: Column(
+                              children: [
+                                TierBadge(tierIndex: tier, size: 50),
+                                const SizedBox(height: 4),
+                                FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(
+                                    tierName(l, tier),
+                                    style: TextStyle(
+                                      color: context.colors.muted,
+                                      fontSize: 11.5,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: 18),
+                    SizedBox(
+                      width: double.infinity,
+                      child: _Panel(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 18,
+                          vertical: 16,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              l.obAdventureTitle,
+                              style: TextStyle(
+                                color: context.colors.text,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              l.obAdventureBody,
+                              style: TextStyle(
+                                color: context.colors.muted,
+                                fontSize: 14.5,
+                                height: 1.5,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-      actions: _Primary(label: l.continueLabel, onTap: onNext),
+        const SizedBox(height: 14),
+        _Dots(count: _count, at: _page),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 18, 20, 22),
+          child: _Primary(
+            label: _page == _count - 1 ? l.continueLabel : l.obNext,
+            onTap: _next,
+          ),
+        ),
+      ],
     );
   }
 }
 
-class _IdeaLine extends StatelessWidget {
-  const _IdeaLine({required this.icon, required this.text});
+/// One card: its title and its line, the picture under them taking whatever
+/// height is left, and anything that goes beneath. It scrolls only when a
+/// large text size needs the room.
+class _IdeaPage extends StatelessWidget {
+  const _IdeaPage({
+    required this.title,
+    required this.body,
+    required this.picture,
+    this.footer,
+  });
 
-  final IconData icon;
-  final String text;
+  final String title;
+  final String body;
+  final Widget picture;
+  final Widget? footer;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 28),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, size: 32, color: context.colors.brand),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Text(
-              text,
-              style: TextStyle(
-                color: context.colors.text,
-                fontSize: 21,
-                height: 1.35,
-                fontWeight: FontWeight.w500,
+    final after = TypeOut.lengthOf(title);
+
+    return LayoutBuilder(
+      builder: (context, box) => SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: box.maxHeight),
+          child: IntrinsicHeight(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(22, 14, 22, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TypeOut(
+                    title,
+                    style: TextStyle(
+                      color: context.colors.text,
+                      fontSize: 34,
+                      height: 1.18,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  RiseIn(
+                    delay: after,
+                    child: Text(
+                      body,
+                      style: TextStyle(
+                        color: context.colors.muted,
+                        fontSize: 16,
+                        height: 1.55,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 22),
+                  Expanded(
+                    child: _Fill(
+                      child: RiseIn(
+                        delay: after + const Duration(milliseconds: 120),
+                        child: picture,
+                      ),
+                    ),
+                  ),
+                  if (footer case final footer?) ...[
+                    const SizedBox(height: 18),
+                    RiseIn(
+                      delay: after + const Duration(milliseconds: 240),
+                      child: footer,
+                    ),
+                  ],
+                ],
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Takes the height it is given and asks for none of its own, so a card's
+/// picture shrinks to fit rather than making the card scroll — a photo's own
+/// height, asked for, is the whole height of the photo. A layout delegate's
+/// box has no size of its own until it is handed one, so asked, it says none.
+class _Fill extends StatelessWidget {
+  const _Fill({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) =>
+      CustomSingleChildLayout(delegate: const _FillLayout(), child: child);
+}
+
+/// All the room there is, for the box and for what is in it.
+class _FillLayout extends SingleChildLayoutDelegate {
+  const _FillLayout();
+
+  @override
+  bool shouldRelayout(_FillLayout oldDelegate) => false;
+}
+
+/// Which card this is: a pill for this one, dots for the others.
+class _Dots extends StatelessWidget {
+  const _Dots({required this.count, required this.at});
+
+  final int count;
+  final int at;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: '${at + 1} / $count',
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          for (var i = 0; i < count; i++) ...[
+            if (i > 0) const SizedBox(width: 7),
+            AnimatedContainer(
+              duration: kQuick,
+              width: i == at ? 22 : 7,
+              height: 7,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                color: i == at ? context.colors.brand : context.colors.border,
+              ),
+            ),
+          ],
         ],
       ),
+    );
+  }
+}
+
+/// The match screen's depth bar, large, going through a rep on a loop: down
+/// past the gold line, which turns green, then back up past the top line,
+/// which counts it. The two steps are named beside the lines they belong to,
+/// and the one the bar is working towards is lit.
+class _RepRule extends StatefulWidget {
+  const _RepRule();
+
+  @override
+  State<_RepRule> createState() => _RepRuleState();
+}
+
+class _RepRuleState extends State<_RepRule>
+    with SingleTickerProviderStateMixin {
+  late final _loop = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 3000),
+  );
+
+  /// Four reps, then the bar rests at the top: enough to read the rule by,
+  /// and one that never stopped would keep the screen redrawing for as long
+  /// as somebody sat on it.
+  static const _reps = 4;
+  int _repsShown = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _loop.addStatusListener((status) {
+      if (status == AnimationStatus.completed && ++_repsShown < _reps) {
+        _loop.forward(from: 0);
+      }
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!reduceMotion(context) && _repsShown == 0 && !_loop.isAnimating) {
+      _loop.forward();
+    }
+  }
+
+  @override
+  void dispose() {
+    _loop.dispose();
+    super.dispose();
+  }
+
+  /// Where the lifter is, as a share of lockout, and whether the bottom line
+  /// has been passed on the way to the top one. The rep takes the first 2.2
+  /// seconds; the bar rests at the top for the rest.
+  (double, bool) _at(double t) {
+    final move = (t * 3000 / 2200).clamp(0.0, 1.0);
+    final dip = math.sin(math.pi * move);
+    final share = 1 - 0.65 * dip * dip;
+    // Down to the bottom line at 0.341 of the rep, up to the top one at 0.787.
+    return (share, move > 0.341 && move < 0.787);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+
+    return AnimatedBuilder(
+      animation: _loop,
+      builder: (context, _) {
+        // Still, part way down, for anybody who asked for less motion.
+        final (share, pastBottom) =
+            reduceMotion(context) ? (0.42, false) : _at(_loop.value);
+        return LayoutBuilder(
+          builder: (context, box) {
+            final height = math.min(box.maxHeight, 380.0);
+            final top = (box.maxHeight - height) / 2;
+            double lineY(double at) => top + height * (1 - barFill(at));
+
+            Widget line(double at, Color colour, {required bool lit}) {
+              final thick = lit ? 8.0 : 7.0;
+              return Positioned(
+                left: 20 - 9,
+                width: 26 + 18,
+                top: lineY(at) - thick / 2,
+                height: thick,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: colour,
+                    borderRadius: BorderRadius.circular(4),
+                    border: Border.all(
+                      color: context.colors.background,
+                      width: 1.5,
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            Widget step(double at, int n, String text, Color mark, bool next) {
+              return Positioned(
+                left: 76,
+                right: 0,
+                top: lineY(at) - 20,
+                height: 40,
+                child: Row(
+                  children: [
+                    Container(
+                      width: 26,
+                      height: 26,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: mark,
+                      ),
+                      child: Text(
+                        '$n',
+                        style: TextStyle(
+                          color: context.colors.background,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: AlignmentDirectional.centerStart,
+                        child: Text(
+                          text,
+                          style: TextStyle(
+                            color: next
+                                ? context.colors.text
+                                : context.colors.muted,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+
+            const dim = Color(0xB38F8880);
+            return Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Positioned(
+                  left: 20,
+                  width: 26,
+                  top: top,
+                  height: height,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: context.colors.surfaceRaised,
+                      borderRadius: BorderRadius.circular(13),
+                    ),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: FractionallySizedBox(
+                        heightFactor: barFill(share),
+                        widthFactor: 1,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: context.colors.brand,
+                            borderRadius: BorderRadius.circular(13),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                line(
+                  kBottomShare,
+                  pastBottom ? AppColors.win : AppColors.gold,
+                  lit: !pastBottom,
+                ),
+                line(kTopShare, pastBottom ? AppColors.gold : dim, lit: pastBottom),
+                step(
+                  kTopShare,
+                  2,
+                  l.obRepsUp,
+                  pastBottom ? AppColors.gold : context.colors.muted,
+                  pastBottom,
+                ),
+                step(
+                  kBottomShare,
+                  1,
+                  l.obRepsDown,
+                  pastBottom ? AppColors.win : AppColors.gold,
+                  !pastBottom,
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }
@@ -883,47 +1319,101 @@ class _CameraAsk extends StatelessWidget {
     final l = L.of(context);
 
     return _Step0(
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(22, 30, 22, 0),
-            child: Column(
-              children: [
-                Icon(
-                  Icons.photo_camera_outlined,
-                  size: 38,
-                  color: context.colors.brand,
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(22, 14, 22, 0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // What the camera does with a set, before it is asked for: a
+            // lifter on the floor with the line over their arms, and where
+            // that is worked out.
+            AspectRatio(
+              aspectRatio: 1104 / 990,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(22),
+                  border: Border.all(color: context.colors.border),
                 ),
-                const SizedBox(height: 18),
-                Text(
-                  l.obCameraTitle,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: context.colors.text,
-                    fontSize: 22,
-                    height: 1.35,
-                    fontWeight: FontWeight.w500,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(21),
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Image.asset(
+                        'assets/images/onboarding_camera.jpg',
+                        fit: BoxFit.cover,
+                        excludeFromSemantics: true,
+                      ),
+                      PositionedDirectional(
+                        start: 12,
+                        bottom: 12,
+                        end: 12,
+                        child: Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 13,
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: context.colors.background.withValues(
+                                alpha: 0.82,
+                              ),
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.lock_outline,
+                                  size: 16,
+                                  color: context.colors.brand,
+                                ),
+                                const SizedBox(width: 8),
+                                Flexible(
+                                  child: Text(
+                                    l.obCountedHere,
+                                    style: TextStyle(
+                                      color: context.colors.text,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 11),
-                Text(
-                  l.obCameraBody,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: context.colors.muted,
-                    fontSize: 14,
-                    height: 1.65,
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 22, 20, 0),
+            const SizedBox(height: 24),
+            TypeOut(
+              l.obCameraTitle,
+              style: TextStyle(
+                color: context.colors.text,
+                fontSize: 30,
+                height: 1.18,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              l.obCameraBody,
+              style: TextStyle(
+                color: context.colors.muted,
+                fontSize: 16,
+                height: 1.55,
+              ),
+            ),
+            const SizedBox(height: 22),
             // The answer to the question everybody actually has when an app
             // wants their camera, on the screen that asks for it rather than
             // in a policy nobody opens.
-            child: _Panel(
+            _Panel(
+              padding: const EdgeInsets.all(16),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -931,11 +1421,11 @@ class _CameraAsk extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 1),
                     child: Icon(
                       Icons.lock_outline,
-                      size: 16,
+                      size: 20,
                       color: context.colors.brand,
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -944,16 +1434,17 @@ class _CameraAsk extends StatelessWidget {
                           l.obCameraPrivateTitle,
                           style: TextStyle(
                             color: context.colors.text,
-                            fontSize: 14,
+                            fontSize: 15.5,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        const SizedBox(height: 3),
                         Text(
                           l.obCameraPrivateBody,
                           style: TextStyle(
                             color: context.colors.muted,
-                            fontSize: 13,
-                            height: 1.6,
+                            fontSize: 14,
+                            height: 1.55,
                           ),
                         ),
                       ],
@@ -962,8 +1453,8 @@ class _CameraAsk extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       actions: Column(
         children: [
@@ -1010,51 +1501,118 @@ class PlacementStep extends StatelessWidget {
 
     return _Step0(
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(22, 18, 22, 0),
+        padding: const EdgeInsets.fromLTRB(22, 14, 22, 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _Title(l.obPlacementTitle, body: l.obPlacementBody),
-            const SizedBox(height: 16),
+            TypeOut(
+              l.obPlacementTitle,
+              style: TextStyle(
+                color: context.colors.text,
+                fontSize: 30,
+                height: 1.18,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              l.obPlacementBody,
+              style: TextStyle(
+                color: context.colors.muted,
+                fontSize: 16,
+                height: 1.55,
+              ),
+            ),
+            const SizedBox(height: 18),
             AspectRatio(
-              aspectRatio: 220 / 130,
+              aspectRatio: 220 / 124,
               child: CustomPaint(
                 painter: _PlacementPainter(
                   line: context.colors.border,
                   body: context.colors.text,
                   fill: context.colors.surfaceRaised,
                   camera: context.colors.rival,
+                  measure: context.colors.muted,
                 ),
               ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 6),
+            // Under the painter's own measure: the metre under the gap
+            // between the phone and the head, and the frame under the body.
             Row(
               children: [
+                const Spacer(flex: 30),
                 Expanded(
+                  flex: 56,
                   child: Text(
                     l.obOneMetre,
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: context.colors.muted, fontSize: 13),
+                    style: TextStyle(
+                      color: context.colors.text,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
                 Expanded(
-                  flex: 2,
+                  flex: 134,
                   child: Text(
                     l.obFullBody,
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: context.colors.muted, fontSize: 13),
+                    style: TextStyle(color: context.colors.muted, fontSize: 14),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 6),
-            _Tick(l.obCheckHandsFeet),
-            _Tick(l.obCheckFacing),
-            _Tick(l.obCheckLight),
+            const SizedBox(height: 18),
+            _Check(icon: Icons.accessibility_new, label: l.obCheckHandsFeet),
+            _Check(icon: Icons.face_outlined, label: l.obCheckFacing),
+            _Check(icon: Icons.lightbulb_outline, label: l.obCheckLight),
           ],
         ),
       ),
       actions: _Primary(label: l.obImSetUp, onTap: onNext),
+    );
+  }
+}
+
+/// One thing to check before the camera opens: its icon in a disc, and the
+/// line, under a hairline.
+class _Check extends StatelessWidget {
+  const _Check({required this.icon, required this.label});
+
+  final IconData icon;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 11),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(color: context.colors.border, width: 0.5),
+        ),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 38,
+            height: 38,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: context.colors.surfaceRaised,
+            ),
+            child: Icon(icon, size: 20, color: context.colors.brand),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Text(
+              label,
+              style: TextStyle(color: context.colors.text, fontSize: 16),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -1068,6 +1626,7 @@ class _PlacementPainter extends CustomPainter {
     required this.body,
     required this.fill,
     required this.camera,
+    required this.measure,
   });
 
   final Color line;
@@ -1078,9 +1637,12 @@ class _PlacementPainter extends CustomPainter {
   /// colours as the two lifters in the logo.
   final Color camera;
 
+  /// The metre from the phone to the lifter's head, drawn under the floor.
+  final Color measure;
+
   @override
   void paint(Canvas canvas, Size size) {
-    // Drawn on a 220 × 130 grid and scaled to whatever it is given.
+    // Drawn on a 220 × 124 grid and scaled to whatever it is given.
     final s = size.width / 220;
     Offset p(double x, double y) => Offset(x * s, y * s);
     Path shape(List<List<double>> points) {
@@ -1099,11 +1661,18 @@ class _PlacementPainter extends CustomPainter {
         [214, 104],
         [30, 81],
       ]),
-      Paint()..color = camera.withValues(alpha: 0.10),
+      // Strongest at the lens, fading over the body.
+      Paint()
+        ..shader = LinearGradient(
+          colors: [
+            camera.withValues(alpha: 0.38),
+            camera.withValues(alpha: 0.06),
+          ],
+        ).createShader(Rect.fromLTRB(30 * s, 46 * s, 214 * s, 104 * s)),
     );
     final edge = Paint()
-      ..color = camera.withValues(alpha: 0.5)
-      ..strokeWidth = 1 * s;
+      ..color = camera.withValues(alpha: 0.8)
+      ..strokeWidth = 1.2 * s;
     void dashed(Offset from, Offset to) {
       final length = (to - from).distance;
       final step = (to - from) / length;
@@ -1147,10 +1716,18 @@ class _PlacementPainter extends CustomPainter {
       phone,
       Paint()
         ..color = camera
-        ..strokeWidth = 2 * s
+        ..strokeWidth = 2.4 * s
         ..style = PaintingStyle.stroke,
     );
     canvas.restore();
+
+    // About a metre: from the phone to the lifter's head, under the floor.
+    final rule = Paint()
+      ..color = measure
+      ..strokeWidth = 1 * s;
+    canvas.drawLine(p(30, 116), p(86, 116), rule);
+    canvas.drawLine(p(30, 112), p(30, 120), rule);
+    canvas.drawLine(p(86, 112), p(86, 120), rule);
 
     // The lifter: head, a straight body from shoulders to toes, an arm
     // straight down under the shoulder, and the hand flat on the floor.
@@ -1193,7 +1770,8 @@ class _PlacementPainter extends CustomPainter {
       old.line != line ||
       old.body != body ||
       old.fill != fill ||
-      old.camera != camera;
+      old.camera != camera ||
+      old.measure != measure;
 }
 
 // ─────────────────────── 6 and 7: the camera is open ─────────────────────────
@@ -1506,6 +2084,10 @@ class _CalibrationState extends State<_Calibration> {
   double _progress = 0;
   bool _done = false;
 
+  /// This rep has been down past the bottom line, so the top one is next —
+  /// the bar's lines change colour on it, as they do in a match.
+  bool _pastBottom = false;
+
   /// The count has started. Until then the tracker only watches — as on the
   /// camera screen before its countdown ends — learning where the hands are
   /// planted and how high this lifter's lockout is, so the first rep is
@@ -1563,7 +2145,10 @@ class _CalibrationState extends State<_Calibration> {
       Sounds.instance.play(Cue.rep);
     }
 
-    setState(() => _progress = reading.progress ?? _progress);
+    setState(() {
+      _progress = reading.progress ?? _progress;
+      _pastBottom = reading.pastBottom;
+    });
 
     if (_reps >= kCalibrationReps) {
       _done = true;
@@ -1584,7 +2169,7 @@ class _CalibrationState extends State<_Calibration> {
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
-    final left = (kCalibrationReps - _reps).clamp(0, kCalibrationReps);
+    const dim = Color(0xB38F8880);
 
     return _CameraStage(
       poseSource: widget.poseSource,
@@ -1617,8 +2202,8 @@ class _CalibrationState extends State<_Calibration> {
                     localNumber(context, _reps),
                     style: TextStyle(
                       color: context.colors.text,
-                      fontSize: 34,
-                      height: 1.15,
+                      fontSize: 46,
+                      height: 1.1,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -1628,8 +2213,8 @@ class _CalibrationState extends State<_Calibration> {
                       for (var i = 0; i < kCalibrationReps; i++) ...[
                         if (i > 0) const SizedBox(width: 6),
                         Container(
-                          width: 30,
-                          height: 5,
+                          width: 40,
+                          height: 6,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(3),
                             color: i < _reps
@@ -1640,44 +2225,69 @@ class _CalibrationState extends State<_Calibration> {
                       ],
                     ],
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    !_counting
-                        ? l.getIntoPosition
-                        : left == 1
-                        ? l.obOneMoreRep
-                        : l.obCalibrationHint,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: context.colors.muted, fontSize: 13),
-                  ),
+                  const SizedBox(height: 10),
+                  // Until the count starts, the position; then the rule
+                  // itself, with the line it names in the line's own gold.
+                  if (!_counting)
+                    Text(
+                      l.getIntoPosition,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: context.colors.muted, fontSize: 15),
+                    )
+                  else
+                    _Rule(
+                      text: l.obCalibrationRule('\u0000'),
+                      gold: l.obGoldLine,
+                    ),
                 ],
               ),
             ),
           ),
+          // The match screen's bar: down past the gold line, then back up
+          // past the top one, so the rule is learnt here, before a match.
           PositionedDirectional(
             start: 11,
-            top: 200,
-            child: Container(
-              width: 10,
-              height: 150,
-              decoration: BoxDecoration(
-                color: context.colors.background.withValues(alpha: 0.5),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: FractionallySizedBox(
-                  // Drawn the camera screen's way, from the bottom of a
-                  // real rep.
-                  heightFactor: barFill(_progress),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      // The camera screen's own bar colour.
-                      color: context.colors.brand,
-                      borderRadius: BorderRadius.circular(5),
+            top: 220,
+            child: SizedBox(
+              width: 16,
+              height: 250,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Positioned.fill(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: context.colors.background.withValues(alpha: 0.45),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: FractionallySizedBox(
+                          // Drawn the camera screen's way, from the bottom of
+                          // a real rep.
+                          heightFactor: barFill(_progress),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              // The camera screen's own bar colour.
+                              color: context.colors.brand,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  _BarLine(
+                    at: kBottomShare,
+                    colour: _pastBottom ? AppColors.win : AppColors.gold,
+                    lit: !_pastBottom,
+                  ),
+                  _BarLine(
+                    at: kTopShare,
+                    colour: _pastBottom ? AppColors.gold : dim,
+                    lit: _pastBottom,
+                  ),
+                ],
               ),
             ),
           ),
@@ -1710,6 +2320,66 @@ class _CalibrationState extends State<_Calibration> {
   }
 }
 
+/// The calibration's rule, with the name of the gold line in gold. [text] is
+/// the whole sentence with a NUL where the name goes, so each language keeps
+/// its own word order.
+class _Rule extends StatelessWidget {
+  const _Rule({required this.text, required this.gold});
+
+  final String text;
+  final String gold;
+
+  @override
+  Widget build(BuildContext context) {
+    final parts = text.split('\u0000');
+    return Text.rich(
+      TextSpan(
+        children: [
+          TextSpan(text: parts.first),
+          TextSpan(
+            text: gold,
+            style: const TextStyle(
+              color: AppColors.gold,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          if (parts.length > 1) TextSpan(text: parts.sublist(1).join()),
+        ],
+      ),
+      textAlign: TextAlign.center,
+      style: TextStyle(color: context.colors.text, fontSize: 15, height: 1.4),
+    );
+  }
+}
+
+/// One of the two lines across the calibration bar, as the match draws it:
+/// a little wider than the bar, ringed in the page's black.
+class _BarLine extends StatelessWidget {
+  const _BarLine({required this.at, required this.colour, required this.lit});
+
+  final double at;
+  final Color colour;
+  final bool lit;
+
+  @override
+  Widget build(BuildContext context) {
+    final thick = lit ? 6.0 : 5.0;
+    return Positioned(
+      left: -5,
+      right: -5,
+      bottom: barFill(at) * 250 - thick / 2,
+      height: thick,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: colour,
+          borderRadius: BorderRadius.circular(3),
+          border: Border.all(color: context.colors.background),
+        ),
+      ),
+    );
+  }
+}
+
 // ────────────────────────────── 8 it works ───────────────────────────────────
 
 class _Calibrated extends StatelessWidget {
@@ -1723,101 +2393,116 @@ class _Calibrated extends StatelessWidget {
     final l = L.of(context);
 
     return _Step0(
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(22, 38, 22, 0),
-            child: Column(
-              children: [
-                Text(
-                  l.obCalibrated,
-                  style: TextStyle(
-                    color: context.colors.text,
-                    fontSize: 21,
-                    fontWeight: FontWeight.w500,
-                  ),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(22, 40, 22, 0),
+        child: Column(
+          children: [
+            PopIn(
+              child: Container(
+                width: 128,
+                height: 128,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: context.colors.brand,
+                  boxShadow: [
+                    BoxShadow(
+                      color: context.colors.brand.withValues(alpha: 0.35),
+                      blurRadius: 50,
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  l.obCalibratedBody,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: context.colors.muted,
-                    fontSize: 14,
-                    height: 1.6,
-                  ),
+                child: Icon(
+                  Icons.check_rounded,
+                  size: 76,
+                  color: context.colors.background,
                 ),
-              ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 24, 20, 0),
-            child: _Panel(
-              padding: const EdgeInsets.all(16),
-              child: Column(
+            const SizedBox(height: 28),
+            Text(
+              l.obCalibrated,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: context.colors.text,
+                fontSize: 34,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              l.obCalibratedBody,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: context.colors.muted,
+                fontSize: 16,
+                height: 1.55,
+              ),
+            ),
+            const SizedBox(height: 28),
+            // Three numbers side by side, the same height whatever wraps.
+            IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.baseline,
-                    textBaseline: TextBaseline.alphabetic,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          l.obRepsCounted,
-                          style: TextStyle(
-                            color: context.colors.muted,
-                            fontSize: 13,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        localNumber(context, result.reps),
-                        style: TextStyle(
-                          color: context.colors.brand,
-                          fontSize: 28,
-                          height: 1,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 13, 0, 11),
-                    child: Divider(height: 0.5, color: context.colors.border),
-                  ),
-                  _Line(
-                    l.obAverageDepth,
+                  _Stat(localNumber(context, result.reps), l.obRepsCounted),
+                  const SizedBox(width: 10),
+                  _Stat(
                     '${localNumber(context, (result.averageDepth * 100).round())}%',
+                    l.obAverageDepth,
                   ),
-                  const SizedBox(height: 6),
-                  _Line(l.obForm, result.clean ? l.obFormClean : l.obFormMixed),
+                  const SizedBox(width: 10),
+                  _Stat(
+                    result.clean ? l.obFormClean : l.obFormMixed,
+                    l.obForm,
+                  ),
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       actions: _Primary(label: l.continueLabel, onTap: onNext),
     );
   }
 }
 
-class _Line extends StatelessWidget {
-  const _Line(this.label, this.value);
 
-  final String label;
+/// One number of the calibration's three, large, with what it is under it.
+class _Stat extends StatelessWidget {
+  const _Stat(this.value, this.label);
+
   final String value;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            label,
-            style: TextStyle(color: context.colors.muted, fontSize: 13),
-          ),
+    return Expanded(
+      child: _Panel(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                value,
+                style: TextStyle(
+                  color: context.colors.text,
+                  fontSize: 30,
+                  height: 1.1,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              style: TextStyle(color: context.colors.muted, fontSize: 13),
+            ),
+          ],
         ),
-        Text(value, style: TextStyle(color: context.colors.text, fontSize: 13)),
-      ],
+      ),
     );
   }
 }

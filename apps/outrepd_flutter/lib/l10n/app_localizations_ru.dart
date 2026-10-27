@@ -2755,4 +2755,51 @@ class LRu extends L {
   String rematchOpponentLeft(String name) {
     return '${name} вышел · в этот раз без реванша';
   }
+
+  @override
+  String get obNext => 'Дальше';
+
+  @override
+  String get obRaceTitle => 'Соревнуйся с живым человеком.';
+
+  @override
+  String get obRaceBody => 'Побеждает тот, кто сделает больше повторений за 60 секунд. Вживую, каждый со своего телефона, — или против записанного подхода, если никого нет в сети.';
+
+  @override
+  String get obRepsTitle => 'Считаются только полные повторения.';
+
+  @override
+  String get obRepsBody => 'Камера видит, как низко ты опускаешься и как высоко поднимаешься.';
+
+  @override
+  String get obRepsDown => 'Вниз ниже золотой линии';
+
+  @override
+  String get obRepsUp => 'Обратно выше верхней линии';
+
+  @override
+  String get obRepsBoth => 'И то и другое — руки на полу. Половина повторения не считается — ни у тебя, ни у соперника.';
+
+  @override
+  String get obClimbTitle => 'Поднимись до Master.';
+
+  @override
+  String get obClimbBody => 'Побеждай, чтобы подниматься: семь рангов, в каждом пять ступеней.';
+
+  @override
+  String get obAdventureTitle => 'Тренируешься один?';
+
+  @override
+  String get obAdventureBody => 'В «Приключении» 140 уровней битв на отжиманиях, и каждый сложнее предыдущего.';
+
+  @override
+  String get obCountedHere => 'Считается на этом телефоне';
+
+  @override
+  String get obGoldLine => 'золотой линии';
+
+  @override
+  String obCalibrationRule(String gold) {
+    return 'Вниз ниже ${gold}, обратно выше верхней';
+  }
 }

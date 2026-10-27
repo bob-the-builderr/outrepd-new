@@ -4954,6 +4954,96 @@ abstract class L {
   /// In en, this message translates to:
   /// **'{name} left · no rematch this time'**
   String rematchOpponentLeft(String name);
+
+  /// No description provided for @obNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get obNext;
+
+  /// No description provided for @obRaceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Race a real person.'**
+  String get obRaceTitle;
+
+  /// No description provided for @obRaceBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Most reps in 60 seconds wins. Live, on their own phone — or their recorded set when nobody is online.'**
+  String get obRaceBody;
+
+  /// No description provided for @obRepsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Only full reps count.'**
+  String get obRepsTitle;
+
+  /// No description provided for @obRepsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your camera watches how low you go and how high you come back.'**
+  String get obRepsBody;
+
+  /// No description provided for @obRepsDown.
+  ///
+  /// In en, this message translates to:
+  /// **'Down past the gold line'**
+  String get obRepsDown;
+
+  /// No description provided for @obRepsUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Back up past the top line'**
+  String get obRepsUp;
+
+  /// No description provided for @obRepsBoth.
+  ///
+  /// In en, this message translates to:
+  /// **'Both, with your hands on the floor. A half rep is not a rep — on your phone or theirs.'**
+  String get obRepsBoth;
+
+  /// No description provided for @obClimbTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Climb to Master.'**
+  String get obClimbTitle;
+
+  /// No description provided for @obClimbBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Win to move up the ladder: seven tiers, five steps each.'**
+  String get obClimbBody;
+
+  /// No description provided for @obAdventureTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Training alone?'**
+  String get obAdventureTitle;
+
+  /// No description provided for @obAdventureBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Adventure has 140 levels of push-up fights, each harder than the last.'**
+  String get obAdventureBody;
+
+  /// No description provided for @obCountedHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Counted on this phone'**
+  String get obCountedHere;
+
+  /// No description provided for @obGoldLine.
+  ///
+  /// In en, this message translates to:
+  /// **'gold line'**
+  String get obGoldLine;
+
+  /// No description provided for @obCalibrationRule.
+  ///
+  /// In en, this message translates to:
+  /// **'Down past the {gold}, back up past the top one'**
+  String obCalibrationRule(String gold);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

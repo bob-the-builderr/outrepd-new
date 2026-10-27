@@ -2755,4 +2755,51 @@ class LHi extends L {
   String rematchOpponentLeft(String name) {
     return '${name} चले गए · इस बार रीमैच नहीं';
   }
+
+  @override
+  String get obNext => 'अगला';
+
+  @override
+  String get obRaceTitle => 'असली इंसान से मुकाबला करें।';
+
+  @override
+  String get obRaceBody => '60 सेकंड में ज़्यादा रेप्स करने वाला जीतता है। लाइव, सामने वाले के अपने फ़ोन पर — या कोई ऑनलाइन न हो तो उसका रिकॉर्ड किया हुआ सेट।';
+
+  @override
+  String get obRepsTitle => 'सिर्फ़ पूरे रेप्स गिने जाते हैं।';
+
+  @override
+  String get obRepsBody => 'कैमरा देखता है कि आप कितना नीचे जाते हैं और कितना ऊपर वापस आते हैं।';
+
+  @override
+  String get obRepsDown => 'सुनहरी लाइन से नीचे जाएँ';
+
+  @override
+  String get obRepsUp => 'ऊपर वाली लाइन से ऊपर वापस आएँ';
+
+  @override
+  String get obRepsBoth => 'दोनों, हाथ ज़मीन पर रखकर। आधा रेप, रेप नहीं है — न आपके फ़ोन पर, न उनके।';
+
+  @override
+  String get obClimbTitle => 'Master तक पहुँचें।';
+
+  @override
+  String get obClimbBody => 'जीतकर सीढ़ी पर ऊपर बढ़ें: सात टियर, हर एक में पाँच स्टेप।';
+
+  @override
+  String get obAdventureTitle => 'अकेले ट्रेनिंग?';
+
+  @override
+  String get obAdventureBody => 'एडवेंचर में पुश-अप लड़ाइयों के 140 लेवल हैं, हर लेवल पिछले से कठिन।';
+
+  @override
+  String get obCountedHere => 'इसी फ़ोन पर गिना जाता है';
+
+  @override
+  String get obGoldLine => 'सुनहरी लाइन';
+
+  @override
+  String obCalibrationRule(String gold) {
+    return '${gold} से नीचे जाएँ, फिर ऊपर वाली से ऊपर आएँ';
+  }
 }

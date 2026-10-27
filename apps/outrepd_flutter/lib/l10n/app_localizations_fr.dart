@@ -2761,4 +2761,51 @@ class LFr extends L {
   String rematchOpponentLeft(String name) {
     return '${name} est parti · pas de revanche cette fois';
   }
+
+  @override
+  String get obNext => 'Suivant';
+
+  @override
+  String get obRaceTitle => 'Affronte une vraie personne.';
+
+  @override
+  String get obRaceBody => 'Le plus de répétitions en 60 secondes gagne. En direct, chacun sur son téléphone — ou contre une série enregistrée quand personne n’est en ligne.';
+
+  @override
+  String get obRepsTitle => 'Seules les répétitions complètes comptent.';
+
+  @override
+  String get obRepsBody => 'La caméra voit jusqu’où tu descends et jusqu’où tu remontes.';
+
+  @override
+  String get obRepsDown => 'Descends sous la ligne dorée';
+
+  @override
+  String get obRepsUp => 'Remonte au-dessus de la ligne du haut';
+
+  @override
+  String get obRepsBoth => 'Les deux, mains au sol. Une demi-répétition ne compte pas — ni chez toi, ni chez l’autre.';
+
+  @override
+  String get obClimbTitle => 'Grimpe jusqu’à Master.';
+
+  @override
+  String get obClimbBody => 'Gagne pour monter l’échelle : sept rangs de cinq paliers chacun.';
+
+  @override
+  String get obAdventureTitle => 'Tu t’entraînes seul ?';
+
+  @override
+  String get obAdventureBody => 'Aventure propose 140 niveaux de combats de pompes, chacun plus dur que le précédent.';
+
+  @override
+  String get obCountedHere => 'Compté sur ce téléphone';
+
+  @override
+  String get obGoldLine => 'ligne dorée';
+
+  @override
+  String obCalibrationRule(String gold) {
+    return 'Descends sous la ${gold}, remonte au-dessus de celle du haut';
+  }
 }

@@ -2760,4 +2760,51 @@ class LEs extends L {
   String rematchOpponentLeft(String name) {
     return '${name} se fue · esta vez no hay revancha';
   }
+
+  @override
+  String get obNext => 'Siguiente';
+
+  @override
+  String get obRaceTitle => 'Compite contra una persona real.';
+
+  @override
+  String get obRaceBody => 'Gana quien haga más repeticiones en 60 segundos. En directo, cada uno con su teléfono, o contra una serie grabada si no hay nadie conectado.';
+
+  @override
+  String get obRepsTitle => 'Solo cuentan las repeticiones completas.';
+
+  @override
+  String get obRepsBody => 'La cámara ve cuánto bajas y cuánto vuelves a subir.';
+
+  @override
+  String get obRepsDown => 'Baja más allá de la línea dorada';
+
+  @override
+  String get obRepsUp => 'Vuelve a subir más allá de la línea de arriba';
+
+  @override
+  String get obRepsBoth => 'Las dos cosas, con las manos en el suelo. Media repetición no cuenta, ni en tu teléfono ni en el suyo.';
+
+  @override
+  String get obClimbTitle => 'Sube hasta Master.';
+
+  @override
+  String get obClimbBody => 'Gana para subir en la escalera: siete rangos de cinco escalones cada uno.';
+
+  @override
+  String get obAdventureTitle => '¿Entrenas solo?';
+
+  @override
+  String get obAdventureBody => 'Aventura tiene 140 niveles de combates de flexiones, cada uno más difícil que el anterior.';
+
+  @override
+  String get obCountedHere => 'Se cuenta en este teléfono';
+
+  @override
+  String get obGoldLine => 'línea dorada';
+
+  @override
+  String obCalibrationRule(String gold) {
+    return 'Baja más allá de la ${gold} y vuelve a subir más allá de la de arriba';
+  }
 }

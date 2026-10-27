@@ -826,5 +826,20 @@
   "needsWeapon": "需要{weapon}",
   "hurtOnlyBy": "只有{weapon}或更强的武器才能伤到它",
   "worldNeedsWeapon": "{world}需要{weapon} · 还差 {count} 颗星",
-  "rematchOpponentLeft": "{name} 已离开 · 这次没有再战"
+  "rematchOpponentLeft": "{name} 已离开 · 这次没有再战",
+  "obNext": "下一步",
+  "obRaceTitle": "和真人比拼。",
+  "obRaceBody": "60秒内做得多的人赢。对手用自己的手机实时参赛；没人在线时，你挑战的是对方录好的一组。",
+  "obRepsTitle": "只算完整的一次。",
+  "obRepsBody": "摄像头会看你下得多低、又起得多高。",
+  "obRepsDown": "下到金线以下",
+  "obRepsUp": "再起到上线以上",
+  "obRepsBoth": "两步都要双手撑地。只做一半不算——你的手机和对手的手机都一样。",
+  "obClimbTitle": "一路冲到 Master。",
+  "obClimbBody": "赢下比赛往上爬：七个段位，每个五级。",
+  "obAdventureTitle": "一个人练？",
+  "obAdventureBody": "冒险模式有140关俯卧撑对决，一关比一关难。",
+  "obCountedHere": "就在这部手机上计数",
+  "obGoldLine": "金线",
+  "obCalibrationRule": "下到{gold}以下，再起到上线以上"
 }

@@ -826,5 +826,20 @@
   "needsWeapon": "Necesitas {weapon}",
   "hurtOnlyBy": "Solo {weapon} o mejor puede herirlo",
   "worldNeedsWeapon": "{world} necesita {weapon} · faltan {count} estrellas",
-  "rematchOpponentLeft": "{name} se fue · esta vez no hay revancha"
+  "rematchOpponentLeft": "{name} se fue · esta vez no hay revancha",
+  "obNext": "Siguiente",
+  "obRaceTitle": "Compite contra una persona real.",
+  "obRaceBody": "Gana quien haga más repeticiones en 60 segundos. En directo, cada uno con su teléfono, o contra una serie grabada si no hay nadie conectado.",
+  "obRepsTitle": "Solo cuentan las repeticiones completas.",
+  "obRepsBody": "La cámara ve cuánto bajas y cuánto vuelves a subir.",
+  "obRepsDown": "Baja más allá de la línea dorada",
+  "obRepsUp": "Vuelve a subir más allá de la línea de arriba",
+  "obRepsBoth": "Las dos cosas, con las manos en el suelo. Media repetición no cuenta, ni en tu teléfono ni en el suyo.",
+  "obClimbTitle": "Sube hasta Master.",
+  "obClimbBody": "Gana para subir en la escalera: siete rangos de cinco escalones cada uno.",
+  "obAdventureTitle": "¿Entrenas solo?",
+  "obAdventureBody": "Aventura tiene 140 niveles de combates de flexiones, cada uno más difícil que el anterior.",
+  "obCountedHere": "Se cuenta en este teléfono",
+  "obGoldLine": "línea dorada",
+  "obCalibrationRule": "Baja más allá de la {gold} y vuelve a subir más allá de la de arriba"
 }

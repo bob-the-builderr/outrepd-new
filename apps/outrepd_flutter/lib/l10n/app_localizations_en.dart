@@ -2753,4 +2753,51 @@ class LEn extends L {
   String rematchOpponentLeft(String name) {
     return '${name} left · no rematch this time';
   }
+
+  @override
+  String get obNext => 'Next';
+
+  @override
+  String get obRaceTitle => 'Race a real person.';
+
+  @override
+  String get obRaceBody => 'Most reps in 60 seconds wins. Live, on their own phone — or their recorded set when nobody is online.';
+
+  @override
+  String get obRepsTitle => 'Only full reps count.';
+
+  @override
+  String get obRepsBody => 'Your camera watches how low you go and how high you come back.';
+
+  @override
+  String get obRepsDown => 'Down past the gold line';
+
+  @override
+  String get obRepsUp => 'Back up past the top line';
+
+  @override
+  String get obRepsBoth => 'Both, with your hands on the floor. A half rep is not a rep — on your phone or theirs.';
+
+  @override
+  String get obClimbTitle => 'Climb to Master.';
+
+  @override
+  String get obClimbBody => 'Win to move up the ladder: seven tiers, five steps each.';
+
+  @override
+  String get obAdventureTitle => 'Training alone?';
+
+  @override
+  String get obAdventureBody => 'Adventure has 140 levels of push-up fights, each harder than the last.';
+
+  @override
+  String get obCountedHere => 'Counted on this phone';
+
+  @override
+  String get obGoldLine => 'gold line';
+
+  @override
+  String obCalibrationRule(String gold) {
+    return 'Down past the ${gold}, back up past the top one';
+  }
 }

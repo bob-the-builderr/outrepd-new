@@ -826,5 +826,20 @@
   "needsWeapon": "Il faut {weapon}",
   "hurtOnlyBy": "Seul {weapon} ou mieux peut le blesser",
   "worldNeedsWeapon": "{world} demande {weapon} · encore {count} étoiles",
-  "rematchOpponentLeft": "{name} est parti · pas de revanche cette fois"
+  "rematchOpponentLeft": "{name} est parti · pas de revanche cette fois",
+  "obNext": "Suivant",
+  "obRaceTitle": "Affronte une vraie personne.",
+  "obRaceBody": "Le plus de répétitions en 60 secondes gagne. En direct, chacun sur son téléphone — ou contre une série enregistrée quand personne n’est en ligne.",
+  "obRepsTitle": "Seules les répétitions complètes comptent.",
+  "obRepsBody": "La caméra voit jusqu’où tu descends et jusqu’où tu remontes.",
+  "obRepsDown": "Descends sous la ligne dorée",
+  "obRepsUp": "Remonte au-dessus de la ligne du haut",
+  "obRepsBoth": "Les deux, mains au sol. Une demi-répétition ne compte pas — ni chez toi, ni chez l’autre.",
+  "obClimbTitle": "Grimpe jusqu’à Master.",
+  "obClimbBody": "Gagne pour monter l’échelle : sept rangs de cinq paliers chacun.",
+  "obAdventureTitle": "Tu t’entraînes seul ?",
+  "obAdventureBody": "Aventure propose 140 niveaux de combats de pompes, chacun plus dur que le précédent.",
+  "obCountedHere": "Compté sur ce téléphone",
+  "obGoldLine": "ligne dorée",
+  "obCalibrationRule": "Descends sous la {gold}, remonte au-dessus de celle du haut"
 }
