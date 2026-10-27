@@ -16,25 +16,20 @@ import 'package:flutter/material.dart';
 import '../theme.dart';
 import 'pose.dart';
 
-/// Arms and torso, ending at the hips. No legs: with the phone on the floor
-/// facing the lifter the knees and ankles are hidden in most frames, so the
-/// tracker guesses at them and their bones swung about over the floor; and
-/// the counter never reads them.
-const _bones = <List<Joint>>[
-  [Joint.leftShoulder, Joint.rightShoulder],
-  [Joint.leftShoulder, Joint.leftElbow],
-  [Joint.leftElbow, Joint.leftWrist],
-  [Joint.rightShoulder, Joint.rightElbow],
-  [Joint.rightElbow, Joint.rightWrist],
-  [Joint.leftShoulder, Joint.leftHip],
-  [Joint.rightShoulder, Joint.rightHip],
-  [Joint.leftHip, Joint.rightHip],
+/// One line, wrist to wrist over the shoulders: the arms and the bar between
+/// them, which is all a push-up is made of from the front (the user's pick,
+/// 2026-10-27, after thin bones with dots and the chest drawn in). No dots, no
+/// torso, no legs: with the phone on the floor facing the lifter the hips sit
+/// behind the shoulders and the knees and ankles are hidden in most frames,
+/// so the tracker guesses at them — and the counter never reads them.
+const _line = <Joint>[
+  Joint.leftWrist,
+  Joint.leftElbow,
+  Joint.leftShoulder,
+  Joint.rightShoulder,
+  Joint.rightElbow,
+  Joint.rightWrist,
 ];
-
-/// The joints given a dot: those the bones above join. The nose feeds the
-/// counter but has no bone to it, so its dot would float on the face; the
-/// legs are not drawn at all.
-final _dotted = {for (final bone in _bones) ...bone};
 
 class SkeletonPainter extends CustomPainter {
   SkeletonPainter({
@@ -87,33 +82,40 @@ class SkeletonPainter extends CustomPainter {
       return Offset(x * drawn.width + dx, p.y * drawn.height + dy);
     }
 
-    final bone = Paint()
-      ..color = colour.withValues(alpha: 0.9 * strength)
-      ..strokeWidth = 5
-      ..strokeCap = StrokeCap.round;
+    // Thick enough to read from the floor a metre away: a thirtieth of the
+    // screen, the way the line it was modelled on is drawn.
+    final line = Paint()
+      ..color = colour.withValues(alpha: 0.86 * strength)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = (size.shortestSide * 0.035).clamp(10.0, 26.0)
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
 
-    final glow = Paint()
-      ..color = colour.withValues(alpha: 0.3 * strength)
-      ..strokeWidth = 14
-      ..strokeCap = StrokeCap.round;
-
-    for (final pair in _bones) {
-      final a = at(pair[0]);
-      final b = at(pair[1]);
-      if (a == null || b == null) continue;
-      canvas.drawLine(a, b, glow);
-      canvas.drawLine(a, b, bone);
+    // One path through every joint the tracker can see, broken where it
+    // cannot: a missing elbow leaves a gap rather than a line cut straight
+    // across from shoulder to wrist.
+    var path = Path();
+    var length = 0;
+    void flush() {
+      if (length >= 2) canvas.drawPath(path, line);
+      path = Path();
+      length = 0;
     }
 
-    final dot = Paint()..color = Colors.white.withValues(alpha: strength);
-    final ring = Paint()..color = colour.withValues(alpha: strength);
-
-    for (final joint in _dotted) {
+    for (final joint in _line) {
       final p = at(joint);
-      if (p == null) continue;
-      canvas.drawCircle(p, 8, ring);
-      canvas.drawCircle(p, 4.5, dot);
+      if (p == null) {
+        flush();
+        continue;
+      }
+      if (length == 0) {
+        path.moveTo(p.dx, p.dy);
+      } else {
+        path.lineTo(p.dx, p.dy);
+      }
+      length++;
     }
+    flush();
   }
 
   @override
