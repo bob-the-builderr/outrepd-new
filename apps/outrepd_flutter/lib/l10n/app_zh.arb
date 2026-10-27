@@ -825,5 +825,6 @@
   "clearFirst": "先通过第 {level} 关",
   "needsWeapon": "需要{weapon}",
   "hurtOnlyBy": "只有{weapon}或更强的武器才能伤到它",
-  "worldNeedsWeapon": "{world}需要{weapon} · 还差 {count} 颗星"
+  "worldNeedsWeapon": "{world}需要{weapon} · 还差 {count} 颗星",
+  "rematchOpponentLeft": "{name} 已离开 · 这次没有再战"
 }

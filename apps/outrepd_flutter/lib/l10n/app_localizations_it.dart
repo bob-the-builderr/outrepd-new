@@ -2756,4 +2756,9 @@ class LIt extends L {
   String worldNeedsWeapon(String world, String weapon, String count) {
     return '${world} richiede ${weapon} · ancora ${count} stelle';
   }
+
+  @override
+  String rematchOpponentLeft(String name) {
+    return '${name} è uscito · niente rivincita stavolta';
+  }
 }

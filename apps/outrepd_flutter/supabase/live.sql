@@ -75,6 +75,14 @@ alter table live_matches
 create index if not exists live_matches_rematch_of_idx
   on live_matches (rematch_of) where rematch_of is not null;
 
+-- After the round, on the result screen: when each phone last said it was
+-- still there, and when it left. What the other phone's rematch button reads
+-- (live_result_presence).
+alter table live_matches add column if not exists a_result_seen timestamptz;
+alter table live_matches add column if not exists b_result_seen timestamptz;
+alter table live_matches add column if not exists a_left_result timestamptz;
+alter table live_matches add column if not exists b_left_result timestamptz;
+
 -- Nobody reads or writes it directly; the functions below are the only way.
 alter table live_matches enable row level security;
 
@@ -457,6 +465,11 @@ begin
   ) then
     raise exception 'no rematch with this lifter';
   end if;
+  -- They have left the result screen: nobody is there to say yes.
+  if (case when prev.a = me then prev.b_left_result else prev.a_left_result end)
+       is not null then
+    raise exception 'they left';
+  end if;
 
   -- They asked first: this is the yes.
   select * into theirs from live_matches lm
@@ -495,6 +508,64 @@ begin
   values (pays, me, them, 'invited', now() + interval '30 seconds', after)
   returning id into new_id;
   return query select new_id, 'invited'::text, pays;
+end;
+$$;
+
+-- The caller is on the result screen of [after], or — with [leaving] — has
+-- just left it. Answers where the other one is: 'here', 'waiting' (not on
+-- their result screen yet), or 'left' — gone from it, or silent for longer
+-- than a phone that is still there ever is, or never arriving long after the
+-- round ended.
+create or replace function live_result_presence(after uuid, leaving boolean default false)
+returns text
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  m live_matches;
+  i_am_a boolean;
+  their_seen timestamptz;
+  their_left timestamptz;
+begin
+  select * into m from live_matches lm
+   where lm.id = after and auth.uid() in (lm.a, lm.b)
+   for update;
+  if m.id is null then
+    raise exception 'no such live match';
+  end if;
+  i_am_a := m.a = auth.uid();
+
+  if i_am_a then
+    update live_matches lm
+       set a_result_seen = now(),
+           a_left_result = case when leaving then now() else lm.a_left_result end
+     where lm.id = m.id;
+    their_seen := m.b_result_seen;
+    their_left := m.b_left_result;
+  else
+    update live_matches lm
+       set b_result_seen = now(),
+           b_left_result = case when leaving then now() else lm.b_left_result end
+     where lm.id = m.id;
+    their_seen := m.a_result_seen;
+    their_left := m.a_left_result;
+  end if;
+
+  if their_left is not null then
+    return 'left';
+  end if;
+  if their_seen is not null then
+    -- A phone on the result screen says so every couple of seconds.
+    return case when their_seen > now() - interval '12 seconds'
+                then 'here' else 'left' end;
+  end if;
+  -- Not there yet: still finishing, or never coming. A minute's round and
+  -- forty seconds after it is longer than any phone takes to get there.
+  if coalesce(m.starts_at, m.created_at) < now() - interval '100 seconds' then
+    return 'left';
+  end if;
+  return 'waiting';
 end;
 $$;
 
@@ -864,6 +935,8 @@ revoke all on function cancel_live_invite(uuid) from public, anon;
 grant execute on function cancel_live_invite(uuid) to authenticated;
 revoke all on function rematch_live(uuid) from public, anon;
 grant execute on function rematch_live(uuid) to authenticated;
+revoke all on function live_result_presence(uuid, boolean) from public, anon;
+grant execute on function live_result_presence(uuid, boolean) to authenticated;
 revoke all on function live_match_state(uuid) from public, anon;
 grant execute on function live_match_state(uuid) to authenticated;
 revoke all on function live_ready(uuid) from public, anon;

@@ -825,5 +825,6 @@
   "clearFirst": "Önce şu seviyeyi kazan: {level}",
   "needsWeapon": "Gerekli: {weapon}",
   "hurtOnlyBy": "Ona sadece {weapon} veya daha iyisi zarar verebilir",
-  "worldNeedsWeapon": "{world} için {weapon} gerekli · {count} yıldız daha"
+  "worldNeedsWeapon": "{world} için {weapon} gerekli · {count} yıldız daha",
+  "rematchOpponentLeft": "{name} ayrıldı · bu sefer rövanş yok"
 }

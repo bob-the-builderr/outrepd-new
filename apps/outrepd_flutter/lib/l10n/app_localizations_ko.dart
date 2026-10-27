@@ -2719,4 +2719,9 @@ class LKo extends L {
   String worldNeedsWeapon(String world, String weapon, String count) {
     return '${world}에는 ${weapon} 필요 · 별 ${count}개 더';
   }
+
+  @override
+  String rematchOpponentLeft(String name) {
+    return '${name}님이 나갔어요 · 이번엔 재대결이 없어요';
+  }
 }

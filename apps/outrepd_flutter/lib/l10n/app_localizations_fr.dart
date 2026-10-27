@@ -2757,4 +2757,9 @@ class LFr extends L {
   String worldNeedsWeapon(String world, String weapon, String count) {
     return '${world} demande ${weapon} · encore ${count} étoiles';
   }
+
+  @override
+  String rematchOpponentLeft(String name) {
+    return '${name} est parti · pas de revanche cette fois';
+  }
 }

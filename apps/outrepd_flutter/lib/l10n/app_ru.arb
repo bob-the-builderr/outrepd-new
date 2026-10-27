@@ -825,5 +825,6 @@
   "clearFirst": "Сначала пройди уровень {level}",
   "needsWeapon": "Нужно оружие «{weapon}»",
   "hurtOnlyBy": "Его берёт только «{weapon}» или сильнее",
-  "worldNeedsWeapon": "Для «{world}» нужно «{weapon}» · ещё звёзд: {count}"
+  "worldNeedsWeapon": "Для «{world}» нужно «{weapon}» · ещё звёзд: {count}",
+  "rematchOpponentLeft": "{name} вышел · в этот раз без реванша"
 }

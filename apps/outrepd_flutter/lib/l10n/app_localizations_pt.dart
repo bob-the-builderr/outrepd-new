@@ -2753,4 +2753,9 @@ class LPt extends L {
   String worldNeedsWeapon(String world, String weapon, String count) {
     return '${world} exige ${weapon} · faltam ${count} estrelas';
   }
+
+  @override
+  String rematchOpponentLeft(String name) {
+    return '${name} saiu · sem revanche desta vez';
+  }
 }

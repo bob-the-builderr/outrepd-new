@@ -2751,4 +2751,9 @@ class LRu extends L {
   String worldNeedsWeapon(String world, String weapon, String count) {
     return 'Для «${world}» нужно «${weapon}» · ещё звёзд: ${count}';
   }
+
+  @override
+  String rematchOpponentLeft(String name) {
+    return '${name} вышел · в этот раз без реванша';
+  }
 }

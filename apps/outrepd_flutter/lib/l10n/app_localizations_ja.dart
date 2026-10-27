@@ -2713,4 +2713,9 @@ class LJa extends L {
   String worldNeedsWeapon(String world, String weapon, String count) {
     return '${world}には${weapon}が必要 · あと星${count}個';
   }
+
+  @override
+  String rematchOpponentLeft(String name) {
+    return '${name}が退出しました · 今回は再戦なし';
+  }
 }

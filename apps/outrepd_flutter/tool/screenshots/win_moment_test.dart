@@ -37,9 +37,18 @@ const _karim = LiveOpponent(
 );
 
 class _Live extends NoBackend {
-  _Live({this.asked = false});
+  _Live({this.asked = false, this.left = false});
 
   final bool asked;
+
+  /// The other one has left their result screen.
+  final bool left;
+
+  @override
+  Future<RematchPresence> liveResultPresence(
+    String afterMatchId, {
+    bool leaving = false,
+  }) async => left ? RematchPresence.left : RematchPresence.here;
 
   @override
   bool get available => true;
@@ -154,6 +163,18 @@ void main() {
     await expectLater(
       find.byType(MaterialApp),
       matchesGoldenFile('goldens/result_rematch_asked.png'),
+    );
+  });
+
+  testWidgets('rematch, the other one left', (tester) async {
+    phone(tester);
+    backend = _Live(left: true);
+    await tester.pumpWidget(_app(_result(won: true)));
+    await tester.pump(const Duration(seconds: 2));
+    await tester.pump();
+    await expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile('goldens/result_rematch_left.png'),
     );
   });
 

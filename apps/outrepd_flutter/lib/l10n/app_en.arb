@@ -1874,5 +1874,13 @@
         "type": "String"
       }
     }
+  },
+  "rematchOpponentLeft": "{name} left · no rematch this time",
+  "@rematchOpponentLeft": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }

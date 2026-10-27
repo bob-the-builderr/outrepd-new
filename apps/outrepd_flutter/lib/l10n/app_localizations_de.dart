@@ -2758,4 +2758,9 @@ class LDe extends L {
   String worldNeedsWeapon(String world, String weapon, String count) {
     return '${world} braucht ${weapon} · noch ${count} Sterne';
   }
+
+  @override
+  String rematchOpponentLeft(String name) {
+    return '${name} ist gegangen · diesmal keine Revanche';
+  }
 }

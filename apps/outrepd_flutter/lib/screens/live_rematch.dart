@@ -2,7 +2,8 @@
 ///
 /// Either phone asks; the other sees it on its own result screen and the
 /// button there turns into the answer. When both have asked, the match
-/// starts. The server holds the rules (supabase/live.sql, `rematch_live`):
+/// starts. Each phone also says it is still on the result screen, and when it
+/// leaves; once the other one has gone the button greys out and says so. The server holds the rules (supabase/live.sql, `rematch_live`):
 /// only the two who just played, only straight after, and as ranked as the
 /// match before — with the two-a-day rule still deciding whether it pays.
 library;
@@ -54,6 +55,10 @@ class _LiveRematchButtonState extends State<LiveRematchButton> {
   Timer? _poll;
   bool _started = false;
 
+  /// The other one has left their result screen: nobody to ask.
+  bool _theyLeft = false;
+  int _ticks = 0;
+
   LiveOpponent get _them => widget.after.opponent;
 
   @override
@@ -61,11 +66,37 @@ class _LiveRematchButtonState extends State<LiveRematchButton> {
     super.initState();
     // Watching for theirs from the start: they may press first.
     _poll = Timer.periodic(const Duration(seconds: 1), (_) => _check());
+    unawaited(_presence());
+  }
+
+  /// Here, and is the other one? Every other second: the server calls a phone
+  /// gone after twelve without a word from it.
+  Future<void> _presence() async {
+    try {
+      final where = await backend.liveResultPresence(widget.after.id);
+      if (!mounted || _started) return;
+      final left = where == RematchPresence.left;
+      if (left != _theyLeft) setState(() => _theyLeft = left);
+    } on Object catch (error) {
+      debugPrint('Could not say this phone is still here: $error');
+    }
+  }
+
+  /// Gone from the result screen, so the other phone stops offering a
+  /// rematch nobody is there to answer.
+  Future<void> _sayLeft() async {
+    try {
+      await backend.liveResultPresence(widget.after.id, leaving: true);
+    } on Object catch (error) {
+      debugPrint('Could not say this phone left: $error');
+    }
   }
 
   @override
   void dispose() {
     _poll?.cancel();
+    // Not when leaving for the rematch itself: that is both of them going on.
+    if (!_started) unawaited(_sayLeft());
     // Left before an answer: they should not join an empty room.
     if (_mine case final id? when !_started && _ask == _Ask.waiting) {
       unawaited(
@@ -79,6 +110,7 @@ class _LiveRematchButtonState extends State<LiveRematchButton> {
 
   Future<void> _check() async {
     if (_started || !mounted) return;
+    if ((_ticks++).isOdd) unawaited(_presence());
     try {
       if (_ask == _Ask.waiting && _mine != null) {
         final state = await backend.liveState(_mine!);
@@ -181,7 +213,9 @@ class _LiveRematchButtonState extends State<LiveRematchButton> {
         widget.friendlyNext ||
         (widget.after.ranked && _ranked == false);
 
-    final (label, fill, ink, onTap) = switch (_ask) {
+    final (label, fill, ink, onTap) = _theyLeft
+        ? (l.rematchLive, context.colors.surfaceRaised, context.colors.faint, null)
+        : switch (_ask) {
       _Ask.waiting => (
         '${l.rematchWaiting(name)} · ${_secondsLeft()}',
         context.colors.surfaceRaised,
@@ -236,7 +270,33 @@ class _LiveRematchButtonState extends State<LiveRematchButton> {
             ),
           ),
         ),
-        if (_ask == _Ask.waiting)
+        if (_theyLeft)
+          Padding(
+            key: const Key('rematchTheyLeft'),
+            padding: const EdgeInsets.only(top: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: context.colors.muted,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Text(
+                    l.rematchOpponentLeft(name),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: context.colors.muted, fontSize: 14),
+                  ),
+                ),
+              ],
+            ),
+          )
+        else if (_ask == _Ask.waiting)
           TextButton(onPressed: _cancel, child: Text(l.cancel))
         else if (_ask == _Ask.asked)
           Padding(
@@ -254,7 +314,7 @@ class _LiveRematchButtonState extends State<LiveRematchButton> {
               style: TextStyle(color: context.colors.muted, fontSize: 14),
             ),
           ),
-        if (friendly)
+        if (friendly && !_theyLeft)
           Padding(
             padding: const EdgeInsets.only(top: 6),
             child: Text(

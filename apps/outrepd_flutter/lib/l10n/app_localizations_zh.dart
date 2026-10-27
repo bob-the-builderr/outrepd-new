@@ -2703,4 +2703,9 @@ class LZh extends L {
   String worldNeedsWeapon(String world, String weapon, String count) {
     return '${world}需要${weapon} · 还差 ${count} 颗星';
   }
+
+  @override
+  String rematchOpponentLeft(String name) {
+    return '${name} 已离开 · 这次没有再战';
+  }
 }

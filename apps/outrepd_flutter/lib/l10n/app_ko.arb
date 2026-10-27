@@ -825,5 +825,6 @@
   "clearFirst": "스테이지 {level} 먼저 클리어하세요",
   "needsWeapon": "{weapon} 필요",
   "hurtOnlyBy": "{weapon} 이상의 무기만 통해요",
-  "worldNeedsWeapon": "{world}에는 {weapon} 필요 · 별 {count}개 더"
+  "worldNeedsWeapon": "{world}에는 {weapon} 필요 · 별 {count}개 더",
+  "rematchOpponentLeft": "{name}님이 나갔어요 · 이번엔 재대결이 없어요"
 }

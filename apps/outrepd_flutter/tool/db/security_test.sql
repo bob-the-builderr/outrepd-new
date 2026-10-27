@@ -685,6 +685,37 @@ select must_fail('a rematch with somebody who blocked you',
 reset role;
 delete from blocks where blocker = :'C' and blocked = :'A';
 
+-- On the result screen each sees whether the other is still there, and once
+-- one has left the other cannot ask them for a rematch.
+insert into live_matches (ranked, a, b, status, starts_at)
+values (false, :'B', :'D', 'done', now() - interval '70 seconds');
+select set_config('test.lr',
+  (select id::text from live_matches
+    where a = :'B' and b = :'D' and status = 'done'
+    order by created_at desc limit 1), false);
+select as_user(:'C'); set role authenticated;
+select must_fail('somebody else''s result screen',
+  format('select live_result_presence(%L)', current_setting('test.lr')));
+reset role;
+select as_user(:'B'); set role authenticated;
+select check_that(live_result_presence(current_setting('test.lr')::uuid) = 'waiting',
+                  'the other one, not on the result screen yet, read as something else');
+reset role;
+select as_user(:'D'); set role authenticated;
+select check_that(live_result_presence(current_setting('test.lr')::uuid) = 'here',
+                  'the one on the result screen was not seen there');
+reset role;
+select as_user(:'B'); set role authenticated;
+select check_that(live_result_presence(current_setting('test.lr')::uuid, true) = 'here',
+                  'leaving the result screen');
+reset role;
+select as_user(:'D'); set role authenticated;
+select check_that(live_result_presence(current_setting('test.lr')::uuid) = 'left',
+                  'the one who left still read as there');
+select must_fail('a rematch with somebody who left',
+  format('select * from rematch_live(%L)', current_setting('test.lr')));
+reset role;
+
 -- ── a friend's code ───────────────────────────────────────────────────────────
 
 select set_config('test.dcode', (select friend_code from profiles where id = :'D'), false);

@@ -825,5 +825,6 @@
   "clearFirst": "Prima vinci il livello {level}",
   "needsWeapon": "Serve {weapon}",
   "hurtOnlyBy": "Solo {weapon} o meglio può ferirlo",
-  "worldNeedsWeapon": "{world} richiede {weapon} · ancora {count} stelle"
+  "worldNeedsWeapon": "{world} richiede {weapon} · ancora {count} stelle",
+  "rematchOpponentLeft": "{name} è uscito · niente rivincita stavolta"
 }

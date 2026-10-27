@@ -825,5 +825,6 @@
   "clearFirst": "Menangkan level {level} dulu",
   "needsWeapon": "Butuh {weapon}",
   "hurtOnlyBy": "Hanya {weapon} atau lebih kuat yang bisa melukainya",
-  "worldNeedsWeapon": "{world} butuh {weapon} · {count} bintang lagi"
+  "worldNeedsWeapon": "{world} butuh {weapon} · {count} bintang lagi",
+  "rematchOpponentLeft": "{name} keluar · tidak ada tanding ulang kali ini"
 }

@@ -767,6 +767,19 @@ class LiveOnline {
   final int online;
 }
 
+/// Where the other lifter is, after a live match, as their result screen
+/// reports it.
+enum RematchPresence {
+  /// On the result screen now.
+  here,
+
+  /// Not there yet: still finishing the round on their side.
+  waiting,
+
+  /// Gone from it, or silent too long to still be there.
+  left,
+}
+
 /// Where a live rematch stands, from the side that asked for it.
 class LiveRematch {
   const LiveRematch({
@@ -1415,6 +1428,14 @@ abstract interface class Backend {
   /// after it. When they have already asked, this is the yes and it starts.
   Future<LiveRematch> rematchLive(String afterMatchId);
 
+  /// Says this phone is on [afterMatchId]'s result screen — or, with
+  /// [leaving], that it has just left it — and answers where the other one
+  /// is.
+  Future<RematchPresence> liveResultPresence(
+    String afterMatchId, {
+    bool leaving = false,
+  });
+
   Future<LiveState> liveState(String matchId);
 
   /// This lifter is in position. How far away the round's start is once both
@@ -1715,6 +1736,13 @@ class NoBackend implements Backend {
   @override
   Future<LiveRematch> rematchLive(String afterMatchId) =>
       throw StateError('no server configured');
+
+  /// No server, no other phone to have left.
+  @override
+  Future<RematchPresence> liveResultPresence(
+    String afterMatchId, {
+    bool leaving = false,
+  }) async => RematchPresence.here;
 
   @override
   Future<LiveState> liveState(String matchId) =>

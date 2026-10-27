@@ -2756,4 +2756,9 @@ class LEs extends L {
   String worldNeedsWeapon(String world, String weapon, String count) {
     return '${world} necesita ${weapon} · faltan ${count} estrellas';
   }
+
+  @override
+  String rematchOpponentLeft(String name) {
+    return '${name} se fue · esta vez no hay revancha';
+  }
 }

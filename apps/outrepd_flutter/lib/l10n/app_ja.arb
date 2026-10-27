@@ -825,5 +825,6 @@
   "clearFirst": "まずステージ{level}をクリアしよう",
   "needsWeapon": "{weapon}が必要",
   "hurtOnlyBy": "{weapon}以上の武器でしかダメージを与えられない",
-  "worldNeedsWeapon": "{world}には{weapon}が必要 · あと星{count}個"
+  "worldNeedsWeapon": "{world}には{weapon}が必要 · あと星{count}個",
+  "rematchOpponentLeft": "{name}が退出しました · 今回は再戦なし"
 }

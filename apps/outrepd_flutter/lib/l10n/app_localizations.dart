@@ -4948,6 +4948,12 @@ abstract class L {
   /// In en, this message translates to:
   /// **'{world} needs {weapon} · {count} more stars'**
   String worldNeedsWeapon(String world, String weapon, String count);
+
+  /// No description provided for @rematchOpponentLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} left · no rematch this time'**
+  String rematchOpponentLeft(String name);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

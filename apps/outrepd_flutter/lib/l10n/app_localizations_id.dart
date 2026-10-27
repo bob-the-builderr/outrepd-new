@@ -2750,4 +2750,9 @@ class LId extends L {
   String worldNeedsWeapon(String world, String weapon, String count) {
     return '${world} butuh ${weapon} · ${count} bintang lagi';
   }
+
+  @override
+  String rematchOpponentLeft(String name) {
+    return '${name} keluar · tidak ada tanding ulang kali ini';
+  }
 }

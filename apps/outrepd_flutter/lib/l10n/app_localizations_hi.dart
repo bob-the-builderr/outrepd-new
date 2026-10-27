@@ -2751,4 +2751,9 @@ class LHi extends L {
   String worldNeedsWeapon(String world, String weapon, String count) {
     return '${world} के लिए ${weapon} चाहिए · ${count} और सितारे';
   }
+
+  @override
+  String rematchOpponentLeft(String name) {
+    return '${name} चले गए · इस बार रीमैच नहीं';
+  }
 }

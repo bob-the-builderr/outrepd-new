@@ -825,5 +825,6 @@
   "clearFirst": "पहले लेवल {level} जीतें",
   "needsWeapon": "{weapon} चाहिए",
   "hurtOnlyBy": "इसे सिर्फ़ {weapon} या उससे बेहतर हथियार ही चोट पहुँचा सकता है",
-  "worldNeedsWeapon": "{world} के लिए {weapon} चाहिए · {count} और सितारे"
+  "worldNeedsWeapon": "{world} के लिए {weapon} चाहिए · {count} और सितारे",
+  "rematchOpponentLeft": "{name} चले गए · इस बार रीमैच नहीं"
 }

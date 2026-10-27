@@ -825,5 +825,6 @@
   "clearFirst": "Primero gana el nivel {level}",
   "needsWeapon": "Necesitas {weapon}",
   "hurtOnlyBy": "Solo {weapon} o mejor puede herirlo",
-  "worldNeedsWeapon": "{world} necesita {weapon} · faltan {count} estrellas"
+  "worldNeedsWeapon": "{world} necesita {weapon} · faltan {count} estrellas",
+  "rematchOpponentLeft": "{name} se fue · esta vez no hay revancha"
 }

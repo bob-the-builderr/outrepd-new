@@ -2746,4 +2746,9 @@ class LTr extends L {
   String worldNeedsWeapon(String world, String weapon, String count) {
     return '${world} için ${weapon} gerekli · ${count} yıldız daha';
   }
+
+  @override
+  String rematchOpponentLeft(String name) {
+    return '${name} ayrıldı · bu sefer rövanş yok';
+  }
 }

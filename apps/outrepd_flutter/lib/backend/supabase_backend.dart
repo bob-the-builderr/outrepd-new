@@ -1221,6 +1221,22 @@ class SupabaseBackend implements Backend {
   }
 
   @override
+  Future<RematchPresence> liveResultPresence(
+    String afterMatchId, {
+    bool leaving = false,
+  }) async {
+    final where = await _db.rpc<String>(
+      'live_result_presence',
+      params: {'after': afterMatchId, 'leaving': leaving},
+    );
+    return switch (where) {
+      'left' => RematchPresence.left,
+      'waiting' => RematchPresence.waiting,
+      _ => RematchPresence.here,
+    };
+  }
+
+  @override
   Future<LiveState> liveState(String matchId) async {
     final rows = await _db.rpc<List<dynamic>>(
       'live_match_state',
