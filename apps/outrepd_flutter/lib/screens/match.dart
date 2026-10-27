@@ -27,6 +27,7 @@ import '../season.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
 import '../widgets.dart';
+import 'adventure_map.dart';
 import 'daily_goal.dart';
 import 'match_entry.dart';
 import 'match_flow.dart';
@@ -184,21 +185,9 @@ class _PlacementActions extends StatelessWidget {
           style: TextStyle(color: context.colors.muted, fontSize: 13),
         ),
         const SizedBox(height: 18),
-        // Before the first duel the useful second option is a dry run, not
-        // another ranked game.
-        Center(
-          child: InkWell(
-            onTap: () => startMatch(context, mode: MatchMode.practice),
-            borderRadius: BorderRadius.circular(8),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              child: Text(
-                l.practiceFirst,
-                style: TextStyle(color: context.colors.muted, fontSize: 14),
-              ),
-            ),
-          ),
-        ),
+        // Before the first duel the useful second option is a fight with
+        // nothing at stake, not another ranked game.
+        const AdventureCard(),
       ],
     );
   }
@@ -262,10 +251,8 @@ class _OfflineActions extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 11),
-        _FilledAction(
-          label: l.practiceOffline,
-          onTap: () => startMatch(context, mode: MatchMode.practice),
-        ),
+        // The camera needs no server, and neither does the adventure.
+        const AdventureCard(),
         const SizedBox(height: 14),
         Center(
           child: InkWell(
@@ -484,9 +471,10 @@ class _Rank extends StatelessWidget {
 
 // ──────────────────────────────── actions ────────────────────────────────────
 
-/// Three ways in, weighted. One filled button for the thing most people came
-/// to do, one outlined for the social route, and practice as plain text —
-/// available to anyone looking for it, and not competing with the match.
+/// Two ways in, weighted. One filled button for the thing most people came to
+/// do, and the adventure under it as a card — the monster says what it is
+/// without competing with the match. Friends are challenged from their own
+/// tab, where they are listed.
 class _Actions extends StatelessWidget {
   const _Actions();
 
@@ -510,26 +498,8 @@ class _Actions extends StatelessWidget {
           style: TextStyle(color: context.colors.muted, fontSize: 14),
         ),
 
-        const SizedBox(height: 20),
-        _OutlinedAction(
-          label: l.challengeFriend,
-          onTap: () => showFriendRoomSheet(context),
-        ),
-
         const SizedBox(height: 18),
-        Center(
-          child: InkWell(
-            onTap: () => startMatch(context, mode: MatchMode.practice),
-            borderRadius: BorderRadius.circular(8),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              child: Text(
-                l.practiceTerms,
-                style: TextStyle(color: context.colors.faint, fontSize: 15),
-              ),
-            ),
-          ),
-        ),
+        const AdventureCard(),
       ],
     );
   }
@@ -566,38 +536,6 @@ class _FilledAction extends StatelessWidget {
           ),
         ),
       ),
-      ),
-    );
-  }
-}
-
-class _OutlinedAction extends StatelessWidget {
-  const _OutlinedAction({required this.label, required this.onTap});
-
-  final String label;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(14),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 17),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: context.colors.border),
-        ),
-        child: Center(
-          child: Text(
-            label,
-            style: TextStyle(
-              color: context.colors.text,
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
       ),
     );
   }

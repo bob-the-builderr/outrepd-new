@@ -177,7 +177,11 @@ void main() {
     // the home screen exists to offer.
     expect(tester.getBottomLeft(button).dy, lessThan(640));
 
-    expect(find.text('Practice — no rank, no opponent'), findsOneWidget);
+    // The adventure took the practice link's place; friends are challenged
+    // from their own tab.
+    expect(find.byKey(const Key('adventureCard')), findsOneWidget);
+    expect(find.text('Practice — no rank, no opponent'), findsNothing);
+    expect(find.text('Challenge a friend'), findsNothing);
     expect(find.text('60 seconds · ranked'), findsOneWidget);
   });
 }

@@ -2543,4 +2543,195 @@ class LEn extends L {
 
   @override
   String get countryNotSaved => 'Couldn\'t save your country. Try again.';
+
+  @override
+  String get adventure => 'Adventure';
+
+  @override
+  String stageNumber(String n) {
+    return 'Level ${n}';
+  }
+
+  @override
+  String adventureLevelIn(String level, String world) {
+    return 'Level ${level} · ${world}';
+  }
+
+  @override
+  String adventureClearedOf(String cleared, String total) {
+    return '${cleared} of ${total} cleared · no rank';
+  }
+
+  @override
+  String get worldIron => 'Iron Mines';
+
+  @override
+  String get worldBronze => 'Bronze Dunes';
+
+  @override
+  String get worldSilver => 'Silver Peaks';
+
+  @override
+  String get worldGold => 'Gold Citadel';
+
+  @override
+  String get worldPlatinum => 'Platinum Glacier';
+
+  @override
+  String get worldDiamond => 'Diamond Caverns';
+
+  @override
+  String get worldMaster => 'Master’s Throne';
+
+  @override
+  String worldNumber(String n) {
+    return 'World ${n}';
+  }
+
+  @override
+  String monsterGolem(String tier) {
+    return '${tier} Golem';
+  }
+
+  @override
+  String monsterWarden(String tier) {
+    return '${tier} Warden';
+  }
+
+  @override
+  String monsterKing(String tier) {
+    return '${tier} King';
+  }
+
+  @override
+  String fightLevel(String level) {
+    return 'Fight level ${level}';
+  }
+
+  @override
+  String levelHpLine(String hp, String reps) {
+    return 'HP ${hp} · about ${reps} push-ups';
+  }
+
+  @override
+  String get hpShort => 'HP';
+
+  @override
+  String comboTag(String n) {
+    return 'COMBO ×${n}';
+  }
+
+  @override
+  String get levelCleared => 'CLEARED';
+
+  @override
+  String get outOfTime => 'OUT OF TIME';
+
+  @override
+  String get statPushUps => 'push-ups';
+
+  @override
+  String get statTimeLeft => 'left';
+
+  @override
+  String get statHpLeft => 'HP left';
+
+  @override
+  String get statXp => 'XP';
+
+  @override
+  String secondStarHint(String seconds) {
+    return 'Finish with ${seconds} seconds left for the second star';
+  }
+
+  @override
+  String thirdStarHint(String seconds) {
+    return 'Finish with ${seconds} seconds left for the third star';
+  }
+
+  @override
+  String get fightLostHint => 'Win earlier levels again for more stars: they unlock stronger weapons.';
+
+  @override
+  String get nextLevel => 'Next level';
+
+  @override
+  String get tryAgain => 'Try again';
+
+  @override
+  String get adventureMap => 'Map';
+
+  @override
+  String get nextKicker => 'NEXT';
+
+  @override
+  String nextLevelLine(String level, String hp) {
+    return 'Level ${level} · HP ${hp}';
+  }
+
+  @override
+  String get armory => 'Armory';
+
+  @override
+  String get armoryBody => 'Stars unlock weapons. Every push-up hits with the best one you have.';
+
+  @override
+  String get equipped => 'EQUIPPED';
+
+  @override
+  String perPushUp(String damage) {
+    return '${damage} per push-up';
+  }
+
+  @override
+  String damagePerPushUp(String damage) {
+    return '${damage} damage per push-up';
+  }
+
+  @override
+  String wasWith(String damage, String weapon) {
+    return 'was ${damage} with ${weapon}';
+  }
+
+  @override
+  String moreStars(String count) {
+    return '${count} more stars';
+  }
+
+  @override
+  String get newWeapon => 'New weapon';
+
+  @override
+  String starsKicker(String count) {
+    return '${count} STARS';
+  }
+
+  @override
+  String get weaponGauntlets => 'Iron Gauntlets';
+
+  @override
+  String get weaponKnuckles => 'Bronze Knuckles';
+
+  @override
+  String get weaponFang => 'Silver Fang';
+
+  @override
+  String get weaponHammer => 'Gold Hammer';
+
+  @override
+  String get weaponAxe => 'Platinum Axe';
+
+  @override
+  String get weaponSpear => 'Diamond Spear';
+
+  @override
+  String get weaponSword => 'Master Sword';
+
+  @override
+  String get weaponCrownbreaker => 'Crownbreaker';
+
+  @override
+  String clearFirst(String level) {
+    return 'Win level ${level} first';
+  }
 }

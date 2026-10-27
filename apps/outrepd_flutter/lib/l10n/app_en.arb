@@ -1645,5 +1645,204 @@
   "countryLabel": "Country",
   "countryChanged": "Country changed",
   "countryEvery14": "Once every 14 days, like your name",
-  "countryNotSaved": "Couldn't save your country. Try again."
+  "countryNotSaved": "Couldn't save your country. Try again.",
+  "adventure": "Adventure",
+  "stageNumber": "Level {n}",
+  "@stageNumber": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "adventureLevelIn": "Level {level} · {world}",
+  "@adventureLevelIn": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      },
+      "world": {
+        "type": "String"
+      }
+    }
+  },
+  "adventureClearedOf": "{cleared} of {total} cleared · no rank",
+  "@adventureClearedOf": {
+    "placeholders": {
+      "cleared": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "worldIron": "Iron Mines",
+  "worldBronze": "Bronze Dunes",
+  "worldSilver": "Silver Peaks",
+  "worldGold": "Gold Citadel",
+  "worldPlatinum": "Platinum Glacier",
+  "worldDiamond": "Diamond Caverns",
+  "worldMaster": "Master’s Throne",
+  "worldNumber": "World {n}",
+  "@worldNumber": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "monsterGolem": "{tier} Golem",
+  "@monsterGolem": {
+    "placeholders": {
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
+  "monsterWarden": "{tier} Warden",
+  "@monsterWarden": {
+    "placeholders": {
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
+  "monsterKing": "{tier} King",
+  "@monsterKing": {
+    "placeholders": {
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
+  "fightLevel": "Fight level {level}",
+  "@fightLevel": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "levelHpLine": "HP {hp} · about {reps} push-ups",
+  "@levelHpLine": {
+    "placeholders": {
+      "hp": {
+        "type": "String"
+      },
+      "reps": {
+        "type": "String"
+      }
+    }
+  },
+  "hpShort": "HP",
+  "comboTag": "COMBO ×{n}",
+  "@comboTag": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "levelCleared": "CLEARED",
+  "outOfTime": "OUT OF TIME",
+  "statPushUps": "push-ups",
+  "statTimeLeft": "left",
+  "statHpLeft": "HP left",
+  "statXp": "XP",
+  "secondStarHint": "Finish with {seconds} seconds left for the second star",
+  "@secondStarHint": {
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "thirdStarHint": "Finish with {seconds} seconds left for the third star",
+  "@thirdStarHint": {
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "fightLostHint": "Win earlier levels again for more stars: they unlock stronger weapons.",
+  "nextLevel": "Next level",
+  "tryAgain": "Try again",
+  "adventureMap": "Map",
+  "nextKicker": "NEXT",
+  "nextLevelLine": "Level {level} · HP {hp}",
+  "@nextLevelLine": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      },
+      "hp": {
+        "type": "String"
+      }
+    }
+  },
+  "armory": "Armory",
+  "armoryBody": "Stars unlock weapons. Every push-up hits with the best one you have.",
+  "equipped": "EQUIPPED",
+  "perPushUp": "{damage} per push-up",
+  "@perPushUp": {
+    "placeholders": {
+      "damage": {
+        "type": "String"
+      }
+    }
+  },
+  "damagePerPushUp": "{damage} damage per push-up",
+  "@damagePerPushUp": {
+    "placeholders": {
+      "damage": {
+        "type": "String"
+      }
+    }
+  },
+  "wasWith": "was {damage} with {weapon}",
+  "@wasWith": {
+    "placeholders": {
+      "damage": {
+        "type": "String"
+      },
+      "weapon": {
+        "type": "String"
+      }
+    }
+  },
+  "moreStars": "{count} more stars",
+  "@moreStars": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "newWeapon": "New weapon",
+  "starsKicker": "{count} STARS",
+  "@starsKicker": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "weaponGauntlets": "Iron Gauntlets",
+  "weaponKnuckles": "Bronze Knuckles",
+  "weaponFang": "Silver Fang",
+  "weaponHammer": "Gold Hammer",
+  "weaponAxe": "Platinum Axe",
+  "weaponSpear": "Diamond Spear",
+  "weaponSword": "Master Sword",
+  "weaponCrownbreaker": "Crownbreaker",
+  "clearFirst": "Win level {level} first",
+  "@clearFirst": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  }
 }

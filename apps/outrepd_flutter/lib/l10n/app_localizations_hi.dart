@@ -2545,4 +2545,195 @@ class LHi extends L {
 
   @override
   String get countryNotSaved => 'आपका देश सेव नहीं हो सका। फिर से कोशिश करें।';
+
+  @override
+  String get adventure => 'एडवेंचर';
+
+  @override
+  String stageNumber(String n) {
+    return 'लेवल ${n}';
+  }
+
+  @override
+  String adventureLevelIn(String level, String world) {
+    return 'लेवल ${level} · ${world}';
+  }
+
+  @override
+  String adventureClearedOf(String cleared, String total) {
+    return '${total} में से ${cleared} पार · कोई रैंक नहीं';
+  }
+
+  @override
+  String get worldIron => 'लोहे की खदानें';
+
+  @override
+  String get worldBronze => 'कांस्य के टीले';
+
+  @override
+  String get worldSilver => 'चाँदी की चोटियाँ';
+
+  @override
+  String get worldGold => 'स्वर्ण दुर्ग';
+
+  @override
+  String get worldPlatinum => 'प्लैटिनम हिमनद';
+
+  @override
+  String get worldDiamond => 'हीरे की गुफाएँ';
+
+  @override
+  String get worldMaster => 'मास्टर का सिंहासन';
+
+  @override
+  String worldNumber(String n) {
+    return 'दुनिया ${n}';
+  }
+
+  @override
+  String monsterGolem(String tier) {
+    return '${tier} गोलेम';
+  }
+
+  @override
+  String monsterWarden(String tier) {
+    return '${tier} रक्षक';
+  }
+
+  @override
+  String monsterKing(String tier) {
+    return '${tier} राजा';
+  }
+
+  @override
+  String fightLevel(String level) {
+    return 'लेवल ${level} लड़ें';
+  }
+
+  @override
+  String levelHpLine(String hp, String reps) {
+    return 'HP ${hp} · लगभग ${reps} पुश-अप';
+  }
+
+  @override
+  String get hpShort => 'HP';
+
+  @override
+  String comboTag(String n) {
+    return 'कॉम्बो ×${n}';
+  }
+
+  @override
+  String get levelCleared => 'पार किया';
+
+  @override
+  String get outOfTime => 'समय खत्म';
+
+  @override
+  String get statPushUps => 'पुश-अप';
+
+  @override
+  String get statTimeLeft => 'बाकी';
+
+  @override
+  String get statHpLeft => 'HP बाकी';
+
+  @override
+  String get statXp => 'XP';
+
+  @override
+  String secondStarHint(String seconds) {
+    return 'दूसरे सितारे के लिए ${seconds} सेकंड बचाकर खत्म करें';
+  }
+
+  @override
+  String thirdStarHint(String seconds) {
+    return 'तीसरे सितारे के लिए ${seconds} सेकंड बचाकर खत्म करें';
+  }
+
+  @override
+  String get fightLostHint => 'ज़्यादा सितारों के लिए पिछले लेवल फिर से जीतें: इनसे ताकतवर हथियार खुलते हैं।';
+
+  @override
+  String get nextLevel => 'अगला लेवल';
+
+  @override
+  String get tryAgain => 'फिर कोशिश करें';
+
+  @override
+  String get adventureMap => 'मैप';
+
+  @override
+  String get nextKicker => 'अगला';
+
+  @override
+  String nextLevelLine(String level, String hp) {
+    return 'लेवल ${level} · HP ${hp}';
+  }
+
+  @override
+  String get armory => 'शस्त्रागार';
+
+  @override
+  String get armoryBody => 'सितारों से हथियार खुलते हैं। हर पुश-अप आपके सबसे अच्छे हथियार से वार करता है।';
+
+  @override
+  String get equipped => 'चालू';
+
+  @override
+  String perPushUp(String damage) {
+    return 'हर पुश-अप पर ${damage}';
+  }
+
+  @override
+  String damagePerPushUp(String damage) {
+    return 'हर पुश-अप पर ${damage} नुकसान';
+  }
+
+  @override
+  String wasWith(String damage, String weapon) {
+    return 'पहले ${weapon} से ${damage}';
+  }
+
+  @override
+  String moreStars(String count) {
+    return '${count} और सितारे';
+  }
+
+  @override
+  String get newWeapon => 'नया हथियार';
+
+  @override
+  String starsKicker(String count) {
+    return '${count} सितारे';
+  }
+
+  @override
+  String get weaponGauntlets => 'लोहे के दस्ताने';
+
+  @override
+  String get weaponKnuckles => 'कांस्य मुक्के';
+
+  @override
+  String get weaponFang => 'चाँदी का दाँत';
+
+  @override
+  String get weaponHammer => 'स्वर्ण हथौड़ा';
+
+  @override
+  String get weaponAxe => 'प्लैटिनम कुल्हाड़ी';
+
+  @override
+  String get weaponSpear => 'हीरे का भाला';
+
+  @override
+  String get weaponSword => 'मास्टर तलवार';
+
+  @override
+  String get weaponCrownbreaker => 'ताजभंजक';
+
+  @override
+  String clearFirst(String level) {
+    return 'पहले लेवल ${level} जीतें';
+  }
 }

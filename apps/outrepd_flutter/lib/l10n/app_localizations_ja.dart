@@ -2507,4 +2507,195 @@ class LJa extends L {
 
   @override
   String get countryNotSaved => '国を保存できませんでした。もう一度お試しください。';
+
+  @override
+  String get adventure => 'アドベンチャー';
+
+  @override
+  String stageNumber(String n) {
+    return 'ステージ${n}';
+  }
+
+  @override
+  String adventureLevelIn(String level, String world) {
+    return 'ステージ${level} · ${world}';
+  }
+
+  @override
+  String adventureClearedOf(String cleared, String total) {
+    return '${total}中${cleared}クリア · ランクなし';
+  }
+
+  @override
+  String get worldIron => 'アイアン鉱山';
+
+  @override
+  String get worldBronze => 'ブロンズ砂丘';
+
+  @override
+  String get worldSilver => 'シルバー山脈';
+
+  @override
+  String get worldGold => 'ゴールド城塞';
+
+  @override
+  String get worldPlatinum => 'プラチナ氷河';
+
+  @override
+  String get worldDiamond => 'ダイヤモンド洞窟';
+
+  @override
+  String get worldMaster => 'マスターの玉座';
+
+  @override
+  String worldNumber(String n) {
+    return 'ワールド${n}';
+  }
+
+  @override
+  String monsterGolem(String tier) {
+    return '${tier}ゴーレム';
+  }
+
+  @override
+  String monsterWarden(String tier) {
+    return '${tier}ガーディアン';
+  }
+
+  @override
+  String monsterKing(String tier) {
+    return '${tier}キング';
+  }
+
+  @override
+  String fightLevel(String level) {
+    return 'ステージ${level}に挑む';
+  }
+
+  @override
+  String levelHpLine(String hp, String reps) {
+    return 'HP ${hp} · 腕立て約${reps}回';
+  }
+
+  @override
+  String get hpShort => 'HP';
+
+  @override
+  String comboTag(String n) {
+    return 'コンボ ×${n}';
+  }
+
+  @override
+  String get levelCleared => 'クリア';
+
+  @override
+  String get outOfTime => 'タイムアップ';
+
+  @override
+  String get statPushUps => '腕立て';
+
+  @override
+  String get statTimeLeft => '残り';
+
+  @override
+  String get statHpLeft => '残りHP';
+
+  @override
+  String get statXp => 'XP';
+
+  @override
+  String secondStarHint(String seconds) {
+    return '残り${seconds}秒以上でクリアすると星2つ';
+  }
+
+  @override
+  String thirdStarHint(String seconds) {
+    return '残り${seconds}秒以上でクリアすると星3つ';
+  }
+
+  @override
+  String get fightLostHint => '前のステージで星を集めよう。星でもっと強い武器が手に入る。';
+
+  @override
+  String get nextLevel => '次のステージ';
+
+  @override
+  String get tryAgain => 'もう一度';
+
+  @override
+  String get adventureMap => 'マップ';
+
+  @override
+  String get nextKicker => '次';
+
+  @override
+  String nextLevelLine(String level, String hp) {
+    return 'ステージ${level} · HP ${hp}';
+  }
+
+  @override
+  String get armory => '武器庫';
+
+  @override
+  String get armoryBody => '星で武器が解放される。腕立て1回ごとに、持っている最強の武器で攻撃。';
+
+  @override
+  String get equipped => '装備中';
+
+  @override
+  String perPushUp(String damage) {
+    return '1回${damage}';
+  }
+
+  @override
+  String damagePerPushUp(String damage) {
+    return '腕立て1回で${damage}ダメージ';
+  }
+
+  @override
+  String wasWith(String damage, String weapon) {
+    return 'これまで：${weapon}で${damage}';
+  }
+
+  @override
+  String moreStars(String count) {
+    return 'あと星${count}個';
+  }
+
+  @override
+  String get newWeapon => '新しい武器';
+
+  @override
+  String starsKicker(String count) {
+    return '星${count}個';
+  }
+
+  @override
+  String get weaponGauntlets => 'アイアンガントレット';
+
+  @override
+  String get weaponKnuckles => 'ブロンズナックル';
+
+  @override
+  String get weaponFang => 'シルバーファング';
+
+  @override
+  String get weaponHammer => 'ゴールドハンマー';
+
+  @override
+  String get weaponAxe => 'プラチナアックス';
+
+  @override
+  String get weaponSpear => 'ダイヤモンドスピア';
+
+  @override
+  String get weaponSword => 'マスターソード';
+
+  @override
+  String get weaponCrownbreaker => 'クラウンブレイカー';
+
+  @override
+  String clearFirst(String level) {
+    return 'まずステージ${level}をクリアしよう';
+  }
 }

@@ -2552,4 +2552,195 @@ class LDe extends L {
 
   @override
   String get countryNotSaved => 'Dein Land konnte nicht gespeichert werden. Versuch es noch mal.';
+
+  @override
+  String get adventure => 'Abenteuer';
+
+  @override
+  String stageNumber(String n) {
+    return 'Level ${n}';
+  }
+
+  @override
+  String adventureLevelIn(String level, String world) {
+    return 'Level ${level} · ${world}';
+  }
+
+  @override
+  String adventureClearedOf(String cleared, String total) {
+    return '${cleared} von ${total} geschafft · ohne Wertung';
+  }
+
+  @override
+  String get worldIron => 'Eisenminen';
+
+  @override
+  String get worldBronze => 'Bronzedünen';
+
+  @override
+  String get worldSilver => 'Silbergipfel';
+
+  @override
+  String get worldGold => 'Goldzitadelle';
+
+  @override
+  String get worldPlatinum => 'Platingletscher';
+
+  @override
+  String get worldDiamond => 'Diamanthöhlen';
+
+  @override
+  String get worldMaster => 'Thron des Meisters';
+
+  @override
+  String worldNumber(String n) {
+    return 'Welt ${n}';
+  }
+
+  @override
+  String monsterGolem(String tier) {
+    return '${tier}-Golem';
+  }
+
+  @override
+  String monsterWarden(String tier) {
+    return '${tier}-Wächter';
+  }
+
+  @override
+  String monsterKing(String tier) {
+    return '${tier}-König';
+  }
+
+  @override
+  String fightLevel(String level) {
+    return 'Kampf: Level ${level}';
+  }
+
+  @override
+  String levelHpLine(String hp, String reps) {
+    return 'HP ${hp} · etwa ${reps} Liegestütze';
+  }
+
+  @override
+  String get hpShort => 'HP';
+
+  @override
+  String comboTag(String n) {
+    return 'KOMBO ×${n}';
+  }
+
+  @override
+  String get levelCleared => 'GESCHAFFT';
+
+  @override
+  String get outOfTime => 'ZEIT UM';
+
+  @override
+  String get statPushUps => 'Liegestütze';
+
+  @override
+  String get statTimeLeft => 'übrig';
+
+  @override
+  String get statHpLeft => 'HP übrig';
+
+  @override
+  String get statXp => 'XP';
+
+  @override
+  String secondStarHint(String seconds) {
+    return 'Mit ${seconds} Sekunden Rest gibt es den zweiten Stern';
+  }
+
+  @override
+  String thirdStarHint(String seconds) {
+    return 'Mit ${seconds} Sekunden Rest gibt es den dritten Stern';
+  }
+
+  @override
+  String get fightLostHint => 'Hol dir in früheren Levels mehr Sterne: Sie schalten stärkere Waffen frei.';
+
+  @override
+  String get nextLevel => 'Nächstes Level';
+
+  @override
+  String get tryAgain => 'Nochmal';
+
+  @override
+  String get adventureMap => 'Karte';
+
+  @override
+  String get nextKicker => 'ALS NÄCHSTES';
+
+  @override
+  String nextLevelLine(String level, String hp) {
+    return 'Level ${level} · HP ${hp}';
+  }
+
+  @override
+  String get armory => 'Waffenkammer';
+
+  @override
+  String get armoryBody => 'Sterne schalten Waffen frei. Jeder Liegestütz trifft mit der besten, die du hast.';
+
+  @override
+  String get equipped => 'AUSGERÜSTET';
+
+  @override
+  String perPushUp(String damage) {
+    return '${damage} pro Liegestütz';
+  }
+
+  @override
+  String damagePerPushUp(String damage) {
+    return '${damage} Schaden pro Liegestütz';
+  }
+
+  @override
+  String wasWith(String damage, String weapon) {
+    return 'vorher ${damage} mit ${weapon}';
+  }
+
+  @override
+  String moreStars(String count) {
+    return 'noch ${count} Sterne';
+  }
+
+  @override
+  String get newWeapon => 'Neue Waffe';
+
+  @override
+  String starsKicker(String count) {
+    return '${count} STERNE';
+  }
+
+  @override
+  String get weaponGauntlets => 'Eisenhandschuhe';
+
+  @override
+  String get weaponKnuckles => 'Bronze-Schlagring';
+
+  @override
+  String get weaponFang => 'Silberfang';
+
+  @override
+  String get weaponHammer => 'Goldhammer';
+
+  @override
+  String get weaponAxe => 'Platinaxt';
+
+  @override
+  String get weaponSpear => 'Diamantspeer';
+
+  @override
+  String get weaponSword => 'Meisterschwert';
+
+  @override
+  String get weaponCrownbreaker => 'Kronenbrecher';
+
+  @override
+  String clearFirst(String level) {
+    return 'Gewinne zuerst Level ${level}';
+  }
 }

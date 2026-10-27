@@ -2540,4 +2540,195 @@ class LTr extends L {
 
   @override
   String get countryNotSaved => 'Ülken kaydedilemedi. Tekrar dene.';
+
+  @override
+  String get adventure => 'Macera';
+
+  @override
+  String stageNumber(String n) {
+    return 'Seviye ${n}';
+  }
+
+  @override
+  String adventureLevelIn(String level, String world) {
+    return 'Seviye ${level} · ${world}';
+  }
+
+  @override
+  String adventureClearedOf(String cleared, String total) {
+    return '${total} seviyeden ${cleared} tanesi geçildi · derece yok';
+  }
+
+  @override
+  String get worldIron => 'Demir Madenleri';
+
+  @override
+  String get worldBronze => 'Bronz Kumulları';
+
+  @override
+  String get worldSilver => 'Gümüş Zirveler';
+
+  @override
+  String get worldGold => 'Altın Kale';
+
+  @override
+  String get worldPlatinum => 'Platin Buzul';
+
+  @override
+  String get worldDiamond => 'Elmas Mağaralar';
+
+  @override
+  String get worldMaster => 'Usta’nın Tahtı';
+
+  @override
+  String worldNumber(String n) {
+    return 'Dünya ${n}';
+  }
+
+  @override
+  String monsterGolem(String tier) {
+    return '${tier} Golem';
+  }
+
+  @override
+  String monsterWarden(String tier) {
+    return '${tier} Muhafız';
+  }
+
+  @override
+  String monsterKing(String tier) {
+    return '${tier} Kral';
+  }
+
+  @override
+  String fightLevel(String level) {
+    return 'Savaş: Seviye ${level}';
+  }
+
+  @override
+  String levelHpLine(String hp, String reps) {
+    return 'HP ${hp} · yaklaşık ${reps} şınav';
+  }
+
+  @override
+  String get hpShort => 'HP';
+
+  @override
+  String comboTag(String n) {
+    return 'KOMBO ×${n}';
+  }
+
+  @override
+  String get levelCleared => 'GEÇİLDİ';
+
+  @override
+  String get outOfTime => 'SÜRE BİTTİ';
+
+  @override
+  String get statPushUps => 'şınav';
+
+  @override
+  String get statTimeLeft => 'kalan';
+
+  @override
+  String get statHpLeft => 'kalan HP';
+
+  @override
+  String get statXp => 'XP';
+
+  @override
+  String secondStarHint(String seconds) {
+    return 'İkinci yıldız için ${seconds} saniye kala bitir';
+  }
+
+  @override
+  String thirdStarHint(String seconds) {
+    return 'Üçüncü yıldız için ${seconds} saniye kala bitir';
+  }
+
+  @override
+  String get fightLostHint => 'Daha fazla yıldız için önceki seviyeleri yeniden kazan: yıldızlar daha güçlü silahlar açar.';
+
+  @override
+  String get nextLevel => 'Sonraki seviye';
+
+  @override
+  String get tryAgain => 'Tekrar dene';
+
+  @override
+  String get adventureMap => 'Harita';
+
+  @override
+  String get nextKicker => 'SIRADAKİ';
+
+  @override
+  String nextLevelLine(String level, String hp) {
+    return 'Seviye ${level} · HP ${hp}';
+  }
+
+  @override
+  String get armory => 'Cephanelik';
+
+  @override
+  String get armoryBody => 'Yıldızlar silah açar. Her şınav, sahip olduğun en iyi silahla vurur.';
+
+  @override
+  String get equipped => 'KUŞANILDI';
+
+  @override
+  String perPushUp(String damage) {
+    return 'Şınav başına ${damage}';
+  }
+
+  @override
+  String damagePerPushUp(String damage) {
+    return 'Şınav başına ${damage} hasar';
+  }
+
+  @override
+  String wasWith(String damage, String weapon) {
+    return 'önceden ${weapon} ile ${damage}';
+  }
+
+  @override
+  String moreStars(String count) {
+    return '${count} yıldız daha';
+  }
+
+  @override
+  String get newWeapon => 'Yeni silah';
+
+  @override
+  String starsKicker(String count) {
+    return '${count} YILDIZ';
+  }
+
+  @override
+  String get weaponGauntlets => 'Demir Eldivenler';
+
+  @override
+  String get weaponKnuckles => 'Bronz Muşta';
+
+  @override
+  String get weaponFang => 'Gümüş Diş';
+
+  @override
+  String get weaponHammer => 'Altın Çekiç';
+
+  @override
+  String get weaponAxe => 'Platin Balta';
+
+  @override
+  String get weaponSpear => 'Elmas Mızrak';
+
+  @override
+  String get weaponSword => 'Usta Kılıcı';
+
+  @override
+  String get weaponCrownbreaker => 'Taç Kıran';
+
+  @override
+  String clearFirst(String level) {
+    return 'Önce şu seviyeyi kazan: ${level}';
+  }
 }

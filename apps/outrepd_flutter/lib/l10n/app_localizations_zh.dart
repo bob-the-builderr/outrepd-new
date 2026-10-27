@@ -2497,4 +2497,195 @@ class LZh extends L {
 
   @override
   String get countryNotSaved => '无法保存国家/地区，请重试。';
+
+  @override
+  String get adventure => '冒险';
+
+  @override
+  String stageNumber(String n) {
+    return '第 ${n} 关';
+  }
+
+  @override
+  String adventureLevelIn(String level, String world) {
+    return '第 ${level} 关 · ${world}';
+  }
+
+  @override
+  String adventureClearedOf(String cleared, String total) {
+    return '已通过 ${cleared}/${total} · 不计排位';
+  }
+
+  @override
+  String get worldIron => '黑铁矿坑';
+
+  @override
+  String get worldBronze => '青铜沙丘';
+
+  @override
+  String get worldSilver => '白银峰';
+
+  @override
+  String get worldGold => '黄金城堡';
+
+  @override
+  String get worldPlatinum => '铂金冰川';
+
+  @override
+  String get worldDiamond => '钻石洞窟';
+
+  @override
+  String get worldMaster => '大师王座';
+
+  @override
+  String worldNumber(String n) {
+    return '世界 ${n}';
+  }
+
+  @override
+  String monsterGolem(String tier) {
+    return '${tier}魔像';
+  }
+
+  @override
+  String monsterWarden(String tier) {
+    return '${tier}守卫';
+  }
+
+  @override
+  String monsterKing(String tier) {
+    return '${tier}之王';
+  }
+
+  @override
+  String fightLevel(String level) {
+    return '挑战第 ${level} 关';
+  }
+
+  @override
+  String levelHpLine(String hp, String reps) {
+    return 'HP ${hp} · 约 ${reps} 个俯卧撑';
+  }
+
+  @override
+  String get hpShort => 'HP';
+
+  @override
+  String comboTag(String n) {
+    return '连击 ×${n}';
+  }
+
+  @override
+  String get levelCleared => '通关';
+
+  @override
+  String get outOfTime => '时间到';
+
+  @override
+  String get statPushUps => '俯卧撑';
+
+  @override
+  String get statTimeLeft => '剩余';
+
+  @override
+  String get statHpLeft => '剩余 HP';
+
+  @override
+  String get statXp => 'XP';
+
+  @override
+  String secondStarHint(String seconds) {
+    return '完成时剩余 ${seconds} 秒可得第二颗星';
+  }
+
+  @override
+  String thirdStarHint(String seconds) {
+    return '完成时剩余 ${seconds} 秒可得第三颗星';
+  }
+
+  @override
+  String get fightLostHint => '重玩之前的关卡多拿星星：星星能解锁更强的武器。';
+
+  @override
+  String get nextLevel => '下一关';
+
+  @override
+  String get tryAgain => '再试一次';
+
+  @override
+  String get adventureMap => '地图';
+
+  @override
+  String get nextKicker => '下一关';
+
+  @override
+  String nextLevelLine(String level, String hp) {
+    return '第 ${level} 关 · HP ${hp}';
+  }
+
+  @override
+  String get armory => '武器库';
+
+  @override
+  String get armoryBody => '星星可解锁武器。每个俯卧撑都用你最好的武器攻击。';
+
+  @override
+  String get equipped => '已装备';
+
+  @override
+  String perPushUp(String damage) {
+    return '每个俯卧撑 ${damage}';
+  }
+
+  @override
+  String damagePerPushUp(String damage) {
+    return '每个俯卧撑造成 ${damage} 伤害';
+  }
+
+  @override
+  String wasWith(String damage, String weapon) {
+    return '之前：${weapon} ${damage}';
+  }
+
+  @override
+  String moreStars(String count) {
+    return '还差 ${count} 颗星';
+  }
+
+  @override
+  String get newWeapon => '新武器';
+
+  @override
+  String starsKicker(String count) {
+    return '${count} 颗星';
+  }
+
+  @override
+  String get weaponGauntlets => '黑铁护手';
+
+  @override
+  String get weaponKnuckles => '青铜指虎';
+
+  @override
+  String get weaponFang => '白银之牙';
+
+  @override
+  String get weaponHammer => '黄金战锤';
+
+  @override
+  String get weaponAxe => '铂金战斧';
+
+  @override
+  String get weaponSpear => '钻石长矛';
+
+  @override
+  String get weaponSword => '大师之剑';
+
+  @override
+  String get weaponCrownbreaker => '碎冠者';
+
+  @override
+  String clearFirst(String level) {
+    return '先通过第 ${level} 关';
+  }
 }

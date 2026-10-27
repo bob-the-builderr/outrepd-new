@@ -4624,6 +4624,312 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Couldn't save your country. Try again.'**
   String get countryNotSaved;
+
+  /// No description provided for @adventure.
+  ///
+  /// In en, this message translates to:
+  /// **'Adventure'**
+  String get adventure;
+
+  /// No description provided for @stageNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Level {n}'**
+  String stageNumber(String n);
+
+  /// No description provided for @adventureLevelIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Level {level} · {world}'**
+  String adventureLevelIn(String level, String world);
+
+  /// No description provided for @adventureClearedOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{cleared} of {total} cleared · no rank'**
+  String adventureClearedOf(String cleared, String total);
+
+  /// No description provided for @worldIron.
+  ///
+  /// In en, this message translates to:
+  /// **'Iron Mines'**
+  String get worldIron;
+
+  /// No description provided for @worldBronze.
+  ///
+  /// In en, this message translates to:
+  /// **'Bronze Dunes'**
+  String get worldBronze;
+
+  /// No description provided for @worldSilver.
+  ///
+  /// In en, this message translates to:
+  /// **'Silver Peaks'**
+  String get worldSilver;
+
+  /// No description provided for @worldGold.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold Citadel'**
+  String get worldGold;
+
+  /// No description provided for @worldPlatinum.
+  ///
+  /// In en, this message translates to:
+  /// **'Platinum Glacier'**
+  String get worldPlatinum;
+
+  /// No description provided for @worldDiamond.
+  ///
+  /// In en, this message translates to:
+  /// **'Diamond Caverns'**
+  String get worldDiamond;
+
+  /// No description provided for @worldMaster.
+  ///
+  /// In en, this message translates to:
+  /// **'Master’s Throne'**
+  String get worldMaster;
+
+  /// No description provided for @worldNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'World {n}'**
+  String worldNumber(String n);
+
+  /// No description provided for @monsterGolem.
+  ///
+  /// In en, this message translates to:
+  /// **'{tier} Golem'**
+  String monsterGolem(String tier);
+
+  /// No description provided for @monsterWarden.
+  ///
+  /// In en, this message translates to:
+  /// **'{tier} Warden'**
+  String monsterWarden(String tier);
+
+  /// No description provided for @monsterKing.
+  ///
+  /// In en, this message translates to:
+  /// **'{tier} King'**
+  String monsterKing(String tier);
+
+  /// No description provided for @fightLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Fight level {level}'**
+  String fightLevel(String level);
+
+  /// No description provided for @levelHpLine.
+  ///
+  /// In en, this message translates to:
+  /// **'HP {hp} · about {reps} push-ups'**
+  String levelHpLine(String hp, String reps);
+
+  /// No description provided for @hpShort.
+  ///
+  /// In en, this message translates to:
+  /// **'HP'**
+  String get hpShort;
+
+  /// No description provided for @comboTag.
+  ///
+  /// In en, this message translates to:
+  /// **'COMBO ×{n}'**
+  String comboTag(String n);
+
+  /// No description provided for @levelCleared.
+  ///
+  /// In en, this message translates to:
+  /// **'CLEARED'**
+  String get levelCleared;
+
+  /// No description provided for @outOfTime.
+  ///
+  /// In en, this message translates to:
+  /// **'OUT OF TIME'**
+  String get outOfTime;
+
+  /// No description provided for @statPushUps.
+  ///
+  /// In en, this message translates to:
+  /// **'push-ups'**
+  String get statPushUps;
+
+  /// No description provided for @statTimeLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'left'**
+  String get statTimeLeft;
+
+  /// No description provided for @statHpLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'HP left'**
+  String get statHpLeft;
+
+  /// No description provided for @statXp.
+  ///
+  /// In en, this message translates to:
+  /// **'XP'**
+  String get statXp;
+
+  /// No description provided for @secondStarHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish with {seconds} seconds left for the second star'**
+  String secondStarHint(String seconds);
+
+  /// No description provided for @thirdStarHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish with {seconds} seconds left for the third star'**
+  String thirdStarHint(String seconds);
+
+  /// No description provided for @fightLostHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Win earlier levels again for more stars: they unlock stronger weapons.'**
+  String get fightLostHint;
+
+  /// No description provided for @nextLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Next level'**
+  String get nextLevel;
+
+  /// No description provided for @tryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get tryAgain;
+
+  /// No description provided for @adventureMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get adventureMap;
+
+  /// No description provided for @nextKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'NEXT'**
+  String get nextKicker;
+
+  /// No description provided for @nextLevelLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Level {level} · HP {hp}'**
+  String nextLevelLine(String level, String hp);
+
+  /// No description provided for @armory.
+  ///
+  /// In en, this message translates to:
+  /// **'Armory'**
+  String get armory;
+
+  /// No description provided for @armoryBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Stars unlock weapons. Every push-up hits with the best one you have.'**
+  String get armoryBody;
+
+  /// No description provided for @equipped.
+  ///
+  /// In en, this message translates to:
+  /// **'EQUIPPED'**
+  String get equipped;
+
+  /// No description provided for @perPushUp.
+  ///
+  /// In en, this message translates to:
+  /// **'{damage} per push-up'**
+  String perPushUp(String damage);
+
+  /// No description provided for @damagePerPushUp.
+  ///
+  /// In en, this message translates to:
+  /// **'{damage} damage per push-up'**
+  String damagePerPushUp(String damage);
+
+  /// No description provided for @wasWith.
+  ///
+  /// In en, this message translates to:
+  /// **'was {damage} with {weapon}'**
+  String wasWith(String damage, String weapon);
+
+  /// No description provided for @moreStars.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} more stars'**
+  String moreStars(String count);
+
+  /// No description provided for @newWeapon.
+  ///
+  /// In en, this message translates to:
+  /// **'New weapon'**
+  String get newWeapon;
+
+  /// No description provided for @starsKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} STARS'**
+  String starsKicker(String count);
+
+  /// No description provided for @weaponGauntlets.
+  ///
+  /// In en, this message translates to:
+  /// **'Iron Gauntlets'**
+  String get weaponGauntlets;
+
+  /// No description provided for @weaponKnuckles.
+  ///
+  /// In en, this message translates to:
+  /// **'Bronze Knuckles'**
+  String get weaponKnuckles;
+
+  /// No description provided for @weaponFang.
+  ///
+  /// In en, this message translates to:
+  /// **'Silver Fang'**
+  String get weaponFang;
+
+  /// No description provided for @weaponHammer.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold Hammer'**
+  String get weaponHammer;
+
+  /// No description provided for @weaponAxe.
+  ///
+  /// In en, this message translates to:
+  /// **'Platinum Axe'**
+  String get weaponAxe;
+
+  /// No description provided for @weaponSpear.
+  ///
+  /// In en, this message translates to:
+  /// **'Diamond Spear'**
+  String get weaponSpear;
+
+  /// No description provided for @weaponSword.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Sword'**
+  String get weaponSword;
+
+  /// No description provided for @weaponCrownbreaker.
+  ///
+  /// In en, this message translates to:
+  /// **'Crownbreaker'**
+  String get weaponCrownbreaker;
+
+  /// No description provided for @clearFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Win level {level} first'**
+  String clearFirst(String level);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

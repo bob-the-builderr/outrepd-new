@@ -2547,4 +2547,195 @@ class LPt extends L {
 
   @override
   String get countryNotSaved => 'Não foi possível salvar seu país. Tente de novo.';
+
+  @override
+  String get adventure => 'Aventura';
+
+  @override
+  String stageNumber(String n) {
+    return 'Nível ${n}';
+  }
+
+  @override
+  String adventureLevelIn(String level, String world) {
+    return 'Nível ${level} · ${world}';
+  }
+
+  @override
+  String adventureClearedOf(String cleared, String total) {
+    return '${cleared} de ${total} vencidos · sem rank';
+  }
+
+  @override
+  String get worldIron => 'Minas de Ferro';
+
+  @override
+  String get worldBronze => 'Dunas de Bronze';
+
+  @override
+  String get worldSilver => 'Picos de Prata';
+
+  @override
+  String get worldGold => 'Cidadela de Ouro';
+
+  @override
+  String get worldPlatinum => 'Geleira de Platina';
+
+  @override
+  String get worldDiamond => 'Cavernas de Diamante';
+
+  @override
+  String get worldMaster => 'Trono do Mestre';
+
+  @override
+  String worldNumber(String n) {
+    return 'Mundo ${n}';
+  }
+
+  @override
+  String monsterGolem(String tier) {
+    return 'Golem ${tier}';
+  }
+
+  @override
+  String monsterWarden(String tier) {
+    return 'Guardião ${tier}';
+  }
+
+  @override
+  String monsterKing(String tier) {
+    return 'Rei ${tier}';
+  }
+
+  @override
+  String fightLevel(String level) {
+    return 'Lutar no nível ${level}';
+  }
+
+  @override
+  String levelHpLine(String hp, String reps) {
+    return 'HP ${hp} · cerca de ${reps} flexões';
+  }
+
+  @override
+  String get hpShort => 'HP';
+
+  @override
+  String comboTag(String n) {
+    return 'COMBO ×${n}';
+  }
+
+  @override
+  String get levelCleared => 'VENCIDO';
+
+  @override
+  String get outOfTime => 'TEMPO ESGOTADO';
+
+  @override
+  String get statPushUps => 'flexões';
+
+  @override
+  String get statTimeLeft => 'restante';
+
+  @override
+  String get statHpLeft => 'HP restante';
+
+  @override
+  String get statXp => 'XP';
+
+  @override
+  String secondStarHint(String seconds) {
+    return 'Termine com ${seconds} segundos sobrando para a segunda estrela';
+  }
+
+  @override
+  String thirdStarHint(String seconds) {
+    return 'Termine com ${seconds} segundos sobrando para a terceira estrela';
+  }
+
+  @override
+  String get fightLostHint => 'Jogue níveis anteriores de novo para mais estrelas: elas liberam armas mais fortes.';
+
+  @override
+  String get nextLevel => 'Próximo nível';
+
+  @override
+  String get tryAgain => 'Tentar de novo';
+
+  @override
+  String get adventureMap => 'Mapa';
+
+  @override
+  String get nextKicker => 'PRÓXIMO';
+
+  @override
+  String nextLevelLine(String level, String hp) {
+    return 'Nível ${level} · HP ${hp}';
+  }
+
+  @override
+  String get armory => 'Arsenal';
+
+  @override
+  String get armoryBody => 'Estrelas liberam armas. Cada flexão acerta com a melhor que você tem.';
+
+  @override
+  String get equipped => 'EQUIPADA';
+
+  @override
+  String perPushUp(String damage) {
+    return '${damage} por flexão';
+  }
+
+  @override
+  String damagePerPushUp(String damage) {
+    return '${damage} de dano por flexão';
+  }
+
+  @override
+  String wasWith(String damage, String weapon) {
+    return 'antes ${damage} com ${weapon}';
+  }
+
+  @override
+  String moreStars(String count) {
+    return 'faltam ${count} estrelas';
+  }
+
+  @override
+  String get newWeapon => 'Nova arma';
+
+  @override
+  String starsKicker(String count) {
+    return '${count} ESTRELAS';
+  }
+
+  @override
+  String get weaponGauntlets => 'Manoplas de Ferro';
+
+  @override
+  String get weaponKnuckles => 'Soqueiras de Bronze';
+
+  @override
+  String get weaponFang => 'Presa de Prata';
+
+  @override
+  String get weaponHammer => 'Martelo de Ouro';
+
+  @override
+  String get weaponAxe => 'Machado de Platina';
+
+  @override
+  String get weaponSpear => 'Lança de Diamante';
+
+  @override
+  String get weaponSword => 'Espada do Mestre';
+
+  @override
+  String get weaponCrownbreaker => 'Quebra-Coroas';
+
+  @override
+  String clearFirst(String level) {
+    return 'Vença o nível ${level} primeiro';
+  }
 }

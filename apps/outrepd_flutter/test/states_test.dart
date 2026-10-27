@@ -95,7 +95,7 @@ void main() {
         findsOneWidget,
       );
       expect(find.text('Play first match'), findsOneWidget);
-      expect(find.text('Practice first'), findsOneWidget);
+      expect(find.byKey(const Key('adventureCard')), findsOneWidget);
       expect(find.text('One match · 60 seconds'), findsOneWidget);
     });
 
@@ -145,7 +145,7 @@ void main() {
   });
 
   group('with no connection', () {
-    testWidgets('the ranked button is dead and practice is promoted',
+    testWidgets('the ranked button is dead and the adventure is offered',
         (tester) async {
       phone(tester);
       withPlacements(kPlacementDuels);
@@ -157,7 +157,7 @@ void main() {
       // Still on screen, not hidden: a button that vanishes reads as a feature
       // being removed rather than a network being down.
       expect(find.text('Find a match'), findsOneWidget);
-      expect(find.text('Practice offline'), findsOneWidget);
+      expect(find.byKey(const Key('adventureCard')), findsOneWidget);
       expect(find.text('Retry'), findsOneWidget);
     });
 

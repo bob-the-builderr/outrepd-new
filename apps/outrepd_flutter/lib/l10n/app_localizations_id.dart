@@ -2544,4 +2544,195 @@ class LId extends L {
 
   @override
   String get countryNotSaved => 'Negaramu tidak bisa disimpan. Coba lagi.';
+
+  @override
+  String get adventure => 'Petualangan';
+
+  @override
+  String stageNumber(String n) {
+    return 'Level ${n}';
+  }
+
+  @override
+  String adventureLevelIn(String level, String world) {
+    return 'Level ${level} · ${world}';
+  }
+
+  @override
+  String adventureClearedOf(String cleared, String total) {
+    return '${cleared} dari ${total} selesai · tanpa peringkat';
+  }
+
+  @override
+  String get worldIron => 'Tambang Besi';
+
+  @override
+  String get worldBronze => 'Bukit Pasir Perunggu';
+
+  @override
+  String get worldSilver => 'Puncak Perak';
+
+  @override
+  String get worldGold => 'Benteng Emas';
+
+  @override
+  String get worldPlatinum => 'Gletser Platina';
+
+  @override
+  String get worldDiamond => 'Gua Berlian';
+
+  @override
+  String get worldMaster => 'Takhta Master';
+
+  @override
+  String worldNumber(String n) {
+    return 'Dunia ${n}';
+  }
+
+  @override
+  String monsterGolem(String tier) {
+    return 'Golem ${tier}';
+  }
+
+  @override
+  String monsterWarden(String tier) {
+    return 'Penjaga ${tier}';
+  }
+
+  @override
+  String monsterKing(String tier) {
+    return 'Raja ${tier}';
+  }
+
+  @override
+  String fightLevel(String level) {
+    return 'Lawan level ${level}';
+  }
+
+  @override
+  String levelHpLine(String hp, String reps) {
+    return 'HP ${hp} · sekitar ${reps} push-up';
+  }
+
+  @override
+  String get hpShort => 'HP';
+
+  @override
+  String comboTag(String n) {
+    return 'KOMBO ×${n}';
+  }
+
+  @override
+  String get levelCleared => 'SELESAI';
+
+  @override
+  String get outOfTime => 'WAKTU HABIS';
+
+  @override
+  String get statPushUps => 'push-up';
+
+  @override
+  String get statTimeLeft => 'tersisa';
+
+  @override
+  String get statHpLeft => 'HP tersisa';
+
+  @override
+  String get statXp => 'XP';
+
+  @override
+  String secondStarHint(String seconds) {
+    return 'Selesaikan dengan sisa ${seconds} detik untuk bintang kedua';
+  }
+
+  @override
+  String thirdStarHint(String seconds) {
+    return 'Selesaikan dengan sisa ${seconds} detik untuk bintang ketiga';
+  }
+
+  @override
+  String get fightLostHint => 'Ulangi level sebelumnya untuk lebih banyak bintang: bintang membuka senjata yang lebih kuat.';
+
+  @override
+  String get nextLevel => 'Level berikutnya';
+
+  @override
+  String get tryAgain => 'Coba lagi';
+
+  @override
+  String get adventureMap => 'Peta';
+
+  @override
+  String get nextKicker => 'BERIKUTNYA';
+
+  @override
+  String nextLevelLine(String level, String hp) {
+    return 'Level ${level} · HP ${hp}';
+  }
+
+  @override
+  String get armory => 'Gudang Senjata';
+
+  @override
+  String get armoryBody => 'Bintang membuka senjata. Setiap push-up memukul dengan senjata terbaik yang kamu punya.';
+
+  @override
+  String get equipped => 'DIPAKAI';
+
+  @override
+  String perPushUp(String damage) {
+    return '${damage} per push-up';
+  }
+
+  @override
+  String damagePerPushUp(String damage) {
+    return '${damage} damage per push-up';
+  }
+
+  @override
+  String wasWith(String damage, String weapon) {
+    return 'sebelumnya ${damage} dengan ${weapon}';
+  }
+
+  @override
+  String moreStars(String count) {
+    return '${count} bintang lagi';
+  }
+
+  @override
+  String get newWeapon => 'Senjata baru';
+
+  @override
+  String starsKicker(String count) {
+    return '${count} BINTANG';
+  }
+
+  @override
+  String get weaponGauntlets => 'Sarung Tangan Besi';
+
+  @override
+  String get weaponKnuckles => 'Buku Jari Perunggu';
+
+  @override
+  String get weaponFang => 'Taring Perak';
+
+  @override
+  String get weaponHammer => 'Palu Emas';
+
+  @override
+  String get weaponAxe => 'Kapak Platina';
+
+  @override
+  String get weaponSpear => 'Tombak Berlian';
+
+  @override
+  String get weaponSword => 'Pedang Master';
+
+  @override
+  String get weaponCrownbreaker => 'Penghancur Mahkota';
+
+  @override
+  String clearFirst(String level) {
+    return 'Menangkan level ${level} dulu';
+  }
 }

@@ -2545,4 +2545,195 @@ class LRu extends L {
 
   @override
   String get countryNotSaved => 'Не удалось сохранить страну. Попробуйте ещё раз.';
+
+  @override
+  String get adventure => 'Приключение';
+
+  @override
+  String stageNumber(String n) {
+    return 'Уровень ${n}';
+  }
+
+  @override
+  String adventureLevelIn(String level, String world) {
+    return 'Уровень ${level} · ${world}';
+  }
+
+  @override
+  String adventureClearedOf(String cleared, String total) {
+    return 'Пройдено ${cleared} из ${total} · без рейтинга';
+  }
+
+  @override
+  String get worldIron => 'Железные шахты';
+
+  @override
+  String get worldBronze => 'Бронзовые дюны';
+
+  @override
+  String get worldSilver => 'Серебряные пики';
+
+  @override
+  String get worldGold => 'Золотая цитадель';
+
+  @override
+  String get worldPlatinum => 'Платиновый ледник';
+
+  @override
+  String get worldDiamond => 'Алмазные пещеры';
+
+  @override
+  String get worldMaster => 'Трон Мастера';
+
+  @override
+  String worldNumber(String n) {
+    return 'Мир ${n}';
+  }
+
+  @override
+  String monsterGolem(String tier) {
+    return 'Голем «${tier}»';
+  }
+
+  @override
+  String monsterWarden(String tier) {
+    return 'Страж «${tier}»';
+  }
+
+  @override
+  String monsterKing(String tier) {
+    return 'Король «${tier}»';
+  }
+
+  @override
+  String fightLevel(String level) {
+    return 'В бой: уровень ${level}';
+  }
+
+  @override
+  String levelHpLine(String hp, String reps) {
+    return 'HP ${hp} · около ${reps} отжиманий';
+  }
+
+  @override
+  String get hpShort => 'HP';
+
+  @override
+  String comboTag(String n) {
+    return 'КОМБО ×${n}';
+  }
+
+  @override
+  String get levelCleared => 'ПРОЙДЕНО';
+
+  @override
+  String get outOfTime => 'ВРЕМЯ ВЫШЛО';
+
+  @override
+  String get statPushUps => 'отжимания';
+
+  @override
+  String get statTimeLeft => 'осталось';
+
+  @override
+  String get statHpLeft => 'HP осталось';
+
+  @override
+  String get statXp => 'XP';
+
+  @override
+  String secondStarHint(String seconds) {
+    return 'Вторая звезда — если на часах останется ${seconds} с';
+  }
+
+  @override
+  String thirdStarHint(String seconds) {
+    return 'Третья звезда — если на часах останется ${seconds} с';
+  }
+
+  @override
+  String get fightLostHint => 'Перепройди прошлые уровни ради звёзд: они открывают оружие сильнее.';
+
+  @override
+  String get nextLevel => 'Следующий уровень';
+
+  @override
+  String get tryAgain => 'Ещё раз';
+
+  @override
+  String get adventureMap => 'Карта';
+
+  @override
+  String get nextKicker => 'ДАЛЕЕ';
+
+  @override
+  String nextLevelLine(String level, String hp) {
+    return 'Уровень ${level} · HP ${hp}';
+  }
+
+  @override
+  String get armory => 'Арсенал';
+
+  @override
+  String get armoryBody => 'Звёзды открывают оружие. Каждое отжимание бьёт лучшим из того, что у тебя есть.';
+
+  @override
+  String get equipped => 'В РУКАХ';
+
+  @override
+  String perPushUp(String damage) {
+    return '${damage} за отжимание';
+  }
+
+  @override
+  String damagePerPushUp(String damage) {
+    return '${damage} урона за отжимание';
+  }
+
+  @override
+  String wasWith(String damage, String weapon) {
+    return 'было ${damage}: «${weapon}»';
+  }
+
+  @override
+  String moreStars(String count) {
+    return 'ещё звёзд: ${count}';
+  }
+
+  @override
+  String get newWeapon => 'Новое оружие';
+
+  @override
+  String starsKicker(String count) {
+    return 'ЗВЁЗД: ${count}';
+  }
+
+  @override
+  String get weaponGauntlets => 'Железные перчатки';
+
+  @override
+  String get weaponKnuckles => 'Бронзовый кастет';
+
+  @override
+  String get weaponFang => 'Серебряный клык';
+
+  @override
+  String get weaponHammer => 'Золотой молот';
+
+  @override
+  String get weaponAxe => 'Платиновый топор';
+
+  @override
+  String get weaponSpear => 'Алмазное копьё';
+
+  @override
+  String get weaponSword => 'Меч Мастера';
+
+  @override
+  String get weaponCrownbreaker => 'Сокрушитель корон';
+
+  @override
+  String clearFirst(String level) {
+    return 'Сначала пройди уровень ${level}';
+  }
 }

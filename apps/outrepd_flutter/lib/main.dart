@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'l10n/app_localizations.dart';
 
+import 'adventure/adventure.dart';
 import 'app_bottom_nav.dart' show registerIconLicences;
 import 'avatar.dart';
 import 'backend/backend.dart';
@@ -92,6 +93,7 @@ void main() async {
     await loadCountAccuracy();
     await avatar.load();
     await rewards.load();
+    await Adventure.instance.load();
     // After settings and rewards: the reminder's time is one, and whether
     // today is already trained is the other.
     await Reminders.instance.start();

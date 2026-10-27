@@ -2551,4 +2551,195 @@ class LFr extends L {
 
   @override
   String get countryNotSaved => 'Impossible d\'enregistrer ton pays. Réessaie.';
+
+  @override
+  String get adventure => 'Aventure';
+
+  @override
+  String stageNumber(String n) {
+    return 'Niveau ${n}';
+  }
+
+  @override
+  String adventureLevelIn(String level, String world) {
+    return 'Niveau ${level} · ${world}';
+  }
+
+  @override
+  String adventureClearedOf(String cleared, String total) {
+    return '${cleared} sur ${total} réussis · sans classement';
+  }
+
+  @override
+  String get worldIron => 'Mines de fer';
+
+  @override
+  String get worldBronze => 'Dunes de bronze';
+
+  @override
+  String get worldSilver => 'Pics d’argent';
+
+  @override
+  String get worldGold => 'Citadelle d’or';
+
+  @override
+  String get worldPlatinum => 'Glacier de platine';
+
+  @override
+  String get worldDiamond => 'Cavernes de diamant';
+
+  @override
+  String get worldMaster => 'Trône du Maître';
+
+  @override
+  String worldNumber(String n) {
+    return 'Monde ${n}';
+  }
+
+  @override
+  String monsterGolem(String tier) {
+    return 'Golem ${tier}';
+  }
+
+  @override
+  String monsterWarden(String tier) {
+    return 'Gardien ${tier}';
+  }
+
+  @override
+  String monsterKing(String tier) {
+    return 'Roi ${tier}';
+  }
+
+  @override
+  String fightLevel(String level) {
+    return 'Combattre le niveau ${level}';
+  }
+
+  @override
+  String levelHpLine(String hp, String reps) {
+    return 'HP ${hp} · environ ${reps} pompes';
+  }
+
+  @override
+  String get hpShort => 'HP';
+
+  @override
+  String comboTag(String n) {
+    return 'COMBO ×${n}';
+  }
+
+  @override
+  String get levelCleared => 'RÉUSSI';
+
+  @override
+  String get outOfTime => 'TEMPS ÉCOULÉ';
+
+  @override
+  String get statPushUps => 'pompes';
+
+  @override
+  String get statTimeLeft => 'restant';
+
+  @override
+  String get statHpLeft => 'HP restants';
+
+  @override
+  String get statXp => 'XP';
+
+  @override
+  String secondStarHint(String seconds) {
+    return 'Finis avec ${seconds} secondes d’avance pour la deuxième étoile';
+  }
+
+  @override
+  String thirdStarHint(String seconds) {
+    return 'Finis avec ${seconds} secondes d’avance pour la troisième étoile';
+  }
+
+  @override
+  String get fightLostHint => 'Rejoue des niveaux précédents pour plus d’étoiles : elles débloquent des armes plus fortes.';
+
+  @override
+  String get nextLevel => 'Niveau suivant';
+
+  @override
+  String get tryAgain => 'Réessayer';
+
+  @override
+  String get adventureMap => 'Carte';
+
+  @override
+  String get nextKicker => 'SUIVANT';
+
+  @override
+  String nextLevelLine(String level, String hp) {
+    return 'Niveau ${level} · HP ${hp}';
+  }
+
+  @override
+  String get armory => 'Armurerie';
+
+  @override
+  String get armoryBody => 'Les étoiles débloquent des armes. Chaque pompe frappe avec la meilleure que tu as.';
+
+  @override
+  String get equipped => 'ÉQUIPÉE';
+
+  @override
+  String perPushUp(String damage) {
+    return '${damage} par pompe';
+  }
+
+  @override
+  String damagePerPushUp(String damage) {
+    return '${damage} dégâts par pompe';
+  }
+
+  @override
+  String wasWith(String damage, String weapon) {
+    return 'avant : ${damage} avec ${weapon}';
+  }
+
+  @override
+  String moreStars(String count) {
+    return 'encore ${count} étoiles';
+  }
+
+  @override
+  String get newWeapon => 'Nouvelle arme';
+
+  @override
+  String starsKicker(String count) {
+    return '${count} ÉTOILES';
+  }
+
+  @override
+  String get weaponGauntlets => 'Gantelets de fer';
+
+  @override
+  String get weaponKnuckles => 'Poings de bronze';
+
+  @override
+  String get weaponFang => 'Croc d’argent';
+
+  @override
+  String get weaponHammer => 'Marteau d’or';
+
+  @override
+  String get weaponAxe => 'Hache de platine';
+
+  @override
+  String get weaponSpear => 'Lance de diamant';
+
+  @override
+  String get weaponSword => 'Épée du Maître';
+
+  @override
+  String get weaponCrownbreaker => 'Brise-Couronne';
+
+  @override
+  String clearFirst(String level) {
+    return 'Gagne d’abord le niveau ${level}';
+  }
 }

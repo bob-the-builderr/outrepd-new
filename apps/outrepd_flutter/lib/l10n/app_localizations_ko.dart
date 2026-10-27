@@ -2513,4 +2513,195 @@ class LKo extends L {
 
   @override
   String get countryNotSaved => '국가를 저장하지 못했어요. 다시 시도해 주세요.';
+
+  @override
+  String get adventure => '어드벤처';
+
+  @override
+  String stageNumber(String n) {
+    return '스테이지 ${n}';
+  }
+
+  @override
+  String adventureLevelIn(String level, String world) {
+    return '스테이지 ${level} · ${world}';
+  }
+
+  @override
+  String adventureClearedOf(String cleared, String total) {
+    return '${total}개 중 ${cleared}개 클리어 · 랭크 없음';
+  }
+
+  @override
+  String get worldIron => '아이언 광산';
+
+  @override
+  String get worldBronze => '브론즈 사구';
+
+  @override
+  String get worldSilver => '실버 봉우리';
+
+  @override
+  String get worldGold => '골드 요새';
+
+  @override
+  String get worldPlatinum => '플래티넘 빙하';
+
+  @override
+  String get worldDiamond => '다이아몬드 동굴';
+
+  @override
+  String get worldMaster => '마스터의 왕좌';
+
+  @override
+  String worldNumber(String n) {
+    return '월드 ${n}';
+  }
+
+  @override
+  String monsterGolem(String tier) {
+    return '${tier} 골렘';
+  }
+
+  @override
+  String monsterWarden(String tier) {
+    return '${tier} 수호자';
+  }
+
+  @override
+  String monsterKing(String tier) {
+    return '${tier} 왕';
+  }
+
+  @override
+  String fightLevel(String level) {
+    return '스테이지 ${level} 도전';
+  }
+
+  @override
+  String levelHpLine(String hp, String reps) {
+    return 'HP ${hp} · 팔굽혀펴기 약 ${reps}회';
+  }
+
+  @override
+  String get hpShort => 'HP';
+
+  @override
+  String comboTag(String n) {
+    return '콤보 ×${n}';
+  }
+
+  @override
+  String get levelCleared => '클리어';
+
+  @override
+  String get outOfTime => '시간 초과';
+
+  @override
+  String get statPushUps => '팔굽혀펴기';
+
+  @override
+  String get statTimeLeft => '남음';
+
+  @override
+  String get statHpLeft => '남은 HP';
+
+  @override
+  String get statXp => 'XP';
+
+  @override
+  String secondStarHint(String seconds) {
+    return '${seconds}초 이상 남기고 깨면 별 2개';
+  }
+
+  @override
+  String thirdStarHint(String seconds) {
+    return '${seconds}초 이상 남기고 깨면 별 3개';
+  }
+
+  @override
+  String get fightLostHint => '이전 스테이지에서 별을 더 모으세요. 별로 더 강한 무기가 열려요.';
+
+  @override
+  String get nextLevel => '다음 스테이지';
+
+  @override
+  String get tryAgain => '다시 하기';
+
+  @override
+  String get adventureMap => '지도';
+
+  @override
+  String get nextKicker => '다음';
+
+  @override
+  String nextLevelLine(String level, String hp) {
+    return '스테이지 ${level} · HP ${hp}';
+  }
+
+  @override
+  String get armory => '무기고';
+
+  @override
+  String get armoryBody => '별을 모으면 무기가 열려요. 팔굽혀펴기 한 번마다 가진 무기 중 가장 강한 무기로 공격해요.';
+
+  @override
+  String get equipped => '장착 중';
+
+  @override
+  String perPushUp(String damage) {
+    return '1회 ${damage}';
+  }
+
+  @override
+  String damagePerPushUp(String damage) {
+    return '팔굽혀펴기 1회당 ${damage} 피해';
+  }
+
+  @override
+  String wasWith(String damage, String weapon) {
+    return '이전: ${weapon} · ${damage}';
+  }
+
+  @override
+  String moreStars(String count) {
+    return '별 ${count}개 더';
+  }
+
+  @override
+  String get newWeapon => '새 무기';
+
+  @override
+  String starsKicker(String count) {
+    return '별 ${count}개';
+  }
+
+  @override
+  String get weaponGauntlets => '아이언 건틀릿';
+
+  @override
+  String get weaponKnuckles => '브론즈 너클';
+
+  @override
+  String get weaponFang => '실버 팽';
+
+  @override
+  String get weaponHammer => '골드 해머';
+
+  @override
+  String get weaponAxe => '플래티넘 도끼';
+
+  @override
+  String get weaponSpear => '다이아몬드 창';
+
+  @override
+  String get weaponSword => '마스터 소드';
+
+  @override
+  String get weaponCrownbreaker => '크라운브레이커';
+
+  @override
+  String clearFirst(String level) {
+    return '스테이지 ${level} 먼저 클리어하세요';
+  }
 }

@@ -68,6 +68,25 @@ class DuelContext {
   final String rankLabel;
 }
 
+/// A game played on the count: the adventure's fight. It draws the card over
+/// the camera in place of the score card, and it may end the round early —
+/// the moment the monster is down there is nothing left to count towards.
+///
+/// The camera counts exactly as it always does; the game only reads the
+/// number.
+abstract class CameraGame {
+  Widget card(
+    BuildContext context, {
+    required int reps,
+    required Duration remaining,
+    required bool counting,
+    required VoidCallback onStop,
+  });
+
+  /// Whether [reps] finish it.
+  bool wonAt(int reps);
+}
+
 /// The camera. Counts push-ups, and — when it is part of a duel — carries the
 /// score, the clock and what is riding on them.
 class TrainerScreen extends StatefulWidget {
@@ -77,9 +96,14 @@ class TrainerScreen extends StatefulWidget {
     this.forMatch = false,
     this.limit,
     this.duel,
+    this.game,
     this.poseSource,
     this.live,
   });
+
+  /// The adventure's fight, drawn over the camera instead of the score card.
+  /// Null for everything else.
+  final CameraGame? game;
 
   /// A live match: the other lifter is on camera right now, their count comes
   /// from their phone as it moves, and the round starts ten seconds after
@@ -335,6 +359,7 @@ class _TrainerScreenState extends State<TrainerScreen>
     _graceTimer = null;
     _liveReps = 0;
     _stopping = false;
+    _won = false;
     _suspended = false;
 
     setState(() {
@@ -650,6 +675,10 @@ class _TrainerScreenState extends State<TrainerScreen>
       return;
     }
 
+    // The monster is down and the round is closing: the clock has stopped on
+    // the winning rep, and nothing after it counts.
+    if (_won) return;
+
     // The number moves on the frame the rep completes — the frame the bar
     // gets back up to the top line — and never otherwise.
     if (reading.counted) {
@@ -657,6 +686,18 @@ class _TrainerScreenState extends State<TrainerScreen>
       widget.live?.counted(reading.reps);
       tap(heavy: true);
       Sounds.instance.play(Cue.rep);
+
+      // The rep that finishes the fight: the clock stops on it, and the
+      // round closes a moment later so the last hit is seen landing.
+      if (widget.game?.wonAt(reading.reps) ?? false) {
+        _won = true;
+        _clock.stop();
+        setState(() => _pose = pose);
+        Timer(const Duration(milliseconds: 900), () {
+          if (mounted) _stop();
+        });
+        return;
+      }
     }
 
     final limit = widget.limit;
@@ -767,6 +808,9 @@ class _TrainerScreenState extends State<TrainerScreen>
   /// Set while a round is being wrapped up, so the clock and a late pose
   /// cannot both end it.
   bool _stopping = false;
+
+  /// The game was won on the last rep counted and the round is closing.
+  bool _won = false;
 
   Future<void> _stop({bool gaveUp = false}) async {
     if (_stopping) return;
@@ -997,18 +1041,27 @@ class _TrainerScreenState extends State<TrainerScreen>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _ScoreCard(
-                  key: const Key('scoreCard'),
-                  yours: _liveReps,
-                  theirs: _opponentReps,
-                  remaining: _remaining,
-                  duel: widget.duel,
-                  live: _stage == _Stage.counting,
-                  session: widget.live,
-                  onStop: widget.duel == null
-                      ? () => _stop()
-                      : _confirmGiveUp,
-                ),
+                widget.game?.card(
+                      context,
+                      reps: _liveReps,
+                      remaining: _remaining,
+                      counting: _stage == _Stage.counting,
+                      // Nothing on the ladder to lose, so no question first:
+                      // the fight is simply not won.
+                      onStop: () => _stop(gaveUp: true),
+                    ) ??
+                    _ScoreCard(
+                      key: const Key('scoreCard'),
+                      yours: _liveReps,
+                      theirs: _opponentReps,
+                      remaining: _remaining,
+                      duel: widget.duel,
+                      live: _stage == _Stage.counting,
+                      session: widget.live,
+                      onStop: widget.duel == null
+                          ? () => _stop()
+                          : _confirmGiveUp,
+                    ),
                 // Live, when the other phone has gone quiet or given up: the
                 // number that stopped moving needs a reason beside it, or it
                 // reads as the lifter having simply stopped.

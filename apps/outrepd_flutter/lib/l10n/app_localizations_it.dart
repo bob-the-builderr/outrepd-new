@@ -2550,4 +2550,195 @@ class LIt extends L {
 
   @override
   String get countryNotSaved => 'Impossibile salvare il paese. Riprova.';
+
+  @override
+  String get adventure => 'Avventura';
+
+  @override
+  String stageNumber(String n) {
+    return 'Livello ${n}';
+  }
+
+  @override
+  String adventureLevelIn(String level, String world) {
+    return 'Livello ${level} · ${world}';
+  }
+
+  @override
+  String adventureClearedOf(String cleared, String total) {
+    return '${cleared} su ${total} superati · senza rango';
+  }
+
+  @override
+  String get worldIron => 'Miniere di Ferro';
+
+  @override
+  String get worldBronze => 'Dune di Bronzo';
+
+  @override
+  String get worldSilver => 'Vette d’Argento';
+
+  @override
+  String get worldGold => 'Cittadella d’Oro';
+
+  @override
+  String get worldPlatinum => 'Ghiacciaio di Platino';
+
+  @override
+  String get worldDiamond => 'Caverne di Diamante';
+
+  @override
+  String get worldMaster => 'Trono del Maestro';
+
+  @override
+  String worldNumber(String n) {
+    return 'Mondo ${n}';
+  }
+
+  @override
+  String monsterGolem(String tier) {
+    return 'Golem ${tier}';
+  }
+
+  @override
+  String monsterWarden(String tier) {
+    return 'Guardiano ${tier}';
+  }
+
+  @override
+  String monsterKing(String tier) {
+    return 'Re ${tier}';
+  }
+
+  @override
+  String fightLevel(String level) {
+    return 'Combatti il livello ${level}';
+  }
+
+  @override
+  String levelHpLine(String hp, String reps) {
+    return 'HP ${hp} · circa ${reps} piegamenti';
+  }
+
+  @override
+  String get hpShort => 'HP';
+
+  @override
+  String comboTag(String n) {
+    return 'COMBO ×${n}';
+  }
+
+  @override
+  String get levelCleared => 'SUPERATO';
+
+  @override
+  String get outOfTime => 'TEMPO SCADUTO';
+
+  @override
+  String get statPushUps => 'piegamenti';
+
+  @override
+  String get statTimeLeft => 'rimasto';
+
+  @override
+  String get statHpLeft => 'HP rimasti';
+
+  @override
+  String get statXp => 'XP';
+
+  @override
+  String secondStarHint(String seconds) {
+    return 'Finisci con ${seconds} secondi di margine per la seconda stella';
+  }
+
+  @override
+  String thirdStarHint(String seconds) {
+    return 'Finisci con ${seconds} secondi di margine per la terza stella';
+  }
+
+  @override
+  String get fightLostHint => 'Rigioca i livelli precedenti per più stelle: sbloccano armi più forti.';
+
+  @override
+  String get nextLevel => 'Livello successivo';
+
+  @override
+  String get tryAgain => 'Riprova';
+
+  @override
+  String get adventureMap => 'Mappa';
+
+  @override
+  String get nextKicker => 'PROSSIMO';
+
+  @override
+  String nextLevelLine(String level, String hp) {
+    return 'Livello ${level} · HP ${hp}';
+  }
+
+  @override
+  String get armory => 'Armeria';
+
+  @override
+  String get armoryBody => 'Le stelle sbloccano armi. Ogni piegamento colpisce con la migliore che hai.';
+
+  @override
+  String get equipped => 'EQUIPAGGIATA';
+
+  @override
+  String perPushUp(String damage) {
+    return '${damage} per piegamento';
+  }
+
+  @override
+  String damagePerPushUp(String damage) {
+    return '${damage} danni per piegamento';
+  }
+
+  @override
+  String wasWith(String damage, String weapon) {
+    return 'prima ${damage} con ${weapon}';
+  }
+
+  @override
+  String moreStars(String count) {
+    return 'ancora ${count} stelle';
+  }
+
+  @override
+  String get newWeapon => 'Nuova arma';
+
+  @override
+  String starsKicker(String count) {
+    return '${count} STELLE';
+  }
+
+  @override
+  String get weaponGauntlets => 'Guanti di Ferro';
+
+  @override
+  String get weaponKnuckles => 'Tirapugni di Bronzo';
+
+  @override
+  String get weaponFang => 'Zanna d’Argento';
+
+  @override
+  String get weaponHammer => 'Martello d’Oro';
+
+  @override
+  String get weaponAxe => 'Ascia di Platino';
+
+  @override
+  String get weaponSpear => 'Lancia di Diamante';
+
+  @override
+  String get weaponSword => 'Spada del Maestro';
+
+  @override
+  String get weaponCrownbreaker => 'Spezzacorone';
+
+  @override
+  String clearFirst(String level) {
+    return 'Prima vinci il livello ${level}';
+  }
 }

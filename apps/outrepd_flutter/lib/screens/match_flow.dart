@@ -13,6 +13,7 @@ import 'dart:math';
 import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 
+import '../adventure/adventure.dart';
 import '../backend/backend.dart';
 import '../career.dart';
 import '../connection.dart';
@@ -32,6 +33,8 @@ import '../xp.dart';
 import '../reps/count_accuracy.dart';
 import '../review_prompt.dart';
 import '../settings.dart';
+import 'adventure_fight.dart';
+import 'adventure_map.dart';
 import 'confirm_count.dart';
 import 'daily_goal.dart';
 import 'level.dart';
@@ -64,6 +67,10 @@ class MatchFlowScreen extends StatefulWidget {
   /// accepted by both. Ranked live matches are found by the search instead.
   final LiveMatch? liveMatch;
 
+  /// An adventure fight: practice, with this level's monster on the camera
+  /// instead of a clock and a count, and its own ending.
+  final AdventureLevel? adventure;
+
   const MatchFlowScreen({
     super.key,
     this.mode = MatchMode.ranked,
@@ -72,7 +79,12 @@ class MatchFlowScreen extends StatefulWidget {
     this.targetTierIdx,
     this.targetDivIdx,
     this.liveMatch,
+    this.adventure,
   }) : assert(
+         adventure == null || mode == MatchMode.practice,
+         'an adventure fight is practice: it moves no rank',
+       ),
+       assert(
          mode != MatchMode.liveFriend || liveMatch != null,
          'a live match with a friend needs the match',
        ),
@@ -116,6 +128,8 @@ class MatchFlowScreen extends StatefulWidget {
 
   /// Live with a friend, from an accepted invite.
   bool get isLiveFriend => mode == MatchMode.liveFriend;
+
+  bool get isAdventure => adventure != null;
 
   @override
   State<MatchFlowScreen> createState() => _MatchFlowScreenState();
@@ -162,6 +176,10 @@ enum _Stage {
 
   /// The server could not be reached to settle it — live, or a saved set.
   liveFailed,
+
+  /// An adventure fight just earned the stars for a new weapon: shown once,
+  /// after the level and before the result.
+  weapon,
 }
 
 class _MatchFlowScreenState extends State<MatchFlowScreen> {
@@ -211,6 +229,16 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
 
   /// What the session added to the level, once it has been recorded.
   XpGain? _xp;
+
+  /// The weapon an adventure fight is fought with: the best unlocked when it
+  /// started, so stars earned by this fight arm the next one, not this one.
+  final Weapon _weapon = Adventure.instance.weapon;
+
+  /// How the adventure fight went, once the camera has handed back its count.
+  FightOutcome? _fight;
+
+  /// The weapon that fight unlocked, if it unlocked one.
+  Weapon? _unlocked;
 
   /// The live match, when there is one: found by the ranked search, or the
   /// friend's invite or rematch this screen was opened for.
@@ -501,7 +529,11 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
         builder: (_) => TrainerScreen(
           autoStart: true,
           forMatch: true,
-          limit: kDuelLength,
+          limit: widget.adventure?.time ?? kDuelLength,
+          game: switch (widget.adventure) {
+            final level? => FightGame(level: level, weapon: _weapon),
+            null => null,
+          },
           // Practice has nobody on the other side, so the camera shows a
           // clock and a count and nothing else. Sending a challenge is the
           // same: there is no pace to race yet, because the other half of
@@ -544,7 +576,10 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     // stake to protect, and it is where the gap between what the camera saw
     // and what actually happened is worth measuring at all.
     final int settled;
-    if (widget.practice) {
+    // An adventure fight is judged on the camera's count like a match: the
+    // monster went down on the reps it saw, and a number edited afterwards
+    // would be a fight won on paper.
+    if (widget.practice && !widget.isAdventure) {
       final agreed = await confirmCount(
         context,
         counted: scored?.reps ?? 0,
@@ -603,6 +638,28 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
         _stage = _Stage.sent;
       });
       return;
+    }
+
+    // The fight's verdict and its stars, written down before anything is
+    // shown — the same rule as a duel's result.
+    if (widget.adventure case final level?) {
+      final gaveUp = scored?.gaveUp ?? true;
+      final usedMs = scored?.durationMs ?? level.time.inMilliseconds;
+      final fight = FightOutcome(
+        level: level,
+        weapon: _weapon,
+        // Walking out leaves the monster standing whatever was counted.
+        reps: gaveUp ? 0 : settled,
+        timeLeft: gaveUp
+            ? Duration.zero
+            : level.time - Duration(milliseconds: usedMs),
+        starsBefore: Adventure.instance.starsAt(level.number),
+      );
+      _fight = fight;
+      if (fight.won) {
+        _unlocked = await Adventure.instance.record(level.number, fight.stars);
+      }
+      if (!mounted) return;
     }
 
     await _settleAndRecord(
@@ -883,7 +940,10 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       : _afterPromotion;
 
   _Stage get _afterPromotion =>
-      (_xp?.leveledUp ?? false) ? _Stage.levelUp : _Stage.result;
+      (_xp?.leveledUp ?? false) ? _Stage.levelUp : _afterLevel;
+
+  /// After the level: a weapon the fight unlocked, then the result.
+  _Stage get _afterLevel => _unlocked != null ? _Stage.weapon : _Stage.result;
 
   /// Where this account stands on the month's board, or null when there is
   /// no answer. Only ranked duels move it, so only they ask.
@@ -922,6 +982,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           _stage == _Stage.placed ||
           _stage == _Stage.promoted ||
           _stage == _Stage.levelUp ||
+          _stage == _Stage.weapon ||
           _stage == _Stage.sent ||
           _stage == _Stage.calledOff ||
           _stage == _Stage.liveFailed ||
@@ -971,14 +1032,12 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
             body: L.of(context).noConnectionBody,
             actionLabel: L.of(context).retry,
             onAction: _search,
-            secondaryLabel: L.of(context).practiceOffline,
+            secondaryLabel: L.of(context).adventure,
             // A real alternative, not a dismissal: the camera works with no
-            // network at all.
+            // network at all, and so does the adventure.
             secondaryProminent: true,
             onSecondary: () => Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (_) => const MatchFlowScreen(mode: MatchMode.practice),
-              ),
+              MaterialPageRoute(builder: (_) => const AdventureMapScreen()),
             ),
           );
         }
@@ -1086,11 +1145,39 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           gain:
               _xp ??
               XpGain(before: demoProfile.xp, after: demoProfile.xp, reps: 0),
+          onContinue: () => setState(() => _stage = _afterLevel),
+        );
+
+      case _Stage.weapon:
+        return WeaponUnlockedView(
+          weapon: _unlocked ?? Adventure.instance.weapon,
+          previous: _weapon,
           onContinue: () => setState(() => _stage = _Stage.result),
         );
 
       case _Stage.result:
         _ratingTimer ??= Timer(const Duration(seconds: 2), _askForRating);
+        if (_fight case final fight?) {
+          final level = fight.level;
+          void fightAgain(AdventureLevel next) =>
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (_) => MatchFlowScreen(
+                    mode: MatchMode.practice,
+                    adventure: next,
+                  ),
+                ),
+              );
+          return AdventureResultView(
+            outcome: fight,
+            xp: _xp,
+            onNext: level.isLast
+                ? null
+                : () => fightAgain(AdventureLevel.of(level.number + 1)),
+            onAgain: () => fightAgain(level),
+            onMap: () => Navigator.of(context).pop(),
+          );
+        }
         if (_vsBest) {
           return _BestResultView(
             reps: _myReps,

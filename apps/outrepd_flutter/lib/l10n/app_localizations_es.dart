@@ -2550,4 +2550,195 @@ class LEs extends L {
 
   @override
   String get countryNotSaved => 'No se pudo guardar tu país. Inténtalo de nuevo.';
+
+  @override
+  String get adventure => 'Aventura';
+
+  @override
+  String stageNumber(String n) {
+    return 'Nivel ${n}';
+  }
+
+  @override
+  String adventureLevelIn(String level, String world) {
+    return 'Nivel ${level} · ${world}';
+  }
+
+  @override
+  String adventureClearedOf(String cleared, String total) {
+    return '${cleared} de ${total} superados · sin rango';
+  }
+
+  @override
+  String get worldIron => 'Minas de Hierro';
+
+  @override
+  String get worldBronze => 'Dunas de Bronce';
+
+  @override
+  String get worldSilver => 'Picos de Plata';
+
+  @override
+  String get worldGold => 'Ciudadela de Oro';
+
+  @override
+  String get worldPlatinum => 'Glaciar de Platino';
+
+  @override
+  String get worldDiamond => 'Cavernas de Diamante';
+
+  @override
+  String get worldMaster => 'Trono del Maestro';
+
+  @override
+  String worldNumber(String n) {
+    return 'Mundo ${n}';
+  }
+
+  @override
+  String monsterGolem(String tier) {
+    return 'Gólem ${tier}';
+  }
+
+  @override
+  String monsterWarden(String tier) {
+    return 'Guardián ${tier}';
+  }
+
+  @override
+  String monsterKing(String tier) {
+    return 'Rey ${tier}';
+  }
+
+  @override
+  String fightLevel(String level) {
+    return 'Luchar en el nivel ${level}';
+  }
+
+  @override
+  String levelHpLine(String hp, String reps) {
+    return 'HP ${hp} · unas ${reps} flexiones';
+  }
+
+  @override
+  String get hpShort => 'HP';
+
+  @override
+  String comboTag(String n) {
+    return 'COMBO ×${n}';
+  }
+
+  @override
+  String get levelCleared => 'SUPERADO';
+
+  @override
+  String get outOfTime => 'SIN TIEMPO';
+
+  @override
+  String get statPushUps => 'flexiones';
+
+  @override
+  String get statTimeLeft => 'restante';
+
+  @override
+  String get statHpLeft => 'HP restante';
+
+  @override
+  String get statXp => 'XP';
+
+  @override
+  String secondStarHint(String seconds) {
+    return 'Termina con ${seconds} segundos de sobra para la segunda estrella';
+  }
+
+  @override
+  String thirdStarHint(String seconds) {
+    return 'Termina con ${seconds} segundos de sobra para la tercera estrella';
+  }
+
+  @override
+  String get fightLostHint => 'Repite niveles anteriores para ganar más estrellas: desbloquean armas más fuertes.';
+
+  @override
+  String get nextLevel => 'Siguiente nivel';
+
+  @override
+  String get tryAgain => 'Reintentar';
+
+  @override
+  String get adventureMap => 'Mapa';
+
+  @override
+  String get nextKicker => 'SIGUIENTE';
+
+  @override
+  String nextLevelLine(String level, String hp) {
+    return 'Nivel ${level} · HP ${hp}';
+  }
+
+  @override
+  String get armory => 'Armería';
+
+  @override
+  String get armoryBody => 'Las estrellas desbloquean armas. Cada flexión golpea con la mejor que tengas.';
+
+  @override
+  String get equipped => 'EQUIPADA';
+
+  @override
+  String perPushUp(String damage) {
+    return '${damage} por flexión';
+  }
+
+  @override
+  String damagePerPushUp(String damage) {
+    return '${damage} de daño por flexión';
+  }
+
+  @override
+  String wasWith(String damage, String weapon) {
+    return 'antes ${damage} con ${weapon}';
+  }
+
+  @override
+  String moreStars(String count) {
+    return 'faltan ${count} estrellas';
+  }
+
+  @override
+  String get newWeapon => 'Nueva arma';
+
+  @override
+  String starsKicker(String count) {
+    return '${count} ESTRELLAS';
+  }
+
+  @override
+  String get weaponGauntlets => 'Guanteletes de Hierro';
+
+  @override
+  String get weaponKnuckles => 'Nudilleras de Bronce';
+
+  @override
+  String get weaponFang => 'Colmillo de Plata';
+
+  @override
+  String get weaponHammer => 'Martillo de Oro';
+
+  @override
+  String get weaponAxe => 'Hacha de Platino';
+
+  @override
+  String get weaponSpear => 'Lanza de Diamante';
+
+  @override
+  String get weaponSword => 'Espada del Maestro';
+
+  @override
+  String get weaponCrownbreaker => 'Rompecoronas';
+
+  @override
+  String clearFirst(String level) {
+    return 'Primero gana el nivel ${level}';
+  }
 }
