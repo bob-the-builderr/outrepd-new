@@ -12,6 +12,10 @@
 #   REVENUECAT_ANDROID_KEY            RevenueCat's public Google Play key
 #                                     (goog_...). Without it the build has no
 #                                     paywall; the run says so in a warning.
+#   ADMOB_ANDROID_APP_ID              the Android app's id in AdMob
+#                                     (ca-app-pub-...~...), and its
+#   ADMOB_ANDROID_INTERSTITIAL        interstitial ad unit (ca-app-pub-.../...).
+#                                     Without both, a build with no ads.
 #   REVENUECAT_TEST_KEY               RevenueCat's Test Store key. Adds a
 #                                     debug "outrepd test" APK where the
 #                                     paywall can be tried with simulated
@@ -61,6 +65,10 @@ jobs:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
       REVENUECAT_ANDROID_KEY: ${{ secrets.REVENUECAT_ANDROID_KEY }}
+      # AdMob (lib/ads.dart). The app id is read by Gradle into the manifest
+      # (android/app/build.gradle.kts); the ad unit goes into the app.
+      ADMOB_ANDROID_APP_ID: ${{ secrets.ADMOB_ANDROID_APP_ID }}
+      ADMOB_ANDROID_INTERSTITIAL: ${{ secrets.ADMOB_ANDROID_INTERSTITIAL }}
       # Continue with Google: the web client id from Google Cloud. Without
       # it the Google button is not shown.
       GOOGLE_WEB_CLIENT_ID: ${{ secrets.GOOGLE_WEB_CLIENT_ID }}
@@ -90,7 +98,20 @@ jobs:
             esac
             printf 'REVENUECAT_ANDROID_KEY=%s\n' "$REVENUECAT_ANDROID_KEY" >> supabase/keys.env
           else
-            echo "::warning::No REVENUECAT_ANDROID_KEY secret: this build has no paywall, and the whole app is open."
+            echo "::warning::No REVENUECAT_ANDROID_KEY secret: this build has no Pro to buy."
+          fi
+          if [ -n "$ADMOB_ANDROID_APP_ID" ] && [ -n "$ADMOB_ANDROID_INTERSTITIAL" ]; then
+            case "$ADMOB_ANDROID_APP_ID" in
+              ca-app-pub-*~*) ;;
+              *) echo "::error::ADMOB_ANDROID_APP_ID should be the app id, ca-app-pub-...~... (with a tilde). The ad unit, with a slash, goes in ADMOB_ANDROID_INTERSTITIAL."; exit 1 ;;
+            esac
+            case "$ADMOB_ANDROID_INTERSTITIAL" in
+              ca-app-pub-*/*) ;;
+              *) echo "::error::ADMOB_ANDROID_INTERSTITIAL should be the interstitial ad unit, ca-app-pub-.../... (with a slash)."; exit 1 ;;
+            esac
+            printf 'ADMOB_ANDROID_INTERSTITIAL=%s\n' "$ADMOB_ANDROID_INTERSTITIAL" >> supabase/keys.env
+          else
+            echo "::warning::No ADMOB_ANDROID_APP_ID / ADMOB_ANDROID_INTERSTITIAL secrets: this build has no ads."
           fi
           if [ -n "$GOOGLE_WEB_CLIENT_ID" ]; then
             printf 'GOOGLE_WEB_CLIENT_ID=%s\n' "$GOOGLE_WEB_CLIENT_ID" >> supabase/keys.env
@@ -309,6 +330,7 @@ jobs:
             echo "apk         ${{ steps.apk.outcome }} $( [ -f "$apk" ] && stat -c %s "$apk" ) bytes"
             echo "aab         ${{ steps.aab.outcome }} $( [ -f "$aab" ] && stat -c %s "$aab" ) bytes"
             echo "paywall key $( [ -n "$REVENUECAT_ANDROID_KEY" ] && echo yes || echo no )"
+            echo "ads $( [ -n "$ADMOB_ANDROID_APP_ID" ] && [ -n "$ADMOB_ANDROID_INTERSTITIAL" ] && echo yes || echo no )"
             echo "download    https://github.com/${GITHUB_REPOSITORY}/releases/latest/download/OUTREPD.apk"
             echo "firebase    ${{ steps.firebase.outputs.ready }} — ${{ steps.firebase.outputs.note }}"
             if [ -f "$RUNNER_TEMP/cert.txt" ]; then

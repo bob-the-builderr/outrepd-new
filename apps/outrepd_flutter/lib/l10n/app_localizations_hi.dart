@@ -1760,7 +1760,7 @@ class LHi extends L {
   }
 
   @override
-  String get paywallStart => 'चढ़ाई शुरू करें';
+  String get paywallStart => 'विज्ञापन हटाएँ';
 
   @override
   String get paywallRenewsPlay => 'रद्द करने तक अपने-आप रिन्यू होता है। Google Play में कभी भी रद्द करें।';
@@ -2802,4 +2802,34 @@ class LHi extends L {
   String obCalibrationRule(String gold) {
     return '${gold} से नीचे जाएँ, फिर ऊपर वाली से ऊपर आएँ';
   }
+
+  @override
+  String get proTitleTop => 'कोई विज्ञापन नहीं।';
+
+  @override
+  String get proTitleBottom => 'बस पुश-अप्स।';
+
+  @override
+  String get proBody => 'हर मैच मुफ़्त रहता है। Pro सबमें से विज्ञापन हटा देता है।';
+
+  @override
+  String get proThanks => 'विज्ञापन बंद। Pro लेने के लिए धन्यवाद।';
+
+  @override
+  String get removeAds => 'विज्ञापन हटाएँ';
+
+  @override
+  String get adNotice => 'बाहर जाने पर एक विज्ञापन चलेगा';
+
+  @override
+  String get adAskTitle => 'विज्ञापन outrepd को मुफ़्त रखते हैं';
+
+  @override
+  String get adAskBody => 'अब आपका iPhone पूछेगा कि क्या ऐप्स विज्ञापन चुनने के लिए आपकी गतिविधि इस्तेमाल कर सकते हैं। हाँ कहें तो विज्ञापन आपके हिसाब के होंगे; ना कहें तो भी विज्ञापन दिखेंगे, बस कम काम के।';
+
+  @override
+  String get adAskCamera => 'आपका कैमरा इसका हिस्सा कभी नहीं होता: आप जो भी चुनें, बॉडी ट्रैकिंग इसी फ़ोन पर रहती है।';
+
+  @override
+  String get adAskRemove => 'इसके बजाय विज्ञापन हटाएँ';
 }

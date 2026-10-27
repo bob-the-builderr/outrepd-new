@@ -552,7 +552,7 @@
   "paywallPerWeek": "{price}/settimana",
   "paywallEveryWeek": "a settimana",
   "paywallSave": "Risparmia il {percent}%",
-  "paywallStart": "Inizia la scalata",
+  "paywallStart": "Rimuovi pubblicità",
   "paywallRenewsPlay": "Si rinnova automaticamente fino alla disdetta. Disdici quando vuoi da Google Play.",
   "paywallRenewsApple": "Si rinnova automaticamente fino alla disdetta. Disdici quando vuoi dalle impostazioni del tuo account Apple.",
   "paywallRestore": "Ripristina",
@@ -841,5 +841,15 @@
   "obAdventureBody": "Avventura ha 140 livelli di sfide a flessioni, ognuno più difficile del precedente.",
   "obCountedHere": "Contato su questo telefono",
   "obGoldLine": "linea dorata",
-  "obCalibrationRule": "Scendi oltre la {gold}, torna su oltre quella in alto"
+  "obCalibrationRule": "Scendi oltre la {gold}, torna su oltre quella in alto",
+  "proTitleTop": "Niente pubblicità.",
+  "proTitleBottom": "Solo flessioni.",
+  "proBody": "Ogni partita resta gratis. Pro toglie la pubblicità da tutte.",
+  "proThanks": "Pubblicità disattivata. Grazie per essere passato a Pro.",
+  "removeAds": "Rimuovi pubblicità",
+  "adNotice": "Uscendo parte una pubblicità",
+  "adAskTitle": "La pubblicità tiene outrepd gratis",
+  "adAskBody": "Ora il tuo iPhone ti chiederà se le app possono usare la tua attività per scegliere le pubblicità. Se dici sì le pubblicità ti somiglieranno di più; se dici no le vedrai comunque, solo meno pertinenti.",
+  "adAskCamera": "La fotocamera non c’entra mai: il tracciamento del corpo resta su questo telefono, qualunque cosa scegli.",
+  "adAskRemove": "Piuttosto rimuovi la pubblicità"
 }

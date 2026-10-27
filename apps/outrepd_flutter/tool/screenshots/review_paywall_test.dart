@@ -107,7 +107,8 @@ void main() {
     tester.view.physicalSize = const Size(1320, 2868);
     tester.view.devicePixelRatio = 3;
     addTearDown(tester.view.reset);
-    Subscription.instance.use(_Store());
+    final store = _Store();
+    Subscription.instance.use(store);
 
     await tester.pumpWidget(
       MaterialApp(
@@ -121,14 +122,16 @@ void main() {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: L.supportedLocales,
-        home: const PaywallGate(child: SizedBox()),
+        // Pro as it opens over the app.
+        home: PaywallScreen(store: store, onUnlocked: (_) {}),
       ),
     );
     for (var i = 0; i < 6; i++) {
       await tester.pump(const Duration(milliseconds: 50));
     }
     // Apple's wording, not Google Play's, and the trial's terms.
-    expect(find.byKey(const Key('trialTimeline')), findsOneWidget);
+    expect(find.byKey(const Key('paywallTitle')), findsOneWidget);
+    expect(find.text('Start my 3-day free trial'), findsOneWidget);
     expect(find.textContaining('Apple account'), findsWidgets);
 
     await expectLater(

@@ -5,3 +5,4 @@
 "NSPhotoLibraryAddUsageDescription" = "Simpan kartu berbagimu ke foto.";
 "NSHealthShareUsageDescription" = "outrepd menyimpan setiap set ke Apple Health sebagai latihan, jika kamu menyalakannya di Pengaturan. Tidak ada yang dibaca.";
 "NSHealthUpdateUsageDescription" = "outrepd menyimpan setiap set ke Apple Health sebagai latihan, jika kamu menyalakannya di Pengaturan.";
+"NSUserTrackingUsageDescription" = "Agar iklan setelah pertandingan lebih sesuai dengan seleramu. outrepd tetap gratis apa pun pilihanmu.";

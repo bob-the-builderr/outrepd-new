@@ -552,7 +552,7 @@
   "paywallPerWeek": "주당 {price}",
   "paywallEveryWeek": "매주",
   "paywallSave": "{percent}% 절약",
-  "paywallStart": "등반 시작",
+  "paywallStart": "광고 제거",
   "paywallRenewsPlay": "해지할 때까지 자동으로 갱신됩니다. Google Play에서 언제든지 해지할 수 있습니다.",
   "paywallRenewsApple": "해지할 때까지 자동으로 갱신됩니다. Apple 계정 설정에서 언제든지 해지할 수 있습니다.",
   "paywallRestore": "복원",
@@ -841,5 +841,15 @@
   "obAdventureBody": "어드벤처에는 팔굽혀펴기 대결이 140레벨 있어요. 레벨마다 점점 어려워져요.",
   "obCountedHere": "이 휴대폰에서 세요",
   "obGoldLine": "금색 선",
-  "obCalibrationRule": "{gold} 아래로 내려갔다가 위쪽 선 위로 올라오기"
+  "obCalibrationRule": "{gold} 아래로 내려갔다가 위쪽 선 위로 올라오기",
+  "proTitleTop": "광고 없이.",
+  "proTitleBottom": "팔굽혀펴기만.",
+  "proBody": "모든 매치는 계속 무료예요. Pro는 모든 매치에서 광고를 없애요.",
+  "proThanks": "광고가 꺼졌어요. Pro를 선택해 주셔서 고마워요.",
+  "removeAds": "광고 제거",
+  "adNotice": "나가면 광고가 나와요",
+  "adAskTitle": "광고 덕분에 outrepd는 무료예요",
+  "adAskBody": "이제 iPhone이 앱이 광고를 고르는 데 내 활동을 써도 되는지 물어봐요. 허용하면 나에게 더 맞는 광고가 나오고, 허용하지 않아도 광고는 나오지만 덜 관련 있는 광고예요.",
+  "adAskCamera": "카메라는 전혀 관련 없어요. 무엇을 선택하든 몸 추적은 이 휴대폰 안에서만 이뤄져요.",
+  "adAskRemove": "대신 광고 제거하기"
 }

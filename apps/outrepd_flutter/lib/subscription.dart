@@ -1,8 +1,8 @@
 /// The subscription: whether this account has paid, and the way to pay.
 ///
-/// The whole app sits behind it. [PaywallGate] shows the paywall to any
-/// account without the Pro entitlement, and there is no way past it but
-/// paying or restoring.
+/// Pro takes the ads out (lib/ads.dart). The app itself is free since
+/// 2026-10-28; until then the whole of it sat behind this, with no way past
+/// but paying or restoring. Pro is offered from screens/paywall.dart.
 ///
 /// RevenueCat does the store work. Everything the rest of the app touches goes
 /// through [Storefront], so the screens and their tests never see a store SDK:

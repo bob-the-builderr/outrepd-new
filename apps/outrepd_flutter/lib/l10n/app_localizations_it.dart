@@ -1765,7 +1765,7 @@ class LIt extends L {
   }
 
   @override
-  String get paywallStart => 'Inizia la scalata';
+  String get paywallStart => 'Rimuovi pubblicità';
 
   @override
   String get paywallRenewsPlay => 'Si rinnova automaticamente fino alla disdetta. Disdici quando vuoi da Google Play.';
@@ -2807,4 +2807,34 @@ class LIt extends L {
   String obCalibrationRule(String gold) {
     return 'Scendi oltre la ${gold}, torna su oltre quella in alto';
   }
+
+  @override
+  String get proTitleTop => 'Niente pubblicità.';
+
+  @override
+  String get proTitleBottom => 'Solo flessioni.';
+
+  @override
+  String get proBody => 'Ogni partita resta gratis. Pro toglie la pubblicità da tutte.';
+
+  @override
+  String get proThanks => 'Pubblicità disattivata. Grazie per essere passato a Pro.';
+
+  @override
+  String get removeAds => 'Rimuovi pubblicità';
+
+  @override
+  String get adNotice => 'Uscendo parte una pubblicità';
+
+  @override
+  String get adAskTitle => 'La pubblicità tiene outrepd gratis';
+
+  @override
+  String get adAskBody => 'Ora il tuo iPhone ti chiederà se le app possono usare la tua attività per scegliere le pubblicità. Se dici sì le pubblicità ti somiglieranno di più; se dici no le vedrai comunque, solo meno pertinenti.';
+
+  @override
+  String get adAskCamera => 'La fotocamera non c’entra mai: il tracciamento del corpo resta su questo telefono, qualunque cosa scegli.';
+
+  @override
+  String get adAskRemove => 'Piuttosto rimuovi la pubblicità';
 }

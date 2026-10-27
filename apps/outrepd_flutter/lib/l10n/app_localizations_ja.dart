@@ -1722,7 +1722,7 @@ class LJa extends L {
   }
 
   @override
-  String get paywallStart => '登りはじめる';
+  String get paywallStart => '広告を消す';
 
   @override
   String get paywallRenewsPlay => '解約するまで自動更新されます。Google Playからいつでも解約できます。';
@@ -2764,4 +2764,34 @@ class LJa extends L {
   String obCalibrationRule(String gold) {
     return '${gold}より下まで下げて、上のラインより上まで戻る';
   }
+
+  @override
+  String get proTitleTop => '広告なし。';
+
+  @override
+  String get proTitleBottom => '腕立てだけ。';
+
+  @override
+  String get proBody => '対戦はすべて無料のまま。Proなら、どの対戦の後にも広告が出ません。';
+
+  @override
+  String get proThanks => '広告をオフにしました。Proへようこそ。';
+
+  @override
+  String get removeAds => '広告を消す';
+
+  @override
+  String get adNotice => 'この画面を出ると広告が流れます';
+
+  @override
+  String get adAskTitle => '広告でoutrepdは無料です';
+
+  @override
+  String get adAskBody => 'このあとiPhoneが、広告選びのためにアプリがあなたのアクティビティを使ってよいか尋ねます。許可すると広告があなた向けになり、許可しなくても広告は出ますが、関連性が低くなります。';
+
+  @override
+  String get adAskCamera => 'カメラは関係ありません。どちらを選んでも、体のトラッキングはこのスマホの中だけで行われます。';
+
+  @override
+  String get adAskRemove => '広告を消す方にする';
 }

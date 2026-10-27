@@ -5,3 +5,4 @@
 "NSPhotoLibraryAddUsageDescription" = "공유 카드를 사진에 저장합니다.";
 "NSHealthShareUsageDescription" = "설정에서 켜면 outrepd가 세트마다 건강 앱에 운동으로 저장해요. 아무것도 읽지 않아요.";
 "NSHealthUpdateUsageDescription" = "설정에서 켜면 outrepd가 세트마다 건강 앱에 운동으로 저장해요.";
+"NSUserTrackingUsageDescription" = "매치 후 보이는 광고가 취향에 맞도록 하기 위해서예요. 어느 쪽을 선택해도 outrepd는 무료예요.";

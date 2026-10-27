@@ -5044,6 +5044,66 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Down past the {gold}, back up past the top one'**
   String obCalibrationRule(String gold);
+
+  /// No description provided for @proTitleTop.
+  ///
+  /// In en, this message translates to:
+  /// **'No ads.'**
+  String get proTitleTop;
+
+  /// No description provided for @proTitleBottom.
+  ///
+  /// In en, this message translates to:
+  /// **'Just push-ups.'**
+  String get proTitleBottom;
+
+  /// No description provided for @proBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Every match stays free. Pro takes the ads out of all of them.'**
+  String get proBody;
+
+  /// No description provided for @proThanks.
+  ///
+  /// In en, this message translates to:
+  /// **'Ads are off. Thanks for going Pro.'**
+  String get proThanks;
+
+  /// No description provided for @removeAds.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove ads'**
+  String get removeAds;
+
+  /// No description provided for @adNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'An ad plays when you leave'**
+  String get adNotice;
+
+  /// No description provided for @adAskTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ads keep outrepd free'**
+  String get adAskTitle;
+
+  /// No description provided for @adAskBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Next, your iPhone asks whether apps may use your activity to choose ads. Say yes and the ads fit you better; say no and you still get ads, just less relevant ones.'**
+  String get adAskBody;
+
+  /// No description provided for @adAskCamera.
+  ///
+  /// In en, this message translates to:
+  /// **'Your camera is never part of it: body tracking stays on this phone, whatever you choose.'**
+  String get adAskCamera;
+
+  /// No description provided for @adAskRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove ads instead'**
+  String get adAskRemove;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

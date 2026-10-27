@@ -5,3 +5,4 @@
 "NSPhotoLibraryAddUsageDescription" = "Save your share card to your photos.";
 "NSHealthShareUsageDescription" = "outrepd saves each set you lift to Apple Health as a workout, when you turn it on in Settings. It reads nothing.";
 "NSHealthUpdateUsageDescription" = "outrepd saves each set you lift to Apple Health as a workout, when you turn it on in Settings.";
+"NSUserTrackingUsageDescription" = "Lets the ads you see after a match fit what you like. outrepd stays free either way.";

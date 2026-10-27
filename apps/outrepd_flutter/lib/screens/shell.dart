@@ -9,12 +9,12 @@ import '../career.dart';
 import '../deep_links.dart';
 import '../motion.dart';
 import '../push.dart';
+import '../subscription.dart';
 import '../theme.dart';
 import 'friends.dart';
 import 'live_invite.dart';
 import 'match.dart';
 import 'notifications.dart';
-import 'paywall.dart';
 import 'profile.dart';
 import 'ranks.dart';
 import 'season_over.dart';
@@ -89,6 +89,11 @@ class _AppShellState extends State<AppShell> {
     super.initState();
     shownTab.value = _index;
     _countFriendRequests();
+    // Every way into the app lands here — the end of onboarding, a returning
+    // launch, a login — so this is where the subscription is asked after:
+    // whether this account has Pro, and so whether it sees ads.
+    final subscription = Subscription.instance;
+    if (subscription.enabled) unawaited(subscription.refresh(backend.me?.id));
   }
 
   @override
@@ -122,25 +127,21 @@ class _AppShellState extends State<AppShell> {
     // there is no server to have sent one — so the badge above it must agree.
     final friendRequestCount = backend.available ? _friendRequests : 0;
 
-    // Every way into the app lands here — the end of onboarding, a returning
-    // launch, a login — so this is where the subscription is asked for.
-    return PaywallGate(
-      child: _Inside(
-        child: Scaffold(
-          backgroundColor: context.colors.background,
-          // One listener for all four tabs. Every screen under here reads the
-          // account, so a duel that changes it has to redraw them — otherwise
-          // the profile still shows last week's LP until something else
-          // happens to rebuild it.
-          body: ListenableBuilder(
-            listenable: Career.instance,
-            builder: (context, _) => _TabStack(index: _index, children: _tabs),
-          ),
-          bottomNavigationBar: AppBottomNav(
-            currentIndex: _index,
-            onTap: _select,
-            friendRequestCount: friendRequestCount,
-          ),
+    return _Inside(
+      child: Scaffold(
+        backgroundColor: context.colors.background,
+        // One listener for all four tabs. Every screen under here reads the
+        // account, so a duel that changes it has to redraw them — otherwise
+        // the profile still shows last week's LP until something else
+        // happens to rebuild it.
+        body: ListenableBuilder(
+          listenable: Career.instance,
+          builder: (context, _) => _TabStack(index: _index, children: _tabs),
+        ),
+        bottomNavigationBar: AppBottomNav(
+          currentIndex: _index,
+          onTap: _select,
+          friendRequestCount: friendRequestCount,
         ),
       ),
     );

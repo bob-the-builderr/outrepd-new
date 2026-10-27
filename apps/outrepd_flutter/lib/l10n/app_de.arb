@@ -552,7 +552,7 @@
   "paywallPerWeek": "{price}/Woche",
   "paywallEveryWeek": "pro Woche",
   "paywallSave": "{percent} % sparen",
-  "paywallStart": "Aufstieg starten",
+  "paywallStart": "Werbung entfernen",
   "paywallRenewsPlay": "Verlängert sich automatisch bis zur Kündigung. Jederzeit in Google Play kündbar.",
   "paywallRenewsApple": "Verlängert sich automatisch bis zur Kündigung. Jederzeit in den Einstellungen deines Apple-Accounts kündbar.",
   "paywallRestore": "Wiederherstellen",
@@ -841,5 +841,15 @@
   "obAdventureBody": "Abenteuer hat 140 Level mit Liegestütz-Kämpfen, jedes schwerer als das davor.",
   "obCountedHere": "Gezählt auf diesem Handy",
   "obGoldLine": "goldene Linie",
-  "obCalibrationRule": "Runter unter die {gold}, wieder hoch über die obere"
+  "obCalibrationRule": "Runter unter die {gold}, wieder hoch über die obere",
+  "proTitleTop": "Keine Werbung.",
+  "proTitleBottom": "Nur Liegestütze.",
+  "proBody": "Jedes Match bleibt kostenlos. Pro nimmt die Werbung aus allen raus.",
+  "proThanks": "Werbung ist aus. Danke für Pro.",
+  "removeAds": "Werbung entfernen",
+  "adNotice": "Beim Verlassen kommt Werbung",
+  "adAskTitle": "Werbung hält outrepd kostenlos",
+  "adAskBody": "Gleich fragt dein iPhone, ob Apps deine Aktivität für die Auswahl von Werbung nutzen dürfen. Mit Ja passt die Werbung besser zu dir; mit Nein siehst du trotzdem Werbung, nur weniger passende.",
+  "adAskCamera": "Deine Kamera hat damit nichts zu tun: Das Körpertracking bleibt auf diesem Handy, egal wie du dich entscheidest.",
+  "adAskRemove": "Lieber Werbung entfernen"
 }

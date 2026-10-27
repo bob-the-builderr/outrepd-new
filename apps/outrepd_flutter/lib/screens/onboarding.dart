@@ -39,7 +39,6 @@ import '../tier_badge.dart';
 import '../widgets.dart';
 import 'auth_entry.dart';
 import 'legal_line.dart';
-import 'paywall.dart';
 import 'shell.dart';
 import 'welcome_inside.dart';
 
@@ -124,17 +123,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (!mounted) return;
     // A brand-new account sees what else there is before its first duel:
     // titles, and a friend code that is real now that the account exists.
-    //
-    // Behind the paywall, which comes straight after signing up: the welcome
-    // is to the app, and the app is the subscription. The shell's own gate
-    // then lets a subscriber straight through.
+    // Nothing to pay first: the app is free, and Pro only takes the ads out.
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (_) => PaywallGate(
-          child: WelcomeInsideScreen(
-            onDone: (inner) => Navigator.of(inner).pushReplacement(
-              MaterialPageRoute(builder: (_) => const AppShell()),
-            ),
+        builder: (_) => WelcomeInsideScreen(
+          onDone: (inner) => Navigator.of(inner).pushReplacement(
+            MaterialPageRoute(builder: (_) => const AppShell()),
           ),
         ),
       ),

@@ -1,6 +1,6 @@
-/// The paywall: the whole app is behind it, so the ways through it — paying,
-/// restoring — and the things it must offer without payment are each
-/// checked here against a fake store.
+/// Pro, which takes the ads out of a free app: opened over the app and closed
+/// again, the ways into it — paying, restoring — and what the stores ask it to
+/// show, each checked here against a fake store.
 library;
 
 import 'dart:async';
@@ -15,7 +15,6 @@ import 'package:outrepd/l10n/app_localizations.dart';
 import 'package:outrepd/screens/paywall.dart';
 import 'package:outrepd/subscription.dart';
 import 'package:outrepd/theme.dart';
-import 'package:outrepd/tier_badge.dart';
 
 const _weekly = Plan(
   period: PlanPeriod.weekly,
@@ -121,6 +120,28 @@ class _SyncCounter extends NoBackend {
   }
 }
 
+/// The app, free, with the one way into Pro the tests need: a button that
+/// does what "Remove ads" under a result does.
+class _Host extends StatelessWidget {
+  const _Host();
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    body: Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text('inside the app'),
+          TextButton(
+            onPressed: () => openPro(context),
+            child: const Text('open pro'),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
 Widget _app({Locale locale = const Locale('en'), double scale = 1}) =>
     MaterialApp(
       theme: buildTheme(Brightness.dark),
@@ -138,89 +159,95 @@ Widget _app({Locale locale = const Locale('en'), double scale = 1}) =>
         ),
         child: child!,
       ),
-      home: const PaywallGate(child: Text('inside the app')),
+      home: const _Host(),
     );
 
-/// A small phone: the paywall has to fit the way to pay on one without
-/// scrolling to it.
+/// A small phone: Pro has to fit the way to pay on one without scrolling
+/// to it.
 void _phone(WidgetTester tester) {
   tester.view.physicalSize = const Size(360 * 3, 720 * 3);
   tester.view.devicePixelRatio = 3;
   addTearDown(tester.view.reset);
 }
 
-/// Lets the gate hear from the store and the plans load. Not pumpAndSettle:
-/// a spinner is on screen while either is pending and it never settles.
+/// Lets the store answer and the plans load. Not pumpAndSettle: a spinner is
+/// on screen while either is pending and it never settles.
 Future<void> _settle(WidgetTester tester) async {
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < 8; i++) {
     await tester.pump(const Duration(milliseconds: 50));
   }
+}
+
+/// The app, and Pro opened over it.
+Future<void> _openPro(
+  WidgetTester tester, {
+  Locale locale = const Locale('en'),
+  double scale = 1,
+}) async {
+  await tester.pumpWidget(_app(locale: locale, scale: scale));
+  await tester.tap(find.text('open pro'));
+  await _settle(tester);
 }
 
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
   tearDown(() => Subscription.instance.use(null));
 
-  group('the gate', () {
-    testWidgets('a build with no store has no paywall', (tester) async {
-      Subscription.instance.use(null);
-      await tester.pumpWidget(_app());
-      expect(find.text('inside the app'), findsOneWidget);
-      expect(find.byKey(const Key('paywallTitle')), findsNothing);
-    });
-
-    testWidgets('an account with the subscription goes straight in',
-        (tester) async {
-      Subscription.instance.use(_FakeStore(active: true));
-      _phone(tester);
-      await tester.pumpWidget(_app());
-      await _settle(tester);
-      expect(find.text('inside the app'), findsOneWidget);
-      expect(find.byKey(const Key('paywallTitle')), findsNothing);
-    });
-
-    testWidgets('an account without it sees only the paywall', (tester) async {
+  group('a free app', () {
+    testWidgets('nothing stands in front of it', (tester) async {
       Subscription.instance.use(_FakeStore());
       _phone(tester);
       await tester.pumpWidget(_app());
       await _settle(tester);
-      expect(find.text('inside the app'), findsNothing);
-      expect(find.text('Climb from Iron to Master'), findsOneWidget);
-      // No way past it: no close button, no skip.
-      expect(find.byType(CloseButton), findsNothing);
-      expect(find.byType(BackButton), findsNothing);
-      expect(find.textContaining('Skip'), findsNothing);
+      expect(find.text('inside the app'), findsOneWidget);
+      expect(find.byKey(const Key('paywallTitle')), findsNothing);
     });
 
-    testWidgets('the store is started once, however often the gate is built',
-        (tester) async {
-      final store = _FakeStore();
-      Subscription.instance.use(store);
+    testWidgets('Pro says what it is, and closes again', (tester) async {
+      Subscription.instance.use(_FakeStore());
       _phone(tester);
-      await tester.pumpWidget(_app());
-      await tester.pumpWidget(const SizedBox());
-      await tester.pumpWidget(_app());
+      await _openPro(tester);
+
+      expect(find.text('No ads.\nJust push-ups.'), findsOneWidget);
+      expect(
+        find.text(
+          'Every match stays free. Pro takes the ads out of all of them.',
+        ),
+        findsOneWidget,
+      );
+      await tester.tap(find.byKey(const Key('proClose')));
       await _settle(tester);
-      expect(store.starts, 1);
+      expect(find.byKey(const Key('paywallTitle')), findsNothing);
+      expect(find.text('inside the app'), findsOneWidget);
+    });
+
+    testWidgets('a build with no store has nothing to open', (tester) async {
+      Subscription.instance.use(null);
+      _phone(tester);
+      await _openPro(tester);
+      expect(find.byKey(const Key('paywallTitle')), findsNothing);
+    });
+
+    testWidgets('an account with Pro is not offered it again',
+        (tester) async {
+      final store = _FakeStore(active: true);
+      Subscription.instance.use(store);
+      await Subscription.instance.refresh(null);
+      _phone(tester);
+      await _openPro(tester);
+      expect(find.byKey(const Key('paywallTitle')), findsNothing);
     });
   });
 
   group('the free trial', () {
-    testWidgets('says the first days are free, when the charge comes, and '
-        'what it will be', (tester) async {
+    testWidgets('says the first days are free and what comes after',
+        (tester) async {
       Subscription.instance.use(
         _FakeStore()..plansGiven = const [_weeklyTrial, _yearlyTrial],
       );
       _phone(tester);
-      await tester.pumpWidget(_app());
-      await _settle(tester);
+      await _openPro(tester);
 
-      expect(find.text('Climb from Iron to Master'), findsOneWidget);
-      expect(find.text('Camera-judged duels'), findsOneWidget);
-      expect(find.byKey(const Key('trialTimeline')), findsOneWidget);
-      expect(find.text('Today'), findsOneWidget);
-      expect(find.text('Day 2'), findsOneWidget);
-      expect(find.text('Day 3'), findsOneWidget);
       expect(find.text('3 days free'), findsNWidgets(2));
       expect(find.text('Start my 3-day free trial'), findsOneWidget);
       expect(
@@ -233,47 +260,37 @@ void main() {
       expect(find.text(r'No payment now · then $4.99/week'), findsOneWidget);
     });
 
-    testWidgets('a plan this account has no trial on promises no free days, '
-        'on the same paywall', (tester) async {
+    testWidgets('a plan this account has no trial on promises no free days',
+        (tester) async {
       // The yearly plan, chosen first, without a trial; the weekly with one.
       Subscription.instance.use(
         _FakeStore()..plansGiven = const [_weeklyTrial, _yearly],
       );
       _phone(tester);
-      await tester.pumpWidget(_app());
-      await _settle(tester);
+      await _openPro(tester);
 
-      expect(find.text('Climb from Iron to Master'), findsOneWidget);
-      expect(find.text('Camera-judged duels'), findsOneWidget);
-      expect(find.text('Start climbing'), findsOneWidget);
+      expect(find.text('Remove ads'), findsOneWidget);
       expect(find.byKey(const Key('trialThen')), findsNothing);
       expect(find.text('3 days free'), findsOneWidget);
-      // Not the crests: there is one paywall, and choosing a plan does not
-      // swap it for another.
-      expect(find.byType(TierBadge), findsNothing);
 
       await tester.tap(find.byKey(const Key('planWeekly')));
       await tester.pump();
-      expect(find.byKey(const Key('trialTimeline')), findsOneWidget);
       expect(find.text('Start my 3-day free trial'), findsOneWidget);
-      expect(find.byType(TierBadge), findsNothing);
     });
 
-    testWidgets('nothing is promised before the store has said whether the '
-        'days are still free', (tester) async {
+    testWidgets('no free days are claimed before the store has said',
+        (tester) async {
       final plans = Completer<List<Plan>>();
       Subscription.instance.use(_FakeStore()..plansPending = plans);
       _phone(tester);
-      await tester.pumpWidget(_app());
-      await _settle(tester);
+      await _openPro(tester);
 
-      expect(find.byKey(const Key('paywallTitle')), findsNothing);
-      expect(find.byKey(const Key('trialTimeline')), findsNothing);
-      expect(find.byType(TierBadge), findsNothing);
+      expect(find.text('3 days free'), findsNothing);
+      expect(find.text('Start my 3-day free trial'), findsNothing);
 
       plans.complete(const [_weeklyTrial, _yearlyTrial]);
       await _settle(tester);
-      expect(find.byKey(const Key('trialTimeline')), findsOneWidget);
+      expect(find.text('Start my 3-day free trial'), findsOneWidget);
     });
   });
 
@@ -282,8 +299,7 @@ void main() {
         (tester) async {
       Subscription.instance.use(_FakeStore());
       _phone(tester);
-      await tester.pumpWidget(_app());
-      await _settle(tester);
+      await _openPro(tester);
 
       expect(find.text(r'$39.99'), findsOneWidget);
       expect(find.text(r'$4.99'), findsOneWidget);
@@ -303,8 +319,7 @@ void main() {
       final store = _FakeStore()..nextOutcome = BuyOutcome.cancelled;
       Subscription.instance.use(store);
       _phone(tester);
-      await tester.pumpWidget(_app());
-      await _settle(tester);
+      await _openPro(tester);
 
       await tester.tap(find.byKey(const Key('paywallBuy')));
       await _settle(tester);
@@ -322,8 +337,7 @@ void main() {
       final store = _FakeStore()..failPlans = true;
       Subscription.instance.use(store);
       _phone(tester);
-      await tester.pumpWidget(_app());
-      await _settle(tester);
+      await _openPro(tester);
 
       expect(find.byKey(const Key('paywallRetry')), findsOneWidget);
       // The store's own words stay out of sight until somebody asks for
@@ -333,10 +347,8 @@ void main() {
       await tester.pump();
       expect(find.byKey(const Key('paywallLoadError')), findsOneWidget);
       expect(find.textContaining('offline'), findsOneWidget);
-      // Still the one paywall, with what it opens, and no free days claimed.
+      // Still Pro, saying what it is.
       expect(find.byKey(const Key('paywallTitle')), findsOneWidget);
-      expect(find.byKey(const Key('trialTimeline')), findsNothing);
-      expect(find.byType(TierBadge), findsNothing);
       store.failPlans = false;
       await tester.tap(find.byKey(const Key('paywallRetry')));
       await _settle(tester);
@@ -346,32 +358,33 @@ void main() {
   });
 
   group('buying', () {
-    testWidgets('a purchase opens the app', (tester) async {
+    testWidgets('a purchase closes Pro and says the ads are off',
+        (tester) async {
       Subscription.instance.use(_FakeStore());
       _phone(tester);
-      await tester.pumpWidget(_app());
-      await _settle(tester);
+      await _openPro(tester);
 
       await tester.tap(find.byKey(const Key('paywallBuy')));
       await _settle(tester);
+      expect(find.byKey(const Key('paywallTitle')), findsNothing);
       expect(find.text('inside the app'), findsOneWidget);
+      expect(find.text('Ads are off. Thanks for going Pro.'), findsOneWidget);
+      expect(Subscription.instance.active, isTrue);
     });
 
     testWidgets('a purchase has the server catch up at once', (tester) async {
-      // The server lets a duel be played on its own copy of the
-      // subscription; RevenueCat's webhook fills it in, but seconds late.
+      // RevenueCat's webhook fills in the server's copy of the subscription,
+      // but seconds late.
       final server = _SyncCounter();
       backend = server;
       addTearDown(() => backend = const NoBackend());
       Subscription.instance.use(_FakeStore());
       _phone(tester);
-      await tester.pumpWidget(_app());
-      await _settle(tester);
+      await _openPro(tester);
       expect(server.syncs, 0, reason: 'nothing bought yet');
 
       await tester.tap(find.byKey(const Key('paywallBuy')));
       await _settle(tester);
-      expect(find.text('inside the app'), findsOneWidget);
       expect(server.syncs, 1);
     });
 
@@ -380,12 +393,11 @@ void main() {
       final store = _FakeStore()..nextOutcome = BuyOutcome.cancelled;
       Subscription.instance.use(store);
       _phone(tester);
-      await tester.pumpWidget(_app());
-      await _settle(tester);
+      await _openPro(tester);
 
       await tester.tap(find.byKey(const Key('paywallBuy')));
       await _settle(tester);
-      expect(find.text('inside the app'), findsNothing);
+      expect(find.byKey(const Key('paywallTitle')), findsOneWidget);
       expect(find.byKey(const Key('paywallNote')), findsNothing);
     });
 
@@ -393,22 +405,20 @@ void main() {
       final store = _FakeStore()..nextOutcome = BuyOutcome.failed;
       Subscription.instance.use(store);
       _phone(tester);
-      await tester.pumpWidget(_app());
-      await _settle(tester);
+      await _openPro(tester);
 
       await tester.tap(find.byKey(const Key('paywallBuy')));
       await _settle(tester);
       expect(find.text("The purchase didn't go through. Try again."),
           findsOneWidget);
-      expect(find.text('inside the app'), findsNothing);
+      expect(find.byKey(const Key('paywallTitle')), findsOneWidget);
     });
 
     testWidgets('a pending payment says it is pending', (tester) async {
       final store = _FakeStore()..nextOutcome = BuyOutcome.pending;
       Subscription.instance.use(store);
       _phone(tester);
-      await tester.pumpWidget(_app());
-      await _settle(tester);
+      await _openPro(tester);
 
       await tester.tap(find.byKey(const Key('paywallBuy')));
       await _settle(tester);
@@ -421,37 +431,31 @@ void main() {
       final store = _FakeStore()..restoreFinds = true;
       Subscription.instance.use(store);
       _phone(tester);
-      await tester.pumpWidget(_app());
-      await _settle(tester);
+      await _openPro(tester);
 
       await tester.tap(find.byKey(const Key('paywallRestore')));
       await _settle(tester);
-      expect(find.text('inside the app'), findsOneWidget);
+      expect(find.byKey(const Key('paywallTitle')), findsNothing);
+      expect(Subscription.instance.active, isTrue);
     });
 
     testWidgets('restore with nothing to restore says so', (tester) async {
       Subscription.instance.use(_FakeStore());
       _phone(tester);
-      await tester.pumpWidget(_app());
-      await _settle(tester);
+      await _openPro(tester);
 
       await tester.tap(find.byKey(const Key('paywallRestore')));
       await _settle(tester);
       expect(find.text('No subscription found to restore.'), findsOneWidget);
     });
 
-    testWidgets('the terms, the privacy policy and account deletion are there',
-        (tester) async {
+    testWidgets('the terms and the privacy policy are there', (tester) async {
       Subscription.instance.use(_FakeStore());
       _phone(tester);
-      await tester.pumpWidget(_app());
-      await _settle(tester);
+      await _openPro(tester);
 
       expect(find.text('Terms'), findsOneWidget);
       expect(find.text('Privacy'), findsOneWidget);
-      await tester.tap(find.byKey(const Key('paywallAccount')));
-      await _settle(tester);
-      expect(find.byKey(const Key('paywallDeleteAccount')), findsOneWidget);
     });
   });
 
@@ -470,8 +474,7 @@ void main() {
                   : const [_weekly, _yearly],
           );
           _phone(tester);
-          await tester.pumpWidget(_app(locale: Locale(code), scale: 1.3));
-          await _settle(tester);
+          await _openPro(tester, locale: Locale(code), scale: 1.3);
           expect(tester.takeException(), isNull);
 
           // The button is on screen without scrolling.

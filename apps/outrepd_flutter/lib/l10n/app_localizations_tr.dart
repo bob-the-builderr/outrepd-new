@@ -1755,7 +1755,7 @@ class LTr extends L {
   }
 
   @override
-  String get paywallStart => 'Tırmanmaya başla';
+  String get paywallStart => 'Reklamları kaldır';
 
   @override
   String get paywallRenewsPlay => 'İptal edene kadar otomatik olarak yenilenir. Google Play\'den istediğin zaman iptal et.';
@@ -2797,4 +2797,34 @@ class LTr extends L {
   String obCalibrationRule(String gold) {
     return '${gold}nin altına in, üstteki çizginin üstüne çık';
   }
+
+  @override
+  String get proTitleTop => 'Reklam yok.';
+
+  @override
+  String get proTitleBottom => 'Sadece şınav.';
+
+  @override
+  String get proBody => 'Her maç ücretsiz kalır. Pro hepsinden reklamları kaldırır.';
+
+  @override
+  String get proThanks => 'Reklamlar kapandı. Pro’ya geçtiğin için teşekkürler.';
+
+  @override
+  String get removeAds => 'Reklamları kaldır';
+
+  @override
+  String get adNotice => 'Çıkınca bir reklam oynar';
+
+  @override
+  String get adAskTitle => 'Reklamlar outrepd’yi ücretsiz tutar';
+
+  @override
+  String get adAskBody => 'Şimdi iPhone’un, uygulamaların reklam seçmek için etkinliğini kullanıp kullanamayacağını soracak. Evet dersen reklamlar sana daha uygun olur; hayır dersen yine reklam görürsün, sadece daha az ilgili olanları.';
+
+  @override
+  String get adAskCamera => 'Kameranın bununla hiçbir ilgisi yok: ne seçersen seç, vücut takibi bu telefonda kalır.';
+
+  @override
+  String get adAskRemove => 'Bunun yerine reklamları kaldır';
 }

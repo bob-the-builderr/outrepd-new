@@ -1713,7 +1713,7 @@ class LZh extends L {
   }
 
   @override
-  String get paywallStart => '开始攀登';
+  String get paywallStart => '去除广告';
 
   @override
   String get paywallRenewsPlay => '取消前自动续订。可随时在 Google Play 中取消。';
@@ -2755,4 +2755,34 @@ class LZh extends L {
   String obCalibrationRule(String gold) {
     return '下到${gold}以下，再起到上线以上';
   }
+
+  @override
+  String get proTitleTop => '没有广告。';
+
+  @override
+  String get proTitleBottom => '只有俯卧撑。';
+
+  @override
+  String get proBody => '每场比赛都免费。Pro 会去掉所有比赛的广告。';
+
+  @override
+  String get proThanks => '广告已关闭。感谢升级 Pro。';
+
+  @override
+  String get removeAds => '去除广告';
+
+  @override
+  String get adNotice => '离开时会播放一条广告';
+
+  @override
+  String get adAskTitle => '广告让 outrepd 保持免费';
+
+  @override
+  String get adAskBody => '接下来 iPhone 会问你，是否允许 App 用你的活动来挑选广告。同意的话，广告会更合你的口味；不同意也照样会有广告，只是没那么相关。';
+
+  @override
+  String get adAskCamera => '这和摄像头无关：无论你怎么选，身体追踪都只在这部手机上进行。';
+
+  @override
+  String get adAskRemove => '改为去除广告';
 }

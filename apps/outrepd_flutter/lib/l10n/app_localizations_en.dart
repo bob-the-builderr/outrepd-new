@@ -1758,7 +1758,7 @@ class LEn extends L {
   }
 
   @override
-  String get paywallStart => 'Start climbing';
+  String get paywallStart => 'Remove ads';
 
   @override
   String get paywallRenewsPlay => 'Renews automatically until you cancel. Cancel anytime in Google Play.';
@@ -2800,4 +2800,34 @@ class LEn extends L {
   String obCalibrationRule(String gold) {
     return 'Down past the ${gold}, back up past the top one';
   }
+
+  @override
+  String get proTitleTop => 'No ads.';
+
+  @override
+  String get proTitleBottom => 'Just push-ups.';
+
+  @override
+  String get proBody => 'Every match stays free. Pro takes the ads out of all of them.';
+
+  @override
+  String get proThanks => 'Ads are off. Thanks for going Pro.';
+
+  @override
+  String get removeAds => 'Remove ads';
+
+  @override
+  String get adNotice => 'An ad plays when you leave';
+
+  @override
+  String get adAskTitle => 'Ads keep outrepd free';
+
+  @override
+  String get adAskBody => 'Next, your iPhone asks whether apps may use your activity to choose ads. Say yes and the ads fit you better; say no and you still get ads, just less relevant ones.';
+
+  @override
+  String get adAskCamera => 'Your camera is never part of it: body tracking stays on this phone, whatever you choose.';
+
+  @override
+  String get adAskRemove => 'Remove ads instead';
 }

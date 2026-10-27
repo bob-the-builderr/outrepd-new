@@ -5,3 +5,4 @@
 "NSPhotoLibraryAddUsageDescription" = "अपना शेयर कार्ड अपनी फ़ोटो में सेव करें।";
 "NSHealthShareUsageDescription" = "सेटिंग्स में चालू करने पर outrepd आपका हर सेट Apple Health में वर्कआउट के रूप में सेव करता है। कुछ भी पढ़ा नहीं जाता।";
 "NSHealthUpdateUsageDescription" = "सेटिंग्स में चालू करने पर outrepd आपका हर सेट Apple Health में वर्कआउट के रूप में सेव करता है।";
+"NSUserTrackingUsageDescription" = "ताकि मैच के बाद दिखने वाले विज्ञापन आपकी पसंद के हों। outrepd हर हाल में मुफ़्त रहता है।";

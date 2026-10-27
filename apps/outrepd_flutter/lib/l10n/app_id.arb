@@ -552,7 +552,7 @@
   "paywallPerWeek": "{price}/minggu",
   "paywallEveryWeek": "per minggu",
   "paywallSave": "Hemat {percent}%",
-  "paywallStart": "Mulai mendaki",
+  "paywallStart": "Hapus iklan",
   "paywallRenewsPlay": "Diperpanjang otomatis sampai kamu membatalkan. Batalkan kapan saja di Google Play.",
   "paywallRenewsApple": "Diperpanjang otomatis sampai kamu membatalkan. Batalkan kapan saja di pengaturan akun Apple-mu.",
   "paywallRestore": "Pulihkan",
@@ -841,5 +841,15 @@
   "obAdventureBody": "Petualangan punya 140 level pertarungan push-up, tiap level lebih sulit dari sebelumnya.",
   "obCountedHere": "Dihitung di ponsel ini",
   "obGoldLine": "garis emas",
-  "obCalibrationRule": "Turun melewati {gold}, lalu naik lagi melewati garis atas"
+  "obCalibrationRule": "Turun melewati {gold}, lalu naik lagi melewati garis atas",
+  "proTitleTop": "Tanpa iklan.",
+  "proTitleBottom": "Cuma push-up.",
+  "proBody": "Semua pertandingan tetap gratis. Pro menghapus iklan dari semuanya.",
+  "proThanks": "Iklan mati. Terima kasih sudah pakai Pro.",
+  "removeAds": "Hapus iklan",
+  "adNotice": "Iklan diputar saat kamu keluar",
+  "adAskTitle": "Iklan membuat outrepd tetap gratis",
+  "adAskBody": "Setelah ini iPhone-mu akan bertanya apakah aplikasi boleh memakai aktivitasmu untuk memilih iklan. Jawab ya, iklannya lebih cocok untukmu; jawab tidak, iklan tetap muncul, hanya kurang relevan.",
+  "adAskCamera": "Kameramu tidak pernah terlibat: pelacakan tubuh tetap di ponsel ini, apa pun pilihanmu.",
+  "adAskRemove": "Hapus iklan saja"
 }

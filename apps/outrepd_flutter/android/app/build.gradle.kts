@@ -53,6 +53,12 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         manifestPlaceholders["appLabel"] = "outrepd"
+        // AdMob (lib/ads.dart): this app's own id from the build's
+        // ADMOB_ANDROID_APP_ID, or Google's sample one — without any id the
+        // ads SDK stops the app at launch.
+        manifestPlaceholders["admobAppId"] =
+            System.getenv("ADMOB_ANDROID_APP_ID")?.takeIf { it.isNotBlank() }
+                ?: "ca-app-pub-3940256099942544~3347511713"
     }
 
     signingConfigs {

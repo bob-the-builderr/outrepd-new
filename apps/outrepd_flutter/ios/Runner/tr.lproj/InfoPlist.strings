@@ -5,3 +5,4 @@
 "NSPhotoLibraryAddUsageDescription" = "Paylaşım kartını fotoğraflarına kaydet.";
 "NSHealthShareUsageDescription" = "Ayarlar'dan açarsan outrepd her seti Sağlık'a antrenman olarak kaydeder. Hiçbir şey okunmaz.";
 "NSHealthUpdateUsageDescription" = "Ayarlar'dan açarsan outrepd her seti Sağlık'a antrenman olarak kaydeder.";
+"NSUserTrackingUsageDescription" = "Maçtan sonra gördüğün reklamlar zevkine daha uygun olsun diye. outrepd her durumda ücretsiz kalır.";

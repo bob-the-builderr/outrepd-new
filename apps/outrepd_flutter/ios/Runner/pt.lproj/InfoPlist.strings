@@ -5,3 +5,4 @@
 "NSPhotoLibraryAddUsageDescription" = "Salve seu cartão de compartilhamento nas suas fotos.";
 "NSHealthShareUsageDescription" = "O outrepd salva cada série no app Saúde como treino, se você ativar nos Ajustes. Nada é lido.";
 "NSHealthUpdateUsageDescription" = "O outrepd salva cada série no app Saúde como treino, se você ativar nos Ajustes.";
+"NSUserTrackingUsageDescription" = "Para que os anúncios depois de uma partida combinem com o que você gosta. O outrepd continua grátis de qualquer jeito.";

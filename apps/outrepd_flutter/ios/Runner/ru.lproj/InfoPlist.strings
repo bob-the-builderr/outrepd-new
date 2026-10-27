@@ -5,3 +5,4 @@
 "NSPhotoLibraryAddUsageDescription" = "Сохраните карточку для публикации в фото.";
 "NSHealthShareUsageDescription" = "outrepd сохраняет каждый подход в «Здоровье» как тренировку, если включить это в настройках. Ничего не считывается.";
 "NSHealthUpdateUsageDescription" = "outrepd сохраняет каждый подход в «Здоровье» как тренировку, если включить это в настройках.";
+"NSUserTrackingUsageDescription" = "Чтобы реклама после матча лучше вам подходила. outrepd остаётся бесплатным в любом случае.";

@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'l10n/app_localizations.dart';
 
+import 'ads.dart';
 import 'adventure/adventure.dart';
 import 'app_bottom_nav.dart' show registerIconLicences;
 import 'avatar.dart';
@@ -66,7 +67,7 @@ void main() async {
     // runs exactly as it did — on this phone, against nobody.
     await startBackend();
     // Which store this build sells through, if any. Only chosen here: the
-    // gate in front of the app starts it, once it knows whose account it is.
+    // shell starts it, once it knows whose account it is.
     Subscription.instance.use(Subscription.forThisBuild());
     if (kSeedPreview && !backend.available) await seedPreviewHistory();
     await settings.load();
@@ -94,6 +95,7 @@ void main() async {
     await avatar.load();
     await rewards.load();
     await Adventure.instance.load();
+    await Ads.instance.load();
     // After settings and rewards: the reminder's time is one, and whether
     // today is already trained is the other.
     await Reminders.instance.start();

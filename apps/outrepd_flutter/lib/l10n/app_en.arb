@@ -967,7 +967,7 @@
       }
     }
   },
-  "paywallStart": "Start climbing",
+  "paywallStart": "Remove ads",
   "paywallRenewsPlay": "Renews automatically until you cancel. Cancel anytime in Google Play.",
   "paywallRenewsApple": "Renews automatically until you cancel. Cancel anytime in your Apple account settings.",
   "paywallRestore": "Restore",
@@ -1904,5 +1904,15 @@
         "type": "String"
       }
     }
-  }
+  },
+  "proTitleTop": "No ads.",
+  "proTitleBottom": "Just push-ups.",
+  "proBody": "Every match stays free. Pro takes the ads out of all of them.",
+  "proThanks": "Ads are off. Thanks for going Pro.",
+  "removeAds": "Remove ads",
+  "adNotice": "An ad plays when you leave",
+  "adAskTitle": "Ads keep outrepd free",
+  "adAskBody": "Next, your iPhone asks whether apps may use your activity to choose ads. Say yes and the ads fit you better; say no and you still get ads, just less relevant ones.",
+  "adAskCamera": "Your camera is never part of it: body tracking stays on this phone, whatever you choose.",
+  "adAskRemove": "Remove ads instead"
 }

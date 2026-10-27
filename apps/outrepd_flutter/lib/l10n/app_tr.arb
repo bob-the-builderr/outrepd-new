@@ -552,7 +552,7 @@
   "paywallPerWeek": "{price}/hafta",
   "paywallEveryWeek": "haftada",
   "paywallSave": "%{percent} tasarruf",
-  "paywallStart": "Tırmanmaya başla",
+  "paywallStart": "Reklamları kaldır",
   "paywallRenewsPlay": "İptal edene kadar otomatik olarak yenilenir. Google Play'den istediğin zaman iptal et.",
   "paywallRenewsApple": "İptal edene kadar otomatik olarak yenilenir. Apple hesap ayarlarından istediğin zaman iptal et.",
   "paywallRestore": "Geri yükle",
@@ -841,5 +841,15 @@
   "obAdventureBody": "Macera’da her biri öncekinden zor 140 şınav dövüşü seviyesi var.",
   "obCountedHere": "Bu telefonda sayılır",
   "obGoldLine": "altın çizgi",
-  "obCalibrationRule": "{gold}nin altına in, üstteki çizginin üstüne çık"
+  "obCalibrationRule": "{gold}nin altına in, üstteki çizginin üstüne çık",
+  "proTitleTop": "Reklam yok.",
+  "proTitleBottom": "Sadece şınav.",
+  "proBody": "Her maç ücretsiz kalır. Pro hepsinden reklamları kaldırır.",
+  "proThanks": "Reklamlar kapandı. Pro’ya geçtiğin için teşekkürler.",
+  "removeAds": "Reklamları kaldır",
+  "adNotice": "Çıkınca bir reklam oynar",
+  "adAskTitle": "Reklamlar outrepd’yi ücretsiz tutar",
+  "adAskBody": "Şimdi iPhone’un, uygulamaların reklam seçmek için etkinliğini kullanıp kullanamayacağını soracak. Evet dersen reklamlar sana daha uygun olur; hayır dersen yine reklam görürsün, sadece daha az ilgili olanları.",
+  "adAskCamera": "Kameranın bununla hiçbir ilgisi yok: ne seçersen seç, vücut takibi bu telefonda kalır.",
+  "adAskRemove": "Bunun yerine reklamları kaldır"
 }

@@ -1759,7 +1759,7 @@ class LId extends L {
   }
 
   @override
-  String get paywallStart => 'Mulai mendaki';
+  String get paywallStart => 'Hapus iklan';
 
   @override
   String get paywallRenewsPlay => 'Diperpanjang otomatis sampai kamu membatalkan. Batalkan kapan saja di Google Play.';
@@ -2801,4 +2801,34 @@ class LId extends L {
   String obCalibrationRule(String gold) {
     return 'Turun melewati ${gold}, lalu naik lagi melewati garis atas';
   }
+
+  @override
+  String get proTitleTop => 'Tanpa iklan.';
+
+  @override
+  String get proTitleBottom => 'Cuma push-up.';
+
+  @override
+  String get proBody => 'Semua pertandingan tetap gratis. Pro menghapus iklan dari semuanya.';
+
+  @override
+  String get proThanks => 'Iklan mati. Terima kasih sudah pakai Pro.';
+
+  @override
+  String get removeAds => 'Hapus iklan';
+
+  @override
+  String get adNotice => 'Iklan diputar saat kamu keluar';
+
+  @override
+  String get adAskTitle => 'Iklan membuat outrepd tetap gratis';
+
+  @override
+  String get adAskBody => 'Setelah ini iPhone-mu akan bertanya apakah aplikasi boleh memakai aktivitasmu untuk memilih iklan. Jawab ya, iklannya lebih cocok untukmu; jawab tidak, iklan tetap muncul, hanya kurang relevan.';
+
+  @override
+  String get adAskCamera => 'Kameramu tidak pernah terlibat: pelacakan tubuh tetap di ponsel ini, apa pun pilihanmu.';
+
+  @override
+  String get adAskRemove => 'Hapus iklan saja';
 }

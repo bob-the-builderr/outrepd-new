@@ -13,6 +13,7 @@ import 'dart:math';
 import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 
+import '../ads.dart';
 import '../adventure/adventure.dart';
 import '../backend/backend.dart';
 import '../career.dart';
@@ -972,28 +973,53 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     await _settleAndRecord(reps: 0, gaveUp: true);
   }
 
+  /// Whether this screen's game is over: its result, the screens on the way
+  /// to it, or the set in and on its way to the server — which settles it
+  /// whether or not this screen waits to see it, the history taking it from
+  /// there (dispose).
+  bool get _gameOver => switch (_stage) {
+    _Stage.result ||
+    _Stage.placed ||
+    _Stage.promoted ||
+    _Stage.levelUp ||
+    _Stage.weapon ||
+    _Stage.sent ||
+    _Stage.waitingResult ||
+    _Stage.saving => true,
+    _ => false,
+  };
+
+  bool _leaving = false;
+
+  /// Leaves a finished game: its ad first (lib/ads.dart), then [go]. With
+  /// [rematch] when [go] is a rematch with the same person, which counts the
+  /// game but keeps the ad for when one of them leaves.
+  Future<void> _leave(VoidCallback go, {bool rematch = false}) async {
+    if (_leaving) return;
+    _leaving = true;
+    await Ads.instance.afterGame(context, rematch: rematch);
+    if (mounted) go();
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      // Leaving mid-match would silently forfeit, so confirm first. A gone
-      // challenge never started a match to forfeit.
+      // Leaving mid-match would silently forfeit, so confirm first. A
+      // finished game is left through [_leave], the back gesture too, so its
+      // ad comes before whatever is underneath. Called off, failed or gone,
+      // there was no game to leave.
       canPop:
-          _stage == _Stage.result ||
-          _stage == _Stage.placed ||
-          _stage == _Stage.promoted ||
-          _stage == _Stage.levelUp ||
-          _stage == _Stage.weapon ||
-          _stage == _Stage.sent ||
-          _stage == _Stage.calledOff ||
-          _stage == _Stage.liveFailed ||
-          // The set is in, or on its way; the server settles it whether or
-          // not this screen waits to see it, and the history takes it from
-          // there (dispose).
-          _stage == _Stage.waitingResult ||
-          _stage == _Stage.saving ||
-          _challengeGone,
+          !_gameOver &&
+          (_stage == _Stage.calledOff ||
+              _stage == _Stage.liveFailed ||
+              _challengeGone),
       onPopInvokedWithResult: (didPop, _) {
-        if (!didPop) _confirmQuit();
+        if (didPop) return;
+        if (_gameOver) {
+          _leave(() => Navigator.of(context).pop());
+        } else {
+          _confirmQuit();
+        }
       },
       child: Scaffold(
         backgroundColor: context.colors.background,
@@ -1123,8 +1149,10 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
             divIdx: demoProfile.divIdx,
             lp: demoProfile.lp,
           ),
-          onFindMatch: () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => const MatchFlowScreen()),
+          onFindMatch: () => _leave(
+            () => Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (_) => const MatchFlowScreen()),
+            ),
           ),
           onContinue: () => setState(() => _stage = _afterPromotion),
         );
@@ -1173,9 +1201,11 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
             xp: _xp,
             onNext: level.isLast
                 ? null
-                : () => fightAgain(AdventureLevel.of(level.number + 1)),
-            onAgain: () => fightAgain(level),
-            onMap: () => Navigator.of(context).pop(),
+                : () => _leave(
+                    () => fightAgain(AdventureLevel.of(level.number + 1)),
+                  ),
+            onAgain: () => _leave(() => fightAgain(level)),
+            onMap: () => _leave(() => Navigator.of(context).pop()),
           );
         }
         if (_vsBest) {
@@ -1184,10 +1214,12 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
             bestBefore: _bestBefore,
             pooled: _pooled,
             xp: _xp,
-            onAgain: () => Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (_) => const MatchFlowScreen()),
+            onAgain: () => _leave(
+              () => Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (_) => const MatchFlowScreen()),
+              ),
             ),
-            onDone: () => Navigator.of(context).pop(),
+            onDone: () => _leave(() => Navigator.of(context).pop()),
           );
         }
         return _ResultView(
@@ -1208,7 +1240,8 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
               _session?.opponentRepTimes ??
               _realOpponent?.repTimes ??
               const [],
-          onDone: () => Navigator.of(context).pop(),
+          leave: _leave,
+          onDone: () => _leave(() => Navigator.of(context).pop()),
         );
 
       case _Stage.sent:
@@ -1216,7 +1249,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           sent: _challengeSent,
           reps: _myReps,
           opponent: _opponent,
-          onDone: () => Navigator.of(context).pop(),
+          onDone: () => _leave(() => Navigator.of(context).pop()),
         );
     }
   }
@@ -2126,6 +2159,7 @@ class _BestResultView extends StatelessWidget {
                   child: Text(l.doneAction),
                 ),
               ),
+              const AdNotice(),
             ],
           ),
         ),
@@ -2157,6 +2191,9 @@ class _ResultView extends StatelessWidget {
 
   final VoidCallback onDone;
 
+  /// The screen's way out of a finished game: the ad, then where to.
+  final Future<void> Function(VoidCallback go, {bool rematch}) leave;
+
   const _ResultView({
     this.practice = false,
     required this.won,
@@ -2165,6 +2202,7 @@ class _ResultView extends StatelessWidget {
     required this.opponent,
     required this.outcome,
     required this.onDone,
+    required this.leave,
     this.live,
     this.monthBefore,
     this.monthAfter,
@@ -2197,11 +2235,15 @@ class _ResultView extends StatelessWidget {
       theirRepTimes: theirRepTimes,
       // Both asked: the new match replaces this result, so finishing it
       // lands where this one started.
-      onLiveRematch: (match) => Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) =>
-              MatchFlowScreen(mode: MatchMode.liveFriend, liveMatch: match),
+      // The same two, straight back in: no ad between them.
+      onLiveRematch: (match) => leave(
+        () => Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) =>
+                MatchFlowScreen(mode: MatchMode.liveFriend, liveMatch: match),
+          ),
         ),
+        rematch: true,
       ),
       closestYet:
           !won && _closestLossYet(volume.round(), opponentVolume.round()),
@@ -2211,9 +2253,11 @@ class _ResultView extends StatelessWidget {
       // already met. It replaces this screen, so finishing it lands where
       // this duel started.
       rematchLabel: L.of(context).findMatch,
-      onRematch: () => Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) => const MatchFlowScreen(mode: MatchMode.ranked),
+      onRematch: () => leave(
+        () => Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) => const MatchFlowScreen(mode: MatchMode.ranked),
+          ),
         ),
       ),
       onDone: onDone,

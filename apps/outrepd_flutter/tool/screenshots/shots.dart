@@ -98,7 +98,8 @@ void paywallShots(String locale, String fontFile) {
       tester.view.physicalSize = size * 2;
       tester.view.devicePixelRatio = 2;
       addTearDown(tester.view.reset);
-      Subscription.instance.use(_Store());
+      final store = _Store();
+      Subscription.instance.use(store);
 
       await tester.pumpWidget(
         MaterialApp(
@@ -112,7 +113,8 @@ void paywallShots(String locale, String fontFile) {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: L.supportedLocales,
-          home: const PaywallGate(child: SizedBox()),
+          // Pro as it opens over the app.
+          home: PaywallScreen(store: store, onUnlocked: (_) {}),
         ),
       );
       for (var i = 0; i < 6; i++) {

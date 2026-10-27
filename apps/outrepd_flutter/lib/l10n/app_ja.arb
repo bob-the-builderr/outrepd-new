@@ -552,7 +552,7 @@
   "paywallPerWeek": "週あたり{price}",
   "paywallEveryWeek": "毎週",
   "paywallSave": "{percent}%お得",
-  "paywallStart": "登りはじめる",
+  "paywallStart": "広告を消す",
   "paywallRenewsPlay": "解約するまで自動更新されます。Google Playからいつでも解約できます。",
   "paywallRenewsApple": "解約するまで自動更新されます。Appleアカウントの設定からいつでも解約できます。",
   "paywallRestore": "復元",
@@ -841,5 +841,15 @@
   "obAdventureBody": "アドベンチャーには腕立てバトルが140レベル。進むほど難しくなります。",
   "obCountedHere": "このスマホの中でカウント",
   "obGoldLine": "金のライン",
-  "obCalibrationRule": "{gold}より下まで下げて、上のラインより上まで戻る"
+  "obCalibrationRule": "{gold}より下まで下げて、上のラインより上まで戻る",
+  "proTitleTop": "広告なし。",
+  "proTitleBottom": "腕立てだけ。",
+  "proBody": "対戦はすべて無料のまま。Proなら、どの対戦の後にも広告が出ません。",
+  "proThanks": "広告をオフにしました。Proへようこそ。",
+  "removeAds": "広告を消す",
+  "adNotice": "この画面を出ると広告が流れます",
+  "adAskTitle": "広告でoutrepdは無料です",
+  "adAskBody": "このあとiPhoneが、広告選びのためにアプリがあなたのアクティビティを使ってよいか尋ねます。許可すると広告があなた向けになり、許可しなくても広告は出ますが、関連性が低くなります。",
+  "adAskCamera": "カメラは関係ありません。どちらを選んでも、体のトラッキングはこのスマホの中だけで行われます。",
+  "adAskRemove": "広告を消す方にする"
 }

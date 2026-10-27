@@ -1,10 +1,14 @@
-/// The paywall, and the gate that puts it in front of the app.
+/// Pro: the subscription that takes the ads out.
 ///
-/// The whole app is behind it, by decision: after onboarding and signing up,
-/// an account without the subscription sees this screen and nothing else.
-/// There is no skip. What it must still offer — the stores check for each —
-/// is restoring an earlier purchase, the terms and the privacy policy, the
-/// price and how it renews, and a way to delete the account without paying.
+/// The app is free (since 2026-10-28, the user's call): every match, live,
+/// ranked and Adventure, is played without paying, and an ad plays when a
+/// result screen is left (lib/ads.dart). Pro is the same two plans the
+/// paywall sold when the whole app sat behind it, and what they buy now is
+/// no ads. So this screen opens on top of the app and closes again — from
+/// "Remove ads" under a result, from the ask before the first ad, and once
+/// on its own after the first ad. What it must still offer, the stores check
+/// for: restoring an earlier purchase, the terms and the privacy policy, and
+/// the price and how it renews.
 library;
 
 import 'dart:async';
@@ -15,14 +19,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../backend/backend.dart';
 import '../l10n/app_localizations.dart';
 import '../reminders.dart';
 import '../subscription.dart';
 import '../theme.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
-import 'settings_account.dart';
 
 /// The paywall's sizes, between two ends. A short phone keeps the sizes the
 /// paywall was laid out at, because the way to pay has to fit on one without
@@ -41,6 +43,7 @@ class _Sizes {
   double _lerp(double short, double tall) => short + (tall - short) * t;
 
   // The pitch.
+  double get mark => _lerp(140, 190);
   double get headline => _lerp(32, 36);
   double get headlineGap => _lerp(30, 42);
   double get stepTitle => _lerp(17, 19);
@@ -70,60 +73,31 @@ class _Sizes {
 const kTermsUrl = 'https://www.outrepd.com/terms';
 const kPrivacyUrl = 'https://www.outrepd.com/privacy';
 
-/// Shows [child] to an account with the subscription, and the paywall to
-/// anybody else.
-///
-/// A build with no storefront (the web preview, the tests, a build made
-/// without the RevenueCat key) has no paywall, and [child] shows as it
-/// always did.
-class PaywallGate extends StatefulWidget {
-  const PaywallGate({super.key, required this.child});
-
-  final Widget child;
-
-  @override
-  State<PaywallGate> createState() => _PaywallGateState();
-}
-
-class _PaywallGateState extends State<PaywallGate> {
-  final _subscription = Subscription.instance;
-
-  @override
-  void initState() {
-    super.initState();
-    _subscription.addListener(_changed);
-    // Asked every time the gate is built: the account may have changed
-    // since launch — signing up or logging in happens just before this.
-    if (_subscription.enabled) _subscription.refresh(backend.me?.id);
-  }
-
-  @override
-  void dispose() {
-    _subscription.removeListener(_changed);
-    super.dispose();
-  }
-
-  void _changed() {
-    if (mounted) setState(() {});
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final store = _subscription.store;
-    if (store == null || _subscription.active) return widget.child;
-    // Nothing until the answer is in, rather than flash the paywall at
-    // somebody who has paid. The store answers from its cache, so this is a
-    // moment, not a wait.
-    if (!_subscription.known) {
-      return Scaffold(
-        backgroundColor: context.colors.background,
-        body: Center(
-          child: CircularProgressIndicator(color: context.colors.brand),
-        ),
-      );
-    }
-    return PaywallScreen(store: store, onUnlocked: _subscription.settle);
-  }
+/// Opens Pro over whatever is on screen, and closes it again once a purchase
+/// or a restore has taken the ads out. Nothing happens in a build with no
+/// storefront: there is nothing there to buy.
+Future<void> openPro(BuildContext context) async {
+  final subscription = Subscription.instance;
+  final store = subscription.store;
+  if (store == null || subscription.active) return;
+  final messenger = ScaffoldMessenger.maybeOf(context);
+  final thanks = L.of(context).proThanks;
+  await Navigator.of(context, rootNavigator: true).push(
+    MaterialPageRoute<void>(
+      fullscreenDialog: true,
+      builder: (pro) => PaywallScreen(
+        store: store,
+        onUnlocked: (active) {
+          subscription.settle(active);
+          if (!active) return;
+          Navigator.of(pro).pop();
+          messenger?.showSnackBar(
+            SnackBar(content: Text(thanks), behavior: SnackBarBehavior.floating),
+          );
+        },
+      ),
+    ),
+  );
 }
 
 class PaywallScreen extends StatefulWidget {
@@ -135,7 +109,7 @@ class PaywallScreen extends StatefulWidget {
 
   final Storefront store;
 
-  /// Called with true once a purchase or a restore has unlocked the app.
+  /// Called with true once a purchase or a restore has taken the ads out.
   final ValueChanged<bool> onUnlocked;
 
   @override
@@ -245,7 +219,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
   Future<void> _restore() async {
     if (_busy) return;
     final l = L.of(context);
-    final messenger = ScaffoldMessenger.of(context);
     setState(() {
       _busy = true;
       _note = null;
@@ -265,15 +238,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
       _busy = false;
       _note = note;
     });
-    if (active) {
-      messenger.showSnackBar(
-        SnackBar(
-          content: Text(l.paywallRestored),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
-      widget.onUnlocked(true);
-    }
+    if (active) widget.onUnlocked(true);
   }
 
   Future<void> _open(String url) async {
@@ -296,58 +261,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
     }
   }
 
-  /// The account, reachable without paying: the stores require that an
-  /// account can be deleted from inside the app, whatever else is locked.
-  void _account() {
-    final l = L.of(context);
-    final email = backend.accountEmail;
-    showModalBottomSheet<void>(
-      context: context,
-      backgroundColor: context.colors.surface,
-      showDragHandle: true,
-      builder: (sheet) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                l.accountSection,
-                style: sheet.type.heading.copyWith(color: sheet.colors.text),
-              ),
-              if (email != null) ...[
-                const SizedBox(height: 6),
-                Text(
-                  l.paywallSignedInAs(email),
-                  style: sheet.type.body.copyWith(color: sheet.colors.muted),
-                ),
-              ],
-              const SizedBox(height: 14),
-              ListTile(
-                key: const Key('paywallDeleteAccount'),
-                contentPadding: EdgeInsets.zero,
-                leading: const Icon(Icons.delete_outline, color: AppColors.loss),
-                title: Text(
-                  l.deleteAccount,
-                  style: sheet.type.body.copyWith(color: AppColors.loss),
-                ),
-                onTap: () {
-                  Navigator.of(sheet).pop();
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => const DeleteAccountScreen(),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
@@ -355,39 +268,45 @@ class _PaywallScreenState extends State<PaywallScreen> {
     return Scaffold(
       backgroundColor: context.colors.background,
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
-            // The pitch scrolls on a short phone; the way to pay never does.
-            // On a tall one it sits in the middle of the space it has, not at
-            // the top of it with a gap underneath.
-            Expanded(
-              child: LayoutBuilder(
-                builder: (context, viewport) => SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(20, 30, 20, 12),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      // Less the scroll padding above and below.
-                      minHeight: math.max(0.0, viewport.maxHeight - 42),
-                    ),
-                    child: Center(
-                      // Nothing while the plans load: whether this account
-                      // can still have the free days comes with them, and a
-                      // headline that changed its mind a moment later would
-                      // be one paywall swapped for another in front of it.
-                      child: _plans == null && !_loadFailed
-                          ? const SizedBox.shrink()
-                          : switch (_plan(_chosen)?.trialDays) {
-                              final days? => _trialPitch(context, l, days),
-                              null => _pitch(context, l),
-                            },
+            Column(
+              children: [
+                // The pitch scrolls on a short phone; the way to pay never
+                // does. On a tall one it sits in the middle of the space it
+                // has, not at the top of it with a gap underneath. It starts
+                // under the close button, which lies over it.
+                Expanded(
+                  child: LayoutBuilder(
+                    builder: (context, viewport) => SingleChildScrollView(
+                      padding: const EdgeInsets.fromLTRB(20, 48, 20, 12),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          // Less the scroll padding above and below.
+                          minHeight: math.max(0.0, viewport.maxHeight - 60),
+                        ),
+                        child: Center(child: _pitch(context, l)),
+                      ),
                     ),
                   ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 4, 20, 10),
+                  child: _purchaseArea(context, l),
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 4, 20, 10),
-              child: _purchaseArea(context, l),
+            // The way out: the app is free, and this is an offer, not a gate.
+            PositionedDirectional(
+              top: 0,
+              start: 4,
+              child: IconButton(
+                key: const Key('proClose'),
+                tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
+                color: context.colors.muted,
+                icon: const Icon(Icons.close, size: 26),
+                onPressed: () => Navigator.maybePop(context),
+              ),
             ),
           ],
         ),
@@ -395,53 +314,37 @@ class _PaywallScreenState extends State<PaywallScreen> {
     );
   }
 
-  /// What the subscription opens, down the same rail as the trial's days:
-  /// for an account that has had its free days, a plan without any, or plans
-  /// that would not load. The same paywall either way. There used to be a
-  /// second one here, of crests and perks, and picking the other plan
-  /// switched from one to the other.
+  /// What Pro is, said once: an ad struck through, and the two lines under
+  /// it. The same whatever the plans turn out to hold — the free days are on
+  /// the plans and the button.
   Widget _pitch(BuildContext context, L l) {
     final sizes = _Sizes.of(context);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _AccentHeadline(key: const Key('paywallTitle'), text: l.paywallTitle),
-        SizedBox(height: sizes.headlineGap),
-        _Rail(
-          steps: [
-            (Icons.videocam_outlined, l.paywallPerkDuels, null),
-            (Icons.emoji_events_outlined, l.paywallPerkLadder, null),
-            (Icons.group_outlined, l.paywallPerkFriends, null),
-            (Icons.insights_outlined, l.paywallPerkHistory, null),
-          ],
-        ),
-      ],
+    final colors = context.colors;
+    final title = kType.title.copyWith(
+      fontSize: sizes.headline,
+      height: 1.15,
+      color: colors.text,
     );
-  }
-
-  /// While the chosen plan has a trial: what the subscription opens, as four
-  /// tiles, and the trial told as what happens when — today everything
-  /// opens, the day before it ends the app says so, and the day it ends the
-  /// plan starts. The free days are on the plan and the button as well.
-  Widget _trialPitch(BuildContext context, L l, int days) {
-    final sizes = _Sizes.of(context);
     return Column(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _AccentHeadline(
+        _NoAdMark(size: sizes.mark),
+        SizedBox(height: sizes.headlineGap * 0.5),
+        Text(
+          '${l.proTitleTop}\n${l.proTitleBottom}',
           key: const Key('paywallTitle'),
-          text: l.paywallTitle,
-          scale: 0.88,
+          textAlign: TextAlign.center,
+          style: title,
         ),
-        SizedBox(height: sizes.headlineGap * 0.45),
-        const _PerkGrid(),
-        SizedBox(height: sizes.headlineGap * 0.55),
-        _TrialTimeline(
-          key: const Key('trialTimeline'),
-          days: days,
-          compact: true,
+        const SizedBox(height: 12),
+        Text(
+          l.proBody,
+          textAlign: TextAlign.center,
+          style: kType.body.copyWith(
+            fontSize: sizes.stepBody,
+            height: 1.5,
+            color: colors.muted,
+          ),
         ),
       ],
     );
@@ -630,12 +533,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
             _SmallLink(label: l.paywallTerms, onTap: () => _open(kTermsUrl)),
             const _Dot(),
             _SmallLink(label: l.paywallPrivacy, onTap: () => _open(kPrivacyUrl)),
-            const _Dot(),
-            _SmallLink(
-              key: const Key('paywallAccount'),
-              label: l.accountSection,
-              onTap: _account,
-            ),
           ],
         ),
       ],
@@ -643,228 +540,71 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 }
 
-/// A headline with one stretch of it in the accent: the part between the two
-/// asterisks in the translation ("Your first 3 days are *free*"). Marked in
-/// the string rather than split into pieces, because where the word falls in
-/// the sentence is different in every language.
-class _AccentHeadline extends StatelessWidget {
-  const _AccentHeadline({super.key, required this.text, this.scale = 1});
+/// An ad, struck through: the one picture Pro needs. A label marked AD in the
+/// app's cream, and across it a bar in the rival's colour, ringed in the
+/// page's black so it reads as lying on top.
+class _NoAdMark extends StatelessWidget {
+  const _NoAdMark({required this.size});
 
-  final String text;
-
-  /// Of the usual headline size: less than one where the pitch is fuller.
-  final double scale;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
-    final parts = text.split('*');
-    return Text.rich(
-      TextSpan(
-        children: [
-          for (var i = 0; i < parts.length; i++)
-            TextSpan(
-              text: parts[i],
-              style: i.isOdd ? TextStyle(color: context.colors.rival) : null,
-            ),
-        ],
-      ),
-      textAlign: TextAlign.center,
-      style: kType.title.copyWith(
-        fontSize: _Sizes.of(context).headline * scale,
-        height: 1.15,
-        color: context.colors.text,
-      ),
-    );
-  }
-}
-
-/// What the subscription opens, as two rows of two tiles: the same four
-/// things the rail says when there is no trial, small enough to leave the
-/// trial's days room under them.
-class _PerkGrid extends StatelessWidget {
-  const _PerkGrid();
-
-  @override
-  Widget build(BuildContext context) {
-    final l = L.of(context);
     final colors = context.colors;
-    final sizes = _Sizes.of(context);
-    Widget tile(IconData icon, String text) => Expanded(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
-        decoration: BoxDecoration(
-          color: colors.surface,
-          border: Border.all(color: colors.border, width: 0.5),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Row(
-          children: [
-            Icon(icon, size: sizes.stepIcon * 0.8, color: colors.brand),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                text,
-                style: kType.body.copyWith(
-                  fontSize: sizes.stepBody,
-                  height: 1.25,
-                  color: colors.text,
+    return ExcludeSemantics(
+      child: SizedBox.square(
+        dimension: size,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            gradient: RadialGradient(
+              colors: [
+                colors.brand.withValues(alpha: 0.16),
+                colors.brand.withValues(alpha: 0),
+              ],
+              stops: const [0, 0.7],
+            ),
+          ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                width: size * 0.62,
+                height: size * 0.42,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(size * 0.08),
+                  border: Border.all(color: colors.brand, width: size * 0.035),
+                ),
+                child: Text(
+                  'AD',
+                  style: TextStyle(
+                    color: colors.brand,
+                    fontSize: size * 0.2,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 2,
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-    Widget row(Widget a, Widget b) => IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [a, const SizedBox(width: 8), b],
-      ),
-    );
-    return Column(
-      key: const Key('perkGrid'),
-      children: [
-        row(
-          tile(Icons.videocam_outlined, l.paywallPerkDuels),
-          tile(Icons.emoji_events_outlined, l.paywallPerkLadder),
-        ),
-        const SizedBox(height: 8),
-        row(
-          tile(Icons.group_outlined, l.paywallPerkFriends),
-          tile(Icons.insights_outlined, l.paywallPerkHistory),
-        ),
-      ],
-    );
-  }
-}
-
-/// Today, the reminder, the first charge — down a bar that is lit for the
-/// part already under way.
-class _TrialTimeline extends StatelessWidget {
-  const _TrialTimeline({super.key, required this.days, this.compact = false});
-
-  final int days;
-
-  /// The days closer together, beside the perks.
-  final bool compact;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = L.of(context);
-    final steps = <(IconData, String, String?)>[
-      (Icons.lock_open_rounded, l.trialToday, l.trialTodayBody),
-      // A one-day trial has no day before its last to remind on.
-      if (days >= 2)
-        (
-          Icons.notifications_active_outlined,
-          l.trialDay(localNumber(context, days - 1)),
-          l.trialReminderBody,
-        ),
-      (
-        Icons.workspace_premium_outlined,
-        l.trialDay(localNumber(context, days)),
-        l.trialEndBody,
-      ),
-    ];
-
-    return _Rail(steps: steps, fades: true, compact: compact);
-  }
-}
-
-/// Steps down a bar, each an icon, a line and, if it needs one, a sentence
-/// under it — the shape the whole paywall is told in, trial or not.
-class _Rail extends StatelessWidget {
-  const _Rail({required this.steps, this.fades = false, this.compact = false});
-
-  /// Steps closer together, for a rail sharing the pitch with the perks.
-  final bool compact;
-
-  final List<(IconData, String, String?)> steps;
-
-  /// Lit for the part under way and dimming after it, for the days of a
-  /// trial; otherwise lit the whole way down, for what opens all at once.
-  final bool fades;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    final sizes = _Sizes.of(context);
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            width: 8,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              color: fades ? null : colors.brand,
-              gradient: fades
-                  ? LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        colors.brand,
-                        colors.brand,
-                        colors.faint,
-                        colors.faint,
-                        colors.surfaceRaised,
-                      ],
-                      stops: const [0, 0.3, 0.38, 0.62, 0.72],
-                    )
-                  : null,
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                for (var i = 0; i < steps.length; i++) ...[
-                  if (i > 0)
-                    SizedBox(
-                      height: compact ? sizes.stepGap * 0.45 : sizes.stepGap,
+              Transform.rotate(
+                angle: -35 * math.pi / 180,
+                child: Container(
+                  width: size * 0.82,
+                  height: size * 0.05,
+                  decoration: BoxDecoration(
+                    color: colors.rival,
+                    borderRadius: BorderRadius.circular(size * 0.03),
+                    border: Border.all(
+                      color: colors.background,
+                      width: size * 0.025,
+                      strokeAlign: BorderSide.strokeAlignOutside,
                     ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(
-                        steps[i].$1,
-                        size: sizes.stepIcon,
-                        color: colors.brand,
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              steps[i].$2,
-                              style: kType.heading.copyWith(
-                                fontSize: sizes.stepTitle,
-                                color: colors.text,
-                              ),
-                            ),
-                            if (steps[i].$3 case final more?) ...[
-                              const SizedBox(height: 3),
-                              Text(
-                                more,
-                                style: kType.body.copyWith(
-                                  fontSize: sizes.stepBody,
-                                  height: 1.4,
-                                  color: colors.muted,
-                                ),
-                              ),
-                            ],
-                          ],
-                        ),
-                      ),
-                    ],
                   ),
-                ],
-              ],
-            ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

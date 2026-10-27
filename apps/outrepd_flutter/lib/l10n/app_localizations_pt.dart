@@ -1762,7 +1762,7 @@ class LPt extends L {
   }
 
   @override
-  String get paywallStart => 'Começar a subir';
+  String get paywallStart => 'Remover anúncios';
 
   @override
   String get paywallRenewsPlay => 'Renova automaticamente até você cancelar. Cancele quando quiser no Google Play.';
@@ -2804,4 +2804,34 @@ class LPt extends L {
   String obCalibrationRule(String gold) {
     return 'Desça além da ${gold} e suba de novo além da de cima';
   }
+
+  @override
+  String get proTitleTop => 'Sem anúncios.';
+
+  @override
+  String get proTitleBottom => 'Só flexões.';
+
+  @override
+  String get proBody => 'Todas as partidas continuam grátis. O Pro tira os anúncios de todas.';
+
+  @override
+  String get proThanks => 'Anúncios desligados. Obrigado por virar Pro.';
+
+  @override
+  String get removeAds => 'Remover anúncios';
+
+  @override
+  String get adNotice => 'Um anúncio passa quando você sair';
+
+  @override
+  String get adAskTitle => 'Os anúncios mantêm o outrepd grátis';
+
+  @override
+  String get adAskBody => 'Agora o seu iPhone vai perguntar se os apps podem usar sua atividade para escolher anúncios. Se disser sim, os anúncios combinam mais com você; se disser não, você ainda vê anúncios, só que menos relevantes.';
+
+  @override
+  String get adAskCamera => 'Sua câmera nunca entra nisso: o rastreamento do corpo fica neste celular, seja qual for a sua escolha.';
+
+  @override
+  String get adAskRemove => 'Prefiro remover os anúncios';
 }

@@ -5,3 +5,4 @@
 "NSPhotoLibraryAddUsageDescription" = "Enregistre ta carte de partage dans tes photos.";
 "NSHealthShareUsageDescription" = "outrepd enregistre chaque série dans Santé comme séance, si tu l'actives dans les Réglages. Rien n'est lu.";
 "NSHealthUpdateUsageDescription" = "outrepd enregistre chaque série dans Santé comme séance, si tu l'actives dans les Réglages.";
+"NSUserTrackingUsageDescription" = "Pour que les pubs après un match te correspondent mieux. outrepd reste gratuit dans tous les cas.";

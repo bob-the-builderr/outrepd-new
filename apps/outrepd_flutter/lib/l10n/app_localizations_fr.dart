@@ -1766,7 +1766,7 @@ class LFr extends L {
   }
 
   @override
-  String get paywallStart => 'Commencer l’ascension';
+  String get paywallStart => 'Retirer la pub';
 
   @override
   String get paywallRenewsPlay => 'Renouvellement automatique jusqu’à résiliation. Résilie à tout moment dans Google Play.';
@@ -2808,4 +2808,34 @@ class LFr extends L {
   String obCalibrationRule(String gold) {
     return 'Descends sous la ${gold}, remonte au-dessus de celle du haut';
   }
+
+  @override
+  String get proTitleTop => 'Sans pub.';
+
+  @override
+  String get proTitleBottom => 'Que des pompes.';
+
+  @override
+  String get proBody => 'Tous les matchs restent gratuits. Pro retire la pub de chacun.';
+
+  @override
+  String get proThanks => 'Plus de pub. Merci d’être passé à Pro.';
+
+  @override
+  String get removeAds => 'Retirer la pub';
+
+  @override
+  String get adNotice => 'Une pub passe quand tu sors';
+
+  @override
+  String get adAskTitle => 'La pub garde outrepd gratuit';
+
+  @override
+  String get adAskBody => 'Ton iPhone va demander si les apps peuvent utiliser ton activité pour choisir les pubs. Si tu dis oui, les pubs te correspondent mieux ; si tu dis non, tu en verras quand même, juste moins pertinentes.';
+
+  @override
+  String get adAskCamera => 'Ta caméra n’y est pour rien : le suivi du corps reste sur ce téléphone, quoi que tu choisisses.';
+
+  @override
+  String get adAskRemove => 'Plutôt retirer la pub';
 }

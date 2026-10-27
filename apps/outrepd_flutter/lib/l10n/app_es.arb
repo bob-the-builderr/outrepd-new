@@ -552,7 +552,7 @@
   "paywallPerWeek": "{price}/semana",
   "paywallEveryWeek": "por semana",
   "paywallSave": "Ahorra {percent}%",
-  "paywallStart": "Empieza a subir",
+  "paywallStart": "Quitar anuncios",
   "paywallRenewsPlay": "Se renueva automáticamente hasta que canceles. Cancela cuando quieras en Google Play.",
   "paywallRenewsApple": "Se renueva automáticamente hasta que canceles. Cancela cuando quieras en los ajustes de tu cuenta de Apple.",
   "paywallRestore": "Restaurar",
@@ -841,5 +841,15 @@
   "obAdventureBody": "Aventura tiene 140 niveles de combates de flexiones, cada uno más difícil que el anterior.",
   "obCountedHere": "Se cuenta en este teléfono",
   "obGoldLine": "línea dorada",
-  "obCalibrationRule": "Baja más allá de la {gold} y vuelve a subir más allá de la de arriba"
+  "obCalibrationRule": "Baja más allá de la {gold} y vuelve a subir más allá de la de arriba",
+  "proTitleTop": "Sin anuncios.",
+  "proTitleBottom": "Solo flexiones.",
+  "proBody": "Todas las partidas siguen siendo gratis. Pro quita los anuncios de todas.",
+  "proThanks": "Anuncios desactivados. Gracias por hacerte Pro.",
+  "removeAds": "Quitar anuncios",
+  "adNotice": "Al salir verás un anuncio",
+  "adAskTitle": "Los anuncios mantienen outrepd gratis",
+  "adAskBody": "Ahora tu iPhone te preguntará si las apps pueden usar tu actividad para elegir anuncios. Si dices que sí, los anuncios encajarán mejor contigo; si dices que no, seguirás viendo anuncios, solo que menos relevantes.",
+  "adAskCamera": "Tu cámara nunca entra en esto: el seguimiento del cuerpo se queda en este teléfono, elijas lo que elijas.",
+  "adAskRemove": "Mejor quitar los anuncios"
 }

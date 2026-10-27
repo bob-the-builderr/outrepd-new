@@ -1728,7 +1728,7 @@ class LKo extends L {
   }
 
   @override
-  String get paywallStart => '등반 시작';
+  String get paywallStart => '광고 제거';
 
   @override
   String get paywallRenewsPlay => '해지할 때까지 자동으로 갱신됩니다. Google Play에서 언제든지 해지할 수 있습니다.';
@@ -2770,4 +2770,34 @@ class LKo extends L {
   String obCalibrationRule(String gold) {
     return '${gold} 아래로 내려갔다가 위쪽 선 위로 올라오기';
   }
+
+  @override
+  String get proTitleTop => '광고 없이.';
+
+  @override
+  String get proTitleBottom => '팔굽혀펴기만.';
+
+  @override
+  String get proBody => '모든 매치는 계속 무료예요. Pro는 모든 매치에서 광고를 없애요.';
+
+  @override
+  String get proThanks => '광고가 꺼졌어요. Pro를 선택해 주셔서 고마워요.';
+
+  @override
+  String get removeAds => '광고 제거';
+
+  @override
+  String get adNotice => '나가면 광고가 나와요';
+
+  @override
+  String get adAskTitle => '광고 덕분에 outrepd는 무료예요';
+
+  @override
+  String get adAskBody => '이제 iPhone이 앱이 광고를 고르는 데 내 활동을 써도 되는지 물어봐요. 허용하면 나에게 더 맞는 광고가 나오고, 허용하지 않아도 광고는 나오지만 덜 관련 있는 광고예요.';
+
+  @override
+  String get adAskCamera => '카메라는 전혀 관련 없어요. 무엇을 선택하든 몸 추적은 이 휴대폰 안에서만 이뤄져요.';
+
+  @override
+  String get adAskRemove => '대신 광고 제거하기';
 }

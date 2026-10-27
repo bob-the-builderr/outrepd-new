@@ -1760,7 +1760,7 @@ class LRu extends L {
   }
 
   @override
-  String get paywallStart => 'Начать восхождение';
+  String get paywallStart => 'Убрать рекламу';
 
   @override
   String get paywallRenewsPlay => 'Продлевается автоматически, пока вы не отмените. Отменить можно в любой момент в Google Play.';
@@ -2802,4 +2802,34 @@ class LRu extends L {
   String obCalibrationRule(String gold) {
     return 'Вниз ниже ${gold}, обратно выше верхней';
   }
+
+  @override
+  String get proTitleTop => 'Без рекламы.';
+
+  @override
+  String get proTitleBottom => 'Только отжимания.';
+
+  @override
+  String get proBody => 'Все матчи остаются бесплатными. Pro убирает рекламу из всех.';
+
+  @override
+  String get proThanks => 'Реклама отключена. Спасибо, что выбрали Pro.';
+
+  @override
+  String get removeAds => 'Убрать рекламу';
+
+  @override
+  String get adNotice => 'При выходе будет реклама';
+
+  @override
+  String get adAskTitle => 'Реклама делает outrepd бесплатным';
+
+  @override
+  String get adAskBody => 'Сейчас iPhone спросит, можно ли приложениям использовать вашу активность для подбора рекламы. Если разрешите, реклама будет точнее; если нет, реклама всё равно будет, просто менее подходящая.';
+
+  @override
+  String get adAskCamera => 'Камера тут ни при чём: отслеживание тела остаётся на этом телефоне, что бы вы ни выбрали.';
+
+  @override
+  String get adAskRemove => 'Лучше убрать рекламу';
 }

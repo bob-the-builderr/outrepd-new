@@ -1767,7 +1767,7 @@ class LDe extends L {
   }
 
   @override
-  String get paywallStart => 'Aufstieg starten';
+  String get paywallStart => 'Werbung entfernen';
 
   @override
   String get paywallRenewsPlay => 'Verlängert sich automatisch bis zur Kündigung. Jederzeit in Google Play kündbar.';
@@ -2809,4 +2809,34 @@ class LDe extends L {
   String obCalibrationRule(String gold) {
     return 'Runter unter die ${gold}, wieder hoch über die obere';
   }
+
+  @override
+  String get proTitleTop => 'Keine Werbung.';
+
+  @override
+  String get proTitleBottom => 'Nur Liegestütze.';
+
+  @override
+  String get proBody => 'Jedes Match bleibt kostenlos. Pro nimmt die Werbung aus allen raus.';
+
+  @override
+  String get proThanks => 'Werbung ist aus. Danke für Pro.';
+
+  @override
+  String get removeAds => 'Werbung entfernen';
+
+  @override
+  String get adNotice => 'Beim Verlassen kommt Werbung';
+
+  @override
+  String get adAskTitle => 'Werbung hält outrepd kostenlos';
+
+  @override
+  String get adAskBody => 'Gleich fragt dein iPhone, ob Apps deine Aktivität für die Auswahl von Werbung nutzen dürfen. Mit Ja passt die Werbung besser zu dir; mit Nein siehst du trotzdem Werbung, nur weniger passende.';
+
+  @override
+  String get adAskCamera => 'Deine Kamera hat damit nichts zu tun: Das Körpertracking bleibt auf diesem Handy, egal wie du dich entscheidest.';
+
+  @override
+  String get adAskRemove => 'Lieber Werbung entfernen';
 }
