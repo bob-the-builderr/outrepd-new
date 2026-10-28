@@ -874,5 +874,9 @@
   "obFightBody": "7つのワールドで140の腕立て伏せバトル。1回ごとにモンスターにダメージ。",
   "obSevenWorlds": "7つのワールド：{from}から{to}まで",
   "obWeaponsTitle": "星で武器をアンロック",
-  "obWeaponsBody": "ワールドごとに専用の武器が必要。ランクは変動しません。"
+  "obWeaponsBody": "ワールドごとに専用の武器が必要。ランクは変動しません。",
+  "fightDefeated": "撃破！",
+  "nextWeapon": "次の武器",
+  "opensWorld": "{world}が開く",
+  "weaponAtStars": "星{count}個で"
 }

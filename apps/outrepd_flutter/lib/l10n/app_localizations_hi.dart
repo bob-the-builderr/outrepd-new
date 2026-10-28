@@ -2893,4 +2893,20 @@ class LHi extends L {
 
   @override
   String get obWeaponsBody => 'हर दुनिया को अपना हथियार चाहिए। रैंक दाँव पर नहीं।';
+
+  @override
+  String get fightDefeated => 'हरा दिया!';
+
+  @override
+  String get nextWeapon => 'अगला हथियार';
+
+  @override
+  String opensWorld(String world) {
+    return '${world} खोलता है';
+  }
+
+  @override
+  String weaponAtStars(String count) {
+    return '${count} स्टार पर';
+  }
 }

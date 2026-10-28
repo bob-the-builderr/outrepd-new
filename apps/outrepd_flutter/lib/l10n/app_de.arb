@@ -874,5 +874,9 @@
   "obFightBody": "140 Liegestütz-Kämpfe in sieben Welten. Jede Wiederholung trifft das Monster.",
   "obSevenWorlds": "Sieben Welten, {from} bis {to}",
   "obWeaponsTitle": "Sterne schalten Waffen frei",
-  "obWeaponsBody": "Jede Welt braucht ihre eigene Waffe. Dein Rang steht nicht auf dem Spiel."
+  "obWeaponsBody": "Jede Welt braucht ihre eigene Waffe. Dein Rang steht nicht auf dem Spiel.",
+  "fightDefeated": "Besiegt!",
+  "nextWeapon": "Nächste Waffe",
+  "opensWorld": "Öffnet {world}",
+  "weaponAtStars": "ab {count} Sternen"
 }

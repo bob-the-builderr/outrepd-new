@@ -874,5 +874,9 @@
   "obFightBody": "七个世界，140 场俯卧撑战斗。每做一次都会击中怪物。",
   "obSevenWorlds": "七个世界：从{from}到{to}",
   "obWeaponsTitle": "星星解锁武器",
-  "obWeaponsBody": "每个世界都需要专属武器。不影响排位。"
+  "obWeaponsBody": "每个世界都需要专属武器。不影响排位。",
+  "fightDefeated": "击败！",
+  "nextWeapon": "下一件武器",
+  "opensWorld": "开启{world}",
+  "weaponAtStars": "需要 {count} 颗星"
 }

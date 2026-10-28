@@ -2893,4 +2893,20 @@ class LRu extends L {
 
   @override
   String get obWeaponsBody => 'Каждому миру нужно своё оружие. Рейтинг не на кону.';
+
+  @override
+  String get fightDefeated => 'Повержен!';
+
+  @override
+  String get nextWeapon => 'Следующее оружие';
+
+  @override
+  String opensWorld(String world) {
+    return 'Открывает ${world}';
+  }
+
+  @override
+  String weaponAtStars(String count) {
+    return 'за ${count} звёзд';
+  }
 }

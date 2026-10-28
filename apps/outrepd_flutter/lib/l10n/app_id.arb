@@ -874,5 +874,9 @@
   "obFightBody": "140 pertarungan push up di tujuh dunia. Setiap repetisi memukul monsternya.",
   "obSevenWorlds": "Tujuh dunia, dari {from} sampai {to}",
   "obWeaponsTitle": "Bintang membuka senjata",
-  "obWeaponsBody": "Setiap dunia butuh senjatanya sendiri. Peringkat tidak dipertaruhkan."
+  "obWeaponsBody": "Setiap dunia butuh senjatanya sendiri. Peringkat tidak dipertaruhkan.",
+  "fightDefeated": "Kalah!",
+  "nextWeapon": "Senjata berikutnya",
+  "opensWorld": "Membuka {world}",
+  "weaponAtStars": "di {count} bintang"
 }

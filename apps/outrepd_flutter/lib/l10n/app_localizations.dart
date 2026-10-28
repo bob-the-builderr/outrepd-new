@@ -5242,6 +5242,30 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Each world needs its own weapon. No rank on the line.'**
   String get obWeaponsBody;
+
+  /// No description provided for @fightDefeated.
+  ///
+  /// In en, this message translates to:
+  /// **'Defeated!'**
+  String get fightDefeated;
+
+  /// No description provided for @nextWeapon.
+  ///
+  /// In en, this message translates to:
+  /// **'Next weapon'**
+  String get nextWeapon;
+
+  /// No description provided for @opensWorld.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens {world}'**
+  String opensWorld(String world);
+
+  /// No description provided for @weaponAtStars.
+  ///
+  /// In en, this message translates to:
+  /// **'at {count} stars'**
+  String weaponAtStars(String count);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

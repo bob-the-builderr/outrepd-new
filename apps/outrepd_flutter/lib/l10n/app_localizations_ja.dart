@@ -2857,4 +2857,20 @@ class LJa extends L {
 
   @override
   String get obWeaponsBody => 'ワールドごとに専用の武器が必要。ランクは変動しません。';
+
+  @override
+  String get fightDefeated => '撃破！';
+
+  @override
+  String get nextWeapon => '次の武器';
+
+  @override
+  String opensWorld(String world) {
+    return '${world}が開く';
+  }
+
+  @override
+  String weaponAtStars(String count) {
+    return '星${count}個で';
+  }
 }

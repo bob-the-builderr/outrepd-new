@@ -874,5 +874,9 @@
   "obFightBody": "140 combats de pompes dans sept mondes. Chaque répétition frappe le monstre.",
   "obSevenWorlds": "Sept mondes, de {from} à {to}",
   "obWeaponsTitle": "Les étoiles débloquent des armes",
-  "obWeaponsBody": "Chaque monde exige son arme. Aucun rang en jeu."
+  "obWeaponsBody": "Chaque monde exige son arme. Aucun rang en jeu.",
+  "fightDefeated": "Vaincu !",
+  "nextWeapon": "Arme suivante",
+  "opensWorld": "Ouvre {world}",
+  "weaponAtStars": "à {count} étoiles"
 }

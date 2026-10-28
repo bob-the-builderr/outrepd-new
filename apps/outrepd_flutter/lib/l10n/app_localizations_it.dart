@@ -2898,4 +2898,20 @@ class LIt extends L {
 
   @override
   String get obWeaponsBody => 'Ogni mondo richiede la sua arma. Nessun grado in gioco.';
+
+  @override
+  String get fightDefeated => 'Sconfitto!';
+
+  @override
+  String get nextWeapon => 'Prossima arma';
+
+  @override
+  String opensWorld(String world) {
+    return 'Apre ${world}';
+  }
+
+  @override
+  String weaponAtStars(String count) {
+    return 'a ${count} stelle';
+  }
 }

@@ -2895,4 +2895,20 @@ class LPt extends L {
 
   @override
   String get obWeaponsBody => 'Cada mundo exige sua própria arma. Nenhum ranking em jogo.';
+
+  @override
+  String get fightDefeated => 'Derrotado!';
+
+  @override
+  String get nextWeapon => 'Próxima arma';
+
+  @override
+  String opensWorld(String world) {
+    return 'Abre ${world}';
+  }
+
+  @override
+  String weaponAtStars(String count) {
+    return 'com ${count} estrelas';
+  }
 }

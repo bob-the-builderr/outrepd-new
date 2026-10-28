@@ -85,6 +85,18 @@ abstract class CameraGame {
 
   /// Whether [reps] finish it.
   bool wonAt(int reps);
+
+  /// What stands beside the camera in place of the depth bar: [progress] is
+  /// the rep's reading, as the bar would show it, and [pastBottom] whether
+  /// this rep has been down past the bottom line.
+  Widget track(
+    BuildContext context, {
+    required double progress,
+    required bool pastBottom,
+  });
+
+  /// The count down to the start, over the whole screen.
+  Widget countdown(BuildContext context, int seconds);
 }
 
 /// The camera. Counts push-ups, and — when it is part of a duel — carries the
@@ -688,12 +700,13 @@ class _TrainerScreenState extends State<TrainerScreen>
       Sounds.instance.play(Cue.rep);
 
       // The rep that finishes the fight: the clock stops on it, and the
-      // round closes a moment later so the last hit is seen landing.
+      // round closes a moment later so the last hit is seen landing and the
+      // monster going down.
       if (widget.game?.wonAt(reading.reps) ?? false) {
         _won = true;
         _clock.stop();
         setState(() => _pose = pose);
-        Timer(const Duration(milliseconds: 900), () {
+        Timer(const Duration(milliseconds: 1600), () {
           if (mounted) _stop();
         });
         return;
@@ -990,6 +1003,42 @@ class _TrainerScreenState extends State<TrainerScreen>
     final top = math.max(36.0, insets.top + 8);
     final bottom = insets.bottom;
 
+    // A game (the adventure's fight) frames the camera under its card, with
+    // its own track beside it, as the reference the user picked does; the
+    // camera fills the screen everywhere else.
+    final game = widget.game;
+
+    // The camera, and the skeleton over it, in whatever box they are given:
+    // the preview covers it and the painter crops the same way.
+    final cameraView = Stack(
+      fit: StackFit.expand,
+      children: [
+        _source?.buildPreview(context) ?? const ColoredBox(color: Colors.black),
+
+        // The skeleton goes over whatever is behind it, in the app's cream:
+        // faint while the lifter is getting into position, bright once they
+        // are in it (and, mid-round, while the hands stay planted). It is
+        // feedback, not a gate on the count: a rep with a sagging hip is
+        // still a rep somebody did, and a count that silently withheld it
+        // would be the app calling them a liar. One colour throughout — red
+        // for "not yet" read as an error before anything had gone wrong.
+        //
+        // Hidden when the lifter has turned it off in settings. The count
+        // does not change either way — this is the picture, not the
+        // reading — but some people find it easier to lift without a
+        // figure drawn over them.
+        if (settings.showSkeleton)
+          CustomPaint(
+            painter: SkeletonPainter(
+              pose: _pose,
+              good: ready,
+              mirror: live,
+              sourceSize: _source?.sourceSize,
+            ),
+          ),
+      ],
+    );
+
     // A long press anywhere shows the numbers behind the position check.
     // It used to be a hidden sixty-pixel box in the corner of practice mode,
     // which is no use to somebody on the floor wondering why the skeleton is
@@ -1000,30 +1049,10 @@ class _TrainerScreenState extends State<TrainerScreen>
       child: Stack(
         fit: StackFit.expand,
         children: [
-          _source?.buildPreview(context) ??
-              const ColoredBox(color: Colors.black),
-
-          // The skeleton goes over whatever is behind it, in the app's cream:
-          // faint while the lifter is getting into position, bright once they
-          // are in it (and, mid-round, while the hands stay planted). It is
-          // feedback, not a gate on the count: a rep with a sagging hip is
-          // still a rep somebody did, and a count that silently withheld it
-          // would be the app calling them a liar. One colour throughout — red
-          // for "not yet" read as an error before anything had gone wrong.
-          //
-          // Hidden when the lifter has turned it off in settings. The count
-          // does not change either way — this is the picture, not the
-          // reading — but some people find it easier to lift without a
-          // figure drawn over them.
-          if (settings.showSkeleton)
-            CustomPaint(
-              painter: SkeletonPainter(
-                pose: _pose,
-                good: ready,
-                mirror: live,
-                sourceSize: _source?.sourceSize,
-              ),
-            ),
+          if (game == null)
+            cameraView
+          else
+            const ColoredBox(color: Color(0xFF121110)),
 
           // The score, the clock, and the rival — pinned to the top from the
           // moment the camera opens, so the numbers are in the same place before
@@ -1038,18 +1067,50 @@ class _TrainerScreenState extends State<TrainerScreen>
             right: 14,
             top: top,
             bottom: 96 + bottom,
-            child: Column(
+            child: game != null
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      game.card(
+                        context,
+                        reps: _liveReps,
+                        remaining: _remaining,
+                        counting: _stage == _Stage.counting,
+                        // Nothing on the ladder to lose, so no question
+                        // first: the fight is simply not won.
+                        onStop: () => _stop(gaveUp: true),
+                      ),
+                      const SizedBox(height: 12),
+                      Expanded(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Expanded(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(22),
+                                child: cameraView,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            // At rest at the top until the round is on.
+                            SizedBox(
+                              width: 44,
+                              child: game.track(
+                                context,
+                                progress: _stage == _Stage.counting
+                                    ? (_progress ?? 0)
+                                    : 1,
+                                pastBottom: _pastBottom,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+                : Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                widget.game?.card(
-                      context,
-                      reps: _liveReps,
-                      remaining: _remaining,
-                      counting: _stage == _Stage.counting,
-                      // Nothing on the ladder to lose, so no question first:
-                      // the fight is simply not won.
-                      onStop: () => _stop(gaveUp: true),
-                    ) ??
                     _ScoreCard(
                       key: const Key('scoreCard'),
                       yours: _liveReps,
@@ -1168,7 +1229,11 @@ class _TrainerScreenState extends State<TrainerScreen>
               ),
             ),
 
-          if (_stage == _Stage.countdown) ...[
+          // A game counts down its own way: the monster first, then the
+          // number over the camera.
+          if (_stage == _Stage.countdown && game != null)
+            Positioned.fill(child: game.countdown(context, _countdown)),
+          if (_stage == _Stage.countdown && game == null) ...[
             Positioned.fill(
               child: ColoredBox(
                 color: const Color(0xFF121110).withValues(alpha: 0.55),

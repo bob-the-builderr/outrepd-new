@@ -874,5 +874,9 @@
   "obFightBody": "140 combates de flexiones en siete mundos. Cada repetición golpea al monstruo.",
   "obSevenWorlds": "Siete mundos, de {from} a {to}",
   "obWeaponsTitle": "Las estrellas desbloquean armas",
-  "obWeaponsBody": "Cada mundo necesita su propia arma. No te juegas el rango."
+  "obWeaponsBody": "Cada mundo necesita su propia arma. No te juegas el rango.",
+  "fightDefeated": "¡Derrotado!",
+  "nextWeapon": "Siguiente arma",
+  "opensWorld": "Abre {world}",
+  "weaponAtStars": "con {count} estrellas"
 }

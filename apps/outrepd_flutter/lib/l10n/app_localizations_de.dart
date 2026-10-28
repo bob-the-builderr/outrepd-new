@@ -2900,4 +2900,20 @@ class LDe extends L {
 
   @override
   String get obWeaponsBody => 'Jede Welt braucht ihre eigene Waffe. Dein Rang steht nicht auf dem Spiel.';
+
+  @override
+  String get fightDefeated => 'Besiegt!';
+
+  @override
+  String get nextWeapon => 'Nächste Waffe';
+
+  @override
+  String opensWorld(String world) {
+    return 'Öffnet ${world}';
+  }
+
+  @override
+  String weaponAtStars(String count) {
+    return 'ab ${count} Sternen';
+  }
 }

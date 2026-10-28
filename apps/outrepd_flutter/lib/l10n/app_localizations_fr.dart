@@ -2899,4 +2899,20 @@ class LFr extends L {
 
   @override
   String get obWeaponsBody => 'Chaque monde exige son arme. Aucun rang en jeu.';
+
+  @override
+  String get fightDefeated => 'Vaincu !';
+
+  @override
+  String get nextWeapon => 'Arme suivante';
+
+  @override
+  String opensWorld(String world) {
+    return 'Ouvre ${world}';
+  }
+
+  @override
+  String weaponAtStars(String count) {
+    return 'à ${count} étoiles';
+  }
 }

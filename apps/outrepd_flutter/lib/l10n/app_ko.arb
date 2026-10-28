@@ -874,5 +874,9 @@
   "obFightBody": "7개 월드에서 펼치는 140번의 팔굽혀펴기 전투. 한 번 할 때마다 몬스터를 공격합니다.",
   "obSevenWorlds": "7개 월드: {from}부터 {to}까지",
   "obWeaponsTitle": "별로 무기를 잠금 해제",
-  "obWeaponsBody": "월드마다 전용 무기가 필요해요. 랭크는 걸려 있지 않아요."
+  "obWeaponsBody": "월드마다 전용 무기가 필요해요. 랭크는 걸려 있지 않아요.",
+  "fightDefeated": "처치!",
+  "nextWeapon": "다음 무기",
+  "opensWorld": "{world} 열림",
+  "weaponAtStars": "별 {count}개에서"
 }

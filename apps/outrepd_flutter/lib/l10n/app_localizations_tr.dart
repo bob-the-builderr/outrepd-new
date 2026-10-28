@@ -2888,4 +2888,20 @@ class LTr extends L {
 
   @override
   String get obWeaponsBody => 'Her dünya kendi silahını ister. Rütben tehlikede değil.';
+
+  @override
+  String get fightDefeated => 'Yenildi!';
+
+  @override
+  String get nextWeapon => 'Sonraki silah';
+
+  @override
+  String opensWorld(String world) {
+    return '${world} açılır';
+  }
+
+  @override
+  String weaponAtStars(String count) {
+    return '${count} yıldızda';
+  }
 }

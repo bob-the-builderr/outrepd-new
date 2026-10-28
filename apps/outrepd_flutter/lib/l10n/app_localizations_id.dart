@@ -2892,4 +2892,20 @@ class LId extends L {
 
   @override
   String get obWeaponsBody => 'Setiap dunia butuh senjatanya sendiri. Peringkat tidak dipertaruhkan.';
+
+  @override
+  String get fightDefeated => 'Kalah!';
+
+  @override
+  String get nextWeapon => 'Senjata berikutnya';
+
+  @override
+  String opensWorld(String world) {
+    return 'Membuka ${world}';
+  }
+
+  @override
+  String weaponAtStars(String count) {
+    return 'di ${count} bintang';
+  }
 }

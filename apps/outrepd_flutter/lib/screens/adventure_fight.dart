@@ -13,6 +13,7 @@ import '../adventure/golem.dart';
 import '../adventure/names.dart';
 import '../adventure/weapon_art.dart';
 import '../l10n/app_localizations.dart';
+import '../reps/pushup_counter.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import '../xp.dart';
@@ -45,13 +46,37 @@ class FightGame implements CameraGame {
     counting: counting,
     onStop: onStop,
   );
+
+  @override
+  Widget track(
+    BuildContext context, {
+    required double progress,
+    required bool pastBottom,
+  }) => WeaponTrack(
+    key: const Key('weaponTrack'),
+    weapon: weapon,
+    progress: progress,
+    pastBottom: pastBottom,
+  );
+
+  @override
+  Widget countdown(BuildContext context, int seconds) =>
+      FightIntro(key: const Key('fightIntro'), level: level, seconds: seconds);
 }
 
 /// Push-ups closer together than this keep a combo going.
 const _comboGap = Duration(milliseconds: 2200);
 
-/// The fight, on top of the camera the way the live match's score card sits:
-/// the monster and what it has left, the clock, and the way out.
+/// Where in a hit the weapon lands: before it, the weapon is flying from the
+/// track at the monster; after it, the blow — the flash, the rings, the
+/// damage rising.
+const _impact = 0.4;
+
+/// The fight, over the camera (the user's pick, 2026-10-28, from the video
+/// the adventure came from): the monster's name, the clock and the way out
+/// on a line, and the monster in its world under them, its HP along the
+/// bottom. Every rep, the weapon flies up off the track beside the camera
+/// and strikes; at 0 HP the monster goes down.
 class FightCard extends StatefulWidget {
   const FightCard({
     super.key,
@@ -78,7 +103,7 @@ class _FightCardState extends State<FightCard>
     with SingleTickerProviderStateMixin {
   late final AnimationController _hit = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 450),
+    duration: const Duration(milliseconds: 700),
   );
 
   DateTime? _lastHit;
@@ -111,10 +136,8 @@ class _FightCardState extends State<FightCard>
     final l = L.of(context);
     final level = widget.level;
     final look = WorldLook.of(level.world);
-    final dealt = math.min(
-      level.hp,
-      widget.reps * level.damageFrom(widget.weapon),
-    );
+    final damage = level.damageFrom(widget.weapon);
+    final dealt = math.min(level.hp, widget.reps * damage);
     final left = level.hp - dealt;
 
     return AnimatedBuilder(
@@ -122,187 +145,493 @@ class _FightCardState extends State<FightCard>
       builder: (context, _) {
         final t = _hit.value;
         final hitting = _hit.isAnimating;
-        final flash = hitting ? 1 - t : 0.0;
-        final shake = hitting ? math.sin(t * math.pi * 6) * (1 - t) * 6 : 0.0;
+        final flying = hitting && t < _impact;
+        final landed = hitting && !flying;
+        // 0 to 1 over the blow, after the weapon arrives.
+        final after = landed ? (t - _impact) / (1 - _impact) : 1.0;
+        final flash = landed ? 1 - after : 0.0;
+        final shake = landed ? math.sin(after * math.pi * 6) * (1 - after) * 6 : 0.0;
+        // Down only once the last blow has landed.
+        final down = left == 0 && !flying;
 
-        return Container(
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(22),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [look.sky, const Color(0xFF0E0F12)],
-            ),
-          ),
-          child: Stack(
-            children: [
-              // The monster's own light, behind it.
-              Positioned(
-                left: -40,
-                top: -30,
-                width: 240,
-                height: 210,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: RadialGradient(
-                      colors: [
-                        look.eye.withValues(alpha: 0.28),
-                        look.eye.withValues(alpha: 0),
-                      ],
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    monsterName(l, level),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 0.5,
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(4, 10, 14, 14),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                Text(
+                  formatClock(context, widget.remaining.inSeconds),
+                  style: TextStyle(
+                    color: widget.counting
+                        ? Colors.white
+                        : const Color(0xFFA39B91),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                    fontFeatures: const [FontFeature.tabularFigures()],
+                  ),
+                ),
+                const SizedBox(width: 12),
+                _GiveUpPill(label: l.giveUp, onTap: widget.onStop),
+              ],
+            ),
+            const SizedBox(height: 8),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(22),
+              child: SizedBox(
+                height: 190,
+                child: Stack(
                   children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox.square(
-                          dimension: 124,
-                          child: Stack(
-                            clipBehavior: Clip.none,
-                            children: [
-                              Transform.translate(
-                                offset: Offset(shake, 0),
-                                child: Golem(
-                                  level: level,
-                                  size: 124,
-                                  hurt: dealt / level.hp,
-                                  flash: flash,
-                                ),
+                    Positioned.fill(
+                      child: CustomPaint(painter: _LandscapePainter(look)),
+                    ),
+                    if (landed)
+                      Positioned.fill(
+                        child: CustomPaint(
+                          painter: _RingsPainter(after, look.eye),
+                        ),
+                      ),
+                    Align(
+                      alignment: const Alignment(0, -0.15),
+                      child: Transform.translate(
+                        offset: Offset(shake, 0),
+                        child: down
+                            ? FallenGolem(level: level, size: 120)
+                            : Golem(
+                                level: level,
+                                size: 120,
+                                hurt: dealt / level.hp,
+                                flash: flash,
                               ),
-                              // The damage, rising off the hit.
-                              if (hitting)
-                                Positioned(
-                                  right: -10,
-                                  top: 6 - t * 26,
-                                  child: Opacity(
-                                    opacity: (1 - t * t).clamp(0.0, 1.0),
-                                    child: Text(
-                                      '−${localNumber(context, level.damageFrom(widget.weapon))}',
-                                      style: const TextStyle(
-                                        color: AppColors.gold,
-                                        fontSize: 28,
-                                        fontWeight: FontWeight.w900,
-                                        shadows: [
-                                          Shadow(
-                                            color: Color(0xFF000000),
-                                            offset: Offset(0, 2),
-                                          ),
-                                          Shadow(
-                                            color: Color(0xB3E0B145),
-                                            blurRadius: 14,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                            ],
+                      ),
+                    ),
+                    Positioned(
+                      left: 14,
+                      top: 10,
+                      child: Text(
+                        l.adventureLevelIn(
+                          localNumber(context, level.number),
+                          worldName(l, level.world),
+                        ),
+                        style: const TextStyle(
+                          color: Color(0xD9FFFFFF),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    if (_combo >= 3)
+                      Positioned(
+                        left: 14,
+                        top: 32,
+                        child: Container(
+                          key: const Key('combo'),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0x2EE8846B),
+                            borderRadius: BorderRadius.circular(99),
+                            border: Border.all(color: const Color(0x80E8846B)),
+                          ),
+                          child: Text(
+                            l.comboTag(localNumber(context, _combo)),
+                            style: const TextStyle(
+                              color: Color(0xFFE8846B),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 1.2,
+                            ),
                           ),
                         ),
-                        const SizedBox(width: 6),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  l.stageNumber(localNumber(context, level.number)),
-                                  style: const TextStyle(
-                                    color: Color(0xFFA39B91),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w800,
-                                    letterSpacing: 1.6,
-                                  ),
+                      ),
+                    // The weapon, up off the track below the card's right
+                    // corner and in at the monster.
+                    if (flying)
+                      Align(
+                        alignment: Alignment.lerp(
+                          const Alignment(1.2, 1.3),
+                          const Alignment(0.12, -0.2),
+                          Curves.easeIn.transform(t / _impact),
+                        )!,
+                        child: Transform.rotate(
+                          angle: -0.5 - t / _impact * 0.9,
+                          child: WeaponArt(weapon: widget.weapon, size: 46),
+                        ),
+                      ),
+                    // The damage, rising off the blow.
+                    if (landed)
+                      Align(
+                        alignment: Alignment(0.45, -0.55 - after * 0.3),
+                        child: Opacity(
+                          opacity: (1 - after * after).clamp(0.0, 1.0),
+                          child: Text(
+                            '−${localNumber(context, damage)}',
+                            style: const TextStyle(
+                              color: AppColors.gold,
+                              fontSize: 30,
+                              fontWeight: FontWeight.w900,
+                              shadows: [
+                                Shadow(
+                                  color: Color(0xFF000000),
+                                  offset: Offset(0, 2),
                                 ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  monsterName(l, level),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 19,
-                                    fontWeight: FontWeight.w800,
-                                    height: 1.15,
-                                  ),
+                                Shadow(
+                                  color: Color(0xB3E0B145),
+                                  blurRadius: 14,
                                 ),
-                                if (_combo >= 3) ...[
-                                  const SizedBox(height: 7),
-                                  Container(
-                                    key: const Key('combo'),
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 4,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: const Color(0x2EE8846B),
-                                      borderRadius: BorderRadius.circular(99),
-                                      border: Border.all(
-                                        color: const Color(0x80E8846B),
-                                      ),
-                                    ),
-                                    child: Text(
-                                      l.comboTag(localNumber(context, _combo)),
-                                      style: const TextStyle(
-                                        color: Color(0xFFE8846B),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w800,
-                                        letterSpacing: 1.2,
-                                      ),
-                                    ),
-                                  ),
-                                ],
                               ],
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 6),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                formatClock(context, widget.remaining.inSeconds),
-                                style: TextStyle(
-                                  color: widget.counting
-                                      ? Colors.white
-                                      : const Color(0xFFA39B91),
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w800,
-                                  fontFeatures: const [
-                                    FontFeature.tabularFigures(),
-                                  ],
-                                ),
+                      ),
+                    if (down)
+                      Align(
+                        alignment: const Alignment(0, -0.62),
+                        child: Text(
+                          l.fightDefeated,
+                          key: const Key('fightDefeated'),
+                          style: const TextStyle(
+                            color: AppColors.gold,
+                            fontSize: 32,
+                            fontWeight: FontWeight.w900,
+                            shadows: [
+                              Shadow(
+                                color: Color(0xFF000000),
+                                offset: Offset(0, 2),
                               ),
-                              const SizedBox(height: 6),
-                              _GiveUpPill(
-                                label: l.giveUp,
-                                onTap: widget.onStop,
-                              ),
+                              Shadow(color: Color(0x99E0B145), blurRadius: 18),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
+                      ),
+                    Positioned(
+                      left: 14,
+                      right: 14,
+                      bottom: 12,
                       child: _HpBar(left: left, of: level.hp),
                     ),
                   ],
                 ),
               ),
-            ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+/// The monster's world behind it: the sky in its light, a pale sun, two
+/// hills and a few trees.
+class _LandscapePainter extends CustomPainter {
+  _LandscapePainter(this.look);
+
+  final WorldLook look;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width, h = size.height;
+    final rect = Offset.zero & size;
+    canvas.drawRect(
+      rect,
+      Paint()
+        ..shader = LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color.lerp(look.sky, const Color(0xFF8A96A6), 0.45)!, look.sky],
+        ).createShader(rect),
+    );
+    canvas.drawCircle(
+      Offset(w * 0.82, h * 0.2),
+      h * 0.09,
+      Paint()..color = const Color(0x59FFFFFF),
+    );
+    final far = Path()
+      ..moveTo(0, h * 0.72)
+      ..quadraticBezierTo(w * 0.25, h * 0.6, w * 0.5, h * 0.7)
+      ..quadraticBezierTo(w * 0.75, h * 0.8, w, h * 0.66)
+      ..lineTo(w, h)
+      ..lineTo(0, h)
+      ..close();
+    canvas.drawPath(
+      far,
+      Paint()..color = Color.lerp(look.sky, const Color(0xFF000000), 0.2)!,
+    );
+    final near = Path()
+      ..moveTo(0, h * 0.84)
+      ..quadraticBezierTo(w * 0.3, h * 0.74, w * 0.62, h * 0.82)
+      ..quadraticBezierTo(w * 0.85, h * 0.88, w, h * 0.8)
+      ..lineTo(w, h)
+      ..lineTo(0, h)
+      ..close();
+    canvas.drawPath(
+      near,
+      Paint()..color = Color.lerp(look.sky, const Color(0xFF000000), 0.5)!,
+    );
+    final tree = Paint()..color = Color.lerp(look.sky, const Color(0xFF000000), 0.6)!;
+    for (final (x, y, s) in [(0.14, 0.74, 16.0), (0.86, 0.7, 13.0)]) {
+      canvas.drawPath(
+        Path()
+          ..moveTo(w * x - s * 0.4, h * y)
+          ..lineTo(w * x, h * y - s)
+          ..lineTo(w * x + s * 0.4, h * y)
+          ..close(),
+        tree,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(_LandscapePainter old) => old.look != look;
+}
+
+/// The blow landing: three rings opening out from the monster, fading.
+class _RingsPainter extends CustomPainter {
+  _RingsPainter(this.progress, this.colour);
+
+  /// 0 as the weapon lands, 1 when the rings are gone.
+  final double progress;
+  final Color colour;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final centre = Offset(size.width / 2, size.height * 0.42);
+    for (var i = 0; i < 3; i++) {
+      final alpha = ((0.7 - i * 0.2) * (1 - progress)).clamp(0.0, 1.0);
+      canvas.drawCircle(
+        centre,
+        36 + i * 18 + progress * 40,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 3
+          ..color = colour.withValues(alpha: alpha),
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(_RingsPainter old) => old.progress != progress;
+}
+
+/// Beside the camera, in place of the depth bar: a line of ticks, the two
+/// lines a rep has to cross as longer ticks — the next one lit — and the
+/// weapon riding it with the lifter, down with them and back up. The
+/// counter's own lines, where the depth bar has them ([barFill]), so the
+/// weapon never promises a rep the counter will not give.
+class WeaponTrack extends StatelessWidget {
+  const WeaponTrack({
+    super.key,
+    required this.weapon,
+    required this.progress,
+    required this.pastBottom,
+  });
+
+  final Weapon weapon;
+  final double progress;
+  final bool pastBottom;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, box) {
+        const room = 24.0;
+        final w = box.maxWidth;
+        final rail = math.max(0.0, box.maxHeight - room * 2);
+        // From the top of the box, where a reading of [share] sits.
+        double at(double share) => room + rail * (1 - barFill(share));
+        final ticks = math.max(2, rail ~/ 24);
+
+        Widget line(String key, double share, Color colour) => Positioned(
+          key: Key(key),
+          left: (w - 30) / 2,
+          width: 30,
+          top: at(share) - 2,
+          height: 4,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: colour,
+              borderRadius: BorderRadius.circular(2),
+            ),
           ),
+        );
+
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            for (var i = 0; i <= ticks; i++)
+              Positioned(
+                left: (w - 14) / 2,
+                width: 14,
+                top: room + rail * i / ticks - 1.5,
+                height: 3,
+                child: const DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Color(0xFF3A3531),
+                    borderRadius: BorderRadius.all(Radius.circular(2)),
+                  ),
+                ),
+              ),
+            line(
+              'trackLineBottom',
+              kBottomShare,
+              pastBottom ? AppColors.win : AppColors.gold,
+            ),
+            line(
+              'trackLineTop',
+              kTopShare,
+              pastBottom ? AppColors.gold : const Color(0xB38F8880),
+            ),
+            Positioned(
+              left: (w - 40) / 2,
+              top: at(progress) - 20,
+              child: WeaponArt(weapon: weapon, size: 40),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+/// The count down before a fight: the monster, whole, in its world with its
+/// name and its full HP, and the seconds large over the camera below.
+class FightIntro extends StatelessWidget {
+  const FightIntro({super.key, required this.level, required this.seconds});
+
+  final AdventureLevel level;
+  final int seconds;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final look = WorldLook.of(level.world);
+    final hp = localNumber(context, level.hp);
+
+    return LayoutBuilder(
+      builder: (context, box) {
+        final top = box.maxHeight * 0.47;
+        return Stack(
+          children: [
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 0,
+              height: top,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  CustomPaint(painter: _LandscapePainter(look)),
+                  SafeArea(
+                    bottom: false,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 18, 20, 0),
+                      child: Column(
+                        children: [
+                          Text(
+                            l.adventureLevelIn(
+                              localNumber(context, level.number),
+                              worldName(l, level.world),
+                            ),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Color(0xD9FFFFFF),
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            monsterName(l, level),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.w900,
+                              shadows: [
+                                Shadow(color: Color(0x80000000), blurRadius: 10),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Center(
+                              child: Golem(
+                                level: level,
+                                size: math.min(240.0, top * 0.6),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              top: top,
+              height: 34,
+              child: DecoratedBox(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFFE8846B), Color(0xFFFF6A3D)],
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    '${l.hpShort}: $hp / $hp',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              top: top + 34,
+              bottom: 0,
+              child: ColoredBox(
+                color: const Color(0xFF121110).withValues(alpha: 0.4),
+                child: Center(
+                  child: Text(
+                    localNumber(context, seconds),
+                    key: const Key('fightCountdown'),
+                    style: const TextStyle(
+                      color: AppColors.gold,
+                      fontSize: 200,
+                      height: 1,
+                      fontWeight: FontWeight.w900,
+                      shadows: [
+                        Shadow(color: Color(0xFF121110), offset: Offset(0, 5)),
+                        Shadow(color: Color(0x80D9A94A), blurRadius: 40),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         );
       },
     );
@@ -391,10 +720,16 @@ class _HpBar extends StatelessWidget {
                 FractionallySizedBox(
                   alignment: AlignmentDirectional.centerStart,
                   widthFactor: share.clamp(0.0, 1.0),
-                  child: const DecoratedBox(
+                  child: DecoratedBox(
                     decoration: BoxDecoration(
+                      // Red while it is mostly there, amber past half,
+                      // green near the end — as the video's bar does.
                       gradient: LinearGradient(
-                        colors: [Color(0xFFE8846B), Color(0xFFFF6A3D)],
+                        colors: share > 0.6
+                            ? const [Color(0xFFE8846B), Color(0xFFFF6A3D)]
+                            : share > 0.3
+                            ? const [Color(0xFFE0A33A), Color(0xFFF2C14E)]
+                            : const [Color(0xFF2FB56A), Color(0xFF5BD98A)],
                       ),
                     ),
                   ),
@@ -741,102 +1076,163 @@ class WeaponUnlockedView extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = L.of(context);
     final colors = context.colors;
+    // The weapon's own metal, the colour of the world it belongs to.
+    final metal = WorldLook.of(weapon.index).light;
+    final next = weapon.index + 1 < kWeapons.length
+        ? kWeapons[weapon.index + 1]
+        : null;
+    final what = [
+      // The last weapon opens nothing: it is past Master.
+      if (weapon.index < kWorlds) l.opensWorld(worldName(l, weapon.index)),
+      l.wasWith(
+        localNumber(context, previous.damage),
+        weaponName(l, previous),
+      ),
+    ].join(' · ');
 
     return SafeArea(
-      child: Stack(
+      child: Column(
+        key: const Key('weaponUnlocked'),
         children: [
-          Positioned.fill(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: RadialGradient(
-                  center: const Alignment(0, -0.2),
-                  radius: 0.8,
-                  colors: [
-                    AppColors.gold.withValues(alpha: 0.22),
-                    AppColors.gold.withValues(alpha: 0),
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(22, 40, 22, 8),
+              child: Column(
+                children: [
+                  ShrinkText(
+                    l.newWeapon,
+                    maxLines: 1,
+                    style: TextStyle(
+                      color: colors.text,
+                      fontSize: 26,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 4,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Container(
+                    width: 220,
+                    height: 220,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: colors.surfaceRaised,
+                      borderRadius: BorderRadius.circular(36),
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.06),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: metal.withValues(alpha: 0.25),
+                          blurRadius: 60,
+                        ),
+                      ],
+                    ),
+                    child: WeaponArt(weapon: weapon, size: 160),
+                  ),
+                  const SizedBox(height: 26),
+                  Text(
+                    weaponName(l, weapon),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: metal,
+                      fontSize: 34,
+                      height: 1.15,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    l.damagePerPushUp(localNumber(context, weapon.damage)),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: AppColors.gold,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    what,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: colors.muted, fontSize: 14.5),
+                  ),
+                  if (next != null) ...[
+                    const SizedBox(height: 30),
+                    Container(
+                      key: const Key('nextWeapon'),
+                      padding: const EdgeInsets.fromLTRB(16, 14, 18, 14),
+                      decoration: BoxDecoration(
+                        color: colors.surface,
+                        borderRadius: BorderRadius.circular(18),
+                        border: Border.all(color: colors.border, width: 0.5),
+                      ),
+                      child: Row(
+                        children: [
+                          Opacity(
+                            opacity: 0.7,
+                            child: WeaponArt(
+                              weapon: next,
+                              size: 56,
+                              locked: true,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  l.nextWeapon,
+                                  style: TextStyle(
+                                    color: colors.muted,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w800,
+                                    letterSpacing: 1.5,
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  weaponName(l, next),
+                                  style: TextStyle(
+                                    color: colors.text,
+                                    fontSize: 19,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  '${l.perPushUp(localNumber(context, next.damage))} · '
+                                  '${l.weaponAtStars(localNumber(context, next.stars))}',
+                                  style: TextStyle(
+                                    color: colors.muted,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
-                ),
+                ],
               ),
             ),
           ),
-          Column(
-            key: const Key('weaponUnlocked'),
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(24, 48, 24, 8),
-                  child: Column(
-                    children: [
-                      Text(
-                        l.starsKicker(localNumber(context, weapon.stars)),
-                        style: const TextStyle(
-                          color: AppColors.gold,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: 2,
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      ShrinkText(
-                        l.newWeapon,
-                        maxLines: 1,
-                        style: TextStyle(
-                          color: colors.text,
-                          fontSize: 40,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                      const SizedBox(height: 36),
-                      WeaponArt(weapon: weapon, size: 190),
-                      const SizedBox(height: 30),
-                      Text(
-                        weaponName(l, weapon),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: colors.text,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        l.damagePerPushUp(localNumber(context, weapon.damage)),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: AppColors.gold,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        l.wasWith(
-                          localNumber(context, previous.damage),
-                          weaponName(l, previous),
-                        ),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: colors.muted, fontSize: 14),
-                      ),
-                    ],
-                  ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(18, 8, 18, 18),
+            child: SizedBox(
+              width: double.infinity,
+              child: FilledButton(
+                key: const Key('weaponContinue'),
+                style: FilledButton.styleFrom(
+                  backgroundColor: colors.brand,
+                  foregroundColor: colors.background,
                 ),
+                onPressed: onContinue,
+                child: Text(l.continueAction),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(18, 8, 18, 18),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: FilledButton(
-                    key: const Key('weaponContinue'),
-                    style: FilledButton.styleFrom(
-                      backgroundColor: colors.rival,
-                      foregroundColor: colors.background,
-                    ),
-                    onPressed: onContinue,
-                    child: Text(l.continueAction),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ],
       ),

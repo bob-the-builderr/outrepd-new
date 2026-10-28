@@ -2848,4 +2848,20 @@ class LZh extends L {
 
   @override
   String get obWeaponsBody => '每个世界都需要专属武器。不影响排位。';
+
+  @override
+  String get fightDefeated => '击败！';
+
+  @override
+  String get nextWeapon => '下一件武器';
+
+  @override
+  String opensWorld(String world) {
+    return '开启${world}';
+  }
+
+  @override
+  String weaponAtStars(String count) {
+    return '需要 ${count} 颗星';
+  }
 }

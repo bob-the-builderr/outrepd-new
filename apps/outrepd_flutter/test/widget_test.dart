@@ -176,7 +176,6 @@ void main() {
     await tap(tester, 'Next');
     // Adventure, its own card: a fight, the seven worlds, what stars buy.
     expect(find.text('Fight monsters.'), findsOneWidget);
-    expect(find.text('Iron Colossus'), findsOneWidget);
     expect(find.text('Stars unlock weapons'), findsOneWidget);
 
     await tap(tester, 'Continue');

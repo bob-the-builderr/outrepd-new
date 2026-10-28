@@ -2891,4 +2891,20 @@ class LEn extends L {
 
   @override
   String get obWeaponsBody => 'Each world needs its own weapon. No rank on the line.';
+
+  @override
+  String get fightDefeated => 'Defeated!';
+
+  @override
+  String get nextWeapon => 'Next weapon';
+
+  @override
+  String opensWorld(String world) {
+    return 'Opens ${world}';
+  }
+
+  @override
+  String weaponAtStars(String count) {
+    return 'at ${count} stars';
+  }
 }

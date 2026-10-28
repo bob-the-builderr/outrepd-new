@@ -2898,4 +2898,20 @@ class LEs extends L {
 
   @override
   String get obWeaponsBody => 'Cada mundo necesita su propia arma. No te juegas el rango.';
+
+  @override
+  String get fightDefeated => '¡Derrotado!';
+
+  @override
+  String get nextWeapon => 'Siguiente arma';
+
+  @override
+  String opensWorld(String world) {
+    return 'Abre ${world}';
+  }
+
+  @override
+  String weaponAtStars(String count) {
+    return 'con ${count} estrellas';
+  }
 }

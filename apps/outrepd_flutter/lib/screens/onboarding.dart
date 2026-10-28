@@ -25,7 +25,6 @@ import 'package:flutter/material.dart';
 
 import '../adventure/adventure.dart';
 import '../adventure/golem.dart';
-import '../adventure/names.dart';
 import '../career.dart';
 import '../data.dart';
 import '../keep_awake.dart';
@@ -598,31 +597,7 @@ class _IdeaState extends State<_Idea> {
                 body: l.obRaceBody,
                 // A live match as it looks from the floor: both counts, the
                 // clock, the depth bar and the line over the lifter's arms.
-                picture: Center(
-                  child: AspectRatio(
-                    aspectRatio: 880 / 1912,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24),
-                        border: Border.all(color: context.colors.border),
-                        boxShadow: [
-                          BoxShadow(
-                            color: context.colors.brand.withValues(alpha: 0.25),
-                            blurRadius: 36,
-                          ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(23),
-                        child: Image.asset(
-                          'assets/images/onboarding_live.jpg',
-                          fit: BoxFit.cover,
-                          excludeFromSemantics: true,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                picture: const _Screenshot('assets/images/onboarding_live.jpg'),
               ),
               _IdeaPage(
                 title: l.obRepsTitle,
@@ -709,7 +684,11 @@ class _IdeaState extends State<_Idea> {
               _IdeaPage(
                 title: l.obFightTitle,
                 body: l.obFightBody,
-                picture: const _FightPicture(),
+                // The fight as the camera shows it: the lifter in the black
+                // t-shirt under the new skeleton, the weapon just landing.
+                picture: const _Screenshot(
+                  'assets/images/onboarding_adventure.jpg',
+                ),
                 footer: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -885,130 +864,36 @@ class _FillLayout extends SingleChildLayoutDelegate {
   bool shouldRelayout(_FillLayout oldDelegate) => false;
 }
 
-/// The Adventure card's picture: a fight under way, drawn with the game's own
-/// painter — the first world's King, a rep just landed, half its HP gone.
-class _FightPicture extends StatelessWidget {
-  const _FightPicture();
+/// One of the idea's pictures: a screen of the app as a phone shows it,
+/// whole, rounded, in the brand's glow. 880 × 1912, as both are drawn.
+class _Screenshot extends StatelessWidget {
+  const _Screenshot(this.asset);
+
+  final String asset;
 
   @override
   Widget build(BuildContext context) {
-    final l = L.of(context);
-    final colors = context.colors;
-    final level = AdventureLevel.of(kLevelsPerWorld);
-    final look = WorldLook.of(level.world);
-
-    // Its own width, shrunk to the room the card has left on a short phone.
     return Center(
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Container(
-          width: 368,
-          padding: const EdgeInsets.all(16),
+      child: AspectRatio(
+        aspectRatio: 880 / 1912,
+        child: DecoratedBox(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(22),
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [look.sky, colors.surface],
-            ),
-            border: Border.all(color: colors.border),
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(color: context.colors.border),
             boxShadow: [
               BoxShadow(
-                color: colors.rival.withValues(alpha: 0.18),
-                blurRadius: 40,
+                color: context.colors.brand.withValues(alpha: 0.25),
+                blurRadius: 36,
               ),
             ],
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Golem(level: level, size: 132, hurt: 0.55),
-                      PositionedDirectional(
-                        top: 0,
-                        end: -6,
-                        child: Text(
-                          '−${localNumber(context, 1)}',
-                          style: const TextStyle(
-                            color: AppColors.gold,
-                            fontSize: 32,
-                            height: 1,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(width: 14),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          l.adventureLevelIn(
-                            localNumber(context, level.number),
-                            worldName(l, level.world),
-                          ),
-                          style: TextStyle(
-                            color: colors.muted,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          monsterName(l, level),
-                          style: TextStyle(
-                            color: colors.text,
-                            fontSize: 23,
-                            height: 1.15,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 14),
-              Text(
-                l.hpShort,
-                style: TextStyle(
-                  color: colors.text,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(height: 6),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: SizedBox(
-                  height: 12,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      const ColoredBox(color: Color(0xFF0D0C0B)),
-                      FractionallySizedBox(
-                        alignment: AlignmentDirectional.centerStart,
-                        widthFactor: 0.45,
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [colors.rival, const Color(0xFFFF6A3D)],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(23),
+            child: Image.asset(
+              asset,
+              fit: BoxFit.cover,
+              excludeFromSemantics: true,
+            ),
           ),
         ),
       ),

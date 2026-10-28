@@ -874,5 +874,9 @@
   "obFightBody": "Yedi dünyada 140 şınav dövüşü. Her tekrar canavara vurur.",
   "obSevenWorlds": "Yedi dünya: {from} – {to}",
   "obWeaponsTitle": "Yıldızlar silah açar",
-  "obWeaponsBody": "Her dünya kendi silahını ister. Rütben tehlikede değil."
+  "obWeaponsBody": "Her dünya kendi silahını ister. Rütben tehlikede değil.",
+  "fightDefeated": "Yenildi!",
+  "nextWeapon": "Sonraki silah",
+  "opensWorld": "{world} açılır",
+  "weaponAtStars": "{count} yıldızda"
 }

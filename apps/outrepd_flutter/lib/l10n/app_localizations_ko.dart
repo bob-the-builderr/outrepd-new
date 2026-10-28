@@ -2861,4 +2861,20 @@ class LKo extends L {
 
   @override
   String get obWeaponsBody => '월드마다 전용 무기가 필요해요. 랭크는 걸려 있지 않아요.';
+
+  @override
+  String get fightDefeated => '처치!';
+
+  @override
+  String get nextWeapon => '다음 무기';
+
+  @override
+  String opensWorld(String world) {
+    return '${world} 열림';
+  }
+
+  @override
+  String weaponAtStars(String count) {
+    return '별 ${count}개에서';
+  }
 }

@@ -1919,5 +1919,23 @@
     }
   },
   "obWeaponsTitle": "Stars unlock weapons",
-  "obWeaponsBody": "Each world needs its own weapon. No rank on the line."
+  "obWeaponsBody": "Each world needs its own weapon. No rank on the line.",
+  "fightDefeated": "Defeated!",
+  "nextWeapon": "Next weapon",
+  "opensWorld": "Opens {world}",
+  "@opensWorld": {
+    "placeholders": {
+      "world": {
+        "type": "String"
+      }
+    }
+  },
+  "weaponAtStars": "at {count} stars",
+  "@weaponAtStars": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  }
 }
