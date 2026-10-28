@@ -2711,12 +2711,6 @@ class LPt extends L {
   String get obClimbBody => 'Vença para subir na escada: sete níveis, cinco degraus cada.';
 
   @override
-  String get obAdventureTitle => 'Treinando sozinho?';
-
-  @override
-  String get obAdventureBody => 'Aventura tem 140 níveis de lutas de flexões, cada um mais difícil que o anterior.';
-
-  @override
   String get obGoldLine => 'linha dourada';
 
   @override
@@ -2884,4 +2878,21 @@ class LPt extends L {
 
   @override
   String get obBeforeYouLift => 'Antes de começar';
+
+  @override
+  String get obFightTitle => 'Lute contra monstros.';
+
+  @override
+  String get obFightBody => '140 lutas de flexões em sete mundos. Cada repetição acerta o monstro.';
+
+  @override
+  String obSevenWorlds(String from, String to) {
+    return 'Sete mundos, do ${from} ao ${to}';
+  }
+
+  @override
+  String get obWeaponsTitle => 'Estrelas desbloqueiam armas';
+
+  @override
+  String get obWeaponsBody => 'Cada mundo exige sua própria arma. Nenhum ranking em jogo.';
 }

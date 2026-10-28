@@ -2714,12 +2714,6 @@ class LEs extends L {
   String get obClimbBody => 'Gana para subir en la escalera: siete rangos de cinco escalones cada uno.';
 
   @override
-  String get obAdventureTitle => '¿Entrenas solo?';
-
-  @override
-  String get obAdventureBody => 'Aventura tiene 140 niveles de combates de flexiones, cada uno más difícil que el anterior.';
-
-  @override
   String get obGoldLine => 'línea dorada';
 
   @override
@@ -2887,4 +2881,21 @@ class LEs extends L {
 
   @override
   String get obBeforeYouLift => 'Antes de empezar';
+
+  @override
+  String get obFightTitle => 'Lucha contra monstruos.';
+
+  @override
+  String get obFightBody => '140 combates de flexiones en siete mundos. Cada repetición golpea al monstruo.';
+
+  @override
+  String obSevenWorlds(String from, String to) {
+    return 'Siete mundos, de ${from} a ${to}';
+  }
+
+  @override
+  String get obWeaponsTitle => 'Las estrellas desbloquean armas';
+
+  @override
+  String get obWeaponsBody => 'Cada mundo necesita su propia arma. No te juegas el rango.';
 }

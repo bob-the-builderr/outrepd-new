@@ -1,6 +1,6 @@
 /// Screenshots of onboarding's first screens as the app draws them: the
-/// welcome, the idea's three cards — the live match, the rep rule part way
-/// through a rep, the ladder — and the camera's question. See shots.dart for
+/// welcome, the idea's four cards — the live match, the rep rule part way
+/// through a rep, the ladder, an Adventure fight — and the camera's question. See shots.dart for
 /// how these are run and published.
 library;
 
@@ -101,6 +101,14 @@ void main() {
     await expectLater(
       find.byType(MaterialApp),
       matchesGoldenFile('goldens/onboarding_idea_3.png'),
+    );
+
+    // Adventure: a fight drawn by the game's painter, and the seven Kings.
+    await tester.tap(find.text('Next'));
+    await tester.pumpAndSettle();
+    await expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile('goldens/onboarding_idea_4.png'),
     );
 
     await tester.tap(find.text('Continue'));

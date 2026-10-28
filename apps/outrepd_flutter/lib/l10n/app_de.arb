@@ -815,8 +815,6 @@
   "obRepsBoth": "Beides, mit den Händen am Boden. Eine halbe Wiederholung zählt nicht – weder bei dir noch beim Gegner.",
   "obClimbTitle": "Steig auf bis Master.",
   "obClimbBody": "Gewinne, um aufzusteigen: sieben Ränge mit je fünf Stufen.",
-  "obAdventureTitle": "Allein trainieren?",
-  "obAdventureBody": "Abenteuer hat 140 Level mit Liegestütz-Kämpfen, jedes schwerer als das davor.",
   "obGoldLine": "goldene Linie",
   "obCalibrationRule": "Runter unter die {gold}, wieder hoch über die obere",
   "proTitleTop": "Keine Werbung.",
@@ -871,5 +869,10 @@
   "obOver13": "13 oder älter",
   "obFor13": "outrepd ist ab 13.",
   "obUnder13Blocked": "outrepd ist ab 13. Komm wieder, wenn es so weit ist – die Liegestütze warten auf dich.",
-  "obBeforeYouLift": "Bevor du loslegst"
+  "obBeforeYouLift": "Bevor du loslegst",
+  "obFightTitle": "Kämpf gegen Monster.",
+  "obFightBody": "140 Liegestütz-Kämpfe in sieben Welten. Jede Wiederholung trifft das Monster.",
+  "obSevenWorlds": "Sieben Welten, {from} bis {to}",
+  "obWeaponsTitle": "Sterne schalten Waffen frei",
+  "obWeaponsBody": "Jede Welt braucht ihre eigene Waffe. Dein Rang steht nicht auf dem Spiel."
 }

@@ -23,6 +23,9 @@ import 'dart:math' as math;
 import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 
+import '../adventure/adventure.dart';
+import '../adventure/golem.dart';
+import '../adventure/names.dart';
 import '../career.dart';
 import '../data.dart';
 import '../keep_awake.dart';
@@ -558,7 +561,7 @@ class _Idea extends StatefulWidget {
 }
 
 class _IdeaState extends State<_Idea> {
-  static const _count = 3;
+  static const _count = 4;
 
   final _pages = PageController();
   int _page = 0;
@@ -698,6 +701,39 @@ class _IdeaState extends State<_Idea> {
                           ),
                       ],
                     ),
+                  ],
+                ),
+              ),
+              // Adventure, its own card (the user, 2026-10-28, mockup A): a
+              // fight under way, the seven worlds' Kings, and what stars buy.
+              _IdeaPage(
+                title: l.obFightTitle,
+                body: l.obFightBody,
+                picture: const _FightPicture(),
+                footer: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l.obSevenWorlds(
+                        tierName(l, 0),
+                        tierName(l, kTiers.length - 1),
+                      ),
+                      style: TextStyle(
+                        color: context.colors.muted,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        for (var world = 0; world < kWorlds; world++) ...[
+                          if (world > 0) const SizedBox(width: 6),
+                          Expanded(child: _WorldKing(world: world)),
+                        ],
+                      ],
+                    ),
                     const SizedBox(height: 18),
                     SizedBox(
                       width: double.infinity,
@@ -710,7 +746,7 @@ class _IdeaState extends State<_Idea> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              l.obAdventureTitle,
+                              l.obWeaponsTitle,
                               style: TextStyle(
                                 color: context.colors.text,
                                 fontSize: 17,
@@ -719,7 +755,7 @@ class _IdeaState extends State<_Idea> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              l.obAdventureBody,
+                              l.obWeaponsBody,
                               style: TextStyle(
                                 color: context.colors.muted,
                                 fontSize: 14.5,
@@ -847,6 +883,172 @@ class _FillLayout extends SingleChildLayoutDelegate {
 
   @override
   bool shouldRelayout(_FillLayout oldDelegate) => false;
+}
+
+/// The Adventure card's picture: a fight under way, drawn with the game's own
+/// painter — the first world's King, a rep just landed, half its HP gone.
+class _FightPicture extends StatelessWidget {
+  const _FightPicture();
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final colors = context.colors;
+    final level = AdventureLevel.of(kLevelsPerWorld);
+    final look = WorldLook.of(level.world);
+
+    // Its own width, shrunk to the room the card has left on a short phone.
+    return Center(
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Container(
+          width: 368,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(22),
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [look.sky, colors.surface],
+            ),
+            border: Border.all(color: colors.border),
+            boxShadow: [
+              BoxShadow(
+                color: colors.rival.withValues(alpha: 0.18),
+                blurRadius: 40,
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Golem(level: level, size: 132, hurt: 0.55),
+                      PositionedDirectional(
+                        top: 0,
+                        end: -6,
+                        child: Text(
+                          '−${localNumber(context, 1)}',
+                          style: const TextStyle(
+                            color: AppColors.gold,
+                            fontSize: 32,
+                            height: 1,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l.adventureLevelIn(
+                            localNumber(context, level.number),
+                            worldName(l, level.world),
+                          ),
+                          style: TextStyle(
+                            color: colors.muted,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          monsterName(l, level),
+                          style: TextStyle(
+                            color: colors.text,
+                            fontSize: 23,
+                            height: 1.15,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 14),
+              Text(
+                l.hpShort,
+                style: TextStyle(
+                  color: colors.text,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 6),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: SizedBox(
+                  height: 12,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      const ColoredBox(color: Color(0xFF0D0C0B)),
+                      FractionallySizedBox(
+                        alignment: AlignmentDirectional.centerStart,
+                        widthFactor: 0.45,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [colors.rival, const Color(0xFFFF6A3D)],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// One world's King, small, on its world's sky: the seven in a row are the
+/// whole of the Adventure.
+class _WorldKing extends StatelessWidget {
+  const _WorldKing({required this.world});
+
+  final int world;
+
+  @override
+  Widget build(BuildContext context) {
+    final look = WorldLook.of(world);
+    return AspectRatio(
+      aspectRatio: 1,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [look.sky, context.colors.surface],
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(3),
+          child: CustomPaint(
+            painter: GolemPainter(
+              level: AdventureLevel.of((world + 1) * kLevelsPerWorld),
+            ),
+            child: const SizedBox.expand(),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 /// Which card this is: a pill for this one, dots for the others.

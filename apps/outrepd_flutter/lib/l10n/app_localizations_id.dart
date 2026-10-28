@@ -2708,12 +2708,6 @@ class LId extends L {
   String get obClimbBody => 'Menang untuk naik tangga: tujuh tingkat, masing-masing lima anak tangga.';
 
   @override
-  String get obAdventureTitle => 'Latihan sendiri?';
-
-  @override
-  String get obAdventureBody => 'Petualangan punya 140 level pertarungan push-up, tiap level lebih sulit dari sebelumnya.';
-
-  @override
   String get obGoldLine => 'garis emas';
 
   @override
@@ -2881,4 +2875,21 @@ class LId extends L {
 
   @override
   String get obBeforeYouLift => 'Sebelum mulai';
+
+  @override
+  String get obFightTitle => 'Lawan monster.';
+
+  @override
+  String get obFightBody => '140 pertarungan push up di tujuh dunia. Setiap repetisi memukul monsternya.';
+
+  @override
+  String obSevenWorlds(String from, String to) {
+    return 'Tujuh dunia, dari ${from} sampai ${to}';
+  }
+
+  @override
+  String get obWeaponsTitle => 'Bintang membuka senjata';
+
+  @override
+  String get obWeaponsBody => 'Setiap dunia butuh senjatanya sendiri. Peringkat tidak dipertaruhkan.';
 }

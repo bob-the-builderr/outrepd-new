@@ -2704,12 +2704,6 @@ class LTr extends L {
   String get obClimbBody => 'Kazandıkça merdivende yüksel: yedi kademe, her birinde beş basamak.';
 
   @override
-  String get obAdventureTitle => 'Tek başına mı çalışıyorsun?';
-
-  @override
-  String get obAdventureBody => 'Macera’da her biri öncekinden zor 140 şınav dövüşü seviyesi var.';
-
-  @override
   String get obGoldLine => 'altın çizgi';
 
   @override
@@ -2877,4 +2871,21 @@ class LTr extends L {
 
   @override
   String get obBeforeYouLift => 'Başlamadan önce';
+
+  @override
+  String get obFightTitle => 'Canavarlarla savaş.';
+
+  @override
+  String get obFightBody => 'Yedi dünyada 140 şınav dövüşü. Her tekrar canavara vurur.';
+
+  @override
+  String obSevenWorlds(String from, String to) {
+    return 'Yedi dünya: ${from} – ${to}';
+  }
+
+  @override
+  String get obWeaponsTitle => 'Yıldızlar silah açar';
+
+  @override
+  String get obWeaponsBody => 'Her dünya kendi silahını ister. Rütben tehlikede değil.';
 }

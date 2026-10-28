@@ -2709,12 +2709,6 @@ class LHi extends L {
   String get obClimbBody => 'जीतकर सीढ़ी पर ऊपर बढ़ें: सात टियर, हर एक में पाँच स्टेप।';
 
   @override
-  String get obAdventureTitle => 'अकेले ट्रेनिंग?';
-
-  @override
-  String get obAdventureBody => 'एडवेंचर में पुश-अप लड़ाइयों के 140 लेवल हैं, हर लेवल पिछले से कठिन।';
-
-  @override
   String get obGoldLine => 'सुनहरी लाइन';
 
   @override
@@ -2882,4 +2876,21 @@ class LHi extends L {
 
   @override
   String get obBeforeYouLift => 'शुरू करने से पहले';
+
+  @override
+  String get obFightTitle => 'मॉन्स्टर से लड़िए।';
+
+  @override
+  String get obFightBody => 'सात दुनियाओं में 140 पुश-अप लड़ाइयाँ। हर रेप मॉन्स्टर पर वार करता है।';
+
+  @override
+  String obSevenWorlds(String from, String to) {
+    return 'सात दुनियाएँ, ${from} से ${to} तक';
+  }
+
+  @override
+  String get obWeaponsTitle => 'स्टार से हथियार अनलॉक होते हैं';
+
+  @override
+  String get obWeaponsBody => 'हर दुनिया को अपना हथियार चाहिए। रैंक दाँव पर नहीं।';
 }

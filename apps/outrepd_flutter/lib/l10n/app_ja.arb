@@ -815,8 +815,6 @@
   "obRepsBoth": "どちらも手を床につけたまま。半端なレップは数えません。あなたのスマホでも、相手のスマホでも。",
   "obClimbTitle": "Masterを目指そう。",
   "obClimbBody": "勝ってランクを上げよう。7つのティアに、それぞれ5段階。",
-  "obAdventureTitle": "ひとりで練習するなら",
-  "obAdventureBody": "アドベンチャーには腕立てバトルが140レベル。進むほど難しくなります。",
   "obGoldLine": "金のライン",
   "obCalibrationRule": "{gold}より下まで下げて、上のラインより上まで戻る",
   "proTitleTop": "広告なし。",
@@ -871,5 +869,10 @@
   "obOver13": "13歳以上",
   "obFor13": "outrepdは13歳以上向けです。",
   "obUnder13Blocked": "outrepdは13歳以上向けです。13歳になったらまた来てね。腕立てはここで待っています。",
-  "obBeforeYouLift": "始める前に"
+  "obBeforeYouLift": "始める前に",
+  "obFightTitle": "モンスターと戦おう。",
+  "obFightBody": "7つのワールドで140の腕立て伏せバトル。1回ごとにモンスターにダメージ。",
+  "obSevenWorlds": "7つのワールド：{from}から{to}まで",
+  "obWeaponsTitle": "星で武器をアンロック",
+  "obWeaponsBody": "ワールドごとに専用の武器が必要。ランクは変動しません。"
 }

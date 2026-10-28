@@ -2673,12 +2673,6 @@ class LJa extends L {
   String get obClimbBody => '勝ってランクを上げよう。7つのティアに、それぞれ5段階。';
 
   @override
-  String get obAdventureTitle => 'ひとりで練習するなら';
-
-  @override
-  String get obAdventureBody => 'アドベンチャーには腕立てバトルが140レベル。進むほど難しくなります。';
-
-  @override
   String get obGoldLine => '金のライン';
 
   @override
@@ -2846,4 +2840,21 @@ class LJa extends L {
 
   @override
   String get obBeforeYouLift => '始める前に';
+
+  @override
+  String get obFightTitle => 'モンスターと戦おう。';
+
+  @override
+  String get obFightBody => '7つのワールドで140の腕立て伏せバトル。1回ごとにモンスターにダメージ。';
+
+  @override
+  String obSevenWorlds(String from, String to) {
+    return '7つのワールド：${from}から${to}まで';
+  }
+
+  @override
+  String get obWeaponsTitle => '星で武器をアンロック';
+
+  @override
+  String get obWeaponsBody => 'ワールドごとに専用の武器が必要。ランクは変動しません。';
 }

@@ -815,8 +815,6 @@
   "obRepsBoth": "Keduanya, dengan tangan di lantai. Setengah repetisi tidak dihitung — di ponselmu maupun ponsel lawan.",
   "obClimbTitle": "Naik sampai Master.",
   "obClimbBody": "Menang untuk naik tangga: tujuh tingkat, masing-masing lima anak tangga.",
-  "obAdventureTitle": "Latihan sendiri?",
-  "obAdventureBody": "Petualangan punya 140 level pertarungan push-up, tiap level lebih sulit dari sebelumnya.",
   "obGoldLine": "garis emas",
   "obCalibrationRule": "Turun melewati {gold}, lalu naik lagi melewati garis atas",
   "proTitleTop": "Tanpa iklan.",
@@ -871,5 +869,10 @@
   "obOver13": "13 atau lebih",
   "obFor13": "outrepd untuk usia 13 tahun ke atas.",
   "obUnder13Blocked": "outrepd untuk usia 13 tahun ke atas. Kembali lagi saat kamu sudah 13 — push-up-nya akan tetap di sini.",
-  "obBeforeYouLift": "Sebelum mulai"
+  "obBeforeYouLift": "Sebelum mulai",
+  "obFightTitle": "Lawan monster.",
+  "obFightBody": "140 pertarungan push up di tujuh dunia. Setiap repetisi memukul monsternya.",
+  "obSevenWorlds": "Tujuh dunia, dari {from} sampai {to}",
+  "obWeaponsTitle": "Bintang membuka senjata",
+  "obWeaponsBody": "Setiap dunia butuh senjatanya sendiri. Peringkat tidak dipertaruhkan."
 }

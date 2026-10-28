@@ -2677,12 +2677,6 @@ class LKo extends L {
   String get obClimbBody => '이겨서 사다리를 올라가세요. 7개 티어, 티어마다 5단계예요.';
 
   @override
-  String get obAdventureTitle => '혼자 훈련하나요?';
-
-  @override
-  String get obAdventureBody => '어드벤처에는 팔굽혀펴기 대결이 140레벨 있어요. 레벨마다 점점 어려워져요.';
-
-  @override
   String get obGoldLine => '금색 선';
 
   @override
@@ -2850,4 +2844,21 @@ class LKo extends L {
 
   @override
   String get obBeforeYouLift => '시작하기 전에';
+
+  @override
+  String get obFightTitle => '몬스터와 싸우세요.';
+
+  @override
+  String get obFightBody => '7개 월드에서 펼치는 140번의 팔굽혀펴기 전투. 한 번 할 때마다 몬스터를 공격합니다.';
+
+  @override
+  String obSevenWorlds(String from, String to) {
+    return '7개 월드: ${from}부터 ${to}까지';
+  }
+
+  @override
+  String get obWeaponsTitle => '별로 무기를 잠금 해제';
+
+  @override
+  String get obWeaponsBody => '월드마다 전용 무기가 필요해요. 랭크는 걸려 있지 않아요.';
 }

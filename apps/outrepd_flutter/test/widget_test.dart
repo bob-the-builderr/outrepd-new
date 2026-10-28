@@ -77,8 +77,9 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  /// The idea's three cards: Next, Next, and Continue on the last.
+  /// The idea's four cards: Next, Next, Next, and Continue on the last.
   Future<void> throughIdea(WidgetTester tester) async {
+    await tap(tester, 'Next');
     await tap(tester, 'Next');
     await tap(tester, 'Next');
     await tap(tester, 'Continue');
@@ -172,7 +173,11 @@ void main() {
     expect(find.text('Back up past the top line'), findsOneWidget);
     await tap(tester, 'Next');
     expect(find.text('Climb to Master.'), findsOneWidget);
-    expect(find.text('Training alone?'), findsOneWidget);
+    await tap(tester, 'Next');
+    // Adventure, its own card: a fight, the seven worlds, what stars buy.
+    expect(find.text('Fight monsters.'), findsOneWidget);
+    expect(find.text('Iron Colossus'), findsOneWidget);
+    expect(find.text('Stars unlock weapons'), findsOneWidget);
 
     await tap(tester, 'Continue');
     expect(find.text('Two quick things.'), findsOneWidget);

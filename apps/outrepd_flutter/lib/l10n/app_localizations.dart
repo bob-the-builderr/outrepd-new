@@ -4883,18 +4883,6 @@ abstract class L {
   /// **'Win to move up the ladder: seven tiers, five steps each.'**
   String get obClimbBody;
 
-  /// No description provided for @obAdventureTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Training alone?'**
-  String get obAdventureTitle;
-
-  /// No description provided for @obAdventureBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Adventure has 140 levels of push-up fights, each harder than the last.'**
-  String get obAdventureBody;
-
   /// No description provided for @obGoldLine.
   ///
   /// In en, this message translates to:
@@ -5224,6 +5212,36 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Before you lift'**
   String get obBeforeYouLift;
+
+  /// No description provided for @obFightTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fight monsters.'**
+  String get obFightTitle;
+
+  /// No description provided for @obFightBody.
+  ///
+  /// In en, this message translates to:
+  /// **'140 push-up fights in seven worlds. Every rep you do hits the monster.'**
+  String get obFightBody;
+
+  /// No description provided for @obSevenWorlds.
+  ///
+  /// In en, this message translates to:
+  /// **'Seven worlds, {from} to {to}'**
+  String obSevenWorlds(String from, String to);
+
+  /// No description provided for @obWeaponsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stars unlock weapons'**
+  String get obWeaponsTitle;
+
+  /// No description provided for @obWeaponsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Each world needs its own weapon. No rank on the line.'**
+  String get obWeaponsBody;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

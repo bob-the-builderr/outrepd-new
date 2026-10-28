@@ -2709,12 +2709,6 @@ class LRu extends L {
   String get obClimbBody => 'Побеждай, чтобы подниматься: семь рангов, в каждом пять ступеней.';
 
   @override
-  String get obAdventureTitle => 'Тренируешься один?';
-
-  @override
-  String get obAdventureBody => 'В «Приключении» 140 уровней битв на отжиманиях, и каждый сложнее предыдущего.';
-
-  @override
   String get obGoldLine => 'золотой линии';
 
   @override
@@ -2882,4 +2876,21 @@ class LRu extends L {
 
   @override
   String get obBeforeYouLift => 'Перед началом';
+
+  @override
+  String get obFightTitle => 'Сражайся с монстрами.';
+
+  @override
+  String get obFightBody => '140 боёв на отжиманиях в семи мирах. Каждое повторение бьёт монстра.';
+
+  @override
+  String obSevenWorlds(String from, String to) {
+    return 'Семь миров: ${from} — ${to}';
+  }
+
+  @override
+  String get obWeaponsTitle => 'Звёзды открывают оружие';
+
+  @override
+  String get obWeaponsBody => 'Каждому миру нужно своё оружие. Рейтинг не на кону.';
 }

@@ -1836,8 +1836,6 @@
   "obRepsBoth": "Both, with your hands on the floor. A half rep is not a rep — on your phone or theirs.",
   "obClimbTitle": "Climb to Master.",
   "obClimbBody": "Win to move up the ladder: seven tiers, five steps each.",
-  "obAdventureTitle": "Training alone?",
-  "obAdventureBody": "Adventure has 140 levels of push-up fights, each harder than the last.",
   "obGoldLine": "gold line",
   "obCalibrationRule": "Down past the {gold}, back up past the top one",
   "@obCalibrationRule": {
@@ -1906,5 +1904,20 @@
   "obOver13": "13 or over",
   "obFor13": "outrepd is for 13 and over.",
   "obUnder13Blocked": "outrepd is for 13 and over. Come back when you get there — the push-ups will still be here.",
-  "obBeforeYouLift": "Before you lift"
+  "obBeforeYouLift": "Before you lift",
+  "obFightTitle": "Fight monsters.",
+  "obFightBody": "140 push-up fights in seven worlds. Every rep you do hits the monster.",
+  "obSevenWorlds": "Seven worlds, {from} to {to}",
+  "@obSevenWorlds": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "obWeaponsTitle": "Stars unlock weapons",
+  "obWeaponsBody": "Each world needs its own weapon. No rank on the line."
 }

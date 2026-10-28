@@ -815,8 +815,6 @@
   "obRepsBoth": "둘 다 손을 바닥에 댄 채로요. 반만 한 건 인정되지 않아요. 내 휴대폰에서도, 상대 휴대폰에서도요.",
   "obClimbTitle": "Master까지 올라가세요.",
   "obClimbBody": "이겨서 사다리를 올라가세요. 7개 티어, 티어마다 5단계예요.",
-  "obAdventureTitle": "혼자 훈련하나요?",
-  "obAdventureBody": "어드벤처에는 팔굽혀펴기 대결이 140레벨 있어요. 레벨마다 점점 어려워져요.",
   "obGoldLine": "금색 선",
   "obCalibrationRule": "{gold} 아래로 내려갔다가 위쪽 선 위로 올라오기",
   "proTitleTop": "광고 없이.",
@@ -871,5 +869,10 @@
   "obOver13": "13세 이상",
   "obFor13": "outrepd는 13세 이상을 위한 앱이에요.",
   "obUnder13Blocked": "outrepd는 13세 이상을 위한 앱이에요. 13세가 되면 다시 와 주세요. 팔굽혀펴기는 그대로 기다리고 있을게요.",
-  "obBeforeYouLift": "시작하기 전에"
+  "obBeforeYouLift": "시작하기 전에",
+  "obFightTitle": "몬스터와 싸우세요.",
+  "obFightBody": "7개 월드에서 펼치는 140번의 팔굽혀펴기 전투. 한 번 할 때마다 몬스터를 공격합니다.",
+  "obSevenWorlds": "7개 월드: {from}부터 {to}까지",
+  "obWeaponsTitle": "별로 무기를 잠금 해제",
+  "obWeaponsBody": "월드마다 전용 무기가 필요해요. 랭크는 걸려 있지 않아요."
 }

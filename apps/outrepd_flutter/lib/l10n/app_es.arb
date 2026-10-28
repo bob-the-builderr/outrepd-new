@@ -815,8 +815,6 @@
   "obRepsBoth": "Las dos cosas, con las manos en el suelo. Media repetición no cuenta, ni en tu teléfono ni en el suyo.",
   "obClimbTitle": "Sube hasta Master.",
   "obClimbBody": "Gana para subir en la escalera: siete rangos de cinco escalones cada uno.",
-  "obAdventureTitle": "¿Entrenas solo?",
-  "obAdventureBody": "Aventura tiene 140 niveles de combates de flexiones, cada uno más difícil que el anterior.",
   "obGoldLine": "línea dorada",
   "obCalibrationRule": "Baja más allá de la {gold} y vuelve a subir más allá de la de arriba",
   "proTitleTop": "Sin anuncios.",
@@ -871,5 +869,10 @@
   "obOver13": "13 o más",
   "obFor13": "outrepd es para mayores de 13.",
   "obUnder13Blocked": "outrepd es para mayores de 13. Vuelve cuando los cumplas: las flexiones seguirán aquí.",
-  "obBeforeYouLift": "Antes de empezar"
+  "obBeforeYouLift": "Antes de empezar",
+  "obFightTitle": "Lucha contra monstruos.",
+  "obFightBody": "140 combates de flexiones en siete mundos. Cada repetición golpea al monstruo.",
+  "obSevenWorlds": "Siete mundos, de {from} a {to}",
+  "obWeaponsTitle": "Las estrellas desbloquean armas",
+  "obWeaponsBody": "Cada mundo necesita su propia arma. No te juegas el rango."
 }

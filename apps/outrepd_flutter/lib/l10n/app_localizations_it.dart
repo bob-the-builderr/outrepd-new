@@ -2714,12 +2714,6 @@ class LIt extends L {
   String get obClimbBody => 'Vinci per salire la scala: sette gradi, cinque livelli ciascuno.';
 
   @override
-  String get obAdventureTitle => 'Ti alleni da solo?';
-
-  @override
-  String get obAdventureBody => 'Avventura ha 140 livelli di sfide a flessioni, ognuno più difficile del precedente.';
-
-  @override
   String get obGoldLine => 'linea dorata';
 
   @override
@@ -2887,4 +2881,21 @@ class LIt extends L {
 
   @override
   String get obBeforeYouLift => 'Prima di iniziare';
+
+  @override
+  String get obFightTitle => 'Combatti i mostri.';
+
+  @override
+  String get obFightBody => '140 combattimenti a flessioni in sette mondi. Ogni ripetizione colpisce il mostro.';
+
+  @override
+  String obSevenWorlds(String from, String to) {
+    return 'Sette mondi, da ${from} a ${to}';
+  }
+
+  @override
+  String get obWeaponsTitle => 'Le stelle sbloccano le armi';
+
+  @override
+  String get obWeaponsBody => 'Ogni mondo richiede la sua arma. Nessun grado in gioco.';
 }

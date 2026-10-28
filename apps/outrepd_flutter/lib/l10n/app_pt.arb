@@ -815,8 +815,6 @@
   "obRepsBoth": "As duas coisas, com as mãos no chão. Meia repetição não conta — nem no seu celular, nem no do outro.",
   "obClimbTitle": "Suba até Master.",
   "obClimbBody": "Vença para subir na escada: sete níveis, cinco degraus cada.",
-  "obAdventureTitle": "Treinando sozinho?",
-  "obAdventureBody": "Aventura tem 140 níveis de lutas de flexões, cada um mais difícil que o anterior.",
   "obGoldLine": "linha dourada",
   "obCalibrationRule": "Desça além da {gold} e suba de novo além da de cima",
   "proTitleTop": "Sem anúncios.",
@@ -871,5 +869,10 @@
   "obOver13": "13 ou mais",
   "obFor13": "O outrepd é para maiores de 13 anos.",
   "obUnder13Blocked": "O outrepd é para maiores de 13 anos. Volte quando chegar lá — as flexões vão continuar aqui.",
-  "obBeforeYouLift": "Antes de começar"
+  "obBeforeYouLift": "Antes de começar",
+  "obFightTitle": "Lute contra monstros.",
+  "obFightBody": "140 lutas de flexões em sete mundos. Cada repetição acerta o monstro.",
+  "obSevenWorlds": "Sete mundos, do {from} ao {to}",
+  "obWeaponsTitle": "Estrelas desbloqueiam armas",
+  "obWeaponsBody": "Cada mundo exige sua própria arma. Nenhum ranking em jogo."
 }

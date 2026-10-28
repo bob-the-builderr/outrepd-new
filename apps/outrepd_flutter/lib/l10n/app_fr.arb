@@ -815,8 +815,6 @@
   "obRepsBoth": "Les deux, mains au sol. Une demi-répétition ne compte pas — ni chez toi, ni chez l’autre.",
   "obClimbTitle": "Grimpe jusqu’à Master.",
   "obClimbBody": "Gagne pour monter l’échelle : sept rangs de cinq paliers chacun.",
-  "obAdventureTitle": "Tu t’entraînes seul ?",
-  "obAdventureBody": "Aventure propose 140 niveaux de combats de pompes, chacun plus dur que le précédent.",
   "obGoldLine": "ligne dorée",
   "obCalibrationRule": "Descends sous la {gold}, remonte au-dessus de celle du haut",
   "proTitleTop": "Sans pub.",
@@ -871,5 +869,10 @@
   "obOver13": "13 ans ou plus",
   "obFor13": "outrepd est pour les 13 ans et plus.",
   "obUnder13Blocked": "outrepd est pour les 13 ans et plus. Reviens quand tu y seras — les pompes seront toujours là.",
-  "obBeforeYouLift": "Avant de commencer"
+  "obBeforeYouLift": "Avant de commencer",
+  "obFightTitle": "Affronte des monstres.",
+  "obFightBody": "140 combats de pompes dans sept mondes. Chaque répétition frappe le monstre.",
+  "obSevenWorlds": "Sept mondes, de {from} à {to}",
+  "obWeaponsTitle": "Les étoiles débloquent des armes",
+  "obWeaponsBody": "Chaque monde exige son arme. Aucun rang en jeu."
 }

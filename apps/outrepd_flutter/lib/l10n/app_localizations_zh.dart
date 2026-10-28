@@ -2664,12 +2664,6 @@ class LZh extends L {
   String get obClimbBody => '赢下比赛往上爬：七个段位，每个五级。';
 
   @override
-  String get obAdventureTitle => '一个人练？';
-
-  @override
-  String get obAdventureBody => '冒险模式有140关俯卧撑对决，一关比一关难。';
-
-  @override
   String get obGoldLine => '金线';
 
   @override
@@ -2837,4 +2831,21 @@ class LZh extends L {
 
   @override
   String get obBeforeYouLift => '开始之前';
+
+  @override
+  String get obFightTitle => '和怪物战斗。';
+
+  @override
+  String get obFightBody => '七个世界，140 场俯卧撑战斗。每做一次都会击中怪物。';
+
+  @override
+  String obSevenWorlds(String from, String to) {
+    return '七个世界：从${from}到${to}';
+  }
+
+  @override
+  String get obWeaponsTitle => '星星解锁武器';
+
+  @override
+  String get obWeaponsBody => '每个世界都需要专属武器。不影响排位。';
 }

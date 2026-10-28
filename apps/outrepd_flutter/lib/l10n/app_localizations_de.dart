@@ -2716,12 +2716,6 @@ class LDe extends L {
   String get obClimbBody => 'Gewinne, um aufzusteigen: sieben Ränge mit je fünf Stufen.';
 
   @override
-  String get obAdventureTitle => 'Allein trainieren?';
-
-  @override
-  String get obAdventureBody => 'Abenteuer hat 140 Level mit Liegestütz-Kämpfen, jedes schwerer als das davor.';
-
-  @override
   String get obGoldLine => 'goldene Linie';
 
   @override
@@ -2889,4 +2883,21 @@ class LDe extends L {
 
   @override
   String get obBeforeYouLift => 'Bevor du loslegst';
+
+  @override
+  String get obFightTitle => 'Kämpf gegen Monster.';
+
+  @override
+  String get obFightBody => '140 Liegestütz-Kämpfe in sieben Welten. Jede Wiederholung trifft das Monster.';
+
+  @override
+  String obSevenWorlds(String from, String to) {
+    return 'Sieben Welten, ${from} bis ${to}';
+  }
+
+  @override
+  String get obWeaponsTitle => 'Sterne schalten Waffen frei';
+
+  @override
+  String get obWeaponsBody => 'Jede Welt braucht ihre eigene Waffe. Dein Rang steht nicht auf dem Spiel.';
 }

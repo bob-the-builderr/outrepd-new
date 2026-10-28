@@ -2707,12 +2707,6 @@ class LEn extends L {
   String get obClimbBody => 'Win to move up the ladder: seven tiers, five steps each.';
 
   @override
-  String get obAdventureTitle => 'Training alone?';
-
-  @override
-  String get obAdventureBody => 'Adventure has 140 levels of push-up fights, each harder than the last.';
-
-  @override
   String get obGoldLine => 'gold line';
 
   @override
@@ -2880,4 +2874,21 @@ class LEn extends L {
 
   @override
   String get obBeforeYouLift => 'Before you lift';
+
+  @override
+  String get obFightTitle => 'Fight monsters.';
+
+  @override
+  String get obFightBody => '140 push-up fights in seven worlds. Every rep you do hits the monster.';
+
+  @override
+  String obSevenWorlds(String from, String to) {
+    return 'Seven worlds, ${from} to ${to}';
+  }
+
+  @override
+  String get obWeaponsTitle => 'Stars unlock weapons';
+
+  @override
+  String get obWeaponsBody => 'Each world needs its own weapon. No rank on the line.';
 }

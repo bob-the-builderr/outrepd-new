@@ -2715,12 +2715,6 @@ class LFr extends L {
   String get obClimbBody => 'Gagne pour monter l’échelle : sept rangs de cinq paliers chacun.';
 
   @override
-  String get obAdventureTitle => 'Tu t’entraînes seul ?';
-
-  @override
-  String get obAdventureBody => 'Aventure propose 140 niveaux de combats de pompes, chacun plus dur que le précédent.';
-
-  @override
   String get obGoldLine => 'ligne dorée';
 
   @override
@@ -2888,4 +2882,21 @@ class LFr extends L {
 
   @override
   String get obBeforeYouLift => 'Avant de commencer';
+
+  @override
+  String get obFightTitle => 'Affronte des monstres.';
+
+  @override
+  String get obFightBody => '140 combats de pompes dans sept mondes. Chaque répétition frappe le monstre.';
+
+  @override
+  String obSevenWorlds(String from, String to) {
+    return 'Sept mondes, de ${from} à ${to}';
+  }
+
+  @override
+  String get obWeaponsTitle => 'Les étoiles débloquent des armes';
+
+  @override
+  String get obWeaponsBody => 'Chaque monde exige son arme. Aucun rang en jeu.';
 }

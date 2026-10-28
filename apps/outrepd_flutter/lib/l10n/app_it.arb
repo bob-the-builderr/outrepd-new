@@ -815,8 +815,6 @@
   "obRepsBoth": "Entrambe, con le mani a terra. Mezza ripetizione non conta, né sul tuo telefono né sul suo.",
   "obClimbTitle": "Sali fino a Master.",
   "obClimbBody": "Vinci per salire la scala: sette gradi, cinque livelli ciascuno.",
-  "obAdventureTitle": "Ti alleni da solo?",
-  "obAdventureBody": "Avventura ha 140 livelli di sfide a flessioni, ognuno più difficile del precedente.",
   "obGoldLine": "linea dorata",
   "obCalibrationRule": "Scendi oltre la {gold}, torna su oltre quella in alto",
   "proTitleTop": "Niente pubblicità.",
@@ -871,5 +869,10 @@
   "obOver13": "13 o più",
   "obFor13": "outrepd è per chi ha 13 anni o più.",
   "obUnder13Blocked": "outrepd è per chi ha 13 anni o più. Torna quando ci arrivi: le flessioni saranno ancora qui.",
-  "obBeforeYouLift": "Prima di iniziare"
+  "obBeforeYouLift": "Prima di iniziare",
+  "obFightTitle": "Combatti i mostri.",
+  "obFightBody": "140 combattimenti a flessioni in sette mondi. Ogni ripetizione colpisce il mostro.",
+  "obSevenWorlds": "Sette mondi, da {from} a {to}",
+  "obWeaponsTitle": "Le stelle sbloccano le armi",
+  "obWeaponsBody": "Ogni mondo richiede la sua arma. Nessun grado in gioco."
 }
