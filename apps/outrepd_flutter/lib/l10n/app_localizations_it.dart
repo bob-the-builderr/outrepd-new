@@ -1320,8 +1320,7 @@ class LIt extends L {
       'Le ripetizioni si contano con la fotocamera, quindi questo dispositivo non può valutare una sfida. Il resto funziona.';
 
   @override
-  String get noConnectionBody =>
-      'Per sfidare qualcuno serve una connessione. L’allenamento funziona offline e le ripetizioni si sincronizzeranno dopo.';
+  String get noConnectionBody => 'Per sfidare qualcuno serve una connessione. Avventura funziona offline e le ripetizioni si sincronizzeranno dopo.';
 
   @override
   String get getBackInFrame => 'Torna nell’inquadratura';

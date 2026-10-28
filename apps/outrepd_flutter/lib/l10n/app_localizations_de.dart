@@ -1322,8 +1322,7 @@ class LDe extends L {
       'Wiederholungen werden über die Kamera gezählt, dieses Gerät kann also kein Duell werten. Alles andere funktioniert weiter.';
 
   @override
-  String get noConnectionBody =>
-      'Für ein Duell brauchst du eine Verbindung. Üben geht offline, deine Wiederholungen werden später synchronisiert.';
+  String get noConnectionBody => 'Für ein Duell brauchst du eine Verbindung. Abenteuer geht auch offline, deine Wiederholungen werden später synchronisiert.';
 
   @override
   String get getBackInFrame => 'Zurück ins Bild';

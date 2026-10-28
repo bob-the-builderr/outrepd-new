@@ -420,7 +420,7 @@
   "notNow": "Şimdi değil",
   "noCameraTitle": "Kamera bulunamadı",
   "noCameraBody": "Tekrarlar kameradan sayılır, bu yüzden bu cihaz düello puanlayamaz. Geri kalan her şey çalışır.",
-  "noConnectionBody": "Düello için bağlantı gerekir. Alıştırma çevrimdışı çalışır, tekrarların sonra eşitlenir.",
+  "noConnectionBody": "Düello için bağlantı gerekir. Macera çevrimdışı da çalışır, tekrarların sonra eşitlenir.",
   "getBackInFrame": "Kareye geri gir",
   "clockStillRunning": "Süre işliyor. Tekrarlar sayılmıyor.",
   "giveUp": "Pes et",

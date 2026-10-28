@@ -420,7 +420,7 @@
   "notNow": "Nanti saja",
   "noCameraTitle": "Kamera tidak ditemukan",
   "noCameraBody": "Repetisi dihitung lewat kamera, jadi perangkat ini tidak bisa menilai duel. Sisanya tetap berjalan.",
-  "noConnectionBody": "Kamu butuh koneksi untuk berduel. Latihan tetap jalan offline dan repetisimu akan tersinkron nanti.",
+  "noConnectionBody": "Kamu butuh koneksi untuk berduel. Petualangan tetap jalan offline dan repetisimu akan tersinkron nanti.",
   "getBackInFrame": "Kembali ke dalam bingkai",
   "clockStillRunning": "Waktu terus berjalan. Repetisi tidak dihitung.",
   "giveUp": "Menyerah",

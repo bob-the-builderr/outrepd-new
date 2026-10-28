@@ -1315,8 +1315,7 @@ class LEn extends L {
       'Reps are counted from the camera, so this device cannot score a duel. Everything else still works.';
 
   @override
-  String get noConnectionBody =>
-      'You need a connection to duel. Practice still works offline and your reps will sync later.';
+  String get noConnectionBody => 'You need a connection to duel. Adventure still works offline, and your reps will sync later.';
 
   @override
   String get getBackInFrame => 'Get back in frame';

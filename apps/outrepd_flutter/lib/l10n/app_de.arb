@@ -420,7 +420,7 @@
   "notNow": "Jetzt nicht",
   "noCameraTitle": "Keine Kamera gefunden",
   "noCameraBody": "Wiederholungen werden über die Kamera gezählt, dieses Gerät kann also kein Duell werten. Alles andere funktioniert weiter.",
-  "noConnectionBody": "Für ein Duell brauchst du eine Verbindung. Üben geht offline, deine Wiederholungen werden später synchronisiert.",
+  "noConnectionBody": "Für ein Duell brauchst du eine Verbindung. Abenteuer geht auch offline, deine Wiederholungen werden später synchronisiert.",
   "getBackInFrame": "Zurück ins Bild",
   "clockStillRunning": "Die Uhr läuft weiter. Es wird nicht gezählt.",
   "giveUp": "Aufgeben",

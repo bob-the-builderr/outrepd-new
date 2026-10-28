@@ -1319,8 +1319,7 @@ class LPt extends L {
       'As repetições são contadas pela câmera, então este aparelho não pode pontuar um duelo. O resto continua funcionando.';
 
   @override
-  String get noConnectionBody =>
-      'Você precisa de conexão para duelar. Treinar funciona offline e suas repetições sincronizam depois.';
+  String get noConnectionBody => 'Você precisa de conexão para duelar. Aventura funciona offline e suas repetições sincronizam depois.';
 
   @override
   String get getBackInFrame => 'Volte para o enquadramento';

@@ -1315,8 +1315,7 @@ class LId extends L {
       'Repetisi dihitung lewat kamera, jadi perangkat ini tidak bisa menilai duel. Sisanya tetap berjalan.';
 
   @override
-  String get noConnectionBody =>
-      'Kamu butuh koneksi untuk berduel. Latihan tetap jalan offline dan repetisimu akan tersinkron nanti.';
+  String get noConnectionBody => 'Kamu butuh koneksi untuk berduel. Petualangan tetap jalan offline dan repetisimu akan tersinkron nanti.';
 
   @override
   String get getBackInFrame => 'Kembali ke dalam bingkai';

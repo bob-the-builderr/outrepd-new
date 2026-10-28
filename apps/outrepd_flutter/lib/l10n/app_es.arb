@@ -420,7 +420,7 @@
   "notNow": "Ahora no",
   "noCameraTitle": "No hay cámara",
   "noCameraBody": "Las repeticiones se cuentan con la cámara, así que este dispositivo no puede puntuar un duelo. Lo demás sigue funcionando.",
-  "noConnectionBody": "Necesitas conexión para competir. Practicar funciona sin conexión y tus repeticiones se sincronizarán luego.",
+  "noConnectionBody": "Necesitas conexión para competir. Aventura funciona sin conexión y tus repeticiones se sincronizarán luego.",
   "getBackInFrame": "Vuelve al encuadre",
   "clockStillRunning": "El reloj sigue corriendo. No se está contando.",
   "giveUp": "Rendirse",

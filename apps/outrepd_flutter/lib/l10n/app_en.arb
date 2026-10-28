@@ -728,7 +728,7 @@
   "notNow": "Not now",
   "noCameraTitle": "No camera found",
   "noCameraBody": "Reps are counted from the camera, so this device cannot score a duel. Everything else still works.",
-  "noConnectionBody": "You need a connection to duel. Practice still works offline and your reps will sync later.",
+  "noConnectionBody": "You need a connection to duel. Adventure still works offline, and your reps will sync later.",
   "getBackInFrame": "Get back in frame",
   "clockStillRunning": "The clock is still running. Reps are not counting.",
   "giveUp": "Give up",

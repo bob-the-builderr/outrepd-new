@@ -2516,7 +2516,7 @@ abstract class L {
   /// No description provided for @noConnectionBody.
   ///
   /// In en, this message translates to:
-  /// **'You need a connection to duel. Practice still works offline and your reps will sync later.'**
+  /// **'You need a connection to duel. Adventure still works offline, and your reps will sync later.'**
   String get noConnectionBody;
 
   /// No description provided for @getBackInFrame.

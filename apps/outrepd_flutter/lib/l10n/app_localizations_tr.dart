@@ -1313,8 +1313,7 @@ class LTr extends L {
       'Tekrarlar kameradan sayılır, bu yüzden bu cihaz düello puanlayamaz. Geri kalan her şey çalışır.';
 
   @override
-  String get noConnectionBody =>
-      'Düello için bağlantı gerekir. Alıştırma çevrimdışı çalışır, tekrarların sonra eşitlenir.';
+  String get noConnectionBody => 'Düello için bağlantı gerekir. Macera çevrimdışı da çalışır, tekrarların sonra eşitlenir.';
 
   @override
   String get getBackInFrame => 'Kareye geri gir';

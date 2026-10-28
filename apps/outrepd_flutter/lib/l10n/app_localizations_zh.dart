@@ -1288,7 +1288,7 @@ class LZh extends L {
   String get noCameraBody => '计数靠相机完成，所以这台设备无法给对决计分。其余功能正常。';
 
   @override
-  String get noConnectionBody => '对决需要网络。练习离线也能用，计数会稍后同步。';
+  String get noConnectionBody => '对决需要网络。冒险离线也能玩，计数会稍后同步。';
 
   @override
   String get getBackInFrame => '回到画面里';

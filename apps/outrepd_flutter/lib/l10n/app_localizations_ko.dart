@@ -1293,8 +1293,7 @@ class LKo extends L {
       '횟수는 카메라로 세기 때문에 이 기기로는 대결을 채점할 수 없습니다. 나머지는 그대로 작동합니다.';
 
   @override
-  String get noConnectionBody =>
-      '대결하려면 연결이 필요해요. 연습은 오프라인에서도 도에 기록은 나중에 동기화됩니다.';
+  String get noConnectionBody => '대결하려면 연결이 필요해요. 어드벤처는 오프라인에서도 할 수 있고, 기록은 나중에 동기화됩니다.';
 
   @override
   String get getBackInFrame => '화면 안으로 돌아오세요';

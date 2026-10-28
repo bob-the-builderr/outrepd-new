@@ -420,7 +420,7 @@
   "notNow": "Pas maintenant",
   "noCameraTitle": "Aucune caméra",
   "noCameraBody": "Les répétitions sont comptées par la caméra, cet appareil ne peut donc pas noter un duel. Le reste fonctionne.",
-  "noConnectionBody": "Il te faut une connexion pour te mesurer à quelqu’un. L’entraînement marche hors ligne et tes répétitions se synchroniseront ensuite.",
+  "noConnectionBody": "Il te faut une connexion pour te mesurer à quelqu’un. Aventure marche hors ligne et tes répétitions se synchroniseront ensuite.",
   "getBackInFrame": "Reviens dans le cadre",
   "clockStillRunning": "Le chrono tourne toujours. Rien n’est compté.",
   "giveUp": "Abandonner",

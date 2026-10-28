@@ -1320,8 +1320,7 @@ class LEs extends L {
       'Las repeticiones se cuentan con la cámara, así que este dispositivo no puede puntuar un duelo. Lo demás sigue funcionando.';
 
   @override
-  String get noConnectionBody =>
-      'Necesitas conexión para competir. Practicar funciona sin conexión y tus repeticiones se sincronizarán luego.';
+  String get noConnectionBody => 'Necesitas conexión para competir. Aventura funciona sin conexión y tus repeticiones se sincronizarán luego.';
 
   @override
   String get getBackInFrame => 'Vuelve al encuadre';

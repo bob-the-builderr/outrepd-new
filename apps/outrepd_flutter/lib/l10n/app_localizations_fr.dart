@@ -1321,8 +1321,7 @@ class LFr extends L {
       'Les répétitions sont comptées par la caméra, cet appareil ne peut donc pas noter un duel. Le reste fonctionne.';
 
   @override
-  String get noConnectionBody =>
-      'Il te faut une connexion pour te mesurer à quelqu’un. L’entraînement marche hors ligne et tes répétitions se synchroniseront ensuite.';
+  String get noConnectionBody => 'Il te faut une connexion pour te mesurer à quelqu’un. Aventure marche hors ligne et tes répétitions se synchroniseront ensuite.';
 
   @override
   String get getBackInFrame => 'Reviens dans le cadre';

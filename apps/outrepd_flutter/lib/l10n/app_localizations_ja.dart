@@ -1291,7 +1291,7 @@ class LJa extends L {
   String get noCameraBody => '回数はカメラで数えるため、この端末では勝負を採点できません。他の機能は使えます。';
 
   @override
-  String get noConnectionBody => '対戦には接続が必要です。練習はオフラインでもでき、回数はあとで同期されます。';
+  String get noConnectionBody => '対戦には接続が必要です。アドベンチャーはオフラインでも遊べ、回数はあとで同期されます。';
 
   @override
   String get getBackInFrame => '画面に戻って';

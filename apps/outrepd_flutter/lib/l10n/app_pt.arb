@@ -420,7 +420,7 @@
   "notNow": "Agora não",
   "noCameraTitle": "Nenhuma câmera",
   "noCameraBody": "As repetições são contadas pela câmera, então este aparelho não pode pontuar um duelo. O resto continua funcionando.",
-  "noConnectionBody": "Você precisa de conexão para duelar. Treinar funciona offline e suas repetições sincronizam depois.",
+  "noConnectionBody": "Você precisa de conexão para duelar. Aventura funciona offline e suas repetições sincronizam depois.",
   "getBackInFrame": "Volte para o enquadramento",
   "clockStillRunning": "O relógio continua correndo. Nada está sendo contado.",
   "giveUp": "Desistir",
