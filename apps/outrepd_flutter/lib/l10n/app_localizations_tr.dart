@@ -2711,9 +2711,6 @@ class LTr extends L {
   String get obAdventureBody => 'Macera’da her biri öncekinden zor 140 şınav dövüşü seviyesi var.';
 
   @override
-  String get obCountedHere => 'Bu telefonda sayılır';
-
-  @override
   String get obGoldLine => 'altın çizgi';
 
   @override

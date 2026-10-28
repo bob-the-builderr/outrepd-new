@@ -2723,9 +2723,6 @@ class LDe extends L {
   String get obAdventureBody => 'Abenteuer hat 140 Level mit Liegestütz-Kämpfen, jedes schwerer als das davor.';
 
   @override
-  String get obCountedHere => 'Gezählt auf diesem Handy';
-
-  @override
   String get obGoldLine => 'goldene Linie';
 
   @override

@@ -2722,9 +2722,6 @@ class LFr extends L {
   String get obAdventureBody => 'Aventure propose 140 niveaux de combats de pompes, chacun plus dur que le précédent.';
 
   @override
-  String get obCountedHere => 'Compté sur ce téléphone';
-
-  @override
   String get obGoldLine => 'ligne dorée';
 
   @override

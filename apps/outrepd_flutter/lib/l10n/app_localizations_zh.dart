@@ -2670,9 +2670,6 @@ class LZh extends L {
   String get obAdventureBody => '冒险模式有140关俯卧撑对决，一关比一关难。';
 
   @override
-  String get obCountedHere => '就在这部手机上计数';
-
-  @override
   String get obGoldLine => '金线';
 
   @override

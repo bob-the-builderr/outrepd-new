@@ -67,7 +67,6 @@ void main() {
         for (final name in [
           'logo-wordmark.png',
           'onboarding_live.jpg',
-          'onboarding_camera.jpg',
         ])
           precacheImage(AssetImage('assets/images/$name'), context),
       ]),

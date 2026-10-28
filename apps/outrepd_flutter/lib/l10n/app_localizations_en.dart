@@ -2714,9 +2714,6 @@ class LEn extends L {
   String get obAdventureBody => 'Adventure has 140 levels of push-up fights, each harder than the last.';
 
   @override
-  String get obCountedHere => 'Counted on this phone';
-
-  @override
   String get obGoldLine => 'gold line';
 
   @override

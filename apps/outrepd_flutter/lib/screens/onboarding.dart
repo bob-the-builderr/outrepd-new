@@ -1322,79 +1322,37 @@ class _CameraAsk extends StatelessWidget {
     final l = L.of(context);
 
     return _Step0(
+      centred: true,
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(22, 14, 22, 0),
+        padding: const EdgeInsets.fromLTRB(22, 14, 22, 14),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // What the camera does with a set, before it is asked for: a
-            // lifter on the floor with the line over their arms, and where
-            // that is worked out.
-            AspectRatio(
-              aspectRatio: 1104 / 990,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(22),
-                  border: Border.all(color: context.colors.border),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(21),
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      Image.asset(
-                        'assets/images/onboarding_camera.jpg',
-                        fit: BoxFit.cover,
-                        excludeFromSemantics: true,
-                      ),
-                      PositionedDirectional(
-                        start: 12,
-                        bottom: 12,
-                        end: 12,
-                        child: Align(
-                          alignment: AlignmentDirectional.centerStart,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 13,
-                              vertical: 8,
-                            ),
-                            decoration: BoxDecoration(
-                              color: context.colors.background.withValues(
-                                alpha: 0.82,
-                              ),
-                              borderRadius: BorderRadius.circular(14),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.lock_outline,
-                                  size: 16,
-                                  color: context.colors.brand,
-                                ),
-                                const SizedBox(width: 8),
-                                Flexible(
-                                  child: Text(
-                                    l.obCountedHere,
-                                    style: TextStyle(
-                                      color: context.colors.text,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+            // The camera, lit: what is being asked for, before the words
+            // that say why. A picture of a set sat here; the user took it
+            // out (2026-10-28).
+            Container(
+              width: 132,
+              height: 132,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: context.colors.surfaceRaised,
+                boxShadow: [
+                  BoxShadow(
+                    color: context.colors.brand.withValues(alpha: 0.22),
+                    blurRadius: 60,
                   ),
-                ),
+                ],
+              ),
+              child: Icon(
+                Icons.photo_camera,
+                size: 64,
+                color: context.colors.brand,
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 32),
             TypeOut(
               l.obCameraTitle,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 color: context.colors.text,
                 fontSize: 30,
@@ -1402,16 +1360,17 @@ class _CameraAsk extends StatelessWidget {
                 fontWeight: FontWeight.w800,
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 12),
             Text(
               l.obCameraBody,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 color: context.colors.muted,
                 fontSize: 16,
                 height: 1.55,
               ),
             ),
-            const SizedBox(height: 22),
+            const SizedBox(height: 26),
             // The answer to the question everybody actually has when an app
             // wants their camera, on the screen that asks for it rather than
             // in a policy nobody opens.

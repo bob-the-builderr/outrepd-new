@@ -2684,9 +2684,6 @@ class LKo extends L {
   String get obAdventureBody => '어드벤처에는 팔굽혀펴기 대결이 140레벨 있어요. 레벨마다 점점 어려워져요.';
 
   @override
-  String get obCountedHere => '이 휴대폰에서 세요';
-
-  @override
   String get obGoldLine => '금색 선';
 
   @override

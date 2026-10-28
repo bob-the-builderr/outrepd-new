@@ -1838,7 +1838,6 @@
   "obClimbBody": "Win to move up the ladder: seven tiers, five steps each.",
   "obAdventureTitle": "Training alone?",
   "obAdventureBody": "Adventure has 140 levels of push-up fights, each harder than the last.",
-  "obCountedHere": "Counted on this phone",
   "obGoldLine": "gold line",
   "obCalibrationRule": "Down past the {gold}, back up past the top one",
   "@obCalibrationRule": {

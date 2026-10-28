@@ -2721,9 +2721,6 @@ class LIt extends L {
   String get obAdventureBody => 'Avventura ha 140 livelli di sfide a flessioni, ognuno più difficile del precedente.';
 
   @override
-  String get obCountedHere => 'Contato su questo telefono';
-
-  @override
   String get obGoldLine => 'linea dorata';
 
   @override

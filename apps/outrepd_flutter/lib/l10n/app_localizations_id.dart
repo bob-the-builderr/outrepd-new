@@ -2715,9 +2715,6 @@ class LId extends L {
   String get obAdventureBody => 'Petualangan punya 140 level pertarungan push-up, tiap level lebih sulit dari sebelumnya.';
 
   @override
-  String get obCountedHere => 'Dihitung di ponsel ini';
-
-  @override
   String get obGoldLine => 'garis emas';
 
   @override

@@ -4895,12 +4895,6 @@ abstract class L {
   /// **'Adventure has 140 levels of push-up fights, each harder than the last.'**
   String get obAdventureBody;
 
-  /// No description provided for @obCountedHere.
-  ///
-  /// In en, this message translates to:
-  /// **'Counted on this phone'**
-  String get obCountedHere;
-
   /// No description provided for @obGoldLine.
   ///
   /// In en, this message translates to:

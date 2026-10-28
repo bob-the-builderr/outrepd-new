@@ -2716,9 +2716,6 @@ class LHi extends L {
   String get obAdventureBody => 'एडवेंचर में पुश-अप लड़ाइयों के 140 लेवल हैं, हर लेवल पिछले से कठिन।';
 
   @override
-  String get obCountedHere => 'इसी फ़ोन पर गिना जाता है';
-
-  @override
   String get obGoldLine => 'सुनहरी लाइन';
 
   @override

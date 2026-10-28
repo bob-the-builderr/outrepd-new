@@ -2716,9 +2716,6 @@ class LRu extends L {
   String get obAdventureBody => 'В «Приключении» 140 уровней битв на отжиманиях, и каждый сложнее предыдущего.';
 
   @override
-  String get obCountedHere => 'Считается на этом телефоне';
-
-  @override
   String get obGoldLine => 'золотой линии';
 
   @override

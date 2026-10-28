@@ -2679,9 +2679,6 @@ class LJa extends L {
   String get obAdventureBody => 'アドベンチャーには腕立てバトルが140レベル。進むほど難しくなります。';
 
   @override
-  String get obCountedHere => 'このスマホの中でカウント';
-
-  @override
   String get obGoldLine => '金のライン';
 
   @override

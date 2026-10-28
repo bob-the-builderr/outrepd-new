@@ -2721,9 +2721,6 @@ class LEs extends L {
   String get obAdventureBody => 'Aventura tiene 140 niveles de combates de flexiones, cada uno más difícil que el anterior.';
 
   @override
-  String get obCountedHere => 'Se cuenta en este teléfono';
-
-  @override
   String get obGoldLine => 'línea dorada';
 
   @override

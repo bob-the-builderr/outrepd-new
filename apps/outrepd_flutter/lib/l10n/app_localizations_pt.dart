@@ -2718,9 +2718,6 @@ class LPt extends L {
   String get obAdventureBody => 'Aventura tem 140 níveis de lutas de flexões, cada um mais difícil que o anterior.';
 
   @override
-  String get obCountedHere => 'Contado neste celular';
-
-  @override
   String get obGoldLine => 'linha dourada';
 
   @override
