@@ -2542,21 +2542,6 @@ class LEn extends L {
   }
 
   @override
-  String monsterGolem(String tier) {
-    return '${tier} Golem';
-  }
-
-  @override
-  String monsterWarden(String tier) {
-    return '${tier} Warden';
-  }
-
-  @override
-  String monsterKing(String tier) {
-    return '${tier} King';
-  }
-
-  @override
   String fightLevel(String level) {
     return 'Fight level ${level}';
   }
@@ -2784,4 +2769,67 @@ class LEn extends L {
 
   @override
   String get adAskRemove => 'Remove ads instead';
+
+  @override
+  String get monsterRockGolem => 'Rock Golem';
+
+  @override
+  String get monsterOreBrute => 'Ore Brute';
+
+  @override
+  String get monsterIronColossus => 'Iron Colossus';
+
+  @override
+  String get monsterScarab => 'Scarab';
+
+  @override
+  String get monsterScarabGuard => 'Scarab Guard';
+
+  @override
+  String get monsterScarabPharaoh => 'Scarab Pharaoh';
+
+  @override
+  String get monsterYeti => 'Yeti';
+
+  @override
+  String get monsterFrostYeti => 'Frost Yeti';
+
+  @override
+  String get monsterYetiChieftain => 'Yeti Chieftain';
+
+  @override
+  String get monsterGoldSoldier => 'Gold Soldier';
+
+  @override
+  String get monsterGoldKnight => 'Gold Knight';
+
+  @override
+  String get monsterGoldKing => 'Gold King';
+
+  @override
+  String get monsterWisp => 'Wisp';
+
+  @override
+  String get monsterWraith => 'Wraith';
+
+  @override
+  String get monsterFrostLich => 'Frost Lich';
+
+  @override
+  String get monsterCrystalDrake => 'Crystal Drake';
+
+  @override
+  String get monsterCrystalDragon => 'Crystal Dragon';
+
+  @override
+  String get monsterDiamondWyrm => 'Diamond Wyrm';
+
+  @override
+  String get monsterShadowGuard => 'Shadow Guard';
+
+  @override
+  String get monsterShadowKnight => 'Shadow Knight';
+
+  @override
+  String get monsterTheMaster => 'The Master';
 }

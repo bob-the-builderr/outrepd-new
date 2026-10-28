@@ -2512,21 +2512,6 @@ class LKo extends L {
   }
 
   @override
-  String monsterGolem(String tier) {
-    return '${tier} 골렘';
-  }
-
-  @override
-  String monsterWarden(String tier) {
-    return '${tier} 수호자';
-  }
-
-  @override
-  String monsterKing(String tier) {
-    return '${tier} 왕';
-  }
-
-  @override
   String fightLevel(String level) {
     return '스테이지 ${level} 도전';
   }
@@ -2754,4 +2739,67 @@ class LKo extends L {
 
   @override
   String get adAskRemove => '대신 광고 제거하기';
+
+  @override
+  String get monsterRockGolem => '바위 골렘';
+
+  @override
+  String get monsterOreBrute => '광석 브루트';
+
+  @override
+  String get monsterIronColossus => '강철 거신';
+
+  @override
+  String get monsterScarab => '스카라브';
+
+  @override
+  String get monsterScarabGuard => '스카라브 경비병';
+
+  @override
+  String get monsterScarabPharaoh => '스카라브 파라오';
+
+  @override
+  String get monsterYeti => '예티';
+
+  @override
+  String get monsterFrostYeti => '서리 예티';
+
+  @override
+  String get monsterYetiChieftain => '예티 족장';
+
+  @override
+  String get monsterGoldSoldier => '황금 병사';
+
+  @override
+  String get monsterGoldKnight => '황금 기사';
+
+  @override
+  String get monsterGoldKing => '황금 왕';
+
+  @override
+  String get monsterWisp => '위습';
+
+  @override
+  String get monsterWraith => '망령';
+
+  @override
+  String get monsterFrostLich => '서리 리치';
+
+  @override
+  String get monsterCrystalDrake => '크리스탈 드레이크';
+
+  @override
+  String get monsterCrystalDragon => '크리스탈 드래곤';
+
+  @override
+  String get monsterDiamondWyrm => '다이아몬드 웜';
+
+  @override
+  String get monsterShadowGuard => '그림자 경비병';
+
+  @override
+  String get monsterShadowKnight => '그림자 기사';
+
+  @override
+  String get monsterTheMaster => '더 마스터';
 }

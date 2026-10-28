@@ -2550,21 +2550,6 @@ class LFr extends L {
   }
 
   @override
-  String monsterGolem(String tier) {
-    return 'Golem ${tier}';
-  }
-
-  @override
-  String monsterWarden(String tier) {
-    return 'Gardien ${tier}';
-  }
-
-  @override
-  String monsterKing(String tier) {
-    return 'Roi ${tier}';
-  }
-
-  @override
   String fightLevel(String level) {
     return 'Combattre le niveau ${level}';
   }
@@ -2792,4 +2777,67 @@ class LFr extends L {
 
   @override
   String get adAskRemove => 'Plutôt retirer la pub';
+
+  @override
+  String get monsterRockGolem => 'Golem de roche';
+
+  @override
+  String get monsterOreBrute => 'Brute de minerai';
+
+  @override
+  String get monsterIronColossus => 'Colosse de fer';
+
+  @override
+  String get monsterScarab => 'Scarabée';
+
+  @override
+  String get monsterScarabGuard => 'Garde scarabée';
+
+  @override
+  String get monsterScarabPharaoh => 'Pharaon scarabée';
+
+  @override
+  String get monsterYeti => 'Yéti';
+
+  @override
+  String get monsterFrostYeti => 'Yéti du givre';
+
+  @override
+  String get monsterYetiChieftain => 'Chef yéti';
+
+  @override
+  String get monsterGoldSoldier => 'Soldat d’or';
+
+  @override
+  String get monsterGoldKnight => 'Chevalier d’or';
+
+  @override
+  String get monsterGoldKing => 'Roi d’or';
+
+  @override
+  String get monsterWisp => 'Feu follet';
+
+  @override
+  String get monsterWraith => 'Spectre';
+
+  @override
+  String get monsterFrostLich => 'Liche du givre';
+
+  @override
+  String get monsterCrystalDrake => 'Drake de cristal';
+
+  @override
+  String get monsterCrystalDragon => 'Dragon de cristal';
+
+  @override
+  String get monsterDiamondWyrm => 'Wyrm de diamant';
+
+  @override
+  String get monsterShadowGuard => 'Garde de l’ombre';
+
+  @override
+  String get monsterShadowKnight => 'Chevalier de l’ombre';
+
+  @override
+  String get monsterTheMaster => 'Le Maître';
 }

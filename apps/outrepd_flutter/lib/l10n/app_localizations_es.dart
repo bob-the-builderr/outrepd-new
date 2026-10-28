@@ -2549,21 +2549,6 @@ class LEs extends L {
   }
 
   @override
-  String monsterGolem(String tier) {
-    return 'Gólem ${tier}';
-  }
-
-  @override
-  String monsterWarden(String tier) {
-    return 'Guardián ${tier}';
-  }
-
-  @override
-  String monsterKing(String tier) {
-    return 'Rey ${tier}';
-  }
-
-  @override
   String fightLevel(String level) {
     return 'Luchar en el nivel ${level}';
   }
@@ -2791,4 +2776,67 @@ class LEs extends L {
 
   @override
   String get adAskRemove => 'Mejor quitar los anuncios';
+
+  @override
+  String get monsterRockGolem => 'Gólem de roca';
+
+  @override
+  String get monsterOreBrute => 'Bruto de mena';
+
+  @override
+  String get monsterIronColossus => 'Coloso de hierro';
+
+  @override
+  String get monsterScarab => 'Escarabajo';
+
+  @override
+  String get monsterScarabGuard => 'Guardia escarabajo';
+
+  @override
+  String get monsterScarabPharaoh => 'Faraón escarabajo';
+
+  @override
+  String get monsterYeti => 'Yeti';
+
+  @override
+  String get monsterFrostYeti => 'Yeti de escarcha';
+
+  @override
+  String get monsterYetiChieftain => 'Jefe yeti';
+
+  @override
+  String get monsterGoldSoldier => 'Soldado de oro';
+
+  @override
+  String get monsterGoldKnight => 'Caballero de oro';
+
+  @override
+  String get monsterGoldKing => 'Rey de oro';
+
+  @override
+  String get monsterWisp => 'Fuego fatuo';
+
+  @override
+  String get monsterWraith => 'Espectro';
+
+  @override
+  String get monsterFrostLich => 'Liche de escarcha';
+
+  @override
+  String get monsterCrystalDrake => 'Draco de cristal';
+
+  @override
+  String get monsterCrystalDragon => 'Dragón de cristal';
+
+  @override
+  String get monsterDiamondWyrm => 'Sierpe de diamante';
+
+  @override
+  String get monsterShadowGuard => 'Guardia sombrío';
+
+  @override
+  String get monsterShadowKnight => 'Caballero sombrío';
+
+  @override
+  String get monsterTheMaster => 'El Maestro';
 }

@@ -3,7 +3,6 @@
 library;
 
 import '../l10n/app_localizations.dart';
-import '../widgets.dart' show tierName;
 import 'adventure.dart';
 
 String worldName(L l, int world) => switch (world) {
@@ -16,14 +15,22 @@ String worldName(L l, int world) => switch (world) {
   _ => l.worldMaster,
 };
 
-/// "Iron Golem", "Gold Warden", "Master King": the world's metal and what
-/// kind of fight it is.
+/// What a level's monster is called: its world's creature (golem.dart), and
+/// how far it has grown — the regular fight, the Warden, the King.
 String monsterName(L l, AdventureLevel level) {
-  final tier = tierName(l, level.world);
+  final (regular, warden, king) = switch (level.world) {
+    0 => (l.monsterRockGolem, l.monsterOreBrute, l.monsterIronColossus),
+    1 => (l.monsterScarab, l.monsterScarabGuard, l.monsterScarabPharaoh),
+    2 => (l.monsterYeti, l.monsterFrostYeti, l.monsterYetiChieftain),
+    3 => (l.monsterGoldSoldier, l.monsterGoldKnight, l.monsterGoldKing),
+    4 => (l.monsterWisp, l.monsterWraith, l.monsterFrostLich),
+    5 => (l.monsterCrystalDrake, l.monsterCrystalDragon, l.monsterDiamondWyrm),
+    _ => (l.monsterShadowGuard, l.monsterShadowKnight, l.monsterTheMaster),
+  };
   return switch (level.kind) {
-    FightKind.regular => l.monsterGolem(tier),
-    FightKind.elite => l.monsterWarden(tier),
-    FightKind.boss => l.monsterKing(tier),
+    FightKind.regular => regular,
+    FightKind.elite => warden,
+    FightKind.boss => king,
   };
 }
 

@@ -277,7 +277,7 @@ void main() {
           onStop: () {},
         ),
       )));
-      expect(find.text('Iron Golem'), findsOneWidget);
+      expect(find.text('Rock Golem'), findsOneWidget);
       expect(find.text('0:41'), findsOneWidget);
       expect(find.text('30 / 50'), findsOneWidget);
       expect(find.text('Give up'), findsOneWidget);

@@ -1664,30 +1664,6 @@
       }
     }
   },
-  "monsterGolem": "{tier} Golem",
-  "@monsterGolem": {
-    "placeholders": {
-      "tier": {
-        "type": "String"
-      }
-    }
-  },
-  "monsterWarden": "{tier} Warden",
-  "@monsterWarden": {
-    "placeholders": {
-      "tier": {
-        "type": "String"
-      }
-    }
-  },
-  "monsterKing": "{tier} King",
-  "@monsterKing": {
-    "placeholders": {
-      "tier": {
-        "type": "String"
-      }
-    }
-  },
   "fightLevel": "Fight level {level}",
   "@fightLevel": {
     "placeholders": {
@@ -1886,5 +1862,26 @@
   "adAskTitle": "Ads keep outrepd free",
   "adAskBody": "Next, your iPhone asks whether apps may use your activity to choose ads. Say yes and the ads fit you better; say no and you still get ads, just less relevant ones.",
   "adAskCamera": "Your camera is never part of it: body tracking stays on this phone, whatever you choose.",
-  "adAskRemove": "Remove ads instead"
+  "adAskRemove": "Remove ads instead",
+  "monsterRockGolem": "Rock Golem",
+  "monsterOreBrute": "Ore Brute",
+  "monsterIronColossus": "Iron Colossus",
+  "monsterScarab": "Scarab",
+  "monsterScarabGuard": "Scarab Guard",
+  "monsterScarabPharaoh": "Scarab Pharaoh",
+  "monsterYeti": "Yeti",
+  "monsterFrostYeti": "Frost Yeti",
+  "monsterYetiChieftain": "Yeti Chieftain",
+  "monsterGoldSoldier": "Gold Soldier",
+  "monsterGoldKnight": "Gold Knight",
+  "monsterGoldKing": "Gold King",
+  "monsterWisp": "Wisp",
+  "monsterWraith": "Wraith",
+  "monsterFrostLich": "Frost Lich",
+  "monsterCrystalDrake": "Crystal Drake",
+  "monsterCrystalDragon": "Crystal Dragon",
+  "monsterDiamondWyrm": "Diamond Wyrm",
+  "monsterShadowGuard": "Shadow Guard",
+  "monsterShadowKnight": "Shadow Knight",
+  "monsterTheMaster": "The Master"
 }

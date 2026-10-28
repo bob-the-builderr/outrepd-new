@@ -2506,21 +2506,6 @@ class LJa extends L {
   }
 
   @override
-  String monsterGolem(String tier) {
-    return '${tier}ゴーレム';
-  }
-
-  @override
-  String monsterWarden(String tier) {
-    return '${tier}ガーディアン';
-  }
-
-  @override
-  String monsterKing(String tier) {
-    return '${tier}キング';
-  }
-
-  @override
   String fightLevel(String level) {
     return 'ステージ${level}に挑む';
   }
@@ -2748,4 +2733,67 @@ class LJa extends L {
 
   @override
   String get adAskRemove => '広告を消す方にする';
+
+  @override
+  String get monsterRockGolem => 'ロックゴーレム';
+
+  @override
+  String get monsterOreBrute => 'オアブルート';
+
+  @override
+  String get monsterIronColossus => 'アイアンコロッサス';
+
+  @override
+  String get monsterScarab => 'スカラベ';
+
+  @override
+  String get monsterScarabGuard => 'スカラベガード';
+
+  @override
+  String get monsterScarabPharaoh => 'スカラベファラオ';
+
+  @override
+  String get monsterYeti => 'イエティ';
+
+  @override
+  String get monsterFrostYeti => 'フロストイエティ';
+
+  @override
+  String get monsterYetiChieftain => 'イエティの族長';
+
+  @override
+  String get monsterGoldSoldier => 'ゴールドソルジャー';
+
+  @override
+  String get monsterGoldKnight => 'ゴールドナイト';
+
+  @override
+  String get monsterGoldKing => 'ゴールドキング';
+
+  @override
+  String get monsterWisp => 'ウィスプ';
+
+  @override
+  String get monsterWraith => 'レイス';
+
+  @override
+  String get monsterFrostLich => 'フロストリッチ';
+
+  @override
+  String get monsterCrystalDrake => 'クリスタルドレイク';
+
+  @override
+  String get monsterCrystalDragon => 'クリスタルドラゴン';
+
+  @override
+  String get monsterDiamondWyrm => 'ダイヤモンドワーム';
+
+  @override
+  String get monsterShadowGuard => 'シャドウガード';
+
+  @override
+  String get monsterShadowKnight => 'シャドウナイト';
+
+  @override
+  String get monsterTheMaster => 'ザ・マスター';
 }

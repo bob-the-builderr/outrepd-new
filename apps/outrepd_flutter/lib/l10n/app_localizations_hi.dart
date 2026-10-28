@@ -2544,21 +2544,6 @@ class LHi extends L {
   }
 
   @override
-  String monsterGolem(String tier) {
-    return '${tier} गोलेम';
-  }
-
-  @override
-  String monsterWarden(String tier) {
-    return '${tier} रक्षक';
-  }
-
-  @override
-  String monsterKing(String tier) {
-    return '${tier} राजा';
-  }
-
-  @override
   String fightLevel(String level) {
     return 'लेवल ${level} लड़ें';
   }
@@ -2786,4 +2771,67 @@ class LHi extends L {
 
   @override
   String get adAskRemove => 'इसके बजाय विज्ञापन हटाएँ';
+
+  @override
+  String get monsterRockGolem => 'चट्टान गोलेम';
+
+  @override
+  String get monsterOreBrute => 'अयस्क दानव';
+
+  @override
+  String get monsterIronColossus => 'लौह महाकाय';
+
+  @override
+  String get monsterScarab => 'स्कारब';
+
+  @override
+  String get monsterScarabGuard => 'स्कारब रक्षक';
+
+  @override
+  String get monsterScarabPharaoh => 'स्कारब फ़राओ';
+
+  @override
+  String get monsterYeti => 'येती';
+
+  @override
+  String get monsterFrostYeti => 'पाला येती';
+
+  @override
+  String get monsterYetiChieftain => 'येती सरदार';
+
+  @override
+  String get monsterGoldSoldier => 'स्वर्ण सैनिक';
+
+  @override
+  String get monsterGoldKnight => 'स्वर्ण शूरवीर';
+
+  @override
+  String get monsterGoldKing => 'स्वर्ण राजा';
+
+  @override
+  String get monsterWisp => 'छलावा';
+
+  @override
+  String get monsterWraith => 'प्रेत';
+
+  @override
+  String get monsterFrostLich => 'हिम लिच';
+
+  @override
+  String get monsterCrystalDrake => 'क्रिस्टल ड्रेक';
+
+  @override
+  String get monsterCrystalDragon => 'क्रिस्टल ड्रैगन';
+
+  @override
+  String get monsterDiamondWyrm => 'हीरक नाग';
+
+  @override
+  String get monsterShadowGuard => 'छाया रक्षक';
+
+  @override
+  String get monsterShadowKnight => 'छाया शूरवीर';
+
+  @override
+  String get monsterTheMaster => 'द मास्टर';
 }

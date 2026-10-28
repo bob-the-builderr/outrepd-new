@@ -2539,21 +2539,6 @@ class LTr extends L {
   }
 
   @override
-  String monsterGolem(String tier) {
-    return '${tier} Golem';
-  }
-
-  @override
-  String monsterWarden(String tier) {
-    return '${tier} Muhafız';
-  }
-
-  @override
-  String monsterKing(String tier) {
-    return '${tier} Kral';
-  }
-
-  @override
   String fightLevel(String level) {
     return 'Savaş: Seviye ${level}';
   }
@@ -2781,4 +2766,67 @@ class LTr extends L {
 
   @override
   String get adAskRemove => 'Bunun yerine reklamları kaldır';
+
+  @override
+  String get monsterRockGolem => 'Kaya Golemi';
+
+  @override
+  String get monsterOreBrute => 'Cevher Zorbası';
+
+  @override
+  String get monsterIronColossus => 'Demir Dev';
+
+  @override
+  String get monsterScarab => 'Skarabe';
+
+  @override
+  String get monsterScarabGuard => 'Skarabe Muhafızı';
+
+  @override
+  String get monsterScarabPharaoh => 'Skarabe Firavun';
+
+  @override
+  String get monsterYeti => 'Yeti';
+
+  @override
+  String get monsterFrostYeti => 'Ayaz Yetisi';
+
+  @override
+  String get monsterYetiChieftain => 'Yeti Reisi';
+
+  @override
+  String get monsterGoldSoldier => 'Altın Asker';
+
+  @override
+  String get monsterGoldKnight => 'Altın Şövalye';
+
+  @override
+  String get monsterGoldKing => 'Altın Kral';
+
+  @override
+  String get monsterWisp => 'Hayalet Işık';
+
+  @override
+  String get monsterWraith => 'Hortlak';
+
+  @override
+  String get monsterFrostLich => 'Ayaz Lich';
+
+  @override
+  String get monsterCrystalDrake => 'Kristal Ejdercik';
+
+  @override
+  String get monsterCrystalDragon => 'Kristal Ejderha';
+
+  @override
+  String get monsterDiamondWyrm => 'Elmas Ejder';
+
+  @override
+  String get monsterShadowGuard => 'Gölge Muhafız';
+
+  @override
+  String get monsterShadowKnight => 'Gölge Şövalye';
+
+  @override
+  String get monsterTheMaster => 'Efendi';
 }

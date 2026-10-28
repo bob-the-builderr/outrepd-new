@@ -2544,21 +2544,6 @@ class LRu extends L {
   }
 
   @override
-  String monsterGolem(String tier) {
-    return 'Голем «${tier}»';
-  }
-
-  @override
-  String monsterWarden(String tier) {
-    return 'Страж «${tier}»';
-  }
-
-  @override
-  String monsterKing(String tier) {
-    return 'Король «${tier}»';
-  }
-
-  @override
   String fightLevel(String level) {
     return 'В бой: уровень ${level}';
   }
@@ -2786,4 +2771,67 @@ class LRu extends L {
 
   @override
   String get adAskRemove => 'Лучше убрать рекламу';
+
+  @override
+  String get monsterRockGolem => 'Каменный голем';
+
+  @override
+  String get monsterOreBrute => 'Рудный громила';
+
+  @override
+  String get monsterIronColossus => 'Железный колосс';
+
+  @override
+  String get monsterScarab => 'Скарабей';
+
+  @override
+  String get monsterScarabGuard => 'Страж-скарабей';
+
+  @override
+  String get monsterScarabPharaoh => 'Скарабей-фараон';
+
+  @override
+  String get monsterYeti => 'Йети';
+
+  @override
+  String get monsterFrostYeti => 'Морозный йети';
+
+  @override
+  String get monsterYetiChieftain => 'Вождь йети';
+
+  @override
+  String get monsterGoldSoldier => 'Золотой солдат';
+
+  @override
+  String get monsterGoldKnight => 'Золотой рыцарь';
+
+  @override
+  String get monsterGoldKing => 'Золотой король';
+
+  @override
+  String get monsterWisp => 'Огонёк';
+
+  @override
+  String get monsterWraith => 'Призрак';
+
+  @override
+  String get monsterFrostLich => 'Ледяной лич';
+
+  @override
+  String get monsterCrystalDrake => 'Кристальный дракончик';
+
+  @override
+  String get monsterCrystalDragon => 'Кристальный дракон';
+
+  @override
+  String get monsterDiamondWyrm => 'Алмазный змей';
+
+  @override
+  String get monsterShadowGuard => 'Теневой страж';
+
+  @override
+  String get monsterShadowKnight => 'Теневой рыцарь';
+
+  @override
+  String get monsterTheMaster => 'Мастер';
 }

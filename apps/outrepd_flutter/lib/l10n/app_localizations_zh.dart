@@ -2497,21 +2497,6 @@ class LZh extends L {
   }
 
   @override
-  String monsterGolem(String tier) {
-    return '${tier}魔像';
-  }
-
-  @override
-  String monsterWarden(String tier) {
-    return '${tier}守卫';
-  }
-
-  @override
-  String monsterKing(String tier) {
-    return '${tier}之王';
-  }
-
-  @override
   String fightLevel(String level) {
     return '挑战第 ${level} 关';
   }
@@ -2739,4 +2724,67 @@ class LZh extends L {
 
   @override
   String get adAskRemove => '改为去除广告';
+
+  @override
+  String get monsterRockGolem => '岩石魔像';
+
+  @override
+  String get monsterOreBrute => '矿石蛮兵';
+
+  @override
+  String get monsterIronColossus => '钢铁巨像';
+
+  @override
+  String get monsterScarab => '圣甲虫';
+
+  @override
+  String get monsterScarabGuard => '圣甲虫卫士';
+
+  @override
+  String get monsterScarabPharaoh => '圣甲虫法老';
+
+  @override
+  String get monsterYeti => '雪人';
+
+  @override
+  String get monsterFrostYeti => '冰霜雪人';
+
+  @override
+  String get monsterYetiChieftain => '雪人首领';
+
+  @override
+  String get monsterGoldSoldier => '黄金士兵';
+
+  @override
+  String get monsterGoldKnight => '黄金骑士';
+
+  @override
+  String get monsterGoldKing => '黄金国王';
+
+  @override
+  String get monsterWisp => '鬼火';
+
+  @override
+  String get monsterWraith => '幽灵';
+
+  @override
+  String get monsterFrostLich => '冰霜巫妖';
+
+  @override
+  String get monsterCrystalDrake => '水晶幼龙';
+
+  @override
+  String get monsterCrystalDragon => '水晶巨龙';
+
+  @override
+  String get monsterDiamondWyrm => '钻石古龙';
+
+  @override
+  String get monsterShadowGuard => '暗影卫士';
+
+  @override
+  String get monsterShadowKnight => '暗影骑士';
+
+  @override
+  String get monsterTheMaster => '宗师';
 }

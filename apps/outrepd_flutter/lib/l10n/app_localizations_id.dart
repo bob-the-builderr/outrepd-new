@@ -2543,21 +2543,6 @@ class LId extends L {
   }
 
   @override
-  String monsterGolem(String tier) {
-    return 'Golem ${tier}';
-  }
-
-  @override
-  String monsterWarden(String tier) {
-    return 'Penjaga ${tier}';
-  }
-
-  @override
-  String monsterKing(String tier) {
-    return 'Raja ${tier}';
-  }
-
-  @override
   String fightLevel(String level) {
     return 'Lawan level ${level}';
   }
@@ -2785,4 +2770,67 @@ class LId extends L {
 
   @override
   String get adAskRemove => 'Hapus iklan saja';
+
+  @override
+  String get monsterRockGolem => 'Golem Batu';
+
+  @override
+  String get monsterOreBrute => 'Raksasa Bijih';
+
+  @override
+  String get monsterIronColossus => 'Kolosus Besi';
+
+  @override
+  String get monsterScarab => 'Skarab';
+
+  @override
+  String get monsterScarabGuard => 'Penjaga Skarab';
+
+  @override
+  String get monsterScarabPharaoh => 'Firaun Skarab';
+
+  @override
+  String get monsterYeti => 'Yeti';
+
+  @override
+  String get monsterFrostYeti => 'Yeti Beku';
+
+  @override
+  String get monsterYetiChieftain => 'Kepala Yeti';
+
+  @override
+  String get monsterGoldSoldier => 'Prajurit Emas';
+
+  @override
+  String get monsterGoldKnight => 'Ksatria Emas';
+
+  @override
+  String get monsterGoldKing => 'Raja Emas';
+
+  @override
+  String get monsterWisp => 'Wisp';
+
+  @override
+  String get monsterWraith => 'Hantu';
+
+  @override
+  String get monsterFrostLich => 'Lich Beku';
+
+  @override
+  String get monsterCrystalDrake => 'Drake Kristal';
+
+  @override
+  String get monsterCrystalDragon => 'Naga Kristal';
+
+  @override
+  String get monsterDiamondWyrm => 'Wyrm Berlian';
+
+  @override
+  String get monsterShadowGuard => 'Penjaga Bayangan';
+
+  @override
+  String get monsterShadowKnight => 'Ksatria Bayangan';
+
+  @override
+  String get monsterTheMaster => 'Sang Master';
 }
