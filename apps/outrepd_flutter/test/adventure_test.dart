@@ -110,11 +110,21 @@ void main() {
       }
     });
 
-    test('five push-ups to start, sixty a minute at the end', () {
+    test('five push-ups to start, ninety at the end', () {
       expect(parReps(1), closeTo(5, 0.001));
-      expect(parReps(140), closeTo(60, 0.001));
+      expect(parReps(140), closeTo(90, 0.001));
       expect(levels.first.repsWith(kWeapons.first), 5);
-      expect(levels.last.repsWith(levels.last.weaponNeeded), 60);
+      expect(levels.last.repsWith(levels.last.weaponNeeded), 90);
+      // The first boss already asks for more than three times the first.
+      expect(AdventureLevel.of(20).repsWith(kWeapons.first), 17);
+    });
+
+    test('a minute in the first world, five seconds more each world after',
+        () {
+      expect(AdventureLevel.of(1).time, const Duration(seconds: 60));
+      expect(AdventureLevel.of(20).time, const Duration(seconds: 60));
+      expect(AdventureLevel.of(21).time, const Duration(seconds: 65));
+      expect(AdventureLevel.of(140).time, const Duration(seconds: 90));
     });
 
     test("with each world's own weapon the push-ups never go down", () {

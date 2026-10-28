@@ -20,9 +20,12 @@ const kLevelsPerWorld = 20;
 const kAdventureLevels = kWorlds * kLevelsPerWorld;
 const kMaxStars = kAdventureLevels * 3;
 
-/// Every fight is a minute, the same window a duel is: what changes from one
-/// level to the next is how much the monster can take in it.
+/// The first world's fights are a minute, the same window a duel is. Each
+/// world after it adds [kFightLengthPerWorld], to a minute and a half in the
+/// last: the user found the climb too slow (2026-10-28), and a minute caps
+/// what any level can ask at about sixty push-ups.
 const kFightLength = Duration(seconds: 60);
+const kFightLengthPerWorld = Duration(seconds: 5);
 
 enum FightKind {
   regular,
@@ -103,7 +106,7 @@ class AdventureLevel {
       ? 5
       : (inWorld - 1) ~/ 5 + 1 + (kind == FightKind.elite ? 1 : 0);
 
-  Duration get time => kFightLength;
+  Duration get time => kFightLength + kFightLengthPerWorld * world;
 
   /// The weakest weapon that hurts this world's monsters: its own metal.
   Weapon get weaponNeeded => kWeapons[world];
@@ -126,16 +129,18 @@ class AdventureLevel {
   static List<AdventureLevel> get all => _levels;
 }
 
-/// How many push-ups level [n] asks for in its minute with its world's own
-/// weapon: five at the first level and sixty at the last, climbing faster as
-/// it goes, with a step into every fifth fight and a bigger one into each
+/// How many push-ups level [n] asks for in its fight with its world's own
+/// weapon: five at the first level and ninety at the last, in even steps —
+/// about seventeen by the first boss, forty by the third, sixty-six by the
+/// fifth — with a step into every fifth fight and a bigger one into each
 /// boss. The steps are counted in, never subtracted out again, so the level
-/// after a boss is still harder than the boss.
+/// after a boss is still harder than the boss. (Until 2026-10-28 it was
+/// sixty at the end on a curve that started slowly; the user found it slow.)
 @visibleForTesting
 double parReps(int n) {
   double steps(int n) => (n - 1) + 1.5 * (n ~/ 5) + 4.0 * (n ~/ kLevelsPerWorld);
   final share = steps(n) / steps(kAdventureLevels);
-  return 5 + 55 * math.pow(share, 1.2).toDouble();
+  return 5 + 85 * share;
 }
 
 final List<AdventureLevel> _levels = () {
