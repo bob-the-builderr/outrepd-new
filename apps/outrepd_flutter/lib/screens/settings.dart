@@ -23,14 +23,12 @@ import '../data.dart';
 import '../health_sync.dart';
 import '../l10n/app_localizations.dart';
 import '../push.dart';
-import '../reps/count_accuracy.dart';
 import '../settings.dart';
 import '../theme.dart';
 import '../type_scale.dart';
 import '../username_rules.dart';
 import '../widgets.dart';
 import 'auth_entry.dart';
-import 'counter_accuracy.dart';
 import 'country_picker.dart';
 import 'leave_account.dart';
 import 'settings_account.dart';
@@ -268,15 +266,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 icon: Icons.download_outlined,
                 label: l.exportData,
                 onTap: () => _open(const DownloadDataScreen()),
-              ),
-              NavRow(
-                icon: Icons.insights_outlined,
-                label: l.counterAccuracy,
-                caption: l.counterAccuracyCaption,
-                value: countAccuracy.sets == 0
-                    ? null
-                    : '${localNumber(context, percent(countAccuracy.exactRate))}%',
-                onTap: () => _open(const CounterAccuracyScreen()),
               ),
               NavRow(
                 icon: Icons.delete_outline,

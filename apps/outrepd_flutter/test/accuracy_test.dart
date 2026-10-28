@@ -217,8 +217,10 @@ void main() {
   });
 
   group('the way in', () {
-    testWidgets('settings carries the figure, and opens the screen',
-        (tester) async {
+    // The figure came from counts confirmed after a practice set, and
+    // Practice is gone (Adventure plays on the camera's count), so nothing
+    // fills it any more. Settings no longer offers it (the user, 2026-10-28).
+    testWidgets('settings no longer offers it', (tester) async {
       tester.view.physicalSize = const Size(400, 1600);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.reset);
@@ -228,22 +230,16 @@ void main() {
       await tester.pumpWidget(_settings());
       await tester.pumpAndSettle();
 
-      // The number is on the row itself. Somebody who has just been miscounted
-      // should not have to open a screen to find out whether that is usual.
-      // Scrolled to: the Apple Health card heads the list now.
+      // Where it was: between exporting the data and deleting the account.
+      // The list builds only what is near the screen, so scroll there first.
       await tester.scrollUntilVisible(
-        find.text('80%'),
+        find.text('Delete account'),
         200,
         scrollable: find.byType(Scrollable).first,
       );
-      expect(find.text('80%'), findsOneWidget);
-
-      await tester.ensureVisible(find.text('Counter accuracy'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('Counter accuracy'));
-      await tester.pumpAndSettle();
-
-      expect(find.text('EXACT'), findsOneWidget);
+      expect(find.text('Export my data'), findsOneWidget);
+      expect(find.text('Counter accuracy'), findsNothing);
+      expect(find.text('80%'), findsNothing);
     });
   });
 }
