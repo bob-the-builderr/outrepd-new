@@ -1,7 +1,7 @@
-commit   f31919c91e6e1170f7943b39e3b539dac81b98dd
+commit   1d7202b07660ce3fff622cda5750ef341b784543
 branch   camera-rep-counter
-analyze  skipped
-test     skipped
-shots    skipped
+analyze  success
+test     failure
+shots    success
 server   success
-run      https://github.com/bob-the-builderr/outrepd-new/actions/runs/40710001954
+run      https://github.com/bob-the-builderr/outrepd-new/actions/runs/40725240809
