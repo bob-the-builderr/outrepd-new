@@ -11,6 +11,9 @@ Dereceli maç, seninle aynı anda kamerada olan birini bulur. Birlikte başlars�
 SIRALAMADA YÜKSEL
 İlk maçınla sıralamaya Demir V'ten girersin. Sonra Demir'den Bronz, Gümüş, Altın, Platin ve Elmas'a, oradan Usta'ya yüksel. Daha yüksek bir rütbeyi yen, daha çok LP kazan. Ulaştığın kademe senin kalır.
 
+MACERA
+Demir’den Usta’ya yedi dünyada 140 şınav dövüşü. Her tekrar canavara vurur ve canavarlar ilerledikçe evrimleşir. Her yeni dünyanın istediği silahı açmak için yıldız kazan. Rütben tehlikede değil ve çevrimdışı da çalışır.
+
 HER TEKRARLA SEVİYE ATLA
 Her şınav ve her maç, kazansan da kaybetsen de XP kazandırır. Seviyen her yerde adının yanında görünür ve asla düşmez.
 
@@ -28,7 +31,7 @@ Uygulamanın senin hakkında tuttuğu her şeyi indir veya hesabını ve tüm ve
 
 Türkçe, İngilizce, Almanca, İspanyolca, Fransızca, Hintçe, Endonezce, İtalyanca, Japonca, Korece, Portekizce, Rusça ve Çince olarak kullanılabilir.
 
-ABONELİK
-OUTREPD haftalık veya yıllık bir abonelik gerektirir. Dönem bitmeden en az 24 saat önce iptal etmezsen otomatik olarak yenilenir; Apple hesabı ayarlarından istediğin zaman yönetebilir veya iptal edebilirsin.
+REKLAMLAR VE OUTREPD PRO
+Tüm modlar abonelik olmadan oynanabilir; bir oyunun sonucundan çıkarken reklam gösterilir. Haftalık veya yıllık bir abonelik olan OUTREPD Pro reklamları kaldırır. Dönem bitmeden en az 24 saat önce iptal etmezsen otomatik olarak yenilenir; Apple hesabı ayarlarından istediğin zaman yönetebilir veya iptal edebilirsin.
 Kullanım Koşulları: https://www.outrepd.com/terms
 Gizlilik Politikası: https://www.outrepd.com/privacy

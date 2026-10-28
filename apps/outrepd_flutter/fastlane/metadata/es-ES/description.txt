@@ -11,6 +11,9 @@ Una partida clasificatoria busca a alguien frente a la cámara en el mismo momen
 SUBE EN LA CLASIFICACIÓN
 Tu primera partida te coloca en la clasificación, en Hierro V. Después sube de Hierro a Bronce, Plata, Oro, Platino y Diamante hasta Maestro. Gana a un rango más alto y consigues más LP. El nivel que alcanzas, lo conservas.
 
+AVENTURA
+140 combates de flexiones en siete mundos, de Hierro a Maestro. Cada repetición golpea al monstruo, y los monstruos evolucionan a medida que avanzas. Gana estrellas para desbloquear el arma que pide cada mundo nuevo. No te juegas el rango, y funciona sin conexión.
+
 SUBE DE NIVEL CON CADA REPETICIÓN
 Cada flexión y cada partida dan XP, ganes o pierdas. Tu nivel aparece junto a tu nombre en todas partes y nunca baja.
 
@@ -28,7 +31,7 @@ Descarga todo lo que la app guarda sobre ti, o elimina tu cuenta y todos tus dat
 
 Disponible en español, inglés, alemán, francés, hindi, indonesio, italiano, japonés, coreano, portugués, ruso, turco y chino.
 
-SUSCRIPCIÓN
-OUTREPD necesita una suscripción, semanal o anual. Se renueva automáticamente salvo que la canceles al menos 24 horas antes del final del periodo; gestiónala o cancélala cuando quieras en los ajustes de tu cuenta de Apple.
+ANUNCIOS Y OUTREPD PRO
+Todos los modos se pueden jugar sin suscripción, y sale un anuncio al salir del resultado de una partida. OUTREPD Pro, una suscripción semanal o anual, quita los anuncios. Se renueva automáticamente salvo que la canceles al menos 24 horas antes del final del periodo; gestiónala o cancélala cuando quieras en los ajustes de tu cuenta de Apple.
 Condiciones de uso: https://www.outrepd.com/terms
 Política de privacidad: https://www.outrepd.com/privacy

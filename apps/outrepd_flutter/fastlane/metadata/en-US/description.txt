@@ -11,6 +11,9 @@ A ranked match finds somebody on camera at the same moment as you. Start togethe
 CLIMB THE RANKS
 Your first match puts you on the ladder at Iron V. Then climb from Iron through Bronze, Silver, Gold, Platinum and Diamond to Master. Beat a higher rank and you earn more LP. Once you reach a tier, you keep it.
 
+ADVENTURE
+140 push-up fights across seven worlds, from Iron to Master. Every rep hits the monster, and the monsters evolve as you go. Win stars to unlock the weapon each new world needs. No rank on the line, and it works offline.
+
 LEVEL UP WITH EVERY REP
 Every push-up and every match earns XP, win or lose. Your level shows beside your name everywhere, and it never goes down.
 
@@ -28,7 +31,7 @@ Download everything the app holds about you, or delete your account and all of i
 
 Available in English, German, Spanish, French, Hindi, Indonesian, Italian, Japanese, Korean, Portuguese, Russian, Turkish and Chinese.
 
-SUBSCRIPTION
-OUTREPD needs a subscription, weekly or yearly. It renews automatically unless you cancel at least 24 hours before the end of the period; manage or cancel it anytime in your Apple account settings.
+ADS AND OUTREPD PRO
+Every mode can be played without a subscription, and an ad plays when you leave the result of a game. OUTREPD Pro, a weekly or yearly subscription, removes the ads. It renews automatically unless you cancel at least 24 hours before the end of the period; manage or cancel it anytime in your Apple account settings.
 Terms of Use: https://www.outrepd.com/terms
 Privacy Policy: https://www.outrepd.com/privacy

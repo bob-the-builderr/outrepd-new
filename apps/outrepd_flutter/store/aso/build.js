@@ -11,6 +11,8 @@ const locales = {
   ...(fs.existsSync(path.join(__dirname, 'app_langs.js')) ? require('./app_langs.js') : {}),
   ...(fs.existsSync(path.join(__dirname, 'more_langs.js')) ? require('./more_langs.js') : {}),
 };
+// 1.1.5: free to play with ads, Pro removes them, and Adventure (ads_adventure.js).
+require('./ads_adventure.js').apply(locales);
 
 // What's New for the version being prepared, per locale (notes.js).
 const notes = fs.existsSync(path.join(__dirname, 'notes.js')) ? require('./notes.js') : {};

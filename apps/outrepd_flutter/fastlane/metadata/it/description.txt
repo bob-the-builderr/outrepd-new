@@ -11,6 +11,9 @@ Una partita classificata trova qualcuno davanti alla fotocamera nello stesso mom
 SCALA LA CLASSIFICA
 La tua prima partita ti mette in classifica, a Ferro V. Poi sali da Ferro a Bronzo, Argento, Oro, Platino e Diamante fino a Maestro. Batti un grado più alto e guadagni più LP. Un livello raggiunto resta tuo.
 
+AVVENTURA
+140 combattimenti a flessioni in sette mondi, da Ferro a Maestro. Ogni ripetizione colpisce il mostro, e i mostri si evolvono man mano che avanzi. Guadagna stelle per sbloccare l’arma che serve a ogni nuovo mondo. Nessun grado in gioco, e funziona offline.
+
 SALI DI LIVELLO A OGNI RIPETIZIONE
 Ogni flessione e ogni partita danno XP, che tu vinca o perda. Il tuo livello appare accanto al tuo nome ovunque e non scende mai.
 
@@ -28,7 +31,7 @@ Scarica tutto ciò che l'app conserva su di te, o elimina l'account e tutti i da
 
 Disponibile in italiano, inglese, tedesco, spagnolo, francese, hindi, indonesiano, giapponese, coreano, portoghese, russo, turco e cinese.
 
-ABBONAMENTO
-OUTREPD richiede un abbonamento, settimanale o annuale. Si rinnova automaticamente se non lo annulli almeno 24 ore prima della fine del periodo; gestiscilo o annullalo in qualsiasi momento nelle impostazioni del tuo account Apple.
+PUBBLICITÀ E OUTREPD PRO
+Ogni modalità si gioca senza abbonamento, e parte una pubblicità quando lasci il risultato di una partita. OUTREPD Pro, un abbonamento settimanale o annuale, toglie la pubblicità. Si rinnova automaticamente se non lo annulli almeno 24 ore prima della fine del periodo; gestiscilo o annullalo in qualsiasi momento nelle impostazioni del tuo account Apple.
 Condizioni d'uso: https://www.outrepd.com/terms
 Informativa sulla privacy: https://www.outrepd.com/privacy

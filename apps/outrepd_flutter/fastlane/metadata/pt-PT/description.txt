@@ -11,6 +11,9 @@ Uma partida ranqueada encontra alguém na câmara no mesmo momento que você. Vo
 SUBA NO RANKING
 Sua primeira partida coloca você no ranking, no Ferro V. Depois suba de Ferro para Bronze, Prata, Ouro, Platina e Diamante até Mestre. Vença um nível mais alto e ganhe mais LP. O nível que você alcança fica com você.
 
+AVENTURA
+140 lutas de flexões em sete mundos, do Ferro ao Mestre. Cada repetição acerta o monstro, e os monstros evoluem conforme você avança. Ganhe estrelas para desbloquear a arma que cada novo mundo exige. Nenhum ranking em jogo, e funciona offline.
+
 SUBA DE NÍVEL A CADA REPETIÇÃO
 Cada flexão e cada partida dão XP, ganhando ou perdendo. Seu nível aparece ao lado do seu nome em todo lugar e nunca cai.
 
@@ -28,7 +31,7 @@ Transfira tudo o que o app guarda sobre você, ou exclua sua conta e todos os da
 
 Disponível em português, inglês, alemão, espanhol, francês, hindi, indonésio, italiano, japonês, coreano, russo, turco e chinês.
 
-ASSINATURA
-OUTREPD precisa de uma assinatura, semanal ou anual. Ela renova automaticamente, a menos que você cancele pelo menos 24 horas antes do fim do período; gerencie ou cancele quando quiser nos ajustes da sua conta Apple.
+ANÚNCIOS E OUTREPD PRO
+Todos os modos podem ser jogados sem assinatura, e um anúncio aparece quando você sai do resultado de uma partida. O OUTREPD Pro, uma assinatura semanal ou anual, remove os anúncios. Ela renova automaticamente, a menos que você cancele pelo menos 24 horas antes do fim do período; gerencie ou cancele quando quiser nos ajustes da sua conta Apple.
 Termos de Uso: https://www.outrepd.com/terms
 Política de Privacidade: https://www.outrepd.com/privacy

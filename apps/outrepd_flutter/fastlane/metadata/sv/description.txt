@@ -2,10 +2,12 @@ En minut. En motståndare. Varje armhävning räknas.
 
 OUTREPD gör armhävningar till en live 1v1-utmaning. Telefonens kamera räknar varje repetition, och bara hela repetitioner räknas. Tävla live mot riktiga människor, klättra från Iron till Master, samla XP med varje rep och utmana dina vänner. Ett nytt veckorace varje måndag.
 
+Adventure: 140 armhävningsstrider i sju världar, med monster som utvecklas och vapen att låsa upp. Ingen ranking står på spel.
+
 Hållningsigenkänningen körs på din enhet. Ingen video lämnar din telefon.
 
 Appen finns på engelska och 12 andra språk.
 
-OUTREPD kräver en prenumeration, vecko- eller årsvis. Den förnyas automatiskt om du inte säger upp den minst 24 timmar innan perioden slutar; hantera eller säg upp den när du vill i inställningarna för ditt Apple-konto.
+Alla lägen kan spelas utan prenumeration, och en annons visas efter en match. OUTREPD Pro, en vecko- eller årsprenumeration, tar bort annonserna. Den förnyas automatiskt om du inte säger upp den minst 24 timmar innan perioden slutar; hantera eller säg upp den när du vill i inställningarna för ditt Apple-konto.
 Användarvillkor: https://www.outrepd.com/terms
 Integritetspolicy: https://www.outrepd.com/privacy

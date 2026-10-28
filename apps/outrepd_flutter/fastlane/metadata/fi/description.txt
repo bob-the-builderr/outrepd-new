@@ -2,10 +2,12 @@ Minuutti. Yksi vastustaja. Jokainen punnerrus lasketaan.
 
 OUTREPD tekee punnerruksista live 1v1 -haasteen. Puhelimen kamera laskee jokaisen toiston, ja vain täydet toistot lasketaan. Kisaa livenä oikeita ihmisiä vastaan, nouse Ironista Masteriin, ansaitse XP:tä jokaisella toistolla ja haasta kaverisi. Uusi viikkokisa joka maanantai.
 
+Adventure: 140 punnerrustaistelua seitsemässä maailmassa, kehittyviä hirviöitä ja avattavia aseita. Rankingisi ei ole pelissä.
+
 Asennon tunnistus toimii laitteellasi. Mikään video ei lähde puhelimestasi.
 
 Sovellus on englanniksi ja 12 muulla kielellä.
 
-OUTREPD vaatii viikko- tai vuositilauksen. Se uusiutuu automaattisesti, ellet peru sitä vähintään 24 tuntia ennen jakson päättymistä; hallitse tai peru se milloin tahansa Apple-tilisi asetuksissa.
+Kaikkia tiloja voi pelata ilman tilausta, ja pelin jälkeen näytetään mainos. OUTREPD Pro, viikko- tai vuositilaus, poistaa mainokset. Se uusiutuu automaattisesti, ellet peru sitä vähintään 24 tuntia ennen jakson päättymistä; hallitse tai peru se milloin tahansa Apple-tilisi asetuksissa.
 Käyttöehdot: https://www.outrepd.com/terms
 Tietosuojakäytäntö: https://www.outrepd.com/privacy

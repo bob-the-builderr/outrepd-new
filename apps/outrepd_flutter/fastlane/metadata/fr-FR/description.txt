@@ -11,6 +11,9 @@ Un match classé trouve quelqu'un devant sa caméra au même moment que toi. Vou
 GRIMPE DANS LE CLASSEMENT
 Ton premier match te place au classement, en Fer V. Ensuite, monte de Fer à Bronze, Argent, Or, Platine et Diamant jusqu'à Maître. Bats un rang plus élevé et tu gagnes plus de LP. Un palier atteint reste acquis.
 
+AVENTURE
+140 combats de pompes dans sept mondes, de Fer à Maître. Chaque répétition frappe le monstre, et les monstres évoluent au fil du jeu. Gagne des étoiles pour débloquer l’arme qu’exige chaque nouveau monde. Aucun rang en jeu, et ça marche hors ligne.
+
 MONTE DE NIVEAU À CHAQUE RÉPÉTITION
 Chaque pompe et chaque match rapportent de l'XP, victoire ou défaite. Ton niveau s'affiche partout à côté de ton nom et ne baisse jamais.
 
@@ -28,7 +31,7 @@ Télécharge tout ce que l'app garde sur toi, ou supprime ton compte et toutes t
 
 Disponible en français, anglais, allemand, espagnol, hindi, indonésien, italien, japonais, coréen, portugais, russe, turc et chinois.
 
-ABONNEMENT
-OUTREPD nécessite un abonnement, hebdomadaire ou annuel. Il se renouvelle automatiquement sauf si tu l'annules au moins 24 heures avant la fin de la période ; gère-le ou annule-le à tout moment dans les réglages de ton compte Apple.
+PUBLICITÉS ET OUTREPD PRO
+Tous les modes se jouent sans abonnement, et une publicité passe quand tu quittes le résultat d’une partie. OUTREPD Pro, un abonnement hebdomadaire ou annuel, retire les publicités. Il se renouvelle automatiquement sauf si tu l'annules au moins 24 heures avant la fin de la période ; gère-le ou annule-le à tout moment dans les réglages de ton compte Apple.
 Conditions d'utilisation : https://www.outrepd.com/terms
 Politique de confidentialité : https://www.outrepd.com/privacy

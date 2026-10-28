@@ -11,6 +11,9 @@ Pertandingan peringkat mencari orang yang ada di depan kamera pada saat yang sam
 NAIK PERINGKAT
 Pertandingan pertamamu memasukkanmu ke peringkat, mulai dari Besi V. Lalu naik dari Besi ke Perunggu, Perak, Emas, Platinum dan Berlian sampai Master. Kalahkan peringkat lebih tinggi dan dapatkan LP lebih banyak. Tingkat yang sudah dicapai tetap milikmu.
 
+PETUALANGAN
+140 pertarungan push up di tujuh dunia, dari Besi sampai Master. Setiap repetisi memukul monster, dan monsternya berevolusi seiring kamu maju. Kumpulkan bintang untuk membuka senjata yang dibutuhkan setiap dunia baru. Peringkat tidak dipertaruhkan, dan bisa dimainkan offline.
+
 NAIK LEVEL DI SETIAP REPETISI
 Setiap push up dan setiap pertandingan memberi XP, menang atau kalah. Levelmu tampil di samping namamu di mana saja dan tidak pernah turun.
 
@@ -28,7 +31,7 @@ Unduh semua yang disimpan aplikasi tentangmu, atau hapus akun dan semua datamu d
 
 Tersedia dalam bahasa Indonesia, Inggris, Jerman, Spanyol, Prancis, Hindi, Italia, Jepang, Korea, Portugis, Rusia, Turki, dan Mandarin.
 
-LANGGANAN
-OUTREPD memerlukan langganan mingguan atau tahunan. Langganan diperpanjang otomatis kecuali dibatalkan setidaknya 24 jam sebelum periode berakhir; kelola atau batalkan kapan saja di pengaturan akun Apple-mu.
+IKLAN DAN OUTREPD PRO
+Semua mode bisa dimainkan tanpa langganan, dan iklan diputar saat kamu meninggalkan hasil permainan. OUTREPD Pro, langganan mingguan atau tahunan, menghapus iklan. Langganan diperpanjang otomatis kecuali dibatalkan setidaknya 24 jam sebelum periode berakhir; kelola atau batalkan kapan saja di pengaturan akun Apple-mu.
 Ketentuan Penggunaan: https://www.outrepd.com/terms
 Kebijakan Privasi: https://www.outrepd.com/privacy

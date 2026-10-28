@@ -11,6 +11,9 @@ Ein Ranglistenmatch sucht jemanden, der im selben Moment vor der Kamera ist. Ihr
 STEIG IN DER RANGLISTE AUF
 Dein erstes Match bringt dich auf die Rangliste, bei Eisen V. Dann steigst du von Eisen über Bronze, Silber, Gold, Platin und Diamant bis Meister auf. Schlägst du einen höheren Rang, bekommst du mehr LP. Eine erreichte Stufe behältst du.
 
+ABENTEUER
+140 Liegestütz-Kämpfe in sieben Welten, von Eisen bis Meister. Jede Wiederholung trifft das Monster, und die Monster entwickeln sich mit jeder Welt weiter. Sammle Sterne für die Waffe, die jede neue Welt verlangt. Kein Rang steht auf dem Spiel, und es geht auch offline.
+
 LEVEL UP MIT JEDER WIEDERHOLUNG
 Jeder Liegestütz und jedes Match bringen XP, ob Sieg oder Niederlage. Dein Level steht überall neben deinem Namen und sinkt nie.
 
@@ -28,7 +31,7 @@ Lade alles herunter, was die App über dich speichert, oder lösche dein Konto s
 
 Verfügbar auf Deutsch, Englisch, Spanisch, Französisch, Hindi, Indonesisch, Italienisch, Japanisch, Koreanisch, Portugiesisch, Russisch, Türkisch und Chinesisch.
 
-ABONNEMENT
-OUTREPD braucht ein Abonnement, wöchentlich oder jährlich. Es verlängert sich automatisch, wenn du nicht mindestens 24 Stunden vor Ende des Zeitraums kündigst; verwalten oder kündigen kannst du es jederzeit in deinen Apple-Account-Einstellungen.
+WERBUNG UND OUTREPD PRO
+Jeder Modus lässt sich ohne Abonnement spielen; wenn du das Ergebnis eines Spiels verlässt, läuft eine Werbung. OUTREPD Pro, ein wöchentliches oder jährliches Abonnement, entfernt die Werbung. Es verlängert sich automatisch, wenn du nicht mindestens 24 Stunden vor Ende des Zeitraums kündigst; verwalten oder kündigen kannst du es jederzeit in deinen Apple-Account-Einstellungen.
 Nutzungsbedingungen: https://www.outrepd.com/terms
 Datenschutzerklärung: https://www.outrepd.com/privacy
