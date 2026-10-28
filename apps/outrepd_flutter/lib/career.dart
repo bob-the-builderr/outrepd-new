@@ -523,6 +523,33 @@ class Career extends ChangeNotifier {
     if (fresh.isNotEmpty) notifyListeners();
   }
 
+  /// Fills the day-by-day log — the week on the home screen, today's goal —
+  /// from the server's sets, for a phone that has not kept it: a new one, or
+  /// this one signed out and back in, which started from nothing
+  /// (2026-10-29). Each day keeps the larger count: this phone's may hold a
+  /// set the server has not had yet.
+  Future<void> syncDays() async {
+    if (!backend.available || backend.me == null) return;
+    final Map<String, int> server;
+    try {
+      server = await backend.myDays(lastDays: _kDaysKept);
+    } on Object catch (error) {
+      debugPrint('Could not read the days: $error');
+      return;
+    }
+    var changed = false;
+    server.forEach((day, reps) {
+      if (reps > (_days[day] ?? 0)) {
+        _days[day] = reps;
+        changed = true;
+      }
+    });
+    if (!changed) return;
+    _trimDays();
+    await save();
+    notifyListeners();
+  }
+
   /// Duel ids a screen wrote down while [syncHistory] was waiting on the
   /// server, so its answer — read before they existed — does not forget them.
   final Set<String> _recordedSinceSync = {};

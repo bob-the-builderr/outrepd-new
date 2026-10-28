@@ -83,10 +83,10 @@ class _Board extends NoBackend {
   bool get available => true;
 
   @override
-  Future<List<MonthRow>> monthBoard({int limit = 100}) async => demoMonthBoard;
+  Future<List<MonthRow>> monthBoard({int limit = 100, String? country}) async => demoMonthBoard;
 
   @override
-  Future<MonthPlace?> myMonthPlace() async {
+  Future<MonthPlace?> myMonthPlace({String? country}) async {
     final now = DateTime.now().toUtc();
     return MonthPlace(
       season: DateTime.utc(now.year, now.month),

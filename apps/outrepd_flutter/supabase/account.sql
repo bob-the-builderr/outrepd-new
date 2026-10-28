@@ -301,6 +301,34 @@ $$;
 revoke all on function set_my_country(text) from public, anon;
 grant execute on function set_my_country(text) to authenticated;
 
+-- ─────────────────────────────── the days ───────────────────────────────────
+--
+-- This lifter's push-ups day by day, every set they uploaded — ranked, live,
+-- a friend's, practice, the adventure — summed in their own days:
+-- [tz_minutes] is their clock's offset from UTC. For a phone that has not
+-- kept them: a new one, or the same one signed out and back in, which
+-- started its week, its streak and today's goal from nothing (2026-10-29).
+create or replace function my_days(tz_minutes int default 0, last_days int default 60)
+returns table (day date, reps int)
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select ((s.created_at at time zone 'UTC')
+            + make_interval(mins => greatest(-840, least(840, tz_minutes))))::date,
+         sum(s.reps)::int
+    from sets s
+   where s.profile_id = auth.uid()
+     and s.created_at > now()
+           - make_interval(days => greatest(1, least(400, last_days)))
+   group by 1
+   order by 1;
+$$;
+
+revoke all on function my_days(int, int) from public, anon;
+grant execute on function my_days(int, int) to authenticated;
+
 revoke all on function my_data() from public;
 grant execute on function my_data() to authenticated;
 revoke all on function claim_data_export() from public, anon;

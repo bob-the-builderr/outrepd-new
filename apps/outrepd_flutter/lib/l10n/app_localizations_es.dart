@@ -2914,4 +2914,9 @@ class LEs extends L {
   String weaponAtStars(String count) {
     return 'con ${count} estrellas';
   }
+
+  @override
+  String topTenIn(String country) {
+    return 'Top 10 en ${country}';
+  }
 }

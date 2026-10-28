@@ -2911,4 +2911,9 @@ class LPt extends L {
   String weaponAtStars(String count) {
     return 'com ${count} estrelas';
   }
+
+  @override
+  String topTenIn(String country) {
+    return 'Top 10 em ${country}';
+  }
 }

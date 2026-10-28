@@ -2864,4 +2864,9 @@ class LZh extends L {
   String weaponAtStars(String count) {
     return '需要 ${count} 颗星';
   }
+
+  @override
+  String topTenIn(String country) {
+    return '${country}前 10 名';
+  }
 }

@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import '../avatar.dart';
 import '../backend/backend.dart';
 import '../career.dart';
+import '../country_names.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../motion.dart';
@@ -80,6 +81,31 @@ class _RanksScreenState extends State<RanksScreen> {
   /// This account's place on the whole board, for when it is below the
   /// hundred rows the board shows.
   int? _globalPlace;
+
+  /// The country's boards rather than the world's: every scope, the week and
+  /// the month as well as Top Players and Your Tier (the user, 2026-10-29).
+  bool _inCountry = false;
+
+  /// The country the boards are filtered to, or null for the world's. None
+  /// when the account has no country: there is no country board to show.
+  String? get _country => _inCountry ? backend.me?.country : null;
+
+  void _switchCountry(bool inCountry) {
+    if (inCountry == _inCountry) return;
+    setState(() {
+      _inCountry = inCountry;
+      // Every board was the other place's: none of it stands.
+      _boards.clear();
+      _fetchedAt.clear();
+      _week = null;
+      _weekPlace = null;
+      _month = null;
+      _monthPlace = null;
+      _globalPlace = null;
+      _error = null;
+    });
+    _load();
+  }
 
   bool _loading = false;
   Object? _error;
@@ -147,16 +173,19 @@ class _RanksScreenState extends State<RanksScreen> {
   Future<void> _load({bool quiet = false}) async {
     if (!backend.available) return;
     final scope = _scope;
+    final country = _country;
     final me = demoProfile;
     setState(() {
       _loading = true;
       if (!quiet) _error = null;
     });
+    // An answer for the other place, after the toggle moved: dropped.
+    bool stale() => !mounted || country != _country;
     try {
       if (scope == _Scope.thisWeek) {
-        final place = await backend.myWeekPlace();
-        final rows = await backend.weekBoard();
-        if (!mounted) return;
+        final place = await backend.myWeekPlace(country: country);
+        final rows = await backend.weekBoard(country: country);
+        if (stale()) return;
         setState(() {
           _weekPlace = place;
           _week = rows;
@@ -169,9 +198,9 @@ class _RanksScreenState extends State<RanksScreen> {
       if (scope == _Scope.thisMonth) {
         // The place first: asking for it is what closes a month that has
         // ended, so the board read after it is already the new month's.
-        final place = await backend.myMonthPlace();
-        final rows = await backend.monthBoard();
-        if (!mounted) return;
+        final place = await backend.myMonthPlace(country: country);
+        final rows = await backend.monthBoard(country: country);
+        if (stale()) return;
         setState(() {
           _monthPlace = place;
           _month = rows;
@@ -182,15 +211,16 @@ class _RanksScreenState extends State<RanksScreen> {
         return;
       }
       final rows = await backend.leaderboard(
+        country: country,
         tierIdx: scope == _Scope.yourTier ? me.tierIdx : null,
         divIdx: scope == _Scope.yourTier ? me.divIdx : null,
       );
       // Below the hundred shown, the place still is one: asked for apart.
       final global = scope == _Scope.topPlayers &&
               !rows.any((row) => row.id == backend.me?.id)
-          ? await backend.boardPosition()
+          ? await backend.boardPosition(country: country)
           : null;
-      if (!mounted) return;
+      if (stale()) return;
       setState(() {
         _boards[scope] = rows;
         if (scope == _Scope.topPlayers) _globalPlace = global;
@@ -303,6 +333,10 @@ class _RanksScreenState extends State<RanksScreen> {
     final me = demoProfile;
     final month = _season;
     final week = _scope == _Scope.thisWeek;
+    // The country's name while its boards are shown; null on the world's.
+    final countryLabel = _country == null
+        ? null
+        : countryName(context, _country!);
 
     // Nothing to draw yet. The month's board can be empty and still be an
     // answer — a new month, nobody has won a duel — so it is "not fetched"
@@ -333,6 +367,16 @@ class _RanksScreenState extends State<RanksScreen> {
               ),
             ),
 
+            // The world's boards or the country's, above everything else:
+            // it changes every board under it. Only with a country to show.
+            if (backend.available && backend.me?.country != null) ...[
+              const SizedBox(height: 12),
+              _PlaceToggle(
+                country: backend.me!.country!,
+                inCountry: _inCountry,
+                onChanged: _switchCountry,
+              ),
+            ],
             const SizedBox(height: 14),
             _ScopeToggle(scope: _scope, onChanged: _switchTo),
 
@@ -374,6 +418,7 @@ class _RanksScreenState extends State<RanksScreen> {
                         toWeek ? _Scope.thisWeek : _Scope.thisMonth,
                       ),
                       onRefresh: _load,
+                      country: countryLabel,
                     )
                   : entries.isEmpty
                   ? EmptyState(
@@ -415,6 +460,7 @@ class _RanksScreenState extends State<RanksScreen> {
                         rows: _monthRows,
                         username: me.username,
                         week: week,
+                        country: countryLabel,
                       )
                     : _SelfRow(
                         position: _myPosition,
@@ -435,6 +481,74 @@ class _RanksScreenState extends State<RanksScreen> {
 }
 
 // ──────────────────────────────── the controls ───────────────────────────────
+
+/// The world or this account's country, for every board under it.
+class _PlaceToggle extends StatelessWidget {
+  const _PlaceToggle({
+    required this.country,
+    required this.inCountry,
+    required this.onChanged,
+  });
+
+  final String country;
+  final bool inCountry;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    Widget half(bool value, String label, Key key) {
+      final selected = value == inCountry;
+      return Expanded(
+        child: InkWell(
+          key: key,
+          onTap: () => onChanged(value),
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+            decoration: BoxDecoration(
+              color: selected ? colors.surfaceRaised : null,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                label,
+                maxLines: 1,
+                style: TextStyle(
+                  color: selected ? colors.text : colors.muted,
+                  fontSize: 15,
+                  fontWeight: selected ? FontWeight.w600 : null,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Container(
+        padding: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          color: colors.surface,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          children: [
+            half(false, '🌍 ${L.of(context).global}', const Key('boardsWorld')),
+            half(
+              true,
+              '${countryFlag(country)} ${countryName(context, country)}',
+              const Key('boardsCountry'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class _ScopeToggle extends StatelessWidget {
   const _ScopeToggle({required this.scope, required this.onChanged});
@@ -933,6 +1047,7 @@ class _MonthBoard extends StatelessWidget {
     required this.onRefresh,
     this.week = false,
     this.onLength,
+    this.country,
   });
 
   final List<MonthRow> rows;
@@ -944,6 +1059,10 @@ class _MonthBoard extends StatelessWidget {
 
   /// Week or month, from the switch at the top.
   final ValueChanged<bool>? onLength;
+
+  /// The country's board, by its name, rather than the world's. No awards
+  /// on it: those are the world's month (2026-10-29).
+  final String? country;
 
   @override
   Widget build(BuildContext context) {
@@ -960,7 +1079,7 @@ class _MonthBoard extends StatelessWidget {
             _LengthSwitch(week: week, onChanged: onLength),
             const SizedBox(height: 12),
           ],
-          _SeasonHeader(mine: mine, week: week),
+          _SeasonHeader(mine: mine, week: week, country: country),
           if (rows.isEmpty)
             EmptyState(
               icon: Icons.calendar_month_outlined,
@@ -972,12 +1091,17 @@ class _MonthBoard extends StatelessWidget {
             _Podium(rows: podium),
             const SizedBox(height: 12),
             for (final row in rest) ...[
-              if (row.place == 11 && !week) const _Top10Line(),
+              if (row.place == 11 && !week && country == null)
+                const _Top10Line(),
               Padding(
                 padding: const EdgeInsets.only(bottom: 7),
                 child: RiseIn(
                   delay: staggered(row.place - 3),
-                  child: _MonthRankRow(row: row, week: week),
+                  child: _MonthRankRow(
+                    row: row,
+                    week: week,
+                    awards: country == null,
+                  ),
                 ),
               ),
             ],
@@ -989,10 +1113,13 @@ class _MonthBoard extends StatelessWidget {
 }
 
 class _SeasonHeader extends StatelessWidget {
-  const _SeasonHeader({required this.mine, this.week = false});
+  const _SeasonHeader({required this.mine, this.week = false, this.country});
 
   final MonthPlace mine;
   final bool week;
+
+  /// The country's name, on its own board.
+  final String? country;
 
   @override
   Widget build(BuildContext context) {
@@ -1003,6 +1130,7 @@ class _SeasonHeader extends StatelessWidget {
     return Column(
       children: [
         Text(
+          '${country == null ? '' : '$country · '}'
           '${week ? l.thisWeek : monthName(context, mine.season)} · '
           '${monthLeft(context, mine.endsAt, clock.now())}',
           textAlign: TextAlign.center,
@@ -1226,16 +1354,23 @@ class _Top10Line extends StatelessWidget {
 }
 
 class _MonthRankRow extends StatelessWidget {
-  const _MonthRankRow({required this.row, this.week = false});
+  const _MonthRankRow({
+    required this.row,
+    this.week = false,
+    this.awards = true,
+  });
 
   final MonthRow row;
   final bool week;
+
+  /// Whether a place here wins anything: not on a country's board.
+  final bool awards;
 
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
     // A week names nobody at its end: the rank under the name instead.
-    final award = week ? null : awardForPlace(row.place);
+    final award = week || !awards ? null : awardForPlace(row.place);
 
     return InkWell(
       borderRadius: BorderRadius.circular(12),
@@ -1304,12 +1439,16 @@ class _MonthSelfRow extends StatelessWidget {
     required this.rows,
     required this.username,
     this.week = false,
+    this.country,
   });
 
   final MonthPlace mine;
   final List<MonthRow> rows;
   final String username;
   final bool week;
+
+  /// The country's name, on its own board, where no award is at stake.
+  final String? country;
 
   String _hint(BuildContext context) {
     final l = L.of(context);
@@ -1323,7 +1462,11 @@ class _MonthSelfRow extends StatelessWidget {
       return l.weekToTop3(localNumber(context, gap < 1 ? 1 : gap));
     }
     if (place == null) return l.monthJoinHint;
-    if (awardForPlace(place) case final award?) {
+    // On a country's board no award is at stake — they are the world's —
+    // so the top ten is just the top ten.
+    if (country case final name?) {
+      if (place <= 10) return l.topTenIn(name);
+    } else if (awardForPlace(place) case final award?) {
       return l.monthIfEndedNow(awardName(l, award));
     }
     // Past tenth, the gap to tenth. Level on points is not enough: ties go

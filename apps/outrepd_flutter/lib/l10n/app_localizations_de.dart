@@ -2916,4 +2916,9 @@ class LDe extends L {
   String weaponAtStars(String count) {
     return 'ab ${count} Sternen';
   }
+
+  @override
+  String topTenIn(String country) {
+    return 'Top 10 in ${country}';
+  }
 }

@@ -2914,4 +2914,9 @@ class LIt extends L {
   String weaponAtStars(String count) {
     return 'a ${count} stelle';
   }
+
+  @override
+  String topTenIn(String country) {
+    return 'Top 10 in ${country}';
+  }
 }

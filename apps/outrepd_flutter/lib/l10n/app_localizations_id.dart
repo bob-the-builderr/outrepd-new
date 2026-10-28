@@ -2908,4 +2908,9 @@ class LId extends L {
   String weaponAtStars(String count) {
     return 'di ${count} bintang';
   }
+
+  @override
+  String topTenIn(String country) {
+    return '10 besar di ${country}';
+  }
 }

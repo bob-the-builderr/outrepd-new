@@ -878,5 +878,6 @@
   "fightDefeated": "Yenildi!",
   "nextWeapon": "Sonraki silah",
   "opensWorld": "{world} açılır",
-  "weaponAtStars": "{count} yıldızda"
+  "weaponAtStars": "{count} yıldızda",
+  "topTenIn": "{country} içinde ilk 10"
 }

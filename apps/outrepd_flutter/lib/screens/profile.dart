@@ -112,9 +112,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     try {
       // Both at once: they are two independent questions, and asking them in
       // turn doubles how long the cards sit blank.
+      final country = backend.me?.country;
       final places = await Future.wait([
         backend.boardPosition(),
-        backend.boardPosition(country: backend.me?.country),
+        // No country on the account, no country board to be on. Asking with
+        // none is asking for the global place again, and the country card
+        // showed it as though it were the country's.
+        if (country != null)
+          backend.boardPosition(country: country)
+        else
+          Future<int?>.value(),
       ]);
       if (!mounted) return;
       setState(() {

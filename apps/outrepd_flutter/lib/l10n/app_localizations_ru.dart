@@ -2909,4 +2909,9 @@ class LRu extends L {
   String weaponAtStars(String count) {
     return 'за ${count} звёзд';
   }
+
+  @override
+  String topTenIn(String country) {
+    return 'Топ-10 в стране: ${country}';
+  }
 }

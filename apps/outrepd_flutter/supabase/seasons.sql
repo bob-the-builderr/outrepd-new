@@ -295,7 +295,10 @@ $$;
 -- Where the caller stands this month, and when it ends. Also closes any month
 -- that has ended — this is called each time the app opens the board, which
 -- makes it the first request after a month ends.
-create or replace function my_month_place()
+-- A country board as well as the world's: [in_country] (2026-10-29). Dropped
+-- first: it took no argument before.
+drop function if exists my_month_place();
+create or replace function my_month_place(in_country text default null)
 returns table (
   season date,
   ends_at timestamptz,
@@ -327,13 +330,17 @@ begin
   select this_season,
          ((this_season + interval '1 month')::timestamp at time zone 'UTC'),
          case when mine.profile_id is not null
-                   and me.placements_done >= 5 and me.show_on_board then (
+                   and me.placements_done >= 5 and me.show_on_board
+                   and (in_country is null
+                        or (me.country = in_country and me.show_country)) then (
            select count(*)::int + 1
              from season_points sp
              join profiles p on p.id = sp.profile_id
             where sp.season = this_season
               and p.placements_done >= 5
               and p.show_on_board
+              and (in_country is null
+                   or (p.country = in_country and p.show_country))
               and (sp.points > mine.points
                 or (sp.points = mine.points and sp.wins > mine.wins)
                 or (sp.points = mine.points and sp.wins = mine.wins
@@ -344,7 +351,9 @@ begin
             join profiles p on p.id = sp.profile_id
            where sp.season = this_season
              and p.placements_done >= 5
-             and p.show_on_board),
+             and p.show_on_board
+             and (in_country is null
+                  or (p.country = in_country and p.show_country))),
          coalesce(mine.points, 0),
          coalesce(mine.wins, 0),
          coalesce(mine.played, 0);
@@ -425,7 +434,10 @@ as $$
 $$;
 
 -- Where the caller stands this week, and when it ends.
-create or replace function my_week_place()
+-- With a country, as the month (2026-10-29). Dropped first: it took no
+-- argument before.
+drop function if exists my_week_place();
+create or replace function my_week_place(in_country text default null)
 returns table (
   week date,
   ends_at timestamptz,
@@ -446,6 +458,8 @@ as $$
       join profiles p on p.id = w.profile_id
      where p.placements_done >= 5
        and p.show_on_board
+       and (in_country is null
+            or (p.country = in_country and p.show_country))
   ),
   mine as (select * from board where profile_id = auth.uid())
   select (week_start(now()) at time zone 'UTC')::date,
@@ -596,13 +610,13 @@ revoke all on function season_places(date, text) from public, anon, authenticate
 revoke all on function close_finished_seasons() from public, anon, authenticated;
 revoke all on function month_board(text, int) from public, anon;
 grant execute on function month_board(text, int) to authenticated;
-revoke all on function my_month_place() from public, anon;
-grant execute on function my_month_place() to authenticated;
+revoke all on function my_month_place(text) from public, anon;
+grant execute on function my_month_place(text) to authenticated;
 revoke all on function week_points(timestamptz) from public, anon, authenticated;
 revoke all on function week_board(text, int) from public, anon;
 grant execute on function week_board(text, int) to authenticated;
-revoke all on function my_week_place() from public, anon;
-grant execute on function my_week_place() to authenticated;
+revoke all on function my_week_place(text) from public, anon;
+grant execute on function my_week_place(text) to authenticated;
 revoke all on function my_season_awards() from public, anon;
 grant execute on function my_season_awards() to authenticated;
 revoke all on function mark_season_awards_seen() from public, anon;

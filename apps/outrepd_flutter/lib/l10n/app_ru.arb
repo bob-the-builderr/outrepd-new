@@ -878,5 +878,6 @@
   "fightDefeated": "Повержен!",
   "nextWeapon": "Следующее оружие",
   "opensWorld": "Открывает {world}",
-  "weaponAtStars": "за {count} звёзд"
+  "weaponAtStars": "за {count} звёзд",
+  "topTenIn": "Топ-10 в стране: {country}"
 }

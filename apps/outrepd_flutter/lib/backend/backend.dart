@@ -1134,18 +1134,18 @@ abstract interface class Backend {
 
   /// This month's board, best first: everyone placed who has lifted in a
   /// ranked duel since the 1st, by the LP that won them.
-  Future<List<MonthRow>> monthBoard({int limit = 100});
+  Future<List<MonthRow>> monthBoard({int limit = 100, String? country});
 
   /// Where this account stands this month. Also closes any month that has
   /// ended, so it is what hands out last month's awards. Null with no
   /// account to ask about.
-  Future<MonthPlace?> myMonthPlace();
+  Future<MonthPlace?> myMonthPlace({String? country});
 
   /// The week's board (supabase/seasons.sql): the month's points since
   /// Monday, 00:00 UTC. Rows and the caller's place come back in the month's
   /// shapes, [MonthPlace.season] being the Monday.
-  Future<List<MonthRow>> weekBoard({int limit = 100});
-  Future<MonthPlace?> myWeekPlace();
+  Future<List<MonthRow>> weekBoard({int limit = 100, String? country});
+  Future<MonthPlace?> myWeekPlace({String? country});
 
   /// This account's awards from finished months, newest first.
   Future<List<SeasonAward>> mySeasonAwards();
@@ -1191,6 +1191,11 @@ abstract interface class Backend {
 
   /// This account's last fifty duels, newest first, for the history.
   Future<List<ServerDuel>> myDuels();
+
+  /// This account's push-ups day by day over the last [lastDays], keyed
+  /// `yyyy-mm-dd` in this phone's own days: every set it uploaded. For a
+  /// phone that has not kept them — a new one, or one signed out and back in.
+  Future<Map<String, int>> myDays({int lastDays = 31});
 
   /// How many of those have not been seen. What the dot on the bell counts.
   Future<int> unreadNotices();
@@ -1455,16 +1460,18 @@ class NoBackend implements Backend {
   Future<int?> boardPosition({String? country}) async => null;
 
   @override
-  Future<List<MonthRow>> monthBoard({int limit = 100}) async => const [];
+  Future<List<MonthRow>> monthBoard({int limit = 100, String? country}) async =>
+      const [];
 
   @override
-  Future<MonthPlace?> myMonthPlace() async => null;
+  Future<MonthPlace?> myMonthPlace({String? country}) async => null;
 
   @override
-  Future<List<MonthRow>> weekBoard({int limit = 100}) async => const [];
+  Future<List<MonthRow>> weekBoard({int limit = 100, String? country}) async =>
+      const [];
 
   @override
-  Future<MonthPlace?> myWeekPlace() async => null;
+  Future<MonthPlace?> myWeekPlace({String? country}) async => null;
 
   @override
   Future<List<SeasonAward>> mySeasonAwards() async => const [];
@@ -1510,6 +1517,9 @@ class NoBackend implements Backend {
 
   @override
   Future<List<ServerDuel>> myDuels() async => const [];
+
+  @override
+  Future<Map<String, int>> myDays({int lastDays = 31}) async => const {};
 
   @override
   Future<int> unreadNotices() async => 0;

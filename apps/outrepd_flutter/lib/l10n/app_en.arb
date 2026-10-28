@@ -1937,5 +1937,13 @@
         "type": "String"
       }
     }
+  },
+  "topTenIn": "Top 10 in {country}",
+  "@topTenIn": {
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
   }
 }

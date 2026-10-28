@@ -878,5 +878,6 @@
   "fightDefeated": "Besiegt!",
   "nextWeapon": "Nächste Waffe",
   "opensWorld": "Öffnet {world}",
-  "weaponAtStars": "ab {count} Sternen"
+  "weaponAtStars": "ab {count} Sternen",
+  "topTenIn": "Top 10 in {country}"
 }

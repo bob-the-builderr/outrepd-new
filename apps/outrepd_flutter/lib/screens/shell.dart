@@ -98,6 +98,8 @@ class _AppShellState extends State<AppShell> {
     // there is nobody to ask for: an account signed in from onboarding, or
     // signed out and back in, kept an empty history until its next match.
     unawaited(Career.instance.syncHistory());
+    // And its days, which signing out leaves behind on the phone.
+    unawaited(Career.instance.syncDays());
   }
 
   @override

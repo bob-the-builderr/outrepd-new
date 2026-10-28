@@ -2877,4 +2877,9 @@ class LKo extends L {
   String weaponAtStars(String count) {
     return '별 ${count}개에서';
   }
+
+  @override
+  String topTenIn(String country) {
+    return '${country} 상위 10위';
+  }
 }

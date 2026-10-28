@@ -2915,4 +2915,9 @@ class LFr extends L {
   String weaponAtStars(String count) {
     return 'à ${count} étoiles';
   }
+
+  @override
+  String topTenIn(String country) {
+    return 'Top 10 en ${country}';
+  }
 }

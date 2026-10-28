@@ -878,5 +878,6 @@
   "fightDefeated": "Kalah!",
   "nextWeapon": "Senjata berikutnya",
   "opensWorld": "Membuka {world}",
-  "weaponAtStars": "di {count} bintang"
+  "weaponAtStars": "di {count} bintang",
+  "topTenIn": "10 besar di {country}"
 }

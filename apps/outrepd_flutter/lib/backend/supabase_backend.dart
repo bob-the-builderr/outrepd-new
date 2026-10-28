@@ -284,17 +284,20 @@ class SupabaseBackend implements Backend {
   }
 
   @override
-  Future<List<MonthRow>> monthBoard({int limit = 100}) =>
-      _seasonBoard('month_board', limit);
+  Future<List<MonthRow>> monthBoard({int limit = 100, String? country}) =>
+      _seasonBoard('month_board', limit, country);
 
   @override
-  Future<List<MonthRow>> weekBoard({int limit = 100}) =>
-      _seasonBoard('week_board', limit);
+  Future<List<MonthRow>> weekBoard({int limit = 100, String? country}) =>
+      _seasonBoard('week_board', limit, country);
 
   @override
-  Future<MonthPlace?> myWeekPlace() async {
+  Future<MonthPlace?> myWeekPlace({String? country}) async {
     if (_db.auth.currentUser == null) return null;
-    final rows = await _db.rpc<List<dynamic>>('my_week_place');
+    final rows = await _db.rpc<List<dynamic>>(
+      'my_week_place',
+      params: {'in_country': country},
+    );
     if (rows.isEmpty) return null;
     final row = rows.first as Map<String, dynamic>;
     return MonthPlace(
@@ -308,10 +311,14 @@ class SupabaseBackend implements Backend {
     );
   }
 
-  Future<List<MonthRow>> _seasonBoard(String function, int limit) async {
+  Future<List<MonthRow>> _seasonBoard(
+    String function,
+    int limit,
+    String? country,
+  ) async {
     final rows = await _db.rpc<List<dynamic>>(
       function,
-      params: {'limit_to': limit},
+      params: {'in_country': country, 'limit_to': limit},
     );
     return [
       for (final row in rows.cast<Map<String, dynamic>>())
@@ -331,9 +338,12 @@ class SupabaseBackend implements Backend {
   }
 
   @override
-  Future<MonthPlace?> myMonthPlace() async {
+  Future<MonthPlace?> myMonthPlace({String? country}) async {
     if (_db.auth.currentUser == null) return null;
-    final rows = await _db.rpc<List<dynamic>>('my_month_place');
+    final rows = await _db.rpc<List<dynamic>>(
+      'my_month_place',
+      params: {'in_country': country},
+    );
     if (rows.isEmpty) return null;
     final row = rows.first as Map<String, dynamic>;
     return MonthPlace(
@@ -566,6 +576,23 @@ class SupabaseBackend implements Backend {
           lpDelta: (row['lp_delta'] as num?)?.toInt(),
         ),
     ];
+  }
+
+  @override
+  Future<Map<String, int>> myDays({int lastDays = 31}) async {
+    final rows = await _db.rpc<List<dynamic>>(
+      'my_days',
+      params: {
+        // This phone's days, not the server's: a set at 1 a.m. here is
+        // today's, whatever the date is in UTC.
+        'tz_minutes': DateTime.now().timeZoneOffset.inMinutes,
+        'last_days': lastDays,
+      },
+    );
+    return {
+      for (final row in rows.cast<Map<String, dynamic>>())
+        row['day'] as String: (row['reps'] as num).toInt(),
+    };
   }
 
   @override

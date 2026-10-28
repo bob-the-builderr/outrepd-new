@@ -2909,4 +2909,9 @@ class LHi extends L {
   String weaponAtStars(String count) {
     return '${count} स्टार पर';
   }
+
+  @override
+  String topTenIn(String country) {
+    return '${country} में टॉप 10';
+  }
 }

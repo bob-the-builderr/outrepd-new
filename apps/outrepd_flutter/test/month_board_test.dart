@@ -50,10 +50,10 @@ class _Month extends NoBackend {
   bool get available => true;
 
   @override
-  Future<List<MonthRow>> monthBoard({int limit = 100}) async => rows;
+  Future<List<MonthRow>> monthBoard({int limit = 100, String? country}) async => rows;
 
   @override
-  Future<MonthPlace?> myMonthPlace() async => MonthPlace(
+  Future<MonthPlace?> myMonthPlace({String? country}) async => MonthPlace(
     season: DateTime.utc(2026, 10),
     endsAt: clock.now().add(const Duration(days: 20, hours: 4, minutes: 30)),
     place: place,

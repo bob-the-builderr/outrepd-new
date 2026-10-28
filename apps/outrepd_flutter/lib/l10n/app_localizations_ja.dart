@@ -2873,4 +2873,9 @@ class LJa extends L {
   String weaponAtStars(String count) {
     return '星${count}個で';
   }
+
+  @override
+  String topTenIn(String country) {
+    return '${country}でトップ10';
+  }
 }

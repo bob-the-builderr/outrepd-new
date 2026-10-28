@@ -2904,4 +2904,9 @@ class LTr extends L {
   String weaponAtStars(String count) {
     return '${count} yıldızda';
   }
+
+  @override
+  String topTenIn(String country) {
+    return '${country} içinde ilk 10';
+  }
 }

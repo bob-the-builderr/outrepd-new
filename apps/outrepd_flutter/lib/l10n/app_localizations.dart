@@ -5266,6 +5266,12 @@ abstract class L {
   /// In en, this message translates to:
   /// **'at {count} stars'**
   String weaponAtStars(String count);
+
+  /// No description provided for @topTenIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Top 10 in {country}'**
+  String topTenIn(String country);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {
