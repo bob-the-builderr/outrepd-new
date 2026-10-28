@@ -1,14 +1,16 @@
-/// The adventure's monsters: a different creature in every world.
+/// The adventure's monsters: a different creature in every world, and five
+/// forms of it on the way to the King.
 ///
 /// A rock golem in the mines, a scarab in the dunes, a yeti on the peaks, a
 /// knight in the citadel, a wraith on the glacier, a crystal dragon in the
-/// caverns, and the Master on the throne. Each grows through its world: its
-/// regular fights get bigger level by level and wear one more thing in the
-/// second half, the Warden every fifth level takes up a weapon, and the King
-/// at the end is the biggest, crowned or horned, with its world's light
-/// around it. They used to be one golem, the app's crest stood up and
-/// recoloured for each world, and a lifter climbing them could not tell one
-/// world's from the next (the user, 2026-10-28).
+/// caverns, and the Master on the throne. Each evolves as its world goes on:
+/// a new form every five levels, each a size up on the last and keeping all
+/// it had — armour, horns, a weapon, wings — and the King at the end
+/// crowned, with its world's light around it. The Warden at levels 5, 10
+/// and 15 is the first sight of the next form, standing in a glow. They
+/// were one golem recoloured for each world, then one creature per world
+/// that only grew; a lifter climbing them could not feel it evolve (the
+/// user, 2026-10-28).
 ///
 /// Drawn, not bundled: it scales to any size and costs nothing to ship.
 library;
@@ -145,30 +147,16 @@ class GolemPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final look = WorldLook.of(level.world);
-    final tier = switch (level.kind) {
-      FightKind.regular => 0,
-      FightKind.elite => 1,
-      FightKind.boss => 2,
-    };
-    // A world's regular fights wear one more of what the Warden has in its
-    // second half.
-    final secondHalf = tier == 0 && level.inWorld > kLevelsPerWorld ~/ 2;
-    // How big it stands: little more than half the King's size at the start
-    // of its world and growing level by level, so the climb shows, the
-    // Warden a step ahead of the fights around it, and the King the biggest
-    // of all (the user, 2026-10-28: the first ones looked too grown).
-    final along = (level.inWorld - 1) / (kLevelsPerWorld - 1);
-    final grow = switch (tier) {
-      0 => 0.55 + 0.4 * along,
-      1 => 0.61 + 0.4 * along,
-      _ => 1.02,
-    };
+    final form = level.form;
+    final warden = level.kind == FightKind.elite;
+    // Each form stands a size up on the last, to the King's.
+    const sizes = [0.64, 0.74, 0.84, 0.93, 1.02];
 
     // Drawn on a 200 square, its feet on the ground and grown from there.
     canvas.save();
     canvas.scale(size.shortestSide / 200);
     canvas.translate(100, 182);
-    canvas.scale(grow * 200 / 210);
+    canvas.scale(sizes[form - 1] * 200 / 210);
     canvas.translate(-100, -188);
 
     // The shadow first, outside the layer the hit flash whitens.
@@ -176,24 +164,35 @@ class GolemPainter extends CustomPainter {
       Rect.fromCenter(center: const Offset(100, 190), width: 132, height: 16),
       Paint()..color = const Color(0x80000000),
     );
+    final draw = _Draw(canvas, look);
+    // A Warden: the next form, first seen, standing in its world's light.
+    if (warden) {
+      draw.glow(100, 110, 100, look.eye, 0.3);
+      canvas.drawOval(
+        Rect.fromCenter(center: const Offset(100, 190), width: 140, height: 20),
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 3
+          ..color = look.eye.withValues(alpha: 0.7),
+      );
+    }
     canvas.saveLayer(const Rect.fromLTWH(-40, -40, 280, 280), Paint());
 
-    final draw = _Draw(canvas, look);
     switch (level.world.clamp(0, kWorlds - 1)) {
       case 0:
-        _rockGolem(draw, tier, secondHalf);
+        _rockGolem(draw, form);
       case 1:
-        _scarab(draw, tier, secondHalf);
+        _scarab(draw, form);
       case 2:
-        _yeti(draw, tier, secondHalf);
+        _yeti(draw, form);
       case 3:
-        _knight(draw, tier, secondHalf);
+        _knight(draw, form);
       case 4:
-        _wraith(draw, tier, secondHalf);
+        _wraith(draw, form);
       case 5:
-        _dragon(draw, tier, secondHalf);
+        _dragon(draw, form);
       default:
-        _shadowKing(draw, tier, secondHalf);
+        _shadowKing(draw, form);
     }
 
     // Cracks open across the body as the HP drops.
@@ -224,12 +223,14 @@ class GolemPainter extends CustomPainter {
 
 // ─────────────────────────── the seven creatures ────────────────────────────
 //
-// [tier] is 0 for a regular fight, 1 for the Warden, 2 for the King; [secondHalf]
-// is a regular fight in the second half of its world.
+// [form] is 1 to 5 (AdventureLevel.form). Each form keeps everything the one
+// before it had and adds to it, so the climb through a world shows in the
+// monster: armour, horns, a weapon, wings, then a crown and its world's light.
 
-/// Iron Mines: a golem of rock, ore glowing in its cracks, a miner's lamp on
-/// its head; the Warden swings a pick, the King grows horns.
-void _rockGolem(_Draw d, int tier, bool secondHalf) {
+/// Iron Mines: a golem of rock with ore glowing in its cracks. A miner's
+/// lamp and shoulders of boulder, then spikes and more ore, then a pick;
+/// the King grows horns and burns all over.
+void _rockGolem(_Draw d, int form) {
   final l = d.look;
   d.both(() => d.part('M72 146 L64 186 L96 186 L98 150 Z'));
   d.both(() {
@@ -247,39 +248,43 @@ void _rockGolem(_Draw d, int tier, bool secondHalf) {
     const Color(0x40000000),
     1.6,
   );
-  d.lit('M84 98 L94 110 L88 120 L98 132', l.eye, 2.6);
-  if (tier >= 1 || secondHalf) {
+  d.lit('M84 98 L94 110 L88 120 L98 132', l.eye, form == 1 ? 1.6 : 2.6);
+  if (form >= 3) {
     d.lit('M126 98 L116 112 L124 124', l.eye, 2.4);
     d.lit('M60 108 L70 118 L64 132', l.eye, 2.4);
   }
-  if (tier == 2) {
+  if (form >= 5) {
     d.lit('M104 140 L112 150 L106 158', l.eye, 2.4);
     d.lit('M30 140 L40 150', l.eye, 2.2);
     d.lit('M170 140 L160 150', l.eye, 2.2);
   }
-  d.both(() => d.part('M42 70 L58 56 L74 62 L74 82 L56 92 L40 86 Z'));
-  if (tier == 2) d.both(() => d.part('M84 42 L64 10 L92 32 Z'));
+  if (form >= 2) d.both(() => d.part('M42 70 L58 56 L74 62 L74 82 L56 92 L40 86 Z'));
+  if (form >= 3) d.both(() => d.part('M48 62 L42 40 L60 56 Z'));
+  if (form >= 5) d.both(() => d.part('M84 42 L64 10 L92 32 Z'));
   d.part('M80 40 L100 28 L120 40 L122 58 L100 68 L78 58 Z', width: 2);
-  // The miner's helmet and its lamp.
-  d.fill('M78 42 Q100 12 122 42 Z', const Color(0xFF4A4033));
-  d.stroke('M78 42 Q100 12 122 42 Z', l.edge.withValues(alpha: 0.8), 1.5);
-  d.glow(100, 28, 22, l.eye, 0.65);
-  d.dot(100, 28, 5, const Color(0xFFFFF6E0));
-  d.eye(91, 52, 5, l.eye);
-  d.eye(109, 52, 5, l.eye);
-  if (tier >= 1) {
+  if (form >= 2) {
+    // The miner's helmet and its lamp.
+    d.fill('M78 42 Q100 12 122 42 Z', const Color(0xFF4A4033));
+    d.stroke('M78 42 Q100 12 122 42 Z', l.edge.withValues(alpha: 0.8), 1.5);
+    d.glow(100, 28, 22, l.eye, 0.65);
+    d.dot(100, 28, 5, const Color(0xFFFFF6E0));
+  }
+  final eye = form == 1 ? 4.0 : 5.0;
+  d.eye(91, 52, eye, l.eye);
+  d.eye(109, 52, eye, l.eye);
+  if (form >= 4) {
     d.stroke('M150 176 L182 66', const Color(0xFF5B3D22), 7);
     d.part('M154 76 Q182 52 210 80 L200 84 Q184 68 166 84 Z');
   }
 }
 
-/// Bronze Dunes: a scarab standing up, four arms and a shell; the Warden
-/// wears the horn and a blade in each top hand, the King a pharaoh's
-/// headdress under the sun.
-void _scarab(_Draw d, int tier, bool secondHalf) {
+/// Bronze Dunes: a scarab standing up. Its shell comes in, then the top
+/// pair of arms and a horn, then a longer horn and a blade in each top hand;
+/// the King wears a pharaoh's headdress under the sun.
+void _scarab(_Draw d, int form) {
   final l = d.look;
   final canvas = d.canvas;
-  if (tier == 2) {
+  if (form >= 5) {
     const nemes = 'M76 40 L124 40 L138 92 L62 92 Z';
     final headdress = d.fill(nemes, const Color(0xFF24406E));
     canvas.save();
@@ -294,23 +299,27 @@ void _scarab(_Draw d, int tier, bool secondHalf) {
     d.ring(100, 12, 9, const Color(0xFFFFF6E0), 1.5);
   }
   // The wing cases, behind.
-  d.both(
-    () => d.part(
-      'M98 58 C56 56 34 96 42 136 C48 162 78 174 98 170 Z',
-      paint: d.deep,
-    ),
-  );
+  if (form >= 2) {
+    d.both(
+      () => d.part(
+        'M98 58 C56 56 34 96 42 136 C48 162 78 174 98 170 Z',
+        paint: d.deep,
+      ),
+    );
+  }
   d.both(() {
     d.stroke('M90 140 L80 162 L68 186', l.dark, 8);
     d.stroke('M68 186 L60 186', l.dark, 6);
   });
   d.both(() {
-    d.stroke('M80 84 L54 94 L38 118', l.dark, 8);
-    d.stroke('M38 118 L32 128', l.edge, 3);
     d.stroke('M82 108 L58 126 L50 152', l.dark, 7);
     d.stroke('M50 152 L46 162', l.edge, 3);
+    if (form >= 3) {
+      d.stroke('M80 84 L54 94 L38 118', l.dark, 8);
+      d.stroke('M38 118 L32 128', l.edge, 3);
+    }
   });
-  if (tier >= 1) {
+  if (form >= 4) {
     d.both(() => d.part('M38 120 L30 104 Q20 78 40 64 Q36 84 46 100 L44 116 Z'));
   }
   d.part('M78 70 Q100 58 122 70 L128 118 Q100 144 72 118 Z', width: 2);
@@ -321,11 +330,9 @@ void _scarab(_Draw d, int tier, bool secondHalf) {
   );
   d.part('M80 48 Q100 28 120 48 L116 66 Q100 74 84 66 Z', width: 2);
   d.both(() => d.part('M90 66 Q78 76 88 90 L93 86 Q88 76 96 70 Z', width: 1));
-  if (tier >= 1) {
-    d.part('M95 40 Q90 16 102 0 Q109 20 105 40 Z');
-  } else if (secondHalf) {
-    d.part('M96 40 Q93 24 101 14 Q106 26 104 40 Z');
-  }
+  if (form == 3) d.part('M96 40 Q93 24 101 14 Q106 26 104 40 Z');
+  if (form >= 4) d.part('M95 40 Q90 16 102 0 Q109 20 105 40 Z');
+  final r = form == 1 ? 5.0 : 6.5;
   for (final x in const [89.0, 111.0]) {
     d.glow(x, 52, 14, l.eye, 0.5);
     canvas.save();
@@ -333,11 +340,11 @@ void _scarab(_Draw d, int tier, bool secondHalf) {
     canvas.scale(1, 1.35);
     canvas.drawCircle(
       Offset.zero,
-      6.5,
+      r,
       Paint()
         ..shader = ui.Gradient.radial(
           Offset.zero,
-          6.5,
+          r,
           [const Color(0xFFFFF6E0), l.eye, l.eye.withValues(alpha: 0.2)],
           const [0, 0.5, 1],
         ),
@@ -346,9 +353,9 @@ void _scarab(_Draw d, int tier, bool secondHalf) {
   }
 }
 
-/// Silver Peaks: a yeti, all fur and claws; the Warden grows horns and ice
-/// on its shoulders, the King a crown of ice and frost on its breath.
-void _yeti(_Draw d, int tier, bool secondHalf) {
+/// Silver Peaks: a yeti. Claws and fangs come in, then horns, then ice on
+/// its shoulders and arms; the King wears a crown of ice and breathes frost.
+void _yeti(_Draw d, int form) {
   final l = d.look;
   const left = [
     (100, 34), (86, 36), (76, 42), (70, 52), (60, 56), (54, 64), (46, 66), //
@@ -368,18 +375,23 @@ void _yeti(_Draw d, int tier, bool secondHalf) {
     Rect.fromCenter(center: const Offset(100, 124), width: 52, height: 64),
     Paint()..color = l.edge.withValues(alpha: 0.32),
   );
-  d.both(() {
-    for (final (x, y) in const [(24.0, 152.0), (32.0, 156.0), (40.0, 154.0)]) {
-      d.fill('M${x - 3} $y L$x ${y + 9} L${x + 3} $y Z', const Color(0xFFEAF6FF));
-    }
-  });
-  if (tier >= 1) {
+  if (form >= 2) {
+    d.both(() {
+      for (final (x, y) in const [(24.0, 152.0), (32.0, 156.0), (40.0, 154.0)]) {
+        d.fill('M${x - 3} $y L$x ${y + 9} L${x + 3} $y Z', const Color(0xFFEAF6FF));
+      }
+    });
+  }
+  if (form >= 3) {
     d.both(() => d.stroke('M80 46 Q54 30 56 58 Q60 74 76 62', const Color(0xFFD9E4EE), 6));
   }
-  if (tier >= 1 || secondHalf) {
-    d.both(() => d.ice('M44 74 L62 64 L68 84 L50 90 Z'));
+  if (form >= 4) {
+    d.both(() {
+      d.ice('M44 74 L62 64 L68 84 L50 90 Z');
+      d.ice('M30 100 L44 94 L46 112 L32 116 Z');
+    });
   }
-  if (tier == 2) {
+  if (form >= 5) {
     for (final (x, h) in const [(82.0, 16.0), (91.0, 24.0), (100.0, 30.0), (109.0, 24.0), (118.0, 16.0)]) {
       d.crystal(x, 32 - h * 0.5, h * 0.6, l.eye, 0.7);
     }
@@ -389,15 +401,15 @@ void _yeti(_Draw d, int tier, bool secondHalf) {
   d.eye(93, 58, 4.5, l.eye);
   d.eye(107, 58, 4.5, l.eye);
   d.stroke('M90 70 Q100 76 110 70', const Color(0xFF0B0D12), 3);
-  d.both(() => d.fill('M93 70 L95 78 L97 71 Z', const Color(0xFFF5FAFF)));
+  if (form >= 2) d.both(() => d.fill('M93 70 L95 78 L97 71 Z', const Color(0xFFF5FAFF)));
 }
 
-/// Gold Citadel: a knight in gold plate behind the crest's shield; the
-/// Warden draws a sword and wears a plume, the King a cape, a crown and a
-/// burning blade.
-void _knight(_Draw d, int tier, bool secondHalf) {
+/// Gold Citadel: a knight in gold plate. A shield with the crest's chevron
+/// comes in, then broad shoulders and a plume, then a sword; the King wears
+/// a cape and a crown and his blade burns.
+void _knight(_Draw d, int form) {
   final l = d.look;
-  if (tier == 2) {
+  if (form >= 5) {
     d.part(
       'M62 70 L34 186 L166 186 L138 70 Z',
       paint: Paint()
@@ -421,64 +433,81 @@ void _knight(_Draw d, int tier, bool secondHalf) {
   d.part('M64 66 L136 66 L140 104 Q138 140 100 158 Q62 140 60 104 Z', width: 2.2);
   d.stroke('M100 70 L100 152 M66 108 Q100 118 134 108', l.edge.withValues(alpha: 0.55), 1.6);
   d.fill('M66 132 Q100 144 134 132 L134 140 Q100 152 66 140 Z', const Color(0xFF5A3D10));
-  d.both(() => d.part('M68 64 Q44 56 36 80 Q42 94 64 92 Z'));
-  // The shield on its left arm, with the crest's chevron.
-  d.part('M10 94 L52 94 L52 126 Q50 156 31 170 Q12 156 10 126 Z', width: 2);
-  d.glowFill('M20 128 L31 116 L42 128 L42 136 L31 124 L20 136 Z', l.eye);
-  if (tier >= 1) {
-    final burning = tier == 2;
-    if (burning) d.glowFill('M156 30 L166 30 L164 148 L158 148 Z', l.eye, sigma: 8);
-    d.fill('M156 30 L166 30 L164 148 L158 148 Z', burning ? const Color(0xFFFFF1E0) : const Color(0xFFE9EEF4));
-    d.stroke('M156 30 L166 30 L164 148 L158 148 Z', burning ? l.eye : Colors.white, 1.4);
+  d.both(
+    () => d.part(
+      form >= 3
+          ? 'M68 64 Q44 56 36 80 Q42 94 64 92 Z'
+          : 'M68 64 Q54 60 50 76 Q54 86 64 86 Z',
+    ),
+  );
+  if (form >= 2) {
+    // The shield on its left arm, with the crest's chevron.
+    d.part('M10 94 L52 94 L52 126 Q50 156 31 170 Q12 156 10 126 Z', width: 2);
+    d.fill('M20 128 L31 116 L42 128 L42 136 L31 124 L20 136 Z', l.eye);
+  }
+  if (form >= 4) {
+    final burning = form >= 5;
+    const blade = 'M156 30 L166 30 L164 148 L158 148 Z';
+    if (burning) d.glowFill(blade, l.eye, sigma: 8);
+    d.fill(blade, burning ? const Color(0xFFFFF1E0) : const Color(0xFFE9EEF4));
+    d.stroke(blade, burning ? l.eye : Colors.white, 1.4);
     d.part('M144 146 L178 146 L178 154 L144 154 Z', paint: Paint()..color = const Color(0xFF7A5A18), width: 1);
     d.fill('M158 154 L164 154 L164 172 L158 172 Z', const Color(0xFF3A2A10));
     if (burning) d.glow(161, 70, 26, l.eye, 0.45);
   }
-  if (tier >= 1 || secondHalf) {
+  if (form >= 3) {
     d.fill('M100 22 Q122 2 140 18 Q124 16 112 28 Z', l.eye);
     d.stroke('M100 22 Q122 2 140 18 Q124 16 112 28 Z', const Color(0x80FFFFFF), 1);
   }
   d.part('M82 26 Q100 16 118 26 L122 56 L100 68 L78 56 Z', width: 2);
   d.fill('M84 42 L116 42 L114 47 L86 47 Z', const Color(0xFF140C06));
   d.lit('M88 44.5 L112 44.5', l.eye, 2.6);
-  if (tier == 2) d.crown(24, width: 40);
+  if (form >= 5) d.crown(24, width: 40);
 }
 
-/// Platinum Glacier: a hooded wraith that floats over its shadow, ice shards
-/// circling it; the Warden is chained, the King carries a scythe and a crown
-/// of ice.
-void _wraith(_Draw d, int tier, bool secondHalf) {
+/// Platinum Glacier: a hooded wraith floating over its shadow. Sleeves and
+/// claws come in, then chains and ice shards circling it, then ice on its
+/// shoulders; the King carries a scythe under a crown of ice.
+void _wraith(_Draw d, int form) {
   final l = d.look;
   final canvas = d.canvas;
   // Lifted off its shadow, less for the King, whose crown and scythe need
   // the room above.
-  final lift = tier == 2 ? 2.0 : -10.0;
+  final lift = form >= 5 ? 2.0 : -10.0;
   canvas.translate(0, lift);
   const around = [(36.0, 46.0), (166.0, 56.0), (26.0, 132.0), (174.0, 124.0), (52.0, 176.0), (150.0, 176.0)];
-  final shards = 2 + tier * 2 + (secondHalf ? 2 : 0);
-  for (final (x, y) in around.take(shards)) {
+  for (final (x, y) in around.take(const [0, 0, 2, 4, 6][form - 1])) {
     d.crystal(x, y, 9, l.eye, 0.7);
   }
-  if (tier == 2) {
+  if (form >= 5) {
     d.stroke('M160 22 L150 182', const Color(0xFF3B3146), 5);
     d.part('M160 24 Q120 2 92 24 Q124 22 152 44 Z', width: 1.4);
   }
   d.part(
-    'M100 24 Q74 26 66 60 L56 120 L44 162 L54 152 L58 172 L66 158 L72 178 '
-    'L80 162 L86 180 L92 164 L100 178 L108 164 L114 180 L120 162 L128 178 '
-    'L134 158 L142 172 L146 152 L156 162 L144 120 L134 60 Q126 26 100 24 Z',
+    form == 1
+        ? 'M100 30 Q78 32 72 62 L66 120 L58 150 L68 142 L74 158 L82 146 '
+              'L90 162 L100 150 L110 162 L118 146 L126 158 L132 142 L142 150 '
+              'L134 120 L128 62 Q122 32 100 30 Z'
+        : 'M100 24 Q74 26 66 60 L56 120 L44 162 L54 152 L58 172 L66 158 '
+              'L72 178 L80 162 L86 180 L92 164 L100 178 L108 164 L114 180 '
+              'L120 162 L128 178 L134 158 L142 172 L146 152 L156 162 L144 120 '
+              'L134 60 Q126 26 100 24 Z',
     width: 2,
   );
-  d.stroke('M100 30 L100 170', const Color(0x1F000000), 2);
-  if (tier >= 1) d.both(() => d.stroke('M66 96 L134 128', l.edge.withValues(alpha: 0.7), 3));
-  d.both(() {
-    d.part('M70 70 L32 104 L46 114 L74 92 Z');
-    d.stroke('M36 108 L22 122 M40 111 L28 128 M45 113 L38 132', const Color(0xFFF5FAFF), 2.4);
-  });
+  d.stroke('M100 30 L100 160', const Color(0x1F000000), 2);
+  if (form >= 3) d.both(() => d.stroke('M66 96 L134 128', l.edge.withValues(alpha: 0.7), 3));
+  if (form >= 2) {
+    d.both(() {
+      d.part('M70 70 L32 104 L46 114 L74 92 Z');
+      d.stroke('M36 108 L22 122 M40 111 L28 128 M45 113 L38 132', const Color(0xFFF5FAFF), 2.4);
+    });
+  }
+  if (form >= 4) d.both(() => d.crystal(66, 62, 11, l.eye, 0.8));
   d.fill('M100 38 Q80 40 80 62 Q82 82 100 86 Q118 82 120 62 Q120 40 100 38 Z', const Color(0xFF06070B));
-  d.eye(92, 62, 5.5, l.eye);
-  d.eye(108, 62, 5.5, l.eye);
-  if (tier == 2) {
+  final eye = form == 1 ? 4.5 : 5.5;
+  d.eye(92, 62, eye, l.eye);
+  d.eye(108, 62, eye, l.eye);
+  if (form >= 5) {
     for (final (x, h) in const [(84.0, 12.0), (92.0, 18.0), (100.0, 24.0), (108.0, 18.0), (116.0, 12.0)]) {
       d.crystal(x, 30 - h * 0.5, h * 0.5, l.eye, 0.75);
     }
@@ -486,26 +515,26 @@ void _wraith(_Draw d, int tier, bool secondHalf) {
   canvas.translate(0, -lift);
 }
 
-/// Diamond Caverns: a dragon of crystal, wings spread; crystals grow out of
-/// its shoulders as it grows, and the King breathes light under a crystal
-/// crown.
-void _dragon(_Draw d, int tier, bool secondHalf) {
+/// Diamond Caverns: a crystal dragon, hatched without wings. They grow out
+/// and spread wider form by form, crystals push through its shoulders and
+/// its horns lengthen; the King breathes light under a crystal crown.
+void _dragon(_Draw d, int form) {
   final l = d.look;
   final canvas = d.canvas;
-  final span = switch (tier) {
-    0 => secondHalf ? 0.88 : 0.8,
-    1 => 0.95,
-    _ => 1.1,
-  };
-  d.both(() {
-    canvas.save();
-    canvas.translate(76, 74);
-    canvas.scale(span);
-    canvas.translate(-76, -74);
-    d.part('M76 74 L18 22 L28 56 L4 62 L26 84 L8 104 L44 102 L62 118 Z', paint: d.deep, width: 1.4);
-    d.stroke('M76 74 L28 56 M76 74 L26 84 M76 74 L44 102', l.edge.withValues(alpha: 0.5), 1.2);
-    canvas.restore();
-  });
+  if (form == 1) {
+    d.both(() => d.part('M74 80 L56 66 L60 84 L52 92 L70 96 Z', paint: d.deep, width: 1.2));
+  } else {
+    final span = const [0.0, 0.6, 0.8, 0.95, 1.1][form - 1];
+    d.both(() {
+      canvas.save();
+      canvas.translate(76, 74);
+      canvas.scale(span);
+      canvas.translate(-76, -74);
+      d.part('M76 74 L18 22 L28 56 L4 62 L26 84 L8 104 L44 102 L62 118 Z', paint: d.deep, width: 1.4);
+      d.stroke('M76 74 L28 56 M76 74 L26 84 M76 74 L44 102', l.edge.withValues(alpha: 0.5), 1.2);
+      canvas.restore();
+    });
+  }
   d.stroke('M118 170 Q172 178 178 148 Q180 138 168 136', l.dark, 9);
   d.fill('M168 136 L176 124 L174 140 Z', l.edge);
   d.both(() {
@@ -520,13 +549,21 @@ void _dragon(_Draw d, int tier, bool secondHalf) {
     d.stroke('M${80 + inset} $y Q100 ${y + 5} ${120 - inset} $y', l.edge.withValues(alpha: 0.55), 1.5);
   }
   d.both(() => d.part('M68 92 L50 116 L60 124 L74 104 Z'));
-  final crystals = [(58.0, 68.0, 12.0), (142.0, 68.0, 12.0)];
-  if (tier >= 1 || secondHalf) crystals.addAll(const [(50.0, 84.0, 9.0), (150.0, 84.0, 9.0)]);
-  if (tier == 2) crystals.addAll(const [(64.0, 54.0, 10.0), (136.0, 54.0, 10.0)]);
+  final crystals = <(double, double, double)>[
+    if (form >= 2) ...const [(58.0, 68.0, 12.0), (142.0, 68.0, 12.0)],
+    if (form >= 3) ...const [(50.0, 84.0, 9.0), (150.0, 84.0, 9.0)],
+    if (form >= 4) ...const [(64.0, 54.0, 10.0), (136.0, 54.0, 10.0)],
+  ];
   for (final (x, y, s) in crystals) {
     d.crystal(x, y, s, l.eye, 0.8);
   }
-  d.both(() => d.part('M86 32 L68 4 L92 26 Z', paint: Paint()..color = l.edge.withValues(alpha: 0.9), width: 1.2));
+  d.both(
+    () => d.part(
+      form == 1 ? 'M88 32 L80 18 L94 28 Z' : 'M86 32 L68 4 L92 26 Z',
+      paint: Paint()..color = l.edge.withValues(alpha: 0.9),
+      width: 1.2,
+    ),
+  );
   d.part('M84 28 L116 28 L126 50 L116 70 L84 70 L74 50 Z', width: 2);
   d.fill('M84 56 L116 56 L116 70 L84 70 Z', l.edge.withValues(alpha: 0.25));
   d.dot(94, 63, 2.4, const Color(0xFF0B1B1A));
@@ -534,7 +571,7 @@ void _dragon(_Draw d, int tier, bool secondHalf) {
   d.eye(89, 44, 4.5, l.eye);
   d.eye(111, 44, 4.5, l.eye);
   d.both(() => d.fill('M82 40 L95 46 L82 48 Z', const Color(0xFFFFF6E0)));
-  if (tier == 2) {
+  if (form >= 5) {
     d.glow(100, 78, 24, l.eye, 0.6);
     for (final (x, h) in const [(88.0, 12.0), (100.0, 18.0), (112.0, 12.0)]) {
       d.crystal(x, 26 - h * 0.5, h * 0.55, l.eye, 0.8);
@@ -542,18 +579,19 @@ void _dragon(_Draw d, int tier, bool secondHalf) {
   }
 }
 
-/// Master's Throne: a horned knight in ivory and red; the Warden plants a
-/// greatsword and wears a cape, the King is the Master — a crown, a blade
-/// alight and embers in the air.
-void _shadowKing(_Draw d, int tier, bool secondHalf) {
+/// Master's Throne: a horned knight in ivory and red. A glowing chevron and
+/// shoulder spikes come in, then a cape and longer horns, then a greatsword
+/// planted in front; the King is the Master — a crown, a blade alight and
+/// embers in the air.
+void _shadowKing(_Draw d, int form) {
   final l = d.look;
-  if (tier == 2) {
+  if (form >= 5) {
     d.glow(100, 96, 96, l.eye, 0.32);
     for (final (x, y) in const [(30.0, 60.0), (170.0, 50.0), (24.0, 120.0), (178.0, 116.0), (44.0, 30.0), (158.0, 150.0)]) {
       d.glow(x, y, 4, l.eye, 0.9);
     }
   }
-  if (tier >= 1) {
+  if (form >= 3) {
     d.part(
       'M62 68 L28 186 L48 178 L60 188 L80 180 L100 190 L120 180 L140 188 '
       'L152 178 L172 186 L138 68 Z',
@@ -568,18 +606,19 @@ void _shadowKing(_Draw d, int tier, bool secondHalf) {
   }
   d.both(() => d.part('M76 146 L68 186 L96 186 L98 150 Z'));
   d.part('M64 66 L136 66 L140 104 Q138 140 100 158 Q62 140 60 104 Z', width: 2.2);
-  d.glowFill('M82 108 L100 94 L118 108 L118 118 L100 104 L82 118 Z', l.eye);
+  if (form >= 2) d.glowFill('M82 108 L100 94 L118 108 L118 118 L100 104 L82 118 Z', l.eye);
   d.both(() {
     d.part('M66 64 Q40 54 32 80 Q40 94 64 92 Z');
-    d.part('M44 64 L30 42 L52 58 Z');
+    if (form >= 2) d.part('M44 64 L30 42 L52 58 Z');
   });
-  if (tier >= 1) {
+  if (form >= 4) {
     // Both hands on a greatsword planted in front, the arms down and in
     // from the shoulders to its hilt.
-    final burning = tier == 2;
-    if (burning) d.glowFill('M96 112 L104 112 L103 186 L97 186 Z', l.eye, sigma: 7);
-    d.fill('M96 112 L104 112 L103 186 L97 186 Z', const Color(0xFFF3ECE2));
-    d.stroke('M96 112 L104 112 L103 186 L97 186 Z', burning ? l.eye : Colors.white, 1.2);
+    final burning = form >= 5;
+    const blade = 'M96 112 L104 112 L103 186 L97 186 Z';
+    if (burning) d.glowFill(blade, l.eye, sigma: 7);
+    d.fill(blade, const Color(0xFFF3ECE2));
+    d.stroke(blade, burning ? l.eye : Colors.white, 1.2);
     d.part('M80 110 L120 110 L120 116 L80 116 Z', paint: Paint()..color = const Color(0xFF3A2F28), width: 1);
     d.fill('M97 96 L103 96 L103 110 L97 110 Z', const Color(0xFF2A1A14));
     d.both(() {
@@ -593,15 +632,17 @@ void _shadowKing(_Draw d, int tier, bool secondHalf) {
       d.part('M38 128 L54 132 L52 146 L38 144 Z');
     });
   }
-  final horn = switch (tier) {
-    2 => 'M84 34 Q50 32 42 6 Q64 20 88 26 Z',
-    1 => 'M84 34 Q58 30 52 8 Q68 22 88 26 Z',
-    _ => secondHalf ? 'M84 34 Q60 30 56 12 Q70 24 88 27 Z' : 'M84 34 Q66 32 62 18 Q72 26 88 28 Z',
-  };
-  d.both(() => d.part(horn));
+  const horns = [
+    'M86 32 Q76 30 74 22 Q80 26 88 28 Z',
+    'M84 34 Q66 32 62 18 Q72 26 88 28 Z',
+    'M84 34 Q60 30 56 12 Q70 24 88 27 Z',
+    'M84 34 Q58 30 52 8 Q68 22 88 26 Z',
+    'M84 34 Q50 32 42 6 Q64 20 88 26 Z',
+  ];
+  d.both(() => d.part(horns[form - 1]));
   d.part('M82 26 Q100 16 118 26 L122 56 L100 70 L78 56 Z', paint: Paint()..color = const Color(0xFF2A2420), width: 2);
   d.lit('M86 42 L114 42 M100 42 L100 58', l.eye, 3);
-  if (tier == 2) d.crown(24, width: 42);
+  if (form >= 5) d.crown(24, width: 42);
 }
 
 // ───────────────────────────── drawing helpers ──────────────────────────────

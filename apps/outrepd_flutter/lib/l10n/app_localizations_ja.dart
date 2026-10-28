@@ -2735,19 +2735,10 @@ class LJa extends L {
   String get adAskRemove => '広告を消す方にする';
 
   @override
-  String get monsterRockGolem => 'ロックゴーレム';
-
-  @override
-  String get monsterOreBrute => 'オアブルート';
-
-  @override
   String get monsterIronColossus => 'アイアンコロッサス';
 
   @override
   String get monsterScarab => 'スカラベ';
-
-  @override
-  String get monsterScarabGuard => 'スカラベガード';
 
   @override
   String get monsterScarabPharaoh => 'スカラベファラオ';
@@ -2796,4 +2787,60 @@ class LJa extends L {
 
   @override
   String get monsterTheMaster => 'ザ・マスター';
+
+  @override
+  String get monsterPebbleGolem => 'ペブルゴーレム';
+
+  @override
+  String get monsterStoneGolem => 'ストーンゴーレム';
+
+  @override
+  String get monsterOreGolem => 'オアゴーレム';
+
+  @override
+  String get monsterMinerGolem => 'マイナーゴーレム';
+
+  @override
+  String get monsterScarabGrub => 'スカラベの幼虫';
+
+  @override
+  String get monsterHornedScarab => 'ツノスカラベ';
+
+  @override
+  String get monsterScarabWarrior => 'スカラベウォリアー';
+
+  @override
+  String get monsterYetiCub => '子イエティ';
+
+  @override
+  String get monsterHornedYeti => 'ツノイエティ';
+
+  @override
+  String get monsterGoldRecruit => 'ゴールドリクルート';
+
+  @override
+  String get monsterGoldGuard => 'ゴールドガード';
+
+  @override
+  String get monsterShade => 'シェイド';
+
+  @override
+  String get monsterIceSpecter => 'アイススペクター';
+
+  @override
+  String get monsterCrystalHatchling => 'クリスタルの幼竜';
+
+  @override
+  String get monsterCrystalWhelp => 'クリスタルの若竜';
+
+  @override
+  String get monsterShadowSquire => 'シャドウスクワイア';
+
+  @override
+  String get monsterShadowLord => 'シャドウロード';
+
+  @override
+  String monsterWarden(String name) {
+    return '${name}・番人';
+  }
 }

@@ -2726,19 +2726,10 @@ class LZh extends L {
   String get adAskRemove => '改为去除广告';
 
   @override
-  String get monsterRockGolem => '岩石魔像';
-
-  @override
-  String get monsterOreBrute => '矿石蛮兵';
-
-  @override
   String get monsterIronColossus => '钢铁巨像';
 
   @override
   String get monsterScarab => '圣甲虫';
-
-  @override
-  String get monsterScarabGuard => '圣甲虫卫士';
 
   @override
   String get monsterScarabPharaoh => '圣甲虫法老';
@@ -2771,7 +2762,7 @@ class LZh extends L {
   String get monsterFrostLich => '冰霜巫妖';
 
   @override
-  String get monsterCrystalDrake => '水晶幼龙';
+  String get monsterCrystalDrake => '水晶飞龙';
 
   @override
   String get monsterCrystalDragon => '水晶巨龙';
@@ -2787,4 +2778,60 @@ class LZh extends L {
 
   @override
   String get monsterTheMaster => '宗师';
+
+  @override
+  String get monsterPebbleGolem => '卵石魔像';
+
+  @override
+  String get monsterStoneGolem => '石头魔像';
+
+  @override
+  String get monsterOreGolem => '矿石魔像';
+
+  @override
+  String get monsterMinerGolem => '矿工魔像';
+
+  @override
+  String get monsterScarabGrub => '圣甲虫幼虫';
+
+  @override
+  String get monsterHornedScarab => '角圣甲虫';
+
+  @override
+  String get monsterScarabWarrior => '圣甲虫战士';
+
+  @override
+  String get monsterYetiCub => '雪人幼崽';
+
+  @override
+  String get monsterHornedYeti => '角雪人';
+
+  @override
+  String get monsterGoldRecruit => '黄金新兵';
+
+  @override
+  String get monsterGoldGuard => '黄金卫兵';
+
+  @override
+  String get monsterShade => '阴影';
+
+  @override
+  String get monsterIceSpecter => '冰霜幽魂';
+
+  @override
+  String get monsterCrystalHatchling => '水晶雏龙';
+
+  @override
+  String get monsterCrystalWhelp => '水晶幼龙';
+
+  @override
+  String get monsterShadowSquire => '暗影侍从';
+
+  @override
+  String get monsterShadowLord => '暗影领主';
+
+  @override
+  String monsterWarden(String name) {
+    return '${name}守卫';
+  }
 }

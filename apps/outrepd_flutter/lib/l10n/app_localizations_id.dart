@@ -2772,19 +2772,10 @@ class LId extends L {
   String get adAskRemove => 'Hapus iklan saja';
 
   @override
-  String get monsterRockGolem => 'Golem Batu';
-
-  @override
-  String get monsterOreBrute => 'Raksasa Bijih';
-
-  @override
   String get monsterIronColossus => 'Kolosus Besi';
 
   @override
   String get monsterScarab => 'Skarab';
-
-  @override
-  String get monsterScarabGuard => 'Penjaga Skarab';
 
   @override
   String get monsterScarabPharaoh => 'Firaun Skarab';
@@ -2833,4 +2824,60 @@ class LId extends L {
 
   @override
   String get monsterTheMaster => 'Sang Master';
+
+  @override
+  String get monsterPebbleGolem => 'Golem Kerikil';
+
+  @override
+  String get monsterStoneGolem => 'Golem Batu';
+
+  @override
+  String get monsterOreGolem => 'Golem Bijih';
+
+  @override
+  String get monsterMinerGolem => 'Golem Penambang';
+
+  @override
+  String get monsterScarabGrub => 'Larva Skarab';
+
+  @override
+  String get monsterHornedScarab => 'Skarab Bertanduk';
+
+  @override
+  String get monsterScarabWarrior => 'Prajurit Skarab';
+
+  @override
+  String get monsterYetiCub => 'Anak Yeti';
+
+  @override
+  String get monsterHornedYeti => 'Yeti Bertanduk';
+
+  @override
+  String get monsterGoldRecruit => 'Rekrut Emas';
+
+  @override
+  String get monsterGoldGuard => 'Pengawal Emas';
+
+  @override
+  String get monsterShade => 'Bayang';
+
+  @override
+  String get monsterIceSpecter => 'Hantu Es';
+
+  @override
+  String get monsterCrystalHatchling => 'Bayi Naga Kristal';
+
+  @override
+  String get monsterCrystalWhelp => 'Naga Muda Kristal';
+
+  @override
+  String get monsterShadowSquire => 'Ajudan Bayangan';
+
+  @override
+  String get monsterShadowLord => 'Penguasa Bayangan';
+
+  @override
+  String monsterWarden(String name) {
+    return '${name} Penjaga';
+  }
 }

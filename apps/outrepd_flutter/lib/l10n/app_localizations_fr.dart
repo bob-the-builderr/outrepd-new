@@ -2779,19 +2779,10 @@ class LFr extends L {
   String get adAskRemove => 'Plutôt retirer la pub';
 
   @override
-  String get monsterRockGolem => 'Golem de roche';
-
-  @override
-  String get monsterOreBrute => 'Brute de minerai';
-
-  @override
   String get monsterIronColossus => 'Colosse de fer';
 
   @override
   String get monsterScarab => 'Scarabée';
-
-  @override
-  String get monsterScarabGuard => 'Garde scarabée';
 
   @override
   String get monsterScarabPharaoh => 'Pharaon scarabée';
@@ -2840,4 +2831,60 @@ class LFr extends L {
 
   @override
   String get monsterTheMaster => 'Le Maître';
+
+  @override
+  String get monsterPebbleGolem => 'Golem de galets';
+
+  @override
+  String get monsterStoneGolem => 'Golem de pierre';
+
+  @override
+  String get monsterOreGolem => 'Golem de minerai';
+
+  @override
+  String get monsterMinerGolem => 'Golem mineur';
+
+  @override
+  String get monsterScarabGrub => 'Larve de scarabée';
+
+  @override
+  String get monsterHornedScarab => 'Scarabée cornu';
+
+  @override
+  String get monsterScarabWarrior => 'Guerrier scarabée';
+
+  @override
+  String get monsterYetiCub => 'Petit yéti';
+
+  @override
+  String get monsterHornedYeti => 'Yéti cornu';
+
+  @override
+  String get monsterGoldRecruit => 'Recrue d’or';
+
+  @override
+  String get monsterGoldGuard => 'Garde d’or';
+
+  @override
+  String get monsterShade => 'Ombre';
+
+  @override
+  String get monsterIceSpecter => 'Spectre de glace';
+
+  @override
+  String get monsterCrystalHatchling => 'Bébé de cristal';
+
+  @override
+  String get monsterCrystalWhelp => 'Dragonnet de cristal';
+
+  @override
+  String get monsterShadowSquire => 'Écuyer de l’ombre';
+
+  @override
+  String get monsterShadowLord => 'Seigneur de l’ombre';
+
+  @override
+  String monsterWarden(String name) {
+    return '${name} gardien';
+  }
 }

@@ -2780,19 +2780,10 @@ class LDe extends L {
   String get adAskRemove => 'Lieber Werbung entfernen';
 
   @override
-  String get monsterRockGolem => 'Felsgolem';
-
-  @override
-  String get monsterOreBrute => 'Erzschläger';
-
-  @override
   String get monsterIronColossus => 'Eisenkoloss';
 
   @override
   String get monsterScarab => 'Skarabäus';
-
-  @override
-  String get monsterScarabGuard => 'Skarabäuswächter';
 
   @override
   String get monsterScarabPharaoh => 'Skarabäus-Pharao';
@@ -2825,7 +2816,7 @@ class LDe extends L {
   String get monsterFrostLich => 'Frost-Lich';
 
   @override
-  String get monsterCrystalDrake => 'Kristalldrachling';
+  String get monsterCrystalDrake => 'Kristallwyvern';
 
   @override
   String get monsterCrystalDragon => 'Kristalldrache';
@@ -2841,4 +2832,60 @@ class LDe extends L {
 
   @override
   String get monsterTheMaster => 'Der Meister';
+
+  @override
+  String get monsterPebbleGolem => 'Kieselgolem';
+
+  @override
+  String get monsterStoneGolem => 'Steingolem';
+
+  @override
+  String get monsterOreGolem => 'Erzgolem';
+
+  @override
+  String get monsterMinerGolem => 'Grubengolem';
+
+  @override
+  String get monsterScarabGrub => 'Skarabäuslarve';
+
+  @override
+  String get monsterHornedScarab => 'Hornskarabäus';
+
+  @override
+  String get monsterScarabWarrior => 'Skarabäuskrieger';
+
+  @override
+  String get monsterYetiCub => 'Yeti-Junges';
+
+  @override
+  String get monsterHornedYeti => 'Hornyeti';
+
+  @override
+  String get monsterGoldRecruit => 'Goldrekrut';
+
+  @override
+  String get monsterGoldGuard => 'Goldwache';
+
+  @override
+  String get monsterShade => 'Schemen';
+
+  @override
+  String get monsterIceSpecter => 'Eisgeist';
+
+  @override
+  String get monsterCrystalHatchling => 'Kristallküken';
+
+  @override
+  String get monsterCrystalWhelp => 'Kristalljungdrache';
+
+  @override
+  String get monsterShadowSquire => 'Schattenknappe';
+
+  @override
+  String get monsterShadowLord => 'Schattenfürst';
+
+  @override
+  String monsterWarden(String name) {
+    return '${name}-Wächter';
+  }
 }

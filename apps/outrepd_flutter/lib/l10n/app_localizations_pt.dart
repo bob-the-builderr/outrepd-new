@@ -2775,19 +2775,10 @@ class LPt extends L {
   String get adAskRemove => 'Prefiro remover os anúncios';
 
   @override
-  String get monsterRockGolem => 'Golem de pedra';
-
-  @override
-  String get monsterOreBrute => 'Bruto de minério';
-
-  @override
   String get monsterIronColossus => 'Colosso de ferro';
 
   @override
   String get monsterScarab => 'Escaravelho';
-
-  @override
-  String get monsterScarabGuard => 'Guarda escaravelho';
 
   @override
   String get monsterScarabPharaoh => 'Faraó escaravelho';
@@ -2836,4 +2827,60 @@ class LPt extends L {
 
   @override
   String get monsterTheMaster => 'O Mestre';
+
+  @override
+  String get monsterPebbleGolem => 'Golem de seixos';
+
+  @override
+  String get monsterStoneGolem => 'Golem de pedra';
+
+  @override
+  String get monsterOreGolem => 'Golem de minério';
+
+  @override
+  String get monsterMinerGolem => 'Golem mineiro';
+
+  @override
+  String get monsterScarabGrub => 'Larva de escaravelho';
+
+  @override
+  String get monsterHornedScarab => 'Escaravelho chifrudo';
+
+  @override
+  String get monsterScarabWarrior => 'Guerreiro escaravelho';
+
+  @override
+  String get monsterYetiCub => 'Filhote de yeti';
+
+  @override
+  String get monsterHornedYeti => 'Yeti chifrudo';
+
+  @override
+  String get monsterGoldRecruit => 'Recruta de ouro';
+
+  @override
+  String get monsterGoldGuard => 'Guarda de ouro';
+
+  @override
+  String get monsterShade => 'Sombra';
+
+  @override
+  String get monsterIceSpecter => 'Espectro de gelo';
+
+  @override
+  String get monsterCrystalHatchling => 'Filhote de cristal';
+
+  @override
+  String get monsterCrystalWhelp => 'Dragãozinho de cristal';
+
+  @override
+  String get monsterShadowSquire => 'Escudeiro das sombras';
+
+  @override
+  String get monsterShadowLord => 'Senhor das sombras';
+
+  @override
+  String monsterWarden(String name) {
+    return '${name} guardião';
+  }
 }

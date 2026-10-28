@@ -96,6 +96,13 @@ class AdventureLevel {
       ? FightKind.elite
       : FightKind.regular;
 
+  /// Which of its world's five forms the monster is in, 1 to 5: a new one
+  /// every five levels, the Warden at 5, 10 and 15 the first sight of the
+  /// next, and the King at 20 the last (lib/adventure/golem.dart).
+  int get form => kind == FightKind.boss
+      ? 5
+      : (inWorld - 1) ~/ 5 + 1 + (kind == FightKind.elite ? 1 : 0);
+
   Duration get time => kFightLength;
 
   /// The weakest weapon that hurts this world's monsters: its own metal.

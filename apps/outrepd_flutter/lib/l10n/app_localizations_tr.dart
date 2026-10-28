@@ -2768,19 +2768,10 @@ class LTr extends L {
   String get adAskRemove => 'Bunun yerine reklamları kaldır';
 
   @override
-  String get monsterRockGolem => 'Kaya Golemi';
-
-  @override
-  String get monsterOreBrute => 'Cevher Zorbası';
-
-  @override
   String get monsterIronColossus => 'Demir Dev';
 
   @override
   String get monsterScarab => 'Skarabe';
-
-  @override
-  String get monsterScarabGuard => 'Skarabe Muhafızı';
 
   @override
   String get monsterScarabPharaoh => 'Skarabe Firavun';
@@ -2813,7 +2804,7 @@ class LTr extends L {
   String get monsterFrostLich => 'Ayaz Lich';
 
   @override
-  String get monsterCrystalDrake => 'Kristal Ejdercik';
+  String get monsterCrystalDrake => 'Genç Kristal Ejder';
 
   @override
   String get monsterCrystalDragon => 'Kristal Ejderha';
@@ -2829,4 +2820,60 @@ class LTr extends L {
 
   @override
   String get monsterTheMaster => 'Efendi';
+
+  @override
+  String get monsterPebbleGolem => 'Çakıl Golemi';
+
+  @override
+  String get monsterStoneGolem => 'Taş Golem';
+
+  @override
+  String get monsterOreGolem => 'Cevher Golemi';
+
+  @override
+  String get monsterMinerGolem => 'Madenci Golem';
+
+  @override
+  String get monsterScarabGrub => 'Skarabe Larvası';
+
+  @override
+  String get monsterHornedScarab => 'Boynuzlu Skarabe';
+
+  @override
+  String get monsterScarabWarrior => 'Skarabe Savaşçı';
+
+  @override
+  String get monsterYetiCub => 'Yavru Yeti';
+
+  @override
+  String get monsterHornedYeti => 'Boynuzlu Yeti';
+
+  @override
+  String get monsterGoldRecruit => 'Altın Acemi';
+
+  @override
+  String get monsterGoldGuard => 'Altın Muhafız';
+
+  @override
+  String get monsterShade => 'Gölge';
+
+  @override
+  String get monsterIceSpecter => 'Buz Hortlağı';
+
+  @override
+  String get monsterCrystalHatchling => 'Kristal Yavru';
+
+  @override
+  String get monsterCrystalWhelp => 'Kristal Ejdercik';
+
+  @override
+  String get monsterShadowSquire => 'Gölge Silahtar';
+
+  @override
+  String get monsterShadowLord => 'Gölge Lordu';
+
+  @override
+  String monsterWarden(String name) {
+    return '${name} Muhafızı';
+  }
 }

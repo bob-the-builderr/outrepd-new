@@ -2771,19 +2771,10 @@ class LEn extends L {
   String get adAskRemove => 'Remove ads instead';
 
   @override
-  String get monsterRockGolem => 'Rock Golem';
-
-  @override
-  String get monsterOreBrute => 'Ore Brute';
-
-  @override
   String get monsterIronColossus => 'Iron Colossus';
 
   @override
   String get monsterScarab => 'Scarab';
-
-  @override
-  String get monsterScarabGuard => 'Scarab Guard';
 
   @override
   String get monsterScarabPharaoh => 'Scarab Pharaoh';
@@ -2832,4 +2823,60 @@ class LEn extends L {
 
   @override
   String get monsterTheMaster => 'The Master';
+
+  @override
+  String get monsterPebbleGolem => 'Pebble Golem';
+
+  @override
+  String get monsterStoneGolem => 'Stone Golem';
+
+  @override
+  String get monsterOreGolem => 'Ore Golem';
+
+  @override
+  String get monsterMinerGolem => 'Miner Golem';
+
+  @override
+  String get monsterScarabGrub => 'Scarab Grub';
+
+  @override
+  String get monsterHornedScarab => 'Horned Scarab';
+
+  @override
+  String get monsterScarabWarrior => 'Scarab Warrior';
+
+  @override
+  String get monsterYetiCub => 'Yeti Cub';
+
+  @override
+  String get monsterHornedYeti => 'Horned Yeti';
+
+  @override
+  String get monsterGoldRecruit => 'Gold Recruit';
+
+  @override
+  String get monsterGoldGuard => 'Gold Guard';
+
+  @override
+  String get monsterShade => 'Shade';
+
+  @override
+  String get monsterIceSpecter => 'Ice Specter';
+
+  @override
+  String get monsterCrystalHatchling => 'Crystal Hatchling';
+
+  @override
+  String get monsterCrystalWhelp => 'Crystal Whelp';
+
+  @override
+  String get monsterShadowSquire => 'Shadow Squire';
+
+  @override
+  String get monsterShadowLord => 'Shadow Lord';
+
+  @override
+  String monsterWarden(String name) {
+    return '${name} Warden';
+  }
 }

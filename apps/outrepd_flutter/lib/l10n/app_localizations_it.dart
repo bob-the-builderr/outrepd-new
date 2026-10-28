@@ -2778,19 +2778,10 @@ class LIt extends L {
   String get adAskRemove => 'Piuttosto rimuovi la pubblicità';
 
   @override
-  String get monsterRockGolem => 'Golem di roccia';
-
-  @override
-  String get monsterOreBrute => 'Bruto di minerale';
-
-  @override
   String get monsterIronColossus => 'Colosso di ferro';
 
   @override
   String get monsterScarab => 'Scarabeo';
-
-  @override
-  String get monsterScarabGuard => 'Guardia scarabeo';
 
   @override
   String get monsterScarabPharaoh => 'Faraone scarabeo';
@@ -2823,7 +2814,7 @@ class LIt extends L {
   String get monsterFrostLich => 'Lich del gelo';
 
   @override
-  String get monsterCrystalDrake => 'Draghetto di cristallo';
+  String get monsterCrystalDrake => 'Drake di cristallo';
 
   @override
   String get monsterCrystalDragon => 'Drago di cristallo';
@@ -2839,4 +2830,60 @@ class LIt extends L {
 
   @override
   String get monsterTheMaster => 'Il Maestro';
+
+  @override
+  String get monsterPebbleGolem => 'Golem di ciottoli';
+
+  @override
+  String get monsterStoneGolem => 'Golem di pietra';
+
+  @override
+  String get monsterOreGolem => 'Golem di minerale';
+
+  @override
+  String get monsterMinerGolem => 'Golem minatore';
+
+  @override
+  String get monsterScarabGrub => 'Larva di scarabeo';
+
+  @override
+  String get monsterHornedScarab => 'Scarabeo cornuto';
+
+  @override
+  String get monsterScarabWarrior => 'Guerriero scarabeo';
+
+  @override
+  String get monsterYetiCub => 'Cucciolo di yeti';
+
+  @override
+  String get monsterHornedYeti => 'Yeti cornuto';
+
+  @override
+  String get monsterGoldRecruit => 'Recluta d’oro';
+
+  @override
+  String get monsterGoldGuard => 'Guardia d’oro';
+
+  @override
+  String get monsterShade => 'Ombra';
+
+  @override
+  String get monsterIceSpecter => 'Spettro di ghiaccio';
+
+  @override
+  String get monsterCrystalHatchling => 'Cucciolo di cristallo';
+
+  @override
+  String get monsterCrystalWhelp => 'Draghetto di cristallo';
+
+  @override
+  String get monsterShadowSquire => 'Scudiero d’ombra';
+
+  @override
+  String get monsterShadowLord => 'Signore d’ombra';
+
+  @override
+  String monsterWarden(String name) {
+    return '${name} guardiano';
+  }
 }

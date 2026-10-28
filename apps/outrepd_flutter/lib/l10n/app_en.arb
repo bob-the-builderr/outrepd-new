@@ -1863,11 +1863,8 @@
   "adAskBody": "Next, your iPhone asks whether apps may use your activity to choose ads. Say yes and the ads fit you better; say no and you still get ads, just less relevant ones.",
   "adAskCamera": "Your camera is never part of it: body tracking stays on this phone, whatever you choose.",
   "adAskRemove": "Remove ads instead",
-  "monsterRockGolem": "Rock Golem",
-  "monsterOreBrute": "Ore Brute",
   "monsterIronColossus": "Iron Colossus",
   "monsterScarab": "Scarab",
-  "monsterScarabGuard": "Scarab Guard",
   "monsterScarabPharaoh": "Scarab Pharaoh",
   "monsterYeti": "Yeti",
   "monsterFrostYeti": "Frost Yeti",
@@ -1883,5 +1880,30 @@
   "monsterDiamondWyrm": "Diamond Wyrm",
   "monsterShadowGuard": "Shadow Guard",
   "monsterShadowKnight": "Shadow Knight",
-  "monsterTheMaster": "The Master"
+  "monsterTheMaster": "The Master",
+  "monsterPebbleGolem": "Pebble Golem",
+  "monsterStoneGolem": "Stone Golem",
+  "monsterOreGolem": "Ore Golem",
+  "monsterMinerGolem": "Miner Golem",
+  "monsterScarabGrub": "Scarab Grub",
+  "monsterHornedScarab": "Horned Scarab",
+  "monsterScarabWarrior": "Scarab Warrior",
+  "monsterYetiCub": "Yeti Cub",
+  "monsterHornedYeti": "Horned Yeti",
+  "monsterGoldRecruit": "Gold Recruit",
+  "monsterGoldGuard": "Gold Guard",
+  "monsterShade": "Shade",
+  "monsterIceSpecter": "Ice Specter",
+  "monsterCrystalHatchling": "Crystal Hatchling",
+  "monsterCrystalWhelp": "Crystal Whelp",
+  "monsterShadowSquire": "Shadow Squire",
+  "monsterShadowLord": "Shadow Lord",
+  "monsterWarden": "{name} Warden",
+  "@monsterWarden": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -2741,19 +2741,10 @@ class LKo extends L {
   String get adAskRemove => '대신 광고 제거하기';
 
   @override
-  String get monsterRockGolem => '바위 골렘';
-
-  @override
-  String get monsterOreBrute => '광석 브루트';
-
-  @override
   String get monsterIronColossus => '강철 거신';
 
   @override
   String get monsterScarab => '스카라브';
-
-  @override
-  String get monsterScarabGuard => '스카라브 경비병';
 
   @override
   String get monsterScarabPharaoh => '스카라브 파라오';
@@ -2802,4 +2793,60 @@ class LKo extends L {
 
   @override
   String get monsterTheMaster => '더 마스터';
+
+  @override
+  String get monsterPebbleGolem => '자갈 골렘';
+
+  @override
+  String get monsterStoneGolem => '돌 골렘';
+
+  @override
+  String get monsterOreGolem => '광석 골렘';
+
+  @override
+  String get monsterMinerGolem => '광부 골렘';
+
+  @override
+  String get monsterScarabGrub => '스카라브 애벌레';
+
+  @override
+  String get monsterHornedScarab => '뿔 스카라브';
+
+  @override
+  String get monsterScarabWarrior => '스카라브 전사';
+
+  @override
+  String get monsterYetiCub => '아기 예티';
+
+  @override
+  String get monsterHornedYeti => '뿔 예티';
+
+  @override
+  String get monsterGoldRecruit => '황금 신병';
+
+  @override
+  String get monsterGoldGuard => '황금 근위병';
+
+  @override
+  String get monsterShade => '그림자 혼';
+
+  @override
+  String get monsterIceSpecter => '얼음 유령';
+
+  @override
+  String get monsterCrystalHatchling => '크리스탈 새끼 용';
+
+  @override
+  String get monsterCrystalWhelp => '크리스탈 어린 용';
+
+  @override
+  String get monsterShadowSquire => '그림자 종자';
+
+  @override
+  String get monsterShadowLord => '그림자 군주';
+
+  @override
+  String monsterWarden(String name) {
+    return '${name} 수호자';
+  }
 }

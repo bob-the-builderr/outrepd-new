@@ -2773,19 +2773,10 @@ class LHi extends L {
   String get adAskRemove => 'इसके बजाय विज्ञापन हटाएँ';
 
   @override
-  String get monsterRockGolem => 'चट्टान गोलेम';
-
-  @override
-  String get monsterOreBrute => 'अयस्क दानव';
-
-  @override
   String get monsterIronColossus => 'लौह महाकाय';
 
   @override
   String get monsterScarab => 'स्कारब';
-
-  @override
-  String get monsterScarabGuard => 'स्कारब रक्षक';
 
   @override
   String get monsterScarabPharaoh => 'स्कारब फ़राओ';
@@ -2834,4 +2825,60 @@ class LHi extends L {
 
   @override
   String get monsterTheMaster => 'द मास्टर';
+
+  @override
+  String get monsterPebbleGolem => 'कंकड़ गोलेम';
+
+  @override
+  String get monsterStoneGolem => 'पत्थर गोलेम';
+
+  @override
+  String get monsterOreGolem => 'अयस्क गोलेम';
+
+  @override
+  String get monsterMinerGolem => 'खनिक गोलेम';
+
+  @override
+  String get monsterScarabGrub => 'स्कारब लार्वा';
+
+  @override
+  String get monsterHornedScarab => 'सींग वाला स्कारब';
+
+  @override
+  String get monsterScarabWarrior => 'स्कारब योद्धा';
+
+  @override
+  String get monsterYetiCub => 'नन्हा येती';
+
+  @override
+  String get monsterHornedYeti => 'सींग वाला येती';
+
+  @override
+  String get monsterGoldRecruit => 'स्वर्ण रंगरूट';
+
+  @override
+  String get monsterGoldGuard => 'स्वर्ण रक्षक';
+
+  @override
+  String get monsterShade => 'छाया';
+
+  @override
+  String get monsterIceSpecter => 'हिम प्रेत';
+
+  @override
+  String get monsterCrystalHatchling => 'नन्हा क्रिस्टल ड्रैगन';
+
+  @override
+  String get monsterCrystalWhelp => 'युवा क्रिस्टल ड्रैगन';
+
+  @override
+  String get monsterShadowSquire => 'छाया अनुचर';
+
+  @override
+  String get monsterShadowLord => 'छाया स्वामी';
+
+  @override
+  String monsterWarden(String name) {
+    return '${name} रक्षक';
+  }
 }

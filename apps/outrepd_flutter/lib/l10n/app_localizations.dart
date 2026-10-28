@@ -5003,18 +5003,6 @@ abstract class L {
   /// **'Remove ads instead'**
   String get adAskRemove;
 
-  /// No description provided for @monsterRockGolem.
-  ///
-  /// In en, this message translates to:
-  /// **'Rock Golem'**
-  String get monsterRockGolem;
-
-  /// No description provided for @monsterOreBrute.
-  ///
-  /// In en, this message translates to:
-  /// **'Ore Brute'**
-  String get monsterOreBrute;
-
   /// No description provided for @monsterIronColossus.
   ///
   /// In en, this message translates to:
@@ -5026,12 +5014,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Scarab'**
   String get monsterScarab;
-
-  /// No description provided for @monsterScarabGuard.
-  ///
-  /// In en, this message translates to:
-  /// **'Scarab Guard'**
-  String get monsterScarabGuard;
 
   /// No description provided for @monsterScarabPharaoh.
   ///
@@ -5128,6 +5110,114 @@ abstract class L {
   /// In en, this message translates to:
   /// **'The Master'**
   String get monsterTheMaster;
+
+  /// No description provided for @monsterPebbleGolem.
+  ///
+  /// In en, this message translates to:
+  /// **'Pebble Golem'**
+  String get monsterPebbleGolem;
+
+  /// No description provided for @monsterStoneGolem.
+  ///
+  /// In en, this message translates to:
+  /// **'Stone Golem'**
+  String get monsterStoneGolem;
+
+  /// No description provided for @monsterOreGolem.
+  ///
+  /// In en, this message translates to:
+  /// **'Ore Golem'**
+  String get monsterOreGolem;
+
+  /// No description provided for @monsterMinerGolem.
+  ///
+  /// In en, this message translates to:
+  /// **'Miner Golem'**
+  String get monsterMinerGolem;
+
+  /// No description provided for @monsterScarabGrub.
+  ///
+  /// In en, this message translates to:
+  /// **'Scarab Grub'**
+  String get monsterScarabGrub;
+
+  /// No description provided for @monsterHornedScarab.
+  ///
+  /// In en, this message translates to:
+  /// **'Horned Scarab'**
+  String get monsterHornedScarab;
+
+  /// No description provided for @monsterScarabWarrior.
+  ///
+  /// In en, this message translates to:
+  /// **'Scarab Warrior'**
+  String get monsterScarabWarrior;
+
+  /// No description provided for @monsterYetiCub.
+  ///
+  /// In en, this message translates to:
+  /// **'Yeti Cub'**
+  String get monsterYetiCub;
+
+  /// No description provided for @monsterHornedYeti.
+  ///
+  /// In en, this message translates to:
+  /// **'Horned Yeti'**
+  String get monsterHornedYeti;
+
+  /// No description provided for @monsterGoldRecruit.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold Recruit'**
+  String get monsterGoldRecruit;
+
+  /// No description provided for @monsterGoldGuard.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold Guard'**
+  String get monsterGoldGuard;
+
+  /// No description provided for @monsterShade.
+  ///
+  /// In en, this message translates to:
+  /// **'Shade'**
+  String get monsterShade;
+
+  /// No description provided for @monsterIceSpecter.
+  ///
+  /// In en, this message translates to:
+  /// **'Ice Specter'**
+  String get monsterIceSpecter;
+
+  /// No description provided for @monsterCrystalHatchling.
+  ///
+  /// In en, this message translates to:
+  /// **'Crystal Hatchling'**
+  String get monsterCrystalHatchling;
+
+  /// No description provided for @monsterCrystalWhelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Crystal Whelp'**
+  String get monsterCrystalWhelp;
+
+  /// No description provided for @monsterShadowSquire.
+  ///
+  /// In en, this message translates to:
+  /// **'Shadow Squire'**
+  String get monsterShadowSquire;
+
+  /// No description provided for @monsterShadowLord.
+  ///
+  /// In en, this message translates to:
+  /// **'Shadow Lord'**
+  String get monsterShadowLord;
+
+  /// No description provided for @monsterWarden.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} Warden'**
+  String monsterWarden(String name);
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

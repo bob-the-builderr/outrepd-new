@@ -2773,19 +2773,10 @@ class LRu extends L {
   String get adAskRemove => 'Лучше убрать рекламу';
 
   @override
-  String get monsterRockGolem => 'Каменный голем';
-
-  @override
-  String get monsterOreBrute => 'Рудный громила';
-
-  @override
   String get monsterIronColossus => 'Железный колосс';
 
   @override
   String get monsterScarab => 'Скарабей';
-
-  @override
-  String get monsterScarabGuard => 'Страж-скарабей';
 
   @override
   String get monsterScarabPharaoh => 'Скарабей-фараон';
@@ -2818,7 +2809,7 @@ class LRu extends L {
   String get monsterFrostLich => 'Ледяной лич';
 
   @override
-  String get monsterCrystalDrake => 'Кристальный дракончик';
+  String get monsterCrystalDrake => 'Кристальный дрейк';
 
   @override
   String get monsterCrystalDragon => 'Кристальный дракон';
@@ -2834,4 +2825,60 @@ class LRu extends L {
 
   @override
   String get monsterTheMaster => 'Мастер';
+
+  @override
+  String get monsterPebbleGolem => 'Галечный голем';
+
+  @override
+  String get monsterStoneGolem => 'Каменный голем';
+
+  @override
+  String get monsterOreGolem => 'Рудный голем';
+
+  @override
+  String get monsterMinerGolem => 'Голем-шахтёр';
+
+  @override
+  String get monsterScarabGrub => 'Личинка скарабея';
+
+  @override
+  String get monsterHornedScarab => 'Рогатый скарабей';
+
+  @override
+  String get monsterScarabWarrior => 'Скарабей-воин';
+
+  @override
+  String get monsterYetiCub => 'Детёныш йети';
+
+  @override
+  String get monsterHornedYeti => 'Рогатый йети';
+
+  @override
+  String get monsterGoldRecruit => 'Золотой новобранец';
+
+  @override
+  String get monsterGoldGuard => 'Золотой страж';
+
+  @override
+  String get monsterShade => 'Тень';
+
+  @override
+  String get monsterIceSpecter => 'Ледяной призрак';
+
+  @override
+  String get monsterCrystalHatchling => 'Кристальный детёныш';
+
+  @override
+  String get monsterCrystalWhelp => 'Кристальный дракончик';
+
+  @override
+  String get monsterShadowSquire => 'Теневой оруженосец';
+
+  @override
+  String get monsterShadowLord => 'Повелитель теней';
+
+  @override
+  String monsterWarden(String name) {
+    return '${name} — страж';
+  }
 }
