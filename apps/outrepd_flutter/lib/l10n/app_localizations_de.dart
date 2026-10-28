@@ -1448,10 +1448,6 @@ class LDe extends L {
   String get obPrivacy => 'Datenschutzerklärung';
 
   @override
-  String get obUnder16Blocked =>
-      'outrepd ist ab 16. Komm wieder, wenn du so weit bist — die Liegestütze laufen dir nicht weg.';
-
-  @override
   String get obCameraTitle => 'outrepd braucht deine Kamera';
 
   @override

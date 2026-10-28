@@ -1441,10 +1441,6 @@ class LId extends L {
   String get obPrivacy => 'Kebijakan Privasi';
 
   @override
-  String get obUnder16Blocked =>
-      'outrepd untuk usia 16 ke atas. Datang lagi kalau sudah sampai — push-up-nya tidak ke mana-mana.';
-
-  @override
   String get obCameraTitle => 'outrepd butuh kameramu';
 
   @override

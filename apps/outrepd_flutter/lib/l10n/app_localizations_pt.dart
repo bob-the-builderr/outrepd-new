@@ -1445,10 +1445,6 @@ class LPt extends L {
   String get obPrivacy => 'Política de Privacidade';
 
   @override
-  String get obUnder16Blocked =>
-      'O outrepd é para maiores de 16. Volta quando lá chegares — as flexões não vão a lado nenhum.';
-
-  @override
   String get obCameraTitle => 'O outrepd precisa da tua câmara';
 
   @override

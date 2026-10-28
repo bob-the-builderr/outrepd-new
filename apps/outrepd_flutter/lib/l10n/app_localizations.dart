@@ -2747,12 +2747,6 @@ abstract class L {
   /// **'Privacy Policy'**
   String get obPrivacy;
 
-  /// No description provided for @obUnder16Blocked.
-  ///
-  /// In en, this message translates to:
-  /// **'outrepd is for 16 and over. Come back when you get there — the push-ups will still be here.'**
-  String get obUnder16Blocked;
-
   /// No description provided for @obCameraTitle.
   ///
   /// In en, this message translates to:

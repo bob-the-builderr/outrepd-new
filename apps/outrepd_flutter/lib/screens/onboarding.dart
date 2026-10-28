@@ -23,6 +23,7 @@ import 'dart:math' as math;
 import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 
+import '../ads.dart';
 import '../career.dart';
 import '../data.dart';
 import '../keep_awake.dart';
@@ -256,7 +257,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     healthAccepted: _healthAccepted,
                     onAge: (v) => setState(() => _over16 = v),
                     onHealth: (v) => setState(() => _healthAccepted = v),
-                    onNext: () => _go(_Step.camera),
+                    onNext: () {
+                      unawaited(Ads.instance.setMinor(_over16 == false));
+                      _go(_Step.camera);
+                    },
                   ),
                   _Step.camera => _CameraAsk(
                     onNext: () => _go(_Step.placement),
@@ -1140,8 +1144,9 @@ class _BeforeYouStart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
-    final blocked = over16 == false;
-    final ready = over16 == true && healthAccepted;
+    // Either answer goes on: the app is for every age, and the answer is
+    // what keeps the ads to the rules for children (lib/ads.dart).
+    final ready = over16 != null && healthAccepted;
 
     return _Step0(
       body: Padding(
@@ -1183,19 +1188,7 @@ class _BeforeYouStart extends StatelessWidget {
               ),
             ),
 
-            if (blocked) ...[
-              const SizedBox(height: 11),
-              // Said plainly and without a way around it. An age gate with a
-              // "continue anyway" under it is not an age gate.
-              Text(
-                l.obUnder16Blocked,
-                style: TextStyle(
-                  color: context.colors.rival,
-                  fontSize: 14,
-                  height: 1.6,
-                ),
-              ),
-            ] else ...[
+            ...[
               const SizedBox(height: 11),
               _Panel(
                 child: InkWell(

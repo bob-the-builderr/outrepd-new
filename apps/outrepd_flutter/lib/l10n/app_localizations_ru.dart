@@ -1441,10 +1441,6 @@ class LRu extends L {
   String get obPrivacy => 'Политику конфиденциальности';
 
   @override
-  String get obUnder16Blocked =>
-      'outrepd — с 16 лет. Возвращайся, когда дорастёшь: отжимания никуда не денутся.';
-
-  @override
   String get obCameraTitle => 'outrepd нужна камера';
 
   @override

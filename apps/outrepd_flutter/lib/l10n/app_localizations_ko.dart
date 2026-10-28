@@ -1416,10 +1416,6 @@ class LKo extends L {
   String get obPrivacy => '개인정보 처리방침';
 
   @override
-  String get obUnder16Blocked =>
-      'outrepd는 16세 이상을 위한 앱입니다. 그때 다시 오세요 — 푸시업은 어디 안 갑니다.';
-
-  @override
   String get obCameraTitle => 'outrepd에는 카메라가 필요합니다';
 
   @override

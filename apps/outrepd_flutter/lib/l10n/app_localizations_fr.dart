@@ -1447,10 +1447,6 @@ class LFr extends L {
   String get obPrivacy => 'Politique de confidentialité';
 
   @override
-  String get obUnder16Blocked =>
-      'outrepd, c’est à partir de 16 ans. Reviens quand tu y seras — les pompes ne bougeront pas.';
-
-  @override
   String get obCameraTitle => 'outrepd a besoin de ta caméra';
 
   @override

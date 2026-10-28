@@ -1413,9 +1413,6 @@ class LJa extends L {
   String get obPrivacy => 'プライバシーポリシー';
 
   @override
-  String get obUnder16Blocked => 'outrepd は16歳以上向けです。その歳になったら戻ってきて。腕立てはなくならない。';
-
-  @override
   String get obCameraTitle => 'outrepd にはカメラが必要';
 
   @override

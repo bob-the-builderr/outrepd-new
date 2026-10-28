@@ -1446,10 +1446,6 @@ class LEs extends L {
   String get obPrivacy => 'Política de Privacidad';
 
   @override
-  String get obUnder16Blocked =>
-      'outrepd es para mayores de 16. Vuelve cuando llegues — las flexiones seguirán aquí.';
-
-  @override
   String get obCameraTitle => 'outrepd necesita tu cámara';
 
   @override

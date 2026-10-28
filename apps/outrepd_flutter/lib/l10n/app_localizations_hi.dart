@@ -1443,10 +1443,6 @@ class LHi extends L {
   String get obPrivacy => 'प्राइवेसी नीति से';
 
   @override
-  String get obUnder16Blocked =>
-      'outrepd 16 साल और उससे ऊपर के लिए है। जब पहुँच जाओ तब आना — पुश-अप्स यहीं रहेंगे।';
-
-  @override
   String get obCameraTitle => 'outrepd को तुम्हारा कैमरा चाहिए';
 
   @override

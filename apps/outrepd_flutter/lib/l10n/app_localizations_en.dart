@@ -1441,10 +1441,6 @@ class LEn extends L {
   String get obPrivacy => 'Privacy Policy';
 
   @override
-  String get obUnder16Blocked =>
-      'outrepd is for 16 and over. Come back when you get there — the push-ups will still be here.';
-
-  @override
   String get obCameraTitle => 'outrepd needs your camera';
 
   @override

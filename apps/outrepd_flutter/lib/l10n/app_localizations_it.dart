@@ -1446,10 +1446,6 @@ class LIt extends L {
   String get obPrivacy => 'l’Informativa sulla privacy';
 
   @override
-  String get obUnder16Blocked =>
-      'outrepd è per chi ha almeno 16 anni. Torna quando ci arrivi — le flessioni restano qui.';
-
-  @override
   String get obCameraTitle => 'outrepd ha bisogno della fotocamera';
 
   @override

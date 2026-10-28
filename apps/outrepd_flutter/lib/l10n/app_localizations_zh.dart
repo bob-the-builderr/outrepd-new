@@ -1409,9 +1409,6 @@ class LZh extends L {
   String get obPrivacy => '隐私政策';
 
   @override
-  String get obUnder16Blocked => 'outrepd 面向 16 岁及以上。到了年纪再来——俯卧撑跑不了。';
-
-  @override
   String get obCameraTitle => 'outrepd 需要用摄像头';
 
   @override

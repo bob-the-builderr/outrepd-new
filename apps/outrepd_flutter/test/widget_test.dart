@@ -191,8 +191,9 @@ void main() {
     expect(find.text('Allow camera'), findsOneWidget);
   });
 
-  testWidgets('under sixteen is turned away without a way around it',
+  testWidgets('under sixteen plays on: the app is for every age',
       (tester) async {
+    SharedPreferences.setMockInitialValues({});
     phone(tester);
     await tester.pumpWidget(_app(null));
     await tester.pumpAndSettle();
@@ -201,13 +202,15 @@ void main() {
     await throughIdea(tester);
     await tap(tester, 'Under 16');
 
-    expect(find.textContaining('outrepd is for 16 and over'), findsOneWidget);
-    // No health box to tick, so the gate cannot be satisfied.
-    expect(find.textContaining('I understand outrepd counts reps'),
-        findsNothing);
-
+    // Nobody is turned away; the health box is still needed.
+    expect(find.textContaining('outrepd is for 16 and over'), findsNothing);
     await tap(tester, 'Continue');
     expect(find.text('outrepd needs your camera'), findsNothing);
+
+    await tap(tester, 'I understand outrepd counts reps and does not give '
+        'medical or training advice. I’ll stop if something hurts.');
+    await tap(tester, 'Continue');
+    expect(find.text('outrepd needs your camera'), findsOneWidget);
   });
 
   testWidgets('the framing check waits for the body and the hands',

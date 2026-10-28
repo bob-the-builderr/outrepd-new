@@ -1438,10 +1438,6 @@ class LTr extends L {
   String get obPrivacy => 'Gizlilik Politikası';
 
   @override
-  String get obUnder16Blocked =>
-      'outrepd 16 yaş ve üstü için. Oraya gelince uğra — şınavlar burada duruyor.';
-
-  @override
   String get obCameraTitle => 'outrepd’in kameran gerekiyor';
 
   @override
