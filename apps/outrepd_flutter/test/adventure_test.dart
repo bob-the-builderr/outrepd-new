@@ -110,13 +110,15 @@ void main() {
       }
     });
 
-    test('five push-ups to start, ninety at the end', () {
+    test('five push-ups to start and ninety at the end with the next weapon; a fifth more with the own', () {
       expect(parReps(1), closeTo(5, 0.001));
       expect(parReps(140), closeTo(90, 0.001));
-      expect(levels.first.repsWith(kWeapons.first), 5);
-      expect(levels.last.repsWith(levels.last.weaponNeeded), 90);
+      expect(levels.first.repsWith(kWeapons.first), 6);
+      expect(levels.first.repsWith(kWeapons[1]), 5);
+      expect(levels.last.repsWith(levels.last.weaponNeeded), 108);
+      expect(levels.last.repsWith(kWeapons.last), 90);
       // The first boss already asks for more than three times the first.
-      expect(AdventureLevel.of(20).repsWith(kWeapons.first), 17);
+      expect(AdventureLevel.of(20).repsWith(kWeapons.first), 21);
     });
 
     test('a minute in the first world, five seconds more each world after',
@@ -301,7 +303,7 @@ void main() {
       )));
       expect(find.text('Pebble Golem'), findsOneWidget);
       expect(find.text('0:41'), findsOneWidget);
-      expect(find.text('30 / 50'), findsOneWidget);
+      expect(find.text('40 / 60'), findsOneWidget);
       expect(find.text('Give up'), findsOneWidget);
       expect(tester.takeException(), isNull);
     });
@@ -317,7 +319,7 @@ void main() {
       PushupCount? result;
       var closed = false;
 
-      // Level one takes 50 and the gauntlets hit for 10: five push-ups.
+      // Level one takes 60 and the gauntlets hit for 10: six push-ups.
       await tester.pumpWidget(_app(_Launcher(
         screen: TrainerScreen(
           autoStart: true,
@@ -339,7 +341,7 @@ void main() {
       }
       expect(find.byKey(const Key('fightCard')), findsOneWidget);
 
-      // Seven push-ups' worth of movement; the fight is over at five.
+      // Seven push-ups' worth of movement; the fight is over at six.
       for (final pose in pushUpSet(7, lead: 0)) {
         if (closed) break;
         source.emit(pose);
@@ -348,7 +350,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(closed, isTrue, reason: 'the camera never closed');
-      expect(result?.reps, 5);
+      expect(result?.reps, 6);
       // Stopped on the winning rep, well inside the minute.
       expect(result!.durationMs, lessThan(10000));
     });
@@ -437,7 +439,7 @@ void main() {
           outcome: FightOutcome(
             level: AdventureLevel.of(20),
             weapon: kWeapons.first,
-            reps: 20,
+            reps: 21,
             timeLeft: const Duration(seconds: 3),
             starsBefore: 0,
           ),
@@ -467,7 +469,7 @@ void main() {
               outcome: FightOutcome(
                 level: AdventureLevel.of(7),
                 weapon: kWeapons.first,
-                reps: 9,
+                reps: 10,
                 timeLeft: const Duration(seconds: 19),
                 starsBefore: 0,
               ),

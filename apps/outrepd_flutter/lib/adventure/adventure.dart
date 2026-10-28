@@ -27,6 +27,11 @@ const kMaxStars = kAdventureLevels * 3;
 const kFightLength = Duration(seconds: 60);
 const kFightLengthPerWorld = Duration(seconds: 5);
 
+/// How much more a monster takes from its world's own weapon than the curve
+/// ([parReps]) says: about what the next weapon takes off, so the curve is
+/// the fight for whoever has that one, and harder without it.
+const kOwnWeaponMargin = 1.2;
+
 enum FightKind {
   regular,
 
@@ -129,8 +134,8 @@ class AdventureLevel {
   static List<AdventureLevel> get all => _levels;
 }
 
-/// How many push-ups level [n] asks for in its fight with its world's own
-/// weapon: five at the first level and ninety at the last, in even steps —
+/// How many push-ups level [n] asks for in its fight from a lifter holding the
+/// next weapon: five at the first level and ninety at the last, in even steps —
 /// about seventeen by the first boss, forty by the third, sixty-six by the
 /// fifth — with a step into every fifth fight and a bigger one into each
 /// boss. The steps are counted in, never subtracted out again, so the level
@@ -147,11 +152,12 @@ final List<AdventureLevel> _levels = () {
   final out = <AdventureLevel>[];
   var last = 0;
   for (var n = 1; n <= kAdventureLevels; n++) {
-    // Sized for the world's own weapon, the weakest that can hurt it, so the
-    // push-ups asked for stay on the curve above; a better weapon takes a
-    // fifth or so off them.
+    // Sized so that the curve above is what a lifter holding the next weapon
+    // does — the one most have by then — and the world's own weapon, the
+    // weakest that can hurt it, asks [kOwnWeaponMargin] times that (the
+    // user, 2026-10-28: make up for what the weapons take off).
     final world = (n - 1) ~/ kLevelsPerWorld;
-    var hp = (parReps(n) * kWeapons[world].damage).round();
+    var hp = (parReps(n) * kOwnWeaponMargin * kWeapons[world].damage).round();
     if (hp <= last) hp = last + 1;
     out.add(AdventureLevel._(n, hp));
     last = hp;

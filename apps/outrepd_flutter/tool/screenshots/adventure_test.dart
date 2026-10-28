@@ -240,11 +240,11 @@ void main() {
             outcome: FightOutcome(
               level: AdventureLevel.of(7),
               weapon: kWeapons[1],
-              reps: 6,
+              reps: 10,
               timeLeft: const Duration(seconds: 19),
               starsBefore: 0,
             ),
-            xp: const XpGain(before: 4480, after: 4486, reps: 6),
+            xp: const XpGain(before: 4480, after: 4490, reps: 10),
             onNext: () {},
             onAgain: () {},
             onMap: () {},
