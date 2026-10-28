@@ -1419,12 +1419,6 @@ class LId extends L {
   String get obAgeQuestion => 'Berapa umurmu?';
 
   @override
-  String get obUnder16 => 'Di bawah 16';
-
-  @override
-  String get obOver16 => '16 atau lebih';
-
-  @override
   String get obHealthConsent =>
       'Saya paham outrepd menghitung repetisi dan tidak memberi saran medis atau latihan. Saya akan berhenti kalau ada yang sakit.';
 
@@ -2876,4 +2870,19 @@ class LId extends L {
 
   @override
   String get obPhoneSeesBody => 'Dari ujung kepala sampai tangan, sekitar satu meter jauhnya, dalam posisi push-up.';
+
+  @override
+  String get obUnder13 => 'Di bawah 13';
+
+  @override
+  String get obOver13 => '13 atau lebih';
+
+  @override
+  String get obFor13 => 'outrepd untuk usia 13 tahun ke atas.';
+
+  @override
+  String get obUnder13Blocked => 'outrepd untuk usia 13 tahun ke atas. Kembali lagi saat kamu sudah 13 — push-up-nya akan tetap di sini.';
+
+  @override
+  String get obBeforeYouLift => 'Sebelum mulai';
 }

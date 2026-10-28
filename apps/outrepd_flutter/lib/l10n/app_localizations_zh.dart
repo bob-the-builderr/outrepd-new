@@ -1388,12 +1388,6 @@ class LZh extends L {
   String get obAgeQuestion => '你多大了？';
 
   @override
-  String get obUnder16 => '不满 16 岁';
-
-  @override
-  String get obOver16 => '16 岁及以上';
-
-  @override
   String get obHealthConsent => '我明白 outrepd 只负责计数，不提供医疗或训练建议。哪里疼了我就停下。';
 
   @override
@@ -2831,4 +2825,19 @@ class LZh extends L {
 
   @override
   String get obPhoneSeesBody => '从头顶到双手，大约一米远，保持俯卧撑姿势。';
+
+  @override
+  String get obUnder13 => '13岁以下';
+
+  @override
+  String get obOver13 => '13岁及以上';
+
+  @override
+  String get obFor13 => 'outrepd 适合13岁及以上的用户。';
+
+  @override
+  String get obUnder13Blocked => 'outrepd 适合13岁及以上的用户。等你13岁了再来吧，俯卧撑会一直在这里。';
+
+  @override
+  String get obBeforeYouLift => '开始之前';
 }

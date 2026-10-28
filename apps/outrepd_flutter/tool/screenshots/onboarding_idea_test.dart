@@ -106,7 +106,7 @@ void main() {
 
     await tester.tap(find.text('Continue'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('16 or over'));
+    await tester.tap(find.text('13 or over'));
     await tester.pumpAndSettle();
     await tester.tap(find.textContaining('I understand outrepd counts reps'));
     await tester.pumpAndSettle();

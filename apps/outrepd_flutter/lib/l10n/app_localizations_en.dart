@@ -1419,12 +1419,6 @@ class LEn extends L {
   String get obAgeQuestion => 'How old are you?';
 
   @override
-  String get obUnder16 => 'Under 16';
-
-  @override
-  String get obOver16 => '16 or over';
-
-  @override
   String get obHealthConsent =>
       'I understand outrepd counts reps and does not give medical or training advice. I’ll stop if something hurts.';
 
@@ -2875,4 +2869,19 @@ class LEn extends L {
 
   @override
   String get obPhoneSeesBody => 'From the top of your head to your hands, about a metre away, in a push-up.';
+
+  @override
+  String get obUnder13 => 'Under 13';
+
+  @override
+  String get obOver13 => '13 or over';
+
+  @override
+  String get obFor13 => 'outrepd is for 13 and over.';
+
+  @override
+  String get obUnder13Blocked => 'outrepd is for 13 and over. Come back when you get there — the push-ups will still be here.';
+
+  @override
+  String get obBeforeYouLift => 'Before you lift';
 }

@@ -23,7 +23,6 @@ import 'dart:math' as math;
 import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 
-import '../ads.dart';
 import '../career.dart';
 import '../data.dart';
 import '../keep_awake.dart';
@@ -80,7 +79,7 @@ enum _Step {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   _Step _step = _Step.welcome;
 
-  bool? _over16;
+  bool? _over13;
   bool _healthAccepted = false;
   CalibrationResult _calibration = const CalibrationResult(
     reps: 0,
@@ -253,14 +252,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                   _Step.idea => _Idea(onNext: () => _go(_Step.before)),
                   _Step.before => _BeforeYouStart(
-                    over16: _over16,
+                    over13: _over13,
                     healthAccepted: _healthAccepted,
-                    onAge: (v) => setState(() => _over16 = v),
+                    onAge: (v) => setState(() => _over13 = v),
                     onHealth: (v) => setState(() => _healthAccepted = v),
-                    onNext: () {
-                      unawaited(Ads.instance.setMinor(_over16 == false));
-                      _go(_Step.camera);
-                    },
+                    onNext: () => _go(_Step.camera),
                   ),
                   _Step.camera => _CameraAsk(
                     onNext: () => _go(_Step.placement),
@@ -464,45 +460,6 @@ class _Step0 extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 22),
           child: actions,
         ),
-      ],
-    );
-  }
-}
-
-class _Title extends StatelessWidget {
-  const _Title(this.text, {this.body});
-
-  final String text;
-  final String? body;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TypeOut(
-          text,
-          style: TextStyle(
-            color: context.colors.text,
-            fontSize: 28,
-            height: 1.25,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        if (body case final body?) ...[
-          const SizedBox(height: 10),
-          RiseIn(
-            delay: TypeOut.lengthOf(text),
-            child: Text(
-              body,
-              style: TextStyle(
-                color: context.colors.muted,
-                fontSize: 15,
-                height: 1.55,
-              ),
-            ),
-          ),
-        ],
       ],
     );
   }
@@ -1126,16 +1083,20 @@ class _RepRuleState extends State<_RepRule>
 
 // ───────────────────────────── 3 before you start ────────────────────────────
 
+/// The age, and the health line. outrepd is for 13 and over (the user,
+/// 2026-10-28: a 13+ rating, so the ads can be the ordinary kind), so the
+/// question is Under 13 or 13 and over, as two big tiles; under 13 is told
+/// so plainly and goes no further.
 class _BeforeYouStart extends StatelessWidget {
   const _BeforeYouStart({
-    required this.over16,
+    required this.over13,
     required this.healthAccepted,
     required this.onAge,
     required this.onHealth,
     required this.onNext,
   });
 
-  final bool? over16;
+  final bool? over13;
   final bool healthAccepted;
   final ValueChanged<bool> onAge;
   final ValueChanged<bool> onHealth;
@@ -1144,104 +1105,140 @@ class _BeforeYouStart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
-    // Either answer goes on: the app is for every age, and the answer is
-    // what keeps the ads to the rules for children (lib/ads.dart).
-    final ready = over16 != null && healthAccepted;
+    final colors = context.colors;
+    final blocked = over13 == false;
+    final ready = over13 == true && healthAccepted;
+    final thirteen = localNumber(context, 13);
+    final heading = TextStyle(
+      color: colors.text,
+      fontSize: 18,
+      fontWeight: FontWeight.w700,
+    );
 
     return _Step0(
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(22, 22, 22, 0),
+        padding: const EdgeInsets.fromLTRB(22, 14, 22, 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _Title(l.obTwoThings),
-            const SizedBox(height: 22),
-            _Panel(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            TypeOut(
+              l.obTwoThings,
+              style: TextStyle(
+                color: colors.text,
+                fontSize: 30,
+                height: 1.18,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const SizedBox(height: 24),
+            Text(l.obAgeQuestion, style: heading),
+            const SizedBox(height: 12),
+            IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    l.obAgeQuestion,
-                    style: TextStyle(color: context.colors.text, fontSize: 15),
+                  Expanded(
+                    child: _AgeTile(
+                      big: '<$thirteen',
+                      label: l.obUnder13,
+                      selected: over13 == false,
+                      onTap: () => onAge(false),
+                    ),
                   ),
-                  const SizedBox(height: 11),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _Choice(
-                          label: l.obUnder16,
-                          selected: over16 == false,
-                          onTap: () => onAge(false),
-                        ),
-                      ),
-                      const SizedBox(width: 7),
-                      Expanded(
-                        child: _Choice(
-                          label: l.obOver16,
-                          selected: over16 == true,
-                          onTap: () => onAge(true),
-                        ),
-                      ),
-                    ],
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _AgeTile(
+                      big: '$thirteen+',
+                      label: l.obOver13,
+                      selected: over13 == true,
+                      onTap: () => onAge(true),
+                    ),
                   ),
                 ],
               ),
             ),
-
-            ...[
-              const SizedBox(height: 11),
-              _Panel(
+            const SizedBox(height: 12),
+            if (blocked)
+              // Said plainly and without a way around it. An age gate with a
+              // "continue anyway" under it is not an age gate.
+              Text(
+                l.obUnder13Blocked,
+                style: TextStyle(color: colors.rival, fontSize: 16, height: 1.6),
+              )
+            else ...[
+              Text(
+                l.obFor13,
+                style: TextStyle(color: colors.muted, fontSize: 14, height: 1.5),
+              ),
+              const SizedBox(height: 30),
+              Text(l.obBeforeYouLift, style: heading),
+              const SizedBox(height: 12),
+              Material(
+                color: colors.surface,
+                borderRadius: BorderRadius.circular(16),
                 child: InkWell(
                   onTap: () => onHealth(!healthAccepted),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 19,
-                        height: 19,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: healthAccepted
-                              ? context.colors.brand
-                              : Colors.transparent,
-                          border: Border.all(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Container(
+                    padding: const EdgeInsets.all(18),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: healthAccepted ? colors.brand : colors.border,
+                        width: healthAccepted ? 1.5 : 1,
+                      ),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 28,
+                          height: 28,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
                             color: healthAccepted
-                                ? context.colors.brand
-                                : context.colors.border,
+                                ? colors.brand
+                                : Colors.transparent,
+                            border: Border.all(
+                              color: healthAccepted
+                                  ? colors.brand
+                                  : colors.muted,
+                              width: 1.5,
+                            ),
+                          ),
+                          child: healthAccepted
+                              ? Icon(
+                                  Icons.check,
+                                  size: 20,
+                                  color: colors.background,
+                                )
+                              : null,
+                        ),
+                        const SizedBox(width: 14),
+                        Expanded(
+                          child: Text(
+                            l.obHealthConsent,
+                            style: TextStyle(
+                              color: colors.text,
+                              fontSize: 16,
+                              height: 1.55,
+                            ),
                           ),
                         ),
-                        child: healthAccepted
-                            ? Icon(
-                                Icons.check,
-                                size: 13,
-                                color: context.colors.background,
-                              )
-                            : null,
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          l.obHealthConsent,
-                          style: TextStyle(
-                            color: context.colors.text,
-                            fontSize: 14,
-                            height: 1.55,
-                          ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 18),
               LegalLine(
                 style: TextStyle(
-                  color: context.colors.muted,
+                  color: colors.muted,
                   fontSize: 13,
                   height: 1.6,
                 ),
-                linkStyle: TextStyle(color: context.colors.text),
+                linkStyle: TextStyle(color: colors.text),
               ),
             ],
           ],
@@ -1252,41 +1249,60 @@ class _BeforeYouStart extends StatelessWidget {
   }
 }
 
-class _Choice extends StatelessWidget {
-  const _Choice({
+/// One answer to the age question: the age large, and in words under it.
+class _AgeTile extends StatelessWidget {
+  const _AgeTile({
+    required this.big,
     required this.label,
     required this.selected,
     required this.onTap,
   });
 
+  final String big;
   final String label;
   final bool selected;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(11),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 9),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(11),
-          color: selected ? context.colors.brand : null,
-          border: selected
-              ? null
-              : Border.all(color: context.colors.border, width: 0.5),
-        ),
-        child: Center(
-          child: Text(
-            label,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: selected
-                  ? context.colors.background
-                  : context.colors.muted,
-              fontSize: 14,
-            ),
+    final colors = context.colors;
+    return Material(
+      color: selected ? colors.brand : colors.surface,
+      borderRadius: BorderRadius.circular(18),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(18),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 18),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(18),
+            border: selected ? null : Border.all(color: colors.border),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  big,
+                  style: TextStyle(
+                    color: selected ? colors.background : colors.text,
+                    fontSize: 34,
+                    height: 1,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                label,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: selected ? colors.background : colors.muted,
+                  fontSize: 15,
+                ),
+              ),
+            ],
           ),
         ),
       ),

@@ -452,8 +452,6 @@
   "obHaveAccount": "Zaten hesabım var",
   "obTwoThings": "İki kısa şey.",
   "obAgeQuestion": "Kaç yaşındasın?",
-  "obUnder16": "16’dan küçük",
-  "obOver16": "16 ya da üstü",
   "obHealthConsent": "outrepd’in tekrar saydığını, tıbbi ya da antrenman tavsiyesi vermediğini anlıyorum. Bir yerim ağrırsa dururum.",
   "obTermsIntro": "Devam edersen şunları kabul etmiş olursun:",
   "obTerms": "Koşullar",
@@ -869,5 +867,10 @@
   "monsterShadowLord": "Gölge Lordu",
   "monsterWarden": "{name} Muhafızı",
   "obPhoneSees": "Telefonunun görmesi gereken",
-  "obPhoneSeesBody": "Başının üstünden ellerine kadar, yaklaşık bir metre uzakta, şınav pozisyonunda."
+  "obPhoneSeesBody": "Başının üstünden ellerine kadar, yaklaşık bir metre uzakta, şınav pozisyonunda.",
+  "obUnder13": "13 yaş altı",
+  "obOver13": "13 ve üzeri",
+  "obFor13": "outrepd 13 yaş ve üzeri içindir.",
+  "obUnder13Blocked": "outrepd 13 yaş ve üzeri içindir. O yaşa gelince tekrar gel — şınavlar burada olacak.",
+  "obBeforeYouLift": "Başlamadan önce"
 }

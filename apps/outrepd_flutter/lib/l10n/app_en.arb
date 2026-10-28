@@ -774,8 +774,6 @@
   "obHaveAccount": "I already have an account",
   "obTwoThings": "Two quick things.",
   "obAgeQuestion": "How old are you?",
-  "obUnder16": "Under 16",
-  "obOver16": "16 or over",
   "obHealthConsent": "I understand outrepd counts reps and does not give medical or training advice. I’ll stop if something hurts.",
   "obTermsIntro": "By continuing you agree to the",
   "obTerms": "Terms",
@@ -1904,5 +1902,10 @@
     }
   },
   "obPhoneSees": "What your phone should see",
-  "obPhoneSeesBody": "From the top of your head to your hands, about a metre away, in a push-up."
+  "obPhoneSeesBody": "From the top of your head to your hands, about a metre away, in a push-up.",
+  "obUnder13": "Under 13",
+  "obOver13": "13 or over",
+  "obFor13": "outrepd is for 13 and over.",
+  "obUnder13Blocked": "outrepd is for 13 and over. Come back when you get there — the push-ups will still be here.",
+  "obBeforeYouLift": "Before you lift"
 }

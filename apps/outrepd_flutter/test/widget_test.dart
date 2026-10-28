@@ -135,7 +135,7 @@ void main() {
 
     // On the camera steps too, where the screen is the camera.
     await throughIdea(tester);
-    await tap(tester, '16 or over');
+    await tap(tester, '13 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
     await tap(tester, 'Continue');
@@ -178,7 +178,7 @@ void main() {
     expect(find.text('Two quick things.'), findsOneWidget);
 
     // Both answers are needed, so Continue is dead until they are given.
-    await tap(tester, '16 or over');
+    await tap(tester, '13 or over');
     expect(find.text('Two quick things.'), findsOneWidget);
 
     await tap(tester, 'I understand outrepd counts reps and does not give '
@@ -191,26 +191,23 @@ void main() {
     expect(find.text('Allow camera'), findsOneWidget);
   });
 
-  testWidgets('under sixteen plays on: the app is for every age',
+  testWidgets('under thirteen is turned away without a way around it',
       (tester) async {
-    SharedPreferences.setMockInitialValues({});
     phone(tester);
     await tester.pumpWidget(_app(null));
     await tester.pumpAndSettle();
 
     await tap(tester, 'Get started');
     await throughIdea(tester);
-    await tap(tester, 'Under 16');
+    await tap(tester, 'Under 13');
 
-    // Nobody is turned away; the health box is still needed.
-    expect(find.textContaining('outrepd is for 16 and over'), findsNothing);
+    expect(find.textContaining('outrepd is for 13 and over'), findsWidgets);
+    // No health box to tick, so the gate cannot be satisfied.
+    expect(find.textContaining('I understand outrepd counts reps'),
+        findsNothing);
+
     await tap(tester, 'Continue');
     expect(find.text('outrepd needs your camera'), findsNothing);
-
-    await tap(tester, 'I understand outrepd counts reps and does not give '
-        'medical or training advice. I’ll stop if something hurts.');
-    await tap(tester, 'Continue');
-    expect(find.text('outrepd needs your camera'), findsOneWidget);
   });
 
   testWidgets('the framing check waits for the body and the hands',
@@ -224,7 +221,7 @@ void main() {
 
     await tap(tester, 'Get started');
     await throughIdea(tester);
-    await tap(tester, '16 or over');
+    await tap(tester, '13 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
     await tap(tester, 'Continue');
@@ -267,7 +264,7 @@ void main() {
 
     await tap(tester, 'Get started');
     await throughIdea(tester);
-    await tap(tester, '16 or over');
+    await tap(tester, '13 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
     await tap(tester, 'Continue');
@@ -306,7 +303,7 @@ void main() {
 
     await tap(tester, 'Get started');
     await throughIdea(tester);
-    await tap(tester, '16 or over');
+    await tap(tester, '13 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
     await tap(tester, 'Continue');
@@ -349,7 +346,7 @@ void main() {
 
     await tap(tester, 'Get started');
     await throughIdea(tester);
-    await tap(tester, '16 or over');
+    await tap(tester, '13 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
     await tap(tester, 'Continue');
@@ -428,7 +425,7 @@ void main() {
 
     await tap(tester, 'Get started');
     await throughIdea(tester);
-    await tap(tester, '16 or over');
+    await tap(tester, '13 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
     await tap(tester, 'Continue');
@@ -473,7 +470,7 @@ void main() {
         await tap(tester, label);
         expect(tester.takeException(), isNull);
       }
-      await tap(tester, '16 or over');
+      await tap(tester, '13 or over');
       expect(tester.takeException(), isNull);
     });
   }

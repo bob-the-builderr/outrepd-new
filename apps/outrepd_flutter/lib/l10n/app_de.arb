@@ -452,8 +452,6 @@
   "obHaveAccount": "Ich habe schon ein Konto",
   "obTwoThings": "Zwei kurze Sachen.",
   "obAgeQuestion": "Wie alt bist du?",
-  "obUnder16": "Unter 16",
-  "obOver16": "16 oder älter",
   "obHealthConsent": "Mir ist klar, dass outrepd Wiederholungen zählt und keine medizinischen oder Trainingsratschläge gibt. Ich höre auf, wenn etwas wehtut.",
   "obTermsIntro": "Mit dem Fortfahren akzeptierst du die",
   "obTerms": "Nutzungsbedingungen",
@@ -869,5 +867,10 @@
   "monsterShadowLord": "Schattenfürst",
   "monsterWarden": "{name}-Wächter",
   "obPhoneSees": "Das sollte dein Handy sehen",
-  "obPhoneSeesBody": "Vom Scheitel bis zu den Händen, etwa einen Meter entfernt, in der Liegestützposition."
+  "obPhoneSeesBody": "Vom Scheitel bis zu den Händen, etwa einen Meter entfernt, in der Liegestützposition.",
+  "obUnder13": "Unter 13",
+  "obOver13": "13 oder älter",
+  "obFor13": "outrepd ist ab 13.",
+  "obUnder13Blocked": "outrepd ist ab 13. Komm wieder, wenn es so weit ist – die Liegestütze warten auf dich.",
+  "obBeforeYouLift": "Bevor du loslegst"
 }

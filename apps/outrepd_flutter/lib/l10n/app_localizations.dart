@@ -2705,18 +2705,6 @@ abstract class L {
   /// **'How old are you?'**
   String get obAgeQuestion;
 
-  /// No description provided for @obUnder16.
-  ///
-  /// In en, this message translates to:
-  /// **'Under 16'**
-  String get obUnder16;
-
-  /// No description provided for @obOver16.
-  ///
-  /// In en, this message translates to:
-  /// **'16 or over'**
-  String get obOver16;
-
   /// No description provided for @obHealthConsent.
   ///
   /// In en, this message translates to:
@@ -5212,6 +5200,36 @@ abstract class L {
   /// In en, this message translates to:
   /// **'From the top of your head to your hands, about a metre away, in a push-up.'**
   String get obPhoneSeesBody;
+
+  /// No description provided for @obUnder13.
+  ///
+  /// In en, this message translates to:
+  /// **'Under 13'**
+  String get obUnder13;
+
+  /// No description provided for @obOver13.
+  ///
+  /// In en, this message translates to:
+  /// **'13 or over'**
+  String get obOver13;
+
+  /// No description provided for @obFor13.
+  ///
+  /// In en, this message translates to:
+  /// **'outrepd is for 13 and over.'**
+  String get obFor13;
+
+  /// No description provided for @obUnder13Blocked.
+  ///
+  /// In en, this message translates to:
+  /// **'outrepd is for 13 and over. Come back when you get there — the push-ups will still be here.'**
+  String get obUnder13Blocked;
+
+  /// No description provided for @obBeforeYouLift.
+  ///
+  /// In en, this message translates to:
+  /// **'Before you lift'**
+  String get obBeforeYouLift;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

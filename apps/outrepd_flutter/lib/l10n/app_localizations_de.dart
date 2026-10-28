@@ -1426,12 +1426,6 @@ class LDe extends L {
   String get obAgeQuestion => 'Wie alt bist du?';
 
   @override
-  String get obUnder16 => 'Unter 16';
-
-  @override
-  String get obOver16 => '16 oder älter';
-
-  @override
   String get obHealthConsent =>
       'Mir ist klar, dass outrepd Wiederholungen zählt und keine medizinischen oder Trainingsratschläge gibt. Ich höre auf, wenn etwas wehtut.';
 
@@ -2884,4 +2878,19 @@ class LDe extends L {
 
   @override
   String get obPhoneSeesBody => 'Vom Scheitel bis zu den Händen, etwa einen Meter entfernt, in der Liegestützposition.';
+
+  @override
+  String get obUnder13 => 'Unter 13';
+
+  @override
+  String get obOver13 => '13 oder älter';
+
+  @override
+  String get obFor13 => 'outrepd ist ab 13.';
+
+  @override
+  String get obUnder13Blocked => 'outrepd ist ab 13. Komm wieder, wenn es so weit ist – die Liegestütze warten auf dich.';
+
+  @override
+  String get obBeforeYouLift => 'Bevor du loslegst';
 }

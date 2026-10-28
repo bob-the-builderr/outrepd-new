@@ -452,8 +452,6 @@
   "obHaveAccount": "이미 계정이 있어요",
   "obTwoThings": "빠르게 두 가지만.",
   "obAgeQuestion": "나이가 어떻게 되나요?",
-  "obUnder16": "16세 미만",
-  "obOver16": "16세 이상",
   "obHealthConsent": "outrepd는 횟수만 세고 의학적·운동 조언은 하지 않는다는 것을 이해합니다. 아프면 멈추겠습니다.",
   "obTermsIntro": "계속하면 다음에 동의하는 것으로 봅니다:",
   "obTerms": "이용약관",
@@ -869,5 +867,10 @@
   "monsterShadowLord": "그림자 군주",
   "monsterWarden": "{name} 수호자",
   "obPhoneSees": "휴대폰에 보여야 하는 모습",
-  "obPhoneSeesBody": "머리끝부터 손까지, 약 1미터 떨어져서, 팔굽혀펴기 자세로."
+  "obPhoneSeesBody": "머리끝부터 손까지, 약 1미터 떨어져서, 팔굽혀펴기 자세로.",
+  "obUnder13": "13세 미만",
+  "obOver13": "13세 이상",
+  "obFor13": "outrepd는 13세 이상을 위한 앱이에요.",
+  "obUnder13Blocked": "outrepd는 13세 이상을 위한 앱이에요. 13세가 되면 다시 와 주세요. 팔굽혀펴기는 그대로 기다리고 있을게요.",
+  "obBeforeYouLift": "시작하기 전에"
 }

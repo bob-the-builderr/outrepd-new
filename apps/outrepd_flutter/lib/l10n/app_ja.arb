@@ -452,8 +452,6 @@
   "obHaveAccount": "アカウントを持っている",
   "obTwoThings": "手早く2つだけ。",
   "obAgeQuestion": "年齢は?",
-  "obUnder16": "16歳未満",
-  "obOver16": "16歳以上",
   "obHealthConsent": "outrepd は回数を数えるだけで、医療やトレーニングの助言はしないと理解しています。痛みが出たらやめます。",
   "obTermsIntro": "続けると、以下に同意したものとみなされます:",
   "obTerms": "利用規約",
@@ -869,5 +867,10 @@
   "monsterShadowLord": "シャドウロード",
   "monsterWarden": "{name}・番人",
   "obPhoneSees": "スマホに映るべき姿",
-  "obPhoneSeesBody": "頭のてっぺんから手まで、約1メートル離れて、腕立ての姿勢で。"
+  "obPhoneSeesBody": "頭のてっぺんから手まで、約1メートル離れて、腕立ての姿勢で。",
+  "obUnder13": "13歳未満",
+  "obOver13": "13歳以上",
+  "obFor13": "outrepdは13歳以上向けです。",
+  "obUnder13Blocked": "outrepdは13歳以上向けです。13歳になったらまた来てね。腕立てはここで待っています。",
+  "obBeforeYouLift": "始める前に"
 }

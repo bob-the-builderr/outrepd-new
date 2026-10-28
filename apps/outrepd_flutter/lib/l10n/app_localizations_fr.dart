@@ -1425,12 +1425,6 @@ class LFr extends L {
   String get obAgeQuestion => 'Quel âge as-tu ?';
 
   @override
-  String get obUnder16 => 'Moins de 16 ans';
-
-  @override
-  String get obOver16 => '16 ans ou plus';
-
-  @override
   String get obHealthConsent =>
       'Je comprends qu’outrepd compte les répétitions et ne donne aucun conseil médical ni sportif. J’arrête si quelque chose fait mal.';
 
@@ -2883,4 +2877,19 @@ class LFr extends L {
 
   @override
   String get obPhoneSeesBody => 'Du haut de la tête jusqu’aux mains, à environ un mètre, en position de pompe.';
+
+  @override
+  String get obUnder13 => 'Moins de 13 ans';
+
+  @override
+  String get obOver13 => '13 ans ou plus';
+
+  @override
+  String get obFor13 => 'outrepd est pour les 13 ans et plus.';
+
+  @override
+  String get obUnder13Blocked => 'outrepd est pour les 13 ans et plus. Reviens quand tu y seras — les pompes seront toujours là.';
+
+  @override
+  String get obBeforeYouLift => 'Avant de commencer';
 }

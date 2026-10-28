@@ -12,10 +12,9 @@
 ///   Apple's tracking question. The first ad is the next game's.
 /// * Pro (lib/subscription.dart) takes them all out. It is offered once on
 ///   its own, as the first ad closes, and under every result after that.
-/// * The app is for every age (2026-10-28: the user wants an all-ages
-///   rating). Ads are rated G for everybody, and an account that answered
-///   "Under 16" at onboarding gets them by the rules for children: nothing
-///   personalised, no ask and no tracking question.
+/// * The app is for 13 and over (2026-10-28: the user wants a 13+ rating, so
+///   the ads can be the ordinary kind); the onboarding turns away anybody
+///   younger. Ads are capped at the teen rating.
 ///
 /// A build with no ad unit — the tests, the web preview, a build made
 /// without the AdMob ids — has no ads at all, the way a build with no
@@ -55,14 +54,10 @@ class Ads extends ChangeNotifier {
   static const _gamesKey = 'adsGamesPlayed';
   static const _askedKey = 'adsAsked';
   static const _offeredKey = 'adsProOffered';
-  static const _minorKey = 'adsMinor';
 
   int _games = 0;
   bool _asked = false;
   bool _offered = false;
-
-  /// Under 16, by its own answer at onboarding.
-  bool _minor = false;
 
   bool _started = false;
   bool _loading = false;
@@ -94,7 +89,6 @@ class Ads extends ChangeNotifier {
     _games = prefs.getInt(_gamesKey) ?? 0;
     _asked = prefs.getBool(_askedKey) ?? false;
     _offered = prefs.getBool(_offeredKey) ?? false;
-    _minor = prefs.getBool(_minorKey) ?? false;
     if (!configured || !_asked) return;
     // Once the store has said whether this account has Pro: a subscriber's
     // phone has no business loading an ad, or showing a consent form for one.
@@ -107,17 +101,6 @@ class Ads extends ChangeNotifier {
 
     subscription.addListener(whenKnown);
     whenKnown();
-  }
-
-  /// The onboarding's answer: under 16 or not.
-  Future<void> setMinor(bool minor) async {
-    _minor = minor;
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool(_minorKey, minor);
-    } on Object catch (error) {
-      debugPrint('Could not keep the age answer: $error');
-    }
   }
 
   /// A game is over and its result screen is being left, from [context] —
@@ -137,9 +120,8 @@ class Ads extends ChangeNotifier {
       _asked = true;
       unawaited(_save());
       // The ask is about Apple's question, so an Android phone goes straight
-      // to the consent form, where the law asks for one — and nobody under
-      // 16 is asked to be tracked at all.
-      final apple = defaultTargetPlatform == TargetPlatform.iOS && !_minor;
+      // to the consent form, where the law asks for one.
+      final apple = defaultTargetPlatform == TargetPlatform.iOS;
       if (apple) {
         final removeInstead = await navigator.push<bool>(
           MaterialPageRoute(builder: (_) => const AdAskScreen()),
@@ -202,17 +184,9 @@ class Ads extends ChangeNotifier {
         _started = false;
         return;
       }
-      // Ads fit for every age, and for a child, by children's rules.
+      // Nothing past the teen rating, for an app rated 13+.
       await MobileAds.instance.updateRequestConfiguration(
-        RequestConfiguration(
-          maxAdContentRating: MaxAdContentRating.g,
-          tagForChildDirectedTreatment: _minor
-              ? TagForChildDirectedTreatment.yes
-              : TagForChildDirectedTreatment.unspecified,
-          tagForUnderAgeOfConsent: _minor
-              ? TagForUnderAgeOfConsent.yes
-              : TagForUnderAgeOfConsent.unspecified,
-        ),
+        RequestConfiguration(maxAdContentRating: MaxAdContentRating.t),
       );
       await MobileAds.instance.initialize();
       _load();
@@ -233,7 +207,7 @@ class Ads extends ChangeNotifier {
     }
 
     ConsentInformation.instance.requestConsentInfoUpdate(
-      ConsentRequestParameters(tagForUnderAgeOfConsent: _minor),
+      ConsentRequestParameters(),
       () => ConsentForm.loadAndShowConsentFormIfRequired(
         (error) => finish(error?.message),
       ),

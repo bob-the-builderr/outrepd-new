@@ -1416,12 +1416,6 @@ class LTr extends L {
   String get obAgeQuestion => 'Kaç yaşındasın?';
 
   @override
-  String get obUnder16 => '16’dan küçük';
-
-  @override
-  String get obOver16 => '16 ya da üstü';
-
-  @override
   String get obHealthConsent =>
       'outrepd’in tekrar saydığını, tıbbi ya da antrenman tavsiyesi vermediğini anlıyorum. Bir yerim ağrırsa dururum.';
 
@@ -2872,4 +2866,19 @@ class LTr extends L {
 
   @override
   String get obPhoneSeesBody => 'Başının üstünden ellerine kadar, yaklaşık bir metre uzakta, şınav pozisyonunda.';
+
+  @override
+  String get obUnder13 => '13 yaş altı';
+
+  @override
+  String get obOver13 => '13 ve üzeri';
+
+  @override
+  String get obFor13 => 'outrepd 13 yaş ve üzeri içindir.';
+
+  @override
+  String get obUnder13Blocked => 'outrepd 13 yaş ve üzeri içindir. O yaşa gelince tekrar gel — şınavlar burada olacak.';
+
+  @override
+  String get obBeforeYouLift => 'Başlamadan önce';
 }

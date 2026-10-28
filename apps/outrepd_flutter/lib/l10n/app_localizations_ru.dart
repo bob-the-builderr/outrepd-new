@@ -1419,12 +1419,6 @@ class LRu extends L {
   String get obAgeQuestion => 'Сколько тебе лет?';
 
   @override
-  String get obUnder16 => 'Меньше 16';
-
-  @override
-  String get obOver16 => '16 и старше';
-
-  @override
   String get obHealthConsent =>
       'Я понимаю, что outrepd считает повторы и не даёт медицинских или тренировочных советов. Если что-то болит, я остановлюсь.';
 
@@ -2877,4 +2871,19 @@ class LRu extends L {
 
   @override
   String get obPhoneSeesBody => 'От макушки до рук, примерно в метре, в упоре лёжа.';
+
+  @override
+  String get obUnder13 => 'Меньше 13';
+
+  @override
+  String get obOver13 => '13 и старше';
+
+  @override
+  String get obFor13 => 'outrepd — для тех, кому 13 и больше.';
+
+  @override
+  String get obUnder13Blocked => 'outrepd — для тех, кому 13 и больше. Возвращайся, когда исполнится 13: отжимания никуда не денутся.';
+
+  @override
+  String get obBeforeYouLift => 'Перед началом';
 }

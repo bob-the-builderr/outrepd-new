@@ -452,8 +452,6 @@
   "obHaveAccount": "Ho già un account",
   "obTwoThings": "Due cose veloci.",
   "obAgeQuestion": "Quanti anni hai?",
-  "obUnder16": "Meno di 16",
-  "obOver16": "16 o più",
   "obHealthConsent": "Ho capito che outrepd conta le ripetizioni e non dà consigli medici o di allenamento. Mi fermo se qualcosa fa male.",
   "obTermsIntro": "Continuando accetti i",
   "obTerms": "Termini",
@@ -869,5 +867,10 @@
   "monsterShadowLord": "Signore d’ombra",
   "monsterWarden": "{name} guardiano",
   "obPhoneSees": "Cosa deve vedere il telefono",
-  "obPhoneSeesBody": "Dalla cima della testa alle mani, a circa un metro, in posizione da flessione."
+  "obPhoneSeesBody": "Dalla cima della testa alle mani, a circa un metro, in posizione da flessione.",
+  "obUnder13": "Meno di 13",
+  "obOver13": "13 o più",
+  "obFor13": "outrepd è per chi ha 13 anni o più.",
+  "obUnder13Blocked": "outrepd è per chi ha 13 anni o più. Torna quando ci arrivi: le flessioni saranno ancora qui.",
+  "obBeforeYouLift": "Prima di iniziare"
 }

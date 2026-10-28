@@ -452,8 +452,6 @@
   "obHaveAccount": "J’ai déjà un compte",
   "obTwoThings": "Deux petites choses.",
   "obAgeQuestion": "Quel âge as-tu ?",
-  "obUnder16": "Moins de 16 ans",
-  "obOver16": "16 ans ou plus",
   "obHealthConsent": "Je comprends qu’outrepd compte les répétitions et ne donne aucun conseil médical ni sportif. J’arrête si quelque chose fait mal.",
   "obTermsIntro": "En continuant, tu acceptes les",
   "obTerms": "Conditions",
@@ -869,5 +867,10 @@
   "monsterShadowLord": "Seigneur de l’ombre",
   "monsterWarden": "{name} gardien",
   "obPhoneSees": "Ce que ton téléphone doit voir",
-  "obPhoneSeesBody": "Du haut de la tête jusqu’aux mains, à environ un mètre, en position de pompe."
+  "obPhoneSeesBody": "Du haut de la tête jusqu’aux mains, à environ un mètre, en position de pompe.",
+  "obUnder13": "Moins de 13 ans",
+  "obOver13": "13 ans ou plus",
+  "obFor13": "outrepd est pour les 13 ans et plus.",
+  "obUnder13Blocked": "outrepd est pour les 13 ans et plus. Reviens quand tu y seras — les pompes seront toujours là.",
+  "obBeforeYouLift": "Avant de commencer"
 }

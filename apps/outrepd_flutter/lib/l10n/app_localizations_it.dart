@@ -1424,12 +1424,6 @@ class LIt extends L {
   String get obAgeQuestion => 'Quanti anni hai?';
 
   @override
-  String get obUnder16 => 'Meno di 16';
-
-  @override
-  String get obOver16 => '16 o più';
-
-  @override
   String get obHealthConsent =>
       'Ho capito che outrepd conta le ripetizioni e non dà consigli medici o di allenamento. Mi fermo se qualcosa fa male.';
 
@@ -2882,4 +2876,19 @@ class LIt extends L {
 
   @override
   String get obPhoneSeesBody => 'Dalla cima della testa alle mani, a circa un metro, in posizione da flessione.';
+
+  @override
+  String get obUnder13 => 'Meno di 13';
+
+  @override
+  String get obOver13 => '13 o più';
+
+  @override
+  String get obFor13 => 'outrepd è per chi ha 13 anni o più.';
+
+  @override
+  String get obUnder13Blocked => 'outrepd è per chi ha 13 anni o più. Torna quando ci arrivi: le flessioni saranno ancora qui.';
+
+  @override
+  String get obBeforeYouLift => 'Prima di iniziare';
 }

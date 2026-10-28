@@ -1391,12 +1391,6 @@ class LJa extends L {
   String get obAgeQuestion => '年齢は?';
 
   @override
-  String get obUnder16 => '16歳未満';
-
-  @override
-  String get obOver16 => '16歳以上';
-
-  @override
   String get obHealthConsent =>
       'outrepd は回数を数えるだけで、医療やトレーニングの助言はしないと理解しています。痛みが出たらやめます。';
 
@@ -2840,4 +2834,19 @@ class LJa extends L {
 
   @override
   String get obPhoneSeesBody => '頭のてっぺんから手まで、約1メートル離れて、腕立ての姿勢で。';
+
+  @override
+  String get obUnder13 => '13歳未満';
+
+  @override
+  String get obOver13 => '13歳以上';
+
+  @override
+  String get obFor13 => 'outrepdは13歳以上向けです。';
+
+  @override
+  String get obUnder13Blocked => 'outrepdは13歳以上向けです。13歳になったらまた来てね。腕立てはここで待っています。';
+
+  @override
+  String get obBeforeYouLift => '始める前に';
 }

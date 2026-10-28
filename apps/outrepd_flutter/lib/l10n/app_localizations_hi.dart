@@ -1421,12 +1421,6 @@ class LHi extends L {
   String get obAgeQuestion => 'तुम्हारी उम्र क्या है?';
 
   @override
-  String get obUnder16 => '16 से कम';
-
-  @override
-  String get obOver16 => '16 या उससे ज़्यादा';
-
-  @override
   String get obHealthConsent =>
       'मैं समझता हूँ कि outrepd सिर्फ़ रेप्स गिनता है, कोई मेडिकल या ट्रेनिंग सलाह नहीं देता। दर्द हो तो मैं रुक जाऊँगा।';
 
@@ -2877,4 +2871,19 @@ class LHi extends L {
 
   @override
   String get obPhoneSeesBody => 'सिर के ऊपर से हाथों तक, लगभग एक मीटर दूर, पुश-अप की पोज़िशन में।';
+
+  @override
+  String get obUnder13 => '13 से कम';
+
+  @override
+  String get obOver13 => '13 या उससे ज़्यादा';
+
+  @override
+  String get obFor13 => 'outrepd 13 साल और उससे ऊपर के लिए है।';
+
+  @override
+  String get obUnder13Blocked => 'outrepd 13 साल और उससे ऊपर के लिए है। जब आप 13 के हो जाएँ तब आइए — पुश-अप्स यहीं मिलेंगे।';
+
+  @override
+  String get obBeforeYouLift => 'शुरू करने से पहले';
 }

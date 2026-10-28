@@ -1394,12 +1394,6 @@ class LKo extends L {
   String get obAgeQuestion => '나이가 어떻게 되나요?';
 
   @override
-  String get obUnder16 => '16세 미만';
-
-  @override
-  String get obOver16 => '16세 이상';
-
-  @override
   String get obHealthConsent =>
       'outrepd는 횟수만 세고 의학적·운동 조언은 하지 않는다는 것을 이해합니다. 아프면 멈추겠습니다.';
 
@@ -2845,4 +2839,19 @@ class LKo extends L {
 
   @override
   String get obPhoneSeesBody => '머리끝부터 손까지, 약 1미터 떨어져서, 팔굽혀펴기 자세로.';
+
+  @override
+  String get obUnder13 => '13세 미만';
+
+  @override
+  String get obOver13 => '13세 이상';
+
+  @override
+  String get obFor13 => 'outrepd는 13세 이상을 위한 앱이에요.';
+
+  @override
+  String get obUnder13Blocked => 'outrepd는 13세 이상을 위한 앱이에요. 13세가 되면 다시 와 주세요. 팔굽혀펴기는 그대로 기다리고 있을게요.';
+
+  @override
+  String get obBeforeYouLift => '시작하기 전에';
 }
