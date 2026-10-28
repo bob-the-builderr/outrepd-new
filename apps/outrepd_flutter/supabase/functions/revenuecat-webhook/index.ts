@@ -110,9 +110,9 @@ async function currentState(id: string, secretKey: string): Promise<Row> {
   const subscriber = (await response.json()).subscriber ?? {};
   const entitlement = subscriber.entitlements?.[ENTITLEMENT];
   const product: string | null = entitlement?.product_identifier ?? null;
-  // A billing grace period keeps access while the store retries the card.
-  const expires: string | null =
-    entitlement?.grace_period_expires_date ?? entitlement?.expires_date ?? null;
+  // No billing grace period (the user's call, 2026-10-28): a declined renewal
+  // ends Pro on the day it was due, however long the store keeps retrying.
+  const expires: string | null = entitlement?.expires_date ?? null;
   const active = entitlement != null &&
     (expires == null || Date.parse(expires) > Date.now());
   return {

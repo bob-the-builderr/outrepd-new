@@ -307,8 +307,14 @@ class RevenueCatStorefront implements Storefront {
 
   final String apiKey;
 
-  static bool _hasPro(CustomerInfo info) =>
-      info.entitlements.active.containsKey(kProEntitlement);
+  /// Pro is the entitlement, active, with its payment gone through. A store's
+  /// billing grace period — access kept while it retries a declined card —
+  /// counts for nothing here, by the user's call (2026-10-28): the ads come
+  /// back the day a payment fails, not days later.
+  static bool _hasPro(CustomerInfo info) {
+    final pro = info.entitlements.active[kProEntitlement];
+    return pro != null && pro.billingIssueDetectedAt == null;
+  }
 
   @override
   Future<bool> start(String? userId) async {
