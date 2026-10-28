@@ -150,12 +150,17 @@ class GolemPainter extends CustomPainter {
       FightKind.elite => 1,
       FightKind.boss => 2,
     };
-    // A world's regular fights grow through it, and the second half of them
-    // wear one more of what the Warden has.
+    // A world's regular fights wear one more of what the Warden has in its
+    // second half.
     final secondHalf = tier == 0 && level.inWorld > kLevelsPerWorld ~/ 2;
+    // How big it stands: little more than half the King's size at the start
+    // of its world and growing level by level, so the climb shows, the
+    // Warden a step ahead of the fights around it, and the King the biggest
+    // of all (the user, 2026-10-28: the first ones looked too grown).
+    final along = (level.inWorld - 1) / (kLevelsPerWorld - 1);
     final grow = switch (tier) {
-      0 => 0.8 + 0.08 * (level.inWorld - 1) / (kLevelsPerWorld - 2),
-      1 => 0.9,
+      0 => 0.55 + 0.4 * along,
+      1 => 0.61 + 0.4 * along,
       _ => 1.02,
     };
 
