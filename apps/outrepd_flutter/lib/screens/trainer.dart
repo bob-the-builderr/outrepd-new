@@ -646,6 +646,12 @@ class _TrainerScreenState extends State<TrainerScreen>
     _recent.add(pose);
     if (_recent.length > _recentKeep) _recent.removeAt(0);
 
+    // The monster is down and the round is closing: the clock stopped on the
+    // winning rep, and the tracker stops with it. A rep done in the moment
+    // the round takes to close was never on the screen, and the number that
+    // leaves this screen is the number that was on it.
+    if (_won) return;
+
     // Every frame, from the moment the camera opens: the seconds spent
     // getting down are when the tracker learns where the hands are planted
     // and how high this lifter's lockout is, so the first rep of the round is
@@ -686,10 +692,6 @@ class _TrainerScreenState extends State<TrainerScreen>
       setState(() => _pose = pose);
       return;
     }
-
-    // The monster is down and the round is closing: the clock has stopped on
-    // the winning rep, and nothing after it counts.
-    if (_won) return;
 
     // The number moves on the frame the rep completes — the frame the bar
     // gets back up to the top line — and never otherwise.
