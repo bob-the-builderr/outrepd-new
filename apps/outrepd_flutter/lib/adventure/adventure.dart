@@ -135,7 +135,7 @@ class AdventureLevel {
 double parReps(int n) {
   double steps(int n) => (n - 1) + 1.5 * (n ~/ 5) + 4.0 * (n ~/ kLevelsPerWorld);
   final share = steps(n) / steps(kAdventureLevels);
-  return 5 + 55 * math.pow(share, 1.2);
+  return 5 + 55 * math.pow(share, 1.2).toDouble();
 }
 
 final List<AdventureLevel> _levels = () {

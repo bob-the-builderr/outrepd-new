@@ -219,9 +219,7 @@ class _Field extends StatelessWidget {
     super.key,
     required this.controller,
     this.hint,
-    this.keyboardType,
     this.onChanged,
-    this.onSubmitted,
     this.inputFormatters,
     this.errorText,
     this.suffix,
@@ -245,9 +243,7 @@ class _Field extends StatelessWidget {
 
   final TextEditingController controller;
   final String? hint;
-  final TextInputType? keyboardType;
   final ValueChanged<String>? onChanged;
-  final ValueChanged<String>? onSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -258,10 +254,8 @@ class _Field extends StatelessWidget {
           controller: controller,
           autocorrect: false,
           enableSuggestions: inputFormatters == null,
-          keyboardType: keyboardType,
           inputFormatters: inputFormatters,
           onChanged: onChanged,
-          onSubmitted: onSubmitted,
           style: TextStyle(color: context.colors.text, fontSize: 18),
           cursorColor: context.colors.brand,
           decoration: InputDecoration(

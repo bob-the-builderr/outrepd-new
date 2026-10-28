@@ -473,7 +473,7 @@ class AdventureResultView extends StatelessWidget {
     // What would have earned one more star: seconds that had to be left.
     String? hint;
     if (nextShut) {
-      final shut = next!;
+      final shut = next;
       hint = l.worldNeedsWeapon(
         worldName(l, shut.world),
         weaponName(l, shut.weaponNeeded),

@@ -149,18 +149,17 @@ class AdventureCard extends StatelessWidget {
 
 /// A thin bar, [share] of it filled.
 class _Track extends StatelessWidget {
-  const _Track({required this.share, required this.colour, this.height = 6});
+  const _Track({required this.share, required this.colour});
 
   final double share;
   final Color colour;
-  final double height;
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(height / 2),
+      borderRadius: BorderRadius.circular(3),
       child: SizedBox(
-        height: height,
+        height: 6,
         child: Stack(
           fit: StackFit.expand,
           children: [
