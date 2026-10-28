@@ -170,6 +170,10 @@ void _phone(WidgetTester tester) {
   addTearDown(tester.view.reset);
 }
 
+/// Past Pro closing: its page slides away over most of a second, and is
+/// in the tree until it has.
+Future<void> _closed(WidgetTester tester) => tester.pump(const Duration(seconds: 1));
+
 /// Lets the store answer and the plans load. Not pumpAndSettle: a spinner is
 /// on screen while either is pending and it never settles.
 Future<void> _settle(WidgetTester tester) async {
@@ -217,6 +221,7 @@ void main() {
       );
       await tester.tap(find.byKey(const Key('proClose')));
       await _settle(tester);
+      await _closed(tester);
       expect(find.byKey(const Key('paywallTitle')), findsNothing);
       expect(find.text('inside the app'), findsOneWidget);
     });
@@ -366,6 +371,7 @@ void main() {
 
       await tester.tap(find.byKey(const Key('paywallBuy')));
       await _settle(tester);
+      await _closed(tester);
       expect(find.byKey(const Key('paywallTitle')), findsNothing);
       expect(find.text('inside the app'), findsOneWidget);
       expect(find.text('Ads are off. Thanks for going Pro.'), findsOneWidget);
@@ -435,6 +441,7 @@ void main() {
 
       await tester.tap(find.byKey(const Key('paywallRestore')));
       await _settle(tester);
+      await _closed(tester);
       expect(find.byKey(const Key('paywallTitle')), findsNothing);
       expect(Subscription.instance.active, isTrue);
     });

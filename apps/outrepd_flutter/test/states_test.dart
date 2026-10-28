@@ -168,6 +168,9 @@ void main() {
       await tester.pumpWidget(_app(const MatchScreen(), 1.0, const Locale('en')));
       await tester.pumpAndSettle();
 
+      // Under the Adventure card, below the fold of a 360 × 640 phone.
+      await tester.ensureVisible(find.text('Retry'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Retry'));
       await tester.pumpAndSettle();
 

@@ -73,6 +73,11 @@ void main() {
   }
 
   Future<void> tap(WidgetTester tester, String label) async {
+    // A step taller than this small phone scrolls, and a lifter scrolls to
+    // what they are about to tap: the age step's health line sits under the
+    // button at 360 × 640 until it is scrolled up.
+    await tester.ensureVisible(find.text(label));
+    await tester.pumpAndSettle();
     await tester.tap(find.text(label));
     await tester.pumpAndSettle();
   }
@@ -470,7 +475,7 @@ void main() {
 
       await tap(tester, 'Get started');
       expect(tester.takeException(), isNull);
-      for (final label in ['Next', 'Next', 'Continue']) {
+      for (final label in ['Next', 'Next', 'Next', 'Continue']) {
         await tap(tester, label);
         expect(tester.takeException(), isNull);
       }

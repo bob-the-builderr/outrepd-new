@@ -341,12 +341,15 @@ void main() {
       }
       expect(find.byKey(const Key('fightCard')), findsOneWidget);
 
-      // Seven push-ups' worth of movement; the fight is over at six.
-      for (final pose in pushUpSet(7, lead: 0)) {
+      // Eight push-ups' worth of movement; the fight is over at six.
+      for (final pose in pushUpSet(8, lead: 0)) {
         if (closed) break;
         source.emit(pose);
         await tester.pump(const Duration(milliseconds: kFrameMs));
       }
+      // The round closes 1.6 s after the winning rep, so the monster is seen
+      // going down; the rep after it may not leave that long.
+      await tester.pump(const Duration(seconds: 2));
       await tester.pumpAndSettle();
 
       expect(closed, isTrue, reason: 'the camera never closed');
