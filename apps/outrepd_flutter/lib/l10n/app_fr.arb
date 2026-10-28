@@ -467,9 +467,7 @@
   "obWhyNeeded": "Pourquoi c’est nécessaire ?",
   "obPlacementTitle": "Pose ton téléphone au sol",
   "obPlacementBody": "Adosse-le à un mur, à environ un mètre devant toi.",
-  "obOneMetre": "~1 m",
-  "obFullBody": "tout le corps dans le cadre",
-  "obCheckHandsFeet": "Mains et pieds visibles",
+  "obCheckHandsFeet": "Tête, épaules et mains dans le cadre",
   "obCheckFacing": "Face au téléphone, pas de profil",
   "obCheckLight": "Lumière allumée",
   "obImSetUp": "Je suis prêt",
@@ -870,5 +868,7 @@
   "monsterCrystalWhelp": "Dragonnet de cristal",
   "monsterShadowSquire": "Écuyer de l’ombre",
   "monsterShadowLord": "Seigneur de l’ombre",
-  "monsterWarden": "{name} gardien"
+  "monsterWarden": "{name} gardien",
+  "obPhoneSees": "Ce que ton téléphone doit voir",
+  "obPhoneSeesBody": "Du haut de la tête jusqu’aux mains, à environ un mètre, en position de pompe."
 }

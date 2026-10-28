@@ -1474,13 +1474,7 @@ class LIt extends L {
       'Appoggialo a un muro a circa un metro davanti a te.';
 
   @override
-  String get obOneMetre => '~1 m';
-
-  @override
-  String get obFullBody => 'tutto il corpo nell’inquadratura';
-
-  @override
-  String get obCheckHandsFeet => 'Mani e piedi visibili';
+  String get obCheckHandsFeet => 'Testa, spalle e mani nell’inquadratura';
 
   @override
   String get obCheckFacing => 'Rivolto al telefono, non di lato';
@@ -2886,4 +2880,10 @@ class LIt extends L {
   String monsterWarden(String name) {
     return '${name} guardiano';
   }
+
+  @override
+  String get obPhoneSees => 'Cosa deve vedere il telefono';
+
+  @override
+  String get obPhoneSeesBody => 'Dalla cima della testa alle mani, a circa un metro, in posizione da flessione.';
 }

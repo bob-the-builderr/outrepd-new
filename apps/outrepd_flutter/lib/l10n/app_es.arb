@@ -467,9 +467,7 @@
   "obWhyNeeded": "¿Por qué hace falta?",
   "obPlacementTitle": "Pon el móvil en el suelo",
   "obPlacementBody": "Recuéstalo contra una pared, a un metro de ti más o menos.",
-  "obOneMetre": "~1 m",
-  "obFullBody": "todo el cuerpo en el encuadre",
-  "obCheckHandsFeet": "Manos y pies visibles",
+  "obCheckHandsFeet": "Cabeza, hombros y manos en el encuadre",
   "obCheckFacing": "De frente al móvil, no de lado",
   "obCheckLight": "Luz encendida",
   "obImSetUp": "Ya está listo",
@@ -870,5 +868,7 @@
   "monsterCrystalWhelp": "Dragoncillo de cristal",
   "monsterShadowSquire": "Escudero sombrío",
   "monsterShadowLord": "Señor de las sombras",
-  "monsterWarden": "{name} guardián"
+  "monsterWarden": "{name} guardián",
+  "obPhoneSees": "Lo que debe ver tu teléfono",
+  "obPhoneSeesBody": "De la parte de arriba de la cabeza a las manos, a un metro más o menos, en posición de flexión."
 }

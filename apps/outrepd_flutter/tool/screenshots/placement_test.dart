@@ -62,6 +62,15 @@ void main() {
           ),
         ),
       );
+      // The picture decodes outside the test's fake time; without this it
+      // is an empty frame in the shot.
+      final context = tester.element(find.byType(PlacementStep));
+      await tester.runAsync(
+        () => precacheImage(
+          const AssetImage('assets/images/onboarding_view.jpg'),
+          context,
+        ),
+      );
       await tester.pumpAndSettle();
 
       await expectLater(

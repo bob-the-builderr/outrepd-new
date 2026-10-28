@@ -1465,13 +1465,7 @@ class LTr extends L {
   String get obPlacementBody => 'Yaklaşık bir metre önünde duvara dayat.';
 
   @override
-  String get obOneMetre => '~1 m';
-
-  @override
-  String get obFullBody => 'tüm vücut karede';
-
-  @override
-  String get obCheckHandsFeet => 'Eller ve ayaklar görünsün';
+  String get obCheckHandsFeet => 'Baş, omuzlar ve eller karede';
 
   @override
   String get obCheckFacing => 'Yandan değil, telefona dönük';
@@ -2876,4 +2870,10 @@ class LTr extends L {
   String monsterWarden(String name) {
     return '${name} Muhafızı';
   }
+
+  @override
+  String get obPhoneSees => 'Telefonunun görmesi gereken';
+
+  @override
+  String get obPhoneSeesBody => 'Başının üstünden ellerine kadar, yaklaşık bir metre uzakta, şınav pozisyonunda.';
 }

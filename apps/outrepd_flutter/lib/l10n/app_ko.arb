@@ -467,9 +467,7 @@
   "obWhyNeeded": "왜 필요한가요?",
   "obPlacementTitle": "폰을 바닥에 두세요",
   "obPlacementBody": "약 1미터 앞 벽에 기대 놓으세요.",
-  "obOneMetre": "약 1m",
-  "obFullBody": "전신이 화면에",
-  "obCheckHandsFeet": "손과 발이 모두 보이기",
+  "obCheckHandsFeet": "머리, 어깨, 손이 화면 안에",
   "obCheckFacing": "옆이 아니라 폰을 향하기",
   "obCheckLight": "방 불 켜기",
   "obImSetUp": "준비됐어요",
@@ -870,5 +868,7 @@
   "monsterCrystalWhelp": "크리스탈 어린 용",
   "monsterShadowSquire": "그림자 종자",
   "monsterShadowLord": "그림자 군주",
-  "monsterWarden": "{name} 수호자"
+  "monsterWarden": "{name} 수호자",
+  "obPhoneSees": "휴대폰에 보여야 하는 모습",
+  "obPhoneSeesBody": "머리끝부터 손까지, 약 1미터 떨어져서, 팔굽혀펴기 자세로."
 }

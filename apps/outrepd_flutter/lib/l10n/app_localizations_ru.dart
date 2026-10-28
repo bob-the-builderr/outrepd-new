@@ -1469,13 +1469,7 @@ class LRu extends L {
       'Прислони к стене примерно в метре перед собой.';
 
   @override
-  String get obOneMetre => '~1 м';
-
-  @override
-  String get obFullBody => 'всё тело в кадре';
-
-  @override
-  String get obCheckHandsFeet => 'Видно и руки, и ноги';
+  String get obCheckHandsFeet => 'Голова, плечи и руки в кадре';
 
   @override
   String get obCheckFacing => 'Лицом к телефону, не боком';
@@ -2881,4 +2875,10 @@ class LRu extends L {
   String monsterWarden(String name) {
     return '${name} — страж';
   }
+
+  @override
+  String get obPhoneSees => 'Что должен видеть телефон';
+
+  @override
+  String get obPhoneSeesBody => 'От макушки до рук, примерно в метре, в упоре лёжа.';
 }

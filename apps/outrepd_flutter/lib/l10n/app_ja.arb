@@ -467,9 +467,7 @@
   "obWhyNeeded": "なぜ必要?",
   "obPlacementTitle": "スマホを床に置く",
   "obPlacementBody": "1メートルほど前の壁に立てかける。",
-  "obOneMetre": "約1m",
-  "obFullBody": "全身がフレームに入る",
-  "obCheckHandsFeet": "手と足の両方が見える",
+  "obCheckHandsFeet": "頭・肩・手がフレームに入っている",
   "obCheckFacing": "横向きではなく、スマホの方を向く",
   "obCheckLight": "部屋の明かりをつける",
   "obImSetUp": "準備できた",
@@ -870,5 +868,7 @@
   "monsterCrystalWhelp": "クリスタルの若竜",
   "monsterShadowSquire": "シャドウスクワイア",
   "monsterShadowLord": "シャドウロード",
-  "monsterWarden": "{name}・番人"
+  "monsterWarden": "{name}・番人",
+  "obPhoneSees": "スマホに映るべき姿",
+  "obPhoneSeesBody": "頭のてっぺんから手まで、約1メートル離れて、腕立ての姿勢で。"
 }

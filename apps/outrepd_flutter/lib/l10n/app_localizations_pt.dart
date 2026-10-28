@@ -1473,13 +1473,7 @@ class LPt extends L {
       'Encosta-o a uma parede, cerca de um metro à tua frente.';
 
   @override
-  String get obOneMetre => '~1 m';
-
-  @override
-  String get obFullBody => 'corpo inteiro no enquadramento';
-
-  @override
-  String get obCheckHandsFeet => 'Mãos e pés visíveis';
+  String get obCheckHandsFeet => 'Cabeça, ombros e mãos no enquadramento';
 
   @override
   String get obCheckFacing => 'Virado para o telemóvel, não de lado';
@@ -2883,4 +2877,10 @@ class LPt extends L {
   String monsterWarden(String name) {
     return '${name} guardião';
   }
+
+  @override
+  String get obPhoneSees => 'O que seu celular deve ver';
+
+  @override
+  String get obPhoneSeesBody => 'Do alto da cabeça até as mãos, a cerca de um metro, em posição de flexão.';
 }

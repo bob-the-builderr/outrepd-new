@@ -1476,13 +1476,7 @@ class LDe extends L {
       'Lehn es an eine Wand, etwa einen Meter vor dir.';
 
   @override
-  String get obOneMetre => '~1 m';
-
-  @override
-  String get obFullBody => 'ganzer Körper im Bild';
-
-  @override
-  String get obCheckHandsFeet => 'Hände und Füße sichtbar';
+  String get obCheckHandsFeet => 'Kopf, Schultern und Hände im Bild';
 
   @override
   String get obCheckFacing => 'Zum Handy gedreht, nicht seitlich';
@@ -2888,4 +2882,10 @@ class LDe extends L {
   String monsterWarden(String name) {
     return '${name}-Wächter';
   }
+
+  @override
+  String get obPhoneSees => 'Das sollte dein Handy sehen';
+
+  @override
+  String get obPhoneSeesBody => 'Vom Scheitel bis zu den Händen, etwa einen Meter entfernt, in der Liegestützposition.';
 }

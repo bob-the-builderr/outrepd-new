@@ -467,9 +467,7 @@
   "obWhyNeeded": "Porque é preciso?",
   "obPlacementTitle": "Põe o telemóvel no chão",
   "obPlacementBody": "Encosta-o a uma parede, cerca de um metro à tua frente.",
-  "obOneMetre": "~1 m",
-  "obFullBody": "corpo inteiro no enquadramento",
-  "obCheckHandsFeet": "Mãos e pés visíveis",
+  "obCheckHandsFeet": "Cabeça, ombros e mãos no enquadramento",
   "obCheckFacing": "Virado para o telemóvel, não de lado",
   "obCheckLight": "Luz acesa",
   "obImSetUp": "Está tudo pronto",
@@ -870,5 +868,7 @@
   "monsterCrystalWhelp": "Dragãozinho de cristal",
   "monsterShadowSquire": "Escudeiro das sombras",
   "monsterShadowLord": "Senhor das sombras",
-  "monsterWarden": "{name} guardião"
+  "monsterWarden": "{name} guardião",
+  "obPhoneSees": "O que seu celular deve ver",
+  "obPhoneSeesBody": "Do alto da cabeça até as mãos, a cerca de um metro, em posição de flexão."
 }

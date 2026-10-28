@@ -467,9 +467,7 @@
   "obWhyNeeded": "为什么需要这个？",
   "obPlacementTitle": "把手机放在地上",
   "obPlacementBody": "靠墙放，大约在你前方一米。",
-  "obOneMetre": "约1米",
-  "obFullBody": "全身都在画面里",
-  "obCheckHandsFeet": "手和脚都看得见",
+  "obCheckHandsFeet": "头、肩和双手都在画面里",
   "obCheckFacing": "正对手机，不要侧身",
   "obCheckLight": "房间灯打开",
   "obImSetUp": "我准备好了",
@@ -870,5 +868,7 @@
   "monsterCrystalWhelp": "水晶幼龙",
   "monsterShadowSquire": "暗影侍从",
   "monsterShadowLord": "暗影领主",
-  "monsterWarden": "{name}守卫"
+  "monsterWarden": "{name}守卫",
+  "obPhoneSees": "手机应该看到的画面",
+  "obPhoneSeesBody": "从头顶到双手，大约一米远，保持俯卧撑姿势。"
 }

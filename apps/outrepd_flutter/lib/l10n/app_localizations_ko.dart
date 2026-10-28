@@ -1442,13 +1442,7 @@ class LKo extends L {
   String get obPlacementBody => '약 1미터 앞 벽에 기대 놓으세요.';
 
   @override
-  String get obOneMetre => '약 1m';
-
-  @override
-  String get obFullBody => '전신이 화면에';
-
-  @override
-  String get obCheckHandsFeet => '손과 발이 모두 보이기';
+  String get obCheckHandsFeet => '머리, 어깨, 손이 화면 안에';
 
   @override
   String get obCheckFacing => '옆이 아니라 폰을 향하기';
@@ -2849,4 +2843,10 @@ class LKo extends L {
   String monsterWarden(String name) {
     return '${name} 수호자';
   }
+
+  @override
+  String get obPhoneSees => '휴대폰에 보여야 하는 모습';
+
+  @override
+  String get obPhoneSeesBody => '머리끝부터 손까지, 약 1미터 떨어져서, 팔굽혀펴기 자세로.';
 }

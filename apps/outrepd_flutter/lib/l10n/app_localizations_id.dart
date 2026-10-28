@@ -1469,13 +1469,7 @@ class LId extends L {
       'Sandarkan ke dinding sekitar satu meter di depanmu.';
 
   @override
-  String get obOneMetre => '~1 m';
-
-  @override
-  String get obFullBody => 'seluruh badan masuk frame';
-
-  @override
-  String get obCheckHandsFeet => 'Tangan dan kaki terlihat';
+  String get obCheckHandsFeet => 'Kepala, bahu, dan tangan masuk frame';
 
   @override
   String get obCheckFacing => 'Menghadap ponsel, bukan menyamping';
@@ -2880,4 +2874,10 @@ class LId extends L {
   String monsterWarden(String name) {
     return '${name} Penjaga';
   }
+
+  @override
+  String get obPhoneSees => 'Yang harus dilihat ponselmu';
+
+  @override
+  String get obPhoneSeesBody => 'Dari ujung kepala sampai tangan, sekitar satu meter jauhnya, dalam posisi push-up.';
 }

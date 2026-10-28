@@ -1470,13 +1470,7 @@ class LHi extends L {
   String get obPlacementBody => 'दीवार से टिका दो, अपने से क़रीब एक मीटर आगे।';
 
   @override
-  String get obOneMetre => '~1 मी';
-
-  @override
-  String get obFullBody => 'पूरा शरीर फ़्रेम में';
-
-  @override
-  String get obCheckHandsFeet => 'हाथ और पैर दोनों दिखें';
+  String get obCheckHandsFeet => 'सिर, कंधे और हाथ फ़्रेम में';
 
   @override
   String get obCheckFacing => 'फ़ोन की तरफ़ मुँह, बग़ल में नहीं';
@@ -2881,4 +2875,10 @@ class LHi extends L {
   String monsterWarden(String name) {
     return '${name} रक्षक';
   }
+
+  @override
+  String get obPhoneSees => 'आपके फ़ोन को यह दिखना चाहिए';
+
+  @override
+  String get obPhoneSeesBody => 'सिर के ऊपर से हाथों तक, लगभग एक मीटर दूर, पुश-अप की पोज़िशन में।';
 }

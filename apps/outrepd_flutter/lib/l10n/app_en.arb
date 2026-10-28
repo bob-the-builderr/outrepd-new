@@ -789,9 +789,7 @@
   "obWhyNeeded": "Why is this needed?",
   "obPlacementTitle": "Set your phone on the floor",
   "obPlacementBody": "Lean it against a wall about a metre in front of you.",
-  "obOneMetre": "~1 m",
-  "obFullBody": "full body in frame",
-  "obCheckHandsFeet": "Hands and feet both visible",
+  "obCheckHandsFeet": "Head, shoulders and hands in frame",
   "obCheckFacing": "Facing the phone, not sideways",
   "obCheckLight": "Room light on",
   "obImSetUp": "I’m set up",
@@ -1905,5 +1903,7 @@
         "type": "String"
       }
     }
-  }
+  },
+  "obPhoneSees": "What your phone should see",
+  "obPhoneSeesBody": "From the top of your head to your hands, about a metre away, in a push-up."
 }

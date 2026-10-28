@@ -1469,13 +1469,7 @@ class LEn extends L {
       'Lean it against a wall about a metre in front of you.';
 
   @override
-  String get obOneMetre => '~1 m';
-
-  @override
-  String get obFullBody => 'full body in frame';
-
-  @override
-  String get obCheckHandsFeet => 'Hands and feet both visible';
+  String get obCheckHandsFeet => 'Head, shoulders and hands in frame';
 
   @override
   String get obCheckFacing => 'Facing the phone, not sideways';
@@ -2879,4 +2873,10 @@ class LEn extends L {
   String monsterWarden(String name) {
     return '${name} Warden';
   }
+
+  @override
+  String get obPhoneSees => 'What your phone should see';
+
+  @override
+  String get obPhoneSeesBody => 'From the top of your head to your hands, about a metre away, in a push-up.';
 }

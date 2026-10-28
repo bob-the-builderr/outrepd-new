@@ -1433,13 +1433,7 @@ class LZh extends L {
   String get obPlacementBody => '靠墙放，大约在你前方一米。';
 
   @override
-  String get obOneMetre => '约1米';
-
-  @override
-  String get obFullBody => '全身都在画面里';
-
-  @override
-  String get obCheckHandsFeet => '手和脚都看得见';
+  String get obCheckHandsFeet => '头、肩和双手都在画面里';
 
   @override
   String get obCheckFacing => '正对手机，不要侧身';
@@ -2834,4 +2828,10 @@ class LZh extends L {
   String monsterWarden(String name) {
     return '${name}守卫';
   }
+
+  @override
+  String get obPhoneSees => '手机应该看到的画面';
+
+  @override
+  String get obPhoneSeesBody => '从头顶到双手，大约一米远，保持俯卧撑姿势。';
 }

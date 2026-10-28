@@ -467,9 +467,7 @@
   "obWhyNeeded": "Bu neden gerekli?",
   "obPlacementTitle": "Telefonu yere koy",
   "obPlacementBody": "Yaklaşık bir metre önünde duvara dayat.",
-  "obOneMetre": "~1 m",
-  "obFullBody": "tüm vücut karede",
-  "obCheckHandsFeet": "Eller ve ayaklar görünsün",
+  "obCheckHandsFeet": "Baş, omuzlar ve eller karede",
   "obCheckFacing": "Yandan değil, telefona dönük",
   "obCheckLight": "Oda ışığı açık",
   "obImSetUp": "Hazırım",
@@ -870,5 +868,7 @@
   "monsterCrystalWhelp": "Kristal Ejdercik",
   "monsterShadowSquire": "Gölge Silahtar",
   "monsterShadowLord": "Gölge Lordu",
-  "monsterWarden": "{name} Muhafızı"
+  "monsterWarden": "{name} Muhafızı",
+  "obPhoneSees": "Telefonunun görmesi gereken",
+  "obPhoneSeesBody": "Başının üstünden ellerine kadar, yaklaşık bir metre uzakta, şınav pozisyonunda."
 }

@@ -1437,13 +1437,7 @@ class LJa extends L {
   String get obPlacementBody => '1メートルほど前の壁に立てかける。';
 
   @override
-  String get obOneMetre => '約1m';
-
-  @override
-  String get obFullBody => '全身がフレームに入る';
-
-  @override
-  String get obCheckHandsFeet => '手と足の両方が見える';
+  String get obCheckHandsFeet => '頭・肩・手がフレームに入っている';
 
   @override
   String get obCheckFacing => '横向きではなく、スマホの方を向く';
@@ -2843,4 +2837,10 @@ class LJa extends L {
   String monsterWarden(String name) {
     return '${name}・番人';
   }
+
+  @override
+  String get obPhoneSees => 'スマホに映るべき姿';
+
+  @override
+  String get obPhoneSeesBody => '頭のてっぺんから手まで、約1メートル離れて、腕立ての姿勢で。';
 }

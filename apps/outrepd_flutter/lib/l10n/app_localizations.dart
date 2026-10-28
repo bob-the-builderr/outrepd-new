@@ -2795,18 +2795,6 @@ abstract class L {
   /// **'Lean it against a wall about a metre in front of you.'**
   String get obPlacementBody;
 
-  /// No description provided for @obOneMetre.
-  ///
-  /// In en, this message translates to:
-  /// **'~1 m'**
-  String get obOneMetre;
-
-  /// No description provided for @obFullBody.
-  ///
-  /// In en, this message translates to:
-  /// **'full body in frame'**
-  String get obFullBody;
-
   /// No description provided for @obCheckHandsFeet.
   ///
   /// In en, this message translates to:
@@ -5218,6 +5206,18 @@ abstract class L {
   /// In en, this message translates to:
   /// **'{name} Warden'**
   String monsterWarden(String name);
+
+  /// No description provided for @obPhoneSees.
+  ///
+  /// In en, this message translates to:
+  /// **'What your phone should see'**
+  String get obPhoneSees;
+
+  /// No description provided for @obPhoneSeesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'From the top of your head to your hands, about a metre away, in a push-up.'**
+  String get obPhoneSeesBody;
 }
 
 class _LDelegate extends LocalizationsDelegate<L> {

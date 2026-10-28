@@ -1474,13 +1474,7 @@ class LEs extends L {
       'Recuéstalo contra una pared, a un metro de ti más o menos.';
 
   @override
-  String get obOneMetre => '~1 m';
-
-  @override
-  String get obFullBody => 'todo el cuerpo en el encuadre';
-
-  @override
-  String get obCheckHandsFeet => 'Manos y pies visibles';
+  String get obCheckHandsFeet => 'Cabeza, hombros y manos en el encuadre';
 
   @override
   String get obCheckFacing => 'De frente al móvil, no de lado';
@@ -2886,4 +2880,10 @@ class LEs extends L {
   String monsterWarden(String name) {
     return '${name} guardián';
   }
+
+  @override
+  String get obPhoneSees => 'Lo que debe ver tu teléfono';
+
+  @override
+  String get obPhoneSeesBody => 'De la parte de arriba de la cabeza a las manos, a un metro más o menos, en posición de flexión.';
 }

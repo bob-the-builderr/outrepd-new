@@ -467,9 +467,7 @@
   "obWhyNeeded": "Зачем это нужно?",
   "obPlacementTitle": "Поставь телефон на пол",
   "obPlacementBody": "Прислони к стене примерно в метре перед собой.",
-  "obOneMetre": "~1 м",
-  "obFullBody": "всё тело в кадре",
-  "obCheckHandsFeet": "Видно и руки, и ноги",
+  "obCheckHandsFeet": "Голова, плечи и руки в кадре",
   "obCheckFacing": "Лицом к телефону, не боком",
   "obCheckLight": "Свет в комнате включён",
   "obImSetUp": "Всё готово",
@@ -870,5 +868,7 @@
   "monsterCrystalWhelp": "Кристальный дракончик",
   "monsterShadowSquire": "Теневой оруженосец",
   "monsterShadowLord": "Повелитель теней",
-  "monsterWarden": "{name} — страж"
+  "monsterWarden": "{name} — страж",
+  "obPhoneSees": "Что должен видеть телефон",
+  "obPhoneSeesBody": "От макушки до рук, примерно в метре, в упоре лёжа."
 }

@@ -467,9 +467,7 @@
   "obWhyNeeded": "यह क्यों ज़रूरी है?",
   "obPlacementTitle": "फ़ोन को ज़मीन पर रखो",
   "obPlacementBody": "दीवार से टिका दो, अपने से क़रीब एक मीटर आगे।",
-  "obOneMetre": "~1 मी",
-  "obFullBody": "पूरा शरीर फ़्रेम में",
-  "obCheckHandsFeet": "हाथ और पैर दोनों दिखें",
+  "obCheckHandsFeet": "सिर, कंधे और हाथ फ़्रेम में",
   "obCheckFacing": "फ़ोन की तरफ़ मुँह, बग़ल में नहीं",
   "obCheckLight": "कमरे की रोशनी चालू",
   "obImSetUp": "सब तैयार है",
@@ -870,5 +868,7 @@
   "monsterCrystalWhelp": "युवा क्रिस्टल ड्रैगन",
   "monsterShadowSquire": "छाया अनुचर",
   "monsterShadowLord": "छाया स्वामी",
-  "monsterWarden": "{name} रक्षक"
+  "monsterWarden": "{name} रक्षक",
+  "obPhoneSees": "आपके फ़ोन को यह दिखना चाहिए",
+  "obPhoneSeesBody": "सिर के ऊपर से हाथों तक, लगभग एक मीटर दूर, पुश-अप की पोज़िशन में।"
 }

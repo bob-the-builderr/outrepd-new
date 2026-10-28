@@ -1518,47 +1518,75 @@ class PlacementStep extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 18),
+            // What the phone should see from the floor: a lifter, head to
+            // hands, inside the frame's corners. It used to be a drawing of
+            // a stick figure on a side view, which said where the phone goes
+            // but not what it is looking for.
             AspectRatio(
-              aspectRatio: 220 / 124,
-              child: CustomPaint(
-                painter: _PlacementPainter(
-                  line: context.colors.border,
-                  body: context.colors.text,
-                  fill: context.colors.surfaceRaised,
-                  camera: context.colors.rival,
-                  measure: context.colors.muted,
+              aspectRatio: 1104 / 991,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(22),
+                  border: Border.all(color: context.colors.border),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(21),
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Image.asset(
+                        'assets/images/onboarding_view.jpg',
+                        fit: BoxFit.cover,
+                        excludeFromSemantics: true,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 50, 16, 14),
+                        child: CustomPaint(
+                          painter: _Corners(context.colors.brand),
+                        ),
+                      ),
+                      PositionedDirectional(
+                        start: 12,
+                        top: 12,
+                        end: 12,
+                        child: Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 7,
+                            ),
+                            decoration: BoxDecoration(
+                              color: context.colors.background.withValues(
+                                alpha: 0.82,
+                              ),
+                              borderRadius: BorderRadius.circular(13),
+                            ),
+                            child: Text(
+                              l.obPhoneSees,
+                              style: TextStyle(
+                                color: context.colors.text,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-            const SizedBox(height: 6),
-            // Under the painter's own measure: the metre under the gap
-            // between the phone and the head, and the frame under the body.
-            Row(
-              children: [
-                const Spacer(flex: 30),
-                Expanded(
-                  flex: 56,
-                  child: Text(
-                    l.obOneMetre,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: context.colors.text,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 134,
-                  child: Text(
-                    l.obFullBody,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: context.colors.muted, fontSize: 14),
-                  ),
-                ),
-              ],
+            const SizedBox(height: 12),
+            Text(
+              l.obPhoneSeesBody,
+              style: TextStyle(
+                color: context.colors.muted,
+                fontSize: 14.5,
+                height: 1.5,
+              ),
             ),
-            const SizedBox(height: 18),
+            const SizedBox(height: 14),
             _Check(icon: Icons.accessibility_new, label: l.obCheckHandsFeet),
             _Check(icon: Icons.face_outlined, label: l.obCheckFacing),
             _Check(icon: Icons.lightbulb_outline, label: l.obCheckLight),
@@ -1611,161 +1639,41 @@ class _Check extends StatelessWidget {
   }
 }
 
-/// A phone leaning on a wall, the camera's view across the floor, and the
-/// lifter from the logo in a push-up inside it — head toward the phone, body
-/// straight, arm down to the floor: the one way the camera reads a set.
-class _PlacementPainter extends CustomPainter {
-  const _PlacementPainter({
-    required this.line,
-    required this.body,
-    required this.fill,
-    required this.camera,
-    required this.measure,
-  });
+/// The four corners of a camera's frame, in the app's cream.
+class _Corners extends CustomPainter {
+  const _Corners(this.colour);
 
-  final Color line;
-  final Color body;
-  final Color fill;
-
-  /// The phone and what it can see, in the rival's orange — the same pair of
-  /// colours as the two lifters in the logo.
-  final Color camera;
-
-  /// The metre from the phone to the lifter's head, drawn under the floor.
-  final Color measure;
+  final Color colour;
 
   @override
   void paint(Canvas canvas, Size size) {
-    // Drawn on a 220 × 124 grid and scaled to whatever it is given.
-    final s = size.width / 220;
-    Offset p(double x, double y) => Offset(x * s, y * s);
-    Path shape(List<List<double>> points) {
-      final path = Path()..moveTo(points.first[0] * s, points.first[1] * s);
-      for (final pt in points.skip(1)) {
-        path.lineTo(pt[0] * s, pt[1] * s);
-      }
-      return path..close();
-    }
-
-    // What the camera sees: a wedge from the lens across the whole body.
+    const arm = 26.0;
+    final w = size.width, h = size.height;
+    final path = Path()
+      ..moveTo(0, arm)
+      ..lineTo(0, 0)
+      ..lineTo(arm, 0)
+      ..moveTo(w - arm, 0)
+      ..lineTo(w, 0)
+      ..lineTo(w, arm)
+      ..moveTo(w, h - arm)
+      ..lineTo(w, h)
+      ..lineTo(w - arm, h)
+      ..moveTo(arm, h)
+      ..lineTo(0, h)
+      ..lineTo(0, h - arm);
     canvas.drawPath(
-      shape([
-        [30, 72],
-        [214, 46],
-        [214, 104],
-        [30, 81],
-      ]),
-      // Strongest at the lens, fading over the body.
+      path,
       Paint()
-        ..shader = LinearGradient(
-          colors: [
-            camera.withValues(alpha: 0.38),
-            camera.withValues(alpha: 0.06),
-          ],
-        ).createShader(Rect.fromLTRB(30 * s, 46 * s, 214 * s, 104 * s)),
-    );
-    final edge = Paint()
-      ..color = camera.withValues(alpha: 0.8)
-      ..strokeWidth = 1.2 * s;
-    void dashed(Offset from, Offset to) {
-      final length = (to - from).distance;
-      final step = (to - from) / length;
-      for (var d = 0.0; d < length; d += 6 * s) {
-        final end = d + 3 * s > length ? length : d + 3 * s;
-        canvas.drawLine(from + step * d, from + step * end, edge);
-      }
-    }
-
-    dashed(p(30, 72), p(214, 46));
-    dashed(p(30, 81), p(214, 104));
-
-    // Floor and wall.
-    final flat = Paint()..color = line;
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromLTWH(0, 104 * s, 220 * s, 3 * s),
-        Radius.circular(1.5 * s),
-      ),
-      flat,
-    );
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromLTWH(6 * s, 48 * s, 4 * s, 58 * s),
-        Radius.circular(2 * s),
-      ),
-      flat,
-    );
-
-    // The phone, leaning back against the wall.
-    canvas.save();
-    canvas.translate(24 * s, 83 * s);
-    canvas.rotate(-8 * math.pi / 180);
-    canvas.translate(-24 * s, -83 * s);
-    final phone = RRect.fromRectAndRadius(
-      Rect.fromLTWH(12 * s, 61 * s, 24 * s, 45 * s),
-      Radius.circular(5 * s),
-    );
-    canvas.drawRRect(phone, Paint()..color = fill);
-    canvas.drawRRect(
-      phone,
-      Paint()
-        ..color = camera
-        ..strokeWidth = 2.4 * s
-        ..style = PaintingStyle.stroke,
-    );
-    canvas.restore();
-
-    // About a metre: from the phone to the lifter's head, under the floor.
-    final rule = Paint()
-      ..color = measure
-      ..strokeWidth = 1 * s;
-    canvas.drawLine(p(30, 116), p(86, 116), rule);
-    canvas.drawLine(p(30, 112), p(30, 120), rule);
-    canvas.drawLine(p(86, 112), p(86, 120), rule);
-
-    // The lifter: head, a straight body from shoulders to toes, an arm
-    // straight down under the shoulder, and the hand flat on the floor.
-    final solid = Paint()..color = body;
-    canvas.drawCircle(p(86, 77), 8 * s, solid);
-    canvas.drawPath(
-      shape([
-        [96, 82],
-        [104, 82],
-        [196, 100],
-        [196, 106],
-        [188, 106],
-        [186, 103],
-        [100, 91],
-      ]),
-      solid,
-    );
-    canvas.drawPath(
-      shape([
-        [96, 86],
-        [104, 86],
-        [107, 104],
-        [99, 104],
-      ]),
-      solid,
-    );
-    canvas.drawPath(
-      shape([
-        [92, 104],
-        [110, 104],
-        [110, 106],
-        [92, 106],
-      ]),
-      solid,
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 4
+        ..strokeCap = StrokeCap.round
+        ..color = colour,
     );
   }
 
   @override
-  bool shouldRepaint(_PlacementPainter old) =>
-      old.line != line ||
-      old.body != body ||
-      old.fill != fill ||
-      old.camera != camera ||
-      old.measure != measure;
+  bool shouldRepaint(_Corners old) => old.colour != colour;
 }
 
 // ─────────────────────── 6 and 7: the camera is open ─────────────────────────

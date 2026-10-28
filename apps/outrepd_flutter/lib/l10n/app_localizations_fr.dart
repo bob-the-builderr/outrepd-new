@@ -1475,13 +1475,7 @@ class LFr extends L {
       'Adosse-le à un mur, à environ un mètre devant toi.';
 
   @override
-  String get obOneMetre => '~1 m';
-
-  @override
-  String get obFullBody => 'tout le corps dans le cadre';
-
-  @override
-  String get obCheckHandsFeet => 'Mains et pieds visibles';
+  String get obCheckHandsFeet => 'Tête, épaules et mains dans le cadre';
 
   @override
   String get obCheckFacing => 'Face au téléphone, pas de profil';
@@ -2887,4 +2881,10 @@ class LFr extends L {
   String monsterWarden(String name) {
     return '${name} gardien';
   }
+
+  @override
+  String get obPhoneSees => 'Ce que ton téléphone doit voir';
+
+  @override
+  String get obPhoneSeesBody => 'Du haut de la tête jusqu’aux mains, à environ un mètre, en position de pompe.';
 }

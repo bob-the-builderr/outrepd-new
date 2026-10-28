@@ -467,9 +467,7 @@
   "obWhyNeeded": "Warum wird das gebraucht?",
   "obPlacementTitle": "Leg dein Handy auf den Boden",
   "obPlacementBody": "Lehn es an eine Wand, etwa einen Meter vor dir.",
-  "obOneMetre": "~1 m",
-  "obFullBody": "ganzer Körper im Bild",
-  "obCheckHandsFeet": "Hände und Füße sichtbar",
+  "obCheckHandsFeet": "Kopf, Schultern und Hände im Bild",
   "obCheckFacing": "Zum Handy gedreht, nicht seitlich",
   "obCheckLight": "Licht an",
   "obImSetUp": "Ich bin bereit",
@@ -870,5 +868,7 @@
   "monsterCrystalWhelp": "Kristalljungdrache",
   "monsterShadowSquire": "Schattenknappe",
   "monsterShadowLord": "Schattenfürst",
-  "monsterWarden": "{name}-Wächter"
+  "monsterWarden": "{name}-Wächter",
+  "obPhoneSees": "Das sollte dein Handy sehen",
+  "obPhoneSeesBody": "Vom Scheitel bis zu den Händen, etwa einen Meter entfernt, in der Liegestützposition."
 }
