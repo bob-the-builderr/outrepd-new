@@ -70,6 +70,18 @@ class _Account extends NoBackend {
 }
 
 void main() {
+  test('a new form every five levels, the Warden the first sight of the '
+      'next, the King the last', () {
+    final forms = [
+      for (final n in [1, 4, 5, 6, 9, 10, 11, 14, 15, 16, 19, 20])
+        AdventureLevel.of(n).form,
+    ];
+    expect(forms, [1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5]);
+    // The same in every world.
+    expect(AdventureLevel.of(125).form, 2);
+    expect(AdventureLevel.of(140).form, 5);
+  });
+
   group('the levels', () {
     final levels = AdventureLevel.all;
 
