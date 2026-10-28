@@ -335,7 +335,8 @@ void main() {
       )));
       await tester.pumpAndSettle();
 
-      for (var i = 0; i < 4000 ~/ kFrameMs; i++) {
+      // Through the ten second count down to the start.
+      for (var i = 0; i < 11000 ~/ kFrameMs; i++) {
         source.emit(pushUpPose(1));
         await tester.pump(const Duration(milliseconds: kFrameMs));
       }

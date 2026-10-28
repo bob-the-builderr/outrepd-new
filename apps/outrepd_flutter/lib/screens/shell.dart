@@ -94,6 +94,10 @@ class _AppShellState extends State<AppShell> {
     // whether this account has Pro, and so whether it sees ads.
     final subscription = Subscription.instance;
     if (subscription.enabled) unawaited(subscription.refresh(backend.me?.id));
+    // And the account's matches. The launch asks too, but before a sign-in
+    // there is nobody to ask for: an account signed in from onboarding, or
+    // signed out and back in, kept an empty history until its next match.
+    unawaited(Career.instance.syncHistory());
   }
 
   @override

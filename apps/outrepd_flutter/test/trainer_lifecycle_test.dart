@@ -146,7 +146,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
 
     // Into position, through the countdown, then the camera falls silent.
-    for (var i = 0; i < 4000 ~/ kFrameMs; i++) {
+    for (var i = 0; i < 11000 ~/ kFrameMs; i++) {
       source.emit(pushUpPose(1));
       await tester.pump(const Duration(milliseconds: kFrameMs));
     }

@@ -110,11 +110,11 @@ void main() {
 
       // The camera handshake is asynchronous and the pose stream is a
       // broadcast one, so anything emitted before the listener attaches is
-      // dropped on the floor. Wait for the framing prompt, which is only on
+      // dropped on the floor. Wait for the count down, which is only on
       // screen once the subscription exists.
       for (var i = 0; i < 20; i++) {
         await tester.pump(const Duration(milliseconds: 10));
-        if (tester.any(find.text('Get into position'))) break;
+        if (tester.any(find.text('GET READY'))) break;
       }
       return source;
     }
@@ -151,59 +151,38 @@ void main() {
       rankLabel: 'Gold III',
     );
 
-    testWidgets('waits for the whole body before counting anything',
+    testWidgets('counts down from ten the moment the camera opens',
         (tester) async {
+      // The user, 2026-10-29: the round waited for the lifter to be down in
+      // position, and a match that would not start read as broken. Ten
+      // seconds to get there, then the clock runs whatever the camera sees.
       final source = await open(tester, duel: duel);
+      expect(find.text('GET READY'), findsOneWidget);
+      expect(find.text('10'), findsOneWidget);
+      expect(find.text('Get into position'), findsNothing);
 
-      expect(find.text('Get into position'), findsOneWidget);
-      expect(find.text('Wrists and ankles must be in frame'), findsOneWidget);
-
-      // A body with its feet out of shot is not ready. Starting the clock here
-      // costs the lifter part of a sixty second bout.
+      // Nothing the body does holds it up: feet out of shot, standing.
       await show(tester, source, _feetOutOfShot());
-      expect(find.text('GET READY'), findsNothing);
-      expect(find.text('Get into position'), findsOneWidget);
-
-      // Nor is a body standing in front of the phone, whole and in shot.
-      // Reported from a phone: the skeleton went green and a rep landed
-      // before the lifter had got down onto the floor.
-      await show(tester, source, _standingBody());
-      expect(find.text('GET READY'), findsNothing);
-
-      // Down in position, and it counts them in.
-      await hold(tester, source, _framedBody());
-      expect(find.text('GET READY'), findsOneWidget);
-      expect(find.text('3'), findsOneWidget);
-    });
-
-    testWidgets('a position it cannot read still lets the round start',
-        (tester) async {
-      // The other half of the trade. Waiting for the push-up position is
-      // right, but if a camera angle never satisfies it, being unable to
-      // start a match at all is the worse failure by a distance — so a framed
-      // body that never reads as in position is counted in anyway.
-      final source = await open(tester, duel: duel);
-
-      await show(tester, source, _standingBody());
-      expect(find.text('GET READY'), findsNothing);
-
-      await tester.pump(const Duration(seconds: 9));
       await show(tester, source, _standingBody());
       expect(find.text('GET READY'), findsOneWidget);
+
+      await tester.pump(const Duration(seconds: 10));
+      await show(tester, source, _standingBody());
+      expect(find.text('GET READY'), findsNothing);
     });
 
-    testWidgets('counts down three, then starts the clock', (tester) async {
+    testWidgets('counts down ten, then starts the clock', (tester) async {
       final source = await open(tester, duel: duel);
       await hold(tester, source, _framedBody());
 
-      expect(find.text('3'), findsOneWidget);
+      expect(find.text('10'), findsOneWidget);
       // The clock is still full while the countdown runs: the bout has not
       // started, so no time has been spent.
       expect(find.text('1:00'), findsOneWidget);
 
       await tester.pump(const Duration(seconds: 1));
-      expect(find.text('2'), findsOneWidget);
-      await tester.pump(const Duration(seconds: 1));
+      expect(find.text('9'), findsOneWidget);
+      await tester.pump(const Duration(seconds: 8));
       expect(find.text('1'), findsOneWidget);
       expect(find.text('1:00'), findsOneWidget);
 
@@ -268,7 +247,7 @@ void main() {
         (tester) async {
       final source = await open(tester, duel: duel);
       await hold(tester, source, _framedBody());
-      await tester.pump(const Duration(seconds: 4));
+      await tester.pump(const Duration(seconds: 11));
 
       // A ColoredBox with no child has no height of its own, so the bar is
       // only as tall as whatever the Row gives it. Centred, that is nothing —
@@ -300,7 +279,7 @@ void main() {
     testWidgets('never names the movement', (tester) async {
       final source = await open(tester, duel: duel);
       await hold(tester, source, _framedBody());
-      await tester.pump(const Duration(seconds: 4));
+      await tester.pump(const Duration(seconds: 11));
 
       for (final word in [
         'Push-ups',
@@ -330,7 +309,7 @@ void main() {
         expect(tester.takeException(), isNull);
 
         await hold(tester, source, _framedBody());
-        await tester.pump(const Duration(seconds: 4));
+        await tester.pump(const Duration(seconds: 11));
         expect(tester.takeException(), isNull);
       });
     }

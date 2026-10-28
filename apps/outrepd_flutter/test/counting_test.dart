@@ -374,9 +374,9 @@ Future<_ScriptedSource> _startRound(WidgetTester tester) async {
   await tester.pumpWidget(_app(source));
   await tester.pumpAndSettle();
 
-  // Into position and held there, through the three second countdown, the
+  // Into position and held there, through the ten second countdown, the
   // way somebody waits for a start: at the top, still.
-  for (var i = 0; i < 4000 ~/ kFrameMs; i++) {
+  for (var i = 0; i < 11000 ~/ kFrameMs; i++) {
     await _emit(tester, source, pushUpPose(1));
   }
   expect(find.text('GET READY'), findsNothing,

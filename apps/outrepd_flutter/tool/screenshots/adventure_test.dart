@@ -213,7 +213,8 @@ void main() {
       await tester.pump(const Duration(milliseconds: kFrameMs));
     }
 
-    for (var i = 0; i < 70; i++) {
+    // Through the ten second count down to the start.
+    for (var i = 0; i < 11000 ~/ kFrameMs; i++) {
       await frame(pushUpPose(1));
     }
     // Three push-ups a second apart, and the fourth landing as the shot is

@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
+import '../career.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../theme.dart';
@@ -11,11 +14,31 @@ import '../widgets.dart';
 /// The record and the form first — the last ten as a strip of wins and losses
 /// you can read at a glance — then every match, a line each, under the day it
 /// was played.
-class MatchHistoryScreen extends StatelessWidget {
+///
+/// It asks the server for anything it is missing as it opens, and redraws as
+/// that arrives: it used to show only what this phone had written down, so a
+/// signed-in account's matches stayed hidden until it played a new one.
+class MatchHistoryScreen extends StatefulWidget {
   const MatchHistoryScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<MatchHistoryScreen> createState() => _MatchHistoryScreenState();
+}
+
+class _MatchHistoryScreenState extends State<MatchHistoryScreen> {
+  @override
+  void initState() {
+    super.initState();
+    unawaited(Career.instance.syncHistory());
+  }
+
+  @override
+  Widget build(BuildContext context) => ListenableBuilder(
+    listenable: Career.instance,
+    builder: (context, _) => _build(context),
+  );
+
+  Widget _build(BuildContext context) {
     final l = L.of(context);
 
     // A heading wherever the day it reads as changes: two matches a week
