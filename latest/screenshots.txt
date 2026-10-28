@@ -1,54 +1,327 @@
 
+lib/adventure/adventure.dart:138:12: Error: A value of type 'num' can't be returned from a function with return type 'double'.
+  return 5 + 55 * math.pow(share, 1.2);
+           ^
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart (failed)
+Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart":
+Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart: lib/adventure/adventure.dart:138:12: Error: A value of type 'num' can't be returned from a function with return type 'double'.
+  return 5 + 55 * math.pow(share, 1.2);
+           ^
+.
+
+::endgroup::
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart (failed after test completion)
+Error: The Dart compiler exited unexpectedly.
+package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+dart:async/zone_root.dart 48:47                  _rootRunUnary
+dart:async/zone.dart 816:35                      _CustomZone.runUnary
+dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+dart:async/future_impl.dart 977:13               Future._propagateToListeners
+dart:async/future_impl.dart 862:9                Future._propagateToListeners
+dart:async/future_impl.dart 720:5                Future._completeWithValue
+dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+dart:async/zone_root.dart 35:13                  _rootRun
+dart:async/zone.dart 810:35                      _CustomZone.run
+dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+::endgroup::
+lib/adventure/adventure.dart:138:12: Error: A value of type 'num' can't be returned from a function with return type 'double'.
+  return 5 + 55 * math.pow(share, 1.2);
+           ^
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart (failed)
+Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart":
+Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: lib/adventure/adventure.dart:138:12: Error: A value of type 'num' can't be returned from a function with return type 'double'.
+  return 5 + 55 * math.pow(share, 1.2);
+           ^
+.
+
+::endgroup::
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart (failed after test completion)
+Error: The Dart compiler exited unexpectedly.
+package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+dart:async/zone_root.dart 48:47                  _rootRunUnary
+dart:async/zone.dart 816:35                      _CustomZone.runUnary
+dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+dart:async/future_impl.dart 977:13               Future._propagateToListeners
+dart:async/future_impl.dart 862:9                Future._propagateToListeners
+dart:async/future_impl.dart 720:5                Future._completeWithValue
+dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+dart:async/zone_root.dart 35:13                  _rootRun
+dart:async/zone.dart 810:35                      _CustomZone.run
+dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+::endgroup::
+lib/adventure/adventure.dart:138:12: Error: A value of type 'num' can't be returned from a function with return type 'double'.
+  return 5 + 55 * math.pow(share, 1.2);
+           ^
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart (failed)
+Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart":
+Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: lib/adventure/adventure.dart:138:12: Error: A value of type 'num' can't be returned from a function with return type 'double'.
+  return 5 + 55 * math.pow(share, 1.2);
+           ^
+.
+
+::endgroup::
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart (failed after test completion)
+Error: The Dart compiler exited unexpectedly.
+package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+dart:async/zone_root.dart 48:47                  _rootRunUnary
+dart:async/zone.dart 816:35                      _CustomZone.runUnary
+dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+dart:async/future_impl.dart 977:13               Future._propagateToListeners
+dart:async/future_impl.dart 862:9                Future._propagateToListeners
+dart:async/future_impl.dart 720:5                Future._completeWithValue
+dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+dart:async/zone_root.dart 35:13                  _rootRun
+dart:async/zone.dart 810:35                      _CustomZone.run
+dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+::endgroup::
 ::group::✅ Passing tests
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart: sign_in_entry
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: match
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart: sign_in_sign_up
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart: sign_in_choose_name
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart: sign_in_log_in
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: match with the bar
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: friends
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: ranks this month
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: ranks top players
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: profile
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/promo_image_test.dart: promo image pro 1024
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: profile recent
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: settings
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/review_paywall_test.dart: app review paywall 1320x2868 (variant: TargetPlatform.iOS)
+lib/adventure/adventure.dart:138:12: Error: A value of type 'num' can't be returned from a function with return type 'double'.
+  return 5 + 55 * math.pow(share, 1.2);
+           ^
+::endgroup::
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/review_paywall_test.dart (failed)
+Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/review_paywall_test.dart":
+Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/review_paywall_test.dart: lib/adventure/adventure.dart:138:12: Error: A value of type 'num' can't be returned from a function with return type 'double'.
+  return 5 + 55 * math.pow(share, 1.2);
+           ^
+.
+
+::endgroup::
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart (failed after test completion)
+Error: The Dart compiler exited unexpectedly.
+package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+dart:async/zone_root.dart 48:47                  _rootRunUnary
+dart:async/zone.dart 816:35                      _CustomZone.runUnary
+dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+dart:async/future_impl.dart 977:13               Future._propagateToListeners
+dart:async/future_impl.dart 862:9                Future._propagateToListeners
+dart:async/future_impl.dart 720:5                Future._completeWithValue
+dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+dart:async/zone_root.dart 35:13                  _rootRun
+dart:async/zone.dart 810:35                      _CustomZone.run
+dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+::endgroup::
+lib/adventure/adventure.dart:138:12: Error: A value of type 'num' can't be returned from a function with return type 'double'.
+  return 5 + 55 * math.pow(share, 1.2);
+           ^
+::group::✅ Passing tests
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/match_card_test.dart: match card won story
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/match_card_test.dart: match card won post
+::endgroup::
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart (failed)
+Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart":
+Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: lib/adventure/adventure.dart:138:12: Error: A value of type 'num' can't be returned from a function with return type 'double'.
+  return 5 + 55 * math.pow(share, 1.2);
+           ^
+.
+
+::endgroup::
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart (failed after test completion)
+Error: The Dart compiler exited unexpectedly.
+package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+dart:async/zone_root.dart 48:47                  _rootRunUnary
+dart:async/zone.dart 816:35                      _CustomZone.runUnary
+dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+dart:async/future_impl.dart 977:13               Future._propagateToListeners
+dart:async/future_impl.dart 862:9                Future._propagateToListeners
+dart:async/future_impl.dart 720:5                Future._completeWithValue
+dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+dart:async/zone_root.dart 35:13                  _rootRun
+dart:async/zone.dart 810:35                      _CustomZone.run
+dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+::endgroup::
+::group::✅ Passing tests
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/match_card_test.dart: match card lost story
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/match_card_test.dart: match card lost post
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 01-home 1080x1920
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 02-ranks 1080x1920
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/placement_test.dart: onboarding placement dark
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/placement_test.dart: onboarding placement light
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 03-friends 1080x1920
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 04-otherprofile 1080x1920
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 05-profile 1080x1920
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 06-road 1080x1920
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 07-won 1080x1920
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 08-awards 1080x1920
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: win
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: loss
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 01-home 1320x2868
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: rematch asked
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: promotion
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 02-ranks 1320x2868
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: placed
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: level up
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: level card
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 03-friends 1320x2868
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 04-otherprofile 1320x2868
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 05-profile 1320x2868
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 06-road 1320x2868
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 07-won 1320x2868
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 08-awards 1320x2868
+lib/adventure/adventure.dart:138:12: Error: A value of type 'num' can't be returned from a function with return type 'double'.
+  return 5 + 55 * math.pow(share, 1.2);
+           ^
+::endgroup::
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/placement_test.dart (failed)
+Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/placement_test.dart":
+Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/placement_test.dart: lib/adventure/adventure.dart:138:12: Error: A value of type 'num' can't be returned from a function with return type 'double'.
+  return 5 + 55 * math.pow(share, 1.2);
+           ^
+.
+
+::endgroup::
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart (failed after test completion)
+Error: The Dart compiler exited unexpectedly.
+package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+dart:async/zone_root.dart 48:47                  _rootRunUnary
+dart:async/zone.dart 816:35                      _CustomZone.runUnary
+dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+dart:async/future_impl.dart 977:13               Future._propagateToListeners
+dart:async/future_impl.dart 862:9                Future._propagateToListeners
+dart:async/future_impl.dart 720:5                Future._completeWithValue
+dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+dart:async/zone_root.dart 35:13                  _rootRun
+dart:async/zone.dart 810:35                      _CustomZone.run
+dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+::endgroup::
+lib/adventure/adventure.dart:138:12: Error: A value of type 'num' can't be returned from a function with return type 'double'.
+  return 5 + 55 * math.pow(share, 1.2);
+           ^
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart (failed)
+Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart":
+Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: lib/adventure/adventure.dart:138:12: Error: A value of type 'num' can't be returned from a function with return type 'double'.
+  return 5 + 55 * math.pow(share, 1.2);
+           ^
+.
+
+::endgroup::
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart (failed after test completion)
+Error: The Dart compiler exited unexpectedly.
+package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+dart:async/zone_root.dart 48:47                  _rootRunUnary
+dart:async/zone.dart 816:35                      _CustomZone.runUnary
+dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+dart:async/future_impl.dart 977:13               Future._propagateToListeners
+dart:async/future_impl.dart 862:9                Future._propagateToListeners
+dart:async/future_impl.dart 720:5                Future._completeWithValue
+dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+dart:async/zone_root.dart 35:13                  _rootRun
+dart:async/zone.dart 810:35                      _CustomZone.run
+dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+::endgroup::
+::group::✅ Passing tests
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/history_test.dart: match history
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/onboarding_idea_test.dart: onboarding idea
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/month_board_test.dart: month board
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/month_board_test.dart: season over
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_en_test.dart: paywall en small
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_en_test.dart: paywall en tall
+lib/adventure/adventure.dart:138:12: Error: A value of type 'num' can't be returned from a function with return type 'double'.
+  return 5 + 55 * math.pow(share, 1.2);
+           ^
+::endgroup::
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/onboarding_idea_test.dart (failed)
+Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/onboarding_idea_test.dart":
+Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/onboarding_idea_test.dart: lib/adventure/adventure.dart:138:12: Error: A value of type 'num' can't be returned from a function with return type 'double'.
+  return 5 + 55 * math.pow(share, 1.2);
+           ^
+.
+
+::endgroup::
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart (failed after test completion)
+Error: The Dart compiler exited unexpectedly.
+package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+dart:async/zone_root.dart 48:47                  _rootRunUnary
+dart:async/zone.dart 816:35                      _CustomZone.runUnary
+dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+dart:async/future_impl.dart 977:13               Future._propagateToListeners
+dart:async/future_impl.dart 862:9                Future._propagateToListeners
+dart:async/future_impl.dart 720:5                Future._completeWithValue
+dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+dart:async/zone_root.dart 35:13                  _rootRun
+dart:async/zone.dart 810:35                      _CustomZone.run
+dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+::endgroup::
+lib/adventure/adventure.dart:138:12: Error: A value of type 'num' can't be returned from a function with return type 'double'.
+  return 5 + 55 * math.pow(share, 1.2);
+           ^
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/month_board_test.dart (failed)
+Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/month_board_test.dart":
+Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/month_board_test.dart: lib/adventure/adventure.dart:138:12: Error: A value of type 'num' can't be returned from a function with return type 'double'.
+  return 5 + 55 * math.pow(share, 1.2);
+           ^
+.
+
+::endgroup::
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart (failed after test completion)
+Error: The Dart compiler exited unexpectedly.
+package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+dart:async/zone_root.dart 48:47                  _rootRunUnary
+dart:async/zone.dart 816:35                      _CustomZone.runUnary
+dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+dart:async/future_impl.dart 977:13               Future._propagateToListeners
+dart:async/future_impl.dart 862:9                Future._propagateToListeners
+dart:async/future_impl.dart 720:5                Future._completeWithValue
+dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+dart:async/zone_root.dart 35:13                  _rootRun
+dart:async/zone.dart 810:35                      _CustomZone.run
+dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+::endgroup::
+lib/adventure/adventure.dart:138:12: Error: A value of type 'num' can't be returned from a function with return type 'double'.
+  return 5 + 55 * math.pow(share, 1.2);
+           ^
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_en_test.dart (failed)
+Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_en_test.dart":
+Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_en_test.dart: lib/adventure/adventure.dart:138:12: Error: A value of type 'num' can't be returned from a function with return type 'double'.
+  return 5 + 55 * math.pow(share, 1.2);
+           ^
+.
+
+::endgroup::
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart (failed after test completion)
+Error: The Dart compiler exited unexpectedly.
+package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+dart:async/zone_root.dart 48:47                  _rootRunUnary
+dart:async/zone.dart 816:35                      _CustomZone.runUnary
+dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+dart:async/future_impl.dart 977:13               Future._propagateToListeners
+dart:async/future_impl.dart 862:9                Future._propagateToListeners
+dart:async/future_impl.dart 720:5                Future._completeWithValue
+dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+dart:async/zone_root.dart 35:13                  _rootRun
+dart:async/zone.dart 810:35                      _CustomZone.run
+dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
 ::endgroup::
 ::group::✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/live_match_test.dart: store live match 1320x2868
 Could not keep the screen: PlatformException(channel-error, Unable to establish connection on channel: "dev.flutter.pigeon.wakelock_plus_platform_interface.WakelockPlusApi.toggle"., null, null)
@@ -57,4 +330,4 @@ Could not keep the screen: PlatformException(channel-error, Unable to establish 
 Could not keep the screen: PlatformException(channel-error, Unable to establish connection on channel: "dev.flutter.pigeon.wakelock_plus_platform_interface.WakelockPlusApi.toggle"., null, null)
 ::endgroup::
 
-🎉 51 tests passed.
+::error::8 tests passed, 10 failed.

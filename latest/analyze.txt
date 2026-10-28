@@ -1,2 +1,9 @@
 Analyzing outrepd_flutter...                                    
-No issues found! (ran in 18.0s)
+
+  error • A value of type 'num' can't be returned from the function 'parReps' because it has a return type of 'double' • lib/adventure/adventure.dart:138:10 • return_of_invalid_type
+warning • The '!' will have no effect because the receiver can't be null. Try removing the '!' operator • lib/screens/adventure_fight.dart:476:24 • unnecessary_non_null_assertion
+warning • A value for optional parameter 'height' isn't ever given. Try removing the unused parameter • lib/screens/adventure_map.dart:152:65 • unused_element_parameter
+warning • A value for optional parameter 'keyboardType' isn't ever given. Try removing the unused parameter • lib/screens/auth_entry.dart:222:10 • unused_element_parameter
+warning • A value for optional parameter 'onSubmitted' isn't ever given. Try removing the unused parameter • lib/screens/auth_entry.dart:224:10 • unused_element_parameter
+
+5 issues found. (ran in 18.7s)
