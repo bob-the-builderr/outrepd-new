@@ -174,6 +174,7 @@ psql:/home/runner/work/_temp/install.sql:4797: NOTICE:  relation "season_closing
 psql:/home/runner/work/_temp/install.sql:4947: NOTICE:  relation "beta_testers" already exists, skipping
 psql:/home/runner/work/_temp/install.sql:4955: NOTICE:  relation "beta_tester_grants" already exists, skipping
 psql:/home/runner/work/_temp/install.sql:5059: NOTICE:  relation "adventure_progress" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:5150: NOTICE:  relation "rewards_progress" already exists, skipping
 installed twice
 CREATE FUNCTION
 CREATE FUNCTION
@@ -350,12 +351,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- ceed3f38-fa44-492f-942a-88468a09131f
+ 952364e3-981f-418d-82ad-2666fcb62d41
 (1 row)
 
               set_config              
 --------------------------------------
- 90f85946-fd91-48cc-8232-17b99b215a70
+ 6040f7a2-fb96-4b4b-baa6-059115b9355a
 (1 row)
 
  as_user 
@@ -397,12 +398,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- ceed3f38-fa44-492f-942a-88468a09131f
+ 952364e3-981f-418d-82ad-2666fcb62d41
 (1 row)
 
               set_config              
 --------------------------------------
- fdc2037d-94db-4868-9456-402682c6969b
+ 7974e630-39e8-44ff-a73d-366f8b8813fd
 (1 row)
 
  as_user 
@@ -480,7 +481,7 @@ SET
 RESET
               set_config              
 --------------------------------------
- 11e5594e-12a5-4331-bf58-556d083ec4ee
+ 4bba975d-39c8-4c31-93d0-fa1e6571a41e
 (1 row)
 
  pg_sleep 
@@ -535,12 +536,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- c1b1d2ec-7662-4242-bdaf-821b2aaf39a4
+ 90b6a22f-a065-4804-8195-23dbcac44ca5
 (1 row)
 
               set_config              
 --------------------------------------
- c08d9e25-0422-4449-bb82-6ec2ba16eba9
+ a95ace6e-ecbb-49aa-bf2c-66dae97518de
 (1 row)
 
  as_user 
@@ -551,7 +552,7 @@ RESET
 SET
                           settle_duel                           
 ----------------------------------------------------------------
- (77493223-2dca-46ab-b063-37e942d5f01d,t,0,0,0,0,1,0,1,1,5,1,f)
+ (a0326758-9767-4f57-acae-3ab769114b52,t,0,0,0,0,1,0,1,1,5,1,f)
 (1 row)
 
 RESET
@@ -922,7 +923,7 @@ RESET
 SET
              invite_live              
 --------------------------------------
- a4c850b8-7e58-4b6b-9f2b-6170376f42d6
+ 09aed127-9f55-408e-bce0-203ba150a7b6
 (1 row)
 
 RESET
@@ -947,12 +948,12 @@ RESET
 SET
              invite_live              
 --------------------------------------
- 238d1ca6-cf24-4bb5-8d25-d87ab93d1292
+ 9d4a33c0-fb23-42dc-8ed7-081e45ee6c42
 (1 row)
 
              invite_live              
 --------------------------------------
- 88ad1c7f-d68e-494a-9345-d534f1147cac
+ d9c0f663-b452-4713-a6db-ad4b5249e808
 (1 row)
 
 psql:tool/db/security_test.sql:457: NOTICE:  refused, as it should be — a fourth live invite in ten minutes: too many invites, wait a few minutes
@@ -1142,14 +1143,14 @@ INSERT 0 2
 INSERT 0 1
               set_config              
 --------------------------------------
- 1bc7ad8d-48a2-4a5c-a61f-d17b04cb50d7
+ 7235d529-a648-4120-98ff-9d00928a0dab
 (1 row)
 
 INSERT 0 1
 INSERT 0 1
               set_config              
 --------------------------------------
- e4f9630a-9484-4069-9c7e-006142d9bffa
+ 83860db4-520c-4169-9074-49df4f1a9042
 (1 row)
 
  as_user 
@@ -1237,7 +1238,7 @@ UPDATE 1
 INSERT 0 1
               set_config              
 --------------------------------------
- 15caec00-dc2c-48cf-aa45-881422567405
+ 1578d62e-2547-4844-adc2-a84e16888f82
 (1 row)
 
  as_user 
@@ -1326,7 +1327,7 @@ DELETE 1
 INSERT 0 1
               set_config              
 --------------------------------------
- a135f1b3-f179-42f9-9c6d-f07c32b47be9
+ 5925425f-5929-411a-ac4a-b514223acc92
 (1 row)
 
  as_user 
@@ -1478,7 +1479,7 @@ RESET
 INSERT 0 1
               set_config              
 --------------------------------------
- 0e873f5a-fab6-471e-a453-2444a5e0fb43
+ aba63f17-2b6e-4b6b-8ae6-d07d65bc96ef
 (1 row)
 
  as_user 
@@ -1546,7 +1547,7 @@ RESET
 
               set_config              
 --------------------------------------
- 898eae4e-0564-4bec-8fe4-305c793d2869
+ a2a5c49a-4b84-45ce-bcc8-d4378e4717c1
 (1 row)
 
  as_user 

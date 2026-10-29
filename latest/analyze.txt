@@ -1,2 +1,5 @@
 Analyzing outrepd_flutter...                                    
-No issues found! (ran in 15.1s)
+
+  error • The argument type 'Object?' can't be assigned to the parameter type 'String'.  • lib/rewards.dart:816:22 • argument_type_not_assignable
+
+1 issue found. (ran in 13.3s)
