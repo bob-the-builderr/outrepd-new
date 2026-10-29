@@ -1,62 +1,62 @@
-asked       2026-10-26 23:45 UTC
-en-US    name 24  subtitle 30  keywords  98  promo 148  description 2126
-en-GB    name 24  subtitle 30  keywords  98  promo 148  description 2126
-en-AU    name 24  subtitle 30  keywords  98  promo 148  description 2126
-en-CA    name 24  subtitle 30  keywords  98  promo 148  description 2126
-de-DE    name 24  subtitle 30  keywords  95  promo 162  description 2481
-fr-FR    name 24  subtitle 30  keywords  98  promo 157  description 2401
-fr-CA    name 24  subtitle 30  keywords  98  promo 157  description 2401
-es-ES    name 24  subtitle 30  keywords 100  promo 156  description 2282
-es-MX    name 24  subtitle 27  keywords  96  promo 150  description 2292
-it       name 24  subtitle 26  keywords  95  promo 153  description 2334
-pt-BR    name 24  subtitle 30  keywords  97  promo 155  description 2226
-pt-PT    name 24  subtitle 28  keywords  95  promo 152  description 2241
-ru       name 24  subtitle 29  keywords  91  promo 157  description 2227
-tr       name 24  subtitle 29  keywords  96  promo 140  description 2104
-ja       name 24  subtitle 18  keywords  70  promo  70  description 1092
-ko       name 24  subtitle 22  keywords  55  promo  85  description 1181
-zh-Hans  name 24  subtitle 13  keywords  61  promo  54  description 799
-zh-Hant  name 24  subtitle 14  keywords  57  promo  54  description 804
-hi       name 24  subtitle 28  keywords  90  promo 136  description 2078
-id       name 24  subtitle 30  keywords  98  promo 157  description 2300
-ca       name 24  subtitle 25  keywords  95  promo 155  description 786
-nl-NL    name 24  subtitle 29  keywords 100  promo 159  description 792
-sv       name 24  subtitle 29  keywords  94  promo 151  description 765
-no       name 24  subtitle 25  keywords  98  promo 155  description 761
-da       name 24  subtitle 30  keywords  98  promo 154  description 750
-fi       name 24  subtitle 29  keywords  98  promo 163  description 752
-pl       name 24  subtitle 30  keywords  93  promo 162  description 795
-cs       name 24  subtitle 29  keywords  88  promo 158  description 730
-sk       name 24  subtitle 29  keywords  87  promo 168  description 752
-hu       name 24  subtitle 27  keywords  94  promo 158  description 803
-ro       name 24  subtitle 29  keywords  96  promo 163  description 808
-hr       name 24  subtitle 29  keywords  92  promo 166  description 761
-sl-SI    name 24  subtitle 27  keywords  92  promo 161  description 734
-el       name 24  subtitle 28  keywords  99  promo 153  description 813
-uk       name 24  subtitle 30  keywords  93  promo 142  description 801
-th       name 24  subtitle 24  keywords  79  promo 133  description 650
-vi       name 24  subtitle 30  keywords  92  promo 141  description 757
-ms       name 24  subtitle 26  keywords  96  promo 169  description 822
-ar-SA    name 24  subtitle 29  keywords  78  promo 123  description 631
-he       name 24  subtitle 30  keywords  72  promo 123  description 610
-bn-BD    name 24  subtitle 27  keywords  86  promo 146  description 743
-ur-PK    name 24  subtitle 27  keywords  69  promo 134  description 701
-gu-IN    name 24  subtitle 30  keywords  73  promo 132  description 688
-kn-IN    name 24  subtitle 28  keywords  79  promo 147  description 760
-ml-IN    name 24  subtitle 27  keywords  79  promo 157  description 853
-mr-IN    name 24  subtitle 27  keywords  73  promo 142  description 731
-or-IN    name 24  subtitle 27  keywords  72  promo 147  description 775
-pa-IN    name 24  subtitle 30  keywords  72  promo 140  description 746
-ta-IN    name 24  subtitle 29  keywords  74  promo 153  description 876
-te-IN    name 24  subtitle 27  keywords  75  promo 147  description 787
+asked       2026-10-29 15:19 UTC
+en-US    name 24  subtitle 30  keywords  98  promo 148  description 2503
+en-GB    name 24  subtitle 30  keywords  98  promo 148  description 2503
+en-AU    name 24  subtitle 30  keywords  98  promo 148  description 2503
+en-CA    name 24  subtitle 30  keywords  98  promo 148  description 2503
+de-DE    name 24  subtitle 30  keywords  95  promo 162  description 2927
+fr-FR    name 24  subtitle 30  keywords  98  promo 157  description 2826
+fr-CA    name 24  subtitle 30  keywords  98  promo 157  description 2826
+es-ES    name 24  subtitle 30  keywords 100  promo 156  description 2711
+es-MX    name 24  subtitle 27  keywords  96  promo 150  description 2722
+it       name 24  subtitle 26  keywords  95  promo 153  description 2758
+pt-BR    name 24  subtitle 30  keywords  97  promo 155  description 2643
+pt-PT    name 24  subtitle 28  keywords  95  promo 152  description 2658
+ru       name 24  subtitle 29  keywords  91  promo 157  description 2618
+tr       name 24  subtitle 29  keywords  96  promo 140  description 2483
+ja       name 24  subtitle 18  keywords  70  promo  70  description 1288
+ko       name 24  subtitle 22  keywords  55  promo  85  description 1425
+zh-Hans  name 24  subtitle 13  keywords  61  promo  54  description 939
+zh-Hant  name 24  subtitle 14  keywords  57  promo  54  description 945
+hi       name 24  subtitle 28  keywords  90  promo 136  description 2497
+id       name 24  subtitle 30  keywords  98  promo 157  description 2749
+ca       name 24  subtitle 25  keywords  95  promo 155  description 1012
+nl-NL    name 24  subtitle 29  keywords 100  promo 159  description 1035
+sv       name 24  subtitle 29  keywords  94  promo 151  description 985
+no       name 24  subtitle 25  keywords  98  promo 155  description 989
+da       name 24  subtitle 30  keywords  98  promo 154  description 992
+fi       name 24  subtitle 29  keywords  98  promo 163  description 971
+pl       name 24  subtitle 30  keywords  93  promo 162  description 1013
+cs       name 24  subtitle 29  keywords  88  promo 158  description 946
+sk       name 24  subtitle 29  keywords  87  promo 168  description 976
+hu       name 24  subtitle 27  keywords  94  promo 158  description 1030
+ro       name 24  subtitle 29  keywords  96  promo 163  description 1016
+hr       name 24  subtitle 29  keywords  92  promo 166  description 974
+sl-SI    name 24  subtitle 27  keywords  92  promo 161  description 945
+el       name 24  subtitle 28  keywords  99  promo 153  description 1065
+uk       name 24  subtitle 30  keywords  93  promo 142  description 1016
+th       name 24  subtitle 24  keywords  79  promo 133  description 821
+vi       name 24  subtitle 30  keywords  92  promo 141  description 985
+ms       name 24  subtitle 26  keywords  96  promo 169  description 1064
+ar-SA    name 24  subtitle 29  keywords  78  promo 123  description 801
+he       name 24  subtitle 30  keywords  72  promo 123  description 787
+bn-BD    name 24  subtitle 27  keywords  86  promo 146  description 962
+ur-PK    name 24  subtitle 27  keywords  69  promo 134  description 921
+gu-IN    name 24  subtitle 30  keywords  73  promo 132  description 892
+kn-IN    name 24  subtitle 28  keywords  79  promo 147  description 1008
+ml-IN    name 24  subtitle 27  keywords  79  promo 157  description 1102
+mr-IN    name 24  subtitle 27  keywords  73  promo 142  description 942
+or-IN    name 24  subtitle 27  keywords  72  promo 147  description 985
+pa-IN    name 24  subtitle 30  keywords  72  promo 140  description 976
+ta-IN    name 24  subtitle 29  keywords  74  promo 153  description 1141
+te-IN    name 24  subtitle 27  keywords  75  promo 147  description 1017
 50 locales, 0 problems
 app OUTREPD: Push-up Battles (6817853725)
-version 1.1.4  PREPARE_FOR_SUBMISSION
+version 1.1.5  PREPARE_FOR_SUBMISSION
+version 1.1.4  READY_FOR_SALE
 version 1.1.3  READY_FOR_SALE
 version 1.1.2  READY_FOR_SALE
-version 1.1.1  READY_FOR_SALE
-app info ed665173-b420-4cba-9341-439feb88e527  READY_FOR_SALE
-app info 61c1a80c-0ffb-43d8-81e3-013dedc2fc5d  PREPARE_FOR_SUBMISSION
+app info 61c1a80c-0ffb-43d8-81e3-013dedc2fc5d  READY_FOR_SALE
+app info fc57482e-e676-4159-b7b7-fef63103478d  PREPARE_FOR_SUBMISSION
 support url https://www.outrepd.com/contact
   ar-SA: verified
   bn-BD: verified
