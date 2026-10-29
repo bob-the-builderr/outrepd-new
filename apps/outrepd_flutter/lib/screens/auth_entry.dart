@@ -338,7 +338,12 @@ class _HeroCrests extends StatelessWidget {
   Widget build(BuildContext context) {
     final top = kTiers.length - 1;
     const master = 196.0;
-    return SizedBox(
+    // Scaled down whole on a phone narrower than the box: squeezed instead,
+    // the crests kept their places in a narrower box and the picture sat off
+    // to the right.
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: SizedBox(
       width: _width,
       height: _height,
       child: Stack(
@@ -359,6 +364,7 @@ class _HeroCrests extends StatelessWidget {
             child: TierBadge(tierIndex: top, size: master, glow: false),
           ),
         ],
+      ),
       ),
     );
   }

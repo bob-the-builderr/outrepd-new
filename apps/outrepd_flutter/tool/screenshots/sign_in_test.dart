@@ -78,4 +78,22 @@ void main() {
       debugOfferAllSocialSignIn = false;
     });
   }
+
+  // A narrow Android phone, where the crests used to sit off to the right.
+  testWidgets('sign_in_entry_360', (tester) async {
+    tester.view.physicalSize = const Size(360 * 3, 800 * 3);
+    tester.view.devicePixelRatio = 3;
+    tester.view.padding = const FakeViewPadding(top: 24 * 3);
+    addTearDown(tester.view.reset);
+    debugOfferAllSocialSignIn = true;
+
+    await tester.pumpWidget(_app(const AuthEntryScreen()));
+    await tester.pumpAndSettle();
+    await expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile('goldens/sign_in_entry_360.png'),
+    );
+
+    debugOfferAllSocialSignIn = false;
+  });
 }
