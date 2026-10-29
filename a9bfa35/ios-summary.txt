@@ -1,0 +1,11 @@
+commit      a9bfa355baa8289b187a46b115985cfeaa933d3f
+platform    ios
+build       256
+compiled    success
+signed      true
+uploaded    success
+paywall key yes — RevenueCat's public App Store key
+ads no — add ADMOB_IOS_APP_ID and ADMOB_IOS_INTERSTITIAL under Repository secrets
+firebase    true — push notifications and crash reports are in
+google      true
+run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/40806199773
