@@ -16,7 +16,6 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 import '../avatar.dart';
 import '../backend/backend.dart';
@@ -723,9 +722,6 @@ class _WeekChart extends StatelessWidget {
     final total = days.fold(0, (sum, d) => sum + d);
     final peak = days.fold(0, (m, d) => d > m ? d : m);
 
-    // Narrow weekday letters in the reader's own language and week order.
-    final locale = Localizations.localeOf(context).toString();
-    final format = DateFormat.E(locale);
     final today = DateTime.now();
 
     return Padding(
@@ -773,13 +769,12 @@ class _WeekChart extends StatelessWidget {
                   if (i > 0) const SizedBox(width: 6),
                   Expanded(
                     child: Text(
-                      _initial(
-                        format.format(
-                          DateTime(
-                            today.year,
-                            today.month,
-                            today.day - (days.length - 1 - i),
-                          ),
+                      dayLetter(
+                        context,
+                        DateTime(
+                          today.year,
+                          today.month,
+                          today.day - (days.length - 1 - i),
                         ),
                       ),
                       textAlign: TextAlign.center,
@@ -801,12 +796,6 @@ class _WeekChart extends StatelessWidget {
 
   /// The first character of the weekday name.
   ///
-  /// Latin scripts shorten to a letter; Japanese and Chinese already name the
-  /// day in one character and would lose it entirely if this took a substring
-  /// of a longer form, so it takes the first *character* rather than a slice
-  /// of bytes.
-  String _initial(String weekday) =>
-      weekday.isEmpty ? '' : weekday.characters.first;
 }
 
 class _DayBar extends StatelessWidget {

@@ -12,7 +12,6 @@ library;
 
 import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../app_bottom_nav.dart' show TablerIcon;
 import '../connection.dart';
@@ -548,13 +547,8 @@ class _FilledAction extends StatelessWidget {
 class _WeekRow extends StatelessWidget {
   const _WeekRow();
 
-  /// The first character of the weekday name, as the profile's chart writes it.
-  static String _initial(String weekday) =>
-      weekday.isEmpty ? '' : weekday.characters.first;
-
   @override
   Widget build(BuildContext context) {
-    final format = DateFormat.E(Localizations.localeOf(context).toString());
     // Calendar days, as Career.thisWeekReps counts them: across a clock
     // change a day is 23 or 25 hours, and adding hours named Thursday twice.
     final now = DateTime.now();
@@ -580,8 +574,9 @@ class _WeekRow extends StatelessWidget {
                   child: _DayDot(
                     trained: reps[i] > 0,
                     today: i == today,
-                    letter: _initial(
-                      format.format(DateTime(now.year, now.month, monday + i)),
+                    letter: dayLetter(
+                      context,
+                      DateTime(now.year, now.month, monday + i),
                     ),
                   ),
                 ),

@@ -283,6 +283,17 @@ String localNumber(BuildContext context, num n) {
   return NumberFormat.decimalPattern(locale.toString()).format(n);
 }
 
+/// A day's one-letter name as the reader's language writes it: M T W in
+/// English, 一 二 三 in Chinese, 月 火 水 in Japanese. The language's own
+/// narrow names, not the first character of the short ones: every Chinese
+/// short name begins 周, and a week of them read 周 seven times.
+String dayLetter(BuildContext context, DateTime day) {
+  final locale = Localizations.localeOf(context).toString();
+  // DateTime counts Monday as 1 and Sunday as 7; the symbols start on Sunday.
+  final symbols = DateFormat.E(locale).dateSymbols;
+  return symbols.STANDALONENARROWWEEKDAYS[day.weekday % 7];
+}
+
 /// What a screen says before it has anything to show.
 ///
 /// Every list in the app opened onto demo data, so nobody had seen these
