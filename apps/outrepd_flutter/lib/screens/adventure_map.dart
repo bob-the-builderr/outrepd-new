@@ -977,21 +977,28 @@ class _Armory extends StatelessWidget {
               style: TextStyle(color: colors.muted, fontSize: 14, height: 1.4),
             ),
             const SizedBox(height: 16),
-            GridView.count(
-              crossAxisCount: 2,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              childAspectRatio: 1.9,
-              children: [
-                for (final weapon in kWeapons)
-                  _ArmoryTile(
-                    weapon: weapon,
-                    owned: adventure.totalStars >= weapon.stars,
-                    inHand: weapon.index == inHand.index,
-                  ),
-              ],
+            LayoutBuilder(
+              builder: (context, box) => GridView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  // Twice as wide as tall, but never shorter than a tile in
+                  // hand whose name wraps: on a 360 point phone the ratio
+                  // alone left EQUIPPED no room.
+                  mainAxisExtent: math.max((box.maxWidth - 10) / 2 / 1.9, 92),
+                ),
+                children: [
+                  for (final weapon in kWeapons)
+                    _ArmoryTile(
+                      weapon: weapon,
+                      owned: adventure.totalStars >= weapon.stars,
+                      inHand: weapon.index == inHand.index,
+                    ),
+                ],
+              ),
             ),
           ],
         ),
