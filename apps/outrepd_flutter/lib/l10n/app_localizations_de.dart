@@ -2343,7 +2343,7 @@ class LDe extends L {
 
   @override
   String xpHow(String rep, String match) {
-    return '${rep} XP pro Wiederholung, ${match} pro Match';
+    return '${rep} XP pro Wiederholung, ${match} pro Sieg, nichts für eine Niederlage';
   }
 
   @override

@@ -3650,7 +3650,7 @@ abstract class L {
   /// No description provided for @calledOffBody.
   ///
   /// In en, this message translates to:
-  /// **'{name} didn\'t get into position in time. Nothing was recorded.'**
+  /// **'{name} didn\'t make it to the start. Nothing was recorded.'**
   String calledOffBody(String name);
 
   /// No description provided for @waitingForFinal.
@@ -4262,7 +4262,7 @@ abstract class L {
   /// No description provided for @xpHow.
   ///
   /// In en, this message translates to:
-  /// **'{rep} XP a rep, {match} a match'**
+  /// **'{rep} XP a rep, {match} a win, nothing for a loss'**
   String xpHow(String rep, String match);
 
   /// No description provided for @xpGained.

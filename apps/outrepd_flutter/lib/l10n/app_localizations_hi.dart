@@ -2336,7 +2336,7 @@ class LHi extends L {
 
   @override
   String xpHow(String rep, String match) {
-    return 'हर रेप पर ${rep} XP, हर मुक़ाबले पर ${match}';
+    return 'हर रेप पर ${rep} XP, हर जीत पर ${match}, हार पर कुछ नहीं';
   }
 
   @override

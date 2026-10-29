@@ -110,8 +110,9 @@ alter table profiles add column if not exists username_changed_at timestamptz;
 -- until then: the phone's own region fills the column in, and that is not a
 -- choice anybody made.
 alter table profiles add column if not exists country_changed_at timestamptz;
--- Experience: one for every rep of every set, twenty for every match played
--- (count_reps_of_set below; xp_for_duel, live.sql). Only ever goes up.
+-- Experience: one for every rep of every set, twenty for every match won, and
+-- nothing for a match lost (count_reps_of_set below; xp_for_duel, live.sql).
+-- Never lower than before a match.
 alter table profiles add column if not exists xp int not null default 0;
 
 -- The title this lifter wears beside their name, by its id in the app's list

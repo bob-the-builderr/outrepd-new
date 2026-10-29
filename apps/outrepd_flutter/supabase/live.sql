@@ -950,11 +950,13 @@ grant execute on function live_match_result(uuid) to authenticated;
 
 -- ──────────────────────────────────── XP ─────────────────────────────────────
 
--- Twenty XP for every match played, won or lost, ranked or friendly; the reps
--- themselves arrive with each set (count_reps_of_set, schema.sql). The side
--- of a duel that was only raced — a stored set somebody else took on — did
--- not play it, and is paid nothing for it. Deferred, as season_points is: a
--- live match names its duel only after the duel is written.
+-- Twenty XP for every match won, ranked or friendly, on top of its reps,
+-- which arrive with each set (count_reps_of_set, schema.sql). A lost match
+-- pays nothing: the reps its set paid when it was stored come back off. The
+-- side of a duel that was only raced — a stored set somebody else took on —
+-- did not play it, and is neither paid nor charged for it. Deferred, as
+-- season_points is: a live match names its duel only after the duel is
+-- written.
 create or replace function xp_for_duel()
 returns trigger
 language plpgsql
@@ -963,16 +965,28 @@ set search_path = public
 as $$
 declare
   d duels;
+  live boolean;
+  side record;
 begin
   select * into d from duels where id = new.id;
   if d.id is null then
     return null;
   end if;
+  live := exists (select 1 from live_matches m where m.duel = d.id);
   perform set_config('outrepd.settling', 'on', true);
-  update profiles set xp = xp + 20 where id = d.challenger;
-  if exists (select 1 from live_matches m where m.duel = d.id) then
-    update profiles set xp = xp + 20 where id = d.defender;
-  end if;
+  for side in
+    select d.challenger as id, d.challenger_set as set_id
+    union all
+    select d.defender, d.defender_set where live
+  loop
+    if d.winner is null or d.winner = side.id then
+      update profiles set xp = xp + 20 where id = side.id;
+    else
+      update profiles p set xp = greatest(p.xp - s.reps, 0)
+        from sets s
+       where s.id = side.set_id and p.id = side.id;
+    end if;
+  end loop;
   perform set_config('outrepd.settling', 'off', true);
   return null;
 end;
@@ -987,19 +1001,33 @@ create constraint trigger duels_xp
 revoke all on function xp_for_duel() from public, anon, authenticated;
 
 -- Accounts from before XP: what they would have earned, worked out from what
--- is kept — every rep of every set, and twenty for every match played. The
--- same sum the triggers keep, so running it again changes nothing. In a block
--- of its own, so the guard on profiles reads the flag for this update alone.
+-- is kept — every rep of every set, twenty for every match won, and the reps
+-- of every match lost taken back. The same sum the triggers keep, so running
+-- it again changes nothing; and it only ever raises a number, because XP
+-- never goes down: what matches lost before this rule paid stays paid.
+-- In a block of its own, so the guard on profiles reads the flag for this
+-- update alone.
 do $$
 begin
   perform set_config('outrepd.settling', 'on', true);
-  with earned as (
+  with played as (
+    select d.challenger as id, d.challenger_set as set_id, d.winner
+      from duels d
+    union all
+    select d.defender, d.defender_set, d.winner
+      from duels d
+      join live_matches m on m.duel = d.id
+  ), earned as (
     select p.id,
-           p.total_reps + 20 * (
-             (select count(*) from duels d where d.challenger = p.id)
-             + (select count(*) from duels d
-                  join live_matches m on m.duel = d.id
-                 where d.defender = p.id)
+           (p.total_reps
+            + 20 * (select count(*) from played x
+                     where x.id = p.id
+                       and (x.winner is null or x.winner = p.id))
+            - coalesce((select sum(s.reps) from played x
+                          join sets s on s.id = x.set_id
+                         where x.id = p.id
+                           and x.winner is not null
+                           and x.winner <> p.id), 0)
            )::int as xp
       from profiles p
   )
@@ -1007,7 +1035,7 @@ begin
      set xp = earned.xp
     from earned
    where earned.id = p.id
-     and p.xp is distinct from earned.xp;
+     and earned.xp > p.xp;
   perform set_config('outrepd.settling', 'off', true);
 end;
 $$;

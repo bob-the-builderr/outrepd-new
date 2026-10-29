@@ -711,7 +711,7 @@
   "levelShort": "Sv. {n}",
   "xpOf": "{into} / {span} XP",
   "xpToLevel": "Seviye {level} için {n} XP",
-  "xpHow": "Tekrar başına {rep} XP, düello başına {match}",
+  "xpHow": "Tekrar başına {rep} XP, galibiyet başına {match}, yenilgiye hiçbir şey",
   "xpGained": "+{n} XP",
   "xpForReps": "Tekrarlar için {n}",
   "xpForMatch": "Düello için {n}",

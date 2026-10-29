@@ -2342,7 +2342,7 @@ class LFr extends L {
 
   @override
   String xpHow(String rep, String match) {
-    return '${rep} XP par répétition, ${match} par duel';
+    return '${rep} XP par répétition, ${match} par victoire, rien pour une défaite';
   }
 
   @override

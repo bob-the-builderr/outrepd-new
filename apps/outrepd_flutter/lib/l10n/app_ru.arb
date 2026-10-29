@@ -711,7 +711,7 @@
   "levelShort": "Ур. {n}",
   "xpOf": "{into} / {span} XP",
   "xpToLevel": "{n} XP до уровня {level}",
-  "xpHow": "{rep} XP за повторение, {match} за матч",
+  "xpHow": "{rep} XP за повторение, {match} за победу, за поражение — ничего",
   "xpGained": "+{n} XP",
   "xpForReps": "{n} за повторения",
   "xpForMatch": "{n} за матч",

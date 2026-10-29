@@ -2291,7 +2291,7 @@ class LZh extends L {
 
   @override
   String xpHow(String rep, String match) {
-    return '每次 ${rep} XP，每场对决 ${match}';
+    return '每次 ${rep} XP，每场胜利 ${match}，输了不得 XP';
   }
 
   @override

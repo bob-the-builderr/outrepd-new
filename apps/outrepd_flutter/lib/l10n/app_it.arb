@@ -711,7 +711,7 @@
   "levelShort": "Liv. {n}",
   "xpOf": "{into} / {span} XP",
   "xpToLevel": "{n} XP al livello {level}",
-  "xpHow": "{rep} XP a ripetizione, {match} a sfida",
+  "xpHow": "{rep} XP a ripetizione, {match} a vittoria, niente per una sconfitta",
   "xpGained": "+{n} XP",
   "xpForReps": "{n} per le ripetizioni",
   "xpForMatch": "{n} per la sfida",

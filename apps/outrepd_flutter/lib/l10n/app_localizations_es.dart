@@ -2341,7 +2341,7 @@ class LEs extends L {
 
   @override
   String xpHow(String rep, String match) {
-    return '${rep} XP por repetición, ${match} por duelo';
+    return '${rep} XP por repetición, ${match} por victoria, nada por una derrota';
   }
 
   @override

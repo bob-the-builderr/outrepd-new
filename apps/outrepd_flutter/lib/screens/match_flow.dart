@@ -801,7 +801,9 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
         clean: depth >= kCleanDepth,
       );
     }
-    _xp = XpGain(before: xpBefore, after: demoProfile.xp, reps: reps);
+    final gain = XpGain(before: xpBefore, after: demoProfile.xp, reps: reps);
+    // A lost match pays no experience, and the result does not dwell on it.
+    _xp = gain.total > 0 ? gain : null;
     if (!mounted) return;
 
     setState(() {
@@ -908,11 +910,12 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       ranked: live.ranked,
       clean: scored.depth >= kCleanDepth,
     );
-    _xp = XpGain(
+    final gain = XpGain(
       before: xpBefore,
       after: demoProfile.xp,
       reps: scored.reps,
     );
+    _xp = gain.total > 0 ? gain : null;
     if (!mounted) return;
     setState(() => _stage = _afterRecorded);
     unawaited(_afterMonthPlace());

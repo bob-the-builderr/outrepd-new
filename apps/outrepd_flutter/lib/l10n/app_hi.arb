@@ -711,7 +711,7 @@
   "levelShort": "Lv {n}",
   "xpOf": "{into} / {span} XP",
   "xpToLevel": "लेवल {level} तक {n} XP",
-  "xpHow": "हर रेप पर {rep} XP, हर मुक़ाबले पर {match}",
+  "xpHow": "हर रेप पर {rep} XP, हर जीत पर {match}, हार पर कुछ नहीं",
   "xpGained": "+{n} XP",
   "xpForReps": "रेप्स के लिए {n}",
   "xpForMatch": "मुक़ाबले के लिए {n}",

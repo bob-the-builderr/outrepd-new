@@ -228,14 +228,16 @@ void main() {
       expect(demoProfile.xp, 18);
     });
 
-    test('a match is its reps and twenty, won or lost', () async {
+    test('a won match is its reps and twenty, a lost one nothing', () async {
       await career.recordDuel(
         yourReps: 14,
         theirReps: 20,
         opponent: 'iron_mike',
         opponentTier: 2,
       );
-      expect(demoProfile.xp, 14 + kXpPerMatch);
+      expect(demoProfile.xp, 0);
+      // The reps still count everywhere else.
+      expect(demoProfile.totalReps, 14);
       await career.recordDuel(
         yourReps: 9,
         theirReps: 3,
@@ -243,7 +245,14 @@ void main() {
         opponentTier: 2,
         ranked: false,
       );
-      expect(demoProfile.xp, 14 + 9 + 2 * kXpPerMatch);
+      expect(demoProfile.xp, 9 + kXpPerMatch);
+      await career.recordDuel(
+        yourReps: 11,
+        theirReps: 4,
+        opponent: 'iron_mike',
+        opponentTier: 2,
+      );
+      expect(demoProfile.xp, 9 + 11 + 2 * kXpPerMatch);
     });
 
     test('starting again starts it from nothing', () async {

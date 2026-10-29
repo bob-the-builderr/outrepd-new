@@ -2334,7 +2334,7 @@ class LEn extends L {
 
   @override
   String xpHow(String rep, String match) {
-    return '${rep} XP a rep, ${match} a match';
+    return '${rep} XP a rep, ${match} a win, nothing for a loss';
   }
 
   @override

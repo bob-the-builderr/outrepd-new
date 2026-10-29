@@ -2300,7 +2300,7 @@ class LJa extends L {
 
   @override
   String xpHow(String rep, String match) {
-    return '1回ごとに ${rep} XP、マッチごとに ${match}';
+    return '1回ごとに ${rep} XP、勝利ごとに ${match}、負けは 0';
   }
 
   @override

@@ -711,7 +711,7 @@
   "levelShort": "Nv. {n}",
   "xpOf": "{into} / {span} XP",
   "xpToLevel": "{n} XP para o nível {level}",
-  "xpHow": "{rep} XP por repetição, {match} por duelo",
+  "xpHow": "{rep} XP por repetição, {match} por vitória, nada por uma derrota",
   "xpGained": "+{n} XP",
   "xpForReps": "{n} pelas repetições",
   "xpForMatch": "{n} pelo duelo",

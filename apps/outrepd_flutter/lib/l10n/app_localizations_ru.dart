@@ -2336,7 +2336,7 @@ class LRu extends L {
 
   @override
   String xpHow(String rep, String match) {
-    return '${rep} XP за повторение, ${match} за матч';
+    return '${rep} XP за повторение, ${match} за победу, за поражение — ничего';
   }
 
   @override

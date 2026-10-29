@@ -2335,7 +2335,7 @@ class LId extends L {
 
   @override
   String xpHow(String rep, String match) {
-    return '${rep} XP per repetisi, ${match} per duel';
+    return '${rep} XP per repetisi, ${match} per kemenangan, tidak ada untuk kekalahan';
   }
 
   @override

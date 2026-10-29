@@ -2331,7 +2331,7 @@ class LTr extends L {
 
   @override
   String xpHow(String rep, String match) {
-    return 'Tekrar başına ${rep} XP, düello başına ${match}';
+    return 'Tekrar başına ${rep} XP, galibiyet başına ${match}, yenilgiye hiçbir şey';
   }
 
   @override

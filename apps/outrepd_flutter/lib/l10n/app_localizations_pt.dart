@@ -2338,7 +2338,7 @@ class LPt extends L {
 
   @override
   String xpHow(String rep, String match) {
-    return '${rep} XP por repetição, ${match} por duelo';
+    return '${rep} XP por repetição, ${match} por vitória, nada por uma derrota';
   }
 
   @override

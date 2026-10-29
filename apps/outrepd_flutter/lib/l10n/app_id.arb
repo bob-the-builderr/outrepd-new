@@ -711,7 +711,7 @@
   "levelShort": "Lv {n}",
   "xpOf": "{into} / {span} XP",
   "xpToLevel": "{n} XP lagi ke Level {level}",
-  "xpHow": "{rep} XP per repetisi, {match} per duel",
+  "xpHow": "{rep} XP per repetisi, {match} per kemenangan, tidak ada untuk kekalahan",
   "xpGained": "+{n} XP",
   "xpForReps": "{n} dari repetisi",
   "xpForMatch": "{n} dari duel",

@@ -227,7 +227,7 @@ class Career extends ChangeNotifier {
       // comparison taken afterwards always false.
       final previousBest = p.bestSet;
       _countReps(yourReps);
-      p.xp += kXpPerMatch;
+      _payForMatch(won: won, reps: yourReps);
       final record = MatchRecord(
         won: won,
         userReps: yourReps,
@@ -305,7 +305,7 @@ class Career extends ChangeNotifier {
 
     final newBest = yourReps > p.bestSet;
     _countReps(yourReps);
-    p.xp += kXpPerMatch;
+    _payForMatch(won: won, reps: yourReps);
 
     final record = MatchRecord(
       won: won,
@@ -389,7 +389,7 @@ class Career extends ChangeNotifier {
     _countReps(yourReps);
     // What xp_for_duel pays on the server, which the next read of the
     // profile brings back anyway.
-    p.xp += kXpPerMatch;
+    _payForMatch(won: settled.won, reps: yourReps);
 
     final record = MatchRecord(
       won: settled.won,
@@ -581,6 +581,18 @@ class Career extends ChangeNotifier {
     }
     _countReps(reps);
     await _afterSession(clean: clean);
+  }
+
+  /// What a match pays in experience on top of its reps: twenty more for a
+  /// win, and for a loss nothing at all — the reps _countReps just paid come
+  /// back off, as xp_for_duel takes them back on the server.
+  void _payForMatch({required bool won, required int reps}) {
+    final p = demoProfile;
+    if (won) {
+      p.xp += kXpPerMatch;
+    } else {
+      p.xp -= reps;
+    }
   }
 
   void _countReps(int reps) {

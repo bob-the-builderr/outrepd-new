@@ -1488,7 +1488,7 @@
       }
     }
   },
-  "xpHow": "{rep} XP a rep, {match} a match",
+  "xpHow": "{rep} XP a rep, {match} a win, nothing for a loss",
   "@xpHow": {
     "placeholders": {
       "rep": {

@@ -2341,7 +2341,7 @@ class LIt extends L {
 
   @override
   String xpHow(String rep, String match) {
-    return '${rep} XP a ripetizione, ${match} a sfida';
+    return '${rep} XP a ripetizione, ${match} a vittoria, niente per una sconfitta';
   }
 
   @override

@@ -711,7 +711,7 @@
   "levelShort": "Lv.{n}",
   "xpOf": "{into} / {span} XP",
   "xpToLevel": "レベル {level} まであと {n} XP",
-  "xpHow": "1回ごとに {rep} XP、マッチごとに {match}",
+  "xpHow": "1回ごとに {rep} XP、勝利ごとに {match}、負けは 0",
   "xpGained": "+{n} XP",
   "xpForReps": "回数で {n}",
   "xpForMatch": "マッチで {n}",

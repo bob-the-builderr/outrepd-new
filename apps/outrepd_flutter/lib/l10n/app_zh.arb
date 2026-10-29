@@ -711,7 +711,7 @@
   "levelShort": "Lv.{n}",
   "xpOf": "{into} / {span} XP",
   "xpToLevel": "距等级 {level} 还差 {n} XP",
-  "xpHow": "每次 {rep} XP，每场对决 {match}",
+  "xpHow": "每次 {rep} XP，每场胜利 {match}，输了不得 XP",
   "xpGained": "+{n} XP",
   "xpForReps": "次数 {n}",
   "xpForMatch": "对决 {n}",

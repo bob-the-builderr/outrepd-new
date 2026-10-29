@@ -2304,7 +2304,7 @@ class LKo extends L {
 
   @override
   String xpHow(String rep, String match) {
-    return '1회당 ${rep} XP, 대결당 ${match}';
+    return '1회당 ${rep} XP, 승리당 ${match}, 패배는 0';
   }
 
   @override
