@@ -173,8 +173,13 @@ void main() {
     await tester.pumpAndSettle();
 
     // It sits at the bottom, which is the point — everything checked daily is
-    // above it now — so the list has to be scrolled before it is built.
-    await tester.drag(find.byType(ListView), const Offset(0, -400));
+    // above it now — so the list has to be scrolled before it is built. As
+    // far as it takes, not a fixed distance: a longer line above moved it.
+    await tester.dragUntilVisible(
+      find.text('Awards'),
+      find.byType(ListView),
+      const Offset(0, -200),
+    );
     await tester.pumpAndSettle();
 
     expect(find.text('Awards'), findsOneWidget);

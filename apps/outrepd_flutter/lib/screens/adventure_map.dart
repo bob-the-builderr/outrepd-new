@@ -988,7 +988,7 @@ class _Armory extends StatelessWidget {
                   // Twice as wide as tall, but never shorter than a tile in
                   // hand whose name wraps: on a 360 point phone the ratio
                   // alone left EQUIPPED no room.
-                  mainAxisExtent: math.max((box.maxWidth - 10) / 2 / 1.9, 92),
+                  mainAxisExtent: math.max((box.maxWidth - 10) / 2 / 1.9, 100),
                 ),
                 children: [
                   for (final weapon in kWeapons)
