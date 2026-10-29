@@ -812,7 +812,8 @@ class Rewards extends ChangeNotifier {
     earlySessions = larger(earlySessions, number('earlySessions'));
     lateSessions = larger(lateSessions, number('lateSessions'));
     perfectWeeksCount = larger(perfectWeeksCount, number('perfectWeeks'));
-    for (final id in (held['earned'] as List?)?.whereType<String>() ?? const []) {
+    final titles = (held['earned'] as List?)?.whereType<String>();
+    for (final id in titles ?? const <String>[]) {
       if (earned.add(id)) changed = true;
     }
 
