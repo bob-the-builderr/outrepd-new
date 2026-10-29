@@ -6,60 +6,114 @@
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: map at a world gate
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: armory
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: match tab card
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: store map 1320x2868
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: store armory 1320x2868
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: store map 1080x1920
 ::endgroup::
-::group::✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: fight
-Could not keep the screen: PlatformException(channel-error, Unable to establish connection on channel: "dev.flutter.pigeon.wakelock_plus_platform_interface.WakelockPlusApi.toggle"., null, null)
+::group::❌ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: store armory 1080x1920 (failed)
+══╡ EXCEPTION CAUGHT BY RENDERING LIBRARY ╞═════════════════════════════════════════════════════════
+The following assertion was thrown during layout:
+A RenderFlex overflowed by 9.3 pixels on the bottom.
+
+The relevant error-causing widget was:
+  Column
+  Column:file:///home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/lib/screens/adventure_map.dart:1033:20
+
+The overflowing RenderFlex has an orientation of Axis.vertical.
+The edge of the RenderFlex that is overflowing has been marked in the rendering with a yellow and
+black striped pattern. This is usually caused by the contents being too big for the RenderFlex.
+Consider applying a flex factor (e.g. using an Expanded widget) to force the children of the
+RenderFlex to fit within the available space instead of being sized to their natural size.
+This is considered an error condition because it indicates that there is content that cannot be
+seen. If the content is legitimately bigger than the available space, consider clipping it with a
+ClipRect widget before putting it in the flex, or using a scrollable container rather than a Flex,
+like a ListView.
+The specific RenderFlex in question is: RenderFlex#de8f1 relayoutBoundary=up1 OVERFLOWING:
+  creator: Column ← Expanded ← Row ← Padding ← DecoratedBox ← Container ← _ArmoryTile ←
+    RepaintBoundary ← IndexedSemantics ← _SelectionKeepAlive ←
+    NotificationListener<KeepAliveNotification> ← KeepAlive ← ⋯
+  parentData: offset=Offset(54.0, 0.0); flex=1; fit=FlexFit.tight (can use size)
+  constraints: BoxConstraints(w=82.0, 0.0<=h<=60.7)
+  size: Size(82.0, 60.7)
+  direction: vertical
+  mainAxisAlignment: center
+  mainAxisSize: max
+  crossAxisAlignment: start
+  textDirection: ltr
+  verticalDirection: down
+  spacing: 0.0
+◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Test failed. See exception logs above.
+The test description was: store armory 1080x1920
+
 ::endgroup::
 ::group::✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/live_match_test.dart: store live match 1320x2868
+Could not keep the screen: PlatformException(channel-error, Unable to establish connection on channel: "dev.flutter.pigeon.wakelock_plus_platform_interface.WakelockPlusApi.toggle"., null, null)
+::endgroup::
+::group::✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: fight 1320x2868
+Could not keep the screen: PlatformException(channel-error, Unable to establish connection on channel: "dev.flutter.pigeon.wakelock_plus_platform_interface.WakelockPlusApi.toggle"., null, null)
+::endgroup::
+::group::✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: fight 1080x1920
 Could not keep the screen: PlatformException(channel-error, Unable to establish connection on channel: "dev.flutter.pigeon.wakelock_plus_platform_interface.WakelockPlusApi.toggle"., null, null)
 ::endgroup::
 ::group::✅ Passing tests
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: cleared
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: out of time
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: new weapon
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: win
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: loss
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: rematch asked
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: rematch, the other one left
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: promotion
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: placed
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: level up
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: level card
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: store new weapon 1320x2868
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: store new weapon 1080x1920
 ::endgroup::
 ::group::✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/live_match_test.dart: store live match 1080x1920
 Could not keep the screen: PlatformException(channel-error, Unable to establish connection on channel: "dev.flutter.pigeon.wakelock_plus_platform_interface.WakelockPlusApi.toggle"., null, null)
 ::endgroup::
 ::group::✅ Passing tests
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: win
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: loss
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: rematch asked
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart: sign_in_entry
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: rematch, the other one left
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: promotion
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart: sign_in_choose_name
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: placed
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: level up
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: level card
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/promo_image_test.dart: promo image pro 1024
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/review_paywall_test.dart: app review paywall 1320x2868 (variant: TargetPlatform.iOS)
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 01-home 1080x1920
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 02-ranks 1080x1920
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 03-friends 1080x1920
+::endgroup::
+::group::✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 02-ranks 1080x1920
+Could not read the titles from the account: Bad state: no server configured
+::endgroup::
+::group::✅ Passing tests
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_en_test.dart: paywall en small
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 04-otherprofile 1080x1920
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_en_test.dart: paywall en tall
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 03-friends 1080x1920
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 04-otherprofile 1080x1920
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 05-profile 1080x1920
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 06-road 1080x1920
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 07-won 1080x1920
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 08-awards 1080x1920
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 01-home 1320x2868
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 02-ranks 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: match
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 01-home 1320x2868
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: match with the bar
+::endgroup::
+::group::✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 02-ranks 1320x2868
+Could not read the titles from the account: Bad state: no server configured
+::endgroup::
+::group::✅ Passing tests
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: friends
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: ranks this month
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 03-friends 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 04-otherprofile 1320x2868
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: match with the bar
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: friends
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 05-profile 1320x2868
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: ranks this month
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 06-road 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: ranks top players
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 07-won 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: profile
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 08-awards 1320x2868
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 05-profile 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: profile recent
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 06-road 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: settings
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 07-won 1320x2868
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 08-awards 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/placement_test.dart: onboarding placement dark
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/placement_test.dart: onboarding placement light
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/onboarding_idea_test.dart: onboarding idea
@@ -70,4 +124,4 @@ Could not keep the screen: PlatformException(channel-error, Unable to establish 
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/history_test.dart: match history
 ::endgroup::
 
-🎉 58 tests passed.
+::error::64 tests passed, 1 failed.
