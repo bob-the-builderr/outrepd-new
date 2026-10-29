@@ -1,0 +1,11 @@
+commit      fc690c4841fc9b97a1bd03293976b0b92906727a
+platform    ios
+build       258
+compiled    success
+signed      true
+uploaded    success
+paywall key yes — RevenueCat's public App Store key
+ads yes — AdMob app id and interstitial unit
+firebase    true — push notifications and crash reports are in
+google      true
+run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/40871145179
