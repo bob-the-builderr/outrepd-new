@@ -1956,7 +1956,7 @@ class LEn extends L {
 
   @override
   String calledOffBody(String name) {
-    return '${name} didn\'t get into position in time. Nothing was recorded.';
+    return '${name} didn\'t make it to the start. Nothing was recorded.';
   }
 
   @override

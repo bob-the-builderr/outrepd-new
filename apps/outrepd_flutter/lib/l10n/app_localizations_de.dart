@@ -1965,7 +1965,7 @@ class LDe extends L {
 
   @override
   String calledOffBody(String name) {
-    return '${name} war nicht rechtzeitig in Position. Es wurde nichts gewertet.';
+    return '${name} ist nicht rechtzeitig zum Start gekommen. Es wurde nichts gewertet.';
   }
 
   @override

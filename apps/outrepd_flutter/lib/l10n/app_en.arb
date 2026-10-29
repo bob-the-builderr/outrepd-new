@@ -1122,7 +1122,7 @@
     }
   },
   "calledOffTitle": "Match called off",
-  "calledOffBody": "{name} didn't get into position in time. Nothing was recorded.",
+  "calledOffBody": "{name} didn't make it to the start. Nothing was recorded.",
   "@calledOffBody": {
     "placeholders": {
       "name": {

@@ -1953,7 +1953,7 @@ class LTr extends L {
 
   @override
   String calledOffBody(String name) {
-    return '${name} zamanında pozisyon almadı. Hiçbir şey kaydedilmedi.';
+    return '${name} başlangıca yetişemedi. Hiçbir şey kaydedilmedi.';
   }
 
   @override

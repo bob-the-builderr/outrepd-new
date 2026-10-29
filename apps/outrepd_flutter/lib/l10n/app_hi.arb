@@ -609,7 +609,7 @@
   "opponentDropped": "{name} का कनेक्शन टूट गया। जारी रखें: राउंड समय पूरा होने पर खत्म होगा।",
   "opponentGaveUp": "{name} ने हार मान ली। जीत के लिए राउंड पूरा करें।",
   "calledOffTitle": "मैच रद्द हो गया",
-  "calledOffBody": "{name} समय पर पोज़िशन में नहीं आए। कुछ भी दर्ज नहीं हुआ।",
+  "calledOffBody": "{name} शुरुआत तक नहीं पहुँचे। कुछ भी दर्ज नहीं हुआ।",
   "waitingForFinal": "{name} की अंतिम गिनती का इंतज़ार…",
   "wantsToBeFriends": "दोस्त बनना चाहते हैं",
   "giveUpQuestion": "यह राउंड छोड़ दें?",

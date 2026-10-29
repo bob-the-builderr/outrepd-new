@@ -1958,7 +1958,7 @@ class LRu extends L {
 
   @override
   String calledOffBody(String name) {
-    return '${name} не занял(а) позицию вовремя. Ничего не записано.';
+    return '${name} не успел(а) к началу. Ничего не записано.';
   }
 
   @override

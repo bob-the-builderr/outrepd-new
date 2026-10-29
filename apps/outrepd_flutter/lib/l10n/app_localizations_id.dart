@@ -1957,7 +1957,7 @@ class LId extends L {
 
   @override
   String calledOffBody(String name) {
-    return '${name} tidak bersiap di posisi tepat waktu. Tidak ada yang dicatat.';
+    return '${name} tidak sampai ke awal pertandingan. Tidak ada yang dicatat.';
   }
 
   @override

@@ -609,7 +609,7 @@
   "opponentDropped": "La connessione di {name} è caduta. Continua: il round finisce allo scadere del tempo.",
   "opponentGaveUp": "{name} si è arreso. Finisci il round per prenderti la vittoria.",
   "calledOffTitle": "Sfida annullata",
-  "calledOffBody": "{name} non si è messo in posizione in tempo. Non è stato registrato nulla.",
+  "calledOffBody": "{name} non è arrivato in tempo per l'inizio. Non è stato registrato nulla.",
   "waitingForFinal": "In attesa del conteggio finale di {name}…",
   "wantsToBeFriends": "vuole essere tuo amico",
   "giveUpQuestion": "Arrenderti in questo round?",

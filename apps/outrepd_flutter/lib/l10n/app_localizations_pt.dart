@@ -1960,7 +1960,7 @@ class LPt extends L {
 
   @override
   String calledOffBody(String name) {
-    return '${name} não ficou em posição a tempo. Nada foi registado.';
+    return '${name} não chegou a tempo do início. Nada foi registado.';
   }
 
   @override

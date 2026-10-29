@@ -1963,7 +1963,7 @@ class LIt extends L {
 
   @override
   String calledOffBody(String name) {
-    return '${name} non si è messo in posizione in tempo. Non è stato registrato nulla.';
+    return '${name} non è arrivato in tempo per l\'inizio. Non è stato registrato nulla.';
   }
 
   @override

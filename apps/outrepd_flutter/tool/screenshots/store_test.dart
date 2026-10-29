@@ -82,6 +82,36 @@ class _Board extends NoBackend {
   @override
   bool get available => true;
 
+  // An account with a country, so the World / Country switch is drawn.
+  @override
+  RemoteProfile? get me => const RemoteProfile(
+    id: 'demo-id',
+    username: 'demo_lifter',
+    tierIdx: 3,
+    divIdx: 2,
+    lp: 64,
+    friendCode: 'DEMO42',
+    country: 'US',
+  );
+
+  @override
+  Future<List<MonthRow>> weekBoard({int limit = 100, String? country}) async => demoMonthBoard;
+
+  @override
+  Future<MonthPlace?> myWeekPlace({String? country}) async {
+    final now = DateTime.now().toUtc();
+    final monday = DateTime.utc(now.year, now.month, now.day - (now.weekday - 1));
+    return MonthPlace(
+      season: monday,
+      endsAt: monday.add(const Duration(days: 7)),
+      place: 14,
+      ofTotal: 1284,
+      points: 39,
+      wins: 5,
+      played: 7,
+    );
+  }
+
   @override
   Future<List<MonthRow>> monthBoard({int limit = 100, String? country}) async => demoMonthBoard;
 

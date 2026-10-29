@@ -877,7 +877,9 @@ class _Panel extends StatelessWidget {
                 backgroundColor: colors.rival,
                 foregroundColor: colors.background,
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                textStyle: const TextStyle(
+                // From the theme, like every other button: a bare TextStyle
+                // carries no font and the screenshots drew it as boxes.
+                textStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                 ),

@@ -1963,7 +1963,7 @@ class LEs extends L {
 
   @override
   String calledOffBody(String name) {
-    return '${name} no se puso en posición a tiempo. No se registró nada.';
+    return '${name} no llegó a tiempo al inicio. No se registró nada.';
   }
 
   @override

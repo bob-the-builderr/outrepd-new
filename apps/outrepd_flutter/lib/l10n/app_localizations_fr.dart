@@ -1964,7 +1964,7 @@ class LFr extends L {
 
   @override
   String calledOffBody(String name) {
-    return '${name} ne s\'est pas mis en position à temps. Rien n\'a été enregistré.';
+    return '${name} n\'est pas arrivé à temps pour le départ. Rien n\'a été enregistré.';
   }
 
   @override

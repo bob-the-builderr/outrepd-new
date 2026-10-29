@@ -1922,7 +1922,7 @@ class LJa extends L {
 
   @override
   String calledOffBody(String name) {
-    return '${name} が時間内に構えられませんでした。記録は残りません。';
+    return '${name} が開始に間に合いませんでした。記録は残りません。';
   }
 
   @override

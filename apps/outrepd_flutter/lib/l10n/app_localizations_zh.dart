@@ -1913,7 +1913,7 @@ class LZh extends L {
 
   @override
   String calledOffBody(String name) {
-    return '${name} 未能及时就位。没有记录任何结果。';
+    return '${name} 未能赶上开始。没有记录任何结果。';
   }
 
   @override

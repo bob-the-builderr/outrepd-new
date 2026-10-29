@@ -609,7 +609,7 @@
   "opponentDropped": "{name} bağlantısını kaybetti. Devam et: tur süre bitince biter.",
   "opponentGaveUp": "{name} pes etti. Galibiyeti almak için turu bitir.",
   "calledOffTitle": "Maç iptal edildi",
-  "calledOffBody": "{name} zamanında pozisyon almadı. Hiçbir şey kaydedilmedi.",
+  "calledOffBody": "{name} başlangıca yetişemedi. Hiçbir şey kaydedilmedi.",
   "waitingForFinal": "{name} için son sayı bekleniyor…",
   "wantsToBeFriends": "arkadaş olmak istiyor",
   "giveUpQuestion": "Bu turdan çekilmek mi?",

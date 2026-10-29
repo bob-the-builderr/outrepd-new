@@ -1926,7 +1926,7 @@ class LKo extends L {
 
   @override
   String calledOffBody(String name) {
-    return '${name} 님이 제때 자세를 잡지 못했어요. 아무것도 기록되지 않았어요.';
+    return '${name} 님이 시작 시간에 들어오지 못했어요. 아무것도 기록되지 않았어요.';
   }
 
   @override

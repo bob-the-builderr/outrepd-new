@@ -609,7 +609,7 @@
   "opponentDropped": "{name} 的连接断开了。继续：本回合按时间结束。",
   "opponentGaveUp": "{name} 已放弃。完成本回合即可获胜。",
   "calledOffTitle": "对战已取消",
-  "calledOffBody": "{name} 未能及时就位。没有记录任何结果。",
+  "calledOffBody": "{name} 未能赶上开始。没有记录任何结果。",
   "waitingForFinal": "正在等待 {name} 的最终计数…",
   "wantsToBeFriends": "想和你成为好友",
   "giveUpQuestion": "放弃本回合？",

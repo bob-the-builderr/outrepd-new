@@ -1958,7 +1958,7 @@ class LHi extends L {
 
   @override
   String calledOffBody(String name) {
-    return '${name} समय पर पोज़िशन में नहीं आए। कुछ भी दर्ज नहीं हुआ।';
+    return '${name} शुरुआत तक नहीं पहुँचे। कुछ भी दर्ज नहीं हुआ।';
   }
 
   @override

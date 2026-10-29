@@ -609,7 +609,7 @@
   "opponentDropped": "Koneksi {name} terputus. Terus lanjut: ronde selesai saat waktu habis.",
   "opponentGaveUp": "{name} menyerah. Selesaikan ronde untuk menang.",
   "calledOffTitle": "Pertandingan dibatalkan",
-  "calledOffBody": "{name} tidak bersiap di posisi tepat waktu. Tidak ada yang dicatat.",
+  "calledOffBody": "{name} tidak sampai ke awal pertandingan. Tidak ada yang dicatat.",
   "waitingForFinal": "Menunggu hitungan akhir {name}…",
   "wantsToBeFriends": "ingin berteman",
   "giveUpQuestion": "Menyerah di ronde ini?",

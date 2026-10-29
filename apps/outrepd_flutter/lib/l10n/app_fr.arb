@@ -609,7 +609,7 @@
   "opponentDropped": "La connexion de {name} a coupé. Continue : la manche se termine au chrono.",
   "opponentGaveUp": "{name} a abandonné. Termine la manche pour gagner.",
   "calledOffTitle": "Match annulé",
-  "calledOffBody": "{name} ne s'est pas mis en position à temps. Rien n'a été enregistré.",
+  "calledOffBody": "{name} n'est pas arrivé à temps pour le départ. Rien n'a été enregistré.",
   "waitingForFinal": "En attente du total final de {name}…",
   "wantsToBeFriends": "veut être ton ami",
   "giveUpQuestion": "Abandonner cette manche ?",

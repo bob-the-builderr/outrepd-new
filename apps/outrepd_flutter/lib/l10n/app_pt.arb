@@ -609,7 +609,7 @@
   "opponentDropped": "A ligação de {name} caiu. Continua: a ronda acaba com o relógio.",
   "opponentGaveUp": "{name} desistiu. Termina a ronda para ficares com a vitória.",
   "calledOffTitle": "Partida cancelada",
-  "calledOffBody": "{name} não ficou em posição a tempo. Nada foi registado.",
+  "calledOffBody": "{name} não chegou a tempo do início. Nada foi registado.",
   "waitingForFinal": "À espera da contagem final de {name}…",
   "wantsToBeFriends": "quer ser teu amigo",
   "giveUpQuestion": "Desistir desta ronda?",

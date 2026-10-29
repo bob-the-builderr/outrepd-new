@@ -609,7 +609,7 @@
   "opponentDropped": "Die Verbindung von {name} ist weg. Mach weiter: Die Runde endet mit der Uhr.",
   "opponentGaveUp": "{name} hat aufgegeben. Beende die Runde und hol dir den Sieg.",
   "calledOffTitle": "Match abgesagt",
-  "calledOffBody": "{name} war nicht rechtzeitig in Position. Es wurde nichts gewertet.",
+  "calledOffBody": "{name} ist nicht rechtzeitig zum Start gekommen. Es wurde nichts gewertet.",
   "waitingForFinal": "Warte auf das Endergebnis von {name} …",
   "wantsToBeFriends": "möchte befreundet sein",
   "giveUpQuestion": "Diese Runde aufgeben?",

@@ -175,16 +175,53 @@ void main() {
     );
   });
 
-  testWidgets('fight', (tester) async {
-    tester.view.physicalSize = const Size(1320, 2868);
+  // The store's sizes, at three pixels to the point; the App Store's phone
+  // with its notch and home bar, as live_match_test.dart draws it.
+  const storeSizes = [(1320, 2868), (1080, 1920)];
+  void store(WidgetTester tester, int width, int height) {
+    tester.view.physicalSize = Size(width.toDouble(), height.toDouble());
     tester.view.devicePixelRatio = 3;
-    const insets = FakeViewPadding(top: 62 * 3, bottom: 34 * 3);
-    tester.view.padding = insets;
-    tester.view.viewPadding = insets;
+    if (width == 1320) {
+      const insets = FakeViewPadding(top: 62 * 3, bottom: 34 * 3);
+      tester.view.padding = insets;
+      tester.view.viewPadding = insets;
+    }
     addTearDown(tester.view.reset);
+  }
 
+  for (final (width, height) in storeSizes) {
+    testWidgets('store map ${width}x$height', (tester) async {
+      store(tester, width, height);
+      await tester.pumpWidget(_app(const AdventureMapScreen()));
+      await tester.pumpAndSettle();
+      await expectLater(
+        find.byType(MaterialApp),
+        matchesGoldenFile('goldens/store_${width}x${height}_adventure_map.png'),
+      );
+    });
+
+    testWidgets('store armory ${width}x$height', (tester) async {
+      store(tester, width, height);
+      await tester.pumpWidget(_app(const AdventureMapScreen()));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('weaponChip')));
+      await tester.pumpAndSettle();
+      await expectLater(
+        find.byType(MaterialApp),
+        matchesGoldenFile(
+          'goldens/store_${width}x${height}_adventure_armory.png',
+        ),
+      );
+    });
+  }
+
+  // The store's second screenshot: a fight over the store photo, four
+  // push-ups in.
+  for (final (width, height) in storeSizes) {
+  testWidgets('fight ${width}x$height', (tester) async {
+    store(tester, width, height);
     final bytes = File(
-      'tool/screenshots/photos/live_1320x2868.jpg',
+      'tool/screenshots/photos/live_${width}x$height.jpg',
     ).readAsBytesSync();
     final photo = (await tester.runAsync(() => decodeImageFromList(bytes)))!;
     settings.showSkeleton = false;
@@ -227,10 +264,11 @@ void main() {
     await tester.pump(const Duration(milliseconds: 120));
     await expectLater(
       find.byType(MaterialApp),
-      matchesGoldenFile('goldens/adventure_fight.png'),
+      matchesGoldenFile('goldens/store_${width}x${height}_adventure_fight.png'),
     );
     await tester.pumpWidget(const SizedBox());
   });
+  }
 
   testWidgets('cleared', (tester) async {
     phone(tester);
@@ -307,4 +345,28 @@ void main() {
       matchesGoldenFile('goldens/adventure_new_weapon.png'),
     );
   });
+
+  for (final (width, height) in storeSizes) {
+    testWidgets('store new weapon ${width}x$height', (tester) async {
+      store(tester, width, height);
+      await tester.pumpWidget(
+        _app(
+          Scaffold(
+            body: WeaponUnlockedView(
+              weapon: kWeapons[2],
+              previous: kWeapons[1],
+              onContinue: () {},
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await expectLater(
+        find.byType(MaterialApp),
+        matchesGoldenFile(
+          'goldens/store_${width}x${height}_adventure_new_weapon.png',
+        ),
+      );
+    });
+  }
 }

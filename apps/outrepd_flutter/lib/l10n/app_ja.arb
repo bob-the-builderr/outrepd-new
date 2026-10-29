@@ -609,7 +609,7 @@
   "opponentDropped": "{name} の接続が切れました。続けて：ラウンドは時間で終わります。",
   "opponentGaveUp": "{name} が棄権しました。ラウンドを終えて勝利をつかもう。",
   "calledOffTitle": "対戦は中止になりました",
-  "calledOffBody": "{name} が時間内に構えられませんでした。記録は残りません。",
+  "calledOffBody": "{name} が開始に間に合いませんでした。記録は残りません。",
   "waitingForFinal": "{name} の最終カウントを待っています…",
   "wantsToBeFriends": "フレンドになりたがっています",
   "giveUpQuestion": "このラウンドを棄権しますか？",
