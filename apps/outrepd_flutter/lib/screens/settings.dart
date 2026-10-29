@@ -129,8 +129,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
           // First, and a card of its own: App Review asks that an app using
           // HealthKit says so plainly where people can see it, and a switch
           // among the duel's sounds and vibration was not that (2.5.1,
-          // October 2026). A browser has no Health to save to.
-          if (!kIsWeb) _HealthCard(onChanged: _setHealth),
+          // October 2026). A browser has no Health to save to, and on Android
+          // the app no longer offers Health Connect at all.
+          if (!kIsWeb && defaultTargetPlatform == TargetPlatform.iOS)
+            _HealthCard(onChanged: _setHealth),
 
           SettingsSection(
             title: l.accountSection,

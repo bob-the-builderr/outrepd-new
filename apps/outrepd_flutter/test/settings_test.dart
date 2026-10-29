@@ -157,8 +157,9 @@ void main() {
 
   testWidgets('saving to Health stays off until the phone allows it',
       (tester) async {
-    // The test has no Health Connect to ask, which is the same answer as a
+    // The test has no Apple Health to ask, which is the same answer as a
     // lifter saying no: the switch must not claim workouts are being saved.
+    debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
     addTearDown(() => settings.saveToHealth = false);
     phone(tester);
     await tester.pumpWidget(_app(const SettingsScreen()));
@@ -168,12 +169,21 @@ void main() {
     final row = find.byKey(const Key('healthSwitch'));
     await tester.scrollUntilVisible(row, 200,
         scrollable: find.byType(Scrollable).first);
-    expect(find.text('Save workouts to Health Connect'), findsOneWidget);
+    expect(find.text('Save workouts to Apple Health'), findsOneWidget);
     await tester.tap(find.descendant(of: row, matching: find.byType(Switch)));
     await tester.pumpAndSettle();
 
     expect(settings.saveToHealth, isFalse);
     expect(find.textContaining('Not allowed yet'), findsOneWidget);
+    debugDefaultTargetPlatformOverride = null;
+  });
+
+  testWidgets('Android has no Health card', (tester) async {
+    phone(tester);
+    await tester.pumpWidget(_app(const SettingsScreen()));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('healthCard')), findsNothing);
+    expect(find.textContaining('Health Connect'), findsNothing);
   });
 
   testWidgets('the daily reminder can be turned off, and its time goes with it',

@@ -68,7 +68,12 @@ abstract final class HealthSync {
     int reps, {
     Duration length = const Duration(seconds: 60),
   }) async {
-    if (!_onPhone || !settings.saveToHealth || reps <= 0) return false;
+    // An iPhone only: Android no longer asks for Health Connect, so a switch
+    // turned on there before is left alone rather than asked of a phone that
+    // would refuse it.
+    if (!_onPhone || !Platform.isIOS || !settings.saveToHealth || reps <= 0) {
+      return false;
+    }
     if (!await _configure()) return false;
     final end = DateTime.now();
     final iPhone = Platform.isIOS;

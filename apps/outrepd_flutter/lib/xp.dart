@@ -1,12 +1,13 @@
 /// Experience, and the level it adds up to.
 ///
-/// One XP for every rep of every set — practice too — and twenty for every
-/// match played, won or lost. The server keeps the total (profiles.xp: the
+/// One XP for every rep of every set — practice and Adventure too — and twenty
+/// more for every match won; a match lost pays nothing, its reps included.
+/// The server keeps the total (profiles.xp: the
 /// sets trigger in schema.sql, xp_for_duel in live.sql); this file only reads
 /// a level off it. A level never comes down, because experience never does.
 library;
 
-/// What a match pays on top of its reps, whoever won.
+/// What a match won pays on top of its reps.
 const kXpPerMatch = 20;
 
 /// What it takes to go from [level] to the next: 100 for the first, and 50
