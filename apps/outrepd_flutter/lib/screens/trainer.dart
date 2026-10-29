@@ -95,7 +95,7 @@ abstract class CameraGame {
     required bool pastBottom,
   });
 
-  /// The count down to the start, over the whole screen.
+  /// The count down to the start, drawn over the camera's own box.
   Widget countdown(BuildContext context, int seconds);
 }
 
@@ -1065,7 +1065,22 @@ class _TrainerScreenState extends State<TrainerScreen>
                             Expanded(
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(22),
-                                child: cameraView,
+                                // The count down over the camera, letting
+                                // taps through: the card above, and its Give
+                                // up, are the fight's own from the start.
+                                child: Stack(
+                                  fit: StackFit.expand,
+                                  children: [
+                                    cameraView,
+                                    if (_stage == _Stage.countdown)
+                                      IgnorePointer(
+                                        child: game.countdown(
+                                          context,
+                                          _countdown,
+                                        ),
+                                      ),
+                                  ],
+                                ),
                               ),
                             ),
                             const SizedBox(width: 8),
@@ -1206,18 +1221,8 @@ class _TrainerScreenState extends State<TrainerScreen>
               ),
             ),
 
-          // A game counts down its own way: the monster first, then the
-          // number over the camera. Under the card's top line, which keeps
-          // its Give up in sight, and letting taps through to it: ten seconds
-          // is long enough for somebody to want out.
-          if (_stage == _Stage.countdown && game != null)
-            Positioned(
-              left: 0,
-              right: 0,
-              top: top + 34,
-              bottom: 0,
-              child: IgnorePointer(child: game.countdown(context, _countdown)),
-            ),
+          // A game counts down over its camera (above); everything else over
+          // the whole screen.
           if (_stage == _Stage.countdown && game == null) ...[
             // Drawn over the card but not in its way: its Give up stays
             // tappable through the count down.

@@ -61,7 +61,7 @@ class FightGame implements CameraGame {
 
   @override
   Widget countdown(BuildContext context, int seconds) =>
-      FightIntro(key: const Key('fightIntro'), level: level, seconds: seconds);
+      FightCountdown(key: const Key('fightIntro'), seconds: seconds);
 }
 
 /// Push-ups closer together than this keep a combo going.
@@ -508,132 +508,52 @@ class WeaponTrack extends StatelessWidget {
   }
 }
 
-/// The count down before a fight: the monster, whole, in its world with its
-/// name and its full HP, and the seconds large over the camera below.
-class FightIntro extends StatelessWidget {
-  const FightIntro({super.key, required this.level, required this.seconds});
+/// The count down before a fight, over the camera: the fight's own card is
+/// already up above it, the monster at full HP, and the lifter can still see
+/// themselves getting into place through the dimmed picture. When it ends the
+/// number goes and nothing else on the screen moves.
+class FightCountdown extends StatelessWidget {
+  const FightCountdown({super.key, required this.seconds});
 
-  final AdventureLevel level;
   final int seconds;
 
   @override
   Widget build(BuildContext context) {
-    final l = L.of(context);
-    final look = WorldLook.of(level.world);
-    final hp = localNumber(context, level.hp);
-
-    return LayoutBuilder(
-      builder: (context, box) {
-        final top = box.maxHeight * 0.47;
-        return Stack(
-          children: [
-            Positioned(
-              left: 0,
-              right: 0,
-              top: 0,
-              height: top,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  CustomPaint(painter: _LandscapePainter(look)),
-                  SafeArea(
-                    bottom: false,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 18, 20, 0),
-                      child: Column(
-                        children: [
-                          Text(
-                            l.adventureLevelIn(
-                              localNumber(context, level.number),
-                              worldName(l, level.world),
-                            ),
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Color(0xD9FFFFFF),
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            monsterName(l, level),
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontWeight: FontWeight.w900,
-                              shadows: [
-                                Shadow(color: Color(0x80000000), blurRadius: 10),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Center(
-                              child: Golem(
-                                level: level,
-                                size: math.min(240.0, top * 0.6),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              top: top,
-              height: 34,
-              child: DecoratedBox(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFFE8846B), Color(0xFFFF6A3D)],
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    '${l.hpShort}: $hp / $hp',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 1.5,
-                    ),
-                  ),
+    return ColoredBox(
+      color: const Color(0x8C121110),
+      child: Center(
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                L.of(context).getReady,
+                style: const TextStyle(
+                  color: Color(0xD9E8DCC8),
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 3,
                 ),
               ),
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              top: top + 34,
-              bottom: 0,
-              child: ColoredBox(
-                color: const Color(0xFF121110).withValues(alpha: 0.4),
-                child: Center(
-                  child: Text(
-                    localNumber(context, seconds),
-                    key: const Key('fightCountdown'),
-                    style: const TextStyle(
-                      color: AppColors.gold,
-                      fontSize: 200,
-                      height: 1,
-                      fontWeight: FontWeight.w900,
-                      shadows: [
-                        Shadow(color: Color(0xFF121110), offset: Offset(0, 5)),
-                        Shadow(color: Color(0x80D9A94A), blurRadius: 40),
-                      ],
-                    ),
-                  ),
+              Text(
+                localNumber(context, seconds),
+                key: const Key('fightCountdown'),
+                style: const TextStyle(
+                  color: AppColors.gold,
+                  fontSize: 160,
+                  height: 1.05,
+                  fontWeight: FontWeight.w900,
+                  shadows: [
+                    Shadow(color: Color(0xFF121110), offset: Offset(0, 5)),
+                    Shadow(color: Color(0x80D9A94A), blurRadius: 40),
+                  ],
                 ),
               ),
-            ),
-          ],
-        );
-      },
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

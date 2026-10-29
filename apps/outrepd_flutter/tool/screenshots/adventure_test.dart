@@ -270,6 +270,45 @@ void main() {
   });
   }
 
+  // A second into the count down: the fight's card already up, the number
+  // over the camera.
+  testWidgets('fight count down', (tester) async {
+    store(tester, 1080, 1920);
+    final bytes = File(
+      'tool/screenshots/photos/live_1080x1920.jpg',
+    ).readAsBytesSync();
+    final photo = (await tester.runAsync(() => decodeImageFromList(bytes)))!;
+    settings.showSkeleton = false;
+    addTearDown(() => settings.showSkeleton = true);
+    final source = _Photo(photo);
+
+    await tester.pumpWidget(
+      _app(
+        TrainerScreen(
+          autoStart: true,
+          forMatch: true,
+          limit: kFightLength,
+          game: FightGame(
+            level: AdventureLevel.of(2),
+            weapon: Adventure.instance.weapon,
+          ),
+          poseSource: () => source,
+        ),
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 50));
+    for (var i = 0; i < 1000 ~/ kFrameMs; i++) {
+      source.emit(pushUpPose(1));
+      await tester.pump(const Duration(milliseconds: kFrameMs));
+    }
+    await expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile('goldens/adventure_fight_countdown.png'),
+    );
+    await tester.pumpWidget(const SizedBox());
+  });
+
   testWidgets('cleared', (tester) async {
     phone(tester);
     await tester.pumpWidget(
