@@ -1,11 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <!-- The app has no ads and no analytics, and Play Console is told it does
-         not use the advertising ID. Removed here so that stays true even if a
-         library's own manifest ever brings the permission in. -->
-    <uses-permission
-        android:name="com.google.android.gms.permission.AD_ID"
-        tools:node="remove" />
+    <!-- The advertising ID, for the ads (lib/ads.dart, AdMob), and Play
+         Console declares that the app uses it. Without the permission Android
+         13 and later hand AdMob an ID of zeros, and Play refuses the release
+         for not matching that declaration. -->
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
     <!-- The camera plugin declares the microphone for video recording. The
          camera here is opened with enableAudio: false and nothing records
          sound, so the store listing should not say the app uses it. -->
