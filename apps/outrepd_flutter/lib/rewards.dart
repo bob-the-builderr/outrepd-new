@@ -533,8 +533,10 @@ class Rewards extends ChangeNotifier {
     final last = lastSession;
     if (last == null) return null;
     final now = DateTime.now();
-    return DateTime(now.year, now.month, now.day)
-        .difference(DateTime(last.year, last.month, last.day))
+    // Dates as UTC midnights, so every day is 24 hours: local midnights a
+    // clock change apart are 23 hours apart, which is no whole day at all.
+    return DateTime.utc(now.year, now.month, now.day)
+        .difference(DateTime.utc(last.year, last.month, last.day))
         .inDays;
   }
 
@@ -672,11 +674,11 @@ class Rewards extends ChangeNotifier {
       streak = 1;
       perfectDayRun = 1;
     } else {
-      gap = DateTime(
+      gap = DateTime.utc(
         today.year,
         today.month,
         today.day,
-      ).difference(DateTime(last.year, last.month, last.day)).inDays;
+      ).difference(DateTime.utc(last.year, last.month, last.day)).inDays;
 
       if (gap == 0) {
         // Already counted today. Training twice does not count twice.

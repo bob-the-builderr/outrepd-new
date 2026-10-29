@@ -555,12 +555,10 @@ class _WeekRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final format = DateFormat.E(Localizations.localeOf(context).toString());
+    // Calendar days, as Career.thisWeekReps counts them: across a clock
+    // change a day is 23 or 25 hours, and adding hours named Thursday twice.
     final now = DateTime.now();
-    final monday = DateTime(
-      now.year,
-      now.month,
-      now.day,
-    ).subtract(Duration(days: now.weekday - DateTime.monday));
+    final monday = now.day - (now.weekday - DateTime.monday);
     final today = now.weekday - DateTime.monday;
 
     return ListenableBuilder(
@@ -583,7 +581,7 @@ class _WeekRow extends StatelessWidget {
                     trained: reps[i] > 0,
                     today: i == today,
                     letter: _initial(
-                      format.format(monday.add(Duration(days: i))),
+                      format.format(DateTime(now.year, now.month, monday + i)),
                     ),
                   ),
                 ),

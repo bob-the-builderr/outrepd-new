@@ -775,7 +775,11 @@ class _WeekChart extends StatelessWidget {
                     child: Text(
                       _initial(
                         format.format(
-                          today.subtract(Duration(days: days.length - 1 - i)),
+                          DateTime(
+                            today.year,
+                            today.month,
+                            today.day - (days.length - 1 - i),
+                          ),
                         ),
                       ),
                       textAlign: TextAlign.center,

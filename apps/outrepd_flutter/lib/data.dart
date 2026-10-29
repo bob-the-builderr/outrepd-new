@@ -211,8 +211,9 @@ class MatchRecord {
 
   int get daysAgo {
     final now = DateTime.now();
-    final then = DateTime(at.year, at.month, at.day);
-    final today = DateTime(now.year, now.month, now.day);
+    // UTC midnights: every day 24 hours long, whatever the clocks did.
+    final then = DateTime.utc(at.year, at.month, at.day);
+    final today = DateTime.utc(now.year, now.month, now.day);
     return today.difference(then).inDays;
   }
 

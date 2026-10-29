@@ -157,22 +157,21 @@ class Career extends ChangeNotifier {
     final today = DateTime.now();
     return [
       for (var back = 6; back >= 0; back--)
-        _days[_key(today.subtract(Duration(days: back)))] ?? 0,
+        _days[_key(DateTime(today.year, today.month, today.day - back))] ?? 0,
     ];
   }
 
   /// Reps for each day of this calendar week, Monday first, through Sunday.
   /// Days still to come are zero.
   List<int> get thisWeekReps {
+    // Counted in calendar days, never in 24 hours: the week a clock goes back
+    // has a 25 hour day, and Monday plus four times 24 hours was Thursday
+    // again, at eleven at night.
     final now = DateTime.now();
-    final monday = DateTime(
-      now.year,
-      now.month,
-      now.day,
-    ).subtract(Duration(days: now.weekday - DateTime.monday));
+    final monday = now.day - (now.weekday - DateTime.monday);
     return [
       for (var i = 0; i < 7; i++)
-        _days[_key(monday.add(Duration(days: i)))] ?? 0,
+        _days[_key(DateTime(now.year, now.month, monday + i))] ?? 0,
     ];
   }
 
