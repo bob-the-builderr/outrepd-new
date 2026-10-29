@@ -834,6 +834,19 @@ class SupabaseBackend implements Backend {
     await _db.rpc<dynamic>('save_adventure', params: {'new_stars': stars}),
   );
 
+  @override
+  Future<Map<String, dynamic>> myRewards() async =>
+      _rewards(await _db.rpc<dynamic>('my_rewards'));
+
+  @override
+  Future<Map<String, dynamic>> saveRewards(Map<String, dynamic> state) async =>
+      _rewards(
+        await _db.rpc<dynamic>('save_rewards', params: {'new_state': state}),
+      );
+
+  static Map<String, dynamic> _rewards(dynamic value) =>
+      value is Map ? Map<String, dynamic>.from(value) : const {};
+
   /// A smallint[] as the client hands it over: a list of numbers, or null
   /// for an account that has never saved one.
   static List<int> _stars(dynamic raw) => [

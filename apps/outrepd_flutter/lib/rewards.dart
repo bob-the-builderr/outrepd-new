@@ -7,6 +7,8 @@
 /// can see does not motivate anyone.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'backend/backend.dart';
@@ -772,8 +774,152 @@ class Rewards extends ChangeNotifier {
     notifyListeners();
   }
 
+  // ── on the account ──────────────────────────────────────────────────────
+
+  /// Everything above, as the account holds it (supabase/adventure.sql,
+  /// rewards). On the phone alone, a new phone — or this one signed out and
+  /// back in to another account — started them all again (the user,
+  /// 2026-10-29).
+  Map<String, Object?> toServer() => {
+    'streak': streak,
+    'bestStreak': bestStreak,
+    'restUsed': restUsedThisWeek,
+    'cleanSets': cleanSets,
+    'earlySessions': earlySessions,
+    'lateSessions': lateSessions,
+    'perfectDayRun': perfectDayRun,
+    'perfectWeeks': perfectWeeksCount,
+    'earned': earned.toList()..sort(),
+    if (wearing != null) 'wearing': wearing,
+    if (lastSession case final last?) 'lastSession': last.millisecondsSinceEpoch,
+  };
+
+  /// Takes in [held], the account's copy, the way the server merges: every
+  /// title either side has, the larger of each tally, and the streak — with
+  /// its rest days, its perfect run and the title worn — of whichever side
+  /// trained last. True when anything here changed.
+  bool _absorb(Map<String, dynamic> held) {
+    int number(String key) => (held[key] as num?)?.toInt() ?? 0;
+    var changed = false;
+    int larger(int mine, int theirs) {
+      if (theirs <= mine) return mine;
+      changed = true;
+      return theirs;
+    }
+
+    bestStreak = larger(bestStreak, number('bestStreak'));
+    cleanSets = larger(cleanSets, number('cleanSets'));
+    earlySessions = larger(earlySessions, number('earlySessions'));
+    lateSessions = larger(lateSessions, number('lateSessions'));
+    perfectWeeksCount = larger(perfectWeeksCount, number('perfectWeeks'));
+    for (final id in (held['earned'] as List?)?.whereType<String>() ?? const []) {
+      if (earned.add(id)) changed = true;
+    }
+
+    final theirLast = (held['lastSession'] as num?)?.toInt();
+    final myLast = lastSession?.millisecondsSinceEpoch;
+    if (theirLast != null && (myLast == null || theirLast > myLast)) {
+      streak = number('streak');
+      restUsedThisWeek = number('restUsed');
+      perfectDayRun = number('perfectDayRun');
+      lastSession = DateTime.fromMillisecondsSinceEpoch(theirLast);
+      if (held['wearing'] case final String id) wearing = id;
+      changed = true;
+    } else if (wearing == null && held['wearing'] is String) {
+      wearing = held['wearing'] as String;
+      changed = true;
+    }
+    return changed;
+  }
+
+  bool _pushing = false;
+  bool _pushAgain = false;
+
+  /// Sends this copy after a change. A session saves a few times over: one
+  /// write at a time, and one more after it for whatever changed meanwhile.
+  void _pushSoon() {
+    if (!backend.available || backend.me == null) return;
+    if (_pushing) {
+      _pushAgain = true;
+      return;
+    }
+    unawaited(push());
+  }
+
+  /// This copy to the account now, and back whatever another phone added.
+  Future<void> push() async {
+    if (!backend.available || backend.me == null) return;
+    _pushing = true;
+    try {
+      final merged = await backend.saveRewards(toServer());
+      if (_absorb(merged)) {
+        await _store();
+        notifyListeners();
+      }
+    } on Object catch (error) {
+      debugPrint('Could not keep the titles on the account: $error');
+    } finally {
+      _pushing = false;
+    }
+    if (_pushAgain) {
+      _pushAgain = false;
+      await push();
+    }
+  }
+
+  /// On entering the app: the account's copy and this phone's, made one on
+  /// both.
+  Future<void> sync() async {
+    if (!backend.available || backend.me == null) return;
+    try {
+      if (_absorb(await backend.myRewards())) {
+        await _store();
+        notifyListeners();
+      }
+    } on Object catch (error) {
+      debugPrint('Could not read the titles from the account: $error');
+      return;
+    }
+    await push();
+  }
+
+  /// A log-in to an account that already existed: its titles and streak,
+  /// not the ones this phone was keeping for whoever was here before.
+  Future<void> adopt() async {
+    await forget();
+    await sync();
+  }
+
+  /// Nothing on this phone: signed out, or about to take another account's.
+  /// The account keeps its own (see [push], done before signing out).
+  Future<void> forget() async {
+    streak = 0;
+    bestStreak = 0;
+    restUsedThisWeek = 0;
+    cleanSets = 0;
+    earlySessions = 0;
+    lateSessions = 0;
+    perfectDayRun = 0;
+    perfectWeeksCount = 0;
+    lastSession = null;
+    earned.clear();
+    wearing = null;
+    _pushedWearing = null;
+    _pushedOnce = false;
+    final store = await SharedPreferences.getInstance();
+    await store.remove('lastSession');
+    await _store();
+    notifyListeners();
+  }
+
   Future<void> _save() async {
     _pushWorn();
+    _pushSoon();
+    await _store();
+  }
+
+  /// This phone's copy, written down here only.
+  Future<void> _store() async {
     final store = await SharedPreferences.getInstance();
     await store.setInt('streak', streak);
     await store.setInt('bestStreak', bestStreak);

@@ -845,6 +845,17 @@ class Career extends ChangeNotifier {
     notifyListeners();
     // And the adventure: that account's stars, not the ones on this phone.
     await Adventure.instance.adopt();
+    // And its titles and streak, the same way.
+    await rewards.adopt();
+    takeStreak();
+  }
+
+  /// The streak [rewards] holds, onto the profile the screens read, once it
+  /// has taken in the account's copy.
+  void takeStreak() {
+    if (demoProfile.dayStreak == rewards.streak) return;
+    demoProfile.dayStreak = rewards.streak;
+    notifyListeners();
   }
 
   /// Wipes the account. Used by tests, and by whatever ends up offering a

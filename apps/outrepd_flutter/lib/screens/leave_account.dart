@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../backend/backend.dart';
 import '../career.dart';
 import '../data.dart';
+import '../rewards.dart';
 import '../subscription.dart';
 import 'onboarding.dart';
 
@@ -23,6 +24,9 @@ Future<void> leaveForWelcome(NavigatorState navigator) async {
   // What this phone kept of the account — its rank and totals — is the
   // server's copy, and comes back with the next sign-in.
   await Career.instance.startFresh();
+  // The titles and streak too: the account has them (sent before signing
+  // out), and the next one in should not wear these.
+  await rewards.forget();
   await markNotOnboarded();
   try {
     await backend.signIn(username: 'lifter');

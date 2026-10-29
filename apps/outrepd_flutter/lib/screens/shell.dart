@@ -9,6 +9,7 @@ import '../career.dart';
 import '../deep_links.dart';
 import '../motion.dart';
 import '../push.dart';
+import '../rewards.dart';
 import '../subscription.dart';
 import '../theme.dart';
 import 'friends.dart';
@@ -100,6 +101,8 @@ class _AppShellState extends State<AppShell> {
     unawaited(Career.instance.syncHistory());
     // And its days, which signing out leaves behind on the phone.
     unawaited(Career.instance.syncDays());
+    // And its titles and streak, kept on the account too.
+    unawaited(rewards.sync().then((_) => Career.instance.takeStreak()));
   }
 
   @override

@@ -23,6 +23,7 @@ import '../data.dart';
 import '../health_sync.dart';
 import '../l10n/app_localizations.dart';
 import '../push.dart';
+import '../rewards.dart';
 import '../settings.dart';
 import '../theme.dart';
 import '../type_scale.dart';
@@ -403,6 +404,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     // While still signed in: the server only lets an account forget its own
     // phones.
     await Push.instance.stop();
+    // And the titles and streak, so the account has what this phone has.
+    await rewards.push();
     try {
       await backend.signOut();
     } on Object catch (error) {

@@ -72,6 +72,9 @@ as $$
       select to_jsonb(a.stars)
         from adventure_progress a where a.profile_id = auth.uid()
     ),
+    'rewards', (
+      select r.state from rewards_progress r where r.profile_id = auth.uid()
+    ),
     'reports_filed', coalesce((
       select count(*) from reports r where r.reporter = auth.uid()
     ), 0)

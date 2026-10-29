@@ -1257,6 +1257,15 @@ abstract interface class Backend {
   /// off each other; it hands back what it now holds.
   Future<List<int>> saveAdventure(List<int> stars);
 
+  /// The titles earned, the one worn and the streak, as the account holds
+  /// them (supabase/adventure.sql, rewards): an empty map for nothing yet.
+  Future<Map<String, dynamic>> myRewards();
+
+  /// This phone's copy, merged into the account's: every title either side
+  /// has, the larger tally, the streak of whichever trained last. Returns
+  /// the merged one, with whatever another phone added.
+  Future<Map<String, dynamic>> saveRewards(Map<String, dynamic> state);
+
   /// Signs in with an identity token from Apple or Google. On this phone's
   /// guest the identity is linked to it, so the guest becomes the account
   /// and keeps what it has — unless the identity already belongs to an
@@ -1590,6 +1599,14 @@ class NoBackend implements Backend {
 
   @override
   Future<List<int>> saveAdventure(List<int> stars) =>
+      throw StateError('no server configured');
+
+  @override
+  Future<Map<String, dynamic>> myRewards() =>
+      throw StateError('no server configured');
+
+  @override
+  Future<Map<String, dynamic>> saveRewards(Map<String, dynamic> state) =>
       throw StateError('no server configured');
 
   @override
