@@ -15,7 +15,7 @@ AVENTURE
 140 combats de pompes dans sept mondes, de Fer à Maître. Chaque répétition frappe le monstre, et les monstres évoluent au fil du jeu. Gagne des étoiles pour débloquer l’arme qu’exige chaque nouveau monde. Aucun rang en jeu, et ça marche hors ligne.
 
 MONTE DE NIVEAU À CHAQUE RÉPÉTITION
-Chaque pompe et chaque match rapportent de l'XP, victoire ou défaite. Ton niveau s'affiche partout à côté de ton nom et ne baisse jamais.
+Chaque pompe rapporte de l'XP, et chaque victoire 20 de plus ; un match perdu ne rapporte rien. Ton niveau s'affiche partout à côté de ton nom et ne baisse jamais.
 
 COURSES HEBDOMADAIRES ET MENSUELLES
 Un nouveau classement chaque lundi, et une course mensuelle avec des récompenses pour le top 10.

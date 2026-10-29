@@ -16,7 +16,7 @@ CLIMB THE RANKS
 Your first match puts you on the ladder at Iron V. Then climb from Iron through Bronze, Silver, Gold, Platinum and Diamond to Master. Beat a higher rank and you earn more LP. Once you reach a tier, you keep it.
 
 LEVEL UP WITH EVERY REP
-Every push-up and every match earns XP, win or lose. Your level shows beside your name everywhere, and it never goes down.
+Every push-up earns XP, and every win 20 more; a lost match earns nothing. Your level shows beside your name everywhere, and it never goes down.
 
 WEEKLY AND MONTHLY RACES
 A new board every Monday, and a monthly race with awards for the top ten.

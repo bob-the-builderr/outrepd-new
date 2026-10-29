@@ -15,7 +15,7 @@ PETUALANGAN
 140 pertarungan push up di tujuh dunia, dari Besi sampai Master. Setiap repetisi memukul monster, dan monsternya berevolusi seiring kamu maju. Kumpulkan bintang untuk membuka senjata yang dibutuhkan setiap dunia baru. Peringkat tidak dipertaruhkan, dan bisa dimainkan offline.
 
 NAIK LEVEL DI SETIAP REPETISI
-Setiap push up dan setiap pertandingan memberi XP, menang atau kalah. Levelmu tampil di samping namamu di mana saja dan tidak pernah turun.
+Setiap push up memberi XP, dan setiap kemenangan 20 lagi; pertandingan yang kalah tidak memberi apa-apa. Levelmu tampil di samping namamu di mana saja dan tidak pernah turun.
 
 BALAPAN MINGGUAN DAN BULANAN
 Papan baru setiap Senin, dan balapan bulanan dengan penghargaan untuk 10 besar.

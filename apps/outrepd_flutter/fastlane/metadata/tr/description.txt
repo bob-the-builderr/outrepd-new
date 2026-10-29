@@ -15,7 +15,7 @@ MACERA
 Demir’den Usta’ya yedi dünyada 140 şınav dövüşü. Her tekrar canavara vurur ve canavarlar ilerledikçe evrimleşir. Her yeni dünyanın istediği silahı açmak için yıldız kazan. Rütben tehlikede değil ve çevrimdışı da çalışır.
 
 HER TEKRARLA SEVİYE ATLA
-Her şınav ve her maç, kazansan da kaybetsen de XP kazandırır. Seviyen her yerde adının yanında görünür ve asla düşmez.
+Her şınav XP kazandırır, her galibiyet 20 daha; kaybedilen maç hiçbir şey kazandırmaz. Seviyen her yerde adının yanında görünür ve asla düşmez.
 
 HAFTALIK VE AYLIK YARIŞLAR
 Her pazartesi yeni bir tablo ve ilk 10'a ödüllü aylık yarış.

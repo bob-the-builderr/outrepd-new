@@ -15,7 +15,7 @@ ADVENTURE
 140 push-up fights across seven worlds, from Iron to Master. Every rep hits the monster, and the monsters evolve as you go. Win stars to unlock the weapon each new world needs. No rank on the line, and it works offline.
 
 LEVEL UP WITH EVERY REP
-Every push-up and every match earns XP, win or lose. Your level shows beside your name everywhere, and it never goes down.
+Every push-up earns XP, and every win 20 more; a lost match earns nothing. Your level shows beside your name everywhere, and it never goes down.
 
 WEEKLY AND MONTHLY RACES
 A new board every Monday, and a monthly race with awards for the top ten.

@@ -15,7 +15,7 @@ AVENTURA
 140 lutas de flexões em sete mundos, do Ferro ao Mestre. Cada repetição acerta o monstro, e os monstros evoluem conforme você avança. Ganhe estrelas para desbloquear a arma que cada novo mundo exige. Nenhum ranking em jogo, e funciona offline.
 
 SUBA DE NÍVEL A CADA REPETIÇÃO
-Cada flexão e cada partida dão XP, ganhando ou perdendo. Seu nível aparece ao lado do seu nome em todo lugar e nunca cai.
+Cada flexão dá XP, e cada vitória 20 a mais; uma partida perdida não dá nada. Seu nível aparece ao lado do seu nome em todo lugar e nunca cai.
 
 CORRIDAS SEMANAIS E MENSAIS
 Um ranking novo toda segunda-feira, e uma corrida mensal com prêmios para o top 10.

@@ -21,7 +21,7 @@ STEIG IN DER RANGLISTE AUF
 Dein erstes Match bringt dich auf die Rangliste, bei Eisen V. Dann steigst du von Eisen über Bronze, Silber, Gold, Platin und Diamant bis Meister auf. Schlägst du einen höheren Rang, bekommst du mehr LP. Eine erreichte Stufe behältst du.
 
 LEVEL UP MIT JEDER WIEDERHOLUNG
-Jeder Liegestütz und jedes Match bringen XP, ob Sieg oder Niederlage. Dein Level steht überall neben deinem Namen und sinkt nie.
+Jeder Liegestütz bringt XP und jeder Sieg 20 mehr; ein verlorenes Match bringt nichts. Dein Level steht überall neben deinem Namen und sinkt nie.
 
 WOCHEN- UND MONATSRENNEN
 Jeden Montag eine neue Rangliste, dazu ein Monatsrennen mit Auszeichnungen für die Top 10.
@@ -56,7 +56,7 @@ GRIMPE DANS LE CLASSEMENT
 Ton premier match te place au classement, en Fer V. Ensuite, monte de Fer à Bronze, Argent, Or, Platine et Diamant jusqu'à Maître. Bats un rang plus élevé et tu gagnes plus de LP. Un palier atteint reste acquis.
 
 MONTE DE NIVEAU À CHAQUE RÉPÉTITION
-Chaque pompe et chaque match rapportent de l'XP, victoire ou défaite. Ton niveau s'affiche partout à côté de ton nom et ne baisse jamais.
+Chaque pompe rapporte de l'XP, et chaque victoire 20 de plus ; un match perdu ne rapporte rien. Ton niveau s'affiche partout à côté de ton nom et ne baisse jamais.
 
 COURSES HEBDOMADAIRES ET MENSUELLES
 Un nouveau classement chaque lundi, et une course mensuelle avec des récompenses pour le top 10.
@@ -91,7 +91,7 @@ SUBE EN LA CLASIFICACIÓN
 Tu primera partida te coloca en la clasificación, en Hierro V. Después sube de Hierro a Bronce, Plata, Oro, Platino y Diamante hasta Maestro. Gana a un rango más alto y consigues más LP. El nivel que alcanzas, lo conservas.
 
 SUBE DE NIVEL CON CADA REPETICIÓN
-Cada flexión y cada partida dan XP, ganes o pierdas. Tu nivel aparece junto a tu nombre en todas partes y nunca baja.
+Cada flexión da XP y cada victoria 20 más; una partida perdida no da nada. Tu nivel aparece junto a tu nombre en todas partes y nunca baja.
 
 CARRERAS SEMANALES Y MENSUALES
 Una clasificación nueva cada lunes, y una carrera mensual con premios para el top 10.
@@ -137,7 +137,7 @@ SCALA LA CLASSIFICA
 La tua prima partita ti mette in classifica, a Ferro V. Poi sali da Ferro a Bronzo, Argento, Oro, Platino e Diamante fino a Maestro. Batti un grado più alto e guadagni più LP. Un livello raggiunto resta tuo.
 
 SALI DI LIVELLO A OGNI RIPETIZIONE
-Ogni flessione e ogni partita danno XP, che tu vinca o perda. Il tuo livello appare accanto al tuo nome ovunque e non scende mai.
+Ogni flessione dà XP e ogni vittoria 20 in più; una partita persa non dà niente. Il tuo livello appare accanto al tuo nome ovunque e non scende mai.
 
 GARE SETTIMANALI E MENSILI
 Una nuova classifica ogni lunedì, e una gara mensile con premi per la top 10.
@@ -172,7 +172,7 @@ SUBA NO RANKING
 Sua primeira partida coloca você no ranking, no Ferro V. Depois suba de Ferro para Bronze, Prata, Ouro, Platina e Diamante até Mestre. Vença um nível mais alto e ganhe mais LP. O nível que você alcança fica com você.
 
 SUBA DE NÍVEL A CADA REPETIÇÃO
-Cada flexão e cada partida dão XP, ganhando ou perdendo. Seu nível aparece ao lado do seu nome em todo lugar e nunca cai.
+Cada flexão dá XP, e cada vitória 20 a mais; uma partida perdida não dá nada. Seu nível aparece ao lado do seu nome em todo lugar e nunca cai.
 
 CORRIDAS SEMANAIS E MENSAIS
 Um ranking novo toda segunda-feira, e uma corrida mensal com prêmios para o top 10.
@@ -215,7 +215,7 @@ OUTREPD превращает отжимания в живой челлендж 1
 Первый матч ставит тебя в рейтинг — на Железо V. Дальше поднимайся от Железа через Бронзу, Серебро, Золото, Платину и Алмаз до Мастера. Победи ранг выше — получишь больше LP. Достигнутый уровень остается за тобой.
 
 НОВЫЙ УРОВЕНЬ С КАЖДЫМ ПОВТОРЕНИЕМ
-Каждое отжимание и каждый матч дают XP — при победе и при поражении. Твой уровень виден рядом с именем везде и никогда не падает.
+Каждое отжимание даёт XP, а каждая победа — ещё 20; за проигранный матч — ничего. Твой уровень виден рядом с именем везде и никогда не падает.
 
 НЕДЕЛЬНЫЕ И МЕСЯЧНЫЕ ГОНКИ
 Новая таблица каждый понедельник и месячная гонка с наградами для топ-10.
@@ -250,7 +250,7 @@ SIRALAMADA YÜKSEL
 İlk maçınla sıralamaya Demir V'ten girersin. Sonra Demir'den Bronz, Gümüş, Altın, Platin ve Elmas'a, oradan Usta'ya yüksel. Daha yüksek bir rütbeyi yen, daha çok LP kazan. Ulaştığın kademe senin kalır.
 
 HER TEKRARLA SEVİYE ATLA
-Her şınav ve her maç, kazansan da kaybetsen de XP kazandırır. Seviyen her yerde adının yanında görünür ve asla düşmez.
+Her şınav XP kazandırır, her galibiyet 20 daha; kaybedilen maç hiçbir şey kazandırmaz. Seviyen her yerde adının yanında görünür ve asla düşmez.
 
 HAFTALIK VE AYLIK YARIŞLAR
 Her pazartesi yeni bir tablo ve ilk 10'a ödüllü aylık yarış.
@@ -285,7 +285,7 @@ OUTREPDは腕立て伏せをリアルタイムの1v1チャレンジに変えま�
 最初のマッチでランキングに参加し、アイアンVからスタートします。そこからアイアン、ブロンズ、シルバー、ゴールド、プラチナ、ダイヤモンド、そしてマスターへ。格上に勝てばより多くのLPを獲得。一度到達したティアは失いません。
 
 1回ごとにレベルアップ
-腕立て伏せ1回、対戦1回ごとに、勝っても負けてもXPがたまります。レベルはどこでも名前の横に表示され、下がることはありません。
+腕立て伏せ1回ごとにXPがたまり、勝てばさらに20。負けた対戦では何も入りません。レベルはどこでも名前の横に表示され、下がることはありません。
 
 ウィークリーとマンスリーのレース
 毎週月曜日に新しいランキング。月間レースでは上位10人に称号が贈られます。
@@ -320,7 +320,7 @@ OUTREPD는 팔굽혀펴기를 실시간 1:1 대결로 바꿉니다. 휴대폰을
 첫 매치를 하면 아이언 V에서 랭킹을 시작합니다. 그다음 아이언에서 브론즈, 실버, 골드, 플래티넘, 다이아몬드를 거쳐 마스터까지. 더 높은 랭크를 이기면 LP를 더 얻습니다. 한 번 오른 티어는 떨어지지 않습니다.
 
 한 번 할 때마다 레벨업
-팔굽혀펴기 한 번, 대결 한 판마다 이기든 지든 XP가 쌓입니다. 레벨은 어디서나 이름 옆에 표시되고 절대 내려가지 않습니다.
+팔굽혀펴기 한 번마다 XP가 쌓이고, 이기면 20이 더해집니다. 진 대결은 아무것도 주지 않습니다. 레벨은 어디서나 이름 옆에 표시되고 절대 내려가지 않습니다.
 
 주간·월간 레이스
 매주 월요일 새 랭킹, 그리고 상위 10명에게 보상이 주어지는 월간 레이스.
@@ -355,7 +355,7 @@ OUTREPD 把俯卧撑变成实时 1v1 挑战。把手机立好，摆好姿势，�
 打完第一场比赛，你就从黑铁 V 开始进入排名。之后从黑铁一路升到青铜、白银、黄金、铂金、钻石，直到大师。赢下更高段位的对手，拿到更多 LP。到达的段位不会掉。
 
 每一次都在升级
-每个俯卧撑、每场比赛都能获得 XP，赢输都有。你的等级显示在你名字旁边，永远不会下降。
+每个俯卧撑都能获得 XP，每场胜利再加 20；输掉的比赛不得 XP。你的等级显示在你名字旁边，永远不会下降。
 
 每周和每月竞赛
 每周一刷新的新榜单，还有前十名有奖励的月度竞赛。
@@ -390,7 +390,7 @@ OUTREPD 把伏地挺身變成即時 1v1 挑戰。把手機立好、擺好姿勢�
 打完第一場比賽，你就從黑鐵 V 開始進入排名。之後從黑鐵一路升到青銅、白銀、黃金、白金、鑽石，直到大師。贏下更高段位的對手，拿到更多 LP。到達的段位不會掉。
 
 每一下都在升級
-每下伏地挺身、每場比賽都能獲得 XP，輸贏都有。你的等級顯示在名字旁邊，永遠不會下降。
+每下伏地挺身都能獲得 XP，每場勝利再加 20；輸掉的比賽不得 XP。你的等級顯示在名字旁邊，永遠不會下降。
 
 每週和每月競賽
 每週一更新的新排行榜，還有前十名有獎勵的月度競賽。
@@ -425,7 +425,7 @@ OUTREPD पुश-अप को लाइव 1v1 चैलेंज में �
 पहला मैच खेलते ही आप लोहा V से रैंकिंग में आ जाते हैं। फिर लोहा से कांस्य, रजत, स्वर्ण, प्लैटिनम और हीरा होते हुए मास्टर तक चढ़िए। ऊँची रैंक को हराइए और ज़्यादा LP पाइए। जो टियर आप पा लेते हैं, वो आपका रहता है।
 
 हर रेप के साथ लेवल अप
-हर पुश-अप और हर मैच से XP मिलता है, जीतें या हारें। आपका लेवल हर जगह आपके नाम के पास दिखता है और कभी कम नहीं होता।
+हर पुश-अप से XP मिलता है और हर जीत पर 20 और; हारे हुए मैच से कुछ नहीं मिलता। आपका लेवल हर जगह आपके नाम के पास दिखता है और कभी कम नहीं होता।
 
 साप्ताहिक और मासिक रेस
 हर सोमवार नया बोर्ड, और टॉप 10 के लिए इनाम वाली मासिक रेस।
@@ -460,7 +460,7 @@ NAIK PERINGKAT
 Pertandingan pertamamu memasukkanmu ke peringkat, mulai dari Besi V. Lalu naik dari Besi ke Perunggu, Perak, Emas, Platinum dan Berlian sampai Master. Kalahkan peringkat lebih tinggi dan dapatkan LP lebih banyak. Tingkat yang sudah dicapai tetap milikmu.
 
 NAIK LEVEL DI SETIAP REPETISI
-Setiap push up dan setiap pertandingan memberi XP, menang atau kalah. Levelmu tampil di samping namamu di mana saja dan tidak pernah turun.
+Setiap push up memberi XP, dan setiap kemenangan 20 lagi; pertandingan yang kalah tidak memberi apa-apa. Levelmu tampil di samping namamu di mana saja dan tidak pernah turun.
 
 BALAPAN MINGGUAN DAN BULANAN
 Papan baru setiap Senin, dan balapan bulanan dengan penghargaan untuk 10 besar.

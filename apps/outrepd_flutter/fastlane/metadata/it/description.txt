@@ -15,7 +15,7 @@ AVVENTURA
 140 combattimenti a flessioni in sette mondi, da Ferro a Maestro. Ogni ripetizione colpisce il mostro, e i mostri si evolvono man mano che avanzi. Guadagna stelle per sbloccare l’arma che serve a ogni nuovo mondo. Nessun grado in gioco, e funziona offline.
 
 SALI DI LIVELLO A OGNI RIPETIZIONE
-Ogni flessione e ogni partita danno XP, che tu vinca o perda. Il tuo livello appare accanto al tuo nome ovunque e non scende mai.
+Ogni flessione dà XP e ogni vittoria 20 in più; una partita persa non dà niente. Il tuo livello appare accanto al tuo nome ovunque e non scende mai.
 
 GARE SETTIMANALI E MENSILI
 Una nuova classifica ogni lunedì, e una gara mensile con premi per la top 10.

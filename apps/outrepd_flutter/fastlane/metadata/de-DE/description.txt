@@ -15,7 +15,7 @@ ABENTEUER
 140 Liegestütz-Kämpfe in sieben Welten, von Eisen bis Meister. Jede Wiederholung trifft das Monster, und die Monster entwickeln sich mit jeder Welt weiter. Sammle Sterne für die Waffe, die jede neue Welt verlangt. Kein Rang steht auf dem Spiel, und es geht auch offline.
 
 LEVEL UP MIT JEDER WIEDERHOLUNG
-Jeder Liegestütz und jedes Match bringen XP, ob Sieg oder Niederlage. Dein Level steht überall neben deinem Namen und sinkt nie.
+Jeder Liegestütz bringt XP und jeder Sieg 20 mehr; ein verlorenes Match bringt nichts. Dein Level steht überall neben deinem Namen und sinkt nie.
 
 WOCHEN- UND MONATSRENNEN
 Jeden Montag eine neue Rangliste, dazu ein Monatsrennen mit Auszeichnungen für die Top 10.

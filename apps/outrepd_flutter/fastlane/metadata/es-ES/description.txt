@@ -15,7 +15,7 @@ AVENTURA
 140 combates de flexiones en siete mundos, de Hierro a Maestro. Cada repetición golpea al monstruo, y los monstruos evolucionan a medida que avanzas. Gana estrellas para desbloquear el arma que pide cada mundo nuevo. No te juegas el rango, y funciona sin conexión.
 
 SUBE DE NIVEL CON CADA REPETICIÓN
-Cada flexión y cada partida dan XP, ganes o pierdas. Tu nivel aparece junto a tu nombre en todas partes y nunca baja.
+Cada flexión da XP y cada victoria 20 más; una partida perdida no da nada. Tu nivel aparece junto a tu nombre en todas partes y nunca baja.
 
 CARRERAS SEMANALES Y MENSUALES
 Una clasificación nueva cada lunes, y una carrera mensual con premios para el top 10.
