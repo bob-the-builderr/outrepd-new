@@ -1207,13 +1207,23 @@ class _TrainerScreenState extends State<TrainerScreen>
             ),
 
           // A game counts down its own way: the monster first, then the
-          // number over the camera.
+          // number over the camera. Under the card's top line, which keeps
+          // its Give up in sight, and letting taps through to it: ten seconds
+          // is long enough for somebody to want out.
           if (_stage == _Stage.countdown && game != null)
-            Positioned.fill(child: game.countdown(context, _countdown)),
+            Positioned(
+              left: 0,
+              right: 0,
+              top: top + 34,
+              bottom: 0,
+              child: IgnorePointer(child: game.countdown(context, _countdown)),
+            ),
           if (_stage == _Stage.countdown && game == null) ...[
-            Positioned.fill(
-              child: ColoredBox(
-                color: const Color(0xFF121110).withValues(alpha: 0.55),
+            // Drawn over the card but not in its way: its Give up stays
+            // tappable through the count down.
+            const Positioned.fill(
+              child: IgnorePointer(
+                child: ColoredBox(color: Color(0x8C121110)),
               ),
             ),
             Positioned(
