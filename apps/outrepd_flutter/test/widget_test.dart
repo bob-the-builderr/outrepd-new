@@ -82,7 +82,8 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  /// The idea's four cards: Next, Next, Next, and Continue on the last.
+  /// The idea's four cards, each its own step: Next, Next, Next, and
+  /// Continue on the last.
   Future<void> throughIdea(WidgetTester tester) async {
     await tap(tester, 'Next');
     await tap(tester, 'Next');
@@ -135,12 +136,17 @@ void main() {
     await tap(tester, 'Get started');
     await throughIdea(tester);
     expect(find.text('Two quick things.'), findsOneWidget);
+    // Each of the idea's cards is a step of its own: back goes to the last.
     await tester.tap(back);
     await tester.pumpAndSettle();
-    expect(find.text('Race a real person.'), findsOneWidget);
+    expect(find.text('Fight monsters.'), findsOneWidget);
+    await tester.tap(back);
+    await tester.pumpAndSettle();
+    expect(find.text('Climb to Master.'), findsOneWidget);
+    await tap(tester, 'Next');
 
     // On the camera steps too, where the screen is the camera.
-    await throughIdea(tester);
+    await tap(tester, 'Continue');
     await tap(tester, '13 or over');
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
@@ -154,8 +160,8 @@ void main() {
     expect(find.text('Get into a push-up position'), findsNothing);
     expect(find.text('I’m set up'), findsOneWidget);
 
-    // Camera, the two questions, the idea, the welcome.
-    for (var i = 0; i < 4; i++) {
+    // Camera, the two questions, the idea's four cards, the welcome.
+    for (var i = 0; i < 7; i++) {
       await tester.tap(back);
       await tester.pumpAndSettle();
     }

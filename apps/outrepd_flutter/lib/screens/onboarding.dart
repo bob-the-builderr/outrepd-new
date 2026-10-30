@@ -62,14 +62,17 @@ class OnboardingScreen extends StatefulWidget {
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-/// Eight steps to signing up, where there were eleven: the idea on one screen
-/// instead of three, and no page about placements before there is an account
-/// to place — the home screen says it when it matters. The camera and the
-/// three-rep calibration stay before the account, on purpose: seeing the
+/// Eleven steps to signing up: the idea's four cards each a step of its own
+/// (the user, 2026-10-30), and no page about placements before there is an
+/// account to place — the home screen says it when it matters. The camera and
+/// the three-rep calibration stay before the account, on purpose: seeing the
 /// camera count your own push-ups is what makes the subscription worth it.
 enum _Step {
   welcome,
-  idea,
+  race,
+  reps,
+  climb,
+  fight,
   before,
   camera,
   placement,
@@ -196,7 +199,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         // end skips the sign-up it no longer needs. It used to land back on
         // the welcome as if nothing had happened.
         setState(() => _accountMade = true);
-        _go(_Step.idea);
+        _go(_Step.race);
       case null:
         break;
     }
@@ -249,10 +252,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   key: ValueKey(_step),
                   child: switch (_step) {
                   _Step.welcome => _Welcome(
-                    onStart: () => _go(_Step.idea),
+                    onStart: () => _go(_Step.race),
                     onSignIn: _directLogIn,
                   ),
-                  _Step.idea => _Idea(onNext: () => _go(_Step.before)),
+                  _Step.race => _Idea(card: 0, onNext: () => _go(_Step.reps)),
+                  _Step.reps => _Idea(card: 1, onNext: () => _go(_Step.climb)),
+                  _Step.climb => _Idea(
+                    card: 2,
+                    onNext: () => _go(_Step.fight),
+                  ),
+                  _Step.fight => _Idea(
+                    card: 3,
+                    onNext: () => _go(_Step.before),
+                  ),
                   _Step.before => _BeforeYouStart(
                     over13: _over13,
                     healthAccepted: _healthAccepted,
@@ -550,36 +562,16 @@ class _Welcome extends StatelessWidget {
 /// which said what the app was without showing any of it.
 ///
 /// One step still, so the bar above does not grow by three.
-class _Idea extends StatefulWidget {
-  const _Idea({required this.onNext});
+/// One of the idea's four cards, a step of its own: who you race, what
+/// counts, what you climb, and the Adventure. Next on the first three,
+/// Continue on the last.
+class _Idea extends StatelessWidget {
+  const _Idea({required this.card, required this.onNext});
 
-  final VoidCallback onNext;
-
-  @override
-  State<_Idea> createState() => _IdeaState();
-}
-
-class _IdeaState extends State<_Idea> {
   static const _count = 4;
 
-  final _pages = PageController();
-  int _page = 0;
-
-  @override
-  void dispose() {
-    _pages.dispose();
-    super.dispose();
-  }
-
-  void _next() {
-    if (_page == _count - 1) {
-      widget.onNext();
-    } else if (reduceMotion(context)) {
-      _pages.jumpToPage(_page + 1);
-    } else {
-      _pages.nextPage(duration: kSettle, curve: Curves.easeOutCubic);
-    }
-  }
+  final int card;
+  final VoidCallback onNext;
 
   @override
   Widget build(BuildContext context) {
@@ -588,18 +580,15 @@ class _IdeaState extends State<_Idea> {
     return Column(
       children: [
         Expanded(
-          child: PageView(
-            controller: _pages,
-            onPageChanged: (page) => setState(() => _page = page),
-            children: [
-              _IdeaPage(
+          child: switch (card) {
+              0 => _IdeaPage(
                 title: l.obRaceTitle,
                 body: l.obRaceBody,
                 // A live match as it looks from the floor: both counts, the
                 // clock, the depth bar and the line over the lifter's arms.
                 picture: const _Screenshot('assets/images/onboarding_live.jpg'),
               ),
-              _IdeaPage(
+              1 => _IdeaPage(
                 title: l.obRepsTitle,
                 body: l.obRepsBody,
                 picture: const _RepRule(),
@@ -634,7 +623,7 @@ class _IdeaState extends State<_Idea> {
                   ),
                 ),
               ),
-              _IdeaPage(
+              2 => _IdeaPage(
                 title: l.obClimbTitle,
                 body: l.obClimbBody,
                 picture: Center(
@@ -681,7 +670,7 @@ class _IdeaState extends State<_Idea> {
               ),
               // Adventure, its own card (the user, 2026-10-28, mockup A): a
               // fight under way, the seven worlds' Kings, and what stars buy.
-              _IdeaPage(
+              _ => _IdeaPage(
                 title: l.obFightTitle,
                 body: l.obFightBody,
                 // The fight as the camera shows it: the lifter in the black
@@ -748,16 +737,13 @@ class _IdeaState extends State<_Idea> {
                   ],
                 ),
               ),
-            ],
-          ),
+          },
         ),
-        const SizedBox(height: 14),
-        _Dots(count: _count, at: _page),
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 18, 20, 22),
           child: _Primary(
-            label: _page == _count - 1 ? l.continueLabel : l.obNext,
-            onTap: _next,
+            label: card == _count - 1 ? l.continueLabel : l.obNext,
+            onTap: onNext,
           ),
         ),
       ],
@@ -931,38 +917,6 @@ class _WorldKing extends StatelessWidget {
             child: const SizedBox.expand(),
           ),
         ),
-      ),
-    );
-  }
-}
-
-/// Which card this is: a pill for this one, dots for the others.
-class _Dots extends StatelessWidget {
-  const _Dots({required this.count, required this.at});
-
-  final int count;
-  final int at;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      label: '${at + 1} / $count',
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          for (var i = 0; i < count; i++) ...[
-            if (i > 0) const SizedBox(width: 7),
-            AnimatedContainer(
-              duration: kQuick,
-              width: i == at ? 22 : 7,
-              height: 7,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                color: i == at ? context.colors.brand : context.colors.border,
-              ),
-            ),
-          ],
-        ],
       ),
     );
   }
