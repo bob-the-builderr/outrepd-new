@@ -1507,7 +1507,9 @@ class _CameraAsk extends StatelessWidget {
       ),
       actions: Column(
         children: [
-          _Primary(label: l.allowCamera, onTap: onNext),
+          // "Continue", not "Allow": the system asks the question, this
+          // screen only says why (App Review, guideline 5.1.1(iv), 1.1.5).
+          _Primary(label: l.continueLabel, onTap: onNext),
           const SizedBox(height: 6),
           _Secondary(
             label: l.obWhyNeeded,

@@ -104,7 +104,7 @@ void main() {
     expect(find.text('I already have an account'), findsOneWidget);
 
     // Nothing is asked for on the first screen.
-    expect(find.text('Allow camera'), findsNothing);
+    expect(find.text('outrepd needs your camera'), findsNothing);
   });
 
   testWidgets('back goes to the step before, not out of the app',
@@ -145,7 +145,8 @@ void main() {
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
     await tap(tester, 'Continue');
-    await tap(tester, 'Allow camera');
+    // The camera step's button: Continue, never Allow (App Review 5.1.1(iv)).
+    await tap(tester, 'Continue');
     await tap(tester, 'I’m set up');
     expect(find.text('Get into a push-up position'), findsOneWidget);
     await tester.tap(back);
@@ -197,7 +198,10 @@ void main() {
     expect(find.text('outrepd needs your camera'), findsOneWidget);
     // The promise is on the screen that asks, not in a policy nobody opens.
     expect(find.text('Nothing leaves your phone'), findsOneWidget);
-    expect(find.text('Allow camera'), findsOneWidget);
+    // The button goes on to the system's own question; it does not ask for
+    // the camera itself (App Review, guideline 5.1.1(iv)).
+    expect(find.text('Continue'), findsOneWidget);
+    expect(find.textContaining('Allow'), findsNothing);
   });
 
   testWidgets('under thirteen is turned away without a way around it',
@@ -234,7 +238,8 @@ void main() {
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
     await tap(tester, 'Continue');
-    await tap(tester, 'Allow camera');
+    // The camera step's button: Continue, never Allow (App Review 5.1.1(iv)).
+    await tap(tester, 'Continue');
     await tap(tester, 'I’m set up');
 
     expect(find.text('Get into a push-up position'), findsOneWidget);
@@ -277,7 +282,8 @@ void main() {
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
     await tap(tester, 'Continue');
-    await tap(tester, 'Allow camera');
+    // The camera step's button: Continue, never Allow (App Review 5.1.1(iv)).
+    await tap(tester, 'Continue');
     await tap(tester, 'I’m set up');
     expect(find.text('Get into a push-up position'), findsOneWidget);
 
@@ -316,7 +322,8 @@ void main() {
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
     await tap(tester, 'Continue');
-    await tap(tester, 'Allow camera');
+    // The camera step's button: Continue, never Allow (App Review 5.1.1(iv)).
+    await tap(tester, 'Continue');
     await tap(tester, 'I’m set up');
 
     sources.last.emit(_framedBody());
@@ -359,7 +366,8 @@ void main() {
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
     await tap(tester, 'Continue');
-    await tap(tester, 'Allow camera');
+    // The camera step's button: Continue, never Allow (App Review 5.1.1(iv)).
+    await tap(tester, 'Continue');
     await tap(tester, 'I’m set up');
     sources.last.emit(_framedBody());
     await tester.pump();
@@ -438,7 +446,8 @@ void main() {
     await tap(tester, 'I understand outrepd counts reps and does not give '
         'medical or training advice. I’ll stop if something hurts.');
     await tap(tester, 'Continue');
-    await tap(tester, 'Allow camera');
+    // The camera step's button: Continue, never Allow (App Review 5.1.1(iv)).
+    await tap(tester, 'Continue');
     await tap(tester, 'I’m set up');
 
     sources.last.emit(_framedBody());
