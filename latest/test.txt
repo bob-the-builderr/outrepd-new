@@ -8,9 +8,9 @@
 00:00 +6: the opponent following you, always the planned number behind
 00:00 +7: the setup fits a small iPhone
 00:01 +8: a whole take: setup, the round, the result, and back
-00:05 +9: a promotion comes first, then the result
-00:06 +10: a level-up, when planned, comes before the result
-00:06 +11: giving up is a loss whatever the count
-00:06 +12: the Adventure tab fits a small iPhone, every weapon at hand
-00:06 +13: an adventure take: the fight, its result, and back
-00:08 +14: All tests passed!
+00:03 +9: a promotion comes first, then the result
+00:03 +10: a level-up, when planned, comes before the result
+00:03 +11: giving up is a loss whatever the count
+00:03 +12: the Adventure tab fits a small iPhone, every weapon at hand
+00:03 +13: an adventure take: the fight, its result, and back
+00:04 +14: All tests passed!
