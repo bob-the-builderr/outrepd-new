@@ -1,0 +1,14 @@
+00:00 +0: loading /home/runner/work/outrepd-new/outrepd-new/test/promo_test.dart
+lib/screens/adventure_fight.dart:943:23: Error: Not a constant expression.
+                const AdNotice(),
+                      ^^^^^^^^
+00:00 +0 -1: loading /home/runner/work/outrepd-new/outrepd-new/test/promo_test.dart [E]
+  Failed to load "/home/runner/work/outrepd-new/outrepd-new/test/promo_test.dart":
+  Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/test/promo_test.dart: lib/screens/adventure_fight.dart:943:23: Error: Not a constant expression.
+                  const AdNotice(),
+                        ^^^^^^^^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  /home/runner/work/outrepd-new/outrepd-new/test/promo_test.dart: loading /home/runner/work/outrepd-new/outrepd-new/test/promo_test.dart

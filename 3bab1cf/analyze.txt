@@ -1,0 +1,6 @@
+Analyzing outrepd-new...                                        
+
+warning • The declaration '_same' isn't referenced. Try removing the declaration of '_same' • lib/adventure/adventure.dart:262:15 • unused_element
+  error • The name 'AdNotice' isn't a class. Try correcting the name to match an existing class • lib/screens/adventure_fight.dart:943:23 • creation_with_non_type
+
+2 issues found. (ran in 12.0s)
