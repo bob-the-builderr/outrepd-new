@@ -373,6 +373,49 @@ jobs:
   # instead of charging anybody. Debug on purpose — the SDK crashes a release
   # build that has a Test Store key, so this can never reach a store. It
   # installs as "outrepd test", beside the real app.
+  # The release build is shrunk and renamed by R8 (Google Play marks it
+  # otherwise). A class the shrinker wrongly removes kills the app before its
+  # first frame, which no Dart test sees: so the release APK is installed on an
+  # emulator and opened, and a crash in its first 30 seconds fails the run.
+  launch-check:
+    needs: apk
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github/scripts
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: OUTREPD-apk-${{ github.sha }}
+          path: ${{ runner.temp }}/apk
+
+      - name: Let the emulator use KVM
+        working-directory: .
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Open the release APK on an emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          arch: x86_64
+          target: google_apis
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back emulated
+          working-directory: .
+          script: bash .github/scripts/launch_check.sh ${{ runner.temp }}/apk/OUTREPD.apk
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: OUTREPD-launch-${{ github.sha }}
+          path: launch/
+          retention-days: 14
+
   paywall-test:
     runs-on: ubuntu-latest
     timeout-minutes: 60

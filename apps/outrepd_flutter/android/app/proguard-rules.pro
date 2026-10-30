@@ -18,3 +18,27 @@
 -keep class androidx.work.impl.** { *; }
 -keep class androidx.startup.** { *; }
 -dontwarn androidx.work.**
+
+# Flutter's engine refers to Play Core for deferred components, which this app
+# never uses; without this R8 stops the build on the missing classes.
+-dontwarn com.google.android.play.core.**
+
+# flutter_local_notifications keeps scheduled notifications as Gson JSON, and
+# Gson reads generic types back through TypeToken's signature. Strip either and
+# the daily reminder crashes when it is rescheduled.
+-keep class com.dexterous.** { *; }
+-keep class com.google.gson.reflect.TypeToken { *; }
+-keep class * extends com.google.gson.reflect.TypeToken
+-keepattributes Signature, InnerClasses, EnclosingMethod, *Annotation*
+
+# The health plugin is still linked, but Health Connect is no longer in the
+# Android manifest: its references are expected to be unresolved.
+-dontwarn androidx.health.**
+
+# Our own few classes (MainActivity, the home-screen widgets) are found by name
+# from the manifest and from Dart's home_widget calls.
+-keep class com.outrepd.outrepd.** { *; }
+
+# Crash reports keep their file and line numbers, mapped back by the mapping.
+-keepattributes SourceFile, LineNumberTable
+-renamesourcefileattribute SourceFile

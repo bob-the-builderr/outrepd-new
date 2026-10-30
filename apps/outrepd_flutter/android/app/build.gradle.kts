@@ -87,13 +87,17 @@ android {
                 if (hasUploadKey) signingConfigs.getByName("release")
                 else signingConfigs.getByName("debug")
 
-            // Off, and deliberately so. ML Kit pulls in WorkManager, whose Room
-            // database is built by looking up a generated class by name; the
-            // shrinker renamed it and the app died before its first frame, on
-            // the launcher, with nothing to show. The rules below cover what is
-            // known to be reflected, but the app is nowhere near the method
-            // limit and nothing here is worth a crash nobody can read.
-            isMinifyEnabled = false
+            // On, because Google Play marks an app whose code is not shrunk and
+            // obfuscated (2026-10-30: "Obfuscation 1%" on 1.1.5). It was off
+            // after ML Kit's WorkManager lost a class looked up by name and the
+            // app died before its first frame; proguard-rules.pro keeps that
+            // and the other classes found by name, and CI's launch-check opens
+            // the release APK on an emulator so a crash like that fails the run.
+            // The mapping travels inside the App Bundle for Play, and to
+            // Crashlytics, so crash reports still read.
+            isMinifyEnabled = true
+            // Resources stay: some are looked up by name from Dart (the
+            // notification icon), which the resource shrinker cannot see.
             isShrinkResources = false
 
             proguardFiles(
