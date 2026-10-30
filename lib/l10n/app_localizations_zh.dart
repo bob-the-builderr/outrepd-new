@@ -193,7 +193,7 @@ class LZh extends L {
   String get createAccountTitle => '创建账户';
 
   @override
-  String get createAccountBody => '添加邮箱和密码，让这个账户不再只依赖这一部手机。';
+  String get createAccountBody => '登录后，这个账户就不会只存在于一部手机上。';
 
   @override
   String get createAccountAction => '创建账户';
@@ -353,7 +353,7 @@ class LZh extends L {
   String get usernameChanged => '用户名已更改';
 
   @override
-  String get usernameAlreadyChangedBody => '你已经用过唯一一次改名机会——每个账号只能改一次用户名。';
+  String get usernameAlreadyChangedBody => '用户名每 14 天可更改一次。';
 
   @override
   String get gallery => '相册';
@@ -876,9 +876,6 @@ class LZh extends L {
   String get forfeitBody => '现在离开会扣除 LP。';
 
   @override
-  String get stay => '留下';
-
-  @override
   String get forfeit => '认输';
 
   @override
@@ -995,7 +992,7 @@ class LZh extends L {
 
   @override
   String weeksAgo(String n) {
-    return '$n 周前';
+    return '${n} 周前';
   }
 
   @override
@@ -1252,41 +1249,10 @@ class LZh extends L {
   String get noRankYet => '还没有段位';
 
   @override
-  String placementsForFirstTier(String count) {
-    return '完成 $count 场定位赛即可获得首个段位。';
-  }
-
-  @override
-  String get startPlacements => '开始定位赛';
-
-  @override
   String get unranked => '未定级';
 
   @override
-  String placementsTerms(String done, String total, String seconds) {
-    return '$done/$total · 每场 $seconds 秒';
-  }
-
-  @override
-  String placementsLeft(String done, String total, String left) {
-    return '$done/$total · 还差 $left 场定段';
-  }
-
-  @override
-  String placementsForTier(String count) {
-    return '完成 $count 场定位赛即可查看你的段位。';
-  }
-
-  @override
-  String placementsDoneCount(String done, String total) {
-    return '已完成 $done/$total 场定位赛';
-  }
-
-  @override
   String get practiceFirst => '先练一下';
-
-  @override
-  String get nextPlacement => '下一场定位赛';
 
   @override
   String get noConnection => '没有网络';
@@ -1322,7 +1288,7 @@ class LZh extends L {
   String get noCameraBody => '计数靠相机完成，所以这台设备无法给对决计分。其余功能正常。';
 
   @override
-  String get noConnectionBody => '对决需要网络。练习离线也能用，计数会稍后同步。';
+  String get noConnectionBody => '对决需要网络。冒险离线也能玩，计数会稍后同步。';
 
   @override
   String get getBackInFrame => '回到画面里';
@@ -1422,12 +1388,6 @@ class LZh extends L {
   String get obAgeQuestion => '你多大了？';
 
   @override
-  String get obUnder16 => '不满 16 岁';
-
-  @override
-  String get obOver16 => '16 岁及以上';
-
-  @override
   String get obHealthConsent => '我明白 outrepd 只负责计数，不提供医疗或训练建议。哪里疼了我就停下。';
 
   @override
@@ -1441,9 +1401,6 @@ class LZh extends L {
 
   @override
   String get obPrivacy => '隐私政策';
-
-  @override
-  String get obUnder16Blocked => 'outrepd 面向 16 岁及以上。到了年纪再来——俯卧撑跑不了。';
 
   @override
   String get obCameraTitle => 'outrepd 需要用摄像头';
@@ -1467,13 +1424,7 @@ class LZh extends L {
   String get obPlacementBody => '靠墙放，大约在你前方一米。';
 
   @override
-  String get obOneMetre => '约1米';
-
-  @override
-  String get obFullBody => '全身都在画面里';
-
-  @override
-  String get obCheckHandsFeet => '手和脚都看得见';
+  String get obCheckHandsFeet => '头、肩和双手都在画面里';
 
   @override
   String get obCheckFacing => '正对手机，不要侧身';
@@ -1747,7 +1698,7 @@ class LZh extends L {
   }
 
   @override
-  String get paywallStart => '开始攀登';
+  String get paywallStart => '去除广告';
 
   @override
   String get paywallRenewsPlay => '取消前自动续订。可随时在 Google Play 中取消。';
@@ -1794,7 +1745,7 @@ class LZh extends L {
   String get signOutQuestion => '要退出登录吗？';
 
   @override
-  String get signOutBody => '你的账户会原样保留，包括段位、记录和订阅。随时可以用邮箱重新登录。';
+  String get signOutBody => '你的账户会保持原样，排位、记录和订阅都在。随时可以用同样的方式重新登录。';
 
   @override
   String get shareVictory => '胜利';
@@ -1962,7 +1913,7 @@ class LZh extends L {
 
   @override
   String calledOffBody(String name) {
-    return '${name} 未能及时就位。没有记录任何结果。';
+    return '${name} 未能赶上开始。没有记录任何结果。';
   }
 
   @override
@@ -2008,11 +1959,6 @@ class LZh extends L {
 
   @override
   String get noticeLiveInvite => '好友邀请我进行实时对战';
-
-  @override
-  String trialHeadline(String days) {
-    return '前 ${days} 天*免费*';
-  }
 
   @override
   String get trialToday => '今天';
@@ -2175,49 +2121,6 @@ class LZh extends L {
   }
 
   @override
-  String get inviteCodeLabel => '好友代码（可选）';
-
-  @override
-  String get inviteClaimed => '已添加代码 · 免费 7 天';
-
-  @override
-  String get inviteUnknownCode => '没有人使用这个代码';
-
-  @override
-  String get inviteNotYearly => '这个代码暂时无法提供免费天数';
-
-  @override
-  String get inviteOwnCode => '这是你自己的代码';
-
-  @override
-  String get inviteTooLate => '代码仅在账号创建后的第一周内有效';
-
-  @override
-  String get inviteFull => '这个代码本月使用次数过多，请换一个';
-
-  @override
-  String get inviteTitle => '送好友 7 天免费';
-
-  @override
-  String get inviteBody => '代码是年度方案的福利。好友注册时输入即可。';
-
-  @override
-  String get inviteYourCode => '你的代码';
-
-  @override
-  String inviteJoined(String n) {
-    return '已加入 ${n} 人';
-  }
-
-  @override
-  String get inviteSend => '发送邀请';
-
-  @override
-  String inviteShareText(String code) {
-    return '来 OUTREPD 和我比一场：60 秒俯卧撑，实时对战。注册时输入我的代码 ${code}，免费 7 天。';
-  }
-
-  @override
   String get dailyGoalTitle => '今日目标';
 
   @override
@@ -2288,6 +2191,90 @@ class LZh extends L {
   }
 
   @override
+  String get usernameTooShort => '太短了：至少 4 个字符';
+
+  @override
+  String get usernameBadCharacters => '只能使用字母、数字和 _';
+
+  @override
+  String get usernameNeedsLetter => '至少包含一个字母或数字';
+
+  @override
+  String usernameChangeAgainOn(String date) {
+    return '你可以在 ${date} 再次更改';
+  }
+
+  @override
+  String get continueWithApple => '通过 Apple 继续';
+
+  @override
+  String get continueWithGoogle => '通过 Google 继续';
+
+  @override
+  String get socialSignInFailed => '无法登录，请重试。';
+
+  @override
+  String get chooseUsernameTitle => '选择你的用户名';
+
+  @override
+  String get chooseUsernameSubtitle => '其他人会通过它找到你，并在排行榜上看到你。';
+
+  @override
+  String get authHeroTitle => '超越任何人。';
+
+  @override
+  String get authHeroSubtitle => '实时俯卧撑对决，由你的摄像头计数。';
+
+  @override
+  String get createAccountPitch => '你的段位和对决，在任何手机上都在。';
+
+  @override
+  String get usernameSpacesHint => '空格会变成 _';
+
+  @override
+  String get emailCodeNote => '我们会给你发送 6 位数验证码邮件，无需密码。';
+
+  @override
+  String get continueWithEmail => '通过邮箱继续';
+
+  @override
+  String get thisSeason => '本赛季';
+
+  @override
+  String get thisWeek => '本周';
+
+  @override
+  String get weekStartsAgain => '每周一重新开始';
+
+  @override
+  String get lengthWeek => '周';
+
+  @override
+  String get lengthMonth => '月';
+
+  @override
+  String get weekJoinHint => '本周赢一场排位对决即可上榜';
+
+  @override
+  String get weekInTop3 => '本周前三';
+
+  @override
+  String weekToTop3(String n) {
+    return '距前三还差 ${n} LP';
+  }
+
+  @override
+  String get boardActiveNote => '过去 30 天内活跃的玩家';
+
+  @override
+  String get boardTieNote => '并列时胜场多者在前';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '次数差 ${reps} · ${rank} 对手 ${adjust}';
+  }
+
+  @override
   String levelShort(String n) {
     return 'Lv.${n}';
   }
@@ -2304,7 +2291,7 @@ class LZh extends L {
 
   @override
   String xpHow(String rep, String match) {
-    return '每次 ${rep} XP，每场对决 ${match}';
+    return '每次 ${rep} XP，每场胜利 ${match}，输了不得 XP';
   }
 
   @override
@@ -2345,7 +2332,541 @@ class LZh extends L {
   String get keepGoing => '继续';
 
   @override
-  String lpBreakdown(String reps, String adjust, String rank) {
-    return '次数差 ${reps} · ${rank} 对手 ${adjust}';
+  String get stay => '留下';
+
+  @override
+  String lastN(String n) {
+    return '最近 ${n} 场';
+  }
+
+  @override
+  String get firstMatchForTier => '打完第一场比赛即可进入排名。所有人都从 Iron V 开始。';
+
+  @override
+  String get firstMatchForBoard => '打完第一场比赛即可登上排行榜。所有人都从 Iron V 开始。';
+
+  @override
+  String get playFirstMatch => '开始第一场比赛';
+
+  @override
+  String firstMatchTerms(String seconds) {
+    return '1 场 · ${seconds} 秒';
+  }
+
+  @override
+  String get placedLabel => '你已进入排名';
+
+  @override
+  String get placedBody => '所有人都从这里开始。只有赢才能往上爬。';
+
+  @override
+  String get placedHow => '赢下比赛获得 LP。击败段位更高的对手得到更多。';
+
+  @override
+  String get levelBesideName => '显示在你的名字旁，随处可见';
+
+  @override
+  String get weekRaceTitle => '本周竞赛';
+
+  @override
+  String get streakDoneToday => '今天已完成';
+
+  @override
+  String get streakTrainToday => '今天练一次，多加一天';
+
+  @override
+  String get raceChartTitle => '这一分钟的走势';
+
+  @override
+  String raceYouLead(String time) {
+    return '${time} · 你取得领先';
+  }
+
+  @override
+  String raceTheyLead(String time, String name) {
+    return '${time} · ${name} 取得领先';
+  }
+
+  @override
+  String get bringFriendTitle => '叫上朋友';
+
+  @override
+  String get bringFriendBody => '发送你的链接。它会打开你的主页，对方可以在那里加你。';
+
+  @override
+  String get bringFriendShare => '分享我的链接';
+
+  @override
+  String get bringFriendShareText => '来 OUTREPD 和我比俯卧撑。60 秒，实时，摄像头计数。';
+
+  @override
+  String orFriendCode(String code) {
+    return '或好友码 ${code}';
+  }
+
+  @override
+  String get countryPickerTitle => '你的国家/地区';
+
+  @override
+  String get countrySearch => '搜索';
+
+  @override
+  String get countryFromPhone => '来自你的手机';
+
+  @override
+  String get countryAll => '所有国家/地区';
+
+  @override
+  String get countryChoose => '选择你的国家/地区';
+
+  @override
+  String get countryChange => '更改';
+
+  @override
+  String get countryForBoard => '用于你所在国家/地区的排行榜';
+
+  @override
+  String get countryLabel => '国家/地区';
+
+  @override
+  String get countryChanged => '国家/地区已更改';
+
+  @override
+  String get countryEvery14 => '和名字一样，每 14 天一次';
+
+  @override
+  String get countryNotSaved => '无法保存国家/地区，请重试。';
+
+  @override
+  String get adventure => '冒险';
+
+  @override
+  String stageNumber(String n) {
+    return '第 ${n} 关';
+  }
+
+  @override
+  String adventureLevelIn(String level, String world) {
+    return '第 ${level} 关 · ${world}';
+  }
+
+  @override
+  String adventureClearedOf(String cleared, String total) {
+    return '已通过 ${cleared}/${total} · 不计排位';
+  }
+
+  @override
+  String get worldIron => '黑铁矿坑';
+
+  @override
+  String get worldBronze => '青铜沙丘';
+
+  @override
+  String get worldSilver => '白银峰';
+
+  @override
+  String get worldGold => '黄金城堡';
+
+  @override
+  String get worldPlatinum => '铂金冰川';
+
+  @override
+  String get worldDiamond => '钻石洞窟';
+
+  @override
+  String get worldMaster => '大师王座';
+
+  @override
+  String worldNumber(String n) {
+    return '世界 ${n}';
+  }
+
+  @override
+  String fightLevel(String level) {
+    return '挑战第 ${level} 关';
+  }
+
+  @override
+  String levelHpLine(String hp, String reps) {
+    return 'HP ${hp} · 约 ${reps} 个俯卧撑';
+  }
+
+  @override
+  String get hpShort => 'HP';
+
+  @override
+  String comboTag(String n) {
+    return '连击 ×${n}';
+  }
+
+  @override
+  String get levelCleared => '通关';
+
+  @override
+  String get outOfTime => '时间到';
+
+  @override
+  String get statPushUps => '俯卧撑';
+
+  @override
+  String get statTimeLeft => '剩余';
+
+  @override
+  String get statHpLeft => '剩余 HP';
+
+  @override
+  String get statXp => 'XP';
+
+  @override
+  String secondStarHint(String seconds) {
+    return '完成时剩余 ${seconds} 秒可得第二颗星';
+  }
+
+  @override
+  String thirdStarHint(String seconds) {
+    return '完成时剩余 ${seconds} 秒可得第三颗星';
+  }
+
+  @override
+  String get fightLostHint => '重玩之前的关卡多拿星星：星星能解锁更强的武器。';
+
+  @override
+  String get nextLevel => '下一关';
+
+  @override
+  String get tryAgain => '再试一次';
+
+  @override
+  String get adventureMap => '地图';
+
+  @override
+  String get nextKicker => '下一关';
+
+  @override
+  String nextLevelLine(String level, String hp) {
+    return '第 ${level} 关 · HP ${hp}';
+  }
+
+  @override
+  String get armory => '武器库';
+
+  @override
+  String get armoryBody => '星星可解锁武器。每个世界的怪物只会被该世界的武器或更强的武器伤到。';
+
+  @override
+  String get equipped => '已装备';
+
+  @override
+  String perPushUp(String damage) {
+    return '每个俯卧撑 ${damage}';
+  }
+
+  @override
+  String damagePerPushUp(String damage) {
+    return '每个俯卧撑造成 ${damage} 伤害';
+  }
+
+  @override
+  String wasWith(String damage, String weapon) {
+    return '之前：${weapon} ${damage}';
+  }
+
+  @override
+  String moreStars(String count) {
+    return '还差 ${count} 颗星';
+  }
+
+  @override
+  String get newWeapon => '新武器';
+
+  @override
+  String starsKicker(String count) {
+    return '${count} 颗星';
+  }
+
+  @override
+  String get weaponGauntlets => '黑铁护手';
+
+  @override
+  String get weaponKnuckles => '青铜指虎';
+
+  @override
+  String get weaponFang => '白银之牙';
+
+  @override
+  String get weaponHammer => '黄金战锤';
+
+  @override
+  String get weaponAxe => '铂金战斧';
+
+  @override
+  String get weaponSpear => '钻石长矛';
+
+  @override
+  String get weaponSword => '大师之剑';
+
+  @override
+  String get weaponCrownbreaker => '碎冠者';
+
+  @override
+  String clearFirst(String level) {
+    return '先通过第 ${level} 关';
+  }
+
+  @override
+  String needsWeapon(String weapon) {
+    return '需要${weapon}';
+  }
+
+  @override
+  String hurtOnlyBy(String weapon) {
+    return '只有${weapon}或更强的武器才能伤到它';
+  }
+
+  @override
+  String worldNeedsWeapon(String world, String weapon, String count) {
+    return '${world}需要${weapon} · 还差 ${count} 颗星';
+  }
+
+  @override
+  String rematchOpponentLeft(String name) {
+    return '${name} 已离开 · 这次没有再战';
+  }
+
+  @override
+  String get obNext => '下一步';
+
+  @override
+  String get obRaceTitle => '和真人比拼。';
+
+  @override
+  String get obRaceBody => '60秒内做得多的人赢。对手用自己的手机实时参赛；没人在线时，你挑战的是对方录好的一组。';
+
+  @override
+  String get obRepsTitle => '只算完整的一次。';
+
+  @override
+  String get obRepsBody => '摄像头会看你下得多低、又起得多高。';
+
+  @override
+  String get obRepsDown => '下到金线以下';
+
+  @override
+  String get obRepsUp => '再起到上线以上';
+
+  @override
+  String get obRepsBoth => '两步都要双手撑地。只做一半不算——你的手机和对手的手机都一样。';
+
+  @override
+  String get obClimbTitle => '一路冲到 Master。';
+
+  @override
+  String get obClimbBody => '赢下比赛往上爬：七个段位，每个五级。';
+
+  @override
+  String get obGoldLine => '金线';
+
+  @override
+  String obCalibrationRule(String gold) {
+    return '下到${gold}以下，再起到上线以上';
+  }
+
+  @override
+  String get proTitleTop => '没有广告。';
+
+  @override
+  String get proTitleBottom => '只有俯卧撑。';
+
+  @override
+  String get proBody => '每场比赛都免费。Pro 会去掉所有比赛的广告。';
+
+  @override
+  String get proThanks => '广告已关闭。感谢升级 Pro。';
+
+  @override
+  String get removeAds => '去除广告';
+
+  @override
+  String get adNotice => '离开时会播放一条广告';
+
+  @override
+  String get adAskTitle => '广告让 outrepd 保持免费';
+
+  @override
+  String get adAskBody => '接下来 iPhone 会问你，是否允许 App 用你的活动来挑选广告。同意的话，广告会更合你的口味；不同意也照样会有广告，只是没那么相关。';
+
+  @override
+  String get adAskCamera => '这和摄像头无关：无论你怎么选，身体追踪都只在这部手机上进行。';
+
+  @override
+  String get adAskRemove => '改为去除广告';
+
+  @override
+  String get monsterIronColossus => '钢铁巨像';
+
+  @override
+  String get monsterScarab => '圣甲虫';
+
+  @override
+  String get monsterScarabPharaoh => '圣甲虫法老';
+
+  @override
+  String get monsterYeti => '雪人';
+
+  @override
+  String get monsterFrostYeti => '冰霜雪人';
+
+  @override
+  String get monsterYetiChieftain => '雪人首领';
+
+  @override
+  String get monsterGoldSoldier => '黄金士兵';
+
+  @override
+  String get monsterGoldKnight => '黄金骑士';
+
+  @override
+  String get monsterGoldKing => '黄金国王';
+
+  @override
+  String get monsterWisp => '鬼火';
+
+  @override
+  String get monsterWraith => '幽灵';
+
+  @override
+  String get monsterFrostLich => '冰霜巫妖';
+
+  @override
+  String get monsterCrystalDrake => '水晶飞龙';
+
+  @override
+  String get monsterCrystalDragon => '水晶巨龙';
+
+  @override
+  String get monsterDiamondWyrm => '钻石古龙';
+
+  @override
+  String get monsterShadowGuard => '暗影卫士';
+
+  @override
+  String get monsterShadowKnight => '暗影骑士';
+
+  @override
+  String get monsterTheMaster => '宗师';
+
+  @override
+  String get monsterPebbleGolem => '卵石魔像';
+
+  @override
+  String get monsterStoneGolem => '石头魔像';
+
+  @override
+  String get monsterOreGolem => '矿石魔像';
+
+  @override
+  String get monsterMinerGolem => '矿工魔像';
+
+  @override
+  String get monsterScarabGrub => '圣甲虫幼虫';
+
+  @override
+  String get monsterHornedScarab => '角圣甲虫';
+
+  @override
+  String get monsterScarabWarrior => '圣甲虫战士';
+
+  @override
+  String get monsterYetiCub => '雪人幼崽';
+
+  @override
+  String get monsterHornedYeti => '角雪人';
+
+  @override
+  String get monsterGoldRecruit => '黄金新兵';
+
+  @override
+  String get monsterGoldGuard => '黄金卫兵';
+
+  @override
+  String get monsterShade => '阴影';
+
+  @override
+  String get monsterIceSpecter => '冰霜幽魂';
+
+  @override
+  String get monsterCrystalHatchling => '水晶雏龙';
+
+  @override
+  String get monsterCrystalWhelp => '水晶幼龙';
+
+  @override
+  String get monsterShadowSquire => '暗影侍从';
+
+  @override
+  String get monsterShadowLord => '暗影领主';
+
+  @override
+  String monsterWarden(String name) {
+    return '${name}守卫';
+  }
+
+  @override
+  String get obPhoneSees => '手机应该看到的画面';
+
+  @override
+  String get obPhoneSeesBody => '从头顶到双手，大约一米远，保持俯卧撑姿势。';
+
+  @override
+  String get obUnder13 => '13岁以下';
+
+  @override
+  String get obOver13 => '13岁及以上';
+
+  @override
+  String get obFor13 => 'outrepd 适合13岁及以上的用户。';
+
+  @override
+  String get obUnder13Blocked => 'outrepd 适合13岁及以上的用户。等你13岁了再来吧，俯卧撑会一直在这里。';
+
+  @override
+  String get obBeforeYouLift => '开始之前';
+
+  @override
+  String get obFightTitle => '和怪物战斗。';
+
+  @override
+  String get obFightBody => '七个世界，140 场俯卧撑战斗。每做一次都会击中怪物。';
+
+  @override
+  String obSevenWorlds(String from, String to) {
+    return '七个世界：从${from}到${to}';
+  }
+
+  @override
+  String get obWeaponsTitle => '星星解锁武器';
+
+  @override
+  String get obWeaponsBody => '每个世界都需要专属武器。不影响排位。';
+
+  @override
+  String get fightDefeated => '击败！';
+
+  @override
+  String get nextWeapon => '下一件武器';
+
+  @override
+  String opensWorld(String world) {
+    return '开启${world}';
+  }
+
+  @override
+  String weaponAtStars(String count) {
+    return '需要 ${count} 颗星';
+  }
+
+  @override
+  String topTenIn(String country) {
+    return '${country}前 10 名';
   }
 }

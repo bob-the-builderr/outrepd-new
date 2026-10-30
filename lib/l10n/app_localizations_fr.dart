@@ -201,8 +201,7 @@ class LFr extends L {
   String get createAccountTitle => 'Créer un compte';
 
   @override
-  String get createAccountBody =>
-      'Ajoute un e-mail et un mot de passe pour que ce compte ne tienne pas qu\'à ce téléphone.';
+  String get createAccountBody => 'Connecte-toi pour que ce compte ne dépende pas d’un seul téléphone.';
 
   @override
   String get createAccountAction => 'Créer un compte';
@@ -373,8 +372,7 @@ class LFr extends L {
   String get usernameChanged => 'Nom d\'utilisateur modifié';
 
   @override
-  String get usernameAlreadyChangedBody =>
-      'Tu as déjà utilisé ton unique changement de nom d\'utilisateur — chaque compte n\'en reçoit qu\'un seul.';
+  String get usernameAlreadyChangedBody => 'Le nom d\'utilisateur peut être changé une fois tous les 14 jours.';
 
   @override
   String get gallery => 'Galerie';
@@ -904,9 +902,6 @@ class LFr extends L {
   String get forfeitBody => 'Vous perdrez des PL si vous partez maintenant.';
 
   @override
-  String get stay => 'Rester';
-
-  @override
   String get forfeit => 'Abandonner';
 
   @override
@@ -1024,7 +1019,7 @@ class LFr extends L {
 
   @override
   String weeksAgo(String n) {
-    return 'il y a $n semaines';
+    return 'il y a ${n} semaines';
   }
 
   @override
@@ -1285,41 +1280,10 @@ class LFr extends L {
   String get noRankYet => 'Pas encore classé';
 
   @override
-  String placementsForFirstTier(String count) {
-    return 'Termine $count duels de placement pour obtenir ton premier rang.';
-  }
-
-  @override
-  String get startPlacements => 'Commencer les placements';
-
-  @override
   String get unranked => 'Non classé';
 
   @override
-  String placementsTerms(String done, String total, String seconds) {
-    return '$done sur $total · $seconds secondes chacun';
-  }
-
-  @override
-  String placementsLeft(String done, String total, String left) {
-    return '$done sur $total · encore $left avant ton rang';
-  }
-
-  @override
-  String placementsForTier(String count) {
-    return 'Termine $count duels de placement pour voir où tu te situes.';
-  }
-
-  @override
-  String placementsDoneCount(String done, String total) {
-    return '$done sur $total placements terminés';
-  }
-
-  @override
   String get practiceFirst => 'S’entraîner d’abord';
-
-  @override
-  String get nextPlacement => 'Placement suivant';
 
   @override
   String get noConnection => 'Pas de connexion';
@@ -1357,8 +1321,7 @@ class LFr extends L {
       'Les répétitions sont comptées par la caméra, cet appareil ne peut donc pas noter un duel. Le reste fonctionne.';
 
   @override
-  String get noConnectionBody =>
-      'Il te faut une connexion pour te mesurer à quelqu’un. L’entraînement marche hors ligne et tes répétitions se synchroniseront ensuite.';
+  String get noConnectionBody => 'Il te faut une connexion pour te mesurer à quelqu’un. Aventure marche hors ligne et tes répétitions se synchroniseront ensuite.';
 
   @override
   String get getBackInFrame => 'Reviens dans le cadre';
@@ -1461,12 +1424,6 @@ class LFr extends L {
   String get obAgeQuestion => 'Quel âge as-tu ?';
 
   @override
-  String get obUnder16 => 'Moins de 16 ans';
-
-  @override
-  String get obOver16 => '16 ans ou plus';
-
-  @override
   String get obHealthConsent =>
       'Je comprends qu’outrepd compte les répétitions et ne donne aucun conseil médical ni sportif. J’arrête si quelque chose fait mal.';
 
@@ -1481,10 +1438,6 @@ class LFr extends L {
 
   @override
   String get obPrivacy => 'Politique de confidentialité';
-
-  @override
-  String get obUnder16Blocked =>
-      'outrepd, c’est à partir de 16 ans. Reviens quand tu y seras — les pompes ne bougeront pas.';
 
   @override
   String get obCameraTitle => 'outrepd a besoin de ta caméra';
@@ -1511,13 +1464,7 @@ class LFr extends L {
       'Adosse-le à un mur, à environ un mètre devant toi.';
 
   @override
-  String get obOneMetre => '~1 m';
-
-  @override
-  String get obFullBody => 'tout le corps dans le cadre';
-
-  @override
-  String get obCheckHandsFeet => 'Mains et pieds visibles';
+  String get obCheckHandsFeet => 'Tête, épaules et mains dans le cadre';
 
   @override
   String get obCheckFacing => 'Face au téléphone, pas de profil';
@@ -1802,7 +1749,7 @@ class LFr extends L {
   }
 
   @override
-  String get paywallStart => 'Commencer l’ascension';
+  String get paywallStart => 'Retirer la pub';
 
   @override
   String get paywallRenewsPlay => 'Renouvellement automatique jusqu’à résiliation. Résilie à tout moment dans Google Play.';
@@ -1849,7 +1796,7 @@ class LFr extends L {
   String get signOutQuestion => 'Se déconnecter ?';
 
   @override
-  String get signOutBody => 'Ton compte reste tel quel, avec son rang, son historique et son abonnement. Reconnecte-toi quand tu veux avec ton e-mail.';
+  String get signOutBody => 'Ton compte reste tel quel, avec son rang, son historique et son abonnement. Reconnecte-toi quand tu veux de la même façon.';
 
   @override
   String get shareVictory => 'VICTOIRE';
@@ -2017,7 +1964,7 @@ class LFr extends L {
 
   @override
   String calledOffBody(String name) {
-    return '${name} ne s\'est pas mis en position à temps. Rien n\'a été enregistré.';
+    return '${name} n\'est pas arrivé à temps pour le départ. Rien n\'a été enregistré.';
   }
 
   @override
@@ -2063,11 +2010,6 @@ class LFr extends L {
 
   @override
   String get noticeLiveInvite => 'Un ami m\'a invité à un duel en direct';
-
-  @override
-  String trialHeadline(String days) {
-    return 'Tes ${days} premiers jours sont *gratuits*';
-  }
 
   @override
   String get trialToday => 'Aujourd\'hui';
@@ -2230,49 +2172,6 @@ class LFr extends L {
   }
 
   @override
-  String get inviteCodeLabel => 'Code d\'un ami (facultatif)';
-
-  @override
-  String get inviteClaimed => 'Code ajouté · 7 jours gratuits pour toi';
-
-  @override
-  String get inviteUnknownCode => 'Aucun joueur n\'a ce code';
-
-  @override
-  String get inviteNotYearly => 'Ce code ne peut pas offrir de jours gratuits pour l\'instant';
-
-  @override
-  String get inviteOwnCode => 'C\'est ton propre code';
-
-  @override
-  String get inviteTooLate => 'Les codes marchent pendant la première semaine du compte';
-
-  @override
-  String get inviteFull => 'Ce code a beaucoup servi ce mois-ci. Essaie-en un autre';
-
-  @override
-  String get inviteTitle => 'Offre 7 jours gratuits à un ami';
-
-  @override
-  String get inviteBody => 'Ton code est inclus dans l\'abonnement annuel. Ton ami le saisit à l\'inscription.';
-
-  @override
-  String get inviteYourCode => 'Ton code';
-
-  @override
-  String inviteJoined(String n) {
-    return '${n} inscrits';
-  }
-
-  @override
-  String get inviteSend => 'Envoyer l\'invitation';
-
-  @override
-  String inviteShareText(String code) {
-    return 'Affronte-moi sur OUTREPD : 60 secondes de pompes, en direct. Utilise mon code ${code} à l\'inscription et profite de 7 jours gratuits.';
-  }
-
-  @override
   String get dailyGoalTitle => 'Objectif du jour';
 
   @override
@@ -2343,6 +2242,90 @@ class LFr extends L {
   }
 
   @override
+  String get usernameTooShort => 'Trop court : au moins 4 caractères';
+
+  @override
+  String get usernameBadCharacters => 'Uniquement des lettres, des chiffres et _';
+
+  @override
+  String get usernameNeedsLetter => 'Ajoute au moins une lettre ou un chiffre';
+
+  @override
+  String usernameChangeAgainOn(String date) {
+    return 'Tu pourras le changer à nouveau le ${date}';
+  }
+
+  @override
+  String get continueWithApple => 'Continuer avec Apple';
+
+  @override
+  String get continueWithGoogle => 'Continuer avec Google';
+
+  @override
+  String get socialSignInFailed => 'Connexion impossible. Réessaie.';
+
+  @override
+  String get chooseUsernameTitle => 'Choisis ton nom d\'utilisateur';
+
+  @override
+  String get chooseUsernameSubtitle => 'C\'est ainsi que les autres te trouvent et te voient dans les classements.';
+
+  @override
+  String get authHeroTitle => 'BATS N\'IMPORTE QUI.';
+
+  @override
+  String get authHeroSubtitle => 'Des duels de pompes en direct, comptés par ta caméra.';
+
+  @override
+  String get createAccountPitch => 'Ton rang et tes duels, sur n\'importe quel téléphone.';
+
+  @override
+  String get usernameSpacesHint => 'Les espaces deviennent _';
+
+  @override
+  String get emailCodeNote => 'On t\'envoie un code à 6 chiffres par e-mail. Pas de mot de passe.';
+
+  @override
+  String get continueWithEmail => 'Continuer avec l\'e-mail';
+
+  @override
+  String get thisSeason => 'Cette saison';
+
+  @override
+  String get thisWeek => 'Cette semaine';
+
+  @override
+  String get weekStartsAgain => 'Recommence chaque lundi';
+
+  @override
+  String get lengthWeek => 'Semaine';
+
+  @override
+  String get lengthMonth => 'Mois';
+
+  @override
+  String get weekJoinHint => 'Gagne un duel classé cette semaine pour entrer au classement';
+
+  @override
+  String get weekInTop3 => 'Dans le top 3 cette semaine';
+
+  @override
+  String weekToTop3(String n) {
+    return '${n} LP jusqu\'au top 3';
+  }
+
+  @override
+  String get boardActiveNote => 'Joueurs actifs ces 30 derniers jours';
+
+  @override
+  String get boardTieNote => 'égalité : plus de victoires d\'abord';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '${reps} pour les répétitions · ${adjust} pour un adversaire ${rank}';
+  }
+
+  @override
   String levelShort(String n) {
     return 'Niv. ${n}';
   }
@@ -2359,7 +2342,7 @@ class LFr extends L {
 
   @override
   String xpHow(String rep, String match) {
-    return '${rep} XP par répétition, ${match} par duel';
+    return '${rep} XP par répétition, ${match} par victoire, rien pour une défaite';
   }
 
   @override
@@ -2400,7 +2383,541 @@ class LFr extends L {
   String get keepGoing => 'Continuer';
 
   @override
-  String lpBreakdown(String reps, String adjust, String rank) {
-    return '${reps} pour les répétitions · ${adjust} pour un adversaire ${rank}';
+  String get stay => 'Rester';
+
+  @override
+  String lastN(String n) {
+    return '${n} derniers';
+  }
+
+  @override
+  String get firstMatchForTier => 'Joue ton premier match pour entrer dans le classement. Tout le monde commence en Iron V.';
+
+  @override
+  String get firstMatchForBoard => 'Joue ton premier match pour apparaître au classement. Tout le monde commence en Iron V.';
+
+  @override
+  String get playFirstMatch => 'Jouer mon premier match';
+
+  @override
+  String firstMatchTerms(String seconds) {
+    return 'Un match · ${seconds} secondes';
+  }
+
+  @override
+  String get placedLabel => 'Tu es dans le classement';
+
+  @override
+  String get placedBody => 'Tout le monde commence ici. Seules les victoires te font monter.';
+
+  @override
+  String get placedHow => 'Gagne des matchs pour gagner des LP. Bats quelqu\'un mieux classé pour en gagner plus.';
+
+  @override
+  String get levelBesideName => 'À côté de ton nom, partout';
+
+  @override
+  String get weekRaceTitle => 'La course de la semaine';
+
+  @override
+  String get streakDoneToday => 'fait aujourd\'hui';
+
+  @override
+  String get streakTrainToday => 'entraîne-toi aujourd\'hui pour ajouter un jour';
+
+  @override
+  String get raceChartTitle => 'Comment s\'est passée la minute';
+
+  @override
+  String raceYouLead(String time) {
+    return '${time} · tu prends la tête';
+  }
+
+  @override
+  String raceTheyLead(String time, String name) {
+    return '${time} · ${name} prend la tête';
+  }
+
+  @override
+  String get bringFriendTitle => 'Invite un ami';
+
+  @override
+  String get bringFriendBody => 'Envoie ton lien. Il ouvre ton profil, où l\'on peut t\'ajouter.';
+
+  @override
+  String get bringFriendShare => 'Partager mon lien';
+
+  @override
+  String get bringFriendShareText => 'Affronte-moi aux pompes sur OUTREPD. 60 secondes, en direct, et la caméra compte.';
+
+  @override
+  String orFriendCode(String code) {
+    return 'ou code ami ${code}';
+  }
+
+  @override
+  String get countryPickerTitle => 'Ton pays';
+
+  @override
+  String get countrySearch => 'Rechercher';
+
+  @override
+  String get countryFromPhone => 'D\'après ton téléphone';
+
+  @override
+  String get countryAll => 'Tous les pays';
+
+  @override
+  String get countryChoose => 'Choisis ton pays';
+
+  @override
+  String get countryChange => 'Changer';
+
+  @override
+  String get countryForBoard => 'Pour le classement de ton pays';
+
+  @override
+  String get countryLabel => 'Pays';
+
+  @override
+  String get countryChanged => 'Pays modifié';
+
+  @override
+  String get countryEvery14 => 'Une fois tous les 14 jours, comme ton nom';
+
+  @override
+  String get countryNotSaved => 'Impossible d\'enregistrer ton pays. Réessaie.';
+
+  @override
+  String get adventure => 'Aventure';
+
+  @override
+  String stageNumber(String n) {
+    return 'Niveau ${n}';
+  }
+
+  @override
+  String adventureLevelIn(String level, String world) {
+    return 'Niveau ${level} · ${world}';
+  }
+
+  @override
+  String adventureClearedOf(String cleared, String total) {
+    return '${cleared} sur ${total} réussis · sans classement';
+  }
+
+  @override
+  String get worldIron => 'Mines de fer';
+
+  @override
+  String get worldBronze => 'Dunes de bronze';
+
+  @override
+  String get worldSilver => 'Pics d’argent';
+
+  @override
+  String get worldGold => 'Citadelle d’or';
+
+  @override
+  String get worldPlatinum => 'Glacier de platine';
+
+  @override
+  String get worldDiamond => 'Cavernes de diamant';
+
+  @override
+  String get worldMaster => 'Trône du Maître';
+
+  @override
+  String worldNumber(String n) {
+    return 'Monde ${n}';
+  }
+
+  @override
+  String fightLevel(String level) {
+    return 'Combattre le niveau ${level}';
+  }
+
+  @override
+  String levelHpLine(String hp, String reps) {
+    return 'HP ${hp} · environ ${reps} pompes';
+  }
+
+  @override
+  String get hpShort => 'HP';
+
+  @override
+  String comboTag(String n) {
+    return 'COMBO ×${n}';
+  }
+
+  @override
+  String get levelCleared => 'RÉUSSI';
+
+  @override
+  String get outOfTime => 'TEMPS ÉCOULÉ';
+
+  @override
+  String get statPushUps => 'pompes';
+
+  @override
+  String get statTimeLeft => 'restant';
+
+  @override
+  String get statHpLeft => 'HP restants';
+
+  @override
+  String get statXp => 'XP';
+
+  @override
+  String secondStarHint(String seconds) {
+    return 'Finis avec ${seconds} secondes d’avance pour la deuxième étoile';
+  }
+
+  @override
+  String thirdStarHint(String seconds) {
+    return 'Finis avec ${seconds} secondes d’avance pour la troisième étoile';
+  }
+
+  @override
+  String get fightLostHint => 'Rejoue des niveaux précédents pour plus d’étoiles : elles débloquent des armes plus fortes.';
+
+  @override
+  String get nextLevel => 'Niveau suivant';
+
+  @override
+  String get tryAgain => 'Réessayer';
+
+  @override
+  String get adventureMap => 'Carte';
+
+  @override
+  String get nextKicker => 'SUIVANT';
+
+  @override
+  String nextLevelLine(String level, String hp) {
+    return 'Niveau ${level} · HP ${hp}';
+  }
+
+  @override
+  String get armory => 'Armurerie';
+
+  @override
+  String get armoryBody => 'Les étoiles débloquent des armes. Les monstres de chaque monde ne craignent que son arme ou une meilleure.';
+
+  @override
+  String get equipped => 'ÉQUIPÉE';
+
+  @override
+  String perPushUp(String damage) {
+    return '${damage} par pompe';
+  }
+
+  @override
+  String damagePerPushUp(String damage) {
+    return '${damage} dégâts par pompe';
+  }
+
+  @override
+  String wasWith(String damage, String weapon) {
+    return 'avant : ${damage} avec ${weapon}';
+  }
+
+  @override
+  String moreStars(String count) {
+    return 'encore ${count} étoiles';
+  }
+
+  @override
+  String get newWeapon => 'Nouvelle arme';
+
+  @override
+  String starsKicker(String count) {
+    return '${count} ÉTOILES';
+  }
+
+  @override
+  String get weaponGauntlets => 'Gantelets de fer';
+
+  @override
+  String get weaponKnuckles => 'Poings de bronze';
+
+  @override
+  String get weaponFang => 'Croc d’argent';
+
+  @override
+  String get weaponHammer => 'Marteau d’or';
+
+  @override
+  String get weaponAxe => 'Hache de platine';
+
+  @override
+  String get weaponSpear => 'Lance de diamant';
+
+  @override
+  String get weaponSword => 'Épée du Maître';
+
+  @override
+  String get weaponCrownbreaker => 'Brise-Couronne';
+
+  @override
+  String clearFirst(String level) {
+    return 'Gagne d’abord le niveau ${level}';
+  }
+
+  @override
+  String needsWeapon(String weapon) {
+    return 'Il faut ${weapon}';
+  }
+
+  @override
+  String hurtOnlyBy(String weapon) {
+    return 'Seul ${weapon} ou mieux peut le blesser';
+  }
+
+  @override
+  String worldNeedsWeapon(String world, String weapon, String count) {
+    return '${world} demande ${weapon} · encore ${count} étoiles';
+  }
+
+  @override
+  String rematchOpponentLeft(String name) {
+    return '${name} est parti · pas de revanche cette fois';
+  }
+
+  @override
+  String get obNext => 'Suivant';
+
+  @override
+  String get obRaceTitle => 'Affronte une vraie personne.';
+
+  @override
+  String get obRaceBody => 'Le plus de répétitions en 60 secondes gagne. En direct, chacun sur son téléphone — ou contre une série enregistrée quand personne n’est en ligne.';
+
+  @override
+  String get obRepsTitle => 'Seules les répétitions complètes comptent.';
+
+  @override
+  String get obRepsBody => 'La caméra voit jusqu’où tu descends et jusqu’où tu remontes.';
+
+  @override
+  String get obRepsDown => 'Descends sous la ligne dorée';
+
+  @override
+  String get obRepsUp => 'Remonte au-dessus de la ligne du haut';
+
+  @override
+  String get obRepsBoth => 'Les deux, mains au sol. Une demi-répétition ne compte pas — ni chez toi, ni chez l’autre.';
+
+  @override
+  String get obClimbTitle => 'Grimpe jusqu’à Master.';
+
+  @override
+  String get obClimbBody => 'Gagne pour monter l’échelle : sept rangs de cinq paliers chacun.';
+
+  @override
+  String get obGoldLine => 'ligne dorée';
+
+  @override
+  String obCalibrationRule(String gold) {
+    return 'Descends sous la ${gold}, remonte au-dessus de celle du haut';
+  }
+
+  @override
+  String get proTitleTop => 'Sans pub.';
+
+  @override
+  String get proTitleBottom => 'Que des pompes.';
+
+  @override
+  String get proBody => 'Tous les matchs restent gratuits. Pro retire la pub de chacun.';
+
+  @override
+  String get proThanks => 'Plus de pub. Merci d’être passé à Pro.';
+
+  @override
+  String get removeAds => 'Retirer la pub';
+
+  @override
+  String get adNotice => 'Une pub passe quand tu sors';
+
+  @override
+  String get adAskTitle => 'La pub garde outrepd gratuit';
+
+  @override
+  String get adAskBody => 'Ton iPhone va demander si les apps peuvent utiliser ton activité pour choisir les pubs. Si tu dis oui, les pubs te correspondent mieux ; si tu dis non, tu en verras quand même, juste moins pertinentes.';
+
+  @override
+  String get adAskCamera => 'Ta caméra n’y est pour rien : le suivi du corps reste sur ce téléphone, quoi que tu choisisses.';
+
+  @override
+  String get adAskRemove => 'Plutôt retirer la pub';
+
+  @override
+  String get monsterIronColossus => 'Colosse de fer';
+
+  @override
+  String get monsterScarab => 'Scarabée';
+
+  @override
+  String get monsterScarabPharaoh => 'Pharaon scarabée';
+
+  @override
+  String get monsterYeti => 'Yéti';
+
+  @override
+  String get monsterFrostYeti => 'Yéti du givre';
+
+  @override
+  String get monsterYetiChieftain => 'Chef yéti';
+
+  @override
+  String get monsterGoldSoldier => 'Soldat d’or';
+
+  @override
+  String get monsterGoldKnight => 'Chevalier d’or';
+
+  @override
+  String get monsterGoldKing => 'Roi d’or';
+
+  @override
+  String get monsterWisp => 'Feu follet';
+
+  @override
+  String get monsterWraith => 'Spectre';
+
+  @override
+  String get monsterFrostLich => 'Liche du givre';
+
+  @override
+  String get monsterCrystalDrake => 'Drake de cristal';
+
+  @override
+  String get monsterCrystalDragon => 'Dragon de cristal';
+
+  @override
+  String get monsterDiamondWyrm => 'Wyrm de diamant';
+
+  @override
+  String get monsterShadowGuard => 'Garde de l’ombre';
+
+  @override
+  String get monsterShadowKnight => 'Chevalier de l’ombre';
+
+  @override
+  String get monsterTheMaster => 'Le Maître';
+
+  @override
+  String get monsterPebbleGolem => 'Golem de galets';
+
+  @override
+  String get monsterStoneGolem => 'Golem de pierre';
+
+  @override
+  String get monsterOreGolem => 'Golem de minerai';
+
+  @override
+  String get monsterMinerGolem => 'Golem mineur';
+
+  @override
+  String get monsterScarabGrub => 'Larve de scarabée';
+
+  @override
+  String get monsterHornedScarab => 'Scarabée cornu';
+
+  @override
+  String get monsterScarabWarrior => 'Guerrier scarabée';
+
+  @override
+  String get monsterYetiCub => 'Petit yéti';
+
+  @override
+  String get monsterHornedYeti => 'Yéti cornu';
+
+  @override
+  String get monsterGoldRecruit => 'Recrue d’or';
+
+  @override
+  String get monsterGoldGuard => 'Garde d’or';
+
+  @override
+  String get monsterShade => 'Ombre';
+
+  @override
+  String get monsterIceSpecter => 'Spectre de glace';
+
+  @override
+  String get monsterCrystalHatchling => 'Bébé de cristal';
+
+  @override
+  String get monsterCrystalWhelp => 'Dragonnet de cristal';
+
+  @override
+  String get monsterShadowSquire => 'Écuyer de l’ombre';
+
+  @override
+  String get monsterShadowLord => 'Seigneur de l’ombre';
+
+  @override
+  String monsterWarden(String name) {
+    return '${name} gardien';
+  }
+
+  @override
+  String get obPhoneSees => 'Ce que ton téléphone doit voir';
+
+  @override
+  String get obPhoneSeesBody => 'Du haut de la tête jusqu’aux mains, à environ un mètre, en position de pompe.';
+
+  @override
+  String get obUnder13 => 'Moins de 13 ans';
+
+  @override
+  String get obOver13 => '13 ans ou plus';
+
+  @override
+  String get obFor13 => 'outrepd est pour les 13 ans et plus.';
+
+  @override
+  String get obUnder13Blocked => 'outrepd est pour les 13 ans et plus. Reviens quand tu y seras — les pompes seront toujours là.';
+
+  @override
+  String get obBeforeYouLift => 'Avant de commencer';
+
+  @override
+  String get obFightTitle => 'Affronte des monstres.';
+
+  @override
+  String get obFightBody => '140 combats de pompes dans sept mondes. Chaque répétition frappe le monstre.';
+
+  @override
+  String obSevenWorlds(String from, String to) {
+    return 'Sept mondes, de ${from} à ${to}';
+  }
+
+  @override
+  String get obWeaponsTitle => 'Les étoiles débloquent des armes';
+
+  @override
+  String get obWeaponsBody => 'Chaque monde exige son arme. Aucun rang en jeu.';
+
+  @override
+  String get fightDefeated => 'Vaincu !';
+
+  @override
+  String get nextWeapon => 'Arme suivante';
+
+  @override
+  String opensWorld(String world) {
+    return 'Ouvre ${world}';
+  }
+
+  @override
+  String weaponAtStars(String count) {
+    return 'à ${count} étoiles';
+  }
+
+  @override
+  String topTenIn(String country) {
+    return 'Top 10 en ${country}';
   }
 }

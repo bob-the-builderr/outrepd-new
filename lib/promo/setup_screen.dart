@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../adventure/adventure.dart';
+import '../adventure/names.dart';
+import '../adventure/weapon_art.dart';
 import '../l10n/app_localizations.dart';
 import '../player_avatar.dart';
 import '../settings.dart';
@@ -71,6 +74,10 @@ class _SetupScreenState extends State<SetupScreen> {
 
   void _start() {
     FocusScope.of(context).unfocus();
+    if (plan.adventure) {
+      playPromoFight(context, plan);
+      return;
+    }
     _change(() {
       plan.myName = _myName.text.trim().isEmpty ? 'You' : _myName.text.trim();
       plan.oppName =
@@ -112,7 +119,21 @@ class _SetupScreenState extends State<SetupScreen> {
               'Set the match up, then film it. Nothing here reaches the real app.',
               style: TextStyle(color: context.colors.muted, fontSize: 15),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
+            SegmentedButton<bool>(
+              key: const Key('takeKind'),
+              segments: const [
+                ButtonSegment(value: false, label: Text('Match')),
+                ButtonSegment(value: true, label: Text('Adventure')),
+              ],
+              selected: {plan.adventure},
+              showSelectedIcon: false,
+              onSelectionChanged: (s) => _change(() => plan.adventure = s.first),
+            ),
+            const SizedBox(height: 16),
+            if (plan.adventure)
+              ..._fight(context)
+            else ...[
             _PlayerCard(
               title: 'You',
               name: _myName,
@@ -228,6 +249,7 @@ class _SetupScreenState extends State<SetupScreen> {
                 },
               ],
             ),
+            ],
             const SizedBox(height: 14),
             _Box(
               title: 'Before the round',
@@ -316,8 +338,8 @@ class _SetupScreenState extends State<SetupScreen> {
               child: FilledButton(
                 key: const Key('startPromo'),
                 onPressed: _start,
-                child: const Text(
-                  'Start the match',
+                child: Text(
+                  plan.adventure ? 'Start the fight' : 'Start the match',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                 ),
               ),
@@ -326,6 +348,108 @@ class _SetupScreenState extends State<SetupScreen> {
         ),
       ),
     );
+  }
+
+  /// The adventure take: which level, and the weapon it is fought with.
+  List<Widget> _fight(BuildContext context) {
+    final l = L.of(context);
+    final colors = context.colors;
+    final level = AdventureLevel.of(plan.fightLevel);
+    final weapon = kWeapons[plan.fightWeapon];
+    final kind = switch (level.kind) {
+      FightKind.boss => ' · boss',
+      FightKind.elite => ' · elite',
+      FightKind.regular => '',
+    };
+    final reps = level.repsWith(weapon);
+    void setLevel(int n) =>
+        _change(() => plan.fightLevel = n.clamp(1, kAdventureLevels));
+
+    return [
+      _Box(
+        title: 'Level',
+        children: [
+          Row(
+            children: [
+              IconButton(
+                onPressed: level.number > 1
+                    ? () => setLevel(level.number - 1)
+                    : null,
+                iconSize: 32,
+                icon: const Icon(Icons.remove_circle_outline),
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                    Text(
+                      '${level.number}',
+                      key: const Key('fightLevel'),
+                      style: TextStyle(
+                        color: colors.text,
+                        fontSize: 40,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    Text(
+                      '${worldName(l, level.world)} · '
+                      '${level.inWorld}/$kLevelsPerWorld$kind',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: colors.muted, fontSize: 15),
+                    ),
+                  ],
+                ),
+              ),
+              IconButton(
+                onPressed: level.isLast
+                    ? null
+                    : () => setLevel(level.number + 1),
+                iconSize: 32,
+                icon: const Icon(Icons.add_circle_outline),
+              ),
+            ],
+          ),
+          Slider(
+            value: level.number.toDouble(),
+            min: 1,
+            max: kAdventureLevels.toDouble(),
+            divisions: kAdventureLevels - 1,
+            onChanged: (v) => setLevel(v.round()),
+          ),
+          _Hint(
+            'HP ${level.hp} · ${level.time.inSeconds} s · '
+            '${reps == null ? 'this weapon cannot hurt it' : '$reps reps with ${weaponName(l, weapon)}'}',
+          ),
+        ],
+      ),
+      const SizedBox(height: 14),
+      _Box(
+        title: 'Weapon',
+        children: [
+          GridView.count(
+            crossAxisCount: 4,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 8,
+            childAspectRatio: 0.8,
+            children: [
+              for (final w in kWeapons)
+                _WeaponTile(
+                  weapon: w,
+                  name: weaponName(l, w),
+                  selected: w.index == weapon.index,
+                  hurts: level.canBeHurtBy(w),
+                  onTap: () => _change(() => plan.fightWeapon = w.index),
+                ),
+            ],
+          ),
+          const _Hint(
+            "Greyed out: too weak for this level's world, so every rep does "
+            'nothing.',
+          ),
+        ],
+      ),
+    ];
   }
 
   String _customSummary() {
@@ -545,6 +669,67 @@ class _PlayerCard extends StatelessWidget {
             onChanged: onLevelUp,
           ),
       ],
+    );
+  }
+}
+
+class _WeaponTile extends StatelessWidget {
+  const _WeaponTile({
+    required this.weapon,
+    required this.name,
+    required this.selected,
+    required this.hurts,
+    required this.onTap,
+  });
+
+  final Weapon weapon;
+  final String name;
+  final bool selected;
+  final bool hurts;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return Opacity(
+      opacity: hurts ? 1 : 0.55,
+      child: Material(
+        color: colors.surfaceRaised,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+          side: selected
+              ? BorderSide(color: colors.brand, width: 2.5)
+              : BorderSide.none,
+        ),
+        child: InkWell(
+          key: Key('weapon${weapon.index}'),
+          borderRadius: BorderRadius.circular(14),
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(6),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(child: WeaponArt(weapon: weapon, size: 40, locked: !hurts)),
+                Text(
+                  name.split(' ').last,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: colors.text,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                Text(
+                  '${weapon.damage}',
+                  style: TextStyle(color: colors.muted, fontSize: 12),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

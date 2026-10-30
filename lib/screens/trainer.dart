@@ -81,6 +81,37 @@ class DuelContext {
   final String rankLabel;
 }
 
+/// A game played on the count: the adventure's fight. It draws the card over
+/// the camera in place of the score card, and it may end the round early —
+/// the moment the monster is down there is nothing left to count towards.
+///
+/// The camera counts exactly as it always does; the game only reads the
+/// number.
+abstract class CameraGame {
+  Widget card(
+    BuildContext context, {
+    required int reps,
+    required Duration remaining,
+    required bool counting,
+    required VoidCallback onStop,
+  });
+
+  /// Whether [reps] finish it.
+  bool wonAt(int reps);
+
+  /// What stands beside the camera in place of the depth bar: [progress] is
+  /// the rep's reading, as the bar would show it, and [pastBottom] whether
+  /// this rep has been down past the bottom line.
+  Widget track(
+    BuildContext context, {
+    required double progress,
+    required bool pastBottom,
+  });
+
+  /// The count down to the start, drawn over the camera's own box.
+  Widget countdown(BuildContext context, int seconds);
+}
+
 /// The camera. Counts push-ups, and — when it is part of a duel — carries the
 /// score, the clock and what is riding on them.
 class TrainerScreen extends StatefulWidget {
@@ -90,9 +121,19 @@ class TrainerScreen extends StatefulWidget {
     this.forMatch = false,
     this.limit,
     this.duel,
+    this.game,
+    this.countFrom = 10,
     this.poseSource,
     this.live,
   });
+
+  /// The adventure's fight, drawn over the camera instead of the score card.
+  /// Null for everything else.
+  final CameraGame? game;
+
+  /// Promo: seconds from the camera opening to the clock starting, when no
+  /// live match sets them. Ten in the app.
+  final int countFrom;
 
   /// A live match: the other lifter is on camera right now, their count comes
   /// from their phone as it moves, and the round starts ten seconds after
@@ -284,7 +325,6 @@ class _TrainerScreenState extends State<TrainerScreen>
     widget.live?.removeListener(_liveChanged);
     keepScreenOn(false);
     _countdownTimer?.cancel();
-    _graceTimer?.cancel();
     _watchdog?.cancel();
     _sub?.cancel();
     _source?.dispose();
@@ -344,10 +384,9 @@ class _TrainerScreenState extends State<TrainerScreen>
 
     _recorded.clear();
     _recent.clear();
-    _graceTimer?.cancel();
-    _graceTimer = null;
     _liveReps = 0;
     _stopping = false;
+    _won = false;
     _suspended = false;
 
     setState(() {
@@ -361,10 +400,12 @@ class _TrainerScreenState extends State<TrainerScreen>
       _lastPoseAt = DateTime.now();
     });
 
-    // Live: here is all the server waits for. The round starts a fixed time
-    // after both lifters reach this screen, so it starts for both at once —
-    // not whenever the slower of two cameras first sees somebody down.
-    if (widget.live != null) _startCountdown();
+    // The count down starts the moment the camera is up, whether or not the
+    // lifter is down yet: ten seconds to get into position, then the clock
+    // runs (the user, 2026-10-29 — waiting for the position read as the
+    // match not starting). Live, the server picks the instant, a fixed time
+    // after both lifters reach this screen, so it starts for both at once.
+    _startCountdown();
   }
 
   /// The number on the card: the tracker's count, moved on the frame the rep
@@ -412,18 +453,6 @@ class _TrainerScreenState extends State<TrainerScreen>
     if (lost != _lostBody && mounted) setState(() => _lostBody = lost);
   }
 
-  /// Whether the camera can see what the count is read from.
-  ///
-  /// Wrists, shoulders and hips — **not ankles**. Ankles were the test until a
-  /// lifter filmed their own set: with the phone on the floor a metre away and
-  /// the body pointing at it, the tracker saw their knees in 26% of frames and
-  /// their ankles in 18%, while every joint the counter actually reads was
-  /// there in 100%. The old gate was asking for the one part of the body that
-  /// a correct setup hides.
-  ///
-  /// The check itself is [framedForPushUp], shared with the onboarding.
-  bool _framed(BodyPose pose) => framedForPushUp(pose);
-
   /// The last second or so of poses, for the checks that need more than one
   /// frame — chiefly whether the hands are staying planted, which is what
   /// separates a push-up from any other movement up and down.
@@ -434,14 +463,11 @@ class _TrainerScreenState extends State<TrainerScreen>
   /// shared with the onboarding's calibration.
   bool get _inPosition => downInPosition(_recent);
 
-  /// Running while a whole body is in shot but not yet in position.
-  Timer? _graceTimer;
+  /// Seconds from the camera opening to the clock starting: room to get down
+  /// into position, which the round no longer waits for.
+  int get _countFrom => widget.countFrom;
 
-  /// How long a framed body waits for the position check before the round
-  /// starts regardless.
-  static const _positionGrace = Duration(seconds: 8);
-
-  int _countdown = 3;
+  late int _countdown = _countFrom;
   Timer? _countdownTimer;
 
   /// In a live match, and waiting for the other lifter to reach this screen.
@@ -469,13 +495,13 @@ class _TrainerScreenState extends State<TrainerScreen>
     });
   }
 
-  /// Three, two, one. On this phone's own second when [start] is null; ending
-  /// exactly at [start] when there is one, so two phones end theirs together
-  /// — from ten, in a live match, which the server puts that far out.
+  /// Ten seconds down to the start. On this phone's own second when [start]
+  /// is null; ending exactly at [start] when there is one, so two phones end
+  /// theirs together — the server puts a live start ten seconds out too.
   void _countDownTo(DateTime? start) {
     setState(() {
       _stage = _Stage.countdown;
-      _countdown = start == null ? 3 : _secondsTo(start);
+      _countdown = start == null ? _countFrom : _secondsTo(start);
     });
     Sounds.instance.play(Cue.count);
     _countdownTimer?.cancel();
@@ -509,8 +535,11 @@ class _TrainerScreenState extends State<TrainerScreen>
       if (!mounted) return;
       if (_countdown > 1) {
         setState(() => _countdown--);
-        tap();
-        Sounds.instance.play(Cue.count);
+        // As live: the first beep, then the last three.
+        if (_countdown <= 3) {
+          tap();
+          Sounds.instance.play(Cue.count);
+        }
         return;
       }
       timer.cancel();
@@ -566,7 +595,6 @@ class _TrainerScreenState extends State<TrainerScreen>
     if (_stopping) return;
     _stopping = true;
     _watchdog?.cancel();
-    _graceTimer?.cancel();
     _dropPoses();
     await _source?.dispose();
     keepScreenOn(false);
@@ -623,6 +651,12 @@ class _TrainerScreenState extends State<TrainerScreen>
     _recent.add(pose);
     if (_recent.length > _recentKeep) _recent.removeAt(0);
 
+    // The monster is down and the round is closing: the clock stopped on the
+    // winning rep, and the tracker stops with it. A rep done in the moment
+    // the round takes to close was never on the screen, and the number that
+    // leaves this screen is the number that was on it.
+    if (_won) return;
+
     // Every frame, from the moment the camera opens: the seconds spent
     // getting down are when the tracker learns where the hands are planted
     // and how high this lifter's lockout is, so the first rep of the round is
@@ -631,32 +665,12 @@ class _TrainerScreenState extends State<TrainerScreen>
     final reading = tracker.add(atMs, pose);
     _record(atMs, pose);
 
+    // Waiting on nothing but the start: the other phone, live, and nobody's
+    // position anywhere (the count down began as the camera opened). It used
+    // to wait for the lifter to be down in position, and a round that did not
+    // start until then read as one that would not start at all.
     if (_stage == _Stage.positioning) {
       setState(() => _pose = pose);
-      // Live waits on the other phone, not on this body: the start was asked
-      // for the moment the camera opened.
-      if (widget.live != null) return;
-      if (!_framed(pose)) {
-        _graceTimer?.cancel();
-        _graceTimer = null;
-        return;
-      }
-
-      // The clock waits for somebody to actually be down in position. Whole
-      // body in shot is not the same thing — a person standing in front of
-      // the phone passes it — and starting a sixty second round while they
-      // are still walking to the floor costs them the seconds it takes to
-      // get there.
-      //
-      // With an escape hatch. If the position never registers on somebody's
-      // camera angle, being unable to start a match at all is a far worse
-      // failure than a few seconds lost, so a framed body is counted in
-      // anyway once it has waited.
-      _graceTimer ??= Timer(_positionGrace, () {
-        if (mounted && _stage == _Stage.positioning) _startCountdown();
-      });
-
-      if (_inPosition) _startCountdown();
       return;
     }
     if (_stage == _Stage.countdown) {
@@ -671,6 +685,19 @@ class _TrainerScreenState extends State<TrainerScreen>
       widget.live?.counted(reading.reps);
       tap(heavy: true);
       Sounds.instance.play(Cue.rep);
+
+      // The rep that finishes the fight: the clock stops on it, and the
+      // round closes a moment later so the last hit is seen landing and the
+      // monster going down.
+      if (widget.game?.wonAt(reading.reps) ?? false) {
+        _won = true;
+        _clock.stop();
+        setState(() => _pose = pose);
+        Timer(const Duration(milliseconds: 1600), () {
+          if (mounted) _stop();
+        });
+        return;
+      }
     }
 
     final limit = widget.limit;
@@ -783,6 +810,9 @@ class _TrainerScreenState extends State<TrainerScreen>
   /// cannot both end it.
   bool _stopping = false;
 
+  /// The game was won on the last rep counted and the round is closing.
+  bool _won = false;
+
   Future<void> _stop({bool gaveUp = false}) async {
     if (_stopping) return;
     _stopping = true;
@@ -837,18 +867,27 @@ class _TrainerScreenState extends State<TrainerScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        foregroundColor: Colors.white,
-        // No title. There is one movement, so naming it over a camera
-        // already pointed at somebody doing it says nothing.
-        titleTextStyle: context.type.title.copyWith(color: Colors.white),
-        // Recalibrate and reset used to live here, and so did the back
-        // button by default — three controls stacked over a screen meant to
-        // hold nothing above the score card once the camera is actually
-        // tracking somebody. Setup keeps its own way out; live tracking's
-        // only way out is Give up, on the card itself.
-        automaticallyImplyLeading: _stage == _Stage.setup,
+      // Empty and see-through once the camera is tracking, and it lets taps
+      // through: the adventure's card puts Give up at its top line, where
+      // this bar lies over it, and the bar was swallowing the tap.
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: IgnorePointer(
+          ignoring: _stage != _Stage.setup,
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+            foregroundColor: Colors.white,
+            // No title. There is one movement, so naming it over a camera
+            // already pointed at somebody doing it says nothing.
+            titleTextStyle: context.type.title.copyWith(color: Colors.white),
+            // Recalibrate and reset used to live here, and so did the back
+            // button by default — three controls stacked over a screen meant
+            // to hold nothing above the score card once the camera is
+            // actually tracking somebody. Setup keeps its own way out; live
+            // tracking's only way out is Give up, on the card itself.
+            automaticallyImplyLeading: _stage == _Stage.setup,
+          ),
+        ),
       ),
       extendBodyBehindAppBar: true,
       body: switch (_failure) {
@@ -961,6 +1000,42 @@ class _TrainerScreenState extends State<TrainerScreen>
     final top = math.max(36.0, insets.top + 8);
     final bottom = insets.bottom;
 
+    // A game (the adventure's fight) frames the camera under its card, with
+    // its own track beside it, as the reference the user picked does; the
+    // camera fills the screen everywhere else.
+    final game = widget.game;
+
+    // The camera, and the skeleton over it, in whatever box they are given:
+    // the preview covers it and the painter crops the same way.
+    final cameraView = Stack(
+      fit: StackFit.expand,
+      children: [
+        _source?.buildPreview(context) ?? const ColoredBox(color: Colors.black),
+
+        // The skeleton goes over whatever is behind it, in the app's cream:
+        // faint while the lifter is getting into position, bright once they
+        // are in it (and, mid-round, while the hands stay planted). It is
+        // feedback, not a gate on the count: a rep with a sagging hip is
+        // still a rep somebody did, and a count that silently withheld it
+        // would be the app calling them a liar. One colour throughout — red
+        // for "not yet" read as an error before anything had gone wrong.
+        //
+        // Hidden when the lifter has turned it off in settings. The count
+        // does not change either way — this is the picture, not the
+        // reading — but some people find it easier to lift without a
+        // figure drawn over them.
+        if (settings.showSkeleton)
+          CustomPaint(
+            painter: SkeletonPainter(
+              pose: _pose,
+              good: ready,
+              mirror: live,
+              sourceSize: _source?.sourceSize,
+            ),
+          ),
+      ],
+    );
+
     // A long press anywhere shows the numbers behind the position check.
     // It used to be a hidden sixty-pixel box in the corner of practice mode,
     // which is no use to somebody on the floor wondering why the skeleton is
@@ -971,30 +1046,10 @@ class _TrainerScreenState extends State<TrainerScreen>
       child: Stack(
         fit: StackFit.expand,
         children: [
-          _source?.buildPreview(context) ??
-              const ColoredBox(color: Colors.black),
-
-          // The skeleton goes over whatever is behind it, in the app's cream:
-          // faint while the lifter is getting into position, bright once they
-          // are in it (and, mid-round, while the hands stay planted). It is
-          // feedback, not a gate on the count: a rep with a sagging hip is
-          // still a rep somebody did, and a count that silently withheld it
-          // would be the app calling them a liar. One colour throughout — red
-          // for "not yet" read as an error before anything had gone wrong.
-          //
-          // Hidden when the lifter has turned it off in settings. The count
-          // does not change either way — this is the picture, not the
-          // reading — but some people find it easier to lift without a
-          // figure drawn over them.
-          if (settings.showSkeleton)
-            CustomPaint(
-              painter: SkeletonPainter(
-                pose: _pose,
-                good: ready,
-                mirror: live,
-                sourceSize: _source?.sourceSize,
-              ),
-            ),
+          if (game == null)
+            cameraView
+          else
+            const ColoredBox(color: Color(0xFF121110)),
 
           // The score, the clock, and the rival — pinned to the top from the
           // moment the camera opens, so the numbers are in the same place before
@@ -1009,21 +1064,77 @@ class _TrainerScreenState extends State<TrainerScreen>
             right: 14,
             top: top,
             bottom: 96 + bottom,
-            child: Column(
+            child: game != null
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      game.card(
+                        context,
+                        reps: _liveReps,
+                        remaining: _remaining,
+                        counting: _stage == _Stage.counting,
+                        // Nothing on the ladder to lose, so no question
+                        // first: the fight is simply not won.
+                        onStop: () => _stop(gaveUp: true),
+                      ),
+                      const SizedBox(height: 12),
+                      Expanded(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Expanded(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(22),
+                                // The count down over the camera, letting
+                                // taps through: the card above, and its Give
+                                // up, are the fight's own from the start.
+                                child: Stack(
+                                  fit: StackFit.expand,
+                                  children: [
+                                    cameraView,
+                                    if (_stage == _Stage.countdown)
+                                      IgnorePointer(
+                                        child: game.countdown(
+                                          context,
+                                          _countdown,
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            // At rest at the top until the round is on.
+                            SizedBox(
+                              width: 44,
+                              child: game.track(
+                                context,
+                                progress: _stage == _Stage.counting
+                                    ? (_progress ?? 0)
+                                    : 1,
+                                pastBottom: _pastBottom,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+                : Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _ScoreCard(
-                  key: const Key('scoreCard'),
-                  yours: _liveReps,
-                  theirs: _opponentReps,
-                  remaining: _remaining,
-                  duel: widget.duel,
-                  live: _stage == _Stage.counting,
-                  session: widget.live,
-                  onStop: widget.duel == null
-                      ? () => _stop()
-                      : _confirmGiveUp,
-                ),
+                    _ScoreCard(
+                      key: const Key('scoreCard'),
+                      yours: _liveReps,
+                      theirs: _opponentReps,
+                      remaining: _remaining,
+                      duel: widget.duel,
+                      live: _stage == _Stage.counting,
+                      session: widget.live,
+                      onStop: widget.duel == null
+                          ? () => _stop()
+                          : _confirmGiveUp,
+                    ),
                 // Live, when the other phone has gone quiet or given up: the
                 // number that stopped moving needs a reason beside it, or it
                 // reads as the lifter having simply stopped.
@@ -1130,10 +1241,14 @@ class _TrainerScreenState extends State<TrainerScreen>
               ),
             ),
 
-          if (_stage == _Stage.countdown) ...[
-            Positioned.fill(
-              child: ColoredBox(
-                color: const Color(0xFF121110).withValues(alpha: 0.55),
+          // A game counts down over its camera (above); everything else over
+          // the whole screen.
+          if (_stage == _Stage.countdown && game == null) ...[
+            // Drawn over the card but not in its way: its Give up stays
+            // tappable through the count down.
+            const Positioned.fill(
+              child: IgnorePointer(
+                child: ColoredBox(color: Color(0x8C121110)),
               ),
             ),
             Positioned(

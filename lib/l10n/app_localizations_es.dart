@@ -201,8 +201,7 @@ class LEs extends L {
   String get createAccountTitle => 'Crear cuenta';
 
   @override
-  String get createAccountBody =>
-      'Añade un correo y una contraseña para que esta cuenta no dependa solo de este teléfono.';
+  String get createAccountBody => 'Inicia sesión para que esta cuenta no dependa de un solo teléfono.';
 
   @override
   String get createAccountAction => 'Crear cuenta';
@@ -373,8 +372,7 @@ class LEs extends L {
   String get usernameChanged => 'Nombre de usuario cambiado';
 
   @override
-  String get usernameAlreadyChangedBody =>
-      'Ya has usado tu único cambio de nombre de usuario — cada cuenta recibe exactamente uno.';
+  String get usernameAlreadyChangedBody => 'El nombre de usuario se puede cambiar una vez cada 14 días.';
 
   @override
   String get gallery => 'Galería';
@@ -903,9 +901,6 @@ class LEs extends L {
   String get forfeitBody => 'Perderás PL si te vas ahora.';
 
   @override
-  String get stay => 'Quedarme';
-
-  @override
   String get forfeit => 'Abandonar';
 
   @override
@@ -1023,7 +1018,7 @@ class LEs extends L {
 
   @override
   String weeksAgo(String n) {
-    return 'hace $n semanas';
+    return 'hace ${n} semanas';
   }
 
   @override
@@ -1284,41 +1279,10 @@ class LEs extends L {
   String get noRankYet => 'Aún sin rango';
 
   @override
-  String placementsForFirstTier(String count) {
-    return 'Termina $count duelos de colocación para ganar tu primer rango.';
-  }
-
-  @override
-  String get startPlacements => 'Empezar colocación';
-
-  @override
   String get unranked => 'Sin rango';
 
   @override
-  String placementsTerms(String done, String total, String seconds) {
-    return '$done de $total · $seconds segundos cada uno';
-  }
-
-  @override
-  String placementsLeft(String done, String total, String left) {
-    return '$done de $total · $left más para tu rango';
-  }
-
-  @override
-  String placementsForTier(String count) {
-    return 'Termina $count duelos de colocación para ver dónde quedas.';
-  }
-
-  @override
-  String placementsDoneCount(String done, String total) {
-    return '$done de $total colocaciones completadas';
-  }
-
-  @override
   String get practiceFirst => 'Practicar primero';
-
-  @override
-  String get nextPlacement => 'Siguiente colocación';
 
   @override
   String get noConnection => 'Sin conexión';
@@ -1356,8 +1320,7 @@ class LEs extends L {
       'Las repeticiones se cuentan con la cámara, así que este dispositivo no puede puntuar un duelo. Lo demás sigue funcionando.';
 
   @override
-  String get noConnectionBody =>
-      'Necesitas conexión para competir. Practicar funciona sin conexión y tus repeticiones se sincronizarán luego.';
+  String get noConnectionBody => 'Necesitas conexión para competir. Aventura funciona sin conexión y tus repeticiones se sincronizarán luego.';
 
   @override
   String get getBackInFrame => 'Vuelve al encuadre';
@@ -1460,12 +1423,6 @@ class LEs extends L {
   String get obAgeQuestion => '¿Cuántos años tienes?';
 
   @override
-  String get obUnder16 => 'Menos de 16';
-
-  @override
-  String get obOver16 => '16 o más';
-
-  @override
   String get obHealthConsent =>
       'Entiendo que outrepd cuenta repeticiones y no da consejos médicos ni de entrenamiento. Pararé si algo me duele.';
 
@@ -1480,10 +1437,6 @@ class LEs extends L {
 
   @override
   String get obPrivacy => 'Política de Privacidad';
-
-  @override
-  String get obUnder16Blocked =>
-      'outrepd es para mayores de 16. Vuelve cuando llegues — las flexiones seguirán aquí.';
 
   @override
   String get obCameraTitle => 'outrepd necesita tu cámara';
@@ -1510,13 +1463,7 @@ class LEs extends L {
       'Recuéstalo contra una pared, a un metro de ti más o menos.';
 
   @override
-  String get obOneMetre => '~1 m';
-
-  @override
-  String get obFullBody => 'todo el cuerpo en el encuadre';
-
-  @override
-  String get obCheckHandsFeet => 'Manos y pies visibles';
+  String get obCheckHandsFeet => 'Cabeza, hombros y manos en el encuadre';
 
   @override
   String get obCheckFacing => 'De frente al móvil, no de lado';
@@ -1801,7 +1748,7 @@ class LEs extends L {
   }
 
   @override
-  String get paywallStart => 'Empieza a subir';
+  String get paywallStart => 'Quitar anuncios';
 
   @override
   String get paywallRenewsPlay => 'Se renueva automáticamente hasta que canceles. Cancela cuando quieras en Google Play.';
@@ -1848,7 +1795,7 @@ class LEs extends L {
   String get signOutQuestion => '¿Cerrar sesión?';
 
   @override
-  String get signOutBody => 'Tu cuenta queda como está, con su rango, su historial y su suscripción. Vuelve a entrar cuando quieras con tu correo.';
+  String get signOutBody => 'Tu cuenta queda como está, con su rango, historial y suscripción. Vuelve a entrar cuando quieras del mismo modo que entraste.';
 
   @override
   String get shareVictory => 'VICTORIA';
@@ -2016,7 +1963,7 @@ class LEs extends L {
 
   @override
   String calledOffBody(String name) {
-    return '${name} no se puso en posición a tiempo. No se registró nada.';
+    return '${name} no llegó a tiempo al inicio. No se registró nada.';
   }
 
   @override
@@ -2062,11 +2009,6 @@ class LEs extends L {
 
   @override
   String get noticeLiveInvite => 'Un amigo me invitó a un duelo en vivo';
-
-  @override
-  String trialHeadline(String days) {
-    return 'Tus primeros ${days} días son *gratis*';
-  }
 
   @override
   String get trialToday => 'Hoy';
@@ -2229,49 +2171,6 @@ class LEs extends L {
   }
 
   @override
-  String get inviteCodeLabel => 'Código de un amigo (opcional)';
-
-  @override
-  String get inviteClaimed => 'Código añadido · tienes 7 días gratis';
-
-  @override
-  String get inviteUnknownCode => 'Ningún usuario tiene ese código';
-
-  @override
-  String get inviteNotYearly => 'Ese código no puede dar días gratis ahora';
-
-  @override
-  String get inviteOwnCode => 'Ese es tu propio código';
-
-  @override
-  String get inviteTooLate => 'Los códigos funcionan la primera semana de la cuenta';
-
-  @override
-  String get inviteFull => 'Ese código se ha usado mucho este mes. Prueba otro';
-
-  @override
-  String get inviteTitle => 'Regala a un amigo 7 días gratis';
-
-  @override
-  String get inviteBody => 'Tu código viene con el plan anual. Tu amigo lo escribe al registrarse.';
-
-  @override
-  String get inviteYourCode => 'Tu código';
-
-  @override
-  String inviteJoined(String n) {
-    return '${n} se unieron';
-  }
-
-  @override
-  String get inviteSend => 'Enviar invitación';
-
-  @override
-  String inviteShareText(String code) {
-    return 'Rétame en OUTREPD: 60 segundos de flexiones, en vivo. Usa mi código ${code} al registrarte y consigue 7 días gratis.';
-  }
-
-  @override
   String get dailyGoalTitle => 'Objetivo de hoy';
 
   @override
@@ -2342,6 +2241,90 @@ class LEs extends L {
   }
 
   @override
+  String get usernameTooShort => 'Demasiado corto: mínimo 4 caracteres';
+
+  @override
+  String get usernameBadCharacters => 'Solo letras, números y _';
+
+  @override
+  String get usernameNeedsLetter => 'Añade al menos una letra o un número';
+
+  @override
+  String usernameChangeAgainOn(String date) {
+    return 'Podrás cambiarlo de nuevo el ${date}';
+  }
+
+  @override
+  String get continueWithApple => 'Continuar con Apple';
+
+  @override
+  String get continueWithGoogle => 'Continuar con Google';
+
+  @override
+  String get socialSignInFailed => 'No se pudo iniciar sesión. Inténtalo de nuevo.';
+
+  @override
+  String get chooseUsernameTitle => 'Elige tu nombre de usuario';
+
+  @override
+  String get chooseUsernameSubtitle => 'Así te encuentran otros y te ven en las clasificaciones.';
+
+  @override
+  String get authHeroTitle => 'SUPERA A CUALQUIERA.';
+
+  @override
+  String get authHeroSubtitle => 'Duelos de flexiones en vivo, contados por tu cámara.';
+
+  @override
+  String get createAccountPitch => 'Tu rango y tus duelos, en cualquier móvil.';
+
+  @override
+  String get usernameSpacesHint => 'Los espacios se convierten en _';
+
+  @override
+  String get emailCodeNote => 'Te enviaremos un código de 6 dígitos por correo. Sin contraseña.';
+
+  @override
+  String get continueWithEmail => 'Continuar con correo';
+
+  @override
+  String get thisSeason => 'Esta temporada';
+
+  @override
+  String get thisWeek => 'Esta semana';
+
+  @override
+  String get weekStartsAgain => 'Empieza de nuevo cada lunes';
+
+  @override
+  String get lengthWeek => 'Semana';
+
+  @override
+  String get lengthMonth => 'Mes';
+
+  @override
+  String get weekJoinHint => 'Gana un duelo clasificatorio esta semana para entrar en la tabla';
+
+  @override
+  String get weekInTop3 => 'En el top 3 esta semana';
+
+  @override
+  String weekToTop3(String n) {
+    return '${n} LP para el top 3';
+  }
+
+  @override
+  String get boardActiveNote => 'Jugadores activos en los últimos 30 días';
+
+  @override
+  String get boardTieNote => 'empates: más victorias primero';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '${reps} por las repeticiones · ${adjust} por un rival ${rank}';
+  }
+
+  @override
   String levelShort(String n) {
     return 'Nv. ${n}';
   }
@@ -2358,7 +2341,7 @@ class LEs extends L {
 
   @override
   String xpHow(String rep, String match) {
-    return '${rep} XP por repetición, ${match} por duelo';
+    return '${rep} XP por repetición, ${match} por victoria, nada por una derrota';
   }
 
   @override
@@ -2399,7 +2382,541 @@ class LEs extends L {
   String get keepGoing => 'Seguir';
 
   @override
-  String lpBreakdown(String reps, String adjust, String rank) {
-    return '${reps} por las repeticiones · ${adjust} por un rival ${rank}';
+  String get stay => 'Quedarme';
+
+  @override
+  String lastN(String n) {
+    return 'Últimos ${n}';
+  }
+
+  @override
+  String get firstMatchForTier => 'Juega tu primera partida para entrar en la clasificación. Todos empiezan en Iron V.';
+
+  @override
+  String get firstMatchForBoard => 'Juega tu primera partida para aparecer en la clasificación. Todos empiezan en Iron V.';
+
+  @override
+  String get playFirstMatch => 'Jugar primera partida';
+
+  @override
+  String firstMatchTerms(String seconds) {
+    return 'Una partida · ${seconds} segundos';
+  }
+
+  @override
+  String get placedLabel => 'Ya estás en la clasificación';
+
+  @override
+  String get placedBody => 'Todos empiezan aquí. Solo las victorias te hacen subir.';
+
+  @override
+  String get placedHow => 'Gana partidas para sumar LP. Vence a alguien de rango más alto para ganar más.';
+
+  @override
+  String get levelBesideName => 'Junto a tu nombre, en todas partes';
+
+  @override
+  String get weekRaceTitle => 'La carrera de esta semana';
+
+  @override
+  String get streakDoneToday => 'hecho hoy';
+
+  @override
+  String get streakTrainToday => 'entrena hoy para sumar un día';
+
+  @override
+  String get raceChartTitle => 'Así fue el minuto';
+
+  @override
+  String raceYouLead(String time) {
+    return '${time} · te pusiste por delante';
+  }
+
+  @override
+  String raceTheyLead(String time, String name) {
+    return '${time} · ${name} se puso por delante';
+  }
+
+  @override
+  String get bringFriendTitle => 'Trae a un amigo';
+
+  @override
+  String get bringFriendBody => 'Envía tu enlace. Abre tu perfil, donde pueden agregarte.';
+
+  @override
+  String get bringFriendShare => 'Compartir mi enlace';
+
+  @override
+  String get bringFriendShareText => 'Compite conmigo a flexiones en OUTREPD. 60 segundos, en directo, y la cámara cuenta.';
+
+  @override
+  String orFriendCode(String code) {
+    return 'o código de amigo ${code}';
+  }
+
+  @override
+  String get countryPickerTitle => 'Tu país';
+
+  @override
+  String get countrySearch => 'Buscar';
+
+  @override
+  String get countryFromPhone => 'De tu teléfono';
+
+  @override
+  String get countryAll => 'Todos los países';
+
+  @override
+  String get countryChoose => 'Elige tu país';
+
+  @override
+  String get countryChange => 'Cambiar';
+
+  @override
+  String get countryForBoard => 'Para la clasificación de tu país';
+
+  @override
+  String get countryLabel => 'País';
+
+  @override
+  String get countryChanged => 'País cambiado';
+
+  @override
+  String get countryEvery14 => 'Una vez cada 14 días, como tu nombre';
+
+  @override
+  String get countryNotSaved => 'No se pudo guardar tu país. Inténtalo de nuevo.';
+
+  @override
+  String get adventure => 'Aventura';
+
+  @override
+  String stageNumber(String n) {
+    return 'Nivel ${n}';
+  }
+
+  @override
+  String adventureLevelIn(String level, String world) {
+    return 'Nivel ${level} · ${world}';
+  }
+
+  @override
+  String adventureClearedOf(String cleared, String total) {
+    return '${cleared} de ${total} superados · sin rango';
+  }
+
+  @override
+  String get worldIron => 'Minas de Hierro';
+
+  @override
+  String get worldBronze => 'Dunas de Bronce';
+
+  @override
+  String get worldSilver => 'Picos de Plata';
+
+  @override
+  String get worldGold => 'Ciudadela de Oro';
+
+  @override
+  String get worldPlatinum => 'Glaciar de Platino';
+
+  @override
+  String get worldDiamond => 'Cavernas de Diamante';
+
+  @override
+  String get worldMaster => 'Trono del Maestro';
+
+  @override
+  String worldNumber(String n) {
+    return 'Mundo ${n}';
+  }
+
+  @override
+  String fightLevel(String level) {
+    return 'Luchar en el nivel ${level}';
+  }
+
+  @override
+  String levelHpLine(String hp, String reps) {
+    return 'HP ${hp} · unas ${reps} flexiones';
+  }
+
+  @override
+  String get hpShort => 'HP';
+
+  @override
+  String comboTag(String n) {
+    return 'COMBO ×${n}';
+  }
+
+  @override
+  String get levelCleared => 'SUPERADO';
+
+  @override
+  String get outOfTime => 'SIN TIEMPO';
+
+  @override
+  String get statPushUps => 'flexiones';
+
+  @override
+  String get statTimeLeft => 'restante';
+
+  @override
+  String get statHpLeft => 'HP restante';
+
+  @override
+  String get statXp => 'XP';
+
+  @override
+  String secondStarHint(String seconds) {
+    return 'Termina con ${seconds} segundos de sobra para la segunda estrella';
+  }
+
+  @override
+  String thirdStarHint(String seconds) {
+    return 'Termina con ${seconds} segundos de sobra para la tercera estrella';
+  }
+
+  @override
+  String get fightLostHint => 'Repite niveles anteriores para ganar más estrellas: desbloquean armas más fuertes.';
+
+  @override
+  String get nextLevel => 'Siguiente nivel';
+
+  @override
+  String get tryAgain => 'Reintentar';
+
+  @override
+  String get adventureMap => 'Mapa';
+
+  @override
+  String get nextKicker => 'SIGUIENTE';
+
+  @override
+  String nextLevelLine(String level, String hp) {
+    return 'Nivel ${level} · HP ${hp}';
+  }
+
+  @override
+  String get armory => 'Armería';
+
+  @override
+  String get armoryBody => 'Las estrellas desbloquean armas. Los monstruos de cada mundo solo reciben golpes de su propia arma o de una mejor.';
+
+  @override
+  String get equipped => 'EQUIPADA';
+
+  @override
+  String perPushUp(String damage) {
+    return '${damage} por flexión';
+  }
+
+  @override
+  String damagePerPushUp(String damage) {
+    return '${damage} de daño por flexión';
+  }
+
+  @override
+  String wasWith(String damage, String weapon) {
+    return 'antes ${damage} con ${weapon}';
+  }
+
+  @override
+  String moreStars(String count) {
+    return 'faltan ${count} estrellas';
+  }
+
+  @override
+  String get newWeapon => 'Nueva arma';
+
+  @override
+  String starsKicker(String count) {
+    return '${count} ESTRELLAS';
+  }
+
+  @override
+  String get weaponGauntlets => 'Guanteletes de Hierro';
+
+  @override
+  String get weaponKnuckles => 'Nudilleras de Bronce';
+
+  @override
+  String get weaponFang => 'Colmillo de Plata';
+
+  @override
+  String get weaponHammer => 'Martillo de Oro';
+
+  @override
+  String get weaponAxe => 'Hacha de Platino';
+
+  @override
+  String get weaponSpear => 'Lanza de Diamante';
+
+  @override
+  String get weaponSword => 'Espada del Maestro';
+
+  @override
+  String get weaponCrownbreaker => 'Rompecoronas';
+
+  @override
+  String clearFirst(String level) {
+    return 'Primero gana el nivel ${level}';
+  }
+
+  @override
+  String needsWeapon(String weapon) {
+    return 'Necesitas ${weapon}';
+  }
+
+  @override
+  String hurtOnlyBy(String weapon) {
+    return 'Solo ${weapon} o mejor puede herirlo';
+  }
+
+  @override
+  String worldNeedsWeapon(String world, String weapon, String count) {
+    return '${world} necesita ${weapon} · faltan ${count} estrellas';
+  }
+
+  @override
+  String rematchOpponentLeft(String name) {
+    return '${name} se fue · esta vez no hay revancha';
+  }
+
+  @override
+  String get obNext => 'Siguiente';
+
+  @override
+  String get obRaceTitle => 'Compite contra una persona real.';
+
+  @override
+  String get obRaceBody => 'Gana quien haga más repeticiones en 60 segundos. En directo, cada uno con su teléfono, o contra una serie grabada si no hay nadie conectado.';
+
+  @override
+  String get obRepsTitle => 'Solo cuentan las repeticiones completas.';
+
+  @override
+  String get obRepsBody => 'La cámara ve cuánto bajas y cuánto vuelves a subir.';
+
+  @override
+  String get obRepsDown => 'Baja más allá de la línea dorada';
+
+  @override
+  String get obRepsUp => 'Vuelve a subir más allá de la línea de arriba';
+
+  @override
+  String get obRepsBoth => 'Las dos cosas, con las manos en el suelo. Media repetición no cuenta, ni en tu teléfono ni en el suyo.';
+
+  @override
+  String get obClimbTitle => 'Sube hasta Master.';
+
+  @override
+  String get obClimbBody => 'Gana para subir en la escalera: siete rangos de cinco escalones cada uno.';
+
+  @override
+  String get obGoldLine => 'línea dorada';
+
+  @override
+  String obCalibrationRule(String gold) {
+    return 'Baja más allá de la ${gold} y vuelve a subir más allá de la de arriba';
+  }
+
+  @override
+  String get proTitleTop => 'Sin anuncios.';
+
+  @override
+  String get proTitleBottom => 'Solo flexiones.';
+
+  @override
+  String get proBody => 'Todas las partidas siguen siendo gratis. Pro quita los anuncios de todas.';
+
+  @override
+  String get proThanks => 'Anuncios desactivados. Gracias por hacerte Pro.';
+
+  @override
+  String get removeAds => 'Quitar anuncios';
+
+  @override
+  String get adNotice => 'Al salir verás un anuncio';
+
+  @override
+  String get adAskTitle => 'Los anuncios mantienen outrepd gratis';
+
+  @override
+  String get adAskBody => 'Ahora tu iPhone te preguntará si las apps pueden usar tu actividad para elegir anuncios. Si dices que sí, los anuncios encajarán mejor contigo; si dices que no, seguirás viendo anuncios, solo que menos relevantes.';
+
+  @override
+  String get adAskCamera => 'Tu cámara nunca entra en esto: el seguimiento del cuerpo se queda en este teléfono, elijas lo que elijas.';
+
+  @override
+  String get adAskRemove => 'Mejor quitar los anuncios';
+
+  @override
+  String get monsterIronColossus => 'Coloso de hierro';
+
+  @override
+  String get monsterScarab => 'Escarabajo';
+
+  @override
+  String get monsterScarabPharaoh => 'Faraón escarabajo';
+
+  @override
+  String get monsterYeti => 'Yeti';
+
+  @override
+  String get monsterFrostYeti => 'Yeti de escarcha';
+
+  @override
+  String get monsterYetiChieftain => 'Jefe yeti';
+
+  @override
+  String get monsterGoldSoldier => 'Soldado de oro';
+
+  @override
+  String get monsterGoldKnight => 'Caballero de oro';
+
+  @override
+  String get monsterGoldKing => 'Rey de oro';
+
+  @override
+  String get monsterWisp => 'Fuego fatuo';
+
+  @override
+  String get monsterWraith => 'Espectro';
+
+  @override
+  String get monsterFrostLich => 'Liche de escarcha';
+
+  @override
+  String get monsterCrystalDrake => 'Draco de cristal';
+
+  @override
+  String get monsterCrystalDragon => 'Dragón de cristal';
+
+  @override
+  String get monsterDiamondWyrm => 'Sierpe de diamante';
+
+  @override
+  String get monsterShadowGuard => 'Guardia sombrío';
+
+  @override
+  String get monsterShadowKnight => 'Caballero sombrío';
+
+  @override
+  String get monsterTheMaster => 'El Maestro';
+
+  @override
+  String get monsterPebbleGolem => 'Gólem de guijarros';
+
+  @override
+  String get monsterStoneGolem => 'Gólem de piedra';
+
+  @override
+  String get monsterOreGolem => 'Gólem de mena';
+
+  @override
+  String get monsterMinerGolem => 'Gólem minero';
+
+  @override
+  String get monsterScarabGrub => 'Larva de escarabajo';
+
+  @override
+  String get monsterHornedScarab => 'Escarabajo cornudo';
+
+  @override
+  String get monsterScarabWarrior => 'Guerrero escarabajo';
+
+  @override
+  String get monsterYetiCub => 'Cría de yeti';
+
+  @override
+  String get monsterHornedYeti => 'Yeti cornudo';
+
+  @override
+  String get monsterGoldRecruit => 'Recluta de oro';
+
+  @override
+  String get monsterGoldGuard => 'Guardia de oro';
+
+  @override
+  String get monsterShade => 'Sombra';
+
+  @override
+  String get monsterIceSpecter => 'Espectro de hielo';
+
+  @override
+  String get monsterCrystalHatchling => 'Cría de cristal';
+
+  @override
+  String get monsterCrystalWhelp => 'Dragoncillo de cristal';
+
+  @override
+  String get monsterShadowSquire => 'Escudero sombrío';
+
+  @override
+  String get monsterShadowLord => 'Señor de las sombras';
+
+  @override
+  String monsterWarden(String name) {
+    return '${name} guardián';
+  }
+
+  @override
+  String get obPhoneSees => 'Lo que debe ver tu teléfono';
+
+  @override
+  String get obPhoneSeesBody => 'De la parte de arriba de la cabeza a las manos, a un metro más o menos, en posición de flexión.';
+
+  @override
+  String get obUnder13 => 'Menos de 13';
+
+  @override
+  String get obOver13 => '13 o más';
+
+  @override
+  String get obFor13 => 'outrepd es para mayores de 13.';
+
+  @override
+  String get obUnder13Blocked => 'outrepd es para mayores de 13. Vuelve cuando los cumplas: las flexiones seguirán aquí.';
+
+  @override
+  String get obBeforeYouLift => 'Antes de empezar';
+
+  @override
+  String get obFightTitle => 'Lucha contra monstruos.';
+
+  @override
+  String get obFightBody => '140 combates de flexiones en siete mundos. Cada repetición golpea al monstruo.';
+
+  @override
+  String obSevenWorlds(String from, String to) {
+    return 'Siete mundos, de ${from} a ${to}';
+  }
+
+  @override
+  String get obWeaponsTitle => 'Las estrellas desbloquean armas';
+
+  @override
+  String get obWeaponsBody => 'Cada mundo necesita su propia arma. No te juegas el rango.';
+
+  @override
+  String get fightDefeated => '¡Derrotado!';
+
+  @override
+  String get nextWeapon => 'Siguiente arma';
+
+  @override
+  String opensWorld(String world) {
+    return 'Abre ${world}';
+  }
+
+  @override
+  String weaponAtStars(String count) {
+    return 'con ${count} estrellas';
+  }
+
+  @override
+  String topTenIn(String country) {
+    return 'Top 10 en ${country}';
   }
 }

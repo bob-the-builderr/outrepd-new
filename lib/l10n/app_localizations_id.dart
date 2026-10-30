@@ -199,8 +199,7 @@ class LId extends L {
   String get createAccountTitle => 'Buat akun';
 
   @override
-  String get createAccountBody =>
-      'Tambahkan email dan kata sandi agar akun ini tidak hanya bergantung pada satu ponsel.';
+  String get createAccountBody => 'Masuk supaya akun ini tidak bergantung pada satu ponsel saja.';
 
   @override
   String get createAccountAction => 'Buat akun';
@@ -369,8 +368,7 @@ class LId extends L {
   String get usernameChanged => 'Nama pengguna diubah';
 
   @override
-  String get usernameAlreadyChangedBody =>
-      'Anda sudah menggunakan satu-satunya kesempatan mengubah nama pengguna — setiap akun hanya mendapat satu kali.';
+  String get usernameAlreadyChangedBody => 'Nama pengguna bisa diubah sekali setiap 14 hari.';
 
   @override
   String get gallery => 'Galeri';
@@ -897,9 +895,6 @@ class LId extends L {
   String get forfeitBody => 'Anda akan kehilangan LP jika keluar sekarang.';
 
   @override
-  String get stay => 'Tetap';
-
-  @override
   String get forfeit => 'Mundur';
 
   @override
@@ -1017,7 +1012,7 @@ class LId extends L {
 
   @override
   String weeksAgo(String n) {
-    return '$n minggu lalu';
+    return '${n} minggu lalu';
   }
 
   @override
@@ -1279,41 +1274,10 @@ class LId extends L {
   String get noRankYet => 'Belum ada peringkat';
 
   @override
-  String placementsForFirstTier(String count) {
-    return 'Selesaikan $count duel penempatan untuk meraih peringkat pertamamu.';
-  }
-
-  @override
-  String get startPlacements => 'Mulai penempatan';
-
-  @override
   String get unranked => 'Tanpa peringkat';
 
   @override
-  String placementsTerms(String done, String total, String seconds) {
-    return '$done dari $total · $seconds detik tiap duel';
-  }
-
-  @override
-  String placementsLeft(String done, String total, String left) {
-    return '$done dari $total · $left lagi untuk peringkatmu';
-  }
-
-  @override
-  String placementsForTier(String count) {
-    return 'Selesaikan $count duel penempatan untuk melihat peringkatmu.';
-  }
-
-  @override
-  String placementsDoneCount(String done, String total) {
-    return '$done dari $total penempatan selesai';
-  }
-
-  @override
   String get practiceFirst => 'Latihan dulu';
-
-  @override
-  String get nextPlacement => 'Penempatan berikutnya';
 
   @override
   String get noConnection => 'Tidak ada koneksi';
@@ -1351,8 +1315,7 @@ class LId extends L {
       'Repetisi dihitung lewat kamera, jadi perangkat ini tidak bisa menilai duel. Sisanya tetap berjalan.';
 
   @override
-  String get noConnectionBody =>
-      'Kamu butuh koneksi untuk berduel. Latihan tetap jalan offline dan repetisimu akan tersinkron nanti.';
+  String get noConnectionBody => 'Kamu butuh koneksi untuk berduel. Petualangan tetap jalan offline dan repetisimu akan tersinkron nanti.';
 
   @override
   String get getBackInFrame => 'Kembali ke dalam bingkai';
@@ -1455,12 +1418,6 @@ class LId extends L {
   String get obAgeQuestion => 'Berapa umurmu?';
 
   @override
-  String get obUnder16 => 'Di bawah 16';
-
-  @override
-  String get obOver16 => '16 atau lebih';
-
-  @override
   String get obHealthConsent =>
       'Saya paham outrepd menghitung repetisi dan tidak memberi saran medis atau latihan. Saya akan berhenti kalau ada yang sakit.';
 
@@ -1475,10 +1432,6 @@ class LId extends L {
 
   @override
   String get obPrivacy => 'Kebijakan Privasi';
-
-  @override
-  String get obUnder16Blocked =>
-      'outrepd untuk usia 16 ke atas. Datang lagi kalau sudah sampai — push-up-nya tidak ke mana-mana.';
 
   @override
   String get obCameraTitle => 'outrepd butuh kameramu';
@@ -1505,13 +1458,7 @@ class LId extends L {
       'Sandarkan ke dinding sekitar satu meter di depanmu.';
 
   @override
-  String get obOneMetre => '~1 m';
-
-  @override
-  String get obFullBody => 'seluruh badan masuk frame';
-
-  @override
-  String get obCheckHandsFeet => 'Tangan dan kaki terlihat';
+  String get obCheckHandsFeet => 'Kepala, bahu, dan tangan masuk frame';
 
   @override
   String get obCheckFacing => 'Menghadap ponsel, bukan menyamping';
@@ -1795,7 +1742,7 @@ class LId extends L {
   }
 
   @override
-  String get paywallStart => 'Mulai mendaki';
+  String get paywallStart => 'Hapus iklan';
 
   @override
   String get paywallRenewsPlay => 'Diperpanjang otomatis sampai kamu membatalkan. Batalkan kapan saja di Google Play.';
@@ -1842,7 +1789,7 @@ class LId extends L {
   String get signOutQuestion => 'Keluar dari akun?';
 
   @override
-  String get signOutBody => 'Akunmu tetap seperti sekarang, dengan peringkat, riwayat, dan langganannya. Masuk lagi kapan saja dengan emailmu.';
+  String get signOutBody => 'Akunmu tetap seperti sekarang, dengan peringkat, riwayat, dan langganannya. Masuk lagi kapan saja dengan cara yang sama.';
 
   @override
   String get shareVictory => 'MENANG';
@@ -2010,7 +1957,7 @@ class LId extends L {
 
   @override
   String calledOffBody(String name) {
-    return '${name} tidak bersiap di posisi tepat waktu. Tidak ada yang dicatat.';
+    return '${name} tidak sampai ke awal pertandingan. Tidak ada yang dicatat.';
   }
 
   @override
@@ -2056,11 +2003,6 @@ class LId extends L {
 
   @override
   String get noticeLiveInvite => 'Teman mengajakku bertanding langsung';
-
-  @override
-  String trialHeadline(String days) {
-    return '${days} hari pertamamu *gratis*';
-  }
 
   @override
   String get trialToday => 'Hari ini';
@@ -2223,49 +2165,6 @@ class LId extends L {
   }
 
   @override
-  String get inviteCodeLabel => 'Kode teman (opsional)';
-
-  @override
-  String get inviteClaimed => 'Kode ditambahkan · 7 hari gratis untukmu';
-
-  @override
-  String get inviteUnknownCode => 'Tidak ada yang punya kode itu';
-
-  @override
-  String get inviteNotYearly => 'Kode itu sedang tidak bisa memberi hari gratis';
-
-  @override
-  String get inviteOwnCode => 'Itu kodemu sendiri';
-
-  @override
-  String get inviteTooLate => 'Kode berlaku di minggu pertama akun';
-
-  @override
-  String get inviteFull => 'Kode itu sudah sering dipakai bulan ini. Coba yang lain';
-
-  @override
-  String get inviteTitle => 'Beri teman 7 hari gratis';
-
-  @override
-  String get inviteBody => 'Kodemu termasuk dalam paket tahunan. Temanmu mengetiknya saat mendaftar.';
-
-  @override
-  String get inviteYourCode => 'Kodemu';
-
-  @override
-  String inviteJoined(String n) {
-    return '${n} bergabung';
-  }
-
-  @override
-  String get inviteSend => 'Kirim undangan';
-
-  @override
-  String inviteShareText(String code) {
-    return 'Tantang aku di OUTREPD: 60 detik push-up, langsung. Pakai kodeku ${code} saat daftar dan dapat 7 hari gratis.';
-  }
-
-  @override
   String get dailyGoalTitle => 'Target hari ini';
 
   @override
@@ -2336,6 +2235,90 @@ class LId extends L {
   }
 
   @override
+  String get usernameTooShort => 'Terlalu pendek: minimal 4 karakter';
+
+  @override
+  String get usernameBadCharacters => 'Hanya huruf, angka, dan _';
+
+  @override
+  String get usernameNeedsLetter => 'Tambahkan setidaknya satu huruf atau angka';
+
+  @override
+  String usernameChangeAgainOn(String date) {
+    return 'Kamu bisa mengubahnya lagi pada ${date}';
+  }
+
+  @override
+  String get continueWithApple => 'Lanjutkan dengan Apple';
+
+  @override
+  String get continueWithGoogle => 'Lanjutkan dengan Google';
+
+  @override
+  String get socialSignInFailed => 'Gagal masuk. Coba lagi.';
+
+  @override
+  String get chooseUsernameTitle => 'Pilih nama penggunamu';
+
+  @override
+  String get chooseUsernameSubtitle => 'Dengan nama ini orang lain menemukanmu dan melihatmu di papan peringkat.';
+
+  @override
+  String get authHeroTitle => 'KALAHKAN SIAPA PUN.';
+
+  @override
+  String get authHeroSubtitle => 'Duel push-up langsung, dihitung oleh kameramu.';
+
+  @override
+  String get createAccountPitch => 'Peringkat dan duelmu, di ponsel mana pun.';
+
+  @override
+  String get usernameSpacesHint => 'Spasi menjadi _';
+
+  @override
+  String get emailCodeNote => 'Kami akan mengirim kode 6 digit ke emailmu. Tanpa kata sandi.';
+
+  @override
+  String get continueWithEmail => 'Lanjutkan dengan email';
+
+  @override
+  String get thisSeason => 'Musim ini';
+
+  @override
+  String get thisWeek => 'Minggu ini';
+
+  @override
+  String get weekStartsAgain => 'Mulai lagi setiap Senin';
+
+  @override
+  String get lengthWeek => 'Minggu';
+
+  @override
+  String get lengthMonth => 'Bulan';
+
+  @override
+  String get weekJoinHint => 'Menangkan satu duel peringkat minggu ini untuk masuk papan';
+
+  @override
+  String get weekInTop3 => 'Di 3 besar minggu ini';
+
+  @override
+  String weekToTop3(String n) {
+    return '${n} LP lagi ke 3 besar';
+  }
+
+  @override
+  String get boardActiveNote => 'Pemain yang aktif dalam 30 hari terakhir';
+
+  @override
+  String get boardTieNote => 'seri: kemenangan terbanyak di atas';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '${reps} dari repetisi · ${adjust} untuk lawan ${rank}';
+  }
+
+  @override
   String levelShort(String n) {
     return 'Lv ${n}';
   }
@@ -2352,7 +2335,7 @@ class LId extends L {
 
   @override
   String xpHow(String rep, String match) {
-    return '${rep} XP per repetisi, ${match} per duel';
+    return '${rep} XP per repetisi, ${match} per kemenangan, tidak ada untuk kekalahan';
   }
 
   @override
@@ -2393,7 +2376,541 @@ class LId extends L {
   String get keepGoing => 'Lanjut';
 
   @override
-  String lpBreakdown(String reps, String adjust, String rank) {
-    return '${reps} dari repetisi · ${adjust} untuk lawan ${rank}';
+  String get stay => 'Tetap';
+
+  @override
+  String lastN(String n) {
+    return '${n} terakhir';
+  }
+
+  @override
+  String get firstMatchForTier => 'Mainkan pertandingan pertamamu untuk masuk peringkat. Semua mulai dari Iron V.';
+
+  @override
+  String get firstMatchForBoard => 'Mainkan pertandingan pertamamu untuk masuk papan peringkat. Semua mulai dari Iron V.';
+
+  @override
+  String get playFirstMatch => 'Main pertandingan pertama';
+
+  @override
+  String firstMatchTerms(String seconds) {
+    return 'Satu pertandingan · ${seconds} detik';
+  }
+
+  @override
+  String get placedLabel => 'Kamu sudah masuk peringkat';
+
+  @override
+  String get placedBody => 'Semua mulai dari sini. Hanya kemenangan yang membawamu naik.';
+
+  @override
+  String get placedHow => 'Menangkan pertandingan untuk dapat LP. Kalahkan peringkat lebih tinggi untuk dapat lebih.';
+
+  @override
+  String get levelBesideName => 'Di samping namamu, di mana saja';
+
+  @override
+  String get weekRaceTitle => 'Balapan minggu ini';
+
+  @override
+  String get streakDoneToday => 'hari ini beres';
+
+  @override
+  String get streakTrainToday => 'latihan hari ini untuk menambah sehari';
+
+  @override
+  String get raceChartTitle => 'Jalannya satu menit';
+
+  @override
+  String raceYouLead(String time) {
+    return '${time} · kamu memimpin';
+  }
+
+  @override
+  String raceTheyLead(String time, String name) {
+    return '${time} · ${name} memimpin';
+  }
+
+  @override
+  String get bringFriendTitle => 'Ajak teman';
+
+  @override
+  String get bringFriendBody => 'Kirim tautanmu. Tautan itu membuka profilmu, tempat mereka bisa menambahkanmu.';
+
+  @override
+  String get bringFriendShare => 'Bagikan tautanku';
+
+  @override
+  String get bringFriendShareText => 'Tanding push-up denganku di OUTREPD. 60 detik, langsung, dan kamera yang menghitung.';
+
+  @override
+  String orFriendCode(String code) {
+    return 'atau kode teman ${code}';
+  }
+
+  @override
+  String get countryPickerTitle => 'Negaramu';
+
+  @override
+  String get countrySearch => 'Cari';
+
+  @override
+  String get countryFromPhone => 'Dari ponselmu';
+
+  @override
+  String get countryAll => 'Semua negara';
+
+  @override
+  String get countryChoose => 'Pilih negaramu';
+
+  @override
+  String get countryChange => 'Ubah';
+
+  @override
+  String get countryForBoard => 'Untuk papan peringkat negaramu';
+
+  @override
+  String get countryLabel => 'Negara';
+
+  @override
+  String get countryChanged => 'Negara diubah';
+
+  @override
+  String get countryEvery14 => 'Sekali setiap 14 hari, seperti namamu';
+
+  @override
+  String get countryNotSaved => 'Negaramu tidak bisa disimpan. Coba lagi.';
+
+  @override
+  String get adventure => 'Petualangan';
+
+  @override
+  String stageNumber(String n) {
+    return 'Level ${n}';
+  }
+
+  @override
+  String adventureLevelIn(String level, String world) {
+    return 'Level ${level} · ${world}';
+  }
+
+  @override
+  String adventureClearedOf(String cleared, String total) {
+    return '${cleared} dari ${total} selesai · tanpa peringkat';
+  }
+
+  @override
+  String get worldIron => 'Tambang Besi';
+
+  @override
+  String get worldBronze => 'Bukit Pasir Perunggu';
+
+  @override
+  String get worldSilver => 'Puncak Perak';
+
+  @override
+  String get worldGold => 'Benteng Emas';
+
+  @override
+  String get worldPlatinum => 'Gletser Platina';
+
+  @override
+  String get worldDiamond => 'Gua Berlian';
+
+  @override
+  String get worldMaster => 'Takhta Master';
+
+  @override
+  String worldNumber(String n) {
+    return 'Dunia ${n}';
+  }
+
+  @override
+  String fightLevel(String level) {
+    return 'Lawan level ${level}';
+  }
+
+  @override
+  String levelHpLine(String hp, String reps) {
+    return 'HP ${hp} · sekitar ${reps} push-up';
+  }
+
+  @override
+  String get hpShort => 'HP';
+
+  @override
+  String comboTag(String n) {
+    return 'KOMBO ×${n}';
+  }
+
+  @override
+  String get levelCleared => 'SELESAI';
+
+  @override
+  String get outOfTime => 'WAKTU HABIS';
+
+  @override
+  String get statPushUps => 'push-up';
+
+  @override
+  String get statTimeLeft => 'tersisa';
+
+  @override
+  String get statHpLeft => 'HP tersisa';
+
+  @override
+  String get statXp => 'XP';
+
+  @override
+  String secondStarHint(String seconds) {
+    return 'Selesaikan dengan sisa ${seconds} detik untuk bintang kedua';
+  }
+
+  @override
+  String thirdStarHint(String seconds) {
+    return 'Selesaikan dengan sisa ${seconds} detik untuk bintang ketiga';
+  }
+
+  @override
+  String get fightLostHint => 'Ulangi level sebelumnya untuk lebih banyak bintang: bintang membuka senjata yang lebih kuat.';
+
+  @override
+  String get nextLevel => 'Level berikutnya';
+
+  @override
+  String get tryAgain => 'Coba lagi';
+
+  @override
+  String get adventureMap => 'Peta';
+
+  @override
+  String get nextKicker => 'BERIKUTNYA';
+
+  @override
+  String nextLevelLine(String level, String hp) {
+    return 'Level ${level} · HP ${hp}';
+  }
+
+  @override
+  String get armory => 'Gudang Senjata';
+
+  @override
+  String get armoryBody => 'Bintang membuka senjata. Monster di tiap dunia hanya terluka oleh senjata dunia itu atau yang lebih kuat.';
+
+  @override
+  String get equipped => 'DIPAKAI';
+
+  @override
+  String perPushUp(String damage) {
+    return '${damage} per push-up';
+  }
+
+  @override
+  String damagePerPushUp(String damage) {
+    return '${damage} damage per push-up';
+  }
+
+  @override
+  String wasWith(String damage, String weapon) {
+    return 'sebelumnya ${damage} dengan ${weapon}';
+  }
+
+  @override
+  String moreStars(String count) {
+    return '${count} bintang lagi';
+  }
+
+  @override
+  String get newWeapon => 'Senjata baru';
+
+  @override
+  String starsKicker(String count) {
+    return '${count} BINTANG';
+  }
+
+  @override
+  String get weaponGauntlets => 'Sarung Tangan Besi';
+
+  @override
+  String get weaponKnuckles => 'Buku Jari Perunggu';
+
+  @override
+  String get weaponFang => 'Taring Perak';
+
+  @override
+  String get weaponHammer => 'Palu Emas';
+
+  @override
+  String get weaponAxe => 'Kapak Platina';
+
+  @override
+  String get weaponSpear => 'Tombak Berlian';
+
+  @override
+  String get weaponSword => 'Pedang Master';
+
+  @override
+  String get weaponCrownbreaker => 'Penghancur Mahkota';
+
+  @override
+  String clearFirst(String level) {
+    return 'Menangkan level ${level} dulu';
+  }
+
+  @override
+  String needsWeapon(String weapon) {
+    return 'Butuh ${weapon}';
+  }
+
+  @override
+  String hurtOnlyBy(String weapon) {
+    return 'Hanya ${weapon} atau lebih kuat yang bisa melukainya';
+  }
+
+  @override
+  String worldNeedsWeapon(String world, String weapon, String count) {
+    return '${world} butuh ${weapon} · ${count} bintang lagi';
+  }
+
+  @override
+  String rematchOpponentLeft(String name) {
+    return '${name} keluar · tidak ada tanding ulang kali ini';
+  }
+
+  @override
+  String get obNext => 'Berikutnya';
+
+  @override
+  String get obRaceTitle => 'Lawan orang sungguhan.';
+
+  @override
+  String get obRaceBody => 'Repetisi terbanyak dalam 60 detik yang menang. Live, di ponsel masing-masing — atau lawan set rekaman saat tidak ada yang online.';
+
+  @override
+  String get obRepsTitle => 'Hanya repetisi penuh yang dihitung.';
+
+  @override
+  String get obRepsBody => 'Kamera melihat seberapa rendah kamu turun dan seberapa tinggi kamu naik lagi.';
+
+  @override
+  String get obRepsDown => 'Turun melewati garis emas';
+
+  @override
+  String get obRepsUp => 'Naik lagi melewati garis atas';
+
+  @override
+  String get obRepsBoth => 'Keduanya, dengan tangan di lantai. Setengah repetisi tidak dihitung — di ponselmu maupun ponsel lawan.';
+
+  @override
+  String get obClimbTitle => 'Naik sampai Master.';
+
+  @override
+  String get obClimbBody => 'Menang untuk naik tangga: tujuh tingkat, masing-masing lima anak tangga.';
+
+  @override
+  String get obGoldLine => 'garis emas';
+
+  @override
+  String obCalibrationRule(String gold) {
+    return 'Turun melewati ${gold}, lalu naik lagi melewati garis atas';
+  }
+
+  @override
+  String get proTitleTop => 'Tanpa iklan.';
+
+  @override
+  String get proTitleBottom => 'Cuma push-up.';
+
+  @override
+  String get proBody => 'Semua pertandingan tetap gratis. Pro menghapus iklan dari semuanya.';
+
+  @override
+  String get proThanks => 'Iklan mati. Terima kasih sudah pakai Pro.';
+
+  @override
+  String get removeAds => 'Hapus iklan';
+
+  @override
+  String get adNotice => 'Iklan diputar saat kamu keluar';
+
+  @override
+  String get adAskTitle => 'Iklan membuat outrepd tetap gratis';
+
+  @override
+  String get adAskBody => 'Setelah ini iPhone-mu akan bertanya apakah aplikasi boleh memakai aktivitasmu untuk memilih iklan. Jawab ya, iklannya lebih cocok untukmu; jawab tidak, iklan tetap muncul, hanya kurang relevan.';
+
+  @override
+  String get adAskCamera => 'Kameramu tidak pernah terlibat: pelacakan tubuh tetap di ponsel ini, apa pun pilihanmu.';
+
+  @override
+  String get adAskRemove => 'Hapus iklan saja';
+
+  @override
+  String get monsterIronColossus => 'Kolosus Besi';
+
+  @override
+  String get monsterScarab => 'Skarab';
+
+  @override
+  String get monsterScarabPharaoh => 'Firaun Skarab';
+
+  @override
+  String get monsterYeti => 'Yeti';
+
+  @override
+  String get monsterFrostYeti => 'Yeti Beku';
+
+  @override
+  String get monsterYetiChieftain => 'Kepala Yeti';
+
+  @override
+  String get monsterGoldSoldier => 'Prajurit Emas';
+
+  @override
+  String get monsterGoldKnight => 'Ksatria Emas';
+
+  @override
+  String get monsterGoldKing => 'Raja Emas';
+
+  @override
+  String get monsterWisp => 'Wisp';
+
+  @override
+  String get monsterWraith => 'Hantu';
+
+  @override
+  String get monsterFrostLich => 'Lich Beku';
+
+  @override
+  String get monsterCrystalDrake => 'Drake Kristal';
+
+  @override
+  String get monsterCrystalDragon => 'Naga Kristal';
+
+  @override
+  String get monsterDiamondWyrm => 'Wyrm Berlian';
+
+  @override
+  String get monsterShadowGuard => 'Penjaga Bayangan';
+
+  @override
+  String get monsterShadowKnight => 'Ksatria Bayangan';
+
+  @override
+  String get monsterTheMaster => 'Sang Master';
+
+  @override
+  String get monsterPebbleGolem => 'Golem Kerikil';
+
+  @override
+  String get monsterStoneGolem => 'Golem Batu';
+
+  @override
+  String get monsterOreGolem => 'Golem Bijih';
+
+  @override
+  String get monsterMinerGolem => 'Golem Penambang';
+
+  @override
+  String get monsterScarabGrub => 'Larva Skarab';
+
+  @override
+  String get monsterHornedScarab => 'Skarab Bertanduk';
+
+  @override
+  String get monsterScarabWarrior => 'Prajurit Skarab';
+
+  @override
+  String get monsterYetiCub => 'Anak Yeti';
+
+  @override
+  String get monsterHornedYeti => 'Yeti Bertanduk';
+
+  @override
+  String get monsterGoldRecruit => 'Rekrut Emas';
+
+  @override
+  String get monsterGoldGuard => 'Pengawal Emas';
+
+  @override
+  String get monsterShade => 'Bayang';
+
+  @override
+  String get monsterIceSpecter => 'Hantu Es';
+
+  @override
+  String get monsterCrystalHatchling => 'Bayi Naga Kristal';
+
+  @override
+  String get monsterCrystalWhelp => 'Naga Muda Kristal';
+
+  @override
+  String get monsterShadowSquire => 'Ajudan Bayangan';
+
+  @override
+  String get monsterShadowLord => 'Penguasa Bayangan';
+
+  @override
+  String monsterWarden(String name) {
+    return '${name} Penjaga';
+  }
+
+  @override
+  String get obPhoneSees => 'Yang harus dilihat ponselmu';
+
+  @override
+  String get obPhoneSeesBody => 'Dari ujung kepala sampai tangan, sekitar satu meter jauhnya, dalam posisi push-up.';
+
+  @override
+  String get obUnder13 => 'Di bawah 13';
+
+  @override
+  String get obOver13 => '13 atau lebih';
+
+  @override
+  String get obFor13 => 'outrepd untuk usia 13 tahun ke atas.';
+
+  @override
+  String get obUnder13Blocked => 'outrepd untuk usia 13 tahun ke atas. Kembali lagi saat kamu sudah 13 — push-up-nya akan tetap di sini.';
+
+  @override
+  String get obBeforeYouLift => 'Sebelum mulai';
+
+  @override
+  String get obFightTitle => 'Lawan monster.';
+
+  @override
+  String get obFightBody => '140 pertarungan push up di tujuh dunia. Setiap repetisi memukul monsternya.';
+
+  @override
+  String obSevenWorlds(String from, String to) {
+    return 'Tujuh dunia, dari ${from} sampai ${to}';
+  }
+
+  @override
+  String get obWeaponsTitle => 'Bintang membuka senjata';
+
+  @override
+  String get obWeaponsBody => 'Setiap dunia butuh senjatanya sendiri. Peringkat tidak dipertaruhkan.';
+
+  @override
+  String get fightDefeated => 'Kalah!';
+
+  @override
+  String get nextWeapon => 'Senjata berikutnya';
+
+  @override
+  String opensWorld(String world) {
+    return 'Membuka ${world}';
+  }
+
+  @override
+  String weaponAtStars(String count) {
+    return 'di ${count} bintang';
+  }
+
+  @override
+  String topTenIn(String country) {
+    return '10 besar di ${country}';
   }
 }

@@ -9,12 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:promo_recorder/promo_recorder.dart';
 
+import '../adventure/adventure.dart';
 import '../backend/backend.dart';
 import '../l10n/app_localizations.dart';
 import '../live.dart';
 import '../reps/pose_source.dart';
 import '../reps/pushup_counter.dart';
+import '../screens/adventure_fight.dart';
 import '../screens/trainer.dart';
+import '../theme.dart';
 import '../widgets.dart';
 import 'plan.dart';
 import 'promo_backend.dart';
@@ -141,6 +144,86 @@ Future<void> playPromoMatch(BuildContext context, PromoPlan plan) async {
     );
     if (filming) await _stopFilming(messenger);
     if (again != true) return;
+  }
+}
+
+/// Where an adventure take goes after its result.
+enum _AfterFight { next, again, setup }
+
+/// An adventure take: the app's own fight over the camera, at the level and
+/// with the weapon picked in the setup, then the app's own result. Next and
+/// Fight again play on from there; nothing is kept as stars.
+Future<void> playPromoFight(BuildContext context, PromoPlan plan) async {
+  final navigator = Navigator.of(context);
+  final messenger = ScaffoldMessenger.of(context);
+  while (true) {
+    cameraIn4k = plan.camera4k;
+    final level = AdventureLevel.of(plan.fightLevel);
+    final weapon = kWeapons[plan.fightWeapon];
+    Adventure.instance.staged = weapon;
+    final filming =
+        plan.record &&
+        await _startFilming(
+          messenger,
+          aspect: plan.film916 ? _FilmFrame.aspect : null,
+        );
+    Widget framed(Widget screen) =>
+        filming && plan.film916 ? _FilmFrame(child: screen) : screen;
+
+    final count = await navigator.push<PushupCount>(
+      MaterialPageRoute(
+        builder: (_) => framed(TrainerScreen(
+          autoStart: true,
+          forMatch: true,
+          limit: level.time,
+          game: FightGame(level: level, weapon: weapon),
+          countFrom: plan.countdownSeconds,
+          poseSource: promoPoseSource,
+        )),
+      ),
+    );
+    if (count == null) {
+      if (filming) await _stopFilming(messenger);
+      return;
+    }
+
+    // Judged as the app judges it (match_flow.dart): walking out leaves the
+    // monster standing whatever was counted.
+    final fight = FightOutcome(
+      level: level,
+      weapon: weapon,
+      reps: count.gaveUp ? 0 : count.reps,
+      timeLeft: count.gaveUp
+          ? Duration.zero
+          : level.time - Duration(milliseconds: count.durationMs),
+      starsBefore: 0,
+    );
+    final after = await navigator.push<_AfterFight>(
+      MaterialPageRoute(
+        builder: (context) => framed(Scaffold(
+          backgroundColor: context.colors.background,
+          body: AdventureResultView(
+            outcome: fight,
+            xp: null,
+            onNext: level.isLast
+                ? null
+                : () => Navigator.of(context).pop(_AfterFight.next),
+            onAgain: () => Navigator.of(context).pop(_AfterFight.again),
+            onMap: () => Navigator.of(context).pop(_AfterFight.setup),
+          ),
+        )),
+      ),
+    );
+    if (filming) await _stopFilming(messenger);
+    switch (after) {
+      case _AfterFight.next:
+        plan.fightLevel = level.number + 1;
+        await plan.save();
+      case _AfterFight.again:
+        break;
+      case _AfterFight.setup || null:
+        return;
+    }
   }
 }
 

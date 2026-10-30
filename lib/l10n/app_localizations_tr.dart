@@ -199,8 +199,7 @@ class LTr extends L {
   String get createAccountTitle => 'Hesap oluştur';
 
   @override
-  String get createAccountBody =>
-      'Bu hesabın tek bir telefona bağlı kalmaması için bir e-posta ve şifre ekle.';
+  String get createAccountBody => 'Bu hesap tek bir telefona bağlı kalmasın diye giriş yap.';
 
   @override
   String get createAccountAction => 'Hesap oluştur';
@@ -369,8 +368,7 @@ class LTr extends L {
   String get usernameChanged => 'Kullanıcı adı değiştirildi';
 
   @override
-  String get usernameAlreadyChangedBody =>
-      'Tek kullanıcı adı değişikliğinizi zaten kullandınız — her hesap tam olarak bir hak alır.';
+  String get usernameAlreadyChangedBody => 'Kullanıcı adı 14 günde bir değiştirilebilir.';
 
   @override
   String get gallery => 'Galeri';
@@ -897,9 +895,6 @@ class LTr extends L {
   String get forfeitBody => 'Şimdi çıkarsanız LP kaybedersiniz.';
 
   @override
-  String get stay => 'Kal';
-
-  @override
   String get forfeit => 'Çekil';
 
   @override
@@ -1017,7 +1012,7 @@ class LTr extends L {
 
   @override
   String weeksAgo(String n) {
-    return '$n hafta önce';
+    return '${n} hafta önce';
   }
 
   @override
@@ -1277,41 +1272,10 @@ class LTr extends L {
   String get noRankYet => 'Henüz derece yok';
 
   @override
-  String placementsForFirstTier(String count) {
-    return 'İlk dereceni kazanmak için $count yerleştirme düellosu bitir.';
-  }
-
-  @override
-  String get startPlacements => 'Yerleştirmeye başla';
-
-  @override
   String get unranked => 'Derecesiz';
 
   @override
-  String placementsTerms(String done, String total, String seconds) {
-    return '$total maçtan $done · her biri $seconds saniye';
-  }
-
-  @override
-  String placementsLeft(String done, String total, String left) {
-    return '$total maçtan $done · derece için $left tane daha';
-  }
-
-  @override
-  String placementsForTier(String count) {
-    return 'Derecenizi görmek için $count yerleştirme düellosu bitirin.';
-  }
-
-  @override
-  String placementsDoneCount(String done, String total) {
-    return '$total yerleştirmeden $done tanesi tamamlandı';
-  }
-
-  @override
   String get practiceFirst => 'Önce alıştırma';
-
-  @override
-  String get nextPlacement => 'Sonraki yerleştirme';
 
   @override
   String get noConnection => 'Bağlantı yok';
@@ -1349,8 +1313,7 @@ class LTr extends L {
       'Tekrarlar kameradan sayılır, bu yüzden bu cihaz düello puanlayamaz. Geri kalan her şey çalışır.';
 
   @override
-  String get noConnectionBody =>
-      'Düello için bağlantı gerekir. Alıştırma çevrimdışı çalışır, tekrarların sonra eşitlenir.';
+  String get noConnectionBody => 'Düello için bağlantı gerekir. Macera çevrimdışı da çalışır, tekrarların sonra eşitlenir.';
 
   @override
   String get getBackInFrame => 'Kareye geri gir';
@@ -1452,12 +1415,6 @@ class LTr extends L {
   String get obAgeQuestion => 'Kaç yaşındasın?';
 
   @override
-  String get obUnder16 => '16’dan küçük';
-
-  @override
-  String get obOver16 => '16 ya da üstü';
-
-  @override
   String get obHealthConsent =>
       'outrepd’in tekrar saydığını, tıbbi ya da antrenman tavsiyesi vermediğini anlıyorum. Bir yerim ağrırsa dururum.';
 
@@ -1472,10 +1429,6 @@ class LTr extends L {
 
   @override
   String get obPrivacy => 'Gizlilik Politikası';
-
-  @override
-  String get obUnder16Blocked =>
-      'outrepd 16 yaş ve üstü için. Oraya gelince uğra — şınavlar burada duruyor.';
 
   @override
   String get obCameraTitle => 'outrepd’in kameran gerekiyor';
@@ -1501,13 +1454,7 @@ class LTr extends L {
   String get obPlacementBody => 'Yaklaşık bir metre önünde duvara dayat.';
 
   @override
-  String get obOneMetre => '~1 m';
-
-  @override
-  String get obFullBody => 'tüm vücut karede';
-
-  @override
-  String get obCheckHandsFeet => 'Eller ve ayaklar görünsün';
+  String get obCheckHandsFeet => 'Baş, omuzlar ve eller karede';
 
   @override
   String get obCheckFacing => 'Yandan değil, telefona dönük';
@@ -1791,7 +1738,7 @@ class LTr extends L {
   }
 
   @override
-  String get paywallStart => 'Tırmanmaya başla';
+  String get paywallStart => 'Reklamları kaldır';
 
   @override
   String get paywallRenewsPlay => 'İptal edene kadar otomatik olarak yenilenir. Google Play\'den istediğin zaman iptal et.';
@@ -1838,7 +1785,7 @@ class LTr extends L {
   String get signOutQuestion => 'Çıkış yapılsın mı?';
 
   @override
-  String get signOutBody => 'Hesabın rütbesi, geçmişi ve aboneliğiyle olduğu gibi kalır. İstediğin zaman e-postanla tekrar giriş yap.';
+  String get signOutBody => 'Hesabın derecesi, geçmişi ve aboneliğiyle olduğu gibi kalır. İstediğin zaman aynı yolla tekrar giriş yap.';
 
   @override
   String get shareVictory => 'ZAFER';
@@ -2006,7 +1953,7 @@ class LTr extends L {
 
   @override
   String calledOffBody(String name) {
-    return '${name} zamanında pozisyon almadı. Hiçbir şey kaydedilmedi.';
+    return '${name} başlangıca yetişemedi. Hiçbir şey kaydedilmedi.';
   }
 
   @override
@@ -2052,11 +1999,6 @@ class LTr extends L {
 
   @override
   String get noticeLiveInvite => 'Bir arkadaşım beni canlı maça davet etti';
-
-  @override
-  String trialHeadline(String days) {
-    return 'İlk ${days} gün *ücretsiz*';
-  }
 
   @override
   String get trialToday => 'Bugün';
@@ -2219,49 +2161,6 @@ class LTr extends L {
   }
 
   @override
-  String get inviteCodeLabel => 'Arkadaş kodu (isteğe bağlı)';
-
-  @override
-  String get inviteClaimed => 'Kod eklendi · 7 gün ücretsiz senin';
-
-  @override
-  String get inviteUnknownCode => 'Bu kod kimseye ait değil';
-
-  @override
-  String get inviteNotYearly => 'Bu kod şu an ücretsiz gün veremiyor';
-
-  @override
-  String get inviteOwnCode => 'Bu senin kendi kodun';
-
-  @override
-  String get inviteTooLate => 'Kodlar hesabın ilk haftasında geçerli';
-
-  @override
-  String get inviteFull => 'Bu kod bu ay çok kullanıldı. Başka birini dene';
-
-  @override
-  String get inviteTitle => 'Bir arkadaşına 7 gün ücretsiz ver';
-
-  @override
-  String get inviteBody => 'Kodun yıllık planla gelir. Arkadaşın kaydolurken yazar.';
-
-  @override
-  String get inviteYourCode => 'Kodun';
-
-  @override
-  String inviteJoined(String n) {
-    return '${n} katıldı';
-  }
-
-  @override
-  String get inviteSend => 'Davet gönder';
-
-  @override
-  String inviteShareText(String code) {
-    return 'OUTREPD\'de bana meydan oku: 60 saniye şınav, canlı. Kaydolurken ${code} kodumu kullan, 7 gün ücretsiz kazan.';
-  }
-
-  @override
   String get dailyGoalTitle => 'Bugünün hedefi';
 
   @override
@@ -2332,6 +2231,90 @@ class LTr extends L {
   }
 
   @override
+  String get usernameTooShort => 'Çok kısa: en az 4 karakter';
+
+  @override
+  String get usernameBadCharacters => 'Yalnızca harf, rakam ve _';
+
+  @override
+  String get usernameNeedsLetter => 'En az bir harf veya rakam ekle';
+
+  @override
+  String usernameChangeAgainOn(String date) {
+    return '${date} tarihinde tekrar değiştirebilirsin';
+  }
+
+  @override
+  String get continueWithApple => 'Apple ile devam et';
+
+  @override
+  String get continueWithGoogle => 'Google ile devam et';
+
+  @override
+  String get socialSignInFailed => 'Giriş yapılamadı. Tekrar dene.';
+
+  @override
+  String get chooseUsernameTitle => 'Kullanıcı adını seç';
+
+  @override
+  String get chooseUsernameSubtitle => 'Diğerleri seni bu adla bulur ve sıralamalarda görür.';
+
+  @override
+  String get authHeroTitle => 'HERKESİ GEÇ.';
+
+  @override
+  String get authHeroSubtitle => 'Canlı şınav düelloları, kameran sayar.';
+
+  @override
+  String get createAccountPitch => 'Rütben ve düelloların, her telefonda.';
+
+  @override
+  String get usernameSpacesHint => 'Boşluklar _ olur';
+
+  @override
+  String get emailCodeNote => 'Sana e-postayla 6 haneli bir kod göndereceğiz. Şifre yok.';
+
+  @override
+  String get continueWithEmail => 'E-posta ile devam et';
+
+  @override
+  String get thisSeason => 'Bu sezon';
+
+  @override
+  String get thisWeek => 'Bu hafta';
+
+  @override
+  String get weekStartsAgain => 'Her pazartesi yeniden başlar';
+
+  @override
+  String get lengthWeek => 'Hafta';
+
+  @override
+  String get lengthMonth => 'Ay';
+
+  @override
+  String get weekJoinHint => 'Tabloya girmek için bu hafta bir dereceli düello kazan';
+
+  @override
+  String get weekInTop3 => 'Bu hafta ilk 3\'te';
+
+  @override
+  String weekToTop3(String n) {
+    return 'İlk 3\'e ${n} LP';
+  }
+
+  @override
+  String get boardActiveNote => 'Son 30 günde aktif oyuncular';
+
+  @override
+  String get boardTieNote => 'eşitlikte: daha çok galibiyet önde';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return 'Tekrarlar için ${reps} · ${rank} rakip için ${adjust}';
+  }
+
+  @override
   String levelShort(String n) {
     return 'Sv. ${n}';
   }
@@ -2348,7 +2331,7 @@ class LTr extends L {
 
   @override
   String xpHow(String rep, String match) {
-    return 'Tekrar başına ${rep} XP, düello başına ${match}';
+    return 'Tekrar başına ${rep} XP, galibiyet başına ${match}, yenilgiye hiçbir şey';
   }
 
   @override
@@ -2389,7 +2372,541 @@ class LTr extends L {
   String get keepGoing => 'Devam et';
 
   @override
-  String lpBreakdown(String reps, String adjust, String rank) {
-    return 'Tekrarlar için ${reps} · ${rank} rakip için ${adjust}';
+  String get stay => 'Kal';
+
+  @override
+  String lastN(String n) {
+    return 'Son ${n}';
+  }
+
+  @override
+  String get firstMatchForTier => 'Sıralamaya girmek için ilk maçını oyna. Herkes Iron V\'den başlar.';
+
+  @override
+  String get firstMatchForBoard => 'Tabloya girmek için ilk maçını oyna. Herkes Iron V\'den başlar.';
+
+  @override
+  String get playFirstMatch => 'İlk maçı oyna';
+
+  @override
+  String firstMatchTerms(String seconds) {
+    return 'Tek maç · ${seconds} saniye';
+  }
+
+  @override
+  String get placedLabel => 'Sıralamadasın';
+
+  @override
+  String get placedBody => 'Herkes buradan başlar. Seni sadece galibiyetler yükseltir.';
+
+  @override
+  String get placedHow => 'LP kazanmak için maç kazan. Daha yüksek dereceyi yenersen daha fazla alırsın.';
+
+  @override
+  String get levelBesideName => 'Adının yanında, her yerde';
+
+  @override
+  String get weekRaceTitle => 'Bu haftanın yarışı';
+
+  @override
+  String get streakDoneToday => 'bugün tamam';
+
+  @override
+  String get streakTrainToday => 'bir gün eklemek için bugün antrenman yap';
+
+  @override
+  String get raceChartTitle => 'Dakika nasıl geçti';
+
+  @override
+  String raceYouLead(String time) {
+    return '${time} · öne geçtin';
+  }
+
+  @override
+  String raceTheyLead(String time, String name) {
+    return '${time} · ${name} öne geçti';
+  }
+
+  @override
+  String get bringFriendTitle => 'Bir arkadaşını getir';
+
+  @override
+  String get bringFriendBody => 'Bağlantını gönder. Profilini açar, oradan seni ekleyebilirler.';
+
+  @override
+  String get bringFriendShare => 'Bağlantımı paylaş';
+
+  @override
+  String get bringFriendShareText => 'OUTREPD\'de şınavda benimle yarış. 60 saniye, canlı, kamera sayar.';
+
+  @override
+  String orFriendCode(String code) {
+    return 'veya arkadaş kodu ${code}';
+  }
+
+  @override
+  String get countryPickerTitle => 'Ülken';
+
+  @override
+  String get countrySearch => 'Ara';
+
+  @override
+  String get countryFromPhone => 'Telefonundan';
+
+  @override
+  String get countryAll => 'Tüm ülkeler';
+
+  @override
+  String get countryChoose => 'Ülkeni seç';
+
+  @override
+  String get countryChange => 'Değiştir';
+
+  @override
+  String get countryForBoard => 'Ülkenin sıralaması için';
+
+  @override
+  String get countryLabel => 'Ülke';
+
+  @override
+  String get countryChanged => 'Ülke değiştirildi';
+
+  @override
+  String get countryEvery14 => 'Adın gibi 14 günde bir';
+
+  @override
+  String get countryNotSaved => 'Ülken kaydedilemedi. Tekrar dene.';
+
+  @override
+  String get adventure => 'Macera';
+
+  @override
+  String stageNumber(String n) {
+    return 'Seviye ${n}';
+  }
+
+  @override
+  String adventureLevelIn(String level, String world) {
+    return 'Seviye ${level} · ${world}';
+  }
+
+  @override
+  String adventureClearedOf(String cleared, String total) {
+    return '${total} seviyeden ${cleared} tanesi geçildi · derece yok';
+  }
+
+  @override
+  String get worldIron => 'Demir Madenleri';
+
+  @override
+  String get worldBronze => 'Bronz Kumulları';
+
+  @override
+  String get worldSilver => 'Gümüş Zirveler';
+
+  @override
+  String get worldGold => 'Altın Kale';
+
+  @override
+  String get worldPlatinum => 'Platin Buzul';
+
+  @override
+  String get worldDiamond => 'Elmas Mağaralar';
+
+  @override
+  String get worldMaster => 'Usta’nın Tahtı';
+
+  @override
+  String worldNumber(String n) {
+    return 'Dünya ${n}';
+  }
+
+  @override
+  String fightLevel(String level) {
+    return 'Savaş: Seviye ${level}';
+  }
+
+  @override
+  String levelHpLine(String hp, String reps) {
+    return 'HP ${hp} · yaklaşık ${reps} şınav';
+  }
+
+  @override
+  String get hpShort => 'HP';
+
+  @override
+  String comboTag(String n) {
+    return 'KOMBO ×${n}';
+  }
+
+  @override
+  String get levelCleared => 'GEÇİLDİ';
+
+  @override
+  String get outOfTime => 'SÜRE BİTTİ';
+
+  @override
+  String get statPushUps => 'şınav';
+
+  @override
+  String get statTimeLeft => 'kalan';
+
+  @override
+  String get statHpLeft => 'kalan HP';
+
+  @override
+  String get statXp => 'XP';
+
+  @override
+  String secondStarHint(String seconds) {
+    return 'İkinci yıldız için ${seconds} saniye kala bitir';
+  }
+
+  @override
+  String thirdStarHint(String seconds) {
+    return 'Üçüncü yıldız için ${seconds} saniye kala bitir';
+  }
+
+  @override
+  String get fightLostHint => 'Daha fazla yıldız için önceki seviyeleri yeniden kazan: yıldızlar daha güçlü silahlar açar.';
+
+  @override
+  String get nextLevel => 'Sonraki seviye';
+
+  @override
+  String get tryAgain => 'Tekrar dene';
+
+  @override
+  String get adventureMap => 'Harita';
+
+  @override
+  String get nextKicker => 'SIRADAKİ';
+
+  @override
+  String nextLevelLine(String level, String hp) {
+    return 'Seviye ${level} · HP ${hp}';
+  }
+
+  @override
+  String get armory => 'Cephanelik';
+
+  @override
+  String get armoryBody => 'Yıldızlar silah açar. Her dünyanın canavarları yalnızca o dünyanın silahından veya daha iyisinden hasar alır.';
+
+  @override
+  String get equipped => 'KUŞANILDI';
+
+  @override
+  String perPushUp(String damage) {
+    return 'Şınav başına ${damage}';
+  }
+
+  @override
+  String damagePerPushUp(String damage) {
+    return 'Şınav başına ${damage} hasar';
+  }
+
+  @override
+  String wasWith(String damage, String weapon) {
+    return 'önceden ${weapon} ile ${damage}';
+  }
+
+  @override
+  String moreStars(String count) {
+    return '${count} yıldız daha';
+  }
+
+  @override
+  String get newWeapon => 'Yeni silah';
+
+  @override
+  String starsKicker(String count) {
+    return '${count} YILDIZ';
+  }
+
+  @override
+  String get weaponGauntlets => 'Demir Eldivenler';
+
+  @override
+  String get weaponKnuckles => 'Bronz Muşta';
+
+  @override
+  String get weaponFang => 'Gümüş Diş';
+
+  @override
+  String get weaponHammer => 'Altın Çekiç';
+
+  @override
+  String get weaponAxe => 'Platin Balta';
+
+  @override
+  String get weaponSpear => 'Elmas Mızrak';
+
+  @override
+  String get weaponSword => 'Usta Kılıcı';
+
+  @override
+  String get weaponCrownbreaker => 'Taç Kıran';
+
+  @override
+  String clearFirst(String level) {
+    return 'Önce şu seviyeyi kazan: ${level}';
+  }
+
+  @override
+  String needsWeapon(String weapon) {
+    return 'Gerekli: ${weapon}';
+  }
+
+  @override
+  String hurtOnlyBy(String weapon) {
+    return 'Ona sadece ${weapon} veya daha iyisi zarar verebilir';
+  }
+
+  @override
+  String worldNeedsWeapon(String world, String weapon, String count) {
+    return '${world} için ${weapon} gerekli · ${count} yıldız daha';
+  }
+
+  @override
+  String rematchOpponentLeft(String name) {
+    return '${name} ayrıldı · bu sefer rövanş yok';
+  }
+
+  @override
+  String get obNext => 'İleri';
+
+  @override
+  String get obRaceTitle => 'Gerçek biriyle yarış.';
+
+  @override
+  String get obRaceBody => '60 saniyede en çok tekrarı yapan kazanır. Canlı, herkes kendi telefonunda — ya da kimse çevrimiçi değilse kayıtlı bir sete karşı.';
+
+  @override
+  String get obRepsTitle => 'Yalnızca tam tekrarlar sayılır.';
+
+  @override
+  String get obRepsBody => 'Kamera ne kadar aşağı indiğini ve ne kadar geri çıktığını görür.';
+
+  @override
+  String get obRepsDown => 'Altın çizginin altına in';
+
+  @override
+  String get obRepsUp => 'Üst çizginin üstüne geri çık';
+
+  @override
+  String get obRepsBoth => 'İkisi de, eller yerdeyken. Yarım tekrar sayılmaz — ne senin telefonunda ne de rakibininkinde.';
+
+  @override
+  String get obClimbTitle => 'Master’a tırman.';
+
+  @override
+  String get obClimbBody => 'Kazandıkça merdivende yüksel: yedi kademe, her birinde beş basamak.';
+
+  @override
+  String get obGoldLine => 'altın çizgi';
+
+  @override
+  String obCalibrationRule(String gold) {
+    return '${gold}nin altına in, üstteki çizginin üstüne çık';
+  }
+
+  @override
+  String get proTitleTop => 'Reklam yok.';
+
+  @override
+  String get proTitleBottom => 'Sadece şınav.';
+
+  @override
+  String get proBody => 'Her maç ücretsiz kalır. Pro hepsinden reklamları kaldırır.';
+
+  @override
+  String get proThanks => 'Reklamlar kapandı. Pro’ya geçtiğin için teşekkürler.';
+
+  @override
+  String get removeAds => 'Reklamları kaldır';
+
+  @override
+  String get adNotice => 'Çıkınca bir reklam oynar';
+
+  @override
+  String get adAskTitle => 'Reklamlar outrepd’yi ücretsiz tutar';
+
+  @override
+  String get adAskBody => 'Şimdi iPhone’un, uygulamaların reklam seçmek için etkinliğini kullanıp kullanamayacağını soracak. Evet dersen reklamlar sana daha uygun olur; hayır dersen yine reklam görürsün, sadece daha az ilgili olanları.';
+
+  @override
+  String get adAskCamera => 'Kameranın bununla hiçbir ilgisi yok: ne seçersen seç, vücut takibi bu telefonda kalır.';
+
+  @override
+  String get adAskRemove => 'Bunun yerine reklamları kaldır';
+
+  @override
+  String get monsterIronColossus => 'Demir Dev';
+
+  @override
+  String get monsterScarab => 'Skarabe';
+
+  @override
+  String get monsterScarabPharaoh => 'Skarabe Firavun';
+
+  @override
+  String get monsterYeti => 'Yeti';
+
+  @override
+  String get monsterFrostYeti => 'Ayaz Yetisi';
+
+  @override
+  String get monsterYetiChieftain => 'Yeti Reisi';
+
+  @override
+  String get monsterGoldSoldier => 'Altın Asker';
+
+  @override
+  String get monsterGoldKnight => 'Altın Şövalye';
+
+  @override
+  String get monsterGoldKing => 'Altın Kral';
+
+  @override
+  String get monsterWisp => 'Hayalet Işık';
+
+  @override
+  String get monsterWraith => 'Hortlak';
+
+  @override
+  String get monsterFrostLich => 'Ayaz Lich';
+
+  @override
+  String get monsterCrystalDrake => 'Genç Kristal Ejder';
+
+  @override
+  String get monsterCrystalDragon => 'Kristal Ejderha';
+
+  @override
+  String get monsterDiamondWyrm => 'Elmas Ejder';
+
+  @override
+  String get monsterShadowGuard => 'Gölge Muhafız';
+
+  @override
+  String get monsterShadowKnight => 'Gölge Şövalye';
+
+  @override
+  String get monsterTheMaster => 'Efendi';
+
+  @override
+  String get monsterPebbleGolem => 'Çakıl Golemi';
+
+  @override
+  String get monsterStoneGolem => 'Taş Golem';
+
+  @override
+  String get monsterOreGolem => 'Cevher Golemi';
+
+  @override
+  String get monsterMinerGolem => 'Madenci Golem';
+
+  @override
+  String get monsterScarabGrub => 'Skarabe Larvası';
+
+  @override
+  String get monsterHornedScarab => 'Boynuzlu Skarabe';
+
+  @override
+  String get monsterScarabWarrior => 'Skarabe Savaşçı';
+
+  @override
+  String get monsterYetiCub => 'Yavru Yeti';
+
+  @override
+  String get monsterHornedYeti => 'Boynuzlu Yeti';
+
+  @override
+  String get monsterGoldRecruit => 'Altın Acemi';
+
+  @override
+  String get monsterGoldGuard => 'Altın Muhafız';
+
+  @override
+  String get monsterShade => 'Gölge';
+
+  @override
+  String get monsterIceSpecter => 'Buz Hortlağı';
+
+  @override
+  String get monsterCrystalHatchling => 'Kristal Yavru';
+
+  @override
+  String get monsterCrystalWhelp => 'Kristal Ejdercik';
+
+  @override
+  String get monsterShadowSquire => 'Gölge Silahtar';
+
+  @override
+  String get monsterShadowLord => 'Gölge Lordu';
+
+  @override
+  String monsterWarden(String name) {
+    return '${name} Muhafızı';
+  }
+
+  @override
+  String get obPhoneSees => 'Telefonunun görmesi gereken';
+
+  @override
+  String get obPhoneSeesBody => 'Başının üstünden ellerine kadar, yaklaşık bir metre uzakta, şınav pozisyonunda.';
+
+  @override
+  String get obUnder13 => '13 yaş altı';
+
+  @override
+  String get obOver13 => '13 ve üzeri';
+
+  @override
+  String get obFor13 => 'outrepd 13 yaş ve üzeri içindir.';
+
+  @override
+  String get obUnder13Blocked => 'outrepd 13 yaş ve üzeri içindir. O yaşa gelince tekrar gel — şınavlar burada olacak.';
+
+  @override
+  String get obBeforeYouLift => 'Başlamadan önce';
+
+  @override
+  String get obFightTitle => 'Canavarlarla savaş.';
+
+  @override
+  String get obFightBody => 'Yedi dünyada 140 şınav dövüşü. Her tekrar canavara vurur.';
+
+  @override
+  String obSevenWorlds(String from, String to) {
+    return 'Yedi dünya: ${from} – ${to}';
+  }
+
+  @override
+  String get obWeaponsTitle => 'Yıldızlar silah açar';
+
+  @override
+  String get obWeaponsBody => 'Her dünya kendi silahını ister. Rütben tehlikede değil.';
+
+  @override
+  String get fightDefeated => 'Yenildi!';
+
+  @override
+  String get nextWeapon => 'Sonraki silah';
+
+  @override
+  String opensWorld(String world) {
+    return '${world} açılır';
+  }
+
+  @override
+  String weaponAtStars(String count) {
+    return '${count} yıldızda';
+  }
+
+  @override
+  String topTenIn(String country) {
+    return '${country} içinde ilk 10';
   }
 }

@@ -195,8 +195,7 @@ class LJa extends L {
   String get createAccountTitle => 'アカウントを作成';
 
   @override
-  String get createAccountBody =>
-      'メールアドレスとパスワードを追加して、このアカウントが1台の端末だけに頼らないようにしましょう。';
+  String get createAccountBody => 'サインインすれば、このアカウントがこの端末だけに頼ることはありません。';
 
   @override
   String get createAccountAction => 'アカウントを作成';
@@ -356,7 +355,7 @@ class LJa extends L {
   String get usernameChanged => 'ユーザー名を変更しました';
 
   @override
-  String get usernameAlreadyChangedBody => 'ユーザー名の変更は一度きりで、すでに使用済みです。';
+  String get usernameAlreadyChangedBody => 'ユーザー名は14日に1回変更できます。';
 
   @override
   String get gallery => 'ギャラリー';
@@ -879,9 +878,6 @@ class LJa extends L {
   String get forfeitBody => 'いま抜けると LP を失います。';
 
   @override
-  String get stay => '残る';
-
-  @override
   String get forfeit => '棄権';
 
   @override
@@ -998,7 +994,7 @@ class LJa extends L {
 
   @override
   String weeksAgo(String n) {
-    return '$n 週間前';
+    return '${n} 週間前';
   }
 
   @override
@@ -1255,41 +1251,10 @@ class LJa extends L {
   String get noRankYet => 'まだランクなし';
 
   @override
-  String placementsForFirstTier(String count) {
-    return '最初のランクを得るには配置マッチを$count回こなしてください。';
-  }
-
-  @override
-  String get startPlacements => '配置マッチを始める';
-
-  @override
   String get unranked => 'ランクなし';
 
   @override
-  String placementsTerms(String done, String total, String seconds) {
-    return '$total回中$done回 · 各$seconds秒';
-  }
-
-  @override
-  String placementsLeft(String done, String total, String left) {
-    return '$total回中$done回 · ランクまであと$left回';
-  }
-
-  @override
-  String placementsForTier(String count) {
-    return '自分のランクを知るには配置マッチを$count回こなしてください。';
-  }
-
-  @override
-  String placementsDoneCount(String done, String total) {
-    return '配置$total回中$done回完了';
-  }
-
-  @override
   String get practiceFirst => 'まず練習';
-
-  @override
-  String get nextPlacement => '次の配置マッチ';
 
   @override
   String get noConnection => '接続なし';
@@ -1326,7 +1291,7 @@ class LJa extends L {
   String get noCameraBody => '回数はカメラで数えるため、この端末では勝負を採点できません。他の機能は使えます。';
 
   @override
-  String get noConnectionBody => '対戦には接続が必要です。練習はオフラインでもでき、回数はあとで同期されます。';
+  String get noConnectionBody => '対戦には接続が必要です。アドベンチャーはオフラインでも遊べ、回数はあとで同期されます。';
 
   @override
   String get getBackInFrame => '画面に戻って';
@@ -1426,12 +1391,6 @@ class LJa extends L {
   String get obAgeQuestion => '年齢は?';
 
   @override
-  String get obUnder16 => '16歳未満';
-
-  @override
-  String get obOver16 => '16歳以上';
-
-  @override
   String get obHealthConsent =>
       'outrepd は回数を数えるだけで、医療やトレーニングの助言はしないと理解しています。痛みが出たらやめます。';
 
@@ -1446,9 +1405,6 @@ class LJa extends L {
 
   @override
   String get obPrivacy => 'プライバシーポリシー';
-
-  @override
-  String get obUnder16Blocked => 'outrepd は16歳以上向けです。その歳になったら戻ってきて。腕立てはなくならない。';
 
   @override
   String get obCameraTitle => 'outrepd にはカメラが必要';
@@ -1472,13 +1428,7 @@ class LJa extends L {
   String get obPlacementBody => '1メートルほど前の壁に立てかける。';
 
   @override
-  String get obOneMetre => '約1m';
-
-  @override
-  String get obFullBody => '全身がフレームに入る';
-
-  @override
-  String get obCheckHandsFeet => '手と足の両方が見える';
+  String get obCheckHandsFeet => '頭・肩・手がフレームに入っている';
 
   @override
   String get obCheckFacing => '横向きではなく、スマホの方を向く';
@@ -1757,7 +1707,7 @@ class LJa extends L {
   }
 
   @override
-  String get paywallStart => '登りはじめる';
+  String get paywallStart => '広告を消す';
 
   @override
   String get paywallRenewsPlay => '解約するまで自動更新されます。Google Playからいつでも解約できます。';
@@ -1804,7 +1754,7 @@ class LJa extends L {
   String get signOutQuestion => 'サインアウトしますか？';
 
   @override
-  String get signOutBody => 'アカウントはランク、履歴、サブスクリプションごとそのまま残ります。メールアドレスでいつでも再びサインインできます。';
+  String get signOutBody => 'アカウントはランク、履歴、サブスクリプションごとそのまま残ります。いつでも同じ方法でサインインし直せます。';
 
   @override
   String get shareVictory => '勝利';
@@ -1972,7 +1922,7 @@ class LJa extends L {
 
   @override
   String calledOffBody(String name) {
-    return '${name} が時間内に構えられませんでした。記録は残りません。';
+    return '${name} が開始に間に合いませんでした。記録は残りません。';
   }
 
   @override
@@ -2018,11 +1968,6 @@ class LJa extends L {
 
   @override
   String get noticeLiveInvite => 'フレンドからライブ対戦に誘われた';
-
-  @override
-  String trialHeadline(String days) {
-    return '最初の${days}日間は*無料*';
-  }
 
   @override
   String get trialToday => '今日';
@@ -2185,49 +2130,6 @@ class LJa extends L {
   }
 
   @override
-  String get inviteCodeLabel => '友達のコード（任意）';
-
-  @override
-  String get inviteClaimed => 'コードを追加 · 7日間無料';
-
-  @override
-  String get inviteUnknownCode => 'そのコードのユーザーはいません';
-
-  @override
-  String get inviteNotYearly => 'このコードでは今は無料期間を受け取れません';
-
-  @override
-  String get inviteOwnCode => 'それはあなた自身のコードです';
-
-  @override
-  String get inviteTooLate => 'コードはアカウント作成から1週間以内のみ有効です';
-
-  @override
-  String get inviteFull => 'このコードは今月の上限に達しました。別のコードをお試しください';
-
-  @override
-  String get inviteTitle => '友達に7日間無料をプレゼント';
-
-  @override
-  String get inviteBody => 'コードは年間プランの特典です。友達は登録時に入力します。';
-
-  @override
-  String get inviteYourCode => 'あなたのコード';
-
-  @override
-  String inviteJoined(String n) {
-    return '${n}人が参加';
-  }
-
-  @override
-  String get inviteSend => '招待を送る';
-
-  @override
-  String inviteShareText(String code) {
-    return 'OUTREPDで勝負しよう：60秒の腕立て伏せ、ライブ対戦。登録時にコード${code}を入れると7日間無料。';
-  }
-
-  @override
   String get dailyGoalTitle => '今日の目標';
 
   @override
@@ -2298,6 +2200,90 @@ class LJa extends L {
   }
 
   @override
+  String get usernameTooShort => '短すぎます：4文字以上にしてください';
+
+  @override
+  String get usernameBadCharacters => '使えるのは英数字と _ のみです';
+
+  @override
+  String get usernameNeedsLetter => '英字か数字を1つ以上入れてください';
+
+  @override
+  String usernameChangeAgainOn(String date) {
+    return '${date}にまた変更できます';
+  }
+
+  @override
+  String get continueWithApple => 'Appleで続ける';
+
+  @override
+  String get continueWithGoogle => 'Googleで続ける';
+
+  @override
+  String get socialSignInFailed => 'サインインできませんでした。もう一度お試しください。';
+
+  @override
+  String get chooseUsernameTitle => 'ユーザー名を選んでください';
+
+  @override
+  String get chooseUsernameSubtitle => 'ほかのユーザーがあなたを見つけたり、ランキングで見たりするための名前です。';
+
+  @override
+  String get authHeroTitle => '誰にでも勝て。';
+
+  @override
+  String get authHeroSubtitle => 'ライブの腕立て対決。数えるのはあなたのカメラ。';
+
+  @override
+  String get createAccountPitch => 'ランクも対戦も、どのスマホでも。';
+
+  @override
+  String get usernameSpacesHint => 'スペースは _ になります';
+
+  @override
+  String get emailCodeNote => '6桁のコードをメールでお送りします。パスワードは不要です。';
+
+  @override
+  String get continueWithEmail => 'メールで続ける';
+
+  @override
+  String get thisSeason => '今シーズン';
+
+  @override
+  String get thisWeek => '今週';
+
+  @override
+  String get weekStartsAgain => '毎週月曜日にリセット';
+
+  @override
+  String get lengthWeek => '週';
+
+  @override
+  String get lengthMonth => '月';
+
+  @override
+  String get weekJoinHint => '今週ランク戦で1勝すると掲載されます';
+
+  @override
+  String get weekInTop3 => '今週トップ3入り';
+
+  @override
+  String weekToTop3(String n) {
+    return 'トップ3まであと${n} LP';
+  }
+
+  @override
+  String get boardActiveNote => '過去30日間にプレイした人';
+
+  @override
+  String get boardTieNote => '同点なら勝利数が多い方が上';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '回数差で${reps} · ${rank}の相手で${adjust}';
+  }
+
+  @override
   String levelShort(String n) {
     return 'Lv.${n}';
   }
@@ -2314,7 +2300,7 @@ class LJa extends L {
 
   @override
   String xpHow(String rep, String match) {
-    return '1回ごとに ${rep} XP、マッチごとに ${match}';
+    return '1回ごとに ${rep} XP、勝利ごとに ${match}、負けは 0';
   }
 
   @override
@@ -2355,7 +2341,541 @@ class LJa extends L {
   String get keepGoing => '続ける';
 
   @override
-  String lpBreakdown(String reps, String adjust, String rank) {
-    return '回数差で${reps} · ${rank}の相手で${adjust}';
+  String get stay => '残る';
+
+  @override
+  String lastN(String n) {
+    return '直近${n}試合';
+  }
+
+  @override
+  String get firstMatchForTier => '最初のマッチをプレイするとランキングに参加できます。全員 Iron V からスタートです。';
+
+  @override
+  String get firstMatchForBoard => '最初のマッチをプレイするとランキングに載ります。全員 Iron V からスタートです。';
+
+  @override
+  String get playFirstMatch => '最初のマッチをプレイ';
+
+  @override
+  String firstMatchTerms(String seconds) {
+    return '1マッチ · ${seconds}秒';
+  }
+
+  @override
+  String get placedLabel => 'ランキングに参加しました';
+
+  @override
+  String get placedBody => '全員ここからスタート。勝つことでしか上がれません。';
+
+  @override
+  String get placedHow => 'マッチに勝ってLPを獲得。格上に勝てばもっと多く。';
+
+  @override
+  String get levelBesideName => 'あなたの名前の横に、どこでも';
+
+  @override
+  String get weekRaceTitle => '今週のレース';
+
+  @override
+  String get streakDoneToday => '今日は達成';
+
+  @override
+  String get streakTrainToday => '今日やれば1日追加';
+
+  @override
+  String get raceChartTitle => '1分間の流れ';
+
+  @override
+  String raceYouLead(String time) {
+    return '${time} · あなたがリード';
+  }
+
+  @override
+  String raceTheyLead(String time, String name) {
+    return '${time} · ${name} がリード';
+  }
+
+  @override
+  String get bringFriendTitle => '友だちを誘おう';
+
+  @override
+  String get bringFriendBody => 'リンクを送ろう。あなたのプロフィールが開き、そこから追加してもらえます。';
+
+  @override
+  String get bringFriendShare => 'リンクを共有';
+
+  @override
+  String get bringFriendShareText => 'OUTREPDで腕立て伏せ勝負しよう。60秒、ライブ、カメラがカウント。';
+
+  @override
+  String orFriendCode(String code) {
+    return 'またはフレンドコード ${code}';
+  }
+
+  @override
+  String get countryPickerTitle => 'あなたの国';
+
+  @override
+  String get countrySearch => '検索';
+
+  @override
+  String get countryFromPhone => 'スマホの設定から';
+
+  @override
+  String get countryAll => 'すべての国';
+
+  @override
+  String get countryChoose => '国を選ぶ';
+
+  @override
+  String get countryChange => '変更';
+
+  @override
+  String get countryForBoard => 'あなたの国のランキング用';
+
+  @override
+  String get countryLabel => '国';
+
+  @override
+  String get countryChanged => '国を変更しました';
+
+  @override
+  String get countryEvery14 => '名前と同じく14日に1回';
+
+  @override
+  String get countryNotSaved => '国を保存できませんでした。もう一度お試しください。';
+
+  @override
+  String get adventure => 'アドベンチャー';
+
+  @override
+  String stageNumber(String n) {
+    return 'ステージ${n}';
+  }
+
+  @override
+  String adventureLevelIn(String level, String world) {
+    return 'ステージ${level} · ${world}';
+  }
+
+  @override
+  String adventureClearedOf(String cleared, String total) {
+    return '${total}中${cleared}クリア · ランクなし';
+  }
+
+  @override
+  String get worldIron => 'アイアン鉱山';
+
+  @override
+  String get worldBronze => 'ブロンズ砂丘';
+
+  @override
+  String get worldSilver => 'シルバー山脈';
+
+  @override
+  String get worldGold => 'ゴールド城塞';
+
+  @override
+  String get worldPlatinum => 'プラチナ氷河';
+
+  @override
+  String get worldDiamond => 'ダイヤモンド洞窟';
+
+  @override
+  String get worldMaster => 'マスターの玉座';
+
+  @override
+  String worldNumber(String n) {
+    return 'ワールド${n}';
+  }
+
+  @override
+  String fightLevel(String level) {
+    return 'ステージ${level}に挑む';
+  }
+
+  @override
+  String levelHpLine(String hp, String reps) {
+    return 'HP ${hp} · 腕立て約${reps}回';
+  }
+
+  @override
+  String get hpShort => 'HP';
+
+  @override
+  String comboTag(String n) {
+    return 'コンボ ×${n}';
+  }
+
+  @override
+  String get levelCleared => 'クリア';
+
+  @override
+  String get outOfTime => 'タイムアップ';
+
+  @override
+  String get statPushUps => '腕立て';
+
+  @override
+  String get statTimeLeft => '残り';
+
+  @override
+  String get statHpLeft => '残りHP';
+
+  @override
+  String get statXp => 'XP';
+
+  @override
+  String secondStarHint(String seconds) {
+    return '残り${seconds}秒以上でクリアすると星2つ';
+  }
+
+  @override
+  String thirdStarHint(String seconds) {
+    return '残り${seconds}秒以上でクリアすると星3つ';
+  }
+
+  @override
+  String get fightLostHint => '前のステージで星を集めよう。星でもっと強い武器が手に入る。';
+
+  @override
+  String get nextLevel => '次のステージ';
+
+  @override
+  String get tryAgain => 'もう一度';
+
+  @override
+  String get adventureMap => 'マップ';
+
+  @override
+  String get nextKicker => '次';
+
+  @override
+  String nextLevelLine(String level, String hp) {
+    return 'ステージ${level} · HP ${hp}';
+  }
+
+  @override
+  String get armory => '武器庫';
+
+  @override
+  String get armoryBody => '星で武器が解放される。各ワールドの敵には、そのワールドの武器以上でしかダメージを与えられない。';
+
+  @override
+  String get equipped => '装備中';
+
+  @override
+  String perPushUp(String damage) {
+    return '1回${damage}';
+  }
+
+  @override
+  String damagePerPushUp(String damage) {
+    return '腕立て1回で${damage}ダメージ';
+  }
+
+  @override
+  String wasWith(String damage, String weapon) {
+    return 'これまで：${weapon}で${damage}';
+  }
+
+  @override
+  String moreStars(String count) {
+    return 'あと星${count}個';
+  }
+
+  @override
+  String get newWeapon => '新しい武器';
+
+  @override
+  String starsKicker(String count) {
+    return '星${count}個';
+  }
+
+  @override
+  String get weaponGauntlets => 'アイアンガントレット';
+
+  @override
+  String get weaponKnuckles => 'ブロンズナックル';
+
+  @override
+  String get weaponFang => 'シルバーファング';
+
+  @override
+  String get weaponHammer => 'ゴールドハンマー';
+
+  @override
+  String get weaponAxe => 'プラチナアックス';
+
+  @override
+  String get weaponSpear => 'ダイヤモンドスピア';
+
+  @override
+  String get weaponSword => 'マスターソード';
+
+  @override
+  String get weaponCrownbreaker => 'クラウンブレイカー';
+
+  @override
+  String clearFirst(String level) {
+    return 'まずステージ${level}をクリアしよう';
+  }
+
+  @override
+  String needsWeapon(String weapon) {
+    return '${weapon}が必要';
+  }
+
+  @override
+  String hurtOnlyBy(String weapon) {
+    return '${weapon}以上の武器でしかダメージを与えられない';
+  }
+
+  @override
+  String worldNeedsWeapon(String world, String weapon, String count) {
+    return '${world}には${weapon}が必要 · あと星${count}個';
+  }
+
+  @override
+  String rematchOpponentLeft(String name) {
+    return '${name}が退出しました · 今回は再戦なし';
+  }
+
+  @override
+  String get obNext => '次へ';
+
+  @override
+  String get obRaceTitle => '本物の相手と競う。';
+
+  @override
+  String get obRaceBody => '60秒で回数が多い方の勝ち。相手は自分のスマホからライブで参加。誰もオンラインでなければ、録画されたセットと勝負します。';
+
+  @override
+  String get obRepsTitle => '数えるのはフルレップだけ。';
+
+  @override
+  String get obRepsBody => 'カメラが、どこまで下がってどこまで戻ったかを見ています。';
+
+  @override
+  String get obRepsDown => '金のラインより下まで';
+
+  @override
+  String get obRepsUp => '上のラインより上まで戻る';
+
+  @override
+  String get obRepsBoth => 'どちらも手を床につけたまま。半端なレップは数えません。あなたのスマホでも、相手のスマホでも。';
+
+  @override
+  String get obClimbTitle => 'Masterを目指そう。';
+
+  @override
+  String get obClimbBody => '勝ってランクを上げよう。7つのティアに、それぞれ5段階。';
+
+  @override
+  String get obGoldLine => '金のライン';
+
+  @override
+  String obCalibrationRule(String gold) {
+    return '${gold}より下まで下げて、上のラインより上まで戻る';
+  }
+
+  @override
+  String get proTitleTop => '広告なし。';
+
+  @override
+  String get proTitleBottom => '腕立てだけ。';
+
+  @override
+  String get proBody => '対戦はすべて無料のまま。Proなら、どの対戦の後にも広告が出ません。';
+
+  @override
+  String get proThanks => '広告をオフにしました。Proへようこそ。';
+
+  @override
+  String get removeAds => '広告を消す';
+
+  @override
+  String get adNotice => 'この画面を出ると広告が流れます';
+
+  @override
+  String get adAskTitle => '広告でoutrepdは無料です';
+
+  @override
+  String get adAskBody => 'このあとiPhoneが、広告選びのためにアプリがあなたのアクティビティを使ってよいか尋ねます。許可すると広告があなた向けになり、許可しなくても広告は出ますが、関連性が低くなります。';
+
+  @override
+  String get adAskCamera => 'カメラは関係ありません。どちらを選んでも、体のトラッキングはこのスマホの中だけで行われます。';
+
+  @override
+  String get adAskRemove => '広告を消す方にする';
+
+  @override
+  String get monsterIronColossus => 'アイアンコロッサス';
+
+  @override
+  String get monsterScarab => 'スカラベ';
+
+  @override
+  String get monsterScarabPharaoh => 'スカラベファラオ';
+
+  @override
+  String get monsterYeti => 'イエティ';
+
+  @override
+  String get monsterFrostYeti => 'フロストイエティ';
+
+  @override
+  String get monsterYetiChieftain => 'イエティの族長';
+
+  @override
+  String get monsterGoldSoldier => 'ゴールドソルジャー';
+
+  @override
+  String get monsterGoldKnight => 'ゴールドナイト';
+
+  @override
+  String get monsterGoldKing => 'ゴールドキング';
+
+  @override
+  String get monsterWisp => 'ウィスプ';
+
+  @override
+  String get monsterWraith => 'レイス';
+
+  @override
+  String get monsterFrostLich => 'フロストリッチ';
+
+  @override
+  String get monsterCrystalDrake => 'クリスタルドレイク';
+
+  @override
+  String get monsterCrystalDragon => 'クリスタルドラゴン';
+
+  @override
+  String get monsterDiamondWyrm => 'ダイヤモンドワーム';
+
+  @override
+  String get monsterShadowGuard => 'シャドウガード';
+
+  @override
+  String get monsterShadowKnight => 'シャドウナイト';
+
+  @override
+  String get monsterTheMaster => 'ザ・マスター';
+
+  @override
+  String get monsterPebbleGolem => 'ペブルゴーレム';
+
+  @override
+  String get monsterStoneGolem => 'ストーンゴーレム';
+
+  @override
+  String get monsterOreGolem => 'オアゴーレム';
+
+  @override
+  String get monsterMinerGolem => 'マイナーゴーレム';
+
+  @override
+  String get monsterScarabGrub => 'スカラベの幼虫';
+
+  @override
+  String get monsterHornedScarab => 'ツノスカラベ';
+
+  @override
+  String get monsterScarabWarrior => 'スカラベウォリアー';
+
+  @override
+  String get monsterYetiCub => '子イエティ';
+
+  @override
+  String get monsterHornedYeti => 'ツノイエティ';
+
+  @override
+  String get monsterGoldRecruit => 'ゴールドリクルート';
+
+  @override
+  String get monsterGoldGuard => 'ゴールドガード';
+
+  @override
+  String get monsterShade => 'シェイド';
+
+  @override
+  String get monsterIceSpecter => 'アイススペクター';
+
+  @override
+  String get monsterCrystalHatchling => 'クリスタルの幼竜';
+
+  @override
+  String get monsterCrystalWhelp => 'クリスタルの若竜';
+
+  @override
+  String get monsterShadowSquire => 'シャドウスクワイア';
+
+  @override
+  String get monsterShadowLord => 'シャドウロード';
+
+  @override
+  String monsterWarden(String name) {
+    return '${name}・番人';
+  }
+
+  @override
+  String get obPhoneSees => 'スマホに映るべき姿';
+
+  @override
+  String get obPhoneSeesBody => '頭のてっぺんから手まで、約1メートル離れて、腕立ての姿勢で。';
+
+  @override
+  String get obUnder13 => '13歳未満';
+
+  @override
+  String get obOver13 => '13歳以上';
+
+  @override
+  String get obFor13 => 'outrepdは13歳以上向けです。';
+
+  @override
+  String get obUnder13Blocked => 'outrepdは13歳以上向けです。13歳になったらまた来てね。腕立てはここで待っています。';
+
+  @override
+  String get obBeforeYouLift => '始める前に';
+
+  @override
+  String get obFightTitle => 'モンスターと戦おう。';
+
+  @override
+  String get obFightBody => '7つのワールドで140の腕立て伏せバトル。1回ごとにモンスターにダメージ。';
+
+  @override
+  String obSevenWorlds(String from, String to) {
+    return '7つのワールド：${from}から${to}まで';
+  }
+
+  @override
+  String get obWeaponsTitle => '星で武器をアンロック';
+
+  @override
+  String get obWeaponsBody => 'ワールドごとに専用の武器が必要。ランクは変動しません。';
+
+  @override
+  String get fightDefeated => '撃破！';
+
+  @override
+  String get nextWeapon => '次の武器';
+
+  @override
+  String opensWorld(String world) {
+    return '${world}が開く';
+  }
+
+  @override
+  String weaponAtStars(String count) {
+    return '星${count}個で';
+  }
+
+  @override
+  String topTenIn(String country) {
+    return '${country}でトップ10';
   }
 }

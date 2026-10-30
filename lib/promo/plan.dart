@@ -8,6 +8,7 @@ import 'dart:math' as math;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../adventure/adventure.dart';
 import '../xp.dart';
 
 /// How the opponent's count moves through the minute.
@@ -45,6 +46,9 @@ class PromoPlan {
     this.record = true,
     this.camera4k = false,
     this.film916 = true,
+    this.adventure = false,
+    this.fightLevel = 1,
+    this.fightWeapon = 0,
   });
 
   String myName;
@@ -88,6 +92,14 @@ class PromoPlan {
   /// Film in 9:16, the shape TikTok and Reels show: the take is drawn in a
   /// 9:16 frame across the screen, and only the frame is kept.
   bool film916;
+
+  /// An adventure fight is filmed instead of a match.
+  bool adventure;
+
+  /// The adventure level fought, 1 to 140, and the weapon it is fought
+  /// with (an index into kWeapons), picked rather than earned.
+  int fightLevel;
+  int fightWeapon;
 
   /// Experience at the very start of [level].
   static int xpAt(int level) {
@@ -174,6 +186,9 @@ class PromoPlan {
     'record': record,
     'camera4k': camera4k,
     'film916': film916,
+    'adventure': adventure,
+    'fightLevel': fightLevel,
+    'fightWeapon': fightWeapon,
   };
 
   static PromoPlan fromJson(Map<String, Object?> j) {
@@ -195,6 +210,9 @@ class PromoPlan {
       ..record = j['record'] as bool? ?? plan.record
       ..camera4k = j['camera4k'] as bool? ?? plan.camera4k
       ..film916 = j['film916'] as bool? ?? plan.film916
+      ..adventure = j['adventure'] as bool? ?? plan.adventure
+      ..fightLevel = read('fightLevel', plan.fightLevel).clamp(1, kAdventureLevels)
+      ..fightWeapon = read('fightWeapon', plan.fightWeapon).clamp(0, kWeapons.length - 1)
       ..mode = OpponentMode.values.firstWhere(
         (m) => m.name == j['mode'],
         orElse: () => plan.mode,

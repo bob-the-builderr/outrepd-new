@@ -195,8 +195,7 @@ class LKo extends L {
   String get createAccountTitle => '계정 만들기';
 
   @override
-  String get createAccountBody =>
-      '이메일과 비밀번호를 추가해서 이 계정이 휴대폰 하나에만 의존하지 않도록 하세요.';
+  String get createAccountBody => '로그인하면 이 계정이 휴대폰 한 대에만 묶이지 않아요.';
 
   @override
   String get createAccountAction => '계정 만들기';
@@ -356,8 +355,7 @@ class LKo extends L {
   String get usernameChanged => '사용자 이름이 변경되었습니다';
 
   @override
-  String get usernameAlreadyChangedBody =>
-      '이미 단 한 번뿐인 사용자 이름 변경을 사용하셨습니다 — 모든 계정은 정확히 한 번만 변경할 수 있습니다.';
+  String get usernameAlreadyChangedBody => '사용자 이름은 14일에 한 번 변경할 수 있어요.';
 
   @override
   String get gallery => '갤러리';
@@ -881,9 +879,6 @@ class LKo extends L {
   String get forfeitBody => '지금 나가면 LP를 잃습니다.';
 
   @override
-  String get stay => '남기';
-
-  @override
   String get forfeit => '기권';
 
   @override
@@ -1000,7 +995,7 @@ class LKo extends L {
 
   @override
   String weeksAgo(String n) {
-    return '$n주 전';
+    return '${n}주 전';
   }
 
   @override
@@ -1257,41 +1252,10 @@ class LKo extends L {
   String get noRankYet => '아직 랭크 없음';
 
   @override
-  String placementsForFirstTier(String count) {
-    return '첫 랭크를 얻으려면 배치 대결 $count판을 끝내세요.';
-  }
-
-  @override
-  String get startPlacements => '배치 시작';
-
-  @override
   String get unranked => '랭크 없음';
 
   @override
-  String placementsTerms(String done, String total, String seconds) {
-    return '$total판 중 $done판 · 판당 $seconds초';
-  }
-
-  @override
-  String placementsLeft(String done, String total, String left) {
-    return '$total판 중 $done판 · 랭크까지 $left판';
-  }
-
-  @override
-  String placementsForTier(String count) {
-    return '내 랭크를 알아보려면 배치 대결 $count판을 끝내세요.';
-  }
-
-  @override
-  String placementsDoneCount(String done, String total) {
-    return '배치 $total판 중 $done판 완료';
-  }
-
-  @override
   String get practiceFirst => '먼저 연습';
-
-  @override
-  String get nextPlacement => '다음 배치';
 
   @override
   String get noConnection => '연결 없음';
@@ -1329,8 +1293,7 @@ class LKo extends L {
       '횟수는 카메라로 세기 때문에 이 기기로는 대결을 채점할 수 없습니다. 나머지는 그대로 작동합니다.';
 
   @override
-  String get noConnectionBody =>
-      '대결하려면 연결이 필요해요. 연습은 오프라인에서도 도에 기록은 나중에 동기화됩니다.';
+  String get noConnectionBody => '대결하려면 연결이 필요해요. 어드벤처는 오프라인에서도 할 수 있고, 기록은 나중에 동기화됩니다.';
 
   @override
   String get getBackInFrame => '화면 안으로 돌아오세요';
@@ -1430,12 +1393,6 @@ class LKo extends L {
   String get obAgeQuestion => '나이가 어떻게 되나요?';
 
   @override
-  String get obUnder16 => '16세 미만';
-
-  @override
-  String get obOver16 => '16세 이상';
-
-  @override
   String get obHealthConsent =>
       'outrepd는 횟수만 세고 의학적·운동 조언은 하지 않는다는 것을 이해합니다. 아프면 멈추겠습니다.';
 
@@ -1450,10 +1407,6 @@ class LKo extends L {
 
   @override
   String get obPrivacy => '개인정보 처리방침';
-
-  @override
-  String get obUnder16Blocked =>
-      'outrepd는 16세 이상을 위한 앱입니다. 그때 다시 오세요 — 푸시업은 어디 안 갑니다.';
 
   @override
   String get obCameraTitle => 'outrepd에는 카메라가 필요합니다';
@@ -1478,13 +1431,7 @@ class LKo extends L {
   String get obPlacementBody => '약 1미터 앞 벽에 기대 놓으세요.';
 
   @override
-  String get obOneMetre => '약 1m';
-
-  @override
-  String get obFullBody => '전신이 화면에';
-
-  @override
-  String get obCheckHandsFeet => '손과 발이 모두 보이기';
+  String get obCheckHandsFeet => '머리, 어깨, 손이 화면 안에';
 
   @override
   String get obCheckFacing => '옆이 아니라 폰을 향하기';
@@ -1764,7 +1711,7 @@ class LKo extends L {
   }
 
   @override
-  String get paywallStart => '등반 시작';
+  String get paywallStart => '광고 제거';
 
   @override
   String get paywallRenewsPlay => '해지할 때까지 자동으로 갱신됩니다. Google Play에서 언제든지 해지할 수 있습니다.';
@@ -1811,7 +1758,7 @@ class LKo extends L {
   String get signOutQuestion => '로그아웃할까요?';
 
   @override
-  String get signOutBody => '계정은 랭크, 기록, 구독과 함께 그대로 남습니다. 언제든 이메일로 다시 로그인하세요.';
+  String get signOutBody => '계정은 랭크, 기록, 구독까지 그대로 남아요. 언제든 처음과 같은 방법으로 다시 로그인하세요.';
 
   @override
   String get shareVictory => '승리';
@@ -1979,7 +1926,7 @@ class LKo extends L {
 
   @override
   String calledOffBody(String name) {
-    return '${name} 님이 제때 자세를 잡지 못했어요. 아무것도 기록되지 않았어요.';
+    return '${name} 님이 시작 시간에 들어오지 못했어요. 아무것도 기록되지 않았어요.';
   }
 
   @override
@@ -2025,11 +1972,6 @@ class LKo extends L {
 
   @override
   String get noticeLiveInvite => '친구가 라이브 대결에 초대했어요';
-
-  @override
-  String trialHeadline(String days) {
-    return '처음 ${days}일은 *무료*';
-  }
 
   @override
   String get trialToday => '오늘';
@@ -2192,49 +2134,6 @@ class LKo extends L {
   }
 
   @override
-  String get inviteCodeLabel => '친구 코드 (선택)';
-
-  @override
-  String get inviteClaimed => '코드 추가됨 · 7일 무료';
-
-  @override
-  String get inviteUnknownCode => '그 코드를 가진 사람이 없어요';
-
-  @override
-  String get inviteNotYearly => '이 코드는 지금 무료 기간을 줄 수 없어요';
-
-  @override
-  String get inviteOwnCode => '내 코드예요';
-
-  @override
-  String get inviteTooLate => '코드는 계정 생성 후 첫 주에만 쓸 수 있어요';
-
-  @override
-  String get inviteFull => '이번 달에 많이 쓰인 코드예요. 다른 코드를 써 보세요';
-
-  @override
-  String get inviteTitle => '친구에게 7일 무료 선물하기';
-
-  @override
-  String get inviteBody => '코드는 연간 플랜에 포함돼요. 친구가 가입할 때 입력하면 돼요.';
-
-  @override
-  String get inviteYourCode => '내 코드';
-
-  @override
-  String inviteJoined(String n) {
-    return '${n}명 가입';
-  }
-
-  @override
-  String get inviteSend => '초대 보내기';
-
-  @override
-  String inviteShareText(String code) {
-    return 'OUTREPD에서 나랑 대결해: 60초 푸시업, 실시간. 가입할 때 내 코드 ${code}를 입력하면 7일 무료야.';
-  }
-
-  @override
   String get dailyGoalTitle => '오늘의 목표';
 
   @override
@@ -2305,6 +2204,90 @@ class LKo extends L {
   }
 
   @override
+  String get usernameTooShort => '너무 짧아요: 4자 이상 입력하세요';
+
+  @override
+  String get usernameBadCharacters => '영문자, 숫자, _만 사용할 수 있어요';
+
+  @override
+  String get usernameNeedsLetter => '영문자나 숫자를 하나 이상 넣어 주세요';
+
+  @override
+  String usernameChangeAgainOn(String date) {
+    return '${date}에 다시 변경할 수 있어요';
+  }
+
+  @override
+  String get continueWithApple => 'Apple로 계속하기';
+
+  @override
+  String get continueWithGoogle => 'Google로 계속하기';
+
+  @override
+  String get socialSignInFailed => '로그인하지 못했어요. 다시 시도해 주세요.';
+
+  @override
+  String get chooseUsernameTitle => '사용자 이름을 정하세요';
+
+  @override
+  String get chooseUsernameSubtitle => '다른 사람들이 이 이름으로 당신을 찾고 순위표에서 보게 돼요.';
+
+  @override
+  String get authHeroTitle => '누구든 이겨라.';
+
+  @override
+  String get authHeroSubtitle => '실시간 푸시업 대결, 카메라가 세어 줘요.';
+
+  @override
+  String get createAccountPitch => '내 랭크와 대결 기록을 어떤 폰에서든.';
+
+  @override
+  String get usernameSpacesHint => '띄어쓰기는 _로 바뀌어요';
+
+  @override
+  String get emailCodeNote => '이메일로 6자리 코드를 보내 드려요. 비밀번호는 필요 없어요.';
+
+  @override
+  String get continueWithEmail => '이메일로 계속하기';
+
+  @override
+  String get thisSeason => '이번 시즌';
+
+  @override
+  String get thisWeek => '이번 주';
+
+  @override
+  String get weekStartsAgain => '매주 월요일에 새로 시작해요';
+
+  @override
+  String get lengthWeek => '주간';
+
+  @override
+  String get lengthMonth => '월간';
+
+  @override
+  String get weekJoinHint => '이번 주 랭크 대결에서 이기면 순위표에 올라요';
+
+  @override
+  String get weekInTop3 => '이번 주 톱 3';
+
+  @override
+  String weekToTop3(String n) {
+    return '톱 3까지 ${n} LP';
+  }
+
+  @override
+  String get boardActiveNote => '최근 30일 동안 활동한 플레이어';
+
+  @override
+  String get boardTieNote => '동점이면 승리가 많은 순';
+
+  @override
+  String lpBreakdown(String reps, String adjust, String rank) {
+    return '횟수 차이로 ${reps} · ${rank} 상대로 ${adjust}';
+  }
+
+  @override
   String levelShort(String n) {
     return 'Lv.${n}';
   }
@@ -2321,7 +2304,7 @@ class LKo extends L {
 
   @override
   String xpHow(String rep, String match) {
-    return '1회당 ${rep} XP, 대결당 ${match}';
+    return '1회당 ${rep} XP, 승리당 ${match}, 패배는 0';
   }
 
   @override
@@ -2362,7 +2345,541 @@ class LKo extends L {
   String get keepGoing => '계속하기';
 
   @override
-  String lpBreakdown(String reps, String adjust, String rank) {
-    return '횟수 차이로 ${reps} · ${rank} 상대로 ${adjust}';
+  String get stay => '남기';
+
+  @override
+  String lastN(String n) {
+    return '최근 ${n}경기';
+  }
+
+  @override
+  String get firstMatchForTier => '첫 대결을 하면 랭킹에 들어갑니다. 모두 Iron V에서 시작해요.';
+
+  @override
+  String get firstMatchForBoard => '첫 대결을 하면 순위표에 올라갑니다. 모두 Iron V에서 시작해요.';
+
+  @override
+  String get playFirstMatch => '첫 대결 시작';
+
+  @override
+  String firstMatchTerms(String seconds) {
+    return '대결 1판 · ${seconds}초';
+  }
+
+  @override
+  String get placedLabel => '랭킹에 들어왔어요';
+
+  @override
+  String get placedBody => '모두 여기서 시작해요. 이겨야만 올라갑니다.';
+
+  @override
+  String get placedHow => '대결에서 이겨 LP를 얻으세요. 더 높은 랭크를 이기면 더 많이 얻어요.';
+
+  @override
+  String get levelBesideName => '어디서나 이름 옆에';
+
+  @override
+  String get weekRaceTitle => '이번 주 레이스';
+
+  @override
+  String get streakDoneToday => '오늘 완료';
+
+  @override
+  String get streakTrainToday => '오늘 하면 하루 추가';
+
+  @override
+  String get raceChartTitle => '1분이 흘러간 방식';
+
+  @override
+  String raceYouLead(String time) {
+    return '${time} · 내가 앞서기 시작';
+  }
+
+  @override
+  String raceTheyLead(String time, String name) {
+    return '${time} · ${name} 앞서기 시작';
+  }
+
+  @override
+  String get bringFriendTitle => '친구를 데려오세요';
+
+  @override
+  String get bringFriendBody => '링크를 보내세요. 내 프로필이 열리고, 거기서 나를 추가할 수 있어요.';
+
+  @override
+  String get bringFriendShare => '내 링크 공유';
+
+  @override
+  String get bringFriendShareText => 'OUTREPD에서 푸시업으로 나랑 붙자. 60초, 실시간, 카메라가 세어 줘.';
+
+  @override
+  String orFriendCode(String code) {
+    return '또는 친구 코드 ${code}';
+  }
+
+  @override
+  String get countryPickerTitle => '내 국가';
+
+  @override
+  String get countrySearch => '검색';
+
+  @override
+  String get countryFromPhone => '휴대폰 설정에서';
+
+  @override
+  String get countryAll => '모든 국가';
+
+  @override
+  String get countryChoose => '국가를 선택하세요';
+
+  @override
+  String get countryChange => '변경';
+
+  @override
+  String get countryForBoard => '내 국가 순위표에 쓰여요';
+
+  @override
+  String get countryLabel => '국가';
+
+  @override
+  String get countryChanged => '국가가 변경됐어요';
+
+  @override
+  String get countryEvery14 => '이름처럼 14일에 한 번';
+
+  @override
+  String get countryNotSaved => '국가를 저장하지 못했어요. 다시 시도해 주세요.';
+
+  @override
+  String get adventure => '어드벤처';
+
+  @override
+  String stageNumber(String n) {
+    return '스테이지 ${n}';
+  }
+
+  @override
+  String adventureLevelIn(String level, String world) {
+    return '스테이지 ${level} · ${world}';
+  }
+
+  @override
+  String adventureClearedOf(String cleared, String total) {
+    return '${total}개 중 ${cleared}개 클리어 · 랭크 없음';
+  }
+
+  @override
+  String get worldIron => '아이언 광산';
+
+  @override
+  String get worldBronze => '브론즈 사구';
+
+  @override
+  String get worldSilver => '실버 봉우리';
+
+  @override
+  String get worldGold => '골드 요새';
+
+  @override
+  String get worldPlatinum => '플래티넘 빙하';
+
+  @override
+  String get worldDiamond => '다이아몬드 동굴';
+
+  @override
+  String get worldMaster => '마스터의 왕좌';
+
+  @override
+  String worldNumber(String n) {
+    return '월드 ${n}';
+  }
+
+  @override
+  String fightLevel(String level) {
+    return '스테이지 ${level} 도전';
+  }
+
+  @override
+  String levelHpLine(String hp, String reps) {
+    return 'HP ${hp} · 팔굽혀펴기 약 ${reps}회';
+  }
+
+  @override
+  String get hpShort => 'HP';
+
+  @override
+  String comboTag(String n) {
+    return '콤보 ×${n}';
+  }
+
+  @override
+  String get levelCleared => '클리어';
+
+  @override
+  String get outOfTime => '시간 초과';
+
+  @override
+  String get statPushUps => '팔굽혀펴기';
+
+  @override
+  String get statTimeLeft => '남음';
+
+  @override
+  String get statHpLeft => '남은 HP';
+
+  @override
+  String get statXp => 'XP';
+
+  @override
+  String secondStarHint(String seconds) {
+    return '${seconds}초 이상 남기고 깨면 별 2개';
+  }
+
+  @override
+  String thirdStarHint(String seconds) {
+    return '${seconds}초 이상 남기고 깨면 별 3개';
+  }
+
+  @override
+  String get fightLostHint => '이전 스테이지에서 별을 더 모으세요. 별로 더 강한 무기가 열려요.';
+
+  @override
+  String get nextLevel => '다음 스테이지';
+
+  @override
+  String get tryAgain => '다시 하기';
+
+  @override
+  String get adventureMap => '지도';
+
+  @override
+  String get nextKicker => '다음';
+
+  @override
+  String nextLevelLine(String level, String hp) {
+    return '스테이지 ${level} · HP ${hp}';
+  }
+
+  @override
+  String get armory => '무기고';
+
+  @override
+  String get armoryBody => '별을 모으면 무기가 열려요. 각 월드의 몬스터는 그 월드의 무기나 더 강한 무기에만 피해를 입어요.';
+
+  @override
+  String get equipped => '장착 중';
+
+  @override
+  String perPushUp(String damage) {
+    return '1회 ${damage}';
+  }
+
+  @override
+  String damagePerPushUp(String damage) {
+    return '팔굽혀펴기 1회당 ${damage} 피해';
+  }
+
+  @override
+  String wasWith(String damage, String weapon) {
+    return '이전: ${weapon} · ${damage}';
+  }
+
+  @override
+  String moreStars(String count) {
+    return '별 ${count}개 더';
+  }
+
+  @override
+  String get newWeapon => '새 무기';
+
+  @override
+  String starsKicker(String count) {
+    return '별 ${count}개';
+  }
+
+  @override
+  String get weaponGauntlets => '아이언 건틀릿';
+
+  @override
+  String get weaponKnuckles => '브론즈 너클';
+
+  @override
+  String get weaponFang => '실버 팽';
+
+  @override
+  String get weaponHammer => '골드 해머';
+
+  @override
+  String get weaponAxe => '플래티넘 도끼';
+
+  @override
+  String get weaponSpear => '다이아몬드 창';
+
+  @override
+  String get weaponSword => '마스터 소드';
+
+  @override
+  String get weaponCrownbreaker => '크라운브레이커';
+
+  @override
+  String clearFirst(String level) {
+    return '스테이지 ${level} 먼저 클리어하세요';
+  }
+
+  @override
+  String needsWeapon(String weapon) {
+    return '${weapon} 필요';
+  }
+
+  @override
+  String hurtOnlyBy(String weapon) {
+    return '${weapon} 이상의 무기만 통해요';
+  }
+
+  @override
+  String worldNeedsWeapon(String world, String weapon, String count) {
+    return '${world}에는 ${weapon} 필요 · 별 ${count}개 더';
+  }
+
+  @override
+  String rematchOpponentLeft(String name) {
+    return '${name}님이 나갔어요 · 이번엔 재대결이 없어요';
+  }
+
+  @override
+  String get obNext => '다음';
+
+  @override
+  String get obRaceTitle => '진짜 사람과 겨루세요.';
+
+  @override
+  String get obRaceBody => '60초 동안 더 많이 하면 이겨요. 상대는 자기 휴대폰으로 실시간 참여하고, 접속한 사람이 없으면 녹화된 세트와 겨뤄요.';
+
+  @override
+  String get obRepsTitle => '완전한 반복만 인정돼요.';
+
+  @override
+  String get obRepsBody => '카메라가 얼마나 내려가고 얼마나 다시 올라오는지 봐요.';
+
+  @override
+  String get obRepsDown => '금색 선 아래로 내려가기';
+
+  @override
+  String get obRepsUp => '위쪽 선 위로 다시 올라오기';
+
+  @override
+  String get obRepsBoth => '둘 다 손을 바닥에 댄 채로요. 반만 한 건 인정되지 않아요. 내 휴대폰에서도, 상대 휴대폰에서도요.';
+
+  @override
+  String get obClimbTitle => 'Master까지 올라가세요.';
+
+  @override
+  String get obClimbBody => '이겨서 사다리를 올라가세요. 7개 티어, 티어마다 5단계예요.';
+
+  @override
+  String get obGoldLine => '금색 선';
+
+  @override
+  String obCalibrationRule(String gold) {
+    return '${gold} 아래로 내려갔다가 위쪽 선 위로 올라오기';
+  }
+
+  @override
+  String get proTitleTop => '광고 없이.';
+
+  @override
+  String get proTitleBottom => '팔굽혀펴기만.';
+
+  @override
+  String get proBody => '모든 매치는 계속 무료예요. Pro는 모든 매치에서 광고를 없애요.';
+
+  @override
+  String get proThanks => '광고가 꺼졌어요. Pro를 선택해 주셔서 고마워요.';
+
+  @override
+  String get removeAds => '광고 제거';
+
+  @override
+  String get adNotice => '나가면 광고가 나와요';
+
+  @override
+  String get adAskTitle => '광고 덕분에 outrepd는 무료예요';
+
+  @override
+  String get adAskBody => '이제 iPhone이 앱이 광고를 고르는 데 내 활동을 써도 되는지 물어봐요. 허용하면 나에게 더 맞는 광고가 나오고, 허용하지 않아도 광고는 나오지만 덜 관련 있는 광고예요.';
+
+  @override
+  String get adAskCamera => '카메라는 전혀 관련 없어요. 무엇을 선택하든 몸 추적은 이 휴대폰 안에서만 이뤄져요.';
+
+  @override
+  String get adAskRemove => '대신 광고 제거하기';
+
+  @override
+  String get monsterIronColossus => '강철 거신';
+
+  @override
+  String get monsterScarab => '스카라브';
+
+  @override
+  String get monsterScarabPharaoh => '스카라브 파라오';
+
+  @override
+  String get monsterYeti => '예티';
+
+  @override
+  String get monsterFrostYeti => '서리 예티';
+
+  @override
+  String get monsterYetiChieftain => '예티 족장';
+
+  @override
+  String get monsterGoldSoldier => '황금 병사';
+
+  @override
+  String get monsterGoldKnight => '황금 기사';
+
+  @override
+  String get monsterGoldKing => '황금 왕';
+
+  @override
+  String get monsterWisp => '위습';
+
+  @override
+  String get monsterWraith => '망령';
+
+  @override
+  String get monsterFrostLich => '서리 리치';
+
+  @override
+  String get monsterCrystalDrake => '크리스탈 드레이크';
+
+  @override
+  String get monsterCrystalDragon => '크리스탈 드래곤';
+
+  @override
+  String get monsterDiamondWyrm => '다이아몬드 웜';
+
+  @override
+  String get monsterShadowGuard => '그림자 경비병';
+
+  @override
+  String get monsterShadowKnight => '그림자 기사';
+
+  @override
+  String get monsterTheMaster => '더 마스터';
+
+  @override
+  String get monsterPebbleGolem => '자갈 골렘';
+
+  @override
+  String get monsterStoneGolem => '돌 골렘';
+
+  @override
+  String get monsterOreGolem => '광석 골렘';
+
+  @override
+  String get monsterMinerGolem => '광부 골렘';
+
+  @override
+  String get monsterScarabGrub => '스카라브 애벌레';
+
+  @override
+  String get monsterHornedScarab => '뿔 스카라브';
+
+  @override
+  String get monsterScarabWarrior => '스카라브 전사';
+
+  @override
+  String get monsterYetiCub => '아기 예티';
+
+  @override
+  String get monsterHornedYeti => '뿔 예티';
+
+  @override
+  String get monsterGoldRecruit => '황금 신병';
+
+  @override
+  String get monsterGoldGuard => '황금 근위병';
+
+  @override
+  String get monsterShade => '그림자 혼';
+
+  @override
+  String get monsterIceSpecter => '얼음 유령';
+
+  @override
+  String get monsterCrystalHatchling => '크리스탈 새끼 용';
+
+  @override
+  String get monsterCrystalWhelp => '크리스탈 어린 용';
+
+  @override
+  String get monsterShadowSquire => '그림자 종자';
+
+  @override
+  String get monsterShadowLord => '그림자 군주';
+
+  @override
+  String monsterWarden(String name) {
+    return '${name} 수호자';
+  }
+
+  @override
+  String get obPhoneSees => '휴대폰에 보여야 하는 모습';
+
+  @override
+  String get obPhoneSeesBody => '머리끝부터 손까지, 약 1미터 떨어져서, 팔굽혀펴기 자세로.';
+
+  @override
+  String get obUnder13 => '13세 미만';
+
+  @override
+  String get obOver13 => '13세 이상';
+
+  @override
+  String get obFor13 => 'outrepd는 13세 이상을 위한 앱이에요.';
+
+  @override
+  String get obUnder13Blocked => 'outrepd는 13세 이상을 위한 앱이에요. 13세가 되면 다시 와 주세요. 팔굽혀펴기는 그대로 기다리고 있을게요.';
+
+  @override
+  String get obBeforeYouLift => '시작하기 전에';
+
+  @override
+  String get obFightTitle => '몬스터와 싸우세요.';
+
+  @override
+  String get obFightBody => '7개 월드에서 펼치는 140번의 팔굽혀펴기 전투. 한 번 할 때마다 몬스터를 공격합니다.';
+
+  @override
+  String obSevenWorlds(String from, String to) {
+    return '7개 월드: ${from}부터 ${to}까지';
+  }
+
+  @override
+  String get obWeaponsTitle => '별로 무기를 잠금 해제';
+
+  @override
+  String get obWeaponsBody => '월드마다 전용 무기가 필요해요. 랭크는 걸려 있지 않아요.';
+
+  @override
+  String get fightDefeated => '처치!';
+
+  @override
+  String get nextWeapon => '다음 무기';
+
+  @override
+  String opensWorld(String world) {
+    return '${world} 열림';
+  }
+
+  @override
+  String weaponAtStars(String count) {
+    return '별 ${count}개에서';
+  }
+
+  @override
+  String topTenIn(String country) {
+    return '${country} 상위 10위';
   }
 }
