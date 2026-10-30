@@ -359,4 +359,83 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('YOU LOST'), findsOneWidget);
   });
+
+  testWidgets('the Adventure tab fits a small iPhone, every weapon at hand', (
+    tester,
+  ) async {
+    phone(tester, size: const Size(375, 667));
+    final plan = PromoPlan();
+    await tester.pumpWidget(_app(SetupScreen(plan: plan)));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Adventure'));
+    await tester.pumpAndSettle();
+    expect(plan.adventure, isTrue);
+    expect(find.byKey(const Key('fightLevel')), findsOneWidget);
+    expect(tester.takeException(), isNull);
+
+    // The level's own plus is the first on the screen.
+    await tester.tap(find.byIcon(Icons.add_circle_outline).first);
+    await tester.pumpAndSettle();
+    expect(plan.fightLevel, 2);
+
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('weapon7')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('weapon7')));
+    await tester.pumpAndSettle();
+    expect(plan.fightWeapon, 7);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('an adventure take: the fight, its result, and back', (
+    tester,
+  ) async {
+    phone(tester);
+    final source = _Source();
+    promoPoseSource = () => source;
+    // Level one takes 60 and the gauntlets hit for 10: six push-ups.
+    final plan = PromoPlan(adventure: true, countdownSeconds: 3, record: false);
+
+    await tester.pumpWidget(_app(SetupScreen(plan: plan)));
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('startPromo')),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.ensureVisible(find.byKey(const Key('startPromo')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('startPromo')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+
+    // Down in position through the setup's three seconds.
+    for (var i = 0; i < 3500 ~/ kFrameMs; i++) {
+      source.emit(pushUpPose(1));
+      await tester.pump(const Duration(milliseconds: kFrameMs));
+    }
+    expect(find.byKey(const Key('fightCard')), findsOneWidget);
+
+    // Eight push-ups' worth of movement; the monster is down at six.
+    final result = find.byKey(const Key('adventureResult'));
+    for (final pose in pushUpSet(8, lead: 0)) {
+      if (result.evaluate().isNotEmpty) break;
+      source.emit(pose);
+      await tester.pump(const Duration(milliseconds: kFrameMs));
+    }
+    await tester.pump(const Duration(seconds: 2));
+    await tester.pumpAndSettle();
+
+    expect(result, findsOneWidget);
+    expect(tester.takeException(), isNull);
+
+    // The way out of the result is back to the setup.
+    await tester.tap(find.byKey(const Key('adventureMap')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('startPromo')), findsOneWidget);
+  });
 }

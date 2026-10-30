@@ -940,7 +940,6 @@ class AdventureResultView extends StatelessWidget {
                     ),
                   ],
                 ),
-                const AdNotice(),
               ],
             ),
           ),

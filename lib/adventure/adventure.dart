@@ -259,10 +259,6 @@ class Adventure extends ChangeNotifier {
       math.max(i < a.length ? a[i] : 0, i < b.length ? b[i] : 0).clamp(0, 3),
   ];
 
-  static bool _same(List<int> a, List<int> b) =>
-      a.length == b.length &&
-      [for (var i = 0; i < a.length; i++) a[i] == b[i]].every((same) => same);
-
   Future<void> _save() async {
     try {
       final store = await SharedPreferences.getInstance();
