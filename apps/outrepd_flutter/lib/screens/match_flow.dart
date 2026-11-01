@@ -1099,6 +1099,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
             opponentTierIdx: _opponent.tierIdx,
             opponentDivIdx: _opponent.divIdx,
             opponentXp: _opponent.xp,
+            opponentAvatarUrl: _opponent.avatarUrl,
             ranked: live.ranked,
           );
         }

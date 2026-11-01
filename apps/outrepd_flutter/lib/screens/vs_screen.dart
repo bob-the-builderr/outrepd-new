@@ -3,10 +3,17 @@
 /// VS exactly between the two pictures (the user's picks, 2026-11-01: the
 /// first design, refined). A Pro enters with lightning, a holo edge and the
 /// shine passing over them; the other phone sees it too.
+///
+/// It comes in as one move: the opponent's half drops from the top and this
+/// account's rises from the foot, VS pops between them, then the lightning
+/// flashes once. Each side is the lifter its account made; an account that
+/// made none but has a photo shows the photo, filling its half; one with
+/// neither, the lifter its name gives.
 library;
 
 import 'package:flutter/material.dart';
 
+import '../avatar.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../lifter/catalog.dart';
@@ -22,7 +29,10 @@ import 'pro_parts.dart';
 /// How long the VS screen stays: three seconds, counted down at its foot.
 const kVsTime = Duration(seconds: 3);
 
-class VsScreen extends StatelessWidget {
+/// What a side shows: a lifter to draw, or a photo.
+typedef _Face = ({Lifter? lifter, ImageProvider? photo});
+
+class VsScreen extends StatefulWidget {
   const VsScreen({
     super.key,
     required this.opponentId,
@@ -30,6 +40,7 @@ class VsScreen extends StatelessWidget {
     required this.opponentTierIdx,
     required this.opponentDivIdx,
     this.opponentXp,
+    this.opponentAvatarUrl,
     this.ranked = true,
   });
 
@@ -38,11 +49,71 @@ class VsScreen extends StatelessWidget {
   final int opponentTierIdx;
   final int opponentDivIdx;
   final int? opponentXp;
+
+  /// Their uploaded picture, shown when they made no lifter.
+  final String? opponentAvatarUrl;
   final bool ranked;
 
   @override
+  State<VsScreen> createState() => _VsScreenState();
+}
+
+class _VsScreenState extends State<VsScreen> with SingleTickerProviderStateMixin {
+  /// The entrance, start to finish: halves in, VS, the lightning.
+  late final AnimationController _in = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 950),
+  );
+
+  // Its parts: the halves meet, VS pops as they do, the names and the line
+  // appear, the lightning flashes last.
+  late final _halves = CurvedAnimation(parent: _in, curve: const Interval(0, 0.45, curve: Curves.easeOutCubic));
+  late final _vs = CurvedAnimation(parent: _in, curve: const Interval(0.38, 0.75, curve: Curves.easeOutBack));
+  late final _names = CurvedAnimation(parent: _in, curve: const Interval(0.45, 0.8, curve: Curves.easeOut));
+  late final _flash = CurvedAnimation(parent: _in, curve: const Interval(0.6, 1));
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_in.isAnimating || _in.isCompleted) return;
+    if (MediaQuery.maybeDisableAnimationsOf(context) ?? false) {
+      _in.value = 1;
+    } else {
+      _in.forward();
+    }
+  }
+
+  @override
+  void dispose() {
+    _halves.dispose();
+    _vs.dispose();
+    _names.dispose();
+    _flash.dispose();
+    _in.dispose();
+    super.dispose();
+  }
+
+  /// This account: the lifter it made, or the photo it chose over it, or
+  /// the lifter its name gives.
+  _Face _mine(String name) => switch (avatar.picture) {
+    final LifterPicture made => (lifter: made.lifter, photo: null),
+    final ImageProvider photo => (lifter: null, photo: photo),
+    null => (lifter: lifterFor(name), photo: null),
+  };
+
+  /// The opponent: the lifter they made, or their photo, or the lifter their
+  /// name gives.
+  _Face _theirs() {
+    final made = Looks.instance.lifter(widget.opponentId);
+    if (made != null) return (lifter: made, photo: null);
+    final url = widget.opponentAvatarUrl;
+    if (url != null && url.isNotEmpty) return (lifter: null, photo: NetworkImage(url));
+    return (lifter: lifterFor(widget.opponentName), photo: null);
+  }
+
+  @override
   Widget build(BuildContext context) => ListenableBuilder(
-    listenable: Listenable.merge([Looks.instance, MyLifter.instance, Subscription.instance]),
+    listenable: Listenable.merge([Looks.instance, MyLifter.instance, Subscription.instance, avatar]),
     builder: (context, _) => LayoutBuilder(builder: _layout),
   );
 
@@ -51,12 +122,9 @@ class VsScreen extends StatelessWidget {
     final colors = context.colors;
     final w = box.maxWidth, h = box.maxHeight;
     final me = demoProfile;
-    final looks = Looks.instance;
     final mePro = Subscription.instance.active;
-    final themPro = looks.pro(opponentId);
+    final themPro = Looks.instance.pro(widget.opponentId);
     final anyPro = mePro || themPro;
-    final mine = MyLifter.instance.current(me.username);
-    final theirs = looks.lifter(opponentId) ?? lifterFor(opponentName);
 
     // The design's measures, as shares of the screen (drawn at 824 × 1830).
     final top = h * 0.057;
@@ -66,51 +134,80 @@ class VsScreen extends StatelessWidget {
     final art = w * 1.097;
     final vsY = (split.left + split.right + rise.left + rise.right) / 4;
 
+    final halves = _halves, vs = _vs, names = _names, flash = _flash;
+
     Widget side({
       required Path Function(Size) shape,
-      required Lifter lifter,
+      required _Face face,
       required double y,
+      required double photoTop,
+      required double photoBottom,
       required double fadeFrom,
       required double fadeTo,
       required bool pro,
-    }) => Positioned.fill(
-      child: ClipPath(
-        clipper: _PathClip(shape),
-        child: Stack(
-          children: [
-            Positioned(
-              left: -w * 0.0485,
-              top: y,
-              width: art,
-              height: art,
-              child: pro
-                  ? AliveLifter(
-                      lifter: lifter,
-                      builder: (context, shown, breath) =>
-                          breathing(breath, LifterImage(shown, size: art)),
-                    )
-                  : LifterImage(lifter, size: art),
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              top: fadeFrom,
-              height: fadeTo - fadeFrom,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [colors.background.withValues(alpha: 0), colors.background.withValues(alpha: 0.96)],
+      required double from,
+    }) {
+      final lifter = face.lifter;
+      final photo = face.photo;
+      return AnimatedBuilder(
+        animation: halves,
+        builder: (context, child) => Transform.translate(
+          offset: Offset(0, from * (1 - halves.value)),
+          child: child,
+        ),
+        child: ClipPath(
+          clipper: _PathClip(shape),
+          child: Stack(
+            children: [
+              if (photo != null)
+                // A photo fills its half, faces kept a little above the middle.
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  top: photoTop,
+                  bottom: h - photoBottom,
+                  child: Image(
+                    image: photo,
+                    fit: BoxFit.cover,
+                    alignment: const Alignment(0, -0.3),
+                    errorBuilder: (context, error, stack) => const SizedBox.shrink(),
+                  ),
+                )
+              else if (lifter != null)
+                Positioned(
+                  left: -w * 0.0485,
+                  top: y,
+                  width: art,
+                  height: art,
+                  child: pro
+                      ? AliveLifter(
+                          lifter: lifter,
+                          builder: (context, shown, breath) =>
+                              breathing(breath, LifterImage(shown, size: art)),
+                        )
+                      : LifterImage(lifter, size: art),
+                ),
+              Positioned(
+                left: 0,
+                right: 0,
+                top: fadeFrom,
+                height: fadeTo - fadeFrom,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [colors.background.withValues(alpha: 0), colors.background.withValues(alpha: 0.96)],
+                    ),
                   ),
                 ),
               ),
-            ),
-            if (pro) const Positioned.fill(child: ShineBand(strength: 0.22, child: SizedBox.expand())),
-          ],
+              if (pro) const Positioned.fill(child: ShineBand(strength: 0.22, child: SizedBox.expand())),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
 
     Widget name({
       required String text,
@@ -119,41 +216,44 @@ class VsScreen extends StatelessWidget {
       required Color lineColour,
       required bool pro,
       required bool end,
-    }) => Row(
-      mainAxisAlignment: end ? MainAxisAlignment.end : MainAxisAlignment.start,
-      children: [
-        if (!end) ...[_Bar(colour: bar), const SizedBox(width: 9)],
-        Flexible(
-          child: Column(
-            crossAxisAlignment: end ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (pro && end) ...[const ProChip(height: 18), const SizedBox(width: 7)],
-                  Flexible(
-                    child: Text(
-                      text,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: colors.text, fontSize: 25, fontWeight: FontWeight.w800),
+    }) => FadeTransition(
+      opacity: names,
+      child: Row(
+        mainAxisAlignment: end ? MainAxisAlignment.end : MainAxisAlignment.start,
+        children: [
+          if (!end) ...[_Bar(colour: bar), const SizedBox(width: 9)],
+          Flexible(
+            child: Column(
+              crossAxisAlignment: end ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (pro && end) ...[const ProChip(height: 18), const SizedBox(width: 7)],
+                    Flexible(
+                      child: Text(
+                        text,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: colors.text, fontSize: 25, fontWeight: FontWeight.w800),
+                      ),
                     ),
-                  ),
-                  if (pro && !end) ...[const SizedBox(width: 7), const ProChip(height: 18)],
-                ],
-              ),
-              Text(
-                line,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: lineColour, fontSize: 13.5, fontWeight: FontWeight.w600),
-              ),
-            ],
+                    if (pro && !end) ...[const SizedBox(width: 7), const ProChip(height: 18)],
+                  ],
+                ),
+                Text(
+                  line,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: lineColour, fontSize: 13.5, fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
           ),
-        ),
-        if (end) ...[const SizedBox(width: 9), _Bar(colour: bar)],
-      ],
+          if (end) ...[const SizedBox(width: 9), _Bar(colour: bar)],
+        ],
+      ),
     );
 
     String level(int? xp) => xp == null ? '' : ' · ${l.levelShort(localNumber(context, levelOf(xp)))}';
@@ -162,42 +262,55 @@ class VsScreen extends StatelessWidget {
       color: colors.background,
       child: Stack(
         children: [
-          // The opponent, above.
-          side(
-            shape: (s) => Path()
-              ..moveTo(0, top)
-              ..lineTo(s.width, top)
-              ..lineTo(s.width, split.right)
-              ..lineTo(0, split.left)
-              ..close(),
-            lifter: theirs,
-            y: h * 0.0164,
-            fadeFrom: h * 0.30,
-            fadeTo: split.left + 6,
-            pro: themPro,
-          ),
-          // This account, below.
-          side(
-            shape: (s) => Path()
-              ..moveTo(0, rise.left)
-              ..lineTo(s.width, rise.right)
-              ..lineTo(s.width, foot)
-              ..lineTo(0, foot)
-              ..close(),
-            lifter: mine,
-            y: h * 0.4535,
-            fadeFrom: h * 0.743,
-            fadeTo: foot + 2,
-            pro: mePro,
-          ),
-          // The line between them: holo when either is Pro.
+          // The opponent, dropping in from the top.
           Positioned.fill(
-            child: CustomPaint(
-              painter: _Split(
-                from: Offset(0, (split.left + rise.left) / 2 + h * 0.033),
-                to: Offset(w, (split.right + rise.right) / 2 + h * 0.033),
-                holo: anyPro,
-                plain: colors.border,
+            child: side(
+              shape: (s) => Path()
+                ..moveTo(0, top)
+                ..lineTo(s.width, top)
+                ..lineTo(s.width, split.right)
+                ..lineTo(0, split.left)
+                ..close(),
+              face: _theirs(),
+              y: h * 0.0164,
+              photoTop: top,
+              photoBottom: split.left,
+              fadeFrom: h * 0.30,
+              fadeTo: split.left + 6,
+              pro: themPro,
+              from: -h * 0.5,
+            ),
+          ),
+          // This account, rising from the foot.
+          Positioned.fill(
+            child: side(
+              shape: (s) => Path()
+                ..moveTo(0, rise.left)
+                ..lineTo(s.width, rise.right)
+                ..lineTo(s.width, foot)
+                ..lineTo(0, foot)
+                ..close(),
+              face: _mine(me.username),
+              y: h * 0.4535,
+              photoTop: rise.right,
+              photoBottom: foot,
+              fadeFrom: h * 0.743,
+              fadeTo: foot + 2,
+              pro: mePro,
+              from: h * 0.5,
+            ),
+          ),
+          // The line between them, once both are in: holo when either is Pro.
+          Positioned.fill(
+            child: FadeTransition(
+              opacity: names,
+              child: CustomPaint(
+                painter: _Split(
+                  from: Offset(0, (split.left + rise.left) / 2 + h * 0.033),
+                  to: Offset(w, (split.right + rise.right) / 2 + h * 0.033),
+                  holo: anyPro,
+                  plain: colors.border,
+                ),
               ),
             ),
           ),
@@ -206,15 +319,15 @@ class VsScreen extends StatelessWidget {
             left: 0,
             right: 0,
             top: h * 0.012,
-            child: Center(child: _LivePill(text: ranked ? l.vsLiveRanked : l.vsLiveFriendly)),
+            child: Center(child: _LivePill(text: widget.ranked ? l.vsLiveRanked : l.vsLiveFriendly)),
           ),
           Positioned(
             left: 20,
             right: 20,
             top: split.left - h * 0.105,
             child: name(
-              text: opponentName,
-              line: '${tierLabel(l, opponentTierIdx, opponentDivIdx)}${level(opponentXp)}',
+              text: widget.opponentName,
+              line: '${tierLabel(l, widget.opponentTierIdx, widget.opponentDivIdx)}${level(widget.opponentXp)}',
               bar: colors.rival,
               lineColour: colors.muted,
               pro: themPro,
@@ -234,19 +347,25 @@ class VsScreen extends StatelessWidget {
               end: true,
             ),
           ),
-          // Lightning either side of VS, for a Pro.
+          // Lightning either side of VS, for a Pro: it flashes once, then
+          // stays.
           if (anyPro) ...[
-            Positioned(left: w * 0.24, top: vsY - h * 0.065, child: _Bolt(size: w * 0.14)),
-            Positioned(right: w * 0.24, top: vsY - h * 0.04, child: _Bolt(size: w * 0.12)),
+            Positioned(left: w * 0.24, top: vsY - h * 0.065, child: _Flash(flash: flash, child: _Bolt(size: w * 0.14))),
+            Positioned(right: w * 0.24, top: vsY - h * 0.04, child: _Flash(flash: flash, child: _Bolt(size: w * 0.12))),
           ],
-          // VS, exactly between the two pictures.
+          // VS, exactly between the two pictures, popping in as they meet.
           Positioned(
             left: 0,
             right: 0,
             top: vsY - w * 0.12,
             height: w * 0.24,
             child: Center(
-              child: _PopIn(
+              child: AnimatedBuilder(
+                animation: vs,
+                builder: (context, child) => Opacity(
+                  opacity: (vs.value * 2).clamp(0.0, 1.0),
+                  child: Transform.scale(scale: 1.8 - 0.8 * vs.value, child: child),
+                ),
                 child: Transform.rotate(
                   angle: -0.14,
                   child: _VsWord(size: w * 0.19, gold: anyPro),
@@ -273,6 +392,45 @@ class VsScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+/// [child] flashing in once: bright and a little big, then settling.
+class _Flash extends StatelessWidget {
+  const _Flash({required this.flash, required this.child});
+
+  final Animation<double> flash;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => AnimatedBuilder(
+    animation: flash,
+    builder: (context, child) {
+      final t = flash.value;
+      // Up to full in the first fifth, a burst of light at the peak, then
+      // the bolt as it stays.
+      final shown = (t / 0.2).clamp(0.0, 1.0);
+      final burst = t < 0.2 ? t / 0.2 : (1 - (t - 0.2) / 0.5).clamp(0.0, 1.0);
+      return Opacity(
+        opacity: shown,
+        child: Transform.scale(
+          scale: 1 + 0.25 * burst,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFFFFE04A).withValues(alpha: 0.7 * burst),
+                  blurRadius: 30,
+                  spreadRadius: 4,
+                ),
+              ],
+            ),
+            child: child,
+          ),
+        ),
+      );
+    },
+    child: child,
+  );
 }
 
 class _PathClip extends CustomClipper<Path> {
@@ -435,22 +593,6 @@ class _BoltPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_BoltPainter old) => false;
-}
-
-/// [child] popping in: a little bigger, then settling.
-class _PopIn extends StatelessWidget {
-  const _PopIn({required this.child});
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) => TweenAnimationBuilder<double>(
-    tween: Tween(begin: 1.6, end: 1),
-    duration: const Duration(milliseconds: 380),
-    curve: Curves.easeOutBack,
-    builder: (context, scale, child) => Transform.scale(scale: scale, child: child),
-    child: child,
-  );
 }
 
 /// 3, 2, 1 in a ring that empties over [kVsTime].

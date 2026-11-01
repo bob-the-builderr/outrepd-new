@@ -121,6 +121,31 @@ void main() {
       });
     }
 
+    testWidgets('an opponent with a photo and no lifter shows the photo',
+        (tester) async {
+      tester.view.physicalSize = const Size(1200, 2580);
+      tester.view.devicePixelRatio = 3;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(_app(
+        const VsScreen(
+          opponentId: '',
+          opponentName: 'photo_guy',
+          opponentTierIdx: 2,
+          opponentDivIdx: 1,
+          opponentAvatarUrl: 'https://example.com/photo.jpg',
+        ),
+        const Size(400, 860),
+      ));
+      await tester.pump(const Duration(seconds: 1));
+      final photos = tester
+          .widgetList<Image>(find.byType(Image))
+          .where((image) => image.image is NetworkImage);
+      expect(photos, hasLength(1));
+      // This account has no photo: its side is a lifter.
+      expect(find.byType(LifterImage), findsOneWidget);
+      await tester.pump(kVsTime);
+    });
+
     testWidgets('a friend match says so', (tester) async {
       tester.view.physicalSize = const Size(1200, 2580);
       tester.view.devicePixelRatio = 3;
