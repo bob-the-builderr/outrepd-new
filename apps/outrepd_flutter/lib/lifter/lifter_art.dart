@@ -48,6 +48,8 @@ String lifterSvg(Lifter l, {LifterView view = LifterView.full}) {
     ..write(_top(l.top, tc, skin))
     ..write(_cel('neck', _P.neck, _shade(skin, -0.06)))
     ..write(_inkLine(_P.neckLines))
+    // A collar that wraps the neck sits in front of it.
+    ..write(_topOver(l.top, tc))
     ..write(h.back)
     ..write(_cel('earL', _P.earL, skin))
     ..write(_cel('earR', _P.earR, skin))
@@ -514,134 +516,324 @@ String _background(int colour, int pattern) {
 }
 
 // ── clothes ──────────────────────────────────────────────────────────────────
+//
+// Round two (the user's OK, 2026-11-01): the part of a garment the picture
+// shows — collar, shoulders, the top of the chest — drawn so each reads on
+// its own: its own collar, closure and texture, fabric folds and a
+// highlight. No words, no logos on any of them.
+
+/// A line in [col]; the order the clothes are written in.
+String _line(String d, String col, [double w = 2.2, double o = 0.8]) => _inkLine(d, w: w, o: o, col: col);
+
+const _metal = '#C9CED6';
+const _gold = '#F2C14E';
+
+/// Fabric on the body: a highlight on the near shoulder, folds at the chest
+/// and under the arms.
+String _fabric(String base, [String extra = '']) =>
+    _line('M4 172 C14 156 32 148 54 146', _shade(base, 0.34), 5, 0.5) +
+    _line('M60 180 C72 188 88 188 98 182 M102 182 C112 188 128 188 140 180', _shade(base, -0.34), 2.2, 0.5) +
+    _line('M46 150 C52 166 52 184 50 200 M154 150 C148 166 148 184 150 200', _shade(base, -0.34), 2.2, 0.55) +
+    extra;
+
+String _seams(String col) => _line('M36 140 C28 158 26 180 28 200 M164 140 C172 158 174 180 172 200', col, 2.4, 0.75);
+
+/// A zipper from [y0] down, its slider and pull at [at].
+String _zipper(num y0, num at, [String col = _metal]) =>
+    '<path d="M100 $y0 L100 200" stroke="$_ink" stroke-width="5.5"/><path d="M100 $y0 L100 200" stroke="$col" stroke-width="3" stroke-dasharray="1.6 1.6"/>'
+    '<rect x="96" y="$at" width="8" height="9" rx="2" fill="$col" stroke="$_ink" stroke-width="1.8"/>'
+    '<path d="M98 ${at + 9} L97 ${at + 20} L103 ${at + 20} L102 ${at + 9} Z" fill="$col" stroke="$_ink" stroke-width="1.6" stroke-linejoin="round"/>';
+
+/// Knit ribbing along a band's middle line.
+String _ribbing(String d, String col, [double w = 6]) =>
+    '<path d="$d" fill="none" stroke="$col" stroke-width="${_n(w)}" stroke-dasharray="1.3 2.2" opacity=".75"/>';
+
+String _hoodOf(String fill) =>
+    _cel('hood', 'M46 142 C42 112 62 94 84 98 L86 120 C90 130 110 130 114 120 L116 98 C138 94 158 112 154 142 C136 132 118 130 100 130 C82 130 64 132 46 142 Z', fill, w: 3.2) +
+    _line('M60 128 C66 112 76 104 86 104 M140 128 C134 112 124 104 114 104', _shade(fill, -0.45), 3, 0.7);
+
+String _cords(String col) {
+  const d = 'M90 132 C89 148 88 162 87 176 M110 132 C111 148 112 162 113 176';
+  return '${_line(d, _ink, 4.6, 1)}${_line(d, col, 2.4, 1)}'
+      '<rect x="84.5" y="175" width="5" height="9" rx="1.5" fill="$_metal" stroke="$_ink" stroke-width="1.5"/>'
+      '<rect x="110.5" y="177" width="5" height="9" rx="1.5" fill="$_metal" stroke="$_ink" stroke-width="1.5"/>';
+}
+
+/// A jersey's mesh: rows of small holes.
+String _mesh(String col, double o) {
+  final b = StringBuffer('<g fill="$col" opacity="${_n(o)}">');
+  for (var k = 0; k < 90; k++) {
+    b.write('<circle cx="${(k % 15) * 14 + ((k ~/ 15) % 2) * 7}" cy="${140 + (k ~/ 15) * 11}" r="1.6"/>');
+  }
+  b.write('</g>');
+  return b.toString();
+}
 
 String _top(int i, String tc, String skin) {
-  String body(String fill, {double dark = -0.28, String inner = ''}) => _cel('body', _P.body, fill, dark: dark, inner: inner);
-  String crew(String fill) => _cel('col', 'M78 118 C86 132 114 132 122 118 L124 124 C114 138 86 138 76 124 Z', fill, w: 2.4);
-  String hood(String fill) => _cel('hood', _P.hood, fill);
-  String zip(String col) => _inkLine('M100 136 L100 200', w: 2.6, o: 0.9) + _inkLine('M100 136 L100 200', w: 1, o: 0.9, col: col);
-  final muscles = _inkLine(_P.delts) + _inkLine(_P.traps);
-  const seams = 'M30 142 C26 160 26 182 30 200 M170 142 C174 160 174 182 170 200';
+  final hi = _shade(tc, 0.34), lo = _shade(tc, -0.34), deep = _shade(tc, -0.55);
+  final light = _onCloth(tc) == '#141312' ? _shade(tc, -0.62) : '#F5EFE4';
+  final under = light == '#F5EFE4' ? '#E9E1D2' : '#2A2725';
+  String body(String base, [String extra = '']) => _cel('body', _P.body, base, inner: _fabric(base, extra));
+  const crewCollar = 'M74 116 C84 134 116 134 126 116 L130 124 C118 144 82 144 70 124 Z';
+  const crewRib = 'M72 121 C84 140 116 140 128 121';
+  const ribCollar = 'M70 112 C82 132 118 132 130 112 L134 124 C120 144 80 144 66 124 Z';
+  const ribMiddle = 'M68 118 C82 138 118 138 132 118';
+  const vNeck = 'M78 116 L100 150 L122 116 L130 120 L100 162 L70 120 Z';
+  const shoulderStripes = 'M80 122 C64 132 40 140 16 156 M120 122 C136 132 160 140 184 156';
+  String tankShoulders(bool deepCut) {
+    final l = deepCut
+        ? 'M-12 200 L-12 176 C-8 154 14 142 40 138 C56 136 70 128 79 116 L88 122 C88 150 84 176 82 200 Z'
+        : 'M-12 200 L-12 176 C-8 154 14 142 40 138 C56 136 70 128 79 116 L82 122 C76 140 66 160 62 200 Z';
+    final r = deepCut
+        ? 'M212 200 L212 176 C208 154 186 142 160 138 C144 136 130 128 121 116 L112 122 C112 150 116 176 118 200 Z'
+        : 'M212 200 L212 176 C208 154 186 142 160 138 C144 136 130 128 121 116 L118 122 C124 140 134 160 138 200 Z';
+    return _cel('shL', l, skin) + _cel('shR', r, skin) + _inkLine(_P.delts) + _inkLine(_P.traps);
+  }
+
+  String stripes(String col, [bool edged = true]) {
+    final b = StringBuffer();
+    for (final off in [0, 7]) {
+      final l = 'M${74 - off} ${126 + off} C${56 - off} ${138 + off} ${36 - off} ${146 + off} ${14 - off} ${164 + off}';
+      final r = 'M${126 + off} ${126 + off} C${144 + off} ${138 + off} ${164 + off} ${146 + off} ${186 + off} ${164 + off}';
+      if (edged) b.write(_line(l, _ink, 5, 1) + _line(r, _ink, 5, 1));
+      b.write(_line(l, col, 3, 1) + _line(r, col, 3, 1));
+    }
+    return b.toString();
+  }
+
   switch (kTops[i].id) {
     case 'shirtless':
-      return body(skin) + muscles + _inkLine(_P.pecs);
-    case 'tank':
-      return body(tc) + _cel('shL', _P.shoulderL, skin) + _cel('shR', _P.shoulderR, skin) + muscles;
-    case 'stringer':
-      return body(tc) +
-          _cel('shL', 'M-12 200 L-12 176 C-8 154 14 142 40 138 C56 136 70 128 79 116 L86 122 C86 150 82 176 80 200 Z', skin) +
-          _cel('shR', 'M212 200 L212 176 C208 154 186 142 160 138 C144 136 130 128 121 116 L114 122 C114 150 118 176 120 200 Z', skin) +
-          muscles;
+      return _cel('body', _P.body, skin) + _inkLine(_P.delts) + _inkLine(_P.traps) + _inkLine(_P.pecs);
+    case 'tank' || 'stringer' || 'gold_trim_tank':
+      final deepCut = kTops[i].id == 'stringer';
+      final gold = kTops[i].id == 'gold_trim_tank';
+      final bind = gold ? _gold : _shade(tc, -0.22);
+      final tankEdges = deepCut
+          ? 'M86 122 C86 150 82 176 80 200 M114 122 C114 150 118 176 120 200 M86 124 C92 132 108 132 114 124'
+          : 'M80 122 C74 140 64 160 60 200 M120 122 C126 140 136 160 140 200 M82 124 C90 140 110 140 118 124';
+      return body(gold ? '#141312' : tc) + tankShoulders(deepCut) + _line(tankEdges, _ink, 6.5, 1) + _line(tankEdges, bind, 4, 1) +
+          (gold ? '' : _ribbing(tankEdges, _shade(bind, -0.3), 4));
     case 'tee':
-      return body(tc) + _inkLine(seams, w: 3, o: 0.8) + crew(_shade(tc, -0.15));
+      return body(tc) + _seams(lo) + _cel('col', crewCollar, _shade(tc, -0.1), w: 2.6, inner: _ribbing(crewRib, lo));
     case 'ringer':
-      final trim = _onCloth(tc);
-      return body(tc) + _inkLine(seams, w: 9, o: 1) + _inkLine(seams, w: 5.5, o: 1, col: trim) + crew(trim);
+      final trim = light == '#F5EFE4' ? '#F5EFE4' : '#141312';
+      const bands = 'M34 142 C26 160 24 182 26 200 M166 142 C174 160 176 182 174 200';
+      return body(tc) + _line(bands, _ink, 10, 1) + _line(bands, trim, 6.5, 1) +
+          _cel('col', crewCollar, trim, w: 2.6, inner: _ribbing(crewRib, _shade(trim, -0.25)));
     case 'muscle_tee':
+      final rawEdge = '<path d="M40 138 L48 148 C40 166 38 184 40 200 M160 138 L152 148 C160 166 162 184 160 200" fill="none" stroke="$light" stroke-width="2" stroke-dasharray="2 3" opacity=".8"/>';
       return body(tc) +
-          _cel('arL', 'M-12 200 L-12 176 C-8 154 14 142 40 138 L46 146 C38 164 36 184 38 200 Z', skin) +
-          _cel('arR', 'M212 200 L212 176 C208 154 186 142 160 138 L154 146 C162 164 164 184 162 200 Z', skin) +
-          crew(_shade(tc, -0.15));
+          _cel('arL', 'M-12 200 L-12 176 C-8 154 14 142 40 138 L48 148 C40 166 38 184 40 200 Z', skin) +
+          _cel('arR', 'M212 200 L212 176 C208 154 186 142 160 138 L152 148 C160 166 162 184 160 200 Z', skin) +
+          _inkLine(_P.delts) +
+          rawEdge +
+          _cel('col', 'M76 116 C85 132 115 132 124 116 L128 123 C117 141 83 141 72 123 Z', _shade(tc, -0.12), w: 2.4, inner: _ribbing('M74 120 C85 138 115 138 126 120', lo, 5));
     case 'polo':
-      return body(tc) + _cel('pl', 'M76 116 L100 132 L124 116 L130 124 L104 142 L96 142 L70 124 Z', _shade(tc, 0.15), w: 2.4) +
-          _inkLine('M100 142 L100 168', w: 2, o: 0.8) + _dot(100, 150, 2, '#fff', w: 1.2) + _dot(100, 160, 2, '#fff', w: 1.2);
+      final pique = StringBuffer('<g fill="$lo" opacity=".55">');
+      for (var k = 0; k < 60; k++) {
+        pique.write('<circle cx="${(k * 37) % 200}" cy="${142 + (k * 23) % 58}" r=".9"/>');
+      }
+      pique.write('</g>');
+      final polo = StringBuffer(body(tc, pique.toString()) + _seams(lo))
+        ..write(_cel('plk', 'M94 128 L106 128 L106 170 L94 170 Z', _shade(tc, -0.06), w: 2.2))
+        ..write(_cel('pL', 'M80 114 L64 132 L92 142 L100 130 Z', _shade(tc, 0.1), w: 2.6))
+        ..write(_cel('pR', 'M120 114 L136 132 L108 142 L100 130 Z', _shade(tc, 0.1), w: 2.6));
+      for (final y in [145, 159]) {
+        polo.write('<circle cx="100" cy="$y" r="3" fill="#F5EFE4" stroke="$_ink" stroke-width="1.6"/><circle cx="99" cy="$y" r=".7" fill="$_ink"/><circle cx="101" cy="$y" r=".7" fill="$_ink"/>');
+      }
+      return polo.toString();
     case 'compression':
-      return body(tc) + _inkLine('M100 130 L100 200 M60 150 C70 170 74 186 72 200 M140 150 C130 170 126 186 128 200', w: 2.2, o: 0.55) +
-          _cel('col', 'M76 112 L124 112 L126 126 C114 134 86 134 74 126 Z', _shade(tc, -0.1), w: 2.4);
+      final flatlock = '<path d="M100 132 L100 200 M40 150 C56 160 74 164 92 162 M160 150 C144 160 126 164 108 162" fill="none" stroke="$hi" stroke-width="1.6" stroke-dasharray="3 2" opacity=".8"/>';
+      return body(tc, _line(_P.pecs, lo, 2.4, 0.7) + _line(_P.delts, lo, 2.4, 0.7) + _line('M10 168 C24 152 46 146 66 146', '#fff', 6, 0.25) + flatlock);
     case 'jersey':
-      return body(tc) + _cel('v', _P.vNeck, _shade(tc, 0.35), w: 2.2) + _text(100, 186, '23', 30, _shade(tc, 0.5));
+      return body(tc, _mesh(lo, 0.5)) + _line(shoulderStripes, _ink, 9, 1) + _line(shoulderStripes, light, 5.5, 1) +
+          _cel('v', vNeck, light, w: 2.6) + _text(100, 192, '23', 30, light, stroke: 2.5);
     case 'camo':
-      const blots = [(20, 150, 18, '#3F4A22'), (70, 170, 22, '#8C7A4A'), (140, 150, 16, '#2C3318'), (170, 182, 20, '#3F4A22'), (110, 190, 14, '#8C7A4A'), (40, 188, 16, '#2C3318')];
-      final inner = blots.map((b) => '<ellipse cx="${b.$1}" cy="${b.$2}" rx="${b.$3}" ry="${_n(b.$3 * 0.6)}" fill="${b.$4}"/>').join();
-      return body('#6B7A3A', inner: inner) + crew('#4E5A2A');
+      const blots = [
+        (10, 150, 20, 10, '#3F4A22'), (52, 168, 24, 11, '#8C7A4A'), (96, 152, 16, 8, '#2C3318'), (134, 172, 22, 12, '#3F4A22'),
+        (176, 150, 18, 9, '#8C7A4A'), (30, 192, 22, 9, '#2C3318'), (86, 194, 20, 9, '#3F4A22'), (150, 196, 20, 8, '#2C3318'),
+        (118, 140, 12, 6, '#8C7A4A'), (64, 146, 10, 6, '#2C3318'),
+      ];
+      final shapes = StringBuffer();
+      for (var k = 0; k < blots.length; k++) {
+        final (x, y, rx, ry, c) = blots[k];
+        shapes.write('<path d="M${x - rx} $y C${x - rx} ${_n(y - ry * 1.4)} ${_n(x + rx * 0.2)} ${y - ry} ${x + rx} ${_n(y - ry * 0.4)} '
+            'C${_n(x + rx * 1.3)} ${_n(y + ry * 0.3)} ${_n(x + rx * 0.4)} ${_n(y + ry * 1.2)} ${_n(x - rx * 0.3)} ${y + ry} '
+            'C${_n(x - rx * 0.9)} ${_n(y + ry * 0.9)} ${_n(x - rx * 1.1)} ${_n(y + ry * 0.4)} ${x - rx} $y Z" fill="$c" '
+            'transform="rotate(${(k * 37) % 50 - 25} $x $y)"/>');
+      }
+      return _cel('body', _P.body, '#6B7A3A', inner: shapes.toString() + _fabric('#6B7A3A')) + _seams('#2C3318') +
+          _cel('col', crewCollar, '#3F4A22', w: 2.6, inner: _ribbing(crewRib, '#2C3318'));
     case 'flannel':
-      final line = _shade(tc, -0.35);
-      final inner = [20, 50, 80, 120, 150, 180].map((x) => '<path d="M$x 120 L$x 200" stroke="$line" stroke-width="7" opacity=".6"/>').join() +
-          [150, 172, 194].map((y) => '<path d="M-10 $y L210 $y" stroke="$line" stroke-width="6" opacity=".55"/>').join() +
-          [35, 135].map((x) => '<path d="M$x 120 L$x 200" stroke="#fff" stroke-width="1.5" opacity=".35"/>').join();
-      return body(tc, inner: inner) +
-          _cel('cl', 'M78 116 L100 136 L90 146 L70 124 Z', _shade(tc, 0.1), w: 2.2) +
-          _cel('cr', 'M122 116 L100 136 L110 146 L130 124 Z', _shade(tc, 0.1), w: 2.2) +
-          _inkLine('M100 136 L100 200', w: 2.2, o: 0.8);
+      final dark = _shade(tc, -0.45);
+      final plaid = StringBuffer();
+      for (final x in [16, 46, 76, 124, 154, 184]) {
+        plaid.write('<path d="M$x 120 L$x 200" stroke="$dark" stroke-width="8" opacity=".55"/>');
+      }
+      for (final y in [148, 170, 192]) {
+        plaid.write('<path d="M-10 $y L210 $y" stroke="$dark" stroke-width="7" opacity=".5"/>');
+      }
+      for (final x in [31, 139]) {
+        plaid.write('<path d="M$x 120 L$x 200" stroke="#fff" stroke-width="1.4" opacity=".4"/>');
+      }
+      plaid.write('<path d="M-10 159 L210 159" stroke="#fff" stroke-width="1.2" opacity=".35"/>');
+      return _cel('body', _P.body, tc, inner: plaid.toString() + _fabric(tc)) +
+          _cel('tee', 'M84 124 L116 124 L108 200 L92 200 Z', under, w: 2.4) +
+          _line('M84 124 L92 200 M116 124 L108 200', _ink, 2.6, 1) +
+          _cel('cl', 'M78 112 L92 134 L82 148 L64 124 Z', _shade(tc, 0.08), w: 2.4) +
+          _cel('cr', 'M122 112 L108 134 L118 148 L136 124 Z', _shade(tc, 0.08), w: 2.4) +
+          _cel('pk', 'M54 162 L78 162 L77 176 L66 180 L55 176 Z', _shade(tc, -0.08), w: 2.2) +
+          _dot(66, 172, 2, '#F5EFE4', w: 1.2) + _dot(118, 160, 2.2, '#F5EFE4', w: 1.3) + _dot(118, 182, 2.2, '#F5EFE4', w: 1.3);
     case 'hoodie':
-      return body(tc) + hood(_shade(tc, -0.2)) + _inkLine('M90 136 L88 170 M110 136 L112 170', w: 2.4, o: 0.9) + _inkLine('M60 186 L140 186', w: 3, o: 0.5);
+      return body(tc, _line('M54 200 L64 186 L136 186 L146 200', lo, 2.6, 0.8)) + _seams(lo) + _hoodOf(_shade(tc, -0.08)) + _cords(light);
     case 'windbreaker':
-      return body(tc) + _cel('blk', 'M-12 168 L212 138 L212 200 L-12 200 Z', _shade(tc, 0.45)) + _inkLine('M-12 176 L212 146', w: 5, o: 1, col: _coral) +
-          _cel('col', 'M74 112 L126 112 L128 128 C114 136 86 136 72 128 Z', _shade(tc, -0.15), w: 2.4) +
-          _inkLine('M100 132 L100 200', w: 3, o: 0.95) + _inkLine('M100 132 L100 200', w: 1.2, o: 0.8, col: '#C9CED6');
+      final block = light == '#F5EFE4' ? _shade(tc, 0.55) : _shade(tc, -0.4);
+      return body(tc, '<path d="M-12 172 L100 152 L212 172 L212 200 L-12 200 Z" fill="$block"/>${_line('M-12 168 L100 148 L212 168', _coral, 5, 1)}${_line('M20 160 C34 152 48 150 60 152', '#fff', 4, 0.3)}') +
+          _zipper(130, 140);
     case 'zip_hoodie':
-      return body(tc) + hood(_shade(tc, -0.2)) + _inkLine('M100 128 L100 200', w: 3.2, o: 0.95) + _inkLine('M100 128 L100 200', w: 1.2, o: 0.8, col: '#C9CED6') +
-          _inkLine('M88 136 L86 160 M112 136 L114 160', w: 2, o: 0.8);
+      return body(tc) + _seams(lo) + _hoodOf(_shade(tc, -0.08)) +
+          _cel('v', 'M88 128 L100 152 L112 128 Z', light == '#F5EFE4' ? '#E9E1D2' : '#1E1C1A', w: 2.4) +
+          _line('M100 152 L100 200', _ink, 2, 0.9) + _zipper(152, 154) + _cords(light);
     case 'track_jacket':
-      return body(tc) + _inkLine('M100 124 L100 200', w: 3, o: 0.9) +
-          _cel('col', 'M74 112 L92 112 L100 130 L108 112 L126 112 L128 128 L100 140 L72 128 Z', _shade(tc, -0.15), w: 2.4) +
-          _inkLine('M20 160 L20 200 M28 156 L28 200 M180 160 L180 200 M172 156 L172 200', w: 3, o: 0.85, col: '#fff');
+      return body(tc) + _zipper(118, 118) + stripes(light);
     case 'varsity':
-      const patch = '<path d="M66 154 L70 164 L81 165 L72 172 L75 183 L66 177 L57 183 L60 172 L51 165 L62 164 Z" fill="#E9E1D2" stroke="$_ink" stroke-width="2" stroke-linejoin="round"/>';
-      return body(tc) + _cel('slL', _P.sleeveL, '#E9E1D2') + _cel('slR', _P.sleeveR, '#E9E1D2') +
-          _cel('rib', _P.rib, '#E9E1D2', w: 2.4, inner: '<path d="M72 120 L128 120" stroke="$tc" stroke-width="3"/>') +
-          patch +
-          _inkLine('M100 136 L100 200', w: 2, o: 0.6) + [150, 164, 178, 192].map((y) => _dot(104, y, 1.8, '#E9E1D2', w: 1)).join();
+      const cream = '#E9E1D2';
+      final jacket = StringBuffer(body(tc))
+        ..write(_cel('slL', _P.sleeveL, cream, inner: _line('M-6 178 C4 162 18 152 34 148', '#fff', 4, 0.5)))
+        ..write(_cel('slR', _P.sleeveR, cream))
+        ..write(_cel('rib', ribCollar, tc, w: 2.8, inner: _ribbing(ribMiddle, lo, 7) + _line('M68 120 C82 139 118 139 132 120', cream, 1.8, 1) + _line('M67 125 C81 144 119 144 133 125', cream, 1.8, 1)))
+        ..write('<path d="M66 154 L70 164 L81 165 L72 172 L75 183 L66 177 L57 183 L60 172 L51 165 L62 164 Z" fill="$cream" stroke="$_ink" stroke-width="2.2" stroke-linejoin="round"/>')
+        ..write('<path d="M66 158 L68.5 164.5 L75.5 165 L70 169.5 L72 176.5 L66 172.5 L60 176.5 L62 169.5 L56.5 165 L63.5 164.5 Z" fill="none" stroke="$lo" stroke-width="1" stroke-dasharray="1.5 1.5"/>')
+        ..write(_line('M100 140 L100 200', _ink, 2, 0.6));
+      for (final y in [150, 164, 178, 192]) {
+        jacket.write(_dot(105, y, 2, cream, w: 1.2));
+      }
+      return jacket.toString();
     case 'bomber':
-      return body(tc) + _cel('rib', _P.rib, _coral, w: 2.4) + zip('#C9CED6') + _inkLine('M-10 196 L210 196', w: 5, o: 1, col: _coral);
+      return body(tc, _line('M26 162 C40 152 56 150 70 152', '#fff', 4, 0.3) + _line('M132 156 C146 152 160 154 172 160', '#fff', 3, 0.2)) +
+          _zipper(136, 150) +
+          _cel('rib', ribCollar, deep, w: 2.8, inner: _ribbing(ribMiddle, _shade(deep, -0.3), 7) + _line('M68 122 C82 141 118 141 132 122', _coral, 2, 0.95)) +
+          _cel('pk', 'M18 168 L36 164 L38 180 L20 184 Z', _shade(tc, -0.12), w: 2) + _line('M22 170 L34 167', _metal, 2, 1);
     case 'denim':
-      return body('#3B6EA8') + _inkLine('M100 128 L100 200', w: 2.4, o: 0.9) +
-          _cel('cl', 'M76 114 L96 136 L86 148 L66 124 Z', '#2F5C8E', w: 2.2) + _cel('cr', 'M124 114 L104 136 L114 148 L134 124 Z', '#2F5C8E', w: 2.2) +
-          _cel('pk1', 'M58 158 L84 158 L84 176 L58 176 Z', '#2F5C8E', w: 2) + _cel('pk2', 'M116 158 L142 158 L142 176 L116 176 Z', '#2F5C8E', w: 2) +
-          _inkLine('M58 158 L84 158 M116 158 L142 158 M40 150 L40 200 M160 150 L160 200', w: 1.4, o: 0.6, col: '#E3C27A');
+      const d = '#3B6EA8', dd = '#2F5C8E', stitch = '#E3A94A';
+      final twill = StringBuffer('<g stroke="$dd" stroke-width="1.2" opacity=".55">');
+      for (var k = 0; k < 26; k++) {
+        twill.write('<path d="M${-40 + k * 10} 200 L${k * 10} 140"/>');
+      }
+      twill.write('</g>');
+      final denim = StringBuffer(_cel('body', _P.body, d, inner: twill.toString() + _fabric(d)))
+        ..write(_line('M12 160 C50 150 150 150 188 160', _ink, 2.2, 0.8))
+        ..write('<path d="M12 164 C50 154 150 154 188 164" fill="none" stroke="$stitch" stroke-width="1.4" stroke-dasharray="3 2.5"/>')
+        ..write(_line('M100 136 L100 200', _ink, 2.4, 0.9))
+        ..write('<path d="M104 136 L104 200" fill="none" stroke="$stitch" stroke-width="1.3" stroke-dasharray="3 2.5"/>');
+      for (final x in [56, 118]) {
+        denim
+          ..write(_cel('pk$x', 'M$x 168 L${x + 26} 168 L${x + 25} 180 L${x + 13} 185 L${x + 1} 180 Z', dd, w: 2.2))
+          ..write('<path d="M${x + 3} 171 L${x + 23} 171" stroke="$stitch" stroke-width="1.2" stroke-dasharray="2.5 2"/>')
+          ..write(_dot(x + 13, 179, 2.2, '#C77B3A', w: 1.4));
+      }
+      denim
+        ..write(_dot(100, 150, 2.8, '#C77B3A', w: 1.6))
+        ..write(_dot(100, 192, 2.8, '#C77B3A', w: 1.6))
+        ..write(_cel('dcL', 'M76 110 L58 150 L88 140 L98 128 Z', dd, w: 2.6, inner: '<path d="M74 118 L62 145 L86 137" fill="none" stroke="$stitch" stroke-width="1.3" stroke-dasharray="2.5 2"/>'))
+        ..write(_cel('dcR', 'M124 110 L142 150 L112 140 L102 128 Z', dd, w: 2.6, inner: '<path d="M126 118 L138 145 L114 137" fill="none" stroke="$stitch" stroke-width="1.3" stroke-dasharray="2.5 2"/>'));
+      return denim.toString();
     case 'leather':
-      return body('#1A1817', dark: 0.12) +
-          _cel('lpL', 'M76 114 L100 150 L84 170 L56 136 Z', '#2A2725', w: 2.4, dark: 0.12) +
-          _cel('lpR', 'M124 114 L100 150 L116 170 L144 136 Z', '#2A2725', w: 2.4, dark: 0.12) +
-          _inkLine('M108 150 L114 200', w: 2.6, o: 0.9, col: '#C9CED6') + _inkLine('M30 150 C40 146 50 146 56 150', w: 4, o: 0.45, col: '#fff') +
-          _dot(66, 170, 2.2, '#C9CED6', w: 1) + _dot(134, 170, 2.2, '#C9CED6', w: 1);
+      const lth = '#1A1817', lth2 = '#2A2725';
+      final biker = StringBuffer(_cel('body', _P.body, lth, dark: 0.12, inner: _line('M24 158 C38 148 54 146 64 148', '#fff', 5, 0.35) + _line('M140 154 C152 150 166 152 176 158', '#fff', 3, 0.22)))
+        ..write('<path d="M112 136 L120 200" stroke="$_ink" stroke-width="5"/><path d="M112 136 L120 200" stroke="$_metal" stroke-width="2.6" stroke-dasharray="1.6 1.6"/>')
+        ..write(_cel('lpL', 'M76 114 L102 152 L86 172 L54 136 Z', lth2, w: 2.6, dark: 0.12, inner: _line('M70 130 L84 148', '#fff', 2, 0.25)))
+        ..write(_cel('lpR', 'M124 114 L104 144 L122 168 L146 136 Z', lth2, w: 2.6, dark: 0.12));
+      for (final (x, y) in [(62, 140), (138, 140), (88, 164), (118, 160)]) {
+        biker.write(_dot(x, y, 2.4, _metal, w: 1.2));
+      }
+      biker
+        ..write(_cel('epL', 'M20 152 L46 140 L50 148 L24 160 Z', lth2, w: 2, dark: 0.12))
+        ..write(_cel('epR', 'M180 152 L154 140 L150 148 L176 160 Z', lth2, w: 2, dark: 0.12));
+      return biker.toString();
     case 'puffer_vest':
-      final quilt = [150, 166, 182].map((y) => '<path d="M0 $y L200 $y" stroke="${_shade(tc, -0.35)}" stroke-width="3"/>').join();
-      return body(_shade(tc, -0.4)) + crew(_shade(tc, -0.5)) +
-          _cel('vest', 'M8 200 L14 160 C24 150 40 146 56 144 L74 124 L100 136 L126 124 L144 144 C160 146 176 150 186 160 L192 200 Z', tc, inner: quilt) +
-          _inkLine('M100 136 L100 200', w: 2.6, o: 0.9);
-    case 'gold_bomber':
-      return body('#E2B23C') + _cel('rib', _P.rib, '#141312', w: 2.4) + _inkLine('M100 136 L100 200', w: 2.6, o: 0.9) +
-          _inkLine('M30 152 C40 146 52 144 60 146', w: 5, o: 0.7, col: '#fff') + _inkLine('M-10 196 L210 196', w: 5, o: 1, col: '#141312');
+      final vestBaffles = StringBuffer();
+      for (final y in [146, 164, 182]) {
+        vestBaffles
+          ..write('<path d="M0 $y C60 ${y - 7} 140 ${y - 7} 200 $y" fill="none" stroke="$deep" stroke-width="2.6"/>')
+          ..write('<path d="M20 ${y + 8} C70 ${y + 2} 130 ${y + 2} 180 ${y + 8}" fill="none" stroke="$hi" stroke-width="4" opacity=".5"/>');
+      }
+      return _cel('body', _P.body, under, inner: _fabric(under)) +
+          _cel('vest', 'M10 200 L16 160 C26 150 42 146 58 144 L72 122 L128 122 L142 144 C158 146 174 150 184 160 L190 200 Z', tc, inner: vestBaffles.toString()) +
+          _cel('col', 'M70 104 L130 104 L134 128 C118 138 82 138 66 128 Z', tc, w: 2.8, inner: _line('M70 114 C88 108 112 108 130 114', hi, 4, 0.45) + _line('M68 122 C86 130 114 130 132 122', deep, 2, 0.7)) +
+          _zipper(104, 112);
+    case 'gold_bomber' || 'satin_bomber':
+      final goldOne = kTops[i].id == 'gold_bomber';
+      final satin = goldOne ? '#E2B23C' : '#5B2A9E';
+      final rib = goldOne ? '#141312' : _gold;
+      final stripe = goldOne ? _gold : '#141312';
+      return _cel('body', _P.body, satin, inner: _line('M-6 168 C20 146 50 140 86 150', '#fff', 10, 0.28) + _line('M118 150 C144 142 170 146 204 162', '#fff', 6, 0.18) + _fabric(satin)) +
+          _zipper(136, 150, goldOne ? '#141312' : _gold) +
+          _cel('rib', ribCollar, rib, w: 2.8, inner: _ribbing(ribMiddle, _shade(rib, -0.3), 7) + _line('M68 121 C82 140 118 140 132 121', stripe, 1.8, 1) + _line('M67 126 C81 145 119 145 133 126', stripe, 1.8, 1));
     case 'champion_robe':
       // A star, not a word: nothing written on any garment (the user's rule).
-      const star = '<path d="M152 166 L156 176 L167 177 L158 184 L161 195 L152 189 L143 195 L146 184 L137 177 L148 176 Z" fill="#F2C14E" stroke="$_ink" stroke-width="2" stroke-linejoin="round"/>';
-      return body('#B0182A', inner: '<path d="M-10 150 C40 130 70 140 80 130" stroke="#fff" stroke-width="5" opacity=".25" fill="none"/>') +
-          _cel('lpL', 'M74 114 L100 160 L90 200 L70 200 L56 134 Z', '#F2C14E', w: 2.6) +
-          _cel('lpR', 'M126 114 L100 160 L110 200 L130 200 L144 134 Z', '#F2C14E', w: 2.6) +
+      const star = '<path d="M152 166 L156 176 L167 177 L158 184 L161 195 L152 189 L143 195 L146 184 L137 177 L148 176 Z" fill="$_gold" stroke="$_ink" stroke-width="2" stroke-linejoin="round"/>';
+      return _cel('body', _P.body, '#B0182A', inner: _line('M-6 166 C20 146 48 140 80 146', '#fff', 9, 0.25) + _fabric('#B0182A')) +
+          _cel('shawl', 'M70 112 C76 140 90 170 98 200 L82 200 C70 170 58 142 56 126 Z M130 112 C124 140 110 170 102 200 L118 200 C130 170 142 142 144 126 Z', _gold, w: 2.8, inner: _line('M66 120 C72 146 84 172 90 200 M134 120 C128 146 116 172 110 200', '#FFE08A', 2.4, 0.8)) +
           star;
     case 'pro_tracksuit':
-      return body('#141312', dark: 0.15) + _inkLine('M24 146 L18 200 M34 142 L28 200 M176 146 L182 200 M166 142 L172 200', w: 3.4, o: 1, col: '#F2C14E') +
-          _cel('col', 'M74 112 L126 112 L128 128 C114 136 86 136 72 128 Z', '#1F1D1B', w: 2.4, dark: 0.15) + _inkLine('M100 132 L100 200', w: 3, o: 1, col: '#F2C14E');
-    case 'satin_bomber':
-      return body('#5B2A9E', inner: '<path d="M-10 156 C30 140 60 140 90 160" stroke="#fff" stroke-width="9" opacity=".22" fill="none"/><path d="M120 150 C150 140 180 146 210 160" stroke="#fff" stroke-width="6" opacity=".14" fill="none"/>') +
-          _cel('rib', _P.rib, '#F2C14E', w: 2.4) + _inkLine('M100 136 L100 200', w: 2.6, o: 0.9) + _inkLine('M-10 196 L210 196', w: 5, o: 1, col: '#F2C14E');
+      return _cel('body', _P.body, '#141312', dark: 0.15, inner: _line('M4 172 C14 156 32 148 54 146', '#fff', 5, 0.18)) + _zipper(118, 118, _gold) + stripes(_gold, false);
     case 'holo_jersey':
-      final dots = StringBuffer();
-      for (final y in [150, 162, 174, 186, 198]) {
-        for (var x = 10; x <= 190; x += 20) {
-          dots.write('<circle cx="${x + (y % 24 == 0 ? 0 : 10)}" cy="$y" r="2"/>');
-        }
-      }
-      return '<defs><linearGradient id="hj" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7AD7FF"/><stop offset=".35" stop-color="#C9A8FF"/>'
-          '<stop offset=".7" stop-color="#FF9FD6"/><stop offset="1" stop-color="#B6FF9F"/></linearGradient></defs>'
-          '<path d="${_P.body}" fill="url(#hj)"/><g fill="#fff" opacity=".35">$dots</g>'
-          '<path d="${_P.body}" fill="none" stroke="$_ink" stroke-width="3.4"/>${_cel('v', _P.vNeck, '#141312', w: 2.2)}';
+      // The user's pick D: a sleeveless basketball jersey in a dark oil-slick
+      // finish — black that turns teal, violet and gold in the light — with
+      // gold binding and a gold number.
+      const jerseyEdges = 'M80 122 C74 140 64 160 60 200 M120 122 C126 140 136 160 140 200 M82 124 C90 142 110 142 118 124';
+      return '<defs><linearGradient id="pj" gradientUnits="userSpaceOnUse" x1="0" y1="200" x2="200" y2="120"><stop offset="0" stop-color="#0E3B3F"/><stop offset=".3" stop-color="#14121A"/>'
+          '<stop offset=".55" stop-color="#3B1F5C"/><stop offset=".78" stop-color="#14121A"/><stop offset="1" stop-color="#5C4410"/></linearGradient>'
+          '<clipPath id="pjc"><path d="${_P.body}"/></clipPath></defs>'
+          '<path d="${_P.body}" fill="url(#pj)"/><g clip-path="url(#pjc)">${_mesh('#fff', 0.12)}'
+          '<path d="M30 210 L110 120" stroke="#7AD7FF" stroke-width="10" opacity=".22"/><path d="M90 214 L170 124" stroke="#FF9FD6" stroke-width="6" opacity=".2"/></g>'
+          '<path d="${_P.body}" fill="none" stroke="$_ink" stroke-width="3.4"/>'
+          '${tankShoulders(false)}${_line(jerseyEdges, _ink, 7, 1)}${_line(jerseyEdges, _gold, 4.4, 1)}${_text(100, 194, '00', 32, _gold, stroke: 3)}';
     case 'tie_dye_hoodie':
-      return '<defs><radialGradient id="td" cx="50%" cy="80%" r="70%"><stop offset="0" stop-color="#FFE04A"/><stop offset=".3" stop-color="#FF6FB0"/>'
-          '<stop offset=".55" stop-color="#7B5CFF"/><stop offset=".8" stop-color="#3FD3FF"/><stop offset="1" stop-color="#FF6FB0"/></radialGradient></defs>'
-          '<path d="${_P.body}" fill="url(#td)"/><path d="${_P.body}" fill="none" stroke="$_ink" stroke-width="3.4"/>'
-          '${hood('#5B3FCF')}${_inkLine('M90 136 L88 170 M110 136 L112 170', w: 2.4, o: 0.9)}';
+      return '<defs><radialGradient id="td" cx="50%" cy="85%" r="75%"><stop offset="0" stop-color="#FFE04A"/><stop offset=".28" stop-color="#FF6FB0"/>'
+          '<stop offset=".52" stop-color="#7B5CFF"/><stop offset=".76" stop-color="#3FD3FF"/><stop offset="1" stop-color="#FF6FB0"/></radialGradient></defs>'
+          '<path d="${_P.body}" fill="url(#td)"/>${_line('M4 172 C14 156 32 148 54 146', '#fff', 5, 0.35)}'
+          '${_line('M60 180 C72 188 88 188 98 182 M102 182 C112 188 128 188 140 180', '#3A2A7A', 2.2, 0.4)}'
+          '<path d="${_P.body}" fill="none" stroke="$_ink" stroke-width="3.4"/>${_hoodOf('#5B3FCF')}${_cords('#F5EFE4')}';
     case 'gloss_puffer':
-      final quilt = [150, 168, 186].map((y) => '<path d="M-10 $y C60 ${y - 8} 140 ${y - 8} 210 $y" stroke="#000" stroke-width="3" fill="none"/>'
-          '<path d="M10 ${y - 9} C70 ${y - 16} 130 ${y - 16} 190 ${y - 9}" stroke="#fff" stroke-width="4" opacity=".2" fill="none"/>').join();
-      return body('#121214', dark: 0.1, inner: quilt) + _cel('col', 'M70 110 L130 110 L134 130 C116 140 84 140 66 130 Z', '#1E1E22', w: 2.6, dark: 0.1) +
-          _inkLine('M100 136 L100 200', w: 2.6, o: 0.9, col: '#C9CED6');
-    case 'gold_trim_tank':
-      return body('#141312', dark: 0.15) + _cel('shL', _P.shoulderL, skin) + _cel('shR', _P.shoulderR, skin) +
-          _inkLine('M82 122 C76 140 66 160 62 200 M118 122 C124 140 134 160 138 200 M82 122 C90 132 110 132 118 122', w: 4, o: 1, col: '#F2C14E') + muscles;
+      final glossBaffles = StringBuffer();
+      for (final y in [146, 164, 182]) {
+        glossBaffles
+          ..write('<path d="M-10 $y C60 ${y - 8} 140 ${y - 8} 210 $y" fill="none" stroke="#000" stroke-width="3"/>')
+          ..write('<path d="M14 ${y + 8} C70 ${y + 1} 130 ${y + 1} 186 ${y + 8}" fill="none" stroke="#fff" stroke-width="4" opacity=".28"/>');
+      }
+      return _cel('body', _P.body, '#121214', dark: 0.1, inner: glossBaffles.toString()) + _zipper(104, 112);
     default:
       return body(tc);
+  }
+}
+
+/// Collars that wrap the neck, drawn after it so they sit in front.
+String _topOver(int i, String tc) {
+  final hi = _shade(tc, 0.34), deep = _shade(tc, -0.55);
+  String pull([String col = _metal]) =>
+      '<path d="M100 114 L100 140" stroke="$_ink" stroke-width="5"/><path d="M100 114 L100 140" stroke="$col" stroke-width="2.6" stroke-dasharray="1.6 1.6"/>'
+      '<rect x="96" y="112" width="8" height="8" rx="2" fill="$col" stroke="$_ink" stroke-width="1.6"/><path d="M98 120 L97 129 L103 129 L102 120 Z" fill="$col" stroke="$_ink" stroke-width="1.4"/>';
+  const stand = 'M76 110 C86 118 114 118 124 110 L127 132 C114 141 86 141 73 132 Z';
+  const puffed = 'M72 106 C84 117 116 117 128 106 L132 132 C118 143 82 143 68 132 Z';
+  switch (kTops[i].id) {
+    case 'compression':
+      return _cel('stand', 'M76 108 C86 116 114 116 124 108 L126 130 C114 138 86 138 74 130 Z', _shade(tc, -0.08), w: 2.8, inner: _line('M75 116 C88 124 112 124 125 116', hi, 2.4, 0.6));
+    case 'windbreaker':
+      const cord = 'M84 126 L82 140 M116 126 L118 140';
+      return _cel('stand', stand, tc, w: 2.8, inner: _line('M75 118 C88 126 112 126 125 118', hi, 2.4, 0.6)) + pull() +
+          _line(cord, _ink, 3.4, 1) + _line(cord, '#F5EFE4', 1.6, 1) + _dot(82, 142, 2.6, '#141312', w: 1.2) + _dot(118, 142, 2.6, '#141312', w: 1.2);
+    case 'track_jacket':
+      return _cel('stand', stand, tc, w: 2.8, inner: _line('M75 118 C88 126 112 126 125 118', hi, 2.4, 0.6)) + pull();
+    case 'pro_tracksuit':
+      return _cel('stand', stand, '#141312', w: 2.8, dark: 0.15, inner: _line('M75 118 C88 126 112 126 125 118', _gold, 2.4, 0.9)) + pull(_gold);
+    case 'puffer_vest':
+      return _cel('stand', puffed, tc, w: 2.8, inner: _line('M72 114 C86 122 114 122 128 114', hi, 4, 0.5) + _line('M70 125 C86 134 114 134 130 125', deep, 2, 0.7)) + pull();
+    case 'gloss_puffer':
+      return _cel('stand', puffed, '#121214', w: 2.8, dark: 0.1, inner: _line('M72 114 C86 122 114 122 128 114', '#fff', 4, 0.3)) + pull();
+    default:
+      return '';
   }
 }
 
