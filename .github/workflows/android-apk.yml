@@ -12,15 +12,10 @@
 #   REVENUECAT_ANDROID_KEY            RevenueCat's public Google Play key
 #                                     (goog_...). Without it the build has no
 #                                     paywall; the run says so in a warning.
-#   APPLOVIN_SDK_KEY                  the AppLovin account's SDK key, and the
-#   APPLOVIN_ANDROID_INTERSTITIAL     Android interstitial ad unit's id from
-#                                     AppLovin MAX. Without both, a build with
-#                                     no ads (lib/ads.dart).
 #   ADMOB_ANDROID_APP_ID              the Android app's id in AdMob
 #                                     (ca-app-pub-...~...), and its
 #   ADMOB_ANDROID_INTERSTITIAL        interstitial ad unit (ca-app-pub-.../...).
-#                                     Only Google's consent form uses AdMob
-#                                     now; the ads are AppLovin's.
+#                                     Without both, a build with no ads.
 #   REVENUECAT_TEST_KEY               RevenueCat's Test Store key. Adds a
 #                                     debug "outrepd test" APK where the
 #                                     paywall can be tried with simulated
@@ -74,9 +69,6 @@ jobs:
       # (android/app/build.gradle.kts); the ad unit goes into the app.
       ADMOB_ANDROID_APP_ID: ${{ secrets.ADMOB_ANDROID_APP_ID }}
       ADMOB_ANDROID_INTERSTITIAL: ${{ secrets.ADMOB_ANDROID_INTERSTITIAL }}
-      # AppLovin MAX (lib/ads.dart): the ads themselves.
-      APPLOVIN_SDK_KEY: ${{ secrets.APPLOVIN_SDK_KEY }}
-      APPLOVIN_ANDROID_INTERSTITIAL: ${{ secrets.APPLOVIN_ANDROID_INTERSTITIAL }}
       # Continue with Google: the web client id from Google Cloud. Without
       # it the Google button is not shown.
       GOOGLE_WEB_CLIENT_ID: ${{ secrets.GOOGLE_WEB_CLIENT_ID }}
@@ -119,12 +111,7 @@ jobs:
             esac
             printf 'ADMOB_ANDROID_INTERSTITIAL=%s\n' "$ADMOB_ANDROID_INTERSTITIAL" >> supabase/keys.env
           else
-            echo "::warning::No ADMOB_ANDROID_APP_ID / ADMOB_ANDROID_INTERSTITIAL secrets: Google's consent form uses its sample app id."
-          fi
-          if [ -n "$APPLOVIN_SDK_KEY" ] && [ -n "$APPLOVIN_ANDROID_INTERSTITIAL" ]; then
-            printf 'APPLOVIN_SDK_KEY=%s\nAPPLOVIN_ANDROID_INTERSTITIAL=%s\n' "$APPLOVIN_SDK_KEY" "$APPLOVIN_ANDROID_INTERSTITIAL" >> supabase/keys.env
-          else
-            echo "::warning::No APPLOVIN_SDK_KEY / APPLOVIN_ANDROID_INTERSTITIAL secrets: this build has no ads."
+            echo "::warning::No ADMOB_ANDROID_APP_ID / ADMOB_ANDROID_INTERSTITIAL secrets: this build has no ads."
           fi
           if [ -n "$GOOGLE_WEB_CLIENT_ID" ]; then
             printf 'GOOGLE_WEB_CLIENT_ID=%s\n' "$GOOGLE_WEB_CLIENT_ID" >> supabase/keys.env
@@ -343,7 +330,7 @@ jobs:
             echo "apk         ${{ steps.apk.outcome }} $( [ -f "$apk" ] && stat -c %s "$apk" ) bytes"
             echo "aab         ${{ steps.aab.outcome }} $( [ -f "$aab" ] && stat -c %s "$aab" ) bytes"
             echo "paywall key $( [ -n "$REVENUECAT_ANDROID_KEY" ] && echo yes || echo no )"
-            echo "ads $( [ -n "$APPLOVIN_SDK_KEY" ] && [ -n "$APPLOVIN_ANDROID_INTERSTITIAL" ] && echo yes || echo no ) (AppLovin MAX)"
+            echo "ads $( [ -n "$ADMOB_ANDROID_APP_ID" ] && [ -n "$ADMOB_ANDROID_INTERSTITIAL" ] && echo yes || echo no )"
             echo "download    https://github.com/${GITHUB_REPOSITORY}/releases/latest/download/OUTREPD.apk"
             echo "firebase    ${{ steps.firebase.outputs.ready }} — ${{ steps.firebase.outputs.note }}"
             if [ -f "$RUNNER_TEMP/cert.txt" ]; then

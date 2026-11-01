@@ -78,12 +78,8 @@ dependencies:
   clock: ^1.1.2
   # The subscription. Store purchases through RevenueCat; see lib/subscription.dart.
   purchases_flutter: ^10.13.2
-  # The ads after a game: AppLovin MAX, an auction between networks on every
-  # ad (the user's pick, 2026-11-01); see lib/ads.dart. Pinned, like the ads
-  # package before it.
-  applovin_max: 4.6.4
-  # Only for Google's consent form where the law asks for one; the ads
-  # themselves are AppLovin's. Pinned: 9.2.0 was days old when this went in.
+  # The ads after a game, and Google's consent form where the law asks for
+  # one; see lib/ads.dart. Pinned: 9.2.0 was days old when this went in.
   google_mobile_ads: 9.1.0
   # Apple's tracking question, asked once before the first ad.
   app_tracking_transparency: ^2.0.7
