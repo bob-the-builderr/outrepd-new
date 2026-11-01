@@ -21,6 +21,29 @@ subprojects {
     val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
     project.layout.buildDirectory.value(newSubprojectBuildDir)
 }
+// AppLovin MAX's plugin (lib/ads.dart) still compiles against Android 31, and
+// the AndroidX libraries it brings in need 34 or later; it is compiled against
+// 36 instead. Registered before anything is evaluated, which the next block
+// starts, so it runs before the Android plugin reads the setting. By name and
+// reflection: the Android plugin's classes are not on this script's
+// classpath, and AGP 9 has a setter where AGP 8 had a method.
+subprojects {
+    if (name == "applovin_max") {
+        afterEvaluate {
+            val android = extensions.getByName("android")
+            val setter = android.javaClass.methods.firstOrNull {
+                it.name == "setCompileSdk" && it.parameterCount == 1
+            }
+            if (setter != null) {
+                setter.invoke(android, 36)
+            } else {
+                android.javaClass
+                    .getMethod("compileSdkVersion", Int::class.javaPrimitiveType)
+                    .invoke(android, 36)
+            }
+        }
+    }
+}
 subprojects {
     project.evaluationDependsOn(":app")
 }
