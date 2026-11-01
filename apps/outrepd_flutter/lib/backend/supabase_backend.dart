@@ -358,6 +358,33 @@ class SupabaseBackend implements Backend {
   }
 
   @override
+  Future<MonthWinners?> lastMonthWinners() async {
+    if (_db.auth.currentUser == null) return null;
+    final rows = (await _db.rpc<List<dynamic>>(
+      'last_month_winners',
+    )).cast<Map<String, dynamic>>();
+    if (rows.isEmpty) return null;
+    return MonthWinners(
+      season: _seasonDate(rows.first['season'] as String),
+      rows: [
+        for (final row in rows)
+          MonthRow(
+            place: (row['place'] as num).toInt(),
+            id: row['id'] as String,
+            username: row['username'] as String,
+            tierIdx: (row['tier_idx'] as num?)?.toInt() ?? 0,
+            divIdx: (row['div_idx'] as num?)?.toInt() ?? 0,
+            points: (row['points'] as num?)?.toInt() ?? 0,
+            wins: 0,
+            played: (row['played'] as num?)?.toInt() ?? 0,
+            avatarUrl: row['avatar_url'] as String?,
+            xp: (row['xp'] as num?)?.toInt() ?? 0,
+          ),
+      ],
+    );
+  }
+
+  @override
   Future<List<SeasonAward>> mySeasonAwards() async {
     if (_db.auth.currentUser == null) return const [];
     final rows = await _db.rpc<List<dynamic>>('my_season_awards');

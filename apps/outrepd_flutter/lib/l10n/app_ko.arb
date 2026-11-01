@@ -655,6 +655,8 @@
   "seasonOver": "시즌 종료",
   "seasonOverBody": "이제 프로필에 표시돼요. 새로운 달은 0부터 시작해요.",
   "seasonPlayCta": "새로운 달 시작",
+  "monthWinners": "{month} 우승자",
+  "playShort": "플레이",
   "rematchLive": "라이브 재대결",
   "rematchWaiting": "{name} 기다리는 중",
   "rematchAsked": "{name}님이 재대결을 원해요",

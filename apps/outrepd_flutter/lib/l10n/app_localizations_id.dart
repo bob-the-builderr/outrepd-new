@@ -2126,6 +2126,14 @@ class LId extends L {
   String get seasonPlayCta => 'Main bulan baru';
 
   @override
+  String monthWinners(String month) {
+    return 'Pemenang ${month}';
+  }
+
+  @override
+  String get playShort => 'Main';
+
+  @override
   String get rematchLive => 'Tanding ulang langsung';
 
   @override

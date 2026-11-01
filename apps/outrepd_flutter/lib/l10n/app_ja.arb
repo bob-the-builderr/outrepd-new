@@ -655,6 +655,8 @@
   "seasonOver": "シーズン終了",
   "seasonOverBody": "プロフィールに追加されました。新しい月はゼロからスタートです。",
   "seasonPlayCta": "新しい月をプレイ",
+  "monthWinners": "{month}の勝者",
+  "playShort": "プレイ",
   "rematchLive": "ライブで再戦",
   "rematchWaiting": "{name}を待っています",
   "rematchAsked": "{name}が再戦を希望",

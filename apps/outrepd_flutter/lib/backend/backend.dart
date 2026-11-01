@@ -344,6 +344,19 @@ class MonthPlace {
   final int played;
 }
 
+/// The last month to close and its top ten as it finished: what the month's
+/// board shows while the new month has nobody on it yet.
+class MonthWinners {
+  const MonthWinners({required this.season, required this.rows});
+
+  /// The 1st of that month, UTC.
+  final DateTime season;
+
+  /// First place first. [MonthRow.wins] is not kept with an award, so it is
+  /// always 0 here.
+  final List<MonthRow> rows;
+}
+
 /// What the end of a month gives out: a place in the top ten, or the badge
 /// for twenty ranked duels.
 enum SeasonAwardKind { champion, podium, top10, regular }
@@ -1141,6 +1154,10 @@ abstract interface class Backend {
   /// account to ask about.
   Future<MonthPlace?> myMonthPlace({String? country});
 
+  /// The last month to close, with its top ten. Null before any month has
+  /// closed with somebody on it.
+  Future<MonthWinners?> lastMonthWinners();
+
   /// The week's board (supabase/seasons.sql): the month's points since
   /// Monday, 00:00 UTC. Rows and the caller's place come back in the month's
   /// shapes, [MonthPlace.season] being the Monday.
@@ -1474,6 +1491,9 @@ class NoBackend implements Backend {
 
   @override
   Future<MonthPlace?> myMonthPlace({String? country}) async => null;
+
+  @override
+  Future<MonthWinners?> lastMonthWinners() async => null;
 
   @override
   Future<List<MonthRow>> weekBoard({int limit = 100, String? country}) async =>

@@ -2127,6 +2127,14 @@ class LHi extends L {
   String get seasonPlayCta => 'नया महीना खेलें';
 
   @override
+  String monthWinners(String month) {
+    return '${month} के विजेता';
+  }
+
+  @override
+  String get playShort => 'खेलें';
+
+  @override
   String get rematchLive => 'लाइव रीमैच';
 
   @override

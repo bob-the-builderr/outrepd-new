@@ -655,6 +655,8 @@
   "seasonOver": "Temporada encerrada",
   "seasonOverBody": "Já está no seu perfil. O novo mês começa do zero.",
   "seasonPlayCta": "Jogar o novo mês",
+  "monthWinners": "Vencedores · {month}",
+  "playShort": "Jogar",
   "rematchLive": "Revanche ao vivo",
   "rematchWaiting": "Esperando {name}",
   "rematchAsked": "{name} quer revanche",

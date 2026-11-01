@@ -2125,6 +2125,14 @@ class LEn extends L {
   String get seasonPlayCta => 'Play the new month';
 
   @override
+  String monthWinners(String month) {
+    return '${month}\'s winners';
+  }
+
+  @override
+  String get playShort => 'Play';
+
+  @override
   String get rematchLive => 'Rematch live';
 
   @override

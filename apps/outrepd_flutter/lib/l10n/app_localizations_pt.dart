@@ -2129,6 +2129,14 @@ class LPt extends L {
   String get seasonPlayCta => 'Jogar o novo mês';
 
   @override
+  String monthWinners(String month) {
+    return 'Vencedores · ${month}';
+  }
+
+  @override
+  String get playShort => 'Jogar';
+
+  @override
   String get rematchLive => 'Revanche ao vivo';
 
   @override

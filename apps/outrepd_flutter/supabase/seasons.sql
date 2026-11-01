@@ -600,6 +600,42 @@ as $$
    order by a.season desc, a.place nulls last;
 $$;
 
+-- The last month to close: its top ten as it finished, for the month's board
+-- while the new month has nobody on it yet (the user's pick, 2026-11-01).
+-- Read from the awards written when it closed, so the places are the ones it
+-- ended on. Somebody who has since asked to be left off the boards is left
+-- off this as well.
+create or replace function last_month_winners()
+returns table (
+  season date,
+  place int,
+  id uuid,
+  username text,
+  tier_idx int,
+  div_idx int,
+  points int,
+  played int,
+  avatar_url text,
+  xp int
+)
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  perform close_finished_seasons();
+  return query
+  select a.season, a.place, p.id, p.username, p.tier_idx, p.div_idx,
+         a.points, a.played, p.avatar_url, p.xp
+    from season_awards a
+    join profiles p on p.id = a.profile_id
+   where a.season = (select max(c.season) from season_closings c)
+     and a.award in ('champion', 'podium', 'top10')
+     and p.show_on_board
+   order by a.place;
+end;
+$$;
+
 revoke all on function season_points_from_duels(date) from public, anon, authenticated;
 revoke all on function season_points_rebuild(date) from public, anon, authenticated;
 revoke all on function season_points_refresh() from public, anon, authenticated;
@@ -623,3 +659,5 @@ revoke all on function mark_season_awards_seen() from public, anon;
 grant execute on function mark_season_awards_seen() to authenticated;
 revoke all on function lifter_season_awards(uuid) from public, anon;
 grant execute on function lifter_season_awards(uuid) to authenticated;
+revoke all on function last_month_winners() from public, anon;
+grant execute on function last_month_winners() to authenticated;

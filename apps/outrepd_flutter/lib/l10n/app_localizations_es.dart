@@ -2132,6 +2132,14 @@ class LEs extends L {
   String get seasonPlayCta => 'Jugar el nuevo mes';
 
   @override
+  String monthWinners(String month) {
+    return 'Ganadores · ${month}';
+  }
+
+  @override
+  String get playShort => 'Jugar';
+
+  @override
   String get rematchLive => 'Revancha en vivo';
 
   @override

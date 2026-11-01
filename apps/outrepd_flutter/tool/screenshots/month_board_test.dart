@@ -73,6 +73,31 @@ class _Month extends NoBackend {
   );
 }
 
+/// The 1st of a month, before anybody has won LP in it: last month's top ten
+/// stand in for the empty board.
+class _NewMonth extends _Month {
+  @override
+  Future<List<MonthRow>> monthBoard({int limit = 100, String? country}) async =>
+      const [];
+
+  @override
+  Future<MonthPlace?> myMonthPlace({String? country}) async => MonthPlace(
+    season: DateTime.utc(2026, 11),
+    endsAt: clock.now().add(const Duration(days: 29, hours: 23, minutes: 30)),
+    place: null,
+    ofTotal: 0,
+    points: 0,
+    wins: 0,
+    played: 0,
+  );
+
+  @override
+  Future<MonthWinners?> lastMonthWinners() async => MonthWinners(
+    season: DateTime.utc(2026, 10),
+    rows: (await super.monthBoard()).take(10).toList(),
+  );
+}
+
 Widget _app(Widget home) => MaterialApp(
   debugShowCheckedModeBanner: false,
   theme: buildTheme(Brightness.dark),
@@ -127,6 +152,25 @@ void main() {
     await expectLater(
       find.byType(MaterialApp),
       matchesGoldenFile('goldens/month_board_scrolled.png'),
+    );
+  });
+
+  testWidgets('new month', (tester) async {
+    tester.view.physicalSize = const Size(412 * 2, 915 * 2);
+    tester.view.devicePixelRatio = 2;
+    addTearDown(tester.view.reset);
+    final was = demoProfile.placementsDone;
+    demoProfile.placementsDone = kPlacementDuels;
+    addTearDown(() => demoProfile.placementsDone = was);
+    backend = _NewMonth();
+
+    await tester.pumpWidget(_app(const RanksScreen()));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('lengthMonth')));
+    await tester.pumpAndSettle();
+    await expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile('goldens/month_board_new_month.png'),
     );
   });
 

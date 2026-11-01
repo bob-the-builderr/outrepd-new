@@ -2122,6 +2122,14 @@ class LTr extends L {
   String get seasonPlayCta => 'Yeni ayı oyna';
 
   @override
+  String monthWinners(String month) {
+    return '${month} kazananları';
+  }
+
+  @override
+  String get playShort => 'Oyna';
+
+  @override
   String get rematchLive => 'Canlı rövanş';
 
   @override

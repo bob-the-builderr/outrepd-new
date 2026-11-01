@@ -531,6 +531,11 @@ select check_that((select count(*) from season_awards) = 0,
                   'a lifter can read the awards table');
 select check_that((select count(*) from lifter_season_awards(:'A')) = 2,
                   'another lifter''s awards are not on their card');
+-- Last month's top ten, for the new month's empty board: A alone, first.
+select check_that((select count(*) from last_month_winners()) = 1,
+                  'last month''s winners are not the ones with a place');
+select check_that((select id from last_month_winners() where place = 1) = :'A',
+                  'last month''s champion is not first among its winners');
 select must_fail('a lifter closing a month', 'select close_finished_seasons()');
 select must_fail('a lifter reading the raw standings',
                  'select * from season_standings(current_date)');

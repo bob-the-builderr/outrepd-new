@@ -655,6 +655,8 @@
   "seasonOver": "सीज़न खत्म",
   "seasonOverBody": "अब यह आपकी प्रोफ़ाइल पर है। नया महीना शून्य से शुरू होता है।",
   "seasonPlayCta": "नया महीना खेलें",
+  "monthWinners": "{month} के विजेता",
+  "playShort": "खेलें",
   "rematchLive": "लाइव रीमैच",
   "rematchWaiting": "{name} का इंतज़ार",
   "rematchAsked": "{name} रीमैच चाहता है",

@@ -2134,6 +2134,14 @@ class LDe extends L {
   String get seasonPlayCta => 'Den neuen Monat spielen';
 
   @override
+  String monthWinners(String month) {
+    return 'Gewinner im ${month}';
+  }
+
+  @override
+  String get playShort => 'Spielen';
+
+  @override
   String get rematchLive => 'Live-Revanche';
 
   @override

@@ -3923,6 +3923,18 @@ abstract class L {
   /// **'Play the new month'**
   String get seasonPlayCta;
 
+  /// No description provided for @monthWinners.
+  ///
+  /// In en, this message translates to:
+  /// **'{month}\'s winners'**
+  String monthWinners(String month);
+
+  /// No description provided for @playShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get playShort;
+
   /// No description provided for @rematchLive.
   ///
   /// In en, this message translates to:

@@ -2132,6 +2132,14 @@ class LIt extends L {
   String get seasonPlayCta => 'Gioca il nuovo mese';
 
   @override
+  String monthWinners(String month) {
+    return 'Vincitori · ${month}';
+  }
+
+  @override
+  String get playShort => 'Gioca';
+
+  @override
   String get rematchLive => 'Rivincita live';
 
   @override

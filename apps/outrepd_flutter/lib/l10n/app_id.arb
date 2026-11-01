@@ -655,6 +655,8 @@
   "seasonOver": "Musim berakhir",
   "seasonOverBody": "Sekarang sudah ada di profilmu. Bulan baru mulai dari nol.",
   "seasonPlayCta": "Main bulan baru",
+  "monthWinners": "Pemenang {month}",
+  "playShort": "Main",
   "rematchLive": "Tanding ulang langsung",
   "rematchWaiting": "Menunggu {name}",
   "rematchAsked": "{name} mau tanding ulang",

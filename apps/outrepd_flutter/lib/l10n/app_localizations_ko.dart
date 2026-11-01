@@ -2095,6 +2095,14 @@ class LKo extends L {
   String get seasonPlayCta => '새로운 달 시작';
 
   @override
+  String monthWinners(String month) {
+    return '${month} 우승자';
+  }
+
+  @override
+  String get playShort => '플레이';
+
+  @override
   String get rematchLive => '라이브 재대결';
 
   @override

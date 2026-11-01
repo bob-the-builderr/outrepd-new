@@ -2082,6 +2082,14 @@ class LZh extends L {
   String get seasonPlayCta => '开始新的一个月';
 
   @override
+  String monthWinners(String month) {
+    return '${month}获胜者';
+  }
+
+  @override
+  String get playShort => '开始';
+
+  @override
   String get rematchLive => '实时再战';
 
   @override

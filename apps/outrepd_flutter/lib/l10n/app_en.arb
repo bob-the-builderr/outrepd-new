@@ -1280,6 +1280,15 @@
   "seasonOver": "Season over",
   "seasonOverBody": "It's on your profile now. The new month starts from zero.",
   "seasonPlayCta": "Play the new month",
+  "monthWinners": "{month}'s winners",
+  "@monthWinners": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "playShort": "Play",
   "rematchLive": "Rematch live",
   "rematchWaiting": "Waiting for {name}",
   "@rematchWaiting": {

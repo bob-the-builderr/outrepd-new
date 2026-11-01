@@ -45,6 +45,7 @@ class _Month extends NoBackend {
 
   List<SeasonAward> awards = const [];
   int markedSeen = 0;
+  MonthWinners? winners;
 
   @override
   bool get available => true;
@@ -62,6 +63,9 @@ class _Month extends NoBackend {
     wins: 9,
     played: played,
   );
+
+  @override
+  Future<MonthWinners?> lastMonthWinners() async => winners;
 
   @override
   Future<List<SeasonAward>> mySeasonAwards() async => awards;
@@ -207,6 +211,45 @@ group('the month board', () {
 
       expect(find.text('A fresh month'), findsOneWidget);
       expect(find.text('No connection'), findsNothing);
+    });
+
+    testWidgets("a new month shows last month's winners", (tester) async {
+      phone(tester);
+      ranked();
+      backend = _Month(rows: const [], place: null, played: 0, points: 0)
+        ..winners = MonthWinners(
+          season: DateTime.utc(2026, 10),
+          rows: _board(10),
+        );
+      await tester.pumpWidget(_app(const RanksScreen()));
+      await tester.pumpAndSettle();
+      await toMonth(tester);
+
+      expect(find.text('A fresh month'), findsOneWidget);
+      expect(find.byKey(const Key('lastMonthPlay')), findsOneWidget);
+      expect(find.text("OCTOBER'S WINNERS"), findsOneWidget);
+      expect(find.text('karimfit'), findsOneWidget);
+      expect(find.text('CHAMPION'), findsOneWidget);
+      expect(find.text('PODIUM'), findsNWidgets(2));
+      // Fourth to tenth under the podium, each marked with what it won.
+      expect(find.text('Top 10'), findsNWidgets(7));
+    });
+
+    testWidgets("last month's winners fit at 1.3x in de", (tester) async {
+      phone(tester);
+      ranked();
+      backend = _Month(rows: const [], place: null, played: 0, points: 0)
+        ..winners = MonthWinners(
+          season: DateTime.utc(2026, 10),
+          rows: _board(10),
+        );
+      await tester.pumpWidget(
+        _app(const RanksScreen(), scale: 1.3, locale: const Locale('de')),
+      );
+      await tester.pumpAndSettle();
+      await toMonth(tester);
+      expect(tester.takeException(), isNull);
+      expect(find.text('GEWINNER IM OKTOBER'), findsOneWidget);
     });
 
     testWidgets('shows the badge once it is earned', (tester) async {

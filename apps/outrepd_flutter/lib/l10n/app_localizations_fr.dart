@@ -2133,6 +2133,14 @@ class LFr extends L {
   String get seasonPlayCta => 'Jouer le nouveau mois';
 
   @override
+  String monthWinners(String month) {
+    return 'Vainqueurs · ${month}';
+  }
+
+  @override
+  String get playShort => 'Jouer';
+
+  @override
   String get rematchLive => 'Revanche en direct';
 
   @override

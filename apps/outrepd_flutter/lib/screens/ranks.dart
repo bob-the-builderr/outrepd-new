@@ -75,6 +75,9 @@ class _RanksScreenState extends State<RanksScreen> {
   /// the week's the same way.
   List<MonthRow>? _month;
   MonthPlace? _monthPlace;
+
+  /// Last month's top ten, read while this month's board is empty.
+  MonthWinners? _lastMonth;
   List<MonthRow>? _week;
   MonthPlace? _weekPlace;
 
@@ -101,10 +104,22 @@ class _RanksScreenState extends State<RanksScreen> {
       _weekPlace = null;
       _month = null;
       _monthPlace = null;
+      _lastMonth = null;
       _globalPlace = null;
       _error = null;
     });
     _load();
+  }
+
+  /// Last month's top ten, or nothing. This month's board is right without
+  /// it, so a read that fails leaves the board's own message, not an error.
+  Future<MonthWinners?> _readLastMonth() async {
+    try {
+      return await backend.lastMonthWinners();
+    } on Object catch (error) {
+      debugPrint("Could not read last month's winners: $error");
+      return null;
+    }
   }
 
   bool _loading = false;
@@ -200,10 +215,16 @@ class _RanksScreenState extends State<RanksScreen> {
         // ended, so the board read after it is already the new month's.
         final place = await backend.myMonthPlace(country: country);
         final rows = await backend.monthBoard(country: country);
+        // Nobody on it yet: last month's winners stand in, on the world's
+        // board, the one with awards.
+        final winners = rows.isEmpty && country == null
+            ? await _readLastMonth()
+            : null;
         if (stale()) return;
         setState(() {
           _monthPlace = place;
           _month = rows;
+          _lastMonth = winners;
           _fetchedAt[scope] = clock.now();
           _loading = false;
           _error = null;
@@ -414,6 +435,7 @@ class _RanksScreenState extends State<RanksScreen> {
                       rows: _monthRows,
                       mine: _myMonth,
                       week: week,
+                      lastMonth: week ? null : _lastMonth,
                       onLength: (toWeek) => _switchTo(
                         toWeek ? _Scope.thisWeek : _Scope.thisMonth,
                       ),
@@ -1048,11 +1070,15 @@ class _MonthBoard extends StatelessWidget {
     this.week = false,
     this.onLength,
     this.country,
+    this.lastMonth,
   });
 
   final List<MonthRow> rows;
   final MonthPlace mine;
   final Future<void> Function() onRefresh;
+
+  /// Last month's top ten, shown while this month's board is empty.
+  final MonthWinners? lastMonth;
 
   /// The week's board rather than the month's: no awards at its end.
   final bool week;
@@ -1080,7 +1106,9 @@ class _MonthBoard extends StatelessWidget {
             const SizedBox(height: 12),
           ],
           _SeasonHeader(mine: mine, week: week, country: country),
-          if (rows.isEmpty)
+          if (rows.isEmpty && (lastMonth?.rows.isNotEmpty ?? false))
+            _LastMonth(winners: lastMonth!)
+          else if (rows.isEmpty)
             EmptyState(
               icon: Icons.calendar_month_outlined,
               title: l.monthEmptyTitle,
@@ -1165,10 +1193,114 @@ class _SeasonHeader extends StatelessWidget {
 
 /// First in the middle and tallest, second to its left, third to its right —
 /// the way a podium stands, whichever way the language reads.
+/// The new month before anybody has won LP in it: a word on that with the way
+/// to a match, then last month's top ten as it finished (the user's pick A,
+/// 2026-11-01). The month's own board takes its place with the first ranked
+/// duel won.
+class _LastMonth extends StatelessWidget {
+  const _LastMonth({required this.winners});
+
+  final MonthWinners winners;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final podium = winners.rows.where((row) => row.place <= 3).toList();
+    final rest = winners.rows.where((row) => row.place > 3).toList();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(height: 14),
+        _RowCard(
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      l.monthEmptyTitle,
+                      style: TextStyle(
+                        color: context.colors.text,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      l.monthEmptyBody,
+                      style: TextStyle(
+                        color: context.colors.muted,
+                        fontSize: 13,
+                        height: 1.45,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 12),
+              FilledButton(
+                key: const Key('lastMonthPlay'),
+                onPressed: () => AppShell.goToMatch(context),
+                style: FilledButton.styleFrom(
+                  minimumSize: const Size(0, 42),
+                  padding: const EdgeInsets.symmetric(horizontal: 18),
+                  shape: const StadiumBorder(),
+                  textStyle: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                child: Text(l.playShort),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 22),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.emoji_events, color: AppColors.gold, size: 16),
+            const SizedBox(width: 6),
+            Flexible(
+              child: Text(
+                l
+                    .monthWinners(monthName(context, winners.season))
+                    .toUpperCase(),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: AppColors.gold,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 1.4,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 14),
+        _Podium(rows: podium, awards: true),
+        const SizedBox(height: 12),
+        for (final row in rest)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 7),
+            child: _MonthRankRow(row: row),
+          ),
+      ],
+    );
+  }
+}
+
 class _Podium extends StatelessWidget {
-  const _Podium({required this.rows});
+  const _Podium({required this.rows, this.awards = false});
 
   final List<MonthRow> rows;
+
+  /// A finished month's podium: each step says what its place won.
+  final bool awards;
 
   @override
   Widget build(BuildContext context) {
@@ -1179,7 +1311,7 @@ class _Podium extends StatelessWidget {
         // First up first, then second and third either side of it.
         final row? => PopIn(
           delay: Duration(milliseconds: place == 1 ? 0 : 90 * place),
-          child: _PodiumPlace(row: row),
+          child: _PodiumPlace(row: row, award: awards),
         ),
         null => const SizedBox.shrink(),
       },
@@ -1202,9 +1334,12 @@ class _Podium extends StatelessWidget {
 }
 
 class _PodiumPlace extends StatelessWidget {
-  const _PodiumPlace({required this.row});
+  const _PodiumPlace({required this.row, this.award = false});
 
   final MonthRow row;
+
+  /// Whether the step names what the place won, under its LP.
+  final bool award;
 
   @override
   Widget build(BuildContext context) {
@@ -1215,11 +1350,15 @@ class _PodiumPlace extends StatelessWidget {
       _ => AppColors.bronze,
     };
     final avatar = first ? 66.0 : 52.0;
-    final block = switch (row.place) {
+    // A step that names its award is a line taller, so the line fits rather
+    // than shrinking the number with it.
+    final step = switch (row.place) {
       1 => 92.0,
       2 => 70.0,
       _ => 56.0,
     };
+    final block = award ? step + 16 : step;
+    final won = award ? awardForPlace(row.place) : null;
 
     return InkWell(
       borderRadius: BorderRadius.circular(12),
@@ -1299,6 +1438,18 @@ class _PodiumPlace extends StatelessWidget {
                       fontFeatures: const [FontFeature.tabularFigures()],
                     ),
                   ),
+                  if (won != null) ...[
+                    const SizedBox(height: 2),
+                    Text(
+                      awardName(L.of(context), won).toUpperCase(),
+                      style: TextStyle(
+                        color: context.colors.background,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),

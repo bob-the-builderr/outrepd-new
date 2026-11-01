@@ -2127,6 +2127,14 @@ class LRu extends L {
   String get seasonPlayCta => 'Играть в новом месяце';
 
   @override
+  String monthWinners(String month) {
+    return 'Победители · ${month}';
+  }
+
+  @override
+  String get playShort => 'Играть';
+
+  @override
   String get rematchLive => 'Реванш вживую';
 
   @override

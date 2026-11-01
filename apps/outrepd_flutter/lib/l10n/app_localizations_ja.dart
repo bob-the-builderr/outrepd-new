@@ -2091,6 +2091,14 @@ class LJa extends L {
   String get seasonPlayCta => '新しい月をプレイ';
 
   @override
+  String monthWinners(String month) {
+    return '${month}の勝者';
+  }
+
+  @override
+  String get playShort => 'プレイ';
+
+  @override
   String get rematchLive => 'ライブで再戦';
 
   @override
