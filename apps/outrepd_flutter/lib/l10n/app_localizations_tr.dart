@@ -533,6 +533,57 @@ class LTr extends L {
   String get lifterNeedsAllStars => 'Maceradaki tüm yıldızlar';
 
   @override
+  String get coverTitle => 'Kapak';
+
+  @override
+  String get coverPhoto => 'Fotoğrafın';
+
+  @override
+  String get coverNone => 'Kapak yok';
+
+  @override
+  String get coverUse => 'Bu kapağı kullan';
+
+  @override
+  String get coverProLine => 'Kapaklar Pro’ya özel. Hareket ederler ve profilini açan herkes onları görür.';
+
+  @override
+  String get coverCouldNotUpload => 'Fotoğrafın yüklenemedi. Tekrar dene.';
+
+  @override
+  String get coverNeonCity => 'Neon şehir';
+
+  @override
+  String get coverIronGym => 'Demir salon';
+
+  @override
+  String get coverRooftopSunset => 'Çatıda gün batımı';
+
+  @override
+  String get coverStadiumLights => 'Stadyum ışıkları';
+
+  @override
+  String get coverSilverPeaks => 'Gümüş zirveler';
+
+  @override
+  String get coverBronzeDunes => 'Bronz kum tepeleri';
+
+  @override
+  String get coverVolcano => 'Yanardağ';
+
+  @override
+  String get coverPalmBeach => 'Palmiye plajı';
+
+  @override
+  String get coverWinterCity => 'Kış şehri';
+
+  @override
+  String get vsLiveRanked => 'CANLI · DERECELİ';
+
+  @override
+  String get vsLiveFriendly => 'CANLI · DOSTLUK';
+
+  @override
   String get couldNotShareCard => 'Bu kart paylaşılamadı';
 
   @override

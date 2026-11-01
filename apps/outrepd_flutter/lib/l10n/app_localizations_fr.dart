@@ -536,6 +536,57 @@ class LFr extends L {
   String get lifterNeedsAllStars => 'Toutes les étoiles de l\'Aventure';
 
   @override
+  String get coverTitle => 'Couverture';
+
+  @override
+  String get coverPhoto => 'Votre photo';
+
+  @override
+  String get coverNone => 'Pas de couverture';
+
+  @override
+  String get coverUse => 'Utiliser cette couverture';
+
+  @override
+  String get coverProLine => 'Les couvertures sont Pro. Elles bougent, et tous ceux qui ouvrent votre profil les voient.';
+
+  @override
+  String get coverCouldNotUpload => 'Impossible d\'envoyer votre photo. Réessayez.';
+
+  @override
+  String get coverNeonCity => 'Ville néon';
+
+  @override
+  String get coverIronGym => 'Salle de fonte';
+
+  @override
+  String get coverRooftopSunset => 'Coucher de soleil sur le toit';
+
+  @override
+  String get coverStadiumLights => 'Lumières du stade';
+
+  @override
+  String get coverSilverPeaks => 'Pics d\'argent';
+
+  @override
+  String get coverBronzeDunes => 'Dunes de bronze';
+
+  @override
+  String get coverVolcano => 'Volcan';
+
+  @override
+  String get coverPalmBeach => 'Plage de palmiers';
+
+  @override
+  String get coverWinterCity => 'Ville d\'hiver';
+
+  @override
+  String get vsLiveRanked => 'EN DIRECT · CLASSÉ';
+
+  @override
+  String get vsLiveFriendly => 'EN DIRECT · AMICAL';
+
+  @override
   String get couldNotShareCard => 'Impossible de partager cette carte';
 
   @override

@@ -519,6 +519,57 @@ class LZh extends L {
   String get lifterNeedsAllStars => '冒险中的所有星星';
 
   @override
+  String get coverTitle => '封面';
+
+  @override
+  String get coverPhoto => '你的照片';
+
+  @override
+  String get coverNone => '不用封面';
+
+  @override
+  String get coverUse => '使用这个封面';
+
+  @override
+  String get coverProLine => '封面是 Pro 专属。它们会动，每个打开你资料页的人都能看到。';
+
+  @override
+  String get coverCouldNotUpload => '无法上传你的照片，请重试。';
+
+  @override
+  String get coverNeonCity => '霓虹城市';
+
+  @override
+  String get coverIronGym => '钢铁健身房';
+
+  @override
+  String get coverRooftopSunset => '屋顶日落';
+
+  @override
+  String get coverStadiumLights => '体育场灯光';
+
+  @override
+  String get coverSilverPeaks => '银色山峰';
+
+  @override
+  String get coverBronzeDunes => '青铜沙丘';
+
+  @override
+  String get coverVolcano => '火山';
+
+  @override
+  String get coverPalmBeach => '棕榈海滩';
+
+  @override
+  String get coverWinterCity => '冬日城市';
+
+  @override
+  String get vsLiveRanked => '直播 · 排位';
+
+  @override
+  String get vsLiveFriendly => '直播 · 友谊赛';
+
+  @override
   String get couldNotShareCard => '无法分享这张卡片';
 
   @override

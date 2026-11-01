@@ -112,6 +112,16 @@ alter table profiles add column if not exists avatar_url text;
 alter table profiles add column if not exists lifter jsonb
   constraint profiles_lifter_small
   check (lifter is null or pg_column_size(lifter) <= 2048);
+-- The cover over a Pro profile: one of the moving scenes the app draws
+-- (lib/lifter/covers.dart), or this account's own photo at <id>/cover.jpg.
+-- Shown only while the account is Pro (pro_looks in account.sql), so a lapsed
+-- subscription keeps its choice for when it comes back.
+alter table profiles add column if not exists cover text
+  constraint profiles_cover_known
+  check (cover is null
+    or cover in ('neon_city', 'iron_gym', 'rooftop_sunset', 'stadium_lights', 'silver_peaks', 'bronze_dunes', 'volcano', 'palm_beach', 'winter_city')
+    or cover ~ ('^https://[A-Za-z0-9.-]+/storage/v1/object/public/avatars/'
+                || id::text || '/cover\.jpg(\?v=[0-9]+)?$'));
 alter table profiles add column if not exists username_changed_at timestamptz;
 -- When this lifter last chose a country themselves (set_my_country). Null
 -- until then: the phone's own region fills the column in, and that is not a
@@ -957,10 +967,12 @@ create policy "a lifter sees their own avatar file"
   to authenticated
   using (
     bucket_id = 'avatars'
-    and name = (select auth.uid())::text || '/photo.jpg'
+    and name in ((select auth.uid())::text || '/photo.jpg',
+                 (select auth.uid())::text || '/cover.jpg')
   );
 
--- One file per account, at the one path the app writes: `<id>/photo.jpg`.
+-- Two files per account, at the two paths the app writes: `<id>/photo.jpg`,
+-- and for a Pro profile's own cover `<id>/cover.jpg`.
 -- The folder alone was the rule before, which let an account fill its folder
 -- with as many public files as it liked, under any names — free hosting on
 -- this project's bill and its domain.
@@ -970,7 +982,8 @@ create policy "a lifter uploads their own avatar"
   to authenticated
   with check (
     bucket_id = 'avatars'
-    and name = (select auth.uid())::text || '/photo.jpg'
+    and name in ((select auth.uid())::text || '/photo.jpg',
+                 (select auth.uid())::text || '/cover.jpg')
   );
 
 drop policy if exists "a lifter replaces their own avatar" on storage.objects;
@@ -979,11 +992,13 @@ create policy "a lifter replaces their own avatar"
   to authenticated
   using (
     bucket_id = 'avatars'
-    and name = (select auth.uid())::text || '/photo.jpg'
+    and name in ((select auth.uid())::text || '/photo.jpg',
+                 (select auth.uid())::text || '/cover.jpg')
   )
   with check (
     bucket_id = 'avatars'
-    and name = (select auth.uid())::text || '/photo.jpg'
+    and name in ((select auth.uid())::text || '/photo.jpg',
+                 (select auth.uid())::text || '/cover.jpg')
   );
 
 drop policy if exists "a lifter deletes their own avatar" on storage.objects;

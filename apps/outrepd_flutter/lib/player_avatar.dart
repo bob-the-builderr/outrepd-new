@@ -29,6 +29,7 @@ class PlayerAvatar extends StatelessWidget {
     this.textColour,
     this.onTap,
     this.onBadgeTap,
+    this.alive = false,
   });
 
   /// Whose it is. Their name gives the lifter drawn when there is no
@@ -61,6 +62,10 @@ class PlayerAvatar extends StatelessWidget {
   /// into the rank rather than decoration on it.
   final VoidCallback? onBadgeTap;
 
+  /// A Pro's lifter, alive in its frame: it blinks and breathes. Only for a
+  /// lifter; a photo stays a photo.
+  final bool alive;
+
   @override
   Widget build(BuildContext context) {
     final picture = image;
@@ -72,7 +77,15 @@ class PlayerAvatar extends StatelessWidget {
         shape: BoxShape.circle,
         border: Border.all(color: context.colors.border, width: 1.5),
       ),
-      child: ClipOval(child: LifterImage(drawn, size: size)),
+      child: ClipOval(
+        child: alive
+            ? AliveLifter(
+                lifter: drawn,
+                builder: (context, shown, breath) =>
+                    breathing(breath, LifterImage(shown, size: size)),
+              )
+            : LifterImage(drawn, size: size),
+      ),
     );
 
     final circle = picture == null || picture is LifterPicture

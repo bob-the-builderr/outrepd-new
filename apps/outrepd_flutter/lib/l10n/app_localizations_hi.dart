@@ -533,6 +533,57 @@ class LHi extends L {
   String get lifterNeedsAllStars => 'एडवेंचर का हर स्टार';
 
   @override
+  String get coverTitle => 'कवर';
+
+  @override
+  String get coverPhoto => 'आपकी फ़ोटो';
+
+  @override
+  String get coverNone => 'कोई कवर नहीं';
+
+  @override
+  String get coverUse => 'यह कवर लगाएँ';
+
+  @override
+  String get coverProLine => 'कवर Pro के लिए हैं। ये चलते हैं, और आपकी प्रोफ़ाइल खोलने वाला हर कोई इन्हें देखता है।';
+
+  @override
+  String get coverCouldNotUpload => 'आपकी फ़ोटो अपलोड नहीं हो सकी। फिर से कोशिश करें।';
+
+  @override
+  String get coverNeonCity => 'नियॉन शहर';
+
+  @override
+  String get coverIronGym => 'आयरन जिम';
+
+  @override
+  String get coverRooftopSunset => 'छत पर सूर्यास्त';
+
+  @override
+  String get coverStadiumLights => 'स्टेडियम की रोशनी';
+
+  @override
+  String get coverSilverPeaks => 'चाँदी की चोटियाँ';
+
+  @override
+  String get coverBronzeDunes => 'काँसे के टीले';
+
+  @override
+  String get coverVolcano => 'ज्वालामुखी';
+
+  @override
+  String get coverPalmBeach => 'पाम बीच';
+
+  @override
+  String get coverWinterCity => 'सर्दियों का शहर';
+
+  @override
+  String get vsLiveRanked => 'लाइव · रैंक्ड';
+
+  @override
+  String get vsLiveFriendly => 'लाइव · दोस्ताना';
+
+  @override
   String get couldNotShareCard => 'यह कार्ड शेयर नहीं हो सका';
 
   @override

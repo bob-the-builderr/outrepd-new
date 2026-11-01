@@ -532,6 +532,57 @@ class LId extends L {
   String get lifterNeedsAllStars => 'Semua bintang di Petualangan';
 
   @override
+  String get coverTitle => 'Sampul';
+
+  @override
+  String get coverPhoto => 'Fotomu';
+
+  @override
+  String get coverNone => 'Tanpa sampul';
+
+  @override
+  String get coverUse => 'Pakai sampul ini';
+
+  @override
+  String get coverProLine => 'Sampul khusus Pro. Sampulnya bergerak, dan semua orang yang membuka profilmu melihatnya.';
+
+  @override
+  String get coverCouldNotUpload => 'Fotomu tidak bisa diunggah. Coba lagi.';
+
+  @override
+  String get coverNeonCity => 'Kota neon';
+
+  @override
+  String get coverIronGym => 'Gym besi';
+
+  @override
+  String get coverRooftopSunset => 'Senja di atap';
+
+  @override
+  String get coverStadiumLights => 'Lampu stadion';
+
+  @override
+  String get coverSilverPeaks => 'Puncak perak';
+
+  @override
+  String get coverBronzeDunes => 'Bukit pasir perunggu';
+
+  @override
+  String get coverVolcano => 'Gunung berapi';
+
+  @override
+  String get coverPalmBeach => 'Pantai palem';
+
+  @override
+  String get coverWinterCity => 'Kota musim dingin';
+
+  @override
+  String get vsLiveRanked => 'LIVE · PERINGKAT';
+
+  @override
+  String get vsLiveFriendly => 'LIVE · PERSAHABATAN';
+
+  @override
   String get couldNotShareCard => 'Kartu ini tidak bisa dibagikan';
 
   @override

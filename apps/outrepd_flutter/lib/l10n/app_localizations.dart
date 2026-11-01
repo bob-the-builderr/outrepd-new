@@ -1073,6 +1073,108 @@ abstract class L {
   /// **'Every star in the Adventure'**
   String get lifterNeedsAllStars;
 
+  /// No description provided for @coverTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cover'**
+  String get coverTitle;
+
+  /// No description provided for @coverPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Your photo'**
+  String get coverPhoto;
+
+  /// No description provided for @coverNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No cover'**
+  String get coverNone;
+
+  /// No description provided for @coverUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Use this cover'**
+  String get coverUse;
+
+  /// No description provided for @coverProLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Covers are Pro. They move, and everyone who opens your profile sees them.'**
+  String get coverProLine;
+
+  /// No description provided for @coverCouldNotUpload.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not upload your photo. Try again.'**
+  String get coverCouldNotUpload;
+
+  /// No description provided for @coverNeonCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Neon city'**
+  String get coverNeonCity;
+
+  /// No description provided for @coverIronGym.
+  ///
+  /// In en, this message translates to:
+  /// **'Iron gym'**
+  String get coverIronGym;
+
+  /// No description provided for @coverRooftopSunset.
+  ///
+  /// In en, this message translates to:
+  /// **'Rooftop sunset'**
+  String get coverRooftopSunset;
+
+  /// No description provided for @coverStadiumLights.
+  ///
+  /// In en, this message translates to:
+  /// **'Stadium lights'**
+  String get coverStadiumLights;
+
+  /// No description provided for @coverSilverPeaks.
+  ///
+  /// In en, this message translates to:
+  /// **'Silver peaks'**
+  String get coverSilverPeaks;
+
+  /// No description provided for @coverBronzeDunes.
+  ///
+  /// In en, this message translates to:
+  /// **'Bronze dunes'**
+  String get coverBronzeDunes;
+
+  /// No description provided for @coverVolcano.
+  ///
+  /// In en, this message translates to:
+  /// **'Volcano'**
+  String get coverVolcano;
+
+  /// No description provided for @coverPalmBeach.
+  ///
+  /// In en, this message translates to:
+  /// **'Palm beach'**
+  String get coverPalmBeach;
+
+  /// No description provided for @coverWinterCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Winter city'**
+  String get coverWinterCity;
+
+  /// No description provided for @vsLiveRanked.
+  ///
+  /// In en, this message translates to:
+  /// **'LIVE · RANKED'**
+  String get vsLiveRanked;
+
+  /// No description provided for @vsLiveFriendly.
+  ///
+  /// In en, this message translates to:
+  /// **'LIVE · FRIENDLY'**
+  String get vsLiveFriendly;
+
   /// No description provided for @couldNotShareCard.
   ///
   /// In en, this message translates to:

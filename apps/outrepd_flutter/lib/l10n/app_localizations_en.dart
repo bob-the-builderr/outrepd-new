@@ -534,6 +534,57 @@ class LEn extends L {
   String get lifterNeedsAllStars => 'Every star in the Adventure';
 
   @override
+  String get coverTitle => 'Cover';
+
+  @override
+  String get coverPhoto => 'Your photo';
+
+  @override
+  String get coverNone => 'No cover';
+
+  @override
+  String get coverUse => 'Use this cover';
+
+  @override
+  String get coverProLine => 'Covers are Pro. They move, and everyone who opens your profile sees them.';
+
+  @override
+  String get coverCouldNotUpload => 'Could not upload your photo. Try again.';
+
+  @override
+  String get coverNeonCity => 'Neon city';
+
+  @override
+  String get coverIronGym => 'Iron gym';
+
+  @override
+  String get coverRooftopSunset => 'Rooftop sunset';
+
+  @override
+  String get coverStadiumLights => 'Stadium lights';
+
+  @override
+  String get coverSilverPeaks => 'Silver peaks';
+
+  @override
+  String get coverBronzeDunes => 'Bronze dunes';
+
+  @override
+  String get coverVolcano => 'Volcano';
+
+  @override
+  String get coverPalmBeach => 'Palm beach';
+
+  @override
+  String get coverWinterCity => 'Winter city';
+
+  @override
+  String get vsLiveRanked => 'LIVE · RANKED';
+
+  @override
+  String get vsLiveFriendly => 'LIVE · FRIENDLY';
+
+  @override
   String get couldNotShareCard => 'Could not share this card';
 
   @override

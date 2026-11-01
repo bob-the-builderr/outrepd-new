@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../backend/backend.dart';
 import '../career.dart';
 import '../data.dart';
+import '../lifter/looks.dart';
 import '../lifter/my_lifter.dart';
 import '../rewards.dart';
 import '../subscription.dart';
@@ -30,6 +31,7 @@ Future<void> leaveForWelcome(NavigatorState navigator) async {
   await rewards.forget();
   // The lifter is the account's, like its picture.
   await MyLifter.instance.forget();
+  await MyCover.instance.forget();
   await markNotOnboarded();
   try {
     await backend.signIn(username: 'lifter');

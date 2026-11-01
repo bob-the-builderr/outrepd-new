@@ -300,6 +300,22 @@ class BoardRow {
   final int xp;
 }
 
+/// How somebody looks (account.sql, pro_looks): whether they are Pro, the
+/// lifter they made, and the cover over their profile, which is only ever
+/// given while they are Pro.
+class ProLook {
+  const ProLook({required this.id, this.pro = false, this.lifter, this.cover});
+
+  final String id;
+  final bool pro;
+
+  /// Lifter.toJson of the lifter they made; null before they made one.
+  final Map<String, dynamic>? lifter;
+
+  /// One of the moving scenes by id, or the URL of their own cover photo.
+  final String? cover;
+}
+
 /// One row of this month's board.
 ///
 /// [points] is the LP won in ranked duels since the 1st, less the LP lost —
@@ -1168,6 +1184,18 @@ abstract interface class Backend {
   /// closed with somebody on it.
   Future<MonthWinners?> lastMonthWinners();
 
+  /// How the accounts [ids] look, by id: Pro, lifter, cover. Accounts the
+  /// server does not know are left out.
+  Future<Map<String, ProLook>> proLooks(List<String> ids);
+
+  /// Sets this account's cover: a scene's id, or null for none. A photo
+  /// goes through [uploadCover].
+  Future<void> saveCover(String? cover);
+
+  /// Uploads [bytes] as this account's cover photo and makes it the cover;
+  /// returns its URL.
+  Future<String> uploadCover(Uint8List bytes);
+
   /// The week's board (supabase/seasons.sql): the month's points since
   /// Monday, 00:00 UTC. Rows and the caller's place come back in the month's
   /// shapes, [MonthPlace.season] being the Monday.
@@ -1516,6 +1544,17 @@ class NoBackend implements Backend {
 
   @override
   Future<MonthWinners?> lastMonthWinners() async => null;
+
+  @override
+  Future<Map<String, ProLook>> proLooks(List<String> ids) async => const {};
+
+  @override
+  Future<void> saveCover(String? cover) =>
+      throw StateError('no server configured');
+
+  @override
+  Future<String> uploadCover(Uint8List bytes) =>
+      throw StateError('no server configured');
 
   @override
   Future<List<MonthRow>> weekBoard({int limit = 100, String? country}) async =>

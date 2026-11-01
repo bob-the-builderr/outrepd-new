@@ -254,6 +254,16 @@ alter table profiles add column if not exists avatar_url text;
 alter table profiles add column if not exists lifter jsonb
   constraint profiles_lifter_small
   check (lifter is null or pg_column_size(lifter) <= 2048);
+-- The cover over a Pro profile: one of the moving scenes the app draws
+-- (lib/lifter/covers.dart), or this account's own photo at <id>/cover.jpg.
+-- Shown only while the account is Pro (pro_looks in account.sql), so a lapsed
+-- subscription keeps its choice for when it comes back.
+alter table profiles add column if not exists cover text
+  constraint profiles_cover_known
+  check (cover is null
+    or cover in ('neon_city', 'iron_gym', 'rooftop_sunset', 'stadium_lights', 'silver_peaks', 'bronze_dunes', 'volcano', 'palm_beach', 'winter_city')
+    or cover ~ ('^https://[A-Za-z0-9.-]+/storage/v1/object/public/avatars/'
+                || id::text || '/cover\.jpg(\?v=[0-9]+)?$'));
 alter table profiles add column if not exists username_changed_at timestamptz;
 -- When this lifter last chose a country themselves (set_my_country). Null
 -- until then: the phone's own region fills the column in, and that is not a
@@ -1099,10 +1109,12 @@ create policy "a lifter sees their own avatar file"
   to authenticated
   using (
     bucket_id = 'avatars'
-    and name = (select auth.uid())::text || '/photo.jpg'
+    and name in ((select auth.uid())::text || '/photo.jpg',
+                 (select auth.uid())::text || '/cover.jpg')
   );
 
--- One file per account, at the one path the app writes: `<id>/photo.jpg`.
+-- Two files per account, at the two paths the app writes: `<id>/photo.jpg`,
+-- and for a Pro profile's own cover `<id>/cover.jpg`.
 -- The folder alone was the rule before, which let an account fill its folder
 -- with as many public files as it liked, under any names — free hosting on
 -- this project's bill and its domain.
@@ -1112,7 +1124,8 @@ create policy "a lifter uploads their own avatar"
   to authenticated
   with check (
     bucket_id = 'avatars'
-    and name = (select auth.uid())::text || '/photo.jpg'
+    and name in ((select auth.uid())::text || '/photo.jpg',
+                 (select auth.uid())::text || '/cover.jpg')
   );
 
 drop policy if exists "a lifter replaces their own avatar" on storage.objects;
@@ -1121,11 +1134,13 @@ create policy "a lifter replaces their own avatar"
   to authenticated
   using (
     bucket_id = 'avatars'
-    and name = (select auth.uid())::text || '/photo.jpg'
+    and name in ((select auth.uid())::text || '/photo.jpg',
+                 (select auth.uid())::text || '/cover.jpg')
   )
   with check (
     bucket_id = 'avatars'
-    and name = (select auth.uid())::text || '/photo.jpg'
+    and name in ((select auth.uid())::text || '/photo.jpg',
+                 (select auth.uid())::text || '/cover.jpg')
   );
 
 drop policy if exists "a lifter deletes their own avatar" on storage.objects;
@@ -5687,6 +5702,36 @@ revoke all on function username_available(text) from public;
 grant execute on function username_available(text) to authenticated;
 revoke all on function set_my_username(text) from public;
 grant execute on function set_my_username(text) to authenticated;
+
+-- How the people on a screen look: whether each is Pro, the lifter they
+-- made, and their cover — for the boards' holo rows, the VS screen before a
+-- live match, and a profile's cover. Asked for the ids a screen already has,
+-- at most two hundred. Pro is the subscription itself, not has_pro(), which
+-- lets everybody play while the app is free. A cover shows only while its
+-- account is Pro.
+create or replace function pro_looks(ids uuid[])
+returns table (id uuid, pro boolean, lifter jsonb, cover text)
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select p.id, x.pro, p.lifter, case when x.pro then p.cover end
+  from profiles p
+  cross join lateral (
+    select exists (
+      select 1
+      from subscriptions s
+      where s.user_id = p.id
+        and s.active
+        and (s.expires_at is null or s.expires_at > now() - interval '1 hour')
+    ) as pro
+  ) x
+  where p.id = any (ids[1:200])
+$$;
+
+revoke all on function pro_looks(uuid[]) from public, anon;
+grant execute on function pro_looks(uuid[]) to authenticated;
 
 -- ========================================================================
 -- lockdown.sql

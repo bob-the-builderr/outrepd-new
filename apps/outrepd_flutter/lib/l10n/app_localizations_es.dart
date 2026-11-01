@@ -536,6 +536,57 @@ class LEs extends L {
   String get lifterNeedsAllStars => 'Todas las estrellas de la Aventura';
 
   @override
+  String get coverTitle => 'Portada';
+
+  @override
+  String get coverPhoto => 'Tu foto';
+
+  @override
+  String get coverNone => 'Sin portada';
+
+  @override
+  String get coverUse => 'Usar esta portada';
+
+  @override
+  String get coverProLine => 'Las portadas son Pro. Se mueven, y todos los que abren tu perfil las ven.';
+
+  @override
+  String get coverCouldNotUpload => 'No se pudo subir tu foto. Inténtalo de nuevo.';
+
+  @override
+  String get coverNeonCity => 'Ciudad neón';
+
+  @override
+  String get coverIronGym => 'Gimnasio de hierro';
+
+  @override
+  String get coverRooftopSunset => 'Atardecer en la azotea';
+
+  @override
+  String get coverStadiumLights => 'Luces del estadio';
+
+  @override
+  String get coverSilverPeaks => 'Picos plateados';
+
+  @override
+  String get coverBronzeDunes => 'Dunas de bronce';
+
+  @override
+  String get coverVolcano => 'Volcán';
+
+  @override
+  String get coverPalmBeach => 'Playa de palmeras';
+
+  @override
+  String get coverWinterCity => 'Ciudad de invierno';
+
+  @override
+  String get vsLiveRanked => 'EN VIVO · CLASIFICATORIA';
+
+  @override
+  String get vsLiveFriendly => 'EN VIVO · AMISTOSA';
+
+  @override
   String get couldNotShareCard => 'No se pudo compartir esta tarjeta';
 
   @override

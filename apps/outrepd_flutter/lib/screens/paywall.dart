@@ -28,6 +28,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../lifter/catalog.dart';
+import '../lifter/covers.dart';
 import '../lifter/lifter_art.dart';
 import '../lifter/lifter_view.dart';
 import '../lifter/my_lifter.dart';
@@ -395,16 +396,13 @@ class _PaywallScreenState extends State<PaywallScreen> {
           body: l.proPerkEntranceBody,
         ),
         _Perk(
-          tile: LifterImage(
-            _samples[0],
-            view: LifterView.backgroundOnly,
-            size: perk,
-          ),
+          // Still here: the cover itself moves on the profile.
+          tile: const CoverScene('neon_city', moving: false),
           title: l.proPerkCovers,
           body: l.proPerkCoversBody,
         ),
         _Perk(
-          tile: LifterImage(_samples[1], view: LifterView.head, size: perk),
+          tile: LifterImage(_samples[0], view: LifterView.head, size: perk),
           title: l.proPerkItems,
           body: l.proPerkItemsBody,
         ),
@@ -974,13 +972,12 @@ class _Perk extends StatelessWidget {
   }
 }
 
-/// Two Pro lifters for the perks' pictures: one for the moving covers (its
-/// neon city), one wearing Pro-only things.
+/// Pro lifters for the perks' pictures: one in Pro-only things, one on a
+/// board.
 final _samples = () {
   int at(List<LifterPart> list, String id) =>
       list.indexWhere((p) => p.id == id);
   return [
-    Lifter(pattern: at(kPatterns, 'neon_city'), background: 7),
     Lifter(
       skin: at(kSkins, 'obsidian'),
       hair: 16,
@@ -1061,7 +1058,7 @@ class _BoardTile extends StatelessWidget {
             bottom: size * 0.22,
             width: size * 0.34,
             height: size * 0.5,
-            child: LifterImage(_samples[2], view: LifterView.noBackground, size: size * 0.5),
+            child: LifterImage(_samples[1], view: LifterView.noBackground, size: size * 0.5),
           ),
         ],
       ),

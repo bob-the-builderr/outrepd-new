@@ -535,6 +535,57 @@ class LDe extends L {
   String get lifterNeedsAllStars => 'Jeder Stern im Abenteuer';
 
   @override
+  String get coverTitle => 'Titelbild';
+
+  @override
+  String get coverPhoto => 'Dein Foto';
+
+  @override
+  String get coverNone => 'Kein Titelbild';
+
+  @override
+  String get coverUse => 'Dieses Titelbild nehmen';
+
+  @override
+  String get coverProLine => 'Titelbilder sind Pro. Sie bewegen sich, und jeder, der dein Profil öffnet, sieht sie.';
+
+  @override
+  String get coverCouldNotUpload => 'Dein Foto konnte nicht hochgeladen werden. Versuch es noch einmal.';
+
+  @override
+  String get coverNeonCity => 'Neon-Stadt';
+
+  @override
+  String get coverIronGym => 'Eisen-Gym';
+
+  @override
+  String get coverRooftopSunset => 'Sonnenuntergang auf dem Dach';
+
+  @override
+  String get coverStadiumLights => 'Flutlicht';
+
+  @override
+  String get coverSilverPeaks => 'Silbergipfel';
+
+  @override
+  String get coverBronzeDunes => 'Bronzedünen';
+
+  @override
+  String get coverVolcano => 'Vulkan';
+
+  @override
+  String get coverPalmBeach => 'Palmenstrand';
+
+  @override
+  String get coverWinterCity => 'Winterstadt';
+
+  @override
+  String get vsLiveRanked => 'LIVE · GEWERTET';
+
+  @override
+  String get vsLiveFriendly => 'LIVE · FREUNDSCHAFT';
+
+  @override
   String get couldNotShareCard => 'Diese Karte konnte nicht geteilt werden';
 
   @override

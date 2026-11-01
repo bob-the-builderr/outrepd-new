@@ -521,6 +521,57 @@ class LJa extends L {
   String get lifterNeedsAllStars => 'アドベンチャーのすべての星';
 
   @override
+  String get coverTitle => 'カバー';
+
+  @override
+  String get coverPhoto => '自分の写真';
+
+  @override
+  String get coverNone => 'カバーなし';
+
+  @override
+  String get coverUse => 'このカバーにする';
+
+  @override
+  String get coverProLine => 'カバーはPro限定です。動いて、あなたのプロフィールを開いた全員に見えます。';
+
+  @override
+  String get coverCouldNotUpload => '写真をアップロードできませんでした。もう一度お試しください。';
+
+  @override
+  String get coverNeonCity => 'ネオンシティ';
+
+  @override
+  String get coverIronGym => 'アイアンジム';
+
+  @override
+  String get coverRooftopSunset => '屋上の夕暮れ';
+
+  @override
+  String get coverStadiumLights => 'スタジアムの照明';
+
+  @override
+  String get coverSilverPeaks => '銀の峰';
+
+  @override
+  String get coverBronzeDunes => 'ブロンズの砂丘';
+
+  @override
+  String get coverVolcano => '火山';
+
+  @override
+  String get coverPalmBeach => 'パームビーチ';
+
+  @override
+  String get coverWinterCity => '冬の街';
+
+  @override
+  String get vsLiveRanked => 'ライブ · ランク戦';
+
+  @override
+  String get vsLiveFriendly => 'ライブ · フレンド戦';
+
+  @override
   String get couldNotShareCard => 'このカードを共有できませんでした';
 
   @override

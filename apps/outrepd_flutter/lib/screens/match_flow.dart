@@ -23,6 +23,7 @@ import '../l10n/app_localizations.dart';
 import '../live.dart';
 import '../avatar.dart';
 import '../lifter/lifter_view.dart';
+import '../lifter/looks.dart';
 import '../lifter/my_lifter.dart';
 import '../player_avatar.dart';
 import '../ranking.dart';
@@ -41,6 +42,7 @@ import 'adventure_map.dart';
 import 'confirm_count.dart';
 import 'daily_goal.dart';
 import 'level.dart';
+import 'vs_screen.dart';
 import 'match_entry.dart';
 import 'post_match.dart';
 import 'trainer.dart';
@@ -496,6 +498,9 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   /// The countdown from "found somebody" to "on camera", shared by every mode
   /// that reaches it.
   void _goVersus({bool quick = false}) {
+    // How the other lifter looks, for the VS screen: asked now, drawn when
+    // it arrives.
+    if (_live case final live?) unawaited(Looks.instance.fetch([live.opponent.id]));
     // A challenge already knows exactly who it is with — there is nothing to
     // search for, so nothing to fake the look of searching for either.
     // Everyone else gets a wait somewhere inside the window the design
@@ -513,7 +518,9 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     _timer = Timer(wait, () {
       if (!mounted) return;
       setState(() => _stage = _Stage.versus);
-      _timer = Timer(const Duration(milliseconds: 1500), () {
+      // A live match gets the whole VS screen, three seconds of it; a saved
+      // set the second and a half that was always enough.
+      _timer = Timer(_live == null ? const Duration(milliseconds: 1500) : kVsTime, () {
         if (!mounted) return;
         setState(() => _stage = _Stage.live);
         _lift();
@@ -1085,6 +1092,16 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
         return _SearchingView(onCancel: _confirmQuit);
 
       case _Stage.versus:
+        if (_live case final live?) {
+          return VsScreen(
+            opponentId: live.opponent.id,
+            opponentName: _opponent.username,
+            opponentTierIdx: _opponent.tierIdx,
+            opponentDivIdx: _opponent.divIdx,
+            opponentXp: _opponent.xp,
+            ranked: live.ranked,
+          );
+        }
         return _VersusView(
           opponent: _opponent,
           vsBest: _vsBest,

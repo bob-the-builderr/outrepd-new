@@ -358,6 +358,54 @@ class SupabaseBackend implements Backend {
   }
 
   @override
+  Future<Map<String, ProLook>> proLooks(List<String> ids) async {
+    if (ids.isEmpty || _db.auth.currentUser == null) return const {};
+    final rows = await _db.rpc<List<dynamic>>(
+      'pro_looks',
+      params: {'ids': ids.take(200).toList()},
+    );
+    return {
+      for (final row in rows.cast<Map<String, dynamic>>())
+        row['id'] as String: ProLook(
+          id: row['id'] as String,
+          pro: row['pro'] as bool? ?? false,
+          lifter: row['lifter'] is Map
+              ? Map<String, dynamic>.from(row['lifter'] as Map)
+              : null,
+          cover: row['cover'] as String?,
+        ),
+    };
+  }
+
+  @override
+  Future<void> saveCover(String? cover) async {
+    final user = _db.auth.currentUser;
+    if (user == null) throw StateError('not signed in');
+    await _db.from('profiles').update({'cover': cover}).eq('id', user.id);
+  }
+
+  @override
+  Future<String> uploadCover(Uint8List bytes) async {
+    final user = _db.auth.currentUser;
+    if (user == null) throw StateError('not signed in');
+    // The one path the server takes for a cover, beside the photo; the
+    // version makes every phone fetch the new one.
+    final path = '${user.id}/cover.jpg';
+    await _db.storage
+        .from('avatars')
+        .uploadBinary(
+          path,
+          bytes,
+          fileOptions: const FileOptions(upsert: true, contentType: 'image/jpeg'),
+        );
+    final url =
+        '${_db.storage.from('avatars').getPublicUrl(path)}'
+        '?v=${DateTime.now().millisecondsSinceEpoch}';
+    await saveCover(url);
+    return url;
+  }
+
+  @override
   Future<MonthWinners?> lastMonthWinners() async {
     if (_db.auth.currentUser == null) return null;
     final rows = (await _db.rpc<List<dynamic>>(

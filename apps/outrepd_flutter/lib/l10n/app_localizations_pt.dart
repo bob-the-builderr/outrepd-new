@@ -534,6 +534,57 @@ class LPt extends L {
   String get lifterNeedsAllStars => 'Todas as estrelas da Aventura';
 
   @override
+  String get coverTitle => 'Capa';
+
+  @override
+  String get coverPhoto => 'Sua foto';
+
+  @override
+  String get coverNone => 'Sem capa';
+
+  @override
+  String get coverUse => 'Usar esta capa';
+
+  @override
+  String get coverProLine => 'As capas são Pro. Elas se mexem, e todo mundo que abre seu perfil as vê.';
+
+  @override
+  String get coverCouldNotUpload => 'Não foi possível enviar sua foto. Tente de novo.';
+
+  @override
+  String get coverNeonCity => 'Cidade neon';
+
+  @override
+  String get coverIronGym => 'Academia de ferro';
+
+  @override
+  String get coverRooftopSunset => 'Pôr do sol no terraço';
+
+  @override
+  String get coverStadiumLights => 'Luzes do estádio';
+
+  @override
+  String get coverSilverPeaks => 'Picos prateados';
+
+  @override
+  String get coverBronzeDunes => 'Dunas de bronze';
+
+  @override
+  String get coverVolcano => 'Vulcão';
+
+  @override
+  String get coverPalmBeach => 'Praia de palmeiras';
+
+  @override
+  String get coverWinterCity => 'Cidade de inverno';
+
+  @override
+  String get vsLiveRanked => 'AO VIVO · RANQUEADA';
+
+  @override
+  String get vsLiveFriendly => 'AO VIVO · AMISTOSA';
+
+  @override
   String get couldNotShareCard => 'Não foi possível compartilhar este cartão';
 
   @override

@@ -344,3 +344,33 @@ revoke all on function username_available(text) from public;
 grant execute on function username_available(text) to authenticated;
 revoke all on function set_my_username(text) from public;
 grant execute on function set_my_username(text) to authenticated;
+
+-- How the people on a screen look: whether each is Pro, the lifter they
+-- made, and their cover — for the boards' holo rows, the VS screen before a
+-- live match, and a profile's cover. Asked for the ids a screen already has,
+-- at most two hundred. Pro is the subscription itself, not has_pro(), which
+-- lets everybody play while the app is free. A cover shows only while its
+-- account is Pro.
+create or replace function pro_looks(ids uuid[])
+returns table (id uuid, pro boolean, lifter jsonb, cover text)
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select p.id, x.pro, p.lifter, case when x.pro then p.cover end
+  from profiles p
+  cross join lateral (
+    select exists (
+      select 1
+      from subscriptions s
+      where s.user_id = p.id
+        and s.active
+        and (s.expires_at is null or s.expires_at > now() - interval '1 hour')
+    ) as pro
+  ) x
+  where p.id = any (ids[1:200])
+$$;
+
+revoke all on function pro_looks(uuid[]) from public, anon;
+grant execute on function pro_looks(uuid[]) to authenticated;

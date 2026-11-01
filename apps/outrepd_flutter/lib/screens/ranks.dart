@@ -20,13 +20,16 @@ import '../country_names.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../lifter/lifter_view.dart';
+import '../lifter/looks.dart';
 import '../lifter/my_lifter.dart';
 import '../motion.dart';
 import '../season.dart';
+import '../subscription.dart';
 import '../theme.dart';
 import '../tier_frame.dart';
 import '../widgets.dart';
 import 'other_profile.dart';
+import 'pro_parts.dart';
 import 'shell.dart';
 
 enum _Scope {
@@ -203,6 +206,7 @@ class _RanksScreenState extends State<RanksScreen> {
         final place = await backend.myWeekPlace(country: country);
         final rows = await backend.weekBoard(country: country);
         if (stale()) return;
+        unawaited(Looks.instance.fetch(rows.map((row) => row.id)));
         setState(() {
           _weekPlace = place;
           _week = rows;
@@ -223,6 +227,10 @@ class _RanksScreenState extends State<RanksScreen> {
             ? await _readLastMonth()
             : null;
         if (stale()) return;
+        unawaited(Looks.instance.fetch([
+          ...rows.map((row) => row.id),
+          ...?winners?.rows.map((row) => row.id),
+        ]));
         setState(() {
           _monthPlace = place;
           _month = rows;
@@ -244,6 +252,7 @@ class _RanksScreenState extends State<RanksScreen> {
           ? await backend.boardPosition(country: country)
           : null;
       if (stale()) return;
+      unawaited(Looks.instance.fetch(rows.map((row) => row.id)));
       setState(() {
         _boards[scope] = rows;
         if (scope == _Scope.topPlayers) _globalPlace = global;
@@ -462,9 +471,12 @@ class _RanksScreenState extends State<RanksScreen> {
                             ? const _BoardNote()
                             : RiseIn(
                                 delay: staggered(i - 1),
-                                child: _RankRow(
-                                  position: i,
-                                  entry: entries[i - 1],
+                                child: ListenableBuilder(
+                                  listenable: Looks.instance,
+                                  builder: (context, _) => _RankRow(
+                                    position: i,
+                                    entry: entries[i - 1],
+                                  ),
                                 ),
                               ),
                       ),
@@ -727,6 +739,7 @@ class _RankRow extends StatelessWidget {
         initial: entry.id.isEmpty ? demoLifterProfile(entry.username) : null,
       ),
       child: _RowCard(
+        pro: Looks.instance.pro(entry.id),
         child: Row(
           children: [
             _Position(position: position),
@@ -738,6 +751,7 @@ class _RankRow extends StatelessWidget {
               avatarUrl: entry.avatarUrl,
               mine: entry.id == backend.me?.id,
               frame: entry.tierIdx,
+              id: entry.id,
             ),
             const SizedBox(width: 11),
             Expanded(
@@ -748,6 +762,9 @@ class _RankRow extends StatelessWidget {
                 wins: entry.wins,
                 losses: entry.losses,
                 xp: entry.xp,
+                trailing: Looks.instance.pro(entry.id)
+                    ? const ProChip(height: 16)
+                    : null,
               ),
             ),
             const SizedBox(width: 11),
@@ -788,6 +805,7 @@ class _SelfRow extends StatelessWidget {
     return _RowCard(
       borderColour: context.colors.brand,
       borderWidth: 1,
+      pro: Subscription.instance.active,
       child: Row(
         children: [
           // The raw number rather than a circle: at four or five digits a
@@ -808,6 +826,8 @@ class _SelfRow extends StatelessWidget {
             size: 40,
             fontSize: 17,
             frame: tierIdx,
+            mine: true,
+            id: backend.me?.id ?? '',
           ),
           const SizedBox(width: 11),
           Expanded(
@@ -834,14 +854,44 @@ class _RowCard extends StatelessWidget {
     required this.child,
     this.borderColour,
     this.borderWidth = 0.5,
+    this.pro = false,
   });
 
   final Widget child;
   final Color? borderColour;
   final double borderWidth;
 
+  /// A Pro's row: a holo edge, a faint holo wash, and the shine passing
+  /// over it now and then (the user's pick, 2026-11-01).
+  final bool pro;
+
   @override
   Widget build(BuildContext context) {
+    if (pro) {
+      return HoloEdge(
+        radius: 12,
+        width: 1.5,
+        child: ShineBand(
+          strength: 0.16,
+          child: DecoratedBox(
+            decoration: BoxDecoration(color: context.colors.surface),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [for (final c in kHolo) c.withValues(alpha: 0.07)],
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 11.5, vertical: 12.5),
+                child: child,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 14),
       decoration: BoxDecoration(
@@ -903,6 +953,7 @@ class _Initial extends StatelessWidget {
     this.avatarUrl,
     this.mine = false,
     this.frame,
+    this.id = '',
   });
 
   final String name;
@@ -919,9 +970,16 @@ class _Initial extends StatelessWidget {
   /// pictures wear their place's medal ring instead.
   final int? frame;
 
+  /// Whose picture: what [Looks] knows them by. Empty for a sample row.
+  final String id;
+
   @override
   Widget build(BuildContext context) {
-    final picture = _picture(context);
+    final looks = Looks.instance;
+    final made = looks.lifter(id);
+    final picture = id.isNotEmpty && looks.pro(id) && made != null
+        ? PopOutLifter(made, size: size)
+        : _picture(context);
     if (frame == null) return picture;
     return TierFrame(tierIdx: frame, size: size, child: picture);
   }
@@ -1512,8 +1570,14 @@ class _MonthRankRow extends StatelessWidget {
   /// Whether a place here wins anything: not on a country's board.
   final bool awards;
 
+  // Drawn again when the looks arrive: a Pro's row turns holo.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => ListenableBuilder(
+    listenable: Looks.instance,
+    builder: (context, _) => _row(context),
+  );
+
+  Widget _row(BuildContext context) {
     final l = L.of(context);
     // A week names nobody at its end: the rank under the name instead.
     final award = week || !awards ? null : awardForPlace(row.place);
@@ -1527,6 +1591,7 @@ class _MonthRankRow extends StatelessWidget {
         initial: row.id.isEmpty ? demoLifterProfile(row.username) : null,
       ),
       child: _RowCard(
+        pro: Looks.instance.pro(row.id),
         child: Row(
           children: [
             _Position(position: row.place),
@@ -1538,6 +1603,7 @@ class _MonthRankRow extends StatelessWidget {
               avatarUrl: row.avatarUrl,
               mine: row.id == backend.me?.id,
               frame: row.tierIdx,
+              id: row.id,
             ),
             const SizedBox(width: 11),
             Expanded(
@@ -1545,10 +1611,20 @@ class _MonthRankRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  NameWithLevel(
-                    name: row.username,
-                    xp: row.xp,
-                    style: TextStyle(color: context.colors.text, fontSize: 15),
+                  Row(
+                    children: [
+                      Flexible(
+                        child: NameWithLevel(
+                          name: row.username,
+                          xp: row.xp,
+                          style: TextStyle(color: context.colors.text, fontSize: 15),
+                        ),
+                      ),
+                      if (Looks.instance.pro(row.id)) ...[
+                        const SizedBox(width: 6),
+                        const ProChip(height: 16),
+                      ],
+                    ],
                   ),
                   const SizedBox(height: 2),
                   Text(
@@ -1630,6 +1706,7 @@ class _MonthSelfRow extends StatelessWidget {
     return _RowCard(
       borderColour: context.colors.brand,
       borderWidth: 1,
+      pro: Subscription.instance.active,
       child: Row(
         children: [
           if (place != null) ...[
@@ -1649,6 +1726,8 @@ class _MonthSelfRow extends StatelessWidget {
             fontSize: 17,
             avatarUrl: backend.me?.avatarUrl,
             frame: demoProfile.isRanked ? demoProfile.tierIdx : null,
+            mine: true,
+            id: backend.me?.id ?? '',
           ),
           const SizedBox(width: 11),
           Expanded(

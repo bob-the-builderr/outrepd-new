@@ -7,10 +7,14 @@
 /// from — nothing here computes a stat of its own.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../backend/backend.dart';
 import '../l10n/app_localizations.dart';
+import '../lifter/looks.dart';
+import '../lifter/my_lifter.dart';
 import '../country_names.dart';
 import '../player_avatar.dart';
 import '../rewards.dart';
@@ -19,6 +23,7 @@ import '../theme.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
 import '../worn_title.dart';
+import 'cover_parts.dart';
 import 'live_invite.dart';
 import 'settings_privacy.dart';
 import 'share_card.dart';
@@ -55,6 +60,8 @@ mixin _LifterFetch<T extends StatefulWidget> on State<T> {
   bool loading = true;
 
   Future<void> load() async {
+    // How they look comes from its own call, beside the card.
+    unawaited(Looks.instance.fetch([lifterId]));
     setState(() => loading = true);
     try {
       final result = await backend.lifterProfile(lifterId);
@@ -128,8 +135,27 @@ class _LifterPeekSheetState extends State<_LifterPeekSheet>
     final l = L.of(context);
     final p = profile;
 
+    return ListenableBuilder(
+      listenable: Looks.instance,
+      builder: (context, _) => _sheet(context, l, p),
+    );
+  }
+
+  Widget _sheet(BuildContext context, L l, LifterProfile? p) {
     return SafeArea(
-      child: Padding(
+      child: Stack(
+        children: [
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 0,
+            height: 130,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+              child: ProfileCover(cover: Looks.instance.cover(widget.id)),
+            ),
+          ),
+          Padding(
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -140,7 +166,8 @@ class _LifterPeekSheetState extends State<_LifterPeekSheet>
                 PlayerAvatar(
                   name: widget.username,
                   tierIdx: p != null && p.ranked ? p.tierIdx : null,
-                  image: p?.avatarUrl != null ? NetworkImage(p!.avatarUrl!) : null,
+                  image: _picture(widget.id, p?.avatarUrl),
+                  alive: Looks.instance.pro(widget.id),
                   size: 52,
                   onBadgeTap: p != null && p.ranked ? _openFullProfile : null,
                 ),
@@ -265,9 +292,19 @@ class _LifterPeekSheetState extends State<_LifterPeekSheet>
             ],
           ],
         ),
+          ),
+        ],
       ),
     );
   }
+}
+
+/// [id]'s picture: a Pro who made a lifter is drawn from it (alive, in
+/// vectors); anybody else by their uploaded picture, or their name's lifter.
+ImageProvider? _picture(String id, String? avatarUrl) {
+  final made = Looks.instance.lifter(id);
+  if (Looks.instance.pro(id) && made != null) return LifterPicture(made);
+  return avatarUrl != null ? NetworkImage(avatarUrl) : null;
 }
 
 // ──────────────────────────────── full profile ────────────────────────────
@@ -428,8 +465,26 @@ class _Body extends StatelessWidget {
   final VoidCallback onChallenge;
   final VoidCallback onAddFriend;
 
+  // Their cover behind the top, while they are Pro; redrawn when their
+  // look arrives.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => ListenableBuilder(
+    listenable: Looks.instance,
+    builder: (context, _) => Stack(
+      children: [
+        Positioned(
+          left: 0,
+          right: 0,
+          top: 0,
+          height: 220,
+          child: ProfileCover(cover: Looks.instance.cover(profile.id)),
+        ),
+        _list(context),
+      ],
+    ),
+  );
+
+  Widget _list(BuildContext context) {
     final l = L.of(context);
     final p = profile;
 
@@ -440,7 +495,8 @@ class _Body extends StatelessWidget {
           child: PlayerAvatar(
             name: username,
             tierIdx: p.ranked ? p.tierIdx : null,
-            image: p.avatarUrl != null ? NetworkImage(p.avatarUrl!) : null,
+            image: _picture(p.id, p.avatarUrl),
+            alive: Looks.instance.pro(p.id),
             size: 74,
           ),
         ),

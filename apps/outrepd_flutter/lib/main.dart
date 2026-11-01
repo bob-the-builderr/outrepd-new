@@ -19,6 +19,7 @@ import 'data.dart';
 import 'deep_links.dart';
 import 'firebase.dart';
 import 'home_widgets.dart';
+import 'lifter/looks.dart';
 import 'lifter/my_lifter.dart';
 import 'reminders.dart';
 import 'rewards.dart';
@@ -95,6 +96,8 @@ void main() async {
     await loadCountAccuracy();
     // The lifter before the photo: the picture getter reads both.
     await MyLifter.instance.load();
+    await MyCover.instance.load();
+    unawaited(MyCover.instance.adopt());
     await avatar.load();
     await rewards.load();
     await Adventure.instance.load();

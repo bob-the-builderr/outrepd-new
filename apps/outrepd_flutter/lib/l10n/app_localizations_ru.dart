@@ -533,6 +533,57 @@ class LRu extends L {
   String get lifterNeedsAllStars => 'Все звёзды Приключения';
 
   @override
+  String get coverTitle => 'Обложка';
+
+  @override
+  String get coverPhoto => 'Ваше фото';
+
+  @override
+  String get coverNone => 'Без обложки';
+
+  @override
+  String get coverUse => 'Выбрать эту обложку';
+
+  @override
+  String get coverProLine => 'Обложки только для Pro. Они двигаются, и их видит каждый, кто открывает ваш профиль.';
+
+  @override
+  String get coverCouldNotUpload => 'Не удалось загрузить фото. Попробуйте ещё раз.';
+
+  @override
+  String get coverNeonCity => 'Неоновый город';
+
+  @override
+  String get coverIronGym => 'Железный зал';
+
+  @override
+  String get coverRooftopSunset => 'Закат на крыше';
+
+  @override
+  String get coverStadiumLights => 'Огни стадиона';
+
+  @override
+  String get coverSilverPeaks => 'Серебряные пики';
+
+  @override
+  String get coverBronzeDunes => 'Бронзовые дюны';
+
+  @override
+  String get coverVolcano => 'Вулкан';
+
+  @override
+  String get coverPalmBeach => 'Пальмовый пляж';
+
+  @override
+  String get coverWinterCity => 'Зимний город';
+
+  @override
+  String get vsLiveRanked => 'LIVE · РЕЙТИНГ';
+
+  @override
+  String get vsLiveFriendly => 'LIVE · ДРУЖЕСКИЙ';
+
+  @override
   String get couldNotShareCard => 'Не удалось поделиться карточкой';
 
   @override

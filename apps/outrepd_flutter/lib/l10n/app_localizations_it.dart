@@ -535,6 +535,57 @@ class LIt extends L {
   String get lifterNeedsAllStars => 'Tutte le stelle dell\'Avventura';
 
   @override
+  String get coverTitle => 'Copertina';
+
+  @override
+  String get coverPhoto => 'La tua foto';
+
+  @override
+  String get coverNone => 'Nessuna copertina';
+
+  @override
+  String get coverUse => 'Usa questa copertina';
+
+  @override
+  String get coverProLine => 'Le copertine sono Pro. Si muovono, e chiunque apra il tuo profilo le vede.';
+
+  @override
+  String get coverCouldNotUpload => 'Impossibile caricare la tua foto. Riprova.';
+
+  @override
+  String get coverNeonCity => 'Città al neon';
+
+  @override
+  String get coverIronGym => 'Palestra di ferro';
+
+  @override
+  String get coverRooftopSunset => 'Tramonto sul tetto';
+
+  @override
+  String get coverStadiumLights => 'Luci dello stadio';
+
+  @override
+  String get coverSilverPeaks => 'Vette d\'argento';
+
+  @override
+  String get coverBronzeDunes => 'Dune di bronzo';
+
+  @override
+  String get coverVolcano => 'Vulcano';
+
+  @override
+  String get coverPalmBeach => 'Spiaggia di palme';
+
+  @override
+  String get coverWinterCity => 'Città d\'inverno';
+
+  @override
+  String get vsLiveRanked => 'LIVE · CLASSIFICATA';
+
+  @override
+  String get vsLiveFriendly => 'LIVE · AMICHEVOLE';
+
+  @override
   String get couldNotShareCard => 'Impossibile condividere questa card';
 
   @override

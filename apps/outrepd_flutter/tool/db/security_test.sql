@@ -861,6 +861,34 @@ select check_that(count(*) = 0,
 
 -- ── signed out ────────────────────────────────────────────────────────────────
 
+-- How people look: A's lifter and cover read by B; the cover only while A
+-- is Pro; nobody's cover can point at somebody else's file.
+select as_user(:'A'); set role authenticated;
+update profiles set lifter = '{"v":1,"skin":"tan"}', cover = 'neon_city' where id = :'A';
+select must_fail('a cover that is not one of the scenes',
+                 format('update profiles set cover = %L where id = %L', 'my_site', :'A'));
+select must_fail('a cover from another account''s folder',
+                 format('update profiles set cover = %L where id = %L',
+                        'https://x.supabase.co/storage/v1/object/public/avatars/' || :'B' || '/cover.jpg', :'A'));
+select must_fail('a lifter too big to be one',
+                 format('update profiles set lifter = %L where id = %L',
+                        jsonb_build_object('junk', repeat('x', 4000)), :'A'));
+reset role;
+select as_user(:'B'); set role authenticated;
+select check_that((select lifter->>'skin' from pro_looks(array[:'A'::uuid])) = 'tan',
+                  'another lifter''s lifter cannot be read');
+select check_that((select not pro and cover is null from pro_looks(array[:'A'::uuid])),
+                  'a cover shows without Pro');
+reset role;
+insert into subscriptions (user_id, active, expires_at)
+  values (:'A', true, now() + interval '7 days')
+  on conflict (user_id) do update set active = true, expires_at = excluded.expires_at;
+select as_user(:'B'); set role authenticated;
+select check_that((select pro and cover = 'neon_city' from pro_looks(array[:'A'::uuid])),
+                  'a Pro lifter''s cover does not show');
+reset role;
+delete from subscriptions where user_id = :'A';
+
 -- A request with no session runs as anon. It may draw the website's share
 -- card and nothing else. Read off the catalogue rather than function by
 -- function, so one added later and never closed fails here, not in use.
@@ -895,6 +923,8 @@ select must_fail('signed out, somebody''s recorded set',
 select must_fail('signed out, whether a name is taken',
                  'select username_available(''alice_a1'')');
 select must_fail('signed out, the profiles table', 'select * from profiles');
+select must_fail('signed out, how people look',
+                 format('select * from pro_looks(array[%L::uuid])', :'A'));
 -- The one thing that is meant to work signed out.
 select count(*) from public_lifter_card('alice_a1');
 reset role;

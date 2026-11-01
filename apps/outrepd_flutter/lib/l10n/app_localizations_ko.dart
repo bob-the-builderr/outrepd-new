@@ -521,6 +521,57 @@ class LKo extends L {
   String get lifterNeedsAllStars => '어드벤처의 모든 별';
 
   @override
+  String get coverTitle => '커버';
+
+  @override
+  String get coverPhoto => '내 사진';
+
+  @override
+  String get coverNone => '커버 없음';
+
+  @override
+  String get coverUse => '이 커버 사용';
+
+  @override
+  String get coverProLine => '커버는 Pro 전용이에요. 움직이고, 내 프로필을 여는 모든 사람에게 보여요.';
+
+  @override
+  String get coverCouldNotUpload => '사진을 업로드할 수 없어요. 다시 시도해 주세요.';
+
+  @override
+  String get coverNeonCity => '네온 시티';
+
+  @override
+  String get coverIronGym => '아이언 짐';
+
+  @override
+  String get coverRooftopSunset => '옥상의 노을';
+
+  @override
+  String get coverStadiumLights => '경기장 조명';
+
+  @override
+  String get coverSilverPeaks => '은빛 봉우리';
+
+  @override
+  String get coverBronzeDunes => '청동 사구';
+
+  @override
+  String get coverVolcano => '화산';
+
+  @override
+  String get coverPalmBeach => '야자수 해변';
+
+  @override
+  String get coverWinterCity => '겨울 도시';
+
+  @override
+  String get vsLiveRanked => '라이브 · 랭크';
+
+  @override
+  String get vsLiveFriendly => '라이브 · 친선';
+
+  @override
   String get couldNotShareCard => '이 카드를 공유할 수 없었어요';
 
   @override

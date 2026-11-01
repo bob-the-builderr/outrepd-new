@@ -22,16 +22,20 @@ import '../backend/backend.dart';
 import '../career.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../lifter/looks.dart';
+import '../lifter/my_lifter.dart';
 import '../motion.dart';
 import '../country_names.dart';
 import '../rewards.dart';
 import '../player_avatar.dart';
 import '../season.dart';
+import '../subscription.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import '../worn_title.dart';
 import 'avatar_picker.dart';
 import 'awards.dart';
+import 'cover_parts.dart';
 import 'level.dart';
 import 'match_history.dart';
 import 'progression.dart';
@@ -150,6 +154,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: ListView(
           padding: const EdgeInsets.only(bottom: 20),
           children: [
+            // The cover behind the top of the profile, while Pro.
+            Stack(
+              children: [
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  height: 250,
+                  child: ListenableBuilder(
+                    listenable: Listenable.merge([MyCover.instance, Subscription.instance]),
+                    builder: (context, _) => ProfileCover(
+                      cover: Subscription.instance.active ? MyCover.instance.cover : null,
+                    ),
+                  ),
+                ),
+                Column(
+                  children: [
             _Header(
               onShare: () => showShareCardSheet(
                 context,
@@ -169,10 +190,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               onSettings: () => _open(const SettingsScreen()),
+              onCover: () => showCoverPicker(context),
             ),
             _Identity(
               profile: p,
               onTapRank: () => _open(ProgressionScreen(profile: p)),
+            ),
+                  ],
+                ),
+              ],
             ),
             const SizedBox(height: 16),
             Padding(
@@ -219,10 +245,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
 // ──────────────────────────────── header ─────────────────────────────────────
 
 class _Header extends StatelessWidget {
-  const _Header({required this.onShare, required this.onSettings});
+  const _Header({
+    required this.onShare,
+    required this.onSettings,
+    required this.onCover,
+  });
 
   final VoidCallback onShare;
   final VoidCallback onSettings;
+
+  /// The cover picker: Pro's, open to everybody to look at.
+  final VoidCallback onCover;
 
   @override
   Widget build(BuildContext context) {
@@ -236,10 +269,21 @@ class _Header extends StatelessWidget {
             tooltip: L.of(context).shareProfile,
             onTap: onShare,
           ),
-          _IconAction(
-            icon: Icons.settings_outlined,
-            tooltip: L.of(context).settings,
-            onTap: onSettings,
+          Row(
+            children: [
+              _IconAction(
+                key: const Key('coverButton'),
+                icon: Icons.wallpaper_outlined,
+                tooltip: L.of(context).coverTitle,
+                onTap: onCover,
+              ),
+              const SizedBox(width: 8),
+              _IconAction(
+                icon: Icons.settings_outlined,
+                tooltip: L.of(context).settings,
+                onTap: onSettings,
+              ),
+            ],
           ),
         ],
       ),
@@ -249,6 +293,7 @@ class _Header extends StatelessWidget {
 
 class _IconAction extends StatelessWidget {
   const _IconAction({
+    super.key,
     required this.icon,
     required this.tooltip,
     required this.onTap,
@@ -296,11 +341,13 @@ class _Identity extends StatelessWidget {
         // this screen already rebuilds on — a picked photo is a change
         // nothing about a career tracks.
         ListenableBuilder(
-          listenable: avatar,
+          listenable: Listenable.merge([avatar, MyLifter.instance, Subscription.instance]),
           builder: (context, _) => PlayerAvatar(
             name: profile.username,
             tierIdx: profile.tierIdx,
             image: avatar.picture,
+            // A Pro's lifter is alive in its frame.
+            alive: Subscription.instance.active,
             size: 78,
             onTap: () => showAvatarPicker(context, profile.tierIdx),
             onBadgeTap: onTapRank,
