@@ -1,2 +1,11 @@
 Analyzing outrepd_flutter...                                    
-No issues found! (ran in 12.4s)
+
+  error • Undefined class 'ValueListenable'. Try changing the name to the name of an existing class, or creating a class with the name 'ValueListenable' • lib/lifter/covers.dart:98:9 • undefined_class
+warning • The value of the field 'shoulderL' isn't used. Try removing the field, or using it • lib/lifter/lifter_art.dart:141:16 • unused_field
+warning • The value of the field 'shoulderR' isn't used. Try removing the field, or using it • lib/lifter/lifter_art.dart:142:16 • unused_field
+warning • The value of the field 'rib' isn't used. Try removing the field, or using it • lib/lifter/lifter_art.dart:143:16 • unused_field
+warning • The value of the field 'hood' isn't used. Try removing the field, or using it • lib/lifter/lifter_art.dart:144:16 • unused_field
+warning • The value of the field 'vNeck' isn't used. Try removing the field, or using it • lib/lifter/lifter_art.dart:145:16 • unused_field
+warning • The declaration 'body' isn't referenced. Try removing the declaration of 'body' • lib/screens/share_card.dart:53:24 • unused_element
+
+7 issues found. (ran in 13.8s)
