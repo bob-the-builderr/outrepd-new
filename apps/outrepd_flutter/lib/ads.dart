@@ -17,29 +17,40 @@
 ///   the ads can be the ordinary kind); the onboarding turns away anybody
 ///   younger. Ads are capped at the teen rating.
 ///
-/// A build with no ad unit — the tests, the web preview, a build made
-/// without the AdMob ids — has no ads at all, the way a build with no
+/// The ads come from AppLovin MAX (the user's pick, 2026-11-01, after a week
+/// in which AdMob served none): an auction on every ad between AppLovin and
+/// the networks it brings, the highest paying. The consent before them is
+/// still Google's form, where the law asks for one, and Apple's question;
+/// MAX reads both answers from the phone. The AdMob package stays only for
+/// that form.
+///
+/// A build with no AppLovin key or ad unit — the tests, the web preview, a
+/// build made without them — has no ads at all, the way a build with no
 /// RevenueCat key has no paywall.
 library;
 
 import 'dart:async';
 
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+import 'package:applovin_max/applovin_max.dart' show AppLovinMAX, InterstitialListener;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+// Only for Google's consent form, the one the law asks for in Europe.
+import 'package:google_mobile_ads/google_mobile_ads.dart'
+    show ConsentForm, ConsentInformation, ConsentRequestParameters;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'screens/ad_ask.dart';
 import 'screens/paywall.dart';
 import 'subscription.dart';
 
-/// Supplied at build time from the AdMob account, never committed: the
-/// interstitial ad units, one per store. Not secrets — they ship inside the
-/// app — but the account's to hand out.
-const kAdMobIosInterstitial = String.fromEnvironment('ADMOB_IOS_INTERSTITIAL');
-const kAdMobAndroidInterstitial = String.fromEnvironment(
-  'ADMOB_ANDROID_INTERSTITIAL',
+/// Supplied at build time from the AppLovin account, never committed: the
+/// SDK key, and the interstitial ad units, one per store. Not secrets — they
+/// ship inside the app — but the account's to hand out.
+const kAppLovinSdkKey = String.fromEnvironment('APPLOVIN_SDK_KEY');
+const kMaxIosInterstitial = String.fromEnvironment('APPLOVIN_IOS_INTERSTITIAL');
+const kMaxAndroidInterstitial = String.fromEnvironment(
+  'APPLOVIN_ANDROID_INTERSTITIAL',
 );
 
 class Ads extends ChangeNotifier {
@@ -60,19 +71,24 @@ class Ads extends ChangeNotifier {
 
   bool _started = false;
   bool _loading = false;
-  InterstitialAd? _ad;
+
+  /// An ad is loaded and waiting to be shown.
+  bool _ready = false;
+
+  /// Completes as the ad on screen closes, or fails to show.
+  Completer<void>? _closing;
 
   String get _unit {
     if (kIsWeb) return '';
     return switch (defaultTargetPlatform) {
-      TargetPlatform.iOS => kAdMobIosInterstitial,
-      TargetPlatform.android => kAdMobAndroidInterstitial,
+      TargetPlatform.iOS => kMaxIosInterstitial,
+      TargetPlatform.android => kMaxAndroidInterstitial,
       _ => '',
     };
   }
 
   /// Whether this build shows ads at all.
-  bool get configured => _unit.isNotEmpty;
+  bool get configured => kAppLovinSdkKey.isNotEmpty && _unit.isNotEmpty;
 
   bool get _pro => Subscription.instance.active;
 
@@ -125,28 +141,17 @@ class Ads extends ChangeNotifier {
       return;
     }
 
-    final ad = _ad;
-    if (ad == null) {
+    if (!_ready || !(await AppLovinMAX.isInterstitialReady(_unit) ?? false)) {
       // Nothing in hand — no fill, no network: no ad this time, and another
       // is fetched for the next.
+      _ready = false;
       _load();
       return;
     }
-    _ad = null;
+    _ready = false;
     notifyListeners();
-    final closed = Completer<void>();
-    ad.fullScreenContentCallback = FullScreenContentCallback(
-      onAdDismissedFullScreenContent: (ad) {
-        ad.dispose();
-        if (!closed.isCompleted) closed.complete();
-      },
-      onAdFailedToShowFullScreenContent: (ad, error) {
-        debugPrint('The ad would not show: $error');
-        ad.dispose();
-        if (!closed.isCompleted) closed.complete();
-      },
-    );
-    await ad.show();
+    final closed = _closing = Completer<void>();
+    AppLovinMAX.showInterstitial(_unit);
     await closed.future;
     _load();
 
@@ -159,7 +164,8 @@ class Ads extends ChangeNotifier {
   }
 
   /// Consent where the law asks for it, Apple's question when [askTracking],
-  /// then the SDK and the first ad.
+  /// then AppLovin and the first ad. AppLovin reads the consent form's answer
+  /// and Apple's from the phone; nothing is passed to it by hand.
   Future<void> _start({bool askTracking = false}) async {
     if (_started) return;
     _started = true;
@@ -175,11 +181,32 @@ class Ads extends ChangeNotifier {
         _started = false;
         return;
       }
-      // Nothing past the teen rating, for an app rated 13+.
-      await MobileAds.instance.updateRequestConfiguration(
-        RequestConfiguration(maxAdContentRating: MaxAdContentRating.t),
+      AppLovinMAX.setInterstitialListener(
+        InterstitialListener(
+          onAdLoadedCallback: (_) {
+            _loading = false;
+            _ready = true;
+            notifyListeners();
+          },
+          onAdLoadFailedCallback: (_, error) {
+            // Tried again after the next game, not in a loop: a phone with
+            // no fill would otherwise ask for ads it is never going to get.
+            debugPrint('No ad: ${error.message}');
+            _loading = false;
+          },
+          onAdDisplayedCallback: (_) {},
+          onAdDisplayFailedCallback: (_, error) {
+            debugPrint('The ad would not show: ${error.message}');
+            _closed();
+          },
+          onAdClickedCallback: (_) {},
+          onAdHiddenCallback: (_) => _closed(),
+        ),
       );
-      await MobileAds.instance.initialize();
+      if (await AppLovinMAX.initialize(kAppLovinSdkKey) == null) {
+        _started = false;
+        return;
+      }
       _load();
     } on Object catch (error) {
       debugPrint('Ads did not start: $error');
@@ -208,25 +235,16 @@ class Ads extends ChangeNotifier {
   }
 
   void _load() {
-    if (!_started || _loading || _ad != null || _pro) return;
+    if (!_started || _loading || _ready || _pro) return;
     _loading = true;
-    InterstitialAd.load(
-      adUnitId: _unit,
-      request: const AdRequest(),
-      adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: (ad) {
-          _loading = false;
-          _ad = ad;
-          notifyListeners();
-        },
-        onAdFailedToLoad: (error) {
-          // Tried again after the next game, not in a loop: a phone with no
-          // fill would otherwise ask for ads it is never going to get.
-          debugPrint('No ad: $error');
-          _loading = false;
-        },
-      ),
-    );
+    AppLovinMAX.loadInterstitial(_unit);
+  }
+
+  /// The ad on screen closed, or never showed: whatever waits on it goes on.
+  void _closed() {
+    final closing = _closing;
+    _closing = null;
+    if (closing != null && !closing.isCompleted) closing.complete();
   }
 
   Future<void> _save() async {
