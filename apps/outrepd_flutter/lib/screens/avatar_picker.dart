@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -41,15 +43,20 @@ class _AvatarSheetState extends State<_AvatarSheet> {
   /// that quietly vanishes is worse than one that was never set.
   Future<void> _pick(ImageSource source) async {
     try {
+      // Bigger than the picture is kept at: the crop below may take a small
+      // part of it, and that part should still fill the 800 it is saved at.
       final picked = await ImagePicker().pickImage(
         source: source,
-        maxWidth: 800,
-        maxHeight: 800,
-        imageQuality: 88,
+        maxWidth: 2048,
+        maxHeight: 2048,
+        imageQuality: 95,
       );
       if (picked == null) return;
 
-      final bytes = await picked.readAsBytes();
+      final bytes = await _crop(picked);
+      // The crop screen was closed without choosing: nothing changes.
+      if (bytes == null) return;
+
       final dir = await getApplicationDocumentsDirectory();
       final target = File(
         '${dir.path}/avatar-${DateTime.now().millisecondsSinceEpoch}.jpg',
@@ -89,8 +96,83 @@ class _AvatarSheetState extends State<_AvatarSheet> {
     }
   }
 
+  /// The phone's own crop screen, square: what goes in the circle is the
+  /// lifter's call, not the middle of whatever they picked (the user's pick
+  /// B, 2026-11-01). Null when it was closed without choosing. Where there
+  /// is no crop screen to open — anywhere but a phone — the picture is used
+  /// as picked, at the size it was always kept at.
+  Future<Uint8List?> _crop(XFile picked) async {
+    if (kIsWeb || !(Platform.isAndroid || Platform.isIOS)) {
+      return picked.readAsBytes();
+    }
+    final l = L.of(context);
+    final cropped = await ImageCropper().cropImage(
+      sourcePath: picked.path,
+      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+      maxWidth: 800,
+      maxHeight: 800,
+      compressFormat: ImageCompressFormat.jpg,
+      compressQuality: 88,
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: l.cropPhoto,
+          toolbarColor: const Color(0xFF1C1A18),
+          toolbarWidgetColor: const Color(0xFFF5EFE4),
+          backgroundColor: Colors.black,
+          activeControlsWidgetColor: AppColors.gold,
+          statusBarLight: false,
+          navBarLight: false,
+          showCropGrid: true,
+          lockAspectRatio: true,
+          initAspectRatio: CropAspectRatioPreset.square,
+          aspectRatioPresets: const [CropAspectRatioPreset.square],
+        ),
+        IOSUiSettings(
+          title: l.cropPhoto,
+          aspectRatioLockEnabled: true,
+          resetAspectRatioEnabled: false,
+          aspectRatioPickerButtonHidden: true,
+          aspectRatioPresets: const [CropAspectRatioPreset.square],
+        ),
+      ],
+    );
+    return cropped?.readAsBytes();
+  }
+
+  bool _removing = false;
+
+  /// Back to the initial, everywhere: asked once, since the server's copy
+  /// goes too. The phone's copy goes only once the server's has, so a
+  /// failure leaves the picture as it was rather than half gone.
+  Future<void> _remove() async {
+    final l = L.of(context);
+    final sure = await showDialog<bool>(
+      context: context,
+      builder: (context) => _RemoveDialog(tierIdx: widget.tierIdx),
+    );
+    if (sure != true || !mounted) return;
+    setState(() {
+      _removing = true;
+      _error = null;
+    });
+    try {
+      if (backend.available) await backend.removeAvatar();
+      await avatar.clearPhoto();
+      if (mounted) Navigator.of(context).pop();
+    } on Object catch (error) {
+      debugPrint('Could not remove the photo: $error');
+      if (mounted) {
+        setState(() {
+          _removing = false;
+          _error = l.couldNotRemovePhoto;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final hasPicture = avatar.picture != null;
     return SafeArea(
       child: SingleChildScrollView(
         child: Padding(
@@ -142,6 +224,27 @@ class _AvatarSheetState extends State<_AvatarSheet> {
                   ),
                 ],
               ),
+              // Only with a picture to take down; set a little apart from the
+              // two above so it is not hit on the way to one of them (pick R1).
+              if (hasPicture) ...[
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: TextButton.icon(
+                    key: const Key('removePhoto'),
+                    onPressed: _removing ? null : _remove,
+                    icon: const Icon(Icons.delete_outline, size: 20),
+                    label: Text(L.of(context).removePhoto),
+                    style: TextButton.styleFrom(
+                      foregroundColor: AppColors.loss,
+                      minimumSize: const Size.fromHeight(48),
+                      textStyle: context.type.label.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
               if (_error != null) ...[
                 const SizedBox(height: 12),
                 Text(
@@ -151,6 +254,76 @@ class _AvatarSheetState extends State<_AvatarSheet> {
               ],
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Asked before the picture goes: the initial it leaves, in the frame it
+/// will sit in, and what removing does.
+class _RemoveDialog extends StatelessWidget {
+  const _RemoveDialog({required this.tierIdx});
+  final int tierIdx;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    return Dialog(
+      backgroundColor: context.colors.surface,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(22, 24, 22, 18),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            PlayerAvatar(name: demoProfile.username, tierIdx: tierIdx, size: 64),
+            const SizedBox(height: 12),
+            Text(
+              l.removePhotoTitle,
+              textAlign: TextAlign.center,
+              style: context.type.heading.copyWith(color: context.colors.text),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              l.removePhotoBody,
+              textAlign: TextAlign.center,
+              style: context.type.label.copyWith(color: context.colors.muted),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(46),
+                    ),
+                    child: Text(l.cancel),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: OutlinedButton(
+                    key: const Key('confirmRemovePhoto'),
+                    onPressed: () => Navigator.of(context).pop(true),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(46),
+                      foregroundColor: AppColors.loss,
+                      backgroundColor: AppColors.loss.withValues(alpha: 0.13),
+                      side: BorderSide(
+                        color: AppColors.loss.withValues(alpha: 0.4),
+                      ),
+                    ),
+                    child: Text(
+                      l.removePhotoConfirm,
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

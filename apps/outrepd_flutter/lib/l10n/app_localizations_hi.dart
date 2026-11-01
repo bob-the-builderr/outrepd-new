@@ -349,6 +349,24 @@ class LHi extends L {
       'आपकी फ़ोटो सेव हो गई है, पर अभी सिंक नहीं हुई';
 
   @override
+  String get removePhoto => 'फ़ोटो हटाएँ';
+
+  @override
+  String get removePhotoTitle => 'अपनी फ़ोटो हटाएँ?';
+
+  @override
+  String get removePhotoBody => 'इसकी जगह हर जगह आपके नाम का पहला अक्षर दिखेगा। आप कभी भी नई फ़ोटो जोड़ सकते हैं।';
+
+  @override
+  String get removePhotoConfirm => 'हटाएँ';
+
+  @override
+  String get couldNotRemovePhoto => 'आपकी फ़ोटो नहीं हटाई जा सकी। फिर से कोशिश करें।';
+
+  @override
+  String get cropPhoto => 'क्रॉप करें';
+
+  @override
   String get couldNotShareCard => 'यह कार्ड शेयर नहीं हो सका';
 
   @override

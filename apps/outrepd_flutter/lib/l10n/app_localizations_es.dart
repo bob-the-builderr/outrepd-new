@@ -352,6 +352,24 @@ class LEs extends L {
       'Tu foto se guardó, pero aún no se ha sincronizado';
 
   @override
+  String get removePhoto => 'Quitar foto';
+
+  @override
+  String get removePhotoTitle => '¿Quitar tu foto?';
+
+  @override
+  String get removePhotoBody => 'En su lugar se verá tu inicial, en todas partes. Puedes añadir una foto nueva cuando quieras.';
+
+  @override
+  String get removePhotoConfirm => 'Quitar';
+
+  @override
+  String get couldNotRemovePhoto => 'No se pudo quitar tu foto. Inténtalo de nuevo.';
+
+  @override
+  String get cropPhoto => 'Recortar';
+
+  @override
   String get couldNotShareCard => 'No se pudo compartir esta tarjeta';
 
   @override

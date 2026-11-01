@@ -337,6 +337,24 @@ class LJa extends L {
   String get couldNotSyncAvatar => '写真は保存されましたが、まだ同期されていません';
 
   @override
+  String get removePhoto => '写真を削除';
+
+  @override
+  String get removePhotoTitle => '写真を削除しますか？';
+
+  @override
+  String get removePhotoBody => '代わりにイニシャルがすべての場所に表示されます。新しい写真はいつでも追加できます。';
+
+  @override
+  String get removePhotoConfirm => '削除';
+
+  @override
+  String get couldNotRemovePhoto => '写真を削除できませんでした。もう一度お試しください。';
+
+  @override
+  String get cropPhoto => '切り抜き';
+
+  @override
   String get couldNotShareCard => 'このカードを共有できませんでした';
 
   @override

@@ -181,6 +181,8 @@ class RemoteProfile {
     int? totalReps,
     int? bestSet,
     int? xp,
+    // A null [avatarUrl] keeps the one there; this is how it goes.
+    bool clearAvatar = false,
   }) => RemoteProfile(
     id: id,
     username: username ?? this.username,
@@ -190,7 +192,7 @@ class RemoteProfile {
     friendCode: friendCode,
     country: country ?? this.country,
     prefs: prefs ?? this.prefs,
-    avatarUrl: avatarUrl ?? this.avatarUrl,
+    avatarUrl: clearAvatar ? null : avatarUrl ?? this.avatarUrl,
     usernameChangedAt: usernameChangedAt ?? this.usernameChangedAt,
     countryChangedAt: countryChangedAt ?? this.countryChangedAt,
     peakTierIdx: peakTierIdx ?? this.peakTierIdx,
@@ -1298,6 +1300,10 @@ abstract interface class Backend {
   /// as this account's [RemoteProfile.avatarUrl].
   Future<String> uploadAvatar(Uint8List bytes);
 
+  /// Takes this account's photo down: the link on the profile and the file,
+  /// so every screen draws the initial again.
+  Future<void> removeAvatar();
+
   /// True once this account has a real email on it — not just an anonymous
   /// session tied to this one install, with nothing to sign back into if
   /// this phone is lost or this app is reinstalled.
@@ -1632,6 +1638,9 @@ class NoBackend implements Backend {
   @override
   Future<String> uploadAvatar(Uint8List bytes) =>
       throw StateError('no server configured');
+
+  @override
+  Future<void> removeAvatar() => throw StateError('no server configured');
 
   @override
   bool get hasRealAccount => false;

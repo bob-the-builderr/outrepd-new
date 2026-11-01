@@ -349,6 +349,24 @@ class LRu extends L {
       'Фото сохранено, но пока не синхронизировано';
 
   @override
+  String get removePhoto => 'Удалить фото';
+
+  @override
+  String get removePhotoTitle => 'Удалить фото?';
+
+  @override
+  String get removePhotoBody => 'Вместо него везде будет показана ваша первая буква. Новое фото можно добавить в любой момент.';
+
+  @override
+  String get removePhotoConfirm => 'Удалить';
+
+  @override
+  String get couldNotRemovePhoto => 'Не удалось удалить фото. Попробуйте ещё раз.';
+
+  @override
+  String get cropPhoto => 'Обрезать';
+
+  @override
   String get couldNotShareCard => 'Не удалось поделиться карточкой';
 
   @override

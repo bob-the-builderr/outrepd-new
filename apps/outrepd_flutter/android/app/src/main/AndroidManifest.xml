@@ -61,6 +61,12 @@
                  not have. -->
             <meta-data android:name="flutter_deeplinking_enabled" android:value="false"/>
         </activity>
+        <!-- The phone's crop screen for a new profile picture (image_cropper,
+             which opens uCrop). -->
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <!-- The home-screen widgets (OutrepdWidgets.kt): today's goal, the
              streak, and in the bigger one the rank. -->
         <receiver

@@ -35,6 +35,12 @@
 # Android manifest: its references are expected to be unresolved.
 -dontwarn androidx.health.**
 
+# uCrop, the crop screen for a profile picture: its activity is found by name
+# from the manifest, and its README asks for these.
+-dontwarn com.yalantis.ucrop**
+-keep class com.yalantis.ucrop** { *; }
+-keep interface com.yalantis.ucrop** { *; }
+
 # Our own few classes (MainActivity, the home-screen widgets) are found by name
 # from the manifest and from Dart's home_widget calls.
 -keep class com.outrepd.outrepd.** { *; }

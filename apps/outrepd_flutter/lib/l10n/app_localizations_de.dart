@@ -351,6 +351,24 @@ class LDe extends L {
       'Dein Bild ist gespeichert, aber noch nicht synchronisiert';
 
   @override
+  String get removePhoto => 'Foto entfernen';
+
+  @override
+  String get removePhotoTitle => 'Foto entfernen?';
+
+  @override
+  String get removePhotoBody => 'Stattdessen wird überall dein Anfangsbuchstabe gezeigt. Du kannst jederzeit ein neues Foto hinzufügen.';
+
+  @override
+  String get removePhotoConfirm => 'Entfernen';
+
+  @override
+  String get couldNotRemovePhoto => 'Dein Foto konnte nicht entfernt werden. Versuch es noch einmal.';
+
+  @override
+  String get cropPhoto => 'Zuschneiden';
+
+  @override
   String get couldNotShareCard => 'Diese Karte konnte nicht geteilt werden';
 
   @override

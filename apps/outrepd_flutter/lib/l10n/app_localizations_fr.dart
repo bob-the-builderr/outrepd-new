@@ -352,6 +352,24 @@ class LFr extends L {
       'Votre photo est enregistrée, mais pas encore synchronisée';
 
   @override
+  String get removePhoto => 'Supprimer la photo';
+
+  @override
+  String get removePhotoTitle => 'Supprimer votre photo ?';
+
+  @override
+  String get removePhotoBody => 'Votre initiale s’affichera à la place, partout. Vous pouvez ajouter une nouvelle photo à tout moment.';
+
+  @override
+  String get removePhotoConfirm => 'Supprimer';
+
+  @override
+  String get couldNotRemovePhoto => 'Impossible de supprimer votre photo. Réessayez.';
+
+  @override
+  String get cropPhoto => 'Recadrer';
+
+  @override
   String get couldNotShareCard => 'Impossible de partager cette carte';
 
   @override

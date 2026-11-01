@@ -335,6 +335,24 @@ class LZh extends L {
   String get couldNotSyncAvatar => '照片已保存,但还没有同步';
 
   @override
+  String get removePhoto => '移除照片';
+
+  @override
+  String get removePhotoTitle => '移除你的照片？';
+
+  @override
+  String get removePhotoBody => '各处都会改为显示你的首字母。你可以随时添加新照片。';
+
+  @override
+  String get removePhotoConfirm => '移除';
+
+  @override
+  String get couldNotRemovePhoto => '无法移除你的照片，请重试。';
+
+  @override
+  String get cropPhoto => '裁剪';
+
+  @override
   String get couldNotShareCard => '无法分享这张卡片';
 
   @override

@@ -349,6 +349,24 @@ class LTr extends L {
       'Fotoğrafın kaydedildi ama henüz senkronize olmadı';
 
   @override
+  String get removePhoto => 'Fotoğrafı kaldır';
+
+  @override
+  String get removePhotoTitle => 'Fotoğrafın kaldırılsın mı?';
+
+  @override
+  String get removePhotoBody => 'Bunun yerine her yerde baş harfin görünür. İstediğin zaman yeni bir fotoğraf ekleyebilirsin.';
+
+  @override
+  String get removePhotoConfirm => 'Kaldır';
+
+  @override
+  String get couldNotRemovePhoto => 'Fotoğrafın kaldırılamadı. Tekrar dene.';
+
+  @override
+  String get cropPhoto => 'Kırp';
+
+  @override
   String get couldNotShareCard => 'Bu kart paylaşılamadı';
 
   @override

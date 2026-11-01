@@ -337,6 +337,24 @@ class LKo extends L {
   String get couldNotSyncAvatar => '사진은 저장됐지만 아직 동기화되지 않았어요';
 
   @override
+  String get removePhoto => '사진 삭제';
+
+  @override
+  String get removePhotoTitle => '사진을 삭제할까요?';
+
+  @override
+  String get removePhotoBody => '대신 이니셜이 모든 곳에 표시돼요. 새 사진은 언제든 추가할 수 있어요.';
+
+  @override
+  String get removePhotoConfirm => '삭제';
+
+  @override
+  String get couldNotRemovePhoto => '사진을 삭제하지 못했어요. 다시 시도해 주세요.';
+
+  @override
+  String get cropPhoto => '자르기';
+
+  @override
   String get couldNotShareCard => '이 카드를 공유할 수 없었어요';
 
   @override

@@ -962,6 +962,25 @@ class SupabaseBackend implements Backend {
     return url;
   }
 
+  @override
+  Future<void> removeAvatar() async {
+    final user = _db.auth.currentUser;
+    if (user == null) throw StateError('not signed in');
+
+    // The link first: once it is gone every screen draws the initial, and a
+    // file left behind by a lost connection is one nobody is shown — the
+    // next upload overwrites it anyway.
+    await _db.from('profiles').update({'avatar_url': null}).eq('id', user.id);
+    final was = _me;
+    if (was != null) _me = was.copyWith(clearAvatar: true);
+
+    try {
+      await _db.storage.from('avatars').remove(['${user.id}/photo.jpg']);
+    } on Object catch (error) {
+      debugPrint('Could not delete the photo file: $error');
+    }
+  }
+
   // An anonymous session's own email reads as "", not null — Supabase's
   // shape for "there is no email", not this getter's. Checked for content,
   // not just presence, or every anonymous account would read as real.

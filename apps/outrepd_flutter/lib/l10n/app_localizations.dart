@@ -743,6 +743,42 @@ abstract class L {
   /// **'Your picture is saved, but it hasn\'t synced yet'**
   String get couldNotSyncAvatar;
 
+  /// No description provided for @removePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove photo'**
+  String get removePhoto;
+
+  /// No description provided for @removePhotoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove your photo?'**
+  String get removePhotoTitle;
+
+  /// No description provided for @removePhotoBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your initial shows instead, everywhere. You can add a new photo any time.'**
+  String get removePhotoBody;
+
+  /// No description provided for @removePhotoConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get removePhotoConfirm;
+
+  /// No description provided for @couldNotRemovePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not remove your photo. Try again.'**
+  String get couldNotRemovePhoto;
+
+  /// No description provided for @cropPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Crop'**
+  String get cropPhoto;
+
   /// No description provided for @couldNotShareCard.
   ///
   /// In en, this message translates to:

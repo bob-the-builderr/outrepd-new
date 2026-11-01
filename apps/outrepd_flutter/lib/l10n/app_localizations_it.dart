@@ -351,6 +351,24 @@ class LIt extends L {
       'La tua foto è salvata, ma non ancora sincronizzata';
 
   @override
+  String get removePhoto => 'Rimuovi foto';
+
+  @override
+  String get removePhotoTitle => 'Rimuovere la tua foto?';
+
+  @override
+  String get removePhotoBody => 'Al suo posto vedrai la tua iniziale, ovunque. Puoi aggiungere una nuova foto quando vuoi.';
+
+  @override
+  String get removePhotoConfirm => 'Rimuovi';
+
+  @override
+  String get couldNotRemovePhoto => 'Impossibile rimuovere la tua foto. Riprova.';
+
+  @override
+  String get cropPhoto => 'Ritaglia';
+
+  @override
   String get couldNotShareCard => 'Impossibile condividere questa card';
 
   @override

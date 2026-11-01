@@ -350,6 +350,24 @@ class LPt extends L {
       'Sua foto foi salva, mas ainda não sincronizou';
 
   @override
+  String get removePhoto => 'Remover foto';
+
+  @override
+  String get removePhotoTitle => 'Remover sua foto?';
+
+  @override
+  String get removePhotoBody => 'Sua inicial aparece no lugar dela, em todo lugar. Você pode adicionar uma nova foto quando quiser.';
+
+  @override
+  String get removePhotoConfirm => 'Remover';
+
+  @override
+  String get couldNotRemovePhoto => 'Não foi possível remover sua foto. Tente de novo.';
+
+  @override
+  String get cropPhoto => 'Recortar';
+
+  @override
   String get couldNotShareCard => 'Não foi possível compartilhar este cartão';
 
   @override

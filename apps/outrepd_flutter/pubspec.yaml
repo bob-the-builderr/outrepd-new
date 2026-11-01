@@ -46,6 +46,10 @@ dependencies:
   google_mlkit_pose_detection: ^0.15.0
   path_provider: ^2.1.6
   image_picker: ^1.2.3
+  # The phone's own crop screen for a new profile picture (the user's pick B,
+  # 2026-11-01). Not 13: that one needs Flutter 3.47, and CI takes whatever
+  # stable is.
+  image_cropper: ^12.2.1
   flutter_localizations:
     sdk: flutter
   intl: ^0.20.2

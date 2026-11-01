@@ -348,6 +348,24 @@ class LId extends L {
   String get couldNotSyncAvatar => 'Fotomu tersimpan, tapi belum tersinkron';
 
   @override
+  String get removePhoto => 'Hapus foto';
+
+  @override
+  String get removePhotoTitle => 'Hapus fotomu?';
+
+  @override
+  String get removePhotoBody => 'Inisialmu akan tampil sebagai gantinya, di mana pun. Kamu bisa menambahkan foto baru kapan saja.';
+
+  @override
+  String get removePhotoConfirm => 'Hapus';
+
+  @override
+  String get couldNotRemovePhoto => 'Fotomu tidak bisa dihapus. Coba lagi.';
+
+  @override
+  String get cropPhoto => 'Pangkas';
+
+  @override
   String get couldNotShareCard => 'Kartu ini tidak bisa dibagikan';
 
   @override

@@ -57,6 +57,23 @@ class Avatar extends ChangeNotifier {
     await store.setString('avatarPhoto', path.split(RegExp(r'[\\/]')).last);
   }
 
+  /// Back to the drawn initial on this phone: the photo and the note of it
+  /// go. The server's copy is the caller's to take down first
+  /// (Backend.removeAvatar), or [picture] would fall back to it.
+  Future<void> clearPhoto() async {
+    final path = photoPath;
+    photoPath = null;
+    notifyListeners();
+    final store = await SharedPreferences.getInstance();
+    await store.remove('avatarPhoto');
+    if (path == null) return;
+    try {
+      await File(path).delete();
+    } on Object catch (error) {
+      debugPrint('Could not delete the old photo: $error');
+    }
+  }
+
   /// The server's copy changed — uploaded from here, or read fresh — and a
   /// screen showing it from there should draw it again.
   void serverPictureChanged() => notifyListeners();

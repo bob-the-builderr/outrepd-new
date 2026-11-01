@@ -350,6 +350,24 @@ class LEn extends L {
       'Your picture is saved, but it hasn\'t synced yet';
 
   @override
+  String get removePhoto => 'Remove photo';
+
+  @override
+  String get removePhotoTitle => 'Remove your photo?';
+
+  @override
+  String get removePhotoBody => 'Your initial shows instead, everywhere. You can add a new photo any time.';
+
+  @override
+  String get removePhotoConfirm => 'Remove';
+
+  @override
+  String get couldNotRemovePhoto => 'Could not remove your photo. Try again.';
+
+  @override
+  String get cropPhoto => 'Crop';
+
+  @override
   String get couldNotShareCard => 'Could not share this card';
 
   @override
