@@ -379,13 +379,16 @@ class _VsScreenState extends State<VsScreen> with SingleTickerProviderStateMixin
             right: 0,
             bottom: 0,
             height: h - foot,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const _Countdown(size: 54),
-                const SizedBox(height: 6),
-                Text(l.getIntoPosition, style: TextStyle(color: colors.muted, fontSize: 13)),
-              ],
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const _Countdown(size: 54),
+                  const SizedBox(height: 6),
+                  Text(l.getIntoPosition, style: TextStyle(color: colors.muted, fontSize: 13)),
+                ],
+              ),
             ),
           ),
         ],

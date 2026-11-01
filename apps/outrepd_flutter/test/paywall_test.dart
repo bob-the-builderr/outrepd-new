@@ -250,7 +250,7 @@ void main() {
 
       await tester.tap(find.byKey(const Key('planWeekly')));
       await tester.pump();
-      expect(find.text(r'Go Pro · .99/week'), findsOneWidget);
+      expect(find.text(r'Go Pro · $4.99/week'), findsOneWidget);
     });
 
     testWidgets('the plans arrive late and still promise nothing free',

@@ -100,7 +100,12 @@ void main() {
       expect(tester.takeException(), isNull, reason: tab);
     }
     expect(find.text('Eyes'), findsNothing);
-    await tester.ensureVisible(find.byKey(const Key('makerTab_face')));
+    // Back along the row of tabs, which has scrolled past Face by now.
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('makerTab_face')),
+      -80,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('makerTab_face')));
     await tester.pumpAndSettle();
