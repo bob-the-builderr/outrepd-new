@@ -10,10 +10,14 @@
 #   SUPABASE_URL, SUPABASE_ANON_KEY   required, the same ones Android uses.
 #   REVENUECAT_APPLE_KEY              RevenueCat's public App Store key
 #                                     (appl_...). Without it, no Pro.
+#   LEVELPLAY_IOS_APP_KEY             the iOS app's key in Unity LevelPlay,
+#   LEVELPLAY_IOS_INTERSTITIAL        and its interstitial ad unit id. The
+#                                     ads' first choice (lib/ads.dart).
 #   ADMOB_IOS_APP_ID                  the iOS app's id in AdMob
 #                                     (ca-app-pub-...~...), and its
 #   ADMOB_IOS_INTERSTITIAL            interstitial ad unit (ca-app-pub-.../...).
-#                                     Without both, a build with no ads.
+#                                     The ad when LevelPlay has none. Without
+#                                     either pair, a build with no ads.
 #   GOOGLE_SERVICE_INFO_PLIST         the GoogleService-Info.plist from the
 #                                     iOS app in Firebase, pasted whole. Push
 #                                     notifications and crash reports.
@@ -65,6 +69,8 @@ jobs:
       REVENUECAT_APPLE_KEY: ${{ secrets.REVENUECAT_APPLE_KEY }}
       ADMOB_IOS_APP_ID: ${{ secrets.ADMOB_IOS_APP_ID }}
       ADMOB_IOS_INTERSTITIAL: ${{ secrets.ADMOB_IOS_INTERSTITIAL }}
+      LEVELPLAY_IOS_APP_KEY: ${{ secrets.LEVELPLAY_IOS_APP_KEY }}
+      LEVELPLAY_IOS_INTERSTITIAL: ${{ secrets.LEVELPLAY_IOS_INTERSTITIAL }}
       GOOGLE_SERVICE_INFO_PLIST: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
       # Continue with Google: the iOS and web client ids from Google Cloud.
       # Without both the Google button is not shown.
@@ -147,14 +153,23 @@ jobs:
           plutil -lint "$plist"
           echo "ready=true" >> "$GITHUB_OUTPUT"
 
-      # AdMob (lib/ads.dart): the app id into Info.plist, over Google's sample
-      # one, and the ad unit into the app. An id in the wrong secret is
-      # caught here rather than as an app that never shows an ad.
+      # The ads (lib/ads.dart): LevelPlay's key and ad unit into the app, its
+      # first choice. Then AdMob's: the app id into Info.plist, over Google's
+      # sample one (Google's consent form uses it too), and the ad unit into
+      # the app. An id in the wrong secret is caught here rather than as an
+      # app that never shows an ad.
       - name: Ads
         id: ads
         run: |
+          if [ -n "$LEVELPLAY_IOS_APP_KEY" ] && [ -n "$LEVELPLAY_IOS_INTERSTITIAL" ]; then
+            printf 'LEVELPLAY_IOS_APP_KEY=%s\nLEVELPLAY_IOS_INTERSTITIAL=%s\n' "$LEVELPLAY_IOS_APP_KEY" "$LEVELPLAY_IOS_INTERSTITIAL" >> supabase/keys.env
+            echo "levelplay=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::No LEVELPLAY_IOS_APP_KEY / LEVELPLAY_IOS_INTERSTITIAL secrets: no LevelPlay ads in this build."
+            echo "levelplay=false" >> "$GITHUB_OUTPUT"
+          fi
           if [ -z "$ADMOB_IOS_APP_ID" ] || [ -z "$ADMOB_IOS_INTERSTITIAL" ]; then
-            echo "::warning::No ADMOB_IOS_APP_ID / ADMOB_IOS_INTERSTITIAL secrets: this build has no ads."
+            echo "::warning::No ADMOB_IOS_APP_ID / ADMOB_IOS_INTERSTITIAL secrets: no AdMob ads in this build."
             echo "ready=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -272,9 +287,13 @@ jobs:
               "") echo "paywall key no — add REVENUECAT_APPLE_KEY under Settings > Secrets and variables > Actions > Repository secrets" ;;
               *) echo "paywall key yes — but it does not start appl_" ;;
             esac
+            case "${{ steps.ads.outputs.levelplay }}" in
+              true) echo "ads levelplay yes — app key and interstitial unit" ;;
+              *) echo "ads levelplay no — add LEVELPLAY_IOS_APP_KEY and LEVELPLAY_IOS_INTERSTITIAL under Repository secrets" ;;
+            esac
             case "${{ steps.ads.outputs.ready }}" in
-              true) echo "ads yes — AdMob app id and interstitial unit" ;;
-              *) echo "ads no — add ADMOB_IOS_APP_ID and ADMOB_IOS_INTERSTITIAL under Repository secrets" ;;
+              true) echo "ads admob yes — AdMob app id and interstitial unit" ;;
+              *) echo "ads admob no — add ADMOB_IOS_APP_ID and ADMOB_IOS_INTERSTITIAL under Repository secrets" ;;
             esac
             echo "firebase    ${{ steps.firebase.outputs.ready }} — ${{ steps.firebase.outputs.note }}"
             echo "google      ${{ steps.google.outputs.ready }}"

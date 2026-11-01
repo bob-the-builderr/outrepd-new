@@ -16,14 +16,18 @@
 ///   beside the bell and in Settings, never under a result.
 /// * The app is for 13 and over (2026-10-28: the user wants a 13+ rating, so
 ///   the ads can be the ordinary kind); the onboarding turns away anybody
-///   younger. Ads are capped at the teen rating.
+///   younger. AdMob's ads are capped at the teen rating.
 ///
-/// The ads come from Google AdMob. (AppLovin MAX was tried on 2026-11-01
-/// and dropped the same day: it was taking no new publishers.)
+/// The ads come from Unity LevelPlay first (the user's pick, 2026-11-01, for
+/// more money per ad than AdMob alone): an auction on every ad between
+/// Unity's networks. When LevelPlay has no ad to give, Google AdMob's is
+/// shown instead. (AppLovin MAX was tried the same day and dropped: it was
+/// taking no new publishers.) Both read the consent form's answer and
+/// Apple's from the phone; nothing is passed to them by hand.
 ///
-/// A build with no ad unit — the tests, the web preview, a build made
-/// without the AdMob ids — has no ads at all, the way a build with no
-/// RevenueCat key has no paywall.
+/// A build with neither network's ids — the tests, the web preview, a build
+/// made without them — has no ads at all, the way a build with no
+/// RevenueCat key has no paywall. A build with one of them has that one's.
 library;
 
 import 'dart:async';
@@ -33,14 +37,36 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:unity_levelplay_mediation/unity_levelplay_mediation.dart'
+    show
+        LevelPlay,
+        LevelPlayAdError,
+        LevelPlayAdInfo,
+        LevelPlayConfiguration,
+        LevelPlayInitError,
+        LevelPlayInitListener,
+        LevelPlayInitRequest,
+        LevelPlayInterstitialAd,
+        LevelPlayInterstitialAdListener;
 
 import 'screens/ad_ask.dart';
 import 'screens/paywall.dart';
 import 'subscription.dart';
 
-/// Supplied at build time from the AdMob account, never committed: the
-/// interstitial ad units, one per store. Not secrets — they ship inside the
-/// app — but the account's to hand out.
+/// Supplied at build time, never committed: from the LevelPlay account the
+/// app key and the interstitial ad unit, from the AdMob account the
+/// interstitial ad unit, one of each per store. Not secrets — they ship
+/// inside the app — but the accounts' to hand out.
+const kLevelPlayIosAppKey = String.fromEnvironment('LEVELPLAY_IOS_APP_KEY');
+const kLevelPlayAndroidAppKey = String.fromEnvironment(
+  'LEVELPLAY_ANDROID_APP_KEY',
+);
+const kLevelPlayIosInterstitial = String.fromEnvironment(
+  'LEVELPLAY_IOS_INTERSTITIAL',
+);
+const kLevelPlayAndroidInterstitial = String.fromEnvironment(
+  'LEVELPLAY_ANDROID_INTERSTITIAL',
+);
 const kAdMobIosInterstitial = String.fromEnvironment('ADMOB_IOS_INTERSTITIAL');
 const kAdMobAndroidInterstitial = String.fromEnvironment(
   'ADMOB_ANDROID_INTERSTITIAL',
@@ -63,20 +89,46 @@ class Ads extends ChangeNotifier {
   bool _asked = false;
 
   bool _started = false;
+
+  /// LevelPlay's ad: null until its SDK has started.
+  LevelPlayInterstitialAd? _levelPlay;
+  bool _levelPlayLoading = false;
+  bool _levelPlayReady = false;
+
+  /// LevelPlay had nothing to give the last time it was asked, or did not
+  /// start at all: AdMob's ad is fetched in its place.
+  bool _levelPlayEmpty = false;
+
+  /// Completes as LevelPlay's ad on screen closes (true), or fails to show
+  /// (false).
+  Completer<bool>? _levelPlayClosing;
+
   bool _loading = false;
   InterstitialAd? _ad;
 
-  String get _unit {
+  String _forStore({required String ios, required String android}) {
     if (kIsWeb) return '';
     return switch (defaultTargetPlatform) {
-      TargetPlatform.iOS => kAdMobIosInterstitial,
-      TargetPlatform.android => kAdMobAndroidInterstitial,
+      TargetPlatform.iOS => ios,
+      TargetPlatform.android => android,
       _ => '',
     };
   }
 
+  String get _levelPlayKey =>
+      _forStore(ios: kLevelPlayIosAppKey, android: kLevelPlayAndroidAppKey);
+  String get _levelPlayUnit => _forStore(
+    ios: kLevelPlayIosInterstitial,
+    android: kLevelPlayAndroidInterstitial,
+  );
+  String get _unit =>
+      _forStore(ios: kAdMobIosInterstitial, android: kAdMobAndroidInterstitial);
+
+  bool get _hasLevelPlay => _levelPlayKey.isNotEmpty && _levelPlayUnit.isNotEmpty;
+  bool get _hasAdMob => _unit.isNotEmpty;
+
   /// Whether this build shows ads at all.
-  bool get configured => _unit.isNotEmpty;
+  bool get configured => _hasLevelPlay || _hasAdMob;
 
   bool get _pro => Subscription.instance.active;
 
@@ -165,15 +217,34 @@ class Ads extends ChangeNotifier {
     }
   }
 
-  /// Shows the ad in hand and waits for it to close. Without one — no fill,
-  /// no network — there is no ad this time, and another is fetched for the
-  /// next.
+  /// Shows the ad in hand, LevelPlay's if it has one and AdMob's if not, and
+  /// waits for it to close. Without either — no fill, no network — there is
+  /// no ad this time, and another is fetched for the next.
   Future<void> _showAd() async {
-    final ad = _ad;
-    if (ad == null) {
-      _load();
-      return;
+    if (!await _showLevelPlay()) await _showAdMob();
+    _load();
+  }
+
+  /// Whether LevelPlay had an ad and showed it.
+  Future<bool> _showLevelPlay() async {
+    final ad = _levelPlay;
+    if (ad == null || !_levelPlayReady) return false;
+    _levelPlayReady = false;
+    if (!await ad.isAdReady()) return false;
+    notifyListeners();
+    final closed = _levelPlayClosing = Completer<bool>();
+    try {
+      await ad.showAd();
+    } on Object catch (error) {
+      debugPrint('The LevelPlay ad would not show: $error');
+      _levelPlayClosed(shown: false);
     }
+    return closed.future;
+  }
+
+  Future<void> _showAdMob() async {
+    final ad = _ad;
+    if (ad == null) return;
     _ad = null;
     notifyListeners();
     final closed = Completer<void>();
@@ -190,11 +261,10 @@ class Ads extends ChangeNotifier {
     );
     await ad.show();
     await closed.future;
-    _load();
   }
 
   /// Consent where the law asks for it, Apple's question when [askTracking],
-  /// then the SDK and the first ad.
+  /// then the SDKs and the first ad.
   Future<void> _start({bool askTracking = false}) async {
     if (_started) return;
     _started = true;
@@ -210,16 +280,111 @@ class Ads extends ChangeNotifier {
         _started = false;
         return;
       }
-      // Nothing past the teen rating, for an app rated 13+.
-      await MobileAds.instance.updateRequestConfiguration(
-        RequestConfiguration(maxAdContentRating: MaxAdContentRating.t),
-      );
-      await MobileAds.instance.initialize();
+      if (_hasLevelPlay) {
+        await _startLevelPlay();
+      } else {
+        _levelPlayEmpty = true;
+      }
+      if (_hasAdMob) {
+        // Nothing past the teen rating, for an app rated 13+.
+        await MobileAds.instance.updateRequestConfiguration(
+          RequestConfiguration(maxAdContentRating: MaxAdContentRating.t),
+        );
+        await MobileAds.instance.initialize();
+      }
       _load();
     } on Object catch (error) {
       debugPrint('Ads did not start: $error');
       _started = false;
     }
+  }
+
+  /// Starts LevelPlay's SDK; its ad is made, and loaded, once it says it has
+  /// started.
+  Future<void> _startLevelPlay() async {
+    try {
+      // Not an app for children: 13 and over.
+      await LevelPlay.setMetaData({
+        'is_child_directed': ['false'],
+      });
+      await LevelPlay.init(
+        initRequest: LevelPlayInitRequest(appKey: _levelPlayKey),
+        initListener: _LevelPlayStart(this),
+      );
+    } on Object catch (error) {
+      _levelPlayDidNotStart('$error');
+    }
+  }
+
+  void _levelPlayStarted() {
+    if (_levelPlay != null) return;
+    _levelPlay = LevelPlayInterstitialAd(adUnitId: _levelPlayUnit)
+      ..setListener(_LevelPlayEvents(this));
+    _load();
+  }
+
+  void _levelPlayDidNotStart(String error) {
+    debugPrint('LevelPlay did not start: $error');
+    _levelPlayEmpty = true;
+    _loadAdMob();
+  }
+
+  void _levelPlayLoaded() {
+    _levelPlayLoading = false;
+    _levelPlayReady = true;
+    _levelPlayEmpty = false;
+    notifyListeners();
+  }
+
+  void _levelPlayFailed(LevelPlayAdError error) {
+    // Tried again after the next game, not in a loop: a phone with no fill
+    // would otherwise ask for ads it is never going to get. AdMob is asked
+    // in its place.
+    debugPrint('No LevelPlay ad: ${error.errorCode} ${error.errorMessage}');
+    _levelPlayLoading = false;
+    _levelPlayReady = false;
+    _levelPlayEmpty = true;
+    _loadAdMob();
+  }
+
+  /// LevelPlay's ad on screen closed ([shown]), or never showed.
+  void _levelPlayClosed({required bool shown}) {
+    final closing = _levelPlayClosing;
+    _levelPlayClosing = null;
+    if (closing != null && !closing.isCompleted) closing.complete(shown);
+  }
+
+  /// Fetches the next ad: LevelPlay's, and AdMob's while LevelPlay has none
+  /// to give.
+  void _load() {
+    if (!_started || _pro) return;
+    final levelPlay = _levelPlay;
+    if (levelPlay != null && !_levelPlayReady && !_levelPlayLoading) {
+      _levelPlayLoading = true;
+      unawaited(levelPlay.loadAd());
+    }
+    if (_levelPlayEmpty) _loadAdMob();
+  }
+
+  void _loadAdMob() {
+    if (!_started || !_hasAdMob || _loading || _ad != null || _pro) return;
+    _loading = true;
+    InterstitialAd.load(
+      adUnitId: _unit,
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          _loading = false;
+          _ad = ad;
+          notifyListeners();
+        },
+        onAdFailedToLoad: (error) {
+          // Tried again after the next game, as LevelPlay's is.
+          debugPrint('No AdMob ad: $error');
+          _loading = false;
+        },
+      ),
+    );
   }
 
   /// Google's consent form, for the places that require one (the EEA, the
@@ -242,28 +407,6 @@ class Ads extends ChangeNotifier {
     return done.future;
   }
 
-  void _load() {
-    if (!_started || _loading || _ad != null || _pro) return;
-    _loading = true;
-    InterstitialAd.load(
-      adUnitId: _unit,
-      request: const AdRequest(),
-      adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: (ad) {
-          _loading = false;
-          _ad = ad;
-          notifyListeners();
-        },
-        onAdFailedToLoad: (error) {
-          // Tried again after the next game, not in a loop: a phone with no
-          // fill would otherwise ask for ads it is never going to get.
-          debugPrint('No ad: $error');
-          _loading = false;
-        },
-      ),
-    );
-  }
-
   Future<void> _save() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -275,3 +418,46 @@ class Ads extends ChangeNotifier {
   }
 }
 
+class _LevelPlayStart implements LevelPlayInitListener {
+  _LevelPlayStart(this._ads);
+
+  final Ads _ads;
+
+  @override
+  void onInitSuccess(LevelPlayConfiguration configuration) =>
+      _ads._levelPlayStarted();
+
+  @override
+  void onInitFailed(LevelPlayInitError error) =>
+      _ads._levelPlayDidNotStart('${error.errorCode} ${error.errorMessage}');
+}
+
+class _LevelPlayEvents implements LevelPlayInterstitialAdListener {
+  _LevelPlayEvents(this._ads);
+
+  final Ads _ads;
+
+  @override
+  void onAdLoaded(LevelPlayAdInfo adInfo) => _ads._levelPlayLoaded();
+
+  @override
+  void onAdLoadFailed(LevelPlayAdError error) => _ads._levelPlayFailed(error);
+
+  @override
+  void onAdClosed(LevelPlayAdInfo adInfo) => _ads._levelPlayClosed(shown: true);
+
+  @override
+  void onAdDisplayFailed(LevelPlayAdError error, LevelPlayAdInfo adInfo) {
+    debugPrint('The LevelPlay ad would not show: ${error.errorMessage}');
+    _ads._levelPlayClosed(shown: false);
+  }
+
+  @override
+  void onAdDisplayed(LevelPlayAdInfo adInfo) {}
+
+  @override
+  void onAdClicked(LevelPlayAdInfo adInfo) {}
+
+  @override
+  void onAdInfoChanged(LevelPlayAdInfo adInfo) {}
+}

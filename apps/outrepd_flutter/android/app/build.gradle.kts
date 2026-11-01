@@ -120,4 +120,8 @@ flutter {
 
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+    // Unity Ads bidding for LevelPlay's ads (lib/ads.dart): the adapter for
+    // LevelPlay 9.x, and the Unity Ads SDK it was made for.
+    implementation("com.unity3d.ads-mediation:unityads-adapter:5.14.0")
+    implementation("com.unity3d.ads:unity-ads:4.21.0")
 }
