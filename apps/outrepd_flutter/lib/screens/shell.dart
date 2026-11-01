@@ -4,6 +4,7 @@ import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 
 import '../app_bottom_nav.dart';
+import '../ads.dart';
 import '../backend/backend.dart';
 import '../career.dart';
 import '../deep_links.dart';
@@ -103,6 +104,11 @@ class _AppShellState extends State<AppShell> {
     unawaited(Career.instance.syncDays());
     // And its titles and streak, kept on the account too.
     unawaited(rewards.sync().then((_) => Career.instance.takeStreak()));
+    // And the ads' ask, once, the first time this screen opens: the first
+    // game's ad is loaded by the time that game ends (lib/ads.dart).
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) unawaited(Ads.instance.prepare(context));
+    });
   }
 
   @override

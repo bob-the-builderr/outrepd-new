@@ -1,21 +1,22 @@
 /// The ads that keep the app free: one full-screen ad as a result screen is
 /// left, for any account without Pro.
 ///
-/// The rules are the user's (2026-10-28):
+/// The rules are the user's (2026-10-28, changed 2026-11-01):
 ///
 /// * After every game — ranked, live, a friend's, a saved set, Adventure —
-///   as its result screen is left. Not between a rematch and the next one:
-///   both lifters are still there, and the ad waits until one of them goes.
-/// * Never in an account's first [freeGames] games. Leaving the last of them
-///   is where the ask comes instead (lib/screens/ad_ask.dart): why there are
-///   ads, then, where the law asks, Google's consent form, and on an iPhone
-///   Apple's tracking question. The first ad is the next game's.
-/// * Pro (lib/subscription.dart) takes them all out. It is offered once on
-///   its own, as the first ad closes; after that it waits beside the bell
-///   and in Settings, never under a result (2026-11-01).
+///   as its result screen is left, from the very first game. Not between a
+///   rematch and the next one: both lifters are still there, and the ad
+///   waits until one of them goes.
+/// * The ask comes before any of that, the first time the main screen opens
+///   ([prepare]): on an iPhone why there are ads (lib/screens/ad_ask.dart),
+///   then, where the law asks, Google's consent form, then Apple's tracking
+///   question — so the first game's ad is already loaded when it ends.
+/// * Pro (lib/subscription.dart) takes them all out. It is offered after
+///   every [proEvery]th game, as that game's ad closes; besides, it waits
+///   beside the bell and in Settings, never under a result.
 /// * The app is for 13 and over (2026-10-28: the user wants a 13+ rating, so
 ///   the ads can be the ordinary kind); the onboarding turns away anybody
-///   younger. Ads are capped at the teen rating.
+///   younger.
 ///
 /// The ads come from AppLovin MAX (the user's pick, 2026-11-01, after a week
 /// in which AdMob served none): an auction on every ad between AppLovin and
@@ -58,16 +59,16 @@ class Ads extends ChangeNotifier {
 
   static final instance = Ads._();
 
-  /// Games a new account plays before its first ad.
-  static const freeGames = 3;
+  /// Pro is offered after every this many games (the user's call,
+  /// 2026-11-01).
+  static const proEvery = 5;
 
-  static const _gamesKey = 'adsGamesPlayed';
+  static const _sinceOfferKey = 'adsGamesSinceProOffer';
   static const _askedKey = 'adsAsked';
-  static const _offeredKey = 'adsProOffered';
 
-  int _games = 0;
+  /// Games since Pro was last offered.
+  int _sinceOffer = 0;
   bool _asked = false;
-  bool _offered = false;
 
   bool _started = false;
   bool _loading = false;
@@ -96,21 +97,53 @@ class Ads extends ChangeNotifier {
   /// that has had the ask gets its consent checked and its first ad loaded.
   Future<void> load() async {
     final prefs = await SharedPreferences.getInstance();
-    _games = prefs.getInt(_gamesKey) ?? 0;
+    _sinceOffer = prefs.getInt(_sinceOfferKey) ?? 0;
     _asked = prefs.getBool(_askedKey) ?? false;
-    _offered = prefs.getBool(_offeredKey) ?? false;
     if (!configured || !_asked) return;
-    // Once the store has said whether this account has Pro: a subscriber's
-    // phone has no business loading an ad, or showing a consent form for one.
+    await _storeKnown();
+    if (!_pro) unawaited(_start());
+  }
+
+  /// Once the store has said whether this account has Pro: a subscriber's
+  /// phone has no business loading an ad, or showing a consent form for one.
+  Future<void> _storeKnown() {
     final subscription = Subscription.instance;
+    final known = Completer<void>();
     void whenKnown() {
       if (subscription.enabled && !subscription.known) return;
       subscription.removeListener(whenKnown);
-      if (!_pro) unawaited(_start());
+      if (!known.isCompleted) known.complete();
     }
 
     subscription.addListener(whenKnown);
     whenKnown();
+    return known.future;
+  }
+
+  /// The ask, the first time the main screen opens, from [context] — that
+  /// screen's: on an iPhone why there are ads, then Google's consent form
+  /// where the law asks for one, then Apple's question; then the first ad is
+  /// loaded, ready for the first game. Once per phone.
+  Future<void> prepare(BuildContext context) async {
+    if (!configured || _asked) return;
+    final navigator = Navigator.of(context, rootNavigator: true);
+    await _storeKnown();
+    if (_pro || _asked || !navigator.mounted) return;
+    await _ask(navigator);
+  }
+
+  Future<void> _ask(NavigatorState navigator) async {
+    _asked = true;
+    unawaited(_save());
+    // The ask is about Apple's question, so an Android phone goes straight
+    // to the consent form, where the law asks for one.
+    final apple = defaultTargetPlatform == TargetPlatform.iOS;
+    if (apple) {
+      await navigator.push<bool>(
+        MaterialPageRoute(builder: (_) => const AdAskScreen()),
+      );
+    }
+    if (!_pro) await _start(askTracking: apple);
   }
 
   /// A game is over and its result screen is being left, from [context] —
@@ -118,32 +151,38 @@ class Ads extends ChangeNotifier {
   /// it, to close, so whatever comes next does not start behind it.
   ///
   /// [rematch] when the next thing is a rematch with the same person: the
-  /// game counts towards the free ones, and there is no ad.
+  /// game counts, and nothing comes between the two — no ad, no Pro.
   Future<void> afterGame(BuildContext context, {bool rematch = false}) async {
-    if (!configured) return;
-    _games++;
-    unawaited(_save());
-    if (_pro || rematch || _games < freeGames) return;
+    if (_pro) return;
     final navigator = Navigator.of(context, rootNavigator: true);
+    _sinceOffer++;
+    unawaited(_save());
+    if (rematch) return;
 
-    if (!_asked) {
-      _asked = true;
-      unawaited(_save());
-      // The ask is about Apple's question, so an Android phone goes straight
-      // to the consent form, where the law asks for one.
-      final apple = defaultTargetPlatform == TargetPlatform.iOS;
-      if (apple) {
-        await navigator.push<bool>(
-          MaterialPageRoute(builder: (_) => const AdAskScreen()),
-        );
+    if (configured) {
+      if (!_asked) {
+        // The main screen did not get to ask (an old install, a match
+        // straight from a link): asked now, and the ad is the next game's.
+        await _ask(navigator);
+      } else {
+        await _showAd();
       }
-      if (!_pro) await _start(askTracking: apple);
-      return;
     }
 
+    // Every few games, as the ad closes: the way to never see another, and
+    // the Pro look.
+    if (_sinceOffer >= proEvery && navigator.mounted && Subscription.instance.enabled) {
+      _sinceOffer = 0;
+      unawaited(_save());
+      await openPro(navigator.context);
+    }
+  }
+
+  /// Shows the ad in hand and waits for it to close. Without one — no fill,
+  /// no network — there is no ad this time, and another is fetched for the
+  /// next.
+  Future<void> _showAd() async {
     if (!_ready || !(await AppLovinMAX.isInterstitialReady(_unit) ?? false)) {
-      // Nothing in hand — no fill, no network: no ad this time, and another
-      // is fetched for the next.
       _ready = false;
       _load();
       return;
@@ -154,13 +193,6 @@ class Ads extends ChangeNotifier {
     AppLovinMAX.showInterstitial(_unit);
     await closed.future;
     _load();
-
-    // Once, as the first ad closes: the way to never see another.
-    if (!_offered && navigator.mounted) {
-      _offered = true;
-      unawaited(_save());
-      await openPro(navigator.context);
-    }
   }
 
   /// Consent where the law asks for it, Apple's question when [askTracking],
@@ -250,9 +282,8 @@ class Ads extends ChangeNotifier {
   Future<void> _save() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setInt(_gamesKey, _games);
+      await prefs.setInt(_sinceOfferKey, _sinceOffer);
       await prefs.setBool(_askedKey, _asked);
-      await prefs.setBool(_offeredKey, _offered);
     } on Object catch (error) {
       debugPrint('Could not keep the ad count: $error');
     }

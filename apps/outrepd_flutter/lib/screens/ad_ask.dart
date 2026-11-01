@@ -1,6 +1,6 @@
-/// Why there are about to be ads, said once, just before the first: as the
-/// last ad-free game's result is left, on an iPhone, ahead of Apple's own
-/// tracking question so that question does not arrive cold.
+/// Why there are about to be ads, said once, before the first: the first
+/// time the main screen opens, on an iPhone, ahead of Apple's own tracking
+/// question so that question does not arrive cold.
 ///
 /// Continue goes on to Apple's question. Nothing here is a reward for
 /// answering either way, and the button does not say Allow — Apple asks for
