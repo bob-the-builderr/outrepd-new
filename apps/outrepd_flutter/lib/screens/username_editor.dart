@@ -5,7 +5,6 @@ library;
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../backend/backend.dart';
 import '../data.dart';
@@ -118,12 +117,7 @@ class _UsernameEditorSheetState extends State<_UsernameEditorSheet> {
       if (!mounted) return;
       switch (result) {
         case RenameResult.ok:
-          demoProfile.username = name;
-          unawaited(
-            SharedPreferences.getInstance().then(
-              (store) => store.setString('username', name),
-            ),
-          );
+          rememberUsername(name);
           Navigator.of(context).pop();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

@@ -62,6 +62,8 @@ void applyServerProfile(RemoteProfile me) {
     ..bestSet = me.bestSet
     ..xp = me.xp;
   if (me.country case final code?) demoProfile.country = code;
+  // The name too: the boards show the server's, and so must the profile.
+  rememberUsername(me.username);
 }
 
 /// What one duel did, so the screen after it can say what happened.

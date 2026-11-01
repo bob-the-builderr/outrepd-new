@@ -457,7 +457,7 @@ class _ChooseUsernameScreenState extends State<ChooseUsernameScreen>
       if (!mounted) return;
       switch (result) {
         case RenameResult.ok:
-          demoProfile.username = name;
+          rememberUsername(name);
           await _saveCountry();
           if (mounted) Navigator.of(context).pop();
         case RenameResult.alreadyChanged:

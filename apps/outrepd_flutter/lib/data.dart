@@ -7,6 +7,8 @@
 /// or from a fresh start (Career.startFresh).
 library;
 
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -151,6 +153,20 @@ Future<void> loadProfileStats() async {
   // "new account" would send exactly the people with something to lose back
   // through the screen that clears it.
   onboarded = s.getBool('onboarded') ?? (s.getString('career.profile') != null);
+}
+
+/// This lifter's name, on the profile now and on this phone for the next
+/// launch. Every place a name arrives — the server's row, a name chosen for a
+/// new account, a rename — comes through here: a name set only in memory is
+/// gone the next time the app opens, and [loadProfileStats] falls back to
+/// 'demo_lifter' (the user, 2026-11-01).
+void rememberUsername(String name) {
+  demoProfile.username = name;
+  unawaited(
+    SharedPreferences.getInstance().then(
+      (store) => store.setString('username', name),
+    ),
+  );
 }
 
 /// Whether this install has been set up already.

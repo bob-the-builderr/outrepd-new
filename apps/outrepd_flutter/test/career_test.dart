@@ -838,6 +838,30 @@ void main() {
       expect(demoProfile.friendCode, '918273');
     });
 
+    test('the server name is kept for the next launch', () async {
+      // A name chosen on the account but never stored on this phone: the
+      // profile said 'demo_lifter' every launch while the boards said the
+      // real one (the user, 2026-11-01).
+      SharedPreferences.setMockInitialValues({});
+      demoProfile.username = 'demo_lifter';
+
+      applyServerProfile(RemoteProfile(
+        id: 'server-id',
+        username: 'mokhtar_',
+        tierIdx: demoProfile.tierIdx,
+        divIdx: demoProfile.divIdx,
+        lp: demoProfile.lp,
+        friendCode: demoProfile.friendCode,
+      ));
+      expect(demoProfile.username, 'mokhtar_');
+
+      // The next launch, before the server answers.
+      await Future<void>.delayed(Duration.zero);
+      demoProfile.username = 'demo_lifter';
+      await loadProfileStats();
+      expect(demoProfile.username, 'mokhtar_');
+    });
+
     test('a phone that would not say the country keeps the one it had', () {
       demoProfile.country = 'US';
       applyServerProfile(RemoteProfile(
