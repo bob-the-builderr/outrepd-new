@@ -1,4 +1,11 @@
-/// Pro: the subscription that takes the ads out.
+/// Pro: the subscription that takes the ads out and gives the Pro look.
+///
+/// The screen is the user's pick A (2026-11-01): the player's own lifter
+/// small as it is, and big as Pro on a holo card; five rows of what Pro
+/// gives, each with a picture of it; the two plans side by side; and a
+/// button that says the price, because the stores charge from the first day
+/// (there is no free trial). The same screen is a step of sign-up, right
+/// after the lifter is made, with "Not now" in place of the close button.
 ///
 /// The app is free (since 2026-10-28, the user's call): every match, live,
 /// ranked and Adventure, is played without paying, and an ad plays when a
@@ -18,11 +25,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../lifter/catalog.dart';
+import '../lifter/lifter_art.dart';
+import '../lifter/lifter_view.dart';
+import '../lifter/my_lifter.dart';
 import '../subscription.dart';
 import '../theme.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
+import 'pro_parts.dart';
 
 /// The paywall's sizes, between two ends. A short phone keeps the sizes the
 /// paywall was laid out at, because the way to pay has to fit on one without
@@ -41,6 +54,11 @@ class _Sizes {
   double _lerp(double short, double tall) => short + (tall - short) * t;
 
   // The pitch.
+  double get hero => _lerp(150, 190);
+  double get perkTile => _lerp(40, 46);
+  double get perkTitle => _lerp(15, 17);
+  double get perkBody => _lerp(12.5, 14);
+  double get perkGap => _lerp(6, 9);
   double get mark => _lerp(140, 190);
   double get headline => _lerp(32, 36);
   double get headlineGap => _lerp(30, 42);
@@ -72,8 +90,9 @@ const kPrivacyUrl = 'https://www.outrepd.com/privacy';
 
 /// Opens Pro over whatever is on screen, and closes it again once a purchase
 /// or a restore has taken the ads out. Nothing happens in a build with no
-/// storefront: there is nothing there to buy.
-Future<void> openPro(BuildContext context) async {
+/// storefront: there is nothing there to buy. [onboarding] is the sign-up
+/// step: "Not now" instead of the close button, and the lifter just made.
+Future<void> openPro(BuildContext context, {bool onboarding = false}) async {
   final subscription = Subscription.instance;
   final store = subscription.store;
   if (store == null || subscription.active) return;
@@ -84,6 +103,7 @@ Future<void> openPro(BuildContext context) async {
       fullscreenDialog: true,
       builder: (pro) => PaywallScreen(
         store: store,
+        onboarding: onboarding,
         onUnlocked: (active) {
           subscription.settle(active);
           if (!active) return;
@@ -102,9 +122,13 @@ class PaywallScreen extends StatefulWidget {
     super.key,
     required this.store,
     required this.onUnlocked,
+    this.onboarding = false,
   });
 
   final Storefront store;
+
+  /// Shown as a step of sign-up rather than opened from the app.
+  final bool onboarding;
 
   /// Called with true once a purchase or a restore has taken the ads out.
   final ValueChanged<bool> onUnlocked;
@@ -288,54 +312,101 @@ class _PaywallScreenState extends State<PaywallScreen> {
               ],
             ),
             // The way out: the app is free, and this is an offer, not a gate.
-            PositionedDirectional(
-              top: 0,
-              start: 4,
-              child: IconButton(
-                key: const Key('proClose'),
-                tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
-                color: context.colors.muted,
-                icon: const Icon(Icons.close, size: 26),
-                onPressed: () => Navigator.maybePop(context),
+            // In sign-up it says so in words, where the next step would be.
+            if (widget.onboarding)
+              PositionedDirectional(
+                top: 2,
+                end: 8,
+                child: TextButton(
+                  key: const Key('proNotNow'),
+                  onPressed: () => Navigator.maybePop(context),
+                  child: Text(
+                    l.notNow,
+                    style: TextStyle(color: context.colors.muted, fontSize: 16),
+                  ),
+                ),
+              )
+            else
+              PositionedDirectional(
+                top: 0,
+                start: 4,
+                child: IconButton(
+                  key: const Key('proClose'),
+                  tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
+                  color: context.colors.muted,
+                  icon: const Icon(Icons.close, size: 26),
+                  onPressed: () => Navigator.maybePop(context),
+                ),
               ),
-            ),
           ],
         ),
       ),
     );
   }
 
-  /// What Pro is, said once: an ad struck through, and the two lines under
-  /// it. Pro is paid from the first day: there is no free trial (2026-10-28,
-  /// the user's call), so nothing here or on the plans promises free days.
+  /// What Pro is: the player's lifter before and after, the line under it,
+  /// and the five things Pro gives, each with a picture of it.
   Widget _pitch(BuildContext context, L l) {
     final sizes = _Sizes.of(context);
     final colors = context.colors;
-    final title = kType.title.copyWith(
-      fontSize: sizes.headline,
-      height: 1.15,
-      color: colors.text,
-    );
+    final mine = MyLifter.instance.current(demoProfile.username);
+    final perk = sizes.perkTile;
     return Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _NoAdMark(size: sizes.mark),
-        SizedBox(height: sizes.headlineGap * 0.5),
+        _Hero(mine: mine, size: sizes.hero, onboarding: widget.onboarding),
+        SizedBox(height: sizes.headlineGap * 0.4),
         Text(
-          '${l.proTitleTop}\n${l.proTitleBottom}',
+          widget.onboarding ? l.proOnboardTitle : l.proGoTitle,
           key: const Key('paywallTitle'),
           textAlign: TextAlign.center,
-          style: title,
+          style: kType.title.copyWith(
+            fontSize: sizes.headline,
+            height: 1.1,
+            fontWeight: FontWeight.w900,
+            color: colors.text,
+          ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 6),
         Text(
-          l.proBody,
+          l.proSubtitle,
           textAlign: TextAlign.center,
           style: kType.body.copyWith(
             fontSize: sizes.stepBody,
-            height: 1.5,
+            height: 1.4,
             color: colors.muted,
           ),
+        ),
+        SizedBox(height: sizes.headlineGap * 0.4),
+        _Perk(
+          tile: _NoAdTile(size: perk),
+          title: l.proPerkNoAds,
+          body: l.proPerkNoAdsBody,
+        ),
+        _Perk(
+          tile: _BoardTile(size: perk),
+          title: l.proPerkBoard,
+          body: l.proPerkBoardBody,
+        ),
+        _Perk(
+          tile: _VsTile(size: perk),
+          title: l.proPerkEntrance,
+          body: l.proPerkEntranceBody,
+        ),
+        _Perk(
+          tile: LifterImage(
+            _samples[0],
+            view: LifterView.backgroundOnly,
+            size: perk,
+          ),
+          title: l.proPerkCovers,
+          body: l.proPerkCoversBody,
+        ),
+        _Perk(
+          tile: LifterImage(_samples[1], view: LifterView.head, size: perk),
+          title: l.proPerkItems,
+          body: l.proPerkItemsBody,
         ),
       ],
     );
@@ -397,33 +468,45 @@ class _PaywallScreenState extends State<PaywallScreen> {
             ),
           )
         else
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (yearly != null)
-                _PlanRow(
-                  key: const Key('planYearly'),
-                  label: l.paywallYearly,
-                  price: yearly.priceString,
-                  detail: l.paywallPerWeek(yearly.perWeek()),
-                  badge: saving == null
-                      ? null
-                      : l.paywallSave(localNumber(context, saving)),
-                  selected: _chosen == PlanPeriod.yearly,
-                  onTap: () => setState(() => _chosen = PlanPeriod.yearly),
-                ),
-              if (yearly != null && weekly != null)
-                SizedBox(height: sizes.planGap),
-              if (weekly != null)
-                _PlanRow(
-                  key: const Key('planWeekly'),
-                  label: l.paywallWeekly,
-                  price: weekly.priceString,
-                  detail: l.paywallEveryWeek,
-                  selected: _chosen == PlanPeriod.weekly,
-                  onTap: () => setState(() => _chosen = PlanPeriod.weekly),
-                ),
-            ],
+          // Room above for the saving, which sits on the yearly plan's edge.
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (yearly != null)
+                    Expanded(
+                      child: _PlanTile(
+                        key: const Key('planYearly'),
+                        label: l.paywallYearly,
+                        price: yearly.priceString,
+                        detail: l.paywallPerWeek(yearly.perWeek()),
+                        badge: saving == null
+                            ? null
+                            : l.paywallSave(localNumber(context, saving)),
+                        selected: _chosen == PlanPeriod.yearly,
+                        onTap: () =>
+                            setState(() => _chosen = PlanPeriod.yearly),
+                      ),
+                    ),
+                  if (yearly != null && weekly != null)
+                    SizedBox(width: sizes.planGap),
+                  if (weekly != null)
+                    Expanded(
+                      child: _PlanTile(
+                        key: const Key('planWeekly'),
+                        label: l.paywallWeekly,
+                        price: weekly.priceString,
+                        detail: l.paywallEveryWeek,
+                        selected: _chosen == PlanPeriod.weekly,
+                        onTap: () =>
+                            setState(() => _chosen = PlanPeriod.weekly),
+                      ),
+                    ),
+                ],
+              ),
+            ),
           ),
         const SizedBox(height: 12),
         SizedBox(
@@ -451,7 +534,12 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 : FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      l.paywallStart,
+                      switch (_plan(_chosen)) {
+                        final plan? when plan.period == PlanPeriod.yearly =>
+                          l.proBuyYearly(plan.priceString),
+                        final plan? => l.proBuyWeekly(plan.priceString),
+                        null => l.proGo,
+                      },
                       maxLines: 1,
                       style: TextStyle(
                         fontSize: sizes.buttonText,
@@ -574,10 +662,10 @@ class _NoAdMark extends StatelessWidget {
   }
 }
 
-/// A plan as one row: the name and what it saves on the left, the price on
-/// the right.
-class _PlanRow extends StatelessWidget {
-  const _PlanRow({
+/// A plan as a tile, the two side by side: the name, the price, and what a
+/// week of it costs. The saving sits on the yearly tile's top edge.
+class _PlanTile extends StatelessWidget {
+  const _PlanTile({
     super.key,
     required this.label,
     required this.price,
@@ -600,7 +688,7 @@ class _PlanRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final sizes = _Sizes.of(context);
-    return Semantics(
+    final tile = Semantics(
       selected: selected,
       button: true,
       child: Material(
@@ -611,10 +699,7 @@ class _PlanRow extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 150),
-            padding: EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: sizes.planPadding,
-            ),
+            padding: EdgeInsets.fromLTRB(14, sizes.planPadding + 2, 10, sizes.planPadding),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
@@ -622,83 +707,44 @@ class _PlanRow extends StatelessWidget {
                 width: selected ? 2 : 1,
               ),
             ),
-            // Three parts to the left side and two to the right, each shrunk
-            // rather than cut when a language or a large text size runs long:
-            // the name and its saving are read as one, so it never loses its
-            // end.
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // Each line shrunk rather than cut when a language or a large
+            // text size runs long.
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
-                  flex: 3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      FittedBox(
-                        fit: BoxFit.scaleDown,
-                        alignment: AlignmentDirectional.centerStart,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              label,
-                              maxLines: 1,
-                              style: kType.heading.copyWith(
-                                fontSize: sizes.planName,
-                                color: colors.text,
-                              ),
-                            ),
-                            if (badge case final saving?) ...[
-                              const SizedBox(width: 8),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 7,
-                                  vertical: 3,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: AppColors.gold,
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                child: Text(
-                                  saving,
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                    color: const Color(0xFF2A1E05),
-                                    fontSize: sizes.planBadge,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 3),
-                      Text(
-                        detail,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: colors.muted,
-                          fontSize: sizes.planDetail,
-                        ),
-                      ),
-                    ],
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    style: kType.heading.copyWith(
+                      fontSize: sizes.planName,
+                      color: colors.text,
+                    ),
                   ),
                 ),
-                const SizedBox(width: 12),
-                Flexible(
-                  flex: 2,
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    alignment: AlignmentDirectional.centerEnd,
-                    child: Text(
-                      price,
-                      style: context.type.statValue.copyWith(
-                        fontSize: sizes.planPrice,
-                        color: colors.text,
-                      ),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Text(
+                    price,
+                    maxLines: 1,
+                    style: context.type.statValue.copyWith(
+                      fontSize: sizes.planPrice + 2,
+                      color: colors.text,
                     ),
+                  ),
+                ),
+                const SizedBox(height: 1),
+                Text(
+                  detail,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: colors.muted,
+                    fontSize: sizes.planDetail,
                   ),
                 ),
               ],
@@ -707,7 +753,360 @@ class _PlanRow extends StatelessWidget {
         ),
       ),
     );
+    final saving = badge;
+    if (saving == null) return tile;
+    return Stack(
+      clipBehavior: Clip.none,
+      fit: StackFit.expand,
+      children: [
+        tile,
+        PositionedDirectional(
+          top: -10,
+          end: 10,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+            decoration: BoxDecoration(
+              color: AppColors.gold,
+              borderRadius: BorderRadius.circular(7),
+            ),
+            child: Text(
+              saving.toUpperCase(),
+              maxLines: 1,
+              style: TextStyle(
+                color: const Color(0xFF2A1E05),
+                fontSize: sizes.planBadge,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
+}
+
+/// The player's own lifter twice: small as it is now, and big as Pro on a
+/// holo card with the shine passing over it, an arrow from one to the other.
+class _Hero extends StatelessWidget {
+  const _Hero({
+    required this.mine,
+    required this.size,
+    required this.onboarding,
+  });
+
+  final Lifter mine;
+  final double size;
+  final bool onboarding;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final colors = context.colors;
+    final thumb = size * 0.4;
+    return ExcludeSemantics(
+      child: SizedBox(
+        height: size + 8,
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: CustomPaint(
+                painter: _ArrowPainter(
+                  color: colors.brand,
+                  thumb: thumb,
+                  card: size,
+                  rtl: Directionality.of(context) == TextDirection.rtl,
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  HoloEdge(
+                    radius: 26,
+                    width: 4,
+                    child: ShineBand(
+                      child: LifterImage(proLook(mine), size: size - 8),
+                    ),
+                  ),
+                  const PositionedDirectional(
+                    top: 10,
+                    end: 10,
+                    child: ProChip(height: 22),
+                  ),
+                ],
+              ),
+            ),
+            PositionedDirectional(
+              start: 0,
+              bottom: 0,
+              child: Column(
+                children: [
+                  Container(
+                    width: thumb,
+                    height: thumb,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: colors.border, width: 1.5),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: LifterImage(mine, size: thumb),
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    onboarding ? l.proYoursNow : l.proFree,
+                    style: TextStyle(
+                      color: colors.muted,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 0.6,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// A curved arrow from the top of the small lifter to the card's edge.
+class _ArrowPainter extends CustomPainter {
+  const _ArrowPainter({
+    required this.color,
+    required this.thumb,
+    required this.card,
+    required this.rtl,
+  });
+
+  final Color color;
+  final double thumb;
+  final double card;
+  final bool rtl;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    double x(double v) => rtl ? size.width - v : v;
+    final from = Offset(x(thumb * 0.5), size.height - thumb - 30);
+    final to = Offset(x((size.width - card) / 2 - 8), size.height * 0.28);
+    final bend = Offset(x(thumb * 0.55), to.dy);
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2
+      ..strokeCap = StrokeCap.round;
+    canvas.drawPath(
+      Path()
+        ..moveTo(from.dx, from.dy)
+        ..quadraticBezierTo(bend.dx, bend.dy, to.dx, to.dy),
+      paint,
+    );
+    final back = rtl ? 7.0 : -7.0;
+    canvas.drawPath(
+      Path()
+        ..moveTo(to.dx + back, to.dy - 6)
+        ..lineTo(to.dx, to.dy)
+        ..lineTo(to.dx + back, to.dy + 6),
+      paint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_ArrowPainter old) =>
+      old.color != color || old.thumb != thumb || old.card != card || old.rtl != rtl;
+}
+
+/// One thing Pro gives: its picture, its name, a line about it.
+class _Perk extends StatelessWidget {
+  const _Perk({required this.tile, required this.title, required this.body});
+
+  final Widget tile;
+  final String title;
+  final String body;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    final sizes = _Sizes.of(context);
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: sizes.perkGap),
+      child: Row(
+        children: [
+          ExcludeSemantics(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: SizedBox.square(dimension: sizes.perkTile, child: tile),
+            ),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: kType.heading.copyWith(
+                    fontSize: sizes.perkTitle,
+                    fontWeight: FontWeight.w800,
+                    color: colors.text,
+                  ),
+                ),
+                const SizedBox(height: 1),
+                Text(
+                  body,
+                  style: TextStyle(
+                    color: colors.muted,
+                    fontSize: sizes.perkBody,
+                    height: 1.3,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Two Pro lifters for the perks' pictures: one for the moving covers (its
+/// neon city), one wearing Pro-only things.
+final _samples = () {
+  int at(List<LifterPart> list, String id) =>
+      list.indexWhere((p) => p.id == id);
+  return [
+    Lifter(pattern: at(kPatterns, 'neon_city'), background: 7),
+    Lifter(
+      skin: at(kSkins, 'obsidian'),
+      hair: 16,
+      hairColor: 5,
+      eyes: 6,
+      beard: 8,
+      top: at(kTops, 'tie_dye_hoodie'),
+      gear: at(kGear, 'cyber_visor'),
+      background: 3,
+      pattern: at(kPatterns, 'holo_foil'),
+    ),
+    Lifter(
+      skin: at(kSkins, 'neon'),
+      hair: 7,
+      hairColor: 9,
+      mouth: 1,
+      beard: 0,
+      top: at(kTops, 'pro_tracksuit'),
+      gear: at(kGear, 'gold_headphones'),
+      background: 7,
+      pattern: at(kPatterns, 'aurora'),
+    ),
+  ];
+}();
+
+class _NoAdTile extends StatelessWidget {
+  const _NoAdTile({required this.size});
+
+  final double size;
+
+  @override
+  Widget build(BuildContext context) => ColoredBox(
+    color: context.colors.surface,
+    child: Center(child: _NoAdMark(size: size * 1.25)),
+  );
+}
+
+/// A holo row on a board, its lifter's head out of the frame.
+class _BoardTile extends StatelessWidget {
+  const _BoardTile({required this.size});
+
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return ColoredBox(
+      color: colors.surface,
+      child: Stack(
+        children: [
+          Positioned(
+            left: size * 0.1,
+            right: size * 0.1,
+            bottom: size * 0.18,
+            height: size * 0.38,
+            child: HoloEdge(
+              radius: 6,
+              width: 1.5,
+              child: ColoredBox(
+                color: colors.surface,
+                child: Padding(
+                  padding: EdgeInsetsDirectional.only(start: size * 0.36, end: 4),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(height: 3, width: size * 0.3, color: colors.faint),
+                      const SizedBox(height: 3),
+                      Container(height: 3, width: size * 0.2, color: colors.surfaceRaised),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            left: size * 0.12,
+            bottom: size * 0.22,
+            width: size * 0.34,
+            height: size * 0.5,
+            child: LifterImage(_samples[2], view: LifterView.noBackground, size: size * 0.5),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// VS in gold, lightning either side: the Pro entrance.
+class _VsTile extends StatelessWidget {
+  const _VsTile({required this.size});
+
+  final double size;
+
+  @override
+  Widget build(BuildContext context) => ColoredBox(
+    color: const Color(0xFF1B1640),
+    child: Stack(
+      alignment: Alignment.center,
+      children: [
+        PositionedDirectional(
+          top: 2,
+          start: 2,
+          child: Icon(Icons.bolt, size: size * 0.42, color: const Color(0xFFFFE04A)),
+        ),
+        PositionedDirectional(
+          bottom: 2,
+          end: 2,
+          child: Icon(Icons.bolt, size: size * 0.38, color: const Color(0xFFFFE04A)),
+        ),
+        Transform.rotate(
+          angle: -0.14,
+          child: Text(
+            'VS',
+            style: TextStyle(
+              color: const Color(0xFFF2C14E),
+              fontSize: size * 0.42,
+              fontWeight: FontWeight.w900,
+              height: 1,
+              shadows: const [Shadow(color: Color(0xFF121110), blurRadius: 0, offset: Offset(1.5, 1.5))],
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 }
 
 class _SmallLink extends StatelessWidget {

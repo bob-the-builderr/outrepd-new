@@ -31,6 +31,7 @@ import 'daily_goal.dart';
 import 'match_entry.dart';
 import 'match_flow.dart';
 import 'notifications.dart';
+import 'pro_parts.dart';
 import 'progression.dart';
 import 'shell.dart';
 
@@ -329,9 +330,12 @@ class _TopRowState extends State<_TopRow> {
 
     return Row(
       children: [
-        // The week on the left, the bell keeping the right edge.
+        // The week on the left, the bell keeping the right edge, and Pro
+        // beside the bell, where it is seen every time the app opens (the
+        // user's pick, 2026-11-01). The week gives it the room.
         const Expanded(child: _WeekRow()),
         const SizedBox(width: 12),
+        const ProPill(),
         // A round button the size of a thumb, with how many are waiting
         // rather than a dot that only says something is.
         Semantics(

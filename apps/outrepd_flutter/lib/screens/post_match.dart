@@ -15,7 +15,6 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
-import '../ads.dart';
 import '../avatar.dart';
 import '../backend/backend.dart';
 import '../career.dart';
@@ -397,7 +396,6 @@ class DuelResultView extends StatelessWidget {
                     ),
                   ],
                 ),
-                const AdNotice(),
               ],
             ),
           ),

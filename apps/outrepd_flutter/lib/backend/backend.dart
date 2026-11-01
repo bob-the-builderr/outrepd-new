@@ -93,6 +93,7 @@ class RemoteProfile {
     this.country,
     this.prefs = const RemotePrefs(),
     this.avatarUrl,
+    this.lifter,
     this.usernameChangedAt,
     this.countryChangedAt,
     this.peakTierIdx = 0,
@@ -143,9 +144,14 @@ class RemoteProfile {
 
   final RemotePrefs prefs;
 
-  /// Null until this account has uploaded a photo. The drawn initial is the
-  /// fallback everywhere this is shown, not a broken image.
+  /// Null until this account has uploaded a photo or made its lifter. The
+  /// lifter its name gives is the fallback everywhere this is shown, not a
+  /// broken image.
   final String? avatarUrl;
+
+  /// The parts of the lifter this account made (Lifter.toJson), or null
+  /// before it made one: how a second phone gets it back to edit.
+  final Map<String, dynamic>? lifter;
 
   /// When the username was last chosen, or null when it never was. For
   /// fourteen days after it, [Backend.renameUsername] answers
@@ -169,6 +175,7 @@ class RemoteProfile {
     String? country,
     RemotePrefs? prefs,
     String? avatarUrl,
+    Map<String, dynamic>? lifter,
     DateTime? usernameChangedAt,
     DateTime? countryChangedAt,
     int? peakTierIdx,
@@ -193,6 +200,7 @@ class RemoteProfile {
     country: country ?? this.country,
     prefs: prefs ?? this.prefs,
     avatarUrl: clearAvatar ? null : avatarUrl ?? this.avatarUrl,
+    lifter: lifter ?? this.lifter,
     usernameChangedAt: usernameChangedAt ?? this.usernameChangedAt,
     countryChangedAt: countryChangedAt ?? this.countryChangedAt,
     peakTierIdx: peakTierIdx ?? this.peakTierIdx,
@@ -1297,11 +1305,19 @@ abstract interface class Backend {
   });
 
   /// Uploads a new avatar photo and returns its public URL, already saved
-  /// as this account's [RemoteProfile.avatarUrl].
-  Future<String> uploadAvatar(Uint8List bytes);
+  /// as this account's [RemoteProfile.avatarUrl]. A JPEG from the gallery,
+  /// or the PNG of the account's lifter.
+  Future<String> uploadAvatar(
+    Uint8List bytes, {
+    String contentType = 'image/jpeg',
+  });
+
+  /// Keeps the parts of this account's lifter on the account
+  /// ([RemoteProfile.lifter]).
+  Future<void> saveLifter(Map<String, Object> lifter);
 
   /// Takes this account's photo down: the link on the profile and the file,
-  /// so every screen draws the initial again.
+  /// so every screen draws the lifter again.
   Future<void> removeAvatar();
 
   /// True once this account has a real email on it — not just an anonymous
@@ -1636,7 +1652,13 @@ class NoBackend implements Backend {
       throw StateError('no server configured');
 
   @override
-  Future<String> uploadAvatar(Uint8List bytes) =>
+  Future<String> uploadAvatar(
+    Uint8List bytes, {
+    String contentType = 'image/jpeg',
+  }) => throw StateError('no server configured');
+
+  @override
+  Future<void> saveLifter(Map<String, Object> lifter) =>
       throw StateError('no server configured');
 
   @override

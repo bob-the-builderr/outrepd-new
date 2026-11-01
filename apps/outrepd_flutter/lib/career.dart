@@ -28,6 +28,7 @@ import 'backend/backend.dart'
 import 'adventure/adventure.dart';
 import 'data.dart';
 import 'health_sync.dart';
+import 'lifter/my_lifter.dart';
 import 'ranking.dart';
 import 'rewards.dart';
 import 'xp.dart';
@@ -64,6 +65,8 @@ void applyServerProfile(RemoteProfile me) {
   if (me.country case final code?) demoProfile.country = code;
   // The name too: the boards show the server's, and so must the profile.
   rememberUsername(me.username);
+  // And the lifter it made, for a phone that does not have it yet.
+  MyLifter.instance.adopt(me.lifter);
 }
 
 /// What one duel did, so the screen after it can say what happened.

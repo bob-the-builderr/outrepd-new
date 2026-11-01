@@ -1,7 +1,6 @@
-/// What sits inside the frame: a photo, or the drawn initial every screen
-/// already falls back to. No third option — [PlayerAvatar]'s own rule is a
-/// circle with the person's initial, never clip-art standing in for them, so
-/// there is nothing here to render one.
+/// What sits inside the frame: a photo, or the lifter. An account with no
+/// photo wears the lifter it made (lib/lifter/my_lifter.dart), or until it
+/// makes one, the one its name gives — never an initial (2026-11-01).
 library;
 
 import 'dart:io';
@@ -11,12 +10,13 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'backend/backend.dart';
+import 'lifter/my_lifter.dart';
 
-/// The player's picture. Either a file they chose, or nothing — the initial
-/// carries it from there.
+/// The player's picture: a file they chose, or their lifter.
 class Avatar extends ChangeNotifier {
   /// Path to a photo copied into the app's own storage. Null falls back to
-  /// the photo on the server, and then to the drawn initial.
+  /// the made lifter or the picture on the server, and then to the lifter the
+  /// name gives.
   String? photoPath;
 
   bool get hasPhoto => photoPath != null && File(photoPath!).existsSync();
@@ -26,9 +26,19 @@ class Avatar extends ChangeNotifier {
   /// first, so a new one shows the moment it is picked; then the one on the
   /// server, so a phone that never had it (a new install, a second phone)
   /// still shows it. One getter, so no screen can draw an older one.
+  ///
+  /// The made lifter is drawn from this phone while it is the picture, and
+  /// also while the server has no picture at all (its upload has not gone
+  /// through yet), so it never falls back to the name's lifter.
   ImageProvider? get picture {
     if (hasPhoto) return FileImage(File(photoPath!));
-    return pictureAt(backend.me?.avatarUrl);
+    final mine = MyLifter.instance;
+    final made = mine.built;
+    final onServer = backend.me?.avatarUrl;
+    if (made != null && (mine.isPicture || onServer == null || onServer.isEmpty)) {
+      return LifterPicture(made);
+    }
+    return pictureAt(onServer);
   }
 
   /// Only the file's name is kept. iOS moves the app's folder on every
@@ -52,13 +62,13 @@ class Avatar extends ChangeNotifier {
 
   Future<void> usePhoto(String path) async {
     photoPath = path;
+    await MyLifter.instance.photoChosen();
     notifyListeners();
     final store = await SharedPreferences.getInstance();
     await store.setString('avatarPhoto', path.split(RegExp(r'[\\/]')).last);
   }
 
-  /// Back to the drawn initial on this phone: the photo and the note of it
-  /// go. The server's copy is the caller's to take down first
+  /// Back to the lifter on this phone: the photo and the note of it go. The server's copy is the caller's to take down first
   /// (Backend.removeAvatar), or [picture] would fall back to it.
   Future<void> clearPhoto() async {
     final path = photoPath;
@@ -81,6 +91,6 @@ class Avatar extends ChangeNotifier {
 
 final avatar = Avatar();
 
-/// Somebody's uploaded picture, or null for the drawn initial.
+/// Somebody's uploaded picture, or null for the lifter their name gives.
 ImageProvider? pictureAt(String? url) =>
     url == null || url.isEmpty ? null : NetworkImage(url);

@@ -87,6 +87,8 @@ void main() {
     await open(tester);
     expect(find.text('Your picture'), findsOneWidget);
     expect(find.byKey(const Key('removePhoto')), findsNothing);
+    // The lifter is always there to change.
+    expect(find.byKey(const Key('editLifter')), findsOneWidget);
   });
 
   testWidgets('a picture is taken down after asking once', (tester) async {

@@ -19,6 +19,8 @@ import '../career.dart';
 import '../country_names.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../lifter/lifter_view.dart';
+import '../lifter/my_lifter.dart';
 import '../motion.dart';
 import '../season.dart';
 import '../theme.dart';
@@ -925,23 +927,16 @@ class _Initial extends StatelessWidget {
   }
 
   Widget _picture(BuildContext context) {
-    final fallback = Container(
-      width: size,
-      height: size,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: context.colors.surfaceRaised,
-      ),
-      child: Text(
-        name.isEmpty ? '?' : name.characters.first.toUpperCase(),
-        style: TextStyle(color: context.colors.text, fontSize: fontSize),
-      ),
-    );
-
     final own = mine ? avatar.picture : null;
+    // No photo: the lifter. This account's own made one, drawn from here;
+    // anybody else's, the one their name gives.
+    final fallback = LifterCircle(
+      name: name,
+      size: size,
+      lifter: own is LifterPicture ? own.lifter : null,
+    );
     final url = avatarUrl;
-    if (own == null && url == null) return fallback;
+    if ((own == null && url == null) || own is LifterPicture) return fallback;
     return ClipOval(
       child: Image(
         image: own ?? NetworkImage(url!),

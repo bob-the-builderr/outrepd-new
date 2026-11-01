@@ -926,7 +926,10 @@ class SupabaseBackend implements Backend {
   }
 
   @override
-  Future<String> uploadAvatar(Uint8List bytes) async {
+  Future<String> uploadAvatar(
+    Uint8List bytes, {
+    String contentType = 'image/jpeg',
+  }) async {
     final user = _db.auth.currentUser;
     if (user == null) throw StateError('not signed in');
 
@@ -939,10 +942,9 @@ class SupabaseBackend implements Backend {
         .uploadBinary(
           path,
           bytes,
-          fileOptions: const FileOptions(
-            upsert: true,
-            contentType: 'image/jpeg',
-          ),
+          // The name stays photo.jpg whatever is in it — the server only
+          // takes that one path — and the content type says what it is.
+          fileOptions: FileOptions(upsert: true, contentType: contentType),
         );
 
     // The path never changes, so neither would the public URL — cache-busted
@@ -963,11 +965,20 @@ class SupabaseBackend implements Backend {
   }
 
   @override
+  Future<void> saveLifter(Map<String, Object> lifter) async {
+    final user = _db.auth.currentUser;
+    if (user == null) throw StateError('not signed in');
+    await _db.from('profiles').update({'lifter': lifter}).eq('id', user.id);
+    final was = _me;
+    if (was != null) _me = was.copyWith(lifter: lifter);
+  }
+
+  @override
   Future<void> removeAvatar() async {
     final user = _db.auth.currentUser;
     if (user == null) throw StateError('not signed in');
 
-    // The link first: once it is gone every screen draws the initial, and a
+    // The link first: once it is gone every screen draws the lifter, and a
     // file left behind by a lost connection is one nobody is shown — the
     // next upload overwrites it anyway.
     await _db.from('profiles').update({'avatar_url': null}).eq('id', user.id);
@@ -1451,6 +1462,11 @@ class SupabaseBackend implements Backend {
     country: row['country'] as String?,
     prefs: _prefsFrom(row),
     avatarUrl: row['avatar_url'] as String?,
+    // Absent until the server has the column (outrepd-update-1.1.6.sql):
+    // select() is every column there is, so an older server reads as none.
+    lifter: row['lifter'] is Map
+        ? Map<String, dynamic>.from(row['lifter'] as Map)
+        : null,
     xp: (row['xp'] as num?)?.toInt() ?? 0,
     usernameChangedAt: DateTime.tryParse(
       row['username_changed_at'] as String? ?? '',

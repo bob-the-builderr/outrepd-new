@@ -7,7 +7,6 @@ import 'dart:math' as math;
 import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 
-import '../ads.dart';
 import '../adventure/adventure.dart';
 import '../adventure/golem.dart';
 import '../adventure/names.dart';
@@ -941,7 +940,6 @@ class AdventureResultView extends StatelessWidget {
                     ),
                   ],
                 ),
-                const AdNotice(),
               ],
             ),
           ),

@@ -11,10 +11,13 @@ import '../backend/backend.dart';
 import '../l10n/app_localizations.dart';
 import '../type_scale.dart';
 import '../data.dart';
+import '../lifter/my_lifter.dart';
 import '../player_avatar.dart';
 import '../theme.dart';
+import 'lifter_maker.dart';
 
-/// Choosing a picture: one from the phone, or one the app provides.
+/// Choosing a picture: the lifter, made or changed here, or a photo from the
+/// phone.
 Future<void> showAvatarPicker(BuildContext context, int tierIdx) {
   return showModalBottomSheet<void>(
     context: context,
@@ -141,9 +144,10 @@ class _AvatarSheetState extends State<_AvatarSheet> {
 
   bool _removing = false;
 
-  /// Back to the initial, everywhere: asked once, since the server's copy
+  /// Back to the lifter, everywhere: asked once, since the server's copy
   /// goes too. The phone's copy goes only once the server's has, so a
-  /// failure leaves the picture as it was rather than half gone.
+  /// failure leaves the picture as it was rather than half gone. A made
+  /// lifter is then sent up as the picture again.
   Future<void> _remove() async {
     final l = L.of(context);
     final sure = await showDialog<bool>(
@@ -158,6 +162,7 @@ class _AvatarSheetState extends State<_AvatarSheet> {
     try {
       if (backend.available) await backend.removeAvatar();
       await avatar.clearPhoto();
+      await MyLifter.instance.photoRemoved();
       if (mounted) Navigator.of(context).pop();
     } on Object catch (error) {
       debugPrint('Could not remove the photo: $error');
@@ -170,9 +175,22 @@ class _AvatarSheetState extends State<_AvatarSheet> {
     }
   }
 
+  /// The maker, over the screen the sheet was opened from.
+  Future<void> _editLifter() async {
+    final navigator = Navigator.of(context);
+    navigator.pop();
+    await navigator.push<bool>(
+      MaterialPageRoute(builder: (_) => const LifterMakerScreen()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final hasPicture = avatar.picture != null;
+    // A photo to take down: one on this phone, or one on the server that is
+    // not the lifter's own picture.
+    final onServer = backend.me?.avatarUrl;
+    final hasPicture = avatar.hasPhoto ||
+        (!MyLifter.instance.isPicture && onServer != null && onServer.isNotEmpty);
     return SafeArea(
       child: SingleChildScrollView(
         child: Padding(
@@ -199,6 +217,23 @@ class _AvatarSheetState extends State<_AvatarSheet> {
                 style: context.type.label.copyWith(color: context.colors.muted),
               ),
               const SizedBox(height: 18),
+              // The lifter first: it is what every account wears.
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton.icon(
+                  key: const Key('editLifter'),
+                  onPressed: _editLifter,
+                  icon: const Icon(Icons.face_outlined, size: 20),
+                  label: Text(L.of(context).editLifter),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: context.colors.brand,
+                    foregroundColor: context.colors.background,
+                    minimumSize: const Size.fromHeight(48),
+                    textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(
@@ -260,8 +295,8 @@ class _AvatarSheetState extends State<_AvatarSheet> {
   }
 }
 
-/// Asked before the picture goes: the initial it leaves, in the frame it
-/// will sit in, and what removing does.
+/// Asked before the picture goes: the lifter it leaves, in the frame it will
+/// sit in, and what removing does.
 class _RemoveDialog extends StatelessWidget {
   const _RemoveDialog({required this.tierIdx});
   final int tierIdx;
@@ -277,7 +312,15 @@ class _RemoveDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            PlayerAvatar(name: demoProfile.username, tierIdx: tierIdx, size: 64),
+            PlayerAvatar(
+              name: demoProfile.username,
+              tierIdx: tierIdx,
+              image: switch (MyLifter.instance.built) {
+                final made? => LifterPicture(made),
+                null => null,
+              },
+              size: 64,
+            ),
             const SizedBox(height: 12),
             Text(
               l.removePhotoTitle,

@@ -11,7 +11,8 @@
 ///   ads, then, where the law asks, Google's consent form, and on an iPhone
 ///   Apple's tracking question. The first ad is the next game's.
 /// * Pro (lib/subscription.dart) takes them all out. It is offered once on
-///   its own, as the first ad closes, and under every result after that.
+///   its own, as the first ad closes; after that it waits beside the bell
+///   and in Settings, never under a result (2026-11-01).
 /// * The app is for 13 and over (2026-10-28: the user wants a 13+ rating, so
 ///   the ads can be the ordinary kind); the onboarding turns away anybody
 ///   younger. Ads are capped at the teen rating.
@@ -29,11 +30,9 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'l10n/app_localizations.dart';
 import 'screens/ad_ask.dart';
 import 'screens/paywall.dart';
 import 'subscription.dart';
-import 'theme.dart';
 
 /// Supplied at build time from the AdMob account, never committed: the
 /// interstitial ad units, one per store. Not secrets — they ship inside the
@@ -77,11 +76,6 @@ class Ads extends ChangeNotifier {
 
   bool get _pro => Subscription.instance.active;
 
-  /// Whether leaving the result screen now plays an ad: there is one in
-  /// hand, for an account past its free games and without Pro. What the line
-  /// under a result's buttons says, so it is only ever said when it is true.
-  bool get playsOnLeaving => configured && _asked && !_pro && _ad != null;
-
   /// Reads what this phone has already been through. At launch; an account
   /// that has had the ask gets its consent checked and its first ad loaded.
   Future<void> load() async {
@@ -123,12 +117,9 @@ class Ads extends ChangeNotifier {
       // to the consent form, where the law asks for one.
       final apple = defaultTargetPlatform == TargetPlatform.iOS;
       if (apple) {
-        final removeInstead = await navigator.push<bool>(
+        await navigator.push<bool>(
           MaterialPageRoute(builder: (_) => const AdAskScreen()),
         );
-        if (removeInstead == true && navigator.mounted) {
-          await openPro(navigator.context);
-        }
       }
       if (!_pro) await _start(askTracking: apple);
       return;
@@ -250,53 +241,3 @@ class Ads extends ChangeNotifier {
   }
 }
 
-/// The line under a result's buttons while an ad is waiting there: that it
-/// plays when the screen is left, and the way to never see another.
-class AdNotice extends StatelessWidget {
-  const AdNotice({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: Listenable.merge([Ads.instance, Subscription.instance]),
-      builder: (context, _) {
-        if (!Ads.instance.playsOnLeaving || !Subscription.instance.enabled) {
-          return const SizedBox.shrink();
-        }
-        final l = L.of(context);
-        return Padding(
-          padding: const EdgeInsets.only(top: 6),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                child: Text(
-                  '${l.adNotice} · ',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: context.colors.muted, fontSize: 14),
-                ),
-              ),
-              TextButton(
-                key: const Key('removeAds'),
-                style: TextButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  minimumSize: const Size(0, 36),
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-                onPressed: () => openPro(context),
-                child: Text(
-                  l.removeAds,
-                  style: TextStyle(
-                    color: context.colors.text,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}

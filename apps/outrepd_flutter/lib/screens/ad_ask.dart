@@ -2,9 +2,10 @@
 /// last ad-free game's result is left, on an iPhone, ahead of Apple's own
 /// tracking question so that question does not arrive cold.
 ///
-/// Continue goes on to Apple's question; "Remove ads instead" opens Pro.
-/// Nothing here is a reward for answering either way, and the button does
-/// not say Allow — Apple asks for both (App Review 5.1.2).
+/// Continue goes on to Apple's question. Nothing here is a reward for
+/// answering either way, and the button does not say Allow — Apple asks for
+/// both (App Review 5.1.2). Pro is not offered here any more: it has its own
+/// button beside the bell and in Settings (the user's call, 2026-11-01).
 library;
 
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import '../theme.dart';
 
-/// Pops true for "Remove ads instead", false for Continue.
+/// Pops when Continue is pressed, or on back.
 class AdAskScreen extends StatelessWidget {
   const AdAskScreen({super.key});
 
@@ -133,15 +134,6 @@ class AdAskScreen extends StatelessWidget {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    TextButton(
-                      key: const Key('adAskRemove'),
-                      onPressed: () => Navigator.of(context).pop(true),
-                      child: Text(
-                        l.adAskRemove,
-                        style: TextStyle(color: colors.muted, fontSize: 15),
                       ),
                     ),
                   ],

@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 
 import '../backend/backend.dart';
 import '../l10n/app_localizations.dart';
+import '../lifter/lifter_view.dart';
 import '../settings.dart';
 import '../theme.dart';
 import '../widgets.dart';
@@ -267,21 +268,7 @@ class _BlockedRow extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(
-            width: 32,
-            height: 32,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: context.colors.surfaceRaised,
-            ),
-            child: Text(
-              who.username.isEmpty
-                  ? '?'
-                  : who.username.characters.first.toUpperCase(),
-              style: TextStyle(color: context.colors.muted, fontSize: 15),
-            ),
-          ),
+          LifterCircle(name: who.username, size: 32),
           const SizedBox(width: 11),
           Expanded(
             child: Column(
@@ -423,24 +410,7 @@ class _ReportScreenState extends State<ReportScreen> {
                     ),
                     child: Row(
                       children: [
-                        Container(
-                          width: 32,
-                          height: 32,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: context.colors.surfaceRaised,
-                          ),
-                          child: Text(
-                            name.isEmpty
-                                ? '?'
-                                : name.characters.first.toUpperCase(),
-                            style: TextStyle(
-                              color: context.colors.text,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),
+                        LifterCircle(name: name, size: 32),
                         const SizedBox(width: 11),
                         Expanded(
                           child: Column(

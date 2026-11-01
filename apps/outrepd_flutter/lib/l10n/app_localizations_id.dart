@@ -354,7 +354,8 @@ class LId extends L {
   String get removePhotoTitle => 'Hapus fotomu?';
 
   @override
-  String get removePhotoBody => 'Inisialmu akan tampil sebagai gantinya, di mana pun. Kamu bisa menambahkan foto baru kapan saja.';
+  String get removePhotoBody =>
+      'Lifter-mu akan tampil sebagai gantinya, di mana pun. Kamu bisa menambahkan foto baru kapan saja.';
 
   @override
   String get removePhotoConfirm => 'Hapus';
@@ -364,6 +365,171 @@ class LId extends L {
 
   @override
   String get cropPhoto => 'Pangkas';
+
+  @override
+  String get proGoTitle => 'Jadi Pro.';
+
+  @override
+  String get proOnboardTitle => 'Lifter-mu, Pro.';
+
+  @override
+  String get proSubtitle => 'Tanpa iklan, dan tampilan yang tidak ada di aplikasi gratis.';
+
+  @override
+  String get proFree => 'GRATIS';
+
+  @override
+  String get proYoursNow => 'MILIKMU KINI';
+
+  @override
+  String get proPerkNoAds => 'Tanpa iklan. Selamanya.';
+
+  @override
+  String get proPerkNoAdsBody => 'Setiap pertandingan, setiap level, tanpa jeda.';
+
+  @override
+  String get proPerkBoard => 'Bersinar di setiap papan';
+
+  @override
+  String get proPerkBoardBody => 'Baris holo, dengan lifter-mu keluar darinya.';
+
+  @override
+  String get proPerkEntrance => 'Masuk dengan petir';
+
+  @override
+  String get proPerkEntranceBody => 'Di layar VS sebelum setiap pertandingan live.';
+
+  @override
+  String get proPerkCovers => '9 sampul bergerak';
+
+  @override
+  String get proPerkCoversBody => 'Atau fotomu sendiri, di atas profilmu.';
+
+  @override
+  String get proPerkItems => '20 item khusus Pro';
+
+  @override
+  String get proPerkItemsBody => 'Kulit, atasan, perlengkapan, dan lifter yang berkedip.';
+
+  @override
+  String get proGo => 'Jadi Pro';
+
+  @override
+  String proBuyYearly(String price) {
+    return 'Jadi Pro · ${price}/tahun';
+  }
+
+  @override
+  String proBuyWeekly(String price) {
+    return 'Jadi Pro · ${price}/minggu';
+  }
+
+  @override
+  String get proSettingsBody => 'Tanpa iklan, dan tampilan Pro.';
+
+  @override
+  String get proSettingsActive => 'Kamu Pro. Terima kasih atas dukunganmu.';
+
+  @override
+  String get lifterMakerTitle => 'Lifter-mu';
+
+  @override
+  String get lifterMakerFirst => 'Buat lifter-mu';
+
+  @override
+  String get lifterMakerFirstBody => 'Inilah kamu di setiap papan dan setiap pertandingan.';
+
+  @override
+  String get lifterTabSkin => 'Kulit';
+
+  @override
+  String get lifterTabHair => 'Rambut';
+
+  @override
+  String get lifterTabFace => 'Wajah';
+
+  @override
+  String get lifterTabBeard => 'Jenggot';
+
+  @override
+  String get lifterTabTop => 'Atasan';
+
+  @override
+  String get lifterTabGear => 'Perlengkapan';
+
+  @override
+  String get lifterTabBackground => 'Latar';
+
+  @override
+  String get lifterEyes => 'Mata';
+
+  @override
+  String get lifterBrows => 'Alis';
+
+  @override
+  String get lifterMouth => 'Mulut';
+
+  @override
+  String get lifterMarks => 'Tanda';
+
+  @override
+  String get lifterRandom => 'Acak';
+
+  @override
+  String get lifterTryingPro => 'Tampilan Pro.';
+
+  @override
+  String get lifterUnlockPro => 'Buka dengan Pro';
+
+  @override
+  String get editLifter => 'Ubah lifter-mu';
+
+  @override
+  String lifterNeedsWorld(String world) {
+    return 'Selesaikan ${world}';
+  }
+
+  @override
+  String lifterNeedsTier(String tier) {
+    return 'Capai ${tier}';
+  }
+
+  @override
+  String lifterNeedsLevel(String level) {
+    return 'Capai level ${level}';
+  }
+
+  @override
+  String lifterNeedsWins(String count) {
+    return 'Menangkan ${count} pertandingan';
+  }
+
+  @override
+  String lifterNeedsWinStreak(String count) {
+    return 'Menang ${count} kali beruntun';
+  }
+
+  @override
+  String lifterNeedsDayStreak(String count) {
+    return 'Latihan ${count} hari beruntun';
+  }
+
+  @override
+  String get lifterNeedsMonthTop10 => 'Akhiri sebulan di 10 besar';
+
+  @override
+  String get lifterNeedsMonthPodium => 'Akhiri sebulan di 3 besar';
+
+  @override
+  String get lifterNeedsMonthChampion => 'Juarai satu bulan';
+
+  @override
+  String lifterNeedsStars(String count) {
+    return '3 bintang di ${count} level Petualangan';
+  }
+
+  @override
+  String get lifterNeedsAllStars => 'Semua bintang di Petualangan';
 
   @override
   String get couldNotShareCard => 'Kartu ini tidak bisa dibagikan';
@@ -1760,9 +1926,6 @@ class LId extends L {
   }
 
   @override
-  String get paywallStart => 'Hapus iklan';
-
-  @override
   String get paywallRenewsPlay => 'Diperpanjang otomatis sampai kamu membatalkan. Batalkan kapan saja di Google Play.';
 
   @override
@@ -2699,22 +2862,7 @@ class LId extends L {
   }
 
   @override
-  String get proTitleTop => 'Tanpa iklan.';
-
-  @override
-  String get proTitleBottom => 'Cuma push-up.';
-
-  @override
-  String get proBody => 'Semua pertandingan tetap gratis. Pro menghapus iklan dari semuanya.';
-
-  @override
   String get proThanks => 'Iklan mati. Terima kasih sudah pakai Pro.';
-
-  @override
-  String get removeAds => 'Hapus iklan';
-
-  @override
-  String get adNotice => 'Iklan diputar saat kamu keluar';
 
   @override
   String get adAskTitle => 'Iklan membuat outrepd tetap gratis';
@@ -2724,9 +2872,6 @@ class LId extends L {
 
   @override
   String get adAskCamera => 'Kameramu tidak pernah terlibat: pelacakan tubuh tetap di ponsel ini, apa pun pilihanmu.';
-
-  @override
-  String get adAskRemove => 'Hapus iklan saja';
 
   @override
   String get monsterIronColossus => 'Kolosus Besi';

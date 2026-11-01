@@ -355,7 +355,8 @@ class LTr extends L {
   String get removePhotoTitle => 'Fotoğrafın kaldırılsın mı?';
 
   @override
-  String get removePhotoBody => 'Bunun yerine her yerde baş harfin görünür. İstediğin zaman yeni bir fotoğraf ekleyebilirsin.';
+  String get removePhotoBody =>
+      'Bunun yerine her yerde lifter’ın görünecek. İstediğin zaman yeni bir fotoğraf ekleyebilirsin.';
 
   @override
   String get removePhotoConfirm => 'Kaldır';
@@ -365,6 +366,171 @@ class LTr extends L {
 
   @override
   String get cropPhoto => 'Kırp';
+
+  @override
+  String get proGoTitle => 'Pro\'ya geç.';
+
+  @override
+  String get proOnboardTitle => 'Lifter’ın, Pro.';
+
+  @override
+  String get proSubtitle => 'Reklamsız ve ücretsiz uygulamada olmayan bir görünüm.';
+
+  @override
+  String get proFree => 'ÜCRETSİZ';
+
+  @override
+  String get proYoursNow => 'ARTIK SENİN';
+
+  @override
+  String get proPerkNoAds => 'Reklam yok. Asla.';
+
+  @override
+  String get proPerkNoAdsBody => 'Her maç, her seviye, kesintisiz.';
+
+  @override
+  String get proPerkBoard => 'Her sıralamada parla';
+
+  @override
+  String get proPerkBoardBody => 'Lifter’ının dışına taştığı bir holo satır.';
+
+  @override
+  String get proPerkEntrance => 'Şimşekli giriş';
+
+  @override
+  String get proPerkEntranceBody => 'Her canlı maçtan önce VS ekranında.';
+
+  @override
+  String get proPerkCovers => '9 hareketli kapak';
+
+  @override
+  String get proPerkCoversBody => 'Ya da kendi fotoğrafın, profilinin en üstünde.';
+
+  @override
+  String get proPerkItems => 'Yalnızca Pro’ya özel 20 eşya';
+
+  @override
+  String get proPerkItemsBody => 'Görünümler, üstler, ekipman ve göz kırpan bir lifter.';
+
+  @override
+  String get proGo => 'Pro\'ya geç';
+
+  @override
+  String proBuyYearly(String price) {
+    return 'Pro\'ya geç · ${price}/yıl';
+  }
+
+  @override
+  String proBuyWeekly(String price) {
+    return 'Pro\'ya geç · ${price}/hafta';
+  }
+
+  @override
+  String get proSettingsBody => 'Reklamsız, üstelik Pro görünümü.';
+
+  @override
+  String get proSettingsActive => 'Pro’sun. Desteğin için teşekkürler.';
+
+  @override
+  String get lifterMakerTitle => 'Lifter’ın';
+
+  @override
+  String get lifterMakerFirst => 'Lifter’ını oluştur';
+
+  @override
+  String get lifterMakerFirstBody => 'Her sıralamada ve her maçta bu sensin.';
+
+  @override
+  String get lifterTabSkin => 'Ten';
+
+  @override
+  String get lifterTabHair => 'Saç';
+
+  @override
+  String get lifterTabFace => 'Yüz';
+
+  @override
+  String get lifterTabBeard => 'Sakal';
+
+  @override
+  String get lifterTabTop => 'Üst';
+
+  @override
+  String get lifterTabGear => 'Ekipman';
+
+  @override
+  String get lifterTabBackground => 'Arka plan';
+
+  @override
+  String get lifterEyes => 'Gözler';
+
+  @override
+  String get lifterBrows => 'Kaşlar';
+
+  @override
+  String get lifterMouth => 'Ağız';
+
+  @override
+  String get lifterMarks => 'İzler';
+
+  @override
+  String get lifterRandom => 'Rastgele';
+
+  @override
+  String get lifterTryingPro => 'Bir Pro görünümü.';
+
+  @override
+  String get lifterUnlockPro => 'Pro ile aç';
+
+  @override
+  String get editLifter => 'Lifter’ını düzenle';
+
+  @override
+  String lifterNeedsWorld(String world) {
+    return '${world} bölümünü bitir';
+  }
+
+  @override
+  String lifterNeedsTier(String tier) {
+    return '${tier} seviyesine ulaş';
+  }
+
+  @override
+  String lifterNeedsLevel(String level) {
+    return '${level}. seviyeye ulaş';
+  }
+
+  @override
+  String lifterNeedsWins(String count) {
+    return '${count} maç kazan';
+  }
+
+  @override
+  String lifterNeedsWinStreak(String count) {
+    return 'Üst üste ${count} galibiyet';
+  }
+
+  @override
+  String lifterNeedsDayStreak(String count) {
+    return '${count} gün üst üste antrenman yap';
+  }
+
+  @override
+  String get lifterNeedsMonthTop10 => 'Bir ayı ilk 10’da bitir';
+
+  @override
+  String get lifterNeedsMonthPodium => 'Bir ayı ilk 3’te bitir';
+
+  @override
+  String get lifterNeedsMonthChampion => 'Bir ayı birinci bitir';
+
+  @override
+  String lifterNeedsStars(String count) {
+    return '${count} Macera seviyesinde 3 yıldız';
+  }
+
+  @override
+  String get lifterNeedsAllStars => 'Maceradaki tüm yıldızlar';
 
   @override
   String get couldNotShareCard => 'Bu kart paylaşılamadı';
@@ -1756,9 +1922,6 @@ class LTr extends L {
   }
 
   @override
-  String get paywallStart => 'Reklamları kaldır';
-
-  @override
   String get paywallRenewsPlay => 'İptal edene kadar otomatik olarak yenilenir. Google Play\'den istediğin zaman iptal et.';
 
   @override
@@ -2695,22 +2858,7 @@ class LTr extends L {
   }
 
   @override
-  String get proTitleTop => 'Reklam yok.';
-
-  @override
-  String get proTitleBottom => 'Sadece şınav.';
-
-  @override
-  String get proBody => 'Her maç ücretsiz kalır. Pro hepsinden reklamları kaldırır.';
-
-  @override
   String get proThanks => 'Reklamlar kapandı. Pro’ya geçtiğin için teşekkürler.';
-
-  @override
-  String get removeAds => 'Reklamları kaldır';
-
-  @override
-  String get adNotice => 'Çıkınca bir reklam oynar';
 
   @override
   String get adAskTitle => 'Reklamlar outrepd’yi ücretsiz tutar';
@@ -2720,9 +2868,6 @@ class LTr extends L {
 
   @override
   String get adAskCamera => 'Kameranın bununla hiçbir ilgisi yok: ne seçersen seç, vücut takibi bu telefonda kalır.';
-
-  @override
-  String get adAskRemove => 'Bunun yerine reklamları kaldır';
 
   @override
   String get monsterIronColossus => 'Demir Dev';

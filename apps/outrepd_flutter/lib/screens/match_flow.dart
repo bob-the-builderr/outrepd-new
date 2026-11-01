@@ -22,6 +22,8 @@ import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../live.dart';
 import '../avatar.dart';
+import '../lifter/lifter_view.dart';
+import '../lifter/my_lifter.dart';
 import '../player_avatar.dart';
 import '../ranking.dart';
 import '../reps/recording.dart';
@@ -1937,19 +1939,13 @@ class _Fighter extends StatelessWidget {
       width: 88,
       child: Column(
         children: [
-          Container(
-            width: 62,
-            height: 62,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: context.colors.surfaceRaised,
-              border: Border.all(color: ring, width: 2),
-            ),
-            child: Text(
-              initial.isEmpty ? '?' : initial.characters.first.toUpperCase(),
-              style: TextStyle(color: context.colors.text, fontSize: 23),
-            ),
+          LifterCircle(
+            name: initial,
+            size: 62,
+            lifter: initial == demoProfile.username
+                ? MyLifter.instance.built
+                : null,
+            border: Border.all(color: ring, width: 2),
           ),
           const SizedBox(height: 7),
           Text(
@@ -2162,7 +2158,6 @@ class _BestResultView extends StatelessWidget {
                   child: Text(l.doneAction),
                 ),
               ),
-              const AdNotice(),
             ],
           ),
         ),

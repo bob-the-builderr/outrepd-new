@@ -104,7 +104,7 @@ class _SyncCounter extends NoBackend {
 }
 
 /// The app, free, with the one way into Pro the tests need: a button that
-/// does what "Remove ads" under a result does.
+/// does what the PRO button beside the bell does.
 class _Host extends StatelessWidget {
   const _Host();
 
@@ -195,13 +195,13 @@ void main() {
       _phone(tester);
       await _openPro(tester);
 
-      expect(find.text('No ads.\nJust push-ups.'), findsOneWidget);
+      expect(find.text('Go Pro.'), findsOneWidget);
       expect(
-        find.text(
-          'Every match stays free. Pro takes the ads out of all of them.',
-        ),
+        find.text("No ads, and a look the free app can't have."),
         findsOneWidget,
       );
+      expect(find.text('No ads. Ever.'), findsOneWidget);
+      expect(find.text('A lightning entrance'), findsOneWidget);
       await tester.tap(find.byKey(const Key('proClose')));
       await _settle(tester);
       await _closed(tester);
@@ -230,16 +230,27 @@ void main() {
   group('no free trial', () {
     // Pro is paid from the first day (2026-10-28): nothing promises free
     // days, whatever the store hands back.
-    testWidgets('the button removes the ads, and no plan says free days',
+    testWidgets('the button says the price, and no plan says free days',
         (tester) async {
       Subscription.instance.use(_FakeStore());
       _phone(tester);
       await _openPro(tester);
 
-      expect(find.text('Remove ads'), findsOneWidget);
+      expect(find.text(r'Go Pro · $39.99/year'), findsOneWidget);
       expect(find.textContaining('days free'), findsNothing);
       expect(find.textContaining('free trial'), findsNothing);
       expect(find.textContaining('No payment now'), findsNothing);
+    });
+
+    testWidgets('the weekly plan chosen, the button says its price',
+        (tester) async {
+      Subscription.instance.use(_FakeStore());
+      _phone(tester);
+      await _openPro(tester);
+
+      await tester.tap(find.byKey(const Key('planWeekly')));
+      await tester.pump();
+      expect(find.text(r'Go Pro · .99/week'), findsOneWidget);
     });
 
     testWidgets('the plans arrive late and still promise nothing free',
@@ -251,7 +262,7 @@ void main() {
 
       plans.complete(const [_weekly, _yearly]);
       await _settle(tester);
-      expect(find.text('Remove ads'), findsOneWidget);
+      expect(find.text(r'Go Pro · $39.99/year'), findsOneWidget);
       expect(find.textContaining('free trial'), findsNothing);
     });
   });
@@ -268,7 +279,7 @@ void main() {
       expect(find.text(r'$0.77/week'), findsOneWidget);
       expect(find.text('per week'), findsOneWidget);
       // 39.99 a year against 4.99 a week for 52 weeks.
-      expect(find.text('Save 85%'), findsOneWidget);
+      expect(find.text('SAVE 85%'), findsOneWidget);
       expect(
         find.text('Renews automatically until you cancel. '
             'Cancel anytime in Google Play.'),

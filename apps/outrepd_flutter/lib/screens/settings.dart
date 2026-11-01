@@ -32,6 +32,7 @@ import '../widgets.dart';
 import 'auth_entry.dart';
 import 'country_picker.dart';
 import 'leave_account.dart';
+import 'pro_parts.dart';
 import 'settings_account.dart';
 import 'settings_notices.dart';
 import 'settings_parts.dart';
@@ -126,7 +127,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
         children: [
-          // First, and a card of its own: App Review asks that an app using
+          // Pro at the very top: what it gives, and the way in.
+          const ProSettingsCard(),
+
+          // A card of its own: App Review asks that an app using
           // HealthKit says so plainly where people can see it, and a switch
           // among the duel's sounds and vibration was not that (2.5.1,
           // October 2026). A browser has no Health to save to, and on Android

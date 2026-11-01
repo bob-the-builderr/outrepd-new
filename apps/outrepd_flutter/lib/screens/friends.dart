@@ -18,6 +18,7 @@ import '../backend/backend.dart';
 import '../career.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../lifter/lifter_view.dart';
 import '../motion.dart';
 import '../player_avatar.dart';
 import '../theme.dart';
@@ -1055,21 +1056,7 @@ class _Avatar extends StatelessWidget {
         children: [
           Builder(
             builder: (context) {
-              final fallback = Container(
-                width: 44,
-                height: 44,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: context.colors.surfaceRaised,
-                ),
-                child: Text(
-                  friend.username.isEmpty
-                      ? '?'
-                      : friend.username.characters.first.toUpperCase(),
-                  style: TextStyle(color: context.colors.text, fontSize: 19),
-                ),
-              );
+              final fallback = LifterCircle(name: friend.username, size: 44);
               if (friend.avatarUrl == null) return fallback;
               return ClipOval(
                 child: Image.network(

@@ -7,12 +7,15 @@
 /// old app survived in three screens after the rest had moved on; the frame
 /// is drawn, not loaded, and it is the same everywhere.
 ///
-/// An initial, never gym clip-art. The one place that is supposed to be the
-/// person is the last place to put a picture of a dumbbell.
+/// A photo, or the person's lifter: the comic-ink character they made, or
+/// until they make one, the one their name gives (lib/lifter/). Never an
+/// initial (the user's rule, 2026-11-01).
 library;
 
 import 'package:flutter/material.dart';
 
+import 'lifter/lifter_view.dart';
+import 'lifter/my_lifter.dart';
 import 'theme.dart';
 import 'tier_frame.dart';
 
@@ -28,8 +31,8 @@ class PlayerAvatar extends StatelessWidget {
     this.onBadgeTap,
   });
 
-  /// Whose it is. The first letter is what gets drawn when there is no
-  /// [photoUrl], or while it is still loading.
+  /// Whose it is. Their name gives the lifter drawn when there is no
+  /// [image], or while it is still loading.
   final String name;
 
   /// Their tier, or null for somebody who has no rank to show yet — a new
@@ -37,8 +40,9 @@ class PlayerAvatar extends StatelessWidget {
   final int? tierIdx;
 
   /// Null for everyone who has not set a photo — most people, most of the
-  /// time — which is what makes the initial the fallback rather than a
-  /// special case drawn once and forgotten. A `NetworkImage` for anyone
+  /// time — which is what makes the lifter the fallback rather than a
+  /// special case drawn once and forgotten. A [LifterPicture] is drawn as
+  /// its lifter, in vectors. A `NetworkImage` for anyone
   /// else's uploaded photo, or a `FileImage` for this account's own picture
   /// before or between uploads — both are an `ImageProvider`, so the circle
   /// does not need to know which one it was handed.
@@ -48,8 +52,7 @@ class PlayerAvatar extends StatelessWidget {
   /// this; see [TierFrame.widthFor].
   final double size;
 
-  /// The initial's colour. Defaults to the body colour; the duel card uses it
-  /// to tell the two lifters apart.
+  /// Kept for the callers that set it; a lifter has no letter to colour.
   final Color? textColour;
 
   final VoidCallback? onTap;
@@ -60,26 +63,20 @@ class PlayerAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final initial = Container(
+    final picture = image;
+    final drawn = picture is LifterPicture ? picture.lifter : lifterFor(name);
+    final fallback = Container(
       width: size,
       height: size,
-      alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: context.colors.surfaceRaised,
         border: Border.all(color: context.colors.border, width: 1.5),
       ),
-      child: Text(
-        name.isEmpty ? '?' : name.characters.first.toUpperCase(),
-        style: TextStyle(
-          color: textColour ?? context.colors.text,
-          fontSize: size * 0.38,
-        ),
-      ),
+      child: ClipOval(child: LifterImage(drawn, size: size)),
     );
 
-    final circle = image == null
-        ? initial
+    final circle = picture == null || picture is LifterPicture
+        ? fallback
         : Container(
             width: size,
             height: size,
@@ -89,16 +86,16 @@ class PlayerAvatar extends StatelessWidget {
             ),
             child: ClipOval(
               child: Image(
-                image: image!,
+                image: picture,
                 width: size,
                 height: size,
                 fit: BoxFit.cover,
                 // A photo that is still loading or failed to load reads as
-                // no photo at all, not as a hole in the row — the initial is
+                // no photo at all, not as a hole in the row — the lifter is
                 // never a special case, only ever the fallback.
                 loadingBuilder: (context, child, progress) =>
-                    progress == null ? child : initial,
-                errorBuilder: (context, error, stack) => initial,
+                    progress == null ? child : fallback,
+                errorBuilder: (context, error, stack) => fallback,
               ),
             ),
           );

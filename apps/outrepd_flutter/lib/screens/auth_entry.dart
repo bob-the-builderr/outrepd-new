@@ -30,6 +30,8 @@ import '../type_scale.dart';
 import '../username_rules.dart';
 import 'country_picker.dart';
 import 'legal_line.dart';
+import 'lifter_maker.dart';
+import 'paywall.dart';
 import 'social_sign_in.dart';
 
 /// What this whole gate finished with, popped back to whoever opened
@@ -398,6 +400,12 @@ mixin _SocialSignIn<T extends StatefulWidget> on State<T> {
         await Navigator.of(context).push<void>(
           MaterialPageRoute(builder: (_) => const ChooseUsernameScreen()),
         );
+        // Then the lifter, which Skip leaves to the one the name gives, and
+        // Pro on the lifter just made, which Not now leaves for later.
+        if (!mounted) return;
+        await openLifterMaker(context, firstTime: true);
+        if (!mounted) return;
+        await openPro(context, onboarding: true);
         if (mounted) Navigator.of(context).pop(AuthOutcome.signedUp);
       case SocialSignInResult.existingAccount:
         await Career.instance.adoptServerProfile(backend.me!);

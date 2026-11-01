@@ -356,7 +356,8 @@ class LPt extends L {
   String get removePhotoTitle => 'Remover sua foto?';
 
   @override
-  String get removePhotoBody => 'Sua inicial aparece no lugar dela, em todo lugar. Você pode adicionar uma nova foto quando quiser.';
+  String get removePhotoBody =>
+      'No lugar dela, seu lifter aparece em todo lugar. Você pode adicionar uma nova foto quando quiser.';
 
   @override
   String get removePhotoConfirm => 'Remover';
@@ -366,6 +367,171 @@ class LPt extends L {
 
   @override
   String get cropPhoto => 'Recortar';
+
+  @override
+  String get proGoTitle => 'Seja Pro.';
+
+  @override
+  String get proOnboardTitle => 'Seu lifter, Pro.';
+
+  @override
+  String get proSubtitle => 'Sem anúncios, e um visual que o app grátis não tem.';
+
+  @override
+  String get proFree => 'GRÁTIS';
+
+  @override
+  String get proYoursNow => 'AGORA SEU';
+
+  @override
+  String get proPerkNoAds => 'Sem anúncios. Nunca.';
+
+  @override
+  String get proPerkNoAdsBody => 'Cada partida, cada nível, sem pausas.';
+
+  @override
+  String get proPerkBoard => 'Brilhe em cada ranking';
+
+  @override
+  String get proPerkBoardBody => 'Uma linha holográfica, com seu lifter saindo dela.';
+
+  @override
+  String get proPerkEntrance => 'Uma entrada com raios';
+
+  @override
+  String get proPerkEntranceBody => 'Na tela VS antes de cada partida ao vivo.';
+
+  @override
+  String get proPerkCovers => '9 capas animadas';
+
+  @override
+  String get proPerkCoversBody => 'Ou sua própria foto, no topo do seu perfil.';
+
+  @override
+  String get proPerkItems => '20 itens só Pro';
+
+  @override
+  String get proPerkItemsBody => 'Peles, camisetas, acessórios e um lifter que pisca.';
+
+  @override
+  String get proGo => 'Seja Pro';
+
+  @override
+  String proBuyYearly(String price) {
+    return 'Seja Pro · ${price}/ano';
+  }
+
+  @override
+  String proBuyWeekly(String price) {
+    return 'Seja Pro · ${price}/semana';
+  }
+
+  @override
+  String get proSettingsBody => 'Sem anúncios, e o visual Pro.';
+
+  @override
+  String get proSettingsActive => 'Você é Pro. Obrigado pelo apoio.';
+
+  @override
+  String get lifterMakerTitle => 'Seu lifter';
+
+  @override
+  String get lifterMakerFirst => 'Crie seu lifter';
+
+  @override
+  String get lifterMakerFirstBody => 'Este é você em cada ranking e em cada partida.';
+
+  @override
+  String get lifterTabSkin => 'Pele';
+
+  @override
+  String get lifterTabHair => 'Cabelo';
+
+  @override
+  String get lifterTabFace => 'Rosto';
+
+  @override
+  String get lifterTabBeard => 'Barba';
+
+  @override
+  String get lifterTabTop => 'Roupa';
+
+  @override
+  String get lifterTabGear => 'Acessórios';
+
+  @override
+  String get lifterTabBackground => 'Fundo';
+
+  @override
+  String get lifterEyes => 'Olhos';
+
+  @override
+  String get lifterBrows => 'Sobrancelhas';
+
+  @override
+  String get lifterMouth => 'Boca';
+
+  @override
+  String get lifterMarks => 'Marcas';
+
+  @override
+  String get lifterRandom => 'Aleatório';
+
+  @override
+  String get lifterTryingPro => 'Um visual Pro.';
+
+  @override
+  String get lifterUnlockPro => 'Desbloquear com Pro';
+
+  @override
+  String get editLifter => 'Editar seu lifter';
+
+  @override
+  String lifterNeedsWorld(String world) {
+    return 'Conclua ${world}';
+  }
+
+  @override
+  String lifterNeedsTier(String tier) {
+    return 'Chegue a ${tier}';
+  }
+
+  @override
+  String lifterNeedsLevel(String level) {
+    return 'Chegue ao nível ${level}';
+  }
+
+  @override
+  String lifterNeedsWins(String count) {
+    return 'Vença ${count} partidas';
+  }
+
+  @override
+  String lifterNeedsWinStreak(String count) {
+    return 'Vença ${count} seguidas';
+  }
+
+  @override
+  String lifterNeedsDayStreak(String count) {
+    return 'Treine ${count} dias seguidos';
+  }
+
+  @override
+  String get lifterNeedsMonthTop10 => 'Termine um mês no top 10';
+
+  @override
+  String get lifterNeedsMonthPodium => 'Termine um mês no top 3';
+
+  @override
+  String get lifterNeedsMonthChampion => 'Vença um mês';
+
+  @override
+  String lifterNeedsStars(String count) {
+    return '3 estrelas em ${count} níveis da Aventura';
+  }
+
+  @override
+  String get lifterNeedsAllStars => 'Todas as estrelas da Aventura';
 
   @override
   String get couldNotShareCard => 'Não foi possível compartilhar este cartão';
@@ -1763,9 +1929,6 @@ class LPt extends L {
   }
 
   @override
-  String get paywallStart => 'Remover anúncios';
-
-  @override
   String get paywallRenewsPlay => 'Renova automaticamente até você cancelar. Cancele quando quiser no Google Play.';
 
   @override
@@ -2702,22 +2865,7 @@ class LPt extends L {
   }
 
   @override
-  String get proTitleTop => 'Sem anúncios.';
-
-  @override
-  String get proTitleBottom => 'Só flexões.';
-
-  @override
-  String get proBody => 'Todas as partidas continuam grátis. O Pro tira os anúncios de todas.';
-
-  @override
   String get proThanks => 'Anúncios desligados. Obrigado por virar Pro.';
-
-  @override
-  String get removeAds => 'Remover anúncios';
-
-  @override
-  String get adNotice => 'Um anúncio passa quando você sair';
 
   @override
   String get adAskTitle => 'Os anúncios mantêm o outrepd grátis';
@@ -2727,9 +2875,6 @@ class LPt extends L {
 
   @override
   String get adAskCamera => 'Sua câmera nunca entra nisso: o rastreamento do corpo fica neste celular, seja qual for a sua escolha.';
-
-  @override
-  String get adAskRemove => 'Prefiro remover os anúncios';
 
   @override
   String get monsterIronColossus => 'Colosso de ferro';

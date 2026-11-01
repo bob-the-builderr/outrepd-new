@@ -158,10 +158,122 @@
   "couldNotSyncAvatar": "Your picture is saved, but it hasn't synced yet",
   "removePhoto": "Remove photo",
   "removePhotoTitle": "Remove your photo?",
-  "removePhotoBody": "Your initial shows instead, everywhere. You can add a new photo any time.",
+  "removePhotoBody": "Your lifter shows instead, everywhere. You can add a new photo any time.",
   "removePhotoConfirm": "Remove",
   "couldNotRemovePhoto": "Could not remove your photo. Try again.",
   "cropPhoto": "Crop",
+  "proGoTitle": "Go Pro.",
+  "proOnboardTitle": "Your lifter, Pro.",
+  "proSubtitle": "No ads, and a look the free app can't have.",
+  "proFree": "FREE",
+  "proYoursNow": "YOURS NOW",
+  "proPerkNoAds": "No ads. Ever.",
+  "proPerkNoAdsBody": "Every match, every level, straight through.",
+  "proPerkBoard": "Shine on every board",
+  "proPerkBoardBody": "A holo row, your lifter breaking out of it.",
+  "proPerkEntrance": "A lightning entrance",
+  "proPerkEntranceBody": "On the VS screen before every live match.",
+  "proPerkCovers": "9 moving covers",
+  "proPerkCoversBody": "Or your own photo, on top of your profile.",
+  "proPerkItems": "20 Pro-only items",
+  "proPerkItemsBody": "Skins, tops, gear, and a lifter that blinks.",
+  "proGo": "Go Pro",
+  "proBuyYearly": "Go Pro · {price}/year",
+  "@proBuyYearly": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "proBuyWeekly": "Go Pro · {price}/week",
+  "@proBuyWeekly": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "proSettingsBody": "No ads, and the Pro look.",
+  "proSettingsActive": "You're Pro. Thanks for the support.",
+  "lifterMakerTitle": "Your lifter",
+  "lifterMakerFirst": "Make your lifter",
+  "lifterMakerFirstBody": "This is you on every board and in every match.",
+  "lifterTabSkin": "Skin",
+  "lifterTabHair": "Hair",
+  "lifterTabFace": "Face",
+  "lifterTabBeard": "Beard",
+  "lifterTabTop": "Top",
+  "lifterTabGear": "Gear",
+  "lifterTabBackground": "Background",
+  "lifterEyes": "Eyes",
+  "lifterBrows": "Brows",
+  "lifterMouth": "Mouth",
+  "lifterMarks": "Marks",
+  "lifterRandom": "Random",
+  "lifterTryingPro": "A Pro look.",
+  "lifterUnlockPro": "Unlock with Pro",
+  "editLifter": "Edit your lifter",
+  "lifterNeedsWorld": "Clear {world}",
+  "@lifterNeedsWorld": {
+    "placeholders": {
+      "world": {
+        "type": "String"
+      }
+    }
+  },
+  "lifterNeedsTier": "Reach {tier}",
+  "@lifterNeedsTier": {
+    "placeholders": {
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
+  "lifterNeedsLevel": "Reach level {level}",
+  "@lifterNeedsLevel": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "lifterNeedsWins": "Win {count} matches",
+  "@lifterNeedsWins": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "lifterNeedsWinStreak": "Win {count} in a row",
+  "@lifterNeedsWinStreak": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "lifterNeedsDayStreak": "Train {count} days in a row",
+  "@lifterNeedsDayStreak": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "lifterNeedsMonthTop10": "Finish a month in the top 10",
+  "lifterNeedsMonthPodium": "Finish a month in the top 3",
+  "lifterNeedsMonthChampion": "Win a month",
+  "lifterNeedsStars": "3 stars on {count} Adventure levels",
+  "@lifterNeedsStars": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "lifterNeedsAllStars": "Every star in the Adventure",
   "couldNotShareCard": "Could not share this card",
   "couldNotOpenLink": "Could not open that link",
   "couldNotCheckUsername": "Couldn't check that name — try again",
@@ -968,7 +1080,6 @@
       }
     }
   },
-  "paywallStart": "Remove ads",
   "paywallRenewsPlay": "Renews automatically until you cancel. Cancel anytime in Google Play.",
   "paywallRenewsApple": "Renews automatically until you cancel. Cancel anytime in your Apple account settings.",
   "paywallRestore": "Restore",
@@ -1814,16 +1925,10 @@
       }
     }
   },
-  "proTitleTop": "No ads.",
-  "proTitleBottom": "Just push-ups.",
-  "proBody": "Every match stays free. Pro takes the ads out of all of them.",
   "proThanks": "Ads are off. Thanks for going Pro.",
-  "removeAds": "Remove ads",
-  "adNotice": "An ad plays when you leave",
   "adAskTitle": "Ads keep outrepd free",
   "adAskBody": "Next, your iPhone asks whether apps may use your activity to choose ads. Say yes and the ads fit you better; say no and you still get ads, just less relevant ones.",
   "adAskCamera": "Your camera is never part of it: body tracking stays on this phone, whatever you choose.",
-  "adAskRemove": "Remove ads instead",
   "monsterIronColossus": "Iron Colossus",
   "monsterScarab": "Scarab",
   "monsterScarabPharaoh": "Scarab Pharaoh",

@@ -247,6 +247,13 @@ alter table profiles add column if not exists notify_challenged bool not null
 alter table profiles add column if not exists notify_live_invite bool not null
   default true;
 alter table profiles add column if not exists avatar_url text;
+-- The parts of the lifter this account made (lib/lifter/catalog.dart,
+-- Lifter.toJson): ids and colours, so another phone can edit it. Its picture
+-- is the PNG uploaded as avatar_url. A few hundred bytes; the cap keeps it
+-- from becoming somewhere to keep anything else.
+alter table profiles add column if not exists lifter jsonb
+  constraint profiles_lifter_small
+  check (lifter is null or pg_column_size(lifter) <= 2048);
 alter table profiles add column if not exists username_changed_at timestamptz;
 -- When this lifter last chose a country themselves (set_my_country). Null
 -- until then: the phone's own region fills the column in, and that is not a

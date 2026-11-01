@@ -50,6 +50,9 @@ dependencies:
   # 2026-11-01). Not 13: that one needs Flutter 3.47, and CI takes whatever
   # stable is.
   image_cropper: ^12.2.1
+  # Draws the lifter, the comic-ink character every account wears
+  # (lib/lifter/), from the SVG it is built as.
+  flutter_svg: ^2.3.2
   flutter_localizations:
     sdk: flutter
   intl: ^0.20.2

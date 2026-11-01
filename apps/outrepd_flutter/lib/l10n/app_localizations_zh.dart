@@ -341,7 +341,8 @@ class LZh extends L {
   String get removePhotoTitle => '移除你的照片？';
 
   @override
-  String get removePhotoBody => '各处都会改为显示你的首字母。你可以随时添加新照片。';
+  String get removePhotoBody =>
+      '各处都会改为显示你的举重手。你可以随时添加新照片。';
 
   @override
   String get removePhotoConfirm => '移除';
@@ -351,6 +352,171 @@ class LZh extends L {
 
   @override
   String get cropPhoto => '裁剪';
+
+  @override
+  String get proGoTitle => '升级 Pro。';
+
+  @override
+  String get proOnboardTitle => '你的举重手，Pro 版。';
+
+  @override
+  String get proSubtitle => '没有广告，还有免费版没有的造型。';
+
+  @override
+  String get proFree => '免费';
+
+  @override
+  String get proYoursNow => '现在的你';
+
+  @override
+  String get proPerkNoAds => '没有广告。永远。';
+
+  @override
+  String get proPerkNoAdsBody => '每场比赛、每个关卡，一路畅通。';
+
+  @override
+  String get proPerkBoard => '在每个榜单上闪耀';
+
+  @override
+  String get proPerkBoardBody => '全息的一行，你的举重手从中跃出。';
+
+  @override
+  String get proPerkEntrance => '闪电登场';
+
+  @override
+  String get proPerkEntranceBody => '在每场直播对决前的 VS 画面上。';
+
+  @override
+  String get proPerkCovers => '9 个动态封面';
+
+  @override
+  String get proPerkCoversBody => '或用你自己的照片，放在资料页顶部。';
+
+  @override
+  String get proPerkItems => '20 件 Pro 专属物品';
+
+  @override
+  String get proPerkItemsBody => '皮肤、上衣、装备，还有会眨眼的举重手。';
+
+  @override
+  String get proGo => '升级 Pro';
+
+  @override
+  String proBuyYearly(String price) {
+    return '升级 Pro · ${price}/年';
+  }
+
+  @override
+  String proBuyWeekly(String price) {
+    return '升级 Pro · ${price}/周';
+  }
+
+  @override
+  String get proSettingsBody => '没有广告，还有 Pro 造型。';
+
+  @override
+  String get proSettingsActive => '你已是 Pro。感谢你的支持。';
+
+  @override
+  String get lifterMakerTitle => '你的举重手';
+
+  @override
+  String get lifterMakerFirst => '创建你的举重手';
+
+  @override
+  String get lifterMakerFirstBody => '在每个榜单和每场比赛中，这就是你。';
+
+  @override
+  String get lifterTabSkin => '肤色';
+
+  @override
+  String get lifterTabHair => '发型';
+
+  @override
+  String get lifterTabFace => '脸部';
+
+  @override
+  String get lifterTabBeard => '胡子';
+
+  @override
+  String get lifterTabTop => '上衣';
+
+  @override
+  String get lifterTabGear => '装备';
+
+  @override
+  String get lifterTabBackground => '背景';
+
+  @override
+  String get lifterEyes => '眼睛';
+
+  @override
+  String get lifterBrows => '眉毛';
+
+  @override
+  String get lifterMouth => '嘴巴';
+
+  @override
+  String get lifterMarks => '标记';
+
+  @override
+  String get lifterRandom => '随机';
+
+  @override
+  String get lifterTryingPro => 'Pro 造型。';
+
+  @override
+  String get lifterUnlockPro => '用 Pro 解锁';
+
+  @override
+  String get editLifter => '编辑你的举重手';
+
+  @override
+  String lifterNeedsWorld(String world) {
+    return '通关${world}';
+  }
+
+  @override
+  String lifterNeedsTier(String tier) {
+    return '达到${tier}';
+  }
+
+  @override
+  String lifterNeedsLevel(String level) {
+    return '达到 ${level} 级';
+  }
+
+  @override
+  String lifterNeedsWins(String count) {
+    return '赢得 ${count} 场比赛';
+  }
+
+  @override
+  String lifterNeedsWinStreak(String count) {
+    return '连胜 ${count} 场';
+  }
+
+  @override
+  String lifterNeedsDayStreak(String count) {
+    return '连续训练 ${count} 天';
+  }
+
+  @override
+  String get lifterNeedsMonthTop10 => '以前 10 名结束一个月';
+
+  @override
+  String get lifterNeedsMonthPodium => '以前 3 名结束一个月';
+
+  @override
+  String get lifterNeedsMonthChampion => '赢得一个月的冠军';
+
+  @override
+  String lifterNeedsStars(String count) {
+    return '在 ${count} 个冒险关卡获得 3 星';
+  }
+
+  @override
+  String get lifterNeedsAllStars => '冒险中的所有星星';
 
   @override
   String get couldNotShareCard => '无法分享这张卡片';
@@ -1716,9 +1882,6 @@ class LZh extends L {
   }
 
   @override
-  String get paywallStart => '去除广告';
-
-  @override
   String get paywallRenewsPlay => '取消前自动续订。可随时在 Google Play 中取消。';
 
   @override
@@ -2655,22 +2818,7 @@ class LZh extends L {
   }
 
   @override
-  String get proTitleTop => '没有广告。';
-
-  @override
-  String get proTitleBottom => '只有俯卧撑。';
-
-  @override
-  String get proBody => '每场比赛都免费。Pro 会去掉所有比赛的广告。';
-
-  @override
   String get proThanks => '广告已关闭。感谢升级 Pro。';
-
-  @override
-  String get removeAds => '去除广告';
-
-  @override
-  String get adNotice => '离开时会播放一条广告';
 
   @override
   String get adAskTitle => '广告让 outrepd 保持免费';
@@ -2680,9 +2828,6 @@ class LZh extends L {
 
   @override
   String get adAskCamera => '这和摄像头无关：无论你怎么选，身体追踪都只在这部手机上进行。';
-
-  @override
-  String get adAskRemove => '改为去除广告';
 
   @override
   String get monsterIronColossus => '钢铁巨像';

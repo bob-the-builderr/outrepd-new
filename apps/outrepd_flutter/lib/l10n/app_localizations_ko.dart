@@ -343,7 +343,8 @@ class LKo extends L {
   String get removePhotoTitle => '사진을 삭제할까요?';
 
   @override
-  String get removePhotoBody => '대신 이니셜이 모든 곳에 표시돼요. 새 사진은 언제든 추가할 수 있어요.';
+  String get removePhotoBody =>
+      '대신 모든 곳에 리프터가 표시돼요. 언제든 새 사진을 추가할 수 있어요.';
 
   @override
   String get removePhotoConfirm => '삭제';
@@ -353,6 +354,171 @@ class LKo extends L {
 
   @override
   String get cropPhoto => '자르기';
+
+  @override
+  String get proGoTitle => 'Pro가 되세요.';
+
+  @override
+  String get proOnboardTitle => '당신의 리프터, Pro.';
+
+  @override
+  String get proSubtitle => '광고 없이, 무료 앱에는 없는 모습으로.';
+
+  @override
+  String get proFree => '무료';
+
+  @override
+  String get proYoursNow => '이제 내 것';
+
+  @override
+  String get proPerkNoAds => '광고 없음. 영원히.';
+
+  @override
+  String get proPerkNoAdsBody => '모든 경기, 모든 레벨을 끊김 없이.';
+
+  @override
+  String get proPerkBoard => '모든 순위표에서 빛나기';
+
+  @override
+  String get proPerkBoardBody => '홀로 줄에서 리프터가 튀어나와요.';
+
+  @override
+  String get proPerkEntrance => '번개와 함께 등장';
+
+  @override
+  String get proPerkEntranceBody => '모든 라이브 경기 전 VS 화면에서.';
+
+  @override
+  String get proPerkCovers => '움직이는 커버 9종';
+
+  @override
+  String get proPerkCoversBody => '또는 내 사진을 프로필 맨 위에.';
+
+  @override
+  String get proPerkItems => 'Pro 전용 아이템 20종';
+
+  @override
+  String get proPerkItemsBody => '스킨, 상의, 장비, 그리고 눈을 깜빡이는 리프터.';
+
+  @override
+  String get proGo => 'Pro 시작';
+
+  @override
+  String proBuyYearly(String price) {
+    return 'Pro 시작 · ${price}/년';
+  }
+
+  @override
+  String proBuyWeekly(String price) {
+    return 'Pro 시작 · ${price}/주';
+  }
+
+  @override
+  String get proSettingsBody => '광고 없이, Pro 스타일로.';
+
+  @override
+  String get proSettingsActive => 'Pro 회원이에요. 응원해 주셔서 고마워요.';
+
+  @override
+  String get lifterMakerTitle => '내 리프터';
+
+  @override
+  String get lifterMakerFirst => '리프터 만들기';
+
+  @override
+  String get lifterMakerFirstBody => '모든 순위표와 모든 경기에서 이게 바로 당신이에요.';
+
+  @override
+  String get lifterTabSkin => '피부';
+
+  @override
+  String get lifterTabHair => '헤어';
+
+  @override
+  String get lifterTabFace => '얼굴';
+
+  @override
+  String get lifterTabBeard => '수염';
+
+  @override
+  String get lifterTabTop => '상의';
+
+  @override
+  String get lifterTabGear => '장비';
+
+  @override
+  String get lifterTabBackground => '배경';
+
+  @override
+  String get lifterEyes => '눈';
+
+  @override
+  String get lifterBrows => '눈썹';
+
+  @override
+  String get lifterMouth => '입';
+
+  @override
+  String get lifterMarks => '표시';
+
+  @override
+  String get lifterRandom => '랜덤';
+
+  @override
+  String get lifterTryingPro => 'Pro 스타일.';
+
+  @override
+  String get lifterUnlockPro => 'Pro로 잠금 해제';
+
+  @override
+  String get editLifter => '리프터 편집';
+
+  @override
+  String lifterNeedsWorld(String world) {
+    return '${world} 클리어';
+  }
+
+  @override
+  String lifterNeedsTier(String tier) {
+    return '${tier} 달성';
+  }
+
+  @override
+  String lifterNeedsLevel(String level) {
+    return '레벨 ${level} 달성';
+  }
+
+  @override
+  String lifterNeedsWins(String count) {
+    return '${count}경기 승리';
+  }
+
+  @override
+  String lifterNeedsWinStreak(String count) {
+    return '${count}연승';
+  }
+
+  @override
+  String lifterNeedsDayStreak(String count) {
+    return '${count}일 연속 운동';
+  }
+
+  @override
+  String get lifterNeedsMonthTop10 => '한 달을 10위 안에 마치기';
+
+  @override
+  String get lifterNeedsMonthPodium => '한 달을 3위 안에 마치기';
+
+  @override
+  String get lifterNeedsMonthChampion => '한 달 1위 하기';
+
+  @override
+  String lifterNeedsStars(String count) {
+    return '어드벤처 레벨 ${count}개에서 별 3개';
+  }
+
+  @override
+  String get lifterNeedsAllStars => '어드벤처의 모든 별';
 
   @override
   String get couldNotShareCard => '이 카드를 공유할 수 없었어요';
@@ -1729,9 +1895,6 @@ class LKo extends L {
   }
 
   @override
-  String get paywallStart => '광고 제거';
-
-  @override
   String get paywallRenewsPlay => '해지할 때까지 자동으로 갱신됩니다. Google Play에서 언제든지 해지할 수 있습니다.';
 
   @override
@@ -2668,22 +2831,7 @@ class LKo extends L {
   }
 
   @override
-  String get proTitleTop => '광고 없이.';
-
-  @override
-  String get proTitleBottom => '팔굽혀펴기만.';
-
-  @override
-  String get proBody => '모든 매치는 계속 무료예요. Pro는 모든 매치에서 광고를 없애요.';
-
-  @override
   String get proThanks => '광고가 꺼졌어요. Pro를 선택해 주셔서 고마워요.';
-
-  @override
-  String get removeAds => '광고 제거';
-
-  @override
-  String get adNotice => '나가면 광고가 나와요';
 
   @override
   String get adAskTitle => '광고 덕분에 outrepd는 무료예요';
@@ -2693,9 +2841,6 @@ class LKo extends L {
 
   @override
   String get adAskCamera => '카메라는 전혀 관련 없어요. 무엇을 선택하든 몸 추적은 이 휴대폰 안에서만 이뤄져요.';
-
-  @override
-  String get adAskRemove => '대신 광고 제거하기';
 
   @override
   String get monsterIronColossus => '강철 거신';

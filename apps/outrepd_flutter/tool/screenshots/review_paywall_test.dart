@@ -130,7 +130,7 @@ void main() {
     // Apple's wording, not Google Play's, and no free trial: Pro is paid
     // from the first day.
     expect(find.byKey(const Key('paywallTitle')), findsOneWidget);
-    expect(find.text('Remove ads'), findsOneWidget);
+    expect(find.text(r'Go Pro · $39.99/year'), findsOneWidget);
     expect(find.textContaining('Apple account'), findsWidgets);
 
     await expectLater(

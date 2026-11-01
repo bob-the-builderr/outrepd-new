@@ -355,7 +355,8 @@ class LHi extends L {
   String get removePhotoTitle => 'अपनी फ़ोटो हटाएँ?';
 
   @override
-  String get removePhotoBody => 'इसकी जगह हर जगह आपके नाम का पहला अक्षर दिखेगा। आप कभी भी नई फ़ोटो जोड़ सकते हैं।';
+  String get removePhotoBody =>
+      'इसकी जगह हर जगह आपका लिफ्टर दिखेगा। आप कभी भी नई फ़ोटो जोड़ सकते हैं।';
 
   @override
   String get removePhotoConfirm => 'हटाएँ';
@@ -365,6 +366,171 @@ class LHi extends L {
 
   @override
   String get cropPhoto => 'क्रॉप करें';
+
+  @override
+  String get proGoTitle => 'Pro लें।';
+
+  @override
+  String get proOnboardTitle => 'आपका लिफ्टर, Pro।';
+
+  @override
+  String get proSubtitle => 'कोई विज्ञापन नहीं, और ऐसा लुक जो फ़्री ऐप में नहीं।';
+
+  @override
+  String get proFree => 'फ़्री';
+
+  @override
+  String get proYoursNow => 'अब आपका';
+
+  @override
+  String get proPerkNoAds => 'कोई विज्ञापन नहीं। कभी नहीं।';
+
+  @override
+  String get proPerkNoAdsBody => 'हर मैच, हर लेवल, बिना रुकावट।';
+
+  @override
+  String get proPerkBoard => 'हर बोर्ड पर चमक';
+
+  @override
+  String get proPerkBoardBody => 'एक होलो पंक्ति, जिससे आपका लिफ्टर बाहर निकलता है।';
+
+  @override
+  String get proPerkEntrance => 'बिजली के साथ एंट्री';
+
+  @override
+  String get proPerkEntranceBody => 'हर लाइव मैच से पहले VS स्क्रीन पर।';
+
+  @override
+  String get proPerkCovers => '9 चलते कवर';
+
+  @override
+  String get proPerkCoversBody => 'या आपकी अपनी फ़ोटो, आपकी प्रोफ़ाइल के ऊपर।';
+
+  @override
+  String get proPerkItems => '20 सिर्फ़-Pro आइटम';
+
+  @override
+  String get proPerkItemsBody => 'स्किन, कपड़े, गियर, और पलक झपकाने वाला लिफ्टर।';
+
+  @override
+  String get proGo => 'Pro लें';
+
+  @override
+  String proBuyYearly(String price) {
+    return 'Pro लें · ${price}/साल';
+  }
+
+  @override
+  String proBuyWeekly(String price) {
+    return 'Pro लें · ${price}/सप्ताह';
+  }
+
+  @override
+  String get proSettingsBody => 'कोई विज्ञापन नहीं, और Pro लुक।';
+
+  @override
+  String get proSettingsActive => 'आप Pro हैं। साथ देने के लिए धन्यवाद।';
+
+  @override
+  String get lifterMakerTitle => 'आपका लिफ्टर';
+
+  @override
+  String get lifterMakerFirst => 'अपना लिफ्टर बनाएँ';
+
+  @override
+  String get lifterMakerFirstBody => 'हर बोर्ड और हर मैच में यही आप हैं।';
+
+  @override
+  String get lifterTabSkin => 'स्किन';
+
+  @override
+  String get lifterTabHair => 'बाल';
+
+  @override
+  String get lifterTabFace => 'चेहरा';
+
+  @override
+  String get lifterTabBeard => 'दाढ़ी';
+
+  @override
+  String get lifterTabTop => 'कपड़े';
+
+  @override
+  String get lifterTabGear => 'गियर';
+
+  @override
+  String get lifterTabBackground => 'बैकग्राउंड';
+
+  @override
+  String get lifterEyes => 'आँखें';
+
+  @override
+  String get lifterBrows => 'भौंहें';
+
+  @override
+  String get lifterMouth => 'मुँह';
+
+  @override
+  String get lifterMarks => 'निशान';
+
+  @override
+  String get lifterRandom => 'रैंडम';
+
+  @override
+  String get lifterTryingPro => 'एक Pro लुक।';
+
+  @override
+  String get lifterUnlockPro => 'Pro से अनलॉक करें';
+
+  @override
+  String get editLifter => 'अपना लिफ्टर बदलें';
+
+  @override
+  String lifterNeedsWorld(String world) {
+    return '${world} पूरा करें';
+  }
+
+  @override
+  String lifterNeedsTier(String tier) {
+    return '${tier} तक पहुँचें';
+  }
+
+  @override
+  String lifterNeedsLevel(String level) {
+    return 'लेवल ${level} तक पहुँचें';
+  }
+
+  @override
+  String lifterNeedsWins(String count) {
+    return '${count} मैच जीतें';
+  }
+
+  @override
+  String lifterNeedsWinStreak(String count) {
+    return 'लगातार ${count} जीतें';
+  }
+
+  @override
+  String lifterNeedsDayStreak(String count) {
+    return 'लगातार ${count} दिन ट्रेन करें';
+  }
+
+  @override
+  String get lifterNeedsMonthTop10 => 'किसी महीने को टॉप 10 में खत्म करें';
+
+  @override
+  String get lifterNeedsMonthPodium => 'किसी महीने को टॉप 3 में खत्म करें';
+
+  @override
+  String get lifterNeedsMonthChampion => 'एक महीना जीतें';
+
+  @override
+  String lifterNeedsStars(String count) {
+    return '${count} एडवेंचर लेवल पर 3 स्टार';
+  }
+
+  @override
+  String get lifterNeedsAllStars => 'एडवेंचर का हर स्टार';
 
   @override
   String get couldNotShareCard => 'यह कार्ड शेयर नहीं हो सका';
@@ -1761,9 +1927,6 @@ class LHi extends L {
   }
 
   @override
-  String get paywallStart => 'विज्ञापन हटाएँ';
-
-  @override
   String get paywallRenewsPlay => 'रद्द करने तक अपने-आप रिन्यू होता है। Google Play में कभी भी रद्द करें।';
 
   @override
@@ -2700,22 +2863,7 @@ class LHi extends L {
   }
 
   @override
-  String get proTitleTop => 'कोई विज्ञापन नहीं।';
-
-  @override
-  String get proTitleBottom => 'बस पुश-अप्स।';
-
-  @override
-  String get proBody => 'हर मैच मुफ़्त रहता है। Pro सबमें से विज्ञापन हटा देता है।';
-
-  @override
   String get proThanks => 'विज्ञापन बंद। Pro लेने के लिए धन्यवाद।';
-
-  @override
-  String get removeAds => 'विज्ञापन हटाएँ';
-
-  @override
-  String get adNotice => 'बाहर जाने पर एक विज्ञापन चलेगा';
 
   @override
   String get adAskTitle => 'विज्ञापन outrepd को मुफ़्त रखते हैं';
@@ -2725,9 +2873,6 @@ class LHi extends L {
 
   @override
   String get adAskCamera => 'आपका कैमरा इसका हिस्सा कभी नहीं होता: आप जो भी चुनें, बॉडी ट्रैकिंग इसी फ़ोन पर रहती है।';
-
-  @override
-  String get adAskRemove => 'इसके बजाय विज्ञापन हटाएँ';
 
   @override
   String get monsterIronColossus => 'लौह महाकाय';

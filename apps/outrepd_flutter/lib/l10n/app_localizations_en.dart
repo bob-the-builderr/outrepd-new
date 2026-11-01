@@ -356,7 +356,8 @@ class LEn extends L {
   String get removePhotoTitle => 'Remove your photo?';
 
   @override
-  String get removePhotoBody => 'Your initial shows instead, everywhere. You can add a new photo any time.';
+  String get removePhotoBody =>
+      'Your lifter shows instead, everywhere. You can add a new photo any time.';
 
   @override
   String get removePhotoConfirm => 'Remove';
@@ -366,6 +367,171 @@ class LEn extends L {
 
   @override
   String get cropPhoto => 'Crop';
+
+  @override
+  String get proGoTitle => 'Go Pro.';
+
+  @override
+  String get proOnboardTitle => 'Your lifter, Pro.';
+
+  @override
+  String get proSubtitle => 'No ads, and a look the free app can\'t have.';
+
+  @override
+  String get proFree => 'FREE';
+
+  @override
+  String get proYoursNow => 'YOURS NOW';
+
+  @override
+  String get proPerkNoAds => 'No ads. Ever.';
+
+  @override
+  String get proPerkNoAdsBody => 'Every match, every level, straight through.';
+
+  @override
+  String get proPerkBoard => 'Shine on every board';
+
+  @override
+  String get proPerkBoardBody => 'A holo row, your lifter breaking out of it.';
+
+  @override
+  String get proPerkEntrance => 'A lightning entrance';
+
+  @override
+  String get proPerkEntranceBody => 'On the VS screen before every live match.';
+
+  @override
+  String get proPerkCovers => '9 moving covers';
+
+  @override
+  String get proPerkCoversBody => 'Or your own photo, on top of your profile.';
+
+  @override
+  String get proPerkItems => '20 Pro-only items';
+
+  @override
+  String get proPerkItemsBody => 'Skins, tops, gear, and a lifter that blinks.';
+
+  @override
+  String get proGo => 'Go Pro';
+
+  @override
+  String proBuyYearly(String price) {
+    return 'Go Pro · ${price}/year';
+  }
+
+  @override
+  String proBuyWeekly(String price) {
+    return 'Go Pro · ${price}/week';
+  }
+
+  @override
+  String get proSettingsBody => 'No ads, and the Pro look.';
+
+  @override
+  String get proSettingsActive => 'You\'re Pro. Thanks for the support.';
+
+  @override
+  String get lifterMakerTitle => 'Your lifter';
+
+  @override
+  String get lifterMakerFirst => 'Make your lifter';
+
+  @override
+  String get lifterMakerFirstBody => 'This is you on every board and in every match.';
+
+  @override
+  String get lifterTabSkin => 'Skin';
+
+  @override
+  String get lifterTabHair => 'Hair';
+
+  @override
+  String get lifterTabFace => 'Face';
+
+  @override
+  String get lifterTabBeard => 'Beard';
+
+  @override
+  String get lifterTabTop => 'Top';
+
+  @override
+  String get lifterTabGear => 'Gear';
+
+  @override
+  String get lifterTabBackground => 'Background';
+
+  @override
+  String get lifterEyes => 'Eyes';
+
+  @override
+  String get lifterBrows => 'Brows';
+
+  @override
+  String get lifterMouth => 'Mouth';
+
+  @override
+  String get lifterMarks => 'Marks';
+
+  @override
+  String get lifterRandom => 'Random';
+
+  @override
+  String get lifterTryingPro => 'A Pro look.';
+
+  @override
+  String get lifterUnlockPro => 'Unlock with Pro';
+
+  @override
+  String get editLifter => 'Edit your lifter';
+
+  @override
+  String lifterNeedsWorld(String world) {
+    return 'Clear ${world}';
+  }
+
+  @override
+  String lifterNeedsTier(String tier) {
+    return 'Reach ${tier}';
+  }
+
+  @override
+  String lifterNeedsLevel(String level) {
+    return 'Reach level ${level}';
+  }
+
+  @override
+  String lifterNeedsWins(String count) {
+    return 'Win ${count} matches';
+  }
+
+  @override
+  String lifterNeedsWinStreak(String count) {
+    return 'Win ${count} in a row';
+  }
+
+  @override
+  String lifterNeedsDayStreak(String count) {
+    return 'Train ${count} days in a row';
+  }
+
+  @override
+  String get lifterNeedsMonthTop10 => 'Finish a month in the top 10';
+
+  @override
+  String get lifterNeedsMonthPodium => 'Finish a month in the top 3';
+
+  @override
+  String get lifterNeedsMonthChampion => 'Win a month';
+
+  @override
+  String lifterNeedsStars(String count) {
+    return '3 stars on ${count} Adventure levels';
+  }
+
+  @override
+  String get lifterNeedsAllStars => 'Every star in the Adventure';
 
   @override
   String get couldNotShareCard => 'Could not share this card';
@@ -1759,9 +1925,6 @@ class LEn extends L {
   }
 
   @override
-  String get paywallStart => 'Remove ads';
-
-  @override
   String get paywallRenewsPlay => 'Renews automatically until you cancel. Cancel anytime in Google Play.';
 
   @override
@@ -2698,22 +2861,7 @@ class LEn extends L {
   }
 
   @override
-  String get proTitleTop => 'No ads.';
-
-  @override
-  String get proTitleBottom => 'Just push-ups.';
-
-  @override
-  String get proBody => 'Every match stays free. Pro takes the ads out of all of them.';
-
-  @override
   String get proThanks => 'Ads are off. Thanks for going Pro.';
-
-  @override
-  String get removeAds => 'Remove ads';
-
-  @override
-  String get adNotice => 'An ad plays when you leave';
 
   @override
   String get adAskTitle => 'Ads keep outrepd free';
@@ -2723,9 +2871,6 @@ class LEn extends L {
 
   @override
   String get adAskCamera => 'Your camera is never part of it: body tracking stays on this phone, whatever you choose.';
-
-  @override
-  String get adAskRemove => 'Remove ads instead';
 
   @override
   String get monsterIronColossus => 'Iron Colossus';

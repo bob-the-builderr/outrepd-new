@@ -17,6 +17,9 @@ import 'package:share_plus/share_plus.dart';
 
 import '../l10n/app_localizations.dart';
 import '../country_names.dart';
+import '../data.dart';
+import '../lifter/lifter_view.dart';
+import '../lifter/my_lifter.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
 import '../tier_frame.dart';
@@ -941,27 +944,16 @@ class _Initial extends StatelessWidget {
   final String? avatarUrl;
   final double size;
 
-  /// The initial's colour when there is no photo — a lifter's own colour on
-  /// the scoreboard card, where the two sides are told apart by it.
+  /// Kept for the callers that set it; the lifter drawn when there is no
+  /// photo has no letter to colour.
   final Color? textColour;
 
   @override
   Widget build(BuildContext context) {
-    final fallback = Container(
-      width: size,
-      height: size,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: context.colors.surfaceRaised,
-      ),
-      child: Text(
-        name.isEmpty ? '?' : name.characters.first.toUpperCase(),
-        style: _CardType.body.copyWith(
-          color: textColour ?? context.colors.text,
-          fontSize: size * 0.46,
-        ),
-      ),
+    final fallback = LifterCircle(
+      name: name,
+      size: size,
+      lifter: name == demoProfile.username ? MyLifter.instance.built : null,
     );
 
     if (avatarUrl == null) return fallback;
