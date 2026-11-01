@@ -40,19 +40,11 @@ class Plan {
     required this.priceString,
     required this.currencyCode,
     this.pricePerWeekString,
-    this.trialDays,
     this.handle,
   });
 
   final PlanPeriod period;
   final double price;
-
-  /// How long the free trial runs before the first charge, in days — or null
-  /// when this plan has none, or this account has already had one. The
-  /// store decides both: the trial is an introductory offer set up on the
-  /// product in App Store Connect and Play Console, and each store gives it
-  /// once per account.
-  final int? trialDays;
 
   /// Formatted by the store: "$39.99", "39,99 €", "EGP 1,999.99".
   final String priceString;
@@ -71,35 +63,6 @@ class Plan {
     if (given != null && given.isNotEmpty) return given;
     return NumberFormat.simpleCurrency(name: currencyCode).format(price / 52);
   }
-}
-
-/// The free trial on [product], in days, or null when it has none.
-///
-/// The App Store reports it as an introductory price of nothing; Google Play
-/// as a free phase on the product's default offer. Weeks and months are
-/// turned into days so the paywall can count to the first charge.
-int? freeTrialDays(StoreProduct product) {
-  int? days(PeriodUnit unit, int count) => switch (unit) {
-    PeriodUnit.day => count,
-    PeriodUnit.week => count * 7,
-    PeriodUnit.month => count * 30,
-    PeriodUnit.year => count * 365,
-    _ => null,
-  };
-
-  final intro = product.introductoryPrice;
-  if (intro != null && intro.price == 0) {
-    final length = days(intro.periodUnit, intro.periodNumberOfUnits);
-    if (length != null && length > 0) {
-      return length * (intro.cycles > 0 ? intro.cycles : 1);
-    }
-  }
-  final period = product.defaultOption?.freePhase?.billingPeriod;
-  if (period != null) {
-    final length = days(period.unit, period.value);
-    if (length != null && length > 0) return length;
-  }
-  return null;
 }
 
 /// How much the yearly plan saves against paying weekly for a year, as a
@@ -352,43 +315,13 @@ class RevenueCatStorefront implements Storefront {
 
     final weekly = offering.weekly ?? find(PackageType.weekly);
     final yearly = offering.annual ?? find(PackageType.annual);
-    final eligible = await _trialEligibility([
-      for (final package in [weekly, yearly])
-        if (package != null) package.storeProduct.identifier,
-    ]);
     return [
-      if (weekly != null) _plan(PlanPeriod.weekly, weekly, eligible),
-      if (yearly != null) _plan(PlanPeriod.yearly, yearly, eligible),
+      if (weekly != null) _plan(PlanPeriod.weekly, weekly),
+      if (yearly != null) _plan(PlanPeriod.yearly, yearly),
     ];
   }
 
-  /// Which products this account may still have a free trial on.
-  ///
-  /// Asked of the App Store, which offers a trial once per subscription
-  /// group however many times the paywall shows it. Google Play leaves an
-  /// ineligible offer out of the product altogether and answers "unknown"
-  /// here, so unknown counts as eligible — as does a check that fails, since
-  /// the store's own purchase sheet states the real terms either way.
-  static Future<Set<String>> _trialEligibility(List<String> ids) async {
-    try {
-      final answers =
-          await Purchases.checkTrialOrIntroductoryPriceEligibility(ids);
-      return {
-        for (final id in ids)
-          if (answers[id]?.status !=
-                  IntroEligibilityStatus.introEligibilityStatusIneligible &&
-              answers[id]?.status !=
-                  IntroEligibilityStatus
-                      .introEligibilityStatusNoIntroOfferExists)
-            id,
-      };
-    } on Object catch (error) {
-      debugPrint('Could not check trial eligibility: $error');
-      return ids.toSet();
-    }
-  }
-
-  static Plan _plan(PlanPeriod period, Package package, Set<String> eligible) {
+  static Plan _plan(PlanPeriod period, Package package) {
     final product = package.storeProduct;
     return Plan(
       period: period,
@@ -396,9 +329,6 @@ class RevenueCatStorefront implements Storefront {
       priceString: product.priceString,
       currencyCode: product.currencyCode,
       pricePerWeekString: product.pricePerWeekString,
-      trialDays: eligible.contains(product.identifier)
-          ? freeTrialDays(product)
-          : null,
       handle: package,
     );
   }

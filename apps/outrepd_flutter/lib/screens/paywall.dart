@@ -11,7 +11,6 @@
 /// the price and how it renews.
 library;
 
-import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
@@ -20,7 +19,6 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n/app_localizations.dart';
-import '../reminders.dart';
 import '../subscription.dart';
 import '../theme.dart';
 import '../type_scale.dart';
@@ -56,7 +54,6 @@ class _Sizes {
   double get planBadge => _lerp(11, 13);
   double get planDetail => _lerp(12, 14);
   double get planPrice => _lerp(20, 22);
-  double get planFree => _lerp(12, 14);
   double get planPadding => _lerp(12, 15);
   double get planGap => _lerp(8, 10);
 
@@ -198,12 +195,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
       debugPrint('Purchase failed: $error');
       result = (outcome: BuyOutcome.failed, active: false);
     }
-    // A trial just began: the reminder the timeline promised, the day
-    // before the first charge.
-    final trialDays = plan.trialDays;
-    if (result.active && trialDays != null) {
-      unawaited(Reminders.instance.trialStarted(Duration(days: trialDays)));
-    }
     if (!mounted) return;
     setState(() {
       _busy = false;
@@ -315,8 +306,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 
   /// What Pro is, said once: an ad struck through, and the two lines under
-  /// it. The same whatever the plans turn out to hold — the free days are on
-  /// the plans and the button.
+  /// it. Pro is paid from the first day: there is no free trial (2026-10-28,
+  /// the user's call), so nothing here or on the plans promises free days.
   Widget _pitch(BuildContext context, L l) {
     final sizes = _Sizes.of(context);
     final colors = context.colors;
@@ -359,12 +350,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
         weekly != null && yearly != null ? yearlySaving(weekly, yearly) : null;
     final ready = _plans != null && !_loadFailed;
     final apple = defaultTargetPlatform == TargetPlatform.iOS;
-    final chosen = _plan(_chosen);
-    final trial = chosen?.trialDays;
-    String? tag(Plan? plan) => switch (plan?.trialDays) {
-      final days? => l.trialTag(localNumber(context, days)),
-      null => null,
-    };
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -424,7 +409,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   badge: saving == null
                       ? null
                       : l.paywallSave(localNumber(context, saving)),
-                  trial: tag(yearly),
                   selected: _chosen == PlanPeriod.yearly,
                   onTap: () => setState(() => _chosen = PlanPeriod.yearly),
                 ),
@@ -436,7 +420,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   label: l.paywallWeekly,
                   price: weekly.priceString,
                   detail: l.paywallEveryWeek,
-                  trial: tag(weekly),
                   selected: _chosen == PlanPeriod.weekly,
                   onTap: () => setState(() => _chosen = PlanPeriod.weekly),
                 ),
@@ -468,9 +451,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 : FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      trial == null
-                          ? l.paywallStart
-                          : l.trialCta(localNumber(context, trial)),
+                      l.paywallStart,
                       maxLines: 1,
                       style: TextStyle(
                         fontSize: sizes.buttonText,
@@ -489,23 +470,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
             style: kType.label.copyWith(
               fontSize: sizes.note,
               color: AppColors.loss,
-            ),
-          ),
-        ],
-        // What a trial costs, said plainly where the button is: nothing now,
-        // and exactly what after. The stores ask for the price after a free
-        // trial to be as clear as the trial itself.
-        if (trial != null && chosen != null) ...[
-          const SizedBox(height: 10),
-          Text(
-            chosen.period == PlanPeriod.yearly
-                ? l.trialThenYearly(chosen.priceString)
-                : l.trialThenWeekly(chosen.priceString),
-            key: const Key('trialThen'),
-            textAlign: TextAlign.center,
-            style: kType.label.copyWith(
-              fontSize: sizes.note,
-              color: colors.text,
             ),
           ),
         ],
@@ -610,8 +574,8 @@ class _NoAdMark extends StatelessWidget {
   }
 }
 
-/// A plan as one row: the name and what it saves on the left, the price and
-/// any free days on the right.
+/// A plan as one row: the name and what it saves on the left, the price on
+/// the right.
 class _PlanRow extends StatelessWidget {
   const _PlanRow({
     super.key,
@@ -621,7 +585,6 @@ class _PlanRow extends StatelessWidget {
     required this.selected,
     required this.onTap,
     this.badge,
-    this.trial,
   });
 
   final String label;
@@ -632,9 +595,6 @@ class _PlanRow extends StatelessWidget {
 
   /// "Save 85%", on the plan that saves.
   final String? badge;
-
-  /// "3 days free", on a plan with a trial this account can still have.
-  final String? trial;
 
   @override
   Widget build(BuildContext context) {
@@ -664,8 +624,8 @@ class _PlanRow extends StatelessWidget {
             ),
             // Three parts to the left side and two to the right, each shrunk
             // rather than cut when a language or a large text size runs long:
-            // the name and its saving, and the price and its free days, are
-            // each read as one, so neither half loses its end.
+            // the name and its saving are read as one, so it never loses its
+            // end.
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -732,28 +692,12 @@ class _PlanRow extends StatelessWidget {
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     alignment: AlignmentDirectional.centerEnd,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          price,
-                          style: context.type.statValue.copyWith(
-                            fontSize: sizes.planPrice,
-                            color: colors.text,
-                          ),
-                        ),
-                        if (trial case final free?) ...[
-                          const SizedBox(height: 2),
-                          Text(
-                            free,
-                            style: TextStyle(
-                              color: colors.rival,
-                              fontSize: sizes.planFree,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ],
+                    child: Text(
+                      price,
+                      style: context.type.statValue.copyWith(
+                        fontSize: sizes.planPrice,
+                        color: colors.text,
+                      ),
                     ),
                   ),
                 ),

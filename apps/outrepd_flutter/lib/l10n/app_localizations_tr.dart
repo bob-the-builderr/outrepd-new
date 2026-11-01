@@ -2019,49 +2019,6 @@ class LTr extends L {
   String get noticeLiveInvite => 'Bir arkadaşım beni canlı maça davet etti';
 
   @override
-  String get trialToday => 'Bugün';
-
-  @override
-  String get trialTodayBody => 'Tüm düellolar, canlı ve dereceli, açık.';
-
-  @override
-  String trialDay(String day) {
-    return '${day}. gün';
-  }
-
-  @override
-  String get trialReminderBody => 'Denemen bitmeden bir gün önce hatırlatırız.';
-
-  @override
-  String get trialEndBody => 'Planın başlar. Önceden iptal edersen hiçbir şey ödemezsin.';
-
-  @override
-  String trialTag(String days) {
-    return '${days} gün ücretsiz';
-  }
-
-  @override
-  String trialCta(String days) {
-    return '${days} günlük ücretsiz denememi başlat';
-  }
-
-  @override
-  String trialThenYearly(String price) {
-    return 'Şimdi ödeme yok · sonra ${price}/yıl';
-  }
-
-  @override
-  String trialThenWeekly(String price) {
-    return 'Şimdi ödeme yok · sonra ${price}/hafta';
-  }
-
-  @override
-  String get trialEndsTitle => 'Ücretsiz denemen yarın bitiyor';
-
-  @override
-  String get trialEndsBody => 'Tırmanmaya devam et ya da daha önce abonelik ayarlarından iptal et.';
-
-  @override
   String get obIdeaTitle => '60 saniye. Tek rakip.';
 
   @override

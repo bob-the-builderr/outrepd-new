@@ -1979,49 +1979,6 @@ class LZh extends L {
   String get noticeLiveInvite => '好友邀请我进行实时对战';
 
   @override
-  String get trialToday => '今天';
-
-  @override
-  String get trialTodayBody => '所有对决，实时与排位，全部解锁。';
-
-  @override
-  String trialDay(String day) {
-    return '第 ${day} 天';
-  }
-
-  @override
-  String get trialReminderBody => '试用结束前一天我们会提醒你。';
-
-  @override
-  String get trialEndBody => '你的方案开始。在此之前取消则无需付费。';
-
-  @override
-  String trialTag(String days) {
-    return '${days} 天免费';
-  }
-
-  @override
-  String trialCta(String days) {
-    return '开始我的 ${days} 天免费试用';
-  }
-
-  @override
-  String trialThenYearly(String price) {
-    return '现在无需付款 · 之后 ${price}/年';
-  }
-
-  @override
-  String trialThenWeekly(String price) {
-    return '现在无需付款 · 之后 ${price}/周';
-  }
-
-  @override
-  String get trialEndsTitle => '你的免费试用明天结束';
-
-  @override
-  String get trialEndsBody => '继续攀登，或在此之前于订阅设置中取消。';
-
-  @override
   String get obIdeaTitle => '60 秒，一个对手。';
 
   @override

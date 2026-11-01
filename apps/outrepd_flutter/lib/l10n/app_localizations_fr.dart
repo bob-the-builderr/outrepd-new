@@ -2030,49 +2030,6 @@ class LFr extends L {
   String get noticeLiveInvite => 'Un ami m\'a invité à un duel en direct';
 
   @override
-  String get trialToday => 'Aujourd\'hui';
-
-  @override
-  String get trialTodayBody => 'Tous les duels, en direct et classés, débloqués.';
-
-  @override
-  String trialDay(String day) {
-    return 'Jour ${day}';
-  }
-
-  @override
-  String get trialReminderBody => 'On te prévient la veille de la fin de ton essai.';
-
-  @override
-  String get trialEndBody => 'Ton abonnement démarre. Annule avant et tu ne paies rien.';
-
-  @override
-  String trialTag(String days) {
-    return '${days} jours gratuits';
-  }
-
-  @override
-  String trialCta(String days) {
-    return 'Commencer mon essai gratuit de ${days} jours';
-  }
-
-  @override
-  String trialThenYearly(String price) {
-    return 'Rien à payer maintenant · puis ${price}/an';
-  }
-
-  @override
-  String trialThenWeekly(String price) {
-    return 'Rien à payer maintenant · puis ${price}/semaine';
-  }
-
-  @override
-  String get trialEndsTitle => 'Ton essai gratuit se termine demain';
-
-  @override
-  String get trialEndsBody => 'Continue de grimper, ou annule avant dans les réglages de ton abonnement.';
-
-  @override
   String get obIdeaTitle => '60 secondes. Un adversaire.';
 
   @override

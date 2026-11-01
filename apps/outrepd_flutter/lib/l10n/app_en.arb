@@ -1176,52 +1176,6 @@
   },
   "noticeChallenged": "Someone challenged me to a rematch",
   "noticeLiveInvite": "A friend asked me to go live",
-  "trialToday": "Today",
-  "trialTodayBody": "Every duel, live and ranked, unlocked.",
-  "trialDay": "Day {day}",
-  "@trialDay": {
-    "placeholders": {
-      "day": {
-        "type": "String"
-      }
-    }
-  },
-  "trialReminderBody": "We'll remind you the day before your trial ends.",
-  "trialEndBody": "Your plan starts. Cancel any time before and you pay nothing.",
-  "trialTag": "{days} days free",
-  "@trialTag": {
-    "placeholders": {
-      "days": {
-        "type": "String"
-      }
-    }
-  },
-  "trialCta": "Start my {days}-day free trial",
-  "@trialCta": {
-    "placeholders": {
-      "days": {
-        "type": "String"
-      }
-    }
-  },
-  "trialThenYearly": "No payment now · then {price}/year",
-  "@trialThenYearly": {
-    "placeholders": {
-      "price": {
-        "type": "String"
-      }
-    }
-  },
-  "trialThenWeekly": "No payment now · then {price}/week",
-  "@trialThenWeekly": {
-    "placeholders": {
-      "price": {
-        "type": "String"
-      }
-    }
-  },
-  "trialEndsTitle": "Your free trial ends tomorrow",
-  "trialEndsBody": "Keep climbing, or cancel before then in your subscription settings.",
   "obIdeaTitle": "60 seconds. One opponent.",
   "obIdeaRival": "A real person, live or their recorded set",
   "obIdeaCamera": "Your camera counts every rep, on your phone",

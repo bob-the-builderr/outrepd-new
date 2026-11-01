@@ -2024,49 +2024,6 @@ class LHi extends L {
   String get noticeLiveInvite => 'किसी दोस्त ने मुझे लाइव मैच में बुलाया';
 
   @override
-  String get trialToday => 'आज';
-
-  @override
-  String get trialTodayBody => 'हर मुकाबला, लाइव और रैंक्ड, अनलॉक।';
-
-  @override
-  String trialDay(String day) {
-    return 'दिन ${day}';
-  }
-
-  @override
-  String get trialReminderBody => 'ट्रायल खत्म होने से एक दिन पहले हम याद दिलाएँगे।';
-
-  @override
-  String get trialEndBody => 'आपका प्लान शुरू होता है। पहले रद्द करें और कुछ नहीं देना।';
-
-  @override
-  String trialTag(String days) {
-    return '${days} दिन मुफ़्त';
-  }
-
-  @override
-  String trialCta(String days) {
-    return 'मेरा ${days} दिन का फ़्री ट्रायल शुरू करें';
-  }
-
-  @override
-  String trialThenYearly(String price) {
-    return 'अभी कोई भुगतान नहीं · फिर ${price}/साल';
-  }
-
-  @override
-  String trialThenWeekly(String price) {
-    return 'अभी कोई भुगतान नहीं · फिर ${price}/हफ़्ता';
-  }
-
-  @override
-  String get trialEndsTitle => 'आपका फ़्री ट्रायल कल खत्म हो रहा है';
-
-  @override
-  String get trialEndsBody => 'चढ़ते रहें, या उससे पहले सब्सक्रिप्शन सेटिंग्स में रद्द करें।';
-
-  @override
   String get obIdeaTitle => '60 सेकंड। एक प्रतिद्वंद्वी।';
 
   @override

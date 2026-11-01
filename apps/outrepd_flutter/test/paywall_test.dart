@@ -30,23 +30,6 @@ const _yearly = Plan(
   pricePerWeekString: r'$0.77',
 );
 
-// The same two plans with the 3-day free trial set up on them in the stores.
-const _weeklyTrial = Plan(
-  period: PlanPeriod.weekly,
-  price: 4.99,
-  priceString: r'$4.99',
-  currencyCode: 'USD',
-  trialDays: 3,
-);
-const _yearlyTrial = Plan(
-  period: PlanPeriod.yearly,
-  price: 39.99,
-  priceString: r'$39.99',
-  currencyCode: 'USD',
-  pricePerWeekString: r'$0.77',
-  trialDays: 3,
-);
-
 class _FakeStore implements Storefront {
   _FakeStore({this.active = false});
 
@@ -244,58 +227,32 @@ void main() {
     });
   });
 
-  group('the free trial', () {
-    testWidgets('says the first days are free and what comes after',
+  group('no free trial', () {
+    // Pro is paid from the first day (2026-10-28): nothing promises free
+    // days, whatever the store hands back.
+    testWidgets('the button removes the ads, and no plan says free days',
         (tester) async {
-      Subscription.instance.use(
-        _FakeStore()..plansGiven = const [_weeklyTrial, _yearlyTrial],
-      );
-      _phone(tester);
-      await _openPro(tester);
-
-      expect(find.text('3 days free'), findsNWidgets(2));
-      expect(find.text('Start my 3-day free trial'), findsOneWidget);
-      expect(
-        find.text(r'No payment now · then $39.99/year'),
-        findsOneWidget,
-      );
-
-      await tester.tap(find.byKey(const Key('planWeekly')));
-      await tester.pump();
-      expect(find.text(r'No payment now · then $4.99/week'), findsOneWidget);
-    });
-
-    testWidgets('a plan this account has no trial on promises no free days',
-        (tester) async {
-      // The yearly plan, chosen first, without a trial; the weekly with one.
-      Subscription.instance.use(
-        _FakeStore()..plansGiven = const [_weeklyTrial, _yearly],
-      );
+      Subscription.instance.use(_FakeStore());
       _phone(tester);
       await _openPro(tester);
 
       expect(find.text('Remove ads'), findsOneWidget);
-      expect(find.byKey(const Key('trialThen')), findsNothing);
-      expect(find.text('3 days free'), findsOneWidget);
-
-      await tester.tap(find.byKey(const Key('planWeekly')));
-      await tester.pump();
-      expect(find.text('Start my 3-day free trial'), findsOneWidget);
+      expect(find.textContaining('days free'), findsNothing);
+      expect(find.textContaining('free trial'), findsNothing);
+      expect(find.textContaining('No payment now'), findsNothing);
     });
 
-    testWidgets('no free days are claimed before the store has said',
+    testWidgets('the plans arrive late and still promise nothing free',
         (tester) async {
       final plans = Completer<List<Plan>>();
       Subscription.instance.use(_FakeStore()..plansPending = plans);
       _phone(tester);
       await _openPro(tester);
 
-      expect(find.text('3 days free'), findsNothing);
-      expect(find.text('Start my 3-day free trial'), findsNothing);
-
-      plans.complete(const [_weeklyTrial, _yearlyTrial]);
+      plans.complete(const [_weekly, _yearly]);
       await _settle(tester);
-      expect(find.text('Start my 3-day free trial'), findsOneWidget);
+      expect(find.text('Remove ads'), findsOneWidget);
+      expect(find.textContaining('free trial'), findsNothing);
     });
   });
 
@@ -471,24 +428,17 @@ void main() {
       'en', 'es', 'fr', 'de', 'pt', 'it', //
       'ru', 'tr', 'id', 'hi', 'ja', 'ko', 'zh',
     ]) {
-      for (final trial in [false, true]) {
-        testWidgets('fits a small phone in $code at 1.3x text'
-            '${trial ? ', with the trial' : ''}', (tester) async {
-          Subscription.instance.use(
-            _FakeStore()
-              ..plansGiven = trial
-                  ? const [_weeklyTrial, _yearlyTrial]
-                  : const [_weekly, _yearly],
-          );
-          _phone(tester);
-          await _openPro(tester, locale: Locale(code), scale: 1.3);
-          expect(tester.takeException(), isNull);
+      testWidgets('fits a small phone in $code at 1.3x text',
+          (tester) async {
+        Subscription.instance.use(_FakeStore());
+        _phone(tester);
+        await _openPro(tester, locale: Locale(code), scale: 1.3);
+        expect(tester.takeException(), isNull);
 
-          // The button is on screen without scrolling.
-          final buy = tester.getRect(find.byKey(const Key('paywallBuy')));
-          expect(buy.bottom, lessThanOrEqualTo(720));
-        });
-      }
+        // The button is on screen without scrolling.
+        final buy = tester.getRect(find.byKey(const Key('paywallBuy')));
+        expect(buy.bottom, lessThanOrEqualTo(720));
+      });
     }
   });
 

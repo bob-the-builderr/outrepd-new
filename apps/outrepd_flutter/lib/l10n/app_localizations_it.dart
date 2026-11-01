@@ -2029,49 +2029,6 @@ class LIt extends L {
   String get noticeLiveInvite => 'Un amico mi ha invitato a un duello dal vivo';
 
   @override
-  String get trialToday => 'Oggi';
-
-  @override
-  String get trialTodayBody => 'Tutti i duelli, dal vivo e classificati, sbloccati.';
-
-  @override
-  String trialDay(String day) {
-    return 'Giorno ${day}';
-  }
-
-  @override
-  String get trialReminderBody => 'Ti avvisiamo il giorno prima della fine della prova.';
-
-  @override
-  String get trialEndBody => 'Il tuo piano inizia. Annulla prima e non paghi nulla.';
-
-  @override
-  String trialTag(String days) {
-    return '${days} giorni gratis';
-  }
-
-  @override
-  String trialCta(String days) {
-    return 'Inizia la mia prova gratuita di ${days} giorni';
-  }
-
-  @override
-  String trialThenYearly(String price) {
-    return 'Nessun pagamento ora · poi ${price}/anno';
-  }
-
-  @override
-  String trialThenWeekly(String price) {
-    return 'Nessun pagamento ora · poi ${price}/settimana';
-  }
-
-  @override
-  String get trialEndsTitle => 'La tua prova gratuita finisce domani';
-
-  @override
-  String get trialEndsBody => 'Continua a salire, o annulla prima nelle impostazioni dell\'abbonamento.';
-
-  @override
   String get obIdeaTitle => '60 secondi. Un avversario.';
 
   @override

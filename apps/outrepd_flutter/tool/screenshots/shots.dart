@@ -46,7 +46,6 @@ class _Store implements Storefront {
           priceString: r'$29.99',
           currencyCode: 'USD',
           pricePerWeekString: r'$0.58',
-          trialDays: 3,
         ),
       ];
   @override
