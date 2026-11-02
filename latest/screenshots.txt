@@ -62,34 +62,34 @@ Could not read the titles from the account: Bad state: no server configured
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 06-road 1080x1920
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 07-won 1080x1920
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 08-awards 1080x1920
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 01-home 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: match
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 01-home 1320x2868
 ::endgroup::
 ::group::✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 02-ranks 1320x2868
 Could not read the titles from the account: Bad state: no server configured
 ::endgroup::
 ::group::✅ Passing tests
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 03-friends 1320x2868
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 04-otherprofile 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: match with the bar
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 03-friends 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: friends
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 05-profile 1320x2868
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 04-otherprofile 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: ranks this month
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 06-road 1320x2868
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 05-profile 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: ranks top players
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 07-won 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: profile
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 08-awards 1320x2868
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 06-road 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: profile recent
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 07-won 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: settings
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 08-awards 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/placement_test.dart: onboarding placement dark
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/placement_test.dart: onboarding placement light
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/onboarding_idea_test.dart: onboarding idea
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/match_card_test.dart: match card won story
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/match_card_test.dart: match card won post
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/match_card_test.dart: match card lost story
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/match_card_test.dart: match card lost post
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/history_test.dart: match history
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/match_card_test.dart: match card lost post
 ::endgroup::
 
 🎉 68 tests passed.
