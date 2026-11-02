@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Promo Adventure Mockup</title>
+<style>
+:root{--bg:#121110;--surface:#1C1A18;--raised:#262320;--border:#2C2926;--muted:#8F8880;--faint:#5A544E;--text:#F5EFE4;--brand:#E8DCC8;--rival:#E8846B;--gold:#D9A94A;--page:#0b0a09}
+*{box-sizing:border-box;margin:0}
+body{background:var(--page);color:var(--text);font-family:-apple-system,"SF Pro Text",Inter,system-ui,sans-serif;padding:24px 16px}
+h1.note{font-size:18px;font-weight:700;text-align:center;margin-bottom:6px}
+p.note{color:var(--muted);text-align:center;font-size:14px;margin-bottom:22px;direction:rtl}
+.row{display:flex;gap:28px;justify-content:center;flex-wrap:wrap}
+.col{display:flex;flex-direction:column;align-items:center;gap:10px;width:390px;max-width:100%}
+.cap{text-align:center}
+.cap{color:var(--muted);font-size:13px;direction:rtl}
+.phone{width:100%;height:844px;background:var(--bg);border-radius:44px;border:10px solid #000;overflow:hidden;position:relative;box-shadow:0 20px 60px #0008}
+.scroll{height:100%;overflow-y:auto;padding:56px 16px 120px}
+.title{font-size:30px;font-weight:800}
+.sub{color:var(--muted);font-size:16px;margin-top:4px}
+.seg{display:flex;background:var(--surface);border:1px solid var(--raised);border-radius:16px;padding:4px;margin:18px 0}
+.seg div{flex:1;text-align:center;padding:14px 0;border-radius:12px;font-weight:700;font-size:17px;color:var(--muted)}
+.seg .on{background:var(--brand);color:var(--bg)}
+.box{background:var(--surface);border:1px solid var(--raised);border-radius:20px;padding:18px;margin-bottom:14px}
+.box h3{font-size:19px;font-weight:700;margin-bottom:14px}
+.hint{color:var(--muted);font-size:14px;line-height:1.45;margin-top:10px}
+.worlds{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.w{background:var(--raised);border-radius:12px;padding:10px 4px;text-align:center;font-size:12.5px;font-weight:700;color:var(--muted);border:2px solid transparent}
+.w i{display:block;width:16px;height:16px;border-radius:50%;margin:0 auto 6px}
+.w.on{border-color:var(--gold);color:var(--text)}
+.lvl{display:flex;align-items:center;justify-content:space-between;margin-top:16px}
+.btn-r{width:56px;height:56px;border-radius:16px;background:var(--raised);display:grid;place-items:center;font-size:28px;font-weight:600;color:var(--text)}
+.big{text-align:center}
+.big b{font-size:52px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1}
+.big span{display:block;color:var(--muted);font-size:13px;letter-spacing:1.4px;font-weight:700;margin-top:2px}
+.slider{height:6px;background:var(--raised);border-radius:3px;margin:18px 4px 6px;position:relative}
+.slider:before{content:"";position:absolute;left:0;top:0;bottom:0;width:21%;background:var(--gold);border-radius:3px}
+.slider:after{content:"";position:absolute;left:calc(21% - 12px);top:-9px;width:24px;height:24px;border-radius:50%;background:var(--brand)}
+.ticks{display:flex;justify-content:space-between;color:var(--faint);font-size:12px;padding:0 2px}
+.facts{display:flex;gap:8px;margin-top:16px}
+.fact{flex:1;background:var(--raised);border-radius:14px;padding:12px 6px;text-align:center}
+.fact b{display:block;font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+.fact span{color:var(--muted);font-size:12.5px}
+.tag{display:inline-block;padding:4px 10px;border-radius:99px;font-size:12px;font-weight:800;letter-spacing:1.2px;color:var(--rival);border:1px solid #E8846B80;background:#E8846B2E;margin-inline-start:6px;vertical-align:middle}
+.weapons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.wp{background:var(--raised);border-radius:16px;padding:12px;display:flex;align-items:center;gap:10px;border:2px solid transparent;min-height:72px}
+.wp.on{border-color:var(--gold);background:#2d2618}
+.wp.off{opacity:.38}
+.wp svg{flex:none}
+.wp b{display:block;font-size:15px}
+.wp span{color:var(--muted);font-size:12.5px}
+.stars{display:flex;gap:8px}
+.stars div{flex:1;background:var(--raised);border-radius:14px;padding:14px 0;text-align:center;color:var(--faint);font-size:20px;letter-spacing:2px;border:2px solid transparent}
+.stars .on{border-color:var(--gold);color:var(--gold)}
+.foot{position:absolute;left:0;right:0;bottom:0;padding:14px 16px 30px;background:linear-gradient(transparent,var(--bg) 26%)}
+.cta{height:60px;border-radius:18px;background:var(--brand);color:var(--bg);display:grid;place-items:center;font-size:19px;font-weight:800}
+.ghost{height:52px;border-radius:16px;border:1.5px solid var(--border);display:grid;place-items:center;font-size:17px;font-weight:700;margin-top:10px}
+.mini .scroll{padding-top:56px}
+.dim{opacity:.35}
+.new{outline:2px dashed var(--gold);outline-offset:6px;border-radius:16px}
+</style>
+</head>
+<body>
+<h1 class="note">OUTREPD Promo: Adventure</h1>
+<p class="note">موك أب للموافقة قبل التنفيذ. الإطار المتقطع الدهبي = الحاجة الجديدة.</p>
+
+<div class="row">
+
+<!-- Screen 1: setup with the switch -->
+<div class="col">
+<div class="phone mini"><div class="scroll">
+  <div class="title">OUTREPD Promo</div>
+  <div class="sub">Set the take up, then film it. Nothing here reaches the real app.</div>
+  <div class="seg new"><div class="on">Match</div><div>Adventure</div></div>
+  <div class="box dim"><h3>You</h3><div style="height:120px"></div></div>
+  <div class="box dim"><h3>Opponent</h3><div style="height:90px"></div></div>
+  <div class="box dim"><h3>The opponent's count</h3><div style="height:60px"></div></div>
+  <div class="box dim"><h3>Before the round</h3><div style="height:60px"></div></div>
+</div>
+<div class="foot"><div class="cta">Start the match</div></div>
+</div>
+<div class="cap">١. شاشة الإعداد: سويتش فوق بين Match و Adventure. الباقي زي ما هو.</div>
+</div>
+
+<!-- Screen 2: Adventure customize -->
+<div class="col">
+<div class="phone"><div class="scroll">
+  <div class="title">OUTREPD Promo</div>
+  <div class="sub">Pick the fight to film. Your stars and weapon here are staged, not earned.</div>
+  <div class="seg"><div>Match</div><div class="on">Adventure</div></div>
+
+  <div class="box new">
+    <h3>Level</h3>
+    <div class="worlds">
+      <div class="w"><i style="background:#A7ADB6"></i>Iron</div>
+      <div class="w on"><i style="background:#E0A27A"></i>Bronze</div>
+      <div class="w"><i style="background:#EEF2F7"></i>Silver</div>
+      <div class="w"><i style="background:#F4D27A"></i>Gold</div>
+      <div class="w"><i style="background:#E4ECF3"></i>Platinum</div>
+      <div class="w"><i style="background:#8FF0E4"></i>Diamond</div>
+      <div class="w"><i style="background:#FFF6E6"></i>Master</div>
+    </div>
+    <div class="lvl">
+      <div class="btn-r">−</div>
+      <div class="big"><b>25</b><span>BRONZE DUNES · 5 / 20 <em class="tag">ELITE</em></span></div>
+      <div class="btn-r">+</div>
+    </div>
+    <div class="slider"></div>
+    <div class="ticks"><span>1</span><span>5</span><span>10</span><span>15</span><span>20</span></div>
+    <div class="facts">
+      <div class="fact"><b>280</b><span>HP</span></div>
+      <div class="fact"><b>1:05</b><span>on the clock</span></div>
+      <div class="fact"><b>24</b><span>push-ups to win</span></div>
+    </div>
+  </div>
+
+  <div class="box new">
+    <h3>Weapon in hand</h3>
+    <div class="weapons">
+      <div class="wp off"><svg width="40" height="40"><rect x="8" y="10" width="24" height="22" rx="6" fill="#A7ADB6"/></svg><div><b>Iron Gauntlets</b><span>Can't hurt Bronze</span></div></div>
+      <div class="wp on"><svg width="40" height="40"><circle cx="20" cy="20" r="12" fill="#E0A27A"/></svg><div><b>Bronze Knuckles</b><span>12 a push-up</span></div></div>
+      <div class="wp"><svg width="40" height="40"><path d="M20 4 L28 34 L12 34Z" fill="#EEF2F7"/></svg><div><b>Silver Fang</b><span>15 a push-up</span></div></div>
+      <div class="wp"><svg width="40" height="40"><rect x="17" y="14" width="6" height="22" fill="#7A5A18"/><rect x="8" y="6" width="24" height="12" rx="3" fill="#F4D27A"/></svg><div><b>Gold Hammer</b><span>18 a push-up</span></div></div>
+      <div class="wp"><svg width="40" height="40"><rect x="18" y="8" width="4" height="28" fill="#5F6E7C"/><path d="M22 8 Q36 14 22 24Z" fill="#E4ECF3"/></svg><div><b>Platinum Axe</b><span>22 a push-up</span></div></div>
+      <div class="wp"><svg width="40" height="40"><rect x="19" y="10" width="2.5" height="28" fill="#1F6E68"/><path d="M20 2 L25 12 L15 12Z" fill="#8FF0E4"/></svg><div><b>Diamond Spear</b><span>27 a push-up</span></div></div>
+      <div class="wp"><svg width="40" height="40"><rect x="18" y="4" width="4" height="24" fill="#FFF6E6"/><rect x="12" y="26" width="16" height="3" fill="#9C8E78"/></svg><div><b>Master Sword</b><span>33 a push-up</span></div></div>
+      <div class="wp"><svg width="40" height="40"><path d="M8 30 L20 6 L32 30Z" fill="#D9A94A"/></svg><div><b>Crownbreaker</b><span>40 a push-up</span></div></div>
+    </div>
+    <div class="hint">Greyed: this world's monsters don't feel it, as in the app.</div>
+  </div>
+
+  <div class="box new">
+    <h3>Levels before it</h3>
+    <div class="stars"><div>★</div><div>★★</div><div class="on">★★★</div></div>
+    <div class="hint">Every level up to 24 shown won with this many stars, so the map looks played.</div>
+  </div>
+
+  <div class="box dim"><h3>Before the round</h3><div class="hint">The same switches as the match: 9:16, 4K, filming into Photos, skeleton, sounds.</div></div>
+</div>
+<div class="foot new" style="outline-offset:-4px">
+  <div class="cta">Fight level 25</div>
+  <div class="ghost">Open the map</div>
+</div>
+</div>
+<div class="cap">٢. Adventure: العالم والليفل، السلاح، النجوم اللي قبله، وزرارين تحت.</div>
+</div>
+
+</div>
+</body>
+</html>

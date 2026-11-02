@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<title>UI Directions</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800;900&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #070605; color: #F5EFE4; font-family: 'Noto Sans', sans-serif; }
+  .wrap { padding: 22px 24px 30px; width: 1400px; }
+  .cap { direction: rtl; font-family: 'Noto Sans Arabic', 'Noto Sans', sans-serif; margin-bottom: 12px; }
+  .cap b { display: block; font-size: 22px; margin-bottom: 6px; }
+  .cap p { margin: 0; color: #8F8880; font-size: 15px; line-height: 1.7; }
+  .row { display: flex; gap: 40px; justify-content: center; }
+  .lab { direction: rtl; font-family: 'Noto Sans Arabic', sans-serif; text-align: center; font-size: 18px; margin-bottom: 8px; color: #8F8880; }
+  .lab.a { color: #E2B654; font-weight: 700; } .lab.b { color: #E8DCC8; font-weight: 700; }
+  .phone { position: relative; width: 412px; height: 915px; border-radius: 30px; overflow: hidden; outline: 1px solid #2a2724; flex: none; }
+  .phone img.shot { position: absolute; inset: 0; width: 412px; height: 915px; }
+  .av { position: absolute; background-repeat: no-repeat; background-size: 412px 915px; mix-blend-mode: lighten; }
+  .abs { position: absolute; }
+  .num { font-variant-numeric: tabular-nums; }
+  /* Shared pieces the two directions style differently. */
+  .A { background: radial-gradient(120% 50% at 50% 0%, rgba(217,169,74,.10), transparent 60%), #0D0C0B; }
+  .B { background: #111010; }
+</style>
+</head>
+<body data-p="home">
+<div class="wrap">
+  <div class="cap"><b id="title"></b><p id="sub"></p></div>
+  <div class="row">
+    <div><div class="lab">دلوقتي</div><div class="phone" id="now"></div></div>
+    <div><div class="lab a">A · فخم دهبي</div><div class="phone A" id="pa"></div></div>
+    <div><div class="lab b">B · بسيط ونضيف</div><div class="phone B" id="pb"></div></div>
+  </div>
+</div>
+<script>
+  const page = document.body.dataset.p;
+  const FR = 'now/tab_friends.png', HOME = 'now/tab_shell_match.png';
+  const el = (p, css, html) => { const d = document.createElement('div'); d.className = 'abs'; Object.assign(d.style, css); if (html != null) d.innerHTML = html; p.appendChild(d); return d; };
+  // A piece of a screenshot (shot at 412 wide), centred on (cx, cy), at (x, y), scaled k.
+  const crop = (p, src, cx, cy, w, h, x, y, k = 1) => { const d = el(p, { left: x + 'px', top: y + 'px', width: w * k + 'px', height: h * k + 'px', backgroundImage: `url(${src})`, backgroundSize: `${412 * k}px ${915 * k}px`, backgroundPosition: `${-(cx - w / 2) * k}px ${-(cy - h / 2) * k}px` }); d.className = 'av'; return d; };
+
+  // The two directions, as the few numbers that differ.
+  const S = {
+    A: {
+      title: (t) => `<div style="font-size:30px;font-weight:800;letter-spacing:-.3px">${t}</div>`,
+      section: (t) => `<div style="font-size:12px;font-weight:800;letter-spacing:2.2px;color:#D9A94A">${t.toUpperCase()}</div>`,
+      card: { background: 'linear-gradient(180deg,#1E1C19,#161412)', border: '1px solid rgba(255,255,255,.07)', borderRadius: '20px', boxShadow: 'inset 0 1px 0 rgba(255,255,255,.05), 0 8px 24px rgba(0,0,0,.35)' },
+      primary: (t, h = 56) => `<div style="height:${h}px;border-radius:18px;background:linear-gradient(180deg,#F1CF7A,#C9952F);color:#1A1206;font-weight:800;font-size:${h > 44 ? 18 : 14}px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(217,169,74,.35), inset 0 1px 0 rgba(255,255,255,.45)">${t}</div>`,
+      secondary: (t, h = 36) => `<div style="height:${h}px;border-radius:14px;border:1px solid rgba(217,169,74,.45);color:#E9C46A;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center">${t}</div>`,
+      lv: (n) => `<span style="font-size:11px;font-weight:800;color:#E9C46A;border:1px solid rgba(217,169,74,.5);border-radius:6px;padding:1px 6px">Lv ${n}</span>`,
+      muted: 'rgba(245,239,228,.55)', divider: 'rgba(255,255,255,.06)', accent: '#D9A94A', toggle: 'linear-gradient(180deg,#F1CF7A,#C9952F)', icon: '#D9A94A',
+      nav: { background: 'rgba(22,20,18,.92)', border: '1px solid rgba(255,255,255,.07)' }, navOn: 'linear-gradient(180deg,#F1CF7A,#C9952F)', navInk: '#1A1206',
+    },
+    B: {
+      title: (t) => `<div style="font-size:28px;font-weight:700">${t}</div>`,
+      section: (t) => `<div style="font-size:14px;font-weight:600;color:rgba(245,239,228,.5)">${t}</div>`,
+      card: { background: '#1A1918', border: 'none', borderRadius: '16px' },
+      primary: (t, h = 54) => `<div style="height:${h}px;border-radius:16px;background:#E8DCC8;color:#141210;font-weight:700;font-size:${h > 44 ? 17 : 14}px;display:flex;align-items:center;justify-content:center">${t}</div>`,
+      secondary: (t, h = 34) => `<div style="height:${h}px;border-radius:12px;background:#262421;color:#E8DCC8;font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center">${t}</div>`,
+      lv: (n) => `<span style="font-size:11px;font-weight:700;color:rgba(245,239,228,.6);background:#262421;border-radius:6px;padding:1px 6px">Lv ${n}</span>`,
+      muted: 'rgba(245,239,228,.5)', divider: 'rgba(255,255,255,.07)', accent: '#E8DCC8', toggle: '#E8DCC8', icon: 'rgba(245,239,228,.55)',
+      nav: { background: '#1A1918', border: 'none' }, navOn: '#E8DCC8', navInk: '#141210',
+    },
+  };
+  const ICON = {
+    search: (c) => `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>`,
+    add: (c) => `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6M19 8v6M16 11h6"/></svg>`,
+    chev: (c) => `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>`,
+    bell: (c) => `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2" stroke-linejoin="round"><path d="M6 16V11a6 6 0 0112 0v5l2 2H4l2-2zM10 20a2 2 0 004 0"/></svg>`,
+    match: (c) => `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2.2" stroke-linecap="round"><path d="M4 4l10 10M14 4L4 14M17 13l4 4-2 2-4-4M3 19l3-3"/></svg>`,
+    people: (c) => `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M16 4.5a3.5 3.5 0 010 7M21.5 20c0-2.6-1.5-4.6-3.8-5.5"/></svg>`,
+    trophy: (c) => `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2" stroke-linejoin="round"><path d="M7 4h10v5a5 5 0 01-10 0V4zM7 6H4v2a3 3 0 003 3M17 6h3v2a3 3 0 01-3 3M9 20h6M12 14v6"/></svg>`,
+    person: (c) => `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>`,
+  };
+  function nav(p, s, active) {
+    const n = el(p, Object.assign({ left: '14px', right: '14px', bottom: '14px', height: '64px', borderRadius: '24px', display: 'flex', alignItems: 'center', padding: '0 8px', gap: '6px', backdropFilter: 'blur(8px)' }, s.nav));
+    const items = [['match', 'Match'], ['people', 'Friends'], ['trophy', 'Ranks'], ['person', 'Profile']];
+    n.innerHTML = items.map(([ic, t]) => ic === active
+      ? `<div style="flex:1.6;height:48px;border-radius:18px;background:${s.navOn};color:${s.navInk};display:flex;align-items:center;justify-content:center;gap:8px;font-weight:800;font-size:16px">${ICON[ic](s.navInk)}${t}</div>`
+      : `<div style="flex:1;display:flex;justify-content:center">${ICON[ic]('rgba(245,239,228,.55)')}</div>`).join('');
+  }
+
+  // ── Home ────────────────────────────────────────────────────────────────
+  function home(p, k) {
+    const s = S[k];
+    // The week, and the bell.
+    el(p, Object.assign({ left: '16px', top: '18px', width: '316px', height: '54px', display: 'flex', alignItems: 'center', justifyContent: 'space-around', padding: '0 6px' }, s.card),
+      ['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => `<div style="display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:18px;height:18px;border-radius:50%;border:2px solid ${i === 0 ? (k === 'A' ? '#D9A94A' : '#E8806A') : 'rgba(255,255,255,.14)'}"></div><div style="font-size:10px;font-weight:700;color:${i === 0 ? '#F5EFE4' : 'rgba(245,239,228,.45)'}">${d}</div></div>`).join(''));
+    el(p, Object.assign({ right: '16px', top: '18px', width: '54px', height: '54px', display: 'flex', alignItems: 'center', justifyContent: 'center' }, s.card, { borderRadius: '50%' }), ICON.bell('#F5EFE4') + `<div style="position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:50%;background:${k === 'A' ? '#D9A94A' : '#E8806A'};color:#111;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center">2</div>`);
+    // The crest, the rank, the rating.
+    crop(p, HOME, 206, 185, 220, 140, 96, 92, 1);
+    el(p, { left: 0, right: 0, top: '262px', textAlign: 'center' }, `<div style="font-size:${k === 'A' ? 36 : 32}px;font-weight:800;${k === 'A' ? 'background:linear-gradient(180deg,#FFF3C9,#D9A94A);-webkit-background-clip:text;color:transparent' : ''}">Gold III</div>`);
+    el(p, { left: '40px', right: '40px', top: '316px', height: '6px', borderRadius: '3px', background: 'rgba(255,255,255,.08)', overflow: 'hidden' }, `<div style="width:64%;height:100%;background:${k === 'A' ? 'linear-gradient(90deg,#B8912F,#F7D87F)' : '#E8DCC8'};border-radius:3px"></div>`);
+    el(p, { left: 0, right: 0, top: '330px', textAlign: 'center', fontSize: '14px', color: s.muted }, `<span class="num" style="color:#F5EFE4;font-weight:700">2,764</span> · 36 to Gold II`);
+    // Today's goal.
+    el(p, Object.assign({ left: '16px', right: '16px', top: '372px', height: '84px', display: 'flex', alignItems: 'center', gap: '14px', padding: '0 16px' }, s.card),
+      `<div style="width:52px;height:52px;border-radius:50%;border:5px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-weight:800">0</div>
+       <div style="flex:1"><div style="font-size:16px;font-weight:700">Today's goal</div><div style="font-size:13px;color:${s.muted};margin-top:2px">0 / 50 push-ups</div></div>
+       <div style="font-size:13px;font-weight:700;color:${s.accent}">Change</div>`);
+    // The way into a match.
+    el(p, { left: '16px', right: '16px', top: '474px' }, s.primary('Find a match', 58) + `<div style="text-align:center;font-size:13px;color:${s.muted};margin-top:8px">60 seconds · ranked</div>`);
+    // Adventure and the week, side by side.
+    const tile = (x, over, title, line, extra) => el(p, Object.assign({ left: x + 'px', top: '574px', width: '182px', height: '146px', padding: '14px', overflow: 'hidden' }, s.card),
+      `${extra || ''}<div style="position:relative">${k === 'A' ? s.section(over) : `<div style="font-size:12px;font-weight:600;color:${s.muted}">${over}</div>`}<div style="font-size:16px;font-weight:800;margin-top:6px;line-height:1.25">${title}</div><div style="font-size:12px;color:${s.muted};margin-top:6px">${line}</div></div>`);
+    tile(16, 'Adventure', 'Level 1<br>Iron Mines', '0 of 140 cleared', `<div style="position:absolute;right:-6px;bottom:-8px;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,rgba(232,128,106,.35),transparent 70%)"></div>`);
+    crop(p, HOME, 64, 715, 66, 56, 120, 652, 1.0);
+    tile(214, 'This week', `<span class="num" style="font-size:30px;color:${k === 'A' ? '#E9C46A' : '#F5EFE4'}">#14</span>`, '39 pts to the top 3');
+    nav(p, s, 'match');
+  }
+
+  // ── Friends ─────────────────────────────────────────────────────────────
+  const FRIENDS = [
+    ['iron_mike', 22, 'Diamond III · 3W 1L', 240, true],
+    ['benchgod', 15, 'Gold III · 1W 2L', 323, true],
+    ['squat_queen', 19, 'Platinum V · 2W 2L', 452, false],
+    ['newbie_gains', 5, 'Bronze II · never played', 535, false],
+    ['delt_destroyer', 10, 'Gold I · 0W 4L', 618, false],
+  ];
+  function friends(p, k) {
+    const s = S[k];
+    el(p, { left: '20px', top: '22px' }, s.title('Friends'));
+    el(p, { right: '20px', top: '28px' }, ICON.add('#F5EFE4'));
+    el(p, Object.assign({ left: '16px', right: '16px', top: '80px', height: '48px', display: 'flex', alignItems: 'center', gap: '10px', padding: '0 14px', color: s.muted, fontSize: '15px' }, s.card, { borderRadius: k === 'A' ? '16px' : '14px' }), ICON.search(s.muted) + 'Search by username');
+    el(p, { left: '20px', right: '20px', top: '144px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }, `<div style="font-size:15px;font-weight:600">Incoming requests <span style="color:${s.accent}">· 1</span></div>` + ICON.chev(s.muted));
+    // One grouped card a section, a hairline between rows.
+    const group = (top, label, rows) => {
+      el(p, { left: '22px', top: top + 'px' }, s.section(label));
+      const g = el(p, Object.assign({ left: '16px', right: '16px', top: (top + 24) + 'px', height: rows.length * 70 + 'px' }, s.card));
+      rows.forEach(([name, lv, line, cy, online], i) => {
+        const y = top + 24 + i * 70;
+        crop(p, FR, 69, cy, 80, 52, 22, y + 9, 0.95);
+        if (online) el(p, { left: '74px', top: (y + 46) + 'px', width: '12px', height: '12px', borderRadius: '50%', background: '#22C55E', border: '2px solid #161412' });
+        el(p, { left: '104px', top: (y + 14) + 'px', width: '190px' }, `<div style="font-size:16px;font-weight:700;display:flex;align-items:center;gap:6px">${name} ${s.lv(lv)}</div><div style="font-size:12.5px;color:${s.muted};margin-top:3px">${line} vs you</div>`);
+        el(p, { right: '28px', top: (y + 17) + 'px', width: '94px' }, online ? s.primary('Challenge', 36) : s.secondary('Invite', 36));
+        if (i > 0) el(g, { left: '88px', right: '0', top: (i * 70) + 'px', height: '1px', background: s.divider });
+      });
+    };
+    group(186, 'Online now · 2', FRIENDS.filter((f) => f[4]));
+    group(374, 'Offline · 3', FRIENDS.filter((f) => !f[4]));
+    // Bring a friend, quietly at the end.
+    el(p, Object.assign({ left: '16px', right: '16px', top: '630px', height: '128px', padding: '18px', textAlign: 'center' }, s.card),
+      `<div style="font-size:17px;font-weight:800">Bring a friend</div><div style="font-size:13px;color:${s.muted};margin:4px 0 12px">Send your link, or friend code #482910</div>` + s.primary('Share my link', 44));
+    nav(p, s, 'people');
+  }
+
+  // ── Settings ────────────────────────────────────────────────────────────
+  function settings(p, k) {
+    const s = S[k];
+    el(p, { left: '20px', top: '22px' }, s.title('Settings'));
+    const rowH = 56;
+    const toggle = () => `<div style="width:46px;height:28px;border-radius:14px;background:${s.toggle};position:relative"><div style="position:absolute;right:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff"></div></div>`;
+    let y = 78;
+    const group = (label, rows) => {
+      el(p, { left: '22px', top: y + 'px' }, s.section(label));
+      y += 24;
+      const g = el(p, Object.assign({ left: '16px', right: '16px', top: y + 'px', height: rows.length * rowH + 'px' }, s.card));
+      rows.forEach(([icon, text, right], i) => {
+        el(g, { left: '16px', top: (i * rowH) + 'px', height: rowH + 'px', right: '16px', display: 'flex', alignItems: 'center', gap: '14px' },
+          `<div style="width:30px;height:30px;border-radius:9px;background:${k === 'A' ? 'rgba(217,169,74,.14)' : '#262421'};display:flex;align-items:center;justify-content:center;color:${s.icon};font-size:15px">${icon}</div><div style="flex:1;font-size:15.5px;font-weight:600">${text}</div>${right === 't' ? toggle() : ICON.chev(s.muted)}`);
+        if (i > 0) el(g, { left: '60px', right: '0', top: (i * rowH) + 'px', height: '1px', background: s.divider });
+      });
+      y += rows.length * rowH + 20;
+    };
+    const g = (d) => `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="${s.icon}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+    const I = { person: g('<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>'), vib: g('<rect x="8" y="4" width="8" height="16" rx="2"/><path d="M4 8v8M20 8v8"/>'), sound: g('<path d="M4 10v4h4l5 4V6L8 10H4zM17 9a4 4 0 010 6"/>'), body: g('<circle cx="12" cy="5" r="2"/><path d="M5 9h14M12 9v12M8 21l4-6 4 6"/>'), bell: g('<path d="M6 16V11a6 6 0 0112 0v5l2 2H4l2-2zM10 20a2 2 0 004 0"/>'), shield: g('<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/>'), block: g('<circle cx="12" cy="12" r="8"/><path d="M6.5 6.5l11 11"/>'), flag: g('<path d="M5 21V4h11l-2 4 2 4H5"/>') };
+    group('Account', [[I.person, 'Create account', 'c']]);
+    group('Duel', [[I.vib, 'Haptics on each rep', 't'], [I.sound, 'Sounds', 't'], [I.body, 'Skeleton on the camera', 't']]);
+    group('Notifications', [[I.bell, 'Manage notifications', 'c']]);
+    group('Privacy', [[I.shield, 'Who can challenge me', 'c'], [I.block, 'Blocked accounts', 'c'], [I.flag, 'Report a problem', 'c']]);
+    el(p, { left: '24px', right: '24px', top: y + 'px', fontSize: '12px', color: s.muted, textAlign: 'center' }, 'Version 1.1.6');
+  }
+
+  const pages = {
+    home: ['١. الرئيسية', 'كارت الهدف وزرار الماتش زي ما هم، بس الأدفنشر وسباق الأسبوع بقوا مربعين جنب بعض بدل كروت فوق بعض، فالشاشة بقت أخف ومن غير سكرول. كل حاجة بنفس الخط والكروت والزراير.', home, 'tab_shell_match'],
+    friends: ['٢. الأصحاب', 'الأصحاب في كارت واحد لكل قسم بخط رفيع بين كل واحد والتاني بدل كارت لكل واحد، وزراير Challenge وInvite من نفس العيلة. "Bring a friend" بقى أصغر وأهدى.', friends, 'tab_friends'],
+    settings: ['٣. الإعدادات', 'نفس عناوين الأقسام بتاعة باقي الشاشات، وكل صف بأيقونة في مربع صغير وارتفاع واحد. الشرح الطويل تحت كل اختيار اتشال، والإعدادات اتعملت أقصر وأوضح.', settings, 'tab_settings'],
+  };
+  const [title, sub, draw, shot] = pages[page];
+  document.getElementById('title').textContent = title;
+  document.getElementById('sub').textContent = sub;
+  document.getElementById('now').innerHTML = `<img class="shot" src="now/${shot}.png">`;
+  draw(document.getElementById('pa'), 'A');
+  draw(document.getElementById('pb'), 'B');
+</script>
+</body>
+</html>
