@@ -35,17 +35,17 @@ Could not keep the screen: PlatformException(channel-error, Unable to establish 
 Could not keep the screen: PlatformException(channel-error, Unable to establish connection on channel: "dev.flutter.pigeon.wakelock_plus_platform_interface.WakelockPlusApi.toggle"., null, null)
 ::endgroup::
 ::group::✅ Passing tests
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart: sign_in_entry
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: win
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: loss
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart: sign_in_choose_name
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: rematch asked
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart: sign_in_entry_360
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: rematch, the other one left
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: promotion
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: placed
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: level up
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: level card
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart: sign_in_entry
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart: sign_in_choose_name
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart: sign_in_entry_360
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/promo_image_test.dart: promo image pro 1024
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/review_paywall_test.dart: app review paywall 1320x2868 (variant: TargetPlatform.iOS)
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 01-home 1080x1920
@@ -79,6 +79,7 @@ Could not read the titles from the account: Bad state: no server configured
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 07-won 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: ranks top players
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 08-awards 1320x2868
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: ranks: how points work
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: profile
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: profile recent
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: settings
@@ -92,4 +93,4 @@ Could not read the titles from the account: Bad state: no server configured
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/history_test.dart: match history
 ::endgroup::
 
-🎉 68 tests passed.
+🎉 69 tests passed.

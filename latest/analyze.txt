@@ -1,5 +1,2 @@
 Analyzing outrepd_flutter...                                    
-
-  error • The getter 'children' isn't defined for the type 'InlineSpan'. Try importing the library that defines 'children', correcting the name to the name of an existing getter, or defining a getter or field named 'children' • test/profile_layout_test.dart:97:57 • undefined_getter
-
-1 issue found. (ran in 14.8s)
+No issues found! (ran in 18.7s)
