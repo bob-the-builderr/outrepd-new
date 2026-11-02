@@ -720,9 +720,11 @@ class _BoardLine extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Each side up to half, the link against the far edge.
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
+              Flexible(
                 child: Text(
                   text,
                   maxLines: 2,
