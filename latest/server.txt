@@ -76,8 +76,8 @@ psql:/home/runner/work/_temp/install.sql:4718: NOTICE:  function month_board(tex
 psql:/home/runner/work/_temp/install.sql:4765: NOTICE:  function my_month_place() does not exist, skipping
 psql:/home/runner/work/_temp/install.sql:4878: NOTICE:  function week_board(text,pg_catalog.int4) does not exist, skipping
 psql:/home/runner/work/_temp/install.sql:4912: NOTICE:  function my_week_place() does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:5219: NOTICE:  trigger "tester_signed_up" for relation "auth.users" does not exist, skipping
-psql:/home/runner/work/_temp/install.sql:5248: NOTICE:  trigger "tester_added" for relation "beta_testers" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:5330: NOTICE:  trigger "tester_signed_up" for relation "auth.users" does not exist, skipping
+psql:/home/runner/work/_temp/install.sql:5359: NOTICE:  trigger "tester_added" for relation "beta_testers" does not exist, skipping
 installed once
 psql:/home/runner/work/_temp/install.sql:49: NOTICE:  relation "subscriptions" already exists, skipping
 psql:/home/runner/work/_temp/install.sql:54: NOTICE:  column "period_type" of relation "subscriptions" already exists, skipping
@@ -175,10 +175,10 @@ psql:/home/runner/work/_temp/install.sql:4912: NOTICE:  function my_week_place()
 psql:/home/runner/work/_temp/install.sql:4970: NOTICE:  relation "season_awards" already exists, skipping
 psql:/home/runner/work/_temp/install.sql:4972: NOTICE:  relation "season_awards_profile_idx" already exists, skipping
 psql:/home/runner/work/_temp/install.sql:4977: NOTICE:  relation "season_closings" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:5166: NOTICE:  relation "beta_testers" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:5174: NOTICE:  relation "beta_tester_grants" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:5278: NOTICE:  relation "adventure_progress" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:5369: NOTICE:  relation "rewards_progress" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:5277: NOTICE:  relation "beta_testers" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:5285: NOTICE:  relation "beta_tester_grants" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:5389: NOTICE:  relation "adventure_progress" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:5480: NOTICE:  relation "rewards_progress" already exists, skipping
 installed twice
 CREATE FUNCTION
 CREATE FUNCTION
@@ -355,12 +355,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- c7eafaa2-9acf-418d-b3fc-bbdc8c383cf2
+ 9c7bfd7f-8b54-4803-95a6-91128c69f8b4
 (1 row)
 
               set_config              
 --------------------------------------
- 4583f1bd-fc08-42a7-a97f-7f4f248fd3e0
+ 9d739dc4-f9b0-49ee-b75c-5d51f052f3cd
 (1 row)
 
  as_user 
@@ -402,12 +402,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- c7eafaa2-9acf-418d-b3fc-bbdc8c383cf2
+ 9c7bfd7f-8b54-4803-95a6-91128c69f8b4
 (1 row)
 
               set_config              
 --------------------------------------
- 934369ad-4e78-4a2e-a990-1d9995b17c10
+ f1c7f6e6-6efe-4ad0-8072-2be68ded1fff
 (1 row)
 
  as_user 
@@ -485,7 +485,7 @@ SET
 RESET
               set_config              
 --------------------------------------
- e555d954-d614-4a33-b361-2b5440c4126e
+ d529edf3-d5d4-4c79-abe1-91398c0e41e2
 (1 row)
 
  pg_sleep 
@@ -540,12 +540,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- 9363c84c-e65d-45b3-a3b2-5f62c8536475
+ 7dd4fb42-82f8-41db-bea2-68537cbe87cb
 (1 row)
 
               set_config              
 --------------------------------------
- e90809d7-60fe-4856-9dd3-ca892a551228
+ 8135435d-90c5-4e73-8c23-4504b8fcfebb
 (1 row)
 
  as_user 
@@ -556,7 +556,7 @@ RESET
 SET
                           settle_duel                           
 ----------------------------------------------------------------
- (79b2bc27-40ef-4043-a363-d5fbf3494249,t,0,0,0,0,1,0,1,1,5,1,f)
+ (9079494a-46ba-4287-917f-73d05e627cef,t,0,0,0,0,1,0,1,1,5,1,f)
 (1 row)
 
 RESET
@@ -927,7 +927,7 @@ RESET
 SET
              invite_live              
 --------------------------------------
- 7ffbdc58-31b8-4eb9-88d1-05314aafd769
+ 7add8a65-596e-4de6-b699-e539f495501e
 (1 row)
 
 RESET
@@ -952,12 +952,12 @@ RESET
 SET
              invite_live              
 --------------------------------------
- 6c5e58be-a9c2-46e9-867f-e4dd336dd11f
+ dc566051-2615-424c-a943-d793cf902fec
 (1 row)
 
              invite_live              
 --------------------------------------
- 9c9b7607-4884-4ef2-963d-6f1152519473
+ af6f4f18-0ffb-4232-bbbe-22b824fbc8f1
 (1 row)
 
 psql:tool/db/security_test.sql:457: NOTICE:  refused, as it should be — a fourth live invite in ten minutes: too many invites, wait a few minutes
@@ -1167,14 +1167,14 @@ INSERT 0 2
 INSERT 0 1
               set_config              
 --------------------------------------
- f8ccf073-5d73-4a92-9d07-8be30b991889
+ 744b05de-9fb0-41cf-9e21-d8e7e4d0a38d
 (1 row)
 
 INSERT 0 1
 INSERT 0 1
               set_config              
 --------------------------------------
- e6de48f2-b4dd-41f6-99fa-bc3b1748f57e
+ 5eeee0fe-1da9-4222-b91b-388d9d617d16
 (1 row)
 
  as_user 
@@ -1232,6 +1232,66 @@ psql:tool/db/security_test.sql:617: NOTICE:  refused, as it should be — readin
 (1 row)
 
 RESET
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ check_that 
+------------
+ 
+(1 row)
+
+ check_that 
+------------
+ 
+(1 row)
+
+ check_that 
+------------
+ 
+(1 row)
+
+ check_that 
+------------
+ 
+(1 row)
+
+ check_that 
+------------
+ 
+(1 row)
+
+ check_that 
+------------
+ 
+(1 row)
+
+ check_that 
+------------
+ 
+(1 row)
+
+psql:tool/db/security_test.sql:651: NOTICE:  refused, as it should be — reading the circle directly: permission denied for function my_circle
+ must_fail 
+-----------
+ 
+(1 row)
+
+RESET
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ check_that 
+------------
+ 
+(1 row)
+
+RESET
  check_that 
 ------------
  
@@ -1277,7 +1337,7 @@ UPDATE 1
 INSERT 0 1
               set_config              
 --------------------------------------
- 399e70cf-506b-478c-8892-5082020bdc22
+ 7225bba6-5c6b-4b4c-a376-8dc73d1a00ae
 (1 row)
 
  as_user 
@@ -1286,7 +1346,7 @@ INSERT 0 1
 (1 row)
 
 SET
-psql:tool/db/security_test.sql:658: NOTICE:  refused, as it should be — a rematch of somebody else's match: no finished live match to rematch
+psql:tool/db/security_test.sql:697: NOTICE:  refused, as it should be — a rematch of somebody else's match: no finished live match to rematch
  must_fail 
 -----------
  
@@ -1334,13 +1394,13 @@ INSERT 0 2
 (1 row)
 
 SET
-psql:tool/db/security_test.sql:687: NOTICE:  refused, as it should be — a rematch of a match an hour old: no finished live match to rematch
+psql:tool/db/security_test.sql:726: NOTICE:  refused, as it should be — a rematch of a match an hour old: no finished live match to rematch
  must_fail 
 -----------
  
 (1 row)
 
-psql:tool/db/security_test.sql:690: NOTICE:  refused, as it should be — a rematch of a match still running: no finished live match to rematch
+psql:tool/db/security_test.sql:729: NOTICE:  refused, as it should be — a rematch of a match still running: no finished live match to rematch
  must_fail 
 -----------
  
@@ -1355,7 +1415,7 @@ INSERT 0 1
 (1 row)
 
 SET
-psql:tool/db/security_test.sql:700: NOTICE:  refused, as it should be — a rematch with somebody who blocked you: no finished live match to rematch
+psql:tool/db/security_test.sql:739: NOTICE:  refused, as it should be — a rematch with somebody who blocked you: no finished live match to rematch
  must_fail 
 -----------
  
@@ -1366,7 +1426,7 @@ DELETE 1
 INSERT 0 1
               set_config              
 --------------------------------------
- 8a023f46-6e64-4a43-b1bf-47b89d060836
+ 184b587c-4b75-403a-aba9-1c6d06b5afb5
 (1 row)
 
  as_user 
@@ -1375,7 +1435,7 @@ INSERT 0 1
 (1 row)
 
 SET
-psql:tool/db/security_test.sql:714: NOTICE:  refused, as it should be — somebody else's result screen: no such live match
+psql:tool/db/security_test.sql:753: NOTICE:  refused, as it should be — somebody else's result screen: no such live match
  must_fail 
 -----------
  
@@ -1429,7 +1489,7 @@ SET
  
 (1 row)
 
-psql:tool/db/security_test.sql:732: NOTICE:  refused, as it should be — a rematch with somebody who left: they left
+psql:tool/db/security_test.sql:771: NOTICE:  refused, as it should be — a rematch with somebody who left: they left
  must_fail 
 -----------
  
@@ -1461,7 +1521,7 @@ RESET
  
 (1 row)
 
-psql:tool/db/security_test.sql:765: NOTICE:  refused, as it should be — a tester listed with capitals: new row for relation "beta_testers" violates check constraint "beta_testers_email_check"
+psql:tool/db/security_test.sql:804: NOTICE:  refused, as it should be — a tester listed with capitals: new row for relation "beta_testers" violates check constraint "beta_testers_email_check"
  must_fail 
 -----------
  
@@ -1473,7 +1533,7 @@ psql:tool/db/security_test.sql:765: NOTICE:  refused, as it should be — a test
 (1 row)
 
 SET
-psql:tool/db/security_test.sql:769: NOTICE:  refused, as it should be — a lifter handing out tester passes: permission denied for function grant_tester_pro
+psql:tool/db/security_test.sql:808: NOTICE:  refused, as it should be — a lifter handing out tester passes: permission denied for function grant_tester_pro
  must_fail 
 -----------
  
@@ -1484,7 +1544,7 @@ psql:tool/db/security_test.sql:769: NOTICE:  refused, as it should be — a lift
  
 (1 row)
 
-psql:tool/db/security_test.sql:773: NOTICE:  refused, as it should be — a lifter putting themselves on the tester list: new row violates row-level security policy for table "beta_testers"
+psql:tool/db/security_test.sql:812: NOTICE:  refused, as it should be — a lifter putting themselves on the tester list: new row violates row-level security policy for table "beta_testers"
  must_fail 
 -----------
  
@@ -1498,7 +1558,7 @@ DELETE 1
 (1 row)
 
 SET
-psql:tool/db/security_test.sql:781: NOTICE:  refused, as it should be — raising your own experience: rank and record are settled by the server, not the client
+psql:tool/db/security_test.sql:820: NOTICE:  refused, as it should be — raising your own experience: rank and record are settled by the server, not the client
  must_fail 
 -----------
  
@@ -1523,7 +1583,7 @@ RESET
 INSERT 0 1
               set_config              
 --------------------------------------
- f53702e1-300e-4aab-bea7-f3ced8af6c71
+ 25e459f9-8674-4fb6-93b3-272d07765565
 (1 row)
 
  as_user 
@@ -1581,7 +1641,7 @@ RESET
 (1 row)
 
 SET
-psql:tool/db/security_test.sql:821: NOTICE:  refused, as it should be — a practice set sent as a challenge: a practice set challenges nobody
+psql:tool/db/security_test.sql:860: NOTICE:  refused, as it should be — a practice set sent as a challenge: a practice set challenges nobody
  must_fail 
 -----------
  
@@ -1596,7 +1656,7 @@ RESET
 
               set_config              
 --------------------------------------
- 73bccbc9-fa2d-497b-a8b3-5523a2ef1030
+ 985dcaa8-8bef-4509-b4ea-4187ff5f06d4
 (1 row)
 
  as_user 
@@ -1623,7 +1683,7 @@ RESET
 
 SET
 INSERT 0 1
-psql:tool/db/security_test.sql:844: NOTICE:  refused, as it should be — racing a practice set: a practice set is not raced
+psql:tool/db/security_test.sql:883: NOTICE:  refused, as it should be — racing a practice set: a practice set is not raced
  must_fail 
 -----------
  
@@ -1642,19 +1702,19 @@ RESET
 
 SET
 UPDATE 1
-psql:tool/db/security_test.sql:880: NOTICE:  refused, as it should be — a cover that is not one of the scenes: new row for relation "profiles" violates check constraint "profiles_cover_known"
+psql:tool/db/security_test.sql:919: NOTICE:  refused, as it should be — a cover that is not one of the scenes: new row for relation "profiles" violates check constraint "profiles_cover_known"
  must_fail 
 -----------
  
 (1 row)
 
-psql:tool/db/security_test.sql:883: NOTICE:  refused, as it should be — a cover from another account's folder: new row for relation "profiles" violates check constraint "profiles_cover_known"
+psql:tool/db/security_test.sql:922: NOTICE:  refused, as it should be — a cover from another account's folder: new row for relation "profiles" violates check constraint "profiles_cover_known"
  must_fail 
 -----------
  
 (1 row)
 
-psql:tool/db/security_test.sql:886: NOTICE:  refused, as it should be — a lifter too big to be one: new row for relation "profiles" violates check constraint "profiles_lifter_small"
+psql:tool/db/security_test.sql:925: NOTICE:  refused, as it should be — a lifter too big to be one: new row for relation "profiles" violates check constraint "profiles_lifter_small"
  must_fail 
 -----------
  
@@ -1708,31 +1768,31 @@ DELETE 1
 (1 row)
 
 SET
-psql:tool/db/security_test.sql:931: NOTICE:  refused, as it should be — signed out, a lifter's profile: permission denied for function lifter_profile
+psql:tool/db/security_test.sql:970: NOTICE:  refused, as it should be — signed out, a lifter's profile: permission denied for function lifter_profile
  must_fail 
 -----------
  
 (1 row)
 
-psql:tool/db/security_test.sql:933: NOTICE:  refused, as it should be — signed out, somebody's recorded set: permission denied for function find_opponent_set
+psql:tool/db/security_test.sql:972: NOTICE:  refused, as it should be — signed out, somebody's recorded set: permission denied for function find_opponent_set
  must_fail 
 -----------
  
 (1 row)
 
-psql:tool/db/security_test.sql:935: NOTICE:  refused, as it should be — signed out, whether a name is taken: permission denied for function username_available
+psql:tool/db/security_test.sql:974: NOTICE:  refused, as it should be — signed out, whether a name is taken: permission denied for function username_available
  must_fail 
 -----------
  
 (1 row)
 
-psql:tool/db/security_test.sql:936: NOTICE:  refused, as it should be — signed out, the profiles table: permission denied for table profiles
+psql:tool/db/security_test.sql:975: NOTICE:  refused, as it should be — signed out, the profiles table: permission denied for table profiles
  must_fail 
 -----------
  
 (1 row)
 
-psql:tool/db/security_test.sql:938: NOTICE:  refused, as it should be — signed out, how people look: permission denied for function pro_looks
+psql:tool/db/security_test.sql:977: NOTICE:  refused, as it should be — signed out, how people look: permission denied for function pro_looks
  must_fail 
 -----------
  
@@ -1957,10 +2017,10 @@ psql:/home/runner/work/_temp/install.sql:4912: NOTICE:  function my_week_place()
 psql:/home/runner/work/_temp/install.sql:4970: NOTICE:  relation "season_awards" already exists, skipping
 psql:/home/runner/work/_temp/install.sql:4972: NOTICE:  relation "season_awards_profile_idx" already exists, skipping
 psql:/home/runner/work/_temp/install.sql:4977: NOTICE:  relation "season_closings" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:5166: NOTICE:  relation "beta_testers" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:5174: NOTICE:  relation "beta_tester_grants" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:5278: NOTICE:  relation "adventure_progress" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:5369: NOTICE:  relation "rewards_progress" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:5277: NOTICE:  relation "beta_testers" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:5285: NOTICE:  relation "beta_tester_grants" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:5389: NOTICE:  relation "adventure_progress" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:5480: NOTICE:  relation "rewards_progress" already exists, skipping
 CREATE FUNCTION
  upgrade_check 
 ---------------
@@ -2152,10 +2212,10 @@ psql:/home/runner/work/_temp/install.sql:4912: NOTICE:  function my_week_place()
 psql:/home/runner/work/_temp/install.sql:4970: NOTICE:  relation "season_awards" already exists, skipping
 psql:/home/runner/work/_temp/install.sql:4972: NOTICE:  relation "season_awards_profile_idx" already exists, skipping
 psql:/home/runner/work/_temp/install.sql:4977: NOTICE:  relation "season_closings" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:5166: NOTICE:  relation "beta_testers" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:5174: NOTICE:  relation "beta_tester_grants" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:5278: NOTICE:  relation "adventure_progress" already exists, skipping
-psql:/home/runner/work/_temp/install.sql:5369: NOTICE:  relation "rewards_progress" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:5277: NOTICE:  relation "beta_testers" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:5285: NOTICE:  relation "beta_tester_grants" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:5389: NOTICE:  relation "adventure_progress" already exists, skipping
+psql:/home/runner/work/_temp/install.sql:5480: NOTICE:  relation "rewards_progress" already exists, skipping
 CREATE FUNCTION
  upgrade_check 
 ---------------
