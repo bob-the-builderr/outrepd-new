@@ -113,7 +113,9 @@ class RankCard extends StatelessWidget {
                     ),
                     if (!top) ...[
                       const SizedBox(width: 8),
+                      // Against the far edge, however short the words are.
                       Flexible(
+                        fit: FlexFit.tight,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [

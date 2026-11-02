@@ -440,11 +440,14 @@ class _Identity extends StatelessWidget {
         const SizedBox(height: 12),
         // The rank as one number on a card in its tier's colours (pick A,
         // 2026-11-02). It was a muted line over a thin bar.
-        RankCard(
-          tierIdx: profile.tierIdx,
-          divIdx: profile.divIdx,
-          lp: profile.lp,
-          onTap: onTapRank,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: RankCard(
+            tierIdx: profile.tierIdx,
+            divIdx: profile.divIdx,
+            lp: profile.lp,
+            onTap: onTapRank,
+          ),
         ),
       ],
     );
