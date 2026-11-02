@@ -25,7 +25,6 @@ import '../l10n/app_localizations.dart';
 import '../type_scale.dart';
 import '../theme.dart';
 import '../widgets.dart';
-import '../xp.dart';
 
 /// Everything the camera screen needs to know about the duel it is part of.
 ///
@@ -1031,6 +1030,33 @@ class _TrainerScreenState extends State<TrainerScreen>
           else
             const ColoredBox(color: Color(0xFF121110)),
 
+          // The score sits straight on the camera now (design B, 2026-11-02),
+          // with no card behind it: this shade from the top is what keeps the
+          // numbers readable over a bright room.
+          if (game == null)
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 0,
+              height: top + 260,
+              child: const IgnorePointer(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color(0xC7000000),
+                        Color(0x80000000),
+                        Color(0x00000000),
+                      ],
+                      stops: [0, 0.55, 1],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
           // The score, the clock, and the rival — pinned to the top from the
           // moment the camera opens, so the numbers are in the same place before
           // and during the bout instead of appearing when it starts.
@@ -1108,6 +1134,7 @@ class _TrainerScreenState extends State<TrainerScreen>
                       yours: _liveReps,
                       theirs: _opponentReps,
                       remaining: _remaining,
+                      limit: widget.limit,
                       duel: widget.duel,
                       live: _stage == _Stage.counting,
                       session: widget.live,
@@ -1519,6 +1546,11 @@ double? _torsoOverShoulders(BodyPose? pose) {
       width;
 }
 
+/// The score over the camera (design B, the user's pick 2026-11-02): no card,
+/// the two counts as giant glowing numbers at the two sides, the clock in a
+/// ring between them that runs out as the minute does, and one thin bar of
+/// who is ahead under it all. It replaced a black card that took a third of
+/// the screen, with the red Give up the loudest thing on it.
 class _ScoreCard extends StatelessWidget {
   const _ScoreCard({
     super.key,
@@ -1527,6 +1559,7 @@ class _ScoreCard extends StatelessWidget {
     required this.remaining,
     required this.duel,
     required this.live,
+    this.limit,
     this.session,
     this.onStop,
   });
@@ -1534,18 +1567,21 @@ class _ScoreCard extends StatelessWidget {
   final int yours;
   final int theirs;
   final Duration remaining;
+
+  /// The round's length, for the ring; null leaves the ring full.
+  final Duration? limit;
   final DuelContext? duel;
 
   /// Whether the bout has started. The bar only appears once there is a real
   /// share to draw.
   final bool live;
 
-  /// A live match, when this is one: the tag on top, and the other side
-  /// dimmed while their phone is quiet.
+  /// A live match, when this is one: the tag under the clock, and the other
+  /// side dimmed while their phone is quiet.
   final LiveSession? session;
 
-  /// The way out: Give up in a match, in red; Finish in practice, where
-  /// nothing is lost by stopping.
+  /// The way out: Give up in a match, a small red flag under the clock;
+  /// Finish in practice, where nothing is lost by stopping.
   final VoidCallback? onStop;
 
   @override
@@ -1553,130 +1589,176 @@ class _ScoreCard extends StatelessWidget {
     final l = L.of(context);
     final duel = this.duel;
     final away = session?.opponentAway ?? false;
+    final limit = this.limit;
+    final left = limit == null || limit.inMilliseconds == 0
+        ? 1.0
+        : (remaining.inMilliseconds / limit.inMilliseconds).clamp(0.0, 1.0);
 
-    return Container(
-      padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
-      decoration: BoxDecoration(
-        color: const Color(0xFF121110),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: context.colors.border, width: 0.5),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // No IntrinsicHeight: the two sides are built from the same pieces
-          // in the same order, so they come out the same height on their own —
-          // and measuring them would mean asking a ShrinkText for an intrinsic
-          // height, which a LayoutBuilder cannot answer.
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: _Fighter(
-                  name: l.you,
-                  reps: yours,
-                  tierIdx: demoProfile.tierIdx,
-                  divIdx: demoProfile.divIdx,
-                  ranked: demoProfile.isRanked,
-                  xp: demoProfile.xp,
-                  colour: Colors.white,
-                  image: avatar.picture,
-                ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: _Fighter(
+                name: l.you,
+                reps: yours,
+                tierIdx: demoProfile.tierIdx,
+                colour: context.colors.brand,
+                image: avatar.picture,
               ),
-              // The middle column: whether this is live, the clock, and the
-              // way out, all between the two lifters — so the card is no
-              // taller than the lifters are. They sat on rows of their own
-              // above and below, and the card came down over the lifter's
-              // head on a short phone.
-              //
-              // It takes only what it needs; the two lifters either side
-              // share what is left. A fixed width here is what put a long
-              // username through the edge of the card.
-              Padding(
-                padding: EdgeInsets.only(
-                  top: session == null ? 16 : 2,
-                  left: 4,
-                  right: 4,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (session != null) ...[
-                      LiveTag(reconnecting: away),
-                      const SizedBox(height: 4),
-                    ],
-                    Text(
+            ),
+            // The middle: the clock, whether this is live, and the way out —
+            // taking only what it needs, so the two counts share the rest.
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 6),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _ClockRing(
+                    left: left,
+                    child: Text(
                       formatClock(context, remaining.inSeconds),
                       style: TextStyle(
-                        color: live ? Colors.white : context.colors.muted,
-                        fontSize: 24,
+                        color: live ? Colors.white : const Color(0xFFC9C1B6),
+                        fontSize: 21,
+                        fontWeight: FontWeight.w700,
                         fontFeatures: const [FontFeature.tabularFigures()],
                       ),
                     ),
-                    if (onStop case final stop?) ...[
-                      const SizedBox(height: 8),
-                      _StopButton(inMatch: duel != null, onTap: stop),
-                    ],
+                  ),
+                  if (session != null) ...[
+                    const SizedBox(height: 6),
+                    LiveTag(reconnecting: away),
                   ],
-                ),
-              ),
-              Expanded(
-                child: duel == null
-                    // Keeps the clock centred when there is nobody there.
-                    ? const SizedBox.shrink()
-                    : Opacity(
-                        opacity: away ? 0.45 : 1,
-                        child: _Fighter(
-                          name: duel.opponentName,
-                          reps: theirs,
-                          tierIdx: duel.opponentTierIdx,
-                          divIdx: duel.opponentDivIdx,
-                          xp: duel.opponentXp,
-                          colour: context.colors.rival,
-                          image: duel.opponentImage,
-                        ),
-                      ),
-              ),
-            ],
-          ),
-          if (duel != null && live) ...[
-            const SizedBox(height: 10),
-            // One bar, two counts: your share of the reps done so far. It is
-            // the same information as the two numbers above and it is the one
-            // anybody actually reads while moving.
-            ClipRRect(
-              borderRadius: BorderRadius.circular(5),
-              child: SizedBox(
-                height: 9,
-                child: Row(
-                  // Stretch, not the default centre: a ColoredBox with no
-                  // child has no height of its own, so a centred one collapses
-                  // to nothing and the bar draws at zero pixels tall.
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(
-                      flex: yours + theirs == 0 ? 1 : yours,
-                      child: ColoredBox(color: context.colors.brand),
-                    ),
-                    Expanded(
-                      flex: yours + theirs == 0 ? 1 : theirs,
-                      child: ColoredBox(color: context.colors.rival),
-                    ),
+                  if (onStop case final stop?) ...[
+                    const SizedBox(height: 8),
+                    _StopButton(inMatch: duel != null, onTap: stop),
                   ],
-                ),
+                ],
               ),
             ),
+            Expanded(
+              child: duel == null
+                  // Keeps the clock centred when there is nobody there.
+                  ? const SizedBox.shrink()
+                  : Opacity(
+                      opacity: away ? 0.45 : 1,
+                      child: _Fighter(
+                        name: duel.opponentName,
+                        reps: theirs,
+                        tierIdx: duel.opponentTierIdx,
+                        colour: context.colors.rival,
+                        image: duel.opponentImage,
+                        end: true,
+                      ),
+                    ),
+            ),
           ],
+        ),
+        if (duel != null && live) ...[
+          const SizedBox(height: 10),
+          // One bar, two counts: your share of the reps done so far. It is
+          // the same information as the two numbers above and it is the one
+          // anybody actually reads while moving.
+          ClipRRect(
+            borderRadius: BorderRadius.circular(3),
+            child: SizedBox(
+              height: 6,
+              child: Row(
+                // Stretch, not the default centre: a ColoredBox with no
+                // child has no height of its own, so a centred one collapses
+                // to nothing and the bar draws at zero pixels tall.
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    flex: yours + theirs == 0 ? 1 : yours,
+                    child: ColoredBox(color: context.colors.brand),
+                  ),
+                  Expanded(
+                    flex: yours + theirs == 0 ? 1 : theirs,
+                    child: ColoredBox(color: context.colors.rival),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
+      ],
+    );
+  }
+}
+
+/// The clock as a ring that runs out with the minute, the time inside it.
+class _ClockRing extends StatelessWidget {
+  const _ClockRing({required this.left, required this.child});
+
+  /// How much of the round is still to go, 0–1.
+  final double left;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      key: const Key('clockRing'),
+      width: 76,
+      height: 76,
+      child: CustomPaint(
+        painter: _RingPainter(left: left, colour: context.colors.brand),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: FittedBox(fit: BoxFit.scaleDown, child: child),
+          ),
+        ),
       ),
     );
   }
 }
 
-/// Give up, under the clock: red, the one red thing on the card, so it is
-/// found at a glance from the floor. Finish in practice, plain, since nothing
-/// is lost. Its words shrink rather than widen the column in a language
-/// where they run long.
+class _RingPainter extends CustomPainter {
+  _RingPainter({required this.left, required this.colour});
+
+  final double left;
+  final Color colour;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    const stroke = 6.0;
+    final centre = size.center(Offset.zero);
+    final radius = size.shortestSide / 2 - stroke / 2;
+    canvas.drawCircle(centre, radius, Paint()..color = const Color(0xBF0E0D0C));
+    canvas.drawCircle(
+      centre,
+      radius,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = stroke
+        ..color = Colors.white.withValues(alpha: 0.16),
+    );
+    if (left <= 0) return;
+    canvas.drawArc(
+      Rect.fromCircle(center: centre, radius: radius),
+      -math.pi / 2,
+      2 * math.pi * left,
+      false,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = stroke
+        ..strokeCap = StrokeCap.round
+        ..color = colour,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_RingPainter old) =>
+      old.left != left || old.colour != colour;
+}
+
+/// Give up, under the clock: a small round flag ringed in red, found where
+/// the eye already is and no longer the loudest thing on the screen (design
+/// B). Finish in practice, a plain pill, since nothing is lost.
 class _StopButton extends StatelessWidget {
   const _StopButton({required this.inMatch, required this.onTap});
 
@@ -1686,8 +1768,30 @@ class _StopButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
+    if (inMatch) {
+      return Semantics(
+        button: true,
+        label: l.giveUp,
+        child: Material(
+          color: const Color(0xB30E0D0C),
+          shape: CircleBorder(
+            side: BorderSide(color: _giveUpRed.withValues(alpha: 0.75)),
+          ),
+          child: InkWell(
+            key: const Key('stopButton'),
+            onTap: onTap,
+            customBorder: const CircleBorder(),
+            child: const SizedBox(
+              width: 40,
+              height: 40,
+              child: Icon(Icons.flag_rounded, size: 19, color: Color(0xFFFF8A8D)),
+            ),
+          ),
+        ),
+      );
+    }
     return Material(
-      color: inMatch ? _giveUpRed : Colors.transparent,
+      color: Colors.transparent,
       borderRadius: BorderRadius.circular(20),
       child: InkWell(
         key: const Key('stopButton'),
@@ -1696,36 +1800,19 @@ class _StopButton extends StatelessWidget {
         child: Container(
           constraints: const BoxConstraints(maxWidth: 132),
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
-          decoration: inMatch
-              ? null
-              : BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.5),
-                  ),
-                ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
+          ),
           child: FittedBox(
             fit: BoxFit.scaleDown,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (inMatch) ...[
-                  const Icon(
-                    Icons.flag_outlined,
-                    size: 16,
-                    color: Colors.white,
-                  ),
-                  const SizedBox(width: 6),
-                ],
-                Text(
-                  inMatch ? l.giveUp : l.finish,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
+            child: Text(
+              l.finish,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ),
@@ -1903,21 +1990,17 @@ class _GiveUpCardState extends State<_GiveUpCard> {
   }
 }
 
-/// One side of the card: who they are, where they stand, and their count.
-///
-/// The picture and the badge are the same pairing the profile screen uses —
-/// the badge hangs off the picture rather than sitting in a chip of its own,
-/// because it belongs to the person.
+/// One side of the score: the picture and the name, then the count as a
+/// giant number glowing in its own colour, against its own edge of the
+/// screen (design B).
 class _Fighter extends StatelessWidget {
   const _Fighter({
     required this.name,
     required this.reps,
     required this.tierIdx,
-    required this.divIdx,
     required this.colour,
     this.image,
-    this.ranked = true,
-    this.xp,
+    this.end = false,
   });
 
   final ImageProvider? image;
@@ -1925,20 +2008,16 @@ class _Fighter extends StatelessWidget {
   final String name;
   final int reps;
   final int tierIdx;
-  final int divIdx;
   final Color colour;
 
-  /// False while placements are still open: no rank to name yet.
-  final bool ranked;
-
-  /// Experience, for the level after the rank; null when not known.
-  final int? xp;
+  /// The right-hand side: everything against the far edge.
+  final bool end;
 
   @override
   Widget build(BuildContext context) {
-    final l = L.of(context);
-
+    final align = end ? CrossAxisAlignment.end : CrossAxisAlignment.start;
     return Column(
+      crossAxisAlignment: align,
       mainAxisSize: MainAxisSize.min,
       children: [
         // One treatment everywhere somebody's picture appears.
@@ -1946,37 +2025,37 @@ class _Fighter extends StatelessWidget {
           name: name,
           tierIdx: tierIdx,
           image: image,
-          size: 48,
+          size: 50,
           textColour: colour,
-          // The card has its own background, so the badge is ringed with that
-          // rather than the page behind it.
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: 4),
         ShrinkText(
           name,
           maxLines: 1,
-          style: TextStyle(color: colour, fontSize: 14),
+          style: TextStyle(
+            color: colour,
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            shadows: const [Shadow(color: Color(0x99000000), blurRadius: 6)],
+          ),
         ),
-        // The rank, then the level: "Gold III · Lv 12".
-        ShrinkText(
-          [
-            ranked ? tierLabel(l, tierIdx, divIdx) : l.unranked,
-            if (xp case final xp?)
-              l.levelShort(localNumber(context, levelOf(xp))),
-          ].join(' · '),
-          maxLines: 1,
-          style: TextStyle(color: context.colors.muted, fontSize: 13),
-        ),
-        const SizedBox(height: 4),
         FittedBox(
           fit: BoxFit.scaleDown,
+          alignment: end
+              ? AlignmentDirectional.centerEnd
+              : AlignmentDirectional.centerStart,
           child: Text(
             localNumber(context, reps),
             style: TextStyle(
               color: colour,
-              fontSize: 34,
-              height: 1.05,
+              fontSize: 96,
+              fontWeight: FontWeight.w800,
+              height: 1.0,
               fontFeatures: const [FontFeature.tabularFigures()],
+              shadows: [
+                Shadow(color: colour.withValues(alpha: 0.55), blurRadius: 28),
+                const Shadow(color: Color(0x66000000), blurRadius: 8),
+              ],
             ),
           ),
         ),

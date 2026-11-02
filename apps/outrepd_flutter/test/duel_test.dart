@@ -194,7 +194,7 @@ void main() {
       expect(find.text('1:00'), findsNothing);
     });
 
-    testWidgets('shows the clock, both counts and the rank', (tester) async {
+    testWidgets('shows the clock, both counts and the way out', (tester) async {
       await open(tester, duel: duel);
 
       // The card is up before the bout starts, showing zeroes and the full
@@ -203,10 +203,10 @@ void main() {
       expect(find.text('1:00'), findsOneWidget);
       expect(find.text('You'), findsOneWidget);
       expect(find.text('kickk'), findsOneWidget);
-      // No LP promise any more — nothing about the score is known yet, so
-      // there is nothing here to promise a number for.
-      expect(find.text('Gold III'), findsOneWidget);
-      expect(find.text('Give up'), findsOneWidget);
+      // No rank line any more (design B, 2026-11-02): the tier is the
+      // frame round each picture. Give up is a red flag under the clock.
+      expect(find.byKey(const Key('clockRing')), findsOneWidget);
+      expect(find.byKey(const Key('stopButton')), findsOneWidget);
 
       // Under the clock, between the two lifters, and no lower than their
       // counts — on a row of its own it made the card taller than the
@@ -240,7 +240,7 @@ void main() {
       await tester.tap(find.byKey(const Key('keepGoing')));
       await tester.pumpAndSettle();
       expect(find.text('Give up this round?'), findsNothing);
-      expect(find.text('Give up'), findsOneWidget);
+      expect(find.byKey(const Key('stopButton')), findsOneWidget);
     });
 
     testWidgets('the score bar has height once the bout is running',
