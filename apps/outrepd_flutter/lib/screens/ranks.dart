@@ -469,12 +469,11 @@ class _RanksScreenState extends State<RanksScreen> {
                       onRefresh: _load,
                       child: ListView.builder(
                         padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
-                        // Above the list on Overall: who is on it.
+                        // Above the list on Overall: the link to how it
+                        // counts, and who is on it.
                         itemCount: entries.length + 1,
                         itemBuilder: (context, i) => i == 0
-                            ? _BoardLine(
-                                text: L.of(context).boardActiveNote,
-                              )
+                            ? const _BoardLine()
                             : _Slice(
                                 first: i == 1,
                                 last: i == entries.length,
@@ -701,13 +700,15 @@ class _ScopeToggle extends StatelessWidget {
   }
 }
 
-/// Under the strip, at the top of every board: when it ends (or who is on
-/// it), and the way to how its points work (pick A, 2026-11-02). The rules
-/// were chips here, and the tie rule a line of its own.
+/// Under the strip, at the top of every board: when it ends, and the way to
+/// how its points work against the far edge (pick A, 2026-11-02, and again
+/// for the link's place). The rules were chips here, and who is on Overall
+/// and how a tie goes a line of their own: both are in the sheet now.
 class _BoardLine extends StatelessWidget {
-  const _BoardLine({required this.text, this.below});
+  const _BoardLine({this.text, this.below});
 
-  final String text;
+  /// The line's words; none on Overall, where the link stands alone.
+  final String? text;
 
   /// A second line under the first: the 20 Club on the month.
   final Widget? below;
@@ -720,19 +721,20 @@ class _BoardLine extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Each side up to half, the link against the far edge.
+          // The words take what the link leaves them; the link keeps its
+          // size, up to a cap that a long language shortens it to.
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
+              Expanded(
                 child: Text(
-                  text,
+                  text ?? '',
                   maxLines: 2,
                   style: TextStyle(color: colors.muted, fontSize: 14),
                 ),
               ),
               const SizedBox(width: 8),
-              Flexible(
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 210),
                 child: InkWell(
                   key: const Key('howPoints'),
                   onTap: () => showHowPoints(context),
