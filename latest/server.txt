@@ -355,12 +355,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- bfaa8b8f-d580-46d1-9fe7-5680187c7bd4
+ 6366d8e3-068a-446a-aee4-c0ca1e89e4e5
 (1 row)
 
               set_config              
 --------------------------------------
- 750eccdf-e308-4db9-a2ac-f85fef1d3519
+ 72682abe-1bb0-4dad-9d08-ea3cbec7f98a
 (1 row)
 
  as_user 
@@ -402,12 +402,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- bfaa8b8f-d580-46d1-9fe7-5680187c7bd4
+ 6366d8e3-068a-446a-aee4-c0ca1e89e4e5
 (1 row)
 
               set_config              
 --------------------------------------
- 634a926a-4f62-47c8-a586-4a6b3e04ce43
+ aead7210-e3d8-44a8-8943-ae1b0fe63a2d
 (1 row)
 
  as_user 
@@ -485,7 +485,7 @@ SET
 RESET
               set_config              
 --------------------------------------
- 5e098f4b-a1a9-4cf8-8795-2cc6341d436c
+ 82877900-35db-4ed7-b5ba-036e63f1b2b2
 (1 row)
 
  pg_sleep 
@@ -540,12 +540,12 @@ INSERT 0 1
 RESET
               set_config              
 --------------------------------------
- fd617574-0110-4df7-8f4b-e9dd4165021d
+ 9836b1ab-0465-4548-9eb8-3929c183d5d9
 (1 row)
 
               set_config              
 --------------------------------------
- ea484154-fe52-4554-85aa-0a035492010a
+ c1f59655-012f-4f3c-8a97-adc0f320298e
 (1 row)
 
  as_user 
@@ -556,7 +556,7 @@ RESET
 SET
                           settle_duel                           
 ----------------------------------------------------------------
- (4f71a1df-8c00-4909-b907-aa49edba06e3,t,0,0,0,0,1,0,1,1,5,1,f)
+ (2280fc82-f646-47da-86fa-3ce9b33c16be,t,0,0,0,0,1,0,1,1,5,1,f)
 (1 row)
 
 RESET
@@ -927,7 +927,7 @@ RESET
 SET
              invite_live              
 --------------------------------------
- 0afbae7a-d45e-4073-bc6e-23796543afa7
+ aed63254-d060-4a31-9e49-66b1c5b5c764
 (1 row)
 
 RESET
@@ -952,12 +952,12 @@ RESET
 SET
              invite_live              
 --------------------------------------
- 421702e5-3b25-488f-ab53-75a04c850c9e
+ a7e47250-8893-48f4-a088-b15fa3ca0484
 (1 row)
 
              invite_live              
 --------------------------------------
- 66f2a52c-1a82-4cea-a547-afd72d2c02bd
+ 42d9b61d-e051-4462-8c99-942bddfee34b
 (1 row)
 
 psql:tool/db/security_test.sql:457: NOTICE:  refused, as it should be — a fourth live invite in ten minutes: too many invites, wait a few minutes
@@ -1167,14 +1167,14 @@ INSERT 0 2
 INSERT 0 1
               set_config              
 --------------------------------------
- c673f9be-210b-4e72-9125-b6ccca43919e
+ 20eec092-113c-409d-9216-6b0ac6be3893
 (1 row)
 
 INSERT 0 1
 INSERT 0 1
               set_config              
 --------------------------------------
- 0ef5f1e0-a96d-44a3-bad8-32c7b1df472d
+ fa8f28d3-1b71-42cd-9e79-acb57bed5480
 (1 row)
 
  as_user 
@@ -1204,5 +1204,548 @@ RESET
  
 (1 row)
 
-psql:tool/db/security_test.sql:607: ERROR:  FAIL: the third win in a row is not worth 10
-CONTEXT:  PL/pgSQL function check_that(boolean,text) line 4 at RAISE
+ check_that 
+------------
+ 
+(1 row)
+
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ check_that 
+------------
+ 
+(1 row)
+
+ check_that 
+------------
+ 
+(1 row)
+
+psql:tool/db/security_test.sql:617: NOTICE:  refused, as it should be — reading week_points directly: permission denied for function week_points
+ must_fail 
+-----------
+ 
+(1 row)
+
+RESET
+ check_that 
+------------
+ 
+(1 row)
+
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ check_that 
+------------
+ 
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+ leave_live_queue 
+------------------
+ 
+(1 row)
+
+RESET
+UPDATE 1
+INSERT 0 1
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ check_that 
+------------
+ 
+(1 row)
+
+RESET
+UPDATE 1
+INSERT 0 1
+              set_config              
+--------------------------------------
+ 73241bf2-3915-4f0d-8c0d-b54db26fe7fb
+(1 row)
+
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+psql:tool/db/security_test.sql:658: NOTICE:  refused, as it should be — a rematch of somebody else's match: no finished live match to rematch
+ must_fail 
+-----------
+ 
+(1 row)
+
+RESET
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ check_that 
+------------
+ 
+(1 row)
+
+ count 
+-------
+     1
+(1 row)
+
+RESET
+ check_that 
+------------
+ 
+(1 row)
+
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ check_that 
+------------
+ 
+(1 row)
+
+RESET
+INSERT 0 2
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+psql:tool/db/security_test.sql:687: NOTICE:  refused, as it should be — a rematch of a match an hour old: no finished live match to rematch
+ must_fail 
+-----------
+ 
+(1 row)
+
+psql:tool/db/security_test.sql:690: NOTICE:  refused, as it should be — a rematch of a match still running: no finished live match to rematch
+ must_fail 
+-----------
+ 
+(1 row)
+
+RESET
+INSERT 0 1
+INSERT 0 1
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+psql:tool/db/security_test.sql:700: NOTICE:  refused, as it should be — a rematch with somebody who blocked you: no finished live match to rematch
+ must_fail 
+-----------
+ 
+(1 row)
+
+RESET
+DELETE 1
+INSERT 0 1
+              set_config              
+--------------------------------------
+ 14a3ab66-4d07-4c3d-b25b-d9a4cf0340e8
+(1 row)
+
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+psql:tool/db/security_test.sql:714: NOTICE:  refused, as it should be — somebody else's result screen: no such live match
+ must_fail 
+-----------
+ 
+(1 row)
+
+RESET
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ check_that 
+------------
+ 
+(1 row)
+
+RESET
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ check_that 
+------------
+ 
+(1 row)
+
+RESET
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ check_that 
+------------
+ 
+(1 row)
+
+RESET
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ check_that 
+------------
+ 
+(1 row)
+
+psql:tool/db/security_test.sql:732: NOTICE:  refused, as it should be — a rematch with somebody who left: they left
+ must_fail 
+-----------
+ 
+(1 row)
+
+RESET
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ check_that 
+------------
+ 
+(1 row)
+
+RESET
+DO
+GRANT
+GRANT
+INSERT 0 1
+SET
+UPDATE 1
+UPDATE 1
+RESET
+ check_that 
+------------
+ 
+(1 row)
+
+psql:tool/db/security_test.sql:765: NOTICE:  refused, as it should be — a tester listed with capitals: new row for relation "beta_testers" violates check constraint "beta_testers_email_check"
+ must_fail 
+-----------
+ 
+(1 row)
+
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+psql:tool/db/security_test.sql:769: NOTICE:  refused, as it should be — a lifter handing out tester passes: permission denied for function grant_tester_pro
+ must_fail 
+-----------
+ 
+(1 row)
+
+ check_that 
+------------
+ 
+(1 row)
+
+psql:tool/db/security_test.sql:773: NOTICE:  refused, as it should be — a lifter putting themselves on the tester list: new row violates row-level security policy for table "beta_testers"
+ must_fail 
+-----------
+ 
+(1 row)
+
+RESET
+DELETE 1
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+psql:tool/db/security_test.sql:781: NOTICE:  refused, as it should be — raising your own experience: rank and record are settled by the server, not the client
+ must_fail 
+-----------
+ 
+(1 row)
+
+RESET
+ set_config 
+------------
+ 10
+(1 row)
+
+ set_config 
+------------
+ 0
+(1 row)
+
+ set_config 
+------------
+ 0
+(1 row)
+
+INSERT 0 1
+              set_config              
+--------------------------------------
+ 664cdb6a-81a6-4638-9a55-54d4778532bb
+(1 row)
+
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ count 
+-------
+     1
+(1 row)
+
+RESET
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ check_that 
+------------
+ 
+(1 row)
+
+RESET
+ check_that 
+------------
+ 
+(1 row)
+
+ check_that 
+------------
+ 
+(1 row)
+
+ check_that 
+------------
+ 
+(1 row)
+
+ set_config 
+------------
+ 730
+(1 row)
+
+ pg_sleep 
+----------
+ 
+(1 row)
+
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+psql:tool/db/security_test.sql:821: NOTICE:  refused, as it should be — a practice set sent as a challenge: a practice set challenges nobody
+ must_fail 
+-----------
+ 
+(1 row)
+
+INSERT 0 1
+RESET
+ check_that 
+------------
+ 
+(1 row)
+
+              set_config              
+--------------------------------------
+ a1bb67c7-40b0-4a83-83da-a3fd025d5521
+(1 row)
+
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ check_that 
+------------
+ 
+(1 row)
+
+RESET
+ pg_sleep 
+----------
+ 
+(1 row)
+
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+INSERT 0 1
+psql:tool/db/security_test.sql:844: NOTICE:  refused, as it should be — racing a practice set: a practice set is not raced
+ must_fail 
+-----------
+ 
+(1 row)
+
+RESET
+ check_that 
+------------
+ 
+(1 row)
+
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+UPDATE 1
+psql:tool/db/security_test.sql:880: NOTICE:  refused, as it should be — a cover that is not one of the scenes: new row for relation "profiles" violates check constraint "profiles_cover_known"
+ must_fail 
+-----------
+ 
+(1 row)
+
+psql:tool/db/security_test.sql:883: NOTICE:  refused, as it should be — a cover from another account's folder: new row for relation "profiles" violates check constraint "profiles_cover_known"
+ must_fail 
+-----------
+ 
+(1 row)
+
+psql:tool/db/security_test.sql:886: NOTICE:  refused, as it should be — a lifter too big to be one: new row for relation "profiles" violates check constraint "profiles_lifter_small"
+ must_fail 
+-----------
+ 
+(1 row)
+
+RESET
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ check_that 
+------------
+ 
+(1 row)
+
+ check_that 
+------------
+ 
+(1 row)
+
+RESET
+INSERT 0 1
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+ check_that 
+------------
+ 
+(1 row)
+
+RESET
+DELETE 1
+ check_that 
+------------
+ 
+(1 row)
+
+ check_that 
+------------
+ 
+(1 row)
+
+ as_user 
+---------
+ 
+(1 row)
+
+SET
+psql:tool/db/security_test.sql:931: NOTICE:  refused, as it should be — signed out, a lifter's profile: permission denied for function lifter_profile
+ must_fail 
+-----------
+ 
+(1 row)
+
+psql:tool/db/security_test.sql:933: NOTICE:  refused, as it should be — signed out, somebody's recorded set: permission denied for function find_opponent_set
+ must_fail 
+-----------
+ 
+(1 row)
+
+psql:tool/db/security_test.sql:935: NOTICE:  refused, as it should be — signed out, whether a name is taken: permission denied for function username_available
+ must_fail 
+-----------
+ 
+(1 row)
+
+psql:tool/db/security_test.sql:936: NOTICE:  refused, as it should be — signed out, the profiles table: permission denied for table profiles
+ must_fail 
+-----------
+ 
+(1 row)
+
+psql:tool/db/security_test.sql:938: NOTICE:  refused, as it should be — signed out, how people look: permission denied for function pro_looks
+ must_fail 
+-----------
+ 
+(1 row)
+
+ count 
+-------
+     0
+(1 row)
+
+RESET
+           result           
+----------------------------
+ all security checks passed
+(1 row)
+
