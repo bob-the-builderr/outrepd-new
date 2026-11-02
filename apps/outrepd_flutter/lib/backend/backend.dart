@@ -1202,6 +1202,15 @@ abstract interface class Backend {
   Future<List<MonthRow>> weekBoard({int limit = 100, String? country});
   Future<MonthPlace?> myWeekPlace({String? country});
 
+  /// The week's board, or with [month] the month's, among this account and
+  /// its friends only (supabase/seasons.sql friends_board; pick B,
+  /// 2026-11-02): the whole board's rules, but everyone in the circle on
+  /// it, a friend with no ranked duel yet at 0.
+  Future<List<MonthRow>> friendsBoard({bool month = false});
+
+  /// The rating board among this account and its friends only.
+  Future<List<BoardRow>> friendsLeaderboard();
+
   /// This account's awards from finished months, newest first.
   Future<List<SeasonAward>> mySeasonAwards();
 
@@ -1562,6 +1571,12 @@ class NoBackend implements Backend {
 
   @override
   Future<MonthPlace?> myWeekPlace({String? country}) async => null;
+
+  @override
+  Future<List<MonthRow>> friendsBoard({bool month = false}) async => const [];
+
+  @override
+  Future<List<BoardRow>> friendsLeaderboard() async => const [];
 
   @override
   Future<List<SeasonAward>> mySeasonAwards() async => const [];

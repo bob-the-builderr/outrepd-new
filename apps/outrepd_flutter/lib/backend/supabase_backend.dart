@@ -257,7 +257,14 @@ class SupabaseBackend implements Backend {
         'in_div_idx': divIdx,
       },
     );
+    return _boardRows(rows);
+  }
 
+  @override
+  Future<List<BoardRow>> friendsLeaderboard() async =>
+      _boardRows(await _db.rpc<List<dynamic>>('friends_leaderboard'));
+
+  List<BoardRow> _boardRows(List<dynamic> rows) {
     return [
       for (final row in rows.cast<Map<String, dynamic>>())
         BoardRow(
@@ -311,15 +318,27 @@ class SupabaseBackend implements Backend {
     );
   }
 
+  @override
+  Future<List<MonthRow>> friendsBoard({bool month = false}) async =>
+      _monthRows(
+        await _db.rpc<List<dynamic>>(
+          'friends_board',
+          params: {'in_month': month},
+        ),
+      );
+
   Future<List<MonthRow>> _seasonBoard(
     String function,
     int limit,
     String? country,
-  ) async {
-    final rows = await _db.rpc<List<dynamic>>(
+  ) async => _monthRows(
+    await _db.rpc<List<dynamic>>(
       function,
       params: {'in_country': country, 'limit_to': limit},
-    );
+    ),
+  );
+
+  List<MonthRow> _monthRows(List<dynamic> rows) {
     return [
       for (final row in rows.cast<Map<String, dynamic>>())
         MonthRow(

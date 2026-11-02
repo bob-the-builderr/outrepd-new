@@ -617,6 +617,45 @@ select must_fail('reading week_points directly',
   'select * from week_points(now() - interval ''7 days'')');
 reset role;
 
+-- ── the boards among friends ──────────────────────────────────────────────────
+
+-- A and B are friends; D, whom A has duelled all day, is not, nor is C.
+select as_user(:'A'); set role authenticated;
+select check_that(not exists (select 1 from friends_board()
+                               where id not in (:'A', :'B')),
+  'the week among friends shows somebody who is not a friend');
+select check_that(not exists (select 1 from friends_board(true)
+                               where id not in (:'A', :'B')),
+  'the month among friends shows somebody who is not a friend');
+select check_that(not exists (select 1 from friends_leaderboard()
+                               where id not in (:'A', :'B')),
+  'the rating among friends shows somebody who is not a friend');
+-- The caller is on their own circle's board, by the whole board's rules,
+-- with the points the whole board gives them.
+select check_that(
+  (select placements_done < 5 or not show_on_board from profiles where id = :'A')
+  or exists (select 1 from friends_board(true) where id = :'A'),
+  'the month among friends leaves out the one asking');
+select check_that(not exists (
+  select 1 from friends_board(true)
+   where id = :'A' and points <> (select points from my_month_place())),
+  'the month among friends counts other points than the month''s');
+select check_that(not exists (
+  select 1 from friends_board()
+   where id = :'A' and points <> (select points from my_week_place())),
+  'the week among friends counts other points than the week''s');
+select check_that(not exists (
+  select 1 from (select points, lag(points) over (order by place) as before
+                   from friends_board(true)) b
+   where b.before < b.points), 'the month among friends is out of order');
+select must_fail('reading the circle directly', 'select * from my_circle()');
+reset role;
+select as_user(:'C'); set role authenticated;
+select check_that(not exists (select 1 from friends_board()
+                               where id in (:'A', :'B', :'D')),
+  'a lifter with no friends sees other people on their friends board');
+reset role;
+
 -- ── the live search ───────────────────────────────────────────────────────────
 
 select check_that(live_reach(0) = 2 and live_reach(7) = 6 and live_reach(20) = 12,

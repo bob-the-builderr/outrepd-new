@@ -49,6 +49,10 @@ enum _Scope {
   topPlayers,
 }
 
+/// Whose boards, from the button by the title: everybody's, the country's,
+/// or only this account and its friends' (pick B, 2026-11-02).
+enum _Place { world, country, friends }
+
 /// How long a board is shown before it is asked for again while somebody is
 /// looking at it: places move every time anybody finishes a duel, and the
 /// board is where people watch them move.
@@ -89,18 +93,21 @@ class _RanksScreenState extends State<RanksScreen> {
   /// hundred rows the board shows.
   int? _globalPlace;
 
-  /// The country's boards rather than the world's: every board, the week and
-  /// the month as well as Overall (the user, 2026-10-29).
-  bool _inCountry = false;
+  /// Whose boards: every board follows it, the week and the month as well
+  /// as Overall (the country, 2026-10-29; friends, pick B 2026-11-02).
+  _Place _place = _Place.world;
 
-  /// The country the boards are filtered to, or null for the world's. None
-  /// when the account has no country: there is no country board to show.
-  String? get _country => _inCountry ? backend.me?.country : null;
+  /// The country the boards are filtered to, or null. None when the account
+  /// has no country: there is no country board to show.
+  String? get _country =>
+      _place == _Place.country ? backend.me?.country : null;
 
-  void _switchCountry(bool inCountry) {
-    if (inCountry == _inCountry) return;
+  bool get _friends => _place == _Place.friends;
+
+  void _switchPlace(_Place place) {
+    if (place == _place) return;
     setState(() {
-      _inCountry = inCountry;
+      _place = place;
       // Every board was the other place's: none of it stands.
       _boards.clear();
       _fetchedAt.clear();
@@ -197,16 +204,19 @@ class _RanksScreenState extends State<RanksScreen> {
       _loading = true;
       if (!quiet) _error = null;
     });
-    // An answer for the other place, after the toggle moved: dropped.
-    bool stale() => !mounted || country != _country;
+    final friends = _friends;
+    // An answer for the other place, after the button moved: dropped.
+    bool stale() => !mounted || country != _country || friends != _friends;
     try {
       if (scope == _Scope.thisWeek) {
         final place = await backend.myWeekPlace(country: country);
-        final rows = await backend.weekBoard(country: country);
+        final rows = friends
+            ? await backend.friendsBoard()
+            : await backend.weekBoard(country: country);
         if (stale()) return;
         unawaited(Looks.instance.fetch(rows.map((row) => row.id)));
         setState(() {
-          _weekPlace = place;
+          _weekPlace = friends ? _amongFriends(place, rows) : place;
           _week = rows;
           _fetchedAt[scope] = clock.now();
           _loading = false;
@@ -218,10 +228,12 @@ class _RanksScreenState extends State<RanksScreen> {
         // The place first: asking for it is what closes a month that has
         // ended, so the board read after it is already the new month's.
         final place = await backend.myMonthPlace(country: country);
-        final rows = await backend.monthBoard(country: country);
+        final rows = friends
+            ? await backend.friendsBoard(month: true)
+            : await backend.monthBoard(country: country);
         // Nobody on it yet: last month's winners stand in, on the world's
         // board, the one with awards.
-        final winners = rows.isEmpty && country == null
+        final winners = rows.isEmpty && country == null && !friends
             ? await _readLastMonth()
             : null;
         if (stale()) return;
@@ -230,7 +242,7 @@ class _RanksScreenState extends State<RanksScreen> {
           ...?winners?.rows.map((row) => row.id),
         ]));
         setState(() {
-          _monthPlace = place;
+          _monthPlace = friends ? _amongFriends(place, rows) : place;
           _month = rows;
           _lastMonth = winners;
           _fetchedAt[scope] = clock.now();
@@ -239,9 +251,12 @@ class _RanksScreenState extends State<RanksScreen> {
         });
         return;
       }
-      final rows = await backend.leaderboard(country: country);
+      final rows = friends
+          ? await backend.friendsLeaderboard()
+          : await backend.leaderboard(country: country);
       // Below the hundred shown, the place still is one: asked for apart.
-      final global = !rows.any((row) => row.id == backend.me?.id)
+      // Among friends everybody is on the page.
+      final global = !friends && !rows.any((row) => row.id == backend.me?.id)
           ? await backend.boardPosition(country: country)
           : null;
       if (stale()) return;
@@ -260,6 +275,23 @@ class _RanksScreenState extends State<RanksScreen> {
         _loading = false;
       });
     }
+  }
+
+  /// This account among its friends: the whole board's answer for when the
+  /// race ends and what it has scored, the place counted on the circle's
+  /// own rows.
+  MonthPlace? _amongFriends(MonthPlace? whole, List<MonthRow> rows) {
+    if (whole == null) return null;
+    final id = backend.me?.id;
+    return MonthPlace(
+      season: whole.season,
+      endsAt: whole.endsAt,
+      place: rows.where((row) => row.id == id).firstOrNull?.place,
+      ofTotal: rows.length,
+      points: whole.points,
+      wins: whole.wins,
+      played: whole.played,
+    );
   }
 
   void _switchTo(_Scope scope) {
@@ -373,14 +405,14 @@ class _RanksScreenState extends State<RanksScreen> {
                       style: kPageTitle.copyWith(color: context.colors.text),
                     ),
                   ),
-                  // The world's boards or the country's: a button by the
-                  // title rather than a row of its own (pick A, 2026-11-02).
-                  // Only with a country to show.
-                  if (backend.available && backend.me?.country != null)
+                  // Whose boards: a button by the title rather than a row of
+                  // its own (pick A, 2026-11-02), with friends beside the
+                  // world and the country (pick B).
+                  if (backend.available)
                     _PlacePicker(
-                      country: backend.me!.country!,
-                      inCountry: _inCountry,
-                      onChanged: _switchCountry,
+                      country: backend.me?.country,
+                      place: _place,
+                      onChanged: _switchPlace,
                     ),
                 ],
               ),
@@ -425,6 +457,7 @@ class _RanksScreenState extends State<RanksScreen> {
                       lastMonth: week ? null : _lastMonth,
                       onRefresh: _load,
                       country: countryLabel,
+                      friends: _friends,
                     )
                   : entries.isEmpty
                   ? EmptyState(
@@ -464,7 +497,9 @@ class _RanksScreenState extends State<RanksScreen> {
             // to pin. An unranked account has no place on this board, and a
             // row inventing one sat directly under "No rank yet" claiming a
             // rank, a record and a position in the same breath.
-            if (me.isRanked && !(month && nothingYet))
+            // Not among friends: there this account is a row of the list,
+            // picked out where it stands.
+            if (me.isRanked && !(month && nothingYet) && !_friends)
               Padding(
                 padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
                 child: month
@@ -495,31 +530,38 @@ class _RanksScreenState extends State<RanksScreen> {
 
 // ──────────────────────────────── the controls ───────────────────────────────
 
-/// The world or this account's country, for every board under it: a button
-/// by the title that opens the choice (pick A, 2026-11-02).
+/// Whose boards, for every board under it: the world, this account's
+/// country, or its friends — a button by the title that opens the choice
+/// (pick A, 2026-11-02; friends, pick B).
 class _PlacePicker extends StatelessWidget {
   const _PlacePicker({
     required this.country,
-    required this.inCountry,
+    required this.place,
     required this.onChanged,
   });
 
-  final String country;
-  final bool inCountry;
-  final ValueChanged<bool> onChanged;
+  /// This account's country; null leaves the country out of the choice.
+  final String? country;
+  final _Place place;
+  final ValueChanged<_Place> onChanged;
+
+  String _label(BuildContext context, _Place of) => switch ((of, country)) {
+    (_Place.country, final code?) =>
+      '${countryFlag(code)} ${countryName(context, code)}',
+    (_Place.friends, _) => '👥 ${L.of(context).tabFriends}',
+    _ => '🌍 ${L.of(context).global}',
+  };
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final world = '🌍 ${L.of(context).global}';
-    final home = '${countryFlag(country)} ${countryName(context, country)}';
     return Material(
       color: colors.surface,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         key: const Key('boardsPlace'),
         borderRadius: BorderRadius.circular(12),
-        onTap: () => _pick(context, world, home),
+        onTap: () => _pick(context),
         child: Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(12, 8, 8, 8),
           child: Row(
@@ -528,7 +570,7 @@ class _PlacePicker extends StatelessWidget {
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 150),
                 child: Text(
-                  inCountry ? home : world,
+                  _label(context, place),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -547,8 +589,8 @@ class _PlacePicker extends StatelessWidget {
     );
   }
 
-  Future<void> _pick(BuildContext context, String world, String home) async {
-    final picked = await showModalBottomSheet<bool>(
+  Future<void> _pick(BuildContext context) async {
+    final picked = await showModalBottomSheet<_Place>(
       context: context,
       backgroundColor: context.colors.surface,
       showDragHandle: true,
@@ -561,22 +603,23 @@ class _PlacePicker extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              for (final (value, label, key) in [
-                (false, world, 'boardsWorld'),
-                (true, home, 'boardsCountry'),
+              for (final (value, key) in [
+                (_Place.world, 'boardsWorld'),
+                if (country != null) (_Place.country, 'boardsCountry'),
+                (_Place.friends, 'boardsFriends'),
               ])
                 ListTile(
                   key: Key(key),
                   contentPadding: const EdgeInsets.symmetric(horizontal: 24),
                   title: Text(
-                    label,
+                    _label(context, value),
                     style: TextStyle(
                       color: context.colors.text,
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  trailing: value == inCountry
+                  trailing: value == place
                       ? Icon(Icons.check, color: context.colors.brand)
                       : null,
                   onTap: () => Navigator.pop(context, value),
@@ -829,6 +872,7 @@ class _RankRow extends StatelessWidget {
       child: _RowCard(
         grouped: true,
         pro: Looks.instance.pro(entry.id),
+        mine: entry.id.isNotEmpty && entry.id == backend.me?.id,
         child: Row(
           children: [
             _Position(position: position),
@@ -953,6 +997,7 @@ class _RowCard extends StatelessWidget {
     this.borderWidth = 0.5,
     this.pro = false,
     this.grouped = false,
+    this.mine = false,
   });
 
   final Widget child;
@@ -970,8 +1015,27 @@ class _RowCard extends StatelessWidget {
   /// card set into the board's, as tall as the rows round it.
   final bool grouped;
 
+  /// This account's own row in a board's card: a cream edge round it, as
+  /// tall as the rows round it (4 + 1.5 + 6.5 = 12). Among friends it is
+  /// not pinned below, it is here (pick B, 2026-11-02).
+  final bool mine;
+
   @override
   Widget build(BuildContext context) {
+    if (grouped && !pro && mine) {
+      return Padding(
+        padding: const EdgeInsets.all(4),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 7.5, vertical: 6.5),
+          decoration: BoxDecoration(
+            color: context.colors.brand.withValues(alpha: 0.06),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: context.colors.brand, width: 1.5),
+          ),
+          child: child,
+        ),
+      );
+    }
     if (grouped && !pro) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 12),
@@ -1299,6 +1363,7 @@ class _MonthBoard extends StatelessWidget {
     required this.onRefresh,
     this.week = false,
     this.country,
+    this.friends = false,
     this.lastMonth,
   });
 
@@ -1316,13 +1381,17 @@ class _MonthBoard extends StatelessWidget {
   /// on it: those are the world's month (2026-10-29).
   final String? country;
 
+  /// Among this account and its friends: no awards on it either.
+  final bool friends;
+
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
     final podium = rows.take(3).toList();
     final rest = rows.skip(3).toList();
     // Where the awards stop: only on the world's month.
-    final awardLine = !week && country == null;
+    final awards = country == null && !friends;
+    final awardLine = !week && awards;
 
     return RefreshIndicator(
       onRefresh: onRefresh,
@@ -1356,7 +1425,7 @@ class _MonthBoard extends StatelessWidget {
                   child: _MonthRankRow(
                     row: row,
                     week: week,
-                    awards: country == null,
+                    awards: awards,
                   ),
                 ),
               ),
@@ -1753,6 +1822,7 @@ class _MonthRankRow extends StatelessWidget {
       child: _RowCard(
         grouped: true,
         pro: Looks.instance.pro(row.id),
+        mine: row.id.isNotEmpty && row.id == backend.me?.id,
         child: Row(
           children: [
             _Position(position: row.place),

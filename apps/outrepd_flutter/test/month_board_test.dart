@@ -74,6 +74,20 @@ class _Month extends NoBackend {
   Future<void> markSeasonAwardsSeen() async => markedSeen++;
 }
 
+/// A circle of four: the boards among friends.
+class _Friends extends _Month {
+  _Friends({required super.rows, super.place});
+
+  /// What was asked for, in order: the month's board or the week's.
+  final asked = <bool>[];
+
+  @override
+  Future<List<MonthRow>> friendsBoard({bool month = false}) async {
+    asked.add(month);
+    return rows.take(4).toList();
+  }
+}
+
 Widget _app(Widget home, {double scale = 1.0, Locale locale = const Locale('en')}) =>
     MaterialApp(
       theme: buildTheme(Brightness.dark),
@@ -114,6 +128,39 @@ void main() {
     await tester.tap(find.byKey(const Key('lengthMonth')));
     await tester.pumpAndSettle();
   }
+
+  group('among friends', () {
+    testWidgets('the button by the title narrows every board to the circle',
+        (tester) async {
+      phone(tester);
+      ranked();
+      final server = _Friends(rows: _board(13), place: 14);
+      backend = server;
+      await tester.pumpWidget(_app(const RanksScreen()));
+      await tester.pumpAndSettle();
+      expect(find.text('YOU'), findsOneWidget);
+
+      await tester.tap(find.byKey(const Key('boardsPlace')));
+      await tester.pumpAndSettle();
+      // No country on this account: the world and friends only.
+      expect(find.byKey(const Key('boardsCountry')), findsNothing);
+      await tester.tap(find.byKey(const Key('boardsFriends')));
+      await tester.pumpAndSettle();
+
+      // The circle's four, the week first; nobody pinned below, since there
+      // this account is a row of the list.
+      expect(server.asked, [false]);
+      expect(find.text('nour_x'), findsOneWidget);
+      expect(find.text('omarpush'), findsNothing);
+      expect(find.text('YOU'), findsNothing);
+
+      await tester.tap(find.byKey(const Key('lengthMonth')));
+      await tester.pumpAndSettle();
+      expect(server.asked, [false, true]);
+      // No awards among friends: fourth is a rank there, not Top 10.
+      expect(find.text('Top 10'), findsNothing);
+    });
+  });
 
   group('the week board', () {
     testWidgets('opens first, with the switch to the month', (tester) async {

@@ -748,6 +748,112 @@ begin
 end;
 $$;
 
+-- ── among friends ─────────────────────────────────────────────────────────────
+
+-- The caller and everyone they are friends with: the circle the boards'
+-- Friends choice is drawn from (pick B, 2026-11-02).
+create or replace function my_circle()
+returns setof uuid
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select auth.uid()
+  union
+  select case when f.requester = auth.uid() then f.addressee
+              else f.requester end
+    from friendships f
+   where f.accepted_at is not null
+     and (f.requester = auth.uid() or f.addressee = auth.uid());
+$$;
+
+-- The week's board, or with in_month the month's, among the caller and
+-- their friends: the whole board's rules and order, but everyone in the
+-- circle on it — a friend with no ranked duel yet at 0, so the race shows
+-- who has not started. A circle is small: ranked in full.
+create or replace function friends_board(in_month boolean default false)
+returns table (
+  place int,
+  id uuid,
+  username text,
+  tier_idx int,
+  div_idx int,
+  points int,
+  wins int,
+  played int,
+  avatar_url text,
+  xp int
+)
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if in_month then
+    perform season_points_refresh();
+    return query
+    select (row_number() over (order by coalesce(sp.points, 0) desc,
+                                        coalesce(sp.wins, 0) desc,
+                                        p.username))::int,
+           p.id, p.username, p.tier_idx, p.div_idx,
+           coalesce(sp.points, 0), coalesce(sp.wins, 0),
+           coalesce(sp.played, 0), p.avatar_url, p.xp
+      from profiles p
+      left join season_points sp
+        on sp.profile_id = p.id and sp.season = season_of(now())
+     where p.id in (select c from my_circle() c)
+       and p.placements_done >= 5
+       and p.show_on_board
+     order by 1;
+  else
+    return query
+    select (row_number() over (order by coalesce(w.points, 0) desc,
+                                        coalesce(w.wins, 0) desc,
+                                        p.username))::int,
+           p.id, p.username, p.tier_idx, p.div_idx,
+           coalesce(w.points, 0), coalesce(w.wins, 0),
+           coalesce(w.played, 0), p.avatar_url, p.xp
+      from profiles p
+      left join week_points(week_start(now())) w on w.profile_id = p.id
+     where p.id in (select c from my_circle() c)
+       and p.placements_done >= 5
+       and p.show_on_board
+     order by 1;
+  end if;
+end;
+$$;
+
+-- The rating board among the caller and their friends: leaderboard()'s
+-- rules and order, the circle only.
+create or replace function friends_leaderboard()
+returns table (
+  id uuid,
+  username text,
+  tier_idx int,
+  div_idx int,
+  lp int,
+  wins int,
+  losses int,
+  avatar_url text,
+  xp int
+)
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select p.id, p.username, p.tier_idx, p.div_idx, p.lp, p.wins, p.losses,
+         p.avatar_url, p.xp
+    from profiles p
+   where p.id in (select c from my_circle() c)
+     and p.placements_done >= 5
+     and p.show_on_board
+     and p.last_seen > now() - interval '30 days'
+   order by p.tier_idx desc, p.div_idx desc, p.lp desc,
+            p.wins desc, p.losses asc, p.username;
+$$;
+
 revoke all on function board_points(boolean, int, uuid) from public, anon, authenticated;
 revoke all on function season_points_from_duels(date) from public, anon, authenticated;
 revoke all on function season_points_rebuild(date) from public, anon, authenticated;
@@ -774,3 +880,8 @@ revoke all on function lifter_season_awards(uuid) from public, anon;
 grant execute on function lifter_season_awards(uuid) to authenticated;
 revoke all on function last_month_winners() from public, anon;
 grant execute on function last_month_winners() to authenticated;
+revoke all on function my_circle() from public, anon, authenticated;
+revoke all on function friends_board(boolean) from public, anon;
+grant execute on function friends_board(boolean) to authenticated;
+revoke all on function friends_leaderboard() from public, anon;
+grant execute on function friends_leaderboard() to authenticated;
