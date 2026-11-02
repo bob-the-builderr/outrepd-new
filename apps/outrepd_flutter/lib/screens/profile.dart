@@ -876,15 +876,7 @@ class _Recent extends StatelessWidget {
             textBaseline: TextBaseline.alphabetic,
             children: [
               Expanded(
-                child: Text(
-                  l.recent.toUpperCase(),
-                  style: TextStyle(
-                    color: context.colors.text,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 0.5,
-                  ),
-                ),
+                child: Text(l.recent, style: sectionLabelStyle(context)),
               ),
               InkWell(
                 onTap: onViewAll,

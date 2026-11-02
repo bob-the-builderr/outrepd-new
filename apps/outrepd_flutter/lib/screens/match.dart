@@ -97,8 +97,16 @@ class MatchScreen extends StatelessWidget {
                   const _PlacementActions()
                 else ...[
                   const _Actions(),
-                  const SizedBox(height: 16),
-                  const _WeekRaceCard(),
+                  const SizedBox(height: 18),
+                  // Two tiles side by side (direction B, 2026-11-02): one
+                  // glance takes in both, and the home no longer scrolls.
+                  const Row(
+                    children: [
+                      Expanded(child: AdventureCard(compact: true)),
+                      SizedBox(width: 12),
+                      Expanded(child: _WeekRaceCard()),
+                    ],
+                  ),
                 ],
                 const Spacer(flex: 2),
                       ],
@@ -509,9 +517,6 @@ class _Actions extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(color: context.colors.muted, fontSize: 14),
         ),
-
-        const SizedBox(height: 18),
-        const AdventureCard(),
       ],
     );
   }
@@ -755,60 +760,73 @@ class _WeekRaceCardState extends State<_WeekRaceCard> {
     return l.weekToTop3(localNumber(context, gap < 1 ? 1 : gap));
   }
 
+  /// A tile beside Adventure's (direction B, 2026-11-02): the place large,
+  /// then the time left and how far the next places are. Until the server
+  /// answers, the tile stands with a dash, so Adventure keeps its half.
   @override
   Widget build(BuildContext context) {
     final mine = _mine;
-    if (mine == null) return const SizedBox.shrink();
     final l = L.of(context);
     final colors = context.colors;
-    final place = mine.place;
+    final place = mine?.place;
 
     return Material(
       key: const Key('weekRaceCard'),
       color: colors.surface,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: BorderRadius.circular(16),
       child: InkWell(
         onTap: () => AppShell.goToRanks(context),
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(16),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: colors.border, width: 0.5),
-          ),
-          child: Row(
+          height: AdventureCard.tileHeight,
+          padding: const EdgeInsets.fromLTRB(14, 12, 12, 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                place == null ? '–' : '#${localNumber(context, place)}',
-                style: const TextStyle(
-                  color: AppColors.gold,
-                  fontSize: 28,
-                  fontWeight: FontWeight.w800,
+                l.boardThisWeek,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: colors.muted,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      l.weekRaceTitle,
-                      style: TextStyle(
-                        color: colors.text,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      '${monthLeft(context, mine.endsAt, clock.now())}'
-                      ' · ${_hint(context, l, mine)}',
-                      style: TextStyle(color: colors.muted, fontSize: 14),
-                    ),
-                  ],
+              const SizedBox(height: 6),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
+                  place == null ? '–' : '#${localNumber(context, place)}',
+                  style: const TextStyle(
+                    color: AppColors.gold,
+                    fontSize: 34,
+                    fontWeight: FontWeight.w800,
+                    height: 1.05,
+                  ),
                 ),
               ),
-              Icon(Icons.chevron_right, color: colors.muted),
+              const Spacer(),
+              if (mine != null) ...[
+                Text(
+                  monthLeft(context, mine.endsAt, clock.now()),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: colors.text,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  _hint(context, l, mine),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: colors.muted, fontSize: 11.5),
+                ),
+              ],
             ],
           ),
         ),

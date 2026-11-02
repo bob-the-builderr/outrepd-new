@@ -212,7 +212,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 NavRow(
                   icon: Icons.person_add_alt_1,
                   label: l.createAccountTitle,
-                  caption: l.createAccountBody,
                   onTap: () => _open(const AuthEntryScreen()),
                   last: true,
                 ),
@@ -232,14 +231,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 key: const Key('soundsSwitch'),
                 icon: Icons.volume_up_outlined,
                 label: l.soundsLabel,
-                caption: l.soundsHint,
                 value: settings.sounds,
                 onChanged: (v) => _set(() => settings.sounds = v),
               ),
               SwitchRow(
                 icon: Icons.accessibility_new,
                 label: l.showSkeleton,
-                caption: l.showSkeletonHint,
                 value: settings.showSkeleton,
                 onChanged: (v) => _set(() => settings.showSkeleton = v),
                 last: true,

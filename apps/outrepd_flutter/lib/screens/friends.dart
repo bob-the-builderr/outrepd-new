@@ -283,12 +283,9 @@ class _FriendsScreenState extends State<FriendsScreen> {
                           children: [
                             Expanded(
                               child: Text(
-                                l.tabFriends.toUpperCase(),
-                                style: TextStyle(
+                                l.tabFriends,
+                                style: kPageTitle.copyWith(
                                   color: context.colors.text,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600,
-                                  letterSpacing: 0.5,
                                 ),
                               ),
                             ),
@@ -335,21 +332,13 @@ class _FriendsScreenState extends State<FriendsScreen> {
                         _SectionLabel(
                           l.onlineNowCount(localNumber(context, online.length)),
                         ),
-                        for (final (i, friend) in online.indexed)
-                          RiseIn(
-                            delay: staggered(i),
-                            child: _FriendRow(friend: friend),
-                          ),
+                        _FriendGroup(friends: online),
                       ],
                       if (offline.isNotEmpty) ...[
                         _SectionLabel(
                           l.offlineCount(localNumber(context, offline.length)),
                         ),
-                        for (final (i, friend) in offline.indexed)
-                          RiseIn(
-                            delay: staggered(online.length + i),
-                            child: _FriendRow(friend: friend),
-                          ),
+                        _FriendGroup(friends: offline, from: online.length),
                       ],
                       // A way to bring somebody in, for everyone. The yearly
                       // plan's "give a friend 7 days free" card went with the
@@ -927,19 +916,49 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 18, bottom: 9, left: 4),
-      child: Text(
-        text.toUpperCase(),
-        style: TextStyle(
-          color: context.colors.muted,
-          fontSize: 13,
-          letterSpacing: 0.5,
-        ),
-      ),
+      child: Text(text, style: sectionLabelStyle(context)),
     );
   }
 }
 
 // ─────────────────────────────── friend rows ─────────────────────────────────
+
+/// One section's friends in one card, a hairline between each (direction B,
+/// 2026-11-02). It was a card for every friend, which crowded the list.
+class _FriendGroup extends StatelessWidget {
+  const _FriendGroup({required this.friends, this.from = 0});
+
+  final List<Friend> friends;
+
+  /// How many rows came before, so the rise-in runs on down the screen.
+  final int from;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: context.colors.surface,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        children: [
+          for (final (i, friend) in friends.indexed) ...[
+            if (i > 0)
+              Padding(
+                padding: const EdgeInsetsDirectional.only(start: 74),
+                child: Divider(height: 1, thickness: 0.5, color: context.colors.border),
+              ),
+            RiseIn(
+              delay: staggered(from + i),
+              child: _FriendRow(friend: friend),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
 
 class _FriendRow extends StatelessWidget {
   const _FriendRow({required this.friend});
@@ -950,14 +969,11 @@ class _FriendRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = L.of(context);
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 7),
-      child: Opacity(
+    return Opacity(
         // Offline rows step back rather than disappear: they are still people
         // you can invite, just not people you can challenge this minute.
         opacity: friend.online ? 1 : 0.6,
         child: InkWell(
-          borderRadius: BorderRadius.circular(13),
           // A demo row has no real id to fetch a profile for, so it opens a
           // sample card instead of a sheet that can only show an error.
           onTap: () => showLifterPeek(
@@ -968,13 +984,9 @@ class _FriendRow extends StatelessWidget {
                 ? demoLifterProfile(friend.username)
                 : null,
           ),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-            decoration: BoxDecoration(
-              color: context.colors.surface,
-              borderRadius: BorderRadius.circular(13),
-              border: Border.all(color: context.colors.border, width: 0.5),
-            ),
+          // The card is the section's (_FriendGroup); the row is only a row.
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
             child: Row(
               children: [
                 _Avatar(friend: friend),
@@ -990,6 +1002,7 @@ class _FriendRow extends StatelessWidget {
                         style: TextStyle(
                           color: context.colors.text,
                           fontSize: 15,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       const SizedBox(height: 2),
@@ -1019,7 +1032,6 @@ class _FriendRow extends StatelessWidget {
             ),
           ),
         ),
-      ),
     );
   }
 
@@ -1115,15 +1127,14 @@ class _ActionButton extends StatelessWidget {
         divIdx: friend.divIdx,
         avatarUrl: friend.avatarUrl,
       ),
-      borderRadius: BorderRadius.circular(11),
+      borderRadius: BorderRadius.circular(12),
+      // One family of button (direction B): cream for Challenge, the quiet
+      // filled one for Invite — no box drawn round a word.
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(11),
-          color: online ? context.colors.brand : null,
-          border: online
-              ? null
-              : Border.all(color: context.colors.border, width: 0.5),
+          borderRadius: BorderRadius.circular(12),
+          color: online ? context.colors.brand : context.colors.surfaceRaised,
         ),
         child: Text(
           online ? l.challenge : l.invite,
@@ -1132,6 +1143,7 @@ class _ActionButton extends StatelessWidget {
             // which is the only thing dark enough to read on `brand`.
             color: online ? context.colors.background : context.colors.text,
             fontSize: 13,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ),

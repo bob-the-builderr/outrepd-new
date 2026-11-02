@@ -121,7 +121,8 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(find.text('RANKS'), findsOneWidget);
+    // The title, as the language writes it (and the tab's own label).
+    expect(find.text('Ranks'), findsWidgets);
     expect(find.text('Find a match'), findsNothing);
   });
 

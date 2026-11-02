@@ -40,8 +40,9 @@ class SettingsSection extends StatelessWidget {
   }
 }
 
-/// Shared chrome for a settings row: icon, label, optional caption, and a
-/// hairline unless it closes the section.
+/// Shared chrome for a settings row: the icon in a small rounded square, the
+/// label, an optional caption, and a hairline from the label on unless it
+/// closes the section (direction B, 2026-11-02).
 class RowFrame extends StatelessWidget {
   const RowFrame({
     super.key,
@@ -68,41 +69,69 @@ class RowFrame extends StatelessWidget {
 
     return InkWell(
       onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 13),
-        decoration: BoxDecoration(
-          border: last
-              ? null
-              : Border(bottom: BorderSide(color: context.colors.surfaceRaised)),
-        ),
-        child: Row(
-          children: [
-            Icon(
-              icon,
-              size: 20,
-              color: danger ? AppColors.loss : context.colors.muted,
-            ),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(label, style: context.type.body.copyWith(color: tint)),
-                  if (caption != null) ...[
-                    const SizedBox(height: 2),
-                    Text(
-                      caption!,
-                      style: context.type.label.copyWith(
-                        color: context.colors.muted,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Row(
+              children: [
+                Container(
+                  width: 30,
+                  height: 30,
+                  decoration: BoxDecoration(
+                    color: danger
+                        ? AppColors.loss.withValues(alpha: 0.14)
+                        : context.colors.surfaceRaised,
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                  child: Icon(
+                    icon,
+                    size: 17,
+                    color: danger ? AppColors.loss : context.colors.muted,
+                  ),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        label,
+                        style: TextStyle(
+                          color: tint,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                  ],
-                ],
+                      if (caption != null) ...[
+                        const SizedBox(height: 2),
+                        Text(
+                          caption!,
+                          style: TextStyle(
+                            color: context.colors.muted,
+                            fontSize: 13,
+                            height: 1.35,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+                trailing,
+              ],
+            ),
+          ),
+          if (!last)
+            Padding(
+              padding: const EdgeInsetsDirectional.only(start: 44),
+              child: Divider(
+                height: 1,
+                thickness: 0.5,
+                color: context.colors.border,
               ),
             ),
-            trailing,
-          ],
-        ),
+        ],
       ),
     );
   }

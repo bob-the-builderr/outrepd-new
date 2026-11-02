@@ -39,7 +39,14 @@ Future<void> openAdventureMap(BuildContext context) {
 /// On the Match tab, where the friend button and the practice link were: the
 /// next monster, the level, and how far through the hundred and forty.
 class AdventureCard extends StatelessWidget {
-  const AdventureCard({super.key});
+  const AdventureCard({super.key, this.compact = false});
+
+  /// A tile beside the week's race on the ranked home (direction B,
+  /// 2026-11-02), rather than a card across the screen.
+  final bool compact;
+
+  /// How tall the home's two tiles stand.
+  static const tileHeight = 156.0;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +58,7 @@ class AdventureCard extends StatelessWidget {
         final adventure = Adventure.instance;
         final level = AdventureLevel.of(adventure.current);
         final look = WorldLook.of(level.world);
+        if (compact) return _tile(context, l, adventure, level, look);
 
         return PressScale(
           child: Material(
@@ -143,6 +151,105 @@ class AdventureCard extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+extension on AdventureCard {
+  Widget _tile(
+    BuildContext context,
+    L l,
+    Adventure adventure,
+    AdventureLevel level,
+    WorldLook look,
+  ) {
+    final colors = context.colors;
+    final blocked = !level.canBeHurtBy(adventure.weapon);
+    return PressScale(
+      child: Material(
+        key: const Key('adventureCard'),
+        color: colors.surface,
+        borderRadius: BorderRadius.circular(16),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: () => openAdventureMap(context),
+          child: Container(
+            height: AdventureCard.tileHeight,
+            padding: const EdgeInsets.fromLTRB(14, 12, 10, 12),
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                center: const Alignment(0.8, -0.6),
+                radius: 0.9,
+                colors: [
+                  look.eye.withValues(alpha: 0.2),
+                  look.eye.withValues(alpha: 0),
+                ],
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        l.adventure,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: colors.muted,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    Golem(level: level, size: 46),
+                  ],
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: AlignmentDirectional.topStart,
+                    child: Text(
+                      l.adventureLevelIn(
+                        localNumber(context, level.number),
+                        worldName(l, level.world),
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: colors.text,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w800,
+                        height: 1.25,
+                      ),
+                    ),
+                  ),
+                ),
+                _Track(
+                  share: adventure.clearedCount / kAdventureLevels,
+                  colour: colors.rival,
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  blocked
+                      ? l.needsWeapon(weaponName(l, level.weaponNeeded))
+                      : l.adventureClearedOf(
+                          localNumber(context, adventure.clearedCount),
+                          localNumber(context, kAdventureLevels),
+                        ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: blocked ? colors.rival : colors.muted,
+                    fontSize: 11.5,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

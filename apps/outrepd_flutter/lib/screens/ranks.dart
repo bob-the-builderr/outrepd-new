@@ -389,13 +389,8 @@ class _RanksScreenState extends State<RanksScreen> {
               child: Align(
                 alignment: AlignmentDirectional.centerStart,
                 child: Text(
-                  L.of(context).ranksTitle.toUpperCase(),
-                  style: TextStyle(
-                    color: context.colors.text,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.5,
-                  ),
+                  L.of(context).ranksTitle,
+                  style: kPageTitle.copyWith(color: context.colors.text),
                 ),
               ),
             ),
