@@ -93,10 +93,10 @@ void main() {
 
     // The same style: drawn smaller only where a long number shrinks to fit
     // its third of the card (direction B, 2026-11-02).
-    TextStyle? style(String text) =>
-        (tester.widget<Text>(find.text(text)).textSpan!.children!.first
-                as TextSpan)
-            .style;
+    TextStyle? style(String text) {
+      final span = tester.widget<Text>(find.text(text)).textSpan! as TextSpan;
+      return (span.children!.first as TextSpan).style;
+    }
     expect(style('#64')!.fontSize, style('#1,842')!.fontSize);
     final global = tester.getRect(find.text('#1,842'));
     final local = tester.getRect(find.text('#64'));
