@@ -251,8 +251,8 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
 
   /// This account's place on the month's board before the duel and after
   /// it, for the result screen's "#14 → #11". Null when not known.
-  int? _monthBefore;
-  int? _monthAfter;
+  MonthPlace? _weekBefore;
+  MonthPlace? _weekAfter;
   LiveSession? _session;
 
   /// How long the ranked search looks for somebody live before it races a
@@ -299,7 +299,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
 
     _stage = widget.practice ? _Stage.live : _Stage.searching;
     if (!widget.practice) {
-      unawaited(_readMonthPlace().then((place) => _monthBefore = place));
+      unawaited(_readWeekPlace().then((place) => _weekBefore = place));
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.practice) {
@@ -820,7 +820,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       // A promotion is announced on its own screen first.
       _stage = _afterRecorded;
     });
-    unawaited(_afterMonthPlace());
+    unawaited(_afterWeekPlace());
   }
 
   /// Both on camera at once. The other lifter's count comes from their phone
@@ -927,7 +927,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     _xp = gain.total > 0 ? gain : null;
     if (!mounted) return;
     setState(() => _stage = _afterRecorded);
-    unawaited(_afterMonthPlace());
+    unawaited(_afterWeekPlace());
   }
 
   /// A win, a new level or a new best, with the result in front of them: the
@@ -958,22 +958,23 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   /// After the level: a weapon the fight unlocked, then the result.
   _Stage get _afterLevel => _unlocked != null ? _Stage.weapon : _Stage.result;
 
-  /// Where this account stands on the month's board, or null when there is
-  /// no answer. Only ranked duels move it, so only they ask.
-  Future<int?> _readMonthPlace() async {
+  /// Where this account stands on the week's board, or null when there is
+  /// no answer: read before the duel and after it, so the result can say
+  /// what it added and where it moved you. Only ranked duels move it.
+  Future<MonthPlace?> _readWeekPlace() async {
     if (!backend.available || backend.me == null) return null;
     try {
-      return (await backend.myMonthPlace())?.place;
+      return await backend.myWeekPlace();
     } on Object catch (error) {
-      debugPrint('Could not read the month place: $error');
+      debugPrint('Could not read the week place: $error');
       return null;
     }
   }
 
-  Future<void> _afterMonthPlace() async {
+  Future<void> _afterWeekPlace() async {
     if (_outcome?.rank == null) return;
-    final place = await _readMonthPlace();
-    if (mounted && place != null) setState(() => _monthAfter = place);
+    final place = await _readWeekPlace();
+    if (mounted && place != null) setState(() => _weekAfter = place);
   }
 
   /// Backing out before the camera ever opened — [_confirmQuit] below. No
@@ -1255,8 +1256,8 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           // send a challenge to, so the button can only honestly go back.
           outcome: _outcome,
           live: _live,
-          monthBefore: _monthBefore,
-          monthAfter: _monthAfter,
+          weekBefore: _weekBefore,
+          weekAfter: _weekAfter,
           xp: _xp,
           yourRepTimes: _myRepTimes,
           theirRepTimes:
@@ -2199,8 +2200,8 @@ class _ResultView extends StatelessWidget {
   /// other phone instead of recorded for later.
   final LiveMatch? live;
 
-  final int? monthBefore;
-  final int? monthAfter;
+  final MonthPlace? weekBefore;
+  final MonthPlace? weekAfter;
 
   /// What the session added to the level.
   final XpGain? xp;
@@ -2220,8 +2221,8 @@ class _ResultView extends StatelessWidget {
     required this.onDone,
     required this.leave,
     this.live,
-    this.monthBefore,
-    this.monthAfter,
+    this.weekBefore,
+    this.weekAfter,
     this.xp,
     this.yourRepTimes = const [],
     this.theirRepTimes = const [],
@@ -2244,8 +2245,8 @@ class _ResultView extends StatelessWidget {
       opponent: opponent,
       outcome: outcome,
       live: live,
-      monthBefore: monthBefore,
-      monthAfter: monthAfter,
+      weekBefore: weekBefore,
+      weekAfter: weekAfter,
       xp: xp,
       yourRepTimes: yourRepTimes,
       theirRepTimes: theirRepTimes,

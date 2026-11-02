@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import '../backend/backend.dart';
 import '../l10n/app_localizations.dart';
 import '../push.dart';
+import '../ranking.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'leave_account.dart';
@@ -361,7 +362,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                           label: l.rankLabel,
                           value: summary.ranked
                               ? '${tierLabel(l, summary.tierIdx, summary.divIdx)}'
-                                    ' · ${l.lpAmount(localNumber(context, summary.lp))}'
+                                    ' · ${localNumber(context, ratingOf(summary.tierIdx, summary.divIdx, summary.lp))}'
                               : l.unranked,
                         ),
                         _Lost(

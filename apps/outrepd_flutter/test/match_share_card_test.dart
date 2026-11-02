@@ -82,7 +82,7 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  testWidgets('a win shows the count, who it beat, and the LP it paid', (
+  testWidgets('a win shows the count, who it beat, and the rating it paid', (
     tester,
   ) async {
     await open(tester, _win);
@@ -91,7 +91,7 @@ void main() {
     // Both lifters, face to face, each by name.
     expect(find.text('mokhtar_y'), findsWidgets);
     expect(find.text('iron_mike'), findsWidgets);
-    expect(find.textContaining('+7 LP', findRichText: true), findsWidgets);
+    expect(find.textContaining('+7 rating', findRichText: true), findsWidgets);
     expect(find.textContaining('New personal best'), findsWidgets);
     expect(find.text('Duel me on outrepd'), findsWidgets);
     // The story card is a scoreboard: a heading, and both lifters by name.
@@ -108,7 +108,7 @@ void main() {
     expect(find.text('squat_queen'), findsWidgets);
     expect(find.text('14'), findsWidgets);
     expect(find.text('19'), findsWidgets);
-    expect(find.textContaining('−5 LP', findRichText: true), findsWidgets);
+    expect(find.textContaining('−5 rating', findRichText: true), findsWidgets);
     expect(find.text('Think you can beat me?'), findsWidgets);
     expect(find.textContaining('New personal best'), findsNothing);
     // A loss does not claim a win on its scoreboard; it asks for another go.
@@ -128,7 +128,7 @@ void main() {
         seconds: 60,
       ),
     );
-    expect(find.textContaining('LP', findRichText: true), findsNothing);
+    expect(find.textContaining('rating', findRichText: true), findsNothing);
     expect(tester.takeException(), isNull);
   });
 

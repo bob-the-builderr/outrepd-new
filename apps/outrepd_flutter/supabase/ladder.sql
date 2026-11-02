@@ -47,21 +47,20 @@ $$;
 -- is a different function to Postgres, so `or replace` left that one behind
 -- on a database the first installer was pasted into; it is dropped by name.
 drop function if exists lp_for(boolean, int, int, int, int, boolean, boolean);
+-- The rule since 2026-11-02 (the user's): a win is 25 and the gap in reps
+-- on top, a loss 20 and the gap. Who it was against no longer counts.
 create or replace function lp_for(won boolean, your_reps int, their_reps int)
 returns int
 language sql
 immutable
 set search_path = public
 as $$
-  select case when won then abs(your_reps - their_reps)
-              else -abs(your_reps - their_reps) end;
+  select case when won then 25 + abs(your_reps - their_reps)
+              else -(20 + abs(your_reps - their_reps)) end;
 $$;
 
--- The same, weighed by who it was against: ten percent more or less for each
--- division between the two, up to half again or half as much. Beating
--- somebody above you pays more and losing to them costs less; the other way
--- round, less and more. Level with each other, it is the rep gap exactly.
--- Whole LP, rounded half up — the app's lpFor does the same arithmetic.
+-- It was weighed by who it was against until 2026-11-02. Kept, with the
+-- ranks ignored, for anything installed before that still calls it.
 create or replace function lp_for(
   won boolean, your_reps int, their_reps int, your_level int, their_level int
 )
@@ -70,17 +69,15 @@ language sql
 immutable
 set search_path = public
 as $$
-  select (case when won then 1 else -1 end)
-       * ((abs(your_reps - their_reps)
-           * (10 + (case when won then 1 else -1 end)
-                 * greatest(-5, least(5, coalesce(their_level - your_level, 0))))
-           + 5) / 10);
+  select lp_for(won, your_reps, their_reps);
 $$;
 
 -- ───────────────────────── applying it to a rank ─────────────────────────────
 
--- Carries a change through as many promotions or demotions as it earns, and
--- holds the floor: a tier once reached cannot be lost.
+-- Carries a change through as many promotions or demotions as it earns. The
+-- floor is the bottom of [floor_tier]; settle_duel passes Iron, so nobody
+-- falls below 1,000 and any tier above it can be lost (2026-11-02). Master I
+-- has no top: its LP keeps counting past 99.
 create or replace function apply_lp(
   from_tier int,
   from_div int,
@@ -100,9 +97,7 @@ declare
 begin
   while p >= 100 loop
     if t >= top_tier() and d >= top_division() then
-      -- Nothing above this. LP stops rather than rolling over into a tier that
-      -- does not exist.
-      p := 99;
+      -- Nothing above this to roll into: LP keeps counting instead.
       exit;
     end if;
     p := p - 100;

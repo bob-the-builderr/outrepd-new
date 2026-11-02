@@ -1,16 +1,18 @@
 -- ─────────────────────────────── the monthly board ───────────────────────────
 --
--- A race that starts again every month, beside the rank that never goes
--- down. The rank is a promise — once a tier is reached it is kept — so the
--- month is not a reset of it but a board of its own: the LP won, less the LP
--- lost, in ranked duels since the month began. Everybody starts the month
--- level, whatever their tier, and at its end the best of it are named for
--- good: #1 Champion, #2–3 Podium, #4–10 Top 10, and a badge for anybody who
--- played twenty ranked duels in it.
+-- A race that starts again every month, beside the rating. The month is not
+-- a reset of the rating but a board of its own, of points (the user's rule,
+-- 2026-11-02): 5 for a ranked win, 10 for every third win in a row, 2 off
+-- for a loss, never below nought, and only the first twenty ranked duels of
+-- a day count. Played more and won more is higher; a loss never costs more
+-- than a win pays. Everybody starts the month level, whatever their tier,
+-- and at its end the best of it are named for good: #1 Champion, #2–3
+-- Podium, #4–10 Top 10, and a badge for anybody who played twenty ranked
+-- duels in it. (Until 2026-11-02 it was the LP won less the LP lost.)
 --
--- Nothing new is recorded for it. Every duel already carries both sides' LP
--- and when it was played; the board is read from those, through running
--- totals each duel adds itself to (season_points below).
+-- Each duel carries what it added to both sides (duels.pts_*, written by
+-- settle_duel through board_points); the board is read from those, through
+-- running totals each duel adds itself to (season_points below).
 --
 -- A month is a calendar month in UTC, named by its first day. It is closed —
 -- its awards written, once — by the first request after it ends, so nothing
@@ -53,6 +55,28 @@ create index if not exists season_points_profile_idx on season_points (profile_i
 create index if not exists season_points_board_idx
   on season_points (season, points desc, wins desc);
 
+-- What a ranked duel adds to one side's week and month, from that side's
+-- win streak before it and the ranked duels it already has today (UTC).
+-- Not callable from the app: it reads anybody's duels.
+create or replace function board_points(won boolean, streak_before int, of_profile uuid)
+returns int
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select case
+    when (select count(*) from duels d
+           where d.ranked
+             and (d.challenger = of_profile or d.defender = of_profile)
+             and d.created_at >= (date_trunc('day', now() at time zone 'UTC') at time zone 'UTC')) >= 20
+      then 0
+    when won and (coalesce(streak_before, 0) + 1) % 3 = 0 then 10
+    when won then 5
+    else -2
+  end;
+$$;
+
 -- Months whose totals no longer match their duels, to be worked out again
 -- before anything reads them.
 create table if not exists season_points_stale (
@@ -64,6 +88,11 @@ alter table season_points_stale enable row level security;
 -- they lifted in: racing somebody's set, or either side of a live match.
 -- Being raced while away moves their points, as it moves their LP, but it is
 -- not a duel they played.
+--
+-- Never below nought along the way, not only at the end: a total floored as
+-- it goes is the plain sum less the lowest the plain running sum ever got
+-- below nought. A duel from before the points (pts null) counts its LP, so
+-- a month from then reads as it did.
 create or replace function season_points_from_duels(of_season date)
 returns table (profile_id uuid, points int, wins int, played int)
 language sql
@@ -72,7 +101,9 @@ security definer
 set search_path = public
 as $$
   with month_duels as (
-    select d.challenger, d.defender, d.winner, d.lp_challenger, d.lp_defender,
+    select d.id, d.created_at, d.challenger, d.defender, d.winner,
+           coalesce(d.pts_challenger, d.lp_challenger) as pts_challenger,
+           coalesce(d.pts_defender, d.lp_defender) as pts_defender,
            exists (select 1 from live_matches m where m.duel = d.id) as live
       from duels d
      where d.ranked
@@ -80,18 +111,24 @@ as $$
        and d.created_at < ((of_season + interval '1 month')::timestamp at time zone 'UTC')
   ),
   sides as (
-    select challenger as profile_id, lp_challenger as lp,
-           winner = challenger as won, true as played
+    select challenger as profile_id, pts_challenger as pts,
+           winner = challenger as won, true as played, created_at, id
       from month_duels
     union all
-    select defender, lp_defender, winner = defender, live
+    select defender, pts_defender, winner = defender, live, created_at, id
       from month_duels
+  ),
+  run as (
+    select s.*, sum(s.pts) over (partition by s.profile_id
+                                 order by s.created_at, s.id
+                                 rows unbounded preceding) as so_far
+      from sides s
   )
   select profile_id,
-         sum(lp)::int,
+         (sum(pts) - least(0, min(so_far)))::int,
          (count(*) filter (where won))::int,
          (count(*) filter (where played))::int
-    from sides
+    from run
    group by profile_id
 $$;
 
@@ -157,18 +194,20 @@ begin
   end if;
   this_season := season_of(d.created_at);
   defender_played := exists (select 1 from live_matches m where m.duel = d.id);
+  -- Floored at nought as it goes, the way season_points_from_duels adds
+  -- the month up again.
   insert into season_points as sp (season, profile_id, points, wins, played)
-  values (this_season, d.challenger, d.lp_challenger,
+  values (this_season, d.challenger, greatest(coalesce(d.pts_challenger, 0), 0),
           (d.winner = d.challenger)::int, 1)
   on conflict (season, profile_id) do update
-    set points = sp.points + excluded.points,
+    set points = greatest(sp.points + coalesce(d.pts_challenger, 0), 0),
         wins = sp.wins + excluded.wins,
         played = sp.played + excluded.played;
   insert into season_points as sp (season, profile_id, points, wins, played)
-  values (this_season, d.defender, d.lp_defender,
+  values (this_season, d.defender, greatest(coalesce(d.pts_defender, 0), 0),
           (d.winner = d.defender)::int, defender_played::int)
   on conflict (season, profile_id) do update
-    set points = sp.points + excluded.points,
+    set points = greatest(sp.points + coalesce(d.pts_defender, 0), 0),
         wins = sp.wins + excluded.wins,
         played = sp.played + excluded.played;
   return null;
@@ -203,6 +242,70 @@ drop trigger if exists season_points_forget on duels;
 create trigger season_points_forget
   after delete on duels
   for each row execute function season_points_forget();
+
+-- The points came in on 2026-11-02, mid-month and mid-week. The ranked
+-- duels of the month and the week they came in are given theirs, in the
+-- order they were played, as if the rule had been there from the start of
+-- that stretch — streaks and days counted from there — and that month is
+-- added up again. Older duels keep what they have (their LP), so a month
+-- already closed reads as it did. Nothing to do once done: only duels with
+-- no points yet are looked at.
+do $$
+declare
+  since timestamptz := least(
+    (date_trunc('month', now() at time zone 'UTC') at time zone 'UTC'),
+    (date_trunc('week', now() at time zone 'UTC') at time zone 'UTC'));
+  d record;
+  c_won boolean;
+  c_streak int;
+  d_streak int;
+  c_today int;
+  d_today int;
+  c_pts int;
+  d_pts int;
+  any_done boolean := false;
+begin
+  create temp table if not exists board_backfill_streak (
+    profile_id uuid primary key, streak int not null
+  ) on commit drop;
+  create temp table if not exists board_backfill_day (
+    profile_id uuid, day date, n int not null, primary key (profile_id, day)
+  ) on commit drop;
+  for d in
+    select x.id, x.challenger, x.defender, x.winner, x.created_at
+      from duels x
+     where x.ranked and x.created_at >= since and x.pts_challenger is null
+     order by x.created_at, x.id
+  loop
+    any_done := true;
+    c_won := d.winner = d.challenger;
+    c_streak := coalesce((select s.streak from board_backfill_streak s where s.profile_id = d.challenger), 0);
+    d_streak := coalesce((select s.streak from board_backfill_streak s where s.profile_id = d.defender), 0);
+    c_today := coalesce((select b.n from board_backfill_day b
+                          where b.profile_id = d.challenger and b.day = (d.created_at at time zone 'UTC')::date), 0);
+    d_today := coalesce((select b.n from board_backfill_day b
+                          where b.profile_id = d.defender and b.day = (d.created_at at time zone 'UTC')::date), 0);
+    c_pts := case when c_today >= 20 then 0
+                  when coalesce(c_won, false) and (c_streak + 1) % 3 = 0 then 10
+                  when coalesce(c_won, false) then 5 else -2 end;
+    d_pts := case when d_today >= 20 then 0
+                  when d.winner = d.defender and (d_streak + 1) % 3 = 0 then 10
+                  when d.winner = d.defender then 5 else -2 end;
+    update duels set pts_challenger = c_pts, pts_defender = d_pts where id = d.id;
+    insert into board_backfill_streak values (d.challenger, case when coalesce(c_won, false) then c_streak + 1 else 0 end)
+      on conflict (profile_id) do update set streak = excluded.streak;
+    insert into board_backfill_streak values (d.defender, case when d.winner = d.defender then d_streak + 1 else 0 end)
+      on conflict (profile_id) do update set streak = excluded.streak;
+    insert into board_backfill_day values (d.challenger, (d.created_at at time zone 'UTC')::date, 1)
+      on conflict (profile_id, day) do update set n = board_backfill_day.n + 1;
+    insert into board_backfill_day values (d.defender, (d.created_at at time zone 'UTC')::date, 1)
+      on conflict (profile_id, day) do update set n = board_backfill_day.n + 1;
+  end loop;
+  if any_done then
+    insert into season_points_stale (season) values (season_of(now()))
+    on conflict (season) do nothing;
+  end if;
+end $$;
 
 -- The first install of this table: every month already played is worked
 -- out from its duels the first time it is read.
@@ -362,9 +465,9 @@ $$;
 
 -- ── the week ──────────────────────────────────────────────────────────────────
 --
--- The month's board, a week at a time: the same points (LP won less LP lost
--- in ranked duels), the same order, starting again every Monday at 00:00
--- UTC. A shorter race more people can win. Nothing is kept for it and no
+-- The month's board, a week at a time: the same points (board_points,
+-- floored at nought as they go), the same order, starting again every
+-- Monday at 00:00 UTC. A shorter race more people can win. Nothing is kept for it and no
 -- award is named at its end: it is added up from the week's duels, which the
 -- ranked-duel index on created_at finds without reading the rest.
 
@@ -386,20 +489,28 @@ stable
 security definer
 set search_path = public
 as $$
-  select s.pid, sum(s.lp)::int, sum(s.won)::int, sum(s.played)::int
+  select r.pid, (sum(r.pts) - least(0, min(r.so_far)))::int,
+         sum(r.won)::int, sum(r.played)::int
     from (
-      select d.challenger as pid, coalesce(d.lp_challenger, 0) as lp,
-             (d.winner = d.challenger)::int as won, 1 as played
-        from duels d
-       where d.ranked and d.created_at >= since
-      union all
-      select d.defender, coalesce(d.lp_defender, 0),
-             (d.winner = d.defender)::int,
-             (exists (select 1 from live_matches m where m.duel = d.id))::int
-        from duels d
-       where d.ranked and d.created_at >= since
-    ) s
-   group by s.pid;
+      select s.*, sum(s.pts) over (partition by s.pid
+                                   order by s.created_at, s.id
+                                   rows unbounded preceding) as so_far
+        from (
+          select d.challenger as pid, coalesce(d.pts_challenger, 0) as pts,
+                 (d.winner = d.challenger)::int as won, 1 as played,
+                 d.created_at, d.id
+            from duels d
+           where d.ranked and d.created_at >= since
+          union all
+          select d.defender, coalesce(d.pts_defender, 0),
+                 (d.winner = d.defender)::int,
+                 (exists (select 1 from live_matches m where m.duel = d.id))::int,
+                 d.created_at, d.id
+            from duels d
+           where d.ranked and d.created_at >= since
+        ) s
+    ) r
+   group by r.pid;
 $$;
 
 drop function if exists week_board(text, int);
@@ -636,6 +747,7 @@ begin
 end;
 $$;
 
+revoke all on function board_points(boolean, int, uuid) from public, anon, authenticated;
 revoke all on function season_points_from_duels(date) from public, anon, authenticated;
 revoke all on function season_points_rebuild(date) from public, anon, authenticated;
 revoke all on function season_points_refresh() from public, anon, authenticated;

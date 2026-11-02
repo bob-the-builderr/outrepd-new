@@ -34,13 +34,16 @@ create table if not exists profiles (
   created_at    timestamptz not null default now(),
 
   -- The ladder. Seven tiers of five divisions; LP runs 0..99 inside a
-  -- division. `top_tier()` in ladder.sql is the same number.
+  -- division, and past 99 in Master I, which has nothing above it. Shown as
+  -- one number, the rating: 1,000 + 500 a tier + 100 a division + LP
+  -- (2026-11-02). `top_tier()` in ladder.sql is the same number of tiers.
   tier_idx      int  not null default 0 check (tier_idx between 0 and 6),
   div_idx       int  not null default 0 check (div_idx  between 0 and 4),
-  lp            int  not null default 0 check (lp between 0 and 99),
+  lp            int  not null default 0 check (lp >= 0),
 
-  -- The floor: the highest tier ever held. A tier once reached is kept, so a
-  -- losing streak can cost divisions and never the tier itself.
+  -- The highest tier ever held. It used to be a floor nobody could fall
+  -- through; since 2026-11-02 a rank can fall a tier like any other rung,
+  -- and this is only what Your climb ticks off.
   peak_tier_idx int  not null default 0 check (peak_tier_idx between 0 and 6),
 
   -- Placements. Until these are done there is no rank at all, which is the
@@ -170,6 +173,12 @@ alter table profiles add constraint profiles_tier_idx_check
 alter table profiles drop constraint if exists profiles_peak_tier_idx_check;
 alter table profiles add constraint profiles_peak_tier_idx_check
   check (peak_tier_idx between 0 and 6);
+-- LP went to 99 everywhere until the rating (2026-11-02) let Master I keep
+-- climbing. 6 and 4 are top_tier() and top_division(), which ladder.sql
+-- defines after this file.
+alter table profiles drop constraint if exists profiles_lp_check;
+alter table profiles add constraint profiles_lp_check
+  check (lp >= 0 and (lp <= 99 or (tier_idx = 6 and div_idx = 4)));
 
 -- The board reads this constantly, and always in the same order.
 create index if not exists profiles_ladder_idx
@@ -460,6 +469,13 @@ create table if not exists duels (
 
   check (challenger <> defender)
 );
+
+-- What the duel added to each side's week and month on the boards
+-- (seasons.sql): 5 a win, 10 for every third win in a row, 2 off for a loss,
+-- nothing past the twentieth ranked duel of the day. Null on a duel from
+-- before the rule (2026-11-02) until seasons.sql works it out.
+alter table duels add column if not exists pts_challenger int;
+alter table duels add column if not exists pts_defender int;
 
 create index if not exists duels_for_profile_idx
   on duels (challenger, created_at desc);

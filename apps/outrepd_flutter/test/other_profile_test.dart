@@ -143,7 +143,8 @@ void main() {
       await tester.tap(find.text('open'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Diamond I · 72 / 100 LP'), findsOneWidget);
+      // The rating: 1,000 + 500 a tier + 100 a division + 72 (2026-11-02).
+      expect(find.text('Diamond I · 3,972'), findsOneWidget);
       // 3 of their wins, 1 of yours — headToHead()'s own {wins}W{losses}L
       // order, theirs first.
       expect(find.text('3W 1L'), findsOneWidget);

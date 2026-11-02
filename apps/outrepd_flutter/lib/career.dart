@@ -279,21 +279,20 @@ class Career extends ChangeNotifier {
         placementsFinished = true;
       }
     } else {
-      // A forfeit has no reps to compare, so it pays flat. Everything else is
-      // exactly the gap in reps, signed by [won] rather than by the reps
-      // alone — walking out while still ahead must stay a loss, and quitting
-      // early already costs more of its own accord besides, since it means
-      // fewer reps of your own on the board.
+      // A forfeit has no reps to compare, so it pays a flat win. Everything
+      // else is 25 or 20 and the gap in reps, signed by [won] rather than by
+      // the reps alone — walking out while still ahead must stay a loss.
       final delta = forfeit
           ? kForfeitLp
           : lpFor(won: won, yourReps: yourReps, theirReps: theirReps);
 
-      change = applyLp(rank, delta, floorTierIdx: p.peakTierIdx);
+      // Floored at the bottom of Iron: a tier can be lost (2026-11-02).
+      change = applyLp(rank, delta, floorTierIdx: 0);
       p
         ..tierIdx = change.after.tierIdx
         ..divIdx = change.after.divIdx
         ..lp = change.after.lp;
-      // The peak only ever climbs. It is what the floor rule stands on.
+      // The peak only ever climbs: the tiers Your climb ticks off.
       if (p.tierIdx > p.peakTierIdx) p.peakTierIdx = p.tierIdx;
     }
 

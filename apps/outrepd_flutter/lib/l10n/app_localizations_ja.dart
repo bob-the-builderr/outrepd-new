@@ -173,7 +173,7 @@ class LJa extends L {
   String get incSets => 'すべてのセットとレップ数';
 
   @override
-  String get incDuels => 'デュエル履歴と LP の変動';
+  String get incDuels => 'デュエル履歴とレートの変動';
 
   @override
   String get incFriends => 'フレンドとブロックしたアカウント';
@@ -1538,7 +1538,7 @@ class LJa extends L {
   String get giveUp => '棄権';
 
   @override
-  String get lpMovesWithGap => 'LPはレップ差で変動します。差が大きいほど獲得LPも増えます';
+  String get lpMovesWithGap => '勝利：+25とレップ差。敗北：−20とレップ差。';
 
   @override
   String get searchingForOpponent => '対戦相手を探しています';
@@ -2237,7 +2237,7 @@ class LJa extends L {
 
   @override
   String monthToTop10(String lp) {
-    return 'トップ10まであと${lp} LP';
+    return 'トップ10まであと${lp} pt';
   }
 
   @override
@@ -2260,13 +2260,81 @@ class LJa extends L {
   String get monthEmptyTitle => '新しい月';
 
   @override
-  String get monthEmptyBody => '今月はまだ誰もLPを獲得していません。最初のランク戦に勝てば首位です。';
+  String get monthEmptyBody => '今月はまだ誰もポイントを獲得していません。最初のランク戦に勝てば首位です。';
 
   @override
   String get weekEmptyTitle => '新しい週';
 
   @override
-  String get weekEmptyBody => '今週はまだ誰もLPを獲得していません。最初のランク戦に勝てば首位です。';
+  String get weekEmptyBody => '今週はまだ誰もポイントを獲得していません。最初のランク戦に勝てば首位です。';
+
+  @override
+  String get ratingUnit => 'レート';
+
+  @override
+  String get ptsUnit => 'pt';
+
+  @override
+  String ptsAmount(String n) {
+    return '${n} pt';
+  }
+
+  @override
+  String ratingAmount(String n) {
+    return 'レート ${n}';
+  }
+
+  @override
+  String ratingForWin(String n) {
+    return '勝利で${n}';
+  }
+
+  @override
+  String ratingForLoss(String n) {
+    return '敗北で${n}';
+  }
+
+  @override
+  String ratingForReps(String n) {
+    return 'レップ差で${n}';
+  }
+
+  @override
+  String get boardThisWeek => '今週';
+
+  @override
+  String streakNextTen(String n) {
+    return '${n}連勝中：次の勝利は+10';
+  }
+
+  @override
+  String get boardRuleWin => '勝利 +5';
+
+  @override
+  String get boardRuleLoss => '敗北 −2';
+
+  @override
+  String get boardRuleStreak => '3連勝で +10';
+
+  @override
+  String rankNext(String rank) {
+    return '次：${rank}';
+  }
+
+  @override
+  String rankAt(String n) {
+    return '${n}で到達';
+  }
+
+  @override
+  String toGo(String n) {
+    return 'あと${n}';
+  }
+
+  @override
+  String tierStartsAt(String tier, String n) {
+    return '${tier}は${n}から';
+  }
 
   @override
   String rankedDuelsCount(String n) {
@@ -2472,7 +2540,7 @@ class LJa extends L {
 
   @override
   String weekToTop3(String n) {
-    return 'トップ3まであと${n} LP';
+    return 'トップ3まであと${n} pt';
   }
 
   @override
@@ -2572,7 +2640,7 @@ class LJa extends L {
   String get placedBody => '全員ここからスタート。勝つことでしか上がれません。';
 
   @override
-  String get placedHow => 'マッチに勝ってLPを獲得。格上に勝てばもっと多く。';
+  String get placedHow => '勝利：+25とレップ差。敗北：−20とレップ差。';
 
   @override
   String get levelBesideName => 'あなたの名前の横に、どこでも';

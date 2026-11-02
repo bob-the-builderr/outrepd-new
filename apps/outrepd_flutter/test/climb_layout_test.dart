@@ -112,14 +112,15 @@ void main() {
     expect(master, lessThan(bronze));
   });
 
-  testWidgets('the floor reads as something earned', (tester) async {
+  testWidgets('no floor is promised: a tier can be lost (2026-11-02)',
+      (tester) async {
     phone(tester);
     await tester.pumpWidget(
       _app(ProgressionScreen(profile: demoProfile), 1.0, const Locale('en')),
     );
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('Gold is yours'), findsOneWidget);
+    expect(find.textContaining('is yours'), findsNothing);
   });
 
   testWidgets('a first-tier player is shown no floor', (tester) async {

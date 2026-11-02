@@ -277,6 +277,13 @@ List<Offset> _blade(double y, double degrees, double length) {
   ];
 }
 
+/// A tier's metal, for what is drawn in its colours beside the badge (the
+/// profile's rank card): the shield's dark, middle and light, and the wings'.
+({Color base, Color mid, Color light, Color wing}) tierMetal(int tierIdx) {
+  final c = _crests[tierIdx.clamp(0, _crests.length - 1)];
+  return (base: c.base, mid: c.mid, light: c.light, wing: c.wing);
+}
+
 class TierBadge extends StatelessWidget {
   const TierBadge({
     super.key,

@@ -67,37 +67,8 @@ class ProgressionScreen extends StatelessWidget {
                 ],
               ),
             ),
-            // A tier once reached is kept — the ladder's own floor rule, said
-            // as something earned rather than a limit. Nothing to protect at
-            // the very first tier, so there is nothing to say yet.
-            if (profile.peakTierIdx > 0)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-                child: Panel(
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.shield_outlined,
-                        color: kTiers[profile.peakTierIdx].color,
-                        size: 18,
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          l.floorKept(
-                            tierName(l, profile.peakTierIdx),
-                            tierLabel(l, profile.peakTierIdx, 0),
-                          ),
-                          style: TextStyle(
-                            color: context.colors.muted,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+            // No "Gold is yours" line any more: since 2026-11-02 a tier can be
+            // lost, so there is no floor to promise.
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),

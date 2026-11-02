@@ -172,7 +172,7 @@ class LZh extends L {
   String get incSets => '每一组和每次计数';
 
   @override
-  String get incDuels => '对决记录与 LP 变化';
+  String get incDuels => '对决记录与积分变化';
 
   @override
   String get incFriends => '好友与被屏蔽的账号';
@@ -1535,7 +1535,7 @@ class LZh extends L {
   String get giveUp => '放弃';
 
   @override
-  String get lpMovesWithGap => '积分根据次数差变化——领先越多，获得越多';
+  String get lpMovesWithGap => '胜：+25 加次数差。负：−20 加次数差。';
 
   @override
   String get searchingForOpponent => '正在寻找对手';
@@ -2228,7 +2228,7 @@ class LZh extends L {
 
   @override
   String monthToTop10(String lp) {
-    return '距前十还差 ${lp} LP';
+    return '距前十还差 ${lp} 分';
   }
 
   @override
@@ -2251,13 +2251,81 @@ class LZh extends L {
   String get monthEmptyTitle => '全新的一个月';
 
   @override
-  String get monthEmptyBody => '本月还没有人赢得 LP。赢下第一场排位赛，你就领先。';
+  String get monthEmptyBody => '本月还没有人得分。赢下第一场排位赛，你就领先。';
 
   @override
   String get weekEmptyTitle => '全新的一周';
 
   @override
-  String get weekEmptyBody => '本周还没有人赢得 LP。赢下第一场排位赛，你就领先。';
+  String get weekEmptyBody => '本周还没有人得分。赢下第一场排位赛，你就领先。';
+
+  @override
+  String get ratingUnit => '积分';
+
+  @override
+  String get ptsUnit => '分';
+
+  @override
+  String ptsAmount(String n) {
+    return '${n} 分';
+  }
+
+  @override
+  String ratingAmount(String n) {
+    return '积分 ${n}';
+  }
+
+  @override
+  String ratingForWin(String n) {
+    return '胜利 ${n}';
+  }
+
+  @override
+  String ratingForLoss(String n) {
+    return '失败 ${n}';
+  }
+
+  @override
+  String ratingForReps(String n) {
+    return '次数差 ${n}';
+  }
+
+  @override
+  String get boardThisWeek => '本周';
+
+  @override
+  String streakNextTen(String n) {
+    return '已连胜 ${n} 场：下一场胜利 +10';
+  }
+
+  @override
+  String get boardRuleWin => '胜 +5';
+
+  @override
+  String get boardRuleLoss => '负 −2';
+
+  @override
+  String get boardRuleStreak => '三连胜 +10';
+
+  @override
+  String rankNext(String rank) {
+    return '下一级：${rank}';
+  }
+
+  @override
+  String rankAt(String n) {
+    return '需 ${n}';
+  }
+
+  @override
+  String toGo(String n) {
+    return '还差 ${n}';
+  }
+
+  @override
+  String tierStartsAt(String tier, String n) {
+    return '${tier} 起点 ${n}';
+  }
 
   @override
   String rankedDuelsCount(String n) {
@@ -2463,7 +2531,7 @@ class LZh extends L {
 
   @override
   String weekToTop3(String n) {
-    return '距前三还差 ${n} LP';
+    return '距前三还差 ${n} 分';
   }
 
   @override
@@ -2563,7 +2631,7 @@ class LZh extends L {
   String get placedBody => '所有人都从这里开始。只有赢才能往上爬。';
 
   @override
-  String get placedHow => '赢下比赛获得 LP。击败段位更高的对手得到更多。';
+  String get placedHow => '胜：+25 加次数差。负：−20 加次数差。';
 
   @override
   String get levelBesideName => '显示在你的名字旁，随处可见';

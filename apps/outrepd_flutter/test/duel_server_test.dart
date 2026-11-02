@@ -152,7 +152,7 @@ void main() {
           lp: placedA['lp'] as int,
         ),
         ours,
-        floorTierIdx: placedA['peak_tier_idx'] as int,
+        floorTierIdx: 0,
       );
       expect(settled['tier_idx'], after.after.tierIdx);
       expect(settled['div_idx'], after.after.divIdx);

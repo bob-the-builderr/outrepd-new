@@ -70,7 +70,7 @@
   "whatsIncluded": "What's included",
   "incProfile": "Your profile and rank",
   "incSets": "Every set and rep count",
-  "incDuels": "Duel history and LP changes",
+  "incDuels": "Duel history and rating changes",
   "incFriends": "Friends and blocked accounts",
   "incNotices": "Notifications you were sent",
   "noLandmarksNote": "Pose landmarks are not in it, and never were. The camera reads them on your phone and they are not sent anywhere.",
@@ -867,7 +867,7 @@
   "getBackInFrame": "Get back in frame",
   "clockStillRunning": "The clock is still running. Reps are not counting.",
   "giveUp": "Give up",
-  "lpMovesWithGap": "LP moves with the rep gap — win by more, gain more",
+  "lpMovesWithGap": "Win: +25 and the rep gap. Lose: −20 and the rep gap.",
   "searchingForOpponent": "Searching for an opponent",
   "getIntoPosition": "Get into position",
   "framingHint": "Wrists and ankles must be in frame",
@@ -1328,7 +1328,7 @@
   "awardPodium": "Podium",
   "awardTop10": "Top 10",
   "awardRegular": "20 Club",
-  "monthToTop10": "{lp} LP to the top 10",
+  "monthToTop10": "{lp} pts to the top 10",
   "@monthToTop10": {
     "placeholders": {
       "lp": {
@@ -1355,9 +1355,98 @@
   },
   "monthRegularEarned": "20 Club badge earned this month",
   "monthEmptyTitle": "A fresh month",
-  "monthEmptyBody": "Nobody has won LP this month yet. Win the first ranked duel and you lead.",
+  "monthEmptyBody": "Nobody has scored this month yet. Win the first ranked duel and you lead.",
   "weekEmptyTitle": "A fresh week",
-  "weekEmptyBody": "Nobody has won LP this week yet. Win the first ranked duel and you lead.",
+  "weekEmptyBody": "Nobody has scored this week yet. Win the first ranked duel and you lead.",
+  "ratingUnit": "rating",
+  "ptsUnit": "pts",
+  "ptsAmount": "{n} pts",
+  "@ptsAmount": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "ratingAmount": "{n} rating",
+  "@ratingAmount": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "ratingForWin": "{n} for the win",
+  "@ratingForWin": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "ratingForLoss": "{n} for the loss",
+  "@ratingForLoss": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "ratingForReps": "{n} for the reps",
+  "@ratingForReps": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "boardThisWeek": "This week",
+  "streakNextTen": "{n} wins in a row: the next win is +10",
+  "@streakNextTen": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "boardRuleWin": "Win +5",
+  "boardRuleLoss": "Loss −2",
+  "boardRuleStreak": "3 wins in a row: +10",
+  "rankNext": "Next: {rank}",
+  "@rankNext": {
+    "placeholders": {
+      "rank": {
+        "type": "String"
+      }
+    }
+  },
+  "rankAt": "at {n}",
+  "@rankAt": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "toGo": "{n} to go",
+  "@toGo": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "tierStartsAt": "{tier} starts at {n}",
+  "@tierStartsAt": {
+    "placeholders": {
+      "tier": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
   "rankedDuelsCount": "{n} ranked duels",
   "@rankedDuelsCount": {
     "placeholders": {
@@ -1533,7 +1622,7 @@
   "lengthMonth": "Month",
   "weekJoinHint": "Win a ranked duel this week to get on the board",
   "weekInTop3": "In the top 3 this week",
-  "weekToTop3": "{n} LP to the top 3",
+  "weekToTop3": "{n} pts to the top 3",
   "@weekToTop3": {
     "placeholders": {
       "n": {
@@ -1664,7 +1753,7 @@
   },
   "placedLabel": "You're on the ladder",
   "placedBody": "Everyone starts here. Only wins move you up.",
-  "placedHow": "Win matches to earn LP. Beat someone ranked higher for more.",
+  "placedHow": "Win: +25 and the rep gap. Lose: −20 and the rep gap.",
   "levelBesideName": "Beside your name, everywhere",
   "weekRaceTitle": "This week's race",
   "streakDoneToday": "done today",

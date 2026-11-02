@@ -177,7 +177,7 @@ class LId extends L {
   String get incSets => 'Setiap set dan hitungan rep';
 
   @override
-  String get incDuels => 'Riwayat duel dan perubahan LP';
+  String get incDuels => 'Riwayat duel dan perubahan rating';
 
   @override
   String get incFriends => 'Teman dan akun yang diblokir';
@@ -1563,8 +1563,7 @@ class LId extends L {
   String get giveUp => 'Menyerah';
 
   @override
-  String get lpMovesWithGap =>
-      'LP bergerak sesuai selisih repetisi — menang lebih banyak, dapat lebih banyak';
+  String get lpMovesWithGap => 'Menang: +25 ditambah selisih repetisi. Kalah: −20 ditambah selisihnya.';
 
   @override
   String get searchingForOpponent => 'Mencari lawan';
@@ -2272,7 +2271,7 @@ class LId extends L {
 
   @override
   String monthToTop10(String lp) {
-    return '${lp} LP lagi ke 10 besar';
+    return '${lp} poin lagi ke 10 besar';
   }
 
   @override
@@ -2295,13 +2294,81 @@ class LId extends L {
   String get monthEmptyTitle => 'Bulan yang baru';
 
   @override
-  String get monthEmptyBody => 'Belum ada yang menang LP bulan ini. Menangkan duel berperingkat pertama dan kamu memimpin.';
+  String get monthEmptyBody => 'Belum ada yang mencetak poin bulan ini. Menangkan duel berperingkat pertama dan kamu memimpin.';
 
   @override
   String get weekEmptyTitle => 'Minggu yang baru';
 
   @override
-  String get weekEmptyBody => 'Belum ada yang menang LP minggu ini. Menangkan duel berperingkat pertama dan kamu memimpin.';
+  String get weekEmptyBody => 'Belum ada yang mencetak poin minggu ini. Menangkan duel berperingkat pertama dan kamu memimpin.';
+
+  @override
+  String get ratingUnit => 'rating';
+
+  @override
+  String get ptsUnit => 'poin';
+
+  @override
+  String ptsAmount(String n) {
+    return '${n} poin';
+  }
+
+  @override
+  String ratingAmount(String n) {
+    return '${n} rating';
+  }
+
+  @override
+  String ratingForWin(String n) {
+    return '${n} untuk kemenangan';
+  }
+
+  @override
+  String ratingForLoss(String n) {
+    return '${n} untuk kekalahan';
+  }
+
+  @override
+  String ratingForReps(String n) {
+    return '${n} untuk repetisi';
+  }
+
+  @override
+  String get boardThisWeek => 'Minggu ini';
+
+  @override
+  String streakNextTen(String n) {
+    return '${n} kemenangan beruntun: kemenangan berikutnya +10';
+  }
+
+  @override
+  String get boardRuleWin => 'Menang +5';
+
+  @override
+  String get boardRuleLoss => 'Kalah −2';
+
+  @override
+  String get boardRuleStreak => '3 menang beruntun: +10';
+
+  @override
+  String rankNext(String rank) {
+    return 'Berikutnya: ${rank}';
+  }
+
+  @override
+  String rankAt(String n) {
+    return 'di ${n}';
+  }
+
+  @override
+  String toGo(String n) {
+    return '${n} lagi';
+  }
+
+  @override
+  String tierStartsAt(String tier, String n) {
+    return '${tier} mulai di ${n}';
+  }
 
   @override
   String rankedDuelsCount(String n) {
@@ -2507,7 +2574,7 @@ class LId extends L {
 
   @override
   String weekToTop3(String n) {
-    return '${n} LP lagi ke 3 besar';
+    return '${n} poin lagi ke 3 besar';
   }
 
   @override
@@ -2607,7 +2674,7 @@ class LId extends L {
   String get placedBody => 'Semua mulai dari sini. Hanya kemenangan yang membawamu naik.';
 
   @override
-  String get placedHow => 'Menangkan pertandingan untuk dapat LP. Kalahkan peringkat lebih tinggi untuk dapat lebih.';
+  String get placedHow => 'Menang: +25 ditambah selisih repetisi. Kalah: −20 ditambah selisihnya.';
 
   @override
   String get levelBesideName => 'Di samping namamu, di mana saja';

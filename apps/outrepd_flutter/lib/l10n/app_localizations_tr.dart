@@ -177,7 +177,7 @@ class LTr extends L {
   String get incSets => 'Her set ve tekrar sayısı';
 
   @override
-  String get incDuels => 'Düello geçmişi ve LP değişimleri';
+  String get incDuels => 'Düello geçmişi ve reyting değişimleri';
 
   @override
   String get incFriends => 'Arkadaşlar ve engellenenler';
@@ -1560,8 +1560,7 @@ class LTr extends L {
   String get giveUp => 'Pes et';
 
   @override
-  String get lpMovesWithGap =>
-      'LP, tekrar farkına göre değişir — ne kadar farklı kazanırsan o kadar çok kazanırsın';
+  String get lpMovesWithGap => 'Galibiyet: +25 ve tekrar farkı. Mağlubiyet: −20 ve tekrar farkı.';
 
   @override
   String get searchingForOpponent => 'Rakip aranıyor';
@@ -2268,7 +2267,7 @@ class LTr extends L {
 
   @override
   String monthToTop10(String lp) {
-    return 'İlk 10\'a ${lp} LP';
+    return 'İlk 10\'a ${lp} puan';
   }
 
   @override
@@ -2291,13 +2290,81 @@ class LTr extends L {
   String get monthEmptyTitle => 'Yepyeni bir ay';
 
   @override
-  String get monthEmptyBody => 'Bu ay henüz kimse LP kazanmadı. İlk dereceli düelloyu kazan, zirve senin.';
+  String get monthEmptyBody => 'Bu ay henüz kimse puan almadı. İlk dereceli düelloyu kazan, zirve senin.';
 
   @override
   String get weekEmptyTitle => 'Yepyeni bir hafta';
 
   @override
-  String get weekEmptyBody => 'Bu hafta henüz kimse LP kazanmadı. İlk dereceli düelloyu kazan, zirve senin.';
+  String get weekEmptyBody => 'Bu hafta henüz kimse puan almadı. İlk dereceli düelloyu kazan, zirve senin.';
+
+  @override
+  String get ratingUnit => 'reyting';
+
+  @override
+  String get ptsUnit => 'puan';
+
+  @override
+  String ptsAmount(String n) {
+    return '${n} puan';
+  }
+
+  @override
+  String ratingAmount(String n) {
+    return '${n} reyting';
+  }
+
+  @override
+  String ratingForWin(String n) {
+    return 'galibiyet için ${n}';
+  }
+
+  @override
+  String ratingForLoss(String n) {
+    return 'mağlubiyet için ${n}';
+  }
+
+  @override
+  String ratingForReps(String n) {
+    return 'tekrar farkı için ${n}';
+  }
+
+  @override
+  String get boardThisWeek => 'Bu hafta';
+
+  @override
+  String streakNextTen(String n) {
+    return 'Üst üste ${n} galibiyet: sonraki galibiyet +10';
+  }
+
+  @override
+  String get boardRuleWin => 'Galibiyet +5';
+
+  @override
+  String get boardRuleLoss => 'Mağlubiyet −2';
+
+  @override
+  String get boardRuleStreak => 'Üst üste 3 galibiyet: +10';
+
+  @override
+  String rankNext(String rank) {
+    return 'Sıradaki: ${rank}';
+  }
+
+  @override
+  String rankAt(String n) {
+    return 'hedef: ${n}';
+  }
+
+  @override
+  String toGo(String n) {
+    return '${n} kaldı';
+  }
+
+  @override
+  String tierStartsAt(String tier, String n) {
+    return '${tier} başlangıcı: ${n}';
+  }
 
   @override
   String rankedDuelsCount(String n) {
@@ -2503,7 +2570,7 @@ class LTr extends L {
 
   @override
   String weekToTop3(String n) {
-    return 'İlk 3\'e ${n} LP';
+    return 'İlk 3\'e ${n} puan';
   }
 
   @override
@@ -2603,7 +2670,7 @@ class LTr extends L {
   String get placedBody => 'Herkes buradan başlar. Seni sadece galibiyetler yükseltir.';
 
   @override
-  String get placedHow => 'LP kazanmak için maç kazan. Daha yüksek dereceyi yenersen daha fazla alırsın.';
+  String get placedHow => 'Galibiyet: +25 ve tekrar farkı. Mağlubiyet: −20 ve tekrar farkı.';
 
   @override
   String get levelBesideName => 'Adının yanında, her yerde';

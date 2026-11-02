@@ -176,7 +176,7 @@ class LRu extends L {
   String get incSets => 'Все подходы и повторы';
 
   @override
-  String get incDuels => 'История дуэлей и изменения LP';
+  String get incDuels => 'История дуэлей и изменения рейтинга';
 
   @override
   String get incFriends => 'Друзья и заблокированные';
@@ -1563,8 +1563,7 @@ class LRu extends L {
   String get giveUp => 'Сдаться';
 
   @override
-  String get lpMovesWithGap =>
-      'LP меняется в зависимости от разницы повторений — чем больше отрыв, тем больше очков';
+  String get lpMovesWithGap => 'Победа: +25 плюс разница в повторениях. Поражение: −20 плюс разница.';
 
   @override
   String get searchingForOpponent => 'Ищем соперника';
@@ -2273,7 +2272,7 @@ class LRu extends L {
 
   @override
   String monthToTop10(String lp) {
-    return 'До топ-10: ${lp} LP';
+    return 'До топ-10: ${lp} очк.';
   }
 
   @override
@@ -2296,13 +2295,81 @@ class LRu extends L {
   String get monthEmptyTitle => 'Новый месяц';
 
   @override
-  String get monthEmptyBody => 'В этом месяце LP ещё никто не выиграл. Выиграйте первую рейтинговую дуэль — и вы лидер.';
+  String get monthEmptyBody => 'В этом месяце ещё никто не набрал очков. Выиграйте первую рейтинговую дуэль — и вы лидер.';
 
   @override
   String get weekEmptyTitle => 'Новая неделя';
 
   @override
-  String get weekEmptyBody => 'На этой неделе LP ещё никто не выиграл. Выиграйте первую рейтинговую дуэль — и вы лидер.';
+  String get weekEmptyBody => 'На этой неделе ещё никто не набрал очков. Выиграйте первую рейтинговую дуэль — и вы лидер.';
+
+  @override
+  String get ratingUnit => 'рейтинг';
+
+  @override
+  String get ptsUnit => 'очк.';
+
+  @override
+  String ptsAmount(String n) {
+    return '${n} очк.';
+  }
+
+  @override
+  String ratingAmount(String n) {
+    return '${n} рейтинга';
+  }
+
+  @override
+  String ratingForWin(String n) {
+    return '${n} за победу';
+  }
+
+  @override
+  String ratingForLoss(String n) {
+    return '${n} за поражение';
+  }
+
+  @override
+  String ratingForReps(String n) {
+    return '${n} за повторения';
+  }
+
+  @override
+  String get boardThisWeek => 'Эта неделя';
+
+  @override
+  String streakNextTen(String n) {
+    return 'Побед подряд: ${n}. Следующая даст +10';
+  }
+
+  @override
+  String get boardRuleWin => 'Победа +5';
+
+  @override
+  String get boardRuleLoss => 'Поражение −2';
+
+  @override
+  String get boardRuleStreak => '3 победы подряд: +10';
+
+  @override
+  String rankNext(String rank) {
+    return 'Дальше: ${rank}';
+  }
+
+  @override
+  String rankAt(String n) {
+    return 'с ${n}';
+  }
+
+  @override
+  String toGo(String n) {
+    return 'осталось ${n}';
+  }
+
+  @override
+  String tierStartsAt(String tier, String n) {
+    return '${tier} начинается с ${n}';
+  }
 
   @override
   String rankedDuelsCount(String n) {
@@ -2508,7 +2575,7 @@ class LRu extends L {
 
   @override
   String weekToTop3(String n) {
-    return '${n} LP до топ-3';
+    return '${n} очк. до топ-3';
   }
 
   @override
@@ -2608,7 +2675,7 @@ class LRu extends L {
   String get placedBody => 'Все начинают отсюда. Подниматься можно только победами.';
 
   @override
-  String get placedHow => 'Побеждайте в матчах, чтобы получать LP. За победу над рангом выше — больше.';
+  String get placedHow => 'Победа: +25 плюс разница в повторениях. Поражение: −20 плюс разница.';
 
   @override
   String get levelBesideName => 'Рядом с вашим именем, везде';

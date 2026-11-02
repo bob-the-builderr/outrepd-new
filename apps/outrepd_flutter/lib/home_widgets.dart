@@ -20,6 +20,7 @@ import 'package:home_widget/home_widget.dart';
 import 'career.dart';
 import 'data.dart';
 import 'l10n/app_localizations.dart';
+import 'ranking.dart';
 import 'settings.dart';
 import 'tier_badge.dart';
 import 'widgets.dart';
@@ -85,7 +86,8 @@ abstract final class HomeWidgets {
       'goal_of': done >= goal ? l.dailyGoalDone : l.widgetGoalOf('$goal'),
       'streak': p.dayStreak > 0 ? l.dayStreakCount('${p.dayStreak}') : '',
       'rank': p.isRanked ? tierLabel(l, p.tierIdx, p.divIdx) : l.unranked,
-      'lp': p.isRanked ? '${p.lp} / 100 LP' : '',
+      // The rating since 2026-11-02; the key is the widget's own name for it.
+      'lp': p.isRanked ? '${ratingOf(p.tierIdx, p.divIdx, p.lp)}' : '',
       'lp_percent': p.isRanked ? '${p.lp.clamp(0, 100)}' : '0',
     };
   }

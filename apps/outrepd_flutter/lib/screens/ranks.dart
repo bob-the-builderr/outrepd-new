@@ -23,6 +23,7 @@ import '../lifter/lifter_view.dart';
 import '../lifter/looks.dart';
 import '../lifter/my_lifter.dart';
 import '../motion.dart';
+import '../ranking.dart';
 import '../season.dart';
 import '../subscription.dart';
 import '../theme.dart';
@@ -768,7 +769,11 @@ class _RankRow extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 11),
-            _Points(lp: entry.lp, colour: context.colors.text),
+            _Points(
+              lp: ratingOf(entry.tierIdx, entry.divIdx, entry.lp),
+              colour: context.colors.text,
+              rating: true,
+            ),
           ],
         ),
       ),
@@ -842,7 +847,11 @@ class _SelfRow extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 11),
-          _Points(lp: lp, colour: context.colors.brand),
+          _Points(
+            lp: ratingOf(tierIdx, divIdx, lp),
+            colour: context.colors.brand,
+            rating: true,
+          ),
         ],
       ),
     );
@@ -1062,10 +1071,13 @@ class _Identity extends StatelessWidget {
 }
 
 class _Points extends StatelessWidget {
-  const _Points({required this.lp, required this.colour});
+  const _Points({required this.lp, required this.colour, this.rating = false});
 
   final int lp;
   final Color colour;
+
+  /// A rating (Top Players, Your Tier) rather than the season's points.
+  final bool rating;
 
   @override
   Widget build(BuildContext context) {
@@ -1082,7 +1094,7 @@ class _Points extends StatelessWidget {
           ),
         ),
         Text(
-          L.of(context).lpUnit,
+          rating ? L.of(context).ratingUnit : L.of(context).ptsUnit,
           style: TextStyle(color: context.colors.muted, fontSize: 11),
         ),
       ],
@@ -1221,23 +1233,48 @@ class _SeasonHeader extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        const SizedBox(height: 4),
-        Text(
-          week
-              ? l.weekStartsAgain
-              : earned
-              ? l.monthRegularEarned
-              : l.monthRegularProgress(
-                  '${localNumber(context, played)}/'
-                  '${localNumber(context, kRegularDuels)}',
-                ),
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: earned && !week
-                ? context.colors.brand
-                : context.colors.muted,
-            fontSize: 13,
+        if (!week) ...[
+          const SizedBox(height: 4),
+          Text(
+            earned
+                ? l.monthRegularEarned
+                : l.monthRegularProgress(
+                    '${localNumber(context, played)}/'
+                    '${localNumber(context, kRegularDuels)}',
+                  ),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: earned ? context.colors.brand : context.colors.muted,
+              fontSize: 13,
+            ),
           ),
+        ],
+        const SizedBox(height: 8),
+        // What the season's points are, where they are counted (2026-11-02).
+        Wrap(
+          key: const Key('boardRules'),
+          alignment: WrapAlignment.center,
+          spacing: 6,
+          runSpacing: 6,
+          children: [
+            for (final rule in [
+              l.boardRuleWin,
+              l.boardRuleLoss,
+              l.boardRuleStreak,
+            ])
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                decoration: BoxDecoration(
+                  color: context.colors.surfaceRaised,
+                  border: Border.all(color: context.colors.border),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  rule,
+                  style: TextStyle(color: context.colors.text, fontSize: 13),
+                ),
+              ),
+          ],
         ),
       ],
     );
@@ -1246,7 +1283,7 @@ class _SeasonHeader extends StatelessWidget {
 
 /// First in the middle and tallest, second to its left, third to its right —
 /// the way a podium stands, whichever way the language reads.
-/// The new month before anybody has won LP in it: a word on that with the way
+/// The new month before anybody has scored in it: a word on that with the way
 /// to a match, then last month's top ten as it finished (the user's pick A,
 /// 2026-11-01). The month's own board takes its place with the first ranked
 /// duel won.
@@ -1482,8 +1519,7 @@ class _PodiumPlace extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${localNumber(context, row.points)} '
-                    '${L.of(context).lpUnit}',
+                    L.of(context).ptsAmount(localNumber(context, row.points)),
                     style: TextStyle(
                       color: context.colors.background,
                       fontSize: 14,

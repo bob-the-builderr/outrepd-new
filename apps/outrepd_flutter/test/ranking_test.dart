@@ -83,16 +83,23 @@ void main() {
   });
 
   group('the floor', () {
-    test('a tier once reached is never lost', () {
+    test('a tier can be lost: the only floor is the bottom of Iron', () {
+      // Since 2026-11-02 (the user's call) nothing keeps a tier once reached.
       const goldV = Rank(tierIdx: 3, divIdx: 0, lp: 5);
-      final change = applyLp(goldV, -40, floorTierIdx: 3);
+      final change = applyLp(goldV, -40, floorTierIdx: 0);
 
-      // The progression screen promises this in words — "Gold is yours" — so
-      // the arithmetic has to keep it.
-      expect(change.after, const Rank(tierIdx: 3, divIdx: 0, lp: 0));
-      expect(change.demoted, isFalse);
+      expect(change.after, const Rank(tierIdx: 2, divIdx: 4, lp: 65));
+      expect(change.demoted, isTrue);
+      expect(change.changedTier, isTrue);
+    });
+
+    test('nobody goes below 1,000', () {
+      const ironV = Rank(tierIdx: 0, divIdx: 0, lp: 5);
+      final change = applyLp(ironV, -45, floorTierIdx: 0);
+
+      expect(change.after.rating, kRatingStart);
       // The loss is still reported honestly even though it was absorbed.
-      expect(change.lpDelta, -40);
+      expect(change.lpDelta, -45);
       expect(change.absorbed, isTrue);
     });
 
@@ -112,8 +119,8 @@ void main() {
     });
   });
 
-  group('the ceiling', () {
-    test('the top of the ladder holds instead of rolling over', () {
+  group('the top', () {
+    test('Master I keeps counting instead of rolling over', () {
       final top = Rank(
         tierIdx: kTiers.length - 1,
         divIdx: kDivisions.length - 1,
@@ -123,30 +130,49 @@ void main() {
 
       expect(change.after.tierIdx, kTiers.length - 1);
       expect(change.after.divIdx, kDivisions.length - 1);
-      expect(change.after.lp, 99);
+      expect(change.after.lp, 135);
+      expect(change.ratingDelta, 40);
       expect(change.promoted, isFalse);
     });
   });
 
+  group('the rating', () {
+    test('1,000 at the bottom, 100 a division, 500 a tier', () {
+      expect(Rank.start.rating, 1000);
+      expect(tierStartRating(1), 1500);
+      expect(tierStartRating(3), 2500);
+      expect(tierStartRating(6), 4000);
+      // The user's example: Gold III with 64 LP.
+      expect(gold3.rating, 2764);
+    });
+
+    test('moves by exactly what was paid, inside the rails', () {
+      final change = applyLp(gold3, 32, floorTierIdx: 0);
+      expect(change.after.rating, 2796);
+      expect(change.ratingDelta, 32);
+    });
+  });
+
   group('what a result is worth', () {
-    test('a win pays exactly what it won by', () {
-      expect(lpFor(won: true, yourReps: 20, theirReps: 12), 8);
+    test('a win pays 25 and what it won by', () {
+      expect(lpFor(won: true, yourReps: 18, theirReps: 11), 32);
     });
 
-    test('a loss costs exactly what it lost by', () {
-      expect(lpFor(won: false, yourReps: 12, theirReps: 20), -8);
+    test('a loss costs 20 and what it lost by', () {
+      expect(lpFor(won: false, yourReps: 11, theirReps: 18), -27);
     });
 
-    test('a tie moves nothing', () {
-      expect(lpFor(won: true, yourReps: 15, theirReps: 15), 0);
+    test('a tie still pays the win and takes the loss', () {
+      expect(lpFor(won: true, yourReps: 15, theirReps: 15), 25);
+      expect(lpFor(won: false, yourReps: 15, theirReps: 15), -20);
     });
 
-    test('tier plays no part in it — the two sides of the same duel mirror',
-        () {
+    test('tier plays no part in it: the winner gets five more than the loser '
+        'gives', () {
       for (final reps in [(20, 12), (0, 40), (40, 0), (5, 5)]) {
         final mine = lpFor(won: true, yourReps: reps.$1, theirReps: reps.$2);
         final theirs = lpFor(won: false, yourReps: reps.$2, theirReps: reps.$1);
-        expect(mine, -theirs, reason: '$reps did not mirror');
+        expect(mine + theirs, 5, reason: '$reps');
       }
     });
 
@@ -158,7 +184,7 @@ void main() {
     });
 
     test('a forfeit pays a flat win with no margin in it', () {
-      expect(kForfeitLp, greaterThan(0));
+      expect(kForfeitLp, kWinRating);
     });
   });
 
@@ -180,7 +206,7 @@ void main() {
   group('a long season never breaks the ladder', () {
     test('a thousand mixed results stay inside the rails', () {
       var rank = placementRank(2);
-      var floor = rank.tierIdx;
+      const floor = 0;
 
       // Alternating wins and losses with a slight upward bias, which is what
       // a real account looks like. The point is not where it lands; it is that
@@ -190,15 +216,16 @@ void main() {
             ? lpFor(won: false, yourReps: 10, theirReps: 20)
             : lpFor(won: true, yourReps: 20, theirReps: 10);
         rank = applyLp(rank, delta, floorTierIdx: floor).after;
-        if (rank.tierIdx > floor) floor = rank.tierIdx;
 
-        expect(rank.lp, inInclusiveRange(0, 99), reason: 'result $i');
+        final top = rank.tierIdx == kTopTier && rank.divIdx == kTopDivision;
+        expect(rank.lp, top ? greaterThanOrEqualTo(0) : inInclusiveRange(0, 99),
+            reason: 'result $i');
+        expect(rank.rating, greaterThanOrEqualTo(kRatingStart),
+            reason: 'result $i');
         expect(rank.tierIdx, inInclusiveRange(0, kTiers.length - 1),
             reason: 'result $i');
         expect(rank.divIdx, inInclusiveRange(0, kDivisions.length - 1),
             reason: 'result $i');
-        expect(rank.tierIdx, greaterThanOrEqualTo(floor),
-            reason: 'fell below the floor at result $i');
       }
     });
   });
@@ -235,11 +262,10 @@ void main() {
   });
 
   group('what a duel pays', () {
-    test('it is exactly the rep gap, nothing added and nothing taken away',
-        () {
-      expect(lpFor(won: true, yourReps: 20, theirReps: 10), 10);
-      expect(lpFor(won: true, yourReps: 500, theirReps: 0), 500);
-      expect(lpFor(won: false, yourReps: 0, theirReps: 500), -500);
+    test('it is 25 or 20 and the rep gap, nothing else', () {
+      expect(lpFor(won: true, yourReps: 20, theirReps: 10), 35);
+      expect(lpFor(won: true, yourReps: 500, theirReps: 0), 525);
+      expect(lpFor(won: false, yourReps: 0, theirReps: 500), -520);
     });
 
     test('a narrow loss costs less than a thrashing', () {
@@ -252,8 +278,8 @@ void main() {
       // The old margin bonus was capped so farming a weak opponent could
       // never outweigh facing a strong one. There is no cap to test for any
       // more: a blowout is worth exactly what it was, and applyLp is what
-      // keeps a huge swing inside the ladder's own rails (see 'the ceiling'
-      // and 'a very large gain' above).
+      // keeps a huge swing inside the ladder's own rails (see 'the top' and
+      // 'a very large gain' above).
       final huge = lpFor(won: true, yourReps: 500, theirReps: 0);
       final narrow = lpFor(won: true, yourReps: 11, theirReps: 10);
       expect(huge, greaterThan(narrow));

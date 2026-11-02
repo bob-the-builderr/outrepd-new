@@ -330,6 +330,8 @@ declare
   their_placing boolean;
   my_delta int;
   their_delta int;
+  my_pts int;
+  their_pts int;
   offer set_offers;
 begin
   -- Only a subscriber plays (see subscriptions.sql; off until switched on).
@@ -428,12 +430,11 @@ begin
       me.tier_idx, me.div_idx, me.lp
     );
   else
-    -- Weighed by the two ranks as they stood when the duel was played.
-    my_delta := lp_for(i_won, mine.reps, theirs.reps,
-                       ladder_level(me.tier_idx, me.div_idx),
-                       ladder_level(them.tier_idx, them.div_idx));
+    -- Floored at the bottom of Iron, not at the best tier ever held
+    -- (2026-11-02).
+    my_delta := lp_for(i_won, mine.reps, theirs.reps);
     select * into after from apply_lp(
-      me.tier_idx, me.div_idx, me.lp, my_delta, me.peak_tier_idx
+      me.tier_idx, me.div_idx, me.lp, my_delta, 0
     );
   end if;
 
@@ -445,12 +446,17 @@ begin
       them.tier_idx, them.div_idx, them.lp
     );
   elsif is_ranked then
-    their_delta := lp_for(not i_won, theirs.reps, mine.reps,
-                          ladder_level(them.tier_idx, them.div_idx),
-                          ladder_level(me.tier_idx, me.div_idx));
+    their_delta := lp_for(not i_won, theirs.reps, mine.reps);
     select * into their_after from apply_lp(
-      them.tier_idx, them.div_idx, them.lp, their_delta, them.peak_tier_idx
+      them.tier_idx, them.div_idx, them.lp, their_delta, 0
     );
+  end if;
+
+  -- What it adds to each side's week and month on the boards, from the
+  -- streaks as they stand before it.
+  if is_ranked then
+    my_pts := board_points(i_won, me.win_streak, me.id);
+    their_pts := board_points(not i_won, them.win_streak, them.id);
   end if;
 
   -- Everything below writes the ladder, and an unranked duel writes none of
@@ -506,11 +512,11 @@ begin
 
   insert into duels (
     challenger, defender, challenger_set, defender_set,
-    winner, ranked, lp_challenger, lp_defender
+    winner, ranked, lp_challenger, lp_defender, pts_challenger, pts_defender
   ) values (
     me.id, them.id, mine.id, theirs.id,
     case when i_won then me.id else them.id end,
-    is_ranked, my_delta, their_delta
+    is_ranked, my_delta, their_delta, coalesce(my_pts, 0), coalesce(their_pts, 0)
   ) returning id into d_id;
 
   update sets set claimed_by = d_id where id in (mine.id, theirs.id);

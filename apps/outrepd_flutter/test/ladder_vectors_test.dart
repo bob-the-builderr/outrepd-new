@@ -39,8 +39,9 @@ void main() {
             },
     ];
 
-    // Weighed by the two ranks: level, a little apart, and further apart
-    // than the weighing reaches, both ways, won and lost.
+    // With the two ranks given, which since 2026-11-02 change nothing: the
+    // server's five-argument lp_for is kept for anything installed before
+    // that, and has to agree.
     final weighed = <Map<String, Object?>>[
       for (final won in [true, false])
         for (var yourReps = 0; yourReps <= 40; yourReps += 8)
@@ -58,8 +59,6 @@ void main() {
                       won: won,
                       yourReps: yourReps,
                       theirReps: theirReps,
-                      yourLevel: yourLevel,
-                      theirLevel: yourLevel + apart,
                     ),
                   },
     ];
@@ -121,35 +120,35 @@ void main() {
     // rather than assumed.
     expect(pay.length, greaterThan(200));
     expect(weighed.length, greaterThan(500));
-    // Weighed, a duel never pays more than half again the gap, nor less than
-    // half of it, and level ranks pay the gap exactly.
+    // The ranks change nothing.
     for (final row in weighed) {
       final gap =
           ((row['your_reps']! as int) - (row['their_reps']! as int)).abs();
-      final paid = (row['total']! as int).abs();
-      expect(paid, inInclusiveRange((gap * 5 + 5) ~/ 10, (gap * 15 + 5) ~/ 10),
-          reason: 'weighed past the reach: $row');
-      if (row['your_level'] == row['their_level']) {
-        expect(paid, gap, reason: 'level ranks paid other than the gap: $row');
-      }
+      expect(
+        row['total'],
+        (row['won']! as bool) ? kWinRating + gap : -(kLossRating + gap),
+        reason: 'the ranks changed what a duel pays: $row',
+      );
     }
     expect(applied.length, greaterThan(150));
     expect(levels.length, kLadderLevels);
     expect(placements.length, 6);
 
     // The property the server must preserve, stated here so the vectors
-    // cannot be regenerated from a broken implementation without this failing.
+    // cannot be regenerated from a broken implementation without this failing:
+    // 25 and the gap for a win, 20 and the gap off for a loss.
     for (final row in pay) {
       final gap =
           ((row['your_reps']! as int) - (row['their_reps']! as int)).abs();
       expect(
         row['total'],
-        (row['won']! as bool) ? gap : -gap,
-        reason: 'a row is not the signed rep gap: $row',
+        (row['won']! as bool) ? 25 + gap : -(20 + gap),
+        reason: 'a row is not 25 and the gap, or 20 and the gap off: $row',
       );
     }
     for (final row in applied) {
-      expect(row['lp'], inInclusiveRange(0, 99));
+      final top = row['tier_idx'] == kTopTier && row['div_idx'] == kTopDivision;
+      expect(row['lp'], top ? greaterThanOrEqualTo(0) : inInclusiveRange(0, 99));
       expect(row['tier_idx'], inInclusiveRange(0, kTopTier));
       expect(row['div_idx'], inInclusiveRange(0, kTopDivision));
       if ((row['delta']! as int) < 0) {

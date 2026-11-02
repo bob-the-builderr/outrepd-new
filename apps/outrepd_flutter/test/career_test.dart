@@ -357,8 +357,8 @@ void main() {
     });
   });
 
-  group('LP is exactly the gap in reps', () {
-    test('a win pays exactly what it won by', () async {
+  group('a duel pays 25 or 20 and the gap in reps', () {
+    test('a win pays 25 and what it won by', () async {
       await place();
 
       final outcome = await career.recordDuel(
@@ -368,10 +368,10 @@ void main() {
         opponentTier: 6,
       );
 
-      expect(outcome.rank!.lpDelta, 10);
+      expect(outcome.rank!.lpDelta, 35);
     });
 
-    test('a loss costs exactly what it lost by, whatever the opponent\'s tier',
+    test('a loss costs 20 and what it lost by, whatever the opponent\'s tier',
         () async {
       await place();
 
@@ -385,12 +385,12 @@ void main() {
         opponentTier: 0,
       );
 
-      expect(outcome.rank!.lpDelta, -38);
+      expect(outcome.rank!.lpDelta, -58);
     });
   });
 
   group('the floor holds across a career', () {
-    test('a losing streak cannot cost a tier that was earned', () async {
+    test('a losing streak stops at the bottom of Iron', () async {
       await place(wins: 5);
       final floor = demoProfile.peakTierIdx;
 

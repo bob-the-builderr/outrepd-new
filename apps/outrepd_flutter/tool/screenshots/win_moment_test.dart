@@ -91,8 +91,24 @@ DuelResultView _result({required bool won, bool live = true}) => DuelResultView(
       ? const LiveMatch(id: 'played', ranked: true, opponent: _karim)
       : null,
   onLiveRematch: live ? (_) {} : null,
-  monthBefore: 14,
-  monthAfter: won ? 11 : 16,
+  weekBefore: MonthPlace(
+    season: DateTime.utc(2026, 11, 2),
+    endsAt: DateTime.utc(2026, 11, 9),
+    place: 14,
+    ofTotal: 312,
+    points: 32,
+    wins: 6,
+    played: 9,
+  ),
+  weekAfter: MonthPlace(
+    season: DateTime.utc(2026, 11, 2),
+    endsAt: DateTime.utc(2026, 11, 9),
+    place: won ? 12 : 15,
+    ofTotal: 312,
+    points: won ? 37 : 30,
+    wins: won ? 7 : 6,
+    played: 10,
+  ),
   // A minute that turns at the half: level at 0:25, then they pull away.
   yourRepTimes: won
       ? [for (var i = 1; i <= 18; i++) i * 3200]

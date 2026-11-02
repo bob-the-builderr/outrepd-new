@@ -26,6 +26,7 @@ import '../lifter/looks.dart';
 import '../lifter/my_lifter.dart';
 import '../motion.dart';
 import '../country_names.dart';
+import '../rank_card.dart';
 import '../rewards.dart';
 import '../player_avatar.dart';
 import '../season.dart';
@@ -436,35 +437,14 @@ class _Identity extends StatelessWidget {
           WornTitle(title: title),
         ],
 
-        const SizedBox(height: 3),
-        // Rank and progress on one line. It used to take three: the rank, the
-        // numbers, and a sentence naming the next rung.
-        InkWell(
+        const SizedBox(height: 12),
+        // The rank as one number on a card in its tier's colours (pick A,
+        // 2026-11-02). It was a muted line over a thin bar.
+        RankCard(
+          tierIdx: profile.tierIdx,
+          divIdx: profile.divIdx,
+          lp: profile.lp,
           onTap: onTapRank,
-          borderRadius: BorderRadius.circular(6),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-            child: Text(
-              '${tierLabel(l, profile.tierIdx, profile.divIdx)} · '
-              '${localNumber(context, profile.lp)} / '
-              '${localNumber(context, 100)} LP',
-              style: TextStyle(color: context.colors.muted, fontSize: 14),
-            ),
-          ),
-        ),
-
-        const SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 26),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(3),
-            child: LinearProgressIndicator(
-              value: profile.lp / 100,
-              minHeight: 5,
-              backgroundColor: context.colors.surfaceRaised,
-              valueColor: AlwaysStoppedAnimation(context.colors.brand),
-            ),
-          ),
         ),
       ],
     );

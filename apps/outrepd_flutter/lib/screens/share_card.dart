@@ -20,6 +20,7 @@ import '../country_names.dart';
 import '../data.dart';
 import '../lifter/lifter_view.dart';
 import '../lifter/my_lifter.dart';
+import '../ranking.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
 import '../tier_frame.dart';
@@ -596,7 +597,7 @@ class _StoryCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  _lpOfHundred(context, l, data.lp),
+                  _rating(context, l, data),
                   style: _CardType.label.copyWith(
                     color: context.colors.muted,
                     fontSize: 14,
@@ -669,7 +670,7 @@ class _PostCard extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            _lpOfHundred(context, l, data.lp),
+                            _rating(context, l, data),
                             style: _CardType.label.copyWith(
                               color: context.colors.muted,
                               fontSize: 14,
@@ -707,9 +708,10 @@ class _PostCard extends StatelessWidget {
   }
 }
 
-/// "64 / 100 LP".
-String _lpOfHundred(BuildContext context, L l, int lp) =>
-    '${localNumber(context, lp)} / ${l.lpAmount(localNumber(context, 100))}';
+/// The rating: "2,764 rating".
+String _rating(BuildContext context, L l, ShareCardData data) => l.ratingAmount(
+  localNumber(context, ratingOf(data.tierIdx, data.divIdx, data.lp)),
+);
 
 /// Wins–losses, the way the profile writes a record.
 String _record(BuildContext context, ShareCardData data) =>
@@ -1288,7 +1290,7 @@ class _RankLine extends StatelessWidget {
                   TextSpan(
                     text:
                         '${delta >= 0 ? '+' : '−'}'
-                        '${l.lpAmount(localNumber(context, delta.abs()))}',
+                        '${l.ratingAmount(localNumber(context, delta.abs()))}',
                     style: TextStyle(
                       color: delta >= 0
                           ? context.colors.text

@@ -17,6 +17,7 @@ import '../lifter/looks.dart';
 import '../lifter/my_lifter.dart';
 import '../country_names.dart';
 import '../player_avatar.dart';
+import '../ranking.dart';
 import '../rewards.dart';
 import '../season.dart';
 import '../theme.dart';
@@ -192,7 +193,7 @@ class _LifterPeekSheetState extends State<_LifterPeekSheet>
                         p == null
                             ? ''
                             : p.ranked
-                            ? '${tierLabel(l, p.tierIdx, p.divIdx)} · ${localNumber(context, p.lp)} / ${localNumber(context, 100)} LP'
+                            ? '${tierLabel(l, p.tierIdx, p.divIdx)} · ${localNumber(context, ratingOf(p.tierIdx, p.divIdx, p.lp))}'
                             : l.unranked,
                         style: context.type.label.copyWith(
                           color: p == null
@@ -517,7 +518,7 @@ class _Body extends StatelessWidget {
         const SizedBox(height: 3),
         Text(
           p.ranked
-              ? '${tierLabel(l, p.tierIdx, p.divIdx)} · ${localNumber(context, p.lp)} / ${localNumber(context, 100)} LP'
+              ? '${tierLabel(l, p.tierIdx, p.divIdx)} · ${localNumber(context, ratingOf(p.tierIdx, p.divIdx, p.lp))}'
               : l.unranked,
           textAlign: TextAlign.center,
           style: context.type.label.copyWith(color: _tierColour(p.tierIdx)),

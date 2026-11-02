@@ -4265,6 +4265,102 @@ abstract class L {
   /// **'Nobody has won LP this week yet. Win the first ranked duel and you lead.'**
   String get weekEmptyBody;
 
+  /// No description provided for @ratingUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'rating'**
+  String get ratingUnit;
+
+  /// No description provided for @ptsUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'pts'**
+  String get ptsUnit;
+
+  /// No description provided for @ptsAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} pts'**
+  String ptsAmount(String n);
+
+  /// No description provided for @ratingAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} rating'**
+  String ratingAmount(String n);
+
+  /// No description provided for @ratingForWin.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} for the win'**
+  String ratingForWin(String n);
+
+  /// No description provided for @ratingForLoss.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} for the loss'**
+  String ratingForLoss(String n);
+
+  /// No description provided for @ratingForReps.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} for the reps'**
+  String ratingForReps(String n);
+
+  /// No description provided for @boardThisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get boardThisWeek;
+
+  /// No description provided for @streakNextTen.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} wins in a row: the next win is +10'**
+  String streakNextTen(String n);
+
+  /// No description provided for @boardRuleWin.
+  ///
+  /// In en, this message translates to:
+  /// **'Win +5'**
+  String get boardRuleWin;
+
+  /// No description provided for @boardRuleLoss.
+  ///
+  /// In en, this message translates to:
+  /// **'Loss −2'**
+  String get boardRuleLoss;
+
+  /// No description provided for @boardRuleStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'3 wins in a row: +10'**
+  String get boardRuleStreak;
+
+  /// No description provided for @rankNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {rank}'**
+  String rankNext(String rank);
+
+  /// No description provided for @rankAt.
+  ///
+  /// In en, this message translates to:
+  /// **'at {n}'**
+  String rankAt(String n);
+
+  /// No description provided for @toGo.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} to go'**
+  String toGo(String n);
+
+  /// No description provided for @tierStartsAt.
+  ///
+  /// In en, this message translates to:
+  /// **'{tier} starts at {n}'**
+  String tierStartsAt(String tier, String n);
+
   /// No description provided for @rankedDuelsCount.
   ///
   /// In en, this message translates to:

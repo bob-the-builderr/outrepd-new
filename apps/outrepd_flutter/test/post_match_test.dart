@@ -11,6 +11,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:outrepd/backend/backend.dart';
 import 'package:outrepd/career.dart';
 import 'package:outrepd/data.dart';
 import 'package:outrepd/l10n/app_localizations.dart';
@@ -137,7 +138,17 @@ void main() {
     });
   });
 
-  testWidgets("the month's move draws its arrow rather than typing it",
+  MonthPlace week({required int? place, required int points}) => MonthPlace(
+    season: DateTime.utc(2026, 11, 2),
+    endsAt: DateTime.utc(2026, 11, 9),
+    place: place,
+    ofTotal: 40,
+    points: points,
+    wins: 3,
+    played: 5,
+  );
+
+  testWidgets("the week's move: the points it added, the places it climbed",
       (tester) async {
     phone(tester);
     await tester.pumpWidget(_app(DuelResultView(
@@ -148,18 +159,32 @@ void main() {
       outcome: demoOutcome(won: true),
       onRematch: () {},
       onDone: () {},
-      monthBefore: 14,
-      monthAfter: 11,
+      weekBefore: week(place: 14, points: 32),
+      weekAfter: week(place: 12, points: 37),
     )));
     await tester.pumpAndSettle();
-    final line = find.byKey(const Key('monthMove'));
+    final line = find.byKey(const Key('weekLine'));
     expect(line, findsOneWidget);
+    // The arrow drawn, not typed.
     expect(
       find.descendant(of: line, matching: find.byIcon(Icons.arrow_forward_rounded)),
       findsOneWidget,
     );
-    expect(find.textContaining('#14', findRichText: true), findsOneWidget);
-    expect(find.textContaining('#11', findRichText: true), findsOneWidget);
+    expect(find.text('#14'), findsOneWidget);
+    expect(find.text('#12'), findsOneWidget);
+    expect(find.text('+5 pts'), findsOneWidget);
+    expect(find.textContaining('37 pts'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('the rank card says the rating and what it was made of',
+      (tester) async {
+    phone(tester);
+    await tester.pumpWidget(_app(view(won: true)));
+    await tester.pumpAndSettle();
+    // 18–11: 25 for the win and 7 for the reps.
+    expect(find.text('+32'), findsOneWidget);
+    expect(find.textContaining('25 for the win + 7 for the reps'), findsOneWidget);
   });
 
   testWidgets('after a saved set the button finds a new match, not a rematch',

@@ -179,7 +179,7 @@ class LFr extends L {
   String get incSets => 'Chaque série et chaque compte';
 
   @override
-  String get incDuels => 'Historique des duels et variations de LP';
+  String get incDuels => 'Historique des duels et variations de cote';
 
   @override
   String get incFriends => 'Amis et comptes bloqués';
@@ -1569,8 +1569,7 @@ class LFr extends L {
   String get giveUp => 'Abandonner';
 
   @override
-  String get lpMovesWithGap =>
-      'Les PL évoluent selon l\'écart de répétitions — gagnez avec plus d\'écart, gagnez plus de points';
+  String get lpMovesWithGap => 'Victoire : +25 plus l\'écart de répétitions. Défaite : −20 plus l\'écart.';
 
   @override
   String get searchingForOpponent => 'Recherche d’un adversaire';
@@ -2279,7 +2278,7 @@ class LFr extends L {
 
   @override
   String monthToTop10(String lp) {
-    return 'À ${lp} LP du top 10';
+    return 'À ${lp} pts du top 10';
   }
 
   @override
@@ -2302,13 +2301,81 @@ class LFr extends L {
   String get monthEmptyTitle => 'Un nouveau mois';
 
   @override
-  String get monthEmptyBody => 'Personne n\'a encore gagné de LP ce mois-ci. Gagne le premier duel classé et tu prends la tête.';
+  String get monthEmptyBody => 'Personne n\'a encore marqué de points ce mois-ci. Gagne le premier duel classé et tu prends la tête.';
 
   @override
   String get weekEmptyTitle => 'Une nouvelle semaine';
 
   @override
-  String get weekEmptyBody => 'Personne n\'a encore gagné de LP cette semaine. Gagne le premier duel classé et tu prends la tête.';
+  String get weekEmptyBody => 'Personne n\'a encore marqué de points cette semaine. Gagne le premier duel classé et tu prends la tête.';
+
+  @override
+  String get ratingUnit => 'cote';
+
+  @override
+  String get ptsUnit => 'pts';
+
+  @override
+  String ptsAmount(String n) {
+    return '${n} pts';
+  }
+
+  @override
+  String ratingAmount(String n) {
+    return '${n} de cote';
+  }
+
+  @override
+  String ratingForWin(String n) {
+    return '${n} pour la victoire';
+  }
+
+  @override
+  String ratingForLoss(String n) {
+    return '${n} pour la défaite';
+  }
+
+  @override
+  String ratingForReps(String n) {
+    return '${n} pour les répétitions';
+  }
+
+  @override
+  String get boardThisWeek => 'Cette semaine';
+
+  @override
+  String streakNextTen(String n) {
+    return '${n} victoires d\'affilée : la prochaine vaut +10';
+  }
+
+  @override
+  String get boardRuleWin => 'Victoire +5';
+
+  @override
+  String get boardRuleLoss => 'Défaite −2';
+
+  @override
+  String get boardRuleStreak => '3 victoires d\'affilée : +10';
+
+  @override
+  String rankNext(String rank) {
+    return 'Suivant : ${rank}';
+  }
+
+  @override
+  String rankAt(String n) {
+    return 'à ${n}';
+  }
+
+  @override
+  String toGo(String n) {
+    return 'encore ${n}';
+  }
+
+  @override
+  String tierStartsAt(String tier, String n) {
+    return '${tier} commence à ${n}';
+  }
 
   @override
   String rankedDuelsCount(String n) {
@@ -2514,7 +2581,7 @@ class LFr extends L {
 
   @override
   String weekToTop3(String n) {
-    return '${n} LP jusqu\'au top 3';
+    return '${n} pts jusqu\'au top 3';
   }
 
   @override
@@ -2614,7 +2681,7 @@ class LFr extends L {
   String get placedBody => 'Tout le monde commence ici. Seules les victoires te font monter.';
 
   @override
-  String get placedHow => 'Gagne des matchs pour gagner des LP. Bats quelqu\'un mieux classé pour en gagner plus.';
+  String get placedHow => 'Victoire : +25 plus l\'écart de répétitions. Défaite : −20 plus l\'écart.';
 
   @override
   String get levelBesideName => 'À côté de ton nom, partout';

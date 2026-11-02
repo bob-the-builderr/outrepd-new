@@ -177,7 +177,7 @@ class LEn extends L {
   String get incSets => 'Every set and rep count';
 
   @override
-  String get incDuels => 'Duel history and LP changes';
+  String get incDuels => 'Duel history and rating changes';
 
   @override
   String get incFriends => 'Friends and blocked accounts';
@@ -1563,8 +1563,7 @@ class LEn extends L {
   String get giveUp => 'Give up';
 
   @override
-  String get lpMovesWithGap =>
-      'LP moves with the rep gap — win by more, gain more';
+  String get lpMovesWithGap => 'Win: +25 and the rep gap. Lose: −20 and the rep gap.';
 
   @override
   String get searchingForOpponent => 'Searching for an opponent';
@@ -2271,7 +2270,7 @@ class LEn extends L {
 
   @override
   String monthToTop10(String lp) {
-    return '${lp} LP to the top 10';
+    return '${lp} pts to the top 10';
   }
 
   @override
@@ -2294,13 +2293,81 @@ class LEn extends L {
   String get monthEmptyTitle => 'A fresh month';
 
   @override
-  String get monthEmptyBody => 'Nobody has won LP this month yet. Win the first ranked duel and you lead.';
+  String get monthEmptyBody => 'Nobody has scored this month yet. Win the first ranked duel and you lead.';
 
   @override
   String get weekEmptyTitle => 'A fresh week';
 
   @override
-  String get weekEmptyBody => 'Nobody has won LP this week yet. Win the first ranked duel and you lead.';
+  String get weekEmptyBody => 'Nobody has scored this week yet. Win the first ranked duel and you lead.';
+
+  @override
+  String get ratingUnit => 'rating';
+
+  @override
+  String get ptsUnit => 'pts';
+
+  @override
+  String ptsAmount(String n) {
+    return '${n} pts';
+  }
+
+  @override
+  String ratingAmount(String n) {
+    return '${n} rating';
+  }
+
+  @override
+  String ratingForWin(String n) {
+    return '${n} for the win';
+  }
+
+  @override
+  String ratingForLoss(String n) {
+    return '${n} for the loss';
+  }
+
+  @override
+  String ratingForReps(String n) {
+    return '${n} for the reps';
+  }
+
+  @override
+  String get boardThisWeek => 'This week';
+
+  @override
+  String streakNextTen(String n) {
+    return '${n} wins in a row: the next win is +10';
+  }
+
+  @override
+  String get boardRuleWin => 'Win +5';
+
+  @override
+  String get boardRuleLoss => 'Loss −2';
+
+  @override
+  String get boardRuleStreak => '3 wins in a row: +10';
+
+  @override
+  String rankNext(String rank) {
+    return 'Next: ${rank}';
+  }
+
+  @override
+  String rankAt(String n) {
+    return 'at ${n}';
+  }
+
+  @override
+  String toGo(String n) {
+    return '${n} to go';
+  }
+
+  @override
+  String tierStartsAt(String tier, String n) {
+    return '${tier} starts at ${n}';
+  }
 
   @override
   String rankedDuelsCount(String n) {
@@ -2506,7 +2573,7 @@ class LEn extends L {
 
   @override
   String weekToTop3(String n) {
-    return '${n} LP to the top 3';
+    return '${n} pts to the top 3';
   }
 
   @override
@@ -2606,7 +2673,7 @@ class LEn extends L {
   String get placedBody => 'Everyone starts here. Only wins move you up.';
 
   @override
-  String get placedHow => 'Win matches to earn LP. Beat someone ranked higher for more.';
+  String get placedHow => 'Win: +25 and the rep gap. Lose: −20 and the rep gap.';
 
   @override
   String get levelBesideName => 'Beside your name, everywhere';

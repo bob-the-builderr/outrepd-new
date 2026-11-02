@@ -116,7 +116,7 @@ class SeasonOverDialog extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             Text(
-              '${localNumber(context, lead.points)} ${l.lpUnit} · '
+              '${l.ptsAmount(localNumber(context, lead.points))} · '
               '${l.rankedDuelsCount(localNumber(context, lead.played))}',
               textAlign: TextAlign.center,
               style: TextStyle(color: context.colors.muted, fontSize: 15),

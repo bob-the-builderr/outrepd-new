@@ -177,7 +177,7 @@ class LHi extends L {
   String get incSets => 'हर सेट और रेप काउंट';
 
   @override
-  String get incDuels => 'मुक़ाबलों का इतिहास और LP बदलाव';
+  String get incDuels => 'मुक़ाबलों का इतिहास और रेटिंग बदलाव';
 
   @override
   String get incFriends => 'दोस्त और ब्लॉक किए खाते';
@@ -1565,8 +1565,7 @@ class LHi extends L {
   String get giveUp => 'हार मानें';
 
   @override
-  String get lpMovesWithGap =>
-      'LP रेप्स के अंतर के साथ बदलते हैं — जितने ज़्यादा अंतर से जीतें, उतना ज़्यादा मिलता है';
+  String get lpMovesWithGap => 'जीत: +25 और रेप्स का अंतर। हार: −20 और रेप्स का अंतर।';
 
   @override
   String get searchingForOpponent => 'विरोधी ढूँढ रहे हैं';
@@ -2273,7 +2272,7 @@ class LHi extends L {
 
   @override
   String monthToTop10(String lp) {
-    return 'टॉप 10 से ${lp} LP दूर';
+    return 'टॉप 10 से ${lp} अंक दूर';
   }
 
   @override
@@ -2296,13 +2295,81 @@ class LHi extends L {
   String get monthEmptyTitle => 'नया महीना';
 
   @override
-  String get monthEmptyBody => 'इस महीने अभी तक किसी ने LP नहीं जीते। पहला रैंक्ड ड्यूल जीतें और आप सबसे आगे।';
+  String get monthEmptyBody => 'इस महीने अभी तक किसी ने अंक नहीं बनाए। पहला रैंक्ड ड्यूल जीतें और आप सबसे आगे।';
 
   @override
   String get weekEmptyTitle => 'नया हफ़्ता';
 
   @override
-  String get weekEmptyBody => 'इस हफ़्ते अभी तक किसी ने LP नहीं जीते। पहला रैंक्ड ड्यूल जीतें और आप सबसे आगे।';
+  String get weekEmptyBody => 'इस हफ़्ते अभी तक किसी ने अंक नहीं बनाए। पहला रैंक्ड ड्यूल जीतें और आप सबसे आगे।';
+
+  @override
+  String get ratingUnit => 'रेटिंग';
+
+  @override
+  String get ptsUnit => 'अंक';
+
+  @override
+  String ptsAmount(String n) {
+    return '${n} अंक';
+  }
+
+  @override
+  String ratingAmount(String n) {
+    return '${n} रेटिंग';
+  }
+
+  @override
+  String ratingForWin(String n) {
+    return 'जीत के ${n}';
+  }
+
+  @override
+  String ratingForLoss(String n) {
+    return 'हार के ${n}';
+  }
+
+  @override
+  String ratingForReps(String n) {
+    return 'रेप्स के ${n}';
+  }
+
+  @override
+  String get boardThisWeek => 'इस हफ़्ते';
+
+  @override
+  String streakNextTen(String n) {
+    return 'लगातार ${n} जीत: अगली जीत +10';
+  }
+
+  @override
+  String get boardRuleWin => 'जीत +5';
+
+  @override
+  String get boardRuleLoss => 'हार −2';
+
+  @override
+  String get boardRuleStreak => 'लगातार 3 जीत: +10';
+
+  @override
+  String rankNext(String rank) {
+    return 'अगला: ${rank}';
+  }
+
+  @override
+  String rankAt(String n) {
+    return '${n} पर';
+  }
+
+  @override
+  String toGo(String n) {
+    return '${n} बाकी';
+  }
+
+  @override
+  String tierStartsAt(String tier, String n) {
+    return '${tier} ${n} से शुरू';
+  }
 
   @override
   String rankedDuelsCount(String n) {
@@ -2508,7 +2575,7 @@ class LHi extends L {
 
   @override
   String weekToTop3(String n) {
-    return 'टॉप 3 तक ${n} LP';
+    return 'टॉप 3 तक ${n} अंक';
   }
 
   @override
@@ -2608,7 +2675,7 @@ class LHi extends L {
   String get placedBody => 'सब यहीं से शुरू करते हैं। सिर्फ़ जीत आपको ऊपर ले जाती है।';
 
   @override
-  String get placedHow => 'LP पाने के लिए मुक़ाबले जीतें। ऊँची रैंक वाले को हराएँ तो ज़्यादा मिलेंगे।';
+  String get placedHow => 'जीत: +25 और रेप्स का अंतर। हार: −20 और रेप्स का अंतर।';
 
   @override
   String get levelBesideName => 'आपके नाम के साथ, हर जगह';

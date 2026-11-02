@@ -543,20 +543,17 @@ reset role;
 select close_finished_seasons();
 select check_that((select count(*) from season_awards) = 2, 'a month was closed twice');
 
--- This month: the board's points are this month's LP, and it is in order.
+-- This month: the running totals are what the month's duels add up to when
+-- added up again from scratch, and the board is in order.
+select set_config('test.month_pts', coalesce((
+  select points from season_points_from_duels(season_of(now()))
+   where profile_id = :'A'), 0)::text, false);
 select as_user(:'A'); set role authenticated;
 select check_that(
-  (select points from my_month_place()) = coalesce((
-    select sum(lp) from (
-      select lp_challenger as lp from duels
-       where ranked and challenger = :'A'
-         and created_at >= date_trunc('month', now() at time zone 'UTC') at time zone 'UTC'
-      union all
-      select lp_defender from duels
-       where ranked and defender = :'A'
-         and created_at >= date_trunc('month', now() at time zone 'UTC') at time zone 'UTC'
-    ) x), 0),
-  'this month''s points are not the LP of this month''s duels');
+  (select points from my_month_place()) = current_setting('test.month_pts')::int,
+  'this month''s points are not what this month''s duels add up to');
+select check_that((select points >= 0 from my_month_place()),
+  'this month''s points went below nought');
 select check_that(not exists (
   select 1 from (select points, lag(points) over (order by place) as before
                    from month_board()) b
@@ -596,6 +593,18 @@ reset role;
 select check_that(
   (select ranked from duels where challenger_set = current_setting('test.a3')::uuid),
   'a third duel in a day between the same two was not ranked');
+-- It paid the rating's rule (2026-11-02): 25 and the gap to the winner, 20
+-- and the gap off the loser, and the boards' points to both.
+select check_that(
+  (select lp_challenger = 25 + 40
+     from duels where challenger_set = current_setting('test.a3')::uuid),
+  'a ranked win did not pay 25 and the gap');
+select check_that(
+  (select pts_challenger in (0, 5, 10) and pts_defender = -2
+     from duels where challenger_set = current_setting('test.a3')::uuid),
+  'a ranked duel did not give the boards 5 or 10 for the win and 2 off for the loss');
+select check_that(board_points(true, 1, :'A') in (0, 10) and board_points(true, 0, :'A') in (0, 5),
+  'the third win in a row is not worth 10');
 
 -- ── the week's board ───────────────────────────────────────────────────────────
 

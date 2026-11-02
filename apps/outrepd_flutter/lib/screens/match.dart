@@ -21,6 +21,7 @@ import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../motion.dart';
 import '../push.dart';
+import '../ranking.dart';
 import '../rewards.dart';
 import '../season.dart';
 import '../theme.dart';
@@ -420,7 +421,8 @@ class _Rank extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
-    final toNext = (100 - profile.lp).clamp(0, 100);
+    final toNext = (kRatingPerDivision - profile.lp).clamp(0, kRatingPerDivision);
+    final top = profile.tierIdx >= kTopTier && profile.divIdx >= kTopDivision;
 
     return Column(
       children: [
@@ -452,19 +454,26 @@ class _Rank extends StatelessWidget {
         const SizedBox(height: 16),
         // Fills to where the rank stands each time the tab is drawn.
         GrowingBar(
-          value: profile.lp / 100,
+          value: top ? 1.0 : (profile.lp / 100).clamp(0.0, 1.0),
           colour: context.colors.brand,
           background: context.colors.surfaceRaised,
           radius: 4,
         ),
         const SizedBox(height: 8),
-        // One line, not three. It used to be an LP number at display size, a
-        // bar, and a separate "36 to promotion" caption underneath — three
-        // pieces of furniture for one fact.
+        // One line, not three: the rating (2026-11-02) and the next rung.
         Text(
-          '${localNumber(context, profile.lp)} / '
-          '${localNumber(context, 100)} LP · '
-          '${l.toNextTier(localNumber(context, toNext), nextRankName(l, profile.tierIdx, profile.divIdx))}',
+          [
+            localNumber(
+              context,
+              ratingOf(profile.tierIdx, profile.divIdx, profile.lp),
+            ),
+            if (!top)
+              l.toNextTier(
+                localNumber(context, toNext),
+                nextRankName(l, profile.tierIdx, profile.divIdx),
+              ),
+          ].join(' · '),
+          key: const Key('homeRating'),
           style: TextStyle(color: context.colors.muted, fontSize: 14),
         ),
       ],

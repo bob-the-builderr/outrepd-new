@@ -124,7 +124,10 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.textContaining('This week'), findsOneWidget);
-      expect(find.text('Starts again every Monday'), findsOneWidget);
+      // The points' rules under the title (2026-11-02).
+      expect(find.text('Win +5'), findsOneWidget);
+      expect(find.text('Loss −2'), findsOneWidget);
+      expect(find.text('3 wins in a row: +10'), findsOneWidget);
       expect(find.byKey(const Key('lengthMonth')), findsOneWidget);
     });
 
@@ -152,7 +155,7 @@ group('the month board', () {
 
       expect(find.text('October · 20d 4h left'), findsOneWidget);
       expect(find.text('karimfit'), findsOneWidget);
-      expect(find.text('142 LP'), findsOneWidget);
+      expect(find.text('142 pts'), findsOneWidget);
       expect(find.text('20 Club badge · 12/20 ranked duels'), findsOneWidget);
     });
 
@@ -184,7 +187,7 @@ group('the month board', () {
 
       // Tenth has 98; 86 needs 13 more to be sure of passing, not 12 —
       // level on points goes to whoever has more wins.
-      expect(find.text('13 LP to the top 10'), findsOneWidget);
+      expect(find.text('13 pts to the top 10'), findsOneWidget);
       expect(find.text('YOU'), findsOneWidget);
     });
 
@@ -336,7 +339,7 @@ group('the month board', () {
       expect(find.text('Season over'), findsOneWidget);
       expect(find.text('September 2026'), findsOneWidget);
       expect(find.text('#7'), findsOneWidget);
-      expect(find.text('104 LP · 23 ranked duels'), findsOneWidget);
+      expect(find.text('104 pts · 23 ranked duels'), findsOneWidget);
       expect(find.text('Top 10 · Sep'), findsOneWidget);
       expect(find.text('20 Club · Sep'), findsOneWidget);
     });

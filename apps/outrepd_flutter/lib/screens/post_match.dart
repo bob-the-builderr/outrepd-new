@@ -6,9 +6,9 @@
 /// is always the same two things in the same order: did I win, and what did it
 /// cost or pay.
 ///
-/// The LP card used to itemise a "+33 LP" into the reasons behind it — tier
-/// gap, margin, form. There is only one reason now: LP is exactly the gap in
-/// reps, which the two scores above the card already say in full.
+/// The rank card says what the duel did to the rating — 25 for a win or 20
+/// off for a loss, and the gap in reps on top (2026-11-02) — and what it
+/// added to the week's board, and where that moved you on it.
 library;
 
 import 'dart:ui' as ui;
@@ -130,8 +130,8 @@ class DuelResultView extends StatelessWidget {
     this.closestYet = false,
     this.live,
     this.onLiveRematch,
-    this.monthBefore,
-    this.monthAfter,
+    this.weekBefore,
+    this.weekAfter,
     this.rematchLabel,
     this.xp,
     this.yourRepTimes = const [],
@@ -158,10 +158,10 @@ class DuelResultView extends StatelessWidget {
   /// Both asked for the live rematch, and here it is.
   final ValueChanged<LiveMatch>? onLiveRematch;
 
-  /// This account's place on the month's board before and after the duel,
-  /// when known.
-  final int? monthBefore;
-  final int? monthAfter;
+  /// This account's place and points on the week's board before and after
+  /// the duel, when known.
+  final MonthPlace? weekBefore;
+  final MonthPlace? weekAfter;
 
   /// The narrowest defeat on record. Only ever true on a loss, and only when
   /// it is actually true — a consolation the app invents is worth nothing.
@@ -284,7 +284,11 @@ class DuelResultView extends StatelessWidget {
                     ),
                   ],
                   const SizedBox(height: 24),
-                  LpCard(outcome: outcome, breakdown: _lpBreakdown(context)),
+                  LpCard(
+                    outcome: outcome,
+                    weekBefore: weekBefore,
+                    weekAfter: weekAfter,
+                  ),
                   if (outcome?.madeFriendly ?? false) ...[
                     const SizedBox(height: 10),
                     Text(
@@ -299,40 +303,6 @@ class DuelResultView extends StatelessWidget {
                   if (xp case final gain?) ...[
                     const SizedBox(height: 10),
                     XpGainCard(gain: gain),
-                  ],
-                  if (_monthMove(context) case final move?) ...[
-                    const SizedBox(height: 12),
-                    // The arrow drawn, not typed: as a character it is a box
-                    // on phones whose font does not have it.
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          for (final (i, part)
-                              in l.monthMove(move).split('→').indexed) ...[
-                            if (i > 0)
-                              const WidgetSpan(
-                                alignment: PlaceholderAlignment.middle,
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 2),
-                                  child: Icon(
-                                    Icons.arrow_forward_rounded,
-                                    size: 17,
-                                    color: AppColors.gold,
-                                  ),
-                                ),
-                              ),
-                            TextSpan(text: part),
-                          ],
-                        ],
-                      ),
-                      key: const Key('monthMove'),
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: AppColors.gold,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
                   ],
                   // Only on the duel that met it: the goal is a daily thing,
                   // and saying so after every match that evening would turn
@@ -402,43 +372,6 @@ class DuelResultView extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-extension on DuelResultView {
-  /// "+4 for the reps · +2 for a Platinum IV opponent": said only when the
-  /// opponent's rank moved what the duel paid (lp_for, supabase/ladder.sql),
-  /// so the number on the card is never a mystery. Level ranks pay the rep
-  /// gap exactly, and there is nothing to explain.
-  String? _lpBreakdown(BuildContext context) {
-    final change = outcome?.rank;
-    if (change == null) return null;
-    final gap = (yourReps - theirReps).abs();
-    final forReps = won ? gap : -gap;
-    final adjust = change.lpDelta - forReps;
-    // A forfeit pays flat and is not a weighed rep gap: nothing to explain.
-    if (gap == 0 || adjust == 0 || adjust.abs() * 2 > gap + 1) return null;
-    final l = L.of(context);
-    String signed(int n) => n > 0
-        ? '+${localNumber(context, n)}'
-        : '−${localNumber(context, -n)}';
-    return l.lpBreakdown(
-      signed(forReps),
-      signed(adjust),
-      tierLabel(l, opponent.tierIdx, opponent.divIdx),
-    );
-  }
-
-  /// "#14 → #11" on the month's board, "#11" when there was no place before,
-  /// or null when there is no place to show — a friendly duel moves nothing
-  /// on it, and neither does an account the server has no answer for.
-  String? _monthMove(BuildContext context) {
-    final after = monthAfter;
-    if (after == null || outcome?.rank == null) return null;
-    final now = '#${localNumber(context, after)}';
-    final before = monthBefore;
-    if (before == null || before == after) return now;
-    return '#${localNumber(context, before)} → $now';
   }
 }
 
@@ -678,15 +611,22 @@ class _HealthChip extends StatelessWidget {
   }
 }
 
-/// What the duel did to the rank: the total, where it leaves you, and what the
-/// total was made of.
+/// What the duel did to the rank — the rating it moved by, where that leaves
+/// you, what it was made of — and, under it, what it added to the week's
+/// board and where that moved you on it: the reason to play the next one.
 class LpCard extends StatelessWidget {
-  const LpCard({super.key, required this.outcome, this.breakdown});
+  const LpCard({
+    super.key,
+    required this.outcome,
+    this.weekBefore,
+    this.weekAfter,
+  });
 
   final DuelOutcome? outcome;
 
-  /// What the total was made of, when the opponent's rank changed it.
-  final String? breakdown;
+  /// The week's board before and after, when the server answered.
+  final MonthPlace? weekBefore;
+  final MonthPlace? weekAfter;
 
   @override
   Widget build(BuildContext context) {
@@ -706,11 +646,10 @@ class LpCard extends StatelessWidget {
     final now = change.after;
     final before = (change.before.lp / 100).clamp(0.0, 1.0);
     final after = (now.lp / 100).clamp(0.0, 1.0);
-    final toGo = (100 - now.lp).clamp(0, 100);
 
-    // The LP lands in front of you: the number counts up and the bar fills
-    // to where it ends, rather than both simply being there. The end state
-    // is the same numbers the card always showed.
+    // The rating lands in front of you: the number counts up and the bar
+    // fills to where it ends, rather than both simply being there. The end
+    // state is the same numbers the card always showed.
     return TweenAnimationBuilder<double>(
       tween: Tween(begin: 0, end: 1),
       duration: const Duration(milliseconds: 1100),
@@ -723,9 +662,20 @@ class LpCard extends StatelessWidget {
         gained: gained,
         before: before,
         after: before + (after - before) * t,
-        toGo: toGo,
       ),
     );
+  }
+
+  /// "25 for the win + 7 for the reps": what the number was made of.
+  String _parts(L l, BuildContext context, int delta) {
+    final won = delta >= 0;
+    final base = won ? kWinRating : kLossRating;
+    final reps = delta.abs() - base;
+    final first = won
+        ? l.ratingForWin(localNumber(context, base))
+        : l.ratingForLoss(localNumber(context, base));
+    if (reps <= 0) return first;
+    return '$first + ${l.ratingForReps(localNumber(context, reps))}';
   }
 
   Widget _card(
@@ -736,9 +686,13 @@ class LpCard extends StatelessWidget {
     required bool gained,
     required double before,
     required double after,
-    required int toGo,
   }) {
+    final top = now.tierIdx >= kTopTier && now.divIdx >= kTopDivision;
+    final toGo = (kRatingPerDivision - now.lp).clamp(0, kRatingPerDivision);
+    final week = weekAfter;
+    final change = outcome!.rank!;
     return Container(
+      key: const Key('rankCard'),
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: context.colors.surface,
@@ -753,15 +707,28 @@ class LpCard extends StatelessWidget {
             textBaseline: TextBaseline.alphabetic,
             children: [
               Expanded(
-                child: ShrinkText(
-                  tierLabel(l, now.tierIdx, now.divIdx),
-                  maxLines: 1,
-                  style: TextStyle(color: context.colors.text, fontSize: 15),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: [
+                    Flexible(
+                      child: ShrinkText(
+                        tierLabel(l, now.tierIdx, now.divIdx),
+                        maxLines: 1,
+                        style: TextStyle(color: context.colors.text, fontSize: 15),
+                      ),
+                    ),
+                    Text(
+                      '  ·  ${localNumber(context, now.rating)}',
+                      key: const Key('rating'),
+                      style: TextStyle(color: context.colors.muted, fontSize: 14),
+                    ),
+                  ],
                 ),
               ),
               Text(
-                '${gained ? '+' : '−'}'
-                '${l.lpAmount(localNumber(context, lpShown))}',
+                '${gained ? '+' : '−'}${localNumber(context, lpShown)}',
+                key: const Key('ratingDelta'),
                 style: TextStyle(
                   color: gained ? context.colors.brand : context.colors.rival,
                   fontSize: 26,
@@ -775,23 +742,107 @@ class LpCard extends StatelessWidget {
           _LpBar(before: before, after: after.clamp(0.0, 1.0), gained: gained),
           const SizedBox(height: 6),
           ShrinkText(
-            '${localNumber(context, now.lp)} '
-            '${l.lpOutOf(localNumber(context, 100))}'
-            '  ·  '
-            '${l.toNextTier(localNumber(context, toGo), nextRankName(l, now.tierIdx, now.divIdx))}',
+            [
+              if (!top)
+                l.toNextTier(
+                  localNumber(context, toGo),
+                  nextRankName(l, now.tierIdx, now.divIdx),
+                ),
+              _parts(l, context, change.lpDelta),
+            ].join('  ·  '),
             maxLines: 1,
             style: TextStyle(color: context.colors.muted, fontSize: 13),
           ),
-          if (breakdown case final breakdown?) ...[
-            const SizedBox(height: 6),
-            Text(
-              breakdown,
-              key: const Key('lpBreakdown'),
-              style: const TextStyle(color: AppColors.gold, fontSize: 13),
+          if (week != null) ...[
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 11),
+              child: Divider(height: 1, color: context.colors.border),
             ),
+            _WeekLine(before: weekBefore, after: week),
           ],
         ],
       ),
+    );
+  }
+}
+
+/// The week's board under the rank: the points this duel added and the
+/// places it moved you, then the total and, one win short of a third in a
+/// row, what the next win is worth.
+class _WeekLine extends StatelessWidget {
+  const _WeekLine({required this.before, required this.after});
+
+  final MonthPlace? before;
+  final MonthPlace after;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final before = this.before;
+    final added = before == null ? null : after.points - before.points;
+    final from = before?.place;
+    final to = after.place;
+    final rose = to != null && (from == null || to < from);
+    final streak = demoProfile.winStreak;
+    final placeStyle = TextStyle(
+      color: rose ? AppColors.win : context.colors.muted,
+      fontSize: 14,
+      fontWeight: FontWeight.w600,
+    );
+    return Column(
+      key: const Key('weekLine'),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Flexible(
+              child: ShrinkText(
+                l.boardThisWeek,
+                maxLines: 1,
+                style: TextStyle(color: context.colors.text, fontSize: 15),
+              ),
+            ),
+            if (to != null) ...[
+              const SizedBox(width: 8),
+              // The arrows drawn, not typed: as characters they are boxes on
+              // phones whose font does not have them.
+              if (rose)
+                Icon(Icons.arrow_drop_up_rounded, size: 22, color: placeStyle.color),
+              if (from != null && from != to) ...[
+                Text('#${localNumber(context, from)}', style: placeStyle),
+                Icon(Icons.arrow_forward_rounded, size: 15, color: placeStyle.color),
+              ],
+              Text('#${localNumber(context, to)}', style: placeStyle),
+            ],
+            const Spacer(),
+            if (added != null)
+              Text(
+                l.ptsAmount(
+                  '${added >= 0 ? '+' : '−'}${localNumber(context, added.abs())}',
+                ),
+                key: const Key('weekPoints'),
+                style: TextStyle(
+                  color: added >= 0 ? AppColors.gold : context.colors.rival,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w700,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: 4),
+        ShrinkText(
+          [
+            l.ptsAmount(localNumber(context, after.points)),
+            // One short of the third win in a row, which is worth ten.
+            if (streak > 0 && streak % 3 == 2)
+              l.streakNextTen(localNumber(context, streak)),
+          ].join('  ·  '),
+          maxLines: 1,
+          style: TextStyle(color: context.colors.muted, fontSize: 13),
+        ),
+      ],
     );
   }
 }
@@ -948,44 +999,50 @@ class PromotionView extends StatelessWidget {
                       ),
                     ),
                   ],
-                  const SizedBox(height: 24),
-                  Container(
-                    padding: const EdgeInsets.all(14),
-                    decoration: BoxDecoration(
-                      color: context.colors.surface,
-                      border: Border.all(
-                        color: context.colors.border,
-                        width: 0.5,
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.lock_open_outlined,
-                          size: 17,
-                          color: context.colors.brand,
+                  // The next tier and what it starts at. It used to be the
+                  // floor ("Gold is yours"), until a tier could be lost
+                  // (2026-11-02). Nothing above Master to name.
+                  if (tierIdx < kTopTier) ...[
+                    const SizedBox(height: 24),
+                    Container(
+                      padding: const EdgeInsets.all(14),
+                      decoration: BoxDecoration(
+                        color: context.colors.surface,
+                        border: Border.all(
+                          color: context.colors.border,
+                          width: 0.5,
                         ),
-                        const SizedBox(width: 11),
-                        Expanded(
-                          child: Text(
-                            // The floor, which is the one promise a promotion
-                            // in this app actually makes.
-                            l.floorKept(
-                              tierName(l, tierIdx),
-                              tierLabel(l, tierIdx, 0),
-                            ),
-                            style: TextStyle(
-                              color: context.colors.text,
-                              fontSize: 15,
-                              height: 1.5,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.flag_outlined,
+                            size: 17,
+                            color: context.colors.brand,
+                          ),
+                          const SizedBox(width: 11),
+                          Expanded(
+                            child: Text(
+                              l.tierStartsAt(
+                                tierName(l, tierIdx + 1),
+                                localNumber(
+                                  context,
+                                  tierStartRating(tierIdx + 1),
+                                ),
+                              ),
+                              style: TextStyle(
+                                color: context.colors.text,
+                                fontSize: 15,
+                                height: 1.5,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
+                  ],
                     ],
                   ),
                 ),
@@ -1121,8 +1178,7 @@ class PlacedView extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  '${localNumber(context, rank.lp)} '
-                                  '${l.lpOutOf(localNumber(context, 100))}',
+                                  localNumber(context, rank.rating),
                                   style: TextStyle(
                                     color: context.colors.muted,
                                     fontSize: 14,
@@ -1259,7 +1315,7 @@ DuelOutcome demoOutcome({
 
   return DuelOutcome(
     won: won,
-    rank: applyLp(before, delta, floorTierIdx: demoProfile.peakTierIdx),
+    rank: applyLp(before, delta, floorTierIdx: 0),
     record: MatchRecord(
       won: won,
       userReps: yourReps,
