@@ -603,7 +603,9 @@ select check_that(
   (select pts_challenger in (0, 5, 10) and pts_defender = -2
      from duels where challenger_set = current_setting('test.a3')::uuid),
   'a ranked duel did not give the boards 5 or 10 for the win and 2 off for the loss');
-select check_that(board_points(true, 1, :'A') in (0, 10) and board_points(true, 0, :'A') in (0, 5),
+-- Two wins already in a row: this one is the third. (0 past the day's twenty.)
+select check_that(board_points(true, 2, :'A') in (0, 10) and board_points(true, 1, :'A') in (0, 5)
+                  and board_points(true, 0, :'A') in (0, 5) and board_points(false, 2, :'A') in (0, -2),
   'the third win in a row is not worth 10');
 
 -- ── the week's board ───────────────────────────────────────────────────────────
