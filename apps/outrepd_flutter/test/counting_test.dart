@@ -85,14 +85,13 @@ void main() {
       await _emit(tester, source, pushUpPose(1));
       await _emit(tester, source, pushUpPose(1));
       tops.add(_bar(tester));
-      // Drawn from the bottom of a real rep: empty there, full at the top.
+      // Empty at the bottom line, full at the top one (2026-11-02).
       for (final b in bottoms) {
-        expect(b, lessThanOrEqualTo(barFill(0.25)),
+        expect(b, lessThanOrEqualTo(0.05),
             reason: 'at the bottom the bar read $b');
       }
       for (final t in tops) {
-        expect(t, greaterThan(barFill(0.9)),
-            reason: 'at the top the bar read $t');
+        expect(t, greaterThan(0.9), reason: 'at the top the bar read $t');
       }
     });
 
@@ -107,9 +106,10 @@ void main() {
         if (bar < lowest) lowest = bar;
       }
       expect(_count(tester), 0);
-      // And the bar showed the dip, so the lifter can see why.
-      expect(lowest, lessThan(barFill(0.7)));
-      expect(lowest, greaterThan(barFill(kBottomShare)));
+      // And the bar showed the dip, never reaching its bottom, so the lifter
+      // can see why.
+      expect(lowest, lessThan(repFill(0.7)));
+      expect(lowest, greaterThan(0));
     });
 
     testWidgets('getting up at the end does not add one', (tester) async {
@@ -133,24 +133,23 @@ void main() {
       expect(_count(tester), 0);
     });
 
-    testWidgets('the line to reach next is the one lit', (tester) async {
-      // Two lines across the bar, where the counter's own are: down past the
-      // bottom one, back up past the top one. Gold is the next to reach.
+    testWidgets('the bar turns green at its bottom, for the way up',
+        (tester) async {
+      // No lines to learn (2026-11-02): down to the bar's bottom, and it
+      // turns green until it is full again and the rep counts.
       final source = await _startRound(tester);
-      expect(_line(tester, 'depthLineBottom'), AppColors.gold);
+      final cream = _fill(tester);
+      expect(cream, isNot(AppColors.win));
 
-      var upNext = false;
+      var green = false;
       for (final pose in pushUpSet(1, lead: 0)) {
         await _emit(tester, source, pose);
-        if (_line(tester, 'depthLineTop') == AppColors.gold) {
-          upNext = true;
-          expect(_line(tester, 'depthLineBottom'), AppColors.win);
-        }
+        if (_fill(tester) == AppColors.win) green = true;
       }
-      expect(upNext, isTrue, reason: 'the top line never lit on the way up');
+      expect(green, isTrue, reason: 'the bar never turned green on the way up');
       expect(_count(tester), 1);
       // Counted: the way down is next again.
-      expect(_line(tester, 'depthLineBottom'), AppColors.gold);
+      expect(_fill(tester), cream);
     });
 
     testWidgets('the depth bar is big enough to read from the floor',
@@ -405,16 +404,9 @@ double _bar(WidgetTester tester) => tester
     )
     .heightFactor!;
 
-/// The colour one of the depth bar's two lines is drawn in.
-Color? _line(WidgetTester tester, String key) =>
-    (tester
-                .widget<DecoratedBox>(
-                  find.descendant(
-                    of: find.byKey(Key(key)),
-                    matching: find.byType(DecoratedBox),
-                  ),
-                )
-                .decoration
+/// The colour the depth bar is filled in.
+Color? _fill(WidgetTester tester) =>
+    (tester.widget<DecoratedBox>(find.byKey(const Key('depthFill'))).decoration
             as BoxDecoration)
         .color;
 

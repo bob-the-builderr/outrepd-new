@@ -57,6 +57,12 @@ const kBarFloor = 0.25;
 double barFill(double share) =>
     ((share - kBarFloor) / (1 - kBarFloor)).clamp(0.0, 1.0);
 
+/// The live match's bar (the user's call, 2026-11-02): empty at the bottom
+/// line and full at the top one, with no lines drawn — down to its bottom
+/// and back up to its top is exactly a rep, nothing more to explain.
+double repFill(double share) =>
+    ((share - kBottomShare) / (kTopShare - kBottomShare)).clamp(0.0, 1.0);
+
 /// Time constant of the smoothing on the reading, seconds.
 ///
 /// Short, because fast sets are fast: a hundred-rep set runs at 1.9 reps a

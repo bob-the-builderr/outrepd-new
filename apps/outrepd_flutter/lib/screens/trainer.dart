@@ -2064,13 +2064,13 @@ class _Fighter extends StatelessWidget {
   }
 }
 
-/// How deep this rep is, with the two lines a rep has to cross drawn across
-/// it: down past the bottom one ([kBottomShare]), then back up past the top
-/// one ([kTopShare]). The line still to reach is lit gold; the bottom one
-/// turns green once it is passed, until the rep counts and it is next again.
-/// Where the counter's own lines are, on a bar drawn from the bottom of a
-/// real rep ([barFill]): the bar must never promise a rep the counter will
-/// not give, or ask for more than it does.
+/// How far through this rep the body is, as one simple bar (the user's call,
+/// 2026-11-02): empty at the counter's bottom line ([kBottomShare]), full at
+/// its top one ([kTopShare]) — so down to its bottom and back up to its top
+/// is exactly a rep. It turns green once the bottom is reached, for the way
+/// back up, and is the bar the counter counts off ([repFill]), so it never
+/// promises a rep the counter will not give, or asks for more than it does.
+/// It replaced a thin bar with two lines across it that had to be learned.
 class _DepthBar extends StatelessWidget {
   const _DepthBar({
     super.key,
@@ -2085,75 +2085,39 @@ class _DepthBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const dim = Color(0xB38F8880);
+    // Same colour rule as the skeleton: it goes off when the shape is wrong,
+    // so the two never disagree about whether this rep is going to count.
+    final fill = !good
+        ? context.colors.rival
+        : pastBottom
+        ? AppColors.win
+        : context.colors.brand;
     return SizedBox(
-      width: 16,
+      width: 26,
       height: 250,
-      child: LayoutBuilder(
-        builder: (context, box) {
-          // Across the bar and a little either side of it, ringed in the
-          // card's black so it reads over the fill as well as the camera.
-          Widget line(String key, double share, Color colour, {bool lit = false}) {
-            final thick = lit ? 6.0 : 5.0;
-            return Positioned(
-              key: Key(key),
-              left: -5,
-              right: -5,
-              bottom: barFill(share) * box.maxHeight - thick / 2,
-              height: thick,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: const Color(0xFF121110).withValues(alpha: 0.55),
+          borderRadius: BorderRadius.circular(13),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.3), width: 1.2),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(3),
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: FractionallySizedBox(
+              heightFactor: repFill(progress),
+              widthFactor: 1,
               child: DecoratedBox(
+                key: const Key('depthFill'),
                 decoration: BoxDecoration(
-                  color: colour,
-                  borderRadius: BorderRadius.circular(3),
-                  border: Border.all(color: const Color(0xFF121110)),
+                  color: fill,
+                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
-            );
-          }
-
-          return Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Positioned.fill(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF121110).withValues(alpha: 0.45),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: FractionallySizedBox(
-                      heightFactor: barFill(progress),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          // Same colour rule as the skeleton: it goes off when
-                          // the shape is wrong, so the two never disagree about
-                          // whether this rep is going to count.
-                          color: good
-                              ? context.colors.brand
-                              : context.colors.rival,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              line(
-                'depthLineBottom',
-                kBottomShare,
-                pastBottom ? AppColors.win : AppColors.gold,
-                lit: !pastBottom,
-              ),
-              line(
-                'depthLineTop',
-                kTopShare,
-                pastBottom ? AppColors.gold : dim,
-                lit: pastBottom,
-              ),
-            ],
-          );
-        },
+            ),
+          ),
+        ),
       ),
     );
   }
