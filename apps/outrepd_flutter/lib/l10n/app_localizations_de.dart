@@ -2345,6 +2345,12 @@ class LDe extends L {
   String get boardThisWeek => 'Diese Woche';
 
   @override
+  String get boardOverall => 'Gesamt';
+
+  @override
+  String get howPointsWork => 'So zählen Punkte';
+
+  @override
   String streakNextTen(String n) {
     return '${n} Siege in Folge: Der nächste Sieg bringt +10';
   }

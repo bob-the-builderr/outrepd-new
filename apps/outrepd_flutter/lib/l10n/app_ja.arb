@@ -720,6 +720,8 @@
   "ratingForLoss": "敗北で{n}",
   "ratingForReps": "レップ差で{n}",
   "boardThisWeek": "今週",
+  "boardOverall": "総合",
+  "howPointsWork": "ポイントのしくみ",
   "streakNextTen": "{n}連勝中：次の勝利は+10",
   "boardRuleWin": "勝利 +5",
   "boardRuleLoss": "敗北 −2",

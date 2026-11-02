@@ -2337,6 +2337,12 @@ class LId extends L {
   String get boardThisWeek => 'Minggu ini';
 
   @override
+  String get boardOverall => 'Keseluruhan';
+
+  @override
+  String get howPointsWork => 'Cara poin dihitung';
+
+  @override
   String streakNextTen(String n) {
     return '${n} kemenangan beruntun: kemenangan berikutnya +10';
   }

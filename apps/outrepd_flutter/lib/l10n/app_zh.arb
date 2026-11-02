@@ -720,6 +720,8 @@
   "ratingForLoss": "失败 {n}",
   "ratingForReps": "次数差 {n}",
   "boardThisWeek": "本周",
+  "boardOverall": "总榜",
+  "howPointsWork": "积分规则",
   "streakNextTen": "已连胜 {n} 场：下一场胜利 +10",
   "boardRuleWin": "胜 +5",
   "boardRuleLoss": "负 −2",

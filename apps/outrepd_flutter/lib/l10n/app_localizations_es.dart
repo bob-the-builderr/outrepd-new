@@ -2343,6 +2343,12 @@ class LEs extends L {
   String get boardThisWeek => 'Esta semana';
 
   @override
+  String get boardOverall => 'General';
+
+  @override
+  String get howPointsWork => 'Cómo funcionan los puntos';
+
+  @override
   String streakNextTen(String n) {
     return '${n} victorias seguidas: la próxima vale +10';
   }

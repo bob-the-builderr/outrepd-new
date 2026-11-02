@@ -720,6 +720,8 @@
   "ratingForLoss": "हार के {n}",
   "ratingForReps": "रेप्स के {n}",
   "boardThisWeek": "इस हफ़्ते",
+  "boardOverall": "कुल",
+  "howPointsWork": "पॉइंट्स कैसे मिलते हैं",
   "streakNextTen": "लगातार {n} जीत: अगली जीत +10",
   "boardRuleWin": "जीत +5",
   "boardRuleLoss": "हार −2",

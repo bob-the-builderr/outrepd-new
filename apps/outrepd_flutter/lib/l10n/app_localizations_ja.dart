@@ -2303,6 +2303,12 @@ class LJa extends L {
   String get boardThisWeek => '今週';
 
   @override
+  String get boardOverall => '総合';
+
+  @override
+  String get howPointsWork => 'ポイントのしくみ';
+
+  @override
   String streakNextTen(String n) {
     return '${n}連勝中：次の勝利は+10';
   }

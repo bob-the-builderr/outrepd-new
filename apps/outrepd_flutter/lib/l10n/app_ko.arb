@@ -720,6 +720,8 @@
   "ratingForLoss": "패배 {n}",
   "ratingForReps": "렙 차이 {n}",
   "boardThisWeek": "이번 주",
+  "boardOverall": "전체",
+  "howPointsWork": "점수 규칙",
   "streakNextTen": "{n}연승 중: 다음 승리는 +10",
   "boardRuleWin": "승리 +5",
   "boardRuleLoss": "패배 −2",

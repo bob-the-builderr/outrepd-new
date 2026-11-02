@@ -2343,6 +2343,12 @@ class LIt extends L {
   String get boardThisWeek => 'Questa settimana';
 
   @override
+  String get boardOverall => 'Generale';
+
+  @override
+  String get howPointsWork => 'Come funzionano i punti';
+
+  @override
   String streakNextTen(String n) {
     return '${n} vittorie di fila: la prossima vale +10';
   }

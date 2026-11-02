@@ -2338,6 +2338,12 @@ class LRu extends L {
   String get boardThisWeek => 'Эта неделя';
 
   @override
+  String get boardOverall => 'Общий';
+
+  @override
+  String get howPointsWork => 'Как начисляются очки';
+
+  @override
   String streakNextTen(String n) {
     return 'Побед подряд: ${n}. Следующая даст +10';
   }

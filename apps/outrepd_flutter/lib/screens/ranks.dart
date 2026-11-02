@@ -33,22 +33,20 @@ import 'other_profile.dart';
 import 'pro_parts.dart';
 import 'shell.dart';
 
+/// The three boards, on one strip (pick A, 2026-11-02). Your Tier went
+/// then: this account's place on Overall is pinned under it anyway.
 enum _Scope {
-  /// The week's race, the month's board a week at a time: LP won in ranked
-  /// duels since Monday. Shown first, under the same tab as the month, since
-  /// a week is a race more people can win.
+  /// The week's race: points won in ranked duels since Monday. Shown first,
+  /// since a week is a race more people can win.
   thisWeek,
 
-  /// The month's race: LP won in ranked duels since the 1st. The one board
-  /// everybody starts level on, whatever their rank, and the one with awards.
+  /// The month's race: points won in ranked duels since the 1st. The one
+  /// board everybody starts level on, whatever their rank, and the one with
+  /// awards.
   thisMonth,
 
-  /// Everyone, ranked by LP alone — the whole ladder in one list.
+  /// Everyone, ranked by rating — the whole ladder in one list ("Overall").
   topPlayers,
-
-  /// Only the lifters currently sharing this account's own tier and
-  /// division, ranked against just each other rather than the whole game.
-  yourTier,
 }
 
 /// How long a board is shown before it is asked for again while somebody is
@@ -91,8 +89,8 @@ class _RanksScreenState extends State<RanksScreen> {
   /// hundred rows the board shows.
   int? _globalPlace;
 
-  /// The country's boards rather than the world's: every scope, the week and
-  /// the month as well as Top Players and Your Tier (the user, 2026-10-29).
+  /// The country's boards rather than the world's: every board, the week and
+  /// the month as well as Overall (the user, 2026-10-29).
   bool _inCountry = false;
 
   /// The country the boards are filtered to, or null for the world's. None
@@ -195,7 +193,6 @@ class _RanksScreenState extends State<RanksScreen> {
     if (!backend.available) return;
     final scope = _scope;
     final country = _country;
-    final me = demoProfile;
     setState(() {
       _loading = true;
       if (!quiet) _error = null;
@@ -242,21 +239,16 @@ class _RanksScreenState extends State<RanksScreen> {
         });
         return;
       }
-      final rows = await backend.leaderboard(
-        country: country,
-        tierIdx: scope == _Scope.yourTier ? me.tierIdx : null,
-        divIdx: scope == _Scope.yourTier ? me.divIdx : null,
-      );
+      final rows = await backend.leaderboard(country: country);
       // Below the hundred shown, the place still is one: asked for apart.
-      final global = scope == _Scope.topPlayers &&
-              !rows.any((row) => row.id == backend.me?.id)
+      final global = !rows.any((row) => row.id == backend.me?.id)
           ? await backend.boardPosition(country: country)
           : null;
       if (stale()) return;
       unawaited(Looks.instance.fetch(rows.map((row) => row.id)));
       setState(() {
         _boards[scope] = rows;
-        if (scope == _Scope.topPlayers) _globalPlace = global;
+        _globalPlace = global;
         _fetchedAt[scope] = clock.now();
         _loading = false;
         _error = null;
@@ -314,14 +306,7 @@ class _RanksScreenState extends State<RanksScreen> {
   /// falls back to and the only thing that makes the layout worth looking at
   /// before there is anybody real to put on it.
   List<LeaderboardEntry> get _entries {
-    if (!backend.available) {
-      final me = demoProfile;
-      return _scope == _Scope.topPlayers
-          ? demoLeaderboard
-          : demoLeaderboard
-              .where((e) => e.tierIdx == me.tierIdx && e.divIdx == me.divIdx)
-              .toList();
-    }
+    if (!backend.available) return demoLeaderboard;
     return [
       for (final row in _boards[_scope] ?? const <BoardRow>[])
         LeaderboardEntry(
@@ -338,26 +323,20 @@ class _RanksScreenState extends State<RanksScreen> {
     ];
   }
 
-  /// Where this account sits, or null when that is not known.
+  /// Where this account sits on Overall, or null when that is not known.
   ///
   /// Known exactly whenever the account appears in the page that was
-  /// fetched. Below that the honest answer is nothing at all: a made-up
-  /// position on the one row somebody looks for themselves on is worse than
-  /// no position. Offline, the sample profile's own global rank stands in for
-  /// Top Players — the same fallback every other screen already reads for it
-  /// — but Your Tier has no equivalent sample number to stand in with, since
-  /// the demo board it lists from was never really the one this account was
-  /// on, so it stays honestly unknown there too.
+  /// fetched, and asked for apart below it. Never made up: a wrong position
+  /// on the one row somebody looks for themselves on is worse than none.
+  /// Offline, the sample profile's own global rank stands in — the same
+  /// fallback every other screen already reads for it.
   int? get _myPosition {
-    if (!backend.available) {
-      return _scope == _Scope.topPlayers ? demoProfile.globalRank : null;
-    }
+    if (!backend.available) return demoProfile.globalRank;
     final id = backend.me?.id;
     final rows = _boards[_scope];
     if (id == null || rows == null) return null;
     final at = rows.indexWhere((row) => row.id == id);
-    if (at >= 0) return at + 1;
-    return _scope == _Scope.topPlayers ? _globalPlace : null;
+    return at >= 0 ? at + 1 : _globalPlace;
   }
 
   @override
@@ -386,29 +365,30 @@ class _RanksScreenState extends State<RanksScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-              child: Align(
-                alignment: AlignmentDirectional.centerStart,
-                child: Text(
-                  L.of(context).ranksTitle,
-                  style: kPageTitle.copyWith(color: context.colors.text),
-                ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      L.of(context).ranksTitle,
+                      style: kPageTitle.copyWith(color: context.colors.text),
+                    ),
+                  ),
+                  // The world's boards or the country's: a button by the
+                  // title rather than a row of its own (pick A, 2026-11-02).
+                  // Only with a country to show.
+                  if (backend.available && backend.me?.country != null)
+                    _PlacePicker(
+                      country: backend.me!.country!,
+                      inCountry: _inCountry,
+                      onChanged: _switchCountry,
+                    ),
+                ],
               ),
             ),
-
-            // The world's boards or the country's, above everything else:
-            // it changes every board under it. Only with a country to show.
-            if (backend.available && backend.me?.country != null) ...[
-              const SizedBox(height: 12),
-              _PlaceToggle(
-                country: backend.me!.country!,
-                inCountry: _inCountry,
-                onChanged: _switchCountry,
-              ),
-            ],
             const SizedBox(height: 14),
             _ScopeToggle(scope: _scope, onChanged: _switchTo),
 
-            const SizedBox(height: 14),
+            const SizedBox(height: 12),
             Expanded(
               // An unranked account is not looking at an empty board — the
               // board is full, they are simply not on it yet. Saying "no ranks
@@ -443,9 +423,6 @@ class _RanksScreenState extends State<RanksScreen> {
                       mine: _myMonth,
                       week: week,
                       lastMonth: week ? null : _lastMonth,
-                      onLength: (toWeek) => _switchTo(
-                        toWeek ? _Scope.thisWeek : _Scope.thisMonth,
-                      ),
                       onRefresh: _load,
                       country: countryLabel,
                     )
@@ -459,11 +436,12 @@ class _RanksScreenState extends State<RanksScreen> {
                       onRefresh: _load,
                       child: ListView.builder(
                         padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
-                        // Above the list on Top Players: who is on it, and
-                        // how a tie is settled.
+                        // Above the list on Overall: who is on it.
                         itemCount: entries.length + 1,
                         itemBuilder: (context, i) => i == 0
-                            ? const _BoardNote()
+                            ? _BoardLine(
+                                text: L.of(context).boardActiveNote,
+                              )
                             : _Slice(
                                 first: i == 1,
                                 last: i == entries.length,
@@ -517,9 +495,10 @@ class _RanksScreenState extends State<RanksScreen> {
 
 // ──────────────────────────────── the controls ───────────────────────────────
 
-/// The world or this account's country, for every board under it.
-class _PlaceToggle extends StatelessWidget {
-  const _PlaceToggle({
+/// The world or this account's country, for every board under it: a button
+/// by the title that opens the choice (pick A, 2026-11-02).
+class _PlacePicker extends StatelessWidget {
+  const _PlacePicker({
     required this.country,
     required this.inCountry,
     required this.onChanged,
@@ -532,61 +511,87 @@ class _PlaceToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    Widget half(bool value, String label, Key key) {
-      final selected = value == inCountry;
-      return Expanded(
-        child: InkWell(
-          key: key,
-          onTap: () => onChanged(value),
-          borderRadius: BorderRadius.circular(11),
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-            decoration: BoxDecoration(
-              color: selected ? colors.surfaceRaised : null,
-              borderRadius: BorderRadius.circular(11),
-            ),
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                label,
-                maxLines: 1,
-                style: TextStyle(
-                  color: selected ? colors.text : colors.muted,
-                  fontSize: 15,
-                  fontWeight: selected ? FontWeight.w600 : null,
+    final world = '🌍 ${L.of(context).global}';
+    final home = '${countryFlag(country)} ${countryName(context, country)}';
+    return Material(
+      color: colors.surface,
+      borderRadius: BorderRadius.circular(12),
+      child: InkWell(
+        key: const Key('boardsPlace'),
+        borderRadius: BorderRadius.circular(12),
+        onTap: () => _pick(context, world, home),
+        child: Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(12, 8, 8, 8),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 150),
+                child: Text(
+                  inCountry ? home : world,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: colors.text,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-            ),
+              const SizedBox(width: 2),
+              Icon(Icons.expand_more, size: 18, color: colors.muted),
+            ],
           ),
-        ),
-      );
-    }
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Container(
-        padding: const EdgeInsets.all(4),
-        decoration: BoxDecoration(
-          color: colors.surface,
-          borderRadius: BorderRadius.circular(14),
-        ),
-        child: Row(
-          children: [
-            half(false, '🌍 ${L.of(context).global}', const Key('boardsWorld')),
-            half(
-              true,
-              '${countryFlag(country)} ${countryName(context, country)}',
-              const Key('boardsCountry'),
-            ),
-          ],
         ),
       ),
     );
   }
+
+  Future<void> _pick(BuildContext context, String world, String home) async {
+    final picked = await showModalBottomSheet<bool>(
+      context: context,
+      backgroundColor: context.colors.surface,
+      showDragHandle: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+      ),
+      builder: (context) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (final (value, label, key) in [
+                (false, world, 'boardsWorld'),
+                (true, home, 'boardsCountry'),
+              ])
+                ListTile(
+                  key: Key(key),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                  title: Text(
+                    label,
+                    style: TextStyle(
+                      color: context.colors.text,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  trailing: value == inCountry
+                      ? Icon(Icons.check, color: context.colors.brand)
+                      : null,
+                  onTap: () => Navigator.pop(context, value),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+    if (picked != null) onChanged(picked);
+  }
 }
 
-/// The three boards as one strip, the chosen one filled (direction B,
-/// 2026-11-02). They were three outlined pills.
+/// Week, Month and Overall as one strip, the chosen one filled (pick A,
+/// 2026-11-02). It was three tabs over a week/month switch.
 class _ScopeToggle extends StatelessWidget {
   const _ScopeToggle({required this.scope, required this.onChanged});
 
@@ -595,11 +600,11 @@ class _ScopeToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget pill(_Scope value, String label) {
-      final selected = scope == value ||
-          (value == _Scope.thisWeek && scope == _Scope.thisMonth);
+    Widget pill(_Scope value, String label, Key key) {
+      final selected = scope == value;
       return Expanded(
         child: InkWell(
+          key: key,
           onTap: () => onChanged(value),
           borderRadius: BorderRadius.circular(11),
           child: Container(
@@ -641,11 +646,11 @@ class _ScopeToggle extends StatelessWidget {
         ),
         child: Row(
           children: [
-            pill(_Scope.thisWeek, l.thisSeason),
+            pill(_Scope.thisWeek, l.lengthWeek, const Key('lengthWeek')),
             const SizedBox(width: 4),
-            pill(_Scope.topPlayers, l.topPlayers),
+            pill(_Scope.thisMonth, l.lengthMonth, const Key('lengthMonth')),
             const SizedBox(width: 4),
-            pill(_Scope.yourTier, l.yourTier),
+            pill(_Scope.topPlayers, l.boardOverall, const Key('boardOverall')),
           ],
         ),
       ),
@@ -653,81 +658,153 @@ class _ScopeToggle extends StatelessWidget {
   }
 }
 
-/// Week or month, inside the first tab: the same race, two lengths.
-class _LengthSwitch extends StatelessWidget {
-  const _LengthSwitch({required this.week, required this.onChanged});
+/// Under the strip, at the top of every board: when it ends (or who is on
+/// it), and the way to how its points work (pick A, 2026-11-02). The rules
+/// were chips here, and the tie rule a line of its own.
+class _BoardLine extends StatelessWidget {
+  const _BoardLine({required this.text, this.below});
 
-  final bool week;
-  final ValueChanged<bool> onChanged;
+  final String text;
+
+  /// A second line under the first: the 20 Club on the month.
+  final Widget? below;
 
   @override
   Widget build(BuildContext context) {
-    final l = L.of(context);
-    Widget half(bool value, String label) {
-      final selected = week == value;
-      return Expanded(
-        child: GestureDetector(
-          key: Key(value ? 'lengthWeek' : 'lengthMonth'),
-          onTap: () => onChanged(value),
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 7),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: selected ? context.colors.brand : null,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Text(
-              label,
+    final colors = context.colors;
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(4, 0, 0, 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  text,
+                  maxLines: 2,
+                  style: TextStyle(color: colors.muted, fontSize: 14),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Flexible(
+                child: InkWell(
+                  key: const Key('howPoints'),
+                  onTap: () => showHowPoints(context),
+                  borderRadius: BorderRadius.circular(8),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 4,
+                      vertical: 4,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.info_outline, size: 16, color: colors.brand),
+                        const SizedBox(width: 5),
+                        Flexible(
+                          child: Text(
+                            L.of(context).howPointsWork,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: colors.brand,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          if (below case final line?) ...[const SizedBox(height: 2), line],
+        ],
+      ),
+    );
+  }
+}
+
+/// How the boards count: the week's and the month's points, then the
+/// rating Overall is ranked by, and who is on it.
+Future<void> showHowPoints(BuildContext context) {
+  final l = L.of(context);
+  final colors = context.colors;
+  return showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    showDragHandle: true,
+    backgroundColor: colors.surface,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+    ),
+    builder: (context) => SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(22, 0, 22, 22),
+        child: Column(
+          key: const Key('howPointsSheet'),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l.howPointsWork,
               style: TextStyle(
-                color: selected
-                    ? context.colors.background
-                    : context.colors.muted,
-                fontSize: 14,
-                fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                color: colors.text,
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
               ),
             ),
-          ),
-        ),
-      );
-    }
-
-    return Center(
-      child: Container(
-        width: 200,
-        padding: const EdgeInsets.all(4),
-        decoration: BoxDecoration(
-          color: context.colors.surface,
-          borderRadius: BorderRadius.circular(14),
-        ),
-        child: Row(
-          children: [
-            half(true, l.lengthWeek),
-            const SizedBox(width: 4),
-            half(false, l.lengthMonth),
+            const SizedBox(height: 18),
+            Text(
+              '${l.lengthWeek} · ${l.lengthMonth}',
+              style: sectionLabelStyle(context),
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              key: const Key('boardRules'),
+              spacing: 6,
+              runSpacing: 6,
+              children: [
+                for (final rule in [
+                  l.boardRuleWin,
+                  l.boardRuleLoss,
+                  l.boardRuleStreak,
+                ])
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: colors.surfaceRaised,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      rule,
+                      style: TextStyle(color: colors.text, fontSize: 14),
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 22),
+            Text(l.boardOverall, style: sectionLabelStyle(context)),
+            const SizedBox(height: 8),
+            Text(
+              l.lpMovesWithGap,
+              style: TextStyle(color: colors.text, fontSize: 15, height: 1.4),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              '${l.boardActiveNote} · ${l.boardTieNote}',
+              style: TextStyle(color: colors.muted, fontSize: 13, height: 1.4),
+            ),
           ],
         ),
       ),
-    );
-  }
-}
-
-/// Above Top Players and Your Tier: who is on the board, and how a tie on
-/// rank and LP is settled (social.sql, leaderboard).
-class _BoardNote extends StatelessWidget {
-  const _BoardNote();
-
-  @override
-  Widget build(BuildContext context) {
-    final l = L.of(context);
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Text(
-        '${l.boardActiveNote} · ${l.boardTieNote}',
-        textAlign: TextAlign.center,
-        style: TextStyle(color: context.colors.muted, fontSize: 12),
-      ),
-    );
-  }
+    ),
+  );
 }
 
 // ───────────────────────────────── the rows ──────────────────────────────────
@@ -1054,8 +1131,8 @@ class _Initial extends StatelessWidget {
   /// again from the server.
   final bool mine;
 
-  /// The tier to frame the picture in, in a row. Null on the podium, whose
-  /// pictures wear their place's medal ring instead.
+  /// The tier to frame the picture in, on a row or the podium. Null for a
+  /// bare picture.
   final int? frame;
 
   /// Whose picture: what [Looks] knows them by. Empty for a sample row.
@@ -1159,7 +1236,7 @@ class _Points extends StatelessWidget {
   final int lp;
   final Color colour;
 
-  /// A rating (Top Players, Your Tier) rather than the season's points.
+  /// A rating (Overall) rather than the season's points.
   final bool rating;
 
   @override
@@ -1221,7 +1298,6 @@ class _MonthBoard extends StatelessWidget {
     required this.mine,
     required this.onRefresh,
     this.week = false,
-    this.onLength,
     this.country,
     this.lastMonth,
   });
@@ -1235,9 +1311,6 @@ class _MonthBoard extends StatelessWidget {
 
   /// The week's board rather than the month's: no awards at its end.
   final bool week;
-
-  /// Week or month, from the switch at the top.
-  final ValueChanged<bool>? onLength;
 
   /// The country's board, by its name, rather than the world's. No awards
   /// on it: those are the world's month (2026-10-29).
@@ -1256,11 +1329,7 @@ class _MonthBoard extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
         children: [
-          if (onLength case final onLength?) ...[
-            _LengthSwitch(week: week, onChanged: onLength),
-            const SizedBox(height: 12),
-          ],
-          _SeasonHeader(mine: mine, week: week, country: country),
+          _SeasonHeader(mine: mine, week: week),
           if (rows.isEmpty && (lastMonth?.rows.isNotEmpty ?? false))
             _LastMonth(winners: lastMonth!)
           else if (rows.isEmpty)
@@ -1299,14 +1368,13 @@ class _MonthBoard extends StatelessWidget {
   }
 }
 
+/// The week's or the month's line: when it ends, and on the month how far
+/// the 20 Club badge is. The rules went to [showHowPoints] (pick A).
 class _SeasonHeader extends StatelessWidget {
-  const _SeasonHeader({required this.mine, this.week = false, this.country});
+  const _SeasonHeader({required this.mine, this.week = false});
 
   final MonthPlace mine;
   final bool week;
-
-  /// The country's name, on its own board.
-  final String? country;
 
   @override
   Widget build(BuildContext context) {
@@ -1314,62 +1382,23 @@ class _SeasonHeader extends StatelessWidget {
     final played = mine.played;
     final earned = played >= kRegularDuels;
 
-    return Column(
-      children: [
-        Text(
-          '${country == null ? '' : '$country · '}'
-          '${week ? l.thisWeek : monthName(context, mine.season)} · '
+    return _BoardLine(
+      text: '${week ? l.thisWeek : monthName(context, mine.season)} · '
           '${monthLeft(context, mine.endsAt, clock.now())}',
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: AppColors.gold,
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        if (!week) ...[
-          const SizedBox(height: 4),
-          Text(
-            earned
-                ? l.monthRegularEarned
-                : l.monthRegularProgress(
-                    '${localNumber(context, played)}/'
-                    '${localNumber(context, kRegularDuels)}',
-                  ),
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: earned ? context.colors.brand : context.colors.muted,
-              fontSize: 13,
-            ),
-          ),
-        ],
-        const SizedBox(height: 8),
-        // What the season's points are, where they are counted (2026-11-02).
-        Wrap(
-          key: const Key('boardRules'),
-          alignment: WrapAlignment.center,
-          spacing: 6,
-          runSpacing: 6,
-          children: [
-            for (final rule in [
-              l.boardRuleWin,
-              l.boardRuleLoss,
-              l.boardRuleStreak,
-            ])
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                decoration: BoxDecoration(
-                  color: context.colors.surfaceRaised,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  rule,
-                  style: TextStyle(color: context.colors.text, fontSize: 13),
-                ),
+      below: week
+          ? null
+          : Text(
+              earned
+                  ? l.monthRegularEarned
+                  : l.monthRegularProgress(
+                      '${localNumber(context, played)}/'
+                      '${localNumber(context, kRegularDuels)}',
+                    ),
+              style: TextStyle(
+                color: earned ? context.colors.brand : context.colors.muted,
+                fontSize: 13,
               ),
-          ],
-        ),
-      ],
+            ),
     );
   }
 }
@@ -1533,7 +1562,7 @@ class _PodiumPlace extends StatelessWidget {
       2 => AppColors.silver,
       _ => AppColors.bronze,
     };
-    final avatar = first ? 66.0 : 52.0;
+    final avatar = first ? 58.0 : 46.0;
     // A step that names its award is a line taller, so the line fits rather
     // than shrinking the number with it.
     final step = switch (row.place) {
@@ -1557,18 +1586,19 @@ class _PodiumPlace extends StatelessWidget {
         children: [
           if (first)
             const Icon(Icons.emoji_events, color: AppColors.gold, size: 26),
-          Container(
-            padding: const EdgeInsets.all(2.5),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: medal, width: 2.5),
-            ),
+          // In the place's tier frame, as on every row (the user,
+          // 2026-11-02); the step under it wears the medal's colour. Shrunk
+          // to its third of the podium on a narrow phone.
+          FittedBox(
+            fit: BoxFit.scaleDown,
             child: _Initial(
               name: row.username,
               size: avatar,
-              fontSize: first ? 26 : 21,
+              fontSize: first ? 24 : 19,
               avatarUrl: row.avatarUrl,
               mine: row.id == backend.me?.id,
+              frame: row.tierIdx,
+              id: row.id,
             ),
           ),
           const SizedBox(height: 6),

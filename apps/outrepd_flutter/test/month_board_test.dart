@@ -124,10 +124,16 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.textContaining('This week'), findsOneWidget);
-      // The points' rules under the title (2026-11-02).
+      // The points' rules a tap away, in their own sheet (pick A,
+      // 2026-11-02).
+      expect(find.text('Win +5'), findsNothing);
+      await tester.tap(find.byKey(const Key('howPoints')));
+      await tester.pumpAndSettle();
       expect(find.text('Win +5'), findsOneWidget);
       expect(find.text('Loss −2'), findsOneWidget);
       expect(find.text('3 wins in a row: +10'), findsOneWidget);
+      Navigator.of(tester.element(find.byKey(const Key('howPointsSheet')))).pop();
+      await tester.pumpAndSettle();
       expect(find.byKey(const Key('lengthMonth')), findsOneWidget);
     });
 
@@ -286,7 +292,7 @@ group('the month board', () {
       await tester.pumpAndSettle();
       await toMonth(tester);
 
-      await tester.tap(find.text('Top Players'));
+      await tester.tap(find.byKey(const Key('boardOverall')));
       await tester.pumpAndSettle();
       expect(find.text('October · 20d 4h left'), findsNothing);
     });

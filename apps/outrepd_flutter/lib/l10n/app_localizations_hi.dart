@@ -2338,6 +2338,12 @@ class LHi extends L {
   String get boardThisWeek => 'इस हफ़्ते';
 
   @override
+  String get boardOverall => 'कुल';
+
+  @override
+  String get howPointsWork => 'पॉइंट्स कैसे मिलते हैं';
+
+  @override
   String streakNextTen(String n) {
     return 'लगातार ${n} जीत: अगली जीत +10';
   }

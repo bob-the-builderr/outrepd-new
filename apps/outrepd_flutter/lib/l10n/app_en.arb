@@ -1401,6 +1401,8 @@
     }
   },
   "boardThisWeek": "This week",
+  "boardOverall": "Overall",
+  "howPointsWork": "How points work",
   "streakNextTen": "{n} wins in a row: the next win is +10",
   "@streakNextTen": {
     "placeholders": {

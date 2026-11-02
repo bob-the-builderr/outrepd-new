@@ -720,6 +720,8 @@
   "ratingForLoss": "{n} за поражение",
   "ratingForReps": "{n} за повторения",
   "boardThisWeek": "Эта неделя",
+  "boardOverall": "Общий",
+  "howPointsWork": "Как начисляются очки",
   "streakNextTen": "Побед подряд: {n}. Следующая даст +10",
   "boardRuleWin": "Победа +5",
   "boardRuleLoss": "Поражение −2",

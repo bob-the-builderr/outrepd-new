@@ -2294,6 +2294,12 @@ class LZh extends L {
   String get boardThisWeek => '本周';
 
   @override
+  String get boardOverall => '总榜';
+
+  @override
+  String get howPointsWork => '积分规则';
+
+  @override
   String streakNextTen(String n) {
     return '已连胜 ${n} 场：下一场胜利 +10';
   }

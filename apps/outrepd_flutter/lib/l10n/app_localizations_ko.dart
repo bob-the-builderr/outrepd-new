@@ -2307,6 +2307,12 @@ class LKo extends L {
   String get boardThisWeek => '이번 주';
 
   @override
+  String get boardOverall => '전체';
+
+  @override
+  String get howPointsWork => '점수 규칙';
+
+  @override
   String streakNextTen(String n) {
     return '${n}연승 중: 다음 승리는 +10';
   }

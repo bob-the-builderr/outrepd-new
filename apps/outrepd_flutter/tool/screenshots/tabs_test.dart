@@ -102,13 +102,26 @@ void main() {
     phone(tester);
     await tester.pumpWidget(_app(const RanksScreen()));
     await tester.pump(const Duration(milliseconds: 300));
-    await tester.tap(find.text('Top Players'));
+    await tester.tap(find.byKey(const Key('boardOverall')));
     for (var i = 0; i < 10; i++) {
       await tester.pump(const Duration(milliseconds: 100));
     }
     await expectLater(
       find.byType(MaterialApp),
       matchesGoldenFile('goldens/tab_ranks_top.png'),
+    );
+  });
+  testWidgets('ranks: how points work', (tester) async {
+    phone(tester);
+    await tester.pumpWidget(_app(const RanksScreen()));
+    await tester.pump(const Duration(milliseconds: 300));
+    await tester.tap(find.byKey(const Key('howPoints')));
+    for (var i = 0; i < 10; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    await expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile('goldens/tab_ranks_how_points.png'),
     );
   });
   testWidgets(

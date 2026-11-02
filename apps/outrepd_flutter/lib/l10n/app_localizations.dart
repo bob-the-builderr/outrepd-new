@@ -4313,6 +4313,18 @@ abstract class L {
   /// **'This week'**
   String get boardThisWeek;
 
+  /// No description provided for @boardOverall.
+  ///
+  /// In en, this message translates to:
+  /// **'Overall'**
+  String get boardOverall;
+
+  /// No description provided for @howPointsWork.
+  ///
+  /// In en, this message translates to:
+  /// **'How points work'**
+  String get howPointsWork;
+
   /// No description provided for @streakNextTen.
   ///
   /// In en, this message translates to:

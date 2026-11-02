@@ -2340,6 +2340,12 @@ class LPt extends L {
   String get boardThisWeek => 'Esta semana';
 
   @override
+  String get boardOverall => 'Geral';
+
+  @override
+  String get howPointsWork => 'Como funcionam os pontos';
+
+  @override
   String streakNextTen(String n) {
     return '${n} vitórias seguidas: a próxima vale +10';
   }

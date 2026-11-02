@@ -720,6 +720,8 @@
   "ratingForLoss": "mağlubiyet için {n}",
   "ratingForReps": "tekrar farkı için {n}",
   "boardThisWeek": "Bu hafta",
+  "boardOverall": "Genel",
+  "howPointsWork": "Puanlar nasıl işler",
   "streakNextTen": "Üst üste {n} galibiyet: sonraki galibiyet +10",
   "boardRuleWin": "Galibiyet +5",
   "boardRuleLoss": "Mağlubiyet −2",

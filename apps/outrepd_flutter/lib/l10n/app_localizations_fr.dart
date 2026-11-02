@@ -2344,6 +2344,12 @@ class LFr extends L {
   String get boardThisWeek => 'Cette semaine';
 
   @override
+  String get boardOverall => 'Général';
+
+  @override
+  String get howPointsWork => 'Comment marchent les points';
+
+  @override
   String streakNextTen(String n) {
     return '${n} victoires d\'affilée : la prochaine vaut +10';
   }

@@ -2336,6 +2336,12 @@ class LEn extends L {
   String get boardThisWeek => 'This week';
 
   @override
+  String get boardOverall => 'Overall';
+
+  @override
+  String get howPointsWork => 'How points work';
+
+  @override
   String streakNextTen(String n) {
     return '${n} wins in a row: the next win is +10';
   }

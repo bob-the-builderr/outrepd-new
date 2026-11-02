@@ -720,6 +720,8 @@
   "ratingForLoss": "{n} untuk kekalahan",
   "ratingForReps": "{n} untuk repetisi",
   "boardThisWeek": "Minggu ini",
+  "boardOverall": "Keseluruhan",
+  "howPointsWork": "Cara poin dihitung",
   "streakNextTen": "{n} kemenangan beruntun: kemenangan berikutnya +10",
   "boardRuleWin": "Menang +5",
   "boardRuleLoss": "Kalah −2",

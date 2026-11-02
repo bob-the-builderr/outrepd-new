@@ -2333,6 +2333,12 @@ class LTr extends L {
   String get boardThisWeek => 'Bu hafta';
 
   @override
+  String get boardOverall => 'Genel';
+
+  @override
+  String get howPointsWork => 'Puanlar nasıl işler';
+
+  @override
   String streakNextTen(String n) {
     return 'Üst üste ${n} galibiyet: sonraki galibiyet +10';
   }

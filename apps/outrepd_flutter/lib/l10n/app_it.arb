@@ -720,6 +720,8 @@
   "ratingForLoss": "{n} per la sconfitta",
   "ratingForReps": "{n} per le ripetizioni",
   "boardThisWeek": "Questa settimana",
+  "boardOverall": "Generale",
+  "howPointsWork": "Come funzionano i punti",
   "streakNextTen": "{n} vittorie di fila: la prossima vale +10",
   "boardRuleWin": "Vittoria +5",
   "boardRuleLoss": "Sconfitta −2",
