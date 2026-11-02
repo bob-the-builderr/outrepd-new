@@ -1,34 +1,200 @@
-Xcode 26.6
-Build version 17F113
-Warning: Building for device with codesigning disabled. You will have to manually codesign before deploying to device.
-Xcode is fetching Swift Package Manager dependencies. This may take several minutes...
-  Fetching from https://github.com/RevenueCat/purchases-hybrid-common.git...     
-  Fetching from https://github.com/google/GoogleSignIn-iOS.git...     
-  Fetching from https://github.com/googleads/swift-package-manager-google-mobile-ads...     
-  Fetching from https://github.com/firebase/firebase-ios-sdk...     
-  Fetching from https://github.com/RevenueCat/purchases-ios-spm...     
-  Fetching from https://github.com/google/app-check.git...      
-  Fetching from https://github.com/google/interop-ios-for-google-sdks.git...     
-  Fetching from https://github.com/firebase/leveldb.git...      
-  Fetching from https://github.com/google/grpc-binary.git...     
-  Fetching from https://github.com/google/abseil-cpp-binary.git...     
-  Fetching from https://github.com/firebase/nanopb.git...       
-  Fetching from https://github.com/google/gtm-session-fetcher.git...     
-  Fetching from https://github.com/google/GoogleUtilities.git...     
-  Fetching from https://github.com/google/GoogleDataTransport.git...     
-  Fetching from https://github.com/google/GoogleAppMeasurement.git...     
-  Fetching from https://github.com/google/promises.git...       
-  Fetching from https://github.com/googleads/google-ads-on-device-conversion-ios-sdk...     
-  Fetching from https://github.com/google/GTMAppAuth.git...     
-  Fetching from https://github.com/openid/AppAuth-iOS.git...     
-  Fetching from https://github.com/googleads/swift-package-manager-google-user-messaging-platform.git...     
-Building com.outrepd.outrepd for device (ios-release)...
-The following plugins do not support Swift Package Manager for ios:
-  - google_mlkit_commons
-  - google_mlkit_pose_detection
-  - sign_in_with_apple
-This will become an error in a future version of Flutter. Please contact the plugin maintainers to request Swift Package Manager adoption.
-Running pod install...                                             15.3s
-Running Xcode build...                                          
-Xcode build done.                                           301.7s
-✓ Built build/ios/iphoneos/Runner.app (99.3MB)
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64_x86_64-simulator/UnityAds.framework/Modules/UnityAds.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64_x86_64-simulator/UnityAds.framework/Modules/UnityAds.swiftmodule/arm64-apple-ios-simulator.swiftdoc  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64_x86_64-simulator/UnityAds.framework/Modules/UnityAds.swiftmodule/x86_64-apple-ios-simulator.abi.json  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64_x86_64-simulator/UnityAds.framework/Modules/module.modulemap  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64_x86_64-simulator/UnityAds.framework/Info.plist  
+          creating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64
+          creating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/UnityAds  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/omid-session-client-v1.js  
+          creating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UnityAds-Swift.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UnityServices.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSOfferwallAdsBridge.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/USRVStorage.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSDictionaryConvertible.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UnityAdsShowCompletionState.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UnityAdsShowError.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSBannerAdRefreshViewDelegate.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UnityAdsInitializationDelegate.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSDynamicFunctionInvoker.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSBannerError.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSWebViewEventSender.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSMetaData.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSMediationMetaData.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSShowOptions.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSGenericError.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UnityAdsLoadError.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UnityAds.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/USRVJsonStorage.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSLoadOptions.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UnityAdsShowDelegate.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/USRVStorageManager.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSPlayerMetaData.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UnityAdsBannerDelegate.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSBannerViewDelegate.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSOfferwallAvailabilityBridge.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSBanner.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UnityAdsLoadDelegate.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSGenericCompletion.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSBannerLoadOptions.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSOfferwallVersionBridge.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSProxyReflection.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/InternalAdFormat.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UnityAdsInitializationError.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSBannerView.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Headers/UADSBaseOptions.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/omsdk-v1.js  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/PrivacyInfo.xcprivacy  
+          creating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Modules
+          creating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Modules/UnityAds.swiftmodule
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Modules/UnityAds.swiftmodule/arm64-apple-ios.swiftinterface  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Modules/UnityAds.swiftmodule/arm64-apple-ios.swiftdoc  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Modules/UnityAds.swiftmodule/arm64-apple-ios.abi.json  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Modules/UnityAds.swiftmodule/arm64-apple-ios.private.swiftinterface  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Modules/module.modulemap  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/ios-arm64/UnityAds.framework/Info.plist  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/UnityAds.xcframework/Info.plist  
+      $ /usr/bin/rsync -a --exclude=.git --delete /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-cz6y70/ /Users/runner/Library/Caches/CocoaPods/Pods/Release/UnityAds/4.21.0-caacc
+      > Copying UnityAds from `/Users/runner/Library/Caches/CocoaPods/Pods/Release/UnityAds/4.21.0-caacc` to `Pods/UnityAds`
+
+    -> Installing UnityCoherenceLib (0.2.0)
+     > Http download
+       $ /usr/bin/curl -f -L -o /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/file.zip https://storage.googleapis.com/unity-coherence-library-releases/release/v0.2.0/UnityCoherenceLib.xcframework.zip --create-dirs --netrc-optional --retry 2 -A 'CocoaPods/1.17.0 cocoapods-downloader/2.1'
+       $ /usr/bin/unzip /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/file.zip -d /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u
+       Archive:  /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/file.zip
+          creating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework
+          creating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator
+          creating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework
+          creating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/_CodeSignature
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/_CodeSignature/CodeResources  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/_CodeSignature/CodeDirectory  
+        extracting: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/_CodeSignature/CodeSignature  
+        extracting: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/_CodeSignature/CodeRequirements  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/UnityCoherenceLib  
+          creating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/Headers
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/Headers/UCLCoherenceLibrary.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/Headers/UCLInitConfig.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/Headers/UnityCoherenceLib.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/Headers/UCLCommonAttributesConfig.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/Headers/UCLExport.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/Headers/UCLCoherencePipelineConfig.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/Headers/UCLIdentityProvider.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/Headers/UCLCoherencePipeline.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/Headers/UCLAttributesProvider.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/Headers/UCLCoherenceProvider.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/PrivacyInfo.xcprivacy  
+          creating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/Modules
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/Modules/module.modulemap  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64_x86_64-simulator/UnityCoherenceLib.framework/Info.plist  
+          creating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64
+          creating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework
+          creating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/_CodeSignature
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/_CodeSignature/CodeResources  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/_CodeSignature/CodeDirectory  
+        extracting: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/_CodeSignature/CodeSignature  
+        extracting: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/_CodeSignature/CodeRequirements  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/UnityCoherenceLib  
+          creating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/Headers
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/Headers/UCLCoherenceLibrary.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/Headers/UCLInitConfig.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/Headers/UnityCoherenceLib.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/Headers/UCLCommonAttributesConfig.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/Headers/UCLExport.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/Headers/UCLCoherencePipelineConfig.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/Headers/UCLIdentityProvider.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/Headers/UCLCoherencePipeline.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/Headers/UCLAttributesProvider.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/Headers/UCLCoherenceProvider.h  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/PrivacyInfo.xcprivacy  
+          creating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/Modules
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/Modules/module.modulemap  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/ios-arm64/UnityCoherenceLib.framework/Info.plist  
+         inflating: /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/UnityCoherenceLib.xcframework/Info.plist  
+      $ /usr/bin/rsync -a --exclude=.git --delete /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-vscs8u/ /Users/runner/Library/Caches/CocoaPods/Pods/Release/UnityCoherenceLib/0.2.0-9f7a4
+      > Copying UnityCoherenceLib from `/Users/runner/Library/Caches/CocoaPods/Pods/Release/UnityCoherenceLib/0.2.0-9f7a4` to `Pods/UnityCoherenceLib`
+
+    -> Installing google_mlkit_commons (0.12.0)
+
+    -> Installing google_mlkit_pose_detection (0.15.0)
+
+    -> Installing nanopb (3.30910.0)
+     > Git download
+     > Git download
+         $ /opt/homebrew/bin/git clone https://github.com/nanopb/nanopb.git /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-gneaq3 --template= --single-branch --depth 1 --branch 0.3.9.10
+      $ /usr/bin/rsync -a --exclude=.git --delete /var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-gneaq3/ /Users/runner/Library/Caches/CocoaPods/Pods/Release/nanopb/3.30910.0-fad81
+      > Copying nanopb from `/Users/runner/Library/Caches/CocoaPods/Pods/Release/nanopb/3.30910.0-fad81` to `Pods/nanopb`
+
+    -> Installing sign_in_with_apple (0.0.1)
+
+    -> Installing unity_levelplay_mediation (9.3.0)
+      - Running pre install hooks
+    [!] The 'Pods-Runner' target has transitive dependencies that include statically linked binaries: (/Users/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/ios/Pods/IronSourceSDK/IronSource/IronSource.xcframework)
+
+    /opt/homebrew/lib/ruby/gems/3.4.0/gems/cocoapods-1.17.0/lib/cocoapods/installer/xcode/target_validator.rb:84:in 'block (2 levels) in Pod::Installer::Xcode::TargetValidator#verify_no_static_framework_transitive_dependencies'
+    /opt/homebrew/lib/ruby/gems/3.4.0/gems/cocoapods-1.17.0/lib/cocoapods/installer/xcode/target_validator.rb:74:in 'Hash#each_key'
+    /opt/homebrew/lib/ruby/gems/3.4.0/gems/cocoapods-1.17.0/lib/cocoapods/installer/xcode/target_validator.rb:74:in 'block in Pod::Installer::Xcode::TargetValidator#verify_no_static_framework_transitive_dependencies'
+    /opt/homebrew/lib/ruby/gems/3.4.0/gems/cocoapods-1.17.0/lib/cocoapods/installer/xcode/target_validator.rb:73:in 'Array#each'
+    /opt/homebrew/lib/ruby/gems/3.4.0/gems/cocoapods-1.17.0/lib/cocoapods/installer/xcode/target_validator.rb:73:in 'Pod::Installer::Xcode::TargetValidator#verify_no_static_framework_transitive_dependencies'
+    /opt/homebrew/lib/ruby/gems/3.4.0/gems/cocoapods-1.17.0/lib/cocoapods/installer/xcode/target_validator.rb:38:in 'Pod::Installer::Xcode::TargetValidator#validate!'
+    /opt/homebrew/lib/ruby/gems/3.4.0/gems/cocoapods-1.17.0/lib/cocoapods/installer.rb:666:in 'Pod::Installer#validate_targets'
+    /opt/homebrew/lib/ruby/gems/3.4.0/gems/cocoapods-1.17.0/lib/cocoapods/installer.rb:164:in 'Pod::Installer#install!'
+    /opt/homebrew/lib/ruby/gems/3.4.0/gems/cocoapods-1.17.0/lib/cocoapods/command/install.rb:52:in 'Pod::Command::Install#run'
+    /opt/homebrew/lib/ruby/gems/3.4.0/gems/claide-1.1.0/lib/claide/command.rb:334:in 'CLAide::Command.run'
+    /opt/homebrew/lib/ruby/gems/3.4.0/gems/cocoapods-1.17.0/lib/cocoapods/command.rb:52:in 'Pod::Command.run'
+    /opt/homebrew/lib/ruby/gems/3.4.0/gems/cocoapods-1.17.0/bin/pod:55:in '<top (required)>'
+    /opt/homebrew/lib/ruby/site_ruby/3.4.0/rubygems.rb:305:in 'Kernel#load'
+    /opt/homebrew/lib/ruby/site_ruby/3.4.0/rubygems.rb:305:in 'Gem.activate_and_load_bin_path'
+    /opt/homebrew/lib/ruby/gems/3.4.0/bin/pod:25:in '<main>'
+
+Error output from CocoaPods:
+↳
+         Cloning into '/var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-kvv8j'...
+         Cloning into '/var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-qhuxwv'...
+         % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                        Dload  Upload   Total   Spent    Left  Speed
+            0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0    12  452k   12 56176    0     0   193k      0  0:00:02 --:--:--  0:00:02  193k   100  452k  100  452k    0     0  1041k      0 --:--:-- --:--:-- --:--:-- 1039k
+         Cloning into '/var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-fb9j40'...
+         Cloning into '/var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-5olh10'...
+         % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                        Dload  Upload   Total   Spent    Left  Speed
+            0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0     0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+            0 12.0M    0 14933    0     0  27338      0  0:07:41 --:--:--  0:07:41 27338   100 12.0M  100 12.0M    0     0  19.5M      0 --:--:-- --:--:-- --:--:--  176M
+         % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                        Dload  Upload   Total   Spent    Left  Speed
+            0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0    52 12.6M   52 6790k    0     0  28.6M      0 --:--:-- --:--:-- --:--:-- 28.5M   100 12.6M  100 12.6M    0     0  48.8M      0 --:--:-- --:--:-- --:--:-- 48.8M
+         % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                        Dload  Upload   Total   Spent    Left  Speed
+            0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0   100  161k  100  161k    0     0  2260k      0 --:--:-- --:--:-- --:--:-- 2271k
+         % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                        Dload  Upload   Total   Spent    Left  Speed
+            0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0   100  7044  100  7044    0     0  37408      0 --:--:-- --:--:-- --:--:-- 37468
+         % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                        Dload  Upload   Total   Spent    Left  Speed
+            0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0   100 2884k  100 2884k    0     0  4904k      0 --:--:-- --:--:-- --:--:-- 4905k
+         % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                        Dload  Upload   Total   Spent    Left  Speed
+            0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0     0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0   100 5068k  100 5068k    0     0  8393k      0 --:--:-- --:--:-- --:--:-- 8391k
+         % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                        Dload  Upload   Total   Spent    Left  Speed
+            0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0     0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0   100 8384k  100 8384k    0     0  12.2M      0 --:--:-- --:--:-- --:--:-- 12.2M
+         % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                        Dload  Upload   Total   Spent    Left  Speed
+            0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0     0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0   100  268k  100  268k    0     0   697k      0 --:--:-- --:--:-- --:--:--  696k
+         % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                        Dload  Upload   Total   Spent    Left  Speed
+            0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0   100  342k  100  342k    0     0   922k      0 --:--:-- --:--:-- --:--:--  924k
+         % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                        Dload  Upload   Total   Spent    Left  Speed
+            0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0    88 18.4M   88 16.3M    0     0  21.1M      0 --:--:-- --:--:-- --:--:-- 21.1M   100 18.4M  100 18.4M    0     0  22.9M      0 --:--:-- --:--:-- --:--:-- 22.9M
+         Cloning into '/var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-dlbb43'...
+         % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                        Dload  Upload   Total   Spent    Left  Speed
+            0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0     0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+           43 12.2M   43 5479k    0     0  15.8M      0 --:--:-- --:--:-- --:--:-- 15.8M   100 12.2M  100 12.2M    0     0  32.8M      0 --:--:-- --:--:-- --:--:--  191M
+         % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                        Dload  Upload   Total   Spent    Left  Speed
+            0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0   100  696k    0  696k    0     0  1280k      0 --:--:-- --:--:-- --:--:-- 1282k
+         Cloning into '/var/folders/n6/hn37q6pj7sj_9dmqqc2113800000gn/T/d20261102-12602-gneaq3'...
+
+Error running pod install
