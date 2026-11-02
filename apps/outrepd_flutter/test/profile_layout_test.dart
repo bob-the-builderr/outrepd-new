@@ -88,14 +88,20 @@ void main() {
     // leaderboard feel pointless to everybody outside the top hundred.
     expect(find.text('#1,842'), findsOneWidget);
     expect(find.text('#64'), findsOneWidget);
-    expect(find.text('GLOBAL'), findsOneWidget);
-    expect(find.text('UNITED STATES'), findsOneWidget);
+    expect(find.text('Global'), findsOneWidget);
+    expect(find.text('United States'), findsOneWidget);
 
+    // The same style: drawn smaller only where a long number shrinks to fit
+    // its third of the card (direction B, 2026-11-02).
+    TextStyle? style(String text) =>
+        (tester.widget<Text>(find.text(text)).textSpan!.children!.first
+                as TextSpan)
+            .style;
+    expect(style('#64')!.fontSize, style('#1,842')!.fontSize);
     final global = tester.getRect(find.text('#1,842'));
     final local = tester.getRect(find.text('#64'));
-    expect(local.height, closeTo(global.height, 0.5));
     // Side by side, not stacked.
-    expect((local.center.dy - global.center.dy).abs(), lessThan(1));
+    expect((local.top - global.top).abs(), lessThan(1));
   });
 
   testWidgets('leads the grid with the stat one session can move',
@@ -107,7 +113,7 @@ void main() {
     await tester.pumpWidget(_app(1.0, const Locale('en')));
     await tester.pumpAndSettle();
 
-    for (final label in ['BEST SET', 'TOTAL REPS', 'RECORD', 'STREAK']) {
+    for (final label in ['Best set', 'Total reps', 'Record', 'Streak']) {
       expect(find.text(label), findsOneWidget, reason: '$label missing');
     }
 
@@ -117,10 +123,13 @@ void main() {
     expect(demoProfile.dayStreak, isNot(demoProfile.winStreak));
     expect(find.textContaining('${demoProfile.dayStreak}'), findsWidgets);
 
-    // Best set sits first and wears the colour that means "you".
-    final best = tester.getRect(find.text('BEST SET'));
-    final total = tester.getRect(find.text('TOTAL REPS'));
-    expect(best.left, lessThan(total.left));
+    // Best set sits in the top row, beside the places, and wears the colour
+    // that means "you" (direction B, 2026-11-02).
+    final best = tester.getRect(find.text('Best set'));
+    final total = tester.getRect(find.text('Total reps'));
+    final global = tester.getRect(find.text('Global'));
+    expect(best.top, lessThan(total.top));
+    expect(best.top, closeTo(global.top, 0.5));
 
     // No weight anywhere: this app counts push-ups.
     expect(find.textContaining('kg'), findsNothing);
@@ -140,13 +149,13 @@ void main() {
     await tester.pumpAndSettle();
     // Below the level card, so a short phone scrolls to it.
     await tester.dragUntilVisible(
-      find.text('LAST 7 DAYS'),
+      find.text('Last 7 days'),
       find.byType(ListView).first,
       const Offset(0, -200),
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('LAST 7 DAYS'), findsOneWidget);
+    expect(find.text('Last 7 days'), findsOneWidget);
     // The total is read off the log, not written into the screen.
     expect(find.text('31 reps'), findsOneWidget);
 

@@ -457,21 +457,24 @@ class _RanksScreenState extends State<RanksScreen> {
                     )
                   : RefreshIndicator(
                       onRefresh: _load,
-                      child: ListView.separated(
+                      child: ListView.builder(
                         padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
                         // Above the list on Top Players: who is on it, and
                         // how a tie is settled.
                         itemCount: entries.length + 1,
-                        separatorBuilder: (_, _) => const SizedBox(height: 7),
                         itemBuilder: (context, i) => i == 0
                             ? const _BoardNote()
-                            : RiseIn(
-                                delay: staggered(i - 1),
-                                child: ListenableBuilder(
-                                  listenable: Looks.instance,
-                                  builder: (context, _) => _RankRow(
-                                    position: i,
-                                    entry: entries[i - 1],
+                            : _Slice(
+                                first: i == 1,
+                                last: i == entries.length,
+                                child: RiseIn(
+                                  delay: staggered(i - 1),
+                                  child: ListenableBuilder(
+                                    listenable: Looks.instance,
+                                    builder: (context, _) => _RankRow(
+                                      position: i,
+                                      entry: entries[i - 1],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -535,12 +538,12 @@ class _PlaceToggle extends StatelessWidget {
         child: InkWell(
           key: key,
           onTap: () => onChanged(value),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(11),
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
             decoration: BoxDecoration(
               color: selected ? colors.surfaceRaised : null,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(11),
             ),
             child: FittedBox(
               fit: BoxFit.scaleDown,
@@ -565,7 +568,7 @@ class _PlaceToggle extends StatelessWidget {
         padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
           color: colors.surface,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(14),
         ),
         child: Row(
           children: [
@@ -582,6 +585,8 @@ class _PlaceToggle extends StatelessWidget {
   }
 }
 
+/// The three boards as one strip, the chosen one filled (direction B,
+/// 2026-11-02). They were three outlined pills.
 class _ScopeToggle extends StatelessWidget {
   const _ScopeToggle({required this.scope, required this.onChanged});
 
@@ -596,15 +601,12 @@ class _ScopeToggle extends StatelessWidget {
       return Expanded(
         child: InkWell(
           onTap: () => onChanged(value),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(11),
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
+            padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 6),
             decoration: BoxDecoration(
               color: selected ? context.colors.brand : null,
-              borderRadius: BorderRadius.circular(12),
-              border: selected
-                  ? null
-                  : Border.all(color: context.colors.border, width: 0.5),
+              borderRadius: BorderRadius.circular(11),
             ),
             // Three to a row, so a long name shrinks to fit rather than
             // wrapping one pill to twice the height of its neighbours.
@@ -619,7 +621,7 @@ class _ScopeToggle extends StatelessWidget {
                       ? context.colors.background
                       : context.colors.muted,
                   fontSize: 15,
-                  fontWeight: selected ? FontWeight.w600 : null,
+                  fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
                 ),
               ),
             ),
@@ -631,14 +633,21 @@ class _ScopeToggle extends StatelessWidget {
     final l = L.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        children: [
-          pill(_Scope.thisWeek, l.thisSeason),
-          const SizedBox(width: 8),
-          pill(_Scope.topPlayers, l.topPlayers),
-          const SizedBox(width: 8),
-          pill(_Scope.yourTier, l.yourTier),
-        ],
+      child: Container(
+        padding: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          color: context.colors.surface,
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Row(
+          children: [
+            pill(_Scope.thisWeek, l.thisSeason),
+            const SizedBox(width: 4),
+            pill(_Scope.topPlayers, l.topPlayers),
+            const SizedBox(width: 4),
+            pill(_Scope.yourTier, l.yourTier),
+          ],
+        ),
       ),
     );
   }
@@ -664,15 +673,17 @@ class _LengthSwitch extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 7),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: selected ? context.colors.surfaceRaised : null,
-              borderRadius: BorderRadius.circular(16),
+              color: selected ? context.colors.brand : null,
+              borderRadius: BorderRadius.circular(10),
             ),
             child: Text(
               label,
               style: TextStyle(
-                color: selected ? context.colors.text : context.colors.muted,
+                color: selected
+                    ? context.colors.background
+                    : context.colors.muted,
                 fontSize: 14,
-                fontWeight: selected ? FontWeight.w600 : null,
+                fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
               ),
             ),
           ),
@@ -683,13 +694,17 @@ class _LengthSwitch extends StatelessWidget {
     return Center(
       child: Container(
         width: 200,
-        padding: const EdgeInsets.all(3),
+        padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
           color: context.colors.surface,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(14),
         ),
         child: Row(
-          children: [half(true, l.lengthWeek), half(false, l.lengthMonth)],
+          children: [
+            half(true, l.lengthWeek),
+            const SizedBox(width: 4),
+            half(false, l.lengthMonth),
+          ],
         ),
       ),
     );
@@ -705,7 +720,7 @@ class _BoardNote extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = L.of(context);
     return Padding(
-      padding: const EdgeInsets.only(bottom: 2),
+      padding: const EdgeInsets.only(bottom: 10),
       child: Text(
         '${l.boardActiveNote} · ${l.boardTieNote}',
         textAlign: TextAlign.center,
@@ -735,6 +750,7 @@ class _RankRow extends StatelessWidget {
         initial: entry.id.isEmpty ? demoLifterProfile(entry.username) : null,
       ),
       child: _RowCard(
+        grouped: true,
         pro: Looks.instance.pro(entry.id),
         child: Row(
           children: [
@@ -804,7 +820,7 @@ class _SelfRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return _RowCard(
       borderColour: context.colors.brand,
-      borderWidth: 1,
+      borderWidth: 1.5,
       pro: Subscription.instance.active,
       child: Row(
         children: [
@@ -859,9 +875,12 @@ class _RowCard extends StatelessWidget {
     this.borderColour,
     this.borderWidth = 0.5,
     this.pro = false,
+    this.grouped = false,
   });
 
   final Widget child;
+
+  /// An edge round the card; none without one.
   final Color? borderColour;
   final double borderWidth;
 
@@ -869,11 +888,23 @@ class _RowCard extends StatelessWidget {
   /// over it now and then (the user's pick, 2026-11-01).
   final bool pro;
 
+  /// A row in a board's card ([_Slice]) rather than a card of its own
+  /// (direction B, 2026-11-02): no card is drawn, and a Pro's row is a holo
+  /// card set into the board's, as tall as the rows round it.
+  final bool grouped;
+
   @override
   Widget build(BuildContext context) {
+    if (grouped && !pro) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 12),
+        child: child,
+      );
+    }
     if (pro) {
-      return HoloEdge(
-        radius: 12,
+      // In a board's card: 4 + 1.5 + 6.5 = the 12 a plain row stands off by.
+      final card = HoloEdge(
+        radius: grouped ? 12 : 16,
         width: 1.5,
         child: ShineBand(
           strength: 0.16,
@@ -888,25 +919,75 @@ class _RowCard extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 11.5, vertical: 12.5),
+                padding: grouped
+                    ? const EdgeInsets.symmetric(horizontal: 7.5, vertical: 6.5)
+                    : const EdgeInsets.symmetric(horizontal: 11.5, vertical: 12.5),
                 child: child,
               ),
             ),
           ),
         ),
       );
+      return grouped
+          ? Padding(padding: const EdgeInsets.all(4), child: card)
+          : card;
     }
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 14),
       decoration: BoxDecoration(
         color: context.colors.surface,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: borderColour ?? context.colors.border,
-          width: borderWidth,
-        ),
+        borderRadius: BorderRadius.circular(16),
+        border: borderColour == null
+            ? null
+            : Border.all(color: borderColour!, width: borderWidth),
       ),
       child: child,
+    );
+  }
+}
+
+/// One row's share of a board's card (direction B, 2026-11-02): the card's
+/// top corners on the [first], its bottom ones on the [last], and a hairline
+/// from the name on above every row but the first. Drawn a row at a time so
+/// the list stays lazy, and outside the row's rise-in, so the card stands
+/// whole while the rows rise into it.
+class _Slice extends StatelessWidget {
+  const _Slice({required this.first, required this.last, required this.child});
+
+  final bool first;
+  final bool last;
+  final Widget child;
+
+  /// From the card's edge to the name: 13 + 30 + 11 + 40 + 11.
+  static const _hairlineStart = 105.0;
+
+  @override
+  Widget build(BuildContext context) {
+    const round = Radius.circular(16);
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: context.colors.surface,
+        borderRadius: BorderRadius.vertical(
+          top: first ? round : Radius.zero,
+          bottom: last ? round : Radius.zero,
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (!first)
+            Padding(
+              padding: const EdgeInsetsDirectional.only(start: _hairlineStart),
+              child: Divider(
+                height: 1,
+                thickness: 0.5,
+                color: context.colors.border,
+              ),
+            ),
+          child,
+        ],
+      ),
     );
   }
 }
@@ -931,18 +1012,21 @@ class _Position extends StatelessWidget {
       width: 30,
       height: 30,
       alignment: Alignment.center,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: medal ?? context.colors.surfaceRaised,
-      ),
-      child: Text(
-        localNumber(context, position),
-        style: TextStyle(
-          color: medal == null
-              ? context.colors.muted
-              : context.colors.background,
-          fontSize: 14,
-          fontFeatures: const [FontFeature.tabularFigures()],
+      decoration: medal == null
+          ? null
+          : BoxDecoration(shape: BoxShape.circle, color: medal),
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+          localNumber(context, position),
+          style: TextStyle(
+            color: medal == null
+                ? context.colors.muted
+                : context.colors.background,
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
+            fontFeatures: const [FontFeature.tabularFigures()],
+          ),
         ),
       ),
     );
@@ -1046,7 +1130,11 @@ class _Identity extends StatelessWidget {
               child: NameWithLevel(
                 name: username,
                 xp: xp,
-                style: TextStyle(color: context.colors.text, fontSize: 15),
+                style: TextStyle(
+                  color: context.colors.text,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
             if (trailing case final chip?) ...[const SizedBox(width: 6), chip],
@@ -1085,6 +1173,7 @@ class _Points extends StatelessWidget {
           style: TextStyle(
             color: colour,
             fontSize: 17,
+            fontWeight: FontWeight.w700,
             fontFeatures: const [FontFeature.tabularFigures()],
           ),
         ),
@@ -1110,7 +1199,11 @@ class _YouChip extends StatelessWidget {
       ),
       child: Text(
         L.of(context).you.toUpperCase(),
-        style: TextStyle(color: context.colors.background, fontSize: 11),
+        style: TextStyle(
+          color: context.colors.background,
+          fontSize: 11,
+          fontWeight: FontWeight.w700,
+        ),
       ),
     );
   }
@@ -1155,6 +1248,8 @@ class _MonthBoard extends StatelessWidget {
     final l = L.of(context);
     final podium = rows.take(3).toList();
     final rest = rows.skip(3).toList();
+    // Where the awards stop: only on the world's month.
+    final awardLine = !week && country == null;
 
     return RefreshIndicator(
       onRefresh: onRefresh,
@@ -1178,11 +1273,15 @@ class _MonthBoard extends StatelessWidget {
             const SizedBox(height: 14),
             _Podium(rows: podium),
             const SizedBox(height: 12),
-            for (final row in rest) ...[
-              if (row.place == 11 && !week && country == null)
+            for (final (i, row) in rest.indexed) ...[
+              if (row.place == 11 && awardLine) ...[
+                const SizedBox(height: 12),
                 const _Top10Line(),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 7),
+              ],
+              _Slice(
+                first: i == 0 || (row.place == 11 && awardLine),
+                last: i == rest.length - 1 ||
+                    (rest[i + 1].place == 11 && awardLine),
                 child: RiseIn(
                   delay: staggered(row.place - 3),
                   child: _MonthRankRow(
@@ -1261,7 +1360,6 @@ class _SeasonHeader extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                 decoration: BoxDecoration(
                   color: context.colors.surfaceRaised,
-                  border: Border.all(color: context.colors.border),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
@@ -1369,9 +1467,10 @@ class _LastMonth extends StatelessWidget {
         const SizedBox(height: 14),
         _Podium(rows: podium, awards: true),
         const SizedBox(height: 12),
-        for (final row in rest)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 7),
+        for (final (i, row) in rest.indexed)
+          _Slice(
+            first: i == 0,
+            last: i == rest.length - 1,
             child: _MonthRankRow(row: row),
           ),
       ],
@@ -1622,6 +1721,7 @@ class _MonthRankRow extends StatelessWidget {
         initial: row.id.isEmpty ? demoLifterProfile(row.username) : null,
       ),
       child: _RowCard(
+        grouped: true,
         pro: Looks.instance.pro(row.id),
         child: Row(
           children: [
@@ -1648,7 +1748,11 @@ class _MonthRankRow extends StatelessWidget {
                         child: NameWithLevel(
                           name: row.username,
                           xp: row.xp,
-                          style: TextStyle(color: context.colors.text, fontSize: 15),
+                          style: TextStyle(
+                            color: context.colors.text,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                       if (Looks.instance.pro(row.id)) ...[
@@ -1736,7 +1840,7 @@ class _MonthSelfRow extends StatelessWidget {
 
     return _RowCard(
       borderColour: context.colors.brand,
-      borderWidth: 1,
+      borderWidth: 1.5,
       pro: Subscription.instance.active,
       child: Row(
         children: [
@@ -1775,6 +1879,7 @@ class _MonthSelfRow extends StatelessWidget {
                         style: TextStyle(
                           color: context.colors.text,
                           fontSize: 15,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),

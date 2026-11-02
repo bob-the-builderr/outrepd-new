@@ -45,7 +45,7 @@ class AdventureCard extends StatelessWidget {
   /// 2026-11-02), rather than a card across the screen.
   final bool compact;
 
-  /// How tall the home's two tiles stand.
+  /// How tall the home's two tiles stand at least: taller with large text.
   static const tileHeight = 156.0;
 
   @override
@@ -174,7 +174,9 @@ extension on AdventureCard {
         child: InkWell(
           onTap: () => openAdventureMap(context),
           child: Container(
-            height: AdventureCard.tileHeight,
+            constraints: const BoxConstraints(
+              minHeight: AdventureCard.tileHeight,
+            ),
             padding: const EdgeInsets.fromLTRB(14, 12, 10, 12),
             decoration: BoxDecoration(
               gradient: RadialGradient(

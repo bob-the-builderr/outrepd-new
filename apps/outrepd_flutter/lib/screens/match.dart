@@ -100,12 +100,16 @@ class MatchScreen extends StatelessWidget {
                   const SizedBox(height: 18),
                   // Two tiles side by side (direction B, 2026-11-02): one
                   // glance takes in both, and the home no longer scrolls.
-                  const Row(
-                    children: [
-                      Expanded(child: AdventureCard(compact: true)),
-                      SizedBox(width: 12),
-                      Expanded(child: _WeekRaceCard()),
-                    ],
+                  // As tall as the taller tile, so large text grows both.
+                  const IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Expanded(child: AdventureCard(compact: true)),
+                        SizedBox(width: 12),
+                        Expanded(child: _WeekRaceCard()),
+                      ],
+                    ),
                   ),
                 ],
                 const Spacer(flex: 2),
@@ -778,7 +782,9 @@ class _WeekRaceCardState extends State<_WeekRaceCard> {
         onTap: () => AppShell.goToRanks(context),
         borderRadius: BorderRadius.circular(16),
         child: Container(
-          height: AdventureCard.tileHeight,
+          constraints: const BoxConstraints(
+            minHeight: AdventureCard.tileHeight,
+          ),
           padding: const EdgeInsets.fromLTRB(14, 12, 12, 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

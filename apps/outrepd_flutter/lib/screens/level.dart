@@ -28,12 +28,13 @@ class XpCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = L.of(context);
     final at = xpLevel(xp);
+    // Quiet (direction B, 2026-11-02): the level a line, not a headline,
+    // under the rank card that is the profile's headline.
     return Container(
       key: const Key('xpCard'),
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.fromLTRB(16, 14, 16, 13),
       decoration: BoxDecoration(
         color: context.colors.surface,
-        border: Border.all(color: context.colors.border, width: 0.5),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -49,8 +50,8 @@ class XpCard extends StatelessWidget {
                   maxLines: 1,
                   style: TextStyle(
                     color: context.colors.text,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w800,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
@@ -59,18 +60,28 @@ class XpCard extends StatelessWidget {
                   localNumber(context, at.into),
                   localNumber(context, at.span),
                 ),
-                style: TextStyle(color: context.colors.muted, fontSize: 13),
+                style: TextStyle(
+                  color: context.colors.muted,
+                  fontSize: 13,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
               ),
             ],
           ),
           const SizedBox(height: 10),
-          _XpBar(from: at.progress, to: at.progress, colour: context.colors.text),
+          _XpBar(
+            from: at.progress,
+            to: at.progress,
+            colour: context.colors.brand,
+            height: 6,
+          ),
           const SizedBox(height: 7),
           Text(
-            '${l.xpToLevel(localNumber(context, at.toNext), localNumber(context, at.level + 1))}'
-            '  ·  '
-            '${l.xpHow(localNumber(context, 1), localNumber(context, kXpPerMatch))}',
-            style: TextStyle(color: context.colors.muted, fontSize: 13),
+            l.xpToLevel(
+              localNumber(context, at.toNext),
+              localNumber(context, at.level + 1),
+            ),
+            style: TextStyle(color: context.colors.muted, fontSize: 12),
           ),
         ],
       ),
@@ -156,11 +167,17 @@ class XpGainCard extends StatelessWidget {
 /// The bar to the next level, with the part this session filled drawn over
 /// the part that was already there.
 class _XpBar extends StatelessWidget {
-  const _XpBar({required this.from, required this.to, required this.colour});
+  const _XpBar({
+    required this.from,
+    required this.to,
+    required this.colour,
+    this.height = 8,
+  });
 
   final double from;
   final double to;
   final Color colour;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +186,7 @@ class _XpBar extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(4),
       child: SizedBox(
-        height: 8,
+        height: height,
         // Expand, so every layer is handed the bar's full height — the same
         // reason as the LP bar's.
         child: Stack(

@@ -206,8 +206,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: XpCard(xp: p.xp),
             ),
-            const SizedBox(height: 9),
-            _RankCards(
+            const SizedBox(height: 10),
+            _Stats(
               profile: p,
               global: _globalPosition,
               local: _localPosition,
@@ -228,11 +228,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ],
-            const SizedBox(height: 9),
-            _StatGrid(profile: p),
-            const SizedBox(height: 12),
+            const SizedBox(height: 18),
             const _WeekChart(),
-            const SizedBox(height: 14),
+            const SizedBox(height: 18),
             _Recent(onViewAll: () => _open(const MatchHistoryScreen())),
             const SizedBox(height: 12),
             _AchievementsRow(onTap: () => _open(const AwardsScreen())),
@@ -465,26 +463,27 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // No edge, the app's corners (direction B, 2026-11-02).
     final content = Container(
       padding:
-          padding ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
+          padding ?? const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
       decoration: BoxDecoration(
         color: context.colors.surface,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: context.colors.border, width: 0.5),
+        borderRadius: BorderRadius.circular(16),
       ),
       child: child,
     );
     if (onTap == null) return content;
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(16),
       child: content,
     );
   }
 }
 
-/// The small uppercase label every card is titled with.
+/// The small label a card or a number is titled with: as written, not
+/// shouted (direction B, 2026-11-02).
 class _CardLabel extends StatelessWidget {
   const _CardLabel(this.text);
 
@@ -493,22 +492,25 @@ class _CardLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      text.toUpperCase(),
+      text,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: TextStyle(
         color: context.colors.muted,
-        fontSize: 11,
-        letterSpacing: 0.5,
+        fontSize: 12,
+        fontWeight: FontWeight.w600,
       ),
     );
   }
 }
 
-// ─────────────────────────────── rank cards ──────────────────────────────────
+// ──────────────────────────────── the numbers ────────────────────────────────
 
-class _RankCards extends StatelessWidget {
-  const _RankCards({required this.profile, this.global, this.local});
+/// The six numbers in one card, a hairline between them (direction B,
+/// 2026-11-02): where this account stands, then what it has done. They were
+/// six cards of their own.
+class _Stats extends StatelessWidget {
+  const _Stats({required this.profile, this.global, this.local});
 
   final Profile profile;
 
@@ -522,26 +524,95 @@ class _RankCards extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = L.of(context);
     final onServer = backend.available;
+    final line = context.colors.border;
+
+    // A row of three, the hairlines between them stopping short of the
+    // card's edge and meeting the one across the middle.
+    Widget row(List<Widget> cells, {required bool top}) => IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (final (i, cell) in cells.indexed) ...[
+            if (i > 0)
+              VerticalDivider(
+                width: 1,
+                thickness: 0.5,
+                color: line,
+                indent: top ? 14 : 0,
+                endIndent: top ? 0 : 14,
+              ),
+            Expanded(child: cell),
+          ],
+        ],
+      ),
+    );
+
+    // Null while it is being fetched, and null for good when there is no
+    // position to show — an account still in placements is not on the
+    // board. A dash then, rather than a number made up.
+    Widget place(String label, int? position) => _Stat(
+      label: label,
+      value: position == null
+          ? '—'
+          : l.rankPosition(localNumber(context, position)),
+      colour: position == null ? context.colors.muted : null,
+    );
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: IntrinsicHeight(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: Container(
+        key: const Key('profileStats'),
+        decoration: BoxDecoration(
+          color: context.colors.surface,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
           children: [
-            Expanded(
-              child: _RankCard(
-                label: l.global,
-                position: onServer ? global : profile.globalRank,
+            row(top: true, [
+              place(l.global, onServer ? global : profile.globalRank),
+              place(
+                countryName(context, profile.country),
+                onServer ? local : profile.localRank,
               ),
-            ),
-            const SizedBox(width: 7),
-            Expanded(
-              child: _RankCard(
-                label: countryName(context, profile.country),
-                position: onServer ? local : profile.localRank,
+              CountUp(
+                value: profile.bestSet,
+                builder: (context, shown) => _Stat(
+                  label: l.bestSet,
+                  value: localNumber(context, shown),
+                  // The one number a single good session can move, so it is
+                  // the one wearing the colour that means "you".
+                  colour: context.colors.brand,
+                ),
               ),
+            ]),
+            Divider(
+              height: 1,
+              thickness: 0.5,
+              color: line,
+              indent: 14,
+              endIndent: 14,
             ),
+            row(top: false, [
+              CountUp(
+                value: profile.totalReps,
+                builder: (context, shown) => _Stat(
+                  label: l.totalReps,
+                  value: localNumber(context, shown),
+                ),
+              ),
+              _Stat(
+                label: l.record,
+                value: localNumber(context, profile.wins),
+                suffix: l.winInitial,
+                value2: localNumber(context, profile.losses),
+                suffix2: l.lossInitial,
+              ),
+              _Stat(
+                label: l.streak,
+                value: localNumber(context, profile.dayStreak),
+                suffix: l.dayInitial,
+              ),
+            ]),
           ],
         ),
       ),
@@ -549,123 +620,7 @@ class _RankCards extends StatelessWidget {
   }
 }
 
-class _RankCard extends StatelessWidget {
-  const _RankCard({required this.label, required this.position});
-
-  final String label;
-
-  /// Null while it is being fetched, and null for good when there is no
-  /// position to show — an account still in placements is not on the board.
-  /// The card shows a dash rather than a number it made up.
-  final int? position;
-
-  @override
-  Widget build(BuildContext context) {
-    return _Card(
-      padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 9),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _CardLabel(label),
-          const SizedBox(height: 2),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            alignment: AlignmentDirectional.centerStart,
-            child: Text(
-              position == null
-                  ? '—'
-                  : L.of(context).rankPosition(localNumber(context, position!)),
-              style: TextStyle(
-                color: position == null
-                    ? context.colors.muted
-                    : context.colors.text,
-                fontSize: 18,
-                fontFeatures: const [FontFeature.tabularFigures()],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// ──────────────────────────────── stat grid ──────────────────────────────────
-
-class _StatGrid extends StatelessWidget {
-  const _StatGrid({required this.profile});
-
-  final Profile profile;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = L.of(context);
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: Column(
-        children: [
-          IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                  child: CountUp(
-                    value: profile.bestSet,
-                    builder: (context, shown) => _Stat(
-                    label: l.bestSet,
-                    value: localNumber(context, shown),
-                    // The one number a single good session can move, so it is
-                    // the one wearing the colour that means "you".
-                    colour: context.colors.brand,
-                  ),
-                  ),
-                ),
-                const SizedBox(width: 7),
-                Expanded(
-                  child: CountUp(
-                    value: profile.totalReps,
-                    builder: (context, shown) => _Stat(
-                      label: l.totalReps,
-                      value: localNumber(context, shown),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 7),
-          IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                  child: _Stat(
-                    label: l.record,
-                    value: localNumber(context, profile.wins),
-                    suffix: l.winInitial,
-                    value2: localNumber(context, profile.losses),
-                    suffix2: l.lossInitial,
-                  ),
-                ),
-                const SizedBox(width: 7),
-                Expanded(
-                  child: _Stat(
-                    label: l.streak,
-                    value: localNumber(context, profile.dayStreak),
-                    suffix: l.dayInitial,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
+/// One of the six: its label, then the number.
 class _Stat extends StatelessWidget {
   const _Stat({
     required this.label,
@@ -691,19 +646,21 @@ class _Stat extends StatelessWidget {
   Widget build(BuildContext context) {
     final big = TextStyle(
       color: colour ?? context.colors.text,
-      fontSize: 26,
+      fontSize: 22,
+      fontWeight: FontWeight.w700,
       height: 1.2,
       fontFeatures: const [FontFeature.tabularFigures()],
     );
-    final small = TextStyle(color: context.colors.muted, fontSize: 15);
+    final small = TextStyle(color: context.colors.muted, fontSize: 13);
 
-    return _Card(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(14, 15, 10, 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           _CardLabel(label),
+          const SizedBox(height: 4),
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: AlignmentDirectional.centerStart,
@@ -756,70 +713,80 @@ class _WeekChart extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: _Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsetsDirectional.only(start: 4, end: 6),
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.baseline,
               textBaseline: TextBaseline.alphabetic,
               children: [
-                Expanded(child: _CardLabel(l.last7Days)),
+                Expanded(
+                  child: Text(l.last7Days, style: sectionLabelStyle(context)),
+                ),
                 Text(
                   l.repsCount(localNumber(context, total)),
-                  style: TextStyle(color: context.colors.muted, fontSize: 12),
+                  style: TextStyle(color: context.colors.muted, fontSize: 13),
                 ),
               ],
             ),
-            const SizedBox(height: 8),
-            SizedBox(
-              height: 44,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  for (var i = 0; i < days.length; i++) ...[
-                    if (i > 0) const SizedBox(width: 6),
-                    Expanded(
-                      child: _DayBar(
-                        reps: days[i],
-                        peak: peak,
-                        // The last bar is today, and today is the one worth
-                        // picking out: it is the only one still changeable.
-                        today: i == days.length - 1,
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-            const SizedBox(height: 4),
-            Row(
+          ),
+          const SizedBox(height: 9),
+          _Card(
+            padding: const EdgeInsets.fromLTRB(16, 14, 16, 11),
+            child: Column(
               children: [
-                for (var i = 0; i < days.length; i++) ...[
-                  if (i > 0) const SizedBox(width: 6),
-                  Expanded(
-                    child: Text(
-                      dayLetter(
-                        context,
-                        DateTime(
-                          today.year,
-                          today.month,
-                          today.day - (days.length - 1 - i),
+                SizedBox(
+                  height: 44,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      for (var i = 0; i < days.length; i++) ...[
+                        if (i > 0) const SizedBox(width: 6),
+                        Expanded(
+                          child: _DayBar(
+                            reps: days[i],
+                            peak: peak,
+                            // The last bar is today, and today is the one worth
+                            // picking out: it is the only one still changeable.
+                            today: i == days.length - 1,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    for (var i = 0; i < days.length; i++) ...[
+                      if (i > 0) const SizedBox(width: 6),
+                      Expanded(
+                        child: Text(
+                          dayLetter(
+                            context,
+                            DateTime(
+                              today.year,
+                              today.month,
+                              today.day - (days.length - 1 - i),
+                            ),
+                          ),
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: context.colors.faint,
+                            fontSize: 11,
+                          ),
                         ),
                       ),
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      style: TextStyle(
-                        color: context.colors.faint,
-                        fontSize: 11,
-                      ),
-                    ),
-                  ),
-                ],
+                    ],
+                  ],
+                ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -876,7 +843,10 @@ class _Recent extends StatelessWidget {
             textBaseline: TextBaseline.alphabetic,
             children: [
               Expanded(
-                child: Text(l.recent, style: sectionLabelStyle(context)),
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 4),
+                  child: Text(l.recent, style: sectionLabelStyle(context)),
+                ),
               ),
               InkWell(
                 onTap: onViewAll,
