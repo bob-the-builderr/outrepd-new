@@ -81,6 +81,9 @@ class Ads extends ChangeNotifier {
   /// 2026-11-01).
   static const proEvery = 5;
 
+  /// Taps on the version in Settings that open [openTestSuite].
+  static const testSuiteTaps = 7;
+
   static const _sinceOfferKey = 'adsGamesSinceProOffer';
   static const _askedKey = 'adsAsked';
 
@@ -89,6 +92,10 @@ class Ads extends ChangeNotifier {
   bool _asked = false;
 
   bool _started = false;
+
+  /// Completes with whether LevelPlay's SDK started; null before it is
+  /// asked to, and again after it failed, so that it can be asked again.
+  Completer<bool>? _levelPlayUp;
 
   /// LevelPlay's ad: null until its SDK has started.
   LevelPlayInterstitialAd? _levelPlay;
@@ -281,7 +288,7 @@ class Ads extends ChangeNotifier {
         return;
       }
       if (_hasLevelPlay) {
-        await _startLevelPlay();
+        unawaited(_startLevelPlay());
       } else {
         _levelPlayEmpty = true;
       }
@@ -299,34 +306,70 @@ class Ads extends ChangeNotifier {
     }
   }
 
-  /// Starts LevelPlay's SDK; its ad is made, and loaded, once it says it has
-  /// started.
-  Future<void> _startLevelPlay() async {
-    try {
-      // Not an app for children: 13 and over.
-      await LevelPlay.setMetaData({
-        'is_child_directed': ['false'],
-      });
-      await LevelPlay.init(
-        initRequest: LevelPlayInitRequest(appKey: _levelPlayKey),
-        initListener: _LevelPlayStart(this),
-      );
-    } on Object catch (error) {
-      _levelPlayDidNotStart('$error');
-    }
+  /// Starts LevelPlay's SDK, once; true when it has. Its ad is made, and
+  /// loaded, as it says it has started.
+  Future<bool> _startLevelPlay() {
+    final starting = _levelPlayUp;
+    if (starting != null) return starting.future;
+    final up = _levelPlayUp = Completer<bool>();
+    unawaited(() async {
+      try {
+        await LevelPlay.setMetaData({
+          // Not an app for children: 13 and over.
+          'is_child_directed': ['false'],
+          // Lets LevelPlay's test screen open ([openTestSuite]).
+          'is_test_suite': ['enable'],
+        });
+        await LevelPlay.init(
+          initRequest: LevelPlayInitRequest(appKey: _levelPlayKey),
+          initListener: _LevelPlayStart(this),
+        );
+      } on Object catch (error) {
+        _levelPlayDidNotStart('$error');
+      }
+    }());
+    return up.future;
   }
 
   void _levelPlayStarted() {
     if (_levelPlay != null) return;
     _levelPlay = LevelPlayInterstitialAd(adUnitId: _levelPlayUnit)
       ..setListener(_LevelPlayEvents(this));
+    final up = _levelPlayUp;
+    if (up != null && !up.isCompleted) up.complete(true);
     _load();
   }
 
   void _levelPlayDidNotStart(String error) {
     debugPrint('LevelPlay did not start: $error');
+    final up = _levelPlayUp;
+    _levelPlayUp = null;
+    if (up != null && !up.isCompleted) up.complete(false);
     _levelPlayEmpty = true;
     _loadAdMob();
+  }
+
+  /// LevelPlay's own test screen, for whoever builds the app: whether its
+  /// SDK and each network bidding through it made it into the build, with a
+  /// test ad from each. Opened by tapping the version in Settings
+  /// [testSuiteTaps] times; there is nothing on screen to find it by. Starts
+  /// LevelPlay first if this phone has not — a Pro account's never does —
+  /// after the consent form where the law asks for one, but loads no ad.
+  /// False when this build has no LevelPlay, or it would not start.
+  Future<bool> openTestSuite() async {
+    if (!_hasLevelPlay) return false;
+    if (_levelPlay == null) {
+      await _consent();
+      if (!await ConsentInformation.instance.canRequestAds()) return false;
+      if (!await _startLevelPlay()) return false;
+    }
+    try {
+      await LevelPlay.launchTestSuite();
+      return true;
+    } on Object catch (error) {
+      debugPrint('LevelPlay test screen: $error');
+      return false;
+    }
   }
 
   void _levelPlayLoaded() {

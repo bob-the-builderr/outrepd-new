@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:outrepd/ads.dart';
 import 'package:outrepd/l10n/app_localizations.dart';
 import 'package:outrepd/screens/settings.dart';
 import 'package:outrepd/screens/settings_account.dart';
@@ -114,6 +115,28 @@ void main() {
       expect(find.text("Couldn't connect. Check your internet and try again."), findsNothing,
           reason: '$label still says it needs a server');
     }
+  });
+
+  testWidgets("seven taps on the version reach LevelPlay's test screen, fewer nothing",
+      (tester) async {
+    // A test build has no LevelPlay, so the seventh tap says so instead of
+    // opening the screen; the six before it do nothing anybody could see.
+    phone(tester);
+    await tester.pumpWidget(_app(const SettingsScreen()));
+    await tester.pumpAndSettle();
+    final version = find.byKey(const Key('versionLabel'));
+    await tester.scrollUntilVisible(version, 200,
+        scrollable: find.byType(Scrollable).first);
+    const message = 'LevelPlay is not in this build, or did not start.';
+    for (var tap = 1; tap < Ads.testSuiteTaps; tap++) {
+      await tester.tap(version);
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    expect(find.text(message), findsNothing);
+    await tester.tap(version);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(find.text(message), findsOneWidget);
   });
 
   testWidgets('sounds can be turned off', (tester) async {

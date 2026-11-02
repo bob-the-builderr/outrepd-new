@@ -13,10 +13,12 @@
 /// want are all decisions made where the phone cannot reach.
 library;
 
+import 'package:clock/clock.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../ads.dart';
 import '../backend/backend.dart';
 import '../country_names.dart';
 import '../data.dart';
@@ -48,6 +50,30 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   void _set(VoidCallback change) => settings.update(change);
+
+  int _versionTaps = 0;
+  DateTime? _lastVersionTap;
+
+  /// Counts taps on the version that come close together; enough of them
+  /// open LevelPlay's test screen.
+  Future<void> _versionTapped() async {
+    final now = clock.now();
+    final last = _lastVersionTap;
+    _lastVersionTap = now;
+    final together = last != null && now.difference(last) < const Duration(seconds: 2);
+    _versionTaps = together ? _versionTaps + 1 : 1;
+    if (_versionTaps < Ads.testSuiteTaps) return;
+    _versionTaps = 0;
+    final messenger = ScaffoldMessenger.of(context);
+    if (await Ads.instance.openTestSuite() || !mounted) return;
+    // Only ever seen by whoever builds the app, so not translated.
+    messenger.showSnackBar(
+      const SnackBar(
+        content: Text('LevelPlay is not in this build, or did not start.'),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
 
   /// Asked for when turned on, not before: the phone's own prompt says what
   /// is shared, and turning it off asks nothing.
@@ -369,9 +395,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
 
           Center(
-            child: Text(
-              '${l.version} $appVersionLabel',
-              style: TextStyle(color: context.colors.faint, fontSize: 14),
+            // Tapped [Ads.testSuiteTaps] times in a row: LevelPlay's test
+            // screen, for whoever builds the app. Nothing shows it is there.
+            child: GestureDetector(
+              key: const Key('versionLabel'),
+              behavior: HitTestBehavior.opaque,
+              onTap: _versionTapped,
+              child: Text(
+                '${l.version} $appVersionLabel',
+                style: TextStyle(color: context.colors.faint, fontSize: 14),
+              ),
             ),
           ),
         ],
