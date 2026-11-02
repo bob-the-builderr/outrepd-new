@@ -1,0 +1,4 @@
+# Shell scripts run in Git Bash here and on CI: LF whatever core.autocrlf says.
+*.sh text eol=lf
+# A patch is applied byte for byte.
+*.patch -text
