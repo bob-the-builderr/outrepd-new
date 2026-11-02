@@ -195,19 +195,20 @@ begin
   this_season := season_of(d.created_at);
   defender_played := exists (select 1 from live_matches m where m.duel = d.id);
   -- Floored at nought as it goes, the way season_points_from_duels adds
-  -- the month up again.
+  -- the month up again; a duel with no points (written before them) counts
+  -- its LP, as it does there.
   insert into season_points as sp (season, profile_id, points, wins, played)
-  values (this_season, d.challenger, greatest(coalesce(d.pts_challenger, 0), 0),
+  values (this_season, d.challenger, greatest(coalesce(d.pts_challenger, d.lp_challenger, 0), 0),
           (d.winner = d.challenger)::int, 1)
   on conflict (season, profile_id) do update
-    set points = greatest(sp.points + coalesce(d.pts_challenger, 0), 0),
+    set points = greatest(sp.points + coalesce(d.pts_challenger, d.lp_challenger, 0), 0),
         wins = sp.wins + excluded.wins,
         played = sp.played + excluded.played;
   insert into season_points as sp (season, profile_id, points, wins, played)
-  values (this_season, d.defender, greatest(coalesce(d.pts_defender, 0), 0),
+  values (this_season, d.defender, greatest(coalesce(d.pts_defender, d.lp_defender, 0), 0),
           (d.winner = d.defender)::int, defender_played::int)
   on conflict (season, profile_id) do update
-    set points = greatest(sp.points + coalesce(d.pts_defender, 0), 0),
+    set points = greatest(sp.points + coalesce(d.pts_defender, d.lp_defender, 0), 0),
         wins = sp.wins + excluded.wins,
         played = sp.played + excluded.played;
   return null;

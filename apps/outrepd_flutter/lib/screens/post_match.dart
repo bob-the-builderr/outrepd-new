@@ -706,24 +706,29 @@ class LpCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.baseline,
             textBaseline: TextBaseline.alphabetic,
             children: [
+              // The rank and the rating shrink together, as one line, beside
+              // the total on a small phone at a large text size.
               Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.baseline,
-                  textBaseline: TextBaseline.alphabetic,
-                  children: [
-                    Flexible(
-                      child: ShrinkText(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
                         tierLabel(l, now.tierIdx, now.divIdx),
                         maxLines: 1,
                         style: TextStyle(color: context.colors.text, fontSize: 15),
                       ),
-                    ),
-                    Text(
-                      '  ·  ${localNumber(context, now.rating)}',
-                      key: const Key('rating'),
-                      style: TextStyle(color: context.colors.muted, fontSize: 14),
-                    ),
-                  ],
+                      Text(
+                        '  ·  ${localNumber(context, now.rating)}',
+                        key: const Key('rating'),
+                        style: TextStyle(color: context.colors.muted, fontSize: 14),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Text(
@@ -796,26 +801,36 @@ class _WeekLine extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Flexible(
-              child: ShrinkText(
-                l.boardThisWeek,
-                maxLines: 1,
-                style: TextStyle(color: context.colors.text, fontSize: 15),
+            // "This week ▲ #14 → #12" shrinks as one line beside the points.
+            Expanded(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: AlignmentDirectional.centerStart,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      l.boardThisWeek,
+                      maxLines: 1,
+                      style: TextStyle(color: context.colors.text, fontSize: 15),
+                    ),
+                    if (to != null) ...[
+                      const SizedBox(width: 8),
+                      // The arrows drawn, not typed: as characters they are
+                      // boxes on phones whose font does not have them.
+                      if (rose)
+                        Icon(Icons.arrow_drop_up_rounded, size: 22, color: placeStyle.color),
+                      if (from != null && from != to) ...[
+                        Text('#${localNumber(context, from)}', style: placeStyle),
+                        Icon(Icons.arrow_forward_rounded, size: 15, color: placeStyle.color),
+                      ],
+                      Text('#${localNumber(context, to)}', style: placeStyle),
+                    ],
+                  ],
+                ),
               ),
             ),
-            if (to != null) ...[
-              const SizedBox(width: 8),
-              // The arrows drawn, not typed: as characters they are boxes on
-              // phones whose font does not have them.
-              if (rose)
-                Icon(Icons.arrow_drop_up_rounded, size: 22, color: placeStyle.color),
-              if (from != null && from != to) ...[
-                Text('#${localNumber(context, from)}', style: placeStyle),
-                Icon(Icons.arrow_forward_rounded, size: 15, color: placeStyle.color),
-              ],
-              Text('#${localNumber(context, to)}', style: placeStyle),
-            ],
-            const Spacer(),
+            const SizedBox(width: 8),
             if (added != null)
               Text(
                 l.ptsAmount(
