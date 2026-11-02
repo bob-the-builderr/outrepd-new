@@ -29,7 +29,11 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 flutter_ios_podfile_setup
 
 target 'Runner' do
-  use_frameworks!
+  # Static: LevelPlay ships IronSource as a static xcframework, which
+  # CocoaPods refuses under a dynamically linked plugin ("transitive
+  # dependencies that include statically linked binaries"). Unity's own
+  # Flutter instructions say to link this way.
+  use_frameworks! :linkage => :static
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   # Unity Ads bidding for LevelPlay's ads (lib/ads.dart); brings Unity Ads
