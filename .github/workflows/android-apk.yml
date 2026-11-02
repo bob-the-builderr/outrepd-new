@@ -546,6 +546,7 @@ jobs:
           mkdir -p "$RUNNER_TEMP/ci"
           set -o pipefail
           db=postgresql://postgres:postgres@localhost:5432/postgres
+          up=postgresql://postgres:postgres@localhost:5432/upgrade
           # pg_net is Supabase's; stubs.sql stands in for the one call made.
           sed '/create extension if not exists pg_net/d' supabase/install.sql \
             > "$RUNNER_TEMP/install.sql"
@@ -555,7 +556,22 @@ jobs:
             echo "installed once" &&
             psql "$db" -v ON_ERROR_STOP=1 -q -f "$RUNNER_TEMP/install.sql" &&
             echo "installed twice" &&
-            psql "$db" -v ON_ERROR_STOP=1 -f tool/db/security_test.sql
+            psql "$db" -v ON_ERROR_STOP=1 -f tool/db/security_test.sql &&
+            # The paste that upgrades the live project, run first here: its
+            # server as last pasted (tool/db/live), filled with accounts and
+            # duels, today's installer over it twice, and nothing lost. A
+            # database of its own; the roles are the cluster's, made above.
+            echo "--- upgrading the live project's server" &&
+            psql "$db" -v ON_ERROR_STOP=1 -q -c 'create database upgrade' &&
+            sed '/create extension if not exists pg_net/d' tool/db/live/install.sql > "$RUNNER_TEMP/live.sql" &&
+            sed '/^create role /d' tool/db/stubs.sql > "$RUNNER_TEMP/stubs-db.sql" &&
+            psql "$up" -v ON_ERROR_STOP=1 -q -f "$RUNNER_TEMP/stubs-db.sql" &&
+            psql "$up" -v ON_ERROR_STOP=1 -q -f "$RUNNER_TEMP/live.sql" &&
+            psql "$up" -v ON_ERROR_STOP=1 -q -f tool/db/upgrade_seed.sql &&
+            psql "$up" -v ON_ERROR_STOP=1 -q -f "$RUNNER_TEMP/install.sql" &&
+            psql "$up" -v ON_ERROR_STOP=1 -f tool/db/upgrade_check.sql &&
+            psql "$up" -v ON_ERROR_STOP=1 -q -f "$RUNNER_TEMP/install.sql" &&
+            psql "$up" -v ON_ERROR_STOP=1 -f tool/db/upgrade_check.sql
           } 2>&1 | tee "$RUNNER_TEMP/ci/server.txt"
 
       - uses: subosito/flutter-action@v2
