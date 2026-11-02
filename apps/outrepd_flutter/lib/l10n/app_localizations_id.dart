@@ -2298,6 +2298,12 @@ class LId extends L {
   String get monthEmptyBody => 'Belum ada yang menang LP bulan ini. Menangkan duel berperingkat pertama dan kamu memimpin.';
 
   @override
+  String get weekEmptyTitle => 'Minggu yang baru';
+
+  @override
+  String get weekEmptyBody => 'Belum ada yang menang LP minggu ini. Menangkan duel berperingkat pertama dan kamu memimpin.';
+
+  @override
   String rankedDuelsCount(String n) {
     return '${n} duel berperingkat';
   }

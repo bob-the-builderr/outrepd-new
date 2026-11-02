@@ -710,6 +710,8 @@
   "monthRegularEarned": "Lencana Klub 20 bulan ini sudah didapat",
   "monthEmptyTitle": "Bulan yang baru",
   "monthEmptyBody": "Belum ada yang menang LP bulan ini. Menangkan duel berperingkat pertama dan kamu memimpin.",
+  "weekEmptyTitle": "Minggu yang baru",
+  "weekEmptyBody": "Belum ada yang menang LP minggu ini. Menangkan duel berperingkat pertama dan kamu memimpin.",
   "rankedDuelsCount": "{n} duel berperingkat",
   "monthlyAwards": "Penghargaan bulanan",
   "seasonOver": "Musim berakhir",

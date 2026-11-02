@@ -710,6 +710,8 @@
   "monthRegularEarned": "इस महीने का 20 क्लब बैज मिल गया",
   "monthEmptyTitle": "नया महीना",
   "monthEmptyBody": "इस महीने अभी तक किसी ने LP नहीं जीते। पहला रैंक्ड ड्यूल जीतें और आप सबसे आगे।",
+  "weekEmptyTitle": "नया हफ़्ता",
+  "weekEmptyBody": "इस हफ़्ते अभी तक किसी ने LP नहीं जीते। पहला रैंक्ड ड्यूल जीतें और आप सबसे आगे।",
   "rankedDuelsCount": "{n} रैंक्ड ड्यूल",
   "monthlyAwards": "मासिक पुरस्कार",
   "seasonOver": "सीज़न खत्म",

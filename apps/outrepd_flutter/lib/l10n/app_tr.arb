@@ -710,6 +710,8 @@
   "monthRegularEarned": "Bu ay 20 Kulübü rozetini kazandın",
   "monthEmptyTitle": "Yepyeni bir ay",
   "monthEmptyBody": "Bu ay henüz kimse LP kazanmadı. İlk dereceli düelloyu kazan, zirve senin.",
+  "weekEmptyTitle": "Yepyeni bir hafta",
+  "weekEmptyBody": "Bu hafta henüz kimse LP kazanmadı. İlk dereceli düelloyu kazan, zirve senin.",
   "rankedDuelsCount": "{n} dereceli düello",
   "monthlyAwards": "Aylık ödüller",
   "seasonOver": "Sezon bitti",

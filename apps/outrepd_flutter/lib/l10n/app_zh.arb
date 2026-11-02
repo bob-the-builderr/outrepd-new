@@ -710,6 +710,8 @@
   "monthRegularEarned": "本月 20 俱乐部徽章已获得",
   "monthEmptyTitle": "全新的一个月",
   "monthEmptyBody": "本月还没有人赢得 LP。赢下第一场排位赛，你就领先。",
+  "weekEmptyTitle": "全新的一周",
+  "weekEmptyBody": "本周还没有人赢得 LP。赢下第一场排位赛，你就领先。",
   "rankedDuelsCount": "{n} 场排位赛",
   "monthlyAwards": "月度荣誉",
   "seasonOver": "赛季结束",

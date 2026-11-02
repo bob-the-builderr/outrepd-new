@@ -2306,6 +2306,12 @@ class LDe extends L {
   String get monthEmptyBody => 'Diesen Monat hat noch niemand LP gewonnen. Gewinn das erste gewertete Duell und du führst.';
 
   @override
+  String get weekEmptyTitle => 'Eine neue Woche';
+
+  @override
+  String get weekEmptyBody => 'Diese Woche hat noch niemand LP gewonnen. Gewinn das erste gewertete Duell und du führst.';
+
+  @override
   String rankedDuelsCount(String n) {
     return '${n} gewertete Duelle';
   }

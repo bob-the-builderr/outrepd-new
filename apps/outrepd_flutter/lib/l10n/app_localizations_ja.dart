@@ -2263,6 +2263,12 @@ class LJa extends L {
   String get monthEmptyBody => '今月はまだ誰もLPを獲得していません。最初のランク戦に勝てば首位です。';
 
   @override
+  String get weekEmptyTitle => '新しい週';
+
+  @override
+  String get weekEmptyBody => '今週はまだ誰もLPを獲得していません。最初のランク戦に勝てば首位です。';
+
+  @override
   String rankedDuelsCount(String n) {
     return 'ランク戦 ${n}回';
   }

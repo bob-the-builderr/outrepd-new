@@ -710,6 +710,8 @@
   "monthRegularEarned": "Insignia Club 20 ganada este mes",
   "monthEmptyTitle": "Un mes nuevo",
   "monthEmptyBody": "Nadie ha ganado LP este mes todavía. Gana el primer duelo clasificatorio y vas primero.",
+  "weekEmptyTitle": "Una semana nueva",
+  "weekEmptyBody": "Nadie ha ganado LP esta semana todavía. Gana el primer duelo clasificatorio y vas primero.",
   "rankedDuelsCount": "{n} duelos clasificatorios",
   "monthlyAwards": "Premios mensuales",
   "seasonOver": "Temporada terminada",

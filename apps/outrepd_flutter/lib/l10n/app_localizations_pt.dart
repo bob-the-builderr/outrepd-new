@@ -2301,6 +2301,12 @@ class LPt extends L {
   String get monthEmptyBody => 'Ninguém ganhou LP este mês ainda. Vença o primeiro duelo ranqueado e você lidera.';
 
   @override
+  String get weekEmptyTitle => 'Uma semana nova';
+
+  @override
+  String get weekEmptyBody => 'Ninguém ganhou LP esta semana ainda. Vença o primeiro duelo ranqueado e você lidera.';
+
+  @override
   String rankedDuelsCount(String n) {
     return '${n} duelos ranqueados';
   }

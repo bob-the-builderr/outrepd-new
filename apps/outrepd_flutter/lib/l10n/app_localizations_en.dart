@@ -2297,6 +2297,12 @@ class LEn extends L {
   String get monthEmptyBody => 'Nobody has won LP this month yet. Win the first ranked duel and you lead.';
 
   @override
+  String get weekEmptyTitle => 'A fresh week';
+
+  @override
+  String get weekEmptyBody => 'Nobody has won LP this week yet. Win the first ranked duel and you lead.';
+
+  @override
   String rankedDuelsCount(String n) {
     return '${n} ranked duels';
   }

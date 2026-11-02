@@ -1356,6 +1356,8 @@
   "monthRegularEarned": "20 Club badge earned this month",
   "monthEmptyTitle": "A fresh month",
   "monthEmptyBody": "Nobody has won LP this month yet. Win the first ranked duel and you lead.",
+  "weekEmptyTitle": "A fresh week",
+  "weekEmptyBody": "Nobody has won LP this week yet. Win the first ranked duel and you lead.",
   "rankedDuelsCount": "{n} ranked duels",
   "@rankedDuelsCount": {
     "placeholders": {

@@ -2304,6 +2304,12 @@ class LEs extends L {
   String get monthEmptyBody => 'Nadie ha ganado LP este mes todavía. Gana el primer duelo clasificatorio y vas primero.';
 
   @override
+  String get weekEmptyTitle => 'Una semana nueva';
+
+  @override
+  String get weekEmptyBody => 'Nadie ha ganado LP esta semana todavía. Gana el primer duelo clasificatorio y vas primero.';
+
+  @override
   String rankedDuelsCount(String n) {
     return '${n} duelos clasificatorios';
   }

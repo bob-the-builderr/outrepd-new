@@ -2294,6 +2294,12 @@ class LTr extends L {
   String get monthEmptyBody => 'Bu ay henüz kimse LP kazanmadı. İlk dereceli düelloyu kazan, zirve senin.';
 
   @override
+  String get weekEmptyTitle => 'Yepyeni bir hafta';
+
+  @override
+  String get weekEmptyBody => 'Bu hafta henüz kimse LP kazanmadı. İlk dereceli düelloyu kazan, zirve senin.';
+
+  @override
   String rankedDuelsCount(String n) {
     return '${n} dereceli düello';
   }

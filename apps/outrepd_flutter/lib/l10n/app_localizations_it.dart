@@ -2304,6 +2304,12 @@ class LIt extends L {
   String get monthEmptyBody => 'Nessuno ha ancora vinto LP questo mese. Vinci il primo duello classificato e sei in testa.';
 
   @override
+  String get weekEmptyTitle => 'Una settimana nuova';
+
+  @override
+  String get weekEmptyBody => 'Nessuno ha ancora vinto LP questa settimana. Vinci il primo duello classificato e sei in testa.';
+
+  @override
   String rankedDuelsCount(String n) {
     return '${n} duelli classificati';
   }

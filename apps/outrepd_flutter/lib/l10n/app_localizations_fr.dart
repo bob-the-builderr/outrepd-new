@@ -2305,6 +2305,12 @@ class LFr extends L {
   String get monthEmptyBody => 'Personne n\'a encore gagné de LP ce mois-ci. Gagne le premier duel classé et tu prends la tête.';
 
   @override
+  String get weekEmptyTitle => 'Une nouvelle semaine';
+
+  @override
+  String get weekEmptyBody => 'Personne n\'a encore gagné de LP cette semaine. Gagne le premier duel classé et tu prends la tête.';
+
+  @override
   String rankedDuelsCount(String n) {
     return '${n} duels classés';
   }

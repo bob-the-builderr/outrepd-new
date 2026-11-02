@@ -4253,6 +4253,18 @@ abstract class L {
   /// **'Nobody has won LP this month yet. Win the first ranked duel and you lead.'**
   String get monthEmptyBody;
 
+  /// No description provided for @weekEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A fresh week'**
+  String get weekEmptyTitle;
+
+  /// No description provided for @weekEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody has won LP this week yet. Win the first ranked duel and you lead.'**
+  String get weekEmptyBody;
+
   /// No description provided for @rankedDuelsCount.
   ///
   /// In en, this message translates to:

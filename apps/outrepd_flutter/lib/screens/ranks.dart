@@ -1164,8 +1164,8 @@ class _MonthBoard extends StatelessWidget {
           else if (rows.isEmpty)
             EmptyState(
               icon: Icons.calendar_month_outlined,
-              title: l.monthEmptyTitle,
-              body: l.monthEmptyBody,
+              title: week ? l.weekEmptyTitle : l.monthEmptyTitle,
+              body: week ? l.weekEmptyBody : l.monthEmptyBody,
             )
           else ...[
             const SizedBox(height: 14),

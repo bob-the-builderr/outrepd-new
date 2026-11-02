@@ -710,6 +710,8 @@
   "monthRegularEarned": "Selo Clube 20 conquistado este mês",
   "monthEmptyTitle": "Um mês novo",
   "monthEmptyBody": "Ninguém ganhou LP este mês ainda. Vença o primeiro duelo ranqueado e você lidera.",
+  "weekEmptyTitle": "Uma semana nova",
+  "weekEmptyBody": "Ninguém ganhou LP esta semana ainda. Vença o primeiro duelo ranqueado e você lidera.",
   "rankedDuelsCount": "{n} duelos ranqueados",
   "monthlyAwards": "Prêmios mensais",
   "seasonOver": "Temporada encerrada",

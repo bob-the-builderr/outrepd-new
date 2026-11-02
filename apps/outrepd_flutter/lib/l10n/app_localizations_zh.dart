@@ -2254,6 +2254,12 @@ class LZh extends L {
   String get monthEmptyBody => '本月还没有人赢得 LP。赢下第一场排位赛，你就领先。';
 
   @override
+  String get weekEmptyTitle => '全新的一周';
+
+  @override
+  String get weekEmptyBody => '本周还没有人赢得 LP。赢下第一场排位赛，你就领先。';
+
+  @override
   String rankedDuelsCount(String n) {
     return '${n} 场排位赛';
   }

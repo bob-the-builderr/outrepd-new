@@ -710,6 +710,8 @@
   "monthRegularEarned": "Abzeichen 20er-Club diesen Monat verdient",
   "monthEmptyTitle": "Ein neuer Monat",
   "monthEmptyBody": "Diesen Monat hat noch niemand LP gewonnen. Gewinn das erste gewertete Duell und du führst.",
+  "weekEmptyTitle": "Eine neue Woche",
+  "weekEmptyBody": "Diese Woche hat noch niemand LP gewonnen. Gewinn das erste gewertete Duell und du führst.",
   "rankedDuelsCount": "{n} gewertete Duelle",
   "monthlyAwards": "Monatsauszeichnungen",
   "seasonOver": "Saison vorbei",

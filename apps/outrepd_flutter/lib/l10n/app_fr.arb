@@ -710,6 +710,8 @@
   "monthRegularEarned": "Badge Club 20 gagné ce mois-ci",
   "monthEmptyTitle": "Un nouveau mois",
   "monthEmptyBody": "Personne n'a encore gagné de LP ce mois-ci. Gagne le premier duel classé et tu prends la tête.",
+  "weekEmptyTitle": "Une nouvelle semaine",
+  "weekEmptyBody": "Personne n'a encore gagné de LP cette semaine. Gagne le premier duel classé et tu prends la tête.",
   "rankedDuelsCount": "{n} duels classés",
   "monthlyAwards": "Récompenses du mois",
   "seasonOver": "Saison terminée",

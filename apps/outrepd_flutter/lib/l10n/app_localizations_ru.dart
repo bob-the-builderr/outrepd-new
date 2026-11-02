@@ -2299,6 +2299,12 @@ class LRu extends L {
   String get monthEmptyBody => 'В этом месяце LP ещё никто не выиграл. Выиграйте первую рейтинговую дуэль — и вы лидер.';
 
   @override
+  String get weekEmptyTitle => 'Новая неделя';
+
+  @override
+  String get weekEmptyBody => 'На этой неделе LP ещё никто не выиграл. Выиграйте первую рейтинговую дуэль — и вы лидер.';
+
+  @override
   String rankedDuelsCount(String n) {
     return 'Рейтинговых дуэлей: ${n}';
   }

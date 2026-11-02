@@ -127,6 +127,18 @@ void main() {
       expect(find.text('Starts again every Monday'), findsOneWidget);
       expect(find.byKey(const Key('lengthMonth')), findsOneWidget);
     });
+
+    testWidgets('says a new week is empty, not a new month', (tester) async {
+      // It used to borrow the month's words on a Monday morning.
+      phone(tester);
+      ranked();
+      backend = _Month(rows: const [], place: null, played: 0, points: 0);
+      await tester.pumpWidget(_app(const RanksScreen()));
+      await tester.pumpAndSettle();
+
+      expect(find.text('A fresh week'), findsOneWidget);
+      expect(find.text('A fresh month'), findsNothing);
+    });
   });
 
 group('the month board', () {

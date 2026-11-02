@@ -2267,6 +2267,12 @@ class LKo extends L {
   String get monthEmptyBody => '이번 달엔 아직 아무도 LP를 얻지 못했어요. 첫 랭크전을 이기면 1위예요.';
 
   @override
+  String get weekEmptyTitle => '새로운 주';
+
+  @override
+  String get weekEmptyBody => '이번 주엔 아직 아무도 LP를 얻지 못했어요. 첫 랭크전을 이기면 1위예요.';
+
+  @override
   String rankedDuelsCount(String n) {
     return '랭크전 ${n}판';
   }

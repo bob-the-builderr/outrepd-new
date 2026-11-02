@@ -2299,6 +2299,12 @@ class LHi extends L {
   String get monthEmptyBody => 'इस महीने अभी तक किसी ने LP नहीं जीते। पहला रैंक्ड ड्यूल जीतें और आप सबसे आगे।';
 
   @override
+  String get weekEmptyTitle => 'नया हफ़्ता';
+
+  @override
+  String get weekEmptyBody => 'इस हफ़्ते अभी तक किसी ने LP नहीं जीते। पहला रैंक्ड ड्यूल जीतें और आप सबसे आगे।';
+
+  @override
   String rankedDuelsCount(String n) {
     return '${n} रैंक्ड ड्यूल';
   }

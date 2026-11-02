@@ -710,6 +710,8 @@
   "monthRegularEarned": "今月の20クラブバッジを獲得",
   "monthEmptyTitle": "新しい月",
   "monthEmptyBody": "今月はまだ誰もLPを獲得していません。最初のランク戦に勝てば首位です。",
+  "weekEmptyTitle": "新しい週",
+  "weekEmptyBody": "今週はまだ誰もLPを獲得していません。最初のランク戦に勝てば首位です。",
   "rankedDuelsCount": "ランク戦 {n}回",
   "monthlyAwards": "月間アワード",
   "seasonOver": "シーズン終了",
