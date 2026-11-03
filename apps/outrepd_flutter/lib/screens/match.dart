@@ -32,6 +32,7 @@ import '../season.dart';
 import '../subscription.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
+import '../tier_card_frame.dart';
 import '../widgets.dart';
 import 'adventure_map.dart';
 import 'daily_goal.dart';
@@ -539,10 +540,11 @@ class _Rank extends StatelessWidget {
 
 // ─────────────────────────────── the rank row ────────────────────────────────
 
-/// The rank on this tab (the user's pick 2, 2026-11-03): one quiet row in
-/// the tier's metal — the crest with a light breathing slowly behind it, the
-/// tier, the rating and what the next division needs, and a thin bar. The
-/// profile keeps the large card; here the match is the point.
+/// The rank on this tab (the user's pick 2, 2026-11-03): one quiet row — the
+/// crest with a light breathing slowly behind it, the tier, the rating and
+/// what the next division needs, and a thin bar — wearing its tier's frame
+/// (pick A, lib/tier_card_frame.dart). The profile keeps the large card;
+/// here the match is the point.
 class _RankRow extends StatelessWidget {
   const _RankRow({required this.profile, required this.onTap});
 
@@ -574,36 +576,15 @@ class _RankRow extends StatelessWidget {
 
     return PressScale(
       scale: 0.98,
-      child: Material(
+      child: TierCardFrame(
         key: const Key('rankRow'),
-        color: Colors.transparent,
-        child: Ink(
-          decoration: BoxDecoration(
-            borderRadius: radius,
-            // A touch of the metal from the crest's side, gone by the middle.
-            gradient: LinearGradient(
-              begin: AlignmentDirectional.centerStart,
-              end: AlignmentDirectional.centerEnd,
-              stops: const [0, 0.6],
-              colors: [
-                Color.alphaBlend(
-                  accent.withValues(alpha: dark ? 0.09 : 0.07),
-                  colors.surface,
-                ),
-                colors.surface,
-              ],
-            ),
-            border: Border.all(
-              color: Color.alphaBlend(
-                accent.withValues(alpha: 0.18),
-                colors.border,
-              ),
-              width: 0.8,
-            ),
-          ),
+        tierIdx: p.tierIdx,
+        child: Material(
+          color: Colors.transparent,
+          borderRadius: radius,
+          clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: onTap,
-            borderRadius: radius,
             child: Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(8, 10, 12, 10),
               child: Row(

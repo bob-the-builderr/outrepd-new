@@ -4,7 +4,9 @@
 /// division above the rating, and what the next division needs.
 ///
 /// It replaced "Gold III · 64 / 100 LP" over a thin bar, which the user found
-/// hard to read: the rating is one number now, so it is drawn as one.
+/// hard to read: the rating is one number now, so it is drawn as one. Since
+/// 2026-11-03 it wears its tier's frame (lib/tier_card_frame.dart): the edge,
+/// the feathers and the glow are the frame's, the light inside is its own.
 library;
 
 import 'dart:math' as math;
@@ -16,6 +18,7 @@ import 'motion.dart';
 import 'ranking.dart';
 import 'theme.dart';
 import 'tier_badge.dart';
+import 'tier_card_frame.dart';
 import 'widgets.dart';
 
 class RankCard extends StatelessWidget {
@@ -48,7 +51,7 @@ class RankCard extends StatelessWidget {
     final to = from + kRatingPerDivision;
     final fill = top ? 1.0 : (lp / kRatingPerDivision).clamp(0.0, 1.0);
 
-    final card = _Lit(
+    final lit = _Lit(
       accent: accent,
       light: metal.light,
       dark: dark,
@@ -191,23 +194,28 @@ class RankCard extends StatelessWidget {
       ),
     );
 
-    if (onTap == null) return card;
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(18),
-        child: card,
-      ),
+    return TierCardFrame(
+      tierIdx: tierIdx,
+      fill: false,
+      child: onTap == null
+          ? lit
+          : Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: onTap,
+                borderRadius: BorderRadius.circular(18),
+                child: lit,
+              ),
+            ),
     );
   }
 }
 
 /// The card's metal, lit: the tier's colour washed in from one side, and —
 /// where the phone allows motion — that light travelling across the whole
-/// card and round again, a brighter sheen crossing it, and the glow round it
-/// breathing (the user, 2026-11-03: the glow on the left stood still). Still,
-/// it is the card as it was, lit from the top corner.
+/// card and round again, and a brighter sheen crossing it (the user,
+/// 2026-11-03: the glow on the left stood still). Still, it is the card as it
+/// was, lit from the top corner. Its edge and glow are the frame's.
 class _Lit extends StatefulWidget {
   const _Lit({
     required this.accent,
@@ -261,7 +269,6 @@ class _LitState extends State<_Lit> with SingleTickerProviderStateMixin {
         // The wash runs from the start edge to the far one and back, so it
         // never jumps.
         final along = moving ? (1 - math.cos(t * 2 * math.pi)) / 2 : 0.0;
-        final breath = moving ? (1 - math.cos(t * 4 * math.pi)) / 2 : 0.0;
         // The sheen crosses in the first half of the cycle, then rests.
         final sheen = (t / 0.5).clamp(0.0, 1.0);
         return Container(
@@ -277,14 +284,7 @@ class _LitState extends State<_Lit> with SingleTickerProviderStateMixin {
               ],
               stops: const [0, 0.38, 0.75],
             ),
-            border: Border.all(color: accent, width: 1.5),
             borderRadius: BorderRadius.circular(18),
-            boxShadow: [
-              BoxShadow(
-                color: accent.withValues(alpha: 0.18 + 0.16 * breath),
-                blurRadius: 22 + 14 * breath,
-              ),
-            ],
           ),
           foregroundDecoration: moving && t < 0.5
               ? BoxDecoration(
