@@ -64,7 +64,13 @@ next upgrade.
 5. On a real phone: the photo crop screen (native, no CI screenshot can
    show it) and changing the username.
 
-## Ads setup on the dashboards (2026-11-03, in progress, the user's side)
+## Ads setup on the dashboards (2026-11-03)
+
+**Done:** Unity Ads is set up in LevelPlay and both interstitial ad units
+show **Networks: 2** (ironSource Ads + Unity Ads): iOS s1m7x1s18dr5m929
+with BP_Interstitial_iOS, Android f8y710tdcpfcz5i8 with
+BP_Interstitial_Android. The Android Unity Game ID was not shown to
+Claude. History of how it was set up:
 
 - LevelPlay: both apps there with the keys built into 1.1.6, "Live in
   store", COPPA "Not directed"; the iOS interstitial ad unit
