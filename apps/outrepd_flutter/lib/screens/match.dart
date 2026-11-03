@@ -10,21 +10,26 @@
 /// shape, name, bar, one line of numbers.
 library;
 
+import 'dart:math' as math;
+
 import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 
 import '../app_bottom_nav.dart' show TablerIcon;
+import '../avatar.dart';
 import '../connection.dart';
 import '../backend/backend.dart';
 import '../career.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
+import '../lifter/my_lifter.dart';
 import '../motion.dart';
+import '../player_avatar.dart';
 import '../push.dart';
-import '../rank_card.dart';
 import '../ranking.dart';
 import '../rewards.dart';
 import '../season.dart';
+import '../subscription.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
 import '../widgets.dart';
@@ -57,11 +62,12 @@ class MatchScreen extends StatelessWidget {
           builder: (context, _) {
             final offline = !Connection.instance.online;
 
-            // Ranked and online (the user's pick, 2026-11-03): the rank as
-            // one lit card, the match under it, and Adventure on the first
-            // screen rather than below the fold, each rising in. Read from
-            // the top and simply scrolled: its cards measure their own text,
-            // which an IntrinsicHeight round them cannot ask about.
+            // Ranked and online (the user's pick 2, 2026-11-03): the rank as
+            // one quiet row, the match as you against an empty seat, then
+            // Adventure and the week side by side and today's goal, each
+            // rising in. The colours are the app's own and nothing moves
+            // fast: a light breathes behind the crest, a warm light drifts
+            // across the match, the empty seat turns, the button glows.
             if (p.isRanked && !offline) {
               // Every card built at once, not as it scrolls in, so what is
               // under the fold on a short phone is still there to find.
@@ -74,10 +80,8 @@ class MatchScreen extends StatelessWidget {
                     _StreakLine(profile: p),
                     const SizedBox(height: 12),
                     RiseIn(
-                      child: RankCard(
-                        tierIdx: p.tierIdx,
-                        divIdx: p.divIdx,
-                        lp: p.lp,
+                      child: _RankRow(
+                        profile: p,
                         onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (_) => RankScreen(profile: p),
@@ -85,15 +89,30 @@ class MatchScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 14),
-                    RiseIn(delay: staggered(1), child: const _MatchHero()),
-                    const SizedBox(height: 14),
-                    RiseIn(delay: staggered(2), child: const AdventureCard()),
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 12),
+                    RiseIn(
+                      delay: staggered(1),
+                      child: _MatchHero(profile: p),
+                    ),
+                    const SizedBox(height: 12),
+                    // Two tiles side by side: one glance takes in both. As
+                    // tall as the taller tile, so large text grows both.
+                    RiseIn(
+                      delay: staggered(2),
+                      child: const IntrinsicHeight(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Expanded(child: AdventureCard(compact: true)),
+                            SizedBox(width: 12),
+                            Expanded(child: _WeekRaceCard()),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
                     RiseIn(delay: staggered(3), child: const DailyGoalCard()),
-                    const SizedBox(height: 14),
-                    RiseIn(delay: staggered(4), child: const _WeekRaceCard()),
-                ],
+                  ],
                 ),
               );
             }
@@ -518,51 +537,385 @@ class _Rank extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────── the match ───────────────────────────────────
+// ─────────────────────────────── the rank row ────────────────────────────────
 
-/// The ranked match as a card of its own (2026-11-03): what it is in two
-/// lines, the button with a ring that keeps pulsing out from it, and the
-/// terms under it.
-class _MatchHero extends StatelessWidget {
-  const _MatchHero();
+/// The rank on this tab (the user's pick 2, 2026-11-03): one quiet row in
+/// the tier's metal — the crest with a light breathing slowly behind it, the
+/// tier, the rating and what the next division needs, and a thin bar. The
+/// profile keeps the large card; here the match is the point.
+class _RankRow extends StatelessWidget {
+  const _RankRow({required this.profile, required this.onTap});
+
+  final Profile profile;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
-    return Container(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
-      decoration: BoxDecoration(
-        color: context.colors.surface,
-        borderRadius: BorderRadius.circular(16),
+    final p = profile;
+    final colors = context.colors;
+    final metal = tierMetal(p.tierIdx);
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    // As on the profile's card: Master's identity is its terracotta wings,
+    // and the name is in the lightest metal on the dark theme, the darkest
+    // on the light one.
+    final accent = p.tierIdx >= kTopTier ? metal.wing : metal.mid;
+    final ink = dark ? metal.light : metal.base;
+    final top = p.tierIdx >= kTopTier && p.divIdx >= kTopDivision;
+    final toNext = (kRatingPerDivision - p.lp).clamp(0, kRatingPerDivision);
+    final fill = top ? 1.0 : (p.lp / kRatingPerDivision).clamp(0.0, 1.0);
+    final next = top
+        ? null
+        : l.toNextTier(
+            localNumber(context, toNext),
+            nextRankName(l, p.tierIdx, p.divIdx),
+          );
+    final radius = BorderRadius.circular(18);
+
+    return PressScale(
+      scale: 0.98,
+      child: Material(
+        key: const Key('rankRow'),
+        color: Colors.transparent,
+        child: Ink(
+          decoration: BoxDecoration(
+            borderRadius: radius,
+            // A touch of the metal from the crest's side, gone by the middle.
+            gradient: LinearGradient(
+              begin: AlignmentDirectional.centerStart,
+              end: AlignmentDirectional.centerEnd,
+              stops: const [0, 0.6],
+              colors: [
+                Color.alphaBlend(
+                  accent.withValues(alpha: dark ? 0.09 : 0.07),
+                  colors.surface,
+                ),
+                colors.surface,
+              ],
+            ),
+            border: Border.all(
+              color: Color.alphaBlend(
+                accent.withValues(alpha: 0.18),
+                colors.border,
+              ),
+              width: 0.8,
+            ),
+          ),
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: radius,
+            child: Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(8, 10, 12, 10),
+              child: Row(
+                children: [
+                  _Breathe(
+                    colour: accent,
+                    child: TierBadge(tierIndex: p.tierIdx, size: 52),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ShrinkText(
+                          tierLabel(l, p.tierIdx, p.divIdx).toUpperCase(),
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: ink,
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 1.4,
+                          ),
+                        ),
+                        const SizedBox(height: 1),
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: AlignmentDirectional.centerStart,
+                          child: Text.rich(
+                            key: const Key('rankRowRating'),
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: localNumber(
+                                    context,
+                                    ratingOf(p.tierIdx, p.divIdx, p.lp),
+                                  ),
+                                  style: TextStyle(
+                                    color: colors.text,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w800,
+                                    fontFeatures: const [
+                                      FontFeature.tabularFigures(),
+                                    ],
+                                  ),
+                                ),
+                                if (next != null)
+                                  TextSpan(
+                                    text: '  ·  $next',
+                                    style: TextStyle(
+                                      color: colors.muted,
+                                      fontSize: 12.5,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 7),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(2),
+                          child: SizedBox(
+                            height: 4,
+                            child: Stack(
+                              fit: StackFit.expand,
+                              children: [
+                                ColoredBox(
+                                  color: Colors.black.withValues(
+                                    alpha: dark ? 0.35 : 0.08,
+                                  ),
+                                ),
+                                FractionallySizedBox(
+                                  alignment: AlignmentDirectional.centerStart,
+                                  widthFactor: fill,
+                                  child: ColoredBox(
+                                    color: accent.withValues(alpha: 0.85),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Icon(Icons.chevron_right, color: colors.muted, size: 22),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+    );
+  }
+}
+
+/// A soft light in the tier's colour behind the crest, swelling and fading
+/// over six seconds. Held halfway where the phone asks for less motion, and
+/// under tests.
+class _Breathe extends StatefulWidget {
+  const _Breathe({required this.colour, required this.child});
+
+  final Color colour;
+  final Widget child;
+
+  @override
+  State<_Breathe> createState() => _BreatheState();
+}
+
+class _BreatheState extends State<_Breathe>
+    with SingleTickerProviderStateMixin {
+  late final _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 3),
+    value: 0.5,
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (loopsAllowed(context)) {
+      if (!_controller.isAnimating) _controller.repeat(reverse: true);
+    } else {
+      _controller.stop();
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final c = widget.colour;
+    return Stack(
+      alignment: Alignment.center,
+      clipBehavior: Clip.none,
+      children: [
+        Positioned(
+          left: -8,
+          top: -8,
+          right: -8,
+          bottom: -8,
+          child: IgnorePointer(
+            child: AnimatedBuilder(
+              animation: _controller,
+              builder: (context, _) {
+                final t = Curves.easeInOut.transform(_controller.value);
+                return DecoratedBox(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(
+                      colors: [
+                        c.withValues(alpha: 0.12 + 0.16 * t),
+                        c.withValues(alpha: 0),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+        widget.child,
+      ],
+    );
+  }
+}
+
+// ─────────────────────────────── the match ───────────────────────────────────
+
+/// The ranked match (the user's pick 2, 2026-11-03): you on one side, the
+/// seat across from you still empty, what the match is in two lines, the
+/// button and its terms. Calm on purpose: a warm light drifts slowly across
+/// the whole card, the empty seat turns very slowly, the button glows and
+/// fades. Nothing flashes, spins fast or crosses the text.
+class _MatchHero extends StatelessWidget {
+  const _MatchHero({required this.profile});
+
+  final Profile profile;
+
+  /// The gap between the two sides, where "VS" sits.
+  static const _middle = 56.0;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final colors = context.colors;
+
+    return Container(
+      key: const Key('matchHero'),
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: colors.surface,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: colors.border, width: 0.5),
+      ),
+      child: Stack(
         children: [
-          Text(
-            l.obIdeaTitle,
-            style: TextStyle(
-              color: context.colors.text,
-              fontSize: 22,
-              fontWeight: FontWeight.w800,
+          const Positioned.fill(child: IgnorePointer(child: _WarmLight())),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 18, 16, 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      // The framed picture is twice as wide as its circle;
+                      // on a narrow phone it shrinks rather than overflow.
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: ListenableBuilder(
+                          listenable: Listenable.merge([
+                            avatar,
+                            MyLifter.instance,
+                            Subscription.instance,
+                          ]),
+                          builder: (context, _) => PlayerAvatar(
+                            name: profile.username,
+                            tierIdx: profile.tierIdx,
+                            image: avatar.picture,
+                            // A Pro's lifter is alive in its frame, as on
+                            // the profile.
+                            alive: Subscription.instance.active,
+                            size: 60,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: _middle,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          l.vs,
+                          style: TextStyle(
+                            color: colors.brand.withValues(alpha: 0.55),
+                            fontSize: 26,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 3,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Expanded(child: Center(child: _EmptySeat(size: 72))),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        l.you,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: colors.text,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: _middle),
+                    Expanded(
+                      child: Text(
+                        l.whoIsNext,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: colors.muted, fontSize: 13),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 18),
+                Text(
+                  l.obIdeaTitle,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: colors.text,
+                    fontSize: 23,
+                    fontWeight: FontWeight.w800,
+                    height: 1.2,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  l.obIdeaRival,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: colors.muted, fontSize: 14),
+                ),
+                const SizedBox(height: 16),
+                _Glow(
+                  child: _FilledAction(
+                    label: l.findMatch,
+                    onTap: () => startMatch(context, mode: MatchMode.ranked),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                // The terms of the thing you just agreed to, under the button
+                // rather than inside it.
+                Text(
+                  l.rankedTerms(localNumber(context, kDuelLength.inSeconds)),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: colors.muted, fontSize: 13.5),
+                ),
+              ],
             ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            l.obIdeaRival,
-            style: TextStyle(color: context.colors.muted, fontSize: 14),
-          ),
-          const SizedBox(height: 16),
-          _Pulse(
-            child: _FilledAction(
-              label: l.findMatch,
-              onTap: () => startMatch(context, mode: MatchMode.ranked),
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            l.rankedTerms(localNumber(context, kDuelLength.inSeconds)),
-            textAlign: TextAlign.center,
-            style: TextStyle(color: context.colors.muted, fontSize: 14),
           ),
         ],
       ),
@@ -570,29 +923,208 @@ class _MatchHero extends StatelessWidget {
   }
 }
 
-/// A ring that keeps swelling out of the button and fading, so the one thing
-/// the tab is for looks ready to go. Still where the phone asks for less
-/// motion, and under tests.
-class _Pulse extends StatefulWidget {
-  const _Pulse({required this.child});
-
-  final Widget child;
+/// A warm light drifting across the whole card and back, once every thirty
+/// seconds — there to make the card feel lit, not to be watched — and the
+/// opponent's side faintly in their colour. Still, behind your side, where
+/// the phone asks for less motion and under tests.
+class _WarmLight extends StatefulWidget {
+  const _WarmLight();
 
   @override
-  State<_Pulse> createState() => _PulseState();
+  State<_WarmLight> createState() => _WarmLightState();
 }
 
-class _PulseState extends State<_Pulse> with SingleTickerProviderStateMixin {
+class _WarmLightState extends State<_WarmLight>
+    with SingleTickerProviderStateMixin {
   late final _controller = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 1800),
+    duration: const Duration(seconds: 15),
+    value: 0.15,
   );
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (loopsAllowed(context)) {
-      if (!_controller.isAnimating) _controller.repeat();
+      if (!_controller.isAnimating) _controller.repeat(reverse: true);
+    } else {
+      _controller.stop();
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    final rival = context.colors.rival;
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, _) {
+        final t = Curves.easeInOut.transform(_controller.value);
+        // Along the card, dipping gently towards the middle on the way.
+        final x = -1.1 + 2.2 * t;
+        final y = -0.75 + 0.35 * math.sin(t * math.pi);
+        return DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: RadialGradient(
+              center: Alignment(x, y),
+              radius: 0.95,
+              colors: [
+                AppColors.gold.withValues(alpha: dark ? 0.11 : 0.08),
+                AppColors.gold.withValues(alpha: 0),
+              ],
+            ),
+          ),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                center: const Alignment(0.65, -0.7),
+                radius: 0.7,
+                colors: [
+                  rival.withValues(alpha: dark ? 0.06 : 0.04),
+                  rival.withValues(alpha: 0),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+/// The seat across from you: a dashed ring in the opponent's colour turning
+/// once in forty seconds, and a question mark that fades in and out. Both
+/// still where the phone asks for less motion, and under tests.
+class _EmptySeat extends StatefulWidget {
+  const _EmptySeat({required this.size});
+
+  final double size;
+
+  @override
+  State<_EmptySeat> createState() => _EmptySeatState();
+}
+
+class _EmptySeatState extends State<_EmptySeat> with TickerProviderStateMixin {
+  late final _turn = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 40),
+  );
+  late final _fade = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 2500),
+    value: 1,
+  );
+  late final _opacity = Tween<double>(begin: 0.5, end: 0.9).animate(
+    CurvedAnimation(parent: _fade, curve: Curves.easeInOut),
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (loopsAllowed(context)) {
+      if (!_turn.isAnimating) _turn.repeat();
+      if (!_fade.isAnimating) _fade.repeat(reverse: true);
+    } else {
+      _turn.stop();
+      _fade.stop();
+    }
+  }
+
+  @override
+  void dispose() {
+    _turn.dispose();
+    _fade.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final rival = context.colors.rival;
+    final size = widget.size;
+    return SizedBox.square(
+      dimension: size,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          RotationTransition(
+            turns: _turn,
+            child: CustomPaint(
+              size: Size.square(size),
+              painter: _DashedRing(rival.withValues(alpha: 0.45)),
+            ),
+          ),
+          FadeTransition(
+            opacity: _opacity,
+            child: Text(
+              '?',
+              style: TextStyle(
+                color: rival,
+                fontSize: size * 0.48,
+                fontWeight: FontWeight.w800,
+                height: 1,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DashedRing extends CustomPainter {
+  const _DashedRing(this.colour);
+
+  final Color colour;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = colour
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2
+      ..strokeCap = StrokeCap.round;
+    final rect = (Offset.zero & size).deflate(1);
+    const dashes = 22;
+    const sweep = 2 * math.pi / dashes;
+    for (var i = 0; i < dashes; i++) {
+      canvas.drawArc(rect, i * sweep, sweep * 0.55, false, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(_DashedRing old) => old.colour != colour;
+}
+
+/// A soft glow round the button, swelling and fading over four and a half
+/// seconds, so the one thing the tab is for looks ready without anything
+/// moving across it. None where the phone asks for less motion, and under
+/// tests.
+class _Glow extends StatefulWidget {
+  const _Glow({required this.child});
+
+  final Widget child;
+
+  @override
+  State<_Glow> createState() => _GlowState();
+}
+
+class _GlowState extends State<_Glow> with SingleTickerProviderStateMixin {
+  late final _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 2250),
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (loopsAllowed(context)) {
+      if (!_controller.isAnimating) _controller.repeat(reverse: true);
     } else {
       _controller.stop();
     }
@@ -607,35 +1139,25 @@ class _PulseState extends State<_Pulse> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final brand = context.colors.brand;
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Positioned.fill(
-          child: IgnorePointer(
-            child: AnimatedBuilder(
-              animation: _controller,
-              builder: (context, _) {
-                if (!_controller.isAnimating) return const SizedBox.shrink();
-                final t = Curves.easeOut.transform(_controller.value);
-                return Transform.scale(
-                  scaleX: 1 + 0.06 * t,
-                  scaleY: 1 + 0.35 * t,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: brand.withValues(alpha: 0.7 * (1 - t)),
-                        width: 2,
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
+    return AnimatedBuilder(
+      animation: _controller,
+      child: widget.child,
+      builder: (context, child) {
+        final t = Curves.easeInOut.transform(_controller.value);
+        return DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            boxShadow: [
+              BoxShadow(
+                color: brand.withValues(alpha: 0.17 * t),
+                blurRadius: 26,
+                spreadRadius: 2 * t,
+              ),
+            ],
           ),
-        ),
-        widget.child,
-      ],
+          child: child,
+        );
+      },
     );
   }
 }

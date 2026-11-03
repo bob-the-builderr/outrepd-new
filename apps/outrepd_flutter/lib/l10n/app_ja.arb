@@ -473,6 +473,7 @@
   "noFriendsMatch": "その名前の人はいません",
   "yourClimb": "あなたの登り",
   "yourRank": "あなたのランク",
+  "whoIsNext": "次の相手は？",
   "ratingFloor": "レートが{n}を下回ることはありません。",
   "floorKept": "{tier} はあなたのものです。{rank} より下には落ちません。",
   "dayStreakCount": "{count}日連続",

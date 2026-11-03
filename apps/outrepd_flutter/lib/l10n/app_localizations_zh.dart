@@ -1460,6 +1460,9 @@ class LZh extends L {
   String get yourRank => '我的段位';
 
   @override
+  String get whoIsNext => '下一个对手是谁？';
+
+  @override
   String ratingFloor(String n) {
     return '积分永远不会低于 ${n}。';
   }

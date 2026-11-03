@@ -1490,6 +1490,9 @@ class LEs extends L {
   String get yourRank => 'Tu rango';
 
   @override
+  String get whoIsNext => '¿Quién sigue?';
+
+  @override
   String ratingFloor(String n) {
     return 'Tu rating nunca baja de ${n}.';
   }

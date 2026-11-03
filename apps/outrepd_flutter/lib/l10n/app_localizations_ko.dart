@@ -1463,6 +1463,9 @@ class LKo extends L {
   String get yourRank => '내 랭크';
 
   @override
+  String get whoIsNext => '다음 상대는?';
+
+  @override
   String ratingFloor(String n) {
     return '레이팅은 ${n} 아래로 내려가지 않아요.';
   }

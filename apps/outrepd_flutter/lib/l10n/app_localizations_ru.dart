@@ -1486,6 +1486,9 @@ class LRu extends L {
   String get yourRank => 'Твой ранг';
 
   @override
+  String get whoIsNext => 'Кто следующий?';
+
+  @override
   String ratingFloor(String n) {
     return 'Твой рейтинг никогда не опускается ниже ${n}.';
   }

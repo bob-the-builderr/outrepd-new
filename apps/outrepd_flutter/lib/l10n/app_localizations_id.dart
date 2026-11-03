@@ -1485,6 +1485,9 @@ class LId extends L {
   String get yourRank => 'Peringkatmu';
 
   @override
+  String get whoIsNext => 'Siapa berikutnya?';
+
+  @override
   String ratingFloor(String n) {
     return 'Rating-mu tidak pernah turun di bawah ${n}.';
   }

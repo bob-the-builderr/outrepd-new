@@ -1462,6 +1462,9 @@ class LJa extends L {
   String get yourRank => 'あなたのランク';
 
   @override
+  String get whoIsNext => '次の相手は？';
+
+  @override
   String ratingFloor(String n) {
     return 'レートが${n}を下回ることはありません。';
   }

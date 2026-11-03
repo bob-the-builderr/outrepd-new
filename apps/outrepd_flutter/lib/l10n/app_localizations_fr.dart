@@ -1491,6 +1491,9 @@ class LFr extends L {
   String get yourRank => 'Ton rang';
 
   @override
+  String get whoIsNext => 'Qui est le prochain ?';
+
+  @override
   String ratingFloor(String n) {
     return 'Ta cote ne descend jamais sous ${n}.';
   }

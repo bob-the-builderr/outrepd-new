@@ -820,6 +820,7 @@
   "noFriendsMatch": "Nobody by that name",
   "yourClimb": "Your climb",
   "yourRank": "Your rank",
+  "whoIsNext": "Who's next?",
   "ratingFloor": "Your rating never drops below {n}.",
   "@ratingFloor": {
     "placeholders": {

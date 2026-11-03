@@ -1492,6 +1492,9 @@ class LDe extends L {
   String get yourRank => 'Dein Rang';
 
   @override
+  String get whoIsNext => 'Wer ist der Nächste?';
+
+  @override
   String ratingFloor(String n) {
     return 'Deine Wertung fällt nie unter ${n}.';
   }

@@ -473,6 +473,7 @@
   "noFriendsMatch": "Tidak ada yang bernama itu",
   "yourClimb": "Pendakianmu",
   "yourRank": "Peringkatmu",
+  "whoIsNext": "Siapa berikutnya?",
   "ratingFloor": "Rating-mu tidak pernah turun di bawah {n}.",
   "floorKept": "{tier} sudah jadi milikmu. Kamu tidak akan turun di bawah {rank}.",
   "dayStreakCount": "{count} hari berturut-turut",

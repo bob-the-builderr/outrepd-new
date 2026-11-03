@@ -1489,6 +1489,9 @@ class LPt extends L {
   String get yourRank => 'Seu ranque';
 
   @override
+  String get whoIsNext => 'Quem é o próximo?';
+
+  @override
   String ratingFloor(String n) {
     return 'Seu rating nunca cai abaixo de ${n}.';
   }

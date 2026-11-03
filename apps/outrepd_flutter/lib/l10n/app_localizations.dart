@@ -2831,6 +2831,12 @@ abstract class L {
   /// **'Your rank'**
   String get yourRank;
 
+  /// No description provided for @whoIsNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Who's next?'**
+  String get whoIsNext;
+
   /// No description provided for @ratingFloor.
   ///
   /// In en, this message translates to:

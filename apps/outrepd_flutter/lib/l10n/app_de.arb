@@ -473,6 +473,7 @@
   "noFriendsMatch": "Niemand mit diesem Namen",
   "yourClimb": "Dein Aufstieg",
   "yourRank": "Dein Rang",
+  "whoIsNext": "Wer ist der Nächste?",
   "ratingFloor": "Deine Wertung fällt nie unter {n}.",
   "floorKept": "{tier} gehört dir. Unter {rank} fällst du nicht mehr.",
   "dayStreakCount": "{count} Tage in Folge",

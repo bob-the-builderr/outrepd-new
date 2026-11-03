@@ -473,6 +473,7 @@
   "noFriendsMatch": "Personne à ce nom",
   "yourClimb": "Ton ascension",
   "yourRank": "Ton rang",
+  "whoIsNext": "Qui est le prochain ?",
   "ratingFloor": "Ta cote ne descend jamais sous {n}.",
   "floorKept": "{tier} est à toi. Tu ne descendras plus sous {rank}.",
   "dayStreakCount": "{count} jours d’affilée",

@@ -1483,6 +1483,9 @@ class LTr extends L {
   String get yourRank => 'Rütben';
 
   @override
+  String get whoIsNext => 'Sıradaki kim?';
+
+  @override
   String ratingFloor(String n) {
     return 'Reytingin asla ${n} altına düşmez.';
   }
