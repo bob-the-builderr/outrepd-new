@@ -147,7 +147,9 @@ double _badgeSize(BuildContext context, double available) {
   // Everything but the badge, at this text size: the top row and streak,
   // the rank's words and bar, today's goal, the button and its terms, the
   // two tiles, the gaps between them and the page's own padding.
-  final rest = 560 + 160 * grow;
+  // Measured off the built screens (2026-11-03): about 580 on a wide
+  // phone, more where the goal's line wraps on a narrow one.
+  final rest = 600 + 160 * grow;
   final byHeight = (available - rest) / _badgeCrop;
   return byHeight.clamp(96.0, math.min(screen.width * 0.5, 230.0));
 }
