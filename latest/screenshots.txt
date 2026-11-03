@@ -55,10 +55,10 @@ Could not read the titles from the account: Bad state: no server configured
 ::endgroup::
 ::group::✅ Passing tests
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/cards_test.dart: the card a name opens, free
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 03-friends 1080x1920
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/cards_test.dart: the profile card, free
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 04-otherprofile 1080x1920
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 03-friends 1080x1920
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/cards_test.dart: the card a name opens, pro
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 04-otherprofile 1080x1920
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/cards_test.dart: the profile card, pro
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 05-profile 1080x1920
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/cards_test.dart: the match card, full size
@@ -72,8 +72,8 @@ Could not read the titles from the account: Bad state: no server configured
 ::endgroup::
 ::group::✅ Passing tests
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_en_test.dart: paywall en small
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 03-friends 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_en_test.dart: paywall en tall
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 03-friends 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 04-otherprofile 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 05-profile 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 06-road 1320x2868
@@ -82,8 +82,8 @@ Could not read the titles from the account: Bad state: no server configured
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: match
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: your rank
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: match with the bar
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/placement_test.dart: onboarding placement dark
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: friends
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/placement_test.dart: onboarding placement dark
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/placement_test.dart: onboarding placement light
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: ranks this month
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: ranks top players
