@@ -69,8 +69,8 @@ next upgrade.
 **Done:** Unity Ads is set up in LevelPlay and both interstitial ad units
 show **Networks: 2** (ironSource Ads + Unity Ads): iOS s1m7x1s18dr5m929
 with BP_Interstitial_iOS, Android f8y710tdcpfcz5i8 with
-BP_Interstitial_Android. The Android Unity Game ID was not shown to
-Claude. History of how it was set up:
+BP_Interstitial_Android. Unity Game IDs: iOS 800421449, Android
+800421448, one instance each, All Countries. How it was set up:
 
 - LevelPlay: both apps there with the keys built into 1.1.6, "Live in
   store", COPPA "Not directed"; the iOS interstitial ad unit
