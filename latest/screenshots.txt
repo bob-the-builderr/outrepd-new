@@ -12,10 +12,10 @@
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: store map 1080x1920
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: store armory 1080x1920
 ::endgroup::
-::group::✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/live_match_test.dart: store live match 1320x2868
+::group::✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: fight 1320x2868
 Could not keep the screen: PlatformException(channel-error, Unable to establish connection on channel: "dev.flutter.pigeon.wakelock_plus_platform_interface.WakelockPlusApi.toggle"., null, null)
 ::endgroup::
-::group::✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: fight 1320x2868
+::group::✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/live_match_test.dart: store live match 1320x2868
 Could not keep the screen: PlatformException(channel-error, Unable to establish connection on channel: "dev.flutter.pigeon.wakelock_plus_platform_interface.WakelockPlusApi.toggle"., null, null)
 ::endgroup::
 ::group::✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: fight 1080x1920
@@ -30,24 +30,61 @@ Could not keep the screen: PlatformException(channel-error, Unable to establish 
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: new weapon
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: store new weapon 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/adventure_test.dart: store new weapon 1080x1920
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: win
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: loss
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: rematch asked
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: rematch, the other one left
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: promotion
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: placed
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: level up
 ::endgroup::
 ::group::✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/live_match_test.dart: store live match 1080x1920
 Could not keep the screen: PlatformException(channel-error, Unable to establish connection on channel: "dev.flutter.pigeon.wakelock_plus_platform_interface.WakelockPlusApi.toggle"., null, null)
 ::endgroup::
 ::group::✅ Passing tests
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart: sign_in_entry
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: win
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: loss
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart: sign_in_choose_name
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: rematch asked
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart: sign_in_entry_360
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: rematch, the other one left
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: promotion
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: placed
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: level up
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/win_moment_test.dart: level card
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/promo_image_test.dart: promo image pro 1024
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart: sign_in_entry
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart: sign_in_choose_name
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/sign_in_test.dart: sign_in_entry_360
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/review_paywall_test.dart: app review paywall 1320x2868 (variant: TargetPlatform.iOS)
+tool/screenshots/cards_test.dart:139:24: Error: A value of type 'Future<void>' can't be returned from a function with return type 'Widget'.
+ - 'Future' is from 'dart:async'.
+ - 'Widget' is from 'package:flutter/src/widgets/framework.dart' ('/opt/hostedtoolcache/flutter/stable-3.47.9-x64/flutter/packages/flutter/lib/src/widgets/framework.dart').
+          (context) => showLifterPeek(
+                       ^
+tool/screenshots/cards_test.dart:162:24: Error: A value of type 'Future<void>' can't be returned from a function with return type 'Widget'.
+ - 'Future' is from 'dart:async'.
+ - 'Widget' is from 'package:flutter/src/widgets/framework.dart' ('/opt/hostedtoolcache/flutter/stable-3.47.9-x64/flutter/packages/flutter/lib/src/widgets/framework.dart').
+          (context) => showShareCardSheet(
+                       ^
+tool/screenshots/cards_test.dart:201:22: Error: A value of type 'Future<void>' can't be returned from a function with return type 'Widget'.
+ - 'Future' is from 'dart:async'.
+ - 'Widget' is from 'package:flutter/src/widgets/framework.dart' ('/opt/hostedtoolcache/flutter/stable-3.47.9-x64/flutter/packages/flutter/lib/src/widgets/framework.dart').
+        (context) => showMatchShareSheet(
+                     ^
+::endgroup::
+::group::❌ loading /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/cards_test.dart (failed)
+Failed to load "/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/cards_test.dart":
+Compilation failed for testPath=/home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/cards_test.dart: tool/screenshots/cards_test.dart:139:24: Error: A value of type 'Future<void>' can't be returned from a function with return type 'Widget'.
+ - 'Future' is from 'dart:async'.
+ - 'Widget' is from 'package:flutter/src/widgets/framework.dart' ('/opt/hostedtoolcache/flutter/stable-3.47.9-x64/flutter/packages/flutter/lib/src/widgets/framework.dart').
+          (context) => showLifterPeek(
+                       ^
+tool/screenshots/cards_test.dart:162:24: Error: A value of type 'Future<void>' can't be returned from a function with return type 'Widget'.
+ - 'Future' is from 'dart:async'.
+ - 'Widget' is from 'package:flutter/src/widgets/framework.dart' ('/opt/hostedtoolcache/flutter/stable-3.47.9-x64/flutter/packages/flutter/lib/src/widgets/framework.dart').
+          (context) => showShareCardSheet(
+                       ^
+tool/screenshots/cards_test.dart:201:22: Error: A value of type 'Future<void>' can't be returned from a function with return type 'Widget'.
+ - 'Future' is from 'dart:async'.
+ - 'Widget' is from 'package:flutter/src/widgets/framework.dart' ('/opt/hostedtoolcache/flutter/stable-3.47.9-x64/flutter/packages/flutter/lib/src/widgets/framework.dart').
+        (context) => showMatchShareSheet(
+                     ^
+.
+
+::endgroup::
+::group::✅ Passing tests
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 01-home 1080x1920
 ::endgroup::
 ::group::✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 02-ranks 1080x1920
@@ -56,42 +93,42 @@ Could not read the titles from the account: Bad state: no server configured
 ::group::✅ Passing tests
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 03-friends 1080x1920
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 04-otherprofile 1080x1920
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_en_test.dart: paywall en small
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_en_test.dart: paywall en tall
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 05-profile 1080x1920
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 06-road 1080x1920
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_en_test.dart: paywall en small
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 07-won 1080x1920
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/paywall_en_test.dart: paywall en tall
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 08-awards 1080x1920
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 01-home 1320x2868
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: match
 ::endgroup::
 ::group::✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 02-ranks 1320x2868
 Could not read the titles from the account: Bad state: no server configured
 ::endgroup::
 ::group::✅ Passing tests
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: your rank
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 03-friends 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 04-otherprofile 1320x2868
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: match
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: your rank
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 05-profile 1320x2868
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: match with the bar
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 06-road 1320x2868
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 07-won 1320x2868
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: match with the bar
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 08-awards 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: friends
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: ranks this month
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 07-won 1320x2868
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/store_test.dart: store 08-awards 1320x2868
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: ranks top players
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: ranks: how points work
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: profile
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: profile recent
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: settings
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/placement_test.dart: onboarding placement dark
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/tabs_test.dart: settings
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/placement_test.dart: onboarding placement light
-✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/onboarding_idea_test.dart: onboarding idea
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/match_card_test.dart: match card won story
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/match_card_test.dart: match card won post
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/match_card_test.dart: match card lost story
+✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/onboarding_idea_test.dart: onboarding idea
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/match_card_test.dart: match card lost post
 ✅ /home/runner/work/outrepd-new/outrepd-new/apps/outrepd_flutter/tool/screenshots/history_test.dart: match history
 ::endgroup::
 
-🎉 70 tests passed.
+::error::70 tests passed, 1 failed.
