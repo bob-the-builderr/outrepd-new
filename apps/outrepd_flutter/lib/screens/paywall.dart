@@ -312,23 +312,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 ),
               ],
             ),
-            // The way out: the app is free, and this is an offer, not a gate.
-            // In sign-up it says so in words, where the next step would be.
-            if (widget.onboarding)
-              PositionedDirectional(
-                top: 2,
-                end: 8,
-                child: TextButton(
-                  key: const Key('proNotNow'),
-                  onPressed: () => Navigator.maybePop(context),
-                  child: Text(
-                    l.notNow,
-                    style: TextStyle(color: context.colors.muted, fontSize: 16),
-                  ),
-                ),
-              )
-            else
-              PositionedDirectional(
+            PositionedDirectional(
                 top: 0,
                 start: 4,
                 child: IconButton(
@@ -547,6 +531,32 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   ),
           ),
         ),
+        // The way out, under the button: the app is free, and this is an offer,
+        // not a gate. In sign-up it says so where the next step would be.
+        if (widget.onboarding) ...[
+          const SizedBox(height: 10),
+          SizedBox(
+            height: sizes.button,
+            child: FilledButton(
+              key: const Key('proNotNow'),
+              onPressed: () => Navigator.maybePop(context),
+              style: FilledButton.styleFrom(
+                backgroundColor: colors.surfaceRaised,
+                foregroundColor: colors.text,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+              child: Text(
+                l.notNow,
+                style: TextStyle(
+                  fontSize: sizes.buttonText,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ),
+        ],
         if (_note case final note?) ...[
           const SizedBox(height: 8),
           Text(
