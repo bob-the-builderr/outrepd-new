@@ -8,6 +8,9 @@
 /// is worse than none, and anything a lifter waits for mid-set is a bug.
 library;
 
+import 'dart:io';
+
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -233,6 +236,14 @@ class SlideRoute<T> extends PageRouteBuilder<T> {
 /// for it: the content is there at once, which is what that setting is for.
 bool reduceMotion(BuildContext context) =>
     MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+
+/// Whether something may move for ever — a light crossing a card, a ring
+/// round a button. Not when the phone asks for less motion, and not under
+/// `flutter test`, where a loop that never ends keeps pumpAndSettle waiting
+/// for it.
+bool loopsAllowed(BuildContext context) =>
+    !reduceMotion(context) &&
+    (kIsWeb || !Platform.environment.containsKey('FLUTTER_TEST'));
 
 /// The delay for the [index]th row of a list rising in: one after another,
 /// quickly, and no later than the ninth — a long list should not make

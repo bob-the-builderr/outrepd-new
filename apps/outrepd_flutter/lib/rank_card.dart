@@ -7,9 +7,12 @@
 /// hard to read: the rating is one number now, so it is drawn as one.
 library;
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import 'l10n/app_localizations.dart';
+import 'motion.dart';
 import 'ranking.dart';
 import 'theme.dart';
 import 'tier_badge.dart';
@@ -45,26 +48,12 @@ class RankCard extends StatelessWidget {
     final to = from + kRatingPerDivision;
     final fill = top ? 1.0 : (lp / kRatingPerDivision).clamp(0.0, 1.0);
 
-    final card = Container(
-      key: const Key('rankCard'),
+    final card = _Lit(
+      accent: accent,
+      light: metal.light,
+      dark: dark,
+      child: Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(10, 12, 16, 11),
-      decoration: BoxDecoration(
-        gradient: RadialGradient(
-          center: AlignmentDirectional.topStart,
-          radius: 1.6,
-          colors: [
-            accent.withValues(alpha: dark ? 0.34 : 0.22),
-            accent.withValues(alpha: dark ? 0.13 : 0.08),
-            context.colors.surface,
-          ],
-          stops: const [0, 0.38, 0.75],
-        ),
-        border: Border.all(color: accent, width: 1.5),
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: [
-          BoxShadow(color: accent.withValues(alpha: 0.18), blurRadius: 22),
-        ],
-      ),
       child: Row(
         children: [
           TierBadge(tierIndex: tierIdx, size: 74),
@@ -199,6 +188,7 @@ class RankCard extends StatelessWidget {
           ),
         ],
       ),
+      ),
     );
 
     if (onTap == null) return card;
@@ -209,6 +199,110 @@ class RankCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(18),
         child: card,
       ),
+    );
+  }
+}
+
+/// The card's metal, lit: the tier's colour washed in from one side, and —
+/// where the phone allows motion — that light travelling across the whole
+/// card and round again, a brighter sheen crossing it, and the glow round it
+/// breathing (the user, 2026-11-03: the glow on the left stood still). Still,
+/// it is the card as it was, lit from the top corner.
+class _Lit extends StatefulWidget {
+  const _Lit({
+    required this.accent,
+    required this.light,
+    required this.dark,
+    required this.child,
+  });
+
+  final Color accent;
+  final Color light;
+  final bool dark;
+  final Widget child;
+
+  @override
+  State<_Lit> createState() => _LitState();
+}
+
+class _LitState extends State<_Lit> with SingleTickerProviderStateMixin {
+  late final _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 4200),
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (loopsAllowed(context)) {
+      if (!_controller.isAnimating) _controller.repeat();
+    } else {
+      _controller.stop();
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final accent = widget.accent;
+    final dark = widget.dark;
+    final surface = context.colors.surface;
+    return AnimatedBuilder(
+      animation: _controller,
+      child: widget.child,
+      builder: (context, child) {
+        final moving = _controller.isAnimating;
+        final t = moving ? _controller.value : 0.0;
+        // The wash runs from the start edge to the far one and back, so it
+        // never jumps.
+        final along = moving ? (1 - math.cos(t * 2 * math.pi)) / 2 : 0.0;
+        final breath = moving ? (1 - math.cos(t * 4 * math.pi)) / 2 : 0.0;
+        // The sheen crosses in the first half of the cycle, then rests.
+        final sheen = (t / 0.5).clamp(0.0, 1.0);
+        return Container(
+          key: const Key('rankCard'),
+          decoration: BoxDecoration(
+            gradient: RadialGradient(
+              center: AlignmentDirectional(-1 + 2 * along, -1 + along),
+              radius: 1.6,
+              colors: [
+                accent.withValues(alpha: dark ? 0.34 : 0.22),
+                accent.withValues(alpha: dark ? 0.13 : 0.08),
+                surface,
+              ],
+              stops: const [0, 0.38, 0.75],
+            ),
+            border: Border.all(color: accent, width: 1.5),
+            borderRadius: BorderRadius.circular(18),
+            boxShadow: [
+              BoxShadow(
+                color: accent.withValues(alpha: 0.18 + 0.16 * breath),
+                blurRadius: 22 + 14 * breath,
+              ),
+            ],
+          ),
+          foregroundDecoration: moving && t < 0.5
+              ? BoxDecoration(
+                  borderRadius: BorderRadius.circular(18),
+                  gradient: LinearGradient(
+                    begin: Alignment(-3 + 4 * sheen, -0.4),
+                    end: Alignment(-1 + 4 * sheen, 0.4),
+                    colors: [
+                      widget.light.withValues(alpha: 0),
+                      widget.light.withValues(alpha: dark ? 0.16 : 0.22),
+                      widget.light.withValues(alpha: 0),
+                    ],
+                  ),
+                )
+              : null,
+          child: child,
+        );
+      },
     );
   }
 }
