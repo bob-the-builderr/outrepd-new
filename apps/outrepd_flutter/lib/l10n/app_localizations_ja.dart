@@ -2947,7 +2947,7 @@ class LJa extends L {
   String get obClimbTitle => 'Masterを目指そう。';
 
   @override
-  String get obClimbBody => '勝ってランクを上げよう。7つのティアに、それぞれ5段階。';
+  String get obClimbBody => '7つのティア、それぞれ5段階。勝って上がり、負けると1つ下がることも。ただし1,000ポイントを下回ることはありません。';
 
   @override
   String get obGoldLine => '金のライン';

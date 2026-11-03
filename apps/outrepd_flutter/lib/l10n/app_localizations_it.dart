@@ -2987,7 +2987,7 @@ class LIt extends L {
   String get obClimbTitle => 'Sali fino a Master.';
 
   @override
-  String get obClimbBody => 'Vinci per salire la scala: sette gradi, cinque livelli ciascuno.';
+  String get obClimbBody => 'Sette gradi, cinque livelli ciascuno. Vinci per salire; una sconfitta può farti scendere di grado, mai sotto 1.000 punti.';
 
   @override
   String get obGoldLine => 'linea dorata';

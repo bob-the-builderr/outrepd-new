@@ -2980,7 +2980,7 @@ class LEn extends L {
   String get obClimbTitle => 'Climb to Master.';
 
   @override
-  String get obClimbBody => 'Win to move up the ladder: seven tiers, five steps each.';
+  String get obClimbBody => 'Seven tiers, five divisions each. Win to climb; a loss can drop you a tier, never below 1,000 rating.';
 
   @override
   String get obGoldLine => 'gold line';

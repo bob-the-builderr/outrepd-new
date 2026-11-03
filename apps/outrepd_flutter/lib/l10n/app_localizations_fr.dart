@@ -2988,7 +2988,7 @@ class LFr extends L {
   String get obClimbTitle => 'Grimpe jusqu’à Master.';
 
   @override
-  String get obClimbBody => 'Gagne pour monter l’échelle : sept rangs de cinq paliers chacun.';
+  String get obClimbBody => 'Sept rangs de cinq paliers chacun. Gagne pour monter ; une défaite peut te faire redescendre d’un rang, jamais sous 1 000 points.';
 
   @override
   String get obGoldLine => 'ligne dorée';

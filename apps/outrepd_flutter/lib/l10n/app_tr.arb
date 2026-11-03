@@ -896,7 +896,7 @@
   "obRepsUp": "Üst çizginin üstüne geri çık",
   "obRepsBoth": "İkisi de, eller yerdeyken. Yarım tekrar sayılmaz — ne senin telefonunda ne de rakibininkinde.",
   "obClimbTitle": "Master’a tırman.",
-  "obClimbBody": "Kazandıkça merdivende yüksel: yedi kademe, her birinde beş basamak.",
+  "obClimbBody": "Yedi kademe, her birinde beş basamak. Kazanarak yüksel; mağlubiyet bir kademe düşürebilir, ama 1.000 puanın altına inmez.",
   "obGoldLine": "altın çizgi",
   "obCalibrationRule": "{gold}nin altına in, üstteki çizginin üstüne çık",
   "proThanks": "Reklamlar kapandı. Pro’ya geçtiğin için teşekkürler.",

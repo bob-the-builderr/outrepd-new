@@ -896,7 +896,7 @@
   "obRepsUp": "Vuelve a subir más allá de la línea de arriba",
   "obRepsBoth": "Las dos cosas, con las manos en el suelo. Media repetición no cuenta, ni en tu teléfono ni en el suyo.",
   "obClimbTitle": "Sube hasta Master.",
-  "obClimbBody": "Gana para subir en la escalera: siete rangos de cinco escalones cada uno.",
+  "obClimbBody": "Siete rangos de cinco escalones cada uno. Gana para subir; una derrota puede bajarte de rango, pero nunca por debajo de 1.000 puntos.",
   "obGoldLine": "línea dorada",
   "obCalibrationRule": "Baja más allá de la {gold} y vuelve a subir más allá de la de arriba",
   "proThanks": "Anuncios desactivados. Gracias por hacerte Pro.",

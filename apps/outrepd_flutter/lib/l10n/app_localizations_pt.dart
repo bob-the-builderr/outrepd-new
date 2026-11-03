@@ -2984,7 +2984,7 @@ class LPt extends L {
   String get obClimbTitle => 'Suba até Master.';
 
   @override
-  String get obClimbBody => 'Vença para subir na escada: sete níveis, cinco degraus cada.';
+  String get obClimbBody => 'Sete níveis, cinco degraus cada. Vença para subir; uma derrota pode fazer você cair de nível, nunca abaixo de 1.000 pontos.';
 
   @override
   String get obGoldLine => 'linha dourada';

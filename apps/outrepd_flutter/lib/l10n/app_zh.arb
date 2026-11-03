@@ -896,7 +896,7 @@
   "obRepsUp": "再起到上线以上",
   "obRepsBoth": "两步都要双手撑地。只做一半不算——你的手机和对手的手机都一样。",
   "obClimbTitle": "一路冲到 Master。",
-  "obClimbBody": "赢下比赛往上爬：七个段位，每个五级。",
+  "obClimbBody": "七个段位，每个五级。赢了往上，输了可能掉一个段位，但不会低于 1000 分。",
   "obGoldLine": "金线",
   "obCalibrationRule": "下到{gold}以下，再起到上线以上",
   "proThanks": "广告已关闭。感谢升级 Pro。",

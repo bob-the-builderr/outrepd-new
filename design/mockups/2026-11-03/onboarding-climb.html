@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onboarding climb card, direction B</title>
+<style>
+  :root { color-scheme: dark; }
+  html, body { margin: 0; background: #0c0b0a; font-family: "Inter", "Roboto", system-ui, sans-serif; }
+  .row { display: flex; gap: 28px; padding: 24px; align-items: flex-start; }
+  .lab { color: #9b9489; font: 600 13px/1.3 system-ui; margin-bottom: 10px; }
+  .now img { width: 412px; height: 915px; display: block; border-radius: 22px; }
+  .phone { width: 412px; height: 915px; background: #121110; border-radius: 22px; overflow: hidden; position: relative; color: #f4ede4; }
+  .top { display: flex; align-items: center; gap: 14px; padding: 36px 24px 0; }
+  .back { font-size: 22px; color: #f4ede4; width: 22px; }
+  .bars { display: flex; gap: 6px; flex: 1; }
+  .bars i { flex: 1; height: 4px; border-radius: 2px; background: #2b2825; }
+  .bars i.on { background: #e8dcc8; }
+  h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.2px; margin: 34px 24px 0; }
+  .sub { margin: 10px 24px 0; font-size: 16px; line-height: 1.45; color: #a9a196; }
+  .card { background: #1a1918; border-radius: 16px; margin: 20px 24px 0; padding: 18px 18px; }
+  .card h2 { margin: 0 0 6px; font-size: 14px; font-weight: 600; color: #9b9489; letter-spacing: .2px; }
+  .tiers { display: flex; justify-content: space-between; margin-top: 14px; }
+  .t { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 10.5px; color: #8e867b; }
+  .t b { width: 26px; height: 26px; border-radius: 50%; background: #262421; display: block; }
+  .t.top b { background: #e8dcc8; }
+  .rule { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0; border-top: 1px solid #262421; font-size: 15px; }
+  .rule:first-of-type { border-top: 0; }
+  .rule .n { font-weight: 700; }
+  .rule .win { color: #cfe6b5; }
+  .rule .lose { color: #e8846b; }
+  .foot { position: absolute; left: 24px; right: 24px; bottom: 34px; }
+  .btn { background: #e8dcc8; color: #121110; text-align: center; border-radius: 16px; padding: 17px 0; font-size: 17px; font-weight: 600; }
+  .hint { text-align: center; color: #8e867b; font-size: 13px; margin-top: 12px; }
+</style></head>
+<body>
+<div class="row">
+  <div class="now">
+    <div class="lab">Now (CI, build 278)</div>
+    <img src="onboarding-now.png" alt="">
+  </div>
+  <div>
+    <div class="lab">Mockup B: climb card, corrected copy</div>
+    <div class="phone">
+      <div class="top"><span class="back">←</span>
+        <div class="bars"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <h1>Climb to Master.</h1>
+      <p class="sub">Seven tiers, five divisions each. A win moves you up, and a loss can drop you a tier.</p>
+      <div class="card">
+        <h2>THE SEVEN TIERS</h2>
+        <div class="tiers">
+          <div class="t"><b></b>Iron</div>
+          <div class="t"><b></b>Bronze</div>
+          <div class="t"><b></b>Silver</div>
+          <div class="t"><b></b>Gold</div>
+          <div class="t"><b></b>Platinum</div>
+          <div class="t"><b></b>Diamond</div>
+          <div class="t top"><b></b>Master</div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>RATING PER MATCH</h2>
+        <div class="rule"><span>Win</span><span class="n win">+25 + rep gap</span></div>
+        <div class="rule"><span>Loss</span><span class="n lose">−20 − rep gap</span></div>
+        <div class="rule"><span>Floor</span><span class="n">never below 1,000</span></div>
+      </div>
+      <div class="foot">
+        <div class="btn">Continue</div>
+        <div class="hint">Every 100 rating is a division, 500 a tier.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>

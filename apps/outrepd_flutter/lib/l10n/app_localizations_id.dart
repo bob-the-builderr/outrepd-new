@@ -2981,7 +2981,7 @@ class LId extends L {
   String get obClimbTitle => 'Naik sampai Master.';
 
   @override
-  String get obClimbBody => 'Menang untuk naik tangga: tujuh tingkat, masing-masing lima anak tangga.';
+  String get obClimbBody => 'Tujuh tingkat, masing-masing lima anak tangga. Menang untuk naik; kalah bisa turun satu tingkat, tapi tidak pernah di bawah 1.000 poin.';
 
   @override
   String get obGoldLine => 'garis emas';

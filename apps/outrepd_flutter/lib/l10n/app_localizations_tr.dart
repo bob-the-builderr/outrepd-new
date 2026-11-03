@@ -2977,7 +2977,7 @@ class LTr extends L {
   String get obClimbTitle => 'Master’a tırman.';
 
   @override
-  String get obClimbBody => 'Kazandıkça merdivende yüksel: yedi kademe, her birinde beş basamak.';
+  String get obClimbBody => 'Yedi kademe, her birinde beş basamak. Kazanarak yüksel; mağlubiyet bir kademe düşürebilir, ama 1.000 puanın altına inmez.';
 
   @override
   String get obGoldLine => 'altın çizgi';

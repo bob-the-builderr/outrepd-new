@@ -896,7 +896,7 @@
   "obRepsUp": "Naik lagi melewati garis atas",
   "obRepsBoth": "Keduanya, dengan tangan di lantai. Setengah repetisi tidak dihitung — di ponselmu maupun ponsel lawan.",
   "obClimbTitle": "Naik sampai Master.",
-  "obClimbBody": "Menang untuk naik tangga: tujuh tingkat, masing-masing lima anak tangga.",
+  "obClimbBody": "Tujuh tingkat, masing-masing lima anak tangga. Menang untuk naik; kalah bisa turun satu tingkat, tapi tidak pernah di bawah 1.000 poin.",
   "obGoldLine": "garis emas",
   "obCalibrationRule": "Turun melewati {gold}, lalu naik lagi melewati garis atas",
   "proThanks": "Iklan mati. Terima kasih sudah pakai Pro.",

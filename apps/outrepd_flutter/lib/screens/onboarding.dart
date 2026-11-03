@@ -37,7 +37,6 @@ import '../reps/pushup_counter.dart';
 import '../reps/skeleton.dart';
 import '../sounds.dart';
 import '../theme.dart';
-import '../tier_badge.dart';
 import '../widgets.dart';
 import 'auth_entry.dart';
 import 'legal_line.dart';
@@ -626,45 +625,68 @@ class _Idea extends StatelessWidget {
               2 => _IdeaPage(
                 title: l.obClimbTitle,
                 body: l.obClimbBody,
-                picture: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      maxWidth: 240,
-                      maxHeight: 240,
-                    ),
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: TierBadge(tierIndex: kTiers.length - 1, size: 240),
+                // The rating rule, as the match screen words it, in a card.
+                picture: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 22,
+                  ),
+                  decoration: BoxDecoration(
+                    color: context.colors.surface,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    l.lpMovesWithGap,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: context.colors.text,
+                      fontSize: 19,
+                      fontWeight: FontWeight.w800,
+                      height: 1.35,
                     ),
                   ),
                 ),
-                footer: Column(
+                // All seven tiers, each in its own colour, Iron to Master.
+                footer: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    // The tiers under the top one, Iron up to Diamond.
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        for (var tier = 0; tier < kTiers.length - 1; tier++)
-                          Expanded(
-                            child: Column(
-                              children: [
-                                TierBadge(tierIndex: tier, size: 50),
-                                const SizedBox(height: 4),
-                                FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  child: Text(
-                                    tierName(l, tier),
-                                    style: TextStyle(
-                                      color: context.colors.muted,
-                                      fontSize: 11.5,
+                    for (var tier = 0; tier < kTiers.length; tier++)
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: kTiers[tier].color,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: kTiers[tier].color.withValues(
+                                      alpha: 0.5,
                                     ),
+                                    blurRadius: 14,
+                                    spreadRadius: -2,
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                      ],
-                    ),
+                            const SizedBox(height: 6),
+                            FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                tierName(l, tier),
+                                style: TextStyle(
+                                  color: context.colors.muted,
+                                  fontSize: 11.5,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                   ],
                 ),
               ),

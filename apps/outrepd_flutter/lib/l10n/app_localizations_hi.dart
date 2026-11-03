@@ -2982,7 +2982,7 @@ class LHi extends L {
   String get obClimbTitle => 'Master तक पहुँचें।';
 
   @override
-  String get obClimbBody => 'जीतकर सीढ़ी पर ऊपर बढ़ें: सात टियर, हर एक में पाँच स्टेप।';
+  String get obClimbBody => 'सात टियर, हर एक में पाँच स्टेप। जीतकर ऊपर चढ़ें; हार पर एक टियर नीचे जा सकते हैं, पर 1,000 से नीचे नहीं।';
 
   @override
   String get obGoldLine => 'सुनहरी लाइन';

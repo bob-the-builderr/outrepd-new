@@ -2987,7 +2987,7 @@ class LEs extends L {
   String get obClimbTitle => 'Sube hasta Master.';
 
   @override
-  String get obClimbBody => 'Gana para subir en la escalera: siete rangos de cinco escalones cada uno.';
+  String get obClimbBody => 'Siete rangos de cinco escalones cada uno. Gana para subir; una derrota puede bajarte de rango, pero nunca por debajo de 1.000 puntos.';
 
   @override
   String get obGoldLine => 'línea dorada';

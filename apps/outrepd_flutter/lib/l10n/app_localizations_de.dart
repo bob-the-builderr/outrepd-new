@@ -2989,7 +2989,7 @@ class LDe extends L {
   String get obClimbTitle => 'Steig auf bis Master.';
 
   @override
-  String get obClimbBody => 'Gewinne, um aufzusteigen: sieben Ränge mit je fünf Stufen.';
+  String get obClimbBody => 'Sieben Ränge, je fünf Stufen. Gewinnen bringt dich hoch; eine Niederlage kann dich einen Rang runterbringen, nie unter 1.000 Punkte.';
 
   @override
   String get obGoldLine => 'goldene Linie';

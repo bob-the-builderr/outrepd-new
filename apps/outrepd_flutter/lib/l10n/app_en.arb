@@ -2025,7 +2025,7 @@
   "obRepsUp": "Back up past the top line",
   "obRepsBoth": "Both, with your hands on the floor. A half rep is not a rep — on your phone or theirs.",
   "obClimbTitle": "Climb to Master.",
-  "obClimbBody": "Win to move up the ladder: seven tiers, five steps each.",
+  "obClimbBody": "Seven tiers, five divisions each. Win to climb; a loss can drop you a tier, never below 1,000 rating.",
   "obGoldLine": "gold line",
   "obCalibrationRule": "Down past the {gold}, back up past the top one",
   "@obCalibrationRule": {

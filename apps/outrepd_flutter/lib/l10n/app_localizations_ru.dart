@@ -2982,7 +2982,7 @@ class LRu extends L {
   String get obClimbTitle => 'Поднимись до Master.';
 
   @override
-  String get obClimbBody => 'Побеждай, чтобы подниматься: семь рангов, в каждом пять ступеней.';
+  String get obClimbBody => 'Семь рангов, в каждом пять ступеней. Побеждай, чтобы подниматься; поражение может опустить на ранг, но не ниже 1 000 очков.';
 
   @override
   String get obGoldLine => 'золотой линии';

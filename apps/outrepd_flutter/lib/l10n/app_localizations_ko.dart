@@ -2951,7 +2951,7 @@ class LKo extends L {
   String get obClimbTitle => 'Master까지 올라가세요.';
 
   @override
-  String get obClimbBody => '이겨서 사다리를 올라가세요. 7개 티어, 티어마다 5단계예요.';
+  String get obClimbBody => '7개 티어, 티어마다 5단계예요. 이기면 올라가고, 지면 한 티어 내려갈 수 있지만 1,000점 아래로는 떨어지지 않아요.';
 
   @override
   String get obGoldLine => '금색 선';

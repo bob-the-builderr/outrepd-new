@@ -2938,7 +2938,7 @@ class LZh extends L {
   String get obClimbTitle => '一路冲到 Master。';
 
   @override
-  String get obClimbBody => '赢下比赛往上爬：七个段位，每个五级。';
+  String get obClimbBody => '七个段位，每个五级。赢了往上，输了可能掉一个段位，但不会低于 1000 分。';
 
   @override
   String get obGoldLine => '金线';
