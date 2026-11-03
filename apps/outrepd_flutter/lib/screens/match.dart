@@ -57,6 +57,47 @@ class MatchScreen extends StatelessWidget {
           builder: (context, _) {
             final offline = !Connection.instance.online;
 
+            // Ranked and online (the user's pick, 2026-11-03): the rank as
+            // one lit card, the match under it, and Adventure on the first
+            // screen rather than below the fold, each rising in. Read from
+            // the top and simply scrolled: its cards measure their own text,
+            // which an IntrinsicHeight round them cannot ask about.
+            if (p.isRanked && !offline) {
+              // Every card built at once, not as it scrolls in, so what is
+              // under the fold on a short phone is still there to find.
+              return SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _TopRow(profile: p),
+                    _StreakLine(profile: p),
+                    const SizedBox(height: 12),
+                    RiseIn(
+                      child: RankCard(
+                        tierIdx: p.tierIdx,
+                        divIdx: p.divIdx,
+                        lp: p.lp,
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => RankScreen(profile: p),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                    RiseIn(delay: staggered(1), child: const _MatchHero()),
+                    const SizedBox(height: 14),
+                    RiseIn(delay: staggered(2), child: const AdventureCard()),
+                    const SizedBox(height: 14),
+                    RiseIn(delay: staggered(3), child: const DailyGoalCard()),
+                    const SizedBox(height: 14),
+                    RiseIn(delay: staggered(4), child: const _WeekRaceCard()),
+                ],
+                ),
+              );
+            }
+
             // The rank and the buttons sit in the middle of the space under
             // the top row, rather than at the top of it with the bottom
             // third of a tall phone empty. A short phone scrolls instead.
@@ -73,33 +114,6 @@ class MatchScreen extends StatelessWidget {
                       children: [
                 _TopRow(profile: p),
                 _StreakLine(profile: p),
-                // Ranked and online (the user's pick, 2026-11-03): the rank
-                // as one lit card, the match under it, and Adventure on the
-                // first screen rather than below the fold. Each rises in.
-                if (p.isRanked && !offline) ...[
-                  const SizedBox(height: 12),
-                  RiseIn(
-                    child: RankCard(
-                      tierIdx: p.tierIdx,
-                      divIdx: p.divIdx,
-                      lp: p.lp,
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => RankScreen(profile: p),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-                  RiseIn(delay: staggered(1), child: const _MatchHero()),
-                  const SizedBox(height: 14),
-                  RiseIn(delay: staggered(2), child: const AdventureCard()),
-                  const SizedBox(height: 14),
-                  RiseIn(delay: staggered(3), child: const DailyGoalCard()),
-                  const SizedBox(height: 14),
-                  RiseIn(delay: staggered(4), child: const _WeekRaceCard()),
-                  const Spacer(),
-                ] else ...[
                 const Spacer(),
                 const SizedBox(height: 18),
                 if (!p.isRanked)
@@ -121,27 +135,9 @@ class MatchScreen extends StatelessWidget {
                 ],
                 if (offline)
                   const _OfflineActions()
-                else if (!p.isRanked)
-                  const _PlacementActions()
-                else ...[
-                  const _Actions(),
-                  const SizedBox(height: 18),
-                  // Two tiles side by side (direction B, 2026-11-02): one
-                  // glance takes in both, and the home no longer scrolls.
-                  // As tall as the taller tile, so large text grows both.
-                  const IntrinsicHeight(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Expanded(child: AdventureCard(compact: true)),
-                        SizedBox(width: 12),
-                        Expanded(child: _WeekRaceCard()),
-                      ],
-                    ),
-                  ),
-                ],
+                else
+                  const _PlacementActions(),
                 const Spacer(flex: 2),
-                ],
                       ],
                     ),
                   ),
@@ -645,37 +641,6 @@ class _PulseState extends State<_Pulse> with SingleTickerProviderStateMixin {
 }
 
 // ──────────────────────────────── actions ────────────────────────────────────
-
-/// Two ways in, weighted. One filled button for the thing most people came to
-/// do, and the adventure under it as a card — the monster says what it is
-/// without competing with the match. Friends are challenged from their own
-/// tab, where they are listed.
-class _Actions extends StatelessWidget {
-  const _Actions();
-
-  @override
-  Widget build(BuildContext context) {
-    final l = L.of(context);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _FilledAction(
-          label: l.findMatch,
-          onTap: () => startMatch(context, mode: MatchMode.ranked),
-        ),
-        const SizedBox(height: 10),
-        // The terms of the thing you just agreed to, under the button rather
-        // than inside it.
-        Text(
-          l.rankedTerms(localNumber(context, kDuelLength.inSeconds)),
-          textAlign: TextAlign.center,
-          style: TextStyle(color: context.colors.muted, fontSize: 14),
-        ),
-      ],
-    );
-  }
-}
 
 class _FilledAction extends StatelessWidget {
   const _FilledAction({required this.label, required this.onTap});
