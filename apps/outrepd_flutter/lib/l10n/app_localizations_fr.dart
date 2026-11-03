@@ -1488,6 +1488,14 @@ class LFr extends L {
   String get yourClimb => 'Ton ascension';
 
   @override
+  String get yourRank => 'Ton rang';
+
+  @override
+  String ratingFloor(String n) {
+    return 'Ta cote ne descend jamais sous ${n}.';
+  }
+
+  @override
   String floorKept(String tier, String rank) {
     return '$tier est à toi. Tu ne descendras plus sous $rank.';
   }

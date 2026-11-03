@@ -1457,6 +1457,14 @@ class LZh extends L {
   String get yourClimb => '你的攀登';
 
   @override
+  String get yourRank => '我的段位';
+
+  @override
+  String ratingFloor(String n) {
+    return '积分永远不会低于 ${n}。';
+  }
+
+  @override
   String floorKept(String tier, String rank) {
     return '$tier 已经是你的了，不会再掉到 $rank 以下。';
   }

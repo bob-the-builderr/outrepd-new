@@ -472,6 +472,8 @@
   "couldNotLoadProfile": "Não foi possível carregar este perfil",
   "noFriendsMatch": "Ninguém com esse nome",
   "yourClimb": "Sua escalada",
+  "yourRank": "Seu ranque",
+  "ratingFloor": "Seu rating nunca cai abaixo de {n}.",
   "floorKept": "{tier} é seu. Você não cai abaixo de {rank}.",
   "dayStreakCount": "{count} dias seguidos",
   "findMatch": "Procurar partida",

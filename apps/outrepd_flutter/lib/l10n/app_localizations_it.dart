@@ -1487,6 +1487,14 @@ class LIt extends L {
   String get yourClimb => 'La tua scalata';
 
   @override
+  String get yourRank => 'Il tuo rango';
+
+  @override
+  String ratingFloor(String n) {
+    return 'Il tuo punteggio non scende mai sotto ${n}.';
+  }
+
+  @override
   String floorKept(String tier, String rank) {
     return '$tier è tuo. Non scenderai sotto $rank.';
   }

@@ -1486,6 +1486,14 @@ class LPt extends L {
   String get yourClimb => 'Sua escalada';
 
   @override
+  String get yourRank => 'Seu ranque';
+
+  @override
+  String ratingFloor(String n) {
+    return 'Seu rating nunca cai abaixo de ${n}.';
+  }
+
+  @override
   String floorKept(String tier, String rank) {
     return '$tier é seu. Você não cai abaixo de $rank.';
   }

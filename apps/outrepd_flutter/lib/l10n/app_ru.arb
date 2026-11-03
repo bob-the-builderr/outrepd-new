@@ -472,6 +472,8 @@
   "couldNotLoadProfile": "Не удалось загрузить этот профиль",
   "noFriendsMatch": "Никого с таким именем",
   "yourClimb": "Ваш подъём",
+  "yourRank": "Твой ранг",
+  "ratingFloor": "Твой рейтинг никогда не опускается ниже {n}.",
   "floorKept": "{tier} теперь ваш. Ниже {rank} вы не опуститесь.",
   "dayStreakCount": "{count} дней подряд",
   "findMatch": "Найти матч",

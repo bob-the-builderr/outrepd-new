@@ -1489,6 +1489,14 @@ class LDe extends L {
   String get yourClimb => 'Dein Aufstieg';
 
   @override
+  String get yourRank => 'Dein Rang';
+
+  @override
+  String ratingFloor(String n) {
+    return 'Deine Wertung fällt nie unter ${n}.';
+  }
+
+  @override
   String floorKept(String tier, String rank) {
     return '$tier gehört dir. Unter $rank fällst du nicht mehr.';
   }

@@ -472,6 +472,8 @@
   "couldNotLoadProfile": "यह प्रोफ़ाइल लोड नहीं हो सकी",
   "noFriendsMatch": "इस नाम का कोई नहीं",
   "yourClimb": "आपकी चढ़ाई",
+  "yourRank": "आपकी रैंक",
+  "ratingFloor": "आपकी रेटिंग कभी {n} से नीचे नहीं जाती।",
   "floorKept": "{tier} अब आपका है। आप {rank} से नीचे नहीं जाएँगे।",
   "dayStreakCount": "{count} दिन लगातार",
   "findMatch": "मुक़ाबला ढूँढें",

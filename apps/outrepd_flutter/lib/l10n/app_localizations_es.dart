@@ -1487,6 +1487,14 @@ class LEs extends L {
   String get yourClimb => 'Tu ascenso';
 
   @override
+  String get yourRank => 'Tu rango';
+
+  @override
+  String ratingFloor(String n) {
+    return 'Tu rating nunca baja de ${n}.';
+  }
+
+  @override
   String floorKept(String tier, String rank) {
     return '$tier es tuyo. Ya no bajas de $rank.';
   }

@@ -2825,6 +2825,18 @@ abstract class L {
   /// **'Your climb'**
   String get yourClimb;
 
+  /// No description provided for @yourRank.
+  ///
+  /// In en, this message translates to:
+  /// **'Your rank'**
+  String get yourRank;
+
+  /// No description provided for @ratingFloor.
+  ///
+  /// In en, this message translates to:
+  /// **'Your rating never drops below {n}.'**
+  String ratingFloor(String n);
+
   /// No description provided for @floorKept.
   ///
   /// In en, this message translates to:

@@ -472,6 +472,8 @@
   "couldNotLoadProfile": "Profil konnte nicht geladen werden",
   "noFriendsMatch": "Niemand mit diesem Namen",
   "yourClimb": "Dein Aufstieg",
+  "yourRank": "Dein Rang",
+  "ratingFloor": "Deine Wertung fällt nie unter {n}.",
   "floorKept": "{tier} gehört dir. Unter {rank} fällst du nicht mehr.",
   "dayStreakCount": "{count} Tage in Folge",
   "findMatch": "Match finden",

@@ -1460,6 +1460,14 @@ class LKo extends L {
   String get yourClimb => '당신의 등반';
 
   @override
+  String get yourRank => '내 랭크';
+
+  @override
+  String ratingFloor(String n) {
+    return '레이팅은 ${n} 아래로 내려가지 않아요.';
+  }
+
+  @override
   String floorKept(String tier, String rank) {
     return '$tier은(는) 당신의 것입니다. $rank 아래로 떨어지지 않습니다.';
   }

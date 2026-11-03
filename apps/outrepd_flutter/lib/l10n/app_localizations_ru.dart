@@ -1483,6 +1483,14 @@ class LRu extends L {
   String get yourClimb => 'Ваш подъём';
 
   @override
+  String get yourRank => 'Твой ранг';
+
+  @override
+  String ratingFloor(String n) {
+    return 'Твой рейтинг никогда не опускается ниже ${n}.';
+  }
+
+  @override
   String floorKept(String tier, String rank) {
     return '$tier теперь ваш. Ниже $rank вы не опуститесь.';
   }

@@ -17,6 +17,7 @@ import 'package:outrepd/l10n/app_localizations.dart';
 import 'package:outrepd/screens/friends.dart';
 import 'package:outrepd/screens/match.dart';
 import 'package:outrepd/screens/profile.dart';
+import 'package:outrepd/screens/rank_screen.dart';
 import 'package:outrepd/screens/ranks.dart';
 import 'package:outrepd/screens/settings.dart';
 import 'package:outrepd/screens/shell.dart';
@@ -86,6 +87,10 @@ void main() {
   }
 
   testWidgets('match', (tester) => shoot(tester, const MatchScreen(), 'match'));
+  testWidgets(
+    'your rank',
+    (tester) => shoot(tester, RankScreen(profile: demoProfile), 'rank_screen'),
+  );
   testWidgets(
     'match with the bar',
     (tester) => shoot(tester, const AppShell(), 'shell_match'),

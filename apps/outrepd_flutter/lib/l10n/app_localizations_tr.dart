@@ -1480,6 +1480,14 @@ class LTr extends L {
   String get yourClimb => 'Tırmanışın';
 
   @override
+  String get yourRank => 'Rütben';
+
+  @override
+  String ratingFloor(String n) {
+    return 'Reytingin asla ${n} altına düşmez.';
+  }
+
+  @override
   String floorKept(String tier, String rank) {
     return '$tier artık senin. $rank altına düşmezsin.';
   }

@@ -472,6 +472,8 @@
   "couldNotLoadProfile": "Bu profil yüklenemedi",
   "noFriendsMatch": "Bu isimde kimse yok",
   "yourClimb": "Tırmanışın",
+  "yourRank": "Rütben",
+  "ratingFloor": "Reytingin asla {n} altına düşmez.",
   "floorKept": "{tier} artık senin. {rank} altına düşmezsin.",
   "dayStreakCount": "{count} gün üst üste",
   "findMatch": "Maç bul",

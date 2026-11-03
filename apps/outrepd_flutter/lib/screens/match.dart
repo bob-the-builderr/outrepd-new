@@ -34,7 +34,7 @@ import 'match_entry.dart';
 import 'match_flow.dart';
 import 'notifications.dart';
 import 'pro_parts.dart';
-import 'progression.dart';
+import 'rank_screen.dart';
 import 'shell.dart';
 
 class MatchScreen extends StatelessWidget {
@@ -85,7 +85,7 @@ class MatchScreen extends StatelessWidget {
                       lp: p.lp,
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => ProgressionScreen(profile: p),
+                          builder: (_) => RankScreen(profile: p),
                         ),
                       ),
                     ),
@@ -473,7 +473,7 @@ class _Rank extends StatelessWidget {
         GestureDetector(
           onTap: () => Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (_) => ProgressionScreen(profile: profile),
+              builder: (_) => RankScreen(profile: profile),
             ),
           ),
           child: PopIn(

@@ -819,6 +819,15 @@
   "couldNotLoadProfile": "Couldn't load this profile",
   "noFriendsMatch": "Nobody by that name",
   "yourClimb": "Your climb",
+  "yourRank": "Your rank",
+  "ratingFloor": "Your rating never drops below {n}.",
+  "@ratingFloor": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
   "floorKept": "{tier} is yours. You can't drop below {rank}.",
   "@floorKept": {
     "placeholders": {

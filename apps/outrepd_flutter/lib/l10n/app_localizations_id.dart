@@ -1482,6 +1482,14 @@ class LId extends L {
   String get yourClimb => 'Pendakianmu';
 
   @override
+  String get yourRank => 'Peringkatmu';
+
+  @override
+  String ratingFloor(String n) {
+    return 'Rating-mu tidak pernah turun di bawah ${n}.';
+  }
+
+  @override
   String floorKept(String tier, String rank) {
     return '$tier sudah jadi milikmu. Kamu tidak akan turun di bawah $rank.';
   }

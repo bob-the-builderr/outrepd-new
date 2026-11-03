@@ -1485,6 +1485,14 @@ class LHi extends L {
   String get yourClimb => 'आपकी चढ़ाई';
 
   @override
+  String get yourRank => 'आपकी रैंक';
+
+  @override
+  String ratingFloor(String n) {
+    return 'आपकी रेटिंग कभी ${n} से नीचे नहीं जाती।';
+  }
+
+  @override
   String floorKept(String tier, String rank) {
     return '$tier अब आपका है। आप $rank से नीचे नहीं जाएँगे।';
   }

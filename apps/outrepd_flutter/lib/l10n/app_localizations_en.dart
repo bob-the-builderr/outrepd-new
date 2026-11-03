@@ -1482,6 +1482,14 @@ class LEn extends L {
   String get yourClimb => 'Your climb';
 
   @override
+  String get yourRank => 'Your rank';
+
+  @override
+  String ratingFloor(String n) {
+    return 'Your rating never drops below ${n}.';
+  }
+
+  @override
   String floorKept(String tier, String rank) {
     return '$tier is yours. You can\'t drop below $rank.';
   }

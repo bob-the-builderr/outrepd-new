@@ -39,7 +39,7 @@ import 'awards.dart';
 import 'cover_parts.dart';
 import 'level.dart';
 import 'match_history.dart';
-import 'progression.dart';
+import 'rank_screen.dart';
 import 'ranks.dart' show kBoardFreshFor;
 import 'settings.dart';
 import 'shell.dart' show AppShell, shownTab;
@@ -195,7 +195,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             _Identity(
               profile: p,
-              onTapRank: () => _open(ProgressionScreen(profile: p)),
+              onTapRank: () => _open(RankScreen(profile: p)),
             ),
                   ],
                 ),

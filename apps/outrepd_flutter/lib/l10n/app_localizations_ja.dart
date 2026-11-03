@@ -1459,6 +1459,14 @@ class LJa extends L {
   String get yourClimb => 'あなたの登り';
 
   @override
+  String get yourRank => 'あなたのランク';
+
+  @override
+  String ratingFloor(String n) {
+    return 'レートが${n}を下回ることはありません。';
+  }
+
+  @override
   String floorKept(String tier, String rank) {
     return '$tier はあなたのものです。$rank より下には落ちません。';
   }
