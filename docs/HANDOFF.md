@@ -64,6 +64,26 @@ next upgrade.
 5. On a real phone: the photo crop screen (native, no CI screenshot can
    show it) and changing the username.
 
+## Ads setup on the dashboards (2026-11-03, in progress, the user's side)
+
+- LevelPlay: both apps there with the keys built into 1.1.6, "Live in
+  store", COPPA "Not directed"; the iOS interstitial ad unit
+  (s1m7x1s18dr5m929) is active with **one network, ironSource Ads**.
+- **Unity Ads was not set up.** LevelPlay's bidder auto-setup does not work
+  with the new Unity dashboard, so it is manual: on cloud.unity.com →
+  Monetization the user added both apps (child-directed: No) and is making
+  an **Interstitial, Bidding** placement for each. Then in LevelPlay →
+  Networks → Unity Ads: API key + Organization core ID (+ the service
+  account's Key ID/Secret, roles LevelPlay Automation + Ads Publisher
+  Automation), and per app the Game ID and Placement ID. Done when each
+  app's ad unit shows Networks: 2. No new build needed: the Unity Ads
+  adapter is already in 1.1.6.
+- **Rewarded ads: later** (the user, 2026-11-03). Pays the most and people
+  choose it; the reward must not touch ranked (ideas: continue a lost
+  Adventure level, double XP next match, skip the next forced ad). Mock
+  up first. Banner ads: advised against (little money, breaks the clean
+  look, would crowd the tab bar).
+
 ## Optional, only if the user asks (mock up first)
 
 The other screens are still in the old look: after-match, Adventure map,
