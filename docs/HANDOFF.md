@@ -76,7 +76,9 @@ next upgrade.
   Networks → Unity Ads: API key + Organization core ID (+ the service
   account's Key ID/Secret, roles LevelPlay Automation + Ads Publisher
   Automation), and per app the Game ID and Placement ID. Done when each
-  app's ad unit shows Networks: 2. No new build needed: the Unity Ads
+  app's ad unit shows Networks: 2. iOS on Unity: Game ID 800421449,
+  placement BP_Interstitial_iOS; Organization core ID 11270732318333 (the
+  Stats API key is the user's, kept out of the repo). No new build needed: the Unity Ads
   adapter is already in 1.1.6.
 - **Rewarded ads: later** (the user, 2026-11-03). Pays the most and people
   choose it; the reward must not touch ranked (ideas: continue a lost
