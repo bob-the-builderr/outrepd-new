@@ -51,8 +51,8 @@ next upgrade.
 
 ## Left before 1.1.6 is submitted
 
-1. LevelPlay's `app-ads.txt` lines on outrepd.com (from the LevelPlay
-   dashboard; site push needs the user's yes).
+1. ~~app-ads.txt~~ — done 2026-11-03: outrepd.com/app-ads.txt has AdMob,
+   Unity Ads and ironSource (see `docs/site-pending/README.md`).
 2. AdMob → Privacy & messaging → the GDPR message: add Unity and ironSource
    as ad partners (the user does it).
 3. Privacy page and the App Store / Play privacy forms: name Unity. The
