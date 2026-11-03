@@ -1,4 +1,4 @@
-# Where OUTREPD stands — 2026-11-03
+# Where OUTREPD stands — 2026-11-03 (end of day)
 
 Read with `CLAUDE.md` (how this machine works). Branch `camera-rep-counter`,
 everything pushed to `bob-the-builderr/outrepd-new`; the last CI run
@@ -54,7 +54,11 @@ next upgrade.
 1. ~~app-ads.txt~~ — done 2026-11-03: outrepd.com/app-ads.txt has AdMob,
    Unity Ads and ironSource (see `docs/site-pending/README.md`).
 2. ~~AdMob GDPR ad partners~~ — checked 2026-11-03: ironSource Mobile and
-   Unity Ads were already in the European regulations ad partners.
+   Unity Ads were already in the European regulations ad partners. Two
+   European regulations messages were published for the same two apps;
+   the user was told to switch off "Untitled European regulations message"
+   (25 Oct, English only) and keep "outrepd European regulations message"
+   (29 Oct, 7 languages) — check it is off.
 3. Privacy page and the App Store / Play privacy forms: name Unity. The
    unpublished site change in `docs/site-pending/` belongs with this.
 4. **Store description in 50 languages is wrong now** (`apps/outrepd_flutter/store/aso/en.js`,
@@ -74,11 +78,11 @@ BP_Interstitial_Android. Unity Game IDs: iOS 800421449, Android
 
 - LevelPlay: both apps there with the keys built into 1.1.6, "Live in
   store", COPPA "Not directed"; the iOS interstitial ad unit
-  (s1m7x1s18dr5m929) is active with **one network, ironSource Ads**.
-- **Unity Ads was not set up.** LevelPlay's bidder auto-setup does not work
-  with the new Unity dashboard, so it is manual: on cloud.unity.com →
-  Monetization the user added both apps (child-directed: No) and is making
-  an **Interstitial, Bidding** placement for each. Then in LevelPlay →
+  (s1m7x1s18dr5m929) was active with one network, ironSource Ads.
+- Unity Ads was set up by hand (LevelPlay's bidder auto-setup does not work
+  with the new Unity dashboard): on cloud.unity.com → Monetization the user
+  added both apps (child-directed: No) and an Interstitial, Bidding
+  placement for each. Then in LevelPlay →
   Networks → Unity Ads: API key + Organization core ID (+ the service
   account's Key ID/Secret, roles LevelPlay Automation + Ads Publisher
   Automation), and per app the Game ID and Placement ID. Done when each
