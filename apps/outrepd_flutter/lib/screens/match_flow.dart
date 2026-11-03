@@ -504,8 +504,10 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   /// that reaches it.
   void _goVersus({bool quick = false}) {
     // Found: the seat on the search screen slows and lands on them while
-    // the wait below runs.
-    if (mounted) setState(() => _matched = true);
+    // the wait below runs. Not when the round races this lifter's own best:
+    // nobody was found, and the seat keeps looking until the VS screen says
+    // whose best it is.
+    if (mounted && !_vsBest) setState(() => _matched = true);
     // How the other lifter looks, for the VS screen: asked now, drawn when
     // it arrives.
     if (_live case final live?) unawaited(Looks.instance.fetch([live.opponent.id]));

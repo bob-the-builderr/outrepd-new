@@ -43,7 +43,10 @@ void main() {
   /// the test stops on it whatever the wait turned out to be.
   Future<void> toVersus(WidgetTester tester, {String vs = 'VS'}) async {
     await tester.pump();
-    for (var i = 0; i < 60 && find.text(vs).evaluate().isEmpty; i++) {
+    // The search's face-off card says VS too; the versus screen is the one
+    // without it.
+    bool searching() => find.byKey(const Key('vsSearchCard')).evaluate().isNotEmpty;
+    for (var i = 0; i < 60 && (searching() || find.text(vs).evaluate().isEmpty); i++) {
       await tester.pump(const Duration(milliseconds: 100));
     }
     expect(find.text(vs), findsOneWidget);
