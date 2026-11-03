@@ -1,1 +1,1 @@
-Нове: Adventure — 140 боїв на віджиманнях у семи світах, з монстрами, що еволюціонують, і зброєю для кожного світу. Тепер у всі режими можна грати без підписки: після гри показується реклама, а OUTREPD Pro її прибирає.
+New: a rating for every ranked match. A win adds 25 plus the gap in reps; a loss takes away 20 plus that gap. Ranks now show one strip for week, month and overall, and a board among your friends. A cleaner look across the app, bigger numbers on the live match, last month's winners, and you can now remove or crop your profile photo.

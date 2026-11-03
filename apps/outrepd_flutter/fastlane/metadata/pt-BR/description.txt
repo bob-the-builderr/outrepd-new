@@ -9,7 +9,7 @@ DISPUTE COM PESSOAS REAIS, AO VIVO
 Uma partida ranqueada encontra alguém na câmera no mesmo momento que você. Vocês começam juntos e veem a contagem do outro subir. Se ninguém do seu nível estiver ao vivo em quinze segundos, você enfrenta a série gravada de uma pessoa real, no ritmo real dela. Sem bots, sem números inventados.
 
 SUBA NO RANKING
-Sua primeira partida coloca você no ranking, no Ferro V. Depois suba de Ferro para Bronze, Prata, Ouro, Platina e Diamante até Mestre. Vença um nível mais alto e ganhe mais LP. O nível que você alcança fica com você.
+Sua primeira partida coloca você no ranking, no Ferro V. Depois suba de Ferro para Bronze, Prata, Ouro, Platina e Diamante até Mestre. Uma vitória dá 25 pontos mais a diferença de repetições; uma derrota tira 20 mais essa diferença. Cada 100 pontos é uma divisão e cada 500 um nível. Você pode cair de nível, mas nunca abaixo de 1.000 pontos.
 
 AVENTURA
 140 lutas de flexões em sete mundos, do Ferro ao Mestre. Cada repetição acerta o monstro, e os monstros evoluem conforme você avança. Ganhe estrelas para desbloquear a arma que cada novo mundo exige. Nenhum ranking em jogo, e funciona offline.

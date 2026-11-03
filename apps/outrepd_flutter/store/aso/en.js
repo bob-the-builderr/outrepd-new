@@ -13,7 +13,7 @@ RACE REAL PEOPLE, LIVE
 A ranked match finds somebody on camera at the same moment as you. Start together and watch each other's count move as you lift. If nobody near your rank is live within fifteen seconds, you race a real person's recorded set, at the pace they actually did it. No bots, no made-up numbers.
 
 CLIMB THE RANKS
-Your first match puts you on the ladder at Iron V. Then climb from Iron through Bronze, Silver, Gold, Platinum and Diamond to Master. Beat a higher rank and you earn more LP. Once you reach a tier, you keep it.
+Your first match puts you on the ladder at Iron V. Then climb from Iron through Bronze, Silver, Gold, Platinum and Diamond to Master. A win adds 25 rating plus the gap in reps; a loss takes away 20 plus that gap. Every 100 rating is a division and every 500 a tier. You can drop a tier, but never below 1,000 rating.
 
 LEVEL UP WITH EVERY REP
 Every push-up earns XP, and every win 20 more; a lost match earns nothing. Your level shows beside your name everywhere, and it never goes down.

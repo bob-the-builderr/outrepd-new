@@ -18,7 +18,7 @@ LIVE GEGEN ECHTE MENSCHEN
 Ein Ranglistenmatch sucht jemanden, der im selben Moment vor der Kamera ist. Ihr startet zusammen und seht, wie der Zähler des anderen steigt. Ist in fünfzehn Sekunden niemand in deinem Rang live, trittst du gegen den aufgezeichneten Satz eines echten Menschen an, in seinem echten Tempo. Keine Bots, keine erfundenen Zahlen.
 
 STEIG IN DER RANGLISTE AUF
-Dein erstes Match bringt dich auf die Rangliste, bei Eisen V. Dann steigst du von Eisen über Bronze, Silber, Gold, Platin und Diamant bis Meister auf. Schlägst du einen höheren Rang, bekommst du mehr LP. Eine erreichte Stufe behältst du.
+Dein erstes Match bringt dich auf die Rangliste, bei Eisen V. Dann steigst du von Eisen über Bronze, Silber, Gold, Platin und Diamant bis Meister auf. Ein Sieg bringt 25 Punkte plus den Abstand in Wiederholungen, eine Niederlage kostet 20 plus diesen Abstand. Je 100 Punkte ist eine Division, je 500 eine Stufe. Eine Stufe kannst du wieder verlieren, aber nie unter 1.000 Punkte.
 
 LEVEL UP MIT JEDER WIEDERHOLUNG
 Jeder Liegestütz bringt XP und jeder Sieg 20 mehr; ein verlorenes Match bringt nichts. Dein Level steht überall neben deinem Namen und sinkt nie.
@@ -53,7 +53,7 @@ AFFRONTE DE VRAIES PERSONNES, EN DIRECT
 Un match classé trouve quelqu'un devant sa caméra au même moment que toi. Vous commencez ensemble et voyez le compteur de l'autre monter. Si personne de ton rang n'est en ligne en quinze secondes, tu affrontes la série enregistrée d'une vraie personne, à son vrai rythme. Pas de bots, pas de chiffres inventés.
 
 GRIMPE DANS LE CLASSEMENT
-Ton premier match te place au classement, en Fer V. Ensuite, monte de Fer à Bronze, Argent, Or, Platine et Diamant jusqu'à Maître. Bats un rang plus élevé et tu gagnes plus de LP. Un palier atteint reste acquis.
+Ton premier match te place au classement, en Fer V. Ensuite, monte de Fer à Bronze, Argent, Or, Platine et Diamant jusqu'à Maître. Une victoire rapporte 25 points plus l'écart de répétitions, une défaite en retire 20 plus cet écart. Chaque 100 points forment une division, chaque 500 un palier. Tu peux redescendre d'un palier, mais jamais sous 1 000 points.
 
 MONTE DE NIVEAU À CHAQUE RÉPÉTITION
 Chaque pompe rapporte de l'XP, et chaque victoire 20 de plus ; un match perdu ne rapporte rien. Ton niveau s'affiche partout à côté de ton nom et ne baisse jamais.
@@ -88,7 +88,7 @@ COMPITE CONTRA PERSONAS REALES, EN DIRECTO
 Una partida clasificatoria busca a alguien frente a la cámara en el mismo momento que tú. Empezáis juntos y veis subir el contador del otro. Si nadie de tu rango está en directo en quince segundos, compites contra la serie grabada de una persona real, a su ritmo real. Sin bots, sin números inventados.
 
 SUBE EN LA CLASIFICACIÓN
-Tu primera partida te coloca en la clasificación, en Hierro V. Después sube de Hierro a Bronce, Plata, Oro, Platino y Diamante hasta Maestro. Gana a un rango más alto y consigues más LP. El nivel que alcanzas, lo conservas.
+Tu primera partida te coloca en la clasificación, en Hierro V. Después sube de Hierro a Bronce, Plata, Oro, Platino y Diamante hasta Maestro. Una victoria da 25 puntos más la diferencia de repeticiones; una derrota quita 20 más esa diferencia. Cada 100 puntos es una división y cada 500 un nivel. Puedes bajar de nivel, pero nunca por debajo de 1.000 puntos.
 
 SUBE DE NIVEL CON CADA REPETICIÓN
 Cada flexión da XP y cada victoria 20 más; una partida perdida no da nada. Tu nivel aparece junto a tu nombre en todas partes y nunca baja.
@@ -134,7 +134,7 @@ SFIDA PERSONE VERE, DAL VIVO
 Una partita classificata trova qualcuno davanti alla fotocamera nello stesso momento. Partite insieme e vedete salire il conteggio dell'altro. Se nessuno del tuo grado è online entro quindici secondi, sfidi la serie registrata di una persona vera, al suo vero ritmo. Niente bot, niente numeri inventati.
 
 SCALA LA CLASSIFICA
-La tua prima partita ti mette in classifica, a Ferro V. Poi sali da Ferro a Bronzo, Argento, Oro, Platino e Diamante fino a Maestro. Batti un grado più alto e guadagni più LP. Un livello raggiunto resta tuo.
+La tua prima partita ti mette in classifica, a Ferro V. Poi sali da Ferro a Bronzo, Argento, Oro, Platino e Diamante fino a Maestro. Una vittoria vale 25 punti più la differenza di ripetizioni; una sconfitta ne toglie 20 più quella differenza. Ogni 100 punti è una divisione, ogni 500 un livello. Puoi scendere di livello, ma mai sotto 1.000 punti.
 
 SALI DI LIVELLO A OGNI RIPETIZIONE
 Ogni flessione dà XP e ogni vittoria 20 in più; una partita persa non dà niente. Il tuo livello appare accanto al tuo nome ovunque e non scende mai.
@@ -169,7 +169,7 @@ DISPUTE COM PESSOAS REAIS, AO VIVO
 Uma partida ranqueada encontra alguém na câmera no mesmo momento que você. Vocês começam juntos e veem a contagem do outro subir. Se ninguém do seu nível estiver ao vivo em quinze segundos, você enfrenta a série gravada de uma pessoa real, no ritmo real dela. Sem bots, sem números inventados.
 
 SUBA NO RANKING
-Sua primeira partida coloca você no ranking, no Ferro V. Depois suba de Ferro para Bronze, Prata, Ouro, Platina e Diamante até Mestre. Vença um nível mais alto e ganhe mais LP. O nível que você alcança fica com você.
+Sua primeira partida coloca você no ranking, no Ferro V. Depois suba de Ferro para Bronze, Prata, Ouro, Platina e Diamante até Mestre. Uma vitória dá 25 pontos mais a diferença de repetições; uma derrota tira 20 mais essa diferença. Cada 100 pontos é uma divisão e cada 500 um nível. Você pode cair de nível, mas nunca abaixo de 1.000 pontos.
 
 SUBA DE NÍVEL A CADA REPETIÇÃO
 Cada flexão dá XP, e cada vitória 20 a mais; uma partida perdida não dá nada. Seu nível aparece ao lado do seu nome em todo lugar e nunca cai.
@@ -212,7 +212,7 @@ OUTREPD превращает отжимания в живой челлендж 1
 Рейтинговый матч находит того, кто перед камерой в тот же момент. Вы стартуете вместе и видите, как растет счет друг друга. Если за пятнадцать секунд никого твоего уровня нет онлайн, ты соревнуешься с записанным подходом реального человека в его настоящем темпе. Никаких ботов и выдуманных цифр.
 
 ПОДНИМАЙСЯ В РЕЙТИНГЕ
-Первый матч ставит тебя в рейтинг — на Железо V. Дальше поднимайся от Железа через Бронзу, Серебро, Золото, Платину и Алмаз до Мастера. Победи ранг выше — получишь больше LP. Достигнутый уровень остается за тобой.
+Первый матч ставит тебя в рейтинг — на Железо V. Дальше поднимайся от Железа через Бронзу, Серебро, Золото, Платину и Алмаз до Мастера. Победа даёт 25 очков плюс разницу в повторениях, поражение отнимает 20 плюс эту разницу. Каждые 100 очков — одна дивизия, каждые 500 — один уровень. Уровень можно потерять, но не ниже 1 000 очков.
 
 НОВЫЙ УРОВЕНЬ С КАЖДЫМ ПОВТОРЕНИЕМ
 Каждое отжимание даёт XP, а каждая победа — ещё 20; за проигранный матч — ничего. Твой уровень виден рядом с именем везде и никогда не падает.
@@ -247,7 +247,7 @@ GERÇEK İNSANLARLA CANLI YARIŞ
 Dereceli maç, seninle aynı anda kamerada olan birini bulur. Birlikte başlarsınız ve birbirinizin sayısının arttığını görürsünüz. On beş saniye içinde senin seviyende kimse yoksa, gerçek bir insanın kayıtlı setiyle, onun gerçek temposunda yarışırsın. Bot yok, uydurma sayı yok.
 
 SIRALAMADA YÜKSEL
-İlk maçınla sıralamaya Demir V'ten girersin. Sonra Demir'den Bronz, Gümüş, Altın, Platin ve Elmas'a, oradan Usta'ya yüksel. Daha yüksek bir rütbeyi yen, daha çok LP kazan. Ulaştığın kademe senin kalır.
+İlk maçınla sıralamaya Demir V'ten girersin. Sonra Demir'den Bronz, Gümüş, Altın, Platin ve Elmas'a, oradan Usta'ya yüksel. Galibiyet 25 puan artı tekrar farkı kazandırır; mağlubiyet 20 puan artı o farkı götürür. Her 100 puan bir bölüm, her 500 puan bir kademe eder. Kademeni kaybedebilirsin, ama 1.000 puanın altına inmezsin.
 
 HER TEKRARLA SEVİYE ATLA
 Her şınav XP kazandırır, her galibiyet 20 daha; kaybedilen maç hiçbir şey kazandırmaz. Seviyen her yerde adının yanında görünür ve asla düşmez.
@@ -282,7 +282,7 @@ OUTREPDは腕立て伏せをリアルタイムの1v1チャレンジに変えま�
 ランクマッチは、同じタイミングでカメラの前にいる人を探します。一緒にスタートし、相手のカウントが増えていくのが見えます。15秒以内に同じランク帯で対戦相手がいなければ、本物の人が記録したセットと、その人の実際のペースで勝負します。ボットも作られた数字もありません。
 
 ランクを駆け上がろう
-最初のマッチでランキングに参加し、アイアンVからスタートします。そこからアイアン、ブロンズ、シルバー、ゴールド、プラチナ、ダイヤモンド、そしてマスターへ。格上に勝てばより多くのLPを獲得。一度到達したティアは失いません。
+最初のマッチでランキングに参加し、アイアンVからスタートします。そこからアイアン、ブロンズ、シルバー、ゴールド、プラチナ、ダイヤモンド、そしてマスターへ。勝つと25ポイントに回数の差を足し、負けると20ポイントに回数の差を足して減ります。100ポイントで1ディビジョン、500ポイントで1ティア。ティアは下がることがありますが、1,000ポイントを下回ることはありません。
 
 1回ごとにレベルアップ
 腕立て伏せ1回ごとにXPがたまり、勝てばさらに20。負けた対戦では何も入りません。レベルはどこでも名前の横に表示され、下がることはありません。
@@ -317,7 +317,7 @@ OUTREPD는 팔굽혀펴기를 실시간 1:1 대결로 바꿉니다. 휴대폰을
 랭크 매치는 같은 순간 카메라 앞에 있는 사람을 찾아 줍니다. 함께 시작해 서로의 숫자가 올라가는 걸 보세요. 15초 안에 비슷한 랭크의 상대가 없으면, 실제 사람이 기록한 세트와 그 사람의 실제 속도로 겨룹니다. 봇도, 지어낸 숫자도 없습니다.
 
 랭크를 올리세요
-첫 매치를 하면 아이언 V에서 랭킹을 시작합니다. 그다음 아이언에서 브론즈, 실버, 골드, 플래티넘, 다이아몬드를 거쳐 마스터까지. 더 높은 랭크를 이기면 LP를 더 얻습니다. 한 번 오른 티어는 떨어지지 않습니다.
+첫 매치를 하면 아이언 V에서 랭킹을 시작합니다. 그다음 아이언에서 브론즈, 실버, 골드, 플래티넘, 다이아몬드를 거쳐 마스터까지. 이기면 25점에 횟수 차이를 더하고, 지면 20점에 횟수 차이를 더해 빠집니다. 100점마다 한 디비전, 500점마다 한 티어입니다. 티어는 내려갈 수 있지만 1,000점 아래로는 떨어지지 않습니다.
 
 한 번 할 때마다 레벨업
 팔굽혀펴기 한 번마다 XP가 쌓이고, 이기면 20이 더해집니다. 진 대결은 아무것도 주지 않습니다. 레벨은 어디서나 이름 옆에 표시되고 절대 내려가지 않습니다.
@@ -352,7 +352,7 @@ OUTREPD 把俯卧撑变成实时 1v1 挑战。把手机立好，摆好姿势，�
 排位赛会找到和你同一时刻在镜头前的人。你们一起开始，看着对方的数字往上涨。如果十五秒内没有同段位的人在线，你就挑战一位真人录下的那一组，按他真实的节奏来。没有机器人，没有编造的数字。
 
 冲击排位
-打完第一场比赛，你就从黑铁 V 开始进入排名。之后从黑铁一路升到青铜、白银、黄金、铂金、钻石，直到大师。赢下更高段位的对手，拿到更多 LP。到达的段位不会掉。
+打完第一场比赛，你就从黑铁 V 开始进入排名。之后从黑铁一路升到青铜、白银、黄金、铂金、钻石，直到大师。赢一场得 25 分加上次数差，输一场扣 20 分加上次数差。每 100 分是一小段，每 500 分是一个段位。可以掉段，但不会低于 1000 分。
 
 每一次都在升级
 每个俯卧撑都能获得 XP，每场胜利再加 20；输掉的比赛不得 XP。你的等级显示在你名字旁边，永远不会下降。
@@ -387,7 +387,7 @@ OUTREPD 把伏地挺身變成即時 1v1 挑戰。把手機立好、擺好姿勢�
 排位賽會找到和你同一時刻在鏡頭前的人。你們一起開始，看著對方的數字往上跳。如果十五秒內沒有同段位的人在線，你就挑戰一位真人錄下的那一組，按他真實的節奏來。沒有機器人，沒有編造的數字。
 
 衝上排位
-打完第一場比賽，你就從黑鐵 V 開始進入排名。之後從黑鐵一路升到青銅、白銀、黃金、白金、鑽石，直到大師。贏下更高段位的對手，拿到更多 LP。到達的段位不會掉。
+打完第一場比賽，你就從黑鐵 V 開始進入排名。之後從黑鐵一路升到青銅、白銀、黃金、白金、鑽石，直到大師。贏一場得 25 分加上次數差，輸一場扣 20 分加上次數差。每 100 分是一小段，每 500 分是一個段位。可以掉段，但不會低於 1000 分。
 
 每一下都在升級
 每下伏地挺身都能獲得 XP，每場勝利再加 20；輸掉的比賽不得 XP。你的等級顯示在名字旁邊，永遠不會下降。
@@ -422,7 +422,7 @@ OUTREPD पुश-अप को लाइव 1v1 चैलेंज में �
 रैंक्ड मैच ऐसे किसी को ढूँढता है जो उसी पल कैमरे के सामने हो। दोनों साथ शुरू करते हैं और एक-दूसरे की गिनती बढ़ती देखते हैं। अगर पंद्रह सेकंड में आपकी रैंक का कोई लाइव न हो, तो आप किसी असली इंसान के रिकॉर्ड किए सेट से उसकी असली रफ़्तार पर मुकाबला करते हैं। कोई बॉट नहीं, कोई नकली नंबर नहीं।
 
 रैंक में ऊपर चढ़िए
-पहला मैच खेलते ही आप लोहा V से रैंकिंग में आ जाते हैं। फिर लोहा से कांस्य, रजत, स्वर्ण, प्लैटिनम और हीरा होते हुए मास्टर तक चढ़िए। ऊँची रैंक को हराइए और ज़्यादा LP पाइए। जो टियर आप पा लेते हैं, वो आपका रहता है।
+पहला मैच खेलते ही आप लोहा V से रैंकिंग में आ जाते हैं। फिर लोहा से कांस्य, रजत, स्वर्ण, प्लैटिनम और हीरा होते हुए मास्टर तक चढ़िए। जीत पर 25 अंक और रेप के अंतर जितने मिलते हैं; हार पर 20 अंक और वही अंतर कटते हैं। हर 100 अंक एक डिवीजन, हर 500 अंक एक टियर। टियर नीचे जा सकता है, पर 1,000 अंक से नीचे नहीं।
 
 हर रेप के साथ लेवल अप
 हर पुश-अप से XP मिलता है और हर जीत पर 20 और; हारे हुए मैच से कुछ नहीं मिलता। आपका लेवल हर जगह आपके नाम के पास दिखता है और कभी कम नहीं होता।
@@ -457,7 +457,7 @@ LAWAN ORANG SUNGGUHAN, LANGSUNG
 Pertandingan peringkat mencari orang yang ada di depan kamera pada saat yang sama. Kalian mulai bersama dan melihat hitungan satu sama lain naik. Jika tidak ada yang selevel online dalam lima belas detik, kamu melawan set rekaman orang sungguhan, dengan tempo aslinya. Tanpa bot, tanpa angka karangan.
 
 NAIK PERINGKAT
-Pertandingan pertamamu memasukkanmu ke peringkat, mulai dari Besi V. Lalu naik dari Besi ke Perunggu, Perak, Emas, Platinum dan Berlian sampai Master. Kalahkan peringkat lebih tinggi dan dapatkan LP lebih banyak. Tingkat yang sudah dicapai tetap milikmu.
+Pertandingan pertamamu memasukkanmu ke peringkat, mulai dari Besi V. Lalu naik dari Besi ke Perunggu, Perak, Emas, Platinum dan Berlian sampai Master. Menang memberi 25 poin ditambah selisih repetisi; kalah mengurangi 20 poin ditambah selisih itu. Setiap 100 poin adalah satu divisi, setiap 500 poin satu tingkat. Tingkat bisa turun, tapi tidak pernah di bawah 1.000 poin.
 
 NAIK LEVEL DI SETIAP REPETISI
 Setiap push up memberi XP, dan setiap kemenangan 20 lagi; pertandingan yang kalah tidak memberi apa-apa. Levelmu tampil di samping namamu di mana saja dan tidak pernah turun.

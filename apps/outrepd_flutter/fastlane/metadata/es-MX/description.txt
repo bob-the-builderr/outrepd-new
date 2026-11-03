@@ -9,7 +9,7 @@ COMPITE CONTRA PERSONAS REALES, EN DIRECTO
 Una partida clasificatoria busca a alguien frente a la cámara en el mismo momento que tú. Empiezan juntos y ven subir el contador del otro. Si nadie de tu rango está en directo en quince segundos, compites contra la serie grabada de una persona real, a su ritmo real. Sin bots, sin números inventados.
 
 SUBE EN LA CLASIFICACIÓN
-Tu primera partida te coloca en la clasificación, en Hierro V. Después sube de Hierro a Bronce, Plata, Oro, Platino y Diamante hasta Maestro. Gana a un rango más alto y consigues más LP. El nivel que alcanzas, lo conservas.
+Tu primera partida te coloca en la clasificación, en Hierro V. Después sube de Hierro a Bronce, Plata, Oro, Platino y Diamante hasta Maestro. Una victoria da 25 puntos más la diferencia de repeticiones; una derrota quita 20 más esa diferencia. Cada 100 puntos es una división y cada 500 un nivel. Puedes bajar de nivel, pero nunca por debajo de 1.000 puntos.
 
 AVENTURA
 140 combates de lagartijas en siete mundos, de Hierro a Maestro. Cada repetición golpea al monstruo, y los monstruos evolucionan a medida que avanzas. Gana estrellas para desbloquear el arma que pide cada mundo nuevo. No te juegas el rango, y funciona sin conexión.

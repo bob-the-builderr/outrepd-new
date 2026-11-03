@@ -9,7 +9,7 @@ LIVE GEGEN ECHTE MENSCHEN
 Ein Ranglistenmatch sucht jemanden, der im selben Moment vor der Kamera ist. Ihr startet zusammen und seht, wie der Zähler des anderen steigt. Ist in fünfzehn Sekunden niemand in deinem Rang live, trittst du gegen den aufgezeichneten Satz eines echten Menschen an, in seinem echten Tempo. Keine Bots, keine erfundenen Zahlen.
 
 STEIG IN DER RANGLISTE AUF
-Dein erstes Match bringt dich auf die Rangliste, bei Eisen V. Dann steigst du von Eisen über Bronze, Silber, Gold, Platin und Diamant bis Meister auf. Schlägst du einen höheren Rang, bekommst du mehr LP. Eine erreichte Stufe behältst du.
+Dein erstes Match bringt dich auf die Rangliste, bei Eisen V. Dann steigst du von Eisen über Bronze, Silber, Gold, Platin und Diamant bis Meister auf. Ein Sieg bringt 25 Punkte plus den Abstand in Wiederholungen, eine Niederlage kostet 20 plus diesen Abstand. Je 100 Punkte ist eine Division, je 500 eine Stufe. Eine Stufe kannst du wieder verlieren, aber nie unter 1.000 Punkte.
 
 ABENTEUER
 140 Liegestütz-Kämpfe in sieben Welten, von Eisen bis Meister. Jede Wiederholung trifft das Monster, und die Monster entwickeln sich mit jeder Welt weiter. Sammle Sterne für die Waffe, die jede neue Welt verlangt. Kein Rang steht auf dem Spiel, und es geht auch offline.

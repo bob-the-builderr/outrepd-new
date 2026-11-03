@@ -1,1 +1,1 @@
-కొత్తది: Adventure, ఏడు ప్రపంచాల్లో 140 పుష్-అప్ పోరాటాలు, పరిణామం చెందే రాక్షసులు, ప్రతి ప్రపంచానికి అన్‌లాక్ అయ్యే ఆయుధం. ఇప్పుడు ప్రతి మోడ్‌ను సబ్‌స్క్రిప్షన్ లేకుండా ఆడవచ్చు: ఆట తర్వాత ఒక ప్రకటన వస్తుంది, OUTREPD Pro ప్రకటనలను తొలగిస్తుంది.
+New: a rating for every ranked match. A win adds 25 plus the gap in reps; a loss takes away 20 plus that gap. Ranks now show one strip for week, month and overall, and a board among your friends. A cleaner look across the app, bigger numbers on the live match, last month's winners, and you can now remove or crop your profile photo.

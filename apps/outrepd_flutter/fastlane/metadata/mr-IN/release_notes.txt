@@ -1,1 +1,1 @@
-नवीन: Adventure, सात जगांमध्ये 140 पुश-अप लढाया, उत्क्रांत होणारे राक्षस आणि प्रत्येक जगासाठी अनलॉक होणारे शस्त्र. आता प्रत्येक मोड सबस्क्रिप्शनशिवाय खेळता येतो: गेमनंतर एक जाहिरात दिसते, आणि OUTREPD Pro जाहिराती काढून टाकते.
+New: a rating for every ranked match. A win adds 25 plus the gap in reps; a loss takes away 20 plus that gap. Ranks now show one strip for week, month and overall, and a board among your friends. A cleaner look across the app, bigger numbers on the live match, last month's winners, and you can now remove or crop your profile photo.

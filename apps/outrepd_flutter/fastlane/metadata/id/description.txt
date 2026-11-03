@@ -9,7 +9,7 @@ LAWAN ORANG SUNGGUHAN, LANGSUNG
 Pertandingan peringkat mencari orang yang ada di depan kamera pada saat yang sama. Kalian mulai bersama dan melihat hitungan satu sama lain naik. Jika tidak ada yang selevel online dalam lima belas detik, kamu melawan set rekaman orang sungguhan, dengan tempo aslinya. Tanpa bot, tanpa angka karangan.
 
 NAIK PERINGKAT
-Pertandingan pertamamu memasukkanmu ke peringkat, mulai dari Besi V. Lalu naik dari Besi ke Perunggu, Perak, Emas, Platinum dan Berlian sampai Master. Kalahkan peringkat lebih tinggi dan dapatkan LP lebih banyak. Tingkat yang sudah dicapai tetap milikmu.
+Pertandingan pertamamu memasukkanmu ke peringkat, mulai dari Besi V. Lalu naik dari Besi ke Perunggu, Perak, Emas, Platinum dan Berlian sampai Master. Menang memberi 25 poin ditambah selisih repetisi; kalah mengurangi 20 poin ditambah selisih itu. Setiap 100 poin adalah satu divisi, setiap 500 poin satu tingkat. Tingkat bisa turun, tapi tidak pernah di bawah 1.000 poin.
 
 PETUALANGAN
 140 pertarungan push up di tujuh dunia, dari Besi sampai Master. Setiap repetisi memukul monster, dan monsternya berevolusi seiring kamu maju. Kumpulkan bintang untuk membuka senjata yang dibutuhkan setiap dunia baru. Peringkat tidak dipertaruhkan, dan bisa dimainkan offline.

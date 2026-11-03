@@ -1,1 +1,1 @@
-Mới: Adventure, 140 trận chiến hít đất qua bảy thế giới, với quái vật tiến hóa và một vũ khí để mở khóa ở mỗi thế giới. Giờ mọi chế độ đều chơi được mà không cần gói đăng ký: có quảng cáo sau mỗi trận, và OUTREPD Pro sẽ gỡ bỏ quảng cáo.
+New: a rating for every ranked match. A win adds 25 plus the gap in reps; a loss takes away 20 plus that gap. Ranks now show one strip for week, month and overall, and a board among your friends. A cleaner look across the app, bigger numbers on the live match, last month's winners, and you can now remove or crop your profile photo.

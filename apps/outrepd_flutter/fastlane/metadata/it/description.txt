@@ -9,7 +9,7 @@ SFIDA PERSONE VERE, DAL VIVO
 Una partita classificata trova qualcuno davanti alla fotocamera nello stesso momento. Partite insieme e vedete salire il conteggio dell'altro. Se nessuno del tuo grado è online entro quindici secondi, sfidi la serie registrata di una persona vera, al suo vero ritmo. Niente bot, niente numeri inventati.
 
 SCALA LA CLASSIFICA
-La tua prima partita ti mette in classifica, a Ferro V. Poi sali da Ferro a Bronzo, Argento, Oro, Platino e Diamante fino a Maestro. Batti un grado più alto e guadagni più LP. Un livello raggiunto resta tuo.
+La tua prima partita ti mette in classifica, a Ferro V. Poi sali da Ferro a Bronzo, Argento, Oro, Platino e Diamante fino a Maestro. Una vittoria vale 25 punti più la differenza di ripetizioni; una sconfitta ne toglie 20 più quella differenza. Ogni 100 punti è una divisione, ogni 500 un livello. Puoi scendere di livello, ma mai sotto 1.000 punti.
 
 AVVENTURA
 140 combattimenti a flessioni in sette mondi, da Ferro a Maestro. Ogni ripetizione colpisce il mostro, e i mostri si evolvono man mano che avanzi. Guadagna stelle per sbloccare l’arma che serve a ogni nuovo mondo. Nessun grado in gioco, e funziona offline.

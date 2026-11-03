@@ -9,7 +9,7 @@ AFFRONTE DE VRAIES PERSONNES, EN DIRECT
 Un match classé trouve quelqu'un devant sa caméra au même moment que toi. Vous commencez ensemble et voyez le compteur de l'autre monter. Si personne de ton rang n'est en ligne en quinze secondes, tu affrontes la série enregistrée d'une vraie personne, à son vrai rythme. Pas de bots, pas de chiffres inventés.
 
 GRIMPE DANS LE CLASSEMENT
-Ton premier match te place au classement, en Fer V. Ensuite, monte de Fer à Bronze, Argent, Or, Platine et Diamant jusqu'à Maître. Bats un rang plus élevé et tu gagnes plus de LP. Un palier atteint reste acquis.
+Ton premier match te place au classement, en Fer V. Ensuite, monte de Fer à Bronze, Argent, Or, Platine et Diamant jusqu'à Maître. Une victoire rapporte 25 points plus l'écart de répétitions, une défaite en retire 20 plus cet écart. Chaque 100 points forment une division, chaque 500 un palier. Tu peux redescendre d'un palier, mais jamais sous 1 000 points.
 
 AVENTURE
 140 combats de pompes dans sept mondes, de Fer à Maître. Chaque répétition frappe le monstre, et les monstres évoluent au fil du jeu. Gagne des étoiles pour débloquer l’arme qu’exige chaque nouveau monde. Aucun rang en jeu, et ça marche hors ligne.

@@ -1,1 +1,1 @@
-Új: Adventure, 140 fekvőtámasz-csata hét világban, fejlődő szörnyekkel és minden világban feloldható fegyverrel. Mostantól minden mód előfizetés nélkül játszható: egy játék után reklám jelenik meg, és az OUTREPD Pro eltávolítja a reklámokat.
+New: a rating for every ranked match. A win adds 25 plus the gap in reps; a loss takes away 20 plus that gap. Ranks now show one strip for week, month and overall, and a board among your friends. A cleaner look across the app, bigger numbers on the live match, last month's winners, and you can now remove or crop your profile photo.
