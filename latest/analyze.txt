@@ -1,8 +1,2 @@
 Analyzing outrepd_flutter...                                    
-
-warning • A value for optional parameter 'colour' isn't ever given. Try removing the unused parameter • lib/screens/share_card.dart:664:10 • unused_element_parameter
-  error • The returned type 'Future<void>' isn't returnable from a 'Widget' function, as required by the closure's context • tool/screenshots/cards_test.dart:139:24 • return_of_invalid_type_from_closure
-  error • The returned type 'Future<void>' isn't returnable from a 'Widget' function, as required by the closure's context • tool/screenshots/cards_test.dart:162:24 • return_of_invalid_type_from_closure
-  error • The returned type 'Future<void>' isn't returnable from a 'Widget' function, as required by the closure's context • tool/screenshots/cards_test.dart:201:22 • return_of_invalid_type_from_closure
-
-4 issues found. (ran in 21.1s)
+No issues found! (ran in 21.2s)
