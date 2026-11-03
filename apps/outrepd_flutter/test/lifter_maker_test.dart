@@ -53,7 +53,7 @@ void main() {
 
   testWidgets('a Pro skin is tried on, and Done keeps what the account has', (tester) async {
     await _open(tester);
-    expect(find.text('Your lifter'), findsOneWidget);
+    expect(find.text('Customize your avatar'), findsOneWidget);
 
     await tester.scrollUntilVisible(find.byKey(const Key('part_neon')), 200,
         scrollable: find.byType(Scrollable).last);
@@ -114,7 +114,7 @@ void main() {
 
   testWidgets('at sign-up, Skip leaves the lifter the name gives', (tester) async {
     await _open(tester, firstTime: true);
-    expect(find.text('Make your lifter'), findsOneWidget);
+    expect(find.text('Customize your avatar'), findsOneWidget);
     expect(find.text('This is you on every board and in every match.'), findsOneWidget);
 
     await tester.tap(find.byKey(const Key('makerSkip')));
