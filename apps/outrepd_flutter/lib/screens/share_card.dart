@@ -661,13 +661,11 @@ class _Name extends StatelessWidget {
   const _Name({
     required this.name,
     required this.size,
-    this.colour,
     this.pro = false,
   });
 
   final String name;
   final double size;
-  final Color? colour;
   final bool pro;
 
   @override
@@ -676,7 +674,7 @@ class _Name extends StatelessWidget {
       name,
       maxLines: 1,
       style: TextStyle(
-        color: pro ? Colors.white : colour ?? context.colors.text,
+        color: pro ? Colors.white : context.colors.text,
         fontSize: size,
         fontWeight: FontWeight.w800,
       ),

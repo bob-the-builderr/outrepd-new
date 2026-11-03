@@ -67,7 +67,7 @@ class _Server extends NoBackend {
   };
 }
 
-Widget _app(Widget Function(BuildContext) open) => MaterialApp(
+Widget _app(void Function(BuildContext) open) => MaterialApp(
   debugShowCheckedModeBanner: false,
   theme: buildTheme(Brightness.dark),
   locale: const Locale('en'),
