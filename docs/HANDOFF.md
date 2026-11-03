@@ -53,8 +53,8 @@ next upgrade.
 
 1. ~~app-ads.txt~~ — done 2026-11-03: outrepd.com/app-ads.txt has AdMob,
    Unity Ads and ironSource (see `docs/site-pending/README.md`).
-2. AdMob → Privacy & messaging → the GDPR message: add Unity and ironSource
-   as ad partners (the user does it).
+2. ~~AdMob GDPR ad partners~~ — checked 2026-11-03: ironSource Mobile and
+   Unity Ads were already in the European regulations ad partners.
 3. Privacy page and the App Store / Play privacy forms: name Unity. The
    unpublished site change in `docs/site-pending/` belongs with this.
 4. **Store description in 50 languages is wrong now** (`apps/outrepd_flutter/store/aso/en.js`,
