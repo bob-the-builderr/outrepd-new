@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 
 import '../backend/backend.dart';
 import '../data.dart';
+import '../subscription.dart';
+import '../lifter/looks.dart';
 import '../l10n/app_localizations.dart';
 import '../type_scale.dart';
 import '../theme.dart';
@@ -193,6 +195,8 @@ class _NoticeTile extends StatelessWidget {
                 divIdx: demoProfile.divIdx,
                 lpDelta: notice.lpDelta,
                 avatarUrl: backend.me?.avatarUrl,
+                pro: Subscription.instance.active,
+                cover: MyCover.instance.cover,
               ),
             ),
       // An older result, from before notices carried the score: the

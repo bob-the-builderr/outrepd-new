@@ -15,17 +15,21 @@ import '../backend/backend.dart';
 import '../l10n/app_localizations.dart';
 import '../lifter/looks.dart';
 import '../lifter/my_lifter.dart';
+import '../motion.dart';
 import '../country_names.dart';
 import '../player_avatar.dart';
+import '../rank_row.dart';
 import '../ranking.dart';
 import '../rewards.dart';
 import '../season.dart';
 import '../theme.dart';
+import '../tier_badge.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
 import '../worn_title.dart';
 import 'cover_parts.dart';
 import 'live_invite.dart';
+import 'pro_parts.dart';
 import 'settings_privacy.dart';
 import 'share_card.dart';
 
@@ -142,162 +146,476 @@ class _LifterPeekSheetState extends State<_LifterPeekSheet>
     );
   }
 
+  /// A player card (the user's pick, 2026-11-03): the picture large in its
+  /// tier's frame, the name and level, the title worn, where they stand,
+  /// the rank row in its frame, and the numbers in one card. A Pro's card
+  /// wears their cover behind the top, a holo line along its edge whose
+  /// colours drift slowly, the PRO chip, the name in the holo foil, and a
+  /// soft light breathing behind the picture.
   Widget _sheet(BuildContext context, L l, LifterProfile? p) {
+    final pro = Looks.instance.pro(widget.id);
+    final cover = pro ? Looks.instance.cover(widget.id) : null;
+    final tint = p != null && p.ranked
+        ? tierMetal(p.tierIdx).mid
+        : context.colors.brand;
+    final places = p == null ? '' : _placesLine(context, l, p);
+
     return SafeArea(
-      child: Stack(
-        children: [
-          Positioned(
-            left: 0,
-            right: 0,
-            top: 0,
-            height: 130,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-              child: ProfileCover(cover: Looks.instance.cover(widget.id)),
-            ),
-          ),
-          Padding(
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+      child: SingleChildScrollView(
+        child: Stack(
           children: [
-            const _SheetGrip(),
-            Row(
-              children: [
-                PlayerAvatar(
-                  name: widget.username,
-                  tierIdx: p != null && p.ranked ? p.tierIdx : null,
-                  image: _picture(widget.id, p?.avatarUrl),
-                  alive: Looks.instance.pro(widget.id),
-                  size: 52,
-                  onBadgeTap: p != null && p.ranked ? _openFullProfile : null,
+            // Behind the top: a Pro's cover, or anyone else's tier as a
+            // soft light.
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 0,
+              height: 230,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(20),
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      NameWithLevel(
-                        name: widget.username,
-                        xp: p?.xp,
-                        chipFontSize: 12,
-                        style: context.type.heading.copyWith(
-                          color: context.colors.text,
+                child: cover != null
+                    ? ProfileCover(cover: cover)
+                    : DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: RadialGradient(
+                            center: const Alignment(0, -1.1),
+                            radius: 1.1,
+                            colors: [
+                              tint.withValues(alpha: 0.2),
+                              tint.withValues(alpha: 0),
+                            ],
+                          ),
                         ),
                       ),
-                      if (titleById(p?.title) case final title?)
-                        WornTitle(title: title),
+              ),
+            ),
+            if (pro)
+              const Positioned(
+                left: 0,
+                right: 0,
+                top: 0,
+                height: 2.5,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                  child: _HoloLine(),
+                ),
+              ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const _SheetGrip(),
+                  Row(
+                    children: [
+                      if (pro) const ProChip(height: 20),
+                      const Spacer(),
+                      IconButton(
+                        icon: const Icon(Icons.more_vert),
+                        color: context.colors.muted,
+                        tooltip: l.moreOptions,
+                        onPressed: () => openLifterMenu(
+                          context,
+                          id: widget.id,
+                          username: widget.username,
+                          profile: p,
+                          onChanged: load,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Center(
+                    child: _ProLight(
+                      on: pro,
+                      child: PlayerAvatar(
+                        name: widget.username,
+                        tierIdx: p != null && p.ranked ? p.tierIdx : null,
+                        image: _picture(widget.id, p?.avatarUrl),
+                        alive: pro,
+                        size: 92,
+                        onBadgeTap: p != null && p.ranked
+                            ? _openFullProfile
+                            : null,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Center(
+                    child: _PeekName(
+                      name: widget.username,
+                      xp: p?.xp,
+                      pro: pro,
+                    ),
+                  ),
+                  if (titleById(p?.title) case final title?)
+                    Center(child: WornTitle(title: title)),
+                  if (places.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Text(
+                        places,
+                        textAlign: TextAlign.center,
+                        style: context.type.label.copyWith(
+                          color: context.colors.muted,
+                        ),
+                      ),
+                    ),
+                  const SizedBox(height: 4),
+                  if (loading)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 24),
+                      child: Center(child: CircularProgressIndicator()),
+                    )
+                  else if (p == null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Text(
+                        l.couldNotLoadProfile,
+                        textAlign: TextAlign.center,
+                        style: context.type.label.copyWith(
+                          color: context.colors.muted,
+                        ),
+                      ),
+                    )
+                  else ...[
+                    if (p.ranked)
+                      RankRow(
+                        tierIdx: p.tierIdx,
+                        divIdx: p.divIdx,
+                        lp: p.lp,
+                        onTap: _openFullProfile,
+                      )
+                    else
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: Text(
+                          l.unranked,
+                          textAlign: TextAlign.center,
+                          style: context.type.label.copyWith(
+                            color: context.colors.muted,
+                          ),
+                        ),
+                      ),
+                    _PeekStats(
+                      pro: pro,
+                      stats: [
+                        // A record between the two of you is for friends —
+                        // a stranger off the board gets their numbers, not
+                        // yours.
+                        if (p.isFriend)
+                          (
+                            l.vsYouCaption,
+                            p.hasPlayedThem
+                                ? '${localNumber(context, p.winsVsYou)}${l.winInitial} ${localNumber(context, p.lossesVsYou)}${l.lossInitial}'
+                                : '—',
+                            null,
+                          ),
+                        (
+                          l.bestSet,
+                          localNumber(context, p.bestSet),
+                          context.colors.brand,
+                        ),
+                        (
+                          l.winRate,
+                          p.wins + p.losses == 0
+                              ? '—'
+                              : '${(p.wins * 100 / (p.wins + p.losses)).round()}%',
+                          null,
+                        ),
+                      ],
+                    ),
+                    // A friend is challenged live; a stranger is not
+                    // challenged at all — the full profile is where they are
+                    // asked to be a friend first.
+                    if (p.isFriend) ...[
+                      const SizedBox(height: 14),
+                      FilledButton(
+                        key: const Key('challengeLive'),
+                        onPressed: () => _challenge(context, p),
+                        style: FilledButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                        ),
+                        child: Text(l.challenge),
+                      ),
+                    ],
+                    const SizedBox(height: 8),
+                    FilledButton(
+                      onPressed: _openFullProfile,
+                      style: FilledButton.styleFrom(
+                        backgroundColor: context.colors.surfaceRaised,
+                        foregroundColor: context.colors.brand,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                      ),
+                      child: Text(l.viewFullProfile),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// The name on the card: with its level, and on a Pro's card in the holo
+/// foil.
+class _PeekName extends StatelessWidget {
+  const _PeekName({required this.name, required this.xp, required this.pro});
+
+  final String name;
+  final int? xp;
+  final bool pro;
+
+  @override
+  Widget build(BuildContext context) {
+    final style = context.type.heading.copyWith(
+      color: pro ? Colors.white : context.colors.text,
+      fontSize: 26,
+      fontWeight: FontWeight.w800,
+    );
+    if (!pro) {
+      return NameWithLevel(name: name, xp: xp, chipFontSize: 12, style: style);
+    }
+    final level = xp;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Flexible(
+          child: ShaderMask(
+            blendMode: BlendMode.srcIn,
+            shaderCallback: (rect) => kHoloGradient.createShader(rect),
+            child: Text(
+              name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: style,
+            ),
+          ),
+        ),
+        if (level != null) ...[
+          const SizedBox(width: 6),
+          LevelChip(xp: level, fontSize: 12),
+        ],
+      ],
+    );
+  }
+}
+
+/// The numbers, in one card divided into columns: each value over its label.
+class _PeekStats extends StatelessWidget {
+  const _PeekStats({required this.stats, required this.pro});
+
+  final List<(String, String, Color?)> stats;
+  final bool pro;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return Container(
+      decoration: BoxDecoration(
+        color: colors.background.withValues(alpha: 0.55),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: pro
+              ? AppColors.gold.withValues(alpha: 0.35)
+              : colors.border,
+          width: 0.8,
+        ),
+      ),
+      child: IntrinsicHeight(
+        child: Row(
+          children: [
+            for (final (i, (label, value, colour)) in stats.indexed) ...[
+              if (i > 0) VerticalDivider(width: 1, color: colors.border),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 12,
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        value,
+                        maxLines: 1,
+                        style: TextStyle(
+                          color: colour ?? colors.text,
+                          fontSize: 21,
+                          fontWeight: FontWeight.w800,
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                        ),
+                      ),
                       const SizedBox(height: 2),
                       Text(
-                        p == null
-                            ? ''
-                            : p.ranked
-                            ? '${tierLabel(l, p.tierIdx, p.divIdx)} · ${localNumber(context, ratingOf(p.tierIdx, p.divIdx, p.lp))}'
-                            : l.unranked,
+                        label,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: context.type.label.copyWith(
-                          color: p == null
-                              ? context.colors.muted
-                              : _tierColour(p.tierIdx),
+                          color: colors.muted,
+                          fontSize: 11.5,
                         ),
                       ),
                     ],
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.more_vert),
-                  color: context.colors.muted,
-                  tooltip: l.moreOptions,
-                  onPressed: () => openLifterMenu(
-                    context,
-                    id: widget.id,
-                    username: widget.username,
-                    profile: p,
-                    onChanged: load,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            if (loading)
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 24),
-                child: Center(child: CircularProgressIndicator()),
-              )
-            else if (p == null)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: Text(
-                  l.couldNotLoadProfile,
-                  textAlign: TextAlign.center,
-                  style: context.type.label.copyWith(
-                    color: context.colors.muted,
-                  ),
-                ),
-              )
-            else ...[
-              Row(
-                children: [
-                  // A record between the two of you is for friends — a
-                  // stranger off the board gets their numbers, not yours.
-                  if (p.isFriend)
-                    Expanded(
-                      child: StatTile(
-                        label: l.vsYouCaption,
-                        value: p.hasPlayedThem
-                            ? '${localNumber(context, p.winsVsYou)}${l.winInitial} ${localNumber(context, p.lossesVsYou)}${l.lossInitial}'
-                            : '—',
-                      ),
-                    ),
-                  Expanded(
-                    child: StatTile(
-                      label: l.bestSet,
-                      value: localNumber(context, p.bestSet),
-                      color: context.colors.brand,
-                    ),
-                  ),
-                  Expanded(
-                    child: StatTile(
-                      label: l.winRate,
-                      value: p.wins + p.losses == 0
-                          ? '—'
-                          : '${(p.wins * 100 / (p.wins + p.losses)).round()}%',
-                    ),
-                  ),
-                ],
-              ),
-              // A friend is challenged live; a stranger is not challenged
-              // at all — the full profile is where they are asked to be a
-              // friend first.
-              if (p.isFriend) ...[
-                const SizedBox(height: 18),
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton(
-                    key: const Key('challengeLive'),
-                    onPressed: () => _challenge(context, p),
-                    style: FilledButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                    ),
-                    child: Text(l.challenge),
-                  ),
-                ),
-              ],
-              const SizedBox(height: 10),
-              Center(
-                child: TextButton(
-                  onPressed: _openFullProfile,
-                  child: Text(l.viewFullProfile),
-                ),
               ),
             ],
           ],
         ),
-          ),
-        ],
       ),
     );
   }
+}
+
+/// A Pro's line of holo foil along the top of their card, its colours
+/// drifting across it once every ten seconds. Still where the phone asks
+/// for less motion, and under tests.
+class _HoloLine extends StatefulWidget {
+  const _HoloLine();
+
+  @override
+  State<_HoloLine> createState() => _HoloLineState();
+}
+
+class _HoloLineState extends State<_HoloLine>
+    with SingleTickerProviderStateMixin {
+  late final _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 10),
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (loopsAllowed(context)) {
+      if (!_controller.isAnimating) _controller.repeat();
+    } else {
+      _controller.stop();
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, _) => DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: kHolo,
+            tileMode: TileMode.repeated,
+            transform: _Slide(_controller.value),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Moves a gradient along by [t] of the box's width.
+class _Slide extends GradientTransform {
+  const _Slide(this.t);
+
+  final double t;
+
+  @override
+  Matrix4? transform(Rect bounds, {TextDirection? textDirection}) =>
+      Matrix4.translationValues(bounds.width * t, 0, 0);
+}
+
+/// On a Pro's card, a soft gold light breathing behind the picture over six
+/// seconds. Held halfway where the phone asks for less motion, and under
+/// tests; nothing at all for anyone else.
+class _ProLight extends StatefulWidget {
+  const _ProLight({required this.on, required this.child});
+
+  final bool on;
+  final Widget child;
+
+  @override
+  State<_ProLight> createState() => _ProLightState();
+}
+
+class _ProLightState extends State<_ProLight>
+    with SingleTickerProviderStateMixin {
+  late final _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 3),
+    value: 0.5,
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (widget.on && loopsAllowed(context)) {
+      if (!_controller.isAnimating) _controller.repeat(reverse: true);
+    } else {
+      _controller.stop();
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!widget.on) return widget.child;
+    return Stack(
+      alignment: Alignment.center,
+      clipBehavior: Clip.none,
+      children: [
+        Positioned.fill(
+          child: IgnorePointer(
+            child: AnimatedBuilder(
+              animation: _controller,
+              builder: (context, _) {
+                final t = Curves.easeInOut.transform(_controller.value);
+                return DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: RadialGradient(
+                      colors: [
+                        AppColors.gold.withValues(alpha: 0.12 + 0.14 * t),
+                        AppColors.gold.withValues(alpha: 0),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+        widget.child,
+      ],
+    );
+  }
+}
+
+/// "Global #3 · Egypt #1" — built from the two board places rather than
+/// carried as one string, so either half can be missing without the other
+/// looking orphaned.
+String _placesLine(BuildContext context, L l, LifterProfile p) {
+  final parts = <String>[
+    if (p.globalPlace case final g?)
+      '${l.global} ${l.rankPosition(localNumber(context, g))}',
+    if (p.countryPlace case final c?)
+      if (p.country case final code?)
+        '${countryName(context, code)} '
+            '${l.rankPosition(localNumber(context, c))}',
+  ];
+  return parts.join(' · ');
 }
 
 /// [id]'s picture: a Pro who made a lifter is drawn from it (alive, in
@@ -605,21 +923,6 @@ class _Body extends StatelessWidget {
           ),
       ],
     );
-  }
-
-  /// "Global #3 · Egypt #1" — built from the two board places rather than
-  /// carried as one string, so either half can be missing without the other
-  /// looking orphaned.
-  String _placesLine(BuildContext context, L l, LifterProfile p) {
-    final parts = <String>[
-      if (p.globalPlace case final g?)
-        '${l.global} ${l.rankPosition(localNumber(context, g))}',
-      if (p.countryPlace case final c?)
-        if (p.country case final code?)
-          '${countryName(context, code)} '
-              '${l.rankPosition(localNumber(context, c))}',
-    ];
-    return parts.join(' · ');
   }
 }
 
@@ -1000,6 +1303,10 @@ class _LifterMenuSheetState extends State<_LifterMenuSheet> {
         country: p.country,
         countryPlace: p.countryPlace,
         avatarUrl: p.avatarUrl,
+        xp: p.xp,
+        title: titleById(p.title),
+        pro: Looks.instance.pro(widget.id),
+        cover: Looks.instance.cover(widget.id),
       ),
     );
   }

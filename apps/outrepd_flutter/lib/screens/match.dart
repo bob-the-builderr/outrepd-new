@@ -26,13 +26,13 @@ import '../lifter/my_lifter.dart';
 import '../motion.dart';
 import '../player_avatar.dart';
 import '../push.dart';
+import '../rank_row.dart';
 import '../ranking.dart';
 import '../rewards.dart';
 import '../season.dart';
 import '../subscription.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
-import '../tier_card_frame.dart';
 import '../widgets.dart';
 import 'adventure_map.dart';
 import 'daily_goal.dart';
@@ -81,8 +81,10 @@ class MatchScreen extends StatelessWidget {
                     _StreakLine(profile: p),
                     const SizedBox(height: 12),
                     RiseIn(
-                      child: _RankRow(
-                        profile: p,
+                      child: RankRow(
+                        tierIdx: p.tierIdx,
+                        divIdx: p.divIdx,
+                        lp: p.lp,
                         onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (_) => RankScreen(profile: p),
@@ -533,224 +535,6 @@ class _Rank extends StatelessWidget {
           key: const Key('homeRating'),
           style: TextStyle(color: context.colors.muted, fontSize: 14),
         ),
-      ],
-    );
-  }
-}
-
-// ─────────────────────────────── the rank row ────────────────────────────────
-
-/// The rank on this tab (the user's pick 2, 2026-11-03): one quiet row — the
-/// crest with a light breathing slowly behind it, the tier, the rating and
-/// what the next division needs, and a thin bar — wearing its tier's frame
-/// (pick A, lib/tier_card_frame.dart). The profile keeps the large card;
-/// here the match is the point.
-class _RankRow extends StatelessWidget {
-  const _RankRow({required this.profile, required this.onTap});
-
-  final Profile profile;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = L.of(context);
-    final p = profile;
-    final colors = context.colors;
-    final metal = tierMetal(p.tierIdx);
-    final dark = Theme.of(context).brightness == Brightness.dark;
-    // As on the profile's card: Master's identity is its terracotta wings,
-    // and the name is in the lightest metal on the dark theme, the darkest
-    // on the light one.
-    final accent = p.tierIdx >= kTopTier ? metal.wing : metal.mid;
-    final ink = dark ? metal.light : metal.base;
-    final top = p.tierIdx >= kTopTier && p.divIdx >= kTopDivision;
-    final toNext = (kRatingPerDivision - p.lp).clamp(0, kRatingPerDivision);
-    final fill = top ? 1.0 : (p.lp / kRatingPerDivision).clamp(0.0, 1.0);
-    final next = top
-        ? null
-        : l.toNextTier(
-            localNumber(context, toNext),
-            nextRankName(l, p.tierIdx, p.divIdx),
-          );
-    final radius = BorderRadius.circular(18);
-
-    return PressScale(
-      scale: 0.98,
-      child: TierCardFrame(
-        key: const Key('rankRow'),
-        tierIdx: p.tierIdx,
-        child: Material(
-          color: Colors.transparent,
-          borderRadius: radius,
-          clipBehavior: Clip.antiAlias,
-          child: InkWell(
-            onTap: onTap,
-            child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(8, 10, 12, 10),
-              child: Row(
-                children: [
-                  _Breathe(
-                    colour: accent,
-                    child: TierBadge(tierIndex: p.tierIdx, size: 52),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ShrinkText(
-                          tierLabel(l, p.tierIdx, p.divIdx).toUpperCase(),
-                          maxLines: 1,
-                          style: TextStyle(
-                            color: ink,
-                            fontSize: 11.5,
-                            fontWeight: FontWeight.w800,
-                            letterSpacing: 1.4,
-                          ),
-                        ),
-                        const SizedBox(height: 1),
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          alignment: AlignmentDirectional.centerStart,
-                          child: Text.rich(
-                            key: const Key('rankRowRating'),
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: localNumber(
-                                    context,
-                                    ratingOf(p.tierIdx, p.divIdx, p.lp),
-                                  ),
-                                  style: TextStyle(
-                                    color: colors.text,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w800,
-                                    fontFeatures: const [
-                                      FontFeature.tabularFigures(),
-                                    ],
-                                  ),
-                                ),
-                                if (next != null)
-                                  TextSpan(
-                                    text: '  ·  $next',
-                                    style: TextStyle(
-                                      color: colors.muted,
-                                      fontSize: 12.5,
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 7),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(2),
-                          child: SizedBox(
-                            height: 4,
-                            child: Stack(
-                              fit: StackFit.expand,
-                              children: [
-                                ColoredBox(
-                                  color: Colors.black.withValues(
-                                    alpha: dark ? 0.35 : 0.08,
-                                  ),
-                                ),
-                                FractionallySizedBox(
-                                  alignment: AlignmentDirectional.centerStart,
-                                  widthFactor: fill,
-                                  child: ColoredBox(
-                                    color: accent.withValues(alpha: 0.85),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  Icon(Icons.chevron_right, color: colors.muted, size: 22),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// A soft light in the tier's colour behind the crest, swelling and fading
-/// over six seconds. Held halfway where the phone asks for less motion, and
-/// under tests.
-class _Breathe extends StatefulWidget {
-  const _Breathe({required this.colour, required this.child});
-
-  final Color colour;
-  final Widget child;
-
-  @override
-  State<_Breathe> createState() => _BreatheState();
-}
-
-class _BreatheState extends State<_Breathe>
-    with SingleTickerProviderStateMixin {
-  late final _controller = AnimationController(
-    vsync: this,
-    duration: const Duration(seconds: 3),
-    value: 0.5,
-  );
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (loopsAllowed(context)) {
-      if (!_controller.isAnimating) _controller.repeat(reverse: true);
-    } else {
-      _controller.stop();
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final c = widget.colour;
-    return Stack(
-      alignment: Alignment.center,
-      clipBehavior: Clip.none,
-      children: [
-        Positioned(
-          left: -8,
-          top: -8,
-          right: -8,
-          bottom: -8,
-          child: IgnorePointer(
-            child: AnimatedBuilder(
-              animation: _controller,
-              builder: (context, _) {
-                final t = Curves.easeInOut.transform(_controller.value);
-                return DecoratedBox(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: [
-                        c.withValues(alpha: 0.12 + 0.16 * t),
-                        c.withValues(alpha: 0),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ),
-        widget.child,
       ],
     );
   }

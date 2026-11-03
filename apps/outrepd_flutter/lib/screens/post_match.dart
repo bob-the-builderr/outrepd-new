@@ -19,6 +19,9 @@ import '../avatar.dart';
 import '../backend/backend.dart';
 import '../career.dart';
 import '../data.dart';
+import '../subscription.dart';
+import '../rewards.dart';
+import '../lifter/looks.dart';
 import '../l10n/app_localizations.dart';
 import '../motion.dart';
 import '../player_avatar.dart';
@@ -80,6 +83,10 @@ Future<void> _shareMyCard(BuildContext context) async {
       country: demoProfile.country,
       countryPlace: local,
       avatarUrl: backend.me?.avatarUrl,
+      xp: demoProfile.xp,
+      title: rewards.worn,
+      pro: Subscription.instance.active,
+      cover: MyCover.instance.cover,
     ),
   );
 }
@@ -111,6 +118,9 @@ void _shareMatch(
       newBest: outcome?.newBest ?? false,
       avatarUrl: backend.me?.avatarUrl,
       opponentTierIdx: opponent.tierIdx,
+      lp: change?.after.lp,
+      pro: Subscription.instance.active,
+      cover: MyCover.instance.cover,
     ),
   );
 }

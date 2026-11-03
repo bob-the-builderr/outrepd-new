@@ -143,8 +143,10 @@ void main() {
       await tester.tap(find.text('open'));
       await tester.pumpAndSettle();
 
-      // The rating: 1,000 + 500 a tier + 100 a division + 72 (2026-11-02).
-      expect(find.text('Diamond I · 3,972'), findsOneWidget);
+      // The rating: 1,000 + 500 a tier + 100 a division + 72 (2026-11-02),
+      // on the rank row under the name (the player card, 2026-11-03).
+      expect(find.text('DIAMOND I'), findsOneWidget);
+      expect(find.textContaining('3,972', findRichText: true), findsWidgets);
       // 3 of their wins, 1 of yours — headToHead()'s own {wins}W{losses}L
       // order, theirs first.
       expect(find.text('3W 1L'), findsOneWidget);
