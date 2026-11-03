@@ -1600,13 +1600,18 @@ class _ScoreCard extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Each side leans out towards its own edge, halfway: centred,
+            // the faces crowded the clock; pinned, the names ran off the rim.
             Expanded(
-              child: _Fighter(
-                name: l.you,
-                reps: yours,
-                tierIdx: demoProfile.tierIdx,
-                colour: context.colors.brand,
-                image: avatar.picture,
+              child: Align(
+                alignment: const AlignmentDirectional(-0.5, -1),
+                child: _Fighter(
+                  name: l.you,
+                  reps: yours,
+                  tierIdx: demoProfile.tierIdx,
+                  colour: context.colors.brand,
+                  image: avatar.picture,
+                ),
               ),
             ),
             // The middle: the clock, whether this is live, and the way out —
@@ -1643,14 +1648,17 @@ class _ScoreCard extends StatelessWidget {
               child: duel == null
                   // Keeps the clock centred when there is nobody there.
                   ? const SizedBox.shrink()
-                  : Opacity(
-                      opacity: away ? 0.45 : 1,
-                      child: _Fighter(
-                        name: duel.opponentName,
-                        reps: theirs,
-                        tierIdx: duel.opponentTierIdx,
-                        colour: context.colors.rival,
-                        image: duel.opponentImage,
+                  : Align(
+                      alignment: const AlignmentDirectional(0.5, -1),
+                      child: Opacity(
+                        opacity: away ? 0.45 : 1,
+                        child: _Fighter(
+                          name: duel.opponentName,
+                          reps: theirs,
+                          tierIdx: duel.opponentTierIdx,
+                          colour: context.colors.rival,
+                          image: duel.opponentImage,
+                        ),
                       ),
                     ),
             ),
