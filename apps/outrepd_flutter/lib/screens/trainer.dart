@@ -1651,7 +1651,6 @@ class _ScoreCard extends StatelessWidget {
                         tierIdx: duel.opponentTierIdx,
                         colour: context.colors.rival,
                         image: duel.opponentImage,
-                        end: true,
                       ),
                     ),
             ),
@@ -2000,7 +1999,6 @@ class _Fighter extends StatelessWidget {
     required this.tierIdx,
     required this.colour,
     this.image,
-    this.end = false,
   });
 
   final ImageProvider? image;
@@ -2010,14 +2008,11 @@ class _Fighter extends StatelessWidget {
   final int tierIdx;
   final Color colour;
 
-  /// The right-hand side: everything against the far edge.
-  final bool end;
-
   @override
   Widget build(BuildContext context) {
-    final align = end ? CrossAxisAlignment.end : CrossAxisAlignment.start;
+    // Centred under the face on both sides: pinned to the outer edges, the
+    // names and counts sat against the screen's rim and read as cut off.
     return Column(
-      crossAxisAlignment: align,
       mainAxisSize: MainAxisSize.min,
       children: [
         // One treatment everywhere somebody's picture appears.
@@ -2041,9 +2036,6 @@ class _Fighter extends StatelessWidget {
         ),
         FittedBox(
           fit: BoxFit.scaleDown,
-          alignment: end
-              ? AlignmentDirectional.centerEnd
-              : AlignmentDirectional.centerStart,
           child: Text(
             localNumber(context, reps),
             style: TextStyle(
