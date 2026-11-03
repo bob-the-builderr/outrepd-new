@@ -118,7 +118,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Unranked'), findsNothing);
-      expect(find.text('Gold III'), findsOneWidget);
+      expect(find.text('GOLD III'), findsOneWidget);
       expect(find.text('Find a match'), findsOneWidget);
     });
 
