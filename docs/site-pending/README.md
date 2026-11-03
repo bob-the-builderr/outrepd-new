@@ -11,3 +11,10 @@ publishing it needs the user's yes.
 
 Still to write for the same release: the privacy page naming Unity
 (LevelPlay) among the ad partners.
+
+- `app-ads/` — the next outrepd.com/app-ads.txt: AdMob's line (live now),
+  Unity Ads' list as its dashboard gave it on 2026-11-03 (`unity.txt`),
+  ironSource's published resellers (`ironsource-resellers.txt`) and its
+  DIRECT line. `node docs/site-pending/app-ads/build.js <ironSource publisher id>`
+  writes the file. The site serves it at https://www.outrepd.com/app-ads.txt
+  (outrepd.com redirects there with a 308).
