@@ -434,10 +434,10 @@ class LDe extends L {
   String get proSettingsActive => 'Du bist Pro. Danke für deine Unterstützung.';
 
   @override
-  String get lifterMakerTitle => 'Dein Lifter';
+  String get lifterMakerTitle => 'Avatar anpassen';
 
   @override
-  String get lifterMakerFirst => 'Erstelle deinen Lifter';
+  String get lifterMakerFirst => 'Avatar anpassen';
 
   @override
   String get lifterMakerFirstBody => 'Das bist du auf jeder Rangliste und in jedem Match.';

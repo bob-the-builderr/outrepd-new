@@ -435,10 +435,10 @@ class LEs extends L {
   String get proSettingsActive => 'Eres Pro. Gracias por el apoyo.';
 
   @override
-  String get lifterMakerTitle => 'Tu lifter';
+  String get lifterMakerTitle => 'Personaliza tu avatar';
 
   @override
-  String get lifterMakerFirst => 'Crea tu lifter';
+  String get lifterMakerFirst => 'Personaliza tu avatar';
 
   @override
   String get lifterMakerFirstBody => 'Este eres tú en cada tabla y en cada partida.';

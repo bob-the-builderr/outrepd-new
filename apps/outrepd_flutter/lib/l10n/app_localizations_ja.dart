@@ -420,10 +420,10 @@ class LJa extends L {
   String get proSettingsActive => 'あなたはProです。応援ありがとうございます。';
 
   @override
-  String get lifterMakerTitle => 'あなたのリフター';
+  String get lifterMakerTitle => 'アバターをカスタマイズ';
 
   @override
-  String get lifterMakerFirst => 'リフターを作ろう';
+  String get lifterMakerFirst => 'アバターをカスタマイズ';
 
   @override
   String get lifterMakerFirstBody => 'すべてのボードと試合で、これがあなたです。';

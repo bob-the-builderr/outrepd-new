@@ -433,10 +433,10 @@ class LPt extends L {
   String get proSettingsActive => 'Você é Pro. Obrigado pelo apoio.';
 
   @override
-  String get lifterMakerTitle => 'Seu lifter';
+  String get lifterMakerTitle => 'Personalize seu avatar';
 
   @override
-  String get lifterMakerFirst => 'Crie seu lifter';
+  String get lifterMakerFirst => 'Personalize seu avatar';
 
   @override
   String get lifterMakerFirstBody => 'Este é você em cada ranking e em cada partida.';

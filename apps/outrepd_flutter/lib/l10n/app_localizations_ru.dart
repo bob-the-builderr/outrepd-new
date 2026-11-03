@@ -432,10 +432,10 @@ class LRu extends L {
   String get proSettingsActive => 'У вас Pro. Спасибо за поддержку.';
 
   @override
-  String get lifterMakerTitle => 'Ваш атлет';
+  String get lifterMakerTitle => 'Настрой свой аватар';
 
   @override
-  String get lifterMakerFirst => 'Создайте своего атлета';
+  String get lifterMakerFirst => 'Настрой свой аватар';
 
   @override
   String get lifterMakerFirstBody => 'Это вы в каждой таблице и в каждом матче.';

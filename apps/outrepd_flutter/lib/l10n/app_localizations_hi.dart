@@ -432,10 +432,10 @@ class LHi extends L {
   String get proSettingsActive => 'आप Pro हैं। साथ देने के लिए धन्यवाद।';
 
   @override
-  String get lifterMakerTitle => 'आपका लिफ्टर';
+  String get lifterMakerTitle => 'अवतार कस्टमाइज़ करें';
 
   @override
-  String get lifterMakerFirst => 'अपना लिफ्टर बनाएँ';
+  String get lifterMakerFirst => 'अवतार कस्टमाइज़ करें';
 
   @override
   String get lifterMakerFirstBody => 'हर बोर्ड और हर मैच में यही आप हैं।';

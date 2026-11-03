@@ -435,10 +435,10 @@ class LFr extends L {
   String get proSettingsActive => 'Vous êtes Pro. Merci pour votre soutien.';
 
   @override
-  String get lifterMakerTitle => 'Votre lifter';
+  String get lifterMakerTitle => 'Personnalise ton avatar';
 
   @override
-  String get lifterMakerFirst => 'Créez votre lifter';
+  String get lifterMakerFirst => 'Personnalise ton avatar';
 
   @override
   String get lifterMakerFirstBody => 'C\'est vous, dans chaque classement et chaque match.';

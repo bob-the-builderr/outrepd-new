@@ -434,10 +434,10 @@ class LIt extends L {
   String get proSettingsActive => 'Sei Pro. Grazie per il supporto.';
 
   @override
-  String get lifterMakerTitle => 'Il tuo lifter';
+  String get lifterMakerTitle => 'Personalizza il tuo avatar';
 
   @override
-  String get lifterMakerFirst => 'Crea il tuo lifter';
+  String get lifterMakerFirst => 'Personalizza il tuo avatar';
 
   @override
   String get lifterMakerFirstBody => 'Questo sei tu in ogni classifica e in ogni partita.';

@@ -431,10 +431,10 @@ class LId extends L {
   String get proSettingsActive => 'Kamu Pro. Terima kasih atas dukunganmu.';
 
   @override
-  String get lifterMakerTitle => 'Lifter-mu';
+  String get lifterMakerTitle => 'Sesuaikan avatarmu';
 
   @override
-  String get lifterMakerFirst => 'Buat lifter-mu';
+  String get lifterMakerFirst => 'Sesuaikan avatarmu';
 
   @override
   String get lifterMakerFirstBody => 'Inilah kamu di setiap papan dan setiap pertandingan.';

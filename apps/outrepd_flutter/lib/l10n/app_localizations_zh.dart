@@ -418,10 +418,10 @@ class LZh extends L {
   String get proSettingsActive => '你已是 Pro。感谢你的支持。';
 
   @override
-  String get lifterMakerTitle => '你的举重手';
+  String get lifterMakerTitle => '自定义头像';
 
   @override
-  String get lifterMakerFirst => '创建你的举重手';
+  String get lifterMakerFirst => '自定义头像';
 
   @override
   String get lifterMakerFirstBody => '在每个榜单和每场比赛中，这就是你。';

@@ -432,10 +432,10 @@ class LTr extends L {
   String get proSettingsActive => 'Pro’sun. Desteğin için teşekkürler.';
 
   @override
-  String get lifterMakerTitle => 'Lifter’ın';
+  String get lifterMakerTitle => 'Avatarını özelleştir';
 
   @override
-  String get lifterMakerFirst => 'Lifter’ını oluştur';
+  String get lifterMakerFirst => 'Avatarını özelleştir';
 
   @override
   String get lifterMakerFirstBody => 'Her sıralamada ve her maçta bu sensin.';

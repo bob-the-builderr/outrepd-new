@@ -420,10 +420,10 @@ class LKo extends L {
   String get proSettingsActive => 'Pro 회원이에요. 응원해 주셔서 고마워요.';
 
   @override
-  String get lifterMakerTitle => '내 리프터';
+  String get lifterMakerTitle => '아바타 꾸미기';
 
   @override
-  String get lifterMakerFirst => '리프터 만들기';
+  String get lifterMakerFirst => '아바타 꾸미기';
 
   @override
   String get lifterMakerFirstBody => '모든 순위표와 모든 경기에서 이게 바로 당신이에요.';

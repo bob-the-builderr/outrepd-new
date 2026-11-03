@@ -433,10 +433,10 @@ class LEn extends L {
   String get proSettingsActive => 'You\'re Pro. Thanks for the support.';
 
   @override
-  String get lifterMakerTitle => 'Your lifter';
+  String get lifterMakerTitle => 'Customize your avatar';
 
   @override
-  String get lifterMakerFirst => 'Make your lifter';
+  String get lifterMakerFirst => 'Customize your avatar';
 
   @override
   String get lifterMakerFirstBody => 'This is you on every board and in every match.';
