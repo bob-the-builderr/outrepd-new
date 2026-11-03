@@ -1,13 +1,13 @@
-commit      3ec0535231f4ed04d6ac66f4c00cc2a898ff31b3
-build       289
+commit      72fd3c0a7729c55aa0ebad7ea605d64e663bcd97
+build       290
 upload key  true
 key note    the upload key opens and has the alias
 apk         success 125631161 bytes
-aab         success 127684060 bytes
+aab         success 127683792 bytes
 paywall key yes
 ads levelplay yes, admob yes
 download    https://github.com/bob-the-builderr/outrepd-new/releases/latest/download/OUTREPD.apk
 firebase    true — push notifications and crash reports are in
 signed by   Owner: CN=mokhtar, OU=outrepd, O=outrepd, L=suez, ST=suez, C=EG
 sha-256     93:19:AC:A3:AC:BD:85:34:04:9D:BF:6F:D7:CD:B5:D2:CC:1D:D8:4F:AA:E4:C3:39:4B:A6:8B:45:FF:03:7A:FB
-run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/41700541983
+run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/41705505375
