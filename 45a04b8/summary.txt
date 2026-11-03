@@ -1,0 +1,11 @@
+commit      45a04b813e729a4baaf04439dd9cace0e9362b14
+build       288
+upload key  true
+key note    the upload key opens and has the alias
+apk         failure  bytes
+aab         skipped  bytes
+paywall key yes
+ads levelplay yes, admob yes
+download    https://github.com/bob-the-builderr/outrepd-new/releases/latest/download/OUTREPD.apk
+firebase    true — push notifications and crash reports are in
+run         https://github.com/bob-the-builderr/outrepd-new/actions/runs/41697168882
