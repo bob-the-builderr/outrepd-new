@@ -474,6 +474,7 @@
   "yourClimb": "당신의 등반",
   "yourRank": "내 랭크",
   "whoIsNext": "다음 상대는?",
+  "opponentFound": "상대를 찾았어요",
   "ratingFloor": "레이팅은 {n} 아래로 내려가지 않아요.",
   "floorKept": "{tier}은(는) 당신의 것입니다. {rank} 아래로 떨어지지 않습니다.",
   "dayStreakCount": "{count}일 연속",

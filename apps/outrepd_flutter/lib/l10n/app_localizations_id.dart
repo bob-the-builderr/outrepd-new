@@ -1488,6 +1488,9 @@ class LId extends L {
   String get whoIsNext => 'Siapa berikutnya?';
 
   @override
+  String get opponentFound => 'Lawan ditemukan';
+
+  @override
   String ratingFloor(String n) {
     return 'Rating-mu tidak pernah turun di bawah ${n}.';
   }

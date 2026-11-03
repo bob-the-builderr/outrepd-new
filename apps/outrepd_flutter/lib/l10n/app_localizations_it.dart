@@ -1493,6 +1493,9 @@ class LIt extends L {
   String get whoIsNext => 'Chi è il prossimo?';
 
   @override
+  String get opponentFound => 'Avversario trovato';
+
+  @override
   String ratingFloor(String n) {
     return 'Il tuo punteggio non scende mai sotto ${n}.';
   }

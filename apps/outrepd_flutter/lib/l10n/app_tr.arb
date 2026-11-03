@@ -474,6 +474,7 @@
   "yourClimb": "Tırmanışın",
   "yourRank": "Rütben",
   "whoIsNext": "Sıradaki kim?",
+  "opponentFound": "Rakip bulundu",
   "ratingFloor": "Reytingin asla {n} altına düşmez.",
   "floorKept": "{tier} artık senin. {rank} altına düşmezsin.",
   "dayStreakCount": "{count} gün üst üste",

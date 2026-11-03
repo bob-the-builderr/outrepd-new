@@ -1465,6 +1465,9 @@ class LJa extends L {
   String get whoIsNext => '次の相手は？';
 
   @override
+  String get opponentFound => '対戦相手が見つかりました';
+
+  @override
   String ratingFloor(String n) {
     return 'レートが${n}を下回ることはありません。';
   }

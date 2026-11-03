@@ -474,6 +474,7 @@
   "yourClimb": "आपकी चढ़ाई",
   "yourRank": "आपकी रैंक",
   "whoIsNext": "अगला कौन?",
+  "opponentFound": "प्रतिद्वंद्वी मिल गया",
   "ratingFloor": "आपकी रेटिंग कभी {n} से नीचे नहीं जाती।",
   "floorKept": "{tier} अब आपका है। आप {rank} से नीचे नहीं जाएँगे।",
   "dayStreakCount": "{count} दिन लगातार",

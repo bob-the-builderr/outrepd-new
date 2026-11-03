@@ -31,7 +31,6 @@ import '../reps/recording.dart';
 import '../reps/pushup_counter.dart';
 import '../type_scale.dart';
 import '../theme.dart';
-import '../tier_badge.dart';
 import '../widgets.dart';
 import '../xp.dart';
 import '../reps/count_accuracy.dart';
@@ -46,6 +45,7 @@ import 'vs_screen.dart';
 import 'match_entry.dart';
 import 'post_match.dart';
 import 'trainer.dart';
+import 'vs_search.dart';
 
 /// One bout, both lifters, same clock. Short enough that it is a sprint rather
 /// than a test of endurance, and short enough to fit in a gym doorway.
@@ -194,6 +194,10 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   // opponent is found. Never left unset: practice reaches _Stage.result too,
   // by way of _ResultView's constructor, without ever calling _search.
   late Opponent _opponent;
+
+  /// Whether [_opponent] is somebody found rather than the stand-in the
+  /// screen starts with: the search's seat lands on them once it is.
+  bool _matched = false;
   late int _theirReps;
 
   /// Somebody else's actual stored set, when [_search] found one. Null means
@@ -366,6 +370,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
 
   Future<void> _search() async {
     _timer?.cancel();
+    _matched = false;
 
     // A friend's live match: both already said yes, so there is nobody to
     // look for — straight to meeting them.
@@ -498,6 +503,9 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   /// The countdown from "found somebody" to "on camera", shared by every mode
   /// that reaches it.
   void _goVersus({bool quick = false}) {
+    // Found: the seat on the search screen slows and lands on them while
+    // the wait below runs.
+    if (mounted) setState(() => _matched = true);
     // How the other lifter looks, for the VS screen: asked now, drawn when
     // it arrives.
     if (_live case final live?) unawaited(Looks.instance.fetch([live.opponent.id]));
@@ -1086,11 +1094,15 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
             from: from,
             total: liveSearchFor,
             onCancel: _confirmQuit,
+            found: _matched ? _opponent : null,
           );
         }
         // The same door as the back gesture: leaving from here still forfeits
         // if a real opponent already turned up while this screen searched.
-        return _SearchingView(onCancel: _confirmQuit);
+        return _SearchingView(
+          onCancel: _confirmQuit,
+          found: _matched ? _opponent : null,
+        );
 
       case _Stage.versus:
         if (_live case final live?) {
@@ -1329,9 +1341,12 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
 /// indistinguishable from a hung app after about four seconds, and this search
 /// can honestly take eight.
 class _SearchingView extends StatefulWidget {
-  const _SearchingView({required this.onCancel});
+  const _SearchingView({required this.onCancel, this.found});
 
   final VoidCallback onCancel;
+
+  /// Who was found, once somebody was: the seat lands on them.
+  final Opponent? found;
 
   @override
   State<_SearchingView> createState() => _SearchingViewState();
@@ -1359,107 +1374,91 @@ class _SearchingViewState extends State<_SearchingView> {
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
-    final p = demoProfile;
     final seconds = _elapsed.elapsed.inSeconds;
     // Three dots cycling, so the card is visibly alive between clock ticks.
     final lit = (_elapsed.elapsedMilliseconds ~/ 400) % 3;
+    final found = widget.found;
 
     return Column(
       children: [
         const Spacer(flex: 2),
-        Opacity(
-          opacity: 0.55,
-          child: Column(
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: VsSearchCard(
+            found: found,
             children: [
-              TierBadge(tierIndex: p.tierIdx, size: 58),
-              const SizedBox(height: 6),
-              Text(
-                tierLabel(l, p.tierIdx, p.divIdx),
-                style: TextStyle(color: context.colors.text, fontSize: 17),
-              ),
+              if (found == null) ...[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    for (var i = 0; i < 3; i++) ...[
+                      if (i > 0) const SizedBox(width: 5),
+                      Container(
+                        width: 6,
+                        height: 6,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: i == lit
+                              ? context.colors.brand
+                              : context.colors.faint,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  l.searchingForOpponent,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: context.colors.text,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  formatClock(context, seconds),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: context.colors.muted,
+                    fontSize: 14,
+                    fontFeatures: const [FontFeature.tabularFigures()],
+                  ),
+                ),
+              ] else
+                Text(
+                  l.opponentFound,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: context.colors.text,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
             ],
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 14),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18),
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(13),
-                decoration: BoxDecoration(
-                  color: context.colors.surface,
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: context.colors.border, width: 0.5),
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        for (var i = 0; i < 3; i++) ...[
-                          if (i > 0) const SizedBox(width: 5),
-                          Container(
-                            width: 6,
-                            height: 6,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: i == lit
-                                  ? context.colors.brand
-                                  : context.colors.faint,
-                            ),
-                          ),
-                        ],
-                      ],
-                    ),
-                    const SizedBox(height: 7),
-                    Text(
-                      l.searchingForOpponent,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: context.colors.text,
-                        fontSize: 16,
-                      ),
-                    ),
-                    const SizedBox(height: 3),
-                    Text(
-                      formatClock(context, seconds),
-                      style: TextStyle(
-                        color: context.colors.muted,
-                        fontSize: 14,
-                        fontFeatures: const [FontFeature.tabularFigures()],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 12),
-              InkWell(
-                onTap: widget.onCancel,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: InkWell(
+            onTap: widget.onCancel,
+            borderRadius: BorderRadius.circular(14),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 13),
+              decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14),
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 11),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(
-                      color: context.colors.border,
-                      width: 0.5,
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      l.cancel,
-                      style: TextStyle(
-                        color: context.colors.text,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
+                border: Border.all(color: context.colors.border, width: 0.5),
+              ),
+              child: Center(
+                child: Text(
+                  l.cancel,
+                  style: TextStyle(color: context.colors.text, fontSize: 15),
                 ),
               ),
-            ],
+            ),
           ),
         ),
         const Spacer(flex: 3),
@@ -1478,11 +1477,15 @@ class _LiveSearchView extends StatefulWidget {
     required this.from,
     required this.total,
     required this.onCancel,
+    this.found,
   });
 
   final DateTime from;
   final Duration total;
   final VoidCallback onCancel;
+
+  /// Who was found, once somebody was: the seat lands on them.
+  final Opponent? found;
 
   @override
   State<_LiveSearchView> createState() => _LiveSearchViewState();
@@ -1535,6 +1538,8 @@ class _LiveSearchViewState extends State<_LiveSearchView> {
     final seconds = elapsed.inSeconds.clamp(0, total.inSeconds);
     final end = formatClock(context, total.inSeconds);
 
+    final found = widget.found;
+
     return Column(
       children: [
         const SizedBox(height: 28),
@@ -1543,67 +1548,57 @@ class _LiveSearchViewState extends State<_LiveSearchView> {
           style: TextStyle(color: context.colors.muted, fontSize: 15),
         ),
         const Spacer(flex: 2),
-        SizedBox(
-          width: 230,
-          height: 230,
-          child: Stack(
-            alignment: Alignment.center,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: VsSearchCard(
+            found: found,
             children: [
-              SizedBox.expand(
-                child: CircularProgressIndicator(
-                  key: const Key('liveSearchRing'),
-                  value: share,
-                  strokeWidth: 12,
-                  strokeCap: StrokeCap.round,
-                  backgroundColor: context.colors.surfaceRaised,
-                  color: context.colors.brand,
+              Text(
+                found == null ? l.lookingForLive : l.opponentFound,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: context.colors.text,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    formatClock(context, seconds),
-                    style: TextStyle(
-                      color: context.colors.text,
-                      fontSize: 48,
-                      fontWeight: FontWeight.w500,
-                      fontFeatures: const [FontFeature.tabularFigures()],
+              if (found == null) ...[
+                const SizedBox(height: 12),
+                // The fifteen seconds, filling, and the time on them.
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(3),
+                  child: SizedBox(
+                    height: 6,
+                    child: LinearProgressIndicator(
+                      key: const Key('liveSearchRing'),
+                      value: share,
+                      backgroundColor: context.colors.surfaceRaised,
+                      color: context.colors.brand,
                     ),
                   ),
-                  Text(
-                    l.ofTime(end),
-                    style: TextStyle(color: context.colors.muted, fontSize: 15),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  '${formatClock(context, seconds)} ${l.ofTime(end)}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: context.colors.muted,
+                    fontSize: 14,
+                    fontFeatures: const [FontFeature.tabularFigures()],
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  l.liveFallbackAt(end),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: context.colors.muted,
+                    fontSize: 13.5,
+                    height: 1.4,
+                  ),
+                ),
+              ],
             ],
-          ),
-        ),
-        const SizedBox(height: 30),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Text(
-            l.lookingForLive,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: context.colors.text,
-              fontSize: 21,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: Text(
-            l.liveFallbackAt(end),
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: context.colors.muted,
-              fontSize: 15,
-              height: 1.4,
-            ),
           ),
         ),
         // Only once there is somebody to count: "0 online" tells a lifter

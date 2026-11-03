@@ -2837,6 +2837,12 @@ abstract class L {
   /// **'Who's next?'**
   String get whoIsNext;
 
+  /// No description provided for @opponentFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Opponent found'**
+  String get opponentFound;
+
   /// No description provided for @ratingFloor.
   ///
   /// In en, this message translates to:

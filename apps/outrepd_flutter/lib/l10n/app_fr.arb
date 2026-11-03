@@ -474,6 +474,7 @@
   "yourClimb": "Ton ascension",
   "yourRank": "Ton rang",
   "whoIsNext": "Qui est le prochain ?",
+  "opponentFound": "Adversaire trouvé",
   "ratingFloor": "Ta cote ne descend jamais sous {n}.",
   "floorKept": "{tier} est à toi. Tu ne descendras plus sous {rank}.",
   "dayStreakCount": "{count} jours d’affilée",

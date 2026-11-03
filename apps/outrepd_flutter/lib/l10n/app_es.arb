@@ -474,6 +474,7 @@
   "yourClimb": "Tu ascenso",
   "yourRank": "Tu rango",
   "whoIsNext": "¿Quién sigue?",
+  "opponentFound": "Rival encontrado",
   "ratingFloor": "Tu rating nunca baja de {n}.",
   "floorKept": "{tier} es tuyo. Ya no bajas de {rank}.",
   "dayStreakCount": "{count} días seguidos",

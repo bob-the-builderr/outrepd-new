@@ -1495,6 +1495,9 @@ class LDe extends L {
   String get whoIsNext => 'Wer ist der Nächste?';
 
   @override
+  String get opponentFound => 'Gegner gefunden';
+
+  @override
   String ratingFloor(String n) {
     return 'Deine Wertung fällt nie unter ${n}.';
   }

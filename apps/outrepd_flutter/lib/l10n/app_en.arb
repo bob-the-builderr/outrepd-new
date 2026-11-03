@@ -821,6 +821,7 @@
   "yourClimb": "Your climb",
   "yourRank": "Your rank",
   "whoIsNext": "Who's next?",
+  "opponentFound": "Opponent found",
   "ratingFloor": "Your rating never drops below {n}.",
   "@ratingFloor": {
     "placeholders": {

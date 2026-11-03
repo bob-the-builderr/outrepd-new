@@ -474,6 +474,7 @@
   "yourClimb": "你的攀登",
   "yourRank": "我的段位",
   "whoIsNext": "下一个对手是谁？",
+  "opponentFound": "已找到对手",
   "ratingFloor": "积分永远不会低于 {n}。",
   "floorKept": "{tier} 已经是你的了，不会再掉到 {rank} 以下。",
   "dayStreakCount": "连续 {count} 天",

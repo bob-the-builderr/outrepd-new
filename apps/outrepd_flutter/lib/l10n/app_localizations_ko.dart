@@ -1466,6 +1466,9 @@ class LKo extends L {
   String get whoIsNext => '다음 상대는?';
 
   @override
+  String get opponentFound => '상대를 찾았어요';
+
+  @override
   String ratingFloor(String n) {
     return '레이팅은 ${n} 아래로 내려가지 않아요.';
   }

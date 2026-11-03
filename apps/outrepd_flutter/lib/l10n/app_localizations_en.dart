@@ -1488,6 +1488,9 @@ class LEn extends L {
   String get whoIsNext => 'Who\'s next?';
 
   @override
+  String get opponentFound => 'Opponent found';
+
+  @override
   String ratingFloor(String n) {
     return 'Your rating never drops below ${n}.';
   }

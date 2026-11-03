@@ -1493,6 +1493,9 @@ class LEs extends L {
   String get whoIsNext => '¿Quién sigue?';
 
   @override
+  String get opponentFound => 'Rival encontrado';
+
+  @override
   String ratingFloor(String n) {
     return 'Tu rating nunca baja de ${n}.';
   }

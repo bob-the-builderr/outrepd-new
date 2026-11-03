@@ -1491,6 +1491,9 @@ class LHi extends L {
   String get whoIsNext => 'अगला कौन?';
 
   @override
+  String get opponentFound => 'प्रतिद्वंद्वी मिल गया';
+
+  @override
   String ratingFloor(String n) {
     return 'आपकी रेटिंग कभी ${n} से नीचे नहीं जाती।';
   }
