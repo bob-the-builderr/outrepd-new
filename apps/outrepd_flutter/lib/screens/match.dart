@@ -21,6 +21,7 @@ import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../motion.dart';
 import '../push.dart';
+import '../rank_card.dart';
 import '../ranking.dart';
 import '../rewards.dart';
 import '../season.dart';
@@ -72,6 +73,33 @@ class MatchScreen extends StatelessWidget {
                       children: [
                 _TopRow(profile: p),
                 _StreakLine(profile: p),
+                // Ranked and online (the user's pick, 2026-11-03): the rank
+                // as one lit card, the match under it, and Adventure on the
+                // first screen rather than below the fold. Each rises in.
+                if (p.isRanked && !offline) ...[
+                  const SizedBox(height: 12),
+                  RiseIn(
+                    child: RankCard(
+                      tierIdx: p.tierIdx,
+                      divIdx: p.divIdx,
+                      lp: p.lp,
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => ProgressionScreen(profile: p),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  RiseIn(delay: staggered(1), child: const _MatchHero()),
+                  const SizedBox(height: 14),
+                  RiseIn(delay: staggered(2), child: const AdventureCard()),
+                  const SizedBox(height: 14),
+                  RiseIn(delay: staggered(3), child: const DailyGoalCard()),
+                  const SizedBox(height: 14),
+                  RiseIn(delay: staggered(4), child: const _WeekRaceCard()),
+                  const Spacer(),
+                ] else ...[
                 const Spacer(),
                 const SizedBox(height: 18),
                 if (!p.isRanked)
@@ -113,6 +141,7 @@ class MatchScreen extends StatelessWidget {
                   ),
                 ],
                 const Spacer(flex: 2),
+                ],
                       ],
                     ),
                   ),
@@ -488,6 +517,128 @@ class _Rank extends StatelessWidget {
           key: const Key('homeRating'),
           style: TextStyle(color: context.colors.muted, fontSize: 14),
         ),
+      ],
+    );
+  }
+}
+
+// ─────────────────────────────── the match ───────────────────────────────────
+
+/// The ranked match as a card of its own (2026-11-03): what it is in two
+/// lines, the button with a ring that keeps pulsing out from it, and the
+/// terms under it.
+class _MatchHero extends StatelessWidget {
+  const _MatchHero();
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+      decoration: BoxDecoration(
+        color: context.colors.surface,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            l.obIdeaTitle,
+            style: TextStyle(
+              color: context.colors.text,
+              fontSize: 22,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            l.obIdeaRival,
+            style: TextStyle(color: context.colors.muted, fontSize: 14),
+          ),
+          const SizedBox(height: 16),
+          _Pulse(
+            child: _FilledAction(
+              label: l.findMatch,
+              onTap: () => startMatch(context, mode: MatchMode.ranked),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            l.rankedTerms(localNumber(context, kDuelLength.inSeconds)),
+            textAlign: TextAlign.center,
+            style: TextStyle(color: context.colors.muted, fontSize: 14),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// A ring that keeps swelling out of the button and fading, so the one thing
+/// the tab is for looks ready to go. Still where the phone asks for less
+/// motion, and under tests.
+class _Pulse extends StatefulWidget {
+  const _Pulse({required this.child});
+
+  final Widget child;
+
+  @override
+  State<_Pulse> createState() => _PulseState();
+}
+
+class _PulseState extends State<_Pulse> with SingleTickerProviderStateMixin {
+  late final _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1800),
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (loopsAllowed(context)) {
+      if (!_controller.isAnimating) _controller.repeat();
+    } else {
+      _controller.stop();
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final brand = context.colors.brand;
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Positioned.fill(
+          child: IgnorePointer(
+            child: AnimatedBuilder(
+              animation: _controller,
+              builder: (context, _) {
+                if (!_controller.isAnimating) return const SizedBox.shrink();
+                final t = Curves.easeOut.transform(_controller.value);
+                return Transform.scale(
+                  scaleX: 1 + 0.06 * t,
+                  scaleY: 1 + 0.35 * t,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: brand.withValues(alpha: 0.7 * (1 - t)),
+                        width: 2,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+        widget.child,
       ],
     );
   }
