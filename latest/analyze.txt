@@ -1,2 +1,2 @@
 Analyzing outrepd_flutter...                                    
-No issues found! (ran in 13.4s)
+No issues found! (ran in 20.7s)
