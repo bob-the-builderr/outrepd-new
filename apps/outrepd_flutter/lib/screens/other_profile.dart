@@ -831,7 +831,9 @@ class _Body extends StatelessWidget {
         // Beside the name, the same as on your own profile.
         if (titleById(p.title) case final title?) ...[
           const SizedBox(height: 2),
-          WornTitle(title: title),
+          // Centred under the name like everything else here; the list
+          // stretches its children, which left it hanging at the start.
+          Center(child: WornTitle(title: title)),
         ],
         const SizedBox(height: 3),
         Text(
