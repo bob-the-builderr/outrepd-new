@@ -7,9 +7,11 @@
 library;
 
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../country_names.dart';
@@ -131,7 +133,51 @@ class SupabaseBackend implements Backend {
       row['country'] = _country;
     }
 
-    return _me = _profileFrom(row);
+    return _me = _keep(row);
+  }
+
+  /// Where the last row read is kept, with the account it belongs to.
+  static const _kKeptRow = 'backend.me.v1';
+
+  /// [row] as the profile, and kept for the next launch ([cachedMe]).
+  RemoteProfile _keep(Map<String, dynamic> row) {
+    unawaited(() async {
+      try {
+        final store = await SharedPreferences.getInstance();
+        await store.setString(_kKeptRow, jsonEncode(row));
+      } on Object catch (error) {
+        debugPrint('Could not keep the profile: $error');
+      }
+    }());
+    return _profileFrom(row);
+  }
+
+  Future<void> _forgetKept() async {
+    try {
+      final store = await SharedPreferences.getInstance();
+      await store.remove(_kKeptRow);
+    } on Object catch (error) {
+      debugPrint('Could not forget the profile: $error');
+    }
+  }
+
+  @override
+  Future<RemoteProfile?> cachedMe() async {
+    final user = _db.auth.currentUser;
+    if (user == null) return null;
+    try {
+      final store = await SharedPreferences.getInstance();
+      final raw = store.getString(_kKeptRow);
+      if (raw == null) return null;
+      final row = Map<String, dynamic>.from(jsonDecode(raw) as Map);
+      // Kept for another account: a phone signed out and into a new one.
+      if (row['id'] != user.id) return null;
+      // A fresh read that already landed wins over what was kept.
+      return _me ??= _profileFrom(row);
+    } on Object catch (error) {
+      debugPrint('Could not read the kept profile: $error');
+      return null;
+    }
   }
 
   @override
@@ -144,7 +190,7 @@ class SupabaseBackend implements Backend {
         .eq('id', user.id)
         .maybeSingle();
     if (row == null) return null;
-    return _me = _profileFrom(row);
+    return _me = _keep(row);
   }
 
   /// Where this phone says it is: the country a new account starts with,
@@ -942,7 +988,7 @@ class SupabaseBackend implements Backend {
               })
               .select()
               .single();
-      _me = _profileFrom(row);
+      _me = _keep(row);
       return existing == null
           ? SocialSignInResult.newAccount
           : SocialSignInResult.existingAccount;
@@ -1229,7 +1275,7 @@ class SupabaseBackend implements Backend {
               })
               .select()
               .single();
-      _me = _profileFrom(row);
+      _me = _keep(row);
       return true;
     } on AuthRetryableFetchException {
       // Not a wrong code: the screen says the server could not be reached.
@@ -1270,6 +1316,7 @@ class SupabaseBackend implements Backend {
   Future<void> signOut() async {
     await _db.auth.signOut();
     _me = null;
+    await _forgetKept();
   }
 
   @override
@@ -1535,6 +1582,7 @@ class SupabaseBackend implements Backend {
     await _db.rpc<void>('delete_my_account');
     await _db.auth.signOut();
     _me = null;
+    await _forgetKept();
   }
 
   RemotePrefs _prefsFrom(Map<String, dynamic> row) => RemotePrefs(

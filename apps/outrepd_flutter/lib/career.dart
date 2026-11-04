@@ -865,6 +865,15 @@ class Career extends ChangeNotifier {
     takeStreak();
   }
 
+  /// The server's profile, read after the screens were already up — a launch
+  /// that opened on the copy this phone kept (main.dart): onto the profile
+  /// the screens read, saved, and the screens told.
+  Future<void> takeServerProfile(RemoteProfile me) async {
+    applyServerProfile(me);
+    await save();
+    notifyListeners();
+  }
+
   /// The streak [rewards] holds, onto the profile the screens read, once it
   /// has taken in the account's copy.
   void takeStreak() {

@@ -1127,6 +1127,12 @@ abstract interface class Backend {
   /// Signs in and makes sure a profile row exists.
   Future<RemoteProfile> signIn({required String username});
 
+  /// The signed-in account's profile as this phone last read it from the
+  /// server, made [me] at once; null on a first launch, or when what is kept
+  /// belongs to another account. For a launch that should open without
+  /// waiting on the network: [signIn] still reads the fresh one.
+  Future<RemoteProfile?> cachedMe();
+
   /// This account's row read again, or null when nobody is signed in.
   /// Unlike [signIn], never starts an account of its own.
   Future<RemoteProfile?> refreshMe();
@@ -1510,6 +1516,9 @@ class NoBackend implements Backend {
   @override
   Future<RemoteProfile> signIn({required String username}) =>
       throw StateError('no server configured');
+
+  @override
+  Future<RemoteProfile?> cachedMe() async => null;
 
   @override
   Future<RemoteProfile?> refreshMe() async => null;

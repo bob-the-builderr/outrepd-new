@@ -256,7 +256,10 @@ Duration staggered(int index) =>
 ///
 /// The whole text is laid out from the first frame, the unwritten part
 /// transparent, so the lines never re-wrap as the letters arrive and what
-/// follows it does not jump. Screen readers get the whole sentence at once.
+/// follows it does not jump. The cursor takes no room in the line: as a
+/// letter of its own it widened the line it was on, and a centred line slid
+/// half a letter sideways and back as it passed through (2026-11-04: "the
+/// typing lags strangely"). Screen readers get the whole sentence at once.
 class TypeOut extends StatefulWidget {
   const TypeOut(
     this.text, {
@@ -338,11 +341,29 @@ class _TypeOutState extends State<TypeOut> with SingleTickerProviderStateMixin {
             TextSpan(
               children: [
                 TextSpan(text: letters.take(shown).join()),
+                // Word joiners either side: a break opportunity mid-word, where
+                // the cursor is, would let a word that wraps split there.
+                if (!done) const TextSpan(text: '\u2060'),
                 if (!done)
-                  TextSpan(
-                    text: '|',
-                    style: TextStyle(color: colour?.withValues(alpha: 0.7)),
+                  WidgetSpan(
+                    alignment: PlaceholderAlignment.middle,
+                    // No width and no height: drawn over the line, not in it.
+                    child: SizedBox.shrink(
+                      child: OverflowBox(
+                        minWidth: 0,
+                        maxWidth: double.infinity,
+                        minHeight: 0,
+                        maxHeight: double.infinity,
+                        child: Text(
+                          '|',
+                          style: widget.style.copyWith(
+                            color: colour?.withValues(alpha: 0.7),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
+                if (!done) const TextSpan(text: '\u2060'),
                 TextSpan(
                   text: letters.skip(shown).join(),
                   style: const TextStyle(color: Colors.transparent),

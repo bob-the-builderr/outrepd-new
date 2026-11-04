@@ -146,8 +146,16 @@ class Ads extends ChangeNotifier {
     _sinceOffer = prefs.getInt(_sinceOfferKey) ?? 0;
     _asked = prefs.getBool(_askedKey) ?? false;
     if (!configured || !_asked) return;
-    await _storeKnown();
-    if (!_pro) unawaited(_start());
+    // Started once the store has said whether this account has Pro. Not
+    // awaited: this runs before the first screen, and the store is first
+    // asked by the first screen (shell.dart) — awaited here, the launch
+    // waited on an answer nothing had asked for yet (2026-11-04: "it takes
+    // a long time to open").
+    unawaited(
+      _storeKnown().then((_) {
+        if (!_pro) unawaited(_start());
+      }),
+    );
   }
 
   /// Once the store has said whether this account has Pro: a subscriber's

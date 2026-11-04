@@ -80,22 +80,33 @@ void main() async {
     // 'demo_lifter' default. Kept out of the try this call sits inside would
     // otherwise be part of: a lost connection here is routine, not a reason
     // to skip loading everything that follows.
+    //
+    // A returning account opens on the profile this phone last read and takes
+    // the server's when it answers: the launch waited on that trip to the
+    // server — one or two on a weak signal, seconds — before anything was
+    // drawn (the user, 2026-11-04: "it takes a long time to open"). Only a
+    // first launch, with nothing kept, still waits for it.
     RemoteProfile? me;
+    Future<RemoteProfile?>? fresh;
     if (backend.available) {
-      try {
-        me = await backend.signIn(username: demoProfile.username);
-        // Says this account is around, which is the whole of what the online
-        // dot on a friends list means. Not awaited: the first screen waited
-        // on this trip to the server for nothing (2026-11-04), and if it
-        // fails, the worst outcome is a friend seeing us as offline.
-        unawaited(
-          backend.touch().catchError((Object error) {
-            debugPrint('Could not say we are around: $error');
-          }),
-        );
-      } on Object catch (error) {
-        debugPrint('Could not sign in: $error');
-      }
+      fresh = backend.signIn(username: demoProfile.username).then<RemoteProfile?>(
+        (signedIn) {
+          // Says this account is around, which is the whole of what the
+          // online dot on a friends list means. If it fails, the worst
+          // outcome is a friend seeing us as offline.
+          unawaited(
+            backend.touch().catchError((Object error) {
+              debugPrint('Could not say we are around: $error');
+            }),
+          );
+          return signedIn;
+        },
+        onError: (Object error) {
+          debugPrint('Could not sign in: $error');
+          return null;
+        },
+      );
+      if (await backend.cachedMe() == null) me = await fresh;
     }
 
     await loadCountAccuracy();
@@ -118,7 +129,17 @@ void main() async {
     // overwrites it, not the other way round — the one place a fresh
     // install or a second phone gets back to the ladder it has actually
     // been racing on.
-    if (me case final signedIn?) applyServerProfile(signedIn);
+    if (me case final signedIn?) {
+      applyServerProfile(signedIn);
+    } else if (fresh != null) {
+      // Opened on what this phone had: the server's own once it answers,
+      // onto the screens already up.
+      unawaited(
+        fresh.then((signedIn) async {
+          if (signedIn != null) await Career.instance.takeServerProfile(signedIn);
+        }),
+      );
+    }
     // The adventure's stars: this phone's and the account's, the best of
     // each. Not awaited, like the history below.
     unawaited(Adventure.instance.sync());

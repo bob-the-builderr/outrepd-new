@@ -25,7 +25,6 @@ import '../avatar.dart';
 import '../lifter/lifter_view.dart';
 import '../lifter/looks.dart';
 import '../lifter/my_lifter.dart';
-import '../player_avatar.dart';
 import '../ranking.dart';
 import '../reps/recording.dart';
 import '../reps/pushup_counter.dart';
