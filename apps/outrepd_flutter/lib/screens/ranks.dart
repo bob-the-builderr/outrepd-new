@@ -23,6 +23,7 @@ import '../lifter/lifter_view.dart';
 import '../lifter/looks.dart';
 import '../lifter/my_lifter.dart';
 import '../motion.dart';
+import '../player_avatar.dart' show decodedAt;
 import '../ranking.dart';
 import '../season.dart';
 import '../subscription.dart';
@@ -1231,7 +1232,7 @@ class _Initial extends StatelessWidget {
     if ((own == null && url == null) || own is LifterPicture) return fallback;
     return ClipOval(
       child: Image(
-        image: own ?? NetworkImage(url!),
+        image: decodedAt(context, own ?? NetworkImage(url!), size),
         width: size,
         height: size,
         fit: BoxFit.cover,

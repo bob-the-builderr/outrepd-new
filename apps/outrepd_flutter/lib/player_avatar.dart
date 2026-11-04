@@ -99,7 +99,7 @@ class PlayerAvatar extends StatelessWidget {
             ),
             child: ClipOval(
               child: Image(
-                image: picture,
+                image: decodedAt(context, picture, size),
                 width: size,
                 height: size,
                 fit: BoxFit.cover,
@@ -126,3 +126,18 @@ class PlayerAvatar extends StatelessWidget {
     return GestureDetector(onTap: onTap, child: content);
   }
 }
+
+/// [picture] decoded at the pixels a circle [size] across needs, not at the
+/// size it was uploaded (800 px square).
+///
+/// A board draws up to a hundred of these. Decoded whole, each is 2.5 MB of
+/// memory against Flutter's 100 MB image cache — a long board pushed
+/// pictures out as it scrolled and decoded them again, which is jank on a
+/// slow phone. At 40 px on a 3x screen one is 58 KB. What is drawn is the
+/// same: it is shown no larger than this anyway.
+ImageProvider decodedAt(BuildContext context, ImageProvider picture, double size) =>
+    ResizeImage.resizeIfNeeded(
+      (size * MediaQuery.devicePixelRatioOf(context)).ceil(),
+      null,
+      picture,
+    );

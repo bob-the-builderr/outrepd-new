@@ -9,6 +9,7 @@ library;
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../country_names.dart';
@@ -35,11 +36,46 @@ Future<void> startBackend() async {
     await Supabase.initialize(
       url: kSupabaseUrl,
       publishableKey: kSupabaseAnonKey,
+      httpClient: GiveUpClient(http.Client()),
     );
     backend = SupabaseBackend(Supabase.instance.client);
   } on Object catch (error) {
     debugPrint('Could not reach the server: $error');
   }
+}
+
+/// How long a request to the server may go unanswered before the app gives
+/// up on it, seconds.
+///
+/// Without one, a request sent as the phone's connection drops can sit
+/// unanswered for minutes — the operating system's own limit — and the screen
+/// waiting on it shows its spinner the whole time. Every screen already says
+/// when a request fails; this makes a dead connection one of those.
+/// A normal answer takes well under a second, and a slow network's a few.
+const kRequestTimeoutSeconds = 20;
+
+/// Sends every request through [inner], giving up after
+/// [kRequestTimeoutSeconds] — except uploads and server functions, which can
+/// rightly take longer on a slow connection: a picture going up over a weak
+/// signal, or the function that gathers a lifter's data to email them.
+class GiveUpClient extends http.BaseClient {
+  GiveUpClient(this.inner);
+
+  final http.Client inner;
+
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) {
+    final path = request.url.path;
+    if (path.startsWith('/storage/') || path.startsWith('/functions/')) {
+      return inner.send(request);
+    }
+    return inner
+        .send(request)
+        .timeout(const Duration(seconds: kRequestTimeoutSeconds));
+  }
+
+  @override
+  void close() => inner.close();
 }
 
 class SupabaseBackend implements Backend {
