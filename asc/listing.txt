@@ -1,5 +1,16 @@
-asked       2026-11-04 03:32 UTC
+asked       2026-11-04 03:58 UTC
 version 1.1.6  PREPARE_FOR_SUBMISSION
+en-US APP_IPHONE_67: 10 now
+  01-live-match.png  1320x2868  COMPLETE
+  02-adventure-fight.png  1320x2868  COMPLETE
+  03-ranks.png  1320x2868  COMPLETE
+  04-won.png  1320x2868  COMPLETE
+  05-adventure-map.png  1320x2868  COMPLETE
+  06-armory.png  1320x2868  COMPLETE
+  07-home.png  1320x2868  COMPLETE
+  08-friends.png  1320x2868  COMPLETE
+  09-profile.png  1320x2868  COMPLETE
+  10-awards.png  1320x2868  COMPLETE
 en-US APP_IPHONE_61: 10 now
   01-live-match.png  1206x2622  COMPLETE
   02-adventure-fight.png  1206x2622  COMPLETE
@@ -16,6 +27,52 @@ en-US APP_IPHONE_65: 4 now
   02-race-someone-live.png  1284x2778  COMPLETE
   03-climb-7-tiers.png  1284x2778  COMPLETE
   04-friends.png  1284x2778  COMPLETE
+
+APP_IPHONE_61: 10 to upload
+  01-live-match.png: sent
+  02-adventure-fight.png: sent
+  03-ranks.png: sent
+  04-won.png: sent
+  05-adventure-map.png: sent
+  06-armory.png: sent
+  07-home.png: sent
+  08-friends.png: sent
+  09-profile.png: sent
+  10-awards.png: sent
+  01-live-match.png  1206x2622  COMPLETE
+  02-adventure-fight.png  1206x2622  COMPLETE
+  03-ranks.png  1206x2622  COMPLETE
+  04-won.png  1206x2622  COMPLETE
+  05-adventure-map.png  1206x2622  COMPLETE
+  06-armory.png  1206x2622  COMPLETE
+  07-home.png  1206x2622  COMPLETE
+  08-friends.png  1206x2622  COMPLETE
+  09-profile.png  1206x2622  COMPLETE
+  10-awards.png  1206x2622  COMPLETE
+  10 of 10 on App Store Connect, in order
+
+APP_IPHONE_65: 10 to upload
+  01-live-match.png: sent
+  02-adventure-fight.png: sent
+  03-ranks.png: sent
+  04-won.png: sent
+  05-adventure-map.png: sent
+  06-armory.png: sent
+  07-home.png: sent
+  08-friends.png: sent
+  09-profile.png: sent
+  10-awards.png: sent
+  01-live-match.png  1284x2778  COMPLETE
+  02-adventure-fight.png  1284x2778  COMPLETE
+  03-ranks.png  1284x2778  COMPLETE
+  04-won.png  1284x2778  COMPLETE
+  05-adventure-map.png  1284x2778  COMPLETE
+  06-armory.png  1284x2778  COMPLETE
+  07-home.png  1284x2778  COMPLETE
+  08-friends.png  1284x2778  COMPLETE
+  09-profile.png  1284x2778  COMPLETE
+  10-awards.png  1284x2778  COMPLETE
+  10 of 10 on App Store Connect, in order
 
 APP_IPHONE_67: 10 to upload
   01-live-match.png: sent
