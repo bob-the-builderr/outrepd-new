@@ -1,4 +1,4 @@
-# Where OUTREPD stands — 2026-11-04
+# Where OUTREPD stands — 2026-11-05
 
 Read with `CLAUDE.md` (how this machine works). Branch `camera-rep-counter`,
 everything pushed to `bob-the-builderr/outrepd-new`.
@@ -32,6 +32,23 @@ everything pushed to `bob-the-builderr/outrepd-new`.
   www.outrepd.com now has the Play app-signing key 9A:8D:ED:… as well
   (website commit a0aaa74, user's yes) — re-test a shared link on a Play
   install.
+- **2026-11-04/05, after that:** saved sets and rematches get the VS
+  screen (VsKind: live / saved / rematch); the "Race it" screen is gone;
+  cancelling a search no longer warns about LP; the onboarding 3-rep page
+  uses the live DepthBar and counts only real push-ups (same tracker); the
+  "Only full reps count" page redrawn (pick B); TypeOut no longer jitters
+  (the caret is painted); launch shows the cached profile at once
+  (`Backend.cachedMe`); the Match tab's week card is gone (Adventure takes
+  the whole width). **Pro content** (all the user's picks, generated from
+  the approved mockups by `tool/lifter/pro_parts.js` into
+  `lib/lifter/pro_art.dart`): 4 hair + 4 hair colours, 4 beards, 4 mouths,
+  3 marks, 5 eyes, 4 tops, 5 gear, 4 avatar backgrounds, 6 creature skins
+  (own face, everything else worn over it), 6 ready-made characters (worn
+  only as they are: choosing anything but the background takes one off),
+  4 profile covers (13 in all). The free afro was redrawn above the ears.
+  A free account can try Pro parts on but never keeps one
+  (`UnlockState.keepOwned`). Screenshots: `pro_parts_1/2/3`,
+  `covers_new_1/2`, `beards`, `vs_*`.
 - **Earlier on 2026-11-03:** rank cards wear their tier (lib/tier_card_frame.dart,
   Match tab and profile); the card a name opens is a player card with a
   Pro look; new share cards (match and profile, story and post, Pro look).
@@ -48,6 +65,12 @@ An anon probe finds `friends_board`, `friends_leaderboard`,
 `tool/db/upgrade_seed.sql` and `upgrade_check.sql` were written for the
 1.1.5 → 1.1.6 paste; if the `server` job turns red, rewrite them for the
 next upgrade.
+
+**Waiting for the user to paste:** `Desktop/outrepd-update-1.1.6-covers.sql`
+(= `supabase/install.sql` as of 7ebd421). The only change from what is
+live: the cover check is dropped and made again with the four new scenes.
+Until it is pasted, choosing one of the four new covers fails on the
+server. After the paste, copy that file over `tool/db/live/install.sql`.
 
 ## What the user picked (do not undo)
 
@@ -126,5 +149,6 @@ waiting for the user's OK.
 ## Files on the Desktop
 
 - `outrepd-update-1.1.6.sql` — the server update that is now live.
+- `outrepd-update-1.1.6-covers.sql` — the next paste (the four covers).
 - `OUTREPD-ui-cleanup/` — the direction B, Ranks and How-points mockups the
   user picked from.
