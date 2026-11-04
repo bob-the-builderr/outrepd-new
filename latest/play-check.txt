@@ -1,5 +1,5 @@
 build-tools 37.0.0
-package: name='com.outrepd.outrepd' versionCode='298' versionName='1.1.6' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'
+package: name='com.outrepd.outrepd' versionCode='299' versionName='1.1.6' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'
 targetSdkVersion:'36'
 permission  com.google.android.gms.permission.AD_ID
 permission  android.permission.INTERNET
