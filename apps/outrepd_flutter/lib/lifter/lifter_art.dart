@@ -60,7 +60,15 @@ String lifterSvg(Lifter l, {LifterView view = LifterView.full}) {
     ..write(_brows(l.brows, hc))
     ..write(_eyes(l.eyes, sk))
     ..write(_inkLine('M100 82 L95 98 C98 101 103 101 106 98', w: 2.4, o: 1));
-  if (gearId != 'face_mask') b..write(_mouth(l.mouth))..write(_beard(l.beard, hc));
+  // A beard round the jaw goes under the mouth, which shows through it; a
+  // moustache goes over it, as one does (the user, 2026-11-04: with a full
+  // beard on, the mouth was gone).
+  if (gearId != 'face_mask') {
+    final overMouth = _beardOverMouth.contains(l.beard);
+    if (!overMouth) b.write(_beard(l.beard, hc));
+    b.write(_mouth(l.mouth));
+    if (overMouth) b.write(_beard(l.beard, hc));
+  }
   // Under a hat only hair that hangs below it is drawn.
   final hairId = kHair[l.hair].id;
   if (!l.wearsHat || hairId == 'long' || hairId == 'dreads') b.write(h.front);
@@ -211,6 +219,11 @@ const _hairs = <int, _Hair>{
   if (i == 0) front.write(_inkLine('M84 40 C92 34 106 34 112 38', w: 4.5, o: 0.55, col: '#fff'));
   return (back: back.toString(), front: front.toString());
 }
+
+/// The beards that are a moustache over the lip — the moustache, the one with
+/// a goatee, the handlebar — and so drawn over the mouth. Every other beard
+/// sits round the jaw, under it.
+const _beardOverMouth = {4, 9, 10};
 
 String _beard(int i, String hc) => switch (i) {
   1 => _flat('M68 88 C70 104 82 116 100 118 C118 116 130 104 132 88 C128 100 118 108 100 108 C82 108 72 100 68 88 Z', hc, 0.45),
