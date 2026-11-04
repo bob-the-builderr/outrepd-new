@@ -10,7 +10,6 @@
 /// shape, name, bar, one line of numbers.
 library;
 
-import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:clock/clock.dart';
@@ -26,7 +25,6 @@ import '../motion.dart';
 import '../push.dart';
 import '../ranking.dart';
 import '../rewards.dart';
-import '../season.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
 import '../widgets.dart';
@@ -118,18 +116,9 @@ class MatchScreen extends StatelessWidget {
                       const SizedBox(height: 12),
                       const DailyGoalCard(),
                       const SizedBox(height: 12),
-                      // Two tiles side by side: one glance takes in both. As
-                      // tall as the taller tile, so large text grows both.
-                      const IntrinsicHeight(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Expanded(child: AdventureCard(compact: true)),
-                            SizedBox(width: 12),
-                            Expanded(child: _WeekRaceCard()),
-                          ],
-                        ),
-                      ),
+                      // Adventure, the whole width: the week's place left
+                      // this tab (the user, 2026-11-05); it is on Ranks.
+                      const AdventureCard(),
                     ],
                   ],
                 );
@@ -838,222 +827,6 @@ class _StreakLine extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-/// This week's race, under the buttons: where this lifter stands, how long
-/// is left, and how far it is to the top three. Opens the week's board.
-class _WeekRaceCard extends StatefulWidget {
-  const _WeekRaceCard();
-
-  @override
-  State<_WeekRaceCard> createState() => _WeekRaceCardState();
-}
-
-class _WeekRaceCardState extends State<_WeekRaceCard> {
-  // Kept between cards, so one built again (a new shell) shows the last
-  // place at once while it asks for the current one — and only to the
-  // account it was read for, never the next one signed in on this phone.
-  static MonthPlace? _lastMine;
-  static List<MonthRow> _lastTop = const [];
-  static String? _lastFor;
-
-  static bool get _lastIsMine => _lastFor != null && _lastFor == backend.me?.id;
-
-  MonthPlace? _mine = _lastIsMine ? _lastMine : null;
-  List<MonthRow> _top = _lastIsMine ? _lastTop : const [];
-  DateTime? _fetchedAt;
-  bool _loading = false;
-  Timer? _tick;
-
-  @override
-  void initState() {
-    super.initState();
-    if (backend.available) {
-      _load();
-      // It was asked for once, when the tab was first built, and the tab
-      // stays built: the place said the same after every duel until the app
-      // was opened again (the user, 2026-11-04). Now again whenever the tab
-      // comes into view, after a duel of this account's own, and every
-      // minute while it is on screen — other people's duels move it too.
-      shownTab.addListener(_onShowing);
-      Career.instance.addListener(_onOwnResult);
-      _tick = Timer.periodic(const Duration(minutes: 1), (_) => _refresh());
-      return;
-    }
-    // The preview and the screenshots, which have no server: the sample
-    // lifter, fourteenth, with two days of the week left.
-    final now = clock.now();
-    _mine = MonthPlace(
-      season: now,
-      endsAt: now.add(const Duration(days: 2, hours: 4, minutes: 30)),
-      place: 14,
-      ofTotal: 120,
-      points: 41,
-      wins: 3,
-      played: 5,
-    );
-    _top = [
-      for (final (place, points) in const [(1, 140), (2, 96), (3, 79)])
-        MonthRow(
-          place: place,
-          id: '$place',
-          username: '',
-          tierIdx: 0,
-          divIdx: 0,
-          points: points,
-          wins: 0,
-          played: 0,
-        ),
-    ];
-  }
-
-  @override
-  void dispose() {
-    _tick?.cancel();
-    shownTab.removeListener(_onShowing);
-    Career.instance.removeListener(_onOwnResult);
-    super.dispose();
-  }
-
-  bool get _showing => shownTab.value == AppShell.matchTabIndex;
-
-  void _onShowing() {
-    if (_showing) _refresh();
-  }
-
-  /// A duel of this account's own just moved its place: asked for now, not
-  /// when the last answer is a while old. The duel's own screen may still be
-  /// on top; the card is ready when it is closed.
-  void _onOwnResult() {
-    _fetchedAt = null;
-    _refresh(evenUnseen: true);
-  }
-
-  /// Asks again unless the answer in hand is a few seconds old — or the app
-  /// is in the background, or the tab is not the one in view.
-  void _refresh({bool evenUnseen = false}) {
-    if (!mounted || _loading) return;
-    if (!evenUnseen && !_showing) return;
-    final state = WidgetsBinding.instance.lifecycleState;
-    if (state != null && state != AppLifecycleState.resumed) return;
-    final at = _fetchedAt;
-    if (at != null && clock.now().difference(at) < const Duration(seconds: 20)) {
-      return;
-    }
-    _load();
-  }
-
-  Future<void> _load() async {
-    _loading = true;
-    try {
-      // Both at once: one trip's wait rather than two.
-      final (mine, top) = await (
-        backend.myWeekPlace(),
-        backend.weekBoard(limit: 3),
-      ).wait;
-      _lastMine = mine;
-      _lastTop = top;
-      _lastFor = backend.me?.id;
-      _fetchedAt = clock.now();
-      if (mounted) {
-        setState(() {
-          _mine = mine;
-          _top = top;
-        });
-      }
-    } on Object catch (error) {
-      // The last place rather than a wrong one, or no card at all.
-      debugPrint('Could not read the week: $error');
-    } finally {
-      _loading = false;
-    }
-  }
-
-  /// The same hint the week's board gives its own row.
-  String _hint(BuildContext context, L l, MonthPlace mine) {
-    final place = mine.place;
-    if (place == null) return l.weekJoinHint;
-    final third = _top.where((r) => r.place == 3).firstOrNull;
-    if (place <= 3 || third == null) return l.weekInTop3;
-    final gap = third.points - mine.points + 1;
-    return l.weekToTop3(localNumber(context, gap < 1 ? 1 : gap));
-  }
-
-  /// A tile beside Adventure's (direction B, 2026-11-02): the place large,
-  /// then the time left and how far the next places are. Until the server
-  /// answers, the tile stands with a dash, so Adventure keeps its half.
-  @override
-  Widget build(BuildContext context) {
-    final mine = _mine;
-    final l = L.of(context);
-    final colors = context.colors;
-    final place = mine?.place;
-
-    return Material(
-      key: const Key('weekRaceCard'),
-      color: colors.surface,
-      borderRadius: BorderRadius.circular(16),
-      child: InkWell(
-        onTap: () => AppShell.goToRanks(context),
-        borderRadius: BorderRadius.circular(16),
-        child: Container(
-          constraints: const BoxConstraints(
-            minHeight: AdventureCard.tileHeight,
-          ),
-          padding: const EdgeInsets.fromLTRB(14, 12, 12, 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                l.boardThisWeek,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: colors.muted,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 6),
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: AlignmentDirectional.centerStart,
-                child: Text(
-                  place == null ? '–' : '#${localNumber(context, place)}',
-                  style: const TextStyle(
-                    color: AppColors.gold,
-                    fontSize: 34,
-                    fontWeight: FontWeight.w800,
-                    height: 1.05,
-                  ),
-                ),
-              ),
-              const Spacer(),
-              if (mine != null) ...[
-                Text(
-                  monthLeft(context, mine.endsAt, clock.now()),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: colors.text,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  _hint(context, l, mine),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: colors.muted, fontSize: 11.5),
-                ),
-              ],
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
