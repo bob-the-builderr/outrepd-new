@@ -13,7 +13,7 @@ import 'package:outrepd/lifter/lifter_view.dart';
 
 void main() {
   testWidgets('every beard, with a mouth', (tester) async {
-    tester.view.physicalSize = const Size(412 * 2, 560 * 2);
+    tester.view.physicalSize = const Size(412 * 2, 900 * 2);
     tester.view.devicePixelRatio = 2;
     addTearDown(tester.view.reset);
 
