@@ -146,6 +146,12 @@ class Subscription extends ChangeNotifier {
 
   bool get active => _active ?? false;
 
+  /// Whether the store has said, for [userId], whether it has Pro: not
+  /// before the gate first asks, and not right after signing in to an
+  /// account it has not been asked about yet.
+  bool answeredFor(String? userId) =>
+      _active != null && (userId == null || userId == _userId);
+
   Storefront? get store => _store;
 
   /// The storefront this build can use: RevenueCat on a phone with its key

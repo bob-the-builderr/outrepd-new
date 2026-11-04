@@ -25,6 +25,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../backend/backend.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../lifter/catalog.dart';
@@ -96,7 +97,20 @@ const kPrivacyUrl = 'https://www.outrepd.com/privacy';
 Future<void> openPro(BuildContext context, {bool onboarding = false}) async {
   final subscription = Subscription.instance;
   final store = subscription.store;
-  if (store == null || subscription.active) return;
+  if (store == null) return;
+  // Right after signing in, the store has not been asked about this account
+  // yet — the main screen asks once it opens — so a subscriber was offered
+  // what they already have (the user saw it, 2026-11-04). Asked first, for
+  // a few seconds at most: a store that has not answered by then counts as
+  // no, as it does everywhere else.
+  final me = backend.me?.id;
+  if (!subscription.answeredFor(me)) {
+    await subscription
+        .refresh(me)
+        .timeout(const Duration(seconds: 4), onTimeout: () {});
+    if (!context.mounted) return;
+  }
+  if (subscription.active) return;
   final messenger = ScaffoldMessenger.maybeOf(context);
   final thanks = L.of(context).proThanks;
   await Navigator.of(context, rootNavigator: true).push(
