@@ -1,0 +1,5 @@
+Analyzing outrepd_flutter...                                    
+
+  error • Undefined name 'LifterView'. Try correcting the name to one that is defined, or defining the name • tool/screenshots/beards_test.dart:39:33 • undefined_identifier
+
+1 issue found. (ran in 14.9s)

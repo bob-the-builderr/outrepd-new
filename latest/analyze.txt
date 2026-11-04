@@ -1,5 +1,5 @@
 Analyzing outrepd_flutter...                                    
 
-warning • Unused import: '../player_avatar.dart'. Try removing the import directive • lib/screens/match_flow.dart:28:8 • unused_import
+  error • Undefined name 'LifterView'. Try correcting the name to one that is defined, or defining the name • tool/screenshots/beards_test.dart:39:33 • undefined_identifier
 
-1 issue found. (ran in 20.7s)
+1 issue found. (ran in 14.9s)
