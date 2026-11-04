@@ -58,81 +58,84 @@ class MatchScreen extends StatelessWidget {
           builder: (context, _) {
             final offline = !Connection.instance.online;
 
-            // The tab as it was (the user's pick, 2026-11-03), with the badge,
-            // the rank and the buttons close together under the top row so
-            // the whole of it is on the screen without scrolling: the badge
-            // is sized to what the screen has left once everything else is
-            // laid out. A phone too short even for the smallest badge
-            // scrolls.
+            // The tab as it was (the user's pick, 2026-11-03), all of it on
+            // the screen at once: on a phone with room, the badge takes all
+            // the height the rest leaves and sits in the middle of it — as
+            // far from the streak above as from its name below, and no empty
+            // end under the tiles (2026-11-04). A phone without room, or text
+            // set large, scrolls, the badge kept at a size that still reads.
             return LayoutBuilder(
               builder: (context, box) {
-                final badge = _badgeSize(context, box.maxHeight);
-                return SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: (box.maxHeight - 28).clamp(0, double.infinity),
-                    ),
-                    child: IntrinsicHeight(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          _TopRow(profile: p),
-                          _StreakLine(profile: p),
-                          // What the badge does not fill is shared above and
-                          // below, so a tall phone has no empty end.
-                          const Spacer(),
-                          const SizedBox(height: 4),
-                          if (!p.isRanked)
-                            _Unranked(size: badge)
-                          else
-                            // Offline the rank is still true, it just cannot
-                            // change, so it steps back and stops beating
-                            // rather than disappearing.
-                            Opacity(
-                              opacity: offline ? 0.45 : 1,
-                              child: _Rank(
-                                profile: p,
-                                size: badge,
-                                alive: !offline,
+                final fits = MediaQuery.textScalerOf(context).scale(1) <= 1.15 &&
+                    box.maxHeight >= _restHeight(context) + 120 * _badgeCrop;
+                final rank = !p.isRanked
+                    ? (fits
+                          ? Center(
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                // A width of its own, so its words wrap
+                                // as they would on the page.
+                                child: SizedBox(
+                                  width: box.maxWidth - 32,
+                                  child: _Unranked(size: _badgeMax(context)),
+                                ),
                               ),
-                            ),
-                          const SizedBox(height: 14),
-                          // The button first, right under the rank it plays
-                          // for (the user's pick, 2026-11-04), then today's
-                          // goal. Not offline: practice still counts, but the
-                          // screen there is about the connection.
-                          if (offline)
-                            const _OfflineActions()
-                          else if (!p.isRanked) ...[
-                            const _PlacementActions(),
-                            const SizedBox(height: 12),
-                            const DailyGoalCard(),
-                          ] else ...[
-                            const _Actions(),
-                            const SizedBox(height: 12),
-                            const DailyGoalCard(),
-                            const SizedBox(height: 12),
-                            // Two tiles side by side: one glance takes in
-                            // both. As tall as the taller tile, so large
-                            // text grows both.
-                            const IntrinsicHeight(
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Expanded(child: AdventureCard(compact: true)),
-                                  SizedBox(width: 12),
-                                  Expanded(child: _WeekRaceCard()),
-                                ],
-                              ),
-                            ),
+                            )
+                          : const _Unranked(size: _minBadge))
+                    // Offline the rank is still true, it just cannot change,
+                    // so it steps back and stops beating rather than
+                    // disappearing.
+                    : Opacity(
+                        opacity: offline ? 0.45 : 1,
+                        child: _Rank(
+                          profile: p,
+                          size: fits ? _badgeMax(context) : _minBadge,
+                          alive: !offline,
+                          fill: fits,
+                        ),
+                      );
+                final column = Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _TopRow(profile: p),
+                    _StreakLine(profile: p),
+                    const SizedBox(height: 4),
+                    if (fits) Expanded(child: rank) else rank,
+                    const SizedBox(height: 14),
+                    // The button first, right under the rank it plays for
+                    // (the user's pick, 2026-11-04), then today's goal. Not
+                    // offline: practice still counts, but the screen there
+                    // is about the connection.
+                    if (offline)
+                      const _OfflineActions()
+                    else if (!p.isRanked) ...[
+                      const _PlacementActions(),
+                      const SizedBox(height: 12),
+                      const DailyGoalCard(),
+                    ] else ...[
+                      const _Actions(),
+                      const SizedBox(height: 12),
+                      const DailyGoalCard(),
+                      const SizedBox(height: 12),
+                      // Two tiles side by side: one glance takes in both. As
+                      // tall as the taller tile, so large text grows both.
+                      const IntrinsicHeight(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Expanded(child: AdventureCard(compact: true)),
+                            SizedBox(width: 12),
+                            Expanded(child: _WeekRaceCard()),
                           ],
-                          const Spacer(),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
+                    ],
+                  ],
                 );
+                const padding = EdgeInsets.fromLTRB(16, 4, 16, 16);
+                return fits
+                    ? Padding(padding: padding, child: column)
+                    : SingleChildScrollView(padding: padding, child: column);
               },
             );
           },
@@ -142,24 +145,21 @@ class MatchScreen extends StatelessWidget {
   }
 }
 
-/// The badge on this tab: as large as the screen allows once the rest of the
-/// tab is laid out under it — so all of it is on the screen at once, and a
-/// tall phone is filled rather than left with an empty end — but never wider
-/// than about six tenths of the screen. [available] is the height the tab
-/// has.
-double _badgeSize(BuildContext context, double available) {
-  final screen = MediaQuery.sizeOf(context);
-  final grow = MediaQuery.textScalerOf(context).scale(1) - 1;
-  // Everything but the badge, at this text size: the top row and streak,
-  // the rank's words and bar, today's goal, the button and its terms, the
-  // two tiles, the gaps between them and the page's own padding.
-  // Measured off the built screens (2026-11-03): about 570 on a wide
-  // phone with the tier's name at 20, more where the goal's line wraps on a
-  // narrow one.
-  final rest = 588 + 160 * grow;
-  final byHeight = (available - rest) / _badgeCrop;
-  return byHeight.clamp(96.0, math.min(screen.width * 0.62, 280.0));
-}
+/// The badge at its largest: about six tenths of the screen's width, and
+/// never more than 280.
+double _badgeMax(BuildContext context) =>
+    math.min(MediaQuery.sizeOf(context).width * 0.62, 280.0);
+
+/// The badge on a phone that scrolls: still big enough to read at a glance.
+const _minBadge = 150.0;
+
+/// Everything on the tab but the badge, at this text size: the top row and
+/// streak, the rank's words and bar, the button and its terms, today's goal,
+/// the two tiles, the gaps between them and the page's own padding.
+/// Measured off the built screens (2026-11-03): about 570 on a wide phone,
+/// more where the goal's line wraps on a narrow one.
+double _restHeight(BuildContext context) =>
+    588 + 160 * (MediaQuery.textScalerOf(context).scale(1) - 1);
 
 // ─────────────────────────────── unranked ────────────────────────────────────
 
@@ -453,13 +453,24 @@ class _TopRowState extends State<_TopRow> {
 // ────────────────────────────────── rank ─────────────────────────────────────
 
 class _Rank extends StatelessWidget {
-  const _Rank({required this.profile, required this.size, required this.alive});
+  const _Rank({
+    required this.profile,
+    required this.size,
+    required this.alive,
+    this.fill = false,
+  });
 
   final Profile profile;
+
+  /// The badge's size; with [fill], its largest.
   final double size;
 
   /// Whether the badge beats: not offline, where the rank cannot change.
   final bool alive;
+
+  /// Whether the badge takes all the height this is given, centred in it
+  /// and drawn as large as fits, rather than its own height.
+  final bool fill;
 
   @override
   Widget build(BuildContext context) {
@@ -467,24 +478,33 @@ class _Rank extends StatelessWidget {
     final toNext = (kRatingPerDivision - profile.lp).clamp(0, kRatingPerDivision);
     final top = profile.tierIdx >= kTopTier && profile.divIdx >= kTopDivision;
 
+    final badge = GestureDetector(
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => RankScreen(profile: profile),
+        ),
+      ),
+      child: PopIn(
+        child: _LiveBadge(
+          tierIdx: profile.tierIdx,
+          size: size,
+          alive: alive,
+        ),
+      ),
+    );
+
     return Column(
       children: [
         // As big as the screen has room for — the badge is what this tab is
         // about — but never so tall that the buttons go under the fold.
-        GestureDetector(
-          onTap: () => Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => RankScreen(profile: profile),
+        if (fill)
+          Expanded(
+            child: Center(
+              child: FittedBox(fit: BoxFit.scaleDown, child: badge),
             ),
-          ),
-          child: PopIn(
-            child: _LiveBadge(
-              tierIdx: profile.tierIdx,
-              size: size,
-              alive: alive,
-            ),
-          ),
-        ),
+          )
+        else
+          badge,
         const SizedBox(height: 2),
         Text(
           tierLabel(l, profile.tierIdx, profile.divIdx),
@@ -600,6 +620,7 @@ class _LiveBadgeState extends State<_LiveBadge>
     final size = widget.size;
     final metal = tierMetal(widget.tierIdx);
     final badge = SizedBox(
+      width: size,
       height: size * _badgeCrop,
       child: OverflowBox(
         minHeight: size,
