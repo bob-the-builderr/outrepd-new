@@ -147,17 +147,33 @@ const kReplantSeconds = 0.8;
 const kReplantSettle = 0.12;
 
 /// The hands are judged over this long, seconds, and count as planted while
-/// no more than [kHandsAwayShare] of it had a hand off its point — or no hand
-/// in sight at all.
+/// no more than [kHandsAwayShare] of it had a hand off its point.
 ///
 /// A share rather than every frame: at the bottom of a rep the tracker loses
 /// or swaps a hand for a moment, and that is not a hand leaving the floor.
-/// But a frame with neither hand seen is not evidence of planted hands
-/// (2026-11-04, from a phone: held in the hand and moved up and down, with
-/// no hands in the picture, it counted reps — the hands read as still on the
-/// floor because nothing said they had moved).
 const kHandsWindowSeconds = 0.4;
 const kHandsAwayShare = 0.35;
+
+/// With no hand confirmed on its point for a second, the floor line falls
+/// back to the last point seen — but for no longer than this, seconds.
+///
+/// A point remembered from before is a place on the screen, not on the floor:
+/// once the phone moves, the head moves against it as it does in a push-up
+/// (2026-11-04, from a phone held in the hand and moved up and down). The
+/// labelled sets lose both wrists for 1.8 s at most, mid-set.
+const kFloorStaleSeconds = 2.5;
+
+/// A rep counts only if a hand was seen on its point in at least this share
+/// of its frames, top to top.
+///
+/// The planted test asks whether a hand *left*, and with no hands in sight
+/// nothing says one did: a phone held in the hand and swung up and down, the
+/// hands out of the picture, read as planted hands under a head going down
+/// and up (2026-11-04). On the labelled sets every rep but one had a hand on
+/// its point in at least 67% of its frames. That one, the second rep of
+/// khalifa-27-a, was done with both wrists lost (one frame in 26) and is now
+/// refused, which marks the set unsure rather than wrong. A swing has none.
+const kRepHandsSeenShare = 0.1;
 
 enum _Hand { left, right }
 
@@ -190,10 +206,15 @@ class _Hands {
   final _away = Queue<(int, bool)>();
   int _now = 0;
 
+  /// The last frame had a hand on a point: its own, the other hand's, or one
+  /// planted there and then.
+  bool frameOnPoint = false;
+
   void add(int atMs, PosePoint? left, PosePoint? right, double width) {
     _now = atMs;
     final near = kHandNear * width;
     var anyAway = false;
+    var anyOn = false;
 
     for (final (hand, p) in [(_Hand.left, left), (_Hand.right, right)]) {
       if (p == null) continue;
@@ -208,10 +229,18 @@ class _Hands {
       if (dOwn <= near) {
         _history[hand]!.add(_Stamped(atMs, p.x, p.y));
         _lastOnPoint[hand] = atMs;
+        anyOn = true;
+        // Back on its point: wherever it strayed to, it did not settle there.
+        // Left in, those readings re-planted the hand on a spot it had already
+        // come back from — on a phone swung with the whole body in sight, the
+        // bottom of the swing, which then read as a head far above the floor.
+        _stray[hand]!.clear();
       } else if (dTheirs <= near) {
         // Swapped or merged with the other hand.
+        anyOn = true;
       } else if (own == null || unseen) {
         _plant(hand, atMs, p.x, p.y);
+        anyOn = true;
       } else {
         anyAway = true;
         _stray[hand]!.add(_Stamped(atMs, p.x, p.y));
@@ -254,11 +283,12 @@ class _Hands {
       }
     }
 
-    _away.add((atMs, anyAway || (left == null && right == null)));
+    _away.add((atMs, anyAway));
     while (_away.isNotEmpty &&
         atMs - _away.first.$1 > kHandsWindowSeconds * 1000) {
       _away.removeFirst();
     }
+    frameOnPoint = anyOn;
   }
 
   void _plant(_Hand hand, int atMs, double x, double y) {
@@ -275,10 +305,9 @@ class _Hands {
   }
 
   /// The floor line: where the hands are planted, from points confirmed
-  /// recently — or none. A hand out of sight for a while says nothing current
-  /// about where the floor is, and a point remembered from before is a place
-  /// on the screen, not on the floor: once the phone moves, the head moves
-  /// against it as it does in a push-up (2026-11-04).
+  /// recently. A hand out of sight for a while says nothing current about
+  /// where the floor is; with none confirmed, the last one seen stands in for
+  /// [kFloorStaleSeconds], and after that there is no floor.
   double? get floorY {
     final fresh = [
       for (final hand in _Hand.values)
@@ -287,8 +316,19 @@ class _Hands {
             _now - _lastOnPoint[hand]! <= kFloorFreshSeconds * 1000)
           _points[hand]!.$2,
     ];
-    if (fresh.isEmpty) return null;
-    return fresh.reduce((a, b) => a + b) / fresh.length;
+    if (fresh.isNotEmpty) return fresh.reduce((a, b) => a + b) / fresh.length;
+    _Hand? latest;
+    for (final hand in _Hand.values) {
+      if (_points[hand] == null) continue;
+      if (latest == null ||
+          (_lastOnPoint[hand] ?? -1) > (_lastOnPoint[latest] ?? -1)) {
+        latest = hand;
+      }
+    }
+    if (latest == null) return null;
+    final on = _lastOnPoint[latest];
+    if (on == null || _now - on > kFloorStaleSeconds * 1000) return null;
+    return _points[latest]!.$2;
   }
 }
 
@@ -363,6 +403,11 @@ class PushupTracker {
   int _origin = 0;
   double? _progress;
   bool _planted = false;
+
+  /// The hands over the rep under way, from the last frame at the top:
+  /// frames, and frames with a hand on its point. See [kRepHandsSeenShare].
+  int _repFrames = 0;
+  int _repOnPoint = 0;
 
   int get reps => _reps;
 
@@ -471,6 +516,8 @@ class PushupTracker {
       scale,
     );
     _planted = _hands.planted;
+    _repFrames++;
+    if (_hands.frameOnPoint) _repOnPoint++;
     final floor = _hands.floorY;
     if (floor == null || _heads.isEmpty) return _reading(false);
 
@@ -493,6 +540,7 @@ class PushupTracker {
     switch (_phase) {
       case _Phase.idle || _Phase.up:
         _excursionTop = _excursionTop == null ? h : math.max(_excursionTop!, h);
+        if (share >= kTopShare) _resetRepHands();
         if (_phase == _Phase.up && share >= kTopShare) {
           // Back at the top without ever crossing the bottom line.
           final dip = _dipLow!;
@@ -542,25 +590,34 @@ class PushupTracker {
           final quickEnough =
               lastRep == null || atMs - lastRep >= kMinRepSeconds * 1000;
           final stoodUp = standing;
-          if (_planted && quickEnough && !stoodUp) {
+          final held = _planted &&
+              _repOnPoint >= kRepHandsSeenShare * _repFrames;
+          if (held && quickEnough && !stoodUp) {
             _reps++;
             _repTimes.add(atMs - _origin);
             _repBottoms.add(_dipLow!);
             _lastRepAt = atMs;
             counted = true;
-          } else if (!_planted || stoodUp) {
+          } else if (!held || stoodUp) {
             // A full swing that finished with a hand off the floor — standing
             // up at the end of a set, or an arm lifted to flex — or with the
-            // body on its feet, bobbing toward hands held still. Not a rep,
-            // and nothing to build the next one on.
+            // body on its feet, bobbing toward hands held still, or with the
+            // hands not held through it: a phone swung in the hand. Not a
+            // rep, and nothing to build the next one on.
             _refusedAt.add(atMs - _origin);
           }
-          _phase = _planted && !stoodUp ? _Phase.up : _Phase.idle;
+          _phase = held && !stoodUp ? _Phase.up : _Phase.idle;
           _excursionTop = h;
           _dipLow = share;
+          _resetRepHands();
         }
     }
     return _reading(counted);
+  }
+
+  void _resetRepHands() {
+    _repFrames = 0;
+    _repOnPoint = 0;
   }
 
   PushupReading _reading(bool counted) => PushupReading(

@@ -92,8 +92,11 @@ bottom of a full rep.
 2. then came **back up to 0.75 or higher** (the top line), and
 3. the **hands were planted** at that moment (at most 35% of the last 0.4 s
    with a hand off its floor point), and
-4. at least **0.35 s** since the last rep, and
-5. the tracker was armed: it had seen the body at the top with the hands
+4. a hand was **seen on its point** in at least 10% of the rep's frames, top
+   to top — no hands in sight is not planted hands (a phone swung in the
+   hand counted reps that way), and
+5. at least **0.35 s** since the last rep, and
+6. the tracker was armed: it had seen the body at the top with the hands
    down (or the hands settled after a top, before the bottom line).
 
 Notes that are easy to get wrong:
@@ -107,9 +110,13 @@ Notes that are easy to get wrong:
 - **Hands, not body shape.** A push-up is the one movement where the hands
   stay planted and the body travels to them. Floor points are per hand,
   tolerate a label swap onto the other hand's point, re-plant a hand unseen
-  for 1 s, and re-plant a hand settled somewhere new for 0.8 s. Getting up at
-  the end is refused because the hands leave the floor before the head gets
-  back to the top line.
+  for 1 s, and re-plant a hand settled somewhere new for 0.8 s — readings
+  off the point are dropped the moment the hand is back on it, or a hand
+  gets re-planted where it only passed through. With no hand confirmed for
+  a second the floor is the last point seen, for 2.5 s at most: a point on
+  the screen is not the floor once the phone moves. Getting up at the end is
+  refused because the hands leave the floor before the head gets back to the
+  top line.
 - **The round restarts the count, not the tracker.** The screen runs the
   tracker from the moment the camera opens so it already knows the hands and
   lockout when the countdown ends (`restartCount`). A rep already on its way
@@ -126,9 +133,14 @@ again, and no amount of surrounding features recovers that.
 
 1. **Replay the labelled sets**: `flutter test test/replay_test.dart` (floor:
    every set within one, nine in ten exact).
-2. **Keep the Python reference in step**: `D:/outrepd-tools/bench/counter.py`
+2. **Keep the references in step**: `D:/outrepd-tools/bench/counter.py`
    mirrors the Dart line for line and must print the same counts; `sweep.py`
-   checks each setting sits on a plateau, not a knife edge.
+   checks each setting sits on a plateau, not a knife edge. On the laptop
+   (no Flutter, no Python, D: often missing) the same job is
+   `node tool/bench/run.js test/recordings` in `apps/outrepd_flutter`: a
+   JavaScript port of the tracker that replays the fourteen sets and the
+   synthetic cases in seconds. It reproduced CI's counts exactly
+   (2026-11-04); test a counter change there before spending a CI run.
 3. **Synthetic bodies must have real proportions** — nose about 1.0 shoulder
    width above the hands at lockout (`test/support/synthetic_poses.dart`). A
    body drawn any other way tests a counter against nobody.
