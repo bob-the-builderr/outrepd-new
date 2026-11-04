@@ -1496,6 +1496,41 @@ class LIt extends L {
   String get opponentFound => 'Avversario trovato';
 
   @override
+  String get obSevenTiers => 'I sette gradi';
+
+  @override
+  String get obRatingPerMatch => 'Punti per partita';
+
+  @override
+  String get obWinLabel => 'Vittoria';
+
+  @override
+  String get obLossLabel => 'Sconfitta';
+
+  @override
+  String get obFloorLabel => 'Minimo';
+
+  @override
+  String obWinRating(String n) {
+    return '+${n} + distacco';
+  }
+
+  @override
+  String obLossRating(String n) {
+    return '−${n} − distacco';
+  }
+
+  @override
+  String obNeverBelow(String n) {
+    return 'mai sotto ${n}';
+  }
+
+  @override
+  String obDivisionLine(String division, String tier) {
+    return 'Ogni ${division} punti un livello, ogni ${tier} un grado.';
+  }
+
+  @override
   String ratingFloor(String n) {
     return 'Il tuo punteggio non scende mai sotto ${n}.';
   }

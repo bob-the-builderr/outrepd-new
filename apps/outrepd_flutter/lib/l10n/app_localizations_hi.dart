@@ -1494,6 +1494,41 @@ class LHi extends L {
   String get opponentFound => 'प्रतिद्वंद्वी मिल गया';
 
   @override
+  String get obSevenTiers => 'सात टियर';
+
+  @override
+  String get obRatingPerMatch => 'हर मैच की रेटिंग';
+
+  @override
+  String get obWinLabel => 'जीत';
+
+  @override
+  String get obLossLabel => 'हार';
+
+  @override
+  String get obFloorLabel => 'न्यूनतम';
+
+  @override
+  String obWinRating(String n) {
+    return '+${n} + रेप्स का अंतर';
+  }
+
+  @override
+  String obLossRating(String n) {
+    return '−${n} − रेप्स का अंतर';
+  }
+
+  @override
+  String obNeverBelow(String n) {
+    return '${n} से नीचे कभी नहीं';
+  }
+
+  @override
+  String obDivisionLine(String division, String tier) {
+    return 'हर ${division} रेटिंग पर एक स्टेप, ${tier} पर एक टियर।';
+  }
+
+  @override
   String ratingFloor(String n) {
     return 'आपकी रेटिंग कभी ${n} से नीचे नहीं जाती।';
   }

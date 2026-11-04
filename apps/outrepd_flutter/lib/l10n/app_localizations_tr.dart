@@ -1489,6 +1489,41 @@ class LTr extends L {
   String get opponentFound => 'Rakip bulundu';
 
   @override
+  String get obSevenTiers => 'Yedi kademe';
+
+  @override
+  String get obRatingPerMatch => 'Maç başına puan';
+
+  @override
+  String get obWinLabel => 'Galibiyet';
+
+  @override
+  String get obLossLabel => 'Mağlubiyet';
+
+  @override
+  String get obFloorLabel => 'Alt sınır';
+
+  @override
+  String obWinRating(String n) {
+    return '+${n} + tekrar farkı';
+  }
+
+  @override
+  String obLossRating(String n) {
+    return '−${n} − tekrar farkı';
+  }
+
+  @override
+  String obNeverBelow(String n) {
+    return 'asla ${n} altına düşmez';
+  }
+
+  @override
+  String obDivisionLine(String division, String tier) {
+    return 'Her ${division} puan bir basamak, ${tier} bir kademe.';
+  }
+
+  @override
   String ratingFloor(String n) {
     return 'Reytingin asla ${n} altına düşmez.';
   }

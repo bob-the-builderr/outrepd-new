@@ -822,6 +822,46 @@
   "yourRank": "Your rank",
   "whoIsNext": "Who's next?",
   "opponentFound": "Opponent found",
+  "obSevenTiers": "The seven tiers",
+  "obRatingPerMatch": "Rating per match",
+  "obWinLabel": "Win",
+  "obLossLabel": "Loss",
+  "obFloorLabel": "Floor",
+  "obWinRating": "+{n} + rep gap",
+  "@obWinRating": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "obLossRating": "−{n} − rep gap",
+  "@obLossRating": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "obNeverBelow": "never below {n}",
+  "@obNeverBelow": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "obDivisionLine": "Every {division} rating is a division, {tier} a tier.",
+  "@obDivisionLine": {
+    "placeholders": {
+      "division": {
+        "type": "String"
+      },
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
   "ratingFloor": "Your rating never drops below {n}.",
   "@ratingFloor": {
     "placeholders": {

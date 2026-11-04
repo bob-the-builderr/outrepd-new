@@ -1469,6 +1469,41 @@ class LKo extends L {
   String get opponentFound => '상대를 찾았어요';
 
   @override
+  String get obSevenTiers => '7개의 티어';
+
+  @override
+  String get obRatingPerMatch => '경기당 레이팅';
+
+  @override
+  String get obWinLabel => '승리';
+
+  @override
+  String get obLossLabel => '패배';
+
+  @override
+  String get obFloorLabel => '하한';
+
+  @override
+  String obWinRating(String n) {
+    return '+${n} + 렙 차이';
+  }
+
+  @override
+  String obLossRating(String n) {
+    return '−${n} − 렙 차이';
+  }
+
+  @override
+  String obNeverBelow(String n) {
+    return '${n} 아래로는 안 떨어져요';
+  }
+
+  @override
+  String obDivisionLine(String division, String tier) {
+    return '${division}점마다 한 단계, ${tier}점마다 한 티어예요.';
+  }
+
+  @override
   String ratingFloor(String n) {
     return '레이팅은 ${n} 아래로 내려가지 않아요.';
   }

@@ -30,6 +30,7 @@ import '../data.dart';
 import '../keep_awake.dart';
 import '../l10n/app_localizations.dart';
 import '../motion.dart';
+import '../ranking.dart';
 import '../reps/pose.dart';
 import '../reps/pose_source.dart';
 import '../reps/posture.dart';
@@ -625,69 +626,123 @@ class _Idea extends StatelessWidget {
               2 => _IdeaPage(
                 title: l.obClimbTitle,
                 body: l.obClimbBody,
-                // The rating rule, as the match screen words it, in a card.
-                picture: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 22,
-                  ),
-                  decoration: BoxDecoration(
-                    color: context.colors.surface,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    l.lpMovesWithGap,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: context.colors.text,
-                      fontSize: 19,
-                      fontWeight: FontWeight.w800,
-                      height: 1.35,
+                // The two cards of the picked design (B2, 2026-11-03): the
+                // seven tiers, Iron to Master, each a step higher; and what a
+                // match does to the rating. Every number is the ranking
+                // code's own. Scaled down, not cut, where the page is short.
+                picture: LayoutBuilder(
+                  builder: (context, box) => FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.topCenter,
+                    child: SizedBox(
+                      width: box.maxWidth,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _ClimbCard(
+                            title: l.obSevenTiers,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                for (var tier = 0; tier < kTiers.length; tier++)
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 2,
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            height:
+                                                (kTiers.length - 1 - tier) * 6.0,
+                                          ),
+                                          Container(
+                                            width: 34,
+                                            height: 34,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: kTiers[tier].color,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: kTiers[tier].color
+                                                      .withValues(alpha: 0.5),
+                                                  blurRadius: 14,
+                                                  spreadRadius: -2,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          const SizedBox(height: 6),
+                                          FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: Text(
+                                              tierName(l, tier),
+                                              style: TextStyle(
+                                                color: context.colors.muted,
+                                                fontSize: 11.5,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 14),
+                          _ClimbCard(
+                            title: l.obRatingPerMatch,
+                            child: Column(
+                              children: [
+                                _ClimbRow(
+                                  label: l.obWinLabel,
+                                  value: l.obWinRating(
+                                    localNumber(context, kWinRating),
+                                  ),
+                                  colour: AppColors.success,
+                                ),
+                                Divider(height: 1, color: context.colors.border),
+                                _ClimbRow(
+                                  label: l.obLossLabel,
+                                  value: l.obLossRating(
+                                    localNumber(context, kLossRating),
+                                  ),
+                                  colour: context.colors.rival,
+                                ),
+                                Divider(height: 1, color: context.colors.border),
+                                _ClimbRow(
+                                  label: l.obFloorLabel,
+                                  value: l.obNeverBelow(
+                                    localNumber(context, kRatingStart),
+                                  ),
+                                  colour: context.colors.text,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-                // All seven tiers, each in its own colour, Iron to Master.
-                footer: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    for (var tier = 0; tier < kTiers.length; tier++)
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Container(
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: kTiers[tier].color,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: kTiers[tier].color.withValues(
-                                      alpha: 0.5,
-                                    ),
-                                    blurRadius: 14,
-                                    spreadRadius: -2,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 6),
-                            FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Text(
-                                tierName(l, tier),
-                                style: TextStyle(
-                                  color: context.colors.muted,
-                                  fontSize: 11.5,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                footer: Center(
+                  child: Text(
+                    l.obDivisionLine(
+                      localNumber(context, kRatingPerDivision),
+                      localNumber(
+                        context,
+                        kRatingPerDivision * kDivisions.length,
                       ),
-                  ],
+                    ),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: context.colors.muted,
+                      fontSize: 13.5,
+                    ),
+                  ),
                 ),
               ),
               // Adventure, its own card (the user, 2026-10-28, mockup A): a
@@ -776,6 +831,85 @@ class _Idea extends StatelessWidget {
 /// One card: its title and its line, the picture under them taking whatever
 /// height is left, and anything that goes beneath. It scrolls only when a
 /// large text size needs the room.
+/// One of the climb page's two cards: a small coloured heading over what it
+/// holds.
+class _ClimbCard extends StatelessWidget {
+  const _ClimbCard({required this.title, required this.child});
+
+  final String title;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(18, 16, 18, 14),
+      decoration: BoxDecoration(
+        color: context.colors.surface,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            title.toUpperCase(),
+            style: TextStyle(
+              color: context.colors.rival,
+              fontSize: 13,
+              fontWeight: FontWeight.w800,
+              letterSpacing: 1.6,
+            ),
+          ),
+          const SizedBox(height: 12),
+          child,
+        ],
+      ),
+    );
+  }
+}
+
+/// A line of the rating card: what happens, and what it does to the rating.
+class _ClimbRow extends StatelessWidget {
+  const _ClimbRow({
+    required this.label,
+    required this.value,
+    required this.colour,
+  });
+
+  final String label;
+  final String value;
+  final Color colour;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 11),
+      child: Row(
+        children: [
+          Text(
+            label,
+            style: TextStyle(color: context.colors.text, fontSize: 17),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: AlignmentDirectional.centerEnd,
+              child: Text(
+                value,
+                style: TextStyle(
+                  color: colour,
+                  fontSize: 19,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _IdeaPage extends StatelessWidget {
   const _IdeaPage({
     required this.title,

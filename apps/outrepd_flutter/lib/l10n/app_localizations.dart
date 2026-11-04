@@ -2843,6 +2843,60 @@ abstract class L {
   /// **'Opponent found'**
   String get opponentFound;
 
+  /// No description provided for @obSevenTiers.
+  ///
+  /// In en, this message translates to:
+  /// **'The seven tiers'**
+  String get obSevenTiers;
+
+  /// No description provided for @obRatingPerMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating per match'**
+  String get obRatingPerMatch;
+
+  /// No description provided for @obWinLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Win'**
+  String get obWinLabel;
+
+  /// No description provided for @obLossLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Loss'**
+  String get obLossLabel;
+
+  /// No description provided for @obFloorLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Floor'**
+  String get obFloorLabel;
+
+  /// No description provided for @obWinRating.
+  ///
+  /// In en, this message translates to:
+  /// **'+{n} + rep gap'**
+  String obWinRating(String n);
+
+  /// No description provided for @obLossRating.
+  ///
+  /// In en, this message translates to:
+  /// **'−{n} − rep gap'**
+  String obLossRating(String n);
+
+  /// No description provided for @obNeverBelow.
+  ///
+  /// In en, this message translates to:
+  /// **'never below {n}'**
+  String obNeverBelow(String n);
+
+  /// No description provided for @obDivisionLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Every {division} rating is a division, {tier} a tier.'**
+  String obDivisionLine(String division, String tier);
+
   /// No description provided for @ratingFloor.
   ///
   /// In en, this message translates to:

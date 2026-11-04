@@ -1492,6 +1492,41 @@ class LRu extends L {
   String get opponentFound => 'Соперник найден';
 
   @override
+  String get obSevenTiers => 'Семь рангов';
+
+  @override
+  String get obRatingPerMatch => 'Очки за матч';
+
+  @override
+  String get obWinLabel => 'Победа';
+
+  @override
+  String get obLossLabel => 'Поражение';
+
+  @override
+  String get obFloorLabel => 'Минимум';
+
+  @override
+  String obWinRating(String n) {
+    return '+${n} + разница';
+  }
+
+  @override
+  String obLossRating(String n) {
+    return '−${n} − разница';
+  }
+
+  @override
+  String obNeverBelow(String n) {
+    return 'не ниже ${n}';
+  }
+
+  @override
+  String obDivisionLine(String division, String tier) {
+    return 'Каждые ${division} очков — ступень, ${tier} — ранг.';
+  }
+
+  @override
   String ratingFloor(String n) {
     return 'Твой рейтинг никогда не опускается ниже ${n}.';
   }

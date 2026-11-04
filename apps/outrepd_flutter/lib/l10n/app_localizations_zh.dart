@@ -1466,6 +1466,41 @@ class LZh extends L {
   String get opponentFound => '已找到对手';
 
   @override
+  String get obSevenTiers => '七个段位';
+
+  @override
+  String get obRatingPerMatch => '每场积分';
+
+  @override
+  String get obWinLabel => '胜';
+
+  @override
+  String get obLossLabel => '负';
+
+  @override
+  String get obFloorLabel => '下限';
+
+  @override
+  String obWinRating(String n) {
+    return '+${n} + 次数差';
+  }
+
+  @override
+  String obLossRating(String n) {
+    return '−${n} − 次数差';
+  }
+
+  @override
+  String obNeverBelow(String n) {
+    return '不低于 ${n}';
+  }
+
+  @override
+  String obDivisionLine(String division, String tier) {
+    return '每 ${division} 分一级，${tier} 分一个段位。';
+  }
+
+  @override
   String ratingFloor(String n) {
     return '积分永远不会低于 ${n}。';
   }

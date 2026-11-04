@@ -1491,6 +1491,41 @@ class LId extends L {
   String get opponentFound => 'Lawan ditemukan';
 
   @override
+  String get obSevenTiers => 'Tujuh tingkat';
+
+  @override
+  String get obRatingPerMatch => 'Poin per pertandingan';
+
+  @override
+  String get obWinLabel => 'Menang';
+
+  @override
+  String get obLossLabel => 'Kalah';
+
+  @override
+  String get obFloorLabel => 'Batas bawah';
+
+  @override
+  String obWinRating(String n) {
+    return '+${n} + selisih';
+  }
+
+  @override
+  String obLossRating(String n) {
+    return '−${n} − selisih';
+  }
+
+  @override
+  String obNeverBelow(String n) {
+    return 'tak pernah di bawah ${n}';
+  }
+
+  @override
+  String obDivisionLine(String division, String tier) {
+    return 'Setiap ${division} poin satu anak tangga, ${tier} satu tingkat.';
+  }
+
+  @override
   String ratingFloor(String n) {
     return 'Rating-mu tidak pernah turun di bawah ${n}.';
   }

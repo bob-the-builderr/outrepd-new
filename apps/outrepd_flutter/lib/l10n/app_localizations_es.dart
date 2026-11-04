@@ -1496,6 +1496,41 @@ class LEs extends L {
   String get opponentFound => 'Rival encontrado';
 
   @override
+  String get obSevenTiers => 'Los siete rangos';
+
+  @override
+  String get obRatingPerMatch => 'Puntos por partida';
+
+  @override
+  String get obWinLabel => 'Victoria';
+
+  @override
+  String get obLossLabel => 'Derrota';
+
+  @override
+  String get obFloorLabel => 'Mínimo';
+
+  @override
+  String obWinRating(String n) {
+    return '+${n} + diferencia';
+  }
+
+  @override
+  String obLossRating(String n) {
+    return '−${n} − diferencia';
+  }
+
+  @override
+  String obNeverBelow(String n) {
+    return 'nunca bajo ${n}';
+  }
+
+  @override
+  String obDivisionLine(String division, String tier) {
+    return 'Cada ${division} puntos, un escalón; cada ${tier}, un rango.';
+  }
+
+  @override
   String ratingFloor(String n) {
     return 'Tu rating nunca baja de ${n}.';
   }

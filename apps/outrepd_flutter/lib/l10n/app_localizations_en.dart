@@ -1491,6 +1491,41 @@ class LEn extends L {
   String get opponentFound => 'Opponent found';
 
   @override
+  String get obSevenTiers => 'The seven tiers';
+
+  @override
+  String get obRatingPerMatch => 'Rating per match';
+
+  @override
+  String get obWinLabel => 'Win';
+
+  @override
+  String get obLossLabel => 'Loss';
+
+  @override
+  String get obFloorLabel => 'Floor';
+
+  @override
+  String obWinRating(String n) {
+    return '+${n} + rep gap';
+  }
+
+  @override
+  String obLossRating(String n) {
+    return '−${n} − rep gap';
+  }
+
+  @override
+  String obNeverBelow(String n) {
+    return 'never below ${n}';
+  }
+
+  @override
+  String obDivisionLine(String division, String tier) {
+    return 'Every ${division} rating is a division, ${tier} a tier.';
+  }
+
+  @override
   String ratingFloor(String n) {
     return 'Your rating never drops below ${n}.';
   }

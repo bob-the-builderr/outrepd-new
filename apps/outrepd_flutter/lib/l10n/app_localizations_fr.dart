@@ -1497,6 +1497,41 @@ class LFr extends L {
   String get opponentFound => 'Adversaire trouvé';
 
   @override
+  String get obSevenTiers => 'Les sept rangs';
+
+  @override
+  String get obRatingPerMatch => 'Points par match';
+
+  @override
+  String get obWinLabel => 'Victoire';
+
+  @override
+  String get obLossLabel => 'Défaite';
+
+  @override
+  String get obFloorLabel => 'Plancher';
+
+  @override
+  String obWinRating(String n) {
+    return '+${n} + l’écart';
+  }
+
+  @override
+  String obLossRating(String n) {
+    return '−${n} − l’écart';
+  }
+
+  @override
+  String obNeverBelow(String n) {
+    return 'jamais sous ${n}';
+  }
+
+  @override
+  String obDivisionLine(String division, String tier) {
+    return 'Tous les ${division} points, un palier ; tous les ${tier}, un rang.';
+  }
+
+  @override
   String ratingFloor(String n) {
     return 'Ta cote ne descend jamais sous ${n}.';
   }

@@ -1468,6 +1468,41 @@ class LJa extends L {
   String get opponentFound => '対戦相手が見つかりました';
 
   @override
+  String get obSevenTiers => '7つのティア';
+
+  @override
+  String get obRatingPerMatch => '1試合ごとのポイント';
+
+  @override
+  String get obWinLabel => '勝利';
+
+  @override
+  String get obLossLabel => '敗北';
+
+  @override
+  String get obFloorLabel => '下限';
+
+  @override
+  String obWinRating(String n) {
+    return '+${n} + レップ差';
+  }
+
+  @override
+  String obLossRating(String n) {
+    return '−${n} − レップ差';
+  }
+
+  @override
+  String obNeverBelow(String n) {
+    return '${n}を下回らない';
+  }
+
+  @override
+  String obDivisionLine(String division, String tier) {
+    return '${division}ポイントで1段階、${tier}で1ティア。';
+  }
+
+  @override
   String ratingFloor(String n) {
     return 'レートが${n}を下回ることはありません。';
   }

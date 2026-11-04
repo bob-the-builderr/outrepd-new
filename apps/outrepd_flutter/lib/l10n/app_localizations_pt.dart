@@ -1495,6 +1495,41 @@ class LPt extends L {
   String get opponentFound => 'Oponente encontrado';
 
   @override
+  String get obSevenTiers => 'Os sete níveis';
+
+  @override
+  String get obRatingPerMatch => 'Pontos por partida';
+
+  @override
+  String get obWinLabel => 'Vitória';
+
+  @override
+  String get obLossLabel => 'Derrota';
+
+  @override
+  String get obFloorLabel => 'Mínimo';
+
+  @override
+  String obWinRating(String n) {
+    return '+${n} + diferença';
+  }
+
+  @override
+  String obLossRating(String n) {
+    return '−${n} − diferença';
+  }
+
+  @override
+  String obNeverBelow(String n) {
+    return 'nunca abaixo de ${n}';
+  }
+
+  @override
+  String obDivisionLine(String division, String tier) {
+    return 'Cada ${division} pontos, um degrau; cada ${tier}, um nível.';
+  }
+
+  @override
   String ratingFloor(String n) {
     return 'Seu rating nunca cai abaixo de ${n}.';
   }

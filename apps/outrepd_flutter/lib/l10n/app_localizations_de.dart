@@ -1498,6 +1498,41 @@ class LDe extends L {
   String get opponentFound => 'Gegner gefunden';
 
   @override
+  String get obSevenTiers => 'Die sieben Ränge';
+
+  @override
+  String get obRatingPerMatch => 'Wertung pro Match';
+
+  @override
+  String get obWinLabel => 'Sieg';
+
+  @override
+  String get obLossLabel => 'Niederlage';
+
+  @override
+  String get obFloorLabel => 'Untergrenze';
+
+  @override
+  String obWinRating(String n) {
+    return '+${n} + Unterschied';
+  }
+
+  @override
+  String obLossRating(String n) {
+    return '−${n} − Unterschied';
+  }
+
+  @override
+  String obNeverBelow(String n) {
+    return 'nie unter ${n}';
+  }
+
+  @override
+  String obDivisionLine(String division, String tier) {
+    return 'Alle ${division} Punkte eine Stufe, ${tier} ein Rang.';
+  }
+
+  @override
   String ratingFloor(String n) {
     return 'Deine Wertung fällt nie unter ${n}.';
   }
