@@ -181,6 +181,8 @@ const kTops = <LifterPart>[
   LifterPart('pro_tracksuit', pro: true), LifterPart('satin_bomber', pro: true),
   LifterPart('holo_jersey', pro: true), LifterPart('tie_dye_hoodie', pro: true),
   LifterPart('gloss_puffer', pro: true), LifterPart('gold_trim_tank', pro: true),
+  LifterPart('hero_cape', pro: true), LifterPart('chrome_armor', pro: true),
+  LifterPart('galaxy_hoodie', pro: true), LifterPart('flame_jersey', pro: true),
 ];
 
 const kTopColors = <String>[
@@ -206,6 +208,8 @@ const kGear = <LifterPart>[
   LifterPart('crown', rarity: Rarity.legendary, unlock: Unlock(UnlockKind.tier, 6)),
   LifterPart('gold_headphones', pro: true), LifterPart('diamond_studs', pro: true),
   LifterPart('cyber_visor', pro: true), LifterPart('iced_chain', pro: true), LifterPart('aura', pro: true),
+  LifterPart('shutter_shades', pro: true), LifterPart('flame_headband', pro: true),
+  LifterPart('pet_dragon', pro: true), LifterPart('neon_wings', pro: true), LifterPart('bat_wings', pro: true),
 ];
 
 /// Gear worn on the head, under which most hair is not drawn.
@@ -226,6 +230,8 @@ const kPatterns = <LifterPart>[
   LifterPart('galaxy', rarity: Rarity.legendary, unlock: Unlock(UnlockKind.allStars)),
   LifterPart('aurora', pro: true), LifterPart('neon_city', pro: true),
   LifterPart('holo_foil', pro: true), LifterPart('smoke', pro: true),
+  LifterPart('synthwave', pro: true), LifterPart('sakura', pro: true),
+  LifterPart('deep_sea', pro: true), LifterPart('confetti', pro: true),
 ];
 
 /// One lifter: an index into each list above.

@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<title>Pro fixes</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700;800;900&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #0B0A09; color: #F5EFE4; font-family: 'Noto Sans', sans-serif; }
+  .wrap { padding: 22px 26px 26px; width: 1260px; }
+  .cap { direction: rtl; font-family: 'Noto Sans Arabic', 'Noto Sans', sans-serif; margin-bottom: 10px; }
+  .cap b { display: block; font-size: 24px; margin-bottom: 4px; }
+  .cap p { margin: 0; color: #8F8880; font-size: 15px; line-height: 1.7; }
+  h2 { direction: rtl; font-family: 'Noto Sans Arabic', sans-serif; font-size: 18px; margin: 16px 0 8px; color: #E8DCC8; }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .tile { width: 292px; background: #161412; border: 1px solid #2A2724; border-radius: 16px; padding: 12px; }
+  .big svg { width: 266px; height: 266px; border-radius: 14px; display: block; }
+  .small { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
+  .small svg { width: 56px; height: 56px; border-radius: 28px; display: block; }
+  .small .tiny svg { width: 34px; height: 34px; border-radius: 17px; }
+  .sec { direction: rtl; font-family: 'Noto Sans Arabic', sans-serif; color: #8F8880; font-size: 13px; margin-bottom: 6px; }
+  .code { font-weight: 900; font-size: 20px; color: #F2C14E; margin-top: 8px; }
+  .name { font-size: 15px; font-weight: 700; }
+  .note { direction: rtl; font-family: 'Noto Sans Arabic', sans-serif; color: #8F8880; font-size: 13px; line-height: 1.55; margin-top: 3px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="cap"><b>التعديلات — B4، M1، M4، F1، العيون، T1، والإكسسوارات</b>
+  <p>كل واحد كبير، وتحته صغير على 3 ألوان جلد وفي حجم الليدربورد. نفس ستايل الحبر والظل.</p></div>
+  <div id="out"></div>
+</div>
+<script src="lifterA.js"></script>
+<script>
+let gid = 0;
+const ID = () => 'x' + (++gid);
+const stopsOf = (stops) => stops.map(([o, c]) => `<stop offset="${o}" stop-color="${c}"/>`).join('');
+const linG = (id, stops, x1 = 0, y1 = 0, x2 = 0, y2 = 1) => `<linearGradient id="${id}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}">${stopsOf(stops)}</linearGradient>`;
+const radG = (id, stops, cx = .5, cy = .5, r = .6) => `<radialGradient id="${id}" cx="${cx}" cy="${cy}" r="${r}">${stopsOf(stops)}</radialGradient>`;
+const blur = (id, r) => `<filter id="${id}" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="${r}"/></filter>`;
+function celG(key, d, base, lit, inner = '', w = 3.2, dx = -6, dy = -4) {
+  const c = ID() + key;
+  return `<clipPath id="${c}"><path d="${d}"/></clipPath><g clip-path="url(#${c})"><path d="${d}" fill="${base}"/>` +
+    `<path d="${d}" fill="${lit}" transform="translate(${dx} ${dy})"/>${inner}</g><path d="${d}" fill="none" stroke="${INK}" stroke-width="${w}" stroke-linejoin="round"/>`;
+}
+const spark = (x, y, s = 1, col = '#fff') => `<path d="M${x} ${y - 5 * s} L${x + 1.3 * s} ${y - 1.3 * s} L${x + 5 * s} ${y} L${x + 1.3 * s} ${y + 1.3 * s} L${x} ${y + 5 * s} L${x - 1.3 * s} ${y + 1.3 * s} L${x - 5 * s} ${y} L${x - 1.3 * s} ${y - 1.3 * s} Z" fill="${col}"/>`;
+const neon = (d, col, core = '#fff', w = 3, f) => `<path d="${d}" fill="none" stroke="${col}" stroke-width="${w + 2}" stroke-linecap="round" stroke-linejoin="round" filter="url(#${f})" opacity=".9"/>` +
+  `<path d="${d}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="${core}" stroke-width="${w * 0.4}" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>`;
+
+function compose(c, o = {}, view = 'full') {
+  const id = 'A' + (++uid);
+  const sk = CAT.skin[c.skin];
+  const hc = CAT.hairC[c.hairC];
+  const h = hair(id, c.hair, hc);
+  let s = o.defs || '';
+  s += background(id, c.bg, 0);
+  s += o.top ?? topWear(id, c.top, CAT.topC[c.topC], sk);
+  s += cel(id, 'neck', P.neck, shade(sk.c, -0.06)) + ink(P.neckLines, 2.6) + h.back;
+  s += cel(id, 'earL', P.earL, sk.c) + cel(id, 'earR', P.earR, sk.c);
+  s += cel(id, 'head', P.head, sk.c) + ink(P.jaw, 2.4, 0.6);
+  s += o.marks ?? '';
+  s += brows(c.brows, hc) + (o.eyes ?? eyes(id, c.eyes, sk));
+  s += ink('M100 82 L95 98 C98 101 103 101 106 98', 2.4, 1);
+  s += (o.beard ?? '') + (o.mouth ?? mouth(c.mouth));
+  s += h.front + (o.gear ?? '');
+  const vb = { head: '30 -6 140 140', face: '56 56 88 88', full: '0 0 200 200' }[view];
+  return `<svg viewBox="${vb}" xmlns="http://www.w3.org/2000/svg">${s}</svg>`;
+}
+const base = { skin: 5, hair: 2, hairC: 0, eyes: 0, brows: 0, mouth: 0, top: 3, topC: 0, bg: 3 };
+const people = [base, { ...base, skin: 1, bg: 0, topC: 4 }, { ...base, skin: 8, bg: 1, topC: 2 }];
+const FULLB = 'M66 80 C66 108 80 126 100 128 C120 126 134 108 134 80 C130 96 122 104 112 104 C106 100 94 100 88 104 C78 104 70 96 66 80 Z';
+
+// ── B4 Neon trim: a real beard, a lit line along its edge.
+function neonTrim() {
+  const f = ID();
+  const edge = 'M71 90 C73 110 85 121 100 122.5 C115 121 127 110 129 90';
+  return { defs: `<defs>${blur(f, 2.2)}</defs>`, beard: celG('bd', FULLB, '#0E0A0A', '#2A2020') + neon(edge, '#FF3DD8', '#FFE3F8', 2.2, f) + neon('M90 112 L93 118 M110 112 L107 118', '#FF3DD8', '#FFE3F8', 1.6, f), mouth: mouth(2) };
+}
+
+// ── M1 Neon guard: an open grin, a lit mouthguard in it, the teeth behind.
+function neonGuard() {
+  const f = ID(), g = ID();
+  const lips = 'M84 101 C90 114 110 114 116 101 Z';
+  const guard = 'M86.5 102.5 C92 101 108 101 113.5 102.5 L112.5 108.5 C107 111.5 93 111.5 87.5 108.5 Z';
+  return { defs: `<defs>${blur(f, 2.4)}${linG(g, [[0, '#B9FFD6'], [1, '#22D872']])}</defs>`,
+    mouth: `<path d="${lips}" fill="#3a1410" stroke="${INK}" stroke-width="2.6" stroke-linejoin="round"/>` +
+      `<path d="${guard}" fill="#39FF88" filter="url(#${f})" opacity=".85"/><path d="${guard}" fill="url(#${g})" stroke="#0F7A3E" stroke-width="1.4" stroke-linejoin="round" opacity=".95"/>` +
+      ink('M93 103 L93 109 M100 102.5 L100 110 M107 103 L107 109', 1, 0.45, '#0F7A3E') + ink('M90 104.2 C95 103.2 101 103.2 104 103.6', 1.4, 0.9, '#fff') };
+}
+
+// ── M4 Neon smile: white teeth in a grin, its rim lit.
+function neonSmile() {
+  const f = ID();
+  const lips = 'M85 101.5 C91 113.5 109 113.5 115 101.5 Z';
+  return { defs: `<defs>${blur(f, 2.2)}</defs>`,
+    mouth: `<path d="${lips}" fill="#2A0E14"/><path d="M86.5 102 L113.5 102 L112 106.5 L88 106.5 Z" fill="#fff"/>` + ink('M93 102 L93 106.5 M100 102 L100 106.5 M107 102 L107 106.5', 1, 0.6) +
+      `<path d="${lips}" fill="none" stroke="${INK}" stroke-width="3.6" stroke-linejoin="round"/>` + neon(lips, '#3DF2FF', '#E8FFFF', 1.6, f) + spark(117, 100, 0.55, '#E8FFFF') };
+}
+
+// ── F1 Circuit: traces down the temple and cheek, nodes, a chip.
+function circuit() {
+  const f = ID();
+  const traces = 'M134 72 L130 76 L130 88 M130 88 L124 94 L124 101 M130 88 L134.5 92.5 L134.5 102 M124 101 L127.5 104.5 L127.5 110';
+  const nodes = [[134, 72], [134.5, 102], [127.5, 110], [124, 101]];
+  return { defs: `<defs>${blur(f, 1.6)}</defs>`,
+    marks: neon(traces, '#3DF2FF', '#E8FFFF', 1.8, f) + nodes.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.1" fill="#E8FFFF" stroke="#3DF2FF" stroke-width="1.2"/>`).join('') +
+      `<rect x="127" y="85" width="6" height="6" rx="1" fill="#0B3A44" stroke="#3DF2FF" stroke-width="1.2"/>` };
+}
+
+// ── eyes, every iris clipped to its eye white.
+const WHITES = 'M77 82 C80 77 93 77 96 82 C92 86 81 86 77 82 Z M123 82 C120 77 107 77 104 82 C108 86 119 86 123 82 Z';
+function eyesWith(inner, extra = '', defs = '') {
+  const c = ID();
+  return { defs: `<defs><clipPath id="${c}"><path d="${WHITES}"/></clipPath>${defs}</defs>`,
+    eyes: `<path d="${WHITES}" fill="#fff"/><g clip-path="url(#${c})">${inner}</g><path d="${WHITES}" fill="none" stroke="${INK}" stroke-width="2.2"/>` + ink('M76 79 L96 80 M124 79 L104 80', 2.6, 1) + extra };
+}
+const spiralAt = (x) => `<circle cx="${x}" cy="82" r="4.3" fill="#EBD9FF"/>` + ink(`M${x} 82 a0.9 0.9 0 0 1 1.6 0 a1.7 1.7 0 0 1 -3.2 0 a2.5 2.5 0 0 1 4.8 0 a3.2 3.2 0 0 1 -6.2 0`, 1.3, 1, '#7A2FD8');
+const hypno = () => eyesWith(spiralAt(88) + spiralAt(112));
+const diamondEyes = () => eyesWith([88, 112].map(x => `<path d="M${x} 78 L${x + 3.6} 82 L${x} 86 L${x - 3.6} 82 Z" fill="#9FF3FF" stroke="${INK}" stroke-width="1"/>` + ink(`M${x - 3.6} 82 L${x + 3.6} 82`, 0.7, 0.8, '#fff') + `<path d="M${x} 78 L${x + 1.8} 82 L${x} 82 Z" fill="#fff" opacity=".7"/>`).join(''), spark(124, 75, 0.55));
+function cyberLens() {
+  const f = ID();
+  const e = eyesWith(`<circle cx="88" cy="82" r="3.3" fill="#1a1410"/><circle cx="89" cy="81" r="1" fill="#fff"/>`, '', blur(f, 1.8));
+  e.eyes += `<circle cx="112" cy="82" r="8.5" fill="none" stroke="#FF3B3B" stroke-width="2.5" filter="url(#${f})" opacity=".8"/>` +
+    `<circle cx="112" cy="82" r="8.5" fill="#1A0D0D" stroke="${INK}" stroke-width="2.4"/><circle cx="112" cy="82" r="6" fill="none" stroke="#5A2020" stroke-width="1"/>` +
+    `<circle cx="112" cy="82" r="3" fill="#FF3B3B"/><circle cx="111" cy="81" r="0.9" fill="#FFD0D0"/>` + ink('M104.5 82 L107.5 82 M116.5 82 L119.5 82 M112 74.5 L112 77.5 M112 86.5 L112 89.5', 0.9, 0.9, '#FF8A8A');
+  return e;
+}
+function electricEyes() {
+  const f = ID();
+  const zap = 'M73 75 L76.5 77.5 L74 79 L77.5 81.5 M127 75 L123.5 77.5 L126 79 L122.5 81.5 M84 72 L86 75 L83.5 76 M116 72 L114 75 L116.5 76';
+  const e = eyesWith(`<circle cx="88" cy="82" r="3.8" fill="#3DE0FF" stroke="${INK}" stroke-width="0.9"/><circle cx="112" cy="82" r="3.8" fill="#3DE0FF" stroke="${INK}" stroke-width="0.9"/><circle cx="88" cy="82" r="1.5" fill="#0B3A44"/><circle cx="112" cy="82" r="1.5" fill="#0B3A44"/><circle cx="89.2" cy="80.6" r="1" fill="#fff"/><circle cx="113.2" cy="80.6" r="1" fill="#fff"/>`, '', blur(f, 1.4));
+  e.eyes += neon(zap, '#3DE0FF', '#E6FDFF', 1.4, f);
+  return e;
+}
+
+// ── T1 Hero cape: draped over both shoulders, gold clasps, a cord between.
+function heroCape() {
+  const g = ID();
+  const left = 'M80 118 C72 128 58 135 42 138 C24 141 8 150 -2 166 L-12 200 L-2 200 C2 182 14 166 32 158 C50 152 66 146 78 138 L84 131 Z';
+  const right = 'M120 118 C128 128 142 135 158 138 C176 141 192 150 202 166 L212 200 L202 200 C198 182 186 166 168 158 C150 152 134 146 122 138 L116 131 Z';
+  return { defs: `<defs>${linG(g, [[0, '#FF6A5A'], [1, '#B3261E']])}</defs>`,
+    top: celG('bd', P.body, '#142A6A', '#1E3A8A') + ink('M44 150 C38 166 36 184 38 200 M156 150 C162 166 164 184 162 200', 2.4, 0.45) +
+      `<circle cx="100" cy="172" r="15" fill="#F2C14E" stroke="${INK}" stroke-width="3"/>` + celG('em', 'M102 160 L94 174 L101 174 L97 185 L107 169 L100 169 L104 160 Z', '#B3261E', '#E8401C', '', 1.6, -1, -1) +
+      celG('cl', left, '#8E1C14', `url(#${g})`) + celG('cr', right, '#8E1C14', `url(#${g})`) +
+      ink('M84 133 C92 139 108 139 116 133', 2.2, 1, '#F2C14E') +
+      `<circle cx="84" cy="132" r="4.4" fill="#F2C14E" stroke="${INK}" stroke-width="2"/><circle cx="116" cy="132" r="4.4" fill="#F2C14E" stroke="${INK}" stroke-width="2"/>` };
+}
+
+// ── G1 Gold aviators.
+function aviators() {
+  const g = ID(), r = ID(), c = ID();
+  const lenses = 'M74 77 C74 73.6 97 73.6 97 77 C97 86 91 90 85 90 C78 90 74 85 74 77 Z M126 77 C126 73.6 103 73.6 103 77 C103 86 109 90 115 90 C122 90 126 85 126 77 Z';
+  return { defs: `<defs>${linG(g, [[0, '#2E4BD0'], [.55, '#B4338A'], [1, '#FF9A3D']])}${linG(r, [[0, '#FFF3B8'], [1, '#C98A12']])}<clipPath id="${c}"><path d="${lenses}"/></clipPath></defs>`,
+    gear: ink('M74 77 L64 75 M126 77 L136 75', 3.6, 1) + ink('M74 77 L64 75 M126 77 L136 75', 1.8, 1, '#E2A928') +
+      `<path d="${lenses}" fill="url(#${g})" opacity=".95"/><g clip-path="url(#${c})">${ink('M76 89 L92 72 M82 92 L97 76 M105 89 L120 72', 2.4, 0.55, '#fff')}</g>` +
+      `<path d="${lenses}" fill="none" stroke="${INK}" stroke-width="3.4" stroke-linejoin="round"/><path d="${lenses}" fill="none" stroke="url(#${r})" stroke-width="1.8" stroke-linejoin="round"/>` +
+      ink('M97 77 C99 75.4 101 75.4 103 77 M86 74.2 L114 74.2', 3.2, 1) + ink('M97 77 C99 75.4 101 75.4 103 77 M86 74.2 L114 74.2', 1.5, 1, '#E2A928') };
+}
+
+// ── G2 Flame headband: a black band with flames printed round it.
+function flameBand() {
+  const g = ID();
+  const band = 'M64 56 C80 47 120 47 136 56 L136 67 C120 58 80 58 64 67 Z';
+  const flame = (x) => `<path d="M${x} 64 C${x - 3} 59 ${x} 53 ${x + 4} 51 C${x + 3} 55 ${x + 5} 56 ${x + 8} 53 C${x + 9} 57 ${x + 8} 62 ${x + 5} 64 Z" fill="url(#${g})" stroke="#7A1A0A" stroke-width=".6"/>`;
+  return { defs: `<defs>${linG(g, [[0, '#FFE45C'], [.5, '#FF8A1F'], [1, '#E8401C']], 0, 1, 0, 0)}</defs>`,
+    gear: celG('hb', band, '#0A0807', '#1E1A18', [67, 78, 89, 100, 111, 122].map(flame).join('') + ink('M66 60 C82 53 118 53 134 60', 1.2, 0.35, '#fff'), 3, -2, -2) };
+}
+
+// ── G3 Pet dragon on the shoulder.
+function dragon() {
+  const g = ID();
+  const lit = `url(#${g})`, dark = '#1E7A44';
+  const wing = 'M160 118 C148 104 144 92 148 82 C154 92 160 94 168 94 C164 102 164 110 167 116 Z';
+  const tail = 'M157 139 C145 140 138 150 142 158 C145 163 152 162 151 157 C146 155 147 149 152 146 C156 144 160 142 161 140 Z';
+  const body = 'M156 141 C150 128 154 114 166 112 C178 110 185 122 183 134 C182 140 177 143 168 143 Z';
+  const belly = 'M163 139 C161 131 163 123 169 121 C173 125 175 133 173 140 Z';
+  const head = 'M170 113 C163 107 164 96 172 92 C180 88 190 92 192 99 C198 101 201 108 197 112 C193 116 185 117 179 117 C175 117 172 115 170 113 Z';
+  return { defs: `<defs>${linG(g, [[0, '#6FE39A'], [1, '#2FA35B']])}</defs>`,
+    gear: celG('w', wing, '#1A6A3C', '#4CC27A', ink('M150 86 L162 112 M156 90 L164 112', 1.2, 0.6), 2.6, -3, -2) +
+      celG('t', tail, dark, lit, '', 2.6, -3, -2) + celG('b', body, dark, lit, '', 2.8, -3, -2) +
+      celG('y', belly, '#C9A240', '#F2D27A', ink('M164 127 L172 127 M163 132 L173 132 M163 137 L173 137', 1, 0.5), 1.8, -1, -1) +
+      celG('h', head, dark, lit, '', 2.8, -3, -2) +
+      `<path d="M174 93 L170 83 L178 90 Z M183 91 L185 81 L188 92 Z" fill="#F2D27A" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/>` +
+      `<circle cx="178" cy="101" r="4.4" fill="#fff" stroke="${INK}" stroke-width="1.6"/><circle cx="179" cy="101.3" r="2.4" fill="${INK}"/><circle cx="179.9" cy="100.2" r="0.9" fill="#fff"/>` +
+      `<circle cx="194.5" cy="106" r="0.9" fill="${INK}"/>` + ink('M186 110.5 C190 112.5 193 111.5 195.5 109.5', 1.4, 1) +
+      ink('M160 142 l-1 3 M166 143 l0 3 M172 143 l1 3', 1.6, 1) };
+}
+
+// ── G4 Gold gloves hung round the neck on their laces, resting on the chest.
+function gloves() {
+  const g = ID();
+  const glove = (x, flip) => {
+    const s = flip ? -1 : 1, X = (v) => (x + s * v).toFixed(1);
+    const shape = `M${X(-13)} 146 C${X(-15)} 160 ${X(-14)} 171 ${X(-8)} 177 C${X(-1)} 182 ${X(10)} 182 ${X(14)} 175 C${X(18)} 168 ${X(18)} 156 ${X(14)} 146 Z`;
+    const thumb = `M${X(13)} 151 C${X(22)} 149 ${X(24)} 161 ${X(16)} 167 Z`;
+    return celG('g', shape, '#8A5606', `url(#${g})`, ink(`M${X(-7)} 154 C${X(-5)} 150 ${X(2)} 149 ${X(7)} 151`, 2.2, 0.85, '#FFFBE6'), 2.8, -3, -2) +
+      celG('th', thumb, '#8A5606', `url(#${g})`, '', 2.4, -2, -1) +
+      `<rect x="${x - 15}" y="137" width="30" height="11" rx="3.5" fill="#F5EFE4" stroke="${INK}" stroke-width="2.4"/>` + ink(`M${x - 9} 142.5 L${x + 9} 142.5`, 1.2, 0.5);
+  };
+  return { defs: `<defs>${linG(g, [[0, '#FFF0A8'], [1, '#E2A928']])}</defs>`,
+    gear: ink('M70 138 C72 128 82 122 90 120 M130 138 C128 128 118 122 110 120', 2.6, 1, '#F5EFE4') + glove(70, false) + glove(130, true) };
+}
+
+const sections = [
+  ['الدقن', [['B4', 'Neon trim', neonTrim, 'head', 'دقن عادية بظل، وخط نيون على حرفها وخطين صغيرين. مش قناع منوّر.']]],
+  ['البُق', [['M1', 'Neon guard', neonGuard, 'face', 'بُق مفتوح وجواه واقي سنان نيون شفاف، والسنان باينة وراه.'], ['M4', 'Neon smile', neonSmile, 'face', 'سنان بيضا، وحرف البُق منوّر سماوي.']]],
+  ['علامات الوش', [['F1', 'Circuit', circuit, 'face', 'خطوط دواير على الصدغ والخد بزوايا، ونقط، وشريحة صغيرة.']]],
+  ['العيون — كل حاجة جوه بياض العين', [['E1', 'Hypno', hypno, 'face', 'دوامة جوه العين بالظبط.'], ['E2', 'Diamond', diamondEyes, 'face', 'ألماظ بوش ولمعة.'], ['E3', 'Cyber lens', cyberLens, 'face', 'عدسة مركزها على العين بالظبط، وعلامات تصويب.'], ['E4', 'Electric', electricEyes, 'face', 'لون كهربا جوه العين، وشرار متناسق على الجنبين.']]],
+  ['اللبس', [['T1', 'Hero cape', heroCape, 'full', 'الكاب على الكتفين ومشبوك بمشابك دهب وحبل، من غير زعبوط ورا الراس.']]],
+  ['الإكسسوارات', [['G1', 'Gold aviators', aviators, 'head', 'نضارة طيار: إطار دهب على العين بالظبط، كوبري دبل، عدسة مراية.'], ['G2', 'Flame headband', flameBand, 'head', 'باندانا سودا عليها نار مطبوعة، والشعر باين فوقها.'], ['G3', 'Pet dragon', dragon, 'full', 'تنين صغير قاعد على الكتف: عين كبيرة، قرون، جناح، وديل.'], ['G4', 'Gold gloves', gloves, 'full', 'جوانتيات ملاكمة دهب متعلقة على الصدر بالرباط.']]],
+];
+const draw = (make, who, view) => compose(who, make(), view);
+document.getElementById('out').innerHTML = '<div class="row">' + sections.map(([title, items]) => items.map(([code, name, make, view, note]) =>
+  `<div class="tile"><div class="sec">${title}</div><div class="big">${draw(make, base, view)}</div><div class="small">${people.map(p => `<div>${draw(make, p, view === 'face' ? 'head' : view)}</div>`).join('')}<div class="tiny">${draw(make, base, view === 'face' ? 'head' : view)}</div></div>` +
+  `<div class="code">${code}</div><div class="name">${name}</div><div class="note">${note}</div></div>`).join('')).join('') + '</div>';
+</script>
+</body>
+</html>

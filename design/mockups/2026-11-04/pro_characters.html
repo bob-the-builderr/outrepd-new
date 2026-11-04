@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<title>Pro characters</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700;800;900&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #0B0A09; color: #F5EFE4; font-family: 'Noto Sans', sans-serif; }
+  .wrap { padding: 22px 26px 26px; width: 1260px; }
+  .cap { direction: rtl; font-family: 'Noto Sans Arabic', 'Noto Sans', sans-serif; margin-bottom: 8px; }
+  .cap b { display: block; font-size: 24px; margin-bottom: 4px; }
+  .cap p { margin: 0; color: #8F8880; font-size: 15px; line-height: 1.7; }
+  h2 { direction: rtl; font-family: 'Noto Sans Arabic', sans-serif; font-size: 19px; margin: 18px 0 8px; color: #E8DCC8; }
+  h2 span { color: #8F8880; font-size: 14px; font-weight: 400; margin-right: 8px; }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .tile { width: 190px; background: #161412; border: 1px solid #2A2724; border-radius: 16px; padding: 10px; }
+  .big svg { width: 168px; height: 168px; border-radius: 12px; display: block; }
+  .small { display: flex; gap: 6px; margin-top: 6px; align-items: center; }
+  .small svg { width: 44px; height: 44px; border-radius: 22px; display: block; }
+  .code { font-weight: 900; font-size: 18px; color: #F2C14E; margin-top: 6px; }
+  .name { font-size: 14px; font-weight: 700; }
+  .note { direction: rtl; font-family: 'Noto Sans Arabic', sans-serif; color: #8F8880; font-size: 12.5px; line-height: 1.5; margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="cap"><b>شخصيات Pro</b>
+  <p>فوق: أنواع جلد كاملة (المخلوق نفسه)، وتلبس عليها أي حاجة تانية. تحت: شخصيات جاهزة بدوسة واحدة، وكل قطعة فيها تتلبس لوحدها كمان. ولا واحد منهم بيتكرر مع جلد أو قطعة موجودة.</p></div>
+  <div id="out"></div>
+</div>
+<script src="lifterA.js"></script>
+<script>
+let gid = 0;
+const ID = () => 'c' + (++gid);
+const stopsOf = (stops) => stops.map(([o, c]) => `<stop offset="${o}" stop-color="${c}"/>`).join('');
+const linG = (id, stops, x1 = 0, y1 = 0, x2 = 0, y2 = 1) => `<linearGradient id="${id}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}">${stopsOf(stops)}</linearGradient>`;
+const radG = (id, stops, cx = .5, cy = .5, r = .6) => `<radialGradient id="${id}" cx="${cx}" cy="${cy}" r="${r}">${stopsOf(stops)}</radialGradient>`;
+function celG(key, d, base, lit, inner = '', w = 3.2, dx = -6, dy = -4) {
+  const c = ID() + key;
+  return `<clipPath id="${c}"><path d="${d}"/></clipPath><g clip-path="url(#${c})"><path d="${d}" fill="${base}"/>` +
+    `<path d="${d}" fill="${lit}" transform="translate(${dx} ${dy})"/>${inner}</g><path d="${d}" fill="none" stroke="${INK}" stroke-width="${w}" stroke-linejoin="round"/>`;
+}
+const soft = (d, col, w) => `<path d="${d}" fill="none" stroke="${col}" stroke-width="${w + 5}" opacity=".16" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="${col}" stroke-width="${w + 2.4}" opacity=".3" stroke-linecap="round" stroke-linejoin="round"/>`;
+const neon = (d, col, core, w) => soft(d, col, w) + `<path d="${d}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="${core}" stroke-width="${w * .4}" stroke-linecap="round" stroke-linejoin="round"/>`;
+const spark = (x, y, s = 1, col = '#fff') => `<path d="M${x} ${y - 5 * s} L${x + 1.3 * s} ${y - 1.3 * s} L${x + 5 * s} ${y} L${x + 1.3 * s} ${y + 1.3 * s} L${x} ${y + 5 * s} L${x - 1.3 * s} ${y + 1.3 * s} L${x - 5 * s} ${y} L${x - 1.3 * s} ${y - 1.3 * s} Z" fill="${col}"/>`;
+
+// A lifter with any layer replaced: the skin's colour and its drawing on the
+// face, the ears, the eyes, mouth, beard, hair, clothes, and what is worn.
+function draw(o, view = 'full') {
+  const id = 'A' + (++uid);
+  const skin = o.skin || '#C68A5C';
+  const hc = o.hc || '#141010';
+  const sk = { c: skin };
+  const h = o.hair === undefined ? hair(id, 2, hc) : { back: o.hair.back || '', front: o.hair.front || '' };
+  let s = o.defs || '';
+  s += background(id, o.bg ?? 3, 0) + (o.under || '');
+  s += o.top ?? topWear(id, 3, o.tc || '#141312', sk);
+  s += cel(id, 'neck', P.neck, shade(skin, -0.06)) + ink(P.neckLines, 2.6) + (o.neckFx || '') + h.back;
+  s += o.ears ?? (cel(id, 'earL', P.earL, skin) + cel(id, 'earR', P.earR, skin));
+  s += cel(id, 'head', P.head, skin) + (o.fx || '') + ink(P.jaw, 2.4, 0.6);
+  s += o.brows ?? brows(0, hc);
+  s += o.eyes ?? eyes(id, 0, sk);
+  s += o.nose ?? ink('M100 82 L95 98 C98 101 103 101 106 98', 2.4, 1);
+  s += (o.beard || '') + (o.mouth ?? mouth(0));
+  s += h.front + (o.gear || '');
+  const vb = view === 'head' ? '30 -6 140 140' : '0 0 200 200';
+  return `<svg viewBox="${vb}" xmlns="http://www.w3.org/2000/svg">${s}</svg>`;
+}
+const WHITES = 'M77 82 C80 77 93 77 96 82 C92 86 81 86 77 82 Z M123 82 C120 77 107 77 104 82 C108 86 119 86 123 82 Z';
+const BALD = { back: '', front: '' };
+
+// ── creature skins ───────────────────────────────────────────────────────────
+const robot = () => {
+  const skin = '#9AA7B5';
+  return { skin, hair: BALD,
+    fx: ink('M100 28 L100 48 M66 66 L80 66 M120 66 L134 66 M72 101 C84 110 116 110 128 101', 2, 0.55) +
+      [[73, 74], [127, 74], [82, 110], [118, 110], [100, 36]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.2" fill="#D8E0E8" stroke="${INK}" stroke-width="1.4"/>`).join('') +
+      `<path d="M100 28 L100 14" stroke="${INK}" stroke-width="3"/><circle cx="100" cy="12" r="4" fill="#FF3B3B" stroke="${INK}" stroke-width="2"/>`,
+    eyes: `<rect x="76" y="77" width="21" height="9" rx="3" fill="#0E1A24" stroke="${INK}" stroke-width="2.2"/><rect x="103" y="77" width="21" height="9" rx="3" fill="#0E1A24" stroke="${INK}" stroke-width="2.2"/>` +
+      `<rect x="80" y="79.5" width="13" height="4" rx="2" fill="#3DE0FF"/><rect x="107" y="79.5" width="13" height="4" rx="2" fill="#3DE0FF"/>`,
+    nose: `<rect x="96" y="90" width="8" height="6" rx="2" fill="#7E8A97" stroke="${INK}" stroke-width="1.6"/>`,
+    mouth: `<rect x="86" y="102" width="28" height="9" rx="2" fill="#1A222C" stroke="${INK}" stroke-width="2.2"/>` + ink('M91 102 L91 111 M96 102 L96 111 M101 102 L101 111 M106 102 L106 111 M111 102 L111 111', 1.2, 0.8, '#5A6A7A'),
+    brows: '' };
+};
+const zombie = () => {
+  const skin = '#93B07E';
+  return { skin, hc: '#3A3A2A',
+    fx: flat('M80 92 C84 96 92 96 95 92 C92 90 84 90 80 92 Z M105 92 C108 96 116 96 120 92 C116 90 108 90 105 92 Z', '#5E7A4E', 0.7) +
+      ink('M76 54 L96 48', 2, 0.9) + ink('M80 50 L81 56 M85 49 L86 55 M90 47 L91 53', 1.4, 0.9) +
+      flat('M118 98 C124 96 128 102 124 108 C120 106 116 104 118 98 Z', '#6E8A5E', 0.9) + ink('M119 99 L123 106', 1.2, 0.6),
+    eyes: `<path d="${WHITES}" fill="#F2F0D8" stroke="${INK}" stroke-width="2.2"/><circle cx="88" cy="82" r="2.2" fill="#3A1A10"/><circle cx="113" cy="83" r="1.8" fill="#3A1A10"/>` + ink('M76 79 L96 80 M124 80 L104 81', 2.6, 1),
+    mouth: ink('M88 106 C94 104 100 108 106 104 C109 103 111 105 112 106', 2.6, 1) + ink('M95 105.5 L95 108 M102 106 L102 108.5', 1.2, 1) };
+};
+const alien = () => {
+  const skin = '#A8E6A1';
+  return { skin, hair: BALD,
+    fx: [[86, 44, 2.2], [100, 38, 2.6], [114, 44, 2.2], [93, 52, 1.6], [107, 52, 1.6]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#7CC775"/>`).join(''),
+    under: '', gear: ink('M86 32 C82 20 78 14 74 10 M114 32 C118 20 122 14 126 10', 3, 1) + `<circle cx="73" cy="9" r="4.4" fill="#C9F7A8" stroke="${INK}" stroke-width="2.2"/><circle cx="127" cy="9" r="4.4" fill="#C9F7A8" stroke="${INK}" stroke-width="2.2"/>`,
+    eyes: `<path d="M74 80 C76 70 92 70 97 82 C92 90 78 88 74 80 Z M126 80 C124 70 108 70 103 82 C108 90 122 88 126 80 Z" fill="#0E0A14" stroke="${INK}" stroke-width="2.2"/>` + `<ellipse cx="82" cy="77" rx="3" ry="2" fill="#fff" opacity=".85"/><ellipse cx="110" cy="77" rx="3" ry="2" fill="#fff" opacity=".85"/>`,
+    brows: '', nose: ink('M98 94 L98 96 M102 94 L102 96', 1.6, 1), mouth: ink('M92 107 C96 109 104 109 108 107', 2.4, 1) };
+};
+const skeleton = () => {
+  const skin = '#EDE6D6';
+  return { skin, hair: BALD,
+    fx: `<path d="M74 82 C74 70 96 70 97 82 C97 92 76 93 74 82 Z M126 82 C126 70 104 70 103 82 C103 92 124 93 126 82 Z" fill="#2A2420"/>` + ink('M70 98 C76 102 80 102 84 100 M130 98 C124 102 120 102 116 100', 2, 0.5),
+    eyes: `<circle cx="86" cy="82" r="2.6" fill="#FF5A3D"/><circle cx="114" cy="82" r="2.6" fill="#FF5A3D"/>`,
+    brows: '', nose: `<path d="M100 88 C96 92 95 96 98 98 L100 96 L102 98 C105 96 104 92 100 88 Z" fill="#2A2420"/>`,
+    mouth: `<path d="M84 104 L116 104 L114 112 L86 112 Z" fill="#F6F1E4" stroke="${INK}" stroke-width="2.2" stroke-linejoin="round"/>` + ink('M88 104 L88 112 M93 104 L93 112 M98 104 L98 112 M103 104 L103 112 M108 104 L108 112 M112 104 L112 112 M84 108 L116 108', 1.2, 0.85) };
+};
+const werewolf = () => {
+  const skin = '#8A7766';
+  const fur = 'M65 70 L60 76 L66 80 L60 86 L67 90 L62 96 L70 99 L67 106 L76 108 L74 114 L85 115 M135 70 L140 76 L134 80 L140 86 L133 90 L138 96 L130 99 L133 106 L124 108 L126 114 L115 115';
+  return { skin, hc: '#4A3A30',
+    ears: cel('w', 'eL', 'M68 70 L54 44 L70 60 Z', skin) + cel('w', 'eR', 'M132 70 L146 44 L130 60 Z', skin) + flat('M66 64 L58 50 L68 60 Z M134 64 L142 50 L132 60 Z', '#C9A88A', 0.9),
+    fx: `<path d="${fur}" fill="none" stroke="#5E4E40" stroke-width="3" stroke-linejoin="round"/>` +
+      flat('M88 90 C88 84 112 84 112 90 C116 100 112 112 100 114 C88 112 84 100 88 90 Z', '#B5A08C', 0.9),
+    nose: `<path d="M94 92 C94 88 106 88 106 92 C106 96 102 98 100 98 C98 98 94 96 94 92 Z" fill="#2A2020" stroke="${INK}" stroke-width="1.6"/>`,
+    eyes: `<path d="${WHITES}" fill="#F2C14E" stroke="${INK}" stroke-width="2.2"/><ellipse cx="88" cy="82" rx="1.4" ry="3.4" fill="#141010"/><ellipse cx="112" cy="82" rx="1.4" ry="3.4" fill="#141010"/>` + ink('M76 79 L96 81 M124 79 L104 81', 3, 1),
+    mouth: `<path d="M88 105 C94 110 106 110 112 105" fill="none" stroke="${INK}" stroke-width="2.6"/>` + `<path d="M91 106.5 L93 111 L95 107.5 Z M109 106.5 L107 111 L105 107.5 Z" fill="#fff" stroke="${INK}" stroke-width="1"/>` };
+};
+const reptile = () => {
+  const skin = '#5DA05A';
+  const scales = [];
+  for (const [y, xs] of [[46, [84, 92, 100, 108, 116]], [54, [80, 88, 96, 104, 112, 120]], [96, [72, 78]], [96, [122, 128]], [102, [74, 126]]]) for (const x of xs) scales.push(`M${x - 3} ${y} C${x - 3} ${y - 3.4} ${x + 3} ${y - 3.4} ${x + 3} ${y}`);
+  return { skin, hair: BALD, hc: '#2E5E2C',
+    fx: ink(scales.join(' '), 1.4, 0.7, '#2E5E2C') + flat('M80 66 C88 62 96 64 98 68 L98 70 C92 68 86 68 80 70 Z M120 66 C112 62 104 64 102 68 L102 70 C108 68 114 68 120 70 Z', '#3E7A3A', 0.9),
+    eyes: `<path d="${WHITES}" fill="#E8E24A" stroke="${INK}" stroke-width="2.2"/><ellipse cx="88" cy="82" rx="1.2" ry="4" fill="#141010"/><ellipse cx="112" cy="82" rx="1.2" ry="4" fill="#141010"/>` + ink('M76 79 L96 80 M124 79 L104 80', 2.6, 1),
+    brows: '', nose: ink('M97 94 L97 96 M103 94 L103 96', 1.8, 1), mouth: ink('M84 104 C92 108 108 108 116 104', 2.6, 1) + `<path d="M100 107 L98 112 L100 110 L102 112 Z" fill="#E86A7A" stroke="${INK}" stroke-width="1"/>` };
+};
+
+// ── ready-made characters ────────────────────────────────────────────────────
+const samurai = () => {
+  const g = ID();
+  return { skin: '#E0A985', hair: { back: '', front: flat('M66 64 C64 40 80 30 100 30 C120 30 136 40 134 64 C128 48 116 42 100 42 C84 42 72 48 66 64 Z', '#141010', 0.55) + cel('s', 'knot', 'M92 30 C90 20 96 14 100 14 C104 14 110 20 108 30 Z', '#141010') + `<rect x="94" y="27" width="12" height="4" rx="1.5" fill="#F5EFE4" stroke="${INK}" stroke-width="1.4"/>` },
+    defs: `<defs>${linG(g, [[0, '#E8573E'], [1, '#9E1E12']])}</defs>`,
+    top: celG('ar', P.body, '#7A160E', `url(#${g})`, [150, 162, 174, 186].map(y => ink(`M-10 ${y} L210 ${y}`, 1.6, 0.6, '#3A0A06')).join('') + ink('M100 140 L100 200', 2, 0.7, '#F2C14E')) +
+      celG('sl', 'M-12 168 C-8 150 12 138 38 136 L50 150 C34 156 18 166 6 182 Z', '#5A0F0A', '#B3261E', ink('M0 160 L44 146 M4 170 L48 156', 1.6, 0.8, '#F2C14E')) +
+      celG('sr', 'M212 168 C208 150 188 138 162 136 L150 150 C166 156 182 166 194 182 Z', '#5A0F0A', '#B3261E', ink('M200 160 L156 146 M196 170 L152 156', 1.6, 0.8, '#F2C14E')),
+    gear: `<path d="M64 58 C80 50 120 50 136 58 L136 64 C120 56 80 56 64 64 Z" fill="#F5EFE4" stroke="${INK}" stroke-width="2.4"/>`, beard: '', mouth: mouth(0) };
+};
+const viking = () => {
+  const g = ID();
+  return { skin: '#F2CFAE', hc: '#C8792A',
+    hair: { back: '', front: '' },
+    defs: `<defs>${linG(g, [[0, '#D8DEE4'], [1, '#7A8794']])}</defs>`,
+    gear: celG('hl', 'M64 62 C62 36 80 22 100 22 C120 22 138 36 136 62 L136 66 L64 66 Z', '#5E6A76', `url(#${g})`, ink('M100 22 L100 66 M64 56 L136 56', 2, 0.6), 3, -3, -2) +
+      celG('ns', 'M96 60 L104 60 L103 92 L97 92 Z', '#5E6A76', '#B8C2CC', '', 2.2, -1, -1) +
+      celG('hnL', 'M66 50 C54 46 44 34 46 18 C52 30 60 36 70 40 Z', '#C9B48A', '#F3E6C4', '', 2.6, -2, -1) + celG('hnR', 'M134 50 C146 46 156 34 154 18 C148 30 140 36 130 40 Z', '#C9B48A', '#F3E6C4', '', 2.6, -2, -1),
+    beard: cel('vb' + ID(), 'bd', 'M66 80 C66 108 80 126 100 128 C120 126 134 108 134 80 C130 96 122 104 112 104 C106 100 94 100 88 104 C78 104 70 96 66 80 Z', '#C8792A') +
+      [90, 110].map(x => `<path d="M${x} 124 C${x - 2} 136 ${x + 2} 146 ${x} 156" fill="none" stroke="${INK}" stroke-width="8" stroke-linecap="round"/><path d="M${x} 124 C${x - 2} 136 ${x + 2} 146 ${x} 156" fill="none" stroke="#C8792A" stroke-width="5" stroke-linecap="round"/><rect x="${x - 4.5}" y="140" width="9" height="4" rx="1.5" fill="#C9CED6" stroke="${INK}" stroke-width="1.2"/>`).join(''),
+    top: celG('fu', P.body, '#4A3420', '#7A5A3A') + celG('fur', 'M30 140 C44 128 62 126 80 120 C90 132 110 132 120 120 C138 126 156 128 170 140 C150 152 130 150 100 152 C70 150 50 152 30 140 Z', '#B8A890', '#E6DCC8', '', 2.8, -2, -2), mouth: mouth(2) };
+};
+const ninja = () => {
+  const hood = 'M62 70 C58 34 80 22 100 22 C120 22 142 34 138 70 L138 96 C138 112 124 124 100 126 C76 124 62 112 62 96 Z';
+  const slit = 'M72 74 C84 70 116 70 128 74 L126 90 C114 88 86 88 74 90 Z';
+  return { skin: '#C68A5C', hair: BALD, brows: '',
+    top: celG('gi', P.body, '#0E0C0B', '#26221F', ink('M80 120 L100 160 L120 120', 2.4, 0.8, '#3A3632')),
+    gear: `<path d="${hood} ${slit}" fill-rule="evenodd" fill="#1A1816" stroke="${INK}" stroke-width="3.2"/>` + ink('M66 60 C80 52 120 52 134 60', 4, 1, '#B3261E') + ink('M136 60 C146 62 154 70 158 80 M136 62 C150 60 160 64 166 70', 3, 1, '#B3261E') };
+};
+const astronaut = () => {
+  const g = ID(), r = ID();
+  return { skin: '#9C6440', hc: '#141010',
+    defs: `<defs>${radG(g, [[0, '#BFE9FF'], [1, '#5AA8D8']], .35, .3, .8)}${linG(r, [[0, '#FFFFFF'], [1, '#D6DCE2']])}</defs>`,
+    top: celG('su', P.body, '#AEB6BE', `url(#${r})`, `<rect x="120" y="150" width="22" height="14" rx="2" fill="#2F6FD6" stroke="${INK}" stroke-width="1.6"/>` + ink('M120 156 L142 156', 1.2, 0.6, '#fff') + `<circle cx="74" cy="160" r="7" fill="#E8573E" stroke="${INK}" stroke-width="1.6"/>`) +
+      celG('ring', 'M52 132 C64 118 136 118 148 132 C136 142 64 142 52 132 Z', '#7A8794', '#C9D2DB'),
+    gear: `<circle cx="100" cy="74" r="52" fill="url(#${g})" opacity=".28"/><circle cx="100" cy="74" r="52" fill="none" stroke="${INK}" stroke-width="3.4"/>` +
+      `<path d="M66 44 C76 32 92 26 106 26" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".75"/><path d="M60 58 L62 54" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".75"/>`, mouth: mouth(2) };
+};
+const wrestler = () => {
+  const g = ID();
+  const mask = 'M62 70 C58 34 80 22 100 22 C120 22 142 34 138 70 L138 96 C138 112 124 124 100 126 C76 124 62 112 62 96 Z';
+  const holes = 'M74 82 C76 72 96 72 97 82 C96 90 76 92 74 82 Z M126 82 C124 72 104 72 103 82 C104 90 124 92 126 82 Z M88 102 C92 98 108 98 112 102 C110 112 90 112 88 102 Z';
+  return { skin: '#C68A5C', hair: BALD, brows: '',
+    defs: `<defs>${linG(g, [[0, '#FFD23F'], [1, '#E8401C']])}</defs>`,
+    top: celG('sk', P.body, '#9C6440', '#C68A5C', ink(P.delts + ' ' + P.pecs, 2.2, 0.5)) + celG('stL', 'M58 136 L74 132 L84 200 L66 200 Z', '#1E3A8A', '#2F6FD6', '', 2.4, -2, -1) + celG('stR', 'M142 136 L126 132 L116 200 L134 200 Z', '#1E3A8A', '#2F6FD6', '', 2.4, -2, -1),
+    gear: `<path d="${mask} ${holes}" fill-rule="evenodd" fill="#2F6FD6" stroke="${INK}" stroke-width="3.2"/>` +
+      `<path d="${holes}" fill="none" stroke="url(#${g})" stroke-width="3"/>` + `<path d="M100 22 L94 44 L100 40 L106 44 Z" fill="url(#${g})" stroke="${INK}" stroke-width="1.6"/>` +
+      ink('M66 60 C70 50 76 46 82 44 M134 60 C130 50 124 46 118 44', 3, 1, '#F2C14E') };
+};
+const pharaoh = () => {
+  const g = ID();
+  const nemes = 'M64 60 C64 34 80 22 100 22 C120 22 136 34 136 60 L146 120 L130 124 L126 72 L74 72 L70 124 L54 120 Z';
+  const stripes = [30, 38, 46, 54, 62].map(y => `M62 ${y + 26} L138 ${y + 26}`).join(' ');
+  return { skin: '#9C6440', hair: BALD,
+    defs: `<defs>${linG(g, [[0, '#FFE08A'], [1, '#C98A12']])}</defs>`,
+    top: celG('bd', P.body, '#E8DCC8', '#F5EFE4') + celG('col', 'M52 132 C64 122 80 118 100 120 C120 118 136 122 148 132 C136 150 120 156 100 156 C80 156 64 150 52 132 Z', '#9C6408', `url(#${g})`,
+      ink('M58 136 C72 146 128 146 142 136 M64 142 C76 150 124 150 136 142', 2.4, 0.9, '#2F6FD6') + [76, 88, 100, 112, 124].map(x => `<circle cx="${x}" cy="147" r="2" fill="#E8573E"/>`).join('')),
+    gear: celG('ne', nemes, '#9C6408', `url(#${g})`, ink(stripes, 3.4, 1, '#2F6FD6')) + `<path d="M100 26 C96 30 96 36 100 40 C104 36 104 30 100 26 Z" fill="#2F6FD6" stroke="${INK}" stroke-width="1.6"/>`,
+    eyes: `<path d="${WHITES}" fill="#fff" stroke="${INK}" stroke-width="2.6"/><circle cx="88" cy="82" r="3.2" fill="#1a1410"/><circle cx="112" cy="82" r="3.2" fill="#1a1410"/>` + ink('M72 80 L77 82 M128 80 L123 82 M76 79 L96 79 M124 79 L104 79', 2.8, 1),
+    beard: celG('pb', 'M95 116 L105 116 L104 136 C102 140 98 140 96 136 Z', '#9C6408', `url(#${g})`, ink('M96 122 L104 122 M96 128 L104 128', 1.4, 0.8, '#2F6FD6'), 2, -1, -1), mouth: mouth(0) };
+};
+
+const sections = [
+  ['أنواع جلد كاملة', 'S — المخلوق نفسه، وتلبس عليه أي حاجة تانية', [
+    ['S1', 'Robot', robot, 'معدن بمسامير، وعيون شاشة، وبُق سماعة، وإريال.'],
+    ['S2', 'Zombie', zombie, 'أخضر باهت، وغرز في الجبهة، وعيون تعبانة.'],
+    ['S3', 'Alien', alien, 'أخضر فاتح، وعيون سودا كبيرة، وقرون استشعار.'],
+    ['S4', 'Skeleton', skeleton, 'عضم: عيون فاضية بتنوّر، وسنان، ومناخير مخرومة.'],
+    ['S5', 'Werewolf', werewolf, 'فرو على الوش، وودان مدببة، وبوز، وعيون ديب.'],
+    ['S6', 'Reptile', reptile, 'قشر أخضر، وعيون تعبان، ولسان مشقوق.'],
+  ]],
+  ['شخصيات جاهزة', 'K — بدوسة واحدة، وكل قطعة فيها تتلبس لوحدها', [
+    ['K1', 'Samurai', samurai, 'كحكة شعر، ورباط راس، ودرع أحمر بحبال دهب.'],
+    ['K2', 'Viking', viking, 'خوذة بقرون، ودقن مضفورة، وعباية فرو.'],
+    ['K3', 'Ninja', ninja, 'قناع أسود باين منه العينين بس، ورباط أحمر.'],
+    ['K4', 'Astronaut', astronaut, 'خوذة إزاز، وبدلة فضاء بشارات.'],
+    ['K5', 'Masked wrestler', wrestler, 'ماسك ملوّن بلهب دهب، وبدلة مصارعة.'],
+    ['K6', 'Pharaoh', pharaoh, 'غطا راس مقلّم دهب وأزرق، وطوق دهب، وكحل.'],
+  ]],
+];
+const skins = ['#C68A5C', '#F2CFAE', '#6E4129'];
+document.getElementById('out').innerHTML = sections.map(([title, sub, items]) => `<h2>${title}<span>${sub}</span></h2><div class="row">` +
+  items.map(([code, name, make, note]) => {
+    const big = draw(make(), title === 'أنواع جلد كاملة' ? 'head' : 'full');
+    const smalls = [3, 0, 1].map(bg => draw({ ...make(), bg }, 'head'));
+    return `<div class="tile"><div class="big">${big}</div><div class="small">${smalls.map(s => `<div>${s}</div>`).join('')}</div><div class="code">${code}</div><div class="name">${name}</div><div class="note">${note}</div></div>`;
+  }).join('') + '</div>').join('');
+</script>
+</body>
+</html>

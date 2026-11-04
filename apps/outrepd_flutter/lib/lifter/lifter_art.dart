@@ -46,6 +46,7 @@ String lifterSvg(Lifter l, {LifterView view = LifterView.full}) {
   if (view != LifterView.noBackground) b.write(_background(l.background, l.pattern));
   final h = _hair(l.hair, hc);
   b
+    ..write(proGearBack[gearId] ?? '')
     ..write(_top(l.top, tc, skin))
     ..write(_cel('neck', _P.neck, _shade(skin, -0.06)))
     ..write(_inkLine(_P.neckLines))
@@ -411,6 +412,7 @@ String _skinFx(String? fx) {
 // ── backgrounds ──────────────────────────────────────────────────────────────
 
 String _background(int colour, int pattern) {
+  if (proPatterns[kPatterns[pattern].id] case final pro?) return pro;
   final bg = kBackgroundColors[colour];
   final light = _shade(bg, 0.35), dark = _shade(bg, -0.18);
   String base(String fill) => '<rect x="-20" y="-20" width="240" height="240" fill="$fill"/>';
@@ -594,6 +596,7 @@ String _mesh(String col, double o) {
 }
 
 String _top(int i, String tc, String skin) {
+  if (proTops[kTops[i].id] case final pro?) return pro;
   final hi = _shade(tc, 0.34), lo = _shade(tc, -0.34), deep = _shade(tc, -0.55);
   final light = _onCloth(tc) == '#141312' ? _shade(tc, -0.62) : '#F5EFE4';
   final under = light == '#F5EFE4' ? '#E9E1D2' : '#2A2725';
@@ -835,6 +838,7 @@ String _top(int i, String tc, String skin) {
 
 /// Collars that wrap the neck, drawn after it so they sit in front.
 String _topOver(int i, String tc) {
+  if (proTops.containsKey(kTops[i].id)) return '';
   final hi = _shade(tc, 0.34), deep = _shade(tc, -0.55);
   String pull([String col = _metal]) =>
       '<path d="M100 114 L100 140" stroke="$_ink" stroke-width="5"/><path d="M100 114 L100 140" stroke="$col" stroke-width="2.6" stroke-dasharray="1.6 1.6"/>'
@@ -868,6 +872,8 @@ String _chain(String col, double w, String dash) =>
     '<path d="${_P.chain}" fill="none" stroke="$col" stroke-width="${_n(w)}" stroke-dasharray="$dash" stroke-linecap="round"/>';
 
 String _gear(int i) {
+  if (proGear[kGear[i].id] case final pro?) return pro;
+  if (proGearBack.containsKey(kGear[i].id)) return '';
   switch (kGear[i].id) {
     case 'shades':
       return _cel('sh', 'M70 74 L130 74 L128 88 C124 96 108 96 104 88 L100 82 L96 88 C92 96 76 96 72 88 Z', '#121212', dark: 0.15,

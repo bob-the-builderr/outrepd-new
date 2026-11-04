@@ -78,33 +78,108 @@ const FIRE = ['#FFE45C', '#FF9A1F', '#E8401C'];
 const sections = [];
 const add = (title, sub, items, opts = {}) => sections.push({ title, sub, items, opts });
 
-// ── hair ──
-function bumpy(cx, cy, rx, ry, a0, a1, n, out) {
-  let d = '';
-  for (let i = 0; i <= n; i++) {
-    const a = a0 + (a1 - a0) * i / n;
-    const x = (cx + rx * Math.cos(a)).toFixed(1), y = (cy + ry * Math.sin(a)).toFixed(1);
-    if (i === 0) { d += `M${x} ${y}`; continue; }
-    const am = a0 + (a1 - a0) * (i - 0.5) / n;
-    d += ` Q${(cx + (rx + out) * Math.cos(am)).toFixed(1)} ${(cy + (ry + out) * Math.sin(am)).toFixed(1)} ${x} ${y}`;
+// ── hair (final picks, 2026-11-04: pro_hair.html, pro_hair2.html, storm_options.html) ──
+const stopsOf = (stops) => stops.map(([o, c]) => `<stop offset="${o}" stop-color="${c}"/>`).join('');
+const linG = (id, stops, x1, y1, x2, y2) => `<linearGradient id="${id}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}">${stopsOf(stops)}</linearGradient>`;
+const radG = (id, stops, cx = .5, cy = .5, r = .6) => `<radialGradient id="${id}" cx="${cx}" cy="${cy}" r="${r}">${stopsOf(stops)}</radialGradient>`;
+const blur = (id, r) => `<filter id="${id}" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="${r}"/></filter>`;
+function celG(key, d, base, lit, inner = '', w = 3.4, dx = -9, dy = -6) {
+  const c = ID() + key;
+  return `<clipPath id="${c}"><path d="${d}"/></clipPath><g clip-path="url(#${c})"><path d="${d}" fill="${base}"/>` +
+    `<path d="${d}" fill="${lit}" transform="translate(${dx} ${dy})"/>${inner}</g><path d="${d}" fill="none" stroke="${INK}" stroke-width="${w}" stroke-linejoin="round"/>`;
+}
+
+// ── H1 Inferno: the hair is fire, swept up and back, the tongues leaning right.
+function inferno() {
+  const lit = ID(), core = ID(), gl = ID();
+  const d = 'M64 66 C56 50 58 34 68 24 C68 34 72 40 78 38 C74 24 80 10 92 2 C92 14 96 22 104 20 C104 10 112 0 126 -4 C120 8 122 18 130 24 C136 18 140 10 142 4 C146 18 144 30 140 40 C144 46 142 56 136 66 C128 52 116 46 100 48 C84 46 72 52 64 66 Z';
+  const tongues = 'M78 50 C76 40 80 32 86 28 C86 36 90 40 96 38 C94 28 100 18 108 14 C106 24 110 30 116 30 C118 22 124 16 132 14 C128 24 130 34 128 44 C118 40 92 42 78 50 Z';
+  const defs = `<defs>${linG(lit, [[0, '#FFE45C'], [.45, '#FF9A1F'], [1, '#F0441C']], 0, 1, 0, 0)}${linG(core, [[0, '#FFFBE0'], [1, '#FFD23F']], 0, 1, 0, 0)}${blur(gl, 5)}</defs>`;
+  const front = `<path d="${d}" fill="#FF6A1F" opacity=".55" filter="url(#${gl})"/>` +
+    celG('f', d, '#B3261E', `url(#${lit})`, `<path d="${tongues}" fill="url(#${core})" opacity=".95"/>` + ink('M84 36 C86 30 90 26 92 22 M110 26 C112 20 118 16 122 14', 2, 0.6, '#FFFBE0')) +
+    ['M146 30 L148 26', 'M60 30 L58 26', 'M136 -2 L138 -6'].map(p => `<path d="${p}" stroke="#FFD23F" stroke-width="3" stroke-linecap="round"/>`).join('');
+  return { back: '', front, defs };
+}
+
+
+// ── H4 Neon dreads: locs to the shoulders, every tip lit.
+function neonDreads() {
+  const gl = ID(), lit = ID();
+  const tips = ['#FF3DD8', '#3DE0FF', '#FF3DD8', '#3DE0FF', '#FF3DD8', '#3DE0FF'];
+  const locs = [[62, 52, 54, 118], [70, 50, 64, 126], [78, 48, 76, 122], [122, 48, 124, 122], [130, 50, 136, 126], [138, 52, 146, 118]];
+  let back = '';
+  locs.forEach(([x1, y1, x2, y2], k) => {
+    back += `<path d="M${x1} ${y1} C${x1 - 2} ${(y1 + y2) / 2} ${x2 + 2} ${(y1 + y2) / 2} ${x2} ${y2}" stroke="${INK}" stroke-width="12" stroke-linecap="round" fill="none"/>` +
+      `<path d="M${x1} ${y1} C${x1 - 2} ${(y1 + y2) / 2} ${x2 + 2} ${(y1 + y2) / 2} ${x2} ${y2}" stroke="#1C1414" stroke-width="7.5" stroke-linecap="round" fill="none"/>` +
+      `<path d="M${x1 - 1.5} ${y1 + 4} C${x1 - 3} ${(y1 + y2) / 2} ${x2} ${(y1 + y2) / 2} ${x2 - 1.5} ${y2 - 6}" stroke="#3A2C2C" stroke-width="2" stroke-linecap="round" fill="none"/>` +
+      `<circle cx="${x2}" cy="${y2}" r="7" fill="${tips[k]}" filter="url(#${gl})" opacity=".9"/><circle cx="${x2}" cy="${y2}" r="4.4" fill="${tips[k]}" stroke="${INK}" stroke-width="1.6"/><circle cx="${x2 - 1.2}" cy="${y2 - 1.2}" r="1.4" fill="#fff"/>`;
+  });
+  const cap = 'M62 62 C60 36 78 24 100 24 C122 24 140 36 138 62 C130 50 116 44 100 46 C84 44 70 50 62 62 Z';
+  const ridges = 'M74 34 C80 40 80 48 78 54 M86 28 C90 36 90 44 88 50 M100 26 L100 46 M114 28 C110 36 110 44 112 50 M126 34 C120 40 120 48 122 54';
+  const defs = `<defs>${blur(gl, 3)}${linG(lit, [[0, '#3A2C2C'], [1, '#1C1414']], 0, 0, 0, 1)}</defs>`;
+  const front = celG('f', cap, '#0E0A0A', `url(#${lit})`, ink(ridges, 2.2, 0.8, '#0A0707')) +
+    [[88, 36, '#FF3DD8'], [112, 36, '#3DE0FF']].map(([x, y, c]) => `<rect x="${x - 4}" y="${y - 3}" width="8" height="6" rx="2" fill="${c}" stroke="${INK}" stroke-width="1.4"/>`).join('');
+  return { back, front, defs };
+}
+
+
+// ── the afro, one cloud of hair.
+// Outer edge: bumps along an ellipse over the top, from beside one ear to
+// beside the other. Inner edge: a hairline that is hair meeting skin — the
+// temples, a soft forehead line, down in front of the ears.
+function afroShape() {
+  // Ends above the ears: no hair beside or behind them (the user, 2026-11-04).
+  const cx = 100, cy = 44, rx = 58, ry = 50;
+  const a0 = Math.PI * 0.87, a1 = Math.PI * 2.13, n = 15;
+  const pt = (a) => [cx + rx * Math.cos(a), cy + ry * Math.sin(a)];
+  const f = (v) => v.toFixed(1);
+  const [sx, sy] = pt(a0), [ex, ey] = pt(a1);
+  let [x, y] = [sx, sy];
+  let d = `M${f(sx)} ${f(sy)}`;
+  for (let k = 1; k <= n; k++) {
+    const [x2, y2] = pt(a0 + (a1 - a0) * k / n);
+    const r = Math.hypot(x2 - x, y2 - y) * 0.62;
+    d += ` A${f(r)} ${f(r)} 0 0 1 ${f(x2)} ${f(y2)}`;
+    [x, y] = [x2, y2];
   }
+  // Under the right end, in to the temple, the hairline across, out again.
+  d += ` C${f(ex - 2)} ${f(ey + 4)} 140 68 134 67 C126 56 114 50 100 50 C86 50 74 56 66 67 C60 68 ${f(sx + 2)} ${f(sy + 4)} ${f(sx)} ${f(sy)} Z`;
   return d;
 }
-add('الشعر', 'H — مفيش ولا شعر Pro دلوقتي', [
-  ['H1', 'Flame', () => { const g = ID(); return compose(base, { defs: `<defs>${lin(g, FIRE.slice().reverse())}</defs>`,
-    hairFront: inked('M64 64 C58 46 64 32 72 22 C72 34 78 38 82 30 C82 16 90 8 98 -2 C96 14 104 22 108 10 C114 20 112 30 118 26 C122 34 128 30 130 20 C140 34 142 50 136 64 C128 50 116 44 100 46 C84 44 72 50 64 64 Z', `url(#${g})`) +
-      ink('M84 40 C88 30 92 26 96 18 M108 40 C110 32 116 30 118 24', 2, 0.5, '#FFF6C8') }, 'head'); }],
-  ['H2', 'LED undercut', () => { const f = ID(); const led = 'M64 56 L76 48 M64 63 L77 55 M65 70 L77 62 M136 56 L124 48 M136 63 L123 55 M135 70 L123 62'; return compose(light, { defs: `<defs>${glow(f, 2.4)}</defs>`,
-    hairFront: flat('M66 64 C64 40 80 30 100 30 C120 30 136 40 134 64 C128 48 116 42 100 42 C84 42 72 48 66 64 Z', '#141010', 0.3) +
-      inked('M76 50 C70 28 86 12 106 14 C126 16 134 30 128 46 C120 38 106 34 94 36 C86 38 80 42 76 50 Z', '#1A1414') + ink('M90 22 C100 18 112 18 120 24', 2, 0.5, '#fff') +
-      `<g filter="url(#${f})">${ink(led, 4, 1, '#3DE0FF')}</g>` + ink(led, 1.8, 1, '#E6FDFF') }, 'head'); }],
-  ['H3', 'Galaxy afro', () => { const g = ID(); return compose(dark, { defs: `<defs><radialGradient id="${g}" cx=".45" cy=".35" r=".75"><stop offset="0" stop-color="#9A6BFF"/><stop offset=".55" stop-color="#3A1E8C"/><stop offset="1" stop-color="#140B36"/></radialGradient></defs>`,
-    hairFront: inked(bumpy(100, 44, 52, 44, Math.PI * 0.93, Math.PI * 2.07, 11, 7) + ' L149 70 C140 54 124 46 100 46 C76 46 60 54 51 70 Z', `url(#${g})`) +
-      stars([[70, 30], [84, 14, 1.3], [100, 24], [118, 12], [132, 30, 1.2], [92, 36, 0.8], [112, 32, 0.8], [62, 50], [140, 52]], 1.3) + spark(106, 18, 0.9, '#FFE9A8') + spark(76, 40, 0.6) }, 'head'); }],
-  ['H4', 'Lightning mohawk', () => { const g = ID(), f = ID(); return compose(base, { defs: `<defs>${lin(g, ['#E6FDFF', '#3DE0FF', '#2A6BFF'])}${glow(f, 4)}</defs>`,
-    hairFront: flat('M66 64 C64 40 80 30 100 30 C120 30 136 40 134 64 C128 48 116 42 100 42 C84 42 72 48 66 64 Z', '#141010', 0.5) +
-      `<path d="M88 48 L74 16 L94 22 L82 -10 L124 26 L104 21 L114 48 Z" fill="#3DE0FF" filter="url(#${f})" opacity=".85"/>` +
-      inked('M88 48 L74 16 L94 22 L82 -10 L124 26 L104 21 L114 48 C106 45 94 45 88 48 Z', `url(#${g})`, 3) + ink('M84 18 L92 22 M88 0 L100 16', 1.6, 0.9, '#fff') }, 'head'); }],
+// Little coils in the hair, so it reads as hair and not as a solid.
+const coils = (col, o) => [[70, 24], [86, 14], [104, 10], [122, 16], [136, 28], [62, 42], [78, 34], [96, 28], [114, 30], [130, 42], [144, 54], [56, 60], [72, 50], [140, 70], [58, 76]]
+  .map(([x, y]) => `<path d="M${x - 3} ${y + 1} C${x - 3} ${y - 3} ${x + 3} ${y - 3} ${x + 3} ${y + 1} C${x + 3} ${y + 4} ${x - 1} ${y + 4} ${x - 1} ${y + 1}" fill="none" stroke="${col}" stroke-width="1.8" stroke-linecap="round" opacity="${o}"/>`).join('');
+
+
+function galaxyAfro() {
+  const lit = ID();
+  const d = afroShape();
+  const defs = `<defs>${radG(lit, [[0, '#8A5CFF'], [.55, '#4A26B8'], [1, '#2A1670']], .42, .3, .75)}</defs>`;
+  const sky = [[76, 22, 1.6], [92, 14, 1.2], [110, 22, 1.8], [126, 16, 1.3], [138, 34, 1.4], [84, 40, 1.1], [118, 38, 1], [64, 50, 1.1], [146, 58, 1.2]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#fff"/>`).join('') +
+    `<path d="M100 4 L102.4 11 L109 13 L102.4 15 L100 22 L97.6 15 L91 13 L97.6 11 Z" fill="#FFE9A8"/>` +
+    `<ellipse cx="130" cy="24" rx="7" ry="2.2" fill="none" stroke="#FFB3E1" stroke-width="1.5" transform="rotate(-20 130 24)"/><circle cx="130" cy="24" r="3.6" fill="#FF8FC8"/>`;
+  const draw = () => celG('f', d, '#1A0E4A', `url(#${lit})`, coils('#B79CFF', 0.4) + sky);
+  return { back: '', front: draw(), defs };
+}
+
+
+// C: no mohawk at all: a short crew, a lit lightning bolt shaved into each side.
+function boltFade() {
+  const gl = ID();
+  const crew = 'M64 64 C62 38 80 26 100 26 C120 26 138 38 136 64 C130 50 118 44 100 46 C82 44 70 50 64 64 Z';
+  const boltL = 'M74 40 L68 50 L73 50 L67 60';
+  const boltR = 'M126 40 L132 50 L127 50 L133 60';
+  const front = celG('c', crew, '#0E0A0A', '#2A2020', ink('M78 34 C88 28 112 28 122 34', 2, 0.4, '#fff')) +
+    `<g filter="url(#${gl})">${ink(boltL + ' ' + boltR, 4.2, 1, '#4FD8FF')}</g>` + ink(boltL + ' ' + boltR, 2, 1, '#E6FDFF');
+  return { back: '', front, defs: `<defs>${blur(gl, 2.2)}</defs>` };
+}
+
+const hairTile = (make, who = base) => () => { const x = make(); return compose(who, { defs: x.defs, hairBack: x.back, hairFront: x.front }, 'head'); };
+add('الشعر', 'H — مفيش ولا شعر Pro دلوقتي (الأفرو العادي كمان هيترسم بنفس شكل H2)', [
+  ['H1', 'Inferno', hairTile(inferno)],
+  ['H2', 'Galaxy afro', hairTile(galaxyAfro, dark)],
+  ['H3', 'Bolt fade', hairTile(boltFade)],
+  ['H4', 'Neon dreads', hairTile(neonDreads, dark)],
 ]);
 
 // ── hair colour ──

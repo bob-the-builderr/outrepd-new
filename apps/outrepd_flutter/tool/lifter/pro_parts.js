@@ -74,6 +74,7 @@ const fit = (prefix, svg) => own(prefix, soften(svg || ''));
 const parts = load('pro_parts.html');
 const fixes = load('pro_fixes.html');
 const fixes2 = load('pro_fixes2.html');
+const fixes3 = load('pro_fixes3.html');
 const item = (run, section, code) => run(`(() => { const s = sections.find((s) => s.title === ${JSON.stringify(section)}); const it = s.items.find((i) => i[0] === ${JSON.stringify(code)}); return it[2](); })()`);
 
 const hair = {};
@@ -110,6 +111,32 @@ for (const [expr, run, id] of [['hypno()', fixes, 'hypno'], ['diamondEyes()', fi
   eyes[id] = fit(id.slice(0, 3) + 'e_', (o.defs || '') + o.eyes);
 }
 
+// Clothes, drawn over the whole body.
+const tops = {};
+{ const o = fixes('heroCape()'); tops.hero_cape = fit('hcp_', (o.defs || '') + o.top); }
+for (const [code, id] of [['T2', 'chrome_armor'], ['T3', 'galaxy_hoodie'], ['T4', 'flame_jersey']]) {
+  const o = item(parts, 'اللبس', code);
+  tops[id] = fit(id.slice(0, 3) + 't_', (o.defs || '') + o.top);
+}
+
+// What is worn: in front, or (wings) behind the body.
+const gear = {}, gearBack = {};
+for (const [expr, run, id] of [['shutterShades()', fixes2, 'shutter_shades'], ['flameBand()', fixes, 'flame_headband'], ['dragon()', fixes, 'pet_dragon']]) {
+  const o = run(expr);
+  gear[id] = fit(id.slice(0, 3) + 'g_', (o.defs || '') + o.gear);
+}
+for (const [expr, run, id] of [['neonWings()', fixes2, 'neon_wings'], ['batWings()', fixes3, 'bat_wings']]) {
+  const o = run(expr);
+  gearBack[id] = fit(id.slice(0, 3) + 'w_', (o.defs || '') + o.under);
+}
+
+// Backgrounds: the whole square.
+const patterns = {};
+for (const [code, id] of [['P1', 'synthwave'], ['P2', 'sakura'], ['P3', 'deep_sea'], ['P4', 'confetti']]) {
+  const o = item(parts, 'خلفية الأفاتار', code);
+  patterns[id] = fit(id.slice(0, 3) + 'p_', (o.defs || '') + o.bg);
+}
+
 // The free afro, redrawn: its outline, and its coils in a colour the app fills
 // in (HCL, the hair colour lightened).
 const afroOutline = parts('afroShape()');
@@ -135,6 +162,10 @@ ${map('proBeards', '/// Pro beards by part id, drawn under the mouth.', beards)}
 ${map('proMouths', '/// Pro mouths by part id.', mouths)}
 ${map('proMarks', '/// Pro face marks by part id.', marks)}
 ${map('proEyes', '/// Pro eyes by part id, eye whites and lids included.', eyes)}
+${map('proTops', '/// Pro clothes by part id, the whole body.', tops)}
+${map('proGear', '/// Pro gear by part id, worn in front.', gear)}
+${map('proGearBack', '/// Pro gear by part id that is worn behind the body: wings.', gearBack)}
+${map('proPatterns', '/// Pro backgrounds by part id: the whole square.', patterns)}
 /// The afro's outline (hair 5): a cloud of hair, ending above the ears.
 const afroOutline = ${lit(afroOutline)};
 
@@ -142,4 +173,4 @@ const afroOutline = ${lit(afroOutline)};
 const afroCoils = ${lit(afroCoils)};
 `;
 fs.writeFileSync(path.join(root, 'lib', 'lifter', 'pro_art.dart'), out);
-console.log('pro_art.dart:', Object.keys(hair).length, 'hair,', Object.keys(beards).length, 'beards,', Object.keys(mouths).length, 'mouths,', Object.keys(marks).length, 'marks,', Object.keys(eyes).length, 'eyes;', out.length, 'chars');
+console.log('pro_art.dart:', Object.keys(hair).length, 'hair,', Object.keys(beards).length, 'beards,', Object.keys(mouths).length, 'mouths,', Object.keys(marks).length, 'marks,', Object.keys(eyes).length, 'eyes,', Object.keys(tops).length, 'tops,', Object.keys(gear).length + Object.keys(gearBack).length, 'gear,', Object.keys(patterns).length, 'backgrounds;', out.length, 'chars');

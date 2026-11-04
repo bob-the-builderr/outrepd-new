@@ -62,4 +62,44 @@ void main() {
       matchesGoldenFile('goldens/pro_parts_1.png'),
     );
   });
+
+  testWidgets('the Pro clothes, gear and backgrounds, drawn by the app', (tester) async {
+    tester.view.physicalSize = const Size(412 * 2, 900 * 2);
+    tester.view.devicePixelRatio = 2;
+    addTearDown(tester.view.reset);
+
+    const base = Lifter(skin: 5, hair: 2, beard: 0, mouth: 0, eyes: 0, background: 3);
+    final bodies = <Lifter>[
+      for (final id in ['hero_cape', 'chrome_armor', 'galaxy_hoodie', 'flame_jersey'])
+        base.copyWith(top: _at(kTops, id)),
+      for (final id in ['shutter_shades', 'flame_headband', 'pet_dragon', 'neon_wings', 'bat_wings'])
+        base.copyWith(gear: _at(kGear, id)),
+      for (final id in ['synthwave', 'sakura', 'deep_sea', 'confetti'])
+        base.copyWith(pattern: _at(kPatterns, id)),
+    ];
+
+    await tester.pumpWidget(
+      MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          backgroundColor: const Color(0xFF121110),
+          body: Padding(
+            padding: const EdgeInsets.all(6),
+            child: Wrap(
+              spacing: 6,
+              runSpacing: 6,
+              children: [for (final l in bodies) LifterImage(l, size: 128)],
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pump(const Duration(milliseconds: 1200));
+    await tester.pump();
+
+    await expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile('goldens/pro_parts_2.png'),
+    );
+  });
 }

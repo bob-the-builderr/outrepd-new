@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<title>Pro hair</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700;800;900&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #0B0A09; color: #F5EFE4; font-family: 'Noto Sans', sans-serif; }
+  .wrap { padding: 22px 26px 26px; width: 1260px; }
+  .cap { direction: rtl; font-family: 'Noto Sans Arabic', 'Noto Sans', sans-serif; margin-bottom: 12px; }
+  .cap b { display: block; font-size: 24px; margin-bottom: 4px; }
+  .cap p { margin: 0; color: #8F8880; font-size: 15px; line-height: 1.7; }
+  h2 { direction: rtl; font-family: 'Noto Sans Arabic', sans-serif; font-size: 18px; margin: 16px 0 8px; color: #E8DCC8; }
+  .ref { display: flex; gap: 10px; }
+  .ref div { width: 110px; text-align: center; font-size: 12px; color: #8F8880; }
+  .ref svg { width: 110px; height: 110px; border-radius: 12px; display: block; margin-bottom: 4px; }
+  .row { display: flex; gap: 16px; }
+  .tile { width: 292px; background: #161412; border: 1px solid #2A2724; border-radius: 16px; padding: 12px; }
+  .big svg { width: 266px; height: 266px; border-radius: 14px; display: block; }
+  .small { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
+  .small svg { width: 56px; height: 56px; border-radius: 28px; display: block; }
+  .small .tiny svg { width: 34px; height: 34px; border-radius: 17px; }
+  .code { font-weight: 900; font-size: 22px; color: #F2C14E; margin-top: 10px; }
+  .name { font-size: 15px; font-weight: 700; }
+  .note { direction: rtl; font-family: 'Noto Sans Arabic', sans-serif; color: #8F8880; font-size: 13.5px; line-height: 1.6; margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="cap"><b>شعر Pro — مرسوم من الأول</b>
+  <p>نفس ستايل الشعر اللي في التطبيق: حبر تقيل وظل حاد على اليمين وتحت، وفوقه لمعة. تحت كل واحد نفس الشكل صغير (الليدربورد والقايمة).</p></div>
+  <h2>الشعر الموجود دلوقتي، للمقارنة</h2>
+  <div class="ref" id="ref"></div>
+  <h2>شعر Pro الجديد</h2>
+  <div class="row" id="row"></div>
+</div>
+<script src="lifterA.js"></script>
+<script>
+let gid = 0;
+const ID = () => 'h' + (++gid);
+const stopsOf = (stops) => stops.map(([o, c]) => `<stop offset="${o}" stop-color="${c}"/>`).join('');
+const linG = (id, stops, x1, y1, x2, y2) => `<linearGradient id="${id}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}">${stopsOf(stops)}</linearGradient>`;
+const radG = (id, stops, cx = .5, cy = .5, r = .6) => `<radialGradient id="${id}" cx="${cx}" cy="${cy}" r="${r}">${stopsOf(stops)}</radialGradient>`;
+const blur = (id, r) => `<filter id="${id}" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="${r}"/></filter>`;
+// The app's cel shape — a dark base, the lit fill nudged up and left over it,
+// clipped, then the ink — with a gradient allowed for the lit fill.
+function celG(key, d, base, lit, inner = '', w = 3.4) {
+  const c = ID() + key;
+  return `<clipPath id="${c}"><path d="${d}"/></clipPath><g clip-path="url(#${c})"><path d="${d}" fill="${base}"/>` +
+    `<path d="${d}" fill="${lit}" transform="translate(-9 -6)"/>${inner}</g><path d="${d}" fill="none" stroke="${INK}" stroke-width="${w}" stroke-linejoin="round"/>`;
+}
+const BUZZD = 'M66 64 C64 40 80 30 100 30 C120 30 136 40 134 64 C128 48 116 42 100 42 C84 42 72 48 66 64 Z';
+
+function lifter(c, hairBack, hairFront, defs = '', view = 'head') {
+  const id = 'A' + (++uid);
+  const sk = CAT.skin[c.skin];
+  let s = defs + background(id, c.bg, 0) + topWear(id, c.top, CAT.topC[c.topC], sk);
+  s += cel(id, 'neck', P.neck, shade(sk.c, -0.06)) + ink(P.neckLines, 2.6) + hairBack;
+  s += cel(id, 'earL', P.earL, sk.c) + cel(id, 'earR', P.earR, sk.c);
+  s += cel(id, 'head', P.head, sk.c) + ink(P.jaw, 2.4, 0.6);
+  s += brows(c.brows, c.browC ?? '#141010') + eyes(id, c.eyes, sk);
+  s += ink('M100 82 L95 98 C98 101 103 101 106 98', 2.4, 1) + mouth(c.mouth) + hairFront;
+  const vb = view === 'head' ? '30 -10 140 140' : '0 0 200 200';
+  return `<svg viewBox="${vb}" xmlns="http://www.w3.org/2000/svg">${s}</svg>`;
+}
+
+// ── H1 Inferno: the hair is fire, swept up and back, the tongues leaning right.
+function inferno() {
+  const lit = ID(), core = ID(), gl = ID();
+  const d = 'M64 66 C56 50 58 34 68 24 C68 34 72 40 78 38 C74 24 80 10 92 2 C92 14 96 22 104 20 C104 10 112 0 126 -4 C120 8 122 18 130 24 C136 18 140 10 142 4 C146 18 144 30 140 40 C144 46 142 56 136 66 C128 52 116 46 100 48 C84 46 72 52 64 66 Z';
+  const tongues = 'M78 50 C76 40 80 32 86 28 C86 36 90 40 96 38 C94 28 100 18 108 14 C106 24 110 30 116 30 C118 22 124 16 132 14 C128 24 130 34 128 44 C118 40 92 42 78 50 Z';
+  const defs = `<defs>${linG(lit, [[0, '#FFE45C'], [.45, '#FF9A1F'], [1, '#F0441C']], 0, 1, 0, 0)}${linG(core, [[0, '#FFFBE0'], [1, '#FFD23F']], 0, 1, 0, 0)}${blur(gl, 5)}</defs>`;
+  const front = `<path d="${d}" fill="#FF6A1F" opacity=".55" filter="url(#${gl})"/>` +
+    celG('f', d, '#B3261E', `url(#${lit})`, `<path d="${tongues}" fill="url(#${core})" opacity=".95"/>` + ink('M84 36 C86 30 90 26 92 22 M110 26 C112 20 118 16 122 14', 2, 0.6, '#FFFBE0')) +
+    ['M146 30 L148 26', 'M60 30 L58 26', 'M136 -2 L138 -6'].map(p => `<path d="${p}" stroke="#FFD23F" stroke-width="3" stroke-linecap="round"/>`).join('');
+  return { back: '', front, defs };
+}
+
+// ── H2 Galaxy afro: a real afro, round and full, its edge all curls, a night
+// sky inside it.
+function galaxyAfro() {
+  const lit = ID();
+  const cx = 100, cy = 44, rx = 54, ry = 46;
+  const at = (a) => [cx + rx * Math.cos(a), cy + ry * Math.sin(a)];
+  const [lx, ly] = at(Math.PI * 0.88), [rx2, ry2] = at(Math.PI * 2.12);
+  const d = `M48 86 L${lx.toFixed(1)} ${ly.toFixed(1)} A${rx} ${ry} 0 1 1 ${rx2.toFixed(1)} ${ry2.toFixed(1)} L152 86 C146 70 136 58 124 53 C110 47 90 47 76 53 C64 58 54 70 48 86 Z`;
+  // Curls on the edge, behind the shape: each one half out, so the outline
+  // is a row of them.
+  const curls = [];
+  for (let k = 0; k <= 14; k++) curls.push(at(Math.PI * (0.88 + 1.24 * k / 14)));
+  curls.push([47, 78], [153, 78]);
+  const defs = `<defs>${radG(lit, [[0, '#8A5CFF'], [.55, '#4A26B8'], [1, '#2A1670']], .42, .32, .75)}</defs>`;
+  const curl = ([x, y]) => `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="9" fill="#2A1670" stroke="${INK}" stroke-width="3"/>`;
+  const sky = [[74, 26, 1.6], [90, 16, 1.2], [104, 28, 1.8], [120, 20, 1.3], [134, 34, 1.4], [84, 36, 1.1], [116, 36, 1], [64, 42, 1.1], [142, 50, 1.2], [70, 64, 1], [132, 62, 1]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#fff"/>`).join('') +
+    `<path d="M100 8 L102.2 14 L108 16 L102.2 18 L100 24 L97.8 18 L92 16 L97.8 14 Z" fill="#FFE9A8"/>` +
+    `<ellipse cx="128" cy="24" rx="7" ry="2.2" fill="none" stroke="#FFB3E1" stroke-width="1.5" transform="rotate(-20 128 24)"/><circle cx="128" cy="24" r="3.6" fill="#FF8FC8"/>`;
+  const front = curls.map(curl).join('') + celG('f', d, '#22125E', `url(#${lit})`, sky);
+  return { back: '', front, defs };
+}
+
+// ── H3 Storm mohawk: a tall spiked fin, electric, sparks off its edge.
+function stormHawk() {
+  const lit = ID(), gl = ID();
+  const fin = 'M86 50 L80 26 L90 30 L88 4 L98 16 L102 -8 L110 14 L118 4 L116 30 L124 26 L116 50 C108 46 94 46 86 50 Z';
+  const defs = `<defs>${linG(lit, [[0, '#E6FDFF'], [.5, '#4FD8FF'], [1, '#2A6BFF']], 0, 0, 0, 1)}${blur(gl, 4)}</defs>`;
+  const sparks = 'M78 14 L72 10 L76 8 L70 2 M128 12 L134 8 L130 6 L136 0 M70 34 L64 32 M132 34 L138 32';
+  const front = `<path d="${BUZZD}" fill="#141010" opacity=".55"/>` + `<path d="${fin}" fill="#3DE0FF" opacity=".75" filter="url(#${gl})"/>` +
+    celG('f', fin, '#1E4FC8', `url(#${lit})`, ink('M92 30 L96 16 M106 14 L108 30', 2, 0.8, '#fff')) +
+    `<g filter="url(#${gl})">${ink(sparks, 3, 1, '#4FD8FF')}</g>` + ink(sparks, 1.4, 1, '#E6FDFF');
+  return { back: '', front, defs };
+}
+
+// ── H4 Neon dreads: locs to the shoulders, every tip lit.
+function neonDreads() {
+  const gl = ID(), lit = ID();
+  const tips = ['#FF3DD8', '#3DE0FF', '#FF3DD8', '#3DE0FF', '#FF3DD8', '#3DE0FF'];
+  const locs = [[62, 52, 54, 118], [70, 50, 64, 126], [78, 48, 76, 122], [122, 48, 124, 122], [130, 50, 136, 126], [138, 52, 146, 118]];
+  let back = '';
+  locs.forEach(([x1, y1, x2, y2], k) => {
+    back += `<path d="M${x1} ${y1} C${x1 - 2} ${(y1 + y2) / 2} ${x2 + 2} ${(y1 + y2) / 2} ${x2} ${y2}" stroke="${INK}" stroke-width="12" stroke-linecap="round" fill="none"/>` +
+      `<path d="M${x1} ${y1} C${x1 - 2} ${(y1 + y2) / 2} ${x2 + 2} ${(y1 + y2) / 2} ${x2} ${y2}" stroke="#1C1414" stroke-width="7.5" stroke-linecap="round" fill="none"/>` +
+      `<path d="M${x1 - 1.5} ${y1 + 4} C${x1 - 3} ${(y1 + y2) / 2} ${x2} ${(y1 + y2) / 2} ${x2 - 1.5} ${y2 - 6}" stroke="#3A2C2C" stroke-width="2" stroke-linecap="round" fill="none"/>` +
+      `<circle cx="${x2}" cy="${y2}" r="7" fill="${tips[k]}" filter="url(#${gl})" opacity=".9"/><circle cx="${x2}" cy="${y2}" r="4.4" fill="${tips[k]}" stroke="${INK}" stroke-width="1.6"/><circle cx="${x2 - 1.2}" cy="${y2 - 1.2}" r="1.4" fill="#fff"/>`;
+  });
+  const cap = 'M62 62 C60 36 78 24 100 24 C122 24 140 36 138 62 C130 50 116 44 100 46 C84 44 70 50 62 62 Z';
+  const ridges = 'M74 34 C80 40 80 48 78 54 M86 28 C90 36 90 44 88 50 M100 26 L100 46 M114 28 C110 36 110 44 112 50 M126 34 C120 40 120 48 122 54';
+  const defs = `<defs>${blur(gl, 3)}${linG(lit, [[0, '#3A2C2C'], [1, '#1C1414']], 0, 0, 0, 1)}</defs>`;
+  const front = celG('f', cap, '#0E0A0A', `url(#${lit})`, ink(ridges, 2.2, 0.8, '#0A0707')) +
+    [[88, 36, '#FF3DD8'], [112, 36, '#3DE0FF']].map(([x, y, c]) => `<rect x="${x - 4}" y="${y - 3}" width="8" height="6" rx="2" fill="${c}" stroke="${INK}" stroke-width="1.4"/>`).join('');
+  return { back, front, defs };
+}
+
+const people = [
+  { skin: 5, brows: 0, eyes: 0, mouth: 0, top: 3, topC: 0, bg: 3 },
+  { skin: 1, brows: 0, eyes: 0, mouth: 1, top: 3, topC: 4, bg: 0 },
+  { skin: 8, brows: 0, eyes: 0, mouth: 0, top: 3, topC: 2, bg: 1 },
+];
+
+// Reference: some of the app's own hair, drawn by lifterA.js.
+const refHair = [[4, 'Curls'], [5, 'Afro'], [6, 'Mohawk'], [7, 'Spikes'], [10, 'Dreads'], [17, 'Faux hawk']];
+document.getElementById('ref').innerHTML = refHair.map(([i, n]) => {
+  const c = { skin: 5, hair: i, hairC: 1, eyes: 0, brows: 0, mouth: 0, beard: 0, marks: 0, top: 3, topC: 0, gear: 0, bg: 3 };
+  return `<div>${lifterSvg(c, 'head')}${n}</div>`;
+}).join('');
+
+const items = [
+  ['H1', 'Inferno', inferno, 'الشعر نفسه نار: طالع لفوق ولورا، والألسنة مايلة يمين. أصفر عند الراس وأحمر عند الأطراف، وشرار طاير.'],
+  ['H2', 'Galaxy afro', galaxyAfro, 'أفرو بجد بكيرلز على الحرف (زي Curls في التطبيق)، وجواه سما: نجوم ونجمة كبيرة وكوكب بحلقة.'],
+  ['H3', 'Storm mohawk', stormHawk, 'موهوك عالي من سنون حادة لونه كهربا، والجناب محلوقة، وشرار بيطقطق على الحرف.'],
+  ['H4', 'Neon dreads', neonDreads, 'دريدز لحد الكتف، كل واحدة طرفها منوّر بينك أو سماوي، وحلقتين منوّرين فوق. بدل الـLED undercut.'],
+];
+document.getElementById('row').innerHTML = items.map(([code, name, make, note]) => {
+  const big = make();
+  const smalls = people.map(p => { const h = make(); return lifter(p, h.back, h.front, h.defs); });
+  const tiny = (() => { const h = make(); return lifter(people[0], h.back, h.front, h.defs); })();
+  return `<div class="tile"><div class="big">${lifter(people[0], big.back, big.front, big.defs)}</div>` +
+    `<div class="small">${smalls.map(s => `<div>${s}</div>`).join('')}<div class="tiny">${tiny}</div></div>` +
+    `<div class="code">${code}</div><div class="name">${name}</div><div class="note">${note}</div></div>`;
+}).join('');
+</script>
+</body>
+</html>
