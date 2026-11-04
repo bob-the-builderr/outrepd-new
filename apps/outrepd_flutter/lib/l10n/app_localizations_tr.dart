@@ -3023,10 +3023,19 @@ class LTr extends L {
   String get obRepsBody => 'Kamera ne kadar aşağı indiğini ve ne kadar geri çıktığını görür.';
 
   @override
-  String get obRepsDown => 'Altın çizginin altına in';
+  String get obRepsDown => 'Çubuk boşalana kadar in';
 
   @override
-  String get obRepsUp => 'Üst çizginin üstüne geri çık';
+  String get obRepsUp => 'Dolana kadar çık';
+
+  @override
+  String get obBarGoingDown => 'İnerken';
+
+  @override
+  String get obBarComingUp => 'Çıkarken';
+
+  @override
+  String get obBarHandOff => 'El yerden kalktı';
 
   @override
   String get obRepsBoth => 'İkisi de, eller yerdeyken. Yarım tekrar sayılmaz — ne senin telefonunda ne de rakibininkinde.';

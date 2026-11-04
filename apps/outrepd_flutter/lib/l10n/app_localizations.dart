@@ -5444,14 +5444,32 @@ abstract class L {
   /// No description provided for @obRepsDown.
   ///
   /// In en, this message translates to:
-  /// **'Down past the gold line'**
+  /// **'Down until the bar is empty'**
   String get obRepsDown;
 
   /// No description provided for @obRepsUp.
   ///
   /// In en, this message translates to:
-  /// **'Back up past the top line'**
+  /// **'Up until it's full'**
   String get obRepsUp;
+
+  /// No description provided for @obBarGoingDown.
+  ///
+  /// In en, this message translates to:
+  /// **'Going down'**
+  String get obBarGoingDown;
+
+  /// No description provided for @obBarComingUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming up'**
+  String get obBarComingUp;
+
+  /// No description provided for @obBarHandOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Hand off the floor'**
+  String get obBarHandOff;
 
   /// No description provided for @obRepsBoth.
   ///

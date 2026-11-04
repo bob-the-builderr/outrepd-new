@@ -3028,10 +3028,19 @@ class LRu extends L {
   String get obRepsBody => 'Камера видит, как низко ты опускаешься и как высоко поднимаешься.';
 
   @override
-  String get obRepsDown => 'Вниз ниже золотой линии';
+  String get obRepsDown => 'Вниз, пока полоса не опустеет';
 
   @override
-  String get obRepsUp => 'Обратно выше верхней линии';
+  String get obRepsUp => 'Вверх, пока не заполнится';
+
+  @override
+  String get obBarGoingDown => 'Вниз';
+
+  @override
+  String get obBarComingUp => 'Вверх';
+
+  @override
+  String get obBarHandOff => 'Рука оторвана от пола';
 
   @override
   String get obRepsBoth => 'И то и другое — руки на полу. Половина повторения не считается — ни у тебя, ни у соперника.';

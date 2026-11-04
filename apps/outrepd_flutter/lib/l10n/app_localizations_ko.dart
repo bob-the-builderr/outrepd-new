@@ -2997,10 +2997,19 @@ class LKo extends L {
   String get obRepsBody => '카메라가 얼마나 내려가고 얼마나 다시 올라오는지 봐요.';
 
   @override
-  String get obRepsDown => '금색 선 아래로 내려가기';
+  String get obRepsDown => '바가 빌 때까지 내려가기';
 
   @override
-  String get obRepsUp => '위쪽 선 위로 다시 올라오기';
+  String get obRepsUp => '가득 찰 때까지 올라오기';
+
+  @override
+  String get obBarGoingDown => '내려갈 때';
+
+  @override
+  String get obBarComingUp => '올라올 때';
+
+  @override
+  String get obBarHandOff => '손이 바닥에서 떨어짐';
 
   @override
   String get obRepsBoth => '둘 다 손을 바닥에 댄 채로요. 반만 한 건 인정되지 않아요. 내 휴대폰에서도, 상대 휴대폰에서도요.';

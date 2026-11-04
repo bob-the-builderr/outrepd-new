@@ -3035,10 +3035,19 @@ class LDe extends L {
   String get obRepsBody => 'Die Kamera sieht, wie tief du runtergehst und wie weit du wieder hochkommst.';
 
   @override
-  String get obRepsDown => 'Runter bis unter die goldene Linie';
+  String get obRepsDown => 'Runter, bis der Balken leer ist';
 
   @override
-  String get obRepsUp => 'Wieder hoch über die obere Linie';
+  String get obRepsUp => 'Hoch, bis er voll ist';
+
+  @override
+  String get obBarGoingDown => 'Runter';
+
+  @override
+  String get obBarComingUp => 'Hoch';
+
+  @override
+  String get obBarHandOff => 'Hand vom Boden';
 
   @override
   String get obRepsBoth => 'Beides, mit den Händen am Boden. Eine halbe Wiederholung zählt nicht – weder bei dir noch beim Gegner.';

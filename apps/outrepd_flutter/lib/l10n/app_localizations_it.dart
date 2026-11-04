@@ -3033,10 +3033,19 @@ class LIt extends L {
   String get obRepsBody => 'La fotocamera vede quanto scendi e quanto torni su.';
 
   @override
-  String get obRepsDown => 'Scendi oltre la linea dorata';
+  String get obRepsDown => 'Giù finché la barra è vuota';
 
   @override
-  String get obRepsUp => 'Torna su oltre la linea in alto';
+  String get obRepsUp => 'Su finché è piena';
+
+  @override
+  String get obBarGoingDown => 'In discesa';
+
+  @override
+  String get obBarComingUp => 'In salita';
+
+  @override
+  String get obBarHandOff => 'Mano staccata da terra';
 
   @override
   String get obRepsBoth => 'Entrambe, con le mani a terra. Mezza ripetizione non conta, né sul tuo telefono né sul suo.';

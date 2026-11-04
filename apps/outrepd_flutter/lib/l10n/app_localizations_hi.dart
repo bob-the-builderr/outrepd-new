@@ -3028,10 +3028,19 @@ class LHi extends L {
   String get obRepsBody => 'कैमरा देखता है कि आप कितना नीचे जाते हैं और कितना ऊपर वापस आते हैं।';
 
   @override
-  String get obRepsDown => 'सुनहरी लाइन से नीचे जाएँ';
+  String get obRepsDown => 'नीचे जाएँ, जब तक बार खाली न हो';
 
   @override
-  String get obRepsUp => 'ऊपर वाली लाइन से ऊपर वापस आएँ';
+  String get obRepsUp => 'ऊपर आएँ, जब तक बार भर न जाए';
+
+  @override
+  String get obBarGoingDown => 'नीचे जाते हुए';
+
+  @override
+  String get obBarComingUp => 'ऊपर आते हुए';
+
+  @override
+  String get obBarHandOff => 'हाथ ज़मीन से उठा';
 
   @override
   String get obRepsBoth => 'दोनों, हाथ ज़मीन पर रखकर। आधा रेप, रेप नहीं है — न आपके फ़ोन पर, न उनके।';

@@ -3034,10 +3034,19 @@ class LFr extends L {
   String get obRepsBody => 'La caméra voit jusqu’où tu descends et jusqu’où tu remontes.';
 
   @override
-  String get obRepsDown => 'Descends sous la ligne dorée';
+  String get obRepsDown => 'Descends jusqu\'à vider la barre';
 
   @override
-  String get obRepsUp => 'Remonte au-dessus de la ligne du haut';
+  String get obRepsUp => 'Remonte jusqu\'à la remplir';
+
+  @override
+  String get obBarGoingDown => 'En descente';
+
+  @override
+  String get obBarComingUp => 'En montée';
+
+  @override
+  String get obBarHandOff => 'Main levée du sol';
 
   @override
   String get obRepsBoth => 'Les deux, mains au sol. Une demi-répétition ne compte pas — ni chez toi, ni chez l’autre.';

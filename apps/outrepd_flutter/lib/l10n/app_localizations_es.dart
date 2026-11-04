@@ -3033,10 +3033,19 @@ class LEs extends L {
   String get obRepsBody => 'La cámara ve cuánto bajas y cuánto vuelves a subir.';
 
   @override
-  String get obRepsDown => 'Baja más allá de la línea dorada';
+  String get obRepsDown => 'Baja hasta vaciar la barra';
 
   @override
-  String get obRepsUp => 'Vuelve a subir más allá de la línea de arriba';
+  String get obRepsUp => 'Sube hasta llenarla';
+
+  @override
+  String get obBarGoingDown => 'Bajando';
+
+  @override
+  String get obBarComingUp => 'Subiendo';
+
+  @override
+  String get obBarHandOff => 'Mano fuera del suelo';
 
   @override
   String get obRepsBoth => 'Las dos cosas, con las manos en el suelo. Media repetición no cuenta, ni en tu teléfono ni en el suyo.';

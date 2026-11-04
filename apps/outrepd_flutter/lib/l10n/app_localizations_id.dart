@@ -3027,10 +3027,19 @@ class LId extends L {
   String get obRepsBody => 'Kamera melihat seberapa rendah kamu turun dan seberapa tinggi kamu naik lagi.';
 
   @override
-  String get obRepsDown => 'Turun melewati garis emas';
+  String get obRepsDown => 'Turun sampai bar kosong';
 
   @override
-  String get obRepsUp => 'Naik lagi melewati garis atas';
+  String get obRepsUp => 'Naik sampai penuh';
+
+  @override
+  String get obBarGoingDown => 'Turun';
+
+  @override
+  String get obBarComingUp => 'Naik';
+
+  @override
+  String get obBarHandOff => 'Tangan lepas dari lantai';
 
   @override
   String get obRepsBoth => 'Keduanya, dengan tangan di lantai. Setengah repetisi tidak dihitung — di ponselmu maupun ponsel lawan.';

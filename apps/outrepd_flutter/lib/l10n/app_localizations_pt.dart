@@ -3030,10 +3030,19 @@ class LPt extends L {
   String get obRepsBody => 'A câmera vê até onde você desce e até onde volta a subir.';
 
   @override
-  String get obRepsDown => 'Desça além da linha dourada';
+  String get obRepsDown => 'Desce até a barra esvaziar';
 
   @override
-  String get obRepsUp => 'Suba de novo além da linha de cima';
+  String get obRepsUp => 'Sobe até a encher';
+
+  @override
+  String get obBarGoingDown => 'A descer';
+
+  @override
+  String get obBarComingUp => 'A subir';
+
+  @override
+  String get obBarHandOff => 'Mão fora do chão';
 
   @override
   String get obRepsBoth => 'As duas coisas, com as mãos no chão. Meia repetição não conta — nem no seu celular, nem no do outro.';

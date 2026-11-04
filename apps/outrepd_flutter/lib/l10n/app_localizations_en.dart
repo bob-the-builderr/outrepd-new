@@ -3026,10 +3026,19 @@ class LEn extends L {
   String get obRepsBody => 'Your camera watches how low you go and how high you come back.';
 
   @override
-  String get obRepsDown => 'Down past the gold line';
+  String get obRepsDown => 'Down until the bar is empty';
 
   @override
-  String get obRepsUp => 'Back up past the top line';
+  String get obRepsUp => 'Up until it\'s full';
+
+  @override
+  String get obBarGoingDown => 'Going down';
+
+  @override
+  String get obBarComingUp => 'Coming up';
+
+  @override
+  String get obBarHandOff => 'Hand off the floor';
 
   @override
   String get obRepsBoth => 'Both, with your hands on the floor. A half rep is not a rep — on your phone or theirs.';

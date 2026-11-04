@@ -2079,11 +2079,15 @@ class DepthBar extends StatelessWidget {
     required this.progress,
     required this.good,
     this.pastBottom = false,
+    this.height = 250,
   });
 
   final double progress;
   final bool good;
   final bool pastBottom;
+
+  /// 250 over the camera; the onboarding draws it large, to learn it by.
+  final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -2096,7 +2100,7 @@ class DepthBar extends StatelessWidget {
         : context.colors.brand;
     return SizedBox(
       width: 26,
-      height: 250,
+      height: height,
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: const Color(0xFF121110).withValues(alpha: 0.55),

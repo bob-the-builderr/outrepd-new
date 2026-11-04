@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<title>Reps page</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800;900&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #070605; color: #F5EFE4; font-family: 'Noto Sans', sans-serif; }
+  .wrap { padding: 22px 24px 30px; width: 1420px; }
+  .cap { direction: rtl; font-family: 'Noto Sans Arabic', 'Noto Sans', sans-serif; margin-bottom: 14px; }
+  .cap b { display: block; font-size: 22px; margin-bottom: 6px; }
+  .cap p { margin: 0; color: #8F8880; font-size: 15px; line-height: 1.7; }
+  .row { display: flex; gap: 34px; justify-content: center; }
+  .lab { direction: rtl; font-family: 'Noto Sans Arabic', sans-serif; text-align: center; font-size: 18px; margin-bottom: 8px; color: #8F8880; }
+  .lab.b { color: #E8DCC8; font-weight: 700; }
+  .phone { position: relative; width: 412px; height: 915px; border-radius: 30px; overflow: hidden; outline: 1px solid #2a2724; background: #121110; flex: none; }
+  .phone img.shot { position: absolute; inset: 0; width: 412px; height: 915px; }
+  .abs { position: absolute; }
+  .back { left: 18px; top: 12px; font-size: 26px; color: #F5EFE4; }
+  .dots { left: 52px; right: 20px; top: 24px; height: 3px; display: flex; gap: 4px; }
+  .dots i { flex: 1; background: #2E2B28; border-radius: 2px; }
+  .dots i.on { background: #E8DCC8; }
+  h1 { position: absolute; left: 22px; right: 22px; top: 62px; margin: 0; font-size: 33px; font-weight: 800; letter-spacing: -0.3px; }
+  .sub { left: 22px; right: 22px; top: 116px; font-size: 16px; line-height: 1.55; color: #8F8880; }
+  /* the match's own bar, large */
+  .bar { left: 42px; top: 254px; width: 26px; height: 380px; border-radius: 13px; background: rgba(18,17,16,.55); border: 1.2px solid rgba(255,255,255,.3); padding: 3px; }
+  .bar .in { position: relative; width: 100%; height: 100%; }
+  .bar .fill { position: absolute; left: 0; right: 0; bottom: 0; border-radius: 10px; }
+  .step { left: 98px; right: 18px; height: 40px; display: flex; align-items: center; gap: 10px; }
+  .step .n { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #121110; font-weight: 800; font-size: 14px; flex: none; }
+  .step .t { font-size: 18px; font-weight: 700; }
+  .end { left: 72px; width: 16px; height: 3px; background: #3A3632; border-radius: 2px; }
+  .card { left: 22px; right: 22px; top: 720px; height: 98px; border-radius: 16px; background: #1A1918; border: 1px solid #2A2826; display: flex; align-items: center; gap: 16px; padding: 0 18px; }
+  .card .p1 { font-size: 34px; font-weight: 800; flex: none; }
+  .card .tx { font-size: 15px; color: #8F8880; line-height: 1.45; }
+  .legend { left: 22px; right: 22px; top: 652px; display: flex; gap: 14px; justify-content: center; font-size: 13px; color: #8F8880; }
+  .legend span { display: flex; align-items: center; gap: 6px; }
+  .legend i { width: 12px; height: 12px; border-radius: 4px; display: inline-block; }
+  .next { left: 20px; right: 20px; top: 837px; height: 56px; border-radius: 16px; background: #E8DCC8; color: #121110; font-size: 18px; display: flex; align-items: center; justify-content: center; }
+  .note { direction: rtl; font-family: 'Noto Sans Arabic', sans-serif; text-align: center; color: #8F8880; font-size: 14px; margin-top: 8px; width: 412px; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="cap"><b>صفحة "Only full reps count" بالبار الجديد</b><p>البار نفسه اللي في الماتش (من غير خطوط): بيفضى وإنت نازل وبيتملي وإنت طالع. الصورة دي لحظة الطلوع (البار أخضر، الخطوة 2 منوّرة). الرسمة بتتحرك 4 عدّات وتقف زي دلوقتي.</p></div>
+  <div class="row">
+    <div><div class="lab">دلوقتي (من CI)</div><div class="phone"><img class="shot" src="idea2_now.png"></div></div>
+
+    <div><div class="lab b">A — الخطوتين عند طرفين البار</div>
+      <div class="phone" id="a"></div>
+      <div class="note">"1 Down until the bar is empty" تحت، و"2 Up until it's full" فوق. الكارت تحت زي ما هو.</div></div>
+
+    <div><div class="lab b">B — زي A + ألوان البار</div>
+      <div class="phone" id="b"></div>
+      <div class="note">نفس A، وتحت البار سطر صغير بيشرح الألوان: نازل / طالع / إيدك اتشالت من الأرض.</div></div>
+  </div>
+</div>
+<script>
+function page(legend) {
+  const fillShare = 0.62; // part way back up
+  const barTop = 254, barH = 380, inner = barH - 6;
+  const yTop = barTop + 3, yBottom = barTop + 3 + inner;
+  return `
+  <div class="abs back">&larr;</div>
+  <div class="abs dots">${[1,1,0,0,0,0,0,0,0,0].map(o => `<i class="${o ? 'on' : ''}"></i>`).join('')}</div>
+  <h1>Only full reps count.</h1>
+  <div class="abs sub">Your camera watches how low you go and how high you come back.</div>
+  <div class="abs bar"><div class="in"><div class="fill" style="height:${fillShare*100}%;background:#22C55E"></div></div></div>
+  <div class="abs end" style="top:${yTop}px"></div>
+  <div class="abs end" style="top:${yBottom-3}px"></div>
+  <div class="abs step" style="top:${yTop-8}px"><div class="n" style="background:#22C55E">2</div><div class="t" style="color:#F5EFE4">Up until it&rsquo;s full</div></div>
+  <div class="abs step" style="top:${yBottom-32}px"><div class="n" style="background:#22C55E">1</div><div class="t" style="color:#8F8880">Down until the bar is empty</div></div>
+  ${legend ? `<div class="abs legend">
+     <span><i style="background:#E8DCC8"></i>Going down</span>
+     <span><i style="background:#22C55E"></i>Coming up</span>
+     <span><i style="background:#EF5A4C"></i>Hand off the floor</span></div>` : ''}
+  <div class="abs card"><div class="p1">+1</div><div class="tx">Both, with your hands on the floor. A half rep is not a rep &mdash; on your phone or theirs.</div></div>
+  <div class="abs next">Next</div>`;
+}
+document.getElementById('a').innerHTML = page(false);
+document.getElementById('b').innerHTML = page(true);
+</script>
+</body>
+</html>

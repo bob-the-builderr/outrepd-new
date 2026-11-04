@@ -86,8 +86,8 @@ void main() {
       matchesGoldenFile('goldens/onboarding_idea_1.png'),
     );
 
-    // Part way back up, past the gold line: the bottom line green, the top
-    // one lit, the second step named.
+    // Part way back up, past the bottom: the bar green and filling, the
+    // second step lit, the bar's colours named under it.
     await tester.tap(find.text('Next'));
     for (var i = 0; i < 15; i++) {
       await tester.pump(const Duration(milliseconds: 100));

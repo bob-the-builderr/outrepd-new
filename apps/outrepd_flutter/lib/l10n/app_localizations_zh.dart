@@ -2984,10 +2984,19 @@ class LZh extends L {
   String get obRepsBody => '摄像头会看你下得多低、又起得多高。';
 
   @override
-  String get obRepsDown => '下到金线以下';
+  String get obRepsDown => '向下，直到进度条清空';
 
   @override
-  String get obRepsUp => '再起到上线以上';
+  String get obRepsUp => '向上，直到填满';
+
+  @override
+  String get obBarGoingDown => '下降中';
+
+  @override
+  String get obBarComingUp => '上升中';
+
+  @override
+  String get obBarHandOff => '手离开地面';
 
   @override
   String get obRepsBoth => '两步都要双手撑地。只做一半不算——你的手机和对手的手机都一样。';

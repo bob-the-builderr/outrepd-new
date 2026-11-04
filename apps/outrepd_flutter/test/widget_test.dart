@@ -182,8 +182,10 @@ void main() {
     expect(find.text('Race a real person.'), findsOneWidget);
     await tap(tester, 'Next');
     expect(find.text('Only full reps count.'), findsOneWidget);
-    expect(find.text('Down past the gold line'), findsOneWidget);
-    expect(find.text('Back up past the top line'), findsOneWidget);
+    expect(find.text('Down until the bar is empty'), findsOneWidget);
+    expect(find.text("Up until it's full"), findsOneWidget);
+    // The bar's three colours, named under it.
+    expect(find.text('Hand off the floor'), findsOneWidget);
     await tap(tester, 'Next');
     expect(find.text('Climb to Master.'), findsOneWidget);
     await tap(tester, 'Next');

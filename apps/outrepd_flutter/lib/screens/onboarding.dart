@@ -1079,10 +1079,11 @@ class _WorldKing extends StatelessWidget {
   }
 }
 
-/// The match screen's depth bar, large, going through a rep on a loop: down
-/// past the gold line, which turns green, then back up past the top line,
-/// which counts it. The two steps are named beside the lines they belong to,
-/// and the one the bar is working towards is lit.
+/// The match screen's depth bar, large, going through a rep on a loop: empty
+/// on the way down, green and filling on the way back up, full is a rep. The
+/// two steps are named at the ends of the bar they belong to, the one it is
+/// working towards lit, and the bar's three colours under it (the user's pick
+/// B, 2026-11-04 — it had two lines across it, as the match's bar once did).
 class _RepRule extends StatefulWidget {
   const _RepRule();
 
@@ -1150,35 +1151,16 @@ class _RepRuleState extends State<_RepRule>
             reduceMotion(context) ? (0.42, false) : _at(_loop.value);
         return LayoutBuilder(
           builder: (context, box) {
-            final height = math.min(box.maxHeight, 380.0);
-            final top = (box.maxHeight - height) / 2;
-            double lineY(double at) => top + height * (1 - barFill(at));
+            // Room under the bar for the line of its colours.
+            const legend = 40.0;
+            final height = math.min(box.maxHeight - legend, 380.0);
+            final top = (box.maxHeight - legend - height) / 2;
 
-            Widget line(double at, Color colour, {required bool lit}) {
-              final thick = lit ? 8.0 : 7.0;
-              return Positioned(
-                left: 20 - 9,
-                width: 26 + 18,
-                top: lineY(at) - thick / 2,
-                height: thick,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: colour,
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(
-                      color: context.colors.background,
-                      width: 1.5,
-                    ),
-                  ),
-                ),
-              );
-            }
-
-            Widget step(double at, int n, String text, Color mark, bool next) {
+            Widget step(double y, int n, String text, Color mark, bool next) {
               return Positioned(
                 left: 76,
                 right: 0,
-                top: lineY(at) - 20,
+                top: y - 20,
                 height: 40,
                 child: Row(
                   children: [
@@ -1221,54 +1203,66 @@ class _RepRuleState extends State<_RepRule>
               );
             }
 
-            const dim = Color(0xB38F8880);
+            Widget colour(Color c, String text) => Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 12,
+                  height: 12,
+                  decoration: BoxDecoration(
+                    color: c,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  text,
+                  style: TextStyle(color: context.colors.muted, fontSize: 13),
+                ),
+              ],
+            );
+
             return Stack(
               clipBehavior: Clip.none,
               children: [
                 Positioned(
                   left: 20,
-                  width: 26,
                   top: top,
-                  height: height,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: context.colors.surfaceRaised,
-                      borderRadius: BorderRadius.circular(13),
-                    ),
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: FractionallySizedBox(
-                        heightFactor: barFill(share),
-                        widthFactor: 1,
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: context.colors.brand,
-                            borderRadius: BorderRadius.circular(13),
-                          ),
-                        ),
-                      ),
-                    ),
+                  child: DepthBar(
+                    progress: share,
+                    good: true,
+                    pastBottom: pastBottom,
+                    height: height,
                   ),
                 ),
-                line(
-                  kBottomShare,
-                  pastBottom ? AppColors.win : AppColors.gold,
-                  lit: !pastBottom,
-                ),
-                line(kTopShare, pastBottom ? AppColors.gold : dim, lit: pastBottom),
                 step(
-                  kTopShare,
+                  top + 16,
                   2,
                   l.obRepsUp,
-                  pastBottom ? AppColors.gold : context.colors.muted,
+                  pastBottom ? AppColors.win : context.colors.muted,
                   pastBottom,
                 ),
                 step(
-                  kBottomShare,
+                  top + height - 16,
                   1,
                   l.obRepsDown,
                   pastBottom ? AppColors.win : AppColors.gold,
                   !pastBottom,
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  top: top + height + 18,
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 14,
+                    runSpacing: 6,
+                    children: [
+                      colour(context.colors.brand, l.obBarGoingDown),
+                      colour(AppColors.win, l.obBarComingUp),
+                      colour(context.colors.rival, l.obBarHandOff),
+                    ],
+                  ),
                 ),
               ],
             );

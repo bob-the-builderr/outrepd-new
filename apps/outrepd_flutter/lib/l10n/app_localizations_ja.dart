@@ -2993,10 +2993,19 @@ class LJa extends L {
   String get obRepsBody => 'カメラが、どこまで下がってどこまで戻ったかを見ています。';
 
   @override
-  String get obRepsDown => '金のラインより下まで';
+  String get obRepsDown => 'バーが空になるまで下へ';
 
   @override
-  String get obRepsUp => '上のラインより上まで戻る';
+  String get obRepsUp => 'いっぱいになるまで上へ';
+
+  @override
+  String get obBarGoingDown => '下がる';
+
+  @override
+  String get obBarComingUp => '上がる';
+
+  @override
+  String get obBarHandOff => '手が床から離れた';
 
   @override
   String get obRepsBoth => 'どちらも手を床につけたまま。半端なレップは数えません。あなたのスマホでも、相手のスマホでも。';
