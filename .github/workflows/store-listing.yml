@@ -8,6 +8,8 @@
 #   check           — what is live, and what would change
 #   push + version  — write it to that version (Prepare for Submission)
 #   create + version — make that version first if it is missing, then push
+#   shots + version  — the screenshots in store/screenshots, on its en-US
+#   shots-check + version — what its en-US holds now
 
 name: App Store listing
 
@@ -15,7 +17,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: check, push or create
+        description: check, push, create, shots or shots-check
         required: true
         default: check
       version:
@@ -42,11 +44,21 @@ jobs:
       - name: Listing
         working-directory: apps/outrepd_flutter
         run: |
-          node store/aso/build.js > "$RUNNER_TEMP/listing.txt" 2>&1 || true
+          mode="${{ github.event.inputs.mode }}"
+          version="${{ github.event.inputs.version }}"
           printf '%s\n' "$ASC_KEY_P8" > "$RUNNER_TEMP/AuthKey.p8"
-          node store/aso/push.mjs "$RUNNER_TEMP/AuthKey.p8" \
-            "${{ github.event.inputs.mode }}" "${{ github.event.inputs.version }}" \
-            >> "$RUNNER_TEMP/listing.txt" 2>&1 || true
+          case "$mode" in
+            shots)
+              node store/aso/shots.mjs "$RUNNER_TEMP/AuthKey.p8" push "$version" \
+                > "$RUNNER_TEMP/listing.txt" 2>&1 || true ;;
+            shots-check)
+              node store/aso/shots.mjs "$RUNNER_TEMP/AuthKey.p8" check "$version" \
+                > "$RUNNER_TEMP/listing.txt" 2>&1 || true ;;
+            *)
+              node store/aso/build.js > "$RUNNER_TEMP/listing.txt" 2>&1 || true
+              node store/aso/push.mjs "$RUNNER_TEMP/AuthKey.p8" "$mode" "$version" \
+                >> "$RUNNER_TEMP/listing.txt" 2>&1 || true ;;
+          esac
           rm -f "$RUNNER_TEMP/AuthKey.p8"
           cat "$RUNNER_TEMP/listing.txt"
 
