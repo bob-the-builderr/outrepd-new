@@ -465,6 +465,9 @@ class LEs extends L {
   String get lifterTabBackground => 'Fondo';
 
   @override
+  String get lifterTabCharacters => 'Personajes';
+
+  @override
   String get lifterEyes => 'Ojos';
 
   @override

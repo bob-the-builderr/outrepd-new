@@ -464,6 +464,9 @@ class LDe extends L {
   String get lifterTabBackground => 'Hintergrund';
 
   @override
+  String get lifterTabCharacters => 'Charaktere';
+
+  @override
   String get lifterEyes => 'Augen';
 
   @override

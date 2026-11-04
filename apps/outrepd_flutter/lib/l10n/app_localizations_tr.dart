@@ -462,6 +462,9 @@ class LTr extends L {
   String get lifterTabBackground => 'Arka plan';
 
   @override
+  String get lifterTabCharacters => 'Karakterler';
+
+  @override
   String get lifterEyes => 'Gözler';
 
   @override

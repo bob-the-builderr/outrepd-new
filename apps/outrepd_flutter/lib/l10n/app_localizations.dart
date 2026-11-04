@@ -959,6 +959,12 @@ abstract class L {
   /// **'Background'**
   String get lifterTabBackground;
 
+  /// No description provided for @lifterTabCharacters.
+  ///
+  /// In en, this message translates to:
+  /// **'Characters'**
+  String get lifterTabCharacters;
+
   /// No description provided for @lifterEyes.
   ///
   /// In en, this message translates to:

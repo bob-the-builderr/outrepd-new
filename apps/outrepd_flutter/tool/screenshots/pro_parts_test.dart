@@ -15,7 +15,7 @@ int _at(List<LifterPart> list, String id) => list.indexWhere((p) => p.id == id);
 
 void main() {
   testWidgets('the Pro parts, drawn by the app', (tester) async {
-    tester.view.physicalSize = const Size(412 * 2, 900 * 2);
+    tester.view.physicalSize = const Size(412 * 2, 1100 * 2);
     tester.view.devicePixelRatio = 2;
     addTearDown(tester.view.reset);
 
@@ -33,6 +33,9 @@ void main() {
         base.copyWith(marks: _at(kMarks, id)),
       for (final id in ['hypno', 'diamond_eyes', 'snake_eyes', 'electric', 'gold_eyes'])
         base.copyWith(eyes: _at(kEyes, id)),
+      // The Pro hair colours, on the crew cut and on the afro.
+      for (final hex in kProHairColors.keys) base.copyWith(hairColor: kHairColors.indexOf(hex)),
+      for (final hex in kProHairColors.keys) base.copyWith(hair: _at(kHair, 'afro'), hairColor: kHairColors.indexOf(hex)),
     ];
 
     await tester.pumpWidget(
@@ -100,6 +103,48 @@ void main() {
     await expectLater(
       find.byType(MaterialApp),
       matchesGoldenFile('goldens/pro_parts_2.png'),
+    );
+  });
+
+  testWidgets('the creature skins and the characters, drawn by the app', (tester) async {
+    tester.view.physicalSize = const Size(412 * 2, 900 * 2);
+    tester.view.devicePixelRatio = 2;
+    addTearDown(tester.view.reset);
+
+    const base = Lifter(skin: 5, hair: 0, beard: 0, mouth: 0, eyes: 0, background: 3);
+    final all = <(Lifter, LifterView)>[
+      for (final id in ['robot', 'zombie', 'alien', 'skeleton', 'werewolf', 'reptile'])
+        (base.copyWith(skin: _at(kSkins, id)), LifterView.head),
+      // A creature wears what it is given: the werewolf, a cap and a hoodie.
+      (base.copyWith(skin: _at(kSkins, 'werewolf'), gear: _at(kGear, 'cap'), top: _at(kTops, 'hoodie')), LifterView.full),
+      for (final id in ['samurai', 'viking', 'ninja', 'astronaut', 'masked_wrestler', 'pharaoh'])
+        (base.copyWith(character: _at(kCharacters, id)), LifterView.full),
+      // Worn as it is: a cap under a character does not show.
+      (base.copyWith(character: _at(kCharacters, 'samurai'), gear: _at(kGear, 'cap'), pattern: _at(kPatterns, 'sakura')), LifterView.full),
+    ];
+
+    await tester.pumpWidget(
+      MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          backgroundColor: const Color(0xFF121110),
+          body: Padding(
+            padding: const EdgeInsets.all(6),
+            child: Wrap(
+              spacing: 6,
+              runSpacing: 6,
+              children: [for (final (l, view) in all) LifterImage(l, size: 128, view: view)],
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pump(const Duration(milliseconds: 1200));
+    await tester.pump();
+
+    await expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile('goldens/pro_parts_3.png'),
     );
   });
 }

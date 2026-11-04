@@ -35,7 +35,7 @@ Future<bool> openLifterMaker(BuildContext context, {bool firstTime = false}) asy
   return saved ?? false;
 }
 
-enum _Tab { skin, hair, face, beard, top, gear, background }
+enum _Tab { skin, hair, face, beard, top, gear, background, character }
 
 /// One choice of one part: which list it is from and how it is set.
 class _Slot {
@@ -56,6 +56,7 @@ final _marks = _Slot(kMarks, (l) => l.marks, (l, i) => l.copyWith(marks: i));
 final _beard = _Slot(kBeards, (l) => l.beard, (l, i) => l.copyWith(beard: i));
 final _top = _Slot(kTops, (l) => l.top, (l, i) => l.copyWith(top: i), view: LifterView.full);
 final _gear = _Slot(kGear, (l) => l.gear, (l, i) => l.copyWith(gear: i), view: LifterView.full);
+final _character = _Slot(kCharacters, (l) => l.character, (l, i) => l.copyWith(character: i), view: LifterView.full);
 final _pattern = _Slot(
   kPatterns,
   (l) => l.pattern,
@@ -107,16 +108,30 @@ class _LifterMakerScreenState extends State<LifterMakerScreen> {
 
   void _choose(_Slot slot, int i) {
     final part = slot.parts[i];
+    // A ready-made character is worn as it is: anything else chosen, but the
+    // background, takes it off (the user, 2026-11-04).
+    Lifter off(Lifter l) => slot == _character || slot == _pattern ? l : l.copyWith(character: 0);
     setState(() {
-      _shown = slot.write(_shown, i);
+      _shown = slot.write(off(_shown), i);
       if (_unlocks.owns(part)) {
-        _owned = slot.write(_owned, i);
+        _owned = slot.write(off(_owned), i);
         _trying = null;
       } else {
         _trying = part;
       }
     });
   }
+
+  /// A hair colour: a Pro one is tried on, as a Pro part is, until Pro.
+  void _hairColour(int i) => setState(() {
+    _shown = _shown.copyWith(hairColor: i, character: 0);
+    if (!isProHairColour(i) || _unlocks.pro) {
+      _owned = _owned.copyWith(hairColor: i, character: 0);
+      _trying = null;
+    } else {
+      _trying = kProHairColourPart;
+    }
+  });
 
   void _colour(Lifter Function(Lifter) change) => setState(() {
     _shown = change(_shown);
@@ -334,17 +349,18 @@ class _LifterMakerScreenState extends State<LifterMakerScreen> {
       _Tab.top => [(null, _top)],
       _Tab.gear => [(null, _gear)],
       _Tab.background => [(null, _pattern)],
+      _Tab.character => [(null, _character)],
     };
     final swatches = switch (_tab) {
       _Tab.hair || _Tab.beard => _Swatches(
         colours: kHairColors,
         chosen: _shown.hairColor,
-        onPick: (i) => _colour((l) => l.copyWith(hairColor: i)),
+        onPick: _hairColour,
       ),
       _Tab.top => _Swatches(
         colours: kTopColors,
         chosen: _shown.topColor,
-        onPick: (i) => _colour((l) => l.copyWith(topColor: i)),
+        onPick: (i) => _colour((l) => l.copyWith(topColor: i, character: 0)),
       ),
       _Tab.background => _Swatches(
         colours: kBackgroundColors,
@@ -407,6 +423,7 @@ class _LifterMakerScreenState extends State<LifterMakerScreen> {
     _Tab.top => l.lifterTabTop,
     _Tab.gear => l.lifterTabGear,
     _Tab.background => l.lifterTabBackground,
+    _Tab.character => l.lifterTabCharacters,
   };
 }
 
@@ -529,6 +546,14 @@ class _Swatches extends StatelessWidget {
             height: 36,
             decoration: BoxDecoration(
               color: Color(int.parse('FF${colours[i].substring(1)}', radix: 16)),
+              gradient: switch (kProHairColors[colours[i]]) {
+                final g? => LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment(g.x2 * 2 - 1, g.y2 * 2 - 1),
+                  colors: [for (final c in g.stops) Color(int.parse('FF${c.substring(1)}', radix: 16))],
+                ),
+                null => null,
+              },
               shape: BoxShape.circle,
               border: Border.all(
                 color: i == chosen ? colors.brand : colors.border,

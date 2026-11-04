@@ -465,6 +465,9 @@ class LFr extends L {
   String get lifterTabBackground => 'Fond';
 
   @override
+  String get lifterTabCharacters => 'Personnages';
+
+  @override
   String get lifterEyes => 'Yeux';
 
   @override

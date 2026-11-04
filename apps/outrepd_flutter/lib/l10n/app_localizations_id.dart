@@ -461,6 +461,9 @@ class LId extends L {
   String get lifterTabBackground => 'Latar';
 
   @override
+  String get lifterTabCharacters => 'Karakter';
+
+  @override
   String get lifterEyes => 'Mata';
 
   @override

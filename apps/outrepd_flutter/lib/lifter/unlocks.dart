@@ -117,6 +117,13 @@ class UnlockState {
         owns(list[i]) ? i : (owns(list[was]) ? was : 0);
     return lifter.copyWith(
       skin: pick(kSkins, lifter.skin, fallback.skin),
+      hair: pick(kHair, lifter.hair, fallback.hair),
+      hairColor: !isProHairColour(lifter.hairColor) || pro
+          ? lifter.hairColor
+          : (!isProHairColour(fallback.hairColor) ? fallback.hairColor : 0),
+      beard: pick(kBeards, lifter.beard, fallback.beard),
+      marks: pick(kMarks, lifter.marks, fallback.marks),
+      character: pick(kCharacters, lifter.character, fallback.character),
       eyes: pick(kEyes, lifter.eyes, fallback.eyes),
       mouth: pick(kMouths, lifter.mouth, fallback.mouth),
       top: pick(kTops, lifter.top, fallback.top),

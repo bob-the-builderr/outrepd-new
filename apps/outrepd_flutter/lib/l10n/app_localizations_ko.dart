@@ -450,6 +450,9 @@ class LKo extends L {
   String get lifterTabBackground => '배경';
 
   @override
+  String get lifterTabCharacters => '캐릭터';
+
+  @override
   String get lifterEyes => '눈';
 
   @override

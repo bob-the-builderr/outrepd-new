@@ -450,6 +450,9 @@ class LJa extends L {
   String get lifterTabBackground => '背景';
 
   @override
+  String get lifterTabCharacters => 'キャラクター';
+
+  @override
   String get lifterEyes => '目';
 
   @override

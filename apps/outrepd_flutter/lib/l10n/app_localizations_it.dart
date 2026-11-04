@@ -464,6 +464,9 @@ class LIt extends L {
   String get lifterTabBackground => 'Sfondo';
 
   @override
+  String get lifterTabCharacters => 'Personaggi';
+
+  @override
   String get lifterEyes => 'Occhi';
 
   @override

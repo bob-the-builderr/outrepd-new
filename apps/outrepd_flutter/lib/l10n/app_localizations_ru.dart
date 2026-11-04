@@ -462,6 +462,9 @@ class LRu extends L {
   String get lifterTabBackground => 'Фон';
 
   @override
+  String get lifterTabCharacters => 'Персонажи';
+
+  @override
   String get lifterEyes => 'Глаза';
 
   @override

@@ -105,6 +105,14 @@ const kSkins = <LifterPart>[
   LifterPart('obsidian', color: '#1A1720', fx: 'obsidian', pro: true),
   LifterPart('cosmic', color: '#3B2A7A', fx: 'cosmic', pro: true),
   LifterPart('electric', color: '#2F6FD6', fx: 'electric', pro: true),
+  // Creatures (the user's picks, 2026-11-04): each brings its own face —
+  // pro_art.dart's proSkinFaces — and wears everything else over it.
+  LifterPart('robot', color: '#9AA7B5', fx: 'robot', pro: true),
+  LifterPart('zombie', color: '#93B07E', fx: 'zombie', pro: true),
+  LifterPart('alien', color: '#A8E6A1', fx: 'alien', pro: true),
+  LifterPart('skeleton', color: '#EDE6D6', fx: 'skeleton', pro: true),
+  LifterPart('werewolf', color: '#8A7766', fx: 'werewolf', pro: true),
+  LifterPart('reptile', color: '#5DA05A', fx: 'reptile', pro: true),
 ];
 
 const kHair = <LifterPart>[
@@ -121,7 +129,26 @@ const kHair = <LifterPart>[
 const kHairColors = <String>[
   '#141010', '#3A2416', '#6B3E1F', '#8E3B1E', '#E3C27A', '#EDEAE4', '#9A9590',
   '#D23A22', '#3D6FD8', '#33B36B', '#E85D9C', '#8A4FD8', '#F08A24', '#23B5B5',
+  // Pro: chrome, gold leaf, neon fade, sunset fade — see [kProHairColors].
+  '#9DA9B6', '#D3961B', '#A65CFE', '#C2368B',
 ];
+
+/// The Pro hair colours (the user's picks, 2026-11-04): a gradient each, by
+/// its entry in [kHairColors]. That entry is the gradient's middle, and what
+/// the hair's shading is worked out from; the drawing puts the gradient
+/// where the colour itself would be (lifter_art.dart).
+const kProHairColors = <String, ({List<String> stops, double x2, double y2})>{
+  '#9DA9B6': (stops: ['#2E3842', '#FFFFFF', '#6E7A86', '#F4F8FB', '#3E4A56'], x2: 1, y2: 1),
+  '#D3961B': (stops: ['#7A4E06', '#FFEFA8', '#D3961A', '#FFF8D6', '#9C6408'], x2: 1, y2: 1),
+  '#A65CFE': (stops: ['#FF4FD8', '#A65CFF', '#4FD8FF'], x2: 1, y2: 0.5),
+  '#C2368B': (stops: ['#3B1C6E', '#C2368A', '#FF7A3D', '#FFD36B'], x2: 0, y2: 1),
+};
+
+/// What the maker tries on and asks Pro for, when a Pro hair colour is picked.
+const kProHairColourPart = LifterPart('pro_hair_colour', pro: true);
+
+/// Whether [i] in [kHairColors] is a Pro one.
+bool isProHairColour(int i) => kProHairColors.containsKey(kHairColors[i]);
 
 const kEyes = <LifterPart>[
   LifterPart('focused'), LifterPart('angry'), LifterPart('calm'), LifterPart('wide'),
@@ -213,6 +240,16 @@ const kGear = <LifterPart>[
 ];
 
 /// Gear worn on the head, under which most hair is not drawn.
+/// Ready-made characters (the user's picks, 2026-11-04): the whole lifter, worn
+/// as it is — nothing goes on it, and choosing anything else takes it off.
+/// The background stays the lifter's own. The first is none.
+const kCharacters = <LifterPart>[
+  LifterPart('none'),
+  LifterPart('samurai', pro: true), LifterPart('viking', pro: true),
+  LifterPart('ninja', pro: true), LifterPart('astronaut', pro: true),
+  LifterPart('masked_wrestler', pro: true), LifterPart('pharaoh', pro: true),
+];
+
 const kHats = {'cap_back', 'cap', 'bucket_hat', 'beanie', 'durag', 'visor'};
 
 const kBackgroundColors = <String>[
@@ -250,9 +287,13 @@ class Lifter {
     this.gear = 0,
     this.background = 0,
     this.pattern = 0,
+    this.character = 0,
   });
 
   final int skin, hair, hairColor, eyes, brows, mouth, beard, marks, top, topColor, gear, background, pattern;
+
+  /// A ready-made character in [kCharacters] worn over everything, or 0.
+  final int character;
 
   LifterPart get skinPart => kSkins[skin];
   bool get wearsHat => kHats.contains(kGear[gear].id);
@@ -271,6 +312,7 @@ class Lifter {
     int? gear,
     int? background,
     int? pattern,
+    int? character,
   }) => Lifter(
     skin: skin ?? this.skin,
     hair: hair ?? this.hair,
@@ -285,11 +327,13 @@ class Lifter {
     gear: gear ?? this.gear,
     background: background ?? this.background,
     pattern: pattern ?? this.pattern,
+    character: character ?? this.character,
   );
 
   /// The parts this lifter wears, each with the list it came from.
   Iterable<LifterPart> get parts => [
-    kSkins[skin], kEyes[eyes], kMouths[mouth], kTops[top], kGear[gear], kPatterns[pattern],
+    kSkins[skin], kHair[hair], kEyes[eyes], kMouths[mouth], kBeards[beard], kMarks[marks],
+    kTops[top], kGear[gear], kPatterns[pattern], kCharacters[character],
   ];
 
   /// The rarest thing it wears.
@@ -310,6 +354,7 @@ class Lifter {
     'gear': kGear[gear].id,
     'background': kBackgroundColors[background],
     'pattern': kPatterns[pattern].id,
+    if (character != 0) 'character': kCharacters[character].id,
   };
 
   /// Unknown or missing parts fall back to the first of their kind: a
@@ -341,6 +386,7 @@ class Lifter {
       gear: part(kGear, 'gear'),
       background: color(kBackgroundColors, 'background'),
       pattern: part(kPatterns, 'pattern'),
+      character: part(kCharacters, 'character'),
     );
   }
 
@@ -352,7 +398,8 @@ class Lifter {
     return Lifter(
       skin: free(kSkins),
       hair: free(kHair),
-      hairColor: r.pick(kHairColors.length),
+      // The free colours only, so the same seeds give the same lifters.
+      hairColor: r.pick(kHairColors.length - kProHairColors.length),
       eyes: free(kEyes),
       brows: r.pick(kBrows.length),
       mouth: free(kMouths),

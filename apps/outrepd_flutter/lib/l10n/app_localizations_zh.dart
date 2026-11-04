@@ -448,6 +448,9 @@ class LZh extends L {
   String get lifterTabBackground => '背景';
 
   @override
+  String get lifterTabCharacters => '角色';
+
+  @override
   String get lifterEyes => '眼睛';
 
   @override

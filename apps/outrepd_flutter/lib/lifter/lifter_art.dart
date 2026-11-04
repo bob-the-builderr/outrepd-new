@@ -44,6 +44,13 @@ String lifterSvg(Lifter l, {LifterView view = LifterView.full}) {
     return _svg(b.toString(), view);
   }
   if (view != LifterView.noBackground) b.write(_background(l.background, l.pattern));
+  // A ready-made character is the whole lifter: nothing else is drawn on it.
+  if (l.character != 0) {
+    b.write(proCharacters[kCharacters[l.character].id] ?? '');
+    return _svg(b.toString(), view);
+  }
+  // A creature brings its own face; what it leaves out, the lifter wears.
+  final face = proSkinFaces[sk.fx];
   final h = _hair(l.hair, hc);
   b
     ..write(proGearBack[gearId] ?? '')
@@ -53,29 +60,41 @@ String lifterSvg(Lifter l, {LifterView view = LifterView.full}) {
     // A collar that wraps the neck sits in front of it.
     ..write(_topOver(l.top, tc))
     ..write(h.back)
-    ..write(_cel('earL', _P.earL, skin))
-    ..write(_cel('earR', _P.earR, skin))
+    ..write(face?['ears'] ?? _cel('earL', _P.earL, skin) + _cel('earR', _P.earR, skin))
     ..write(_cel('head', _P.head, skin))
     ..write(_skinFx(sk.fx))
+    ..write(face?['fx'] ?? '')
     ..write(_inkLine(_P.jaw, w: 2.4, o: 0.6))
     ..write(_marks(l.marks))
-    ..write(_brows(l.brows, hc))
-    ..write(_eyes(l.eyes, sk))
-    ..write(_inkLine('M100 82 L95 98 C98 101 103 101 106 98', w: 2.4, o: 1));
+    ..write(face?['brows'] ?? _brows(l.brows, hc))
+    ..write(face?['eyes'] ?? _eyes(l.eyes, sk))
+    ..write(face?['nose'] ?? _inkLine('M100 82 L95 98 C98 101 103 101 106 98', w: 2.4, o: 1));
   // A beard round the jaw goes under the mouth, which shows through it; a
   // moustache goes over it, as one does (the user, 2026-11-04: with a full
   // beard on, the mouth was gone).
   if (gearId != 'face_mask') {
     final overMouth = _beardOverMouth.contains(l.beard);
     if (!overMouth) b.write(_beard(l.beard, hc));
-    b.write(_mouth(l.mouth));
+    b.write(face?['mouth'] ?? _mouth(l.mouth));
     if (overMouth) b.write(_beard(l.beard, hc));
   }
   // Under a hat only hair that hangs below it is drawn.
   final hairId = kHair[l.hair].id;
   if (!l.wearsHat || hairId == 'long' || hairId == 'dreads' || hairId == 'neon_dreads') b.write(h.front);
+  b.write(face?['over'] ?? '');
   b.write(_gear(l.gear));
-  return _svg(b.toString(), view);
+  return _proHairColour(_svg(b.toString(), view), hc);
+}
+
+/// A Pro hair colour is a gradient: drawn wherever the colour itself is, its
+/// shading left to the solid middle the catalogue gives it.
+String _proHairColour(String svg, String hc) {
+  final g = kProHairColors[hc];
+  if (g == null) return svg;
+  final stops = [for (var k = 0; k < g.stops.length; k++) '<stop offset="${_n(k / (g.stops.length - 1))}" stop-color="${g.stops[k]}"/>'].join();
+  final defs = '<defs><linearGradient id="hcg" x1="0" y1="0" x2="${_n(g.x2)}" y2="${_n(g.y2)}">$stops</linearGradient></defs>';
+  final open = svg.indexOf('>') + 1;
+  return svg.substring(0, open) + defs + svg.substring(open).replaceAll('fill="$hc"', 'fill="url(#hcg)"');
 }
 
 String _svg(String body, LifterView view) {

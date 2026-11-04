@@ -463,6 +463,9 @@ class LPt extends L {
   String get lifterTabBackground => 'Fundo';
 
   @override
+  String get lifterTabCharacters => 'Personagens';
+
+  @override
   String get lifterEyes => 'Olhos';
 
   @override

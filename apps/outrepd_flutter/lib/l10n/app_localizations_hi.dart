@@ -462,6 +462,9 @@ class LHi extends L {
   String get lifterTabBackground => 'बैकग्राउंड';
 
   @override
+  String get lifterTabCharacters => 'किरदार';
+
+  @override
   String get lifterEyes => 'आँखें';
 
   @override

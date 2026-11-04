@@ -463,6 +463,9 @@ class LEn extends L {
   String get lifterTabBackground => 'Background';
 
   @override
+  String get lifterTabCharacters => 'Characters';
+
+  @override
   String get lifterEyes => 'Eyes';
 
   @override
