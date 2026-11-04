@@ -948,8 +948,11 @@ class _WeekRaceCardState extends State<_WeekRaceCard> {
   Future<void> _load() async {
     _loading = true;
     try {
-      final mine = await backend.myWeekPlace();
-      final top = await backend.weekBoard(limit: 3);
+      // Both at once: one trip's wait rather than two.
+      final (mine, top) = await (
+        backend.myWeekPlace(),
+        backend.weekBoard(limit: 3),
+      ).wait;
       _lastMine = mine;
       _lastTop = top;
       _lastFor = backend.me?.id;

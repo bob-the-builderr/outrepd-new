@@ -209,10 +209,11 @@ class _RanksScreenState extends State<RanksScreen> {
     bool stale() => !mounted || country != _country || friends != _friends;
     try {
       if (scope == _Scope.thisWeek) {
-        final place = await backend.myWeekPlace(country: country);
-        final rows = friends
-            ? await backend.friendsBoard()
-            : await backend.weekBoard(country: country);
+        // Both at once: one trip's wait rather than two (2026-11-04).
+        final (place, rows) = await (
+          backend.myWeekPlace(country: country),
+          friends ? backend.friendsBoard() : backend.weekBoard(country: country),
+        ).wait;
         if (stale()) return;
         unawaited(Looks.instance.fetch(rows.map((row) => row.id)));
         setState(() {

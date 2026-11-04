@@ -85,9 +85,14 @@ void main() async {
       try {
         me = await backend.signIn(username: demoProfile.username);
         // Says this account is around, which is the whole of what the online
-        // dot on a friends list means. Not awaited in the sense that matters:
-        // if it fails, the worst outcome is a friend seeing us as offline.
-        await backend.touch();
+        // dot on a friends list means. Not awaited: the first screen waited
+        // on this trip to the server for nothing (2026-11-04), and if it
+        // fails, the worst outcome is a friend seeing us as offline.
+        unawaited(
+          backend.touch().catchError((Object error) {
+            debugPrint('Could not say we are around: $error');
+          }),
+        );
       } on Object catch (error) {
         debugPrint('Could not sign in: $error');
       }
@@ -121,16 +126,24 @@ void main() async {
     // after their screen was closed. Not awaited: the history fills in a
     // moment later rather than holding the launch on the network.
     unawaited(Career.instance.syncHistory());
-    await rewards.syncWithProfile(
-      matches: demoProfile.totalMatches,
-      wins: demoProfile.bestStreak,
-      // The real count, not a guess divided out of a weight total. Reps are
-      // what this app actually records, so a rep title is now the only kind
-      // that can be earned honestly.
-      reps: demoProfile.totalReps,
-      tierIdx: demoProfile.tierIdx,
-      friends: await currentFriendCount(),
-    );
+    // The titles the totals earn. In the background: the friend count is a
+    // trip to the server, and the first screen waited on it (2026-11-04).
+    unawaited(() async {
+      try {
+        await rewards.syncWithProfile(
+          matches: demoProfile.totalMatches,
+          wins: demoProfile.bestStreak,
+          // The real count, not a guess divided out of a weight total. Reps
+          // are what this app actually records, so a rep title is now the
+          // only kind that can be earned honestly.
+          reps: demoProfile.totalReps,
+          tierIdx: demoProfile.tierIdx,
+          friends: await currentFriendCount(),
+        );
+      } on Object catch (error) {
+        debugPrint('Could not sync the titles: $error');
+      }
+    }());
   } on Object catch (error, stack) {
     debugPrint('Could not read saved settings: $error\n$stack');
   }
