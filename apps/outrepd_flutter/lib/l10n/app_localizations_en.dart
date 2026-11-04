@@ -585,6 +585,12 @@ class LEn extends L {
   String get vsLiveFriendly => 'LIVE · FRIENDLY';
 
   @override
+  String get vsSavedRanked => 'SAVED SET · RANKED';
+
+  @override
+  String get vsRematchFriendly => 'REMATCH · FRIENDLY';
+
+  @override
   String get couldNotShareCard => 'Could not share this card';
 
   @override

@@ -586,6 +586,12 @@ class LIt extends L {
   String get vsLiveFriendly => 'LIVE · AMICHEVOLE';
 
   @override
+  String get vsSavedRanked => 'SERIE SALVATA · CLASSIFICATA';
+
+  @override
+  String get vsRematchFriendly => 'RIVINCITA · AMICHEVOLE';
+
+  @override
   String get couldNotShareCard => 'Impossibile condividere questa card';
 
   @override

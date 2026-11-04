@@ -583,6 +583,12 @@ class LId extends L {
   String get vsLiveFriendly => 'LIVE · PERSAHABATAN';
 
   @override
+  String get vsSavedRanked => 'SET TERSIMPAN · PERINGKAT';
+
+  @override
+  String get vsRematchFriendly => 'TANDING ULANG · PERSAHABATAN';
+
+  @override
   String get couldNotShareCard => 'Kartu ini tidak bisa dibagikan';
 
   @override

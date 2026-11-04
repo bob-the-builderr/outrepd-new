@@ -197,6 +197,8 @@
   "coverWinterCity": "Kota musim dingin",
   "vsLiveRanked": "LIVE · PERINGKAT",
   "vsLiveFriendly": "LIVE · PERSAHABATAN",
+  "vsSavedRanked": "SET TERSIMPAN · PERINGKAT",
+  "vsRematchFriendly": "TANDING ULANG · PERSAHABATAN",
   "couldNotShareCard": "Kartu ini tidak bisa dibagikan",
   "couldNotOpenLink": "Tautan itu tidak bisa dibuka",
   "couldNotCheckUsername": "Nama itu tidak bisa diperiksa — coba lagi",

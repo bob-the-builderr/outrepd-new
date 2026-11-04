@@ -587,6 +587,12 @@ class LFr extends L {
   String get vsLiveFriendly => 'EN DIRECT · AMICAL';
 
   @override
+  String get vsSavedRanked => 'SÉRIE ENREGISTRÉE · CLASSÉ';
+
+  @override
+  String get vsRematchFriendly => 'REVANCHE · AMICAL';
+
+  @override
   String get couldNotShareCard => 'Impossible de partager cette carte';
 
   @override

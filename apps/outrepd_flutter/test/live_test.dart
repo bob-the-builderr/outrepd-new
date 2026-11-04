@@ -20,6 +20,7 @@ import 'package:outrepd/screens/live_invite.dart';
 import 'package:outrepd/screens/match_entry.dart';
 import 'package:outrepd/screens/match_flow.dart';
 import 'package:outrepd/screens/trainer.dart';
+import 'package:outrepd/screens/vs_screen.dart';
 import 'package:outrepd/theme.dart';
 
 import 'support/synthetic_poses.dart';
@@ -340,6 +341,17 @@ void main() {
     expect(find.text('karim.reps'), findsOneWidget);
     expect(find.text('Did 23 in 60 seconds'), findsOneWidget);
     expect(find.text('Race it'), findsOneWidget);
+
+    // Raced, it gets the VS screen a live match gets — tagged as a saved
+    // set, not as somebody live (the user, 2026-11-04: it went straight to
+    // the old versus view).
+    await tester.tap(find.text('Race it'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 700));
+    expect(find.byType(VsScreen), findsOneWidget);
+    expect(find.text('SAVED SET · RANKED'), findsOneWidget);
+    expect(find.text('LIVE · RANKED'), findsNothing);
+    expect(find.text('karim.reps'), findsOneWidget);
 
     await tester.pumpWidget(const SizedBox());
   });

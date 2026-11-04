@@ -585,6 +585,12 @@ class LPt extends L {
   String get vsLiveFriendly => 'AO VIVO · AMISTOSA';
 
   @override
+  String get vsSavedRanked => 'SÉRIE GUARDADA · RANQUEADA';
+
+  @override
+  String get vsRematchFriendly => 'DESFORRA · AMISTOSA';
+
+  @override
   String get couldNotShareCard => 'Não foi possível compartilhar este cartão';
 
   @override

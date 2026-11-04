@@ -586,6 +586,12 @@ class LDe extends L {
   String get vsLiveFriendly => 'LIVE · FREUNDSCHAFT';
 
   @override
+  String get vsSavedRanked => 'GESPEICHERTER SATZ · GEWERTET';
+
+  @override
+  String get vsRematchFriendly => 'REVANCHE · FREUNDSCHAFT';
+
+  @override
   String get couldNotShareCard => 'Diese Karte konnte nicht geteilt werden';
 
   @override

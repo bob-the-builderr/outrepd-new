@@ -572,6 +572,12 @@ class LKo extends L {
   String get vsLiveFriendly => '라이브 · 친선';
 
   @override
+  String get vsSavedRanked => '저장된 세트 · 랭크';
+
+  @override
+  String get vsRematchFriendly => '재대결 · 친선';
+
+  @override
   String get couldNotShareCard => '이 카드를 공유할 수 없었어요';
 
   @override

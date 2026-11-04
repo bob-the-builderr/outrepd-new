@@ -197,6 +197,8 @@
   "coverWinterCity": "Città d'inverno",
   "vsLiveRanked": "LIVE · CLASSIFICATA",
   "vsLiveFriendly": "LIVE · AMICHEVOLE",
+  "vsSavedRanked": "SERIE SALVATA · CLASSIFICATA",
+  "vsRematchFriendly": "RIVINCITA · AMICHEVOLE",
   "couldNotShareCard": "Impossibile condividere questa card",
   "couldNotOpenLink": "Impossibile aprire quel link",
   "couldNotCheckUsername": "Impossibile verificare quel nome: riprova",

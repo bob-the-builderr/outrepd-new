@@ -291,6 +291,8 @@
   "coverWinterCity": "Winter city",
   "vsLiveRanked": "LIVE · RANKED",
   "vsLiveFriendly": "LIVE · FRIENDLY",
+  "vsSavedRanked": "SAVED SET · RANKED",
+  "vsRematchFriendly": "REMATCH · FRIENDLY",
   "couldNotShareCard": "Could not share this card",
   "couldNotOpenLink": "Could not open that link",
   "couldNotCheckUsername": "Couldn't check that name — try again",

@@ -197,6 +197,8 @@
   "coverWinterCity": "Ville d'hiver",
   "vsLiveRanked": "EN DIRECT · CLASSÉ",
   "vsLiveFriendly": "EN DIRECT · AMICAL",
+  "vsSavedRanked": "SÉRIE ENREGISTRÉE · CLASSÉ",
+  "vsRematchFriendly": "REVANCHE · AMICAL",
   "couldNotShareCard": "Impossible de partager cette carte",
   "couldNotOpenLink": "Impossible d'ouvrir ce lien",
   "couldNotCheckUsername": "Impossible de vérifier ce nom — réessayez",

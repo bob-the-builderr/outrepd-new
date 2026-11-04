@@ -587,6 +587,12 @@ class LEs extends L {
   String get vsLiveFriendly => 'EN VIVO · AMISTOSA';
 
   @override
+  String get vsSavedRanked => 'SERIE GUARDADA · CLASIFICATORIA';
+
+  @override
+  String get vsRematchFriendly => 'REVANCHA · AMISTOSA';
+
+  @override
   String get couldNotShareCard => 'No se pudo compartir esta tarjeta';
 
   @override

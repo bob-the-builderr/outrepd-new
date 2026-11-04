@@ -197,6 +197,8 @@
   "coverWinterCity": "Winterstadt",
   "vsLiveRanked": "LIVE · GEWERTET",
   "vsLiveFriendly": "LIVE · FREUNDSCHAFT",
+  "vsSavedRanked": "GESPEICHERTER SATZ · GEWERTET",
+  "vsRematchFriendly": "REVANCHE · FREUNDSCHAFT",
   "couldNotShareCard": "Diese Karte konnte nicht geteilt werden",
   "couldNotOpenLink": "Der Link konnte nicht geöffnet werden",
   "couldNotCheckUsername": "Der Name konnte nicht geprüft werden — versuch es noch mal",

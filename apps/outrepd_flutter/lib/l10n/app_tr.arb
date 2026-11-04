@@ -197,6 +197,8 @@
   "coverWinterCity": "Kış şehri",
   "vsLiveRanked": "CANLI · DERECELİ",
   "vsLiveFriendly": "CANLI · DOSTLUK",
+  "vsSavedRanked": "KAYITLI SET · DERECELİ",
+  "vsRematchFriendly": "RÖVANŞ · DOSTLUK",
   "couldNotShareCard": "Bu kart paylaşılamadı",
   "couldNotOpenLink": "O bağlantı açılamadı",
   "couldNotCheckUsername": "O ad kontrol edilemedi — tekrar deneyin",

@@ -197,6 +197,8 @@
   "coverWinterCity": "冬の街",
   "vsLiveRanked": "ライブ · ランク戦",
   "vsLiveFriendly": "ライブ · フレンド戦",
+  "vsSavedRanked": "保存済みセット · ランク戦",
+  "vsRematchFriendly": "再戦 · フレンド戦",
   "couldNotShareCard": "このカードを共有できませんでした",
   "couldNotOpenLink": "そのリンクを開けませんでした",
   "couldNotCheckUsername": "その名前を確認できませんでした。もう一度お試しください",

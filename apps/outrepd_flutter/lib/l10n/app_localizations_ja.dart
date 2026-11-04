@@ -572,6 +572,12 @@ class LJa extends L {
   String get vsLiveFriendly => 'ライブ · フレンド戦';
 
   @override
+  String get vsSavedRanked => '保存済みセット · ランク戦';
+
+  @override
+  String get vsRematchFriendly => '再戦 · フレンド戦';
+
+  @override
   String get couldNotShareCard => 'このカードを共有できませんでした';
 
   @override

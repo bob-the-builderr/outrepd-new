@@ -1,4 +1,5 @@
-/// The VS screen before every live match: the two lifters big, face to
+/// The VS screen before every match with somebody in it — live, a saved
+/// set, a rematch: the two lifters big, face to
 /// face — the opponent above, this account below, split by a slanted line,
 /// VS exactly between the two pictures (the user's picks, 2026-11-01: the
 /// first design, refined). A Pro enters with lightning, a holo edge and the
@@ -29,6 +30,10 @@ import 'pro_parts.dart';
 /// How long the VS screen stays: three seconds, counted down at its foot.
 const kVsTime = Duration(seconds: 3);
 
+/// What the other side of a VS screen is: somebody on camera now, a set they
+/// saved, or a rematch.
+enum VsKind { live, saved, rematch }
+
 /// What a side shows: a lifter to draw, or a photo.
 typedef _Face = ({Lifter? lifter, ImageProvider? photo});
 
@@ -42,6 +47,7 @@ class VsScreen extends StatefulWidget {
     this.opponentXp,
     this.opponentAvatarUrl,
     this.ranked = true,
+    this.kind = VsKind.live,
   });
 
   final String opponentId;
@@ -53,6 +59,12 @@ class VsScreen extends StatefulWidget {
   /// Their uploaded picture, shown when they made no lifter.
   final String? opponentAvatarUrl;
   final bool ranked;
+
+  /// Live, a saved set or a rematch: what the tag at the top says, and
+  /// whether its dot is live red. A saved set is not somebody on camera now,
+  /// and the screen must not say it is (the user's pick, 2026-11-04: the
+  /// same tag with a grey dot).
+  final VsKind kind;
 
   @override
   State<VsScreen> createState() => _VsScreenState();
@@ -319,7 +331,16 @@ class _VsScreenState extends State<VsScreen> with SingleTickerProviderStateMixin
             left: 0,
             right: 0,
             top: h * 0.012,
-            child: Center(child: _LivePill(text: widget.ranked ? l.vsLiveRanked : l.vsLiveFriendly)),
+            child: Center(
+              child: _LivePill(
+                text: switch (widget.kind) {
+                  VsKind.live => widget.ranked ? l.vsLiveRanked : l.vsLiveFriendly,
+                  VsKind.saved => l.vsSavedRanked,
+                  VsKind.rematch => l.vsRematchFriendly,
+                },
+                live: widget.kind == VsKind.live,
+              ),
+            ),
           ),
           Positioned(
             left: 20,
@@ -484,9 +505,12 @@ class _Bar extends StatelessWidget {
 }
 
 class _LivePill extends StatelessWidget {
-  const _LivePill({required this.text});
+  const _LivePill({required this.text, this.live = true});
 
   final String text;
+
+  /// Red for somebody on camera now, grey for a set recorded before.
+  final bool live;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -502,12 +526,19 @@ class _LivePill extends StatelessWidget {
         Container(
           width: 8,
           height: 8,
-          decoration: const BoxDecoration(color: Color(0xFFFF4D4D), shape: BoxShape.circle),
+          decoration: BoxDecoration(
+            color: live ? const Color(0xFFFF4D4D) : context.colors.muted,
+            shape: BoxShape.circle,
+          ),
         ),
         const SizedBox(width: 8),
-        Text(
-          text,
-          style: TextStyle(color: context.colors.text, fontSize: 12.5, fontWeight: FontWeight.w800, letterSpacing: 0.4),
+        Flexible(
+          child: Text(
+            text,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: context.colors.text, fontSize: 12.5, fontWeight: FontWeight.w800, letterSpacing: 0.4),
+          ),
         ),
       ],
     ),

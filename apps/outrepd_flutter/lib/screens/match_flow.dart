@@ -274,6 +274,15 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   /// Left while still looking, so the queue is left too.
   bool _searchCancelled = false;
 
+  /// Who the VS screen faces this account with: the lifter on camera, the one
+  /// whose saved set this is, or the one a rematch is with. Null when the
+  /// round races this lifter's own best — there is nobody to face, and the
+  /// plain versus view says whose best it is.
+  String? get _vsOpponentId =>
+      _live?.opponent.id ??
+      _realOpponent?.profileId ??
+      (widget.isChallenge ? widget.targetId : null);
+
   /// Nobody real was found, so the round is raced against this lifter's own
   /// best set and moves nothing on the ladder.
   ///
@@ -510,7 +519,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     if (mounted && !_vsBest) setState(() => _matched = true);
     // How the other lifter looks, for the VS screen: asked now, drawn when
     // it arrives.
-    if (_live case final live?) unawaited(Looks.instance.fetch([live.opponent.id]));
+    if (_vsOpponentId case final id?) unawaited(Looks.instance.fetch([id]));
     // A challenge already knows exactly who it is with — there is nothing to
     // search for, so nothing to fake the look of searching for either.
     // Everyone else gets a wait somewhere inside the window the design
@@ -528,9 +537,9 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     _timer = Timer(wait, () {
       if (!mounted) return;
       setState(() => _stage = _Stage.versus);
-      // A live match gets the whole VS screen, three seconds of it; a saved
-      // set the second and a half that was always enough.
-      _timer = Timer(_live == null ? const Duration(milliseconds: 1500) : kVsTime, () {
+      // The VS screen counts its three seconds down at its foot, so it gets
+      // all three; racing your own best, the plain one, a second and a half.
+      _timer = Timer(_vsOpponentId == null ? const Duration(milliseconds: 1500) : kVsTime, () {
         if (!mounted) return;
         setState(() => _stage = _Stage.live);
         _lift();
@@ -1107,15 +1116,20 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
         );
 
       case _Stage.versus:
-        if (_live case final live?) {
+        if (_vsOpponentId case final id?) {
           return VsScreen(
-            opponentId: live.opponent.id,
+            opponentId: id,
             opponentName: _opponent.username,
             opponentTierIdx: _opponent.tierIdx,
             opponentDivIdx: _opponent.divIdx,
             opponentXp: _opponent.xp,
             opponentAvatarUrl: _opponent.avatarUrl,
-            ranked: live.ranked,
+            ranked: _live?.ranked ?? true,
+            kind: _live != null
+                ? VsKind.live
+                : widget.isChallenge || widget.isChallengeAccept
+                ? VsKind.rematch
+                : VsKind.saved,
           );
         }
         return _VersusView(

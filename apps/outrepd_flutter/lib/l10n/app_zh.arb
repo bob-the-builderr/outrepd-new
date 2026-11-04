@@ -197,6 +197,8 @@
   "coverWinterCity": "冬日城市",
   "vsLiveRanked": "直播 · 排位",
   "vsLiveFriendly": "直播 · 友谊赛",
+  "vsSavedRanked": "已保存的一组 · 排位",
+  "vsRematchFriendly": "再来一局 · 友谊赛",
   "couldNotShareCard": "无法分享这张卡片",
   "couldNotOpenLink": "无法打开该链接",
   "couldNotCheckUsername": "无法检查该名称——请重试",

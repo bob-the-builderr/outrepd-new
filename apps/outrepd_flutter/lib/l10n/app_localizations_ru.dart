@@ -584,6 +584,12 @@ class LRu extends L {
   String get vsLiveFriendly => 'LIVE · ДРУЖЕСКИЙ';
 
   @override
+  String get vsSavedRanked => 'СОХРАНЁННЫЙ ПОДХОД · РЕЙТИНГ';
+
+  @override
+  String get vsRematchFriendly => 'РЕВАНШ · ДРУЖЕСКИЙ';
+
+  @override
   String get couldNotShareCard => 'Не удалось поделиться карточкой';
 
   @override

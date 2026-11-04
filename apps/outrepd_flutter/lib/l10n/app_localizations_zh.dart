@@ -570,6 +570,12 @@ class LZh extends L {
   String get vsLiveFriendly => '直播 · 友谊赛';
 
   @override
+  String get vsSavedRanked => '已保存的一组 · 排位';
+
+  @override
+  String get vsRematchFriendly => '再来一局 · 友谊赛';
+
+  @override
   String get couldNotShareCard => '无法分享这张卡片';
 
   @override

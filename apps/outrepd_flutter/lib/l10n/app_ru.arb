@@ -197,6 +197,8 @@
   "coverWinterCity": "Зимний город",
   "vsLiveRanked": "LIVE · РЕЙТИНГ",
   "vsLiveFriendly": "LIVE · ДРУЖЕСКИЙ",
+  "vsSavedRanked": "СОХРАНЁННЫЙ ПОДХОД · РЕЙТИНГ",
+  "vsRematchFriendly": "РЕВАНШ · ДРУЖЕСКИЙ",
   "couldNotShareCard": "Не удалось поделиться карточкой",
   "couldNotOpenLink": "Не удалось открыть эту ссылку",
   "couldNotCheckUsername": "Не удалось проверить это имя — попробуйте снова",

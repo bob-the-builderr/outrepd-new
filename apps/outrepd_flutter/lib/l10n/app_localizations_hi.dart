@@ -584,6 +584,12 @@ class LHi extends L {
   String get vsLiveFriendly => 'लाइव · दोस्ताना';
 
   @override
+  String get vsSavedRanked => 'सेव्ड सेट · रैंक्ड';
+
+  @override
+  String get vsRematchFriendly => 'दोबारा मुक़ाबला · दोस्ताना';
+
+  @override
   String get couldNotShareCard => 'यह कार्ड शेयर नहीं हो सका';
 
   @override

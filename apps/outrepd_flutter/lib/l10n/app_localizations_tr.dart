@@ -584,6 +584,12 @@ class LTr extends L {
   String get vsLiveFriendly => 'CANLI · DOSTLUK';
 
   @override
+  String get vsSavedRanked => 'KAYITLI SET · DERECELİ';
+
+  @override
+  String get vsRematchFriendly => 'RÖVANŞ · DOSTLUK';
+
+  @override
   String get couldNotShareCard => 'Bu kart paylaşılamadı';
 
   @override

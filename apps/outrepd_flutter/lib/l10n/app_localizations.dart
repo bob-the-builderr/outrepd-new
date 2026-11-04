@@ -1175,6 +1175,18 @@ abstract class L {
   /// **'LIVE · FRIENDLY'**
   String get vsLiveFriendly;
 
+  /// No description provided for @vsSavedRanked.
+  ///
+  /// In en, this message translates to:
+  /// **'SAVED SET · RANKED'**
+  String get vsSavedRanked;
+
+  /// No description provided for @vsRematchFriendly.
+  ///
+  /// In en, this message translates to:
+  /// **'REMATCH · FRIENDLY'**
+  String get vsRematchFriendly;
+
   /// No description provided for @couldNotShareCard.
   ///
   /// In en, this message translates to:
