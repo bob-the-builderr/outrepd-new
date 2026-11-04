@@ -147,10 +147,15 @@ const kReplantSeconds = 0.8;
 const kReplantSettle = 0.12;
 
 /// The hands are judged over this long, seconds, and count as planted while
-/// no more than [kHandsAwayShare] of it had a hand off its point.
+/// no more than [kHandsAwayShare] of it had a hand off its point — or no hand
+/// in sight at all.
 ///
 /// A share rather than every frame: at the bottom of a rep the tracker loses
 /// or swaps a hand for a moment, and that is not a hand leaving the floor.
+/// But a frame with neither hand seen is not evidence of planted hands
+/// (2026-11-04, from a phone: held in the hand and moved up and down, with
+/// no hands in the picture, it counted reps — the hands read as still on the
+/// floor because nothing said they had moved).
 const kHandsWindowSeconds = 0.4;
 const kHandsAwayShare = 0.35;
 
@@ -249,7 +254,7 @@ class _Hands {
       }
     }
 
-    _away.add((atMs, anyAway));
+    _away.add((atMs, anyAway || (left == null && right == null)));
     while (_away.isNotEmpty &&
         atMs - _away.first.$1 > kHandsWindowSeconds * 1000) {
       _away.removeFirst();
@@ -270,8 +275,10 @@ class _Hands {
   }
 
   /// The floor line: where the hands are planted, from points confirmed
-  /// recently. A hand out of sight for a while says nothing current about
-  /// where the floor is.
+  /// recently — or none. A hand out of sight for a while says nothing current
+  /// about where the floor is, and a point remembered from before is a place
+  /// on the screen, not on the floor: once the phone moves, the head moves
+  /// against it as it does in a push-up (2026-11-04).
   double? get floorY {
     final fresh = [
       for (final hand in _Hand.values)
@@ -280,16 +287,8 @@ class _Hands {
             _now - _lastOnPoint[hand]! <= kFloorFreshSeconds * 1000)
           _points[hand]!.$2,
     ];
-    if (fresh.isNotEmpty) return fresh.reduce((a, b) => a + b) / fresh.length;
-    _Hand? latest;
-    for (final hand in _Hand.values) {
-      if (_points[hand] == null) continue;
-      if (latest == null ||
-          (_lastOnPoint[hand] ?? -1) > (_lastOnPoint[latest] ?? -1)) {
-        latest = hand;
-      }
-    }
-    return latest == null ? null : _points[latest]!.$2;
+    if (fresh.isEmpty) return null;
+    return fresh.reduce((a, b) => a + b) / fresh.length;
   }
 }
 
