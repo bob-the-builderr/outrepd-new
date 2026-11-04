@@ -1,5 +1,2 @@
 Analyzing outrepd_flutter...                                    
-
-warning • Unused import: 'package:clock/clock.dart'. Try removing the import directive • lib/screens/match.dart:15:8 • unused_import
-
-1 issue found. (ran in 14.5s)
+No issues found! (ran in 13.2s)
