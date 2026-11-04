@@ -1,12 +1,12 @@
 # Where OUTREPD stands — 2026-11-04
 
-Read with  (how this machine works). Branch ,
-everything pushed to .
+Read with `CLAUDE.md` (how this machine works). Branch `camera-rep-counter`,
+everything pushed to `bob-the-builderr/outrepd-new`.
 
 ## Versions
 
 - **1.1.5** is live on Google Play and the App Store (since 2026-10-31).
-- **1.1.6** ( in  and ): built several
+- **1.1.6** (`1.1.6+1` in `pubspec.yaml` and `kAppVersion`): built several
   times, uploaded, not submitted for review. Android 290 / iOS 297 at
   72fd3c0 (2026-11-03). The user said the batch is done on 2026-11-04 and
   asked for new builds after a whole-app check; those builds carry
