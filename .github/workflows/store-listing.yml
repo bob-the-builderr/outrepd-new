@@ -7,6 +7,7 @@
 # Run by hand from the Actions tab:
 #   check           — what is live, and what would change
 #   push + version  — write it to that version (Prepare for Submission)
+#   create + version — make that version first if it is missing, then push
 
 name: App Store listing
 
@@ -14,7 +15,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: check or push
+        description: check, push or create
         required: true
         default: check
       version:

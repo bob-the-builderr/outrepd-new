@@ -5,6 +5,8 @@
 //
 //   node store/aso/push.mjs <path to .p8> check            what is live, what would change
 //   node store/aso/push.mjs <path to .p8> push <version>   write it to that version, then verify
+//   node store/aso/push.mjs <path to .p8> create <version> make that version first if it is
+//                                                          missing (the user's yes, 2026-11-04), then push
 //
 // Writes to the version only while App Store Connect lets it be edited
 // (Prepare for Submission). Name and subtitle go on the app info that
@@ -24,7 +26,7 @@ if (!keyPath || !keyId || !issuer) {
   console.log('no App Store Connect key; nothing done');
   process.exit(1);
 }
-if (mode === 'push' && !versionString) {
+if ((mode === 'push' || mode === 'create') && !versionString) {
   console.log('push needs the version to write to, like 1.1.3');
   process.exit(1);
 }
@@ -97,7 +99,21 @@ if (!app) {
 }
 console.log(`app ${app.attributes.name} (${app.id})`);
 
-const versions = await all(`/apps/${app.id}/appStoreVersions?limit=10`);
+let versions = await all(`/apps/${app.id}/appStoreVersions?limit=10`);
+
+// A new version, only when asked: App Store Connect then opens a new app
+// info for its name and subtitle, read below with the rest.
+if (mode === 'create' && !versions.some((v) => v.attributes.versionString === versionString)) {
+  await call('POST', '/appStoreVersions', {
+    data: {
+      type: 'appStoreVersions',
+      attributes: { platform: 'IOS', versionString },
+      relationships: { app: { data: { type: 'apps', id: app.id } } },
+    },
+  });
+  console.log(`made version ${versionString}`);
+  versions = await all(`/apps/${app.id}/appStoreVersions?limit=10`);
+}
 for (const v of versions.slice(0, 4)) {
   console.log(`version ${v.attributes.versionString}  ${v.attributes.appStoreState}`);
 }
