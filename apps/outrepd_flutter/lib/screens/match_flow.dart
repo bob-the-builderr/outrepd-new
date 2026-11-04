@@ -164,11 +164,6 @@ enum _Stage {
   /// but nobody has raced them yet.
   sent,
 
-  /// The ranked search found nobody live in fifteen seconds and a saved set
-  /// instead. Shown, not skipped past: racing a set is a different thing
-  /// from racing somebody now, and the lifter starts it themselves.
-  nobodyLive,
-
   /// Live: this set is in, and the other phone's is not yet.
   waitingResult,
 
@@ -267,8 +262,8 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   /// when this search is not looking for anybody live.
   DateTime? _liveSearchFrom;
 
-  /// Whether this search went looking for somebody live at all — and so
-  /// whether a saved set found after it is a fallback worth saying so about.
+  /// Whether this search went looking for somebody live at all: fifteen
+  /// seconds were spent, so what it found goes up without another wait.
   bool _searchedLive = false;
 
   /// Left while still looking, so the queue is left too.
@@ -500,12 +495,10 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     if (_realOpponent == null) {
       _bestBefore = demoProfile.bestSet;
       _theirReps = _bestBefore;
-    } else if (_searchedLive) {
-      // Nobody live, and a saved set instead: say so first.
-      setState(() => _stage = _Stage.nobodyLive);
-      return;
     }
-    // Fifteen seconds were already spent looking; no need to look longer.
+    // Fifteen seconds and nobody live: straight on to the saved set, its VS
+    // screen saying it is one (the user, 2026-11-04: the screen between,
+    // with its own button to race it, went).
     _goVersus(quick: _searchedLive);
   }
 
@@ -1139,13 +1132,6 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           live: _live,
         );
 
-      case _Stage.nobodyLive:
-        return _NobodyLiveView(
-          opponent: _opponent,
-          reps: _theirReps,
-          onRace: () => _goVersus(quick: true),
-        );
-
       case _Stage.waitingResult:
         return Center(
           child: Padding(
@@ -1332,15 +1318,13 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
 
     // Nothing was ever attempted: practice keeps no record to lose, a
     // challenge not yet sent has nobody on the other end to forfeit to, and
-    // neither does a search that has not found anybody. A saved set offered
-    // in place of a live match has not been agreed to yet, and a live match
-    // that has not started is called off for the other phone rather than
-    // lost: the round never began.
+    // neither does a search that has not found anybody. A live match that
+    // has not started is called off for the other phone rather than lost:
+    // the round never began.
     if (widget.practice ||
         widget.isChallenge ||
         _vsBest ||
-        _live != null ||
-        _stage == _Stage.nobodyLive) {
+        _live != null) {
       Navigator.of(context).pop();
       return;
     }
@@ -1670,138 +1654,6 @@ class _LiveSearchViewState extends State<_LiveSearchView> {
                 child: Text(
                   l.cancel,
                   style: TextStyle(color: context.colors.text, fontSize: 17),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-/// Fifteen seconds and nobody live: who the saved set belongs to and what
-/// they did, and a button to race it. The rank points are the same as a live
-/// match's, and the screen says so — a fallback that paid less would be a
-/// reason to cancel and search again.
-class _NobodyLiveView extends StatelessWidget {
-  const _NobodyLiveView({
-    required this.opponent,
-    required this.reps,
-    required this.onRace,
-  });
-
-  final Opponent opponent;
-  final int reps;
-  final VoidCallback onRace;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = L.of(context);
-
-    return Column(
-      children: [
-        const Spacer(flex: 2),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Text(
-            l.nobodyLiveTitle,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: context.colors.text,
-              fontSize: 24,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          l.nobodyLiveBody,
-          textAlign: TextAlign.center,
-          style: TextStyle(color: context.colors.muted, fontSize: 16),
-        ),
-        const SizedBox(height: 30),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          padding: const EdgeInsets.all(18),
-          decoration: BoxDecoration(
-            color: context.colors.surface,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: context.colors.border, width: 0.5),
-          ),
-          child: Row(
-            children: [
-              PlayerAvatar(
-                name: opponent.username,
-                tierIdx: opponent.tierIdx,
-                size: 60,
-                textColour: context.colors.rival,
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      opponent.username,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: context.colors.rival,
-                        fontSize: 19,
-                      ),
-                    ),
-                    Text(
-                      tierLabel(l, opponent.tierIdx, opponent.divIdx),
-                      style: TextStyle(
-                        color: context.colors.muted,
-                        fontSize: 14,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      l.didRepsIn(localNumber(context, reps)),
-                      style: TextStyle(
-                        color: context.colors.text,
-                        fontSize: 17,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 18),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Text(
-            l.sameRankPoints,
-            textAlign: TextAlign.center,
-            style: TextStyle(color: context.colors.muted, fontSize: 14),
-          ),
-        ),
-        const Spacer(flex: 3),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(18, 0, 18, 22),
-          child: Material(
-            color: context.colors.brand,
-            borderRadius: BorderRadius.circular(14),
-            child: InkWell(
-              key: const Key('raceSavedSet'),
-              onTap: onRace,
-              borderRadius: BorderRadius.circular(14),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 18),
-                child: Center(
-                  child: Text(
-                    l.raceIt,
-                    style: TextStyle(
-                      color: context.colors.background,
-                      fontSize: 19,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
                 ),
               ),
             ),

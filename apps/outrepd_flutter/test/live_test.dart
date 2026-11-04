@@ -312,7 +312,7 @@ void main() {
     await session.close();
   });
 
-  testWidgets('ranked looks for somebody live for fifteen seconds, then offers '
+  testWidgets('ranked looks for somebody live for fifteen seconds, then races '
       'a saved set', (tester) async {
     phone(tester);
     final fake = _Live(
@@ -332,22 +332,16 @@ void main() {
     expect(find.text('Looking for a live opponent'), findsOneWidget);
     expect(find.byKey(const Key('liveSearchRing')), findsOneWidget);
 
-    for (var i = 0; i < 18; i++) {
+    // Fifteen seconds of looking, the found seat's moment, and the VS screen
+    // is up — straight on, no screen between with its own button to race it
+    // (the user, 2026-11-04). It says the other side is a saved set, not
+    // somebody live (it went to the old versus view, 2026-11-04).
+    for (var i = 0; i < 16; i++) {
       await tester.pump(const Duration(seconds: 1));
     }
     expect(fake.liveSearches, greaterThan(5));
     expect(fake.leftQueue, isTrue);
-    expect(find.text("Nobody's live right now"), findsOneWidget);
-    expect(find.text('karim.reps'), findsOneWidget);
-    expect(find.text('Did 23 in 60 seconds'), findsOneWidget);
-    expect(find.text('Race it'), findsOneWidget);
-
-    // Raced, it gets the VS screen a live match gets — tagged as a saved
-    // set, not as somebody live (the user, 2026-11-04: it went straight to
-    // the old versus view).
-    await tester.tap(find.text('Race it'));
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 700));
+    expect(find.text('Race it'), findsNothing);
     expect(find.byType(VsScreen), findsOneWidget);
     expect(find.text('SAVED SET · RANKED'), findsOneWidget);
     expect(find.text('LIVE · RANKED'), findsNothing);
