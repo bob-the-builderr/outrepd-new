@@ -18,6 +18,20 @@ everything pushed to `bob-the-builderr/outrepd-new`.
   Pro is asked about the signed-in account before it is offered (a
   subscriber was shown the offer at sign-up); the onboarding climb page as
   the picked design B2 (two cards).
+- **After testing build 299 (2026-11-04):** the badge floats with its own
+  edge glow (pick C, no embers); the week tile and the bell refresh when
+  shown and on resume; your own name on Ranks opens your profile tab; Pro
+  plans retry on error 10; shared links carry www and your own opens your
+  profile; Adventure stars belong to the account; startup no longer waits
+  on the network. **Counter (950ac83):** a phone swung in the hand no
+  longer counts — a rep needs a hand seen on its point in 10% of its frames
+  and a hand back on its point is not re-planted where it passed through
+  (`tool/bench/` = a JS port that replays the 14 sets locally; khalifa-27-a
+  now 27 of 28, flagged unsure). **Weak networks (b6b434d):** requests give
+  up after 20 s, avatars decode at drawn size. **assetlinks.json** on
+  www.outrepd.com now has the Play app-signing key 9A:8D:ED:… as well
+  (website commit a0aaa74, user's yes) — re-test a shared link on a Play
+  install.
 - **Earlier on 2026-11-03:** rank cards wear their tier (lib/tier_card_frame.dart,
   Match tab and profile); the card a name opens is a player card with a
   Pro look; new share cards (match and profile, story and post, Pro look).
