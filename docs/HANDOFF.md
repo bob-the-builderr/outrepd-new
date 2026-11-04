@@ -1,23 +1,29 @@
-# Where OUTREPD stands — 2026-11-03 (end of day)
+# Where OUTREPD stands — 2026-11-04
 
-Read with `CLAUDE.md` (how this machine works). Branch `camera-rep-counter`,
-everything pushed to `bob-the-builderr/outrepd-new`; the last CI run
-(093b17d) was green on every job.
+Read with  (how this machine works). Branch ,
+everything pushed to .
 
 ## Versions
 
 - **1.1.5** is live on Google Play and the App Store (since 2026-10-31).
-- **1.1.6** (`1.1.6+1` in `pubspec.yaml` and `kAppVersion`) was built once:
-  Android 273 / iOS 278 at a56f2a3, uploaded, not submitted for review.
-  That build has the name fix (`rememberUsername`), last month's winners,
-  remove/crop profile photo, the rating system, the live-match HUD "B",
-  the simple depth bar, and LevelPlay ads with AdMob behind it.
-- **Since that build** (in no store build yet): the clean "direction B"
-  look on home, friends, settings, ranks and profile; Ranks simplified
-  (one strip Week · Month · Overall, Your Tier removed, "How points work"
-  sheet, podium in tier frames); Ranks among friends; the home tiles
-  growing with large text. The next build is one CI run with `[ios]` in
-  the commit message, **only when the user says the batch is done**.
+- **1.1.6** ( in  and ): built several
+  times, uploaded, not submitted for review. Android 290 / iOS 297 at
+  72fd3c0 (2026-11-03). The user said the batch is done on 2026-11-04 and
+  asked for new builds after a whole-app check; those builds carry
+  everything below.
+- **Since 72fd3c0:** the Match tab back to the big badge (beating, with
+  embers; it takes the height the rest leaves; Find a match above today's
+  goal; tier name at 20); the search is a face-off card whose seat flicks
+  through drawn faces and lands on the opponent (lib/screens/vs_search.dart);
+  Pro is asked about the signed-in account before it is offered (a
+  subscriber was shown the offer at sign-up); the onboarding climb page as
+  the picked design B2 (two cards).
+- **Earlier on 2026-11-03:** rank cards wear their tier (lib/tier_card_frame.dart,
+  Match tab and profile); the card a name opens is a player card with a
+  Pro look; new share cards (match and profile, story and post, Pro look).
+- Store screenshots for 1.1.6 are in Desktop/mokhtar/OUTREPD 1.1.6 store
+  screenshots; **07-home must be re-rendered** with the new Match tab
+  (scratchpad makeA.js; the chip there was moved to the goal card).
 
 ## Server
 
