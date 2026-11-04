@@ -1190,7 +1190,7 @@ class _TrainerScreenState extends State<TrainerScreen>
                         // has always sat: as near the edge as a thumb allows.
                         child: Transform.translate(
                           offset: const Offset(-3, 0),
-                          child: _DepthBar(
+                          child: DepthBar(
                             key: const Key('depthBar'),
                             progress: _progress ?? 0,
                             good: ready,
@@ -2071,8 +2071,10 @@ class _Fighter extends StatelessWidget {
 /// back up, and is the bar the counter counts off ([repFill]), so it never
 /// promises a rep the counter will not give, or asks for more than it does.
 /// It replaced a thin bar with two lines across it that had to be learned.
-class _DepthBar extends StatelessWidget {
-  const _DepthBar({
+/// The onboarding's three reps draw this same bar, so what is learnt there is
+/// the match (the user, 2026-11-04).
+class DepthBar extends StatelessWidget {
+  const DepthBar({
     super.key,
     required this.progress,
     required this.good,

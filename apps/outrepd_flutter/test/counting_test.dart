@@ -252,38 +252,19 @@ void main() {
     // Reported from a phone (2026-11-04): held in the hand and moved up and
     // down, nobody doing push-ups, it counted. Moving the phone moves the
     // whole picture, so the head travels down the frame and back as it does
-    // in a push-up.
-    BodyPose moved(BodyPose pose, double dy, {bool hands = true}) => BodyPose({
-      for (final MapEntry(:key, :value) in pose.points.entries)
-        if (hands || (key != Joint.leftWrist && key != Joint.rightWrist))
-          key: PosePoint(value.x, value.y + dy, value.confidence, value.z),
-    });
-    // From the top, down a quarter of the frame, and back: more than a full
-    // rep's travel of the head against where the hands were.
-    double swing(double f) => 0.25 * (1 - repShape(f));
+    // in a push-up (phoneSwings in synthetic_poses.dart).
 
     test('a phone moved up and down with no hands in sight is not a rep', () {
       // The hands had been seen planted, then left the picture: a point on
       // the screen remembered from before is not the floor.
-      final frames = timed([
-        for (var i = 0; i < 30; i++) pushUpPose(1),
-        for (var rep = 0; rep < 8; rep++)
-          for (var f = 0; f < 30; f++)
-            moved(pushUpPose(1), swing(f / 30), hands: false),
-      ]);
-      expect(countPushups(frames).reps, 0);
+      expect(countPushups(timed(phoneSwings(hands: false))).reps, 0);
     });
 
     test('a phone moved up and down with the whole body in sight is not a rep',
         () {
       // Everything moves together, hands too: they are off where they were
       // planted on every swing.
-      final frames = timed([
-        for (var i = 0; i < 30; i++) pushUpPose(1),
-        for (var rep = 0; rep < 8; rep++)
-          for (var f = 0; f < 30; f++) moved(pushUpPose(1), swing(f / 30)),
-      ]);
-      expect(countPushups(frames).reps, 0);
+      expect(countPushups(timed(phoneSwings())).reps, 0);
     });
 
     test('a hip nobody can see is no reason to refuse a rep', () {

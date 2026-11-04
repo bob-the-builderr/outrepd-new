@@ -19,6 +19,7 @@ import 'package:outrepd/l10n/app_localizations.dart';
 import 'package:outrepd/reps/pose.dart';
 import 'package:outrepd/reps/pose_source.dart';
 import 'package:outrepd/screens/onboarding.dart';
+import 'package:outrepd/screens/trainer.dart' show DepthBar;
 import 'package:outrepd/theme.dart';
 
 import 'support/synthetic_poses.dart';
@@ -389,11 +390,24 @@ void main() {
       await tester.pump(const Duration(milliseconds: kFrameMs));
     }
     expect(find.text('Get into position'), findsNothing);
-    // The rule, as the match's bar draws it.
+    // The match's own bar, and no rule about a gold line it does not have
+    // (the user, 2026-11-04: the same bar as the live match).
+    expect(find.byType(DepthBar), findsOneWidget);
     expect(
       find.textContaining('gold line', findRichText: true),
-      findsOneWidget,
+      findsNothing,
     );
+
+    // A phone swung in the hand counts nothing here either: the match's own
+    // tracker, so only push-ups with the hands on the floor (the user,
+    // 2026-11-04).
+    for (final pose in [...phoneSwings(hands: false), ...phoneSwings()]) {
+      sources.last.emit(pose);
+      await tester.pump(const Duration(milliseconds: kFrameMs));
+    }
+    expect(find.text('Calibrated.'), findsNothing);
+    expect(find.text('0'), findsOneWidget,
+        reason: 'a swing of the phone was counted as a push-up');
 
     // Exactly three, every one of them counted.
     for (final pose in pushUpSet(3, lead: 0)) {

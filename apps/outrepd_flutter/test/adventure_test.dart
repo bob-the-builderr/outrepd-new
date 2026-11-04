@@ -358,6 +358,50 @@ void main() {
       // Stopped on the winning rep, well inside the minute.
       expect(result!.durationMs, lessThan(10000));
     });
+
+    testWidgets('a phone swung in the hand lands no hit', (tester) async {
+      // The fight counts with the match's own tracker, so what it refuses a
+      // fight refuses too: a phone held in the hand and moved up and down,
+      // with the hands out of shot or the whole body in it, is no push-up
+      // (the user, 2026-11-04: "only real push-ups, hands on the floor").
+      tester.view.physicalSize = const Size(400, 880);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+
+      final source = _ScriptedSource();
+      addTearDown(source.dispose);
+
+      await tester.pumpWidget(_app(_Launcher(
+        screen: TrainerScreen(
+          autoStart: true,
+          forMatch: true,
+          limit: kFightLength,
+          game: FightGame(level: AdventureLevel.of(1), weapon: kWeapons.first),
+          poseSource: () => source,
+        ),
+        onResult: (_) {},
+      )));
+      await tester.pumpAndSettle();
+
+      for (var i = 0; i < 11000 ~/ kFrameMs; i++) {
+        source.emit(pushUpPose(1));
+        await tester.pump(const Duration(milliseconds: kFrameMs));
+      }
+      expect(find.byKey(const Key('fightCard')), findsOneWidget);
+      final full = tester.widget<Text>(find.byKey(const Key('fightHp'))).data;
+
+      for (final pose in [
+        ...phoneSwings(hands: false),
+        ...phoneSwings(),
+      ]) {
+        source.emit(pose);
+        await tester.pump(const Duration(milliseconds: kFrameMs));
+      }
+      expect(tester.widget<Text>(find.byKey(const Key('fightHp'))).data, full,
+          reason: 'a swing of the phone hit the monster');
+
+      await tester.pumpWidget(const SizedBox());
+    });
   });
 
   group('the screens around it', () {

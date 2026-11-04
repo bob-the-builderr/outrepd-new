@@ -43,6 +43,7 @@ import '../widgets.dart';
 import 'auth_entry.dart';
 import 'legal_line.dart';
 import 'shell.dart';
+import 'trainer.dart' show DepthBar;
 import 'welcome_inside.dart';
 
 /// Reps asked for before the app claims to know somebody's range.
@@ -2153,9 +2154,17 @@ class _CalibrationState extends State<_Calibration> {
   double _progress = 0;
   bool _done = false;
 
-  /// This rep has been down past the bottom line, so the top one is next —
-  /// the bar's lines change colour on it, as they do in a match.
+  /// This rep has been down past the bottom line, so the top one is next:
+  /// the bar goes green for the way back up, as it does in a match.
   bool _pastBottom = false;
+
+  /// The hands are on the floor, by the tracker's own test.
+  bool _planted = false;
+
+  /// The match screen's own "ready", for the bar and the skeleton: down in
+  /// position until the count starts, then the one thing the count itself
+  /// requires — the hands on the floor. Red on the bar when they are not.
+  bool get _ready => _counting ? _planted : downInPosition(_recent);
 
   /// The count has started. Until then the tracker only watches — as on the
   /// camera screen before its countdown ends — learning where the hands are
@@ -2203,7 +2212,10 @@ class _CalibrationState extends State<_Calibration> {
         Sounds.instance.play(Cue.go);
         _counting = true;
       }
-      setState(() => _progress = reading.progress ?? _progress);
+      setState(() {
+        _progress = reading.progress ?? _progress;
+        _planted = reading.planted;
+      });
       return;
     }
 
@@ -2217,6 +2229,7 @@ class _CalibrationState extends State<_Calibration> {
     setState(() {
       _progress = reading.progress ?? _progress;
       _pastBottom = reading.pastBottom;
+      _planted = reading.planted;
     });
 
     if (_reps >= kCalibrationReps) {
@@ -2238,12 +2251,11 @@ class _CalibrationState extends State<_Calibration> {
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
-    const dim = Color(0xB38F8880);
 
     return _CameraStage(
       poseSource: widget.poseSource,
       onPose: _onPose,
-      good: _counting,
+      good: _ready,
       builder: (context, _) => Stack(
         children: [
           Positioned(
@@ -2294,72 +2306,35 @@ class _CalibrationState extends State<_Calibration> {
                       ],
                     ],
                   ),
-                  const SizedBox(height: 10),
-                  // Until the count starts, the position; then the rule
-                  // itself, with the line it names in the line's own gold.
-                  if (!_counting)
+                  // Until the count starts, the position. Then nothing: the
+                  // bar and the cue under it say what to do, as in a match.
+                  if (!_counting) ...[
+                    const SizedBox(height: 10),
                     Text(
                       l.getIntoPosition,
                       textAlign: TextAlign.center,
                       style: TextStyle(color: context.colors.muted, fontSize: 15),
-                    )
-                  else
-                    _Rule(
-                      text: l.obCalibrationRule('\u0000'),
-                      gold: l.obGoldLine,
                     ),
+                  ],
                 ],
               ),
             ),
           ),
-          // The match screen's bar: down past the gold line, then back up
-          // past the top one, so the rule is learnt here, before a match.
-          PositionedDirectional(
-            start: 11,
-            top: 220,
-            child: SizedBox(
-              width: 16,
-              height: 250,
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Positioned.fill(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: context.colors.background.withValues(alpha: 0.45),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: FractionallySizedBox(
-                          // Drawn the camera screen's way, from the bottom of
-                          // a real rep.
-                          heightFactor: barFill(_progress),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              // The camera screen's own bar colour.
-                              color: context.colors.brand,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  _BarLine(
-                    at: kBottomShare,
-                    colour: _pastBottom ? AppColors.win : AppColors.gold,
-                    lit: !_pastBottom,
-                  ),
-                  _BarLine(
-                    at: kTopShare,
-                    colour: _pastBottom ? AppColors.gold : dim,
-                    lit: _pastBottom,
-                  ),
-                ],
+          // The match's own bar, where the match has it — once the count is
+          // on: empty at the bottom of a rep, full at the top, green on the
+          // way back up, red with a hand off the floor (the user, 2026-11-04:
+          // the same bar as the live match, counting only real push-ups).
+          if (_counting)
+            PositionedDirectional(
+              start: 8,
+              top: 220,
+              child: DepthBar(
+                key: const Key('depthBar'),
+                progress: _progress,
+                good: _ready,
+                pastBottom: _pastBottom,
               ),
             ),
-          ),
           // The cue to go down or up, once there is a count for it to serve.
           if (_counting)
           Positioned(
@@ -2384,66 +2359,6 @@ class _CalibrationState extends State<_Calibration> {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-/// The calibration's rule, with the name of the gold line in gold. [text] is
-/// the whole sentence with a NUL where the name goes, so each language keeps
-/// its own word order.
-class _Rule extends StatelessWidget {
-  const _Rule({required this.text, required this.gold});
-
-  final String text;
-  final String gold;
-
-  @override
-  Widget build(BuildContext context) {
-    final parts = text.split('\u0000');
-    return Text.rich(
-      TextSpan(
-        children: [
-          TextSpan(text: parts.first),
-          TextSpan(
-            text: gold,
-            style: const TextStyle(
-              color: AppColors.gold,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          if (parts.length > 1) TextSpan(text: parts.sublist(1).join()),
-        ],
-      ),
-      textAlign: TextAlign.center,
-      style: TextStyle(color: context.colors.text, fontSize: 15, height: 1.4),
-    );
-  }
-}
-
-/// One of the two lines across the calibration bar, as the match draws it:
-/// a little wider than the bar, ringed in the page's black.
-class _BarLine extends StatelessWidget {
-  const _BarLine({required this.at, required this.colour, required this.lit});
-
-  final double at;
-  final Color colour;
-  final bool lit;
-
-  @override
-  Widget build(BuildContext context) {
-    final thick = lit ? 6.0 : 5.0;
-    return Positioned(
-      left: -5,
-      right: -5,
-      bottom: barFill(at) * 250 - thick / 2,
-      height: thick,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: colour,
-          borderRadius: BorderRadius.circular(3),
-          border: Border.all(color: context.colors.background),
-        ),
       ),
     );
   }

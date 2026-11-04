@@ -198,3 +198,28 @@ List<BodyPose> pushUpSet(
 List<RecordedFrame> timed(List<BodyPose> poses, {int frameMs = kFrameMs}) => [
   for (var i = 0; i < poses.length; i++) RecordedFrame(i * frameMs, poses[i]),
 ];
+
+/// [pose] with the whole picture moved [dy] down the frame: a phone held in
+/// the hand and moved, which moves everything it sees (reported from a phone,
+/// 2026-11-04 — it counted). Without the wrists when [hands] is false: held
+/// up in front of somebody, their hands are out of shot.
+BodyPose phoneMoved(BodyPose pose, double dy, {bool hands = true}) => BodyPose({
+  for (final MapEntry(:key, :value) in pose.points.entries)
+    if (hands || (key != Joint.leftWrist && key != Joint.rightWrist))
+      key: PosePoint(value.x, value.y + dy, value.confidence, value.z),
+});
+
+/// How far a phone swung up and down has moved the picture at [f] of one
+/// swing: from the top, down a quarter of the frame, and back — more than a
+/// full rep's travel of the head against where the hands were.
+double phoneSwing(double f) => 0.25 * (1 - repShape(f));
+
+/// Eight swings of a phone held in the hand, one a second, after a second at
+/// the top of a push-up: everything moves, the wrists too unless [hands] is
+/// false. Not one of them is a rep.
+List<BodyPose> phoneSwings({bool hands = true}) => [
+  for (var i = 0; i < 30; i++) pushUpPose(1),
+  for (var swing = 0; swing < 8; swing++)
+    for (var f = 0; f < 30; f++)
+      phoneMoved(pushUpPose(1), phoneSwing(f / 30), hands: hands),
+];
