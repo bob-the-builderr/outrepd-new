@@ -378,6 +378,7 @@
   "tdesc_the_gym_knows": "친구 50명",
   "forfeitQ": "대결을 기권할까요?",
   "forfeitBody": "지금 나가면 LP를 잃습니다.",
+  "forfeitRematchBody": "패배로 기록돼요.",
   "forfeit": "기권",
   "getReady": "준비",
   "you": "나",

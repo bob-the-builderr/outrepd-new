@@ -378,6 +378,7 @@
   "tdesc_the_gym_knows": "Lima puluh teman",
   "forfeitQ": "Mundur dari duel?",
   "forfeitBody": "Anda akan kehilangan LP jika keluar sekarang.",
+  "forfeitRematchBody": "Ini dihitung sebagai kekalahan.",
   "forfeit": "Mundur",
   "getReady": "BERSIAP",
   "you": "ANDA",

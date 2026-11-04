@@ -1137,6 +1137,9 @@ class LEn extends L {
   String get forfeitBody => 'You will lose LP if you leave now.';
 
   @override
+  String get forfeitRematchBody => 'It counts as a loss.';
+
+  @override
   String get forfeit => 'Forfeit';
 
   @override

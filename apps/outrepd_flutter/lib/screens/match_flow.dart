@@ -1292,13 +1292,33 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     }
   }
 
+  /// Leaving costs nothing yet. Practice keeps no record to lose, a challenge
+  /// not yet sent has nobody on the other end to forfeit to, and neither does
+  /// a search that has not found anybody. A live match that has not started
+  /// is called off for the other phone rather than lost: the round never
+  /// began.
+  bool get _leavesFree =>
+      widget.practice || widget.isChallenge || _vsBest || _live != null;
+
   Future<void> _confirmQuit() async {
+    // Nothing to lose: straight out, with no warning about rank points that
+    // would not be lost (the user, 2026-11-04: cancelling a search still
+    // looking for somebody said leaving would cost LP).
+    if (_leavesFree) {
+      Navigator.of(context).pop();
+      return;
+    }
     final ok = await showDialog<bool>(
       context: context,
       builder: (c) => AlertDialog(
         backgroundColor: context.colors.surface,
         title: Text(L.of(context).forfeitQ),
-        content: Text(L.of(context).forfeitBody),
+        // A rematch moves no rank (duel.sql): it is a loss, and only that.
+        content: Text(
+          widget.isChallengeAccept
+              ? L.of(context).forfeitRematchBody
+              : L.of(context).forfeitBody,
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(c, false),
@@ -1315,19 +1335,6 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       ),
     );
     if (ok != true || !mounted) return;
-
-    // Nothing was ever attempted: practice keeps no record to lose, a
-    // challenge not yet sent has nobody on the other end to forfeit to, and
-    // neither does a search that has not found anybody. A live match that
-    // has not started is called off for the other phone rather than lost:
-    // the round never began.
-    if (widget.practice ||
-        widget.isChallenge ||
-        _vsBest ||
-        _live != null) {
-      Navigator.of(context).pop();
-      return;
-    }
     await _forfeit();
   }
 }

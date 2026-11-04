@@ -1141,6 +1141,9 @@ class LDe extends L {
   String get forfeitBody => 'Du verlierst LP, wenn du jetzt gehst.';
 
   @override
+  String get forfeitRematchBody => 'Das zählt als Niederlage.';
+
+  @override
   String get forfeit => 'Aufgeben';
 
   @override

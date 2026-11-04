@@ -1141,6 +1141,9 @@ class LIt extends L {
   String get forfeitBody => 'Perderai PL se esci adesso.';
 
   @override
+  String get forfeitRematchBody => 'Conta come una sconfitta.';
+
+  @override
   String get forfeit => 'Ritirati';
 
   @override

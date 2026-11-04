@@ -378,6 +378,7 @@
   "tdesc_the_gym_knows": "Fünfzig Freunde",
   "forfeitQ": "Duell aufgeben?",
   "forfeitBody": "Du verlierst LP, wenn du jetzt gehst.",
+  "forfeitRematchBody": "Das zählt als Niederlage.",
   "forfeit": "Aufgeben",
   "getReady": "BEREIT MACHEN",
   "you": "DU",

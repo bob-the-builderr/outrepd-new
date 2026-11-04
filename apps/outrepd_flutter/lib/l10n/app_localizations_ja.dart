@@ -1119,6 +1119,9 @@ class LJa extends L {
   String get forfeitBody => 'いま抜けると LP を失います。';
 
   @override
+  String get forfeitRematchBody => '負けとして記録されます。';
+
+  @override
   String get forfeit => '棄権';
 
   @override

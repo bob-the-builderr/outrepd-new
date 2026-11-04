@@ -378,6 +378,7 @@
   "tdesc_the_gym_knows": "フレンド50人",
   "forfeitQ": "マッチを棄権しますか？",
   "forfeitBody": "いま抜けると LP を失います。",
+  "forfeitRematchBody": "負けとして記録されます。",
   "forfeit": "棄権",
   "getReady": "準備",
   "you": "あなた",

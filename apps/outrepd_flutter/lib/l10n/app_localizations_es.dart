@@ -1142,6 +1142,9 @@ class LEs extends L {
   String get forfeitBody => 'Perderás PL si te vas ahora.';
 
   @override
+  String get forfeitRematchBody => 'Cuenta como una derrota.';
+
+  @override
   String get forfeit => 'Abandonar';
 
   @override

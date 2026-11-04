@@ -1120,6 +1120,9 @@ class LKo extends L {
   String get forfeitBody => '지금 나가면 LP를 잃습니다.';
 
   @override
+  String get forfeitRematchBody => '패배로 기록돼요.';
+
+  @override
   String get forfeit => '기권';
 
   @override

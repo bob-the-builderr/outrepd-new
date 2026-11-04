@@ -378,6 +378,7 @@
   "tdesc_the_gym_knows": "Elli arkadaş",
   "forfeitQ": "Maçtan çekilinsin mi?",
   "forfeitBody": "Şimdi çıkarsanız LP kaybedersiniz.",
+  "forfeitRematchBody": "Bu bir yenilgi sayılır.",
   "forfeit": "Çekil",
   "getReady": "HAZIR OL",
   "you": "SİZ",

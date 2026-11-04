@@ -2261,6 +2261,12 @@ abstract class L {
   /// **'You will lose LP if you leave now.'**
   String get forfeitBody;
 
+  /// No description provided for @forfeitRematchBody.
+  ///
+  /// In en, this message translates to:
+  /// **'It counts as a loss.'**
+  String get forfeitRematchBody;
+
   /// No description provided for @forfeit.
   ///
   /// In en, this message translates to:

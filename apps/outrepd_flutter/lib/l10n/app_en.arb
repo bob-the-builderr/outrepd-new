@@ -492,6 +492,7 @@
   "tdesc_the_gym_knows": "Fifty friends",
   "forfeitQ": "Forfeit match?",
   "forfeitBody": "You will lose LP if you leave now.",
+  "forfeitRematchBody": "It counts as a loss.",
   "forfeit": "Forfeit",
   "getReady": "GET READY",
   "you": "You",

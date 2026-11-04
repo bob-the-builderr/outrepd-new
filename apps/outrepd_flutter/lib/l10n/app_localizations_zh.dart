@@ -1117,6 +1117,9 @@ class LZh extends L {
   String get forfeitBody => '现在离开会扣除 LP。';
 
   @override
+  String get forfeitRematchBody => '这将算作一场失败。';
+
+  @override
   String get forfeit => '认输';
 
   @override

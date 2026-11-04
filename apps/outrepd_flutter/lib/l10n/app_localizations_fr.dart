@@ -1143,6 +1143,9 @@ class LFr extends L {
   String get forfeitBody => 'Vous perdrez des PL si vous partez maintenant.';
 
   @override
+  String get forfeitRematchBody => 'Cela compte comme une défaite.';
+
+  @override
   String get forfeit => 'Abandonner';
 
   @override

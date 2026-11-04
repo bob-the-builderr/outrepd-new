@@ -1136,6 +1136,9 @@ class LId extends L {
   String get forfeitBody => 'Anda akan kehilangan LP jika keluar sekarang.';
 
   @override
+  String get forfeitRematchBody => 'Ini dihitung sebagai kekalahan.';
+
+  @override
   String get forfeit => 'Mundur';
 
   @override

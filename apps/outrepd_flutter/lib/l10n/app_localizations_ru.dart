@@ -1138,6 +1138,9 @@ class LRu extends L {
   String get forfeitBody => 'Если выйти сейчас, вы потеряете очки.';
 
   @override
+  String get forfeitRematchBody => 'Это засчитается как поражение.';
+
+  @override
   String get forfeit => 'Сдаться';
 
   @override

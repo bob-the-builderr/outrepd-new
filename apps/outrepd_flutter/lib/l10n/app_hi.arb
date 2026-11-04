@@ -378,6 +378,7 @@
   "tdesc_the_gym_knows": "पचास दोस्त",
   "forfeitQ": "मैच छोड़ें?",
   "forfeitBody": "अभी निकले तो आप LP गँवा देंगे।",
+  "forfeitRematchBody": "इसे हार माना जाएगा।",
   "forfeit": "हार मानें",
   "getReady": "तैयार हो जाइए",
   "you": "आप",

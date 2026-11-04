@@ -378,6 +378,7 @@
   "tdesc_the_gym_knows": "五十位好友",
   "forfeitQ": "认输退出？",
   "forfeitBody": "现在离开会扣除 LP。",
+  "forfeitRematchBody": "这将算作一场失败。",
   "forfeit": "认输",
   "getReady": "准备",
   "you": "你",

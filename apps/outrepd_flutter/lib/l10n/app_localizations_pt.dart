@@ -1141,6 +1141,9 @@ class LPt extends L {
   String get forfeitBody => 'Vais perder PL se saíres agora.';
 
   @override
+  String get forfeitRematchBody => 'Conta como uma derrota.';
+
+  @override
   String get forfeit => 'Desistir';
 
   @override

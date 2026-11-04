@@ -1138,6 +1138,9 @@ class LHi extends L {
   String get forfeitBody => 'अभी निकले तो आप LP गँवा देंगे।';
 
   @override
+  String get forfeitRematchBody => 'इसे हार माना जाएगा।';
+
+  @override
   String get forfeit => 'हार मानें';
 
   @override

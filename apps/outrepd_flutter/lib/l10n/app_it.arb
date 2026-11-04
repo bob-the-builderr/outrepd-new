@@ -378,6 +378,7 @@
   "tdesc_the_gym_knows": "Cinquanta amici",
   "forfeitQ": "Ritirarsi dalla sfida?",
   "forfeitBody": "Perderai PL se esci adesso.",
+  "forfeitRematchBody": "Conta come una sconfitta.",
   "forfeit": "Ritirati",
   "getReady": "PRONTI",
   "you": "TU",

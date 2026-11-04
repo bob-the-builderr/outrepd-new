@@ -350,6 +350,43 @@ void main() {
     await tester.pumpWidget(const SizedBox());
   });
 
+  testWidgets('cancelling a search that has found nobody leaves at once, with '
+      'no word of losing LP', (tester) async {
+    // Reported from a phone (2026-11-04): Cancel while it was still looking
+    // put up "You will lose LP if you leave now". Nothing was found, so
+    // nothing can be lost.
+    phone(tester);
+    final fake = _Live();
+    backend = fake;
+    await tester.pumpWidget(
+      _app(
+        Builder(
+          builder: (context) => TextButton(
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(builder: (_) => const MatchFlowScreen()),
+            ),
+            child: const Text('go'),
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.text('go'));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 3));
+    expect(find.text('Looking for a live opponent'), findsOneWidget);
+
+    await tester.tap(find.text('Cancel'));
+    await tester.pump();
+    expect(find.text('Forfeit match?'), findsNothing);
+    await tester.pump(const Duration(milliseconds: 600));
+    expect(find.text('go'), findsOneWidget);
+    expect(fake.leftQueue, isTrue);
+
+    await tester.pumpWidget(const SizedBox());
+    // The search's own waits run out before the next test.
+    await tester.pump(const Duration(seconds: 2));
+  });
+
   testWidgets('the search says who else is around, and nothing when nobody is',
       (tester) async {
     phone(tester);

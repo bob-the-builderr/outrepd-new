@@ -378,6 +378,7 @@
   "tdesc_the_gym_knows": "Cinquante amis",
   "forfeitQ": "Abandonner le duel ?",
   "forfeitBody": "Vous perdrez des PL si vous partez maintenant.",
+  "forfeitRematchBody": "Cela compte comme une défaite.",
   "forfeit": "Abandonner",
   "getReady": "PRÊT",
   "you": "VOUS",

@@ -1136,6 +1136,9 @@ class LTr extends L {
   String get forfeitBody => 'Şimdi çıkarsanız LP kaybedersiniz.';
 
   @override
+  String get forfeitRematchBody => 'Bu bir yenilgi sayılır.';
+
+  @override
   String get forfeit => 'Çekil';
 
   @override
