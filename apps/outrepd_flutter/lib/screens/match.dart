@@ -10,6 +10,7 @@
 /// shape, name, bar, one line of numbers.
 library;
 
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:clock/clock.dart';
@@ -342,12 +343,20 @@ class _TopRowState extends State<_TopRow> {
     // A push that lands with the app open is not drawn by Android; the dot
     // is how it gets noticed.
     Push.instance.arrived.addListener(_countUnread);
+    // And whenever the tab comes into view, or the app back from the
+    // background: the count was asked for once, when the tab was built.
+    shownTab.addListener(_onShowing);
   }
 
   @override
   void dispose() {
     Push.instance.arrived.removeListener(_countUnread);
+    shownTab.removeListener(_onShowing);
     super.dispose();
+  }
+
+  void _onShowing() {
+    if (shownTab.value == AppShell.matchTabIndex) _countUnread();
   }
 
   Future<void> _countUnread() async {
@@ -990,14 +999,30 @@ class _WeekRaceCard extends StatefulWidget {
 }
 
 class _WeekRaceCardState extends State<_WeekRaceCard> {
-  MonthPlace? _mine;
-  List<MonthRow> _top = const [];
+  // Kept between cards, so one built again (a sign-in, a new shell) shows the
+  // last place at once while it asks for the current one.
+  static MonthPlace? _lastMine;
+  static List<MonthRow> _lastTop = const [];
+
+  MonthPlace? _mine = _lastMine;
+  List<MonthRow> _top = _lastTop;
+  DateTime? _fetchedAt;
+  bool _loading = false;
+  Timer? _tick;
 
   @override
   void initState() {
     super.initState();
     if (backend.available) {
       _load();
+      // It was asked for once, when the tab was first built, and the tab
+      // stays built: the place said the same after every duel until the app
+      // was opened again (the user, 2026-11-04). Now again whenever the tab
+      // comes into view, after a duel of this account's own, and every
+      // minute while it is on screen — other people's duels move it too.
+      shownTab.addListener(_onShowing);
+      Career.instance.addListener(_onOwnResult);
+      _tick = Timer.periodic(const Duration(minutes: 1), (_) => _refresh());
       return;
     }
     // The preview and the screenshots, which have no server: the sample
@@ -1027,10 +1052,50 @@ class _WeekRaceCardState extends State<_WeekRaceCard> {
     ];
   }
 
+  @override
+  void dispose() {
+    _tick?.cancel();
+    shownTab.removeListener(_onShowing);
+    Career.instance.removeListener(_onOwnResult);
+    super.dispose();
+  }
+
+  bool get _showing => shownTab.value == AppShell.matchTabIndex;
+
+  void _onShowing() {
+    if (_showing) _refresh();
+  }
+
+  /// A duel of this account's own just moved its place: asked for now, not
+  /// when the last answer is a while old. The duel's own screen may still be
+  /// on top; the card is ready when it is closed.
+  void _onOwnResult() {
+    _fetchedAt = null;
+    _refresh(evenUnseen: true);
+  }
+
+  /// Asks again unless the answer in hand is a few seconds old — or the app
+  /// is in the background, or the tab is not the one in view.
+  void _refresh({bool evenUnseen = false}) {
+    if (!mounted || _loading) return;
+    if (!evenUnseen && !_showing) return;
+    final state = WidgetsBinding.instance.lifecycleState;
+    if (state != null && state != AppLifecycleState.resumed) return;
+    final at = _fetchedAt;
+    if (at != null && clock.now().difference(at) < const Duration(seconds: 20)) {
+      return;
+    }
+    _load();
+  }
+
   Future<void> _load() async {
+    _loading = true;
     try {
       final mine = await backend.myWeekPlace();
       final top = await backend.weekBoard(limit: 3);
+      _lastMine = mine;
+      _lastTop = top;
+      _fetchedAt = clock.now();
       if (mounted) {
         setState(() {
           _mine = mine;
@@ -1038,8 +1103,10 @@ class _WeekRaceCardState extends State<_WeekRaceCard> {
         });
       }
     } on Object catch (error) {
-      // No card rather than a wrong one.
+      // The last place rather than a wrong one, or no card at all.
       debugPrint('Could not read the week: $error');
+    } finally {
+      _loading = false;
     }
   }
 

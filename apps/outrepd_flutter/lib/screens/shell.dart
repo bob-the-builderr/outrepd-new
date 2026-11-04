@@ -57,6 +57,15 @@ class AppShell extends StatefulWidget {
   static void goToRanks(BuildContext context) =>
       context.findAncestorStateOfType<_AppShellState>()?._select(ranksTabIndex);
 
+  /// Switch to the Profile tab — this account's own name tapped on a board.
+  /// False where there is no shell to switch, as on a screen opened from a
+  /// link before the app's own.
+  static bool goToProfile(BuildContext context) {
+    final shell = context.findAncestorStateOfType<_AppShellState>();
+    shell?._select(profileTabIndex);
+    return shell != null;
+  }
+
   /// Switch to the Friends tab with the waiting requests open — a friend
   /// request tapped in the notifications.
   static void goToFriendRequests(BuildContext context) {
@@ -86,9 +95,22 @@ class _AppShellState extends State<AppShell> {
   /// and never tells the bar when an answer changes the count.
   int _friendRequests = 0;
 
+  /// Back from the background, whatever is in view is asked for again, as
+  /// though it had just been opened: a board left open overnight still said
+  /// yesterday's places until somebody switched tabs (the user, 2026-11-04).
+  late final AppLifecycleListener _life;
+
+  void _onResume() {
+    _countFriendRequests();
+    final tab = shownTab.value;
+    shownTab.value = null;
+    shownTab.value = tab;
+  }
+
   @override
   void initState() {
     super.initState();
+    _life = AppLifecycleListener(onResume: _onResume);
     shownTab.value = _index;
     _countFriendRequests();
     // Every way into the app lands here — the end of onboarding, a returning
@@ -113,6 +135,7 @@ class _AppShellState extends State<AppShell> {
 
   @override
   void dispose() {
+    _life.dispose();
     shownTab.value = null;
     super.dispose();
   }
