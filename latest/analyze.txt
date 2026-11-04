@@ -1,2 +1,6 @@
 Analyzing outrepd_flutter...                                    
-No issues found! (ran in 13.8s)
+
+  error • Expected to find ',' • lib/screens/share_card.dart:285:15 • expected_token
+  error • Too many positional arguments: 0 expected, but 1 found. Try removing the extra positional arguments, or specifying the name for named arguments • lib/screens/share_card.dart:285:15 • extra_positional_arguments_could_be_named
+
+2 issues found. (ran in 19.3s)
