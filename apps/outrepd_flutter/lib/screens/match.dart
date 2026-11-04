@@ -561,11 +561,11 @@ class _Rank extends StatelessWidget {
 /// is empty, and cut away on this tab so the words sit right under it.
 const _badgeCrop = 0.72;
 
-/// The badge on this tab, alive (the user's pick, 2026-11-03): it beats like
-/// a heart — twice, then rests — with a ring of light going out on each beat
-/// and small embers and sparks drifting up off it in its own metal. Still,
-/// lit and without embers, where the phone asks for less motion, offline,
-/// and under tests.
+/// The badge on this tab, alive (the user's pick C, 2026-11-04): it floats,
+/// slowly — up a little and back over nine seconds — lit only by its own
+/// glow off its edges. Nothing round behind it, no beat, no flashes and
+/// nothing flying off it: the user found those ugly. Still where the phone
+/// asks for less motion, offline, and under tests.
 class _LiveBadge extends StatefulWidget {
   const _LiveBadge({
     required this.tierIdx,
@@ -585,7 +585,7 @@ class _LiveBadgeState extends State<_LiveBadge>
     with SingleTickerProviderStateMixin {
   late final _controller = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 1800),
+    duration: const Duration(milliseconds: 4500),
   );
 
   @override
@@ -602,7 +602,7 @@ class _LiveBadgeState extends State<_LiveBadge>
 
   void _run() {
     if (widget.alive && loopsAllowed(context)) {
-      if (!_controller.isAnimating) _controller.repeat();
+      if (!_controller.isAnimating) _controller.repeat(reverse: true);
     } else {
       _controller.stop();
     }
@@ -614,20 +614,9 @@ class _LiveBadgeState extends State<_LiveBadge>
     super.dispose();
   }
 
-  /// The heartbeat: a strong beat, a softer one after it, then rest.
-  static double _beat(double t) {
-    double bump(double at, double width) {
-      final d = (t - at).abs() / width;
-      return d >= 1 ? 0 : (1 + math.cos(d * math.pi)) / 2;
-    }
-
-    return math.max(bump(0.12, 0.12), 0.6 * bump(0.36, 0.12));
-  }
-
   @override
   Widget build(BuildContext context) {
     final size = widget.size;
-    final metal = tierMetal(widget.tierIdx);
     final badge = SizedBox(
       width: size,
       height: size * _badgeCrop,
@@ -642,152 +631,16 @@ class _LiveBadgeState extends State<_LiveBadge>
     return AnimatedBuilder(
       animation: _controller,
       child: badge,
-      builder: (context, child) {
-        final moving = _controller.isAnimating;
-        final beat = moving ? _beat(_controller.value) : 0.0;
-        final seconds = moving
-            ? (_controller.lastElapsedDuration?.inMicroseconds ?? 0) / 1e6
-            : 0.0;
-        return CustomPaint(
-          painter: _EmberPainter(
-            light: metal.light,
-            mid: metal.mid,
-            size: size,
-            beat: beat,
-            ring: moving ? _controller.value : null,
-            seconds: moving ? seconds : null,
-          ),
-          child: Transform.scale(scale: 1 + 0.055 * beat, child: child),
-        );
-      },
+      builder: (context, child) => Transform.translate(
+        // A few points at most: three hundredths of the badge.
+        offset: Offset(
+          0,
+          -size * 0.03 * Curves.easeInOut.transform(_controller.value),
+        ),
+        child: child,
+      ),
     );
   }
-}
-
-/// Behind the badge: its light, swelling with each beat; the ring going out
-/// from it; and the embers — small glowing dots and four-pointed sparks
-/// that rise off it, drift outwards and fade, each on its own clock so they
-/// never move together.
-class _EmberPainter extends CustomPainter {
-  const _EmberPainter({
-    required this.light,
-    required this.mid,
-    required this.size,
-    required this.beat,
-    required this.ring,
-    required this.seconds,
-  });
-
-  final Color light;
-  final Color mid;
-
-  /// The badge's size.
-  final double size;
-
-  /// 0 to 1, how far into a beat.
-  final double beat;
-
-  /// Where in the beat's cycle the ring is, or null when still.
-  final double? ring;
-
-  /// Time since the badge came alive, for the embers, or null when still.
-  final double? seconds;
-
-  static const _embers = 18;
-
-  @override
-  void paint(Canvas canvas, Size box) {
-    final centre = Offset(box.width / 2, box.height * 0.5);
-
-    // The light behind it.
-    canvas.drawCircle(
-      centre,
-      size * 0.55,
-      Paint()
-        ..shader = RadialGradient(
-          colors: [
-            mid.withValues(alpha: 0.22 + 0.3 * beat),
-            mid.withValues(alpha: 0),
-          ],
-        ).createShader(Rect.fromCircle(center: centre, radius: size * 0.55)),
-    );
-
-    // The ring, going out from each beat.
-    if (ring case final r?) {
-      final out = ((r - 0.08) / 0.72).clamp(0.0, 1.0);
-      if (out > 0 && out < 1) {
-        canvas.drawCircle(
-          centre,
-          size * (0.3 + 0.42 * out),
-          Paint()
-            ..style = PaintingStyle.stroke
-            ..strokeWidth = 2
-            ..color = light.withValues(alpha: 0.5 * (1 - out)),
-        );
-      }
-    }
-
-    // The embers.
-    final time = seconds;
-    if (time == null) return;
-    const cream = Color(0xFFFFF0C2);
-    for (var i = 0; i < _embers; i++) {
-      // Fixed for each ember, so it keeps its own path and pace.
-      double seed(double k) => (i * k) % 1;
-      final life = 2.2 + 1.6 * seed(0.371);
-      final u = (time / life + seed(0.613)) % 1;
-      final angle = -math.pi / 2 + (seed(0.293) - 0.5) * math.pi * 1.6;
-      final reach = size * (0.38 + 0.4 * seed(0.177));
-      final start = centre +
-          Offset(math.cos(angle) * size * 0.28, math.sin(angle) * size * 0.16);
-      final at = start +
-          Offset(
-            math.cos(angle) * reach * 0.7 * u,
-            (math.sin(angle) * reach - size * 0.22) * u,
-          );
-      final fade = u < 0.12 ? u / 0.12 : (1 - u) / 0.88;
-      final colour = [light, mid, cream][i % 3].withValues(alpha: fade);
-      final r = (1.2 + 1.8 * seed(0.719)) * (1 - 0.6 * u);
-      if (i % 5 == 0) {
-        _spark(canvas, at, r * 2.6, colour);
-      } else {
-        canvas.drawCircle(
-          at,
-          r * 2.4,
-          Paint()
-            ..color = colour.withValues(alpha: fade * 0.35)
-            ..maskFilter = MaskFilter.blur(BlurStyle.normal, r * 1.6),
-        );
-        canvas.drawCircle(at, r, Paint()..color = colour);
-      }
-    }
-  }
-
-  /// A four-pointed spark.
-  void _spark(Canvas canvas, Offset at, double r, Color colour) {
-    final path = Path()
-      ..moveTo(at.dx, at.dy - r)
-      ..quadraticBezierTo(at.dx, at.dy, at.dx + r, at.dy)
-      ..quadraticBezierTo(at.dx, at.dy, at.dx, at.dy + r)
-      ..quadraticBezierTo(at.dx, at.dy, at.dx - r, at.dy)
-      ..quadraticBezierTo(at.dx, at.dy, at.dx, at.dy - r)
-      ..close();
-    canvas.drawPath(
-      path,
-      Paint()
-        ..color = colour.withValues(alpha: colour.a * 0.5)
-        ..maskFilter = MaskFilter.blur(BlurStyle.normal, r * 0.4),
-    );
-    canvas.drawPath(path, Paint()..color = colour);
-  }
-
-  @override
-  bool shouldRepaint(_EmberPainter old) =>
-      old.beat != beat ||
-      old.ring != ring ||
-      old.seconds != seconds ||
-      old.size != size ||
-      old.light != light;
 }
 
 // ──────────────────────────────── actions ────────────────────────────────────
