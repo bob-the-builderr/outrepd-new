@@ -38,6 +38,7 @@ import '../reps/pushup_counter.dart';
 import '../reps/skeleton.dart';
 import '../sounds.dart';
 import '../theme.dart';
+import '../tier_badge.dart';
 import '../widgets.dart';
 import 'auth_entry.dart';
 import 'legal_line.dart';
@@ -627,7 +628,7 @@ class _Idea extends StatelessWidget {
                 title: l.obClimbTitle,
                 body: l.obClimbBody,
                 // The two cards of the picked design (B2, 2026-11-03): the
-                // seven tiers, Iron to Master, each a step higher; and what a
+                // seven tiers' badges, Iron to Master, each a step higher; and what a
                 // match does to the rating. Every number is the ranking
                 // code's own. Scaled down, not cut, where the page is short.
                 picture: LayoutBuilder(
@@ -655,22 +656,21 @@ class _Idea extends StatelessWidget {
                                         children: [
                                           SizedBox(
                                             height:
-                                                (kTiers.length - 1 - tier) * 6.0,
+                                                (kTiers.length - 1 - tier) * 9.0,
                                           ),
-                                          Container(
-                                            width: 34,
-                                            height: 34,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: kTiers[tier].color,
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: kTiers[tier].color
-                                                      .withValues(alpha: 0.5),
-                                                  blurRadius: 14,
-                                                  spreadRadius: -2,
-                                                ),
-                                              ],
+                                          // The tier's own badge (the user's
+                                          // pick, 2026-11-04), wider than its
+                                          // column so the wings overlap the
+                                          // next one's, as on the ladder.
+                                          SizedBox(
+                                            height: 56,
+                                            child: OverflowBox(
+                                              maxWidth: 64,
+                                              maxHeight: 64,
+                                              child: TierBadge(
+                                                tierIndex: tier,
+                                                size: 64,
+                                              ),
                                             ),
                                           ),
                                           const SizedBox(height: 6),
