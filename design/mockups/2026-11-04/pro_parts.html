@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<title>Pro parts</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700;800;900&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #0B0A09; color: #F5EFE4; font-family: 'Noto Sans', sans-serif; }
+  .wrap { padding: 22px 26px 30px; width: 1260px; }
+  .cap { direction: rtl; font-family: 'Noto Sans Arabic', 'Noto Sans', sans-serif; margin-bottom: 8px; }
+  .cap b { display: block; font-size: 24px; margin-bottom: 4px; }
+  .cap p { margin: 0; color: #8F8880; font-size: 15px; line-height: 1.7; }
+  .sec { margin-top: 18px; }
+  .sec h2 { direction: rtl; font-family: 'Noto Sans Arabic', sans-serif; font-size: 19px; margin: 0 0 8px; color: #E8DCC8; }
+  .sec h2 span { color: #8F8880; font-size: 14px; font-weight: 400; margin-right: 8px; }
+  .row { display: flex; gap: 14px; }
+  .tile { width: 290px; background: #161412; border: 1px solid #2A2724; border-radius: 16px; padding: 10px; display: flex; gap: 10px; align-items: center; }
+  .tile .pic { width: 120px; height: 120px; border-radius: 14px; overflow: hidden; flex: none; background: #201D1A; }
+  .tile .pic svg { width: 120px; height: 120px; display: block; }
+  .tile.wide { width: 290px; flex-direction: column; align-items: stretch; }
+  .tile.wide .pic { width: 100%; height: 120px; }
+  .tile.wide .pic svg { width: 100%; height: 120px; }
+  .code { font-weight: 900; font-size: 22px; color: #F2C14E; }
+  .name { font-size: 15px; font-weight: 700; }
+  .pro { display: inline-block; font-size: 10px; font-weight: 900; letter-spacing: .5px; color: #121110; background: linear-gradient(90deg,#F2C14E,#FFE08A); border-radius: 6px; padding: 1px 6px; margin-top: 4px; }
+  .wide .meta { display: flex; gap: 10px; align-items: baseline; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="cap"><b>أشكال Pro مقترحة للأفاتار والبروفايل</b>
+  <p>4 في كل قسم، كل واحد ليه كود. راجعتهم على الـ197 قطعة اللي في التطبيق: ولا واحد فيهم نسخة بلون تاني من قطعة ببلاش، ولا قريب من قطعة بتتكسب في الأدفنشر (التاج والهالة والنار والمجرة ... فضلوا مكافآت للعب). اللي فيه نار أو نيون أو نجوم هيتحرك جوه التطبيق.</p></div>
+  <div id="out"></div>
+</div>
+<script src="lifterA.js"></script>
+<script>
+let gid = 0;
+const ID = () => 'p' + (++gid);
+const lin = (id, stops, x2 = 0, y2 = 1) => `<linearGradient id="${id}" x1="0" y1="0" x2="${x2}" y2="${y2}">${stops.map((c, i) => `<stop offset="${i / (stops.length - 1)}" stop-color="${c}"/>`).join('')}</linearGradient>`;
+const glow = (id, r = 3) => `<filter id="${id}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="${r}"/></filter>`;
+const inked = (d, fill, w = 3.2) => `<path d="${d}" fill="${fill}" stroke="${INK}" stroke-width="${w}" stroke-linejoin="round"/>`;
+const stars = (pts, r = 1.4, col = '#fff') => pts.map(([x, y, s]) => `<circle cx="${x}" cy="${y}" r="${(s || 1) * r}" fill="${col}"/>`).join('');
+const spark = (x, y, s = 1, col = '#fff') => `<path d="M${x} ${y - 5 * s} L${x + 1.3 * s} ${y - 1.3 * s} L${x + 5 * s} ${y} L${x + 1.3 * s} ${y + 1.3 * s} L${x} ${y + 5 * s} L${x - 1.3 * s} ${y + 1.3 * s} L${x - 5 * s} ${y} L${x - 1.3 * s} ${y - 1.3 * s} Z" fill="${col}"/>`;
+
+// A lifter, lifterA.js's way, with any part replaced.
+function compose(c, o = {}, view = 'full') {
+  const id = 'A' + (++uid);
+  const sk = CAT.skin[c.skin];
+  const hc = CAT.hairC[c.hairC];
+  const tc = CAT.topC[c.topC];
+  const h = hair(id, c.hair, hc);
+  let s = o.defs || '';
+  s += o.bg ?? background(id, c.bg, 0);
+  s += o.top ?? topWear(id, c.top, tc, sk);
+  s += cel(id, 'neck', P.neck, shade(sk.c, -0.06)) + ink(P.neckLines, 2.6);
+  s += o.hairBack ?? h.back;
+  s += cel(id, 'earL', P.earL, sk.c) + cel(id, 'earR', P.earR, sk.c);
+  s += cel(id, 'head', P.head, sk.c) + ink(P.jaw, 2.4, 0.6);
+  s += o.marks ?? '';
+  s += (o.brows ?? brows(c.brows, hc)) + (o.eyes ?? eyes(id, c.eyes, sk));
+  s += ink('M100 82 L95 98 C98 101 103 101 106 98', 2.4, 1);
+  const b = o.beard ?? beard(id, c.beard, hc);
+  s += b + (o.mouth ?? mouth(c.mouth));
+  s += o.hairFront ?? h.front;
+  s += o.gear ?? '';
+  s += o.over ?? '';
+  const vb = view === 'head' ? '30 -6 140 140' : view === 'face' ? '56 56 88 88' : '0 0 200 200';
+  return `<svg viewBox="${vb}" xmlns="http://www.w3.org/2000/svg">${s}</svg>`;
+}
+const base = { skin: 5, hair: 2, hairC: 0, eyes: 0, brows: 0, mouth: 0, beard: 0, marks: 0, top: 3, topC: 0, gear: 0, bg: 3 };
+const dark = { ...base, skin: 7 };
+const light = { ...base, skin: 1 };
+const CREWD = 'M64 64 C62 38 80 26 100 26 C120 26 138 38 136 64 C130 50 118 44 100 46 C82 44 70 50 64 64 Z';
+const FULLB = 'M66 80 C66 108 80 126 100 128 C120 126 134 108 134 80 C130 96 122 104 112 104 C106 100 94 100 88 104 C78 104 70 96 66 80 Z';
+const FIRE = ['#FFE45C', '#FF9A1F', '#E8401C'];
+
+const sections = [];
+const add = (title, sub, items, opts = {}) => sections.push({ title, sub, items, opts });
+
+// ── hair ──
+function bumpy(cx, cy, rx, ry, a0, a1, n, out) {
+  let d = '';
+  for (let i = 0; i <= n; i++) {
+    const a = a0 + (a1 - a0) * i / n;
+    const x = (cx + rx * Math.cos(a)).toFixed(1), y = (cy + ry * Math.sin(a)).toFixed(1);
+    if (i === 0) { d += `M${x} ${y}`; continue; }
+    const am = a0 + (a1 - a0) * (i - 0.5) / n;
+    d += ` Q${(cx + (rx + out) * Math.cos(am)).toFixed(1)} ${(cy + (ry + out) * Math.sin(am)).toFixed(1)} ${x} ${y}`;
+  }
+  return d;
+}
+add('الشعر', 'H — مفيش ولا شعر Pro دلوقتي', [
+  ['H1', 'Flame', () => { const g = ID(); return compose(base, { defs: `<defs>${lin(g, FIRE.slice().reverse())}</defs>`,
+    hairFront: inked('M64 64 C58 46 64 32 72 22 C72 34 78 38 82 30 C82 16 90 8 98 -2 C96 14 104 22 108 10 C114 20 112 30 118 26 C122 34 128 30 130 20 C140 34 142 50 136 64 C128 50 116 44 100 46 C84 44 72 50 64 64 Z', `url(#${g})`) +
+      ink('M84 40 C88 30 92 26 96 18 M108 40 C110 32 116 30 118 24', 2, 0.5, '#FFF6C8') }, 'head'); }],
+  ['H2', 'LED undercut', () => { const f = ID(); const led = 'M64 56 L76 48 M64 63 L77 55 M65 70 L77 62 M136 56 L124 48 M136 63 L123 55 M135 70 L123 62'; return compose(light, { defs: `<defs>${glow(f, 2.4)}</defs>`,
+    hairFront: flat('M66 64 C64 40 80 30 100 30 C120 30 136 40 134 64 C128 48 116 42 100 42 C84 42 72 48 66 64 Z', '#141010', 0.3) +
+      inked('M76 50 C70 28 86 12 106 14 C126 16 134 30 128 46 C120 38 106 34 94 36 C86 38 80 42 76 50 Z', '#1A1414') + ink('M90 22 C100 18 112 18 120 24', 2, 0.5, '#fff') +
+      `<g filter="url(#${f})">${ink(led, 4, 1, '#3DE0FF')}</g>` + ink(led, 1.8, 1, '#E6FDFF') }, 'head'); }],
+  ['H3', 'Galaxy afro', () => { const g = ID(); return compose(dark, { defs: `<defs><radialGradient id="${g}" cx=".45" cy=".35" r=".75"><stop offset="0" stop-color="#9A6BFF"/><stop offset=".55" stop-color="#3A1E8C"/><stop offset="1" stop-color="#140B36"/></radialGradient></defs>`,
+    hairFront: inked(bumpy(100, 44, 52, 44, Math.PI * 0.93, Math.PI * 2.07, 11, 7) + ' L149 70 C140 54 124 46 100 46 C76 46 60 54 51 70 Z', `url(#${g})`) +
+      stars([[70, 30], [84, 14, 1.3], [100, 24], [118, 12], [132, 30, 1.2], [92, 36, 0.8], [112, 32, 0.8], [62, 50], [140, 52]], 1.3) + spark(106, 18, 0.9, '#FFE9A8') + spark(76, 40, 0.6) }, 'head'); }],
+  ['H4', 'Lightning mohawk', () => { const g = ID(), f = ID(); return compose(base, { defs: `<defs>${lin(g, ['#E6FDFF', '#3DE0FF', '#2A6BFF'])}${glow(f, 4)}</defs>`,
+    hairFront: flat('M66 64 C64 40 80 30 100 30 C120 30 136 40 134 64 C128 48 116 42 100 42 C84 42 72 48 66 64 Z', '#141010', 0.5) +
+      `<path d="M88 48 L74 16 L94 22 L82 -10 L124 26 L104 21 L114 48 Z" fill="#3DE0FF" filter="url(#${f})" opacity=".85"/>` +
+      inked('M88 48 L74 16 L94 22 L82 -10 L124 26 L104 21 L114 48 C106 45 94 45 88 48 Z', `url(#${g})`, 3) + ink('M84 18 L92 22 M88 0 L100 16', 1.6, 0.9, '#fff') }, 'head'); }],
+]);
+
+// ── hair colour ──
+const colourHair = (stops, extra = '', who = base, dir = [1, 1]) => () => { const g = ID(); return compose(who, { defs: `<defs>${lin(g, stops, dir[0], dir[1])}</defs>`,
+  hairFront: inked(CREWD, `url(#${g})`) + extra, brows: `<path d="M74 66 L96 72 L96 78 L75 73 Z M126 66 L104 72 L104 78 L125 73 Z" fill="url(#${g})" stroke="${INK}" stroke-width="2.2"/>` }, 'head'); };
+add('لون الشعر', 'C — يتلبس على أي قصة. مفيش لون Pro دلوقتي', [
+  ['C1', 'Chrome', colourHair(['#2E3842', '#FFFFFF', '#6E7A86', '#F4F8FB', '#3E4A56'], ink('M74 42 C86 32 106 30 122 36', 3.4, 0.95, '#fff') + spark(118, 34, 0.8))],
+  ['C2', 'Gold leaf', colourHair(['#7A4E06', '#FFEFA8', '#D3961A', '#FFF8D6', '#9C6408'], ink('M74 42 C86 32 106 30 122 36', 3.2, 0.9, '#FFFBE6') + spark(84, 36, 0.8, '#FFFBE6'), dark)],
+  ['C3', 'Neon fade', colourHair(['#FF4FD8', '#A65CFF', '#4FD8FF'], '', base, [1, 0.5])],
+  ['C4', 'Sunset fade', colourHair(['#3B1C6E', '#C2368A', '#FF7A3D', '#FFD36B'], '', light, [0, 1])],
+]);
+
+// ── beards ──
+const braid = (x) => [0, 1, 2].map(k => `<ellipse cx="${x + (k % 2 ? 1.2 : -1.2)}" cy="${114 + k * 7}" rx="4.6" ry="5" fill="#3A2416" stroke="${INK}" stroke-width="1.8"/>`).join('') +
+  [0, 1].map(k => `<rect x="${x - 5.5}" y="${116 + k * 7}" width="11" height="3.6" rx="1.6" fill="#F2C14E" stroke="${INK}" stroke-width="1.4"/>`).join('') + spark(x + 6, 116, 0.5, '#FFFBE6');
+add('الدقن', 'B — مفيش ولا دقن Pro دلوقتي', [
+  ['B1', 'Flame beard', () => { const g = ID(); return compose(base, { defs: `<defs>${lin(g, FIRE.slice().reverse())}</defs>`,
+    beard: inked('M66 80 C66 104 72 116 80 124 C80 134 86 142 90 132 C94 148 100 152 104 138 C110 150 118 142 116 130 C126 120 134 104 134 80 C130 96 122 104 112 104 C106 100 94 100 88 104 C78 104 70 96 66 80 Z', `url(#${g})`), mouth: mouth(1) }, 'head'); }],
+  ['B2', 'Gold braids', () => compose(dark, { beard: cel('bb' + ID(), 'bd', FULLB, '#2A1A10') + braid(90) + braid(110), mouth: mouth(2) }, 'head')],
+  ['B3', 'Frost', () => { const g = ID(); return compose(light, { defs: `<defs>${lin(g, ['#FFFFFF', '#CDEFFF', '#8CCBEB'])}</defs>`,
+    beard: inked(FULLB, `url(#${g})`) + spark(84, 116, 0.8) + spark(116, 112, 0.7) + spark(100, 124, 0.6), mouth: mouth(1) }, 'head'); }],
+  ['B4', 'Neon edge', () => { const f = ID(); return compose(dark, { defs: `<defs>${glow(f, 2.5)}</defs>`,
+    beard: `<path d="${FULLB}" fill="#120E1E"/><path d="${FULLB}" fill="none" stroke="#FF3DD8" stroke-width="5" filter="url(#${f})"/><path d="${FULLB}" fill="none" stroke="#FFB3F2" stroke-width="2"/>`, mouth: mouth(8) }, 'head'); }],
+]);
+
+// ── mouths ──
+const teethBox = 'M86 104 L114 104 L112 111 L88 111 Z';
+add('البُق', 'M — مفيش بُق Pro دلوقتي (السنة الدهب والـgrill الألماظ بيتكسبوا)', [
+  ['M1', 'Neon guard', () => { const f = ID(); return compose(base, { defs: `<defs>${glow(f, 2.2)}</defs>`,
+    mouth: `<path d="M85 102.5 L115 102.5 L113 112 L87 112 Z" fill="#39FF88" filter="url(#${f})"/>` + `<path d="M85 102.5 L115 102.5 L113 112 L87 112 Z" fill="#39FF88" stroke="${INK}" stroke-width="2.4" stroke-linejoin="round"/>` + ink('M89 106 L104 106', 1.6, 0.9, '#E9FFF1') }, 'face'); }],
+  ['M2', 'Fangs', () => compose(light, { mouth: `<path d="M86 103 C92 112 108 112 114 103 Z" fill="#3a1410" stroke="${INK}" stroke-width="2.6" stroke-linejoin="round"/>` +
+    `<path d="M88.5 103.5 L92 112 L95.5 104 Z M111.5 103.5 L108 112 L104.5 104 Z" fill="#fff" stroke="${INK}" stroke-width="1.2"/>` }, 'face')],
+  ['M3', 'Fire breath', () => { const g = ID(), f = ID();
+    const outer = 'M106 108 C116 102 128 98 140 92 C150 88 160 90 170 84 C166 92 172 96 180 96 C172 102 176 108 184 112 C174 114 166 120 158 118 C150 124 138 122 130 120 C122 118 114 116 106 112 Z';
+    const core = 'M107 109 C118 106 130 103 142 100 C152 98 160 100 166 98 C160 104 158 108 164 112 C152 112 142 114 132 113 C122 112 114 111 107 111 Z';
+    return compose(dark, { defs: `<defs><linearGradient id="${g}" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#E8401C"/><stop offset=".5" stop-color="#FF8A1F"/><stop offset="1" stop-color="#FFD23F"/></linearGradient>${glow(f, 4)}</defs>`,
+      mouth: `<ellipse cx="102" cy="108" rx="6.5" ry="6" fill="#3a1410" stroke="${INK}" stroke-width="2.6"/>` +
+        `<path d="${outer}" fill="#FF6A1F" opacity=".7" filter="url(#${f})"/>` + inked(outer, `url(#${g})`, 2.2) + `<path d="${core}" fill="#FFF6C2" opacity=".9"/>` +
+        `<circle cx="176" cy="88" r="2" fill="#FFD23F"/><circle cx="186" cy="104" r="1.6" fill="#FFD23F"/><circle cx="168" cy="124" r="1.8" fill="#FF8A1F"/>` }, 'face'); }],
+  ['M4', 'Neon smile', () => { const f = ID(); return compose(base, { defs: `<defs>${glow(f, 2.4)}</defs>`,
+    mouth: `<path d="M86 102 C92 113 108 113 114 102 Z" fill="none" stroke="#00E5FF" stroke-width="7" filter="url(#${f})"/><path d="M86 102 C92 113 108 113 114 102 Z" fill="#B8FBFF" stroke="#00B8D4" stroke-width="2.4" stroke-linejoin="round"/>` + ink('M88 105 L112 105', 1.2, 0.9, '#0B6A78') }, 'face'); }],
+]);
+
+// ── face marks ──
+add('علامات الوش', 'F — مفيش علامة Pro دلوقتي', [
+  ['F1', 'Circuit', () => { const f = ID(); const d = 'M128 64 L128 76 L121 83 L121 96 M121 90 L129 98 L129 108'; return compose(base, { defs: `<defs>${glow(f, 1.8)}</defs>`,
+    marks: `<g filter="url(#${f})">${ink(d, 3.2, 1, '#3DF2FF')}</g>` + ink(d, 1.4, 1, '#E8FFFF') + [[128, 64], [121, 96], [129, 108]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.4" fill="#E8FFFF" stroke="#3DF2FF" stroke-width="1.2"/>`).join('') }, 'face'); }],
+  ['F2', 'Lightning bolt', () => compose(light, { marks: inked('M84 60 L76 82 L86 82 L78 104 L98 76 L88 76 L96 60 Z', '#FF3B3B', 2) + ink('M86 62 L80 78', 1.4, 0.8, '#7FB2FF') }, 'face')],
+  ['F3', 'Face gems', () => compose(dark, { marks: [[82, 92], [88, 95], [94, 92], [106, 92], [112, 95], [118, 92]].map(([x, y]) =>
+    `<path d="M${x} ${y - 3} L${x + 2.6} ${y} L${x} ${y + 3} L${x - 2.6} ${y} Z" fill="#9FF3FF" stroke="#fff" stroke-width=".9"/>`).join('') + spark(120, 88, 0.5) }, 'face')],
+  ['F4', 'Gold flakes', () => { const g = ID(); return compose(base, { defs: `<defs>${lin(g, ['#FFF3B8', '#E2A928', '#B07A10'], 1, 1)}</defs>`,
+    marks: ['M76 90 L84 88 L86 93 L80 96 L75 94 Z', 'M84 97 L89 96 L90 100 L86 101 Z', 'M124 90 L116 88 L114 93 L120 96 L125 94 Z', 'M116 97 L111 96 L110 100 L114 101 Z']
+      .map(d => `<path d="${d}" fill="url(#${g})" stroke="#8A5A08" stroke-width=".8"/>`).join('') + spark(80, 87, 0.6, '#FFFBE6') + spark(121, 87, 0.6, '#FFFBE6') }, 'face'); }],
+]);
+
+// ── eyes ──
+const white = `<path d="M77 82 C80 77 93 77 96 82 C92 86 81 86 77 82 Z M123 82 C120 77 107 77 104 82 C108 86 119 86 123 82 Z" fill="#fff" stroke="${INK}" stroke-width="2.2"/>`;
+const lids = ink('M76 79 L96 80 M124 79 L104 80', 2.6, 1);
+const spiral = (x) => `<circle cx="${x}" cy="82" r="5.4" fill="#F3E8FF" stroke="${INK}" stroke-width="1.2"/>` +
+  ink(`M${x} 82 a1 1 0 0 1 1.8 0 a1.9 1.9 0 0 1 -3.6 0 a2.8 2.8 0 0 1 5.4 0 a3.7 3.7 0 0 1 -7.2 0`, 1.6, 1, '#7A2FD8');
+add('العيون', 'E — Pro دلوقتي: Glow بس (النار والنجوم والليزر بيتكسبوا)', [
+  ['E1', 'Hypno', () => compose(base, { eyes: white + spiral(88) + spiral(112) + lids }, 'face')],
+  ['E2', 'Diamond', () => compose(dark, { eyes: white + [88, 112].map(x => `<path d="M${x} 77.5 L${x + 4} 82 L${x} 86.5 L${x - 4} 82 Z" fill="#9FF3FF" stroke="${INK}" stroke-width="1.2"/>` + ink(`M${x - 4} 82 L${x + 4} 82 M${x} 77.5 L${x} 86.5`, 0.8, 0.7, '#fff')).join('') + lids + spark(122, 74, 0.6) }, 'face')],
+  ['E3', 'Cyber lens', () => { const f = ID(); return compose(light, { defs: `<defs>${glow(f, 2)}</defs>`,
+    eyes: white + `<circle cx="88" cy="82" r="3.4" fill="#1a1410"/>` + `<circle cx="112" cy="82" r="8" fill="none" stroke="#FF3B3B" stroke-width="3" filter="url(#${f})"/>` +
+      `<circle cx="112" cy="82" r="8" fill="#1A0D0D" stroke="${INK}" stroke-width="2.2"/><circle cx="112" cy="82" r="3.4" fill="#FF3B3B"/>` + ink('M102 82 L122 82 M112 72 L112 92', 0.8, 0.6, '#FF8A8A') + ink('M76 79 L96 80', 2.6, 1) }, 'face'); }],
+  ['E4', 'Electric', () => { const f = ID(); const zap = 'M72 76 L76 78 L73 80 L77 82 M128 76 L124 78 L127 80 L123 82 M84 72 L86 75 L83 76 M116 72 L114 75 L117 76'; return compose(base, { defs: `<defs>${glow(f, 1.6)}</defs>`,
+    eyes: white + `<circle cx="88" cy="82" r="4" fill="#3DE0FF" stroke="${INK}" stroke-width="1"/><circle cx="112" cy="82" r="4" fill="#3DE0FF" stroke="${INK}" stroke-width="1"/><circle cx="89.2" cy="80.8" r="1.2" fill="#fff"/><circle cx="113.2" cy="80.8" r="1.2" fill="#fff"/>` +
+      `<g filter="url(#${f})">${ink(zap, 2.2, 1, '#3DE0FF')}</g>` + ink(zap, 1, 1, '#E6FDFF') + lids }, 'face'); }],
+]);
+
+// ── tops ──
+const BODY = P.body;
+add('اللبس', 'T — Pro دلوقتي: 6 (روب البطل والبومبر الدهب بيتكسبوا)', [
+  ['T1', 'Hero cape', () => compose(base, {
+    top: inked('M60 136 C48 112 52 88 64 76 L80 118 Z M140 136 C152 112 148 88 136 76 L120 118 Z', '#D7261E', 3) + ink('M62 100 L72 116 M138 100 L128 116', 1.6, 0.5) +
+      inked(BODY, '#1E3A8A') + ink('M44 150 C38 166 36 184 38 200 M156 150 C162 166 164 184 162 200', 2.4, 0.5) +
+      `<circle cx="100" cy="170" r="16" fill="#F2C14E" stroke="${INK}" stroke-width="3"/>` + inked('M102 158 L94 172 L101 172 L97 183 L107 167 L100 167 L104 158 Z', '#D7261E', 1.6) +
+      inked('M70 126 C60 132 46 138 30 142 L34 148 C50 144 64 138 74 132 Z M130 126 C140 132 154 138 170 142 L166 148 C150 144 136 138 126 132 Z', '#D7261E', 2) })],
+  ['T2', 'Chrome armor', () => { const g = ID(); return compose(dark, { defs: `<defs>${lin(g, ['#F7FAFC', '#7A8794', '#E8EEF3', '#56616C', '#C9D2DB'], 1, 1)}</defs>`,
+    top: inked(BODY, `url(#${g})`) +
+      inked('M58 150 C70 138 90 136 100 144 C110 136 130 138 142 150 L138 178 C124 170 110 170 100 178 C90 170 76 170 62 178 Z', '#DCE3EA', 2.6) +
+      inked('M2 166 C8 146 26 136 46 136 C52 146 50 158 42 166 C30 170 14 172 2 166 Z M198 166 C192 146 174 136 154 136 C148 146 150 158 158 166 C170 170 186 172 198 166 Z', `url(#${g})`, 2.6) +
+      ink('M100 144 L100 200 M66 156 C76 150 88 150 96 154', 2, 0.7) + ink('M70 160 C78 154 88 154 94 158', 2.2, 0.9, '#fff') +
+      [[64, 172], [136, 172], [20, 158], [180, 158]].map(([x, y]) => dot(x, y, 2.2, '#F7FAFC', 1.4)).join('') + spark(78, 152, 0.9) }); }],
+  ['T3', 'Galaxy hoodie', () => { const g = ID(); return compose(light, { defs: `<defs><radialGradient id="${g}" cx=".5" cy=".3" r=".8"><stop offset="0" stop-color="#5B3BD6"/><stop offset="1" stop-color="#140B3A"/></radialGradient></defs>`,
+    top: inked(BODY, `url(#${g})`) + inked('M66 122 C64 140 76 150 100 150 C124 150 136 140 134 122 C126 134 116 138 100 138 C84 138 74 134 66 122 Z', '#2A1B6E', 2.6) +
+      stars([[30, 170], [52, 186, 1.3], [146, 164], [170, 182, 1.2], [120, 176], [80, 172, 0.8], [186, 196]], 1.4) + spark(160, 168, 0.8, '#FFE9A8') + ink('M92 150 L90 172 M108 150 L110 172', 2.2, 1, '#E8DCC8') }); }],
+  ['T4', 'Flame jersey', () => { const g = ID(); return compose(base, { defs: `<defs>${lin(g, FIRE)}</defs>`,
+    top: inked(BODY, '#141312') + `<path d="M-12 200 L-12 186 C0 176 8 186 16 172 C22 184 30 178 36 166 C42 180 50 182 56 170 C62 182 70 184 76 172 C82 186 92 182 100 168 C108 182 118 186 124 172 C130 184 138 182 144 170 C150 182 158 180 164 166 C170 178 178 184 184 172 C192 186 200 176 212 186 L212 200 Z" fill="url(#${g})" stroke="${INK}" stroke-width="2.6" stroke-linejoin="round"/>` +
+      `<text x="100" y="160" text-anchor="middle" font-family="Arial" font-weight="900" font-size="22" fill="#F5EFE4" stroke="${INK}" stroke-width="1.2">23</text>` }); }],
+]);
+
+// ── gear ──
+const glove = (cx, cy, rot, g) => `<g transform="rotate(${rot} ${cx} ${cy})">` +
+  inked(`M${cx - 12} ${cy - 4} C${cx - 14} ${cy - 18} ${cx + 10} ${cy - 22} ${cx + 13} ${cy - 6} C${cx + 15} ${cy + 6} ${cx + 8} ${cy + 14} ${cx} ${cy + 14} L${cx - 8} ${cy + 14} C${cx - 13} ${cy + 10} ${cx - 13} ${cy + 4} ${cx - 12} ${cy - 4} Z`, `url(#${g})`, 2.6) +
+  inked(`M${cx - 12} ${cy - 2} C${cx - 20} ${cy - 2} ${cx - 20} ${cy + 8} ${cx - 11} ${cy + 8}`, `url(#${g})`, 2.2) +
+  `<rect x="${cx - 9}" y="${cy + 12}" width="17" height="7" rx="2" fill="#F5EFE4" stroke="${INK}" stroke-width="2"/>` + ink(`M${cx - 4} ${cy - 12} C${cx} ${cy - 15} ${cx + 6} ${cy - 13} ${cx + 8} ${cy - 9}`, 2, 0.9, '#FFFBE6') + `</g>`;
+add('الإكسسوارات', 'G — Pro دلوقتي: 5 (التاج والهالة والإكليل والقرون والحزام بيتكسبوا)', [
+  ['G1', 'Gold aviators', () => { const g = ID(), r = ID(); return compose(base, { defs: `<defs>${lin(g, ['#FF9A3D', '#C2368A', '#3D5BD8'])}${lin(r, ['#FFF3B8', '#D99A1E'])}</defs>`,
+    gear: `<path d="M74 78 C74 74 96 74 97 78 C97 88 90 92 84 91 C77 90 74 85 74 78 Z M126 78 C126 74 104 74 103 78 C103 88 110 92 116 91 C123 90 126 85 126 78 Z" fill="url(#${g})" stroke="url(#${r})" stroke-width="2.6"/>` +
+      ink('M96 77 C99 75 101 75 104 77 M74 78 L65 76 M126 78 L135 76', 2.4, 1, '#D99A1E') + ink('M78 79 L84 86 M108 79 L114 86', 1.6, 0.8, '#fff') }, 'head'); }],
+  ['G2', 'Flame headband', () => { const g = ID(); return compose(light, { defs: `<defs>${lin(g, FIRE.slice().reverse())}</defs>`,
+    gear: inked('M70 54 C66 40 72 34 76 30 C76 40 82 42 84 34 C86 24 92 20 96 12 C96 24 102 28 106 20 C110 28 110 36 116 32 C120 38 126 36 128 30 C134 38 134 46 130 54 Z', `url(#${g})`, 2.6) +
+      inked('M64 58 C80 50 120 50 136 58 L136 66 C120 58 80 58 64 66 Z', '#D7261E', 2.6) + ink('M66 61 C82 54 118 54 134 61', 1.4, 0.8, '#fff') }, 'head'); }],
+  ['G3', 'Pet dragon', () => compose(base, {
+    gear: '<g transform="translate(-82 -50) scale(1.4)">' + inked('M150 140 C146 126 156 116 168 120 C176 112 186 116 184 128 C188 134 182 142 172 142 Z', '#33B36B', 2.6) +
+      inked('M158 122 L146 98 L166 112 Z', '#7CE0A0', 2.2) + inked('M150 138 C138 142 136 154 146 156 C140 150 144 146 152 144 Z', '#33B36B', 2.2) +
+      `<circle cx="180" cy="110" r="10" fill="#33B36B" stroke="${INK}" stroke-width="2.6"/>` + inked('M186 108 L198 112 L188 116 Z', '#33B36B', 2) +
+      inked('M174 102 L170 92 L178 100 Z M182 101 L184 90 L186 101 Z', '#F2C14E', 1.6) + dot(181, 108, 2.2, '#fff', 1) + `<circle cx="181.6" cy="108" r="1.1" fill="${INK}"/>` +
+      ink('M162 130 C166 132 172 132 176 130', 1.6, 0.6) + '</g>' })],
+  ['G4', 'Gold gloves', () => { const g = ID(); return compose(dark, { defs: `<defs>${lin(g, ['#FFF3B8', '#E2A928', '#9C6408'], 1, 1)}</defs>`,
+    gear: ink('M80 120 C66 128 52 136 40 146 M84 122 C74 134 66 146 62 158', 2, 0.9, '#F5EFE4') + '<g transform="translate(-14 -40) scale(1.25)">' + glove(38, 160, -20, g) + glove(66, 170, 15, g) + '</g>' }); }],
+]);
+
+// ── backgrounds ──
+const rect = (fill) => `<rect x="-20" y="-20" width="240" height="240" fill="${fill}"/>`;
+add('خلفية الأفاتار', 'P — Pro دلوقتي: 4 (النار والبرق والإشعاع الدهبي والمجرة بيتكسبوا)', [
+  ['P1', 'Synthwave', () => { const g = ID(), s = ID(); return compose(base, { bg: `<defs>${lin(g, ['#1B0B3A', '#5B1E7A', '#D7268A'])}${lin(s, ['#FFE45C', '#FF7A3D', '#FF3D8A'])}</defs>` + rect(`url(#${g})`) +
+    `<circle cx="100" cy="112" r="56" fill="url(#${s})"/>` + [82, 94, 104, 112].map((y, k) => `<rect x="40" y="${y}" width="120" height="${2 + k}" fill="#5B1E7A"/>`).join('') +
+    `<rect x="-20" y="122" width="240" height="100" fill="#14082A"/>` + ink('M-20 140 L220 140 M-20 158 L220 158 M-20 180 L220 180 M100 122 L100 200 M70 122 L20 200 M130 122 L180 200 M40 122 L-40 200 M160 122 L240 200', 1.4, 0.9, '#FF3DD8') }); }],
+  ['P2', 'Sakura', () => { const g = ID(); return compose(dark, { bg: `<defs>${lin(g, ['#FFE3EE', '#F7A8C8'])}</defs>` + rect(`url(#${g})`) +
+    ink('M-10 30 C20 34 40 20 60 28 C76 34 88 26 96 18 M30 30 C34 18 44 12 52 8', 4, 1, '#5A3A2E') +
+    [[20, 26], [44, 18], [62, 30], [84, 24], [52, 8]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="5" fill="#FF8FB8" stroke="#fff" stroke-width="1.4"/>`).join('') +
+    [[150, 30, 20], [176, 70, 60], [130, 60, 110], [24, 90, 160], [180, 120, 30], [10, 140, 80], [160, 150, 140]].map(([x, y, r]) => `<ellipse cx="${x}" cy="${y}" rx="5" ry="3" fill="#FF9EC4" transform="rotate(${r} ${x} ${y})"/>`).join('') }); }],
+  ['P3', 'Deep sea', () => { const g = ID(); return compose(light, { bg: `<defs>${lin(g, ['#1FB5C9', '#0B4A73', '#061A33'])}</defs>` + rect(`url(#${g})`) +
+    `<g opacity=".16" fill="#fff"><path d="M40 -20 L70 -20 L30 220 L0 220 Z"/><path d="M110 -20 L130 -20 L120 220 L90 220 Z"/><path d="M170 -20 L190 -20 L220 220 L190 220 Z"/></g>` +
+    [[30, 150, 5], [40, 130, 3], [36, 112, 2], [170, 140, 4], [176, 120, 2.5], [160, 104, 2]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="#DFFBFF" stroke-width="1.4" opacity=".8"/>`).join('') }); }],
+  ['P4', 'Confetti', () => compose(base, { bg: rect('#1E1B2E') +
+    Array.from({ length: 34 }, (_, k) => { const x = (k * 53) % 200, y = (k * 37) % 200, c = ['#FF5A8A', '#FFE45C', '#5AD8FF', '#7CFF8A', '#B98CFF'][k % 5]; return `<rect x="${x}" y="${y}" width="7" height="3.5" rx="1" fill="${c}" transform="rotate(${(k * 41) % 180} ${x} ${y})"/>`; }).join('') +
+    ink('M10 20 C20 30 10 40 20 50 M180 10 C170 22 182 30 172 42', 2.2, 1, '#FFE45C') })],
+]);
+
+// ── profile covers ──
+const cover = (s) => `<svg viewBox="0 0 412 140" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">${s}</svg>`;
+add('خلفية البروفايل', 'V — مناظر Pro جديدة فوق البروفايل (دلوقتي: 9، كلها بتتحرك)', [
+  ['V1', 'Fireworks', () => { const g = ID(); return cover(`<defs>${lin(g, ['#0B0A2A', '#2A1650'])}</defs><rect width="412" height="140" fill="url(#${g})"/>` +
+    [[110, 46, '#FF5A8A'], [210, 30, '#FFE45C'], [300, 52, '#5AD8FF']].map(([x, y, c]) => Array.from({ length: 12 }, (_, k) => { const a = k * Math.PI / 6; return `<path d="M${x + 6 * Math.cos(a)} ${y + 6 * Math.sin(a)} L${x + 26 * Math.cos(a)} ${y + 26 * Math.sin(a)}" stroke="${c}" stroke-width="3" stroke-linecap="round"/>`; }).join('') + `<circle cx="${x}" cy="${y}" r="4" fill="#fff"/>`).join('') +
+    `<path d="M0 140 L0 110 L40 104 L60 116 L100 100 L150 112 L200 98 L260 114 L300 102 L350 116 L412 104 L412 140 Z" fill="#0A0814"/>` + `<rect x="60" y="112" width="290" height="28" fill="#141024"/>` + Array.from({ length: 14 }, (_, k) => `<rect x="${70 + k * 20}" y="118" width="10" height="6" fill="#FFE08A" opacity=".7"/>`).join('')); }],
+  ['V2', 'Fight night', () => cover(`<rect width="412" height="140" fill="#0E0C0B"/>` +
+    `<path d="M120 0 L60 140 L352 140 L292 0 Z" fill="#FFF3D0" opacity=".12"/><path d="M180 0 L150 140 L262 140 L232 0 Z" fill="#FFF3D0" opacity=".16"/>` +
+    Array.from({ length: 30 }, (_, k) => `<circle cx="${k * 14 + 4}" cy="${62 + (k % 3) * 3}" r="6" fill="#1E1A18"/>`).join('') +
+    Array.from({ length: 12 }, (_, k) => `<circle cx="${20 + k * 34}" cy="${30 + (k % 2) * 6}" r="1.6" fill="#FFF3D0"/>`).join('') +
+    `<path d="M40 128 L372 128 L340 98 L72 98 Z" fill="#2F6FD6" stroke="${INK}" stroke-width="3"/>` + ink('M52 90 L360 90 M58 82 L354 82 M64 74 L348 74', 3, 1, '#E8573E') +
+    `<rect x="46" y="66" width="8" height="64" fill="#E8DCC8" stroke="${INK}" stroke-width="2"/><rect x="358" y="66" width="8" height="64" fill="#E8DCC8" stroke="${INK}" stroke-width="2"/>`)],
+  ['V3', 'Orbit', () => { const g = ID(), e = ID(), f = ID(); return cover(`<defs>${lin(g, ['#020414', '#0B1440'])}<radialGradient id="${e}" cx=".5" cy=".2" r=".8"><stop offset="0" stop-color="#2F86E8"/><stop offset=".6" stop-color="#123E8C"/><stop offset="1" stop-color="#061A40"/></radialGradient>${glow(f, 6)}</defs>` +
+    `<rect width="412" height="140" fill="url(#${g})"/>` + stars([[30, 20], [80, 40, 1.3], [140, 16], [220, 30], [300, 18, 1.2], [360, 44], [390, 14], [250, 54, 0.8]], 1.3) +
+    `<circle cx="206" cy="600" r="510" fill="none" stroke="#7FD3FF" stroke-width="10" filter="url(#${f})"/>` + `<circle cx="206" cy="600" r="510" fill="url(#${e})"/>` +
+    `<path d="M60 120 C90 108 130 112 150 118 C170 124 140 132 110 130 C90 130 70 128 60 120 Z M250 106 C270 100 300 102 310 108 C300 114 270 114 250 106 Z" fill="#EAF6FF" opacity=".55"/>` +
+    spark(340, 60, 1.6, '#FFE7B0') + `<circle cx="340" cy="60" r="10" fill="#FFE7B0" opacity=".25"/>`); }],
+  ['V4', 'Champion podium', () => cover(`<rect width="412" height="140" fill="#1A1418"/>` +
+    `<path d="M206 0 L150 140 L262 140 Z" fill="#FFE08A" opacity=".12"/>` +
+    `<rect x="166" y="76" width="80" height="64" fill="#F2C14E" stroke="${INK}" stroke-width="3"/><rect x="96" y="96" width="70" height="44" fill="#C9D2DB" stroke="${INK}" stroke-width="3"/><rect x="246" y="106" width="70" height="34" fill="#D08A4E" stroke="${INK}" stroke-width="3"/>` +
+    `<text x="206" y="118" text-anchor="middle" font-family="Arial" font-weight="900" font-size="30" fill="${INK}">1</text>` +
+    Array.from({ length: 40 }, (_, k) => { const x = (k * 47) % 412, y = (k * 29) % 90, c = ['#FF5A8A', '#FFE45C', '#5AD8FF', '#7CFF8A'][k % 4]; return `<rect x="${x}" y="${y}" width="6" height="3" fill="${c}" transform="rotate(${k * 37 % 180} ${x} ${y})"/>`; }).join(''))],
+], { wide: true });
+
+const out = document.getElementById('out');
+out.innerHTML = sections.map(s => `<div class="sec"><h2>${s.title}<span>${s.sub}</span></h2><div class="row">${s.items.map(([code, name, draw]) =>
+  s.opts.wide ? `<div class="tile wide"><div class="pic">${draw()}</div><div class="meta"><span class="code">${code}</span><span class="name">${name}</span><span class="pro">PRO</span></div></div>`
+              : `<div class="tile"><div class="pic">${draw()}</div><div><div class="code">${code}</div><div class="name">${name}</div><div class="pro">PRO</div></div></div>`).join('')}</div></div>`).join('');
+</script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<title>Fire breath</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700;800;900&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #0B0A09; color: #F5EFE4; font-family: 'Noto Sans', sans-serif; }
+  .wrap { padding: 22px 26px 26px; width: 1260px; }
+  .cap { direction: rtl; font-family: 'Noto Sans Arabic', 'Noto Sans', sans-serif; margin-bottom: 14px; }
+  .cap b { display: block; font-size: 24px; margin-bottom: 4px; }
+  .cap p { margin: 0; color: #8F8880; font-size: 15px; line-height: 1.7; }
+  .row { display: flex; gap: 16px; }
+  .tile { width: 292px; background: #161412; border: 1px solid #2A2724; border-radius: 16px; padding: 12px; }
+  .tile.now { opacity: .8; }
+  .pics { display: flex; gap: 8px; }
+  .big { width: 266px; height: 266px; border-radius: 14px; overflow: hidden; background: #201D1A; }
+  .big svg { width: 266px; height: 266px; display: block; }
+  .small { display: flex; gap: 8px; margin-top: 8px; }
+  .small div { width: 60px; height: 60px; border-radius: 30px; overflow: hidden; background: #201D1A; }
+  .small svg { width: 60px; height: 60px; display: block; }
+  .code { font-weight: 900; font-size: 22px; color: #F2C14E; margin-top: 10px; }
+  .name { font-size: 15px; font-weight: 700; }
+  .note { direction: rtl; font-family: 'Noto Sans Arabic', sans-serif; color: #8F8880; font-size: 13.5px; line-height: 1.6; margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="cap"><b>Fire breath (M3): 3 بدايل</b>
+  <p>الشكل الحالي كأن النار بتنقط من البُق. البدايل دي النار فيها طالعة من البُق زي النفَس. تحت كل واحد: نفس الشكل صغير زي ما بيظهر في الليدربورد.</p></div>
+  <div class="row" id="row"></div>
+</div>
+<script src="lifterA.js"></script>
+<script>
+let gid = 0;
+const ID = () => 'f' + (++gid);
+const lin = (id, stops, x1 = 0, y1 = 0, x2 = 0, y2 = 1) => `<linearGradient id="${id}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}">${stops.map((c, i) => `<stop offset="${i / (stops.length - 1)}" stop-color="${c}"/>`).join('')}</linearGradient>`;
+const glow = (id, r = 3) => `<filter id="${id}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="${r}"/></filter>`;
+const inked = (d, fill, w = 2.4) => `<path d="${d}" fill="${fill}" stroke="${INK}" stroke-width="${w}" stroke-linejoin="round"/>`;
+const ember = (x, y, r, c = '#FFD23F') => `<circle cx="${x}" cy="${y}" r="${r}" fill="${c}"/>`;
+
+function compose(c, o = {}, view = 'full') {
+  const id = 'A' + (++uid);
+  const sk = CAT.skin[c.skin];
+  const hc = CAT.hairC[c.hairC];
+  const h = hair(id, c.hair, hc);
+  let s = o.defs || '';
+  s += background(id, c.bg, 0) + topWear(id, c.top, CAT.topC[c.topC], sk);
+  s += cel(id, 'neck', P.neck, shade(sk.c, -0.06)) + ink(P.neckLines, 2.6) + h.back;
+  s += cel(id, 'earL', P.earL, sk.c) + cel(id, 'earR', P.earR, sk.c);
+  s += cel(id, 'head', P.head, sk.c) + ink(P.jaw, 2.4, 0.6);
+  s += (o.brows ?? brows(c.brows, hc)) + eyes(id, c.eyes, sk);
+  s += ink('M100 82 L95 98 C98 101 103 101 106 98', 2.4, 1);
+  s += (o.mouth ?? mouth(c.mouth)) + h.front + (o.over ?? '');
+  const vb = { face: '50 52 100 100', head: '30 -6 140 140', full: '0 0 200 200' }[view];
+  return `<svg viewBox="${vb}" xmlns="http://www.w3.org/2000/svg">${s}</svg>`;
+}
+const dark = { skin: 7, hair: 2, hairC: 0, eyes: 0, brows: 0, mouth: 0, beard: 0, top: 3, topC: 0, bg: 3 };
+const FIRE = ['#FFF6C2', '#FFD23F', '#FF8A1F', '#E8401C'];
+
+// The one in the mockup now.
+function now() {
+  const g = ID();
+  return { defs: `<defs>${lin(g, FIRE.slice(1).reverse())}</defs>`,
+    mouth: `<path d="M86 100 L114 100 L110 114 C104 118 96 118 90 114 Z" fill="#3a1410" stroke="${INK}" stroke-width="2.6" stroke-linejoin="round"/>` +
+      inked('M92 112 C88 122 92 128 96 124 C96 134 104 138 104 128 C110 134 116 128 110 120 C114 118 110 112 106 112 C102 116 96 116 92 112 Z', `url(#${g})`, 2) };
+}
+
+// A: lips rounded as if blowing, a jet of fire out to the side, wider as it goes.
+function jet() {
+  const g = ID(), f = ID();
+  const outer = 'M106 108 C116 102 128 98 140 92 C150 88 160 90 170 84 C166 92 172 96 180 96 C172 102 176 108 184 112 C174 114 166 120 158 118 C150 124 138 122 130 120 C122 118 114 116 106 112 Z';
+  const core = 'M107 109 C118 106 130 103 142 100 C152 98 160 100 166 98 C160 104 158 108 164 112 C152 112 142 114 132 113 C122 112 114 111 107 111 Z';
+  return { defs: `<defs>${lin(g, ['#E8401C', '#FF8A1F', '#FFD23F'], 1, 0, 0, 0)}${glow(f, 4)}</defs>`,
+    mouth: `<ellipse cx="102" cy="108" rx="6.5" ry="6" fill="#3a1410" stroke="${INK}" stroke-width="2.6"/>`,
+    over: `<path d="${outer}" fill="#FF6A1F" opacity=".7" filter="url(#${f})"/>` + inked(outer, `url(#${g})`, 2.2) + `<path d="${core}" fill="#FFF6C2" opacity=".9"/>` +
+      ember(176, 88, 2) + ember(186, 104, 1.6) + ember(168, 124, 1.8, '#FF8A1F') };
+}
+
+// B: a roar, and a fireball forming in front of it.
+function ball() {
+  const g = ID(), f = ID();
+  const ballD = 'M100 104 C90 104 80 110 80 122 C80 134 90 142 100 142 C112 142 122 134 122 122 C122 110 112 104 100 104 Z';
+  const flames = 'M84 112 C78 104 80 96 86 92 C86 100 90 102 92 102 C90 94 94 88 100 84 C100 92 104 96 108 98 C108 92 112 88 118 88 C116 96 120 102 118 110 Z';
+  return { defs: `<defs><radialGradient id="${g}" cx=".5" cy=".55" r=".55"><stop offset="0" stop-color="#FFF6C2"/><stop offset=".45" stop-color="#FFD23F"/><stop offset=".8" stop-color="#FF8A1F"/><stop offset="1" stop-color="#E8401C"/></radialGradient>${glow(f, 5)}</defs>`,
+    mouth: `<path d="M84 100 L116 100 L112 116 C106 121 94 121 88 116 Z" fill="#3a1410" stroke="${INK}" stroke-width="2.6" stroke-linejoin="round"/><path d="M87 100 L113 100 L112 104 L88 104 Z" fill="#fff"/>`,
+    over: `<circle cx="100" cy="122" r="22" fill="#FF6A1F" opacity=".6" filter="url(#${f})"/>` + inked(flames, '#FF8A1F', 2) + inked(ballD, `url(#${g})`, 2.4) +
+      ember(78, 100, 1.8) + ember(124, 104, 1.6) + ember(128, 130, 1.4, '#FF8A1F') };
+}
+
+// C: a grin with fire licking up out of both corners, and smoke from the nose.
+function corners() {
+  const g = ID(), f = ID();
+  const left = 'M87 106 C82 105 79 101 80 96 C82 99 84 99 84 97 C84 94 86 91 88 89 C88 93 90 95 91 98 C92 101 91 104 87 106 Z';
+  const right = 'M113 106 C118 105 121 101 120 96 C118 99 116 99 116 97 C116 94 114 91 112 89 C112 93 110 95 109 98 C108 101 109 104 113 106 Z';
+  return { defs: `<defs>${lin(g, ['#FFD23F', '#FF8A1F', '#E8401C'], 0, 1, 0, 0)}${glow(f, 3)}</defs>`,
+    mouth: `<path d="M86 102 C92 113 108 113 114 102 Z" fill="#fff" stroke="${INK}" stroke-width="2.6" stroke-linejoin="round"/>` + ink('M88 105 L112 105', 1.4, 1),
+    over: `<path d="${left} ${right}" fill="#FF6A1F" opacity=".6" filter="url(#${f})"/>` + inked(left, `url(#${g})`, 2) + inked(right, `url(#${g})`, 2) +
+      `<path d="M96 99 C90 100 86 98 82 100 C78 102 74 100 72 102 M104 99 C110 100 114 98 118 100 C122 102 126 100 128 102" fill="none" stroke="#C9C1B6" stroke-width="3" stroke-linecap="round" opacity=".55"/>` };
+}
+
+const tiles = [
+  ['now', 'دلوقتي', now, 'النار نازلة لتحت، شكلها بتنقط.'],
+  ['A', 'Flame jet', jet, 'شفايف مدوّرة كأنه بينفخ، ونار طالعة لبرّه وبتوسع زي خرطوم. أوضح حاجة في الصغير.'],
+  ['B', 'Fireball', ball, 'بُق مفتوح بيزعق، وكورة نار بتتكوّن قدامه.'],
+  ['C', 'Smoulder', corners, 'ابتسامة ونار طالعة من طرفين البُق، ودخان من المناخير. أهدى من الاتنين.'],
+];
+document.getElementById('row').innerHTML = tiles.map(([code, name, make, note]) => {
+  const o = make();
+  return `<div class="tile ${code === 'now' ? 'now' : ''}">` +
+    `<div class="big">${compose(dark, o, 'face')}</div>` +
+    `<div class="small"><div>${compose(dark, make(), 'head')}</div><div>${compose({ ...dark, skin: 1 }, make(), 'head')}</div><div>${compose({ ...dark, skin: 4, bg: 0 }, make(), 'head')}</div></div>` +
+    `<div class="code">${code === 'now' ? '—' : 'M3 ' + code}</div><div class="name">${name}</div><div class="note">${note}</div></div>`;
+}).join('');
+</script>
+</body>
+</html>

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:outrepd/lifter/catalog.dart';
+import 'package:outrepd/lifter/lifter_art.dart' show LifterView;
 import 'package:outrepd/lifter/lifter_view.dart';
 
 void main() {

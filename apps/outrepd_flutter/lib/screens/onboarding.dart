@@ -1152,9 +1152,11 @@ class _RepRuleState extends State<_RepRule>
         return LayoutBuilder(
           builder: (context, box) {
             // Room under the bar for the line of its colours.
+            // Never less than nothing: the card can be squeezed to almost no
+            // height (large text on a small phone).
             const legend = 40.0;
-            final height = math.min(box.maxHeight - legend, 380.0);
-            final top = (box.maxHeight - legend - height) / 2;
+            final height = (box.maxHeight - legend).clamp(0.0, 380.0);
+            final top = math.max(0.0, (box.maxHeight - legend - height) / 2);
 
             Widget step(double y, int n, String text, Color mark, bool next) {
               return Positioned(
@@ -1215,9 +1217,13 @@ class _RepRuleState extends State<_RepRule>
                   ),
                 ),
                 const SizedBox(width: 6),
-                Text(
-                  text,
-                  style: TextStyle(color: context.colors.muted, fontSize: 13),
+                Flexible(
+                  child: Text(
+                    text,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: context.colors.muted, fontSize: 13),
+                  ),
                 ),
               ],
             );

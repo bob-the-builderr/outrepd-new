@@ -32,8 +32,12 @@ void main() {
       ),
     );
 
+    // The line itself: the first paragraph; the cursor is drawn by one of
+    // its own, over it.
     RenderParagraph paragraph() => tester.renderObject<RenderParagraph>(
-      find.descendant(of: find.byType(TypeOut), matching: find.byType(RichText)),
+      find
+          .descendant(of: find.byType(TypeOut), matching: find.byType(RichText))
+          .first,
     );
     Offset firstLetter() =>
         paragraph().getOffsetForCaret(const TextPosition(offset: 0), Rect.zero);
