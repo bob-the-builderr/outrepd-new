@@ -282,7 +282,7 @@ class _ShareCardSheetState extends State<_ShareCardSheet> {
           ],
           text:
               '${widget.invite?.call(l) ?? l.duelMeOnOutrepd}\n'
-              shareLink(widget.profileUrl),
+              '${shareLink(widget.profileUrl)}',
         ),
       );
     } on Object catch (error) {
