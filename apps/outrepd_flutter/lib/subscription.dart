@@ -294,8 +294,17 @@ class RevenueCatStorefront implements Storefront {
   }
 
   @override
-  Future<bool> identify(String userId) async =>
-      _hasPro((await Purchases.logIn(userId)).customerInfo);
+  Future<bool> identify(String userId) async {
+    // The plans first, while RevenueCat still has them on the phone: a new
+    // account's sign-in clears its copy, and on a weak connection the Pro
+    // screen then could not read them again (the user, 2026-11-04).
+    try {
+      _lastPlans ??= await _readPlans();
+    } on Object catch (error) {
+      debugPrint('Could not read the plans before signing in: $error');
+    }
+    return _hasPro((await Purchases.logIn(userId)).customerInfo);
+  }
 
   @override
   Future<bool> check() async => _hasPro(await Purchases.getCustomerInfo());
@@ -306,8 +315,36 @@ class RevenueCatStorefront implements Storefront {
     return _hasPro(await Purchases.getCustomerInfo());
   }
 
+  /// The plans last read, for when RevenueCat cannot be reached: a price
+  /// does not change between one read and the next.
+  List<Plan>? _lastPlans;
+
+  /// Read again, a moment apart, when the request never got an answer — a
+  /// weak connection, not a missing offering — and the last plans read if it
+  /// still has not: on a new account the Pro screen said it could not load
+  /// the plans, "10: Error performing request" (the user, 2026-11-04).
   @override
   Future<List<Plan>> plans() async {
+    for (var attempt = 0; ; attempt++) {
+      try {
+        final plans = await _readPlans();
+        if (plans.isNotEmpty) _lastPlans = plans;
+        return plans;
+      } on PlatformException catch (error) {
+        final network = PurchasesErrorHelper.getErrorCode(error) ==
+            PurchasesErrorCode.networkError;
+        if (!network) rethrow;
+        if (attempt == 2) {
+          final kept = _lastPlans;
+          if (kept != null) return kept;
+          rethrow;
+        }
+        await Future<void>.delayed(Duration(seconds: 1 << attempt));
+      }
+    }
+  }
+
+  Future<List<Plan>> _readPlans() async {
     final offering = (await Purchases.getOfferings()).current;
     if (offering == null) {
       throw StateError('No current offering in RevenueCat');
