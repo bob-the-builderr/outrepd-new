@@ -119,10 +119,14 @@ alter table profiles add column if not exists lifter jsonb
 -- (lib/lifter/covers.dart), or this account's own photo at <id>/cover.jpg.
 -- Shown only while the account is Pro (pro_looks in account.sql), so a lapsed
 -- subscription keeps its choice for when it comes back.
-alter table profiles add column if not exists cover text
-  constraint profiles_cover_known
+alter table profiles add column if not exists cover text;
+-- Dropped and made again, so a database that already has the column takes a
+-- new scene too (four in 1.1.6's second round: fireworks, fight night,
+-- orbit, the champion's podium).
+alter table profiles drop constraint if exists profiles_cover_known;
+alter table profiles add constraint profiles_cover_known
   check (cover is null
-    or cover in ('neon_city', 'iron_gym', 'rooftop_sunset', 'stadium_lights', 'silver_peaks', 'bronze_dunes', 'volcano', 'palm_beach', 'winter_city')
+    or cover in ('neon_city', 'iron_gym', 'rooftop_sunset', 'stadium_lights', 'silver_peaks', 'bronze_dunes', 'volcano', 'palm_beach', 'winter_city', 'fireworks', 'fight_night', 'orbit', 'champion_podium')
     or cover ~ ('^https://[A-Za-z0-9.-]+/storage/v1/object/public/avatars/'
                 || id::text || '/cover\.jpg(\?v=[0-9]+)?$'));
 alter table profiles add column if not exists username_changed_at timestamptz;

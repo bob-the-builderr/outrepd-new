@@ -402,7 +402,7 @@ class LEn extends L {
   String get proPerkEntranceBody => 'On the VS screen before every live match.';
 
   @override
-  String get proPerkCovers => '9 moving covers';
+  String get proPerkCovers => '13 moving covers';
 
   @override
   String get proPerkCoversBody => 'Or your own photo, on top of your profile.';
@@ -580,6 +580,18 @@ class LEn extends L {
 
   @override
   String get coverWinterCity => 'Winter city';
+
+  @override
+  String get coverFireworks => 'Fireworks';
+
+  @override
+  String get coverFightNight => 'Fight night';
+
+  @override
+  String get coverOrbit => 'Orbit';
+
+  @override
+  String get coverChampionPodium => 'Champion podium';
 
   @override
   String get vsLiveRanked => 'LIVE · RANKED';

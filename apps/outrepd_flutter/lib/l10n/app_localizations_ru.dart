@@ -401,7 +401,7 @@ class LRu extends L {
   String get proPerkEntranceBody => 'На экране VS перед каждым матчем в прямом эфире.';
 
   @override
-  String get proPerkCovers => '9 живых обложек';
+  String get proPerkCovers => '13 живых обложек';
 
   @override
   String get proPerkCoversBody => 'Или ваше собственное фото вверху профиля.';
@@ -579,6 +579,18 @@ class LRu extends L {
 
   @override
   String get coverWinterCity => 'Зимний город';
+
+  @override
+  String get coverFireworks => 'Фейерверк';
+
+  @override
+  String get coverFightNight => 'Ночь боёв';
+
+  @override
+  String get coverOrbit => 'Орбита';
+
+  @override
+  String get coverChampionPodium => 'Пьедестал чемпиона';
 
   @override
   String get vsLiveRanked => 'LIVE · РЕЙТИНГ';

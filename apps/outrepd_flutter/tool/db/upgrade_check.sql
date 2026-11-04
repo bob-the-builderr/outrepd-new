@@ -83,5 +83,11 @@ select upgrade_check(
     where proname in ('last_month_winners', 'pro_looks', 'board_points')),
   'a function 1.1.6 needs is missing');
 
+-- The new Pro covers are scenes the live database takes.
+update profiles set cover = 'orbit' where id = :'A';
+select upgrade_check((select cover = 'orbit' from profiles where id = :'A'),
+  'the live database refused a new cover scene');
+update profiles set cover = null where id = :'A';
+
 drop function upgrade_check(boolean, text);
 \echo 'upgrade: everything came through'

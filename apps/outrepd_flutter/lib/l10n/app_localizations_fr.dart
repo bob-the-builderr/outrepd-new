@@ -404,7 +404,7 @@ class LFr extends L {
   String get proPerkEntranceBody => 'Sur l\'écran VS avant chaque match en direct.';
 
   @override
-  String get proPerkCovers => '9 couvertures animées';
+  String get proPerkCovers => '13 couvertures animées';
 
   @override
   String get proPerkCoversBody => 'Ou votre propre photo, en haut de votre profil.';
@@ -582,6 +582,18 @@ class LFr extends L {
 
   @override
   String get coverWinterCity => 'Ville d\'hiver';
+
+  @override
+  String get coverFireworks => 'Feux d\'artifice';
+
+  @override
+  String get coverFightNight => 'Soir de combat';
+
+  @override
+  String get coverOrbit => 'Orbite';
+
+  @override
+  String get coverChampionPodium => 'Podium du champion';
 
   @override
   String get vsLiveRanked => 'EN DIRECT · CLASSÉ';

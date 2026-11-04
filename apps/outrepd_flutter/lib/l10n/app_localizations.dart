@@ -848,7 +848,7 @@ abstract class L {
   /// No description provided for @proPerkCovers.
   ///
   /// In en, this message translates to:
-  /// **'9 moving covers'**
+  /// **'13 moving covers'**
   String get proPerkCovers;
 
   /// No description provided for @proPerkCoversBody.
@@ -1168,6 +1168,30 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Winter city'**
   String get coverWinterCity;
+
+  /// No description provided for @coverFireworks.
+  ///
+  /// In en, this message translates to:
+  /// **'Fireworks'**
+  String get coverFireworks;
+
+  /// No description provided for @coverFightNight.
+  ///
+  /// In en, this message translates to:
+  /// **'Fight night'**
+  String get coverFightNight;
+
+  /// No description provided for @coverOrbit.
+  ///
+  /// In en, this message translates to:
+  /// **'Orbit'**
+  String get coverOrbit;
+
+  /// No description provided for @coverChampionPodium.
+  ///
+  /// In en, this message translates to:
+  /// **'Champion podium'**
+  String get coverChampionPodium;
 
   /// No description provided for @vsLiveRanked.
   ///

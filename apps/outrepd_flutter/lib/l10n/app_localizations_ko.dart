@@ -389,7 +389,7 @@ class LKo extends L {
   String get proPerkEntranceBody => '모든 라이브 경기 전 VS 화면에서.';
 
   @override
-  String get proPerkCovers => '움직이는 커버 9종';
+  String get proPerkCovers => '움직이는 커버 13종';
 
   @override
   String get proPerkCoversBody => '또는 내 사진을 프로필 맨 위에.';
@@ -567,6 +567,18 @@ class LKo extends L {
 
   @override
   String get coverWinterCity => '겨울 도시';
+
+  @override
+  String get coverFireworks => '불꽃놀이';
+
+  @override
+  String get coverFightNight => '파이트 나이트';
+
+  @override
+  String get coverOrbit => '궤도';
+
+  @override
+  String get coverChampionPodium => '우승 시상대';
 
   @override
   String get vsLiveRanked => '라이브 · 랭크';

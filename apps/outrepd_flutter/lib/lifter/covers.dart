@@ -1,6 +1,7 @@
-/// The moving covers over a Pro profile: nine full scenes, each with
+/// The moving covers over a Pro profile: thirteen full scenes, each with
 /// something that moves (the user's picks, 2026-11-01; drawn first in the
-/// mockup covers2.html, ported here line for line).
+/// mockup covers2.html, ported here line for line; four more picked
+/// 2026-11-04, at the end).
 ///
 /// Every scene is drawn at 824 × 560 and scaled to cover the box it is given,
 /// so the same scene fills a profile's top and a square tile in the picker.
@@ -24,6 +25,10 @@ const kCovers = [
   'volcano',
   'palm_beach',
   'winter_city',
+  'fireworks',
+  'fight_night',
+  'orbit',
+  'champion_podium',
 ];
 
 /// Whether [cover] is one of the scenes rather than a photo's URL.
@@ -131,6 +136,10 @@ const _scenes = <String, _Scene>{
   'volcano': _volcano,
   'palm_beach': _palmBeach,
   'winter_city': _winterCity,
+  'fireworks': _fireworks,
+  'fight_night': _fightNight,
+  'orbit': _orbit,
+  'champion_podium': _championPodium,
 };
 
 // ── pieces ───────────────────────────────────────────────────────────────────
@@ -648,5 +657,331 @@ void _winterCity(Canvas g, double w, double h, double t) {
     final y = (r() * h + t * sp) % h;
     final s = 1 + r() * 2.6;
     g.drawCircle(Offset(x, y), s, _fill(_rgba(255, 255, 255, 0.6 + r() * 0.4)));
+  }
+}
+
+// ── the second round (the user's picks V1-V4, 2026-11-04; drawn first in
+// design/mockups/2026-11-04/pro_parts.html at 412 × 140, here given the whole
+// 824 × 560: what the mockup showed sits where a profile's top shows it).
+
+const _ink = Color(0xFF16120F);
+
+Paint _stroke(Color c, double width) => Paint()
+  ..color = c
+  ..style = PaintingStyle.stroke
+  ..strokeWidth = width
+  ..strokeJoin = StrokeJoin.round
+  ..strokeCap = StrokeCap.round;
+
+/// A four-pointed glint, [s] times the mockup's.
+void _spark(Canvas g, double x, double y, double s, Color c) {
+  final a = 5 * s, b = 1.3 * s;
+  g.drawPath(
+    Path()
+      ..moveTo(x, y - a)
+      ..lineTo(x + b, y - b)
+      ..lineTo(x + a, y)
+      ..lineTo(x + b, y + b)
+      ..lineTo(x, y + a)
+      ..lineTo(x - b, y + b)
+      ..lineTo(x - a, y)
+      ..lineTo(x - b, y - b)
+      ..close(),
+    _fill(c),
+  );
+}
+
+/// Rockets go up and burst.
+void _fireworks(Canvas g, double w, double h, double t) {
+  g.drawRect(Rect.fromLTWH(0, 0, w, h), _down(0, h, const [(0, Color(0xFF0B0A2A)), (1, Color(0xFF2A1650))]));
+  _stars(g, w, h, 60, 31, t, 0.6);
+  const colours = [Color(0xFFFF5A8A), Color(0xFFFFE45C), Color(0xFF5AD8FF), Color(0xFF7CFF8A), Color(0xFFB98CFF)];
+  // Beats set so the still picture (at 1 s) has three bursts at their brightest.
+  const period = 3.2, lanes = [2, 0, 3, 1, 4], beats = [0.0075, 0.1375, 0.2675, 0.8375, 0.4875];
+  final ground = h - 80, lane = (w - 180) / lanes.length;
+  for (var k = 0; k < lanes.length; k++) {
+    // Each rocket on its own beat; a new place and colour every time round.
+    final run = t / period + beats[k];
+    final n = run.floor(), p = run - n;
+    final r = _Rnd(k * 31 + n * 7 + 1);
+    final x = 90 + lane * (lanes[k] + 0.2 + r() * 0.6), y = 120 + r() * 150;
+    final c = colours[(k + n) % colours.length];
+    if (p < 0.28) {
+      final q = p / 0.28, rise = 1 - (1 - q) * (1 - q);
+      final ry = ground + (y - ground) * rise;
+      g
+        ..drawLine(
+          Offset(x, ry),
+          Offset(x, ry + 80),
+          Paint()
+            ..shader = ui.Gradient.linear(Offset(x, ry), Offset(x, ry + 80), [_rgba(255, 230, 190, 0.9), _rgba(255, 230, 190, 0)])
+            ..strokeWidth = 3
+            ..strokeCap = StrokeCap.round,
+        )
+        ..drawCircle(Offset(x, ry), 3.5, _fill(const Color(0xFFFFF4D6)));
+      continue;
+    }
+    final q = (p - 0.28) / 0.72;
+    final grow = 1 - math.pow(1 - q, 3).toDouble(), fade = math.pow(1 - q, 1.4).toDouble();
+    final radius = 24 + 100 * grow, drop = 34 * q * q;
+    if (q < 0.25) {
+      final f = 1 - q / 0.25, at = Offset(x, y);
+      g.drawCircle(at, 90, _glow(at, 90, [(0, c.withValues(alpha: 0.5 * f)), (1, c.withValues(alpha: 0))]));
+    }
+    final ray = _stroke(c.withValues(alpha: fade), 5 * (1 - q * 0.5));
+    final tip = _fill(Colors.white.withValues(alpha: fade));
+    for (var s = 0; s < 12; s++) {
+      final a = s * math.pi / 6 + k;
+      final ca = math.cos(a), sa = math.sin(a);
+      final out = Offset(x + ca * radius, y + sa * radius + drop);
+      g
+        ..drawLine(Offset(x + ca * radius * 0.4, y + sa * radius * 0.4 + drop * 0.5), out, ray)
+        ..drawCircle(out, 2.6, tip);
+    }
+    if (q < 0.5) g.drawCircle(Offset(x, y), 8 * (1 - q * 2), _fill(Colors.white.withValues(alpha: 1 - q * 2)));
+  }
+  // The hills, and the arena the show is for, its windows lit.
+  g.drawPath(
+    Path()
+      ..moveTo(0, h)
+      ..lineTo(0, 488)
+      ..lineTo(80, 474)
+      ..lineTo(120, 502)
+      ..lineTo(200, 464)
+      ..lineTo(300, 493)
+      ..lineTo(400, 459)
+      ..lineTo(520, 498)
+      ..lineTo(600, 469)
+      ..lineTo(700, 502)
+      ..lineTo(w, 474)
+      ..lineTo(w, h)
+      ..close(),
+    _fill(const Color(0xFF0A0814)),
+  );
+  g.drawRect(Rect.fromLTWH(120, 493, 580, h - 493), _fill(const Color(0xFF141024)));
+  for (var k = 0; k < 14; k++) {
+    final on = 0.55 + 0.2 * math.sin(t * 1.7 + k * 1.9);
+    g.drawRect(Rect.fromLTWH(140 + k * 40, 507, 20, 14), _fill(const Color(0xFFFFE08A).withValues(alpha: on)));
+  }
+}
+
+/// The spotlights sway; cameras flash in the crowd.
+void _fightNight(Canvas g, double w, double h, double t) {
+  g.drawRect(Rect.fromLTWH(0, 0, w, h), _down(0, h, const [(0, Color(0xFF0E0C0B)), (1, Color(0xFF1A1512))]));
+  // The stands, row on row, nearer and bigger as they come down.
+  final r = _Rnd(41);
+  final spots = <Offset>[];
+  for (var row = 0; row < 7; row++) {
+    final y = 196.0 + row * 32, size = 7 + row * 0.9, gap = 16 + row * 1.6;
+    final head = _fill(Color.lerp(const Color(0xFF15110F), const Color(0xFF221C19), row / 6)!);
+    for (var x = (row % 2) * gap / 2 - 6; x < w + 10; x += gap) {
+      final at = Offset(x + r() * 3, y + r() * 4);
+      g
+        ..drawCircle(at, size, head)
+        ..drawOval(_oval(at.dx, at.dy + size * 2.1, size * 1.6, size * 1.2), head);
+      if (r() > 0.88) spots.add(at.translate(size * 0.8, size * 1.4));
+    }
+  }
+  // Exit lights along the top of the stands.
+  for (var k = 0; k < 12; k++) {
+    g.drawCircle(Offset(40 + k * 68.0, 176 + (k % 2) * 8), 3, _fill(const Color(0xFFFFF3D0).withValues(alpha: 0.8)));
+  }
+  // Cameras going off.
+  final f = _Rnd(77);
+  for (final at in spots) {
+    final period = 2.3 + f() * 2.5, phase = (t / period + f()) % 1;
+    if (phase > 0.07) continue;
+    final on = 1 - phase / 0.07;
+    g
+      ..drawCircle(at, 34, _glow(at, 34, [(0, _rgba(255, 255, 255, 0.95 * on)), (1, _rgba(255, 255, 255, 0))]))
+      ..drawCircle(at, 3.5, _fill(_rgba(255, 255, 255, on)));
+  }
+  // The rig and its two beams on the ring.
+  final sway = math.sin(t * 0.7) * 40, sway2 = math.sin(t * 0.9 + 1.3) * 26;
+  g.drawPath(
+    Path()
+      ..moveTo(240, 40)
+      ..lineTo(584, 40)
+      ..lineTo(704 + sway, h)
+      ..lineTo(120 + sway, h)
+      ..close(),
+    _down(40, h, [(0, _rgba(255, 243, 208, 0.16)), (1, _rgba(255, 243, 208, 0.08))]),
+  );
+  g.drawPath(
+    Path()
+      ..moveTo(360, 40)
+      ..lineTo(464, 40)
+      ..lineTo(524 + sway2, h)
+      ..lineTo(300 + sway2, h)
+      ..close(),
+    _down(40, h, [(0, _rgba(255, 243, 208, 0.22)), (1, _rgba(255, 243, 208, 0.12))]),
+  );
+  g.drawRect(Rect.fromLTWH(230, 16, 364, 24), _fill(const Color(0xFF1E1A18)));
+  for (final x in const [290.0, 370.0, 454.0, 534.0]) {
+    _lit(g, const Color(0xFFFFE9B0), 18, (p) => g.drawCircle(Offset(x, 40), 9, p), _fill(const Color(0xFFFFF3D0)));
+  }
+  // The ring: blue canvas, red ropes, white posts.
+  final canvas = Path()
+    ..moveTo(80, 531)
+    ..lineTo(744, 531)
+    ..lineTo(680, 459)
+    ..lineTo(144, 459)
+    ..close();
+  g
+    ..drawRect(Rect.fromLTWH(80, 531, 664, h - 531), _fill(const Color(0xFF0B0908)))
+    ..drawPath(canvas, _fill(const Color(0xFF2F6FD6)))
+    ..save()
+    ..clipPath(canvas)
+    ..drawOval(_oval(412 + sway, 496, 250, 44), _glow(Offset(412 + sway, 496), 250, [(0, _rgba(255, 243, 208, 0.35)), (1, _rgba(255, 243, 208, 0))]))
+    ..restore()
+    ..drawPath(canvas, _stroke(_ink, 6));
+  final rope = _stroke(const Color(0xFFE8573E), 6);
+  for (final (y, inset) in const [(440.0, 104.0), (421.0, 116.0), (402.0, 128.0)]) {
+    g.drawLine(Offset(inset, y), Offset(w - inset, y), rope);
+  }
+  for (final x in const [92.0, 716.0]) {
+    final post = Rect.fromLTWH(x, 382, 16, 154);
+    g
+      ..drawRect(post, _fill(const Color(0xFFE8DCC8)))
+      ..drawRect(post, _stroke(_ink, 4));
+  }
+}
+
+/// Clouds drift over the planet; a satellite crosses; the stars twinkle.
+void _orbit(Canvas g, double w, double h, double t) {
+  g.drawRect(Rect.fromLTWH(0, 0, w, h), _down(0, h, const [(0, Color(0xFF020414)), (1, Color(0xFF0B1440))]));
+  _stars(g, w, h, 90, 52, t, 0.8);
+  // A far planet with its ring.
+  const far = Offset(150, 120);
+  g
+    ..drawCircle(far, 22, _glow(far.translate(-8, -8), 34, [(0, const Color(0xFFFFC98A)), (1, const Color(0xFFB0563A))]))
+    ..drawOval(_oval(far.dx, far.dy, 44, 9), _stroke(const Color(0xFFFFE2B8).withValues(alpha: 0.7), 3));
+  // A satellite on its way across, its light blinking.
+  final pass = (t / 26 + 0.35) % 1;
+  final sx = -60 + pass * (w + 120), sy = 150 - math.sin(pass * math.pi) * 60;
+  final panel = _fill(const Color(0xFF3D6FD8)), body = _fill(const Color(0xFFD7DEE8));
+  g
+    ..save()
+    ..translate(sx, sy)
+    ..rotate(-0.25 + pass * 0.5)
+    ..drawRect(const Rect.fromLTWH(-34, -5, 22, 10), panel)
+    ..drawRect(const Rect.fromLTWH(12, -5, 22, 10), panel)
+    ..drawRect(const Rect.fromLTWH(-12, -1, 24, 2), body)
+    ..drawRect(const Rect.fromLTWH(-7, -7, 14, 14), body)
+    ..restore();
+  if (math.sin(t * 5) > 0.6) g.drawCircle(Offset(sx, sy - 9), 2.4, _fill(const Color(0xFFFF5A5A)));
+  // The sun's glint.
+  final glint = 3.2 * (1 + 0.15 * math.sin(t * 2));
+  g.drawCircle(const Offset(680, 320), 20, _fill(const Color(0xFFFFE7B0).withValues(alpha: 0.25)));
+  _spark(g, 680, 320, glint, const Color(0xFFFFE7B0));
+  // The planet: its air glowing along the edge, then the planet itself.
+  const c = Offset(412, 1400), radius = 1020.0;
+  final edge = Rect.fromCircle(center: c, radius: radius);
+  g
+    ..drawOval(edge, (_stroke(const Color(0xFF7FD3FF).withValues(alpha: 0.3), 60)..maskFilter = const MaskFilter.blur(BlurStyle.normal, 30)))
+    ..drawOval(edge, (_stroke(const Color(0xFF7FD3FF), 20)..maskFilter = const MaskFilter.blur(BlurStyle.normal, 12)))
+    ..drawOval(edge, Paint()
+      ..shader = ui.Gradient.radial(const Offset(412, 788), 1632, const [Color(0xFF2F86E8), Color(0xFF123E8C), Color(0xFF061A40)], const [0, 0.6, 1]));
+  // The clouds keep to the planet's curve as they go.
+  double surface(double x) => c.dy - math.sqrt(radius * radius - (x - c.dx) * (x - c.dx));
+  final cloud = _fill(const Color(0xFFEAF6FF).withValues(alpha: 0.55));
+  g
+    ..save()
+    ..clipPath(Path()..addOval(edge));
+  for (final (start, big, speed) in const [(120.0, true, 9.0), (500.0, false, 9.0), (-260.0, false, 12.0), (300.0, true, 7.0)]) {
+    final x = (start + t * speed) % (w + 400) - 200;
+    final lift = surface(x.clamp(0.0, w)) - 380;
+    final p = big
+        ? (Path()
+            ..moveTo(0, 30)
+            ..cubicTo(60, 6, 140, 14, 180, 26)
+            ..cubicTo(220, 38, 160, 54, 100, 50)
+            ..cubicTo(60, 50, 20, 46, 0, 30)
+            ..close())
+        : (Path()
+            ..moveTo(0, 22)
+            ..cubicTo(40, 10, 100, 14, 120, 26)
+            ..cubicTo(100, 38, 40, 38, 0, 22)
+            ..close());
+    g.drawPath(p.shift(Offset(x - 90, 400 + lift)), cloud);
+  }
+  // Night coming over the far side.
+  g
+    ..drawRect(Rect.fromLTWH(0, 360, w, h - 360), Paint()
+      ..shader = ui.Gradient.linear(const Offset(380, 0), Offset(w, 0), [_rgba(2, 4, 20, 0), _rgba(2, 4, 20, 0.45)]))
+    ..restore();
+}
+
+/// Confetti falls on the winner.
+void _championPodium(Canvas g, double w, double h, double t) {
+  g.drawRect(Rect.fromLTWH(0, 0, w, h), _fill(const Color(0xFF1A1418)));
+  // The one light, on the top step.
+  final beam = 0.12 + 0.03 * math.sin(t * 1.4);
+  g
+    ..drawPath(
+      Path()
+        ..moveTo(372, 0)
+        ..lineTo(452, 0)
+        ..lineTo(612, h)
+        ..lineTo(212, h)
+        ..close(),
+      _down(0, h, [(0, _rgba(255, 224, 138, beam * 0.6)), (1, _rgba(255, 224, 138, beam))]),
+    )
+    ..drawPath(
+      Path()
+        ..moveTo(412, 0)
+        ..lineTo(300, h)
+        ..lineTo(524, h)
+        ..close(),
+      _fill(_rgba(255, 224, 138, beam)),
+    )
+    ..drawCircle(const Offset(412, 380), 240, _glow(const Offset(412, 380), 240, [(0, _rgba(255, 224, 138, 0.22)), (1, _rgba(255, 224, 138, 0))]));
+  // The steps: gold in the middle, silver to its left, bronze to its right.
+  for (final (box, face, top) in const [
+    (Rect.fromLTRB(192, 437, 332, 572), Color(0xFFC9D2DB), Color(0xFFE6ECF2)),
+    (Rect.fromLTRB(492, 465, 632, 572), Color(0xFFD08A4E), Color(0xFFE6A574)),
+    (Rect.fromLTRB(332, 381, 492, 572), Color(0xFFF2C14E), Color(0xFFFFD978)),
+  ]) {
+    g
+      ..drawRect(box, _fill(face))
+      ..drawRect(Rect.fromLTWH(box.left, box.top, box.width, 14), _fill(top))
+      ..drawLine(Offset(box.left, box.top + 14), Offset(box.right, box.top + 14), _stroke(_ink, 3))
+      ..drawRect(box, _stroke(_ink, 6));
+  }
+  // The 1, cut as a shape so no font is needed.
+  g.drawPath(
+    Path()
+      ..moveTo(403, 418)
+      ..lineTo(425, 418)
+      ..lineTo(425, 480)
+      ..lineTo(437, 480)
+      ..lineTo(437, 492)
+      ..lineTo(391, 492)
+      ..lineTo(391, 480)
+      ..lineTo(403, 480)
+      ..lineTo(403, 440)
+      ..lineTo(390, 446)
+      ..lineTo(386, 435)
+      ..close(),
+    _fill(_ink),
+  );
+  // Glints over the top step.
+  for (final (x, y, k) in const [(350.0, 352.0, 0), (478.0, 340.0, 1), (420.0, 318.0, 2)]) {
+    final s = math.sin(t * 2.2 + k * 2.1);
+    if (s > 0) _spark(g, x, y, 1.4 + s * 1.6, const Color(0xFFFFF1C4));
+  }
+  // Confetti, fluttering down.
+  const colours = [Color(0xFFFF5A8A), Color(0xFFFFE45C), Color(0xFF5AD8FF), Color(0xFF7CFF8A)];
+  final r = _Rnd(19);
+  for (var k = 0; k < 60; k++) {
+    final x0 = r() * w, y0 = r() * h, speed = 40 + r() * 50, spin = 2 + r() * 3;
+    final x = x0 + math.sin(t * 1.5 + k) * 14, y = (y0 + t * speed) % (h + 40) - 20;
+    final flip = math.cos(t * 4 + k).abs();
+    g
+      ..save()
+      ..translate(x, y)
+      ..rotate(t * spin + k)
+      ..drawRect(Rect.fromCenter(center: Offset.zero, width: 12, height: 6 * flip + 1), _fill(colours[k % colours.length]))
+      ..restore();
   }
 }

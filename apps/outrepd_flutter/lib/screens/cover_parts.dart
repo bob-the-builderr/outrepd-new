@@ -1,5 +1,5 @@
 /// The cover over a profile, and where a player picks theirs: one of the
-/// nine moving scenes, a photo of their own cropped to the cover's shape, or
+/// thirteen moving scenes, a photo of their own cropped to the cover's shape, or
 /// none (the user's picks, 2026-11-01). Covers are Pro: a free player can
 /// open the picker and watch any scene move, with a quiet way to Pro, but
 /// keeps none of them.
@@ -76,6 +76,11 @@ String coverName(L l, String id) => switch (id) {
   'bronze_dunes' => l.coverBronzeDunes,
   'volcano' => l.coverVolcano,
   'palm_beach' => l.coverPalmBeach,
+  'fireworks' => l.coverFireworks,
+  'fight_night' => l.coverFightNight,
+  'orbit' => l.coverOrbit,
+  'champion_podium' => l.coverChampionPodium,
+  'winter_city' => l.coverWinterCity,
   _ => l.coverWinterCity,
 };
 

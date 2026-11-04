@@ -403,7 +403,7 @@ class LIt extends L {
   String get proPerkEntranceBody => 'Nella schermata VS prima di ogni partita dal vivo.';
 
   @override
-  String get proPerkCovers => '9 copertine animate';
+  String get proPerkCovers => '13 copertine animate';
 
   @override
   String get proPerkCoversBody => 'O una tua foto, in cima al tuo profilo.';
@@ -581,6 +581,18 @@ class LIt extends L {
 
   @override
   String get coverWinterCity => 'Città d\'inverno';
+
+  @override
+  String get coverFireworks => 'Fuochi d\'artificio';
+
+  @override
+  String get coverFightNight => 'Notte di combattimento';
+
+  @override
+  String get coverOrbit => 'Orbita';
+
+  @override
+  String get coverChampionPodium => 'Podio del campione';
 
   @override
   String get vsLiveRanked => 'LIVE · CLASSIFICATA';

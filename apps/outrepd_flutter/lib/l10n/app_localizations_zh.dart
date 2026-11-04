@@ -387,7 +387,7 @@ class LZh extends L {
   String get proPerkEntranceBody => '在每场直播对决前的 VS 画面上。';
 
   @override
-  String get proPerkCovers => '9 个动态封面';
+  String get proPerkCovers => '13 个动态封面';
 
   @override
   String get proPerkCoversBody => '或用你自己的照片，放在资料页顶部。';
@@ -565,6 +565,18 @@ class LZh extends L {
 
   @override
   String get coverWinterCity => '冬日城市';
+
+  @override
+  String get coverFireworks => '烟花';
+
+  @override
+  String get coverFightNight => '格斗之夜';
+
+  @override
+  String get coverOrbit => '轨道';
+
+  @override
+  String get coverChampionPodium => '冠军领奖台';
 
   @override
   String get vsLiveRanked => '直播 · 排位';

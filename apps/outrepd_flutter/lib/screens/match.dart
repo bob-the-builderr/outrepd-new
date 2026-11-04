@@ -12,7 +12,6 @@ library;
 
 import 'dart:math' as math;
 
-import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 
 import '../app_bottom_nav.dart' show TablerIcon;

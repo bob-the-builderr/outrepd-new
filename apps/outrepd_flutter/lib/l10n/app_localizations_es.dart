@@ -404,7 +404,7 @@ class LEs extends L {
   String get proPerkEntranceBody => 'En la pantalla VS antes de cada partida en vivo.';
 
   @override
-  String get proPerkCovers => '9 portadas animadas';
+  String get proPerkCovers => '13 portadas animadas';
 
   @override
   String get proPerkCoversBody => 'O tu propia foto, arriba de tu perfil.';
@@ -582,6 +582,18 @@ class LEs extends L {
 
   @override
   String get coverWinterCity => 'Ciudad de invierno';
+
+  @override
+  String get coverFireworks => 'Fuegos artificiales';
+
+  @override
+  String get coverFightNight => 'Noche de pelea';
+
+  @override
+  String get coverOrbit => 'Órbita';
+
+  @override
+  String get coverChampionPodium => 'Podio del campeón';
 
   @override
   String get vsLiveRanked => 'EN VIVO · CLASIFICATORIA';

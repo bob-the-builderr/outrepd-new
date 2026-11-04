@@ -401,7 +401,7 @@ class LHi extends L {
   String get proPerkEntranceBody => 'हर लाइव मैच से पहले VS स्क्रीन पर।';
 
   @override
-  String get proPerkCovers => '9 चलते कवर';
+  String get proPerkCovers => '13 चलते कवर';
 
   @override
   String get proPerkCoversBody => 'या आपकी अपनी फ़ोटो, आपकी प्रोफ़ाइल के ऊपर।';
@@ -579,6 +579,18 @@ class LHi extends L {
 
   @override
   String get coverWinterCity => 'सर्दियों का शहर';
+
+  @override
+  String get coverFireworks => 'आतिशबाज़ी';
+
+  @override
+  String get coverFightNight => 'फ़ाइट नाइट';
+
+  @override
+  String get coverOrbit => 'कक्षा';
+
+  @override
+  String get coverChampionPodium => 'चैंपियन पोडियम';
 
   @override
   String get vsLiveRanked => 'लाइव · रैंक्ड';

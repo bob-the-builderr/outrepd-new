@@ -400,7 +400,7 @@ class LId extends L {
   String get proPerkEntranceBody => 'Di layar VS sebelum setiap pertandingan live.';
 
   @override
-  String get proPerkCovers => '9 sampul bergerak';
+  String get proPerkCovers => '13 sampul bergerak';
 
   @override
   String get proPerkCoversBody => 'Atau fotomu sendiri, di atas profilmu.';
@@ -578,6 +578,18 @@ class LId extends L {
 
   @override
   String get coverWinterCity => 'Kota musim dingin';
+
+  @override
+  String get coverFireworks => 'Kembang api';
+
+  @override
+  String get coverFightNight => 'Malam pertarungan';
+
+  @override
+  String get coverOrbit => 'Orbit';
+
+  @override
+  String get coverChampionPodium => 'Podium juara';
 
   @override
   String get vsLiveRanked => 'LIVE · PERINGKAT';

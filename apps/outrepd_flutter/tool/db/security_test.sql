@@ -915,6 +915,10 @@ select check_that(count(*) = 0,
 -- is Pro; nobody's cover can point at somebody else's file.
 select as_user(:'A'); set role authenticated;
 update profiles set lifter = '{"v":1,"skin":"tan"}', cover = 'neon_city' where id = :'A';
+-- The four scenes added after 1.1.6 went live.
+update profiles set cover = 'fireworks' where id = :'A';
+update profiles set cover = 'champion_podium' where id = :'A';
+update profiles set cover = 'neon_city' where id = :'A';
 select must_fail('a cover that is not one of the scenes',
                  format('update profiles set cover = %L where id = %L', 'my_site', :'A'));
 select must_fail('a cover from another account''s folder',

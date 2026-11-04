@@ -402,7 +402,7 @@ class LPt extends L {
   String get proPerkEntranceBody => 'Na tela VS antes de cada partida ao vivo.';
 
   @override
-  String get proPerkCovers => '9 capas animadas';
+  String get proPerkCovers => '13 capas animadas';
 
   @override
   String get proPerkCoversBody => 'Ou sua própria foto, no topo do seu perfil.';
@@ -580,6 +580,18 @@ class LPt extends L {
 
   @override
   String get coverWinterCity => 'Cidade de inverno';
+
+  @override
+  String get coverFireworks => 'Fogos de artifício';
+
+  @override
+  String get coverFightNight => 'Noite de luta';
+
+  @override
+  String get coverOrbit => 'Órbita';
+
+  @override
+  String get coverChampionPodium => 'Pódio do campeão';
 
   @override
   String get vsLiveRanked => 'AO VIVO · RANQUEADA';

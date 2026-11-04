@@ -403,7 +403,7 @@ class LDe extends L {
   String get proPerkEntranceBody => 'Auf dem VS-Bildschirm vor jedem Live-Match.';
 
   @override
-  String get proPerkCovers => '9 bewegte Titelbilder';
+  String get proPerkCovers => '13 bewegte Titelbilder';
 
   @override
   String get proPerkCoversBody => 'Oder dein eigenes Foto, oben auf deinem Profil.';
@@ -581,6 +581,18 @@ class LDe extends L {
 
   @override
   String get coverWinterCity => 'Winterstadt';
+
+  @override
+  String get coverFireworks => 'Feuerwerk';
+
+  @override
+  String get coverFightNight => 'Kampfnacht';
+
+  @override
+  String get coverOrbit => 'Umlaufbahn';
+
+  @override
+  String get coverChampionPodium => 'Siegerpodest';
 
   @override
   String get vsLiveRanked => 'LIVE · GEWERTET';

@@ -389,7 +389,7 @@ class LJa extends L {
   String get proPerkEntranceBody => 'ライブ対戦の前のVS画面で。';
 
   @override
-  String get proPerkCovers => '9種類の動くカバー';
+  String get proPerkCovers => '13種類の動くカバー';
 
   @override
   String get proPerkCoversBody => 'または自分の写真を、プロフィールの上に。';
@@ -567,6 +567,18 @@ class LJa extends L {
 
   @override
   String get coverWinterCity => '冬の街';
+
+  @override
+  String get coverFireworks => '花火';
+
+  @override
+  String get coverFightNight => 'ファイトナイト';
+
+  @override
+  String get coverOrbit => '軌道';
+
+  @override
+  String get coverChampionPodium => '表彰台';
 
   @override
   String get vsLiveRanked => 'ライブ · ランク戦';

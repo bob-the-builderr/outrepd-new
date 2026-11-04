@@ -401,7 +401,7 @@ class LTr extends L {
   String get proPerkEntranceBody => 'Her canlı maçtan önce VS ekranında.';
 
   @override
-  String get proPerkCovers => '9 hareketli kapak';
+  String get proPerkCovers => '13 hareketli kapak';
 
   @override
   String get proPerkCoversBody => 'Ya da kendi fotoğrafın, profilinin en üstünde.';
@@ -579,6 +579,18 @@ class LTr extends L {
 
   @override
   String get coverWinterCity => 'Kış şehri';
+
+  @override
+  String get coverFireworks => 'Havai fişek';
+
+  @override
+  String get coverFightNight => 'Dövüş gecesi';
+
+  @override
+  String get coverOrbit => 'Yörünge';
+
+  @override
+  String get coverChampionPodium => 'Şampiyon kürsüsü';
 
   @override
   String get vsLiveRanked => 'CANLI · DERECELİ';
