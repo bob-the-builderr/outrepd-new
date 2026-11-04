@@ -32,6 +32,7 @@ import 'live_invite.dart';
 import 'pro_parts.dart';
 import 'settings_privacy.dart';
 import 'share_card.dart';
+import 'shell.dart' show AppShell;
 
 /// Opens the quick-peek sheet for [username]. The one entry point every row
 /// that shows somebody's name calls, so a name means the same thing to tap
@@ -42,6 +43,13 @@ Future<void> showLifterPeek(
   required String username,
   LifterProfile? initial,
 }) {
+  // Your own name on a board is you: the server does not describe you to
+  // yourself as somebody else, and the card said it could not load
+  // (the user, 2026-11-04). Your own profile is the tab for that.
+  final me = backend.me?.id;
+  if (me != null && me.isNotEmpty && id == me && AppShell.goToProfile(context)) {
+    return Future.value();
+  }
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
