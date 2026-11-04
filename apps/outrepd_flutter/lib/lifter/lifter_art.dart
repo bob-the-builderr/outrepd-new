@@ -10,6 +10,7 @@ library;
 import 'dart:math' as math;
 
 import 'catalog.dart';
+import 'pro_art.dart';
 
 const _ink = '#16120F';
 const _coral = '#FF8466';
@@ -71,7 +72,7 @@ String lifterSvg(Lifter l, {LifterView view = LifterView.full}) {
   }
   // Under a hat only hair that hangs below it is drawn.
   final hairId = kHair[l.hair].id;
-  if (!l.wearsHat || hairId == 'long' || hairId == 'dreads') b.write(h.front);
+  if (!l.wearsHat || hairId == 'long' || hairId == 'dreads' || hairId == 'neon_dreads') b.write(h.front);
   b.write(_gear(l.gear));
   return _svg(b.toString(), view);
 }
@@ -194,6 +195,13 @@ const _hairs = <int, _Hair>{
 };
 
 ({String back, String front}) _hair(int i, String hc) {
+  final id = kHair[i].id;
+  if (proHair[id] case final pro?) return pro;
+  // The afro: a cloud of hair, its edge all curls, ending above the ears (the
+  // user, 2026-11-04: the old one read as a helmet).
+  if (id == 'afro') {
+    return (back: '', front: _cel('hf', afroOutline, hc, dark: -0.35, inner: afroCoils.replaceAll('HCL', _shade(hc, 0.35))));
+  }
   final h = _hairs[i];
   final back = StringBuffer(), front = StringBuffer();
   if (h != null) {
@@ -225,7 +233,9 @@ const _hairs = <int, _Hair>{
 /// sits round the jaw, under it.
 const _beardOverMouth = {4, 9, 10};
 
-String _beard(int i, String hc) => switch (i) {
+String _beard(int i, String hc) => proBeards[kBeards[i].id] ?? _freeBeard(i, hc);
+
+String _freeBeard(int i, String hc) => switch (i) {
   1 => _flat('M68 88 C70 104 82 116 100 118 C118 116 130 104 132 88 C128 100 118 108 100 108 C82 108 72 100 68 88 Z', hc, 0.45),
   2 => _cel('bd', 'M66 80 C66 108 80 126 100 128 C120 126 134 108 134 80 C130 96 122 104 112 104 C106 100 94 100 88 104 C78 104 70 96 66 80 Z', hc),
   3 => _cel('bd', 'M91 114 C95 112 105 112 109 114 L107 126 C104 129 96 129 93 126 Z', hc, w: 2.6),
@@ -242,7 +252,9 @@ String _beard(int i, String hc) => switch (i) {
 
 // ── the face ─────────────────────────────────────────────────────────────────
 
-String _eyes(int i, LifterPart sk) {
+String _eyes(int i, LifterPart sk) => proEyes[kEyes[i].id] ?? _freeEyes(i, sk);
+
+String _freeEyes(int i, LifterPart sk) {
   const white = '<path d="M77 82 C80 77 93 77 96 82 C92 86 81 86 77 82 Z M123 82 C120 77 107 77 104 82 C108 86 119 86 123 82 Z" fill="#fff" stroke="$_ink" stroke-width="2.2"/>';
   final glow = switch (sk.fx) {
     'cyborg' => '#FF3B3B',
@@ -292,7 +304,9 @@ String _brows(int i, String hc) {
   return '<path d="${shapes[i]}" fill="${_shade(hc, -0.1)}" stroke="$_ink" stroke-width="2.2" stroke-linejoin="round"/>';
 }
 
-String _mouth(int i) {
+String _mouth(int i) => proMouths[kMouths[i].id] ?? _freeMouth(i);
+
+String _freeMouth(int i) {
   String teeth([String cap = '']) {
     final b = StringBuffer('<path d="M86 104 L114 104 L112 111 L88 111 Z" fill="#fff" stroke="$_ink" stroke-width="2.4" stroke-linejoin="round"/>');
     if (cap == 'gold') b.write('<rect x="100" y="104" width="7" height="7" fill="#F2C14E"/>');
@@ -322,7 +336,9 @@ String _mouth(int i) {
   };
 }
 
-String _marks(int i) => switch (i) {
+String _marks(int i) => proMarks[kMarks[i].id] ?? _freeMarks(i);
+
+String _freeMarks(int i) => switch (i) {
   1 => _inkLine('M118 90 L128 104', w: 2.6, o: 0.9, col: '#f4e7d8') + _inkLine('M118 90 L128 104', w: 0.8, o: 0.9),
   2 => _flat('M76 88 L94 88 L93 93 L77 93 Z M106 88 L124 88 L123 93 L107 93 Z', '#141210', 0.95),
   3 => _flat('M72 90 L90 92 L72 95 Z M72 97 L88 98 L72 101 Z M128 90 L110 92 L128 95 Z M128 97 L112 98 L128 101 Z', '#C2452D', 0.95),

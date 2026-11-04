@@ -113,6 +113,9 @@ const kHair = <LifterPart>[
   LifterPart('slick_back'), LifterPart('man_bun'), LifterPart('dreads'), LifterPart('side_part'),
   LifterPart('long'), LifterPart('undercut'), LifterPart('waves'), LifterPart('cornrows'),
   LifterPart('pompadour'), LifterPart('faux_hawk'), LifterPart('twists'), LifterPart('messy'),
+  // Pro (the user's picks, 2026-11-04; drawn in pro_art.dart).
+  LifterPart('inferno', pro: true), LifterPart('galaxy_afro', pro: true),
+  LifterPart('bolt_fade', pro: true), LifterPart('neon_dreads', pro: true),
 ];
 
 const kHairColors = <String>[
@@ -128,6 +131,9 @@ const kEyes = <LifterPart>[
   LifterPart('stars', rarity: Rarity.epic, unlock: Unlock(UnlockKind.starredLevels, 30)),
   LifterPart('laser', rarity: Rarity.legendary, unlock: Unlock(UnlockKind.dayStreak, 30)),
   LifterPart('glow', pro: true),
+  LifterPart('hypno', pro: true), LifterPart('diamond_eyes', pro: true),
+  LifterPart('snake_eyes', pro: true), LifterPart('electric', pro: true),
+  LifterPart('gold_eyes', pro: true),
 ];
 
 /// The eyes drawn shut: the blink of a lifter that moves.
@@ -144,18 +150,24 @@ const kMouths = <LifterPart>[
   LifterPart('grimace'), LifterPart('lip_bite'),
   LifterPart('gold_tooth', rarity: Rarity.rare, unlock: Unlock(UnlockKind.wins, 10)),
   LifterPart('diamond_grill', rarity: Rarity.legendary, unlock: Unlock(UnlockKind.wins, 100)),
+  LifterPart('bubble_gum', pro: true), LifterPart('fangs', pro: true),
+  LifterPart('fire_breath', pro: true), LifterPart('shark_grin', pro: true),
 ];
 
 const kBeards = <LifterPart>[
   LifterPart('none'), LifterPart('stubble'), LifterPart('full'), LifterPart('goatee'),
   LifterPart('moustache'), LifterPart('chin_strap'), LifterPart('viking'), LifterPart('chops'),
   LifterPart('boxed'), LifterPart('anchor'), LifterPart('handlebar'), LifterPart('soul_patch'),
+  LifterPart('flame_beard', pro: true), LifterPart('gold_braids', pro: true),
+  LifterPart('frost_beard', pro: true), LifterPart('galaxy_beard', pro: true),
 ];
 
 const kMarks = <LifterPart>[
   LifterPart('none'), LifterPart('scar'), LifterPart('eye_black'), LifterPart('war_paint'),
   LifterPart('freckles'), LifterPart('tattoo'), LifterPart('nose_tape'), LifterPart('sweat'),
   LifterPart('cheek_bandage'), LifterPart('nose_ring'), LifterPart('brow_piercing'),
+  LifterPart('lightning_bolt', pro: true), LifterPart('face_gems', pro: true),
+  LifterPart('gold_flakes', pro: true),
 ];
 
 const kTops = <LifterPart>[
@@ -333,13 +345,13 @@ class Lifter {
     int free(List<LifterPart> list) => r.pick(list.where((p) => !p.earned && !p.pro).length);
     return Lifter(
       skin: free(kSkins),
-      hair: r.pick(kHair.length),
+      hair: free(kHair),
       hairColor: r.pick(kHairColors.length),
       eyes: free(kEyes),
       brows: r.pick(kBrows.length),
       mouth: free(kMouths),
-      beard: r.pick(kBeards.length),
-      marks: r.next() < 0.5 ? 0 : r.pick(kMarks.length),
+      beard: free(kBeards),
+      marks: r.next() < 0.5 ? 0 : free(kMarks),
       top: free(kTops),
       topColor: r.pick(kTopColors.length),
       gear: free(kGear),
