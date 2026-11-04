@@ -48,8 +48,10 @@ Future<void> _open(BuildContext Function() context, Uri uri) async {
     final lifter = found
         .where((f) => f.username.toLowerCase() == name.toLowerCase())
         .firstOrNull;
-    // Not found, blocked, or this account's own name: nothing to open.
-    if (lifter == null || lifter.id == backend.me?.id) return;
+    // Not found or blocked: nothing to open. This account's own link opens
+    // its own profile, as its name on a board does (showLifterPeek sends it
+    // there): opening it did nothing, which looked like a broken link.
+    if (lifter == null) return;
     final at = context();
     if (!at.mounted) return;
     await showLifterPeek(at, id: lifter.id, username: lifter.username);

@@ -63,7 +63,15 @@ abstract final class _CardType {
 /// Where a shared card points: the lifter's own page on the site, their rank
 /// card with the stores under it — and, when the app is installed, their
 /// card in the app (lib/deep_links.dart).
+///
+/// Written short on the card, sent with www: the app claims www.outrepd.com
+/// only (AndroidManifest.xml, Runner.entitlements), and a phone handed
+/// outrepd.com opened the site, which redirects to www in the browser
+/// instead of in the app (the user, 2026-11-04).
 const kShareSite = 'outrepd.com';
+
+/// The link itself, for sharing and copying: the address the app opens.
+String shareLink(String profileUrl) => 'https://www.$profileUrl';
 
 String profilePath(String username) =>
     '$kShareSite/u/${Uri.encodeComponent(username)}';
@@ -274,7 +282,7 @@ class _ShareCardSheetState extends State<_ShareCardSheet> {
           ],
           text:
               '${widget.invite?.call(l) ?? l.duelMeOnOutrepd}\n'
-              'https://${widget.profileUrl}',
+              shareLink(widget.profileUrl),
         ),
       );
     } on Object catch (error) {
@@ -292,7 +300,7 @@ class _ShareCardSheetState extends State<_ShareCardSheet> {
   }
 
   void _copyLink() {
-    Clipboard.setData(ClipboardData(text: 'https://${widget.profileUrl}'));
+    Clipboard.setData(ClipboardData(text: shareLink(widget.profileUrl)));
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(L.of(context).linkCopied),
