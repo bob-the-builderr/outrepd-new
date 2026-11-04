@@ -19,6 +19,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../adventure/adventure.dart';
 import '../backend/backend.dart';
 import '../career.dart';
 import '../country_names.dart';
@@ -397,6 +398,9 @@ mixin _SocialSignIn<T extends StatefulWidget> on State<T> {
         // The sheet was closed: nothing happened, nothing to say.
         return;
       case SocialSignInResult.newAccount:
+        // A new account has won nothing yet, whatever this phone kept from
+        // the one before it (the user, 2026-11-04): its own stars, none.
+        unawaited(Adventure.instance.adopt());
         await Navigator.of(context).push<void>(
           MaterialPageRoute(builder: (_) => const ChooseUsernameScreen()),
         );

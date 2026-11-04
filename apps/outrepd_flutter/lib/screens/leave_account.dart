@@ -3,6 +3,7 @@ library;
 
 import 'package:flutter/material.dart';
 
+import '../adventure/adventure.dart';
 import '../backend/backend.dart';
 import '../career.dart';
 import '../data.dart';
@@ -32,6 +33,9 @@ Future<void> leaveForWelcome(NavigatorState navigator) async {
   // The lifter is the account's, like its picture.
   await MyLifter.instance.forget();
   await MyCover.instance.forget();
+  // And its Adventure stars: a new account opened on a level it never
+  // fought (the user, 2026-11-04).
+  await Adventure.instance.forget();
   await markNotOnboarded();
   try {
     await backend.signIn(username: 'lifter');

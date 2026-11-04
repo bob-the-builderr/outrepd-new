@@ -300,8 +300,18 @@ class Adventure extends ChangeNotifier {
     }
   }
 
-  /// Signed into a different account on this phone: its stars, from the
-  /// server, in place of the ones here.
+  /// Signing out: the stars here are the account's and go with it, so the
+  /// next account on this phone starts from none — a new account opened on
+  /// Level 1 won, the last account's (the user, 2026-11-04).
+  Future<void> forget() async {
+    _stars = [];
+    _owner = null;
+    await _save();
+    notifyListeners();
+  }
+
+  /// Signed into a different account on this phone, or a new one made: its
+  /// stars, from the server, in place of the ones here.
   Future<void> adopt() async {
     _stars = [];
     _owner = null;

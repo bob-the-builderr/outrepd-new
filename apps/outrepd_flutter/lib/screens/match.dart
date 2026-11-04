@@ -852,13 +852,17 @@ class _WeekRaceCard extends StatefulWidget {
 }
 
 class _WeekRaceCardState extends State<_WeekRaceCard> {
-  // Kept between cards, so one built again (a sign-in, a new shell) shows the
-  // last place at once while it asks for the current one.
+  // Kept between cards, so one built again (a new shell) shows the last
+  // place at once while it asks for the current one — and only to the
+  // account it was read for, never the next one signed in on this phone.
   static MonthPlace? _lastMine;
   static List<MonthRow> _lastTop = const [];
+  static String? _lastFor;
 
-  MonthPlace? _mine = _lastMine;
-  List<MonthRow> _top = _lastTop;
+  static bool get _lastIsMine => _lastFor != null && _lastFor == backend.me?.id;
+
+  MonthPlace? _mine = _lastIsMine ? _lastMine : null;
+  List<MonthRow> _top = _lastIsMine ? _lastTop : const [];
   DateTime? _fetchedAt;
   bool _loading = false;
   Timer? _tick;
@@ -948,6 +952,7 @@ class _WeekRaceCardState extends State<_WeekRaceCard> {
       final top = await backend.weekBoard(limit: 3);
       _lastMine = mine;
       _lastTop = top;
+      _lastFor = backend.me?.id;
       _fetchedAt = clock.now();
       if (mounted) {
         setState(() {
