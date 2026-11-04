@@ -79,6 +79,9 @@ class MatchScreen extends StatelessWidget {
                         children: [
                           _TopRow(profile: p),
                           _StreakLine(profile: p),
+                          // What the badge does not fill is shared above and
+                          // below, so a tall phone has no empty end.
+                          const Spacer(),
                           const SizedBox(height: 4),
                           if (!p.isRanked)
                             _Unranked(size: badge)
@@ -95,19 +98,20 @@ class MatchScreen extends StatelessWidget {
                               ),
                             ),
                           const SizedBox(height: 14),
-                          // Today's goal, above the button that works toward
-                          // it. Not offline: practice still counts, but the
+                          // The button first, right under the rank it plays
+                          // for (the user's pick, 2026-11-04), then today's
+                          // goal. Not offline: practice still counts, but the
                           // screen there is about the connection.
-                          if (!offline) ...[
-                            const DailyGoalCard(),
-                            const SizedBox(height: 12),
-                          ],
                           if (offline)
                             const _OfflineActions()
-                          else if (!p.isRanked)
-                            const _PlacementActions()
-                          else ...[
+                          else if (!p.isRanked) ...[
+                            const _PlacementActions(),
+                            const SizedBox(height: 12),
+                            const DailyGoalCard(),
+                          ] else ...[
                             const _Actions(),
+                            const SizedBox(height: 12),
+                            const DailyGoalCard(),
                             const SizedBox(height: 12),
                             // Two tiles side by side: one glance takes in
                             // both. As tall as the taller tile, so large
@@ -139,8 +143,10 @@ class MatchScreen extends StatelessWidget {
 }
 
 /// The badge on this tab: as large as the screen allows once the rest of the
-/// tab is laid out under it — so all of it is on the screen at once — and
-/// never wider than half the screen. [available] is the height the tab has.
+/// tab is laid out under it — so all of it is on the screen at once, and a
+/// tall phone is filled rather than left with an empty end — but never wider
+/// than about six tenths of the screen. [available] is the height the tab
+/// has.
 double _badgeSize(BuildContext context, double available) {
   final screen = MediaQuery.sizeOf(context);
   final grow = MediaQuery.textScalerOf(context).scale(1) - 1;
@@ -152,7 +158,7 @@ double _badgeSize(BuildContext context, double available) {
   // narrow one.
   final rest = 588 + 160 * grow;
   final byHeight = (available - rest) / _badgeCrop;
-  return byHeight.clamp(96.0, math.min(screen.width * 0.5, 230.0));
+  return byHeight.clamp(96.0, math.min(screen.width * 0.62, 280.0));
 }
 
 // ─────────────────────────────── unranked ────────────────────────────────────
