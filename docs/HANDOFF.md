@@ -49,6 +49,7 @@ everything pushed to `bob-the-builderr/outrepd-new`.
   A free account can try Pro parts on but never keeps one
   (`UnlockState.keepOwned`). Screenshots: `pro_parts_1/2/3`,
   `covers_new_1/2`, `beards`, `vs_*`.
+- **2026-11-05, late:** the Pro plans wait for the store's sign-in and fall back to Google Play / the App Store (f427d42); photos are kept on the phone and the card shows them at once (12c83c2); match share cards have no heading (00dc5bf); **a push-up on the knees is refused** (8c875fb: the straightest 3D knee reading over the last 0.6 s at the top under 100°; see the pose-detection-rules skill). Builds: **Android 317, iOS 330** at 8c875fb. **Website** (outrepd/outrepd, main 4ebeaab, the user's yes): /u/<name> is served by api/u.js with the lifter's own title and picture (api/og.js, 1200×630, crest.js + resvg), and the page's card shows rating instead of LP.
 - **Earlier on 2026-11-03:** rank cards wear their tier (lib/tier_card_frame.dart,
   Match tab and profile); the card a name opens is a player card with a
   Pro look; new share cards (match and profile, story and post, Pro look).
