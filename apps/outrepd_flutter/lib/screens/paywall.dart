@@ -185,6 +185,11 @@ class _PaywallScreenState extends State<PaywallScreen> {
       _loadError = null;
     });
     try {
+      // A sign-in the store is still being told about finishes first: Pro
+      // opens a few seconds into one at the latest (openPro), and plans read
+      // while the store was moving to a new account did not load (the user,
+      // 2026-11-04 and -05).
+      await Subscription.instance.settled();
       final plans = await widget.store.plans();
       if (!mounted) return;
       setState(() {

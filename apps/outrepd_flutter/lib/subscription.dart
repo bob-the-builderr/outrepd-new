@@ -32,6 +32,21 @@ const kProEntitlement = 'pro';
 
 enum PlanPeriod { weekly, yearly }
 
+/// The Pro subscriptions as each store knows them (App Store Connect; Play
+/// Console, where each is a subscription with one base plan, `weekly` or
+/// `yearly`), weekly first. RevenueCat's offering hands out the same ones;
+/// these are read from the store itself when RevenueCat cannot be reached.
+const kProProducts = <TargetPlatform, Map<PlanPeriod, String>>{
+  TargetPlatform.iOS: {
+    PlanPeriod.weekly: 'com.outrepd.outrepd.pro.weekly',
+    PlanPeriod.yearly: 'com.outrepd.outrepd.pro.yearly',
+  },
+  TargetPlatform.android: {
+    PlanPeriod.weekly: 'pro_weekly',
+    PlanPeriod.yearly: 'pro_yearly',
+  },
+};
+
 /// One way to pay, as the store prices it — in the buyer's own currency.
 class Plan {
   const Plan({
@@ -170,6 +185,7 @@ class Subscription extends ChangeNotifier {
   /// Chooses the storefront. Called once at launch, and by tests.
   void use(Storefront? store) {
     _store = store;
+    _inFlight = null;
     _started = false;
     _userId = null;
     _active = null;
@@ -190,7 +206,12 @@ class Subscription extends ChangeNotifier {
     while (_inFlight != null) {
       await _inFlight;
     }
-    final run = _refresh(userId);
+    await _run(_refresh(userId));
+  }
+
+  Future<void>? _inFlight;
+
+  Future<void> _run(Future<void> run) async {
     _inFlight = run;
     try {
       await run;
@@ -199,7 +220,19 @@ class Subscription extends ChangeNotifier {
     }
   }
 
-  Future<void>? _inFlight;
+  /// Waits, for [limit] at most, for the store to finish starting or
+  /// changing accounts. Pro opens a few seconds into a sign-in at the
+  /// latest, and the plans it read while the store was still moving to the
+  /// new account did not load (the user, twice, 2026-11-04 and -05).
+  Future<void> settled({Duration limit = const Duration(seconds: 15)}) async {
+    final run = _inFlight;
+    if (run == null) return;
+    try {
+      await run.timeout(limit);
+    } on TimeoutException {
+      // Read anyway: the store may still answer.
+    }
+  }
 
   Future<void> _refresh(String? userId) async {
     final store = _store;
@@ -232,6 +265,14 @@ class Subscription extends ChangeNotifier {
   /// Signing out: the store lets go of the account, and nothing is known
   /// about the next one until the gate asks.
   Future<void> forget() async {
+    // Not across a start or a sign-in still going on: the store would be
+    // let go of while it was still being given the account. A few seconds
+    // at most, though; signing out does not wait on a dead connection.
+    await settled(limit: const Duration(seconds: 10));
+    await _run(_forget());
+  }
+
+  Future<void> _forget() async {
     final store = _store;
     if (store != null && _started) {
       try {
@@ -319,29 +360,67 @@ class RevenueCatStorefront implements Storefront {
   /// does not change between one read and the next.
   List<Plan>? _lastPlans;
 
-  /// Read again, a moment apart, when the request never got an answer — a
-  /// weak connection, not a missing offering — and the last plans read if it
-  /// still has not: on a new account the Pro screen said it could not load
-  /// the plans, "10: Error performing request" (the user, 2026-11-04).
+  /// RevenueCat's offering first, read again a moment apart when the request
+  /// never got an answer. When it still has not — or has no plans in it —
+  /// the plans come from the store itself, Google Play or the App Store,
+  /// which RevenueCat's servers have no part in; and the last plans read
+  /// when the store cannot say either. On a new account the Pro screen said
+  /// it could not load the plans, "10: Error performing request" (the user,
+  /// 2026-11-04, and again on 2026-11-05 after reading them again had not
+  /// been enough).
   @override
   Future<List<Plan>> plans() async {
-    for (var attempt = 0; ; attempt++) {
+    Object? failure;
+    for (var attempt = 0; attempt < 3; attempt++) {
       try {
         final plans = await _readPlans();
-        if (plans.isNotEmpty) _lastPlans = plans;
-        return plans;
+        if (plans.isNotEmpty) return _lastPlans = plans;
+        break;
       } on PlatformException catch (error) {
+        failure = error;
         final network = PurchasesErrorHelper.getErrorCode(error) ==
             PurchasesErrorCode.networkError;
-        if (!network) rethrow;
-        if (attempt == 2) {
-          final kept = _lastPlans;
-          if (kept != null) return kept;
-          rethrow;
-        }
-        await Future<void>.delayed(Duration(seconds: 1 << attempt));
+        if (!network) break;
+        if (attempt < 2) await Future<void>.delayed(Duration(seconds: 1 << attempt));
+      } on StateError catch (error) {
+        failure = error;
+        break;
       }
     }
+    try {
+      final direct = await _readProducts();
+      if (direct.isNotEmpty) return _lastPlans = direct;
+    } on Object catch (error) {
+      debugPrint('Could not read the plans from the store itself: $error');
+    }
+    final kept = _lastPlans;
+    if (kept != null) return kept;
+    if (failure != null) throw failure;
+    return const [];
+  }
+
+  /// The plans as the store itself prices them, by [kProProducts].
+  Future<List<Plan>> _readProducts() async {
+    final ids = kProProducts[defaultTargetPlatform];
+    if (ids == null) return const [];
+    final products = await Purchases.getProducts(ids.values.toList());
+    // Google Play names each by its subscription and base plan,
+    // "pro_weekly:weekly"; the App Store by the product alone.
+    StoreProduct? find(String id) {
+      for (final product in products) {
+        if (product.identifier == id || product.identifier.startsWith('$id:')) {
+          return product;
+        }
+      }
+      return null;
+    }
+
+    final plans = <Plan>[];
+    for (final entry in ids.entries) {
+      final product = find(entry.value);
+      if (product != null) plans.add(_fromProduct(entry.key, product));
+    }
+    return plans;
   }
 
   Future<List<Plan>> _readPlans() async {
@@ -364,26 +443,32 @@ class RevenueCatStorefront implements Storefront {
     ];
   }
 
-  static Plan _plan(PlanPeriod period, Package package) {
-    final product = package.storeProduct;
-    return Plan(
-      period: period,
-      price: product.price,
-      priceString: product.priceString,
-      currencyCode: product.currencyCode,
-      pricePerWeekString: product.pricePerWeekString,
-      handle: package,
-    );
-  }
+  static Plan _plan(PlanPeriod period, Package package) =>
+      _fromProduct(period, package.storeProduct, package);
+
+  /// [handle] is what [buy] is given back: RevenueCat's package, or the
+  /// store's product itself when the plans were read from the store.
+  static Plan _fromProduct(PlanPeriod period, StoreProduct product, [Object? handle]) => Plan(
+    period: period,
+    price: product.price,
+    priceString: product.priceString,
+    currencyCode: product.currencyCode,
+    pricePerWeekString: product.pricePerWeekString,
+    handle: handle ?? product,
+  );
 
   @override
   Future<({BuyOutcome outcome, bool active})> buy(Plan plan) async {
-    final package = plan.handle;
-    if (package is! Package) {
+    final params = switch (plan.handle) {
+      final Package package => PurchaseParams.package(package),
+      final StoreProduct product => PurchaseParams.storeProduct(product),
+      _ => null,
+    };
+    if (params == null) {
       return (outcome: BuyOutcome.failed, active: false);
     }
     try {
-      final result = await Purchases.purchase(PurchaseParams.package(package));
+      final result = await Purchases.purchase(params);
       final active = _hasPro(result.customerInfo);
       return (
         outcome: active ? BuyOutcome.bought : BuyOutcome.pending,
