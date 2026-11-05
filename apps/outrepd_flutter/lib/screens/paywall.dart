@@ -202,9 +202,14 @@ class _PaywallScreenState extends State<PaywallScreen> {
       if (mounted) {
         setState(() {
           _loadFailed = true;
+          // RevenueCat's own reason goes with its code: "10: Error performing
+          // request" alone could be the phone, Google Play or RevenueCat
+          // (a new account's plans, the user, 2026-11-05).
           _loadError = switch (error) {
-            PlatformException(:final code, :final message) =>
+            PlatformException(:final code, :final message, :final details) => [
               '$code: ${message ?? ''}',
+              if (details case {'underlyingErrorMessage': final String why} when why.isNotEmpty) why,
+            ].join(' — '),
             _ => '$error',
           };
         });
