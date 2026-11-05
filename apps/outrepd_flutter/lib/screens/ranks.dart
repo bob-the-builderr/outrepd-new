@@ -23,7 +23,7 @@ import '../lifter/lifter_view.dart';
 import '../lifter/looks.dart';
 import '../lifter/my_lifter.dart';
 import '../motion.dart';
-import '../player_avatar.dart' show decodedAt;
+import '../player_avatar.dart' show PhotoOrLifter, decodedAt;
 import '../ranking.dart';
 import '../season.dart';
 import '../subscription.dart';
@@ -1232,21 +1232,12 @@ class _Initial extends StatelessWidget {
     final photo = own ?? pictureAt(avatarUrl);
     if (photo == null || photo is LifterPicture) return fallback;
     return ClipOval(
-      child: Image(
+      // As in PlayerAvatar: the photo, with the lifter standing in only once
+      // it has been on its way half a second.
+      child: PhotoOrLifter(
         image: decodedAt(context, photo, size),
-        width: size,
-        height: size,
-        fit: BoxFit.cover,
-        // Empty while the photo is read, as in PlayerAvatar: the lifter is
-        // only for a photo that could not be had.
-        frameBuilder: (context, child, frame, synchronous) => frame == null
-            ? Container(
-                width: size,
-                height: size,
-                color: context.colors.border.withValues(alpha: 0.3),
-              )
-            : child,
-        errorBuilder: (context, error, stack) => fallback,
+        size: size,
+        lifter: fallback,
       ),
     );
   }

@@ -12,6 +12,8 @@
 /// initial (the user's rule, 2026-11-01).
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'lifter/lifter_view.dart';
@@ -88,20 +90,6 @@ class PlayerAvatar extends StatelessWidget {
       ),
     );
 
-    // While a photo is read — from the phone, or the first time from the
-    // server — the circle stays empty: the lifter standing in for a few
-    // seconds read as somebody else's picture (the user, 2026-11-05). The
-    // lifter is only for a photo that could not be had.
-    final blank = Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: context.colors.border.withValues(alpha: 0.3),
-        border: Border.all(color: context.colors.border, width: 1.5),
-      ),
-    );
-
     final circle = picture == null || picture is LifterPicture
         ? fallback
         : Container(
@@ -112,16 +100,10 @@ class PlayerAvatar extends StatelessWidget {
               border: Border.all(color: context.colors.border, width: 1.5),
             ),
             child: ClipOval(
-              child: Image(
+              child: PhotoOrLifter(
                 image: decodedAt(context, picture, size),
-                width: size,
-                height: size,
-                fit: BoxFit.cover,
-                frameBuilder: (context, child, frame, synchronous) =>
-                    frame == null ? blank : child,
-                // A photo that failed to load reads as no photo at all, not
-                // as a hole in the row.
-                errorBuilder: (context, error, stack) => fallback,
+                size: size,
+                lifter: fallback,
               ),
             ),
           );
@@ -154,3 +136,80 @@ ImageProvider decodedAt(BuildContext context, ImageProvider picture, double size
       null,
       picture,
     );
+
+/// A photo, square to [size], with [lifter] standing in until it is drawn.
+///
+/// A photo already on the phone draws within a frame or two, and nothing
+/// stands in for it: the lifter flashing first read as somebody else's
+/// picture (the user, 2026-11-05). One still on its way from the server — a
+/// few seconds, the first time — shows [lifter] after [kPhotoWait] rather
+/// than an empty circle, which read as no picture at all (the same day). A
+/// photo that cannot be had stays [lifter].
+class PhotoOrLifter extends StatefulWidget {
+  const PhotoOrLifter({
+    super.key,
+    required this.image,
+    required this.size,
+    required this.lifter,
+  });
+
+  final ImageProvider image;
+  final double size;
+  final Widget lifter;
+
+  @override
+  State<PhotoOrLifter> createState() => _PhotoOrLifterState();
+}
+
+/// How long a photo may take before [PhotoOrLifter.lifter] stands in.
+const kPhotoWait = Duration(milliseconds: 500);
+
+class _PhotoOrLifterState extends State<PhotoOrLifter> {
+  Timer? _wait;
+  bool _late = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _wait = Timer(kPhotoWait, () {
+      if (mounted) setState(() => _late = true);
+    });
+  }
+
+  @override
+  void didUpdateWidget(PhotoOrLifter old) {
+    super.didUpdateWidget(old);
+    if (old.image != widget.image) {
+      _wait?.cancel();
+      _late = false;
+      _wait = Timer(kPhotoWait, () {
+        if (mounted) setState(() => _late = true);
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _wait?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => Image(
+    image: widget.image,
+    width: widget.size,
+    height: widget.size,
+    fit: BoxFit.cover,
+    // Kept on screen while the next one loads, so a row being drawn again
+    // does not blink.
+    gaplessPlayback: true,
+    frameBuilder: (context, child, frame, synchronous) {
+      if (frame != null) {
+        _wait?.cancel();
+        return child;
+      }
+      return _late ? widget.lifter : SizedBox(width: widget.size, height: widget.size);
+    },
+    errorBuilder: (context, error, stack) => widget.lifter,
+  );
+}

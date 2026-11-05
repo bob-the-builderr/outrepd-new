@@ -186,6 +186,7 @@ class Subscription extends ChangeNotifier {
   void use(Storefront? store) {
     _store = store;
     _inFlight = null;
+    _serverPro = false;
     _started = false;
     _userId = null;
     _active = null;
@@ -243,24 +244,50 @@ class Subscription extends ChangeNotifier {
         active = await store.start(userId);
         _started = true;
         _userId = userId;
-        store.onChange(_set);
+        store.onChange((now) => _set(now || _serverPro));
       } else if (userId != null && userId != _userId) {
         active = await store.identify(userId);
         _userId = userId;
       } else {
         active = await store.check();
       }
+      if (!active) _serverPro = await _askServer(userId ?? _userId);
       _failed = false;
-      _set(active);
+      _set(active || _serverPro);
     } on Object catch (error) {
       debugPrint('Could not read the subscription: $error');
+      // The store could not be reached: the server's word stands in, so a
+      // subscriber keeps Pro — the cover, no ads — while RevenueCat does not
+      // answer (the user's Pro account showed no cover, 2026-11-05).
+      _serverPro = await _askServer(userId ?? _userId);
+      if (_serverPro) {
+        _failed = false;
+        _set(true);
+        return;
+      }
       _failed = true;
       notifyListeners();
     }
   }
 
+  /// What the server last said of this account's Pro: RevenueCat's webhook
+  /// keeps it (pro_looks), whether or not RevenueCat answers this phone.
+  /// Counted as well as the store's word, never instead of a yes from it.
+  bool _serverPro = false;
+
+  Future<bool> _askServer(String? userId) async {
+    if (userId == null || userId.isEmpty) return false;
+    try {
+      final looks = await backend.proLooks([userId]).timeout(const Duration(seconds: 6));
+      return looks[userId]?.pro ?? false;
+    } on Object catch (error) {
+      debugPrint('Could not ask the server about Pro: $error');
+      return _serverPro;
+    }
+  }
+
   /// Records a purchase or a restore the paywall just finished.
-  void settle(bool active) => _set(active);
+  void settle(bool active) => _set(active || _serverPro);
 
   /// Signing out: the store lets go of the account, and nothing is known
   /// about the next one until the gate asks.
@@ -273,6 +300,7 @@ class Subscription extends ChangeNotifier {
   }
 
   Future<void> _forget() async {
+    _serverPro = false;
     final store = _store;
     if (store != null && _started) {
       try {
