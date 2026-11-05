@@ -1,111 +1,35 @@
-asked       2026-11-05 18:14 UTC
-en-US    name 24  subtitle 30  keywords  98  promo 148  description 2609
-en-GB    name 24  subtitle 30  keywords  98  promo 148  description 2609
-en-AU    name 24  subtitle 30  keywords  98  promo 148  description 2609
-en-CA    name 24  subtitle 30  keywords  98  promo 148  description 2609
-de-DE    name 24  subtitle 30  keywords  95  promo 162  description 3069
-fr-FR    name 24  subtitle 30  keywords  98  promo 157  description 2973
-fr-CA    name 24  subtitle 30  keywords  98  promo 157  description 2973
-es-ES    name 24  subtitle 30  keywords 100  promo 156  description 2846
-es-MX    name 24  subtitle 27  keywords  96  promo 150  description 2857
-it       name 24  subtitle 26  keywords  95  promo 153  description 2899
-pt-BR    name 24  subtitle 30  keywords  97  promo 155  description 2769
-pt-PT    name 24  subtitle 28  keywords  95  promo 152  description 2784
-ru       name 24  subtitle 29  keywords  91  promo 157  description 2737
-tr       name 24  subtitle 29  keywords  96  promo 140  description 2608
-ja       name 24  subtitle 18  keywords  70  promo  70  description 1364
-ko       name 24  subtitle 22  keywords  55  promo  85  description 1490
-zh-Hans  name 24  subtitle 13  keywords  61  promo  54  description 985
-zh-Hant  name 24  subtitle 14  keywords  57  promo  54  description 991
-hi       name 24  subtitle 28  keywords  90  promo 136  description 2590
-id       name 24  subtitle 30  keywords  98  promo 157  description 2867
-ca       name 24  subtitle 25  keywords  95  promo 155  description 1012
-nl-NL    name 24  subtitle 29  keywords 100  promo 159  description 1035
-sv       name 24  subtitle 29  keywords  94  promo 151  description 985
-no       name 24  subtitle 25  keywords  98  promo 155  description 989
-da       name 24  subtitle 30  keywords  98  promo 154  description 992
-fi       name 24  subtitle 29  keywords  98  promo 163  description 971
-pl       name 24  subtitle 30  keywords  93  promo 162  description 1013
-cs       name 24  subtitle 29  keywords  88  promo 158  description 946
-sk       name 24  subtitle 29  keywords  87  promo 168  description 976
-hu       name 24  subtitle 27  keywords  94  promo 158  description 1030
-ro       name 24  subtitle 29  keywords  96  promo 163  description 1016
-hr       name 24  subtitle 29  keywords  92  promo 166  description 974
-sl-SI    name 24  subtitle 27  keywords  92  promo 161  description 945
-el       name 24  subtitle 28  keywords  99  promo 153  description 1065
-uk       name 24  subtitle 30  keywords  93  promo 142  description 1016
-th       name 24  subtitle 24  keywords  79  promo 133  description 821
-vi       name 24  subtitle 30  keywords  92  promo 141  description 985
-ms       name 24  subtitle 26  keywords  96  promo 169  description 1064
-ar-SA    name 24  subtitle 29  keywords  78  promo 123  description 801
-he       name 24  subtitle 30  keywords  72  promo 123  description 787
-bn-BD    name 24  subtitle 27  keywords  86  promo 146  description 962
-ur-PK    name 24  subtitle 27  keywords  69  promo 134  description 921
-gu-IN    name 24  subtitle 30  keywords  73  promo 132  description 892
-kn-IN    name 24  subtitle 28  keywords  79  promo 147  description 1008
-ml-IN    name 24  subtitle 27  keywords  79  promo 157  description 1102
-mr-IN    name 24  subtitle 27  keywords  73  promo 142  description 942
-or-IN    name 24  subtitle 27  keywords  72  promo 147  description 985
-pa-IN    name 24  subtitle 30  keywords  72  promo 140  description 976
-ta-IN    name 24  subtitle 29  keywords  74  promo 153  description 1141
-te-IN    name 24  subtitle 27  keywords  75  promo 147  description 1017
-50 locales, 0 problems
-app OUTREPD: Push-up Battles (6817853725)
+asked       2026-11-05 19:14 UTC
 version 1.1.6  PREPARE_FOR_SUBMISSION
-version 1.1.5  READY_FOR_SALE
-version 1.1.4  READY_FOR_SALE
-version 1.1.3  READY_FOR_SALE
-app info fc57482e-e676-4159-b7b7-fef63103478d  READY_FOR_SALE
-app info ff51d24e-c3f8-4ae1-92d2-7c3d8f411821  PREPARE_FOR_SUBMISSION
-support url https://www.outrepd.com/contact
-  ar-SA: verified
-  bn-BD: verified
-  ca: verified
-  cs: verified
-  da: verified
-  de-DE: verified
-  el: verified
-  en-AU: verified
-  en-CA: verified
-  en-GB: verified
-  en-US: verified
-  es-ES: verified
-  es-MX: verified
-  fi: verified
-  fr-CA: verified
-  fr-FR: verified
-  gu-IN: verified
-  he: verified
-  hi: verified
-  hr: verified
-  hu: verified
-  id: verified
-  it: verified
-  ja: verified
-  kn-IN: verified
-  ko: verified
-  ml-IN: verified
-  mr-IN: verified
-  ms: verified
-  nl-NL: verified
-  no: verified
-  or-IN: verified
-  pa-IN: verified
-  pl: verified
-  pt-BR: verified
-  pt-PT: verified
-  ro: verified
-  ru: verified
-  sk: verified
-  sl-SI: verified
-  sv: verified
-  ta-IN: verified
-  te-IN: verified
-  th: verified
-  tr: verified
-  uk: verified
-  ur-PK: verified
-  vi: verified
-  zh-Hans: verified
-  zh-Hant: verified
-50 of 50 locales verified
+en-US APP_IPHONE_67: 10 now
+  01-live-match.png  1320x2868  COMPLETE
+  02-adventure-fight.png  1320x2868  COMPLETE
+  03-ranks.png  1320x2868  COMPLETE
+  04-won.png  1320x2868  COMPLETE
+  05-adventure-map.png  1320x2868  COMPLETE
+  06-armory.png  1320x2868  COMPLETE
+  07-home.png  1320x2868  COMPLETE
+  08-friends.png  1320x2868  COMPLETE
+  09-profile.png  1320x2868  COMPLETE
+  10-awards.png  1320x2868  COMPLETE
+en-US APP_IPHONE_61: 10 now
+  01-live-match.png  1206x2622  COMPLETE
+  03-ranks.png  1206x2622  COMPLETE
+  04-won.png  1206x2622  COMPLETE
+  02-adventure-fight.png  1206x2622  COMPLETE
+  05-adventure-map.png  1206x2622  COMPLETE
+  06-armory.png  1206x2622  COMPLETE
+  07-home.png  1206x2622  COMPLETE
+  08-friends.png  1206x2622  COMPLETE
+  09-profile.png  1206x2622  COMPLETE
+  10-awards.png  1206x2622  COMPLETE
+en-US APP_IPHONE_65: 10 now
+  01-live-match.png  1284x2778  COMPLETE
+  02-adventure-fight.png  1284x2778  COMPLETE
+  03-ranks.png  1284x2778  COMPLETE
+  04-won.png  1284x2778  COMPLETE
+  05-adventure-map.png  1284x2778  COMPLETE
+  06-armory.png  1284x2778  COMPLETE
+  07-home.png  1284x2778  COMPLETE
+  08-friends.png  1284x2778  COMPLETE
+  09-profile.png  1284x2778  COMPLETE
+  10-awards.png  1284x2778  COMPLETE
