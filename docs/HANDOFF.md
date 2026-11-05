@@ -6,9 +6,10 @@ everything pushed to `bob-the-builderr/outrepd-new`.
 ## Versions
 
 - **1.1.5** is live on Google Play and the App Store (since 2026-10-31).
-- **1.1.6** (`1.1.6+1` in `pubspec.yaml` and `kAppVersion`): built several
-  times, uploaded, not submitted for review. Android 290 / iOS 297 at
-  72fd3c0 (2026-11-03). The user said the batch is done on 2026-11-04 and
+- **1.1.6** (`1.1.6+1` in `pubspec.yaml` and `kAppVersion`): **the user sent it to both
+  stores on 2026-11-05 (Android 319, iOS 334); the review results are not
+  recorded yet.** Earlier builds: Android 290 / iOS 297 at 72fd3c0
+  (2026-11-03). The user said the batch is done on 2026-11-04 and
   asked for new builds after a whole-app check; those builds carry
   everything below.
 - **Since 72fd3c0:** the Match tab back to the big badge (beating, with
@@ -93,24 +94,30 @@ query's text. Run is what applies it.
   Pro removes ads. LevelPlay first, AdMob when LevelPlay has none.
   Seven taps on the version in Settings opens LevelPlay's test suite.
 
-## Left before 1.1.6 is submitted
+## After sending 1.1.6 (2026-11-05)
 
-1. ~~app-ads.txt~~ — done 2026-11-03: outrepd.com/app-ads.txt has AdMob,
-   Unity Ads and ironSource (see `docs/site-pending/README.md`).
-2. ~~AdMob GDPR ad partners~~ — checked 2026-11-03: ironSource Mobile and
-   Unity Ads were already in the European regulations ad partners. Two
-   European regulations messages were published for the same two apps;
-   the user was told to switch off "Untitled European regulations message"
-   (25 Oct, English only) and keep "outrepd European regulations message"
-   (29 Oct, 7 languages) — check it is off.
-3. Privacy page and the App Store / Play privacy forms: name Unity. The
-   unpublished site change in `docs/site-pending/` belongs with this.
-4. **Store description in 50 languages is wrong now** (`apps/outrepd_flutter/store/aso/en.js`,
-   `app_langs.js`): it says LP, "beat a higher rank and you earn more LP"
-   and "once you reach a tier, you keep it". Plus What's New for 1.1.6.
-   The user said "not now" on 2026-11-02 — do it before submission.
-5. On a real phone: the photo crop screen (native, no CI screenshot can
-   show it) and changing the username.
+Done: `app-ads.txt` on outrepd.com (AdMob, Unity Ads, ironSource; see
+`docs/site-pending/README.md`); ironSource Mobile and Unity Ads in AdMob's
+European regulations ad partners; the privacy page names Unity LevelPlay;
+the App Store listing and What's New in 50 languages; `store/aso/en.js` no
+longer says LP or that a tier is kept.
+
+Still open:
+
+1. Not recorded anywhere: whether the App Store and Play privacy forms
+   name Unity. Ask the user.
+2. Confirm Play's Main store listing has the new description
+   (`Desktop/mokhtar/OUTREPD-google-play-1.1.6.txt`).
+3. AdMob had two European regulations messages published for the same two
+   apps. The user was told to switch off "Untitled European regulations
+   message" (25 Oct, English only) and keep "outrepd European regulations
+   message" (29 Oct, 7 languages). Confirm it is off.
+4. tito must remake their lifter after updating.
+5. Store shot 07-home is still the old Match tab.
+6. RevenueCat restore behaviour is unchecked.
+7. On a real phone: the photo crop screen and changing the username are
+   not recorded as tested.
+8. Next: a website redesign once the weekly limit resets (2026-11-09).
 
 ## Ads setup on the dashboards (2026-11-03)
 
