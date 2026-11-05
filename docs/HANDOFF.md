@@ -58,19 +58,17 @@ everything pushed to `bob-the-builderr/outrepd-new`.
 
 ## Server
 
-The live Supabase project is on **1.1.6** since 2026-11-02: the user pasted
-`Desktop/outrepd-update-1.1.6.sql` (= `supabase/install.sql` as of 23f889f).
-An anon probe finds `friends_board`, `friends_leaderboard`,
-`last_month_winners` there. `tool/db/live/install.sql` is that file.
+The live Supabase project is on **1.1.6 + the four covers** since
+2026-11-05: the user pasted `Desktop/outrepd-update-1.1.6-covers.sql`
+(= `supabase/install.sql` as of 7ebd421) over the 1.1.6 paste of
+2026-11-02, and `pg_get_constraintdef` on `profiles_cover_known` showed
+all 13 scenes. `tool/db/live/install.sql` is that file.
 `tool/db/upgrade_seed.sql` and `upgrade_check.sql` were written for the
 1.1.5 → 1.1.6 paste; if the `server` job turns red, rewrite them for the
 next upgrade.
 
-**Waiting for the user to paste:** `Desktop/outrepd-update-1.1.6-covers.sql`
-(= `supabase/install.sql` as of 7ebd421). The only change from what is
-live: the cover check is dropped and made again with the four new scenes.
-Until it is pasted, choosing one of the four new covers fails on the
-server. After the paste, copy that file over `tool/db/live/install.sql`.
+The SQL editor's Save may refuse a file this big; Save only keeps the
+query's text. Run is what applies it.
 
 ## What the user picked (do not undo)
 
@@ -149,6 +147,6 @@ waiting for the user's OK.
 ## Files on the Desktop
 
 - `outrepd-update-1.1.6.sql` — the server update that is now live.
-- `outrepd-update-1.1.6-covers.sql` — the next paste (the four covers).
+- `outrepd-update-1.1.6-covers.sql` — the four covers; pasted 2026-11-05, live now.
 - `OUTREPD-ui-cleanup/` — the direction B, Ranks and How-points mockups the
   user picked from.
