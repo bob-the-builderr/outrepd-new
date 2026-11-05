@@ -66,7 +66,7 @@ void applyServerProfile(RemoteProfile me) {
   // The name too: the boards show the server's, and so must the profile.
   rememberUsername(me.username);
   // And the lifter it made, for a phone that does not have it yet.
-  MyLifter.instance.adopt(me.lifter);
+  MyLifter.instance.adopt(me.lifter, me.id);
 }
 
 /// What one duel did, so the screen after it can say what happened.

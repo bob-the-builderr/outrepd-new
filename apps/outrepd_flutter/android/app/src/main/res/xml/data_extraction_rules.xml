@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Nothing of this app is backed up or carried to a new phone (Android 12
+     and later; AndroidManifest.xml says the same for older ones). Everything
+     that belongs to an account is on the server and comes back on sign-in;
+     what a backup brought back instead was another account's lifter, which a
+     reinstall then put on the account signed into (the user, 2026-11-05). -->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="root" />
+        <exclude domain="file" />
+        <exclude domain="database" />
+        <exclude domain="sharedpref" />
+        <exclude domain="external" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="root" />
+        <exclude domain="file" />
+        <exclude domain="database" />
+        <exclude domain="sharedpref" />
+        <exclude domain="external" />
+    </device-transfer>
+</data-extraction-rules>

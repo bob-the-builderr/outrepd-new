@@ -19,10 +19,17 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Puts the daily reminder back after the phone restarts. -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- No backup: a reinstall restored another account's lifter and the app
+         put it on the account signed into (2026-11-05). The account is on
+         the server; see res/xml/data_extraction_rules.xml. -->
     <application
         android:label="${appLabel}"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        tools:replace="android:allowBackup">
         <activity
             android:name=".MainActivity"
             android:exported="true"

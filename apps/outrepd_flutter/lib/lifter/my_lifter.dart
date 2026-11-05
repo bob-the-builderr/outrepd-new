@@ -28,10 +28,15 @@ class MyLifter extends ChangeNotifier {
   static const _key = 'lifter';
   static const _pictureKey = 'lifterIsPicture';
   static const _askedKey = 'lifterAsked';
+  static const _ownerKey = 'lifterOwner';
 
   Lifter? _built;
   bool _isPicture = false;
   bool _asked = false;
+
+  /// The account the kept lifter was made on or taken from, or null for one
+  /// kept before this was recorded.
+  String? _owner;
 
   /// The lifter this account made, or null before it has made one.
   Lifter? get built => _built;
@@ -52,6 +57,7 @@ class MyLifter extends ChangeNotifier {
     _built = _parse(store.getString(_key));
     _isPicture = store.getBool(_pictureKey) ?? false;
     _asked = store.getBool(_askedKey) ?? false;
+    _owner = store.getString(_ownerKey);
   }
 
   static Lifter? _parse(String? saved) {
@@ -78,9 +84,11 @@ class MyLifter extends ChangeNotifier {
     _built = lifter;
     _isPicture = true;
     _asked = true;
+    _owner = backend.me?.id ?? _owner;
     notifyListeners();
     final store = await SharedPreferences.getInstance();
     await store.setString(_key, jsonEncode(lifter.toJson()));
+    if (_owner case final owner?) await store.setString(_ownerKey, owner);
     await store.setBool(_pictureKey, true);
     await store.setBool(_askedKey, true);
     if (avatar.hasPhoto) await avatar.clearPhoto();
@@ -129,24 +137,41 @@ class MyLifter extends ChangeNotifier {
     await upload();
   }
 
-  /// The account's lifter, as the server has it: taken when this phone has
-  /// none (a new install, a second phone), sent when only this phone has
-  /// one.
-  void adopt(Map<String, dynamic>? json) {
-    if (_built == null && json != null) {
-      _built = Lifter.fromJson(json);
-      _asked = true;
-      notifyListeners();
-      unawaited(_persist());
-    } else if (_built != null && json == null) {
-      unawaited(upload());
+  /// The account's lifter, as the server has it, for [accountId]: taken when
+  /// this phone has none of that account's (a new install, a second phone),
+  /// sent when only this phone has it.
+  ///
+  /// Only ever this account's own. A lifter kept for another account — a
+  /// backup Android brought back on a reinstall, a sign-in without a sign-out
+  /// — is dropped, never sent: a reinstall put a test account's lifter on the
+  /// account signed into (the user, 2026-11-05). One kept before the owner
+  /// was recorded is not sent either, and the server's, when it has one,
+  /// wins over it.
+  void adopt(Map<String, dynamic>? json, String accountId) {
+    if (_built != null && _owner == accountId) {
+      // This account's own, made on this phone: sent if the server lacks it.
+      if (json == null) unawaited(upload());
+      return;
     }
+    // Nothing of this account's here: the server's lifter, or none — and
+    // then the account's picture on the server is what shows (Avatar).
+    _built = json == null ? null : Lifter.fromJson(json);
+    _isPicture = false;
+    if (json != null) _asked = true;
+    _owner = accountId;
+    notifyListeners();
+    unawaited(_persist());
   }
 
   Future<void> _persist() async {
     final store = await SharedPreferences.getInstance();
     final lifter = _built;
-    if (lifter == null) return;
+    if (_owner case final owner?) await store.setString(_ownerKey, owner);
+    if (lifter == null) {
+      await store.remove(_key);
+      await store.setBool(_pictureKey, false);
+      return;
+    }
     await store.setString(_key, jsonEncode(lifter.toJson()));
     await store.setBool(_askedKey, true);
   }
@@ -156,11 +181,13 @@ class MyLifter extends ChangeNotifier {
     _built = null;
     _isPicture = false;
     _asked = false;
+    _owner = null;
     notifyListeners();
     final store = await SharedPreferences.getInstance();
     await store.remove(_key);
     await store.remove(_pictureKey);
     await store.remove(_askedKey);
+    await store.remove(_ownerKey);
   }
 }
 

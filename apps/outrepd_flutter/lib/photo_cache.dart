@@ -70,6 +70,12 @@ class PhotoBytes {
   /// Photos kept on the phone. Past this, the oldest go.
   static const _keepOnPhone = 400;
 
+  /// A kept photo older than this is still drawn at once, and read again
+  /// behind it: the storage CDN can hand back the old picture for a while
+  /// after a new one under a new ?v (it caches by path), and what was kept
+  /// then would otherwise stay for good.
+  static const _freshFor = Duration(hours: 6);
+
   /// In the order last drawn, oldest first (a map literal keeps its order).
   final _memory = <String, Uint8List>{};
   final _pending = <String, Future<Uint8List>>{};
@@ -103,6 +109,8 @@ class PhotoBytes {
           final bytes = await file.readAsBytes();
           if (bytes.isNotEmpty) {
             _remember(url, bytes);
+            final age = DateTime.now().difference(await file.lastModified());
+            if (age > _freshFor) unawaited(_refresh(url, file));
             return bytes;
           }
         }
@@ -114,6 +122,18 @@ class PhotoBytes {
     _remember(url, bytes);
     if (file != null) unawaited(_write(file, bytes));
     return bytes;
+  }
+
+  /// Reads [url] again and keeps it in place of the old copy: the next
+  /// screen to draw it has the new one.
+  Future<void> _refresh(String url, File file) async {
+    try {
+      final bytes = await _download(url);
+      _remember(url, bytes);
+      await _write(file, bytes);
+    } on Object catch (error) {
+      debugPrint('Could not read a kept photo again: $error');
+    }
   }
 
   void _remember(String url, Uint8List bytes) {

@@ -497,7 +497,10 @@ class SupabaseBackend implements Backend {
         .uploadBinary(
           path,
           bytes,
-          fileOptions: const FileOptions(upsert: true, contentType: 'image/jpeg'),
+          // A minute at the storage CDN, not the hour it keeps by default: it
+          // caches by path and ignores ?v, so a new cover showed the old one
+          // to everybody for up to an hour (2026-11-05).
+          fileOptions: const FileOptions(upsert: true, contentType: 'image/jpeg', cacheControl: '60'),
         );
     final url =
         '${_db.storage.from('avatars').getPublicUrl(path)}'
@@ -1093,7 +1096,10 @@ class SupabaseBackend implements Backend {
           bytes,
           // The name stays photo.jpg whatever is in it — the server only
           // takes that one path — and the content type says what it is.
-          fileOptions: FileOptions(upsert: true, contentType: contentType),
+          // A minute at the storage CDN, not its default hour: it caches by
+          // path and ignores ?v, so a new picture showed the old one on the
+          // boards for up to an hour (the user's lifter, 2026-11-05).
+          fileOptions: FileOptions(upsert: true, contentType: contentType, cacheControl: '60'),
         );
 
     // The path never changes, so neither would the public URL — cache-busted
