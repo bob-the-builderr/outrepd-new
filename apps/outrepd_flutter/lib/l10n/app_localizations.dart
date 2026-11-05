@@ -3929,12 +3929,6 @@ abstract class L {
   /// **'VICTORY'**
   String get shareVictory;
 
-  /// No description provided for @shareRematch.
-  ///
-  /// In en, this message translates to:
-  /// **'REMATCH?'**
-  String get shareRematch;
-
   /// No description provided for @friendCodeInvite.
   ///
   /// In en, this message translates to:

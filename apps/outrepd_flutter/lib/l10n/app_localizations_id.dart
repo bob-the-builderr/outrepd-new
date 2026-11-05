@@ -2099,9 +2099,6 @@ class LId extends L {
   String get shareVictory => 'MENANG';
 
   @override
-  String get shareRematch => 'TANDING ULANG?';
-
-  @override
   String friendCodeInvite(String code) {
     return 'Tantang aku di outrepd. Tambahkan aku dengan kode temanku ${code}\nhttps://outrepd.com';
   }

@@ -2107,9 +2107,6 @@ class LDe extends L {
   String get shareVictory => 'SIEG';
 
   @override
-  String get shareRematch => 'REVANCHE?';
-
-  @override
   String friendCodeInvite(String code) {
     return 'Fordere mich auf outrepd heraus. Füg mich mit meinem Freundescode ${code} hinzu\nhttps://outrepd.com';
   }

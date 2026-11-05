@@ -2069,9 +2069,6 @@ class LKo extends L {
   String get shareVictory => '승리';
 
   @override
-  String get shareRematch => '재대결?';
-
-  @override
   String friendCodeInvite(String code) {
     return 'outrepd에서 나와 대결해 줘. 내 친구 코드 ${code}로 추가해 줘\nhttps://outrepd.com';
   }

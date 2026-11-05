@@ -656,7 +656,6 @@
   "signOutQuestion": "Çıkış yapılsın mı?",
   "signOutBody": "Hesabın derecesi, geçmişi ve aboneliğiyle olduğu gibi kalır. İstediğin zaman aynı yolla tekrar giriş yap.",
   "shareVictory": "ZAFER",
-  "shareRematch": "RÖVANŞ?",
   "friendCodeInvite": "outrepd'de benimle düello yap. Arkadaş kodumla beni ekle: {code}\nhttps://outrepd.com",
   "soundsLabel": "Sesler",
   "soundsHint": "3, 2, 1 için bip, her tekrar için tık ve tur sonu. Müziğinin üstünde çalar.",

@@ -2100,9 +2100,6 @@ class LRu extends L {
   String get shareVictory => 'ПОБЕДА';
 
   @override
-  String get shareRematch => 'РЕВАНШ?';
-
-  @override
   String friendCodeInvite(String code) {
     return 'Вызови меня на дуэль в outrepd. Добавь меня по коду друга ${code}\nhttps://outrepd.com';
   }

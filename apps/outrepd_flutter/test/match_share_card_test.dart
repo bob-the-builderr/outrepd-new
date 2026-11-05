@@ -111,8 +111,9 @@ void main() {
     expect(find.textContaining('−5 rating', findRichText: true), findsWidgets);
     expect(find.text('Think you can beat me?'), findsWidgets);
     expect(find.textContaining('New personal best'), findsNothing);
-    // A loss does not claim a win on its scoreboard; it asks for another go.
-    expect(find.text('REMATCH?'), findsWidgets);
+    // A loss names nothing: no win claimed, and no rematch asked for on a
+    // result that is being shared (the user, 2026-11-05).
+    expect(find.text('REMATCH?'), findsNothing);
     expect(find.text('VICTORY'), findsNothing);
   });
 

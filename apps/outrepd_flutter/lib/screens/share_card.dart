@@ -1225,8 +1225,9 @@ class _Initial extends StatelessWidget {
 /// The duel as a scoreboard: both lifters in their frames face to face, the
 /// two counts in their own colours, and a bar split by who pushed more. It
 /// reads as a duel at a glance in a feed — a count alone could be any set.
-/// A loss keeps the same board and asks for a rematch instead of claiming a
-/// win, glowing in the rival's colour rather than the tier's.
+/// A loss keeps the same board under no heading at all — a shared result is
+/// no place to ask for a rematch (the user's pick B, 2026-11-05) — sitting
+/// lower, and glowing in the rival's colour rather than the tier's.
 class _MatchStoryCard extends StatelessWidget {
   const _MatchStoryCard({required this.data});
 
@@ -1248,9 +1249,14 @@ class _MatchStoryCard extends StatelessWidget {
             child: Column(
               children: [
                 _Brand(pro: data.pro),
-                const SizedBox(height: 16),
-                _Verdict(data: data, size: 58),
-                const SizedBox(height: 4),
+                if (data.won) ...[
+                  const SizedBox(height: 16),
+                  const _Verdict(size: 58),
+                  const SizedBox(height: 4),
+                ] else
+                  // The heading's room shared out: the board lower, less
+                  // empty under it (the user, 2026-11-05).
+                  const Spacer(flex: 2),
                 _Faces(data: data, size: 70),
                 const SizedBox(height: 2),
                 _Score(data: data, size: 124),
@@ -1280,7 +1286,7 @@ class _MatchStoryCard extends StatelessWidget {
                 ] else
                   const SizedBox(height: 14),
                 if (data.newBest) _BestChip(label: l.newPersonalBest),
-                const Spacer(),
+                Spacer(flex: data.won ? 1 : 3),
                 _Cta(
                   line: data.won ? l.duelMeOnOutrepd : l.thinkYouCanBeatMe,
                   url: data.profileUrl,
@@ -1315,9 +1321,12 @@ class _MatchPostCard extends StatelessWidget {
             child: Column(
               children: [
                 _Brand(pro: data.pro),
-                const SizedBox(height: 8),
-                _Verdict(data: data, size: 46),
-                const SizedBox(height: 2),
+                if (data.won) ...[
+                  const SizedBox(height: 8),
+                  const _Verdict(size: 46),
+                  const SizedBox(height: 2),
+                ] else
+                  const Spacer(flex: 2),
                 Row(
                   children: [
                     Expanded(child: _Face(data: data, mine: true, size: 50)),
@@ -1338,7 +1347,7 @@ class _MatchPostCard extends StatelessWidget {
                 ] else
                   const SizedBox(height: 14),
                 if (data.newBest) _BestChip(label: l.newPersonalBest),
-                const Spacer(),
+                Spacer(flex: data.won ? 1 : 3),
                 _Cta(url: data.profileUrl),
               ],
             ),
@@ -1349,27 +1358,25 @@ class _MatchPostCard extends StatelessWidget {
   }
 }
 
-/// VICTORY, in the gold of a medal, or the ask for a rematch after a loss.
+/// VICTORY, in the gold of a medal. A loss has no heading.
 class _Verdict extends StatelessWidget {
-  const _Verdict({required this.data, required this.size});
+  const _Verdict({required this.size});
 
-  final MatchShareData data;
   final double size;
 
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
     final words = ShrinkText(
-      data.won ? l.shareVictory : l.shareRematch,
+      l.shareVictory,
       maxLines: 1,
       style: TextStyle(
-        color: data.won ? Colors.white : context.colors.rival,
+        color: Colors.white,
         fontSize: size,
         fontWeight: FontWeight.w900,
         letterSpacing: size / 9,
       ),
     );
-    if (!data.won) return words;
     return ShaderMask(
       blendMode: BlendMode.srcIn,
       shaderCallback: (rect) => const LinearGradient(

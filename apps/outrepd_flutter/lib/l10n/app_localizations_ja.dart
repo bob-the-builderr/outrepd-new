@@ -2065,9 +2065,6 @@ class LJa extends L {
   String get shareVictory => '勝利';
 
   @override
-  String get shareRematch => '再戦？';
-
-  @override
   String friendCodeInvite(String code) {
     return 'outrepd で勝負しよう。フレンドコード ${code} で追加してね\nhttps://outrepd.com';
   }

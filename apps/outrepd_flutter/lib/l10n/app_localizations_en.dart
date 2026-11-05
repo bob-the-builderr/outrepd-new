@@ -2098,9 +2098,6 @@ class LEn extends L {
   String get shareVictory => 'VICTORY';
 
   @override
-  String get shareRematch => 'REMATCH?';
-
-  @override
   String friendCodeInvite(String code) {
     return 'Duel me on outrepd. Add me with my friend code ${code}\nhttps://outrepd.com';
   }

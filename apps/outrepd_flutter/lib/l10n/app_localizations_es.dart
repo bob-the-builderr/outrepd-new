@@ -2105,9 +2105,6 @@ class LEs extends L {
   String get shareVictory => 'VICTORIA';
 
   @override
-  String get shareRematch => '¿REVANCHA?';
-
-  @override
   String friendCodeInvite(String code) {
     return 'Rétame en outrepd. Agrégame con mi código de amigo ${code}\nhttps://outrepd.com';
   }
