@@ -2053,9 +2053,6 @@ class LZh extends L {
   String get signOutBody => '你的账户会保持原样，排位、记录和订阅都在。随时可以用同样的方式重新登录。';
 
   @override
-  String get shareVictory => '胜利';
-
-  @override
   String friendCodeInvite(String code) {
     return '来 outrepd 和我对决吧。用我的好友码 ${code} 加我\nhttps://outrepd.com';
   }

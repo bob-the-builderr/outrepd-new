@@ -2102,9 +2102,6 @@ class LIt extends L {
   String get signOutBody => 'Il tuo account resta com’è, con rango, cronologia e abbonamento. Rientra quando vuoi nello stesso modo.';
 
   @override
-  String get shareVictory => 'VITTORIA';
-
-  @override
   String friendCodeInvite(String code) {
     return 'Sfidami su outrepd. Aggiungimi con il mio codice amico ${code}\nhttps://outrepd.com';
   }

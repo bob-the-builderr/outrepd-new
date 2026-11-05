@@ -2102,9 +2102,6 @@ class LEs extends L {
   String get signOutBody => 'Tu cuenta queda como está, con su rango, historial y suscripción. Vuelve a entrar cuando quieras del mismo modo que entraste.';
 
   @override
-  String get shareVictory => 'VICTORIA';
-
-  @override
   String friendCodeInvite(String code) {
     return 'Rétame en outrepd. Agrégame con mi código de amigo ${code}\nhttps://outrepd.com';
   }

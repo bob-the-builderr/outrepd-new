@@ -2095,9 +2095,6 @@ class LEn extends L {
   String get signOutBody => 'Your account stays as it is, with its rank, history and subscription. Sign back in any time the way you signed in.';
 
   @override
-  String get shareVictory => 'VICTORY';
-
-  @override
   String friendCodeInvite(String code) {
     return 'Duel me on outrepd. Add me with my friend code ${code}\nhttps://outrepd.com';
   }

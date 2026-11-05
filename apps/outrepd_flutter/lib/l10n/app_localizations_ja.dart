@@ -2062,9 +2062,6 @@ class LJa extends L {
   String get signOutBody => 'アカウントはランク、履歴、サブスクリプションごとそのまま残ります。いつでも同じ方法でサインインし直せます。';
 
   @override
-  String get shareVictory => '勝利';
-
-  @override
   String friendCodeInvite(String code) {
     return 'outrepd で勝負しよう。フレンドコード ${code} で追加してね\nhttps://outrepd.com';
   }

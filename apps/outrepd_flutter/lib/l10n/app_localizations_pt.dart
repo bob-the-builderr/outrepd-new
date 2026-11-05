@@ -2099,9 +2099,6 @@ class LPt extends L {
   String get signOutBody => 'Sua conta fica como está, com rank, histórico e assinatura. Entre de novo quando quiser do mesmo jeito que entrou.';
 
   @override
-  String get shareVictory => 'VITÓRIA';
-
-  @override
   String friendCodeInvite(String code) {
     return 'Me desafie no outrepd. Me adicione com meu código de amigo ${code}\nhttps://outrepd.com';
   }

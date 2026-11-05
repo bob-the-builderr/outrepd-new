@@ -2103,9 +2103,6 @@ class LFr extends L {
   String get signOutBody => 'Ton compte reste tel quel, avec son rang, son historique et son abonnement. Reconnecte-toi quand tu veux de la même façon.';
 
   @override
-  String get shareVictory => 'VICTOIRE';
-
-  @override
   String friendCodeInvite(String code) {
     return 'Affronte-moi sur outrepd. Ajoute-moi avec mon code ami ${code}\nhttps://outrepd.com';
   }

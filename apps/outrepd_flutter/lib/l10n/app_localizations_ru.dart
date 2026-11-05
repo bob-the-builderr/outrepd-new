@@ -2097,9 +2097,6 @@ class LRu extends L {
   String get signOutBody => 'Аккаунт останется как есть — с рангом, историей и подпиской. Войти снова можно в любой момент тем же способом.';
 
   @override
-  String get shareVictory => 'ПОБЕДА';
-
-  @override
   String friendCodeInvite(String code) {
     return 'Вызови меня на дуэль в outrepd. Добавь меня по коду друга ${code}\nhttps://outrepd.com';
   }

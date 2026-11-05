@@ -2092,9 +2092,6 @@ class LTr extends L {
   String get signOutBody => 'Hesabın derecesi, geçmişi ve aboneliğiyle olduğu gibi kalır. İstediğin zaman aynı yolla tekrar giriş yap.';
 
   @override
-  String get shareVictory => 'ZAFER';
-
-  @override
   String friendCodeInvite(String code) {
     return 'outrepd\'de benimle düello yap. Arkadaş kodumla beni ekle: ${code}\nhttps://outrepd.com';
   }

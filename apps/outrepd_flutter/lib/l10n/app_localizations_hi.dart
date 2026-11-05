@@ -2097,9 +2097,6 @@ class LHi extends L {
   String get signOutBody => 'आपका अकाउंट वैसा ही रहेगा, अपनी रैंक, हिस्ट्री और सब्सक्रिप्शन के साथ। कभी भी उसी तरीके से फिर साइन इन करें जैसे पहले किया था।';
 
   @override
-  String get shareVictory => 'जीत';
-
-  @override
   String friendCodeInvite(String code) {
     return 'outrepd पर मुझसे मुकाबला करो। मेरे फ्रेंड कोड ${code} से मुझे जोड़ो\nhttps://outrepd.com';
   }

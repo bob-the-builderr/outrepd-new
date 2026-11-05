@@ -655,7 +655,6 @@
   "signOut": "로그아웃",
   "signOutQuestion": "로그아웃할까요?",
   "signOutBody": "계정은 랭크, 기록, 구독까지 그대로 남아요. 언제든 처음과 같은 방법으로 다시 로그인하세요.",
-  "shareVictory": "승리",
   "friendCodeInvite": "outrepd에서 나와 대결해 줘. 내 친구 코드 {code}로 추가해 줘\nhttps://outrepd.com",
   "soundsLabel": "소리",
   "soundsHint": "3, 2, 1 신호음, 반복마다 틱 소리, 라운드 종료음. 음악 위에 함께 재생됩니다.",

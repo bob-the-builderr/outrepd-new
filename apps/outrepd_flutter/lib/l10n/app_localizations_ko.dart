@@ -2066,9 +2066,6 @@ class LKo extends L {
   String get signOutBody => '계정은 랭크, 기록, 구독까지 그대로 남아요. 언제든 처음과 같은 방법으로 다시 로그인하세요.';
 
   @override
-  String get shareVictory => '승리';
-
-  @override
   String friendCodeInvite(String code) {
     return 'outrepd에서 나와 대결해 줘. 내 친구 코드 ${code}로 추가해 줘\nhttps://outrepd.com';
   }

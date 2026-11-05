@@ -3923,12 +3923,6 @@ abstract class L {
   /// **'Your account stays as it is, with its rank, history and subscription. Sign back in any time with your email.'**
   String get signOutBody;
 
-  /// No description provided for @shareVictory.
-  ///
-  /// In en, this message translates to:
-  /// **'VICTORY'**
-  String get shareVictory;
-
   /// No description provided for @friendCodeInvite.
   ///
   /// In en, this message translates to:

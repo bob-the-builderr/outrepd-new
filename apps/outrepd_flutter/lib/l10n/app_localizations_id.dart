@@ -2096,9 +2096,6 @@ class LId extends L {
   String get signOutBody => 'Akunmu tetap seperti sekarang, dengan peringkat, riwayat, dan langganannya. Masuk lagi kapan saja dengan cara yang sama.';
 
   @override
-  String get shareVictory => 'MENANG';
-
-  @override
   String friendCodeInvite(String code) {
     return 'Tantang aku di outrepd. Tambahkan aku dengan kode temanku ${code}\nhttps://outrepd.com';
   }

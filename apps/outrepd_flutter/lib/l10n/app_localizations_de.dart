@@ -2104,9 +2104,6 @@ class LDe extends L {
   String get signOutBody => 'Dein Konto bleibt, wie es ist – mit Rang, Verlauf und Abo. Melde dich jederzeit wieder so an wie zuvor.';
 
   @override
-  String get shareVictory => 'SIEG';
-
-  @override
   String friendCodeInvite(String code) {
     return 'Fordere mich auf outrepd heraus. Füg mich mit meinem Freundescode ${code} hinzu\nhttps://outrepd.com';
   }

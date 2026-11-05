@@ -655,7 +655,6 @@
   "signOut": "サインアウト",
   "signOutQuestion": "サインアウトしますか？",
   "signOutBody": "アカウントはランク、履歴、サブスクリプションごとそのまま残ります。いつでも同じ方法でサインインし直せます。",
-  "shareVictory": "勝利",
   "friendCodeInvite": "outrepd で勝負しよう。フレンドコード {code} で追加してね\nhttps://outrepd.com",
   "soundsLabel": "サウンド",
   "soundsHint": "3、2、1 のビープ、レップごとのティック、ラウンド終了の音。音楽と一緒に鳴ります。",

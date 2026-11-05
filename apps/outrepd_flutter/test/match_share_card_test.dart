@@ -94,8 +94,9 @@ void main() {
     expect(find.textContaining('+7 rating', findRichText: true), findsWidgets);
     expect(find.textContaining('New personal best'), findsWidgets);
     expect(find.text('Duel me on outrepd'), findsWidgets);
-    // The story card is a scoreboard: a heading, and both lifters by name.
-    expect(find.text('VICTORY'), findsWidgets);
+    // The story card is a scoreboard under no heading (the user,
+    // 2026-11-05): both lifters by name, and the score.
+    expect(find.text('VICTORY'), findsNothing);
     expect(find.text('REMATCH?'), findsNothing);
     expect(find.text('11'), findsWidgets);
     expect(tester.takeException(), isNull);
