@@ -297,7 +297,7 @@ class _SeatState extends State<_Seat> with SingleTickerProviderStateMixin {
         child: PlayerAvatar(
           name: them.username,
           tierIdx: them.tierIdx,
-          image: url == null ? null : NetworkImage(url),
+          image: pictureAt(url),
           size: _picture,
         ),
       );

@@ -873,6 +873,7 @@ class _RankRow extends StatelessWidget {
         context,
         id: entry.id,
         username: entry.username,
+        avatarUrl: entry.avatarUrl,
         initial: entry.id.isEmpty ? demoLifterProfile(entry.username) : null,
       ),
       child: _RowCard(
@@ -1228,16 +1229,23 @@ class _Initial extends StatelessWidget {
       size: size,
       lifter: own is LifterPicture ? own.lifter : null,
     );
-    final url = avatarUrl;
-    if ((own == null && url == null) || own is LifterPicture) return fallback;
+    final photo = own ?? pictureAt(avatarUrl);
+    if (photo == null || photo is LifterPicture) return fallback;
     return ClipOval(
       child: Image(
-        image: decodedAt(context, own ?? NetworkImage(url!), size),
+        image: decodedAt(context, photo, size),
         width: size,
         height: size,
         fit: BoxFit.cover,
-        loadingBuilder: (context, child, progress) =>
-            progress == null ? child : fallback,
+        // Empty while the photo is read, as in PlayerAvatar: the lifter is
+        // only for a photo that could not be had.
+        frameBuilder: (context, child, frame, synchronous) => frame == null
+            ? Container(
+                width: size,
+                height: size,
+                color: context.colors.border.withValues(alpha: 0.3),
+              )
+            : child,
         errorBuilder: (context, error, stack) => fallback,
       ),
     );
@@ -1654,6 +1662,7 @@ class _PodiumPlace extends StatelessWidget {
         context,
         id: row.id,
         username: row.username,
+        avatarUrl: row.avatarUrl,
         initial: row.id.isEmpty ? demoLifterProfile(row.username) : null,
       ),
       child: Column(
@@ -1823,6 +1832,7 @@ class _MonthRankRow extends StatelessWidget {
         context,
         id: row.id,
         username: row.username,
+        avatarUrl: row.avatarUrl,
         initial: row.id.isEmpty ? demoLifterProfile(row.username) : null,
       ),
       child: _RowCard(

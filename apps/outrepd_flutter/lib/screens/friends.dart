@@ -20,6 +20,7 @@ import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../lifter/lifter_view.dart';
 import '../motion.dart';
+import '../avatar.dart' show pictureAt;
 import '../player_avatar.dart';
 import '../theme.dart';
 import '../tier_frame.dart';
@@ -614,7 +615,7 @@ class _RequestCard extends StatelessWidget {
               PlayerAvatar(
                 name: request.username,
                 tierIdx: ranked ? request.tierIdx : null,
-                image: photo == null ? null : NetworkImage(photo),
+                image: pictureAt(photo),
                 size: 52,
                 textColour: context.colors.rival,
               ),
@@ -980,6 +981,7 @@ class _FriendRow extends StatelessWidget {
             context,
             id: friend.id,
             username: friend.username,
+            avatarUrl: friend.avatarUrl,
             initial: friend.id.isEmpty
                 ? demoLifterProfile(friend.username)
                 : null,

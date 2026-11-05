@@ -119,7 +119,7 @@ class _VsScreenState extends State<VsScreen> with SingleTickerProviderStateMixin
     final made = Looks.instance.lifter(widget.opponentId);
     if (made != null) return (lifter: made, photo: null);
     final url = widget.opponentAvatarUrl;
-    if (url != null && url.isNotEmpty) return (lifter: null, photo: NetworkImage(url));
+    if (pictureAt(url) case final photo?) return (lifter: null, photo: photo);
     return (lifter: lifterFor(widget.opponentName), photo: null);
   }
 

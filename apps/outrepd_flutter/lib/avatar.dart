@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'backend/backend.dart';
 import 'lifter/my_lifter.dart';
+import 'photo_cache.dart';
 
 /// The player's picture: a file they chose, or their lifter.
 class Avatar extends ChangeNotifier {
@@ -92,5 +93,7 @@ class Avatar extends ChangeNotifier {
 final avatar = Avatar();
 
 /// Somebody's uploaded picture, or null for the lifter their name gives.
+/// Downloaded once and kept (lib/photo_cache.dart): a row, the card a name
+/// opens and the full profile all draw the same bytes.
 ImageProvider? pictureAt(String? url) =>
-    url == null || url.isEmpty ? null : NetworkImage(url);
+    url == null || url.isEmpty ? null : photoAt(url);

@@ -18,6 +18,7 @@ import 'package:outrepd/lifter/catalog.dart';
 import 'package:outrepd/lifter/covers.dart';
 import 'package:outrepd/lifter/lifter_view.dart';
 import 'package:outrepd/lifter/looks.dart';
+import 'package:outrepd/photo_cache.dart';
 import 'package:outrepd/screens/vs_screen.dart';
 import 'package:outrepd/theme.dart';
 
@@ -139,7 +140,7 @@ void main() {
       await tester.pump(const Duration(seconds: 1));
       final photos = tester
           .widgetList<Image>(find.byType(Image))
-          .where((image) => image.image is NetworkImage);
+          .where((image) => image.image is CachedPhoto);
       expect(photos, hasLength(1));
       // This account has no photo: its side is a lifter.
       expect(find.byType(LifterImage), findsOneWidget);

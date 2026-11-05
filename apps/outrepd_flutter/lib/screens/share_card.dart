@@ -20,6 +20,7 @@ import '../country_names.dart';
 import '../data.dart';
 import '../lifter/lifter_view.dart';
 import '../lifter/my_lifter.dart';
+import '../photo_cache.dart' show photoAt;
 import '../ranking.dart';
 import '../rewards.dart';
 import '../theme.dart';
@@ -1202,16 +1203,17 @@ class _Initial extends StatelessWidget {
 
     if (avatarUrl == null) return fallback;
     return ClipOval(
-      child: Image.network(
-        avatarUrl!,
+      child: Image(
+        // The same kept bytes the profile drew (lib/photo_cache.dart).
+        image: photoAt(avatarUrl!),
         width: size,
         height: size,
         fit: BoxFit.cover,
         // The card is captured moments after this loads, so this is not
         // hypothetical the way it is on a screen somebody keeps open — a
         // fallback that never resolves in time draws itself into the image.
-        loadingBuilder: (context, child, progress) =>
-            progress == null ? child : fallback,
+        frameBuilder: (context, child, frame, synchronous) =>
+            frame == null ? fallback : child,
         errorBuilder: (context, error, stack) => fallback,
       ),
     );

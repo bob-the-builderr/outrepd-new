@@ -17,6 +17,7 @@ import '../lifter/looks.dart';
 import '../lifter/my_lifter.dart';
 import '../motion.dart';
 import '../country_names.dart';
+import '../avatar.dart' show pictureAt;
 import '../player_avatar.dart';
 import '../rank_row.dart';
 import '../ranking.dart';
@@ -42,6 +43,7 @@ Future<void> showLifterPeek(
   required String id,
   required String username,
   LifterProfile? initial,
+  String? avatarUrl,
 }) {
   // Your own name on a board is you: the server does not describe you to
   // yourself as somebody else, and the card said it could not load
@@ -58,7 +60,12 @@ Future<void> showLifterPeek(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
     builder: (_) =>
-        _LifterPeekSheet(id: id, username: username, initial: initial),
+        _LifterPeekSheet(
+          id: id,
+          username: username,
+          initial: initial,
+          avatarUrl: avatarUrl,
+        ),
   );
 }
 
@@ -100,6 +107,7 @@ class _LifterPeekSheet extends StatefulWidget {
     required this.id,
     required this.username,
     this.initial,
+    this.avatarUrl,
   });
 
   final String id;
@@ -108,6 +116,11 @@ class _LifterPeekSheet extends StatefulWidget {
   /// Already known, so nothing is fetched — the sample rows, which have no
   /// server to ask.
   final LifterProfile? initial;
+
+  /// Their photo, as the row that was tapped already had it: drawn at once,
+  /// before the card has been read from the server — until then the circle
+  /// showed their name's lifter (the user, 2026-11-05).
+  final String? avatarUrl;
 
   @override
   State<_LifterPeekSheet> createState() => _LifterPeekSheetState();
@@ -241,7 +254,7 @@ class _LifterPeekSheetState extends State<_LifterPeekSheet>
                       child: PlayerAvatar(
                         name: widget.username,
                         tierIdx: p != null && p.ranked ? p.tierIdx : null,
-                        image: _picture(widget.id, p?.avatarUrl),
+                        image: _picture(widget.id, p?.avatarUrl ?? widget.avatarUrl),
                         alive: pro,
                         size: 92,
                         onBadgeTap: p != null && p.ranked
@@ -631,7 +644,7 @@ String _placesLine(BuildContext context, L l, LifterProfile p) {
 ImageProvider? _picture(String id, String? avatarUrl) {
   final made = Looks.instance.lifter(id);
   if (Looks.instance.pro(id) && made != null) return LifterPicture(made);
-  return avatarUrl != null ? NetworkImage(avatarUrl) : null;
+  return pictureAt(avatarUrl);
 }
 
 // ──────────────────────────────── full profile ────────────────────────────

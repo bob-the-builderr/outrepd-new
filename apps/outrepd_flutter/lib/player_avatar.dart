@@ -33,7 +33,7 @@ class PlayerAvatar extends StatelessWidget {
   });
 
   /// Whose it is. Their name gives the lifter drawn when there is no
-  /// [image], or while it is still loading.
+  /// [image], or when it could not be loaded.
   final String name;
 
   /// Their tier, or null for somebody who has no rank to show yet — a new
@@ -88,6 +88,20 @@ class PlayerAvatar extends StatelessWidget {
       ),
     );
 
+    // While a photo is read — from the phone, or the first time from the
+    // server — the circle stays empty: the lifter standing in for a few
+    // seconds read as somebody else's picture (the user, 2026-11-05). The
+    // lifter is only for a photo that could not be had.
+    final blank = Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: context.colors.border.withValues(alpha: 0.3),
+        border: Border.all(color: context.colors.border, width: 1.5),
+      ),
+    );
+
     final circle = picture == null || picture is LifterPicture
         ? fallback
         : Container(
@@ -103,11 +117,10 @@ class PlayerAvatar extends StatelessWidget {
                 width: size,
                 height: size,
                 fit: BoxFit.cover,
-                // A photo that is still loading or failed to load reads as
-                // no photo at all, not as a hole in the row — the lifter is
-                // never a special case, only ever the fallback.
-                loadingBuilder: (context, child, progress) =>
-                    progress == null ? child : fallback,
+                frameBuilder: (context, child, frame, synchronous) =>
+                    frame == null ? blank : child,
+                // A photo that failed to load reads as no photo at all, not
+                // as a hole in the row.
                 errorBuilder: (context, error, stack) => fallback,
               ),
             ),
