@@ -175,6 +175,54 @@ const kFloorStaleSeconds = 2.5;
 /// refused, which marks the set unsure rather than wrong. A swing has none.
 const kRepHandsSeenShare = 0.1;
 
+/// Knee push-ups (the user, 2026-11-05: a live match of 75 counted on the
+/// knees). A swing is refused as on the knees when, over the last
+/// [kKneeTopMs] at the top before the lifter went down, even the straightest
+/// reading of the knee — hip, knee and ankle in 3D, from the model's own depth
+/// — bent under this many degrees.
+///
+/// At the top, arms straight, a thigh down to the floor shows (the user's
+/// idea): on the phone's own recordings the straightest top reading was
+/// 32–86° on a set done on the knees and at least 147° on a real set by the
+/// same lifter. On the way down and up the knees read straight either way,
+/// which is why it is the top that is judged. A knee the camera cannot read
+/// says nothing, and the rep counts.
+const kKneeBentDegrees = 100.0;
+
+/// How much of the top before a swing its knees are read over, ms.
+const kKneeTopMs = 600;
+
+/// Fewer readings than this at the top say nothing.
+const kKneeMinFrames = 2;
+
+/// The frame's height over its width, for the bend: x and depth are by the
+/// frame's width and y by its height. The camera runs at
+/// ResolutionPreset.medium, 720×480 on Android and 480×360 on iOS; the bend
+/// moves a few degrees between the two, far inside the margin above.
+const kFrameAspect = 1.5;
+
+/// The bend at the knee, hip–knee–ankle in degrees, averaged over the sides
+/// the camera reads with confidence; null when neither side has all three.
+double? kneeBend(BodyPose pose) {
+  final bends = <double>[];
+  for (final (hip, knee, ankle) in const [
+    (Joint.leftHip, Joint.leftKnee, Joint.leftAnkle),
+    (Joint.rightHip, Joint.rightKnee, Joint.rightAnkle),
+  ]) {
+    final h = pose.confident(hip), k = pose.confident(knee), a = pose.confident(ankle);
+    if (h == null || k == null || a == null) continue;
+    final u = (h.x - k.x, (h.y - k.y) * kFrameAspect, h.z - k.z);
+    final w = (a.x - k.x, (a.y - k.y) * kFrameAspect, a.z - k.z);
+    final n = math.sqrt(u.$1 * u.$1 + u.$2 * u.$2 + u.$3 * u.$3) *
+        math.sqrt(w.$1 * w.$1 + w.$2 * w.$2 + w.$3 * w.$3);
+    if (n == 0) continue;
+    final c = (u.$1 * w.$1 + u.$2 * w.$2 + u.$3 * w.$3) / n;
+    bends.add(math.acos(c.clamp(-1.0, 1.0)) * 180 / math.pi);
+  }
+  if (bends.isEmpty) return null;
+  return bends.reduce((a, b) => a + b) / bends.length;
+}
+
 enum _Hand { left, right }
 
 class _Stamped {
@@ -409,6 +457,16 @@ class PushupTracker {
   int _repFrames = 0;
   int _repOnPoint = 0;
 
+  /// The knees at the top, the last [kKneeTopMs] of it; frozen into
+  /// [_swingBend] as the lifter leaves it. See [kKneeBentDegrees].
+  final _topBends = Queue<(int, double)>();
+  double? _swingBend;
+
+  /// Whether a swing has finished since the lifter was last armed: the first
+  /// one starts from getting into position, often off the knees, and is not
+  /// judged on them.
+  bool _swung = false;
+
   int get reps => _reps;
 
   /// When each rep completed, milliseconds from the start of the count.
@@ -537,6 +595,18 @@ class PushupTracker {
 
     var counted = false;
     _dipLow = _dipLow == null ? share : math.min(_dipLow!, share);
+    if (share >= kTopShare) {
+      final bend = kneeBend(pose);
+      if (bend != null) _topBends.add((atMs, bend));
+      while (_topBends.isNotEmpty && atMs - _topBends.first.$1 > kKneeTopMs) {
+        _topBends.removeFirst();
+      }
+    } else if (_topBends.isNotEmpty) {
+      _swingBend = _topBends.length >= kKneeMinFrames
+          ? _topBends.map((b) => b.$2).reduce(math.max)
+          : null;
+      _topBends.clear();
+    }
     switch (_phase) {
       case _Phase.idle || _Phase.up:
         _excursionTop = _excursionTop == null ? h : math.max(_excursionTop!, h);
@@ -563,6 +633,7 @@ class PushupTracker {
         // is not at the top of a push-up.
         if (_phase == _Phase.idle && seenTop && _planted && !standing) {
           _phase = _Phase.up;
+          _swung = false;
           _dipLow = share;
         }
         if (share <= kBottomShare) {
@@ -592,24 +663,29 @@ class PushupTracker {
           final stoodUp = standing;
           final held = _planted &&
               _repOnPoint >= kRepHandsSeenShare * _repFrames;
-          if (held && quickEnough && !stoodUp) {
+          final bend = _swingBend;
+          final onKnees = _swung && bend != null && bend < kKneeBentDegrees;
+          _swung = true;
+          if (held && quickEnough && !stoodUp && !onKnees) {
             _reps++;
             _repTimes.add(atMs - _origin);
             _repBottoms.add(_dipLow!);
             _lastRepAt = atMs;
             counted = true;
-          } else if (!held || stoodUp) {
+          } else if (!held || stoodUp || onKnees) {
             // A full swing that finished with a hand off the floor — standing
             // up at the end of a set, or an arm lifted to flex — or with the
             // body on its feet, bobbing toward hands held still, or with the
             // hands not held through it: a phone swung in the hand. Not a
-            // rep, and nothing to build the next one on.
+            // rep, and nothing to build the next one on. Or one done on the
+            // knees: not a rep either, though the hands stay where they are.
             _refusedAt.add(atMs - _origin);
           }
           _phase = held && !stoodUp ? _Phase.up : _Phase.idle;
           _excursionTop = h;
           _dipLow = share;
           _resetRepHands();
+          _swingBend = null;
         }
     }
     return _reading(counted);

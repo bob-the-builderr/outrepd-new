@@ -97,7 +97,20 @@ bottom of a full rep.
    hand counted reps that way), and
 5. at least **0.35 s** since the last rep, and
 6. the tracker was armed: it had seen the body at the top with the hands
-   down (or the hands settled after a top, before the bottom line).
+   down (or the hands settled after a top, before the bottom line), and
+7. it was **not done on the knees**: over the last 0.6 s at the top before
+   the lifter went down, the straightest reading of the knee — hip, knee and
+   ankle in 3D, from the model's own depth (`kneeBend`) — was 100° or more.
+   Not judged on the first swing after arming (getting into position is often
+   off the knees), and a knee the camera cannot read says nothing: the rep
+   counts. Measured at the top because that is where a thigh down to the floor
+   shows; on the way down and up the knees read straight either way.
+   Evidence (2026-11-05, the app's own ML Kit recordings on the lifter's
+   phone): straightest top reading 32–86° on a set on the knees, 147° and up
+   on a real set by the same lifter. `test/recordings_knees/` holds the knee
+   sets (75 → 22, 6 → 0); `test/recordings/phone-mlkit-26.json` the real one.
+   ML Kit's likelihood is "in the frame", not "visible": a hidden knee reads
+   0.99 there, ~0.3 in MediaPipe — never compare the two on confidence.
 
 Notes that are easy to get wrong:
 

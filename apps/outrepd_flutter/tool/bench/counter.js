@@ -33,6 +33,32 @@ const percentile = (v, q) => {
   return s[lo] + (s[hi] - s[lo]) * (pos - lo);
 };
 const dist = (x, y, p) => Math.hypot(x - p[0], y - p[1]);
+// Knees (2026-11-05): the bend at the knee, hip–knee–ankle, in 3D from the
+// model's own depth. Straight on every real rep recorded; bent on knee
+// push-ups. y is by the frame's height and x and z by its width, so y is
+// scaled by the frame's aspect: the camera runs at ResolutionPreset.medium,
+// 720x480 on Android (1.5) and 480x360 on iOS (1.33).
+// Measured at the top — arms straight, where a thigh down to the floor shows
+// (the user's idea, 2026-11-05): a swing is on the knees when even the
+// straightest reading over the last topMs at the top before going down bent
+// under 'bent' degrees. The first swing after arming starts from getting into
+// position, often off the knees, and is not judged.
+const KNEES = { bent: 100, minFrames: 2, topMs: 600, aspect: 1.5 };
+function kneeBend(pose, aspect) {
+  const bends = [];
+  for (const side of ['left', 'right']) {
+    const h = conf(pose, side + 'Hip'), k = conf(pose, side + 'Knee'), a = conf(pose, side + 'Ankle');
+    if (!h || !k || !a || h[3] == null || k[3] == null || a[3] == null) continue;
+    const u = [h[0] - k[0], (h[1] - k[1]) * aspect, h[3] - k[3]];
+    const w = [a[0] - k[0], (a[1] - k[1]) * aspect, a[3] - k[3]];
+    const n = Math.hypot(...u) * Math.hypot(...w);
+    if (n === 0) continue;
+    const c = (u[0] * w[0] + u[1] * w[1] + u[2] * w[2]) / n;
+    bends.push((Math.acos(Math.max(-1, Math.min(1, c))) * 180) / Math.PI);
+  }
+  return bends.length ? bends.reduce((x, y) => x + y) / bends.length : null;
+}
+
 const conf = (pose, j, min = 0.7) => {
   const p = pose[j];
   return p && p[2] >= min ? p : null;
@@ -164,7 +190,8 @@ class Hands {
 
 class Tracker {
   constructor(opt = {}) {
-    this.opt = { noHandsAway: false, stale: 2.5, perRep: { away: 1, seen: 0.1 }, clearStray: true, ...opt };
+    this.opt = { noHandsAway: false, stale: 2.5, perRep: { away: 1, seen: 0.1 }, clearStray: true, knees: KNEES, ...opt };
+    this.topBends = []; this.swingBend = null; this.swung = false; this.kneesRefused = 0; this.swingBends = [];
     this.hands = new Hands(this.opt);
     this.heads = []; this.widths = []; this.stances = [];
     this.tops = Array(C.lockSeeds).fill(C.lockPrior);
@@ -226,6 +253,18 @@ class Tracker {
     const h = this.smooth, share = h / this.lockout;
     if (share <= C.bottom) { this.botFrames = (this.botFrames || 0) + 1; if (this.hands.frameAway) this.botAway = (this.botAway || 0) + 1; }
     this.dipLow = this.dipLow == null ? share : Math.min(this.dipLow, share);
+    if (this.opt.knees) {
+      const kn = this.opt.knees;
+      if (share >= C.top) {
+        const b = kneeBend(pose, kn.aspect);
+        if (b != null) this.topBends.push([t, b]);
+        while (this.topBends.length && t - this.topBends[0][0] > kn.topMs) this.topBends.shift();
+      } else if (this.topBends.length) {
+        const bends = this.topBends.map((x) => x[1]);
+        this.swingBend = bends.length < kn.minFrames ? null : Math.max(...bends);
+        this.topBends = [];
+      }
+    }
     if (this.phase === 'idle' || this.phase === 'up') {
       this.excursionTop = this.excursionTop == null ? h : Math.max(this.excursionTop, h);
       if (share >= C.top) {
@@ -240,6 +279,7 @@ class Tracker {
       const seenTop = share >= C.top || (share > C.bottom && top != null && top / this.lockout >= C.top);
       if (this.phase === 'idle' && seenTop && this.planted && !this.standing) {
         this.phase = 'up';
+        this.swung = false;
         this.dipLow = share;
         if (this.opt.armReset) { this.repFrames = 0; this.repAway = 0; this.repSeen = 0; this.botFrames = 0; this.botAway = 0; }
       }
@@ -259,19 +299,31 @@ class Tracker {
       const bot = pr && pr.bottom != null ? (this.botAway || 0) <= pr.bottom * (this.botFrames || 0) : true;
       const held = !pr || this.repFrames === 0 ||
         (this.repAway <= pr.away * this.repFrames && this.repSeen >= pr.seen * this.repFrames && bot);
+      // On the knees: bent through the swing, or — after enough bent swings
+      // lately — not straight enough to say otherwise.
+      let onKnees = false;
+      const kn = this.opt.knees;
+      if (kn) {
+        const bend = this.swingBend;
+        this.swingBends.push(bend);
+        onKnees = this.swung && bend != null && bend < kn.bent;
+        this.swung = true;
+        if (onKnees) this.kneesRefused++;
+      }
       if (this.opt.trace) this.opt.trace.push({ t, frames: this.repFrames, away: this.repAway, seen: this.repSeen, planted: this.planted, held, botFrames: this.botFrames || 0, botAway: this.botAway || 0 });
-      if (this.planted && held && quick && !stoodUp) {
+      if (this.planted && held && quick && !stoodUp && !onKnees) {
         this.reps++;
         this.repTimes.push(t - this.origin);
         this.repBottoms.push(this.dipLow);
         this.lastRepAt = t;
-      } else if (!this.planted || !held || stoodUp) {
+      } else if (!this.planted || !held || stoodUp || onKnees) {
         this.refusedAt.push(t - this.origin);
       }
       this.phase = this.planted && held && !stoodUp ? 'up' : 'idle';
       this.excursionTop = h;
       this.dipLow = share;
       this.repFrames = 0; this.repAway = 0; this.repSeen = 0; this.botFrames = 0; this.botAway = 0;
+      this.swingBend = null;
     }
   }
 }
@@ -287,4 +339,4 @@ function count(frames, startMs, opt) {
   return { reps: tr.reps, confident: tr.confident, tracker: tr };
 }
 
-module.exports = { C, count, Tracker };
+module.exports = { C, KNEES, count, kneeBend, Tracker };

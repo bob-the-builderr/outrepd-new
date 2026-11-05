@@ -11,7 +11,8 @@ function load(file) {
   if (!Number.isFinite(truth)) return null;
   const frames = j.frames.map((f) => {
     const p = {};
-    for (const [name, v] of Object.entries(f.p)) p[JOINTS.includes(name) ? name : 'nose'] = [v[0], v[1], v[3]];
+    // [x, y, confidence, depth]: depth for the knee rule.
+    for (const [name, v] of Object.entries(f.p)) p[JOINTS.includes(name) ? name : 'nose'] = [v[0], v[1], v[3], v[2]];
     return { t: f.t, p };
   });
   return { truth, frames, start: j.start ?? null };

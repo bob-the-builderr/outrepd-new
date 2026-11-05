@@ -140,7 +140,8 @@ void main() {
       }
 
       // The floor, set from what the counter measured when it was rebuilt:
-      // fourteen labelled sets, thirteen exact and the last one out by one.
+      // fourteen labelled sets, thirteen exact and the last one out by one
+      // (fifteen since the phone's own 26, 2026-11-05).
       // The old counter managed half of them exact. A change that drops below
       // this has made the counter worse on sets somebody actually did.
       expect(report.withinOneRate, 1.0,
@@ -178,6 +179,9 @@ void main() {
         // Standing in front of the camera moving up and down. Zero is the
         // answer, and it used to score eight.
         'standing-bob-0.json': 0,
+        // Recorded by the app itself on the lifter's phone (2026-11-05): the
+        // knee rule must not take a rep from a real set.
+        'phone-mlkit-26.json': 26,
       };
 
       final dir = Directory('test/recordings');
@@ -191,6 +195,24 @@ void main() {
         expect(result.counted, entry.value,
             reason: '${entry.key} scored ${result.counted}, '
                 'and the lifter did ${entry.value}');
+      }
+    });
+
+    test('push-ups on the knees are refused', () {
+      // The lifter's own sets on the knees, recorded by the app on their
+      // phone (2026-11-05): the match counted 75 before kKneeBentDegrees. Not
+      // every rep is caught — at the top a knee the camera reads straight is
+      // given the benefit — but most are, and none of a real set is (the
+      // test above and the labelled sets).
+      final dir = Directory('test/recordings_knees');
+      final report = replayDirectory(dir);
+      const most = {'phone-mlkit-knees-6.json': 0, 'phone-mlkit-knees-75.json': 25};
+      for (final entry in most.entries) {
+        final result =
+            report.results.where((r) => r.name == entry.key).firstOrNull;
+        expect(result, isNotNull, reason: '${entry.key} is missing');
+        expect(result!.counted, lessThanOrEqualTo(entry.value),
+            reason: '${entry.key} counted ${result.counted} reps done on the knees');
       }
     });
   });
