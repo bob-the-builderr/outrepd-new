@@ -93,29 +93,26 @@ Thank you.
 
 ## ٣. خانة Notes في App Review Information
 
-App Review Information ← **Notes**: امسح اللي فيها والصق ده (أقل من ٤٠٠٠ حرف،
-وده الحد بتاعها). وغيّر `[VIDEO LINK]`.
+App Review Information ← **Notes** (1.1.6، 2026-11-05): امسح اللي فيها والصق ده. **شيل علامة Sign-in required**: مفيش دخول بإيميل في الأبلكيشن، فالمراجع بيدخل بـ Sign in with Apple (أكاونت appreview@ لسه في الكود بس مالوش زرار).
 
 ```
-SCREEN RECORDINGS: [DRIVE LINK 1] (main features, switching accounts, a match, account deletion); [DRIVE LINK 2] (registration after deletion, calibration, subscription screen, a match); [DRIVE LINK 3] (reporting and blocking a user).
+PURPOSE: OUTREPD is a competitive push-up app for people aged 16+. The front camera counts push-ups on the device: only full-depth reps with the hands on the floor score. A ranked match is a live 60-second duel against a real person; if nobody near the user's rank is live within 15 seconds, the match is against a real person's recorded set, at the pace they did it. Results move the account on a seven-tier rated ladder. Also: Adventure (140 fights against monsters, works offline), friends and friend challenges, weekly and monthly boards, titles and history.
 
-PURPOSE: OUTREPD is a competitive push-up app for people aged 16+. The front camera counts push-ups on the device (only full-depth reps score), and each 60-second set is a duel against a real person that moves the user up a seven-tier ranked ladder. Friends, challenges, titles and history.
+SIGN-IN: Sign in with Apple or Google. There is no email or password sign-in, so no demo account is needed: tap "Get started" (16+ age check, camera permission, a three push-up calibration), then Sign in with Apple creates the account and asks for a username. A returning user taps "I already have an account" on the first screen.
 
-SIGN-IN: On the first screen tap "I already have an account", enter appreview@outrepd.com, tap "Send code", and type the six-digit password above into the code boxes. This account is never sent an email; all other accounts sign in with a one-time code sent to their email. New accounts: "Get started", onboarding (16+ age check, camera permission, three push-up calibration), then sign-up with email and a code.
+TRYING A MATCH: stand the phone on the floor about one metre in front of you, facing you, and get into a push-up position with your head, shoulders and hands in view. Match tab > Find a match (live ranked), or Adventure.
 
-FEATURES: Match tab (Find a match, Challenge a friend, Practice; stand the phone on the floor about 1 m in front of you, facing you). Friends tab, Ranks tab (leaderboards), Profile tab (gear icon = Settings).
+ADS AND IN-APP PURCHASES: every mode can be played without paying. An interstitial ad plays when the user leaves the result of a game (Unity LevelPlay, with Google AdMob as fallback); App Tracking Transparency is asked first, after a short explanation screen. Subscription group "OUTREPD Pro": Pro Weekly and Pro Yearly, with no free trial. Pro removes the ads and unlocks extra looks for the user's avatar (hair, faces, outfits, characters) and moving profile covers. The Pro screen is offered once at sign-up ("Not now" closes it), from the PRO button beside the bell, and after every fifth game; it shows plan names, lengths, prices, Restore, Terms of Use and Privacy Policy.
 
-USER CONTENT: usernames and profile photos only. Report and Block are in the top-right menu of any other user's profile; Settings has "Report a problem" and "Blocked accounts". Usernames are filtered on the server.
+USER CONTENT: usernames, profile photos, avatars and Pro profile cover photos. Report and Block are in the menu of any other user's profile; Settings has "Report a problem" and "Blocked accounts". Usernames are filtered on the server.
 
-ACCOUNT DELETION: Profile > gear > Delete account, or the paywall's "Account" link.
+ACCOUNT DELETION: Profile > gear icon > Delete account.
 
-IN-APP PURCHASES: subscription group "OUTREPD Pro": Pro Weekly (1 week, $4.99) and Pro Yearly (1 year, $29.99), each with a 3-day free trial for eligible new subscribers; unlocks the whole app. The paywall appears after sign-up or sign-in for any account without a subscription, with plan names, lengths, prices, Restore, Terms of Use and Privacy Policy.
+SERVICES: Supabase (sign-in, database, storage, realtime), Apple In-App Purchase through RevenueCat, Google ML Kit Pose Detection (on the device; no video or image leaves the phone), Apple Health (optional: finished sets are saved as workouts when the user allows it), Firebase Cloud Messaging and Crashlytics, Unity LevelPlay and Google AdMob (ads), Resend (emails for data exports). No generative AI.
 
-SERVICES: Supabase (auth with email codes, database, storage, realtime), Apple In-App Purchase, RevenueCat (subscriptions), Google ML Kit Pose Detection (on-device only; no images leave the phone), Firebase Cloud Messaging and Crashlytics, Resend (data export emails). No generative AI.
+REGIONS: the same app in every region; 13 languages; prices in local currency.
 
-REGIONS: identical in every region; 13 languages; local currency prices.
-
-REGULATED / THIRD-PARTY MATERIAL: not applicable. Not a medical device; no medical or training advice.
+Not a medical device; no medical or training advice.
 ```
 
 اضغط **Save** فوق.
