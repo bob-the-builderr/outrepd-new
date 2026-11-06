@@ -7,12 +7,12 @@
 00:00 +5: the opponent lands each rep on the second it was given
 00:00 +6: the opponent following you, always the planned number behind
 00:00 +7: the setup fits a small iPhone
-00:01 +8: a whole take: setup, the round, the result, and back
-00:02 +9: a promotion comes first, then the result
-00:02 +10: a level-up, when planned, comes before the result
-00:03 +11: the VS screen names both sides, then the round starts
-00:03 +12: a loss takes the rating and two points off the week
-00:03 +13: giving up is a loss whatever the count
-00:03 +14: the Adventure tab fits a small iPhone, every weapon at hand
-00:03 +15: an adventure take: the fight, its result, and back
-00:04 +16: All tests passed!
+00:02 +8: a whole take: setup, the round, the result, and back
+00:05 +9: a promotion comes first, then the result
+00:06 +10: a level-up, when planned, comes before the result
+00:06 +11: the VS screen names both sides, then the round starts
+00:06 +12: a loss takes the rating and two points off the week
+00:06 +13: giving up is a loss whatever the count
+00:06 +14: the Adventure tab fits a small iPhone, every weapon at hand
+00:06 +15: an adventure take: the fight, its result, and back
+00:08 +16: All tests passed!
