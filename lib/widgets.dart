@@ -235,6 +235,18 @@ class ShrinkText extends StatelessWidget {
 }
 
 /// Section heading with optional trailing action.
+/// A tab's own title — Friends, Ranks — in one style everywhere (direction
+/// B, 2026-11-02): as the language writes the word, not upper-cased, 28 bold.
+const kPageTitle = TextStyle(fontSize: 28, fontWeight: FontWeight.w700);
+
+/// A section's label inside a screen — "Online now · 2", "Account", "Recent"
+/// — in one style everywhere: muted, sentence case, never upper-cased.
+TextStyle sectionLabelStyle(BuildContext context) => TextStyle(
+  color: context.colors.muted,
+  fontSize: 14,
+  fontWeight: FontWeight.w600,
+);
+
 class SectionHeader extends StatelessWidget {
   const SectionHeader({super.key, required this.title, this.trailing});
 
@@ -244,7 +256,7 @@ class SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.only(bottom: 8, left: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -257,7 +269,7 @@ class SectionHeader extends StatelessWidget {
               title,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: context.type.heading.copyWith(color: context.colors.text),
+              style: sectionLabelStyle(context),
             ),
           ),
           ?trailing,
@@ -281,6 +293,17 @@ String formatClock(BuildContext context, int seconds) {
 String localNumber(BuildContext context, num n) {
   final locale = Localizations.localeOf(context);
   return NumberFormat.decimalPattern(locale.toString()).format(n);
+}
+
+/// A day's one-letter name as the reader's language writes it: M T W in
+/// English, 一 二 三 in Chinese, 月 火 水 in Japanese. The language's own
+/// narrow names, not the first character of the short ones: every Chinese
+/// short name begins 周, and a week of them read 周 seven times.
+String dayLetter(BuildContext context, DateTime day) {
+  final locale = Localizations.localeOf(context).toString();
+  // DateTime counts Monday as 1 and Sunday as 7; the symbols start on Sunday.
+  final symbols = DateFormat.E(locale).dateSymbols;
+  return symbols.STANDALONENARROWWEEKDAYS[day.weekday % 7];
 }
 
 /// What a screen says before it has anything to show.

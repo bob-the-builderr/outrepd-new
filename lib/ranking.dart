@@ -7,12 +7,17 @@
 ///
 /// The ladder is seven tiers of five divisions — Iron to Master. Divisions
 /// climb V → I, so a higher [Rank.divIdx] is better, and LP runs 0–99 inside
-/// a division. The tier count is [kTiers]'s length and `top_tier()` in
-/// `supabase/ladder.sql` is the same number; they move together or the server
-/// hands out a rank the app cannot draw.
+/// a division (past 99 in Master I, which has nothing above it). The tier
+/// count is [kTiers]'s length and `top_tier()` in `supabase/ladder.sql` is
+/// the same number; they move together or the server hands out a rank the app
+/// cannot draw.
+///
+/// Since 2026-11-02 the rank is shown as one number, its [Rank.rating]: 1,000
+/// at the bottom of Iron, 100 a division, 500 a tier — the same rungs, with
+/// the LP inside a division as the last two digits. "LP" is only the name the
+/// code and the server still use for those points.
 library;
 
-import 'data.dart' show kPlacementDuels;
 import 'theme.dart' show kTiers;
 import 'widgets.dart' show kDivisions;
 
@@ -37,6 +42,22 @@ int ladderLevel(int tierIdx, int divIdx) =>
     divIdx.clamp(0, kTopDivision) +
     1;
 
+/// What the bottom of the ladder is worth, and so what everybody starts on
+/// (the user's number, 2026-11-02). Nobody goes below it.
+const kRatingStart = 1000;
+
+/// The points a division is: a whole division of LP.
+const kRatingPerDivision = 100;
+
+/// The rating at a rung and the LP into it.
+int ratingOf(int tierIdx, int divIdx, int lp) =>
+    kRatingStart +
+    (tierIdx * kDivisions.length + divIdx) * kRatingPerDivision +
+    lp;
+
+/// The rating at the bottom of a tier.
+int tierStartRating(int tierIdx) => ratingOf(tierIdx, 0, 0);
+
 /// Where an account sits on the ladder.
 class Rank {
   const Rank({required this.tierIdx, required this.divIdx, required this.lp});
@@ -47,6 +68,10 @@ class Rank {
 
   /// The very bottom of the ladder, where a placed account can land.
   static const start = Rank(tierIdx: 0, divIdx: 0, lp: 0);
+
+  /// The rank as one number: [kRatingStart] at the bottom of Iron, 100 a
+  /// division, 500 a tier.
+  int get rating => ratingOf(tierIdx, divIdx, lp);
 
   Rank copyWith({int? tierIdx, int? divIdx, int? lp}) => Rank(
     tierIdx: tierIdx ?? this.tierIdx,
@@ -94,26 +119,24 @@ class RankChange {
 
   bool get changedTier => after.tierIdx != before.tierIdx;
 
-  /// A boundary stopped the change from applying in full.
-  ///
-  /// Either the floor held a loss that would have dropped a tier, or the
-  /// ceiling held a win with nowhere above it to go. In both cases the rank
-  /// ends up resting exactly on the boundary having moved no divisions.
+  /// The floor stopped a loss from applying in full: the rank is resting on
+  /// the bottom of the ladder having moved no divisions. (There is no
+  /// ceiling: Master I keeps counting.)
   bool get absorbed {
     if (promoted || demoted) return false;
-    final unbounded = before.lp + lpDelta;
-    if (unbounded < 0) return after.lp == 0;
-    if (unbounded >= 100) return after.lp == 99;
-    return false;
+    return before.lp + lpDelta < 0 && after.lp == 0;
   }
+
+  /// The rating it moved by, what was actually realised.
+  int get ratingDelta => after.rating - before.rating;
 }
 
 /// Applies an LP change and carries it through as many promotions or
 /// demotions as it earns.
 ///
-/// [floorTierIdx] is the highest tier this account has ever reached. It cannot
-/// fall out of that tier — which is a promise the progression screen already
-/// makes in words ("Gold is yours"), so the arithmetic has to keep it.
+/// [floorTierIdx] is the tier whose bottom it cannot fall through. It used to
+/// be the highest tier ever reached; since 2026-11-02 a tier can be lost and
+/// every caller passes Iron, so the floor is [kRatingStart].
 RankChange applyLp(Rank from, int delta, {required int floorTierIdx}) {
   var tier = from.tierIdx;
   var div = from.divIdx;
@@ -124,9 +147,7 @@ RankChange applyLp(Rank from, int delta, {required int floorTierIdx}) {
   // be broken by a bonus.
   while (lp >= 100) {
     if (tier >= kTopTier && div >= kTopDivision) {
-      // Nothing above this. LP stops rather than rolling over into a tier
-      // that does not exist.
-      lp = 99;
+      // Nothing above this to roll into: LP keeps counting instead.
       break;
     }
     lp -= 100;
@@ -162,73 +183,31 @@ RankChange applyLp(Rank from, int delta, {required int floorTierIdx}) {
   );
 }
 
-/// What a duel pays: the gap in reps, signed by who actually won, and weighed
-/// by who it was against when both ranks are known — ten percent more or less
-/// for each division between the two, up to half again or half as much
-/// ([kLpLevelReach]). Beating somebody above you pays more and losing to them
-/// costs less; the other way round, less and more. Level with each other, or
-/// with a rank unknown, it is the rep gap exactly. Whole LP, rounded half up,
-/// the same arithmetic as lp_for in supabase/ladder.sql.
+/// What a duel pays (the user's rule, 2026-11-02): [kWinRating] for a win
+/// and [kLossRating] off for a loss, and the gap in reps on top of either.
+/// Who it was against does not count. The same arithmetic as lp_for in
+/// supabase/ladder.sql.
 ///
 /// [won] and the reps normally agree — more reps than the other side is a
 /// win — so this only matters in the one place they can split: walking out
 /// while still ahead is a loss regardless of the count at the moment of
-/// quitting, and a loss must never pay a gain. Elsewhere this is nothing more
-/// than the rep gap: no tier, no form, no cap, no promise the card could make
-/// before the round is over.
-int lpFor({
-  required bool won,
-  required int yourReps,
-  required int theirReps,
-  int? yourLevel,
-  int? theirLevel,
-}) {
+/// quitting, and a loss must never pay a gain.
+int lpFor({required bool won, required int yourReps, required int theirReps}) {
   final gap = (yourReps - theirReps).abs();
-  final apart = yourLevel == null || theirLevel == null
-      ? 0
-      : (theirLevel - yourLevel).clamp(-kLpLevelReach, kLpLevelReach);
-  final paid = (gap * (10 + (won ? apart : -apart)) + 5) ~/ 10;
-  return won ? paid : -paid;
+  return won ? kWinRating + gap : -(kLossRating + gap);
 }
 
-/// How many divisions apart still change what a duel pays: five, so the most
-/// it can do is half again, or half as much.
-const kLpLevelReach = 5;
+/// What a win pays before the gap in reps.
+const kWinRating = 25;
 
-/// A forfeit has no reps to compare, so it cannot be paid the way an ordinary
-/// duel is — there is no gap to be exactly. A flat win, same as before.
-const kForfeitLp = 20;
+/// What a loss costs before the gap in reps.
+const kLossRating = 20;
 
-/// Where an account starts once its placement duels are done.
-///
-/// Wins decide it, and nothing else. Margin would let somebody farm a start
-/// by picking soft opponents, and five duels is far too small a sample to
-/// read anything finer than "how often did they win".
-///
-/// The top of the range is Gold IV: placements can find a strong beginner
-/// quickly, but the tiers above that are meant to be climbed, not granted.
-Rank placementRank(int wins, {int duels = kPlacementDuels}) {
-  final safeDuels = duels <= 0 ? 1 : duels;
-  final share = wins.clamp(0, safeDuels) / safeDuels;
+/// A forfeit has no reps to compare: a win with no gap.
+const kForfeitLp = kWinRating;
 
-  // tier, division — read as a ladder rather than computed, so the outcome of
-  // each result is obvious to anybody reading it.
-  //
-  // Re-spaced when the ladder went from nine tiers to seven. A clean sweep
-  // used to land at Gold IV, which was below the middle of nine and is the
-  // middle of seven — and placements handing somebody the middle of the app
-  // on their first afternoon is the thing this table exists not to do. The
-  // top of it is Silver I, which leaves four of the seven tiers to climb.
-  const ladder = <(int, int)>[
-    (0, 2), // no wins        → Iron III
-    (0, 4), // one in five    → Iron I
-    (1, 2), // two            → Bronze III
-    (1, 4), // three          → Bronze I
-    (2, 2), // four           → Silver III
-    (2, 4), // all five       → Silver I
-  ];
-
-  final step = (share * (ladder.length - 1)).round();
-  final (tier, div) = ladder[step.clamp(0, ladder.length - 1)];
-  return Rank(tierIdx: tier, divIdx: div, lp: 0);
-}
+/// Where an account starts once its placement duel is done: Iron V with no
+/// LP, whatever the result. One duel says nothing about a lifter, so it
+/// decides nothing but that the climb has begun. The twin of
+/// `placement_rank` in supabase/ladder.sql.
+Rank placementRank(int wins) => Rank.start;

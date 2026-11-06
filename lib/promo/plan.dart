@@ -41,6 +41,9 @@ class PromoPlan {
     this.customSeconds = '2, 4, 6, 8, 10, 13, 16, 19, 22, 25',
     this.countdownSeconds = 10,
     this.myLevel = 12,
+    this.weekPlace = 14,
+    this.weekPoints = 86,
+    this.showVs = true,
     this.oppLevel = 27,
     this.levelUp = false,
     this.record = true,
@@ -77,6 +80,15 @@ class PromoPlan {
   /// The level beside each name, as the app shows it (xp.dart).
   int myLevel;
   int oppLevel;
+
+  /// Where the week's board has you before the match, for the line under
+  /// the rank on the result. The app's own points move it: 5 for a win, 2
+  /// off for a loss.
+  int weekPlace;
+  int weekPoints;
+
+  /// The VS screen before the round, as the app shows it.
+  bool showVs;
 
   /// Whether this take ends on the level-up screen: the match pays just
   /// enough to reach the next level.
@@ -181,6 +193,9 @@ class PromoPlan {
     'customSeconds': customSeconds,
     'countdownSeconds': countdownSeconds,
     'myLevel': myLevel,
+    'weekPlace': weekPlace,
+    'weekPoints': weekPoints,
+    'showVs': showVs,
     'oppLevel': oppLevel,
     'levelUp': levelUp,
     'record': record,
@@ -206,6 +221,9 @@ class PromoPlan {
       ..oppDiv = read('oppDiv', plan.oppDiv)
       ..myLevel = read('myLevel', plan.myLevel).clamp(1, 99)
       ..oppLevel = read('oppLevel', plan.oppLevel).clamp(1, 99)
+      ..weekPlace = read('weekPlace', plan.weekPlace).clamp(1, 999)
+      ..weekPoints = read('weekPoints', plan.weekPoints).clamp(0, 999)
+      ..showVs = j['showVs'] as bool? ?? plan.showVs
       ..levelUp = j['levelUp'] as bool? ?? plan.levelUp
       ..record = j['record'] as bool? ?? plan.record
       ..camera4k = j['camera4k'] as bool? ?? plan.camera4k

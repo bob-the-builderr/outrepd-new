@@ -179,7 +179,7 @@ class LFr extends L {
   String get incSets => 'Chaque série et chaque compte';
 
   @override
-  String get incDuels => 'Historique des duels et variations de LP';
+  String get incDuels => 'Historique des duels et variations de cote';
 
   @override
   String get incFriends => 'Amis et comptes bloqués';
@@ -350,6 +350,262 @@ class LFr extends L {
   @override
   String get couldNotSyncAvatar =>
       'Votre photo est enregistrée, mais pas encore synchronisée';
+
+  @override
+  String get removePhoto => 'Supprimer la photo';
+
+  @override
+  String get removePhotoTitle => 'Supprimer votre photo ?';
+
+  @override
+  String get removePhotoBody =>
+      'Votre lifter s\'affichera à la place, partout. Vous pouvez ajouter une nouvelle photo à tout moment.';
+
+  @override
+  String get removePhotoConfirm => 'Supprimer';
+
+  @override
+  String get couldNotRemovePhoto => 'Impossible de supprimer votre photo. Réessayez.';
+
+  @override
+  String get cropPhoto => 'Recadrer';
+
+  @override
+  String get proGoTitle => 'Passez Pro.';
+
+  @override
+  String get proOnboardTitle => 'Votre lifter, Pro.';
+
+  @override
+  String get proSubtitle => 'Pas de pubs, et un look que l\'app gratuite n\'a pas.';
+
+  @override
+  String get proFree => 'GRATUIT';
+
+  @override
+  String get proYoursNow => 'À VOUS';
+
+  @override
+  String get proPerkNoAds => 'Pas de pubs. Jamais.';
+
+  @override
+  String get proPerkNoAdsBody => 'Chaque match, chaque niveau, sans coupure.';
+
+  @override
+  String get proPerkBoard => 'Brillez dans chaque classement';
+
+  @override
+  String get proPerkBoardBody => 'Une ligne holo, votre lifter qui en sort.';
+
+  @override
+  String get proPerkEntrance => 'Une entrée avec éclairs';
+
+  @override
+  String get proPerkEntranceBody => 'Sur l\'écran VS avant chaque match en direct.';
+
+  @override
+  String get proPerkCovers => '13 couvertures animées';
+
+  @override
+  String get proPerkCoversBody => 'Ou votre propre photo, en haut de votre profil.';
+
+  @override
+  String get proPerkItems => '20 objets réservés Pro';
+
+  @override
+  String get proPerkItemsBody => 'Peaux, hauts, accessoires, et un lifter qui cligne des yeux.';
+
+  @override
+  String get proGo => 'Passer Pro';
+
+  @override
+  String proBuyYearly(String price) {
+    return 'Passer Pro · ${price}/an';
+  }
+
+  @override
+  String proBuyWeekly(String price) {
+    return 'Passer Pro · ${price}/semaine';
+  }
+
+  @override
+  String get proSettingsBody => 'Pas de pubs, et le look Pro.';
+
+  @override
+  String get proSettingsActive => 'Vous êtes Pro. Merci pour votre soutien.';
+
+  @override
+  String get lifterMakerTitle => 'Personnalise ton avatar';
+
+  @override
+  String get lifterMakerFirst => 'Personnalise ton avatar';
+
+  @override
+  String get lifterMakerFirstBody => 'C\'est vous, dans chaque classement et chaque match.';
+
+  @override
+  String get lifterTabSkin => 'Peau';
+
+  @override
+  String get lifterTabHair => 'Cheveux';
+
+  @override
+  String get lifterTabFace => 'Visage';
+
+  @override
+  String get lifterTabBeard => 'Barbe';
+
+  @override
+  String get lifterTabTop => 'Haut';
+
+  @override
+  String get lifterTabGear => 'Accessoires';
+
+  @override
+  String get lifterTabBackground => 'Fond';
+
+  @override
+  String get lifterTabCharacters => 'Personnages';
+
+  @override
+  String get lifterEyes => 'Yeux';
+
+  @override
+  String get lifterBrows => 'Sourcils';
+
+  @override
+  String get lifterMouth => 'Bouche';
+
+  @override
+  String get lifterMarks => 'Marques';
+
+  @override
+  String get lifterRandom => 'Au hasard';
+
+  @override
+  String get lifterTryingPro => 'Un look Pro.';
+
+  @override
+  String get lifterUnlockPro => 'Débloquer avec Pro';
+
+  @override
+  String get editLifter => 'Modifier votre lifter';
+
+  @override
+  String lifterNeedsWorld(String world) {
+    return 'Terminez ${world}';
+  }
+
+  @override
+  String lifterNeedsTier(String tier) {
+    return 'Atteignez ${tier}';
+  }
+
+  @override
+  String lifterNeedsLevel(String level) {
+    return 'Atteignez le niveau ${level}';
+  }
+
+  @override
+  String lifterNeedsWins(String count) {
+    return 'Gagnez ${count} matchs';
+  }
+
+  @override
+  String lifterNeedsWinStreak(String count) {
+    return 'Gagnez ${count} matchs de suite';
+  }
+
+  @override
+  String lifterNeedsDayStreak(String count) {
+    return 'Entraînez-vous ${count} jours d\'affilée';
+  }
+
+  @override
+  String get lifterNeedsMonthTop10 => 'Finissez un mois dans le top 10';
+
+  @override
+  String get lifterNeedsMonthPodium => 'Finissez un mois dans le top 3';
+
+  @override
+  String get lifterNeedsMonthChampion => 'Gagnez un mois';
+
+  @override
+  String lifterNeedsStars(String count) {
+    return '3 étoiles sur ${count} niveaux de l’Aventure';
+  }
+
+  @override
+  String get lifterNeedsAllStars => 'Toutes les étoiles de l\'Aventure';
+
+  @override
+  String get coverTitle => 'Couverture';
+
+  @override
+  String get coverPhoto => 'Votre photo';
+
+  @override
+  String get coverNone => 'Pas de couverture';
+
+  @override
+  String get coverUse => 'Utiliser cette couverture';
+
+  @override
+  String get coverProLine => 'Les couvertures sont Pro. Elles bougent, et tous ceux qui ouvrent votre profil les voient.';
+
+  @override
+  String get coverCouldNotUpload => 'Impossible d\'envoyer votre photo. Réessayez.';
+
+  @override
+  String get coverNeonCity => 'Ville néon';
+
+  @override
+  String get coverIronGym => 'Salle de fonte';
+
+  @override
+  String get coverRooftopSunset => 'Coucher de soleil sur le toit';
+
+  @override
+  String get coverStadiumLights => 'Lumières du stade';
+
+  @override
+  String get coverSilverPeaks => 'Pics d\'argent';
+
+  @override
+  String get coverBronzeDunes => 'Dunes de bronze';
+
+  @override
+  String get coverVolcano => 'Volcan';
+
+  @override
+  String get coverPalmBeach => 'Plage de palmiers';
+
+  @override
+  String get coverWinterCity => 'Ville d\'hiver';
+
+  @override
+  String get coverFireworks => 'Feux d\'artifice';
+
+  @override
+  String get coverFightNight => 'Soir de combat';
+
+  @override
+  String get coverOrbit => 'Orbite';
+
+  @override
+  String get coverChampionPodium => 'Podium du champion';
+
+  @override
+  String get vsLiveRanked => 'EN DIRECT · CLASSÉ';
+
+  @override
+  String get vsLiveFriendly => 'EN DIRECT · AMICAL';
+
+  @override
+  String get vsSavedRanked => 'SÉRIE ENREGISTRÉE · CLASSÉ';
+
+  @override
+  String get vsRematchFriendly => 'REVANCHE · AMICAL';
 
   @override
   String get couldNotShareCard => 'Impossible de partager cette carte';
@@ -902,6 +1158,9 @@ class LFr extends L {
   String get forfeitBody => 'Vous perdrez des PL si vous partez maintenant.';
 
   @override
+  String get forfeitRematchBody => 'Cela compte comme une défaite.';
+
+  @override
   String get forfeit => 'Abandonner';
 
   @override
@@ -1253,6 +1512,55 @@ class LFr extends L {
   String get yourClimb => 'Ton ascension';
 
   @override
+  String get yourRank => 'Ton rang';
+
+  @override
+  String get whoIsNext => 'Qui est le prochain ?';
+
+  @override
+  String get opponentFound => 'Adversaire trouvé';
+
+  @override
+  String get obSevenTiers => 'Les sept rangs';
+
+  @override
+  String get obRatingPerMatch => 'Points par match';
+
+  @override
+  String get obWinLabel => 'Victoire';
+
+  @override
+  String get obLossLabel => 'Défaite';
+
+  @override
+  String get obFloorLabel => 'Plancher';
+
+  @override
+  String obWinRating(String n) {
+    return '+${n} + l’écart';
+  }
+
+  @override
+  String obLossRating(String n) {
+    return '−${n} − l’écart';
+  }
+
+  @override
+  String obNeverBelow(String n) {
+    return 'jamais sous ${n}';
+  }
+
+  @override
+  String obDivisionLine(String division, String tier) {
+    return 'Tous les ${division} points, un palier ; tous les ${tier}, un rang.';
+  }
+
+  @override
+  String ratingFloor(String n) {
+    return 'Ta cote ne descend jamais sous ${n}.';
+  }
+
+  @override
   String floorKept(String tier, String rank) {
     return '$tier est à toi. Tu ne descendras plus sous $rank.';
   }
@@ -1334,8 +1642,7 @@ class LFr extends L {
   String get giveUp => 'Abandonner';
 
   @override
-  String get lpMovesWithGap =>
-      'Les PL évoluent selon l\'écart de répétitions — gagnez avec plus d\'écart, gagnez plus de points';
+  String get lpMovesWithGap => 'Victoire : +25 plus l\'écart de répétitions. Défaite : −20 plus l\'écart.';
 
   @override
   String get searchingForOpponent => 'Recherche d’un adversaire';
@@ -1749,9 +2056,6 @@ class LFr extends L {
   }
 
   @override
-  String get paywallStart => 'Retirer la pub';
-
-  @override
   String get paywallRenewsPlay => 'Renouvellement automatique jusqu’à résiliation. Résilie à tout moment dans Google Play.';
 
   @override
@@ -1797,12 +2101,6 @@ class LFr extends L {
 
   @override
   String get signOutBody => 'Ton compte reste tel quel, avec son rang, son historique et son abonnement. Reconnecte-toi quand tu veux de la même façon.';
-
-  @override
-  String get shareVictory => 'VICTOIRE';
-
-  @override
-  String get shareRematch => 'REVANCHE ?';
 
   @override
   String friendCodeInvite(String code) {
@@ -2012,49 +2310,6 @@ class LFr extends L {
   String get noticeLiveInvite => 'Un ami m\'a invité à un duel en direct';
 
   @override
-  String get trialToday => 'Aujourd\'hui';
-
-  @override
-  String get trialTodayBody => 'Tous les duels, en direct et classés, débloqués.';
-
-  @override
-  String trialDay(String day) {
-    return 'Jour ${day}';
-  }
-
-  @override
-  String get trialReminderBody => 'On te prévient la veille de la fin de ton essai.';
-
-  @override
-  String get trialEndBody => 'Ton abonnement démarre. Annule avant et tu ne paies rien.';
-
-  @override
-  String trialTag(String days) {
-    return '${days} jours gratuits';
-  }
-
-  @override
-  String trialCta(String days) {
-    return 'Commencer mon essai gratuit de ${days} jours';
-  }
-
-  @override
-  String trialThenYearly(String price) {
-    return 'Rien à payer maintenant · puis ${price}/an';
-  }
-
-  @override
-  String trialThenWeekly(String price) {
-    return 'Rien à payer maintenant · puis ${price}/semaine';
-  }
-
-  @override
-  String get trialEndsTitle => 'Ton essai gratuit se termine demain';
-
-  @override
-  String get trialEndsBody => 'Continue de grimper, ou annule avant dans les réglages de ton abonnement.';
-
-  @override
   String get obIdeaTitle => '60 secondes. Un adversaire.';
 
   @override
@@ -2090,7 +2345,7 @@ class LFr extends L {
 
   @override
   String monthToTop10(String lp) {
-    return 'À ${lp} LP du top 10';
+    return 'À ${lp} pts du top 10';
   }
 
   @override
@@ -2113,7 +2368,87 @@ class LFr extends L {
   String get monthEmptyTitle => 'Un nouveau mois';
 
   @override
-  String get monthEmptyBody => 'Personne n\'a encore gagné de LP ce mois-ci. Gagne le premier duel classé et tu prends la tête.';
+  String get monthEmptyBody => 'Personne n\'a encore marqué de points ce mois-ci. Gagne le premier duel classé et tu prends la tête.';
+
+  @override
+  String get weekEmptyTitle => 'Une nouvelle semaine';
+
+  @override
+  String get weekEmptyBody => 'Personne n\'a encore marqué de points cette semaine. Gagne le premier duel classé et tu prends la tête.';
+
+  @override
+  String get ratingUnit => 'cote';
+
+  @override
+  String get ptsUnit => 'pts';
+
+  @override
+  String ptsAmount(String n) {
+    return '${n} pts';
+  }
+
+  @override
+  String ratingAmount(String n) {
+    return '${n} de cote';
+  }
+
+  @override
+  String ratingForWin(String n) {
+    return '${n} pour la victoire';
+  }
+
+  @override
+  String ratingForLoss(String n) {
+    return '${n} pour la défaite';
+  }
+
+  @override
+  String ratingForReps(String n) {
+    return '${n} pour les répétitions';
+  }
+
+  @override
+  String get boardThisWeek => 'Cette semaine';
+
+  @override
+  String get boardOverall => 'Général';
+
+  @override
+  String get howPointsWork => 'Comment marchent les points';
+
+  @override
+  String streakNextTen(String n) {
+    return '${n} victoires d\'affilée : la prochaine vaut +10';
+  }
+
+  @override
+  String get boardRuleWin => 'Victoire +5';
+
+  @override
+  String get boardRuleLoss => 'Défaite −2';
+
+  @override
+  String get boardRuleStreak => '3 victoires d\'affilée : +10';
+
+  @override
+  String rankNext(String rank) {
+    return 'Suivant : ${rank}';
+  }
+
+  @override
+  String rankAt(String n) {
+    return 'à ${n}';
+  }
+
+  @override
+  String toGo(String n) {
+    return 'encore ${n}';
+  }
+
+  @override
+  String tierStartsAt(String tier, String n) {
+    return '${tier} commence à ${n}';
+  }
 
   @override
   String rankedDuelsCount(String n) {
@@ -2131,6 +2466,14 @@ class LFr extends L {
 
   @override
   String get seasonPlayCta => 'Jouer le nouveau mois';
+
+  @override
+  String monthWinners(String month) {
+    return 'Vainqueurs · ${month}';
+  }
+
+  @override
+  String get playShort => 'Jouer';
 
   @override
   String get rematchLive => 'Revanche en direct';
@@ -2311,7 +2654,7 @@ class LFr extends L {
 
   @override
   String weekToTop3(String n) {
-    return '${n} LP jusqu\'au top 3';
+    return '${n} pts jusqu\'au top 3';
   }
 
   @override
@@ -2411,7 +2754,7 @@ class LFr extends L {
   String get placedBody => 'Tout le monde commence ici. Seules les victoires te font monter.';
 
   @override
-  String get placedHow => 'Gagne des matchs pour gagner des LP. Bats quelqu\'un mieux classé pour en gagner plus.';
+  String get placedHow => 'Victoire : +25 plus l\'écart de répétitions. Défaite : −20 plus l\'écart.';
 
   @override
   String get levelBesideName => 'À côté de ton nom, partout';
@@ -2700,10 +3043,19 @@ class LFr extends L {
   String get obRepsBody => 'La caméra voit jusqu’où tu descends et jusqu’où tu remontes.';
 
   @override
-  String get obRepsDown => 'Descends sous la ligne dorée';
+  String get obRepsDown => 'Descends jusqu\'à vider la barre';
 
   @override
-  String get obRepsUp => 'Remonte au-dessus de la ligne du haut';
+  String get obRepsUp => 'Remonte jusqu\'à la remplir';
+
+  @override
+  String get obBarGoingDown => 'En descente';
+
+  @override
+  String get obBarComingUp => 'En montée';
+
+  @override
+  String get obBarHandOff => 'Main levée du sol';
 
   @override
   String get obRepsBoth => 'Les deux, mains au sol. Une demi-répétition ne compte pas — ni chez toi, ni chez l’autre.';
@@ -2712,7 +3064,7 @@ class LFr extends L {
   String get obClimbTitle => 'Grimpe jusqu’à Master.';
 
   @override
-  String get obClimbBody => 'Gagne pour monter l’échelle : sept rangs de cinq paliers chacun.';
+  String get obClimbBody => 'Sept rangs de cinq paliers chacun. Gagne pour monter ; une défaite peut te faire redescendre d’un rang, jamais sous 1 000 points.';
 
   @override
   String get obGoldLine => 'ligne dorée';
@@ -2723,22 +3075,7 @@ class LFr extends L {
   }
 
   @override
-  String get proTitleTop => 'Sans pub.';
-
-  @override
-  String get proTitleBottom => 'Que des pompes.';
-
-  @override
-  String get proBody => 'Tous les matchs restent gratuits. Pro retire la pub de chacun.';
-
-  @override
   String get proThanks => 'Plus de pub. Merci d’être passé à Pro.';
-
-  @override
-  String get removeAds => 'Retirer la pub';
-
-  @override
-  String get adNotice => 'Une pub passe quand tu sors';
 
   @override
   String get adAskTitle => 'La pub garde outrepd gratuit';
@@ -2748,9 +3085,6 @@ class LFr extends L {
 
   @override
   String get adAskCamera => 'Ta caméra n’y est pour rien : le suivi du corps reste sur ce téléphone, quoi que tu choisisses.';
-
-  @override
-  String get adAskRemove => 'Plutôt retirer la pub';
 
   @override
   String get monsterIronColossus => 'Colosse de fer';

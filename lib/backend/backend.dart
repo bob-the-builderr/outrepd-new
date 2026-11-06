@@ -93,7 +93,9 @@ class RemoteProfile {
     this.country,
     this.prefs = const RemotePrefs(),
     this.avatarUrl,
+    this.lifter,
     this.usernameChangedAt,
+    this.countryChangedAt,
     this.peakTierIdx = 0,
     this.wins = 0,
     this.losses = 0,
@@ -103,6 +105,7 @@ class RemoteProfile {
     this.placementWins = 0,
     this.totalReps = 0,
     this.bestSet = 0,
+    this.xp = 0,
   });
 
   final String id;
@@ -110,6 +113,9 @@ class RemoteProfile {
   final int tierIdx;
   final int divIdx;
   final int lp;
+
+  /// Experience: every rep and every match played (xp.dart).
+  final int xp;
 
   /// Assigned by the server once, at sign-up — see the comment on the
   /// friend_code column in schema.sql.
@@ -138,14 +144,24 @@ class RemoteProfile {
 
   final RemotePrefs prefs;
 
-  /// Null until this account has uploaded a photo. The drawn initial is the
-  /// fallback everywhere this is shown, not a broken image.
+  /// Null until this account has uploaded a photo or made its lifter. The
+  /// lifter its name gives is the fallback everywhere this is shown, not a
+  /// broken image.
   final String? avatarUrl;
 
-  /// Null until this account has used its one username change. Not null
-  /// means [Backend.renameUsername] will only ever answer
-  /// [RenameResult.alreadyChanged] from here on.
+  /// The parts of the lifter this account made (Lifter.toJson), or null
+  /// before it made one: how a second phone gets it back to edit.
+  final Map<String, dynamic>? lifter;
+
+  /// When the username was last chosen, or null when it never was. For
+  /// fourteen days after it, [Backend.renameUsername] answers
+  /// [RenameResult.alreadyChanged].
   final DateTime? usernameChangedAt;
+
+  /// When this lifter last chose their country, or null when it was never
+  /// chosen. Like the name, it can change again fourteen days after, once the
+  /// account has an email ([Backend.setMyCountry]).
+  final DateTime? countryChangedAt;
 
   /// Everything but the field or two an update actually changed. A backend
   /// method rebuilding this by hand, one field at a time, is exactly how a
@@ -159,7 +175,9 @@ class RemoteProfile {
     String? country,
     RemotePrefs? prefs,
     String? avatarUrl,
+    Map<String, dynamic>? lifter,
     DateTime? usernameChangedAt,
+    DateTime? countryChangedAt,
     int? peakTierIdx,
     int? wins,
     int? losses,
@@ -169,6 +187,9 @@ class RemoteProfile {
     int? placementWins,
     int? totalReps,
     int? bestSet,
+    int? xp,
+    // A null [avatarUrl] keeps the one there; this is how it goes.
+    bool clearAvatar = false,
   }) => RemoteProfile(
     id: id,
     username: username ?? this.username,
@@ -178,8 +199,10 @@ class RemoteProfile {
     friendCode: friendCode,
     country: country ?? this.country,
     prefs: prefs ?? this.prefs,
-    avatarUrl: avatarUrl ?? this.avatarUrl,
+    avatarUrl: clearAvatar ? null : avatarUrl ?? this.avatarUrl,
+    lifter: lifter ?? this.lifter,
     usernameChangedAt: usernameChangedAt ?? this.usernameChangedAt,
+    countryChangedAt: countryChangedAt ?? this.countryChangedAt,
     peakTierIdx: peakTierIdx ?? this.peakTierIdx,
     wins: wins ?? this.wins,
     losses: losses ?? this.losses,
@@ -189,6 +212,7 @@ class RemoteProfile {
     placementWins: placementWins ?? this.placementWins,
     totalReps: totalReps ?? this.totalReps,
     bestSet: bestSet ?? this.bestSet,
+    xp: xp ?? this.xp,
   );
 }
 
@@ -262,6 +286,7 @@ class BoardRow {
     required this.wins,
     required this.losses,
     this.avatarUrl,
+    this.xp = 0,
   });
 
   final String id;
@@ -272,6 +297,23 @@ class BoardRow {
   final int wins;
   final int losses;
   final String? avatarUrl;
+  final int xp;
+}
+
+/// How somebody looks (account.sql, pro_looks): whether they are Pro, the
+/// lifter they made, and the cover over their profile, which is only ever
+/// given while they are Pro.
+class ProLook {
+  const ProLook({required this.id, this.pro = false, this.lifter, this.cover});
+
+  final String id;
+  final bool pro;
+
+  /// Lifter.toJson of the lifter they made; null before they made one.
+  final Map<String, dynamic>? lifter;
+
+  /// One of the moving scenes by id, or the URL of their own cover photo.
+  final String? cover;
 }
 
 /// One row of this month's board.
@@ -289,6 +331,7 @@ class MonthRow {
     required this.wins,
     required this.played,
     this.avatarUrl,
+    this.xp = 0,
   });
 
   final int place;
@@ -300,6 +343,7 @@ class MonthRow {
   final int wins;
   final int played;
   final String? avatarUrl;
+  final int xp;
 }
 
 /// Where this account stands in the month that is running, and when it ends.
@@ -324,6 +368,19 @@ class MonthPlace {
   final int points;
   final int wins;
   final int played;
+}
+
+/// The last month to close and its top ten as it finished: what the month's
+/// board shows while the new month has nobody on it yet.
+class MonthWinners {
+  const MonthWinners({required this.season, required this.rows});
+
+  /// The 1st of that month, UTC.
+  final DateTime season;
+
+  /// First place first. [MonthRow.wins] is not kept with an award, so it is
+  /// always 0 here.
+  final List<MonthRow> rows;
 }
 
 /// What the end of a month gives out: a place in the top ten, or the badge
@@ -385,6 +442,7 @@ class LifterProfile {
     this.lastTheirReps,
     this.avatarUrl,
     this.title,
+    this.xp = 0,
   });
 
   final String id;
@@ -424,6 +482,8 @@ class LifterProfile {
   /// The id of the title they wear, or null for none.
   final String? title;
 
+  final int xp;
+
   bool get ranked => placementsDone >= 5;
   bool get hasPlayedThem => lastDuelAt != null;
 }
@@ -441,6 +501,7 @@ class RemoteFriend {
     required this.winsVsYou,
     required this.lossesVsYou,
     this.avatarUrl,
+    this.xp = 0,
   });
 
   final String id;
@@ -448,6 +509,7 @@ class RemoteFriend {
   final int tierIdx;
   final int divIdx;
   final int lp;
+  final int xp;
 
   /// Below five they have no rank yet, and a row must say "Unranked" rather
   /// than read their placeholder tier as a rank.
@@ -569,12 +631,18 @@ class LiveOpponent {
     required this.username,
     required this.tierIdx,
     required this.divIdx,
+    this.avatarUrl,
+    this.xp = 0,
   });
 
   final String id;
   final String username;
   final int tierIdx;
   final int divIdx;
+
+  /// Their uploaded picture, or null for the drawn initial.
+  final String? avatarUrl;
+  final int xp;
 }
 
 /// A live match this account is in: both lifters on camera at once.
@@ -681,52 +749,6 @@ class LiveFinish {
   bool get done => settled != null;
 }
 
-/// What typing a friend's code at sign-up did. See supabase/invites.sql.
-enum InviteResult {
-  /// Seven days of Pro are on their way.
-  claimed,
-
-  /// No lifter has that code.
-  unknownCode,
-
-  /// That lifter's plan does not carry a code: only a paid yearly one does.
-  notYearly,
-
-  ownCode,
-
-  /// This account already used one.
-  already,
-
-  /// Codes are for an account's first week.
-  tooLate,
-
-  /// That code has been used as much as a month allows.
-  full,
-
-  /// The server could not be asked.
-  offline;
-
-  static InviteResult parse(String? value) => switch (value) {
-    'claimed' => claimed,
-    'unknown_code' => unknownCode,
-    'not_yearly' => notYearly,
-    'own_code' => ownCode,
-    'already' => already,
-    'too_late' => tooLate,
-    'full' => full,
-    _ => unknownCode,
-  };
-}
-
-/// This account's own code, as an invite: whether its plan carries one and
-/// how many friends have come in on it.
-class MyInvites {
-  const MyInvites({required this.canInvite, required this.joined});
-
-  final bool canInvite;
-  final int joined;
-}
-
 /// Who else is around while the live search waits. Counts only.
 class LiveOnline {
   const LiveOnline({required this.searching, required this.online});
@@ -736,6 +758,19 @@ class LiveOnline {
 
   /// Had the app open in the last few minutes, besides this account.
   final int online;
+}
+
+/// Where the other lifter is, after a live match, as their result screen
+/// reports it.
+enum RematchPresence {
+  /// On the result screen now.
+  here,
+
+  /// Not there yet: still finishing the round on their side.
+  waiting,
+
+  /// Gone from it, or silent too long to still be there.
+  left,
 }
 
 /// Where a live rematch stands, from the side that asked for it.
@@ -866,6 +901,26 @@ enum AskResult {
 }
 
 /// What happened to a rename.
+/// Where an Apple or Google identity comes from.
+enum SocialProvider { apple, google }
+
+/// Why the last Apple or Google sign-in failed, in the words it failed
+/// with, for the message on the screen. Null when it did not.
+String? lastSocialSignInError;
+
+/// What signing in with Apple or Google did.
+enum SocialSignInResult {
+  /// A new account: this phone's guest, now carrying the identity and
+  /// everything it had already earned. It still has to choose a name.
+  newAccount,
+
+  /// An account that already had this identity, now signed in to.
+  existingAccount,
+
+  failed,
+  offline,
+}
+
 enum RenameResult {
   ok,
 
@@ -884,6 +939,16 @@ enum RenameResult {
   /// A name the server refuses to show on a board: abuse, or one that would
   /// pass for the app itself.
   notAllowed,
+}
+
+enum CountryResult {
+  ok,
+
+  /// Chosen less than fourteen days ago, on an account with an email.
+  tooSoon,
+
+  /// Not a two-letter code, or asked too often in an hour.
+  invalid,
 }
 
 /// What happened trying to attach an email to this account.
@@ -940,7 +1005,13 @@ class OpponentSet {
     required this.divIdx,
     required this.reps,
     this.repTimes = const [],
+    this.avatarUrl,
+    this.xp = 0,
   });
+
+  /// Their uploaded picture, or null for the drawn initial.
+  final String? avatarUrl;
+  final int xp;
 
   final String setId;
   final String profileId;
@@ -1020,6 +1091,7 @@ class SetUpload {
     this.gaveUp = false,
     this.repTimes = const [],
     this.challengeTarget,
+    this.practice = false,
   });
 
   /// When each rep landed, milliseconds from the start of the set. Read off
@@ -1038,6 +1110,10 @@ class SetUpload {
   /// find with [Backend.findTargetedOpponent], not for the open pool
   /// [Backend.findOpponent] hands out from.
   final String? challengeTarget;
+
+  /// A practice minute: stored for the totals and the experience it adds,
+  /// never offered to anybody to race.
+  final bool practice;
 }
 
 abstract interface class Backend {
@@ -1050,6 +1126,12 @@ abstract interface class Backend {
 
   /// Signs in and makes sure a profile row exists.
   Future<RemoteProfile> signIn({required String username});
+
+  /// The signed-in account's profile as this phone last read it from the
+  /// server, made [me] at once; null on a first launch, or when what is kept
+  /// belongs to another account. For a launch that should open without
+  /// waiting on the network: [signIn] still reads the fresh one.
+  Future<RemoteProfile?> cachedMe();
 
   /// This account's row read again, or null when nobody is signed in.
   /// Unlike [signIn], never starts an account of its own.
@@ -1097,12 +1179,43 @@ abstract interface class Backend {
 
   /// This month's board, best first: everyone placed who has lifted in a
   /// ranked duel since the 1st, by the LP that won them.
-  Future<List<MonthRow>> monthBoard({int limit = 100});
+  Future<List<MonthRow>> monthBoard({int limit = 100, String? country});
 
   /// Where this account stands this month. Also closes any month that has
   /// ended, so it is what hands out last month's awards. Null with no
   /// account to ask about.
-  Future<MonthPlace?> myMonthPlace();
+  Future<MonthPlace?> myMonthPlace({String? country});
+
+  /// The last month to close, with its top ten. Null before any month has
+  /// closed with somebody on it.
+  Future<MonthWinners?> lastMonthWinners();
+
+  /// How the accounts [ids] look, by id: Pro, lifter, cover. Accounts the
+  /// server does not know are left out.
+  Future<Map<String, ProLook>> proLooks(List<String> ids);
+
+  /// Sets this account's cover: a scene's id, or null for none. A photo
+  /// goes through [uploadCover].
+  Future<void> saveCover(String? cover);
+
+  /// Uploads [bytes] as this account's cover photo and makes it the cover;
+  /// returns its URL.
+  Future<String> uploadCover(Uint8List bytes);
+
+  /// The week's board (supabase/seasons.sql): the month's points since
+  /// Monday, 00:00 UTC. Rows and the caller's place come back in the month's
+  /// shapes, [MonthPlace.season] being the Monday.
+  Future<List<MonthRow>> weekBoard({int limit = 100, String? country});
+  Future<MonthPlace?> myWeekPlace({String? country});
+
+  /// The week's board, or with [month] the month's, among this account and
+  /// its friends only (supabase/seasons.sql friends_board; pick B,
+  /// 2026-11-02): the whole board's rules, but everyone in the circle on
+  /// it, a friend with no ranked duel yet at 0.
+  Future<List<MonthRow>> friendsBoard({bool month = false});
+
+  /// The rating board among this account and its friends only.
+  Future<List<BoardRow>> friendsLeaderboard();
 
   /// This account's awards from finished months, newest first.
   Future<List<SeasonAward>> mySeasonAwards();
@@ -1148,6 +1261,11 @@ abstract interface class Backend {
 
   /// This account's last fifty duels, newest first, for the history.
   Future<List<ServerDuel>> myDuels();
+
+  /// This account's push-ups day by day over the last [lastDays], keyed
+  /// `yyyy-mm-dd` in this phone's own days: every set it uploaded. For a
+  /// phone that has not kept them — a new one, or one signed out and back in.
+  Future<Map<String, int>> myDays({int lastDays = 31});
 
   /// How many of those have not been seen. What the dot on the bell counts.
   Future<int> unreadNotices();
@@ -1197,9 +1315,53 @@ abstract interface class Backend {
   /// Renames this account.
   Future<RenameResult> renameUsername(String name);
 
+  /// Sets this account's country, by its two-letter code.
+  Future<CountryResult> setMyCountry(String code);
+
+  /// The adventure's stars on this account, one per level from the first,
+  /// 0 for a level not won.
+  Future<List<int>> myAdventure();
+
+  /// Writes [stars] onto the account. The server keeps the best of what it
+  /// had and what it is sent on every level, so two phones never take stars
+  /// off each other; it hands back what it now holds.
+  Future<List<int>> saveAdventure(List<int> stars);
+
+  /// The titles earned, the one worn and the streak, as the account holds
+  /// them (supabase/adventure.sql, rewards): an empty map for nothing yet.
+  Future<Map<String, dynamic>> myRewards();
+
+  /// This phone's copy, merged into the account's: every title either side
+  /// has, the larger tally, the streak of whichever trained last. Returns
+  /// the merged one, with whatever another phone added.
+  Future<Map<String, dynamic>> saveRewards(Map<String, dynamic> state);
+
+  /// Signs in with an identity token from Apple or Google. On this phone's
+  /// guest the identity is linked to it, so the guest becomes the account
+  /// and keeps what it has — unless the identity already belongs to an
+  /// account, which is then signed in to instead.
+  Future<SocialSignInResult> signInWithIdToken({
+    required SocialProvider provider,
+    required String idToken,
+    String? accessToken,
+    String? nonce,
+  });
+
   /// Uploads a new avatar photo and returns its public URL, already saved
-  /// as this account's [RemoteProfile.avatarUrl].
-  Future<String> uploadAvatar(Uint8List bytes);
+  /// as this account's [RemoteProfile.avatarUrl]. A JPEG from the gallery,
+  /// or the PNG of the account's lifter.
+  Future<String> uploadAvatar(
+    Uint8List bytes, {
+    String contentType = 'image/jpeg',
+  });
+
+  /// Keeps the parts of this account's lifter on the account
+  /// ([RemoteProfile.lifter]).
+  Future<void> saveLifter(Map<String, Object> lifter);
+
+  /// Takes this account's photo down: the link on the profile and the file,
+  /// so every screen draws the lifter again.
+  Future<void> removeAvatar();
 
   /// True once this account has a real email on it — not just an anonymous
   /// session tied to this one install, with nothing to sign back into if
@@ -1250,6 +1412,16 @@ abstract interface class Backend {
   /// Deletes the account and everything hanging off it. Irreversible.
   Future<void> deleteAccount();
 
+  /// This account signs in with Apple: deleting it must revoke that. Asked
+  /// of the server, not read off the session on the phone, which can be
+  /// older than the account's last sign-in.
+  Future<bool> signedInWithApple();
+
+  /// Ends the app's access to the Apple ID, with a fresh authorization code
+  /// from Apple's sheet (App Store guideline 5.1.1(v)). Throws when Apple or
+  /// the server would not.
+  Future<void> revokeAppleSignIn(String authorizationCode);
+
   /// Leaves the account on the server as it is and forgets it on this
   /// phone. [me] is null afterwards; [signIn] starts a fresh one.
   Future<void> signOut();
@@ -1285,12 +1457,6 @@ abstract interface class Backend {
   /// Null when there is nobody to ask.
   Future<LiveOnline?> liveOnline();
 
-  /// A friend's code, typed at sign-up.
-  Future<InviteResult> claimInvite(String code);
-
-  /// This account's own code, as an invite. Null when there is nobody to ask.
-  Future<MyInvites?> myInvites();
-
   /// Asks a friend to go live now. Returns the match's id.
   Future<String> inviteLive(String friendId);
 
@@ -1305,6 +1471,14 @@ abstract interface class Backend {
   /// Asks for another match with whoever [afterMatchId] was against, straight
   /// after it. When they have already asked, this is the yes and it starts.
   Future<LiveRematch> rematchLive(String afterMatchId);
+
+  /// Says this phone is on [afterMatchId]'s result screen — or, with
+  /// [leaving], that it has just left it — and answers where the other one
+  /// is.
+  Future<RematchPresence> liveResultPresence(
+    String afterMatchId, {
+    bool leaving = false,
+  });
 
   Future<LiveState> liveState(String matchId);
 
@@ -1344,6 +1518,9 @@ class NoBackend implements Backend {
       throw StateError('no server configured');
 
   @override
+  Future<RemoteProfile?> cachedMe() async => null;
+
+  @override
   Future<RemoteProfile?> refreshMe() async => null;
 
   @override
@@ -1377,10 +1554,38 @@ class NoBackend implements Backend {
   Future<int?> boardPosition({String? country}) async => null;
 
   @override
-  Future<List<MonthRow>> monthBoard({int limit = 100}) async => const [];
+  Future<List<MonthRow>> monthBoard({int limit = 100, String? country}) async =>
+      const [];
 
   @override
-  Future<MonthPlace?> myMonthPlace() async => null;
+  Future<MonthPlace?> myMonthPlace({String? country}) async => null;
+
+  @override
+  Future<MonthWinners?> lastMonthWinners() async => null;
+
+  @override
+  Future<Map<String, ProLook>> proLooks(List<String> ids) async => const {};
+
+  @override
+  Future<void> saveCover(String? cover) =>
+      throw StateError('no server configured');
+
+  @override
+  Future<String> uploadCover(Uint8List bytes) =>
+      throw StateError('no server configured');
+
+  @override
+  Future<List<MonthRow>> weekBoard({int limit = 100, String? country}) async =>
+      const [];
+
+  @override
+  Future<MonthPlace?> myWeekPlace({String? country}) async => null;
+
+  @override
+  Future<List<MonthRow>> friendsBoard({bool month = false}) async => const [];
+
+  @override
+  Future<List<BoardRow>> friendsLeaderboard() async => const [];
 
   @override
   Future<List<SeasonAward>> mySeasonAwards() async => const [];
@@ -1426,6 +1631,9 @@ class NoBackend implements Backend {
 
   @override
   Future<List<ServerDuel>> myDuels() async => const [];
+
+  @override
+  Future<Map<String, int>> myDays({int lastDays = 31}) async => const {};
 
   @override
   Future<int> unreadNotices() async => 0;
@@ -1476,12 +1684,48 @@ class NoBackend implements Backend {
   Future<bool> usernameAvailable(String name) async => true;
 
   @override
+  Future<SocialSignInResult> signInWithIdToken({
+    required SocialProvider provider,
+    required String idToken,
+    String? accessToken,
+    String? nonce,
+  }) async => SocialSignInResult.failed;
+
+  @override
   Future<RenameResult> renameUsername(String name) =>
       throw StateError('no server configured');
 
+  /// No server: nothing to refuse it, and the caller keeps it on the phone.
   @override
-  Future<String> uploadAvatar(Uint8List bytes) =>
+  Future<CountryResult> setMyCountry(String code) async => CountryResult.ok;
+
+  @override
+  Future<List<int>> myAdventure() => throw StateError('no server configured');
+
+  @override
+  Future<List<int>> saveAdventure(List<int> stars) =>
       throw StateError('no server configured');
+
+  @override
+  Future<Map<String, dynamic>> myRewards() =>
+      throw StateError('no server configured');
+
+  @override
+  Future<Map<String, dynamic>> saveRewards(Map<String, dynamic> state) =>
+      throw StateError('no server configured');
+
+  @override
+  Future<String> uploadAvatar(
+    Uint8List bytes, {
+    String contentType = 'image/jpeg',
+  }) => throw StateError('no server configured');
+
+  @override
+  Future<void> saveLifter(Map<String, Object> lifter) =>
+      throw StateError('no server configured');
+
+  @override
+  Future<void> removeAvatar() => throw StateError('no server configured');
 
   @override
   bool get hasRealAccount => false;
@@ -1524,6 +1768,12 @@ class NoBackend implements Backend {
   Future<void> deleteAccount() => throw StateError('no server configured');
 
   @override
+  Future<bool> signedInWithApple() async => false;
+
+  @override
+  Future<void> revokeAppleSignIn(String authorizationCode) async {}
+
+  @override
   Future<void> signOut() async {}
 
   @override
@@ -1551,12 +1801,6 @@ class NoBackend implements Backend {
   Future<LiveOnline?> liveOnline() async => null;
 
   @override
-  Future<InviteResult> claimInvite(String code) async => InviteResult.offline;
-
-  @override
-  Future<MyInvites?> myInvites() async => null;
-
-  @override
   Future<String> inviteLive(String friendId) =>
       throw StateError('no server configured');
 
@@ -1575,6 +1819,13 @@ class NoBackend implements Backend {
   @override
   Future<LiveRematch> rematchLive(String afterMatchId) =>
       throw StateError('no server configured');
+
+  /// No server, no other phone to have left.
+  @override
+  Future<RematchPresence> liveResultPresence(
+    String afterMatchId, {
+    bool leaving = false,
+  }) async => RematchPresence.here;
 
   @override
   Future<LiveState> liveState(String matchId) =>

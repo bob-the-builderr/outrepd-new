@@ -22,6 +22,7 @@ import '../widgets.dart';
 import 'plan.dart';
 import 'promo_backend.dart';
 import 'result_screen.dart';
+import 'vs_screen.dart';
 
 /// Where the round's poses come from: the camera, unless a test hands in a
 /// script.
@@ -97,7 +98,7 @@ Future<void> playPromoMatch(BuildContext context, PromoPlan plan) async {
 
     final count = await navigator.push<PushupCount>(
       MaterialPageRoute(
-        builder: (_) => framed(TrainerScreen(
+        builder: (_) => framed(_beforeTheRound(plan, TrainerScreen(
           autoStart: true,
           forMatch: true,
           limit: const Duration(seconds: 60),
@@ -117,11 +118,12 @@ Future<void> playPromoMatch(BuildContext context, PromoPlan plan) async {
             myXp: PromoPlan.xpAt(plan.myLevel),
             opponentXp: PromoPlan.xpAt(plan.oppLevel),
           ),
-        )),
+        ))),
       ),
     );
 
     final theirs = promo.finalReps(count);
+    final theirTimes = promo.repTimes(theirs);
     // Closed, not disposed: the camera screen is still on its way out and
     // lets go of the session itself.
     unawaited(session.close());
@@ -139,11 +141,70 @@ Future<void> playPromoMatch(BuildContext context, PromoPlan plan) async {
           yours: count.reps,
           theirs: theirs,
           gaveUp: count.gaveUp,
+          yourRepTimes: count.repTimes,
+          theirRepTimes: theirTimes,
         )),
       ),
     );
     if (filming) await _stopFilming(messenger);
     if (again != true) return;
+  }
+}
+
+/// The VS screen for as long as the app gives it, then [round]; just the
+/// round when the plan leaves VS out.
+Widget _beforeTheRound(PromoPlan plan, Widget round) =>
+    plan.showVs ? _VsThenRound(plan: plan, round: round) : round;
+
+class _VsThenRound extends StatefulWidget {
+  const _VsThenRound({required this.plan, required this.round});
+
+  final PromoPlan plan;
+  final Widget round;
+
+  @override
+  State<_VsThenRound> createState() => _VsThenRoundState();
+}
+
+class _VsThenRoundState extends State<_VsThenRound> {
+  bool _vsOver = false;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer(kVsTime, () {
+      if (mounted) setState(() => _vsOver = true);
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_vsOver) return widget.round;
+    final plan = widget.plan;
+    return Scaffold(
+      backgroundColor: context.colors.background,
+      body: SafeArea(
+        child: PromoVsScreen(
+          myName: plan.myName,
+          myTierIdx: plan.myTier,
+          myDivIdx: plan.myDiv,
+          myXp: PromoPlan.xpAt(plan.myLevel),
+          myPhoto: photoOf(plan.myPhoto),
+          opponentName: plan.oppName,
+          opponentTierIdx: plan.oppTier,
+          opponentDivIdx: plan.oppDiv,
+          opponentXp: PromoPlan.xpAt(plan.oppLevel),
+          opponentPhoto: photoOf(plan.oppPhoto),
+        ),
+      ),
+    );
   }
 }
 

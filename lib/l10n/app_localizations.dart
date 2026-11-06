@@ -743,6 +743,480 @@ abstract class L {
   /// **'Your picture is saved, but it hasn\'t synced yet'**
   String get couldNotSyncAvatar;
 
+  /// No description provided for @removePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove photo'**
+  String get removePhoto;
+
+  /// No description provided for @removePhotoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove your photo?'**
+  String get removePhotoTitle;
+
+  /// No description provided for @removePhotoBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your lifter shows instead, everywhere. You can add a new photo any time.'**
+  String get removePhotoBody;
+
+  /// No description provided for @removePhotoConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get removePhotoConfirm;
+
+  /// No description provided for @couldNotRemovePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not remove your photo. Try again.'**
+  String get couldNotRemovePhoto;
+
+  /// No description provided for @cropPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Crop'**
+  String get cropPhoto;
+
+  /// No description provided for @proGoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Pro.'**
+  String get proGoTitle;
+
+  /// No description provided for @proOnboardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your lifter, Pro.'**
+  String get proOnboardTitle;
+
+  /// No description provided for @proSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No ads, and a look the free app can\'t have.'**
+  String get proSubtitle;
+
+  /// No description provided for @proFree.
+  ///
+  /// In en, this message translates to:
+  /// **'FREE'**
+  String get proFree;
+
+  /// No description provided for @proYoursNow.
+  ///
+  /// In en, this message translates to:
+  /// **'YOURS NOW'**
+  String get proYoursNow;
+
+  /// No description provided for @proPerkNoAds.
+  ///
+  /// In en, this message translates to:
+  /// **'No ads. Ever.'**
+  String get proPerkNoAds;
+
+  /// No description provided for @proPerkNoAdsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Every match, every level, straight through.'**
+  String get proPerkNoAdsBody;
+
+  /// No description provided for @proPerkBoard.
+  ///
+  /// In en, this message translates to:
+  /// **'Shine on every board'**
+  String get proPerkBoard;
+
+  /// No description provided for @proPerkBoardBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A holo row, your lifter breaking out of it.'**
+  String get proPerkBoardBody;
+
+  /// No description provided for @proPerkEntrance.
+  ///
+  /// In en, this message translates to:
+  /// **'A lightning entrance'**
+  String get proPerkEntrance;
+
+  /// No description provided for @proPerkEntranceBody.
+  ///
+  /// In en, this message translates to:
+  /// **'On the VS screen before every live match.'**
+  String get proPerkEntranceBody;
+
+  /// No description provided for @proPerkCovers.
+  ///
+  /// In en, this message translates to:
+  /// **'13 moving covers'**
+  String get proPerkCovers;
+
+  /// No description provided for @proPerkCoversBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Or your own photo, on top of your profile.'**
+  String get proPerkCoversBody;
+
+  /// No description provided for @proPerkItems.
+  ///
+  /// In en, this message translates to:
+  /// **'20 Pro-only items'**
+  String get proPerkItems;
+
+  /// No description provided for @proPerkItemsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Skins, tops, gear, and a lifter that blinks.'**
+  String get proPerkItemsBody;
+
+  /// No description provided for @proGo.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Pro'**
+  String get proGo;
+
+  /// No description provided for @proBuyYearly.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Pro · {price}/year'**
+  String proBuyYearly(String price);
+
+  /// No description provided for @proBuyWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Pro · {price}/week'**
+  String proBuyWeekly(String price);
+
+  /// No description provided for @proSettingsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'No ads, and the Pro look.'**
+  String get proSettingsBody;
+
+  /// No description provided for @proSettingsActive.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re Pro. Thanks for the support.'**
+  String get proSettingsActive;
+
+  /// No description provided for @lifterMakerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your lifter'**
+  String get lifterMakerTitle;
+
+  /// No description provided for @lifterMakerFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Make your lifter'**
+  String get lifterMakerFirst;
+
+  /// No description provided for @lifterMakerFirstBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This is you on every board and in every match.'**
+  String get lifterMakerFirstBody;
+
+  /// No description provided for @lifterTabSkin.
+  ///
+  /// In en, this message translates to:
+  /// **'Skin'**
+  String get lifterTabSkin;
+
+  /// No description provided for @lifterTabHair.
+  ///
+  /// In en, this message translates to:
+  /// **'Hair'**
+  String get lifterTabHair;
+
+  /// No description provided for @lifterTabFace.
+  ///
+  /// In en, this message translates to:
+  /// **'Face'**
+  String get lifterTabFace;
+
+  /// No description provided for @lifterTabBeard.
+  ///
+  /// In en, this message translates to:
+  /// **'Beard'**
+  String get lifterTabBeard;
+
+  /// No description provided for @lifterTabTop.
+  ///
+  /// In en, this message translates to:
+  /// **'Top'**
+  String get lifterTabTop;
+
+  /// No description provided for @lifterTabGear.
+  ///
+  /// In en, this message translates to:
+  /// **'Gear'**
+  String get lifterTabGear;
+
+  /// No description provided for @lifterTabBackground.
+  ///
+  /// In en, this message translates to:
+  /// **'Background'**
+  String get lifterTabBackground;
+
+  /// No description provided for @lifterTabCharacters.
+  ///
+  /// In en, this message translates to:
+  /// **'Characters'**
+  String get lifterTabCharacters;
+
+  /// No description provided for @lifterEyes.
+  ///
+  /// In en, this message translates to:
+  /// **'Eyes'**
+  String get lifterEyes;
+
+  /// No description provided for @lifterBrows.
+  ///
+  /// In en, this message translates to:
+  /// **'Brows'**
+  String get lifterBrows;
+
+  /// No description provided for @lifterMouth.
+  ///
+  /// In en, this message translates to:
+  /// **'Mouth'**
+  String get lifterMouth;
+
+  /// No description provided for @lifterMarks.
+  ///
+  /// In en, this message translates to:
+  /// **'Marks'**
+  String get lifterMarks;
+
+  /// No description provided for @lifterRandom.
+  ///
+  /// In en, this message translates to:
+  /// **'Random'**
+  String get lifterRandom;
+
+  /// No description provided for @lifterTryingPro.
+  ///
+  /// In en, this message translates to:
+  /// **'A Pro look.'**
+  String get lifterTryingPro;
+
+  /// No description provided for @lifterUnlockPro.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock with Pro'**
+  String get lifterUnlockPro;
+
+  /// No description provided for @editLifter.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit your lifter'**
+  String get editLifter;
+
+  /// No description provided for @lifterNeedsWorld.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear {world}'**
+  String lifterNeedsWorld(String world);
+
+  /// No description provided for @lifterNeedsTier.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach {tier}'**
+  String lifterNeedsTier(String tier);
+
+  /// No description provided for @lifterNeedsLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach level {level}'**
+  String lifterNeedsLevel(String level);
+
+  /// No description provided for @lifterNeedsWins.
+  ///
+  /// In en, this message translates to:
+  /// **'Win {count} matches'**
+  String lifterNeedsWins(String count);
+
+  /// No description provided for @lifterNeedsWinStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Win {count} in a row'**
+  String lifterNeedsWinStreak(String count);
+
+  /// No description provided for @lifterNeedsDayStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Train {count} days in a row'**
+  String lifterNeedsDayStreak(String count);
+
+  /// No description provided for @lifterNeedsMonthTop10.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish a month in the top 10'**
+  String get lifterNeedsMonthTop10;
+
+  /// No description provided for @lifterNeedsMonthPodium.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish a month in the top 3'**
+  String get lifterNeedsMonthPodium;
+
+  /// No description provided for @lifterNeedsMonthChampion.
+  ///
+  /// In en, this message translates to:
+  /// **'Win a month'**
+  String get lifterNeedsMonthChampion;
+
+  /// No description provided for @lifterNeedsStars.
+  ///
+  /// In en, this message translates to:
+  /// **'3 stars on {count} Adventure levels'**
+  String lifterNeedsStars(String count);
+
+  /// No description provided for @lifterNeedsAllStars.
+  ///
+  /// In en, this message translates to:
+  /// **'Every star in the Adventure'**
+  String get lifterNeedsAllStars;
+
+  /// No description provided for @coverTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cover'**
+  String get coverTitle;
+
+  /// No description provided for @coverPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Your photo'**
+  String get coverPhoto;
+
+  /// No description provided for @coverNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No cover'**
+  String get coverNone;
+
+  /// No description provided for @coverUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Use this cover'**
+  String get coverUse;
+
+  /// No description provided for @coverProLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Covers are Pro. They move, and everyone who opens your profile sees them.'**
+  String get coverProLine;
+
+  /// No description provided for @coverCouldNotUpload.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not upload your photo. Try again.'**
+  String get coverCouldNotUpload;
+
+  /// No description provided for @coverNeonCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Neon city'**
+  String get coverNeonCity;
+
+  /// No description provided for @coverIronGym.
+  ///
+  /// In en, this message translates to:
+  /// **'Iron gym'**
+  String get coverIronGym;
+
+  /// No description provided for @coverRooftopSunset.
+  ///
+  /// In en, this message translates to:
+  /// **'Rooftop sunset'**
+  String get coverRooftopSunset;
+
+  /// No description provided for @coverStadiumLights.
+  ///
+  /// In en, this message translates to:
+  /// **'Stadium lights'**
+  String get coverStadiumLights;
+
+  /// No description provided for @coverSilverPeaks.
+  ///
+  /// In en, this message translates to:
+  /// **'Silver peaks'**
+  String get coverSilverPeaks;
+
+  /// No description provided for @coverBronzeDunes.
+  ///
+  /// In en, this message translates to:
+  /// **'Bronze dunes'**
+  String get coverBronzeDunes;
+
+  /// No description provided for @coverVolcano.
+  ///
+  /// In en, this message translates to:
+  /// **'Volcano'**
+  String get coverVolcano;
+
+  /// No description provided for @coverPalmBeach.
+  ///
+  /// In en, this message translates to:
+  /// **'Palm beach'**
+  String get coverPalmBeach;
+
+  /// No description provided for @coverWinterCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Winter city'**
+  String get coverWinterCity;
+
+  /// No description provided for @coverFireworks.
+  ///
+  /// In en, this message translates to:
+  /// **'Fireworks'**
+  String get coverFireworks;
+
+  /// No description provided for @coverFightNight.
+  ///
+  /// In en, this message translates to:
+  /// **'Fight night'**
+  String get coverFightNight;
+
+  /// No description provided for @coverOrbit.
+  ///
+  /// In en, this message translates to:
+  /// **'Orbit'**
+  String get coverOrbit;
+
+  /// No description provided for @coverChampionPodium.
+  ///
+  /// In en, this message translates to:
+  /// **'Champion podium'**
+  String get coverChampionPodium;
+
+  /// No description provided for @vsLiveRanked.
+  ///
+  /// In en, this message translates to:
+  /// **'LIVE · RANKED'**
+  String get vsLiveRanked;
+
+  /// No description provided for @vsLiveFriendly.
+  ///
+  /// In en, this message translates to:
+  /// **'LIVE · FRIENDLY'**
+  String get vsLiveFriendly;
+
+  /// No description provided for @vsSavedRanked.
+  ///
+  /// In en, this message translates to:
+  /// **'SAVED SET · RANKED'**
+  String get vsSavedRanked;
+
+  /// No description provided for @vsRematchFriendly.
+  ///
+  /// In en, this message translates to:
+  /// **'REMATCH · FRIENDLY'**
+  String get vsRematchFriendly;
+
   /// No description provided for @couldNotShareCard.
   ///
   /// In en, this message translates to:
@@ -1817,6 +2291,12 @@ abstract class L {
   /// **'You will lose LP if you leave now.'**
   String get forfeitBody;
 
+  /// No description provided for @forfeitRematchBody.
+  ///
+  /// In en, this message translates to:
+  /// **'It counts as a loss.'**
+  String get forfeitRematchBody;
+
   /// No description provided for @forfeit.
   ///
   /// In en, this message translates to:
@@ -2392,6 +2872,84 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Your climb'**
   String get yourClimb;
+
+  /// No description provided for @yourRank.
+  ///
+  /// In en, this message translates to:
+  /// **'Your rank'**
+  String get yourRank;
+
+  /// No description provided for @whoIsNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Who's next?'**
+  String get whoIsNext;
+
+  /// No description provided for @opponentFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Opponent found'**
+  String get opponentFound;
+
+  /// No description provided for @obSevenTiers.
+  ///
+  /// In en, this message translates to:
+  /// **'The seven tiers'**
+  String get obSevenTiers;
+
+  /// No description provided for @obRatingPerMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating per match'**
+  String get obRatingPerMatch;
+
+  /// No description provided for @obWinLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Win'**
+  String get obWinLabel;
+
+  /// No description provided for @obLossLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Loss'**
+  String get obLossLabel;
+
+  /// No description provided for @obFloorLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Floor'**
+  String get obFloorLabel;
+
+  /// No description provided for @obWinRating.
+  ///
+  /// In en, this message translates to:
+  /// **'+{n} + rep gap'**
+  String obWinRating(String n);
+
+  /// No description provided for @obLossRating.
+  ///
+  /// In en, this message translates to:
+  /// **'−{n} − rep gap'**
+  String obLossRating(String n);
+
+  /// No description provided for @obNeverBelow.
+  ///
+  /// In en, this message translates to:
+  /// **'never below {n}'**
+  String obNeverBelow(String n);
+
+  /// No description provided for @obDivisionLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Every {division} rating is a division, {tier} a tier.'**
+  String obDivisionLine(String division, String tier);
+
+  /// No description provided for @ratingFloor.
+  ///
+  /// In en, this message translates to:
+  /// **'Your rating never drops below {n}.'**
+  String ratingFloor(String n);
 
   /// No description provided for @floorKept.
   ///
@@ -3275,12 +3833,6 @@ abstract class L {
   /// **'Save {percent}%'**
   String paywallSave(String percent);
 
-  /// No description provided for @paywallStart.
-  ///
-  /// In en, this message translates to:
-  /// **'Start climbing'**
-  String get paywallStart;
-
   /// No description provided for @paywallRenewsPlay.
   ///
   /// In en, this message translates to:
@@ -3370,18 +3922,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Your account stays as it is, with its rank, history and subscription. Sign back in any time with your email.'**
   String get signOutBody;
-
-  /// No description provided for @shareVictory.
-  ///
-  /// In en, this message translates to:
-  /// **'VICTORY'**
-  String get shareVictory;
-
-  /// No description provided for @shareRematch.
-  ///
-  /// In en, this message translates to:
-  /// **'REMATCH?'**
-  String get shareRematch;
 
   /// No description provided for @friendCodeInvite.
   ///
@@ -3725,72 +4265,6 @@ abstract class L {
   /// **'A friend asked me to go live'**
   String get noticeLiveInvite;
 
-  /// No description provided for @trialToday.
-  ///
-  /// In en, this message translates to:
-  /// **'Today'**
-  String get trialToday;
-
-  /// No description provided for @trialTodayBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Every duel, live and ranked, unlocked.'**
-  String get trialTodayBody;
-
-  /// No description provided for @trialDay.
-  ///
-  /// In en, this message translates to:
-  /// **'Day {day}'**
-  String trialDay(String day);
-
-  /// No description provided for @trialReminderBody.
-  ///
-  /// In en, this message translates to:
-  /// **'We\'ll remind you the day before your trial ends.'**
-  String get trialReminderBody;
-
-  /// No description provided for @trialEndBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Your plan starts. Cancel any time before and you pay nothing.'**
-  String get trialEndBody;
-
-  /// No description provided for @trialTag.
-  ///
-  /// In en, this message translates to:
-  /// **'{days} days free'**
-  String trialTag(String days);
-
-  /// No description provided for @trialCta.
-  ///
-  /// In en, this message translates to:
-  /// **'Start my {days}-day free trial'**
-  String trialCta(String days);
-
-  /// No description provided for @trialThenYearly.
-  ///
-  /// In en, this message translates to:
-  /// **'No payment now · then {price}/year'**
-  String trialThenYearly(String price);
-
-  /// No description provided for @trialThenWeekly.
-  ///
-  /// In en, this message translates to:
-  /// **'No payment now · then {price}/week'**
-  String trialThenWeekly(String price);
-
-  /// No description provided for @trialEndsTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Your free trial ends tomorrow'**
-  String get trialEndsTitle;
-
-  /// No description provided for @trialEndsBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Keep climbing, or cancel before then in your subscription settings.'**
-  String get trialEndsBody;
-
   /// No description provided for @obIdeaTitle.
   ///
   /// In en, this message translates to:
@@ -3893,6 +4367,126 @@ abstract class L {
   /// **'Nobody has won LP this month yet. Win the first ranked duel and you lead.'**
   String get monthEmptyBody;
 
+  /// No description provided for @weekEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A fresh week'**
+  String get weekEmptyTitle;
+
+  /// No description provided for @weekEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody has won LP this week yet. Win the first ranked duel and you lead.'**
+  String get weekEmptyBody;
+
+  /// No description provided for @ratingUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'rating'**
+  String get ratingUnit;
+
+  /// No description provided for @ptsUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'pts'**
+  String get ptsUnit;
+
+  /// No description provided for @ptsAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} pts'**
+  String ptsAmount(String n);
+
+  /// No description provided for @ratingAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} rating'**
+  String ratingAmount(String n);
+
+  /// No description provided for @ratingForWin.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} for the win'**
+  String ratingForWin(String n);
+
+  /// No description provided for @ratingForLoss.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} for the loss'**
+  String ratingForLoss(String n);
+
+  /// No description provided for @ratingForReps.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} for the reps'**
+  String ratingForReps(String n);
+
+  /// No description provided for @boardThisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get boardThisWeek;
+
+  /// No description provided for @boardOverall.
+  ///
+  /// In en, this message translates to:
+  /// **'Overall'**
+  String get boardOverall;
+
+  /// No description provided for @howPointsWork.
+  ///
+  /// In en, this message translates to:
+  /// **'How points work'**
+  String get howPointsWork;
+
+  /// No description provided for @streakNextTen.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} wins in a row: the next win is +10'**
+  String streakNextTen(String n);
+
+  /// No description provided for @boardRuleWin.
+  ///
+  /// In en, this message translates to:
+  /// **'Win +5'**
+  String get boardRuleWin;
+
+  /// No description provided for @boardRuleLoss.
+  ///
+  /// In en, this message translates to:
+  /// **'Loss −2'**
+  String get boardRuleLoss;
+
+  /// No description provided for @boardRuleStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'3 wins in a row: +10'**
+  String get boardRuleStreak;
+
+  /// No description provided for @rankNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {rank}'**
+  String rankNext(String rank);
+
+  /// No description provided for @rankAt.
+  ///
+  /// In en, this message translates to:
+  /// **'at {n}'**
+  String rankAt(String n);
+
+  /// No description provided for @toGo.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} to go'**
+  String toGo(String n);
+
+  /// No description provided for @tierStartsAt.
+  ///
+  /// In en, this message translates to:
+  /// **'{tier} starts at {n}'**
+  String tierStartsAt(String tier, String n);
+
   /// No description provided for @rankedDuelsCount.
   ///
   /// In en, this message translates to:
@@ -3922,6 +4516,18 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Play the new month'**
   String get seasonPlayCta;
+
+  /// No description provided for @monthWinners.
+  ///
+  /// In en, this message translates to:
+  /// **'{month}\'s winners'**
+  String monthWinners(String month);
+
+  /// No description provided for @playShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get playShort;
 
   /// No description provided for @rematchLive.
   ///
@@ -4856,14 +5462,32 @@ abstract class L {
   /// No description provided for @obRepsDown.
   ///
   /// In en, this message translates to:
-  /// **'Down past the gold line'**
+  /// **'Down until the bar is empty'**
   String get obRepsDown;
 
   /// No description provided for @obRepsUp.
   ///
   /// In en, this message translates to:
-  /// **'Back up past the top line'**
+  /// **'Up until it's full'**
   String get obRepsUp;
+
+  /// No description provided for @obBarGoingDown.
+  ///
+  /// In en, this message translates to:
+  /// **'Going down'**
+  String get obBarGoingDown;
+
+  /// No description provided for @obBarComingUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming up'**
+  String get obBarComingUp;
+
+  /// No description provided for @obBarHandOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Hand off the floor'**
+  String get obBarHandOff;
 
   /// No description provided for @obRepsBoth.
   ///
@@ -4895,41 +5519,11 @@ abstract class L {
   /// **'Down past the {gold}, back up past the top one'**
   String obCalibrationRule(String gold);
 
-  /// No description provided for @proTitleTop.
-  ///
-  /// In en, this message translates to:
-  /// **'No ads.'**
-  String get proTitleTop;
-
-  /// No description provided for @proTitleBottom.
-  ///
-  /// In en, this message translates to:
-  /// **'Just push-ups.'**
-  String get proTitleBottom;
-
-  /// No description provided for @proBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Every match stays free. Pro takes the ads out of all of them.'**
-  String get proBody;
-
   /// No description provided for @proThanks.
   ///
   /// In en, this message translates to:
   /// **'Ads are off. Thanks for going Pro.'**
   String get proThanks;
-
-  /// No description provided for @removeAds.
-  ///
-  /// In en, this message translates to:
-  /// **'Remove ads'**
-  String get removeAds;
-
-  /// No description provided for @adNotice.
-  ///
-  /// In en, this message translates to:
-  /// **'An ad plays when you leave'**
-  String get adNotice;
 
   /// No description provided for @adAskTitle.
   ///
@@ -4948,12 +5542,6 @@ abstract class L {
   /// In en, this message translates to:
   /// **'Your camera is never part of it: body tracking stays on this phone, whatever you choose.'**
   String get adAskCamera;
-
-  /// No description provided for @adAskRemove.
-  ///
-  /// In en, this message translates to:
-  /// **'Remove ads instead'**
-  String get adAskRemove;
 
   /// No description provided for @monsterIronColossus.
   ///

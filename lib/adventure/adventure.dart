@@ -7,11 +7,13 @@
 /// adventure is practice with something to hit.
 library;
 
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../backend/backend.dart';
 
 const kWorlds = 7;
 const kLevelsPerWorld = 20;
@@ -259,6 +261,10 @@ class Adventure extends ChangeNotifier {
       math.max(i < a.length ? a[i] : 0, i < b.length ? b[i] : 0).clamp(0, 3),
   ];
 
+  static bool _same(List<int> a, List<int> b) =>
+      a.length == b.length &&
+      [for (var i = 0; i < a.length; i++) a[i] == b[i]].every((same) => same);
+
   Future<void> _save() async {
     try {
       final store = await SharedPreferences.getInstance();
@@ -275,9 +281,52 @@ class Adventure extends ChangeNotifier {
     }
   }
 
+  /// Brings this phone and the account to the same stars: the best either
+  /// has on each level, written to both. At launch, once signed in.
+  Future<void> sync() async {
+    final me = backend.me;
+    if (!backend.available || me == null) return;
+    try {
+      // Another account's stars on this phone stay with that account.
+      final mine = _owner == null || _owner == me.id ? _stars : <int>[];
+      final server = await backend.myAdventure();
+      var merged = merge(mine, server);
+      if (!_same(merged, server)) {
+        merged = merge(merged, await backend.saveAdventure(merged));
+      }
+      _stars = merged;
+      _owner = me.id;
+      await _save();
+      notifyListeners();
+    } on Object catch (error) {
+      // Kept on the phone; the next launch tries again.
+      debugPrint('Could not sync the adventure: $error');
+    }
+  }
+
+  /// Signing out: the stars here are the account's and go with it, so the
+  /// next account on this phone starts from none — a new account opened on
+  /// Level 1 won, the last account's (the user, 2026-11-04).
+  Future<void> forget() async {
+    _stars = [];
+    _owner = null;
+    await _save();
+    notifyListeners();
+  }
+
+  /// Signed into a different account on this phone, or a new one made: its
+  /// stars, from the server, in place of the ones here.
+  Future<void> adopt() async {
+    _stars = [];
+    _owner = null;
+    await _save();
+    notifyListeners();
+    await sync();
+  }
+
   /// Writes down a fight won with [stars]. Keeps the best of the old and the
   /// new, and hands back the weapon this unlocked, if it unlocked one. The
-  /// promo has no account to tell.
+  /// account is told straight after, without holding the result up.
   Future<Weapon?> record(int level, int stars) async {
     if (level < 1 || level > kAdventureLevels || stars < 1) return null;
     final before = weapon;
@@ -288,8 +337,28 @@ class Adventure extends ChangeNotifier {
     _stars[level - 1] = stars;
     notifyListeners();
     await _save();
+    unawaited(_push());
     final after = weapon;
     return after.index > before.index ? after : null;
+  }
+
+  Future<void> _push() async {
+    final me = backend.me;
+    if (!backend.available || me == null) return;
+    if (_owner != null && _owner != me.id) return;
+    try {
+      final held = await backend.saveAdventure(_stars);
+      _owner = me.id;
+      final merged = merge(_stars, held);
+      if (!_same(merged, _stars)) {
+        _stars = merged;
+        notifyListeners();
+      }
+      await _save();
+    } on Object catch (error) {
+      // Kept on the phone; the next launch's sync sends it.
+      debugPrint('Could not save the adventure to the account: $error');
+    }
   }
 
   /// Puts the map in a known state for a test or a screenshot.

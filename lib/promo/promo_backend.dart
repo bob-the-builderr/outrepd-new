@@ -37,6 +37,10 @@ class PromoBackend extends NoBackend {
     _ => opponentReps,
   };
 
+  /// When each of theirs landed, for the race chart, as many as [count].
+  List<int> repTimes(int count) =>
+      (_link?.landed ?? const <int>[]).take(count).toList();
+
   @override
   LiveLink openLiveLink(String matchId) {
     _link?.close();
@@ -83,6 +87,10 @@ class _PromoLink implements LiveLink {
   int reps = 0;
   int _yours = 0;
   bool _closed = false;
+  DateTime? _start;
+
+  /// When each rep landed, in milliseconds from the start of the round.
+  final landed = <int>[];
 
   @override
   Stream<LiveMessage> get messages => _messages.stream;
@@ -94,6 +102,13 @@ class _PromoLink implements LiveLink {
 
   void _land(int count) {
     if (_closed || count <= reps) return;
+    final start = _start;
+    if (start != null) {
+      final at = clock.now().difference(start).inMilliseconds;
+      for (var k = reps; k < count; k++) {
+        landed.add(at.clamp(0, PromoPlan.roundMs));
+      }
+    }
     reps = count;
     _say();
   }
@@ -101,6 +116,7 @@ class _PromoLink implements LiveLink {
   /// The round starts at [start]: every planned rep is set to land on its
   /// second.
   void startAt(DateTime start) {
+    _start = start;
     final times = plan.repTimesMs();
     for (var k = 0; k < times.length; k++) {
       final at = start.add(Duration(milliseconds: times[k]));

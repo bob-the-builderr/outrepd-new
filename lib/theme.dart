@@ -234,8 +234,7 @@ ThemeData buildTheme(Brightness brightness) {
       titleTextStyle: text.titleLarge!.copyWith(
         color: p.text,
         fontSize: 24,
-        fontWeight: FontWeight.w800,
-        letterSpacing: 0.5,
+        fontWeight: FontWeight.w700,
       ),
     ),
     cardTheme: CardThemeData(
@@ -258,10 +257,13 @@ ThemeData buildTheme(Brightness brightness) {
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
+      // Filled and quiet rather than outlined (direction B, 2026-11-02): the
+      // second choice beside a cream one, never a box drawn round a word.
       style: OutlinedButton.styleFrom(
         foregroundColor: p.text,
+        backgroundColor: p.surfaceRaised,
         minimumSize: const Size.fromHeight(56),
-        side: BorderSide(color: p.text.withValues(alpha: 0.2), width: 2),
+        side: BorderSide.none,
         textStyle: text.labelLarge!.copyWith(
           fontSize: 18,
           fontWeight: FontWeight.w600,

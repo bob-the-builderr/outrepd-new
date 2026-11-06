@@ -172,7 +172,7 @@ class LZh extends L {
   String get incSets => '每一组和每次计数';
 
   @override
-  String get incDuels => '对决记录与 LP 变化';
+  String get incDuels => '对决记录与积分变化';
 
   @override
   String get incFriends => '好友与被屏蔽的账号';
@@ -333,6 +333,262 @@ class LZh extends L {
 
   @override
   String get couldNotSyncAvatar => '照片已保存,但还没有同步';
+
+  @override
+  String get removePhoto => '移除照片';
+
+  @override
+  String get removePhotoTitle => '移除你的照片？';
+
+  @override
+  String get removePhotoBody =>
+      '各处都会改为显示你的举重手。你可以随时添加新照片。';
+
+  @override
+  String get removePhotoConfirm => '移除';
+
+  @override
+  String get couldNotRemovePhoto => '无法移除你的照片，请重试。';
+
+  @override
+  String get cropPhoto => '裁剪';
+
+  @override
+  String get proGoTitle => '升级 Pro。';
+
+  @override
+  String get proOnboardTitle => '你的举重手，Pro 版。';
+
+  @override
+  String get proSubtitle => '没有广告，还有免费版没有的造型。';
+
+  @override
+  String get proFree => '免费';
+
+  @override
+  String get proYoursNow => '现在的你';
+
+  @override
+  String get proPerkNoAds => '没有广告。永远。';
+
+  @override
+  String get proPerkNoAdsBody => '每场比赛、每个关卡，一路畅通。';
+
+  @override
+  String get proPerkBoard => '在每个榜单上闪耀';
+
+  @override
+  String get proPerkBoardBody => '全息的一行，你的举重手从中跃出。';
+
+  @override
+  String get proPerkEntrance => '闪电登场';
+
+  @override
+  String get proPerkEntranceBody => '在每场直播对决前的 VS 画面上。';
+
+  @override
+  String get proPerkCovers => '13 个动态封面';
+
+  @override
+  String get proPerkCoversBody => '或用你自己的照片，放在资料页顶部。';
+
+  @override
+  String get proPerkItems => '20 件 Pro 专属物品';
+
+  @override
+  String get proPerkItemsBody => '皮肤、上衣、装备，还有会眨眼的举重手。';
+
+  @override
+  String get proGo => '升级 Pro';
+
+  @override
+  String proBuyYearly(String price) {
+    return '升级 Pro · ${price}/年';
+  }
+
+  @override
+  String proBuyWeekly(String price) {
+    return '升级 Pro · ${price}/周';
+  }
+
+  @override
+  String get proSettingsBody => '没有广告，还有 Pro 造型。';
+
+  @override
+  String get proSettingsActive => '你已是 Pro。感谢你的支持。';
+
+  @override
+  String get lifterMakerTitle => '自定义头像';
+
+  @override
+  String get lifterMakerFirst => '自定义头像';
+
+  @override
+  String get lifterMakerFirstBody => '在每个榜单和每场比赛中，这就是你。';
+
+  @override
+  String get lifterTabSkin => '肤色';
+
+  @override
+  String get lifterTabHair => '发型';
+
+  @override
+  String get lifterTabFace => '脸部';
+
+  @override
+  String get lifterTabBeard => '胡子';
+
+  @override
+  String get lifterTabTop => '上衣';
+
+  @override
+  String get lifterTabGear => '装备';
+
+  @override
+  String get lifterTabBackground => '背景';
+
+  @override
+  String get lifterTabCharacters => '角色';
+
+  @override
+  String get lifterEyes => '眼睛';
+
+  @override
+  String get lifterBrows => '眉毛';
+
+  @override
+  String get lifterMouth => '嘴巴';
+
+  @override
+  String get lifterMarks => '标记';
+
+  @override
+  String get lifterRandom => '随机';
+
+  @override
+  String get lifterTryingPro => 'Pro 造型。';
+
+  @override
+  String get lifterUnlockPro => '用 Pro 解锁';
+
+  @override
+  String get editLifter => '编辑你的举重手';
+
+  @override
+  String lifterNeedsWorld(String world) {
+    return '通关${world}';
+  }
+
+  @override
+  String lifterNeedsTier(String tier) {
+    return '达到${tier}';
+  }
+
+  @override
+  String lifterNeedsLevel(String level) {
+    return '达到 ${level} 级';
+  }
+
+  @override
+  String lifterNeedsWins(String count) {
+    return '赢得 ${count} 场比赛';
+  }
+
+  @override
+  String lifterNeedsWinStreak(String count) {
+    return '连胜 ${count} 场';
+  }
+
+  @override
+  String lifterNeedsDayStreak(String count) {
+    return '连续训练 ${count} 天';
+  }
+
+  @override
+  String get lifterNeedsMonthTop10 => '以前 10 名结束一个月';
+
+  @override
+  String get lifterNeedsMonthPodium => '以前 3 名结束一个月';
+
+  @override
+  String get lifterNeedsMonthChampion => '赢得一个月的冠军';
+
+  @override
+  String lifterNeedsStars(String count) {
+    return '在 ${count} 个冒险关卡获得 3 星';
+  }
+
+  @override
+  String get lifterNeedsAllStars => '冒险中的所有星星';
+
+  @override
+  String get coverTitle => '封面';
+
+  @override
+  String get coverPhoto => '你的照片';
+
+  @override
+  String get coverNone => '不用封面';
+
+  @override
+  String get coverUse => '使用这个封面';
+
+  @override
+  String get coverProLine => '封面是 Pro 专属。它们会动，每个打开你资料页的人都能看到。';
+
+  @override
+  String get coverCouldNotUpload => '无法上传你的照片，请重试。';
+
+  @override
+  String get coverNeonCity => '霓虹城市';
+
+  @override
+  String get coverIronGym => '钢铁健身房';
+
+  @override
+  String get coverRooftopSunset => '屋顶日落';
+
+  @override
+  String get coverStadiumLights => '体育场灯光';
+
+  @override
+  String get coverSilverPeaks => '银色山峰';
+
+  @override
+  String get coverBronzeDunes => '青铜沙丘';
+
+  @override
+  String get coverVolcano => '火山';
+
+  @override
+  String get coverPalmBeach => '棕榈海滩';
+
+  @override
+  String get coverWinterCity => '冬日城市';
+
+  @override
+  String get coverFireworks => '烟花';
+
+  @override
+  String get coverFightNight => '格斗之夜';
+
+  @override
+  String get coverOrbit => '轨道';
+
+  @override
+  String get coverChampionPodium => '冠军领奖台';
+
+  @override
+  String get vsLiveRanked => '直播 · 排位';
+
+  @override
+  String get vsLiveFriendly => '直播 · 友谊赛';
+
+  @override
+  String get vsSavedRanked => '已保存的一组 · 排位';
+
+  @override
+  String get vsRematchFriendly => '再来一局 · 友谊赛';
 
   @override
   String get couldNotShareCard => '无法分享这张卡片';
@@ -876,6 +1132,9 @@ class LZh extends L {
   String get forfeitBody => '现在离开会扣除 LP。';
 
   @override
+  String get forfeitRematchBody => '这将算作一场失败。';
+
+  @override
   String get forfeit => '认输';
 
   @override
@@ -1222,6 +1481,55 @@ class LZh extends L {
   String get yourClimb => '你的攀登';
 
   @override
+  String get yourRank => '我的段位';
+
+  @override
+  String get whoIsNext => '下一个对手是谁？';
+
+  @override
+  String get opponentFound => '已找到对手';
+
+  @override
+  String get obSevenTiers => '七个段位';
+
+  @override
+  String get obRatingPerMatch => '每场积分';
+
+  @override
+  String get obWinLabel => '胜';
+
+  @override
+  String get obLossLabel => '负';
+
+  @override
+  String get obFloorLabel => '下限';
+
+  @override
+  String obWinRating(String n) {
+    return '+${n} + 次数差';
+  }
+
+  @override
+  String obLossRating(String n) {
+    return '−${n} − 次数差';
+  }
+
+  @override
+  String obNeverBelow(String n) {
+    return '不低于 ${n}';
+  }
+
+  @override
+  String obDivisionLine(String division, String tier) {
+    return '每 ${division} 分一级，${tier} 分一个段位。';
+  }
+
+  @override
+  String ratingFloor(String n) {
+    return '积分永远不会低于 ${n}。';
+  }
+
+  @override
   String floorKept(String tier, String rank) {
     return '$tier 已经是你的了，不会再掉到 $rank 以下。';
   }
@@ -1300,7 +1608,7 @@ class LZh extends L {
   String get giveUp => '放弃';
 
   @override
-  String get lpMovesWithGap => '积分根据次数差变化——领先越多，获得越多';
+  String get lpMovesWithGap => '胜：+25 加次数差。负：−20 加次数差。';
 
   @override
   String get searchingForOpponent => '正在寻找对手';
@@ -1698,9 +2006,6 @@ class LZh extends L {
   }
 
   @override
-  String get paywallStart => '去除广告';
-
-  @override
   String get paywallRenewsPlay => '取消前自动续订。可随时在 Google Play 中取消。';
 
   @override
@@ -1746,12 +2051,6 @@ class LZh extends L {
 
   @override
   String get signOutBody => '你的账户会保持原样，排位、记录和订阅都在。随时可以用同样的方式重新登录。';
-
-  @override
-  String get shareVictory => '胜利';
-
-  @override
-  String get shareRematch => '再战？';
 
   @override
   String friendCodeInvite(String code) {
@@ -1961,49 +2260,6 @@ class LZh extends L {
   String get noticeLiveInvite => '好友邀请我进行实时对战';
 
   @override
-  String get trialToday => '今天';
-
-  @override
-  String get trialTodayBody => '所有对决，实时与排位，全部解锁。';
-
-  @override
-  String trialDay(String day) {
-    return '第 ${day} 天';
-  }
-
-  @override
-  String get trialReminderBody => '试用结束前一天我们会提醒你。';
-
-  @override
-  String get trialEndBody => '你的方案开始。在此之前取消则无需付费。';
-
-  @override
-  String trialTag(String days) {
-    return '${days} 天免费';
-  }
-
-  @override
-  String trialCta(String days) {
-    return '开始我的 ${days} 天免费试用';
-  }
-
-  @override
-  String trialThenYearly(String price) {
-    return '现在无需付款 · 之后 ${price}/年';
-  }
-
-  @override
-  String trialThenWeekly(String price) {
-    return '现在无需付款 · 之后 ${price}/周';
-  }
-
-  @override
-  String get trialEndsTitle => '你的免费试用明天结束';
-
-  @override
-  String get trialEndsBody => '继续攀登，或在此之前于订阅设置中取消。';
-
-  @override
   String get obIdeaTitle => '60 秒，一个对手。';
 
   @override
@@ -2039,7 +2295,7 @@ class LZh extends L {
 
   @override
   String monthToTop10(String lp) {
-    return '距前十还差 ${lp} LP';
+    return '距前十还差 ${lp} 分';
   }
 
   @override
@@ -2062,7 +2318,87 @@ class LZh extends L {
   String get monthEmptyTitle => '全新的一个月';
 
   @override
-  String get monthEmptyBody => '本月还没有人赢得 LP。赢下第一场排位赛，你就领先。';
+  String get monthEmptyBody => '本月还没有人得分。赢下第一场排位赛，你就领先。';
+
+  @override
+  String get weekEmptyTitle => '全新的一周';
+
+  @override
+  String get weekEmptyBody => '本周还没有人得分。赢下第一场排位赛，你就领先。';
+
+  @override
+  String get ratingUnit => '积分';
+
+  @override
+  String get ptsUnit => '分';
+
+  @override
+  String ptsAmount(String n) {
+    return '${n} 分';
+  }
+
+  @override
+  String ratingAmount(String n) {
+    return '积分 ${n}';
+  }
+
+  @override
+  String ratingForWin(String n) {
+    return '胜利 ${n}';
+  }
+
+  @override
+  String ratingForLoss(String n) {
+    return '失败 ${n}';
+  }
+
+  @override
+  String ratingForReps(String n) {
+    return '次数差 ${n}';
+  }
+
+  @override
+  String get boardThisWeek => '本周';
+
+  @override
+  String get boardOverall => '总榜';
+
+  @override
+  String get howPointsWork => '积分规则';
+
+  @override
+  String streakNextTen(String n) {
+    return '已连胜 ${n} 场：下一场胜利 +10';
+  }
+
+  @override
+  String get boardRuleWin => '胜 +5';
+
+  @override
+  String get boardRuleLoss => '负 −2';
+
+  @override
+  String get boardRuleStreak => '三连胜 +10';
+
+  @override
+  String rankNext(String rank) {
+    return '下一级：${rank}';
+  }
+
+  @override
+  String rankAt(String n) {
+    return '需 ${n}';
+  }
+
+  @override
+  String toGo(String n) {
+    return '还差 ${n}';
+  }
+
+  @override
+  String tierStartsAt(String tier, String n) {
+    return '${tier} 起点 ${n}';
+  }
 
   @override
   String rankedDuelsCount(String n) {
@@ -2080,6 +2416,14 @@ class LZh extends L {
 
   @override
   String get seasonPlayCta => '开始新的一个月';
+
+  @override
+  String monthWinners(String month) {
+    return '${month}获胜者';
+  }
+
+  @override
+  String get playShort => '开始';
 
   @override
   String get rematchLive => '实时再战';
@@ -2260,7 +2604,7 @@ class LZh extends L {
 
   @override
   String weekToTop3(String n) {
-    return '距前三还差 ${n} LP';
+    return '距前三还差 ${n} 分';
   }
 
   @override
@@ -2360,7 +2704,7 @@ class LZh extends L {
   String get placedBody => '所有人都从这里开始。只有赢才能往上爬。';
 
   @override
-  String get placedHow => '赢下比赛获得 LP。击败段位更高的对手得到更多。';
+  String get placedHow => '胜：+25 加次数差。负：−20 加次数差。';
 
   @override
   String get levelBesideName => '显示在你的名字旁，随处可见';
@@ -2649,10 +2993,19 @@ class LZh extends L {
   String get obRepsBody => '摄像头会看你下得多低、又起得多高。';
 
   @override
-  String get obRepsDown => '下到金线以下';
+  String get obRepsDown => '向下，直到进度条清空';
 
   @override
-  String get obRepsUp => '再起到上线以上';
+  String get obRepsUp => '向上，直到填满';
+
+  @override
+  String get obBarGoingDown => '下降中';
+
+  @override
+  String get obBarComingUp => '上升中';
+
+  @override
+  String get obBarHandOff => '手离开地面';
 
   @override
   String get obRepsBoth => '两步都要双手撑地。只做一半不算——你的手机和对手的手机都一样。';
@@ -2661,7 +3014,7 @@ class LZh extends L {
   String get obClimbTitle => '一路冲到 Master。';
 
   @override
-  String get obClimbBody => '赢下比赛往上爬：七个段位，每个五级。';
+  String get obClimbBody => '七个段位，每个五级。赢了往上，输了可能掉一个段位，但不会低于 1000 分。';
 
   @override
   String get obGoldLine => '金线';
@@ -2672,22 +3025,7 @@ class LZh extends L {
   }
 
   @override
-  String get proTitleTop => '没有广告。';
-
-  @override
-  String get proTitleBottom => '只有俯卧撑。';
-
-  @override
-  String get proBody => '每场比赛都免费。Pro 会去掉所有比赛的广告。';
-
-  @override
   String get proThanks => '广告已关闭。感谢升级 Pro。';
-
-  @override
-  String get removeAds => '去除广告';
-
-  @override
-  String get adNotice => '离开时会播放一条广告';
 
   @override
   String get adAskTitle => '广告让 outrepd 保持免费';
@@ -2697,9 +3035,6 @@ class LZh extends L {
 
   @override
   String get adAskCamera => '这和摄像头无关：无论你怎么选，身体追踪都只在这部手机上进行。';
-
-  @override
-  String get adAskRemove => '改为去除广告';
 
   @override
   String get monsterIronColossus => '钢铁巨像';

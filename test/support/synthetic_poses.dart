@@ -3,10 +3,10 @@
 ///
 /// The proportions are the measured ones, because proportions are what the
 /// counter reads. On every labelled set, at lockout the nose sits about one
-/// shoulder width above the planted hands (0.9â€“1.1), and at the bottom of a
+/// shoulder width above the planted hands (0.9–1.1), and at the bottom of a
 /// full rep about a tenth of one. The bodies these tests used to draw had the
-/// nose nine shoulder widths above the hands â€” no person the counter has ever
-/// been shown â€” so they tested a counter against a body that does not exist.
+/// nose nine shoulder widths above the hands — no person the counter has ever
+/// been shown — so they tested a counter against a body that does not exist.
 ///
 /// Coordinates are shares of the frame, as the app's own are.
 library;
@@ -76,7 +76,7 @@ BodyPose standingPose() => BodyPose({
   Joint.rightAnkle: _at(0.56, 0.90),
 });
 
-/// On their feet, arms held out in front, going up and down â€” a squat, a bob,
+/// On their feet, arms held out in front, going up and down — a squat, a bob,
 /// or somebody trying to see what the app will count. [up] is 1 standing tall
 /// and 0 at the bottom. The hands go up and down with the body.
 BodyPose squatPose(double up) {
@@ -99,7 +99,7 @@ BodyPose squatPose(double up) {
 }
 
 /// On their feet, hands held still in front at chest height, bowing the head
-/// down toward them and back â€” what a lifter did to see whether standing
+/// down toward them and back — what a lifter did to see whether standing
 /// counts, and it did. [up] is 1 upright and 0 with the head at the hands.
 ///
 /// Only the head and shoulders move. The hands stay exactly where they are,
@@ -145,7 +145,7 @@ List<BodyPose> gettingDown({int frames = 25}) => [
 
 /// Getting up off the floor after the last rep, the way people do: down onto
 /// the knees, hands up off the floor, then on to their feet. The head goes
-/// down past the bottom line and back up past the top one â€” a full swing â€”
+/// down past the bottom line and back up past the top one — a full swing —
 /// with the hands off the floor for the second half of it.
 List<BodyPose> gettingUp() {
   // On the knees, hands come up off the floor toward the chest, head still
@@ -174,7 +174,7 @@ List<BodyPose> gettingUp() {
 }
 
 /// Where a rep is at [f] of the way through it: from the top, down, and back.
-/// [depth] is how far down it goes â€” 1 all the way, 0.45 a half rep.
+/// [depth] is how far down it goes — 1 all the way, 0.45 a half rep.
 double repShape(double f, {double depth = 1}) =>
     1 - depth * (1 - math.cos(f * 2 * math.pi)) / 2;
 
@@ -197,4 +197,29 @@ List<BodyPose> pushUpSet(
 /// Poses stamped the way the screen stamps them, [frameMs] apart.
 List<RecordedFrame> timed(List<BodyPose> poses, {int frameMs = kFrameMs}) => [
   for (var i = 0; i < poses.length; i++) RecordedFrame(i * frameMs, poses[i]),
+];
+
+/// [pose] with the whole picture moved [dy] down the frame: a phone held in
+/// the hand and moved, which moves everything it sees (reported from a phone,
+/// 2026-11-04 — it counted). Without the wrists when [hands] is false: held
+/// up in front of somebody, their hands are out of shot.
+BodyPose phoneMoved(BodyPose pose, double dy, {bool hands = true}) => BodyPose({
+  for (final MapEntry(:key, :value) in pose.points.entries)
+    if (hands || (key != Joint.leftWrist && key != Joint.rightWrist))
+      key: PosePoint(value.x, value.y + dy, value.confidence, value.z),
+});
+
+/// How far a phone swung up and down has moved the picture at [f] of one
+/// swing: from the top, down a quarter of the frame, and back — more than a
+/// full rep's travel of the head against where the hands were.
+double phoneSwing(double f) => 0.25 * (1 - repShape(f));
+
+/// Eight swings of a phone held in the hand, one a second, after a second at
+/// the top of a push-up: everything moves, the wrists too unless [hands] is
+/// false. Not one of them is a rep.
+List<BodyPose> phoneSwings({bool hands = true}) => [
+  for (var i = 0; i < 30; i++) pushUpPose(1),
+  for (var swing = 0; swing < 8; swing++)
+    for (var f = 0; f < 30; f++)
+      phoneMoved(pushUpPose(1), phoneSwing(f / 30), hands: hands),
 ];

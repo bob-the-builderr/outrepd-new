@@ -8,7 +8,11 @@
 /// is worse than none, and anything a lifter waits for mid-set is a bug.
 library;
 
+import 'dart:io';
+
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show RenderParagraph;
 import 'package:flutter/services.dart';
 
 import 'settings.dart';
@@ -234,6 +238,14 @@ class SlideRoute<T> extends PageRouteBuilder<T> {
 bool reduceMotion(BuildContext context) =>
     MediaQuery.maybeDisableAnimationsOf(context) ?? false;
 
+/// Whether something may move for ever — a light crossing a card, a ring
+/// round a button. Not when the phone asks for less motion, and not under
+/// `flutter test`, where a loop that never ends keeps pumpAndSettle waiting
+/// for it.
+bool loopsAllowed(BuildContext context) =>
+    !reduceMotion(context) &&
+    (kIsWeb || !Platform.environment.containsKey('FLUTTER_TEST'));
+
 /// The delay for the [index]th row of a list rising in: one after another,
 /// quickly, and no later than the ninth — a long list should not make
 /// somebody wait to see its bottom.
@@ -245,7 +257,10 @@ Duration staggered(int index) =>
 ///
 /// The whole text is laid out from the first frame, the unwritten part
 /// transparent, so the lines never re-wrap as the letters arrive and what
-/// follows it does not jump. Screen readers get the whole sentence at once.
+/// follows it does not jump. The cursor takes no room in the line: as a
+/// letter of its own it widened the line it was on, and a centred line slid
+/// half a letter sideways and back as it passed through (2026-11-04: "the
+/// typing lags strangely"). Screen readers get the whole sentence at once.
 class TypeOut extends StatefulWidget {
   const TypeOut(
     this.text, {
@@ -300,6 +315,9 @@ class _TypeOutState extends State<TypeOut> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
+  /// The laid-out text, for where its caret is.
+  final _line = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     if (reduceMotion(context)) {
@@ -308,6 +326,14 @@ class _TypeOutState extends State<TypeOut> with SingleTickerProviderStateMixin {
     final letters = widget.text.characters.toList();
     final total = _controller.duration!.inMilliseconds;
     final wait = widget.delay.inMilliseconds;
+    final style = DefaultTextStyle.of(context).style.merge(widget.style);
+    final colour = (style.color ?? Colors.white).withValues(alpha: 0.7);
+    final bar = MediaQuery.textScalerOf(context).scale(style.fontSize ?? 14) * 1.1;
+    // The text is never touched while it types: the same characters, laid
+    // out the same way on every frame, the unwritten ones transparent. The
+    // cursor is painted over it, at the caret of that very layout. As a
+    // character of its own it moved the line (2026-11-04: "the typing lags
+    // strangely").
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, _) {
@@ -319,32 +345,66 @@ class _TypeOutState extends State<TypeOut> with SingleTickerProviderStateMixin {
                   .ceil()
                   .clamp(0, letters.length);
         final done = shown >= letters.length;
-        final colour = widget.style.color ?? DefaultTextStyle.of(context).style.color;
+        final written = letters.take(shown).join();
         return Semantics(
           label: widget.text,
           excludeSemantics: true,
-          child: Text.rich(
-            TextSpan(
-              children: [
-                TextSpan(text: letters.take(shown).join()),
-                if (!done)
+          child: CustomPaint(
+            foregroundPainter: done
+                ? null
+                : _Caret(line: _line, offset: written.length, colour: colour, height: bar),
+            child: Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(text: written),
                   TextSpan(
-                    text: '|',
-                    style: TextStyle(color: colour?.withValues(alpha: 0.7)),
+                    text: letters.skip(shown).join(),
+                    style: const TextStyle(color: Colors.transparent),
                   ),
-                TextSpan(
-                  text: letters.skip(shown).join(),
-                  style: const TextStyle(color: Colors.transparent),
-                ),
-              ],
+                ],
+              ),
+              key: _line,
+              style: widget.style,
+              textAlign: widget.textAlign,
             ),
-            style: widget.style,
-            textAlign: widget.textAlign,
           ),
         );
       },
     );
   }
+}
+
+/// The typing cursor, painted at a caret of the laid-out line, so it takes
+/// no room in it.
+class _Caret extends CustomPainter {
+  _Caret({
+    required this.line,
+    required this.offset,
+    required this.colour,
+    required this.height,
+  });
+
+  final GlobalKey line;
+  final int offset;
+  final Color colour;
+  final double height;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paragraph = line.currentContext?.findRenderObject();
+    if (paragraph is! RenderParagraph || !paragraph.hasSize) return;
+    final position = TextPosition(offset: offset);
+    final at = paragraph.getOffsetForCaret(position, Rect.zero);
+    final full = paragraph.getFullHeightForCaret(position);
+    canvas.drawRect(
+      Rect.fromLTWH(at.dx - 1, at.dy + (full - height) / 2, 2, height),
+      Paint()..color = colour,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_Caret old) =>
+      old.offset != offset || old.colour != colour || old.height != height;
 }
 
 /// A number that counts up to its value when it first appears, and from the

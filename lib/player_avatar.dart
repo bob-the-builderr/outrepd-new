@@ -7,12 +7,17 @@
 /// old app survived in three screens after the rest had moved on; the frame
 /// is drawn, not loaded, and it is the same everywhere.
 ///
-/// An initial, never gym clip-art. The one place that is supposed to be the
-/// person is the last place to put a picture of a dumbbell.
+/// A photo, or the person's lifter: the comic-ink character they made, or
+/// until they make one, the one their name gives (lib/lifter/). Never an
+/// initial (the user's rule, 2026-11-01).
 library;
+
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'lifter/lifter_view.dart';
+import 'lifter/my_lifter.dart';
 import 'theme.dart';
 import 'tier_frame.dart';
 
@@ -26,10 +31,11 @@ class PlayerAvatar extends StatelessWidget {
     this.textColour,
     this.onTap,
     this.onBadgeTap,
+    this.alive = false,
   });
 
-  /// Whose it is. The first letter is what gets drawn when there is no
-  /// [photoUrl], or while it is still loading.
+  /// Whose it is. Their name gives the lifter drawn when there is no
+  /// [image], or when it could not be loaded.
   final String name;
 
   /// Their tier, or null for somebody who has no rank to show yet — a new
@@ -37,8 +43,9 @@ class PlayerAvatar extends StatelessWidget {
   final int? tierIdx;
 
   /// Null for everyone who has not set a photo — most people, most of the
-  /// time — which is what makes the initial the fallback rather than a
-  /// special case drawn once and forgotten. A `NetworkImage` for anyone
+  /// time — which is what makes the lifter the fallback rather than a
+  /// special case drawn once and forgotten. A [LifterPicture] is drawn as
+  /// its lifter, in vectors. A `NetworkImage` for anyone
   /// else's uploaded photo, or a `FileImage` for this account's own picture
   /// before or between uploads — both are an `ImageProvider`, so the circle
   /// does not need to know which one it was handed.
@@ -48,8 +55,7 @@ class PlayerAvatar extends StatelessWidget {
   /// this; see [TierFrame.widthFor].
   final double size;
 
-  /// The initial's colour. Defaults to the body colour; the duel card uses it
-  /// to tell the two lifters apart.
+  /// Kept for the callers that set it; a lifter has no letter to colour.
   final Color? textColour;
 
   final VoidCallback? onTap;
@@ -58,28 +64,34 @@ class PlayerAvatar extends StatelessWidget {
   /// into the rank rather than decoration on it.
   final VoidCallback? onBadgeTap;
 
+  /// A Pro's lifter, alive in its frame: it blinks and breathes. Only for a
+  /// lifter; a photo stays a photo.
+  final bool alive;
+
   @override
   Widget build(BuildContext context) {
-    final initial = Container(
+    final picture = image;
+    final drawn = picture is LifterPicture ? picture.lifter : lifterFor(name);
+    final fallback = Container(
       width: size,
       height: size,
-      alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: context.colors.surfaceRaised,
         border: Border.all(color: context.colors.border, width: 1.5),
       ),
-      child: Text(
-        name.isEmpty ? '?' : name.characters.first.toUpperCase(),
-        style: TextStyle(
-          color: textColour ?? context.colors.text,
-          fontSize: size * 0.38,
-        ),
+      child: ClipOval(
+        child: alive
+            ? AliveLifter(
+                lifter: drawn,
+                builder: (context, shown, breath) =>
+                    breathing(breath, LifterImage(shown, size: size)),
+              )
+            : LifterImage(drawn, size: size),
       ),
     );
 
-    final circle = image == null
-        ? initial
+    final circle = picture == null || picture is LifterPicture
+        ? fallback
         : Container(
             width: size,
             height: size,
@@ -88,17 +100,10 @@ class PlayerAvatar extends StatelessWidget {
               border: Border.all(color: context.colors.border, width: 1.5),
             ),
             child: ClipOval(
-              child: Image(
-                image: image!,
-                width: size,
-                height: size,
-                fit: BoxFit.cover,
-                // A photo that is still loading or failed to load reads as
-                // no photo at all, not as a hole in the row — the initial is
-                // never a special case, only ever the fallback.
-                loadingBuilder: (context, child, progress) =>
-                    progress == null ? child : initial,
-                errorBuilder: (context, error, stack) => initial,
+              child: PhotoOrLifter(
+                image: decodedAt(context, picture, size),
+                size: size,
+                lifter: fallback,
               ),
             ),
           );
@@ -115,4 +120,96 @@ class PlayerAvatar extends StatelessWidget {
     if (onTap == null) return content;
     return GestureDetector(onTap: onTap, child: content);
   }
+}
+
+/// [picture] decoded at the pixels a circle [size] across needs, not at the
+/// size it was uploaded (800 px square).
+///
+/// A board draws up to a hundred of these. Decoded whole, each is 2.5 MB of
+/// memory against Flutter's 100 MB image cache — a long board pushed
+/// pictures out as it scrolled and decoded them again, which is jank on a
+/// slow phone. At 40 px on a 3x screen one is 58 KB. What is drawn is the
+/// same: it is shown no larger than this anyway.
+ImageProvider decodedAt(BuildContext context, ImageProvider picture, double size) =>
+    ResizeImage.resizeIfNeeded(
+      (size * MediaQuery.devicePixelRatioOf(context)).ceil(),
+      null,
+      picture,
+    );
+
+/// A photo, square to [size], with [lifter] standing in until it is drawn.
+///
+/// A photo already on the phone draws within a frame or two, and nothing
+/// stands in for it: the lifter flashing first read as somebody else's
+/// picture (the user, 2026-11-05). One still on its way from the server — a
+/// few seconds, the first time — shows [lifter] after [kPhotoWait] rather
+/// than an empty circle, which read as no picture at all (the same day). A
+/// photo that cannot be had stays [lifter].
+class PhotoOrLifter extends StatefulWidget {
+  const PhotoOrLifter({
+    super.key,
+    required this.image,
+    required this.size,
+    required this.lifter,
+  });
+
+  final ImageProvider image;
+  final double size;
+  final Widget lifter;
+
+  @override
+  State<PhotoOrLifter> createState() => _PhotoOrLifterState();
+}
+
+/// How long a photo may take before [PhotoOrLifter.lifter] stands in.
+const kPhotoWait = Duration(milliseconds: 500);
+
+class _PhotoOrLifterState extends State<PhotoOrLifter> {
+  Timer? _wait;
+  bool _late = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _wait = Timer(kPhotoWait, () {
+      if (mounted) setState(() => _late = true);
+    });
+  }
+
+  @override
+  void didUpdateWidget(PhotoOrLifter old) {
+    super.didUpdateWidget(old);
+    if (old.image != widget.image) {
+      _wait?.cancel();
+      _late = false;
+      _wait = Timer(kPhotoWait, () {
+        if (mounted) setState(() => _late = true);
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _wait?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => Image(
+    image: widget.image,
+    width: widget.size,
+    height: widget.size,
+    fit: BoxFit.cover,
+    // Kept on screen while the next one loads, so a row being drawn again
+    // does not blink.
+    gaplessPlayback: true,
+    frameBuilder: (context, child, frame, synchronous) {
+      if (frame != null) {
+        _wait?.cancel();
+        return child;
+      }
+      return _late ? widget.lifter : SizedBox(width: widget.size, height: widget.size);
+    },
+    errorBuilder: (context, error, stack) => widget.lifter,
+  );
 }

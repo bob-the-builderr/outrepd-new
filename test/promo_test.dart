@@ -18,6 +18,7 @@ import 'package:outrepd_promo/promo/plan.dart';
 import 'package:outrepd_promo/promo/promo_backend.dart';
 import 'package:outrepd_promo/promo/result_screen.dart';
 import 'package:outrepd_promo/promo/setup_screen.dart';
+import 'package:outrepd_promo/promo/vs_screen.dart';
 import 'package:outrepd_promo/reps/pose.dart';
 import 'package:outrepd_promo/reps/pose_source.dart';
 import 'package:outrepd_promo/theme.dart';
@@ -249,6 +250,7 @@ void main() {
       myLp: 40,
       // Filming is ReplayKit's, and there is no iPhone here.
       record: false,
+      showVs: false,
     );
 
     await tester.pumpWidget(_app(SetupScreen(plan: plan)));
@@ -296,9 +298,11 @@ void main() {
     expect(find.text('2 reps ahead.'), findsOneWidget);
     expect(find.text('5'), findsOneWidget);
     expect(find.text('3'), findsOneWidget);
-    // Two reps ahead of a Diamond IV, from Gold III: weighed up, as the app
-    // pays it.
-    expect(find.text('+3 LP'), findsOneWidget);
+    // Twenty-five for the win and two for the reps, as the app pays it.
+    expect(find.byKey(const Key('ratingDelta')), findsOneWidget);
+    expect(find.text('+27'), findsOneWidget);
+    expect(find.byKey(const Key('weekLine')), findsOneWidget);
+    expect(find.text('+5 pts'), findsOneWidget);
     expect(find.text('+25 XP'), findsOneWidget);
     expect(tester.takeException(), isNull);
 
@@ -326,7 +330,7 @@ void main() {
     await tester.tap(find.byKey(const Key('continue')));
     await tester.pumpAndSettle();
     expect(find.text('YOU WON'), findsOneWidget);
-    expect(find.text('+8 LP'), findsOneWidget);
+    expect(find.text('+30'), findsOneWidget);
   });
 
   testWidgets('a level-up, when planned, comes before the result', (
@@ -340,13 +344,54 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('LEVEL UP'), findsOneWidget);
-    expect(find.text('13'), findsOneWidget);
     expect(tester.takeException(), isNull);
 
     await tester.tap(find.byKey(const Key('levelUpContinue')));
     await tester.pumpAndSettle();
     expect(find.text('YOU WON'), findsOneWidget);
     expect(find.text('+30 XP'), findsOneWidget);
+  });
+
+  testWidgets('the VS screen names both sides, then the round starts', (
+    tester,
+  ) async {
+    phone(tester);
+    await tester.pumpWidget(
+      _app(
+        const Scaffold(
+          body: PromoVsScreen(
+            myName: 'Mokhtar',
+            myTierIdx: 3,
+            myDivIdx: 2,
+            myXp: 0,
+            opponentName: 'iron_mike',
+            opponentTierIdx: 5,
+            opponentDivIdx: 1,
+            opponentXp: 0,
+          ),
+        ),
+      ),
+    );
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.text('Mokhtar'), findsOneWidget);
+    expect(find.text('iron_mike'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+    await tester.pump(kVsTime);
+  });
+
+  testWidgets('a loss takes the rating and two points off the week', (
+    tester,
+  ) async {
+    phone(tester);
+    await tester.pumpWidget(
+      _app(
+        PromoResultScreen(plan: PromoPlan(), yours: 4, theirs: 9, gaveUp: false),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('YOU LOST'), findsOneWidget);
+    expect(find.text('−25'), findsOneWidget);
+    expect(find.text('−2 pts'), findsOneWidget);
   });
 
   testWidgets('giving up is a loss whatever the count', (tester) async {

@@ -176,7 +176,7 @@ class LRu extends L {
   String get incSets => 'Все подходы и повторы';
 
   @override
-  String get incDuels => 'История дуэлей и изменения LP';
+  String get incDuels => 'История дуэлей и изменения рейтинга';
 
   @override
   String get incFriends => 'Друзья и заблокированные';
@@ -347,6 +347,262 @@ class LRu extends L {
   @override
   String get couldNotSyncAvatar =>
       'Фото сохранено, но пока не синхронизировано';
+
+  @override
+  String get removePhoto => 'Удалить фото';
+
+  @override
+  String get removePhotoTitle => 'Удалить фото?';
+
+  @override
+  String get removePhotoBody =>
+      'Вместо него везде будет ваш атлет. Вы можете добавить новое фото в любой момент.';
+
+  @override
+  String get removePhotoConfirm => 'Удалить';
+
+  @override
+  String get couldNotRemovePhoto => 'Не удалось удалить фото. Попробуйте ещё раз.';
+
+  @override
+  String get cropPhoto => 'Обрезать';
+
+  @override
+  String get proGoTitle => 'Перейдите на Pro.';
+
+  @override
+  String get proOnboardTitle => 'Ваш атлет, Pro.';
+
+  @override
+  String get proSubtitle => 'Без рекламы и с видом, которого нет в бесплатной версии.';
+
+  @override
+  String get proFree => 'БЕСПЛАТНО';
+
+  @override
+  String get proYoursNow => 'ТЕПЕРЬ ВАШ';
+
+  @override
+  String get proPerkNoAds => 'Без рекламы. Никогда.';
+
+  @override
+  String get proPerkNoAdsBody => 'Каждый матч, каждый уровень, без пауз.';
+
+  @override
+  String get proPerkBoard => 'Сияние в каждой таблице';
+
+  @override
+  String get proPerkBoardBody => 'Голографическая строка, из которой выходит ваш атлет.';
+
+  @override
+  String get proPerkEntrance => 'Выход с молниями';
+
+  @override
+  String get proPerkEntranceBody => 'На экране VS перед каждым матчем в прямом эфире.';
+
+  @override
+  String get proPerkCovers => '13 живых обложек';
+
+  @override
+  String get proPerkCoversBody => 'Или ваше собственное фото вверху профиля.';
+
+  @override
+  String get proPerkItems => '20 предметов только для Pro';
+
+  @override
+  String get proPerkItemsBody => 'Скины, одежда, снаряжение и атлет, который моргает.';
+
+  @override
+  String get proGo => 'Перейти на Pro';
+
+  @override
+  String proBuyYearly(String price) {
+    return 'Перейти на Pro · ${price}/год';
+  }
+
+  @override
+  String proBuyWeekly(String price) {
+    return 'Перейти на Pro · ${price}/неделя';
+  }
+
+  @override
+  String get proSettingsBody => 'Без рекламы, и вид Pro.';
+
+  @override
+  String get proSettingsActive => 'У вас Pro. Спасибо за поддержку.';
+
+  @override
+  String get lifterMakerTitle => 'Настрой свой аватар';
+
+  @override
+  String get lifterMakerFirst => 'Настрой свой аватар';
+
+  @override
+  String get lifterMakerFirstBody => 'Это вы в каждой таблице и в каждом матче.';
+
+  @override
+  String get lifterTabSkin => 'Кожа';
+
+  @override
+  String get lifterTabHair => 'Волосы';
+
+  @override
+  String get lifterTabFace => 'Лицо';
+
+  @override
+  String get lifterTabBeard => 'Борода';
+
+  @override
+  String get lifterTabTop => 'Одежда';
+
+  @override
+  String get lifterTabGear => 'Снаряжение';
+
+  @override
+  String get lifterTabBackground => 'Фон';
+
+  @override
+  String get lifterTabCharacters => 'Персонажи';
+
+  @override
+  String get lifterEyes => 'Глаза';
+
+  @override
+  String get lifterBrows => 'Брови';
+
+  @override
+  String get lifterMouth => 'Рот';
+
+  @override
+  String get lifterMarks => 'Метки';
+
+  @override
+  String get lifterRandom => 'Случайно';
+
+  @override
+  String get lifterTryingPro => 'Вид Pro.';
+
+  @override
+  String get lifterUnlockPro => 'Открыть с Pro';
+
+  @override
+  String get editLifter => 'Изменить атлета';
+
+  @override
+  String lifterNeedsWorld(String world) {
+    return 'Пройдите ${world}';
+  }
+
+  @override
+  String lifterNeedsTier(String tier) {
+    return 'Достигните ${tier}';
+  }
+
+  @override
+  String lifterNeedsLevel(String level) {
+    return 'Достигните уровня ${level}';
+  }
+
+  @override
+  String lifterNeedsWins(String count) {
+    return 'Выиграйте ${count} матчей';
+  }
+
+  @override
+  String lifterNeedsWinStreak(String count) {
+    return 'Выиграйте ${count} подряд';
+  }
+
+  @override
+  String lifterNeedsDayStreak(String count) {
+    return 'Тренируйтесь ${count} дней подряд';
+  }
+
+  @override
+  String get lifterNeedsMonthTop10 => 'Закончите месяц в топ-10';
+
+  @override
+  String get lifterNeedsMonthPodium => 'Закончите месяц в топ-3';
+
+  @override
+  String get lifterNeedsMonthChampion => 'Выиграйте месяц';
+
+  @override
+  String lifterNeedsStars(String count) {
+    return '3 звезды на ${count} уровнях Приключения';
+  }
+
+  @override
+  String get lifterNeedsAllStars => 'Все звёзды Приключения';
+
+  @override
+  String get coverTitle => 'Обложка';
+
+  @override
+  String get coverPhoto => 'Ваше фото';
+
+  @override
+  String get coverNone => 'Без обложки';
+
+  @override
+  String get coverUse => 'Выбрать эту обложку';
+
+  @override
+  String get coverProLine => 'Обложки только для Pro. Они двигаются, и их видит каждый, кто открывает ваш профиль.';
+
+  @override
+  String get coverCouldNotUpload => 'Не удалось загрузить фото. Попробуйте ещё раз.';
+
+  @override
+  String get coverNeonCity => 'Неоновый город';
+
+  @override
+  String get coverIronGym => 'Железный зал';
+
+  @override
+  String get coverRooftopSunset => 'Закат на крыше';
+
+  @override
+  String get coverStadiumLights => 'Огни стадиона';
+
+  @override
+  String get coverSilverPeaks => 'Серебряные пики';
+
+  @override
+  String get coverBronzeDunes => 'Бронзовые дюны';
+
+  @override
+  String get coverVolcano => 'Вулкан';
+
+  @override
+  String get coverPalmBeach => 'Пальмовый пляж';
+
+  @override
+  String get coverWinterCity => 'Зимний город';
+
+  @override
+  String get coverFireworks => 'Фейерверк';
+
+  @override
+  String get coverFightNight => 'Ночь боёв';
+
+  @override
+  String get coverOrbit => 'Орбита';
+
+  @override
+  String get coverChampionPodium => 'Пьедестал чемпиона';
+
+  @override
+  String get vsLiveRanked => 'LIVE · РЕЙТИНГ';
+
+  @override
+  String get vsLiveFriendly => 'LIVE · ДРУЖЕСКИЙ';
+
+  @override
+  String get vsSavedRanked => 'СОХРАНЁННЫЙ ПОДХОД · РЕЙТИНГ';
+
+  @override
+  String get vsRematchFriendly => 'РЕВАНШ · ДРУЖЕСКИЙ';
 
   @override
   String get couldNotShareCard => 'Не удалось поделиться карточкой';
@@ -897,6 +1153,9 @@ class LRu extends L {
   String get forfeitBody => 'Если выйти сейчас, вы потеряете очки.';
 
   @override
+  String get forfeitRematchBody => 'Это засчитается как поражение.';
+
+  @override
   String get forfeit => 'Сдаться';
 
   @override
@@ -1248,6 +1507,55 @@ class LRu extends L {
   String get yourClimb => 'Ваш подъём';
 
   @override
+  String get yourRank => 'Твой ранг';
+
+  @override
+  String get whoIsNext => 'Кто следующий?';
+
+  @override
+  String get opponentFound => 'Соперник найден';
+
+  @override
+  String get obSevenTiers => 'Семь рангов';
+
+  @override
+  String get obRatingPerMatch => 'Очки за матч';
+
+  @override
+  String get obWinLabel => 'Победа';
+
+  @override
+  String get obLossLabel => 'Поражение';
+
+  @override
+  String get obFloorLabel => 'Минимум';
+
+  @override
+  String obWinRating(String n) {
+    return '+${n} + разница';
+  }
+
+  @override
+  String obLossRating(String n) {
+    return '−${n} − разница';
+  }
+
+  @override
+  String obNeverBelow(String n) {
+    return 'не ниже ${n}';
+  }
+
+  @override
+  String obDivisionLine(String division, String tier) {
+    return 'Каждые ${division} очков — ступень, ${tier} — ранг.';
+  }
+
+  @override
+  String ratingFloor(String n) {
+    return 'Твой рейтинг никогда не опускается ниже ${n}.';
+  }
+
+  @override
   String floorKept(String tier, String rank) {
     return '$tier теперь ваш. Ниже $rank вы не опуститесь.';
   }
@@ -1328,8 +1636,7 @@ class LRu extends L {
   String get giveUp => 'Сдаться';
 
   @override
-  String get lpMovesWithGap =>
-      'LP меняется в зависимости от разницы повторений — чем больше отрыв, тем больше очков';
+  String get lpMovesWithGap => 'Победа: +25 плюс разница в повторениях. Поражение: −20 плюс разница.';
 
   @override
   String get searchingForOpponent => 'Ищем соперника';
@@ -1743,9 +2050,6 @@ class LRu extends L {
   }
 
   @override
-  String get paywallStart => 'Убрать рекламу';
-
-  @override
   String get paywallRenewsPlay => 'Продлевается автоматически, пока вы не отмените. Отменить можно в любой момент в Google Play.';
 
   @override
@@ -1791,12 +2095,6 @@ class LRu extends L {
 
   @override
   String get signOutBody => 'Аккаунт останется как есть — с рангом, историей и подпиской. Войти снова можно в любой момент тем же способом.';
-
-  @override
-  String get shareVictory => 'ПОБЕДА';
-
-  @override
-  String get shareRematch => 'РЕВАНШ?';
 
   @override
   String friendCodeInvite(String code) {
@@ -2006,49 +2304,6 @@ class LRu extends L {
   String get noticeLiveInvite => 'Друг позвал меня на живой матч';
 
   @override
-  String get trialToday => 'Сегодня';
-
-  @override
-  String get trialTodayBody => 'Все дуэли, живые и рейтинговые, открыты.';
-
-  @override
-  String trialDay(String day) {
-    return 'День ${day}';
-  }
-
-  @override
-  String get trialReminderBody => 'Напомним за день до конца пробного периода.';
-
-  @override
-  String get trialEndBody => 'Подписка начинается. Отмените раньше — и ничего не заплатите.';
-
-  @override
-  String trialTag(String days) {
-    return '${days} дня бесплатно';
-  }
-
-  @override
-  String trialCta(String days) {
-    return 'Начать бесплатный период на ${days} дня';
-  }
-
-  @override
-  String trialThenYearly(String price) {
-    return 'Сейчас без оплаты · затем ${price}/год';
-  }
-
-  @override
-  String trialThenWeekly(String price) {
-    return 'Сейчас без оплаты · затем ${price}/нед.';
-  }
-
-  @override
-  String get trialEndsTitle => 'Пробный период заканчивается завтра';
-
-  @override
-  String get trialEndsBody => 'Продолжайте подниматься или отмените заранее в настройках подписки.';
-
-  @override
   String get obIdeaTitle => '60 секунд. Один соперник.';
 
   @override
@@ -2084,7 +2339,7 @@ class LRu extends L {
 
   @override
   String monthToTop10(String lp) {
-    return 'До топ-10: ${lp} LP';
+    return 'До топ-10: ${lp} очк.';
   }
 
   @override
@@ -2107,7 +2362,87 @@ class LRu extends L {
   String get monthEmptyTitle => 'Новый месяц';
 
   @override
-  String get monthEmptyBody => 'В этом месяце LP ещё никто не выиграл. Выиграйте первую рейтинговую дуэль — и вы лидер.';
+  String get monthEmptyBody => 'В этом месяце ещё никто не набрал очков. Выиграйте первую рейтинговую дуэль — и вы лидер.';
+
+  @override
+  String get weekEmptyTitle => 'Новая неделя';
+
+  @override
+  String get weekEmptyBody => 'На этой неделе ещё никто не набрал очков. Выиграйте первую рейтинговую дуэль — и вы лидер.';
+
+  @override
+  String get ratingUnit => 'рейтинг';
+
+  @override
+  String get ptsUnit => 'очк.';
+
+  @override
+  String ptsAmount(String n) {
+    return '${n} очк.';
+  }
+
+  @override
+  String ratingAmount(String n) {
+    return '${n} рейтинга';
+  }
+
+  @override
+  String ratingForWin(String n) {
+    return '${n} за победу';
+  }
+
+  @override
+  String ratingForLoss(String n) {
+    return '${n} за поражение';
+  }
+
+  @override
+  String ratingForReps(String n) {
+    return '${n} за повторения';
+  }
+
+  @override
+  String get boardThisWeek => 'Эта неделя';
+
+  @override
+  String get boardOverall => 'Общий';
+
+  @override
+  String get howPointsWork => 'Как начисляются очки';
+
+  @override
+  String streakNextTen(String n) {
+    return 'Побед подряд: ${n}. Следующая даст +10';
+  }
+
+  @override
+  String get boardRuleWin => 'Победа +5';
+
+  @override
+  String get boardRuleLoss => 'Поражение −2';
+
+  @override
+  String get boardRuleStreak => '3 победы подряд: +10';
+
+  @override
+  String rankNext(String rank) {
+    return 'Дальше: ${rank}';
+  }
+
+  @override
+  String rankAt(String n) {
+    return 'с ${n}';
+  }
+
+  @override
+  String toGo(String n) {
+    return 'осталось ${n}';
+  }
+
+  @override
+  String tierStartsAt(String tier, String n) {
+    return '${tier} начинается с ${n}';
+  }
 
   @override
   String rankedDuelsCount(String n) {
@@ -2125,6 +2460,14 @@ class LRu extends L {
 
   @override
   String get seasonPlayCta => 'Играть в новом месяце';
+
+  @override
+  String monthWinners(String month) {
+    return 'Победители · ${month}';
+  }
+
+  @override
+  String get playShort => 'Играть';
 
   @override
   String get rematchLive => 'Реванш вживую';
@@ -2305,7 +2648,7 @@ class LRu extends L {
 
   @override
   String weekToTop3(String n) {
-    return '${n} LP до топ-3';
+    return '${n} очк. до топ-3';
   }
 
   @override
@@ -2405,7 +2748,7 @@ class LRu extends L {
   String get placedBody => 'Все начинают отсюда. Подниматься можно только победами.';
 
   @override
-  String get placedHow => 'Побеждайте в матчах, чтобы получать LP. За победу над рангом выше — больше.';
+  String get placedHow => 'Победа: +25 плюс разница в повторениях. Поражение: −20 плюс разница.';
 
   @override
   String get levelBesideName => 'Рядом с вашим именем, везде';
@@ -2694,10 +3037,19 @@ class LRu extends L {
   String get obRepsBody => 'Камера видит, как низко ты опускаешься и как высоко поднимаешься.';
 
   @override
-  String get obRepsDown => 'Вниз ниже золотой линии';
+  String get obRepsDown => 'Вниз, пока полоса не опустеет';
 
   @override
-  String get obRepsUp => 'Обратно выше верхней линии';
+  String get obRepsUp => 'Вверх, пока не заполнится';
+
+  @override
+  String get obBarGoingDown => 'Вниз';
+
+  @override
+  String get obBarComingUp => 'Вверх';
+
+  @override
+  String get obBarHandOff => 'Рука оторвана от пола';
 
   @override
   String get obRepsBoth => 'И то и другое — руки на полу. Половина повторения не считается — ни у тебя, ни у соперника.';
@@ -2706,7 +3058,7 @@ class LRu extends L {
   String get obClimbTitle => 'Поднимись до Master.';
 
   @override
-  String get obClimbBody => 'Побеждай, чтобы подниматься: семь рангов, в каждом пять ступеней.';
+  String get obClimbBody => 'Семь рангов, в каждом пять ступеней. Побеждай, чтобы подниматься; поражение может опустить на ранг, но не ниже 1 000 очков.';
 
   @override
   String get obGoldLine => 'золотой линии';
@@ -2717,22 +3069,7 @@ class LRu extends L {
   }
 
   @override
-  String get proTitleTop => 'Без рекламы.';
-
-  @override
-  String get proTitleBottom => 'Только отжимания.';
-
-  @override
-  String get proBody => 'Все матчи остаются бесплатными. Pro убирает рекламу из всех.';
-
-  @override
   String get proThanks => 'Реклама отключена. Спасибо, что выбрали Pro.';
-
-  @override
-  String get removeAds => 'Убрать рекламу';
-
-  @override
-  String get adNotice => 'При выходе будет реклама';
 
   @override
   String get adAskTitle => 'Реклама делает outrepd бесплатным';
@@ -2742,9 +3079,6 @@ class LRu extends L {
 
   @override
   String get adAskCamera => 'Камера тут ни при чём: отслеживание тела остаётся на этом телефоне, что бы вы ни выбрали.';
-
-  @override
-  String get adAskRemove => 'Лучше убрать рекламу';
 
   @override
   String get monsterIronColossus => 'Железный колосс';

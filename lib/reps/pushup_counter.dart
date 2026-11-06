@@ -57,6 +57,12 @@ const kBarFloor = 0.25;
 double barFill(double share) =>
     ((share - kBarFloor) / (1 - kBarFloor)).clamp(0.0, 1.0);
 
+/// The live match's bar (the user's call, 2026-11-02): empty at the bottom
+/// line and full at the top one, with no lines drawn — down to its bottom
+/// and back up to its top is exactly a rep, nothing more to explain.
+double repFill(double share) =>
+    ((share - kBottomShare) / (kTopShare - kBottomShare)).clamp(0.0, 1.0);
+
 /// Time constant of the smoothing on the reading, seconds.
 ///
 /// Short, because fast sets are fast: a hundred-rep set runs at 1.9 reps a
@@ -148,6 +154,75 @@ const kReplantSettle = 0.12;
 const kHandsWindowSeconds = 0.4;
 const kHandsAwayShare = 0.35;
 
+/// With no hand confirmed on its point for a second, the floor line falls
+/// back to the last point seen — but for no longer than this, seconds.
+///
+/// A point remembered from before is a place on the screen, not on the floor:
+/// once the phone moves, the head moves against it as it does in a push-up
+/// (2026-11-04, from a phone held in the hand and moved up and down). The
+/// labelled sets lose both wrists for 1.8 s at most, mid-set.
+const kFloorStaleSeconds = 2.5;
+
+/// A rep counts only if a hand was seen on its point in at least this share
+/// of its frames, top to top.
+///
+/// The planted test asks whether a hand *left*, and with no hands in sight
+/// nothing says one did: a phone held in the hand and swung up and down, the
+/// hands out of the picture, read as planted hands under a head going down
+/// and up (2026-11-04). On the labelled sets every rep but one had a hand on
+/// its point in at least 67% of its frames. That one, the second rep of
+/// khalifa-27-a, was done with both wrists lost (one frame in 26) and is now
+/// refused, which marks the set unsure rather than wrong. A swing has none.
+const kRepHandsSeenShare = 0.1;
+
+/// Knee push-ups (the user, 2026-11-05: a live match of 75 counted on the
+/// knees). A swing is refused as on the knees when, over the last
+/// [kKneeTopMs] at the top before the lifter went down, even the straightest
+/// reading of the knee — hip, knee and ankle in 3D, from the model's own depth
+/// — bent under this many degrees.
+///
+/// At the top, arms straight, a thigh down to the floor shows (the user's
+/// idea): on the phone's own recordings the straightest top reading was
+/// 32–86° on a set done on the knees and at least 147° on a real set by the
+/// same lifter. On the way down and up the knees read straight either way,
+/// which is why it is the top that is judged. A knee the camera cannot read
+/// says nothing, and the rep counts.
+const kKneeBentDegrees = 100.0;
+
+/// How much of the top before a swing its knees are read over, ms.
+const kKneeTopMs = 600;
+
+/// Fewer readings than this at the top say nothing.
+const kKneeMinFrames = 2;
+
+/// The frame's height over its width, for the bend: x and depth are by the
+/// frame's width and y by its height. The camera runs at
+/// ResolutionPreset.medium, 720×480 on Android and 480×360 on iOS; the bend
+/// moves a few degrees between the two, far inside the margin above.
+const kFrameAspect = 1.5;
+
+/// The bend at the knee, hip–knee–ankle in degrees, averaged over the sides
+/// the camera reads with confidence; null when neither side has all three.
+double? kneeBend(BodyPose pose) {
+  final bends = <double>[];
+  for (final (hip, knee, ankle) in const [
+    (Joint.leftHip, Joint.leftKnee, Joint.leftAnkle),
+    (Joint.rightHip, Joint.rightKnee, Joint.rightAnkle),
+  ]) {
+    final h = pose.confident(hip), k = pose.confident(knee), a = pose.confident(ankle);
+    if (h == null || k == null || a == null) continue;
+    final u = (h.x - k.x, (h.y - k.y) * kFrameAspect, h.z - k.z);
+    final w = (a.x - k.x, (a.y - k.y) * kFrameAspect, a.z - k.z);
+    final n = math.sqrt(u.$1 * u.$1 + u.$2 * u.$2 + u.$3 * u.$3) *
+        math.sqrt(w.$1 * w.$1 + w.$2 * w.$2 + w.$3 * w.$3);
+    if (n == 0) continue;
+    final c = (u.$1 * w.$1 + u.$2 * w.$2 + u.$3 * w.$3) / n;
+    bends.add(math.acos(c.clamp(-1.0, 1.0)) * 180 / math.pi);
+  }
+  if (bends.isEmpty) return null;
+  return bends.reduce((a, b) => a + b) / bends.length;
+}
+
 enum _Hand { left, right }
 
 class _Stamped {
@@ -179,10 +254,15 @@ class _Hands {
   final _away = Queue<(int, bool)>();
   int _now = 0;
 
+  /// The last frame had a hand on a point: its own, the other hand's, or one
+  /// planted there and then.
+  bool frameOnPoint = false;
+
   void add(int atMs, PosePoint? left, PosePoint? right, double width) {
     _now = atMs;
     final near = kHandNear * width;
     var anyAway = false;
+    var anyOn = false;
 
     for (final (hand, p) in [(_Hand.left, left), (_Hand.right, right)]) {
       if (p == null) continue;
@@ -197,10 +277,18 @@ class _Hands {
       if (dOwn <= near) {
         _history[hand]!.add(_Stamped(atMs, p.x, p.y));
         _lastOnPoint[hand] = atMs;
+        anyOn = true;
+        // Back on its point: wherever it strayed to, it did not settle there.
+        // Left in, those readings re-planted the hand on a spot it had already
+        // come back from — on a phone swung with the whole body in sight, the
+        // bottom of the swing, which then read as a head far above the floor.
+        _stray[hand]!.clear();
       } else if (dTheirs <= near) {
         // Swapped or merged with the other hand.
+        anyOn = true;
       } else if (own == null || unseen) {
         _plant(hand, atMs, p.x, p.y);
+        anyOn = true;
       } else {
         anyAway = true;
         _stray[hand]!.add(_Stamped(atMs, p.x, p.y));
@@ -248,6 +336,7 @@ class _Hands {
         atMs - _away.first.$1 > kHandsWindowSeconds * 1000) {
       _away.removeFirst();
     }
+    frameOnPoint = anyOn;
   }
 
   void _plant(_Hand hand, int atMs, double x, double y) {
@@ -265,7 +354,8 @@ class _Hands {
 
   /// The floor line: where the hands are planted, from points confirmed
   /// recently. A hand out of sight for a while says nothing current about
-  /// where the floor is.
+  /// where the floor is; with none confirmed, the last one seen stands in for
+  /// [kFloorStaleSeconds], and after that there is no floor.
   double? get floorY {
     final fresh = [
       for (final hand in _Hand.values)
@@ -283,7 +373,10 @@ class _Hands {
         latest = hand;
       }
     }
-    return latest == null ? null : _points[latest]!.$2;
+    if (latest == null) return null;
+    final on = _lastOnPoint[latest];
+    if (on == null || _now - on > kFloorStaleSeconds * 1000) return null;
+    return _points[latest]!.$2;
   }
 }
 
@@ -358,6 +451,21 @@ class PushupTracker {
   int _origin = 0;
   double? _progress;
   bool _planted = false;
+
+  /// The hands over the rep under way, from the last frame at the top:
+  /// frames, and frames with a hand on its point. See [kRepHandsSeenShare].
+  int _repFrames = 0;
+  int _repOnPoint = 0;
+
+  /// The knees at the top, the last [kKneeTopMs] of it; frozen into
+  /// [_swingBend] as the lifter leaves it. See [kKneeBentDegrees].
+  final _topBends = Queue<(int, double)>();
+  double? _swingBend;
+
+  /// Whether a swing has finished since the lifter was last armed: the first
+  /// one starts from getting into position, often off the knees, and is not
+  /// judged on them.
+  bool _swung = false;
 
   int get reps => _reps;
 
@@ -466,6 +574,8 @@ class PushupTracker {
       scale,
     );
     _planted = _hands.planted;
+    _repFrames++;
+    if (_hands.frameOnPoint) _repOnPoint++;
     final floor = _hands.floorY;
     if (floor == null || _heads.isEmpty) return _reading(false);
 
@@ -485,9 +595,22 @@ class PushupTracker {
 
     var counted = false;
     _dipLow = _dipLow == null ? share : math.min(_dipLow!, share);
+    if (share >= kTopShare) {
+      final bend = kneeBend(pose);
+      if (bend != null) _topBends.add((atMs, bend));
+      while (_topBends.isNotEmpty && atMs - _topBends.first.$1 > kKneeTopMs) {
+        _topBends.removeFirst();
+      }
+    } else if (_topBends.isNotEmpty) {
+      _swingBend = _topBends.length >= kKneeMinFrames
+          ? _topBends.map((b) => b.$2).reduce(math.max)
+          : null;
+      _topBends.clear();
+    }
     switch (_phase) {
       case _Phase.idle || _Phase.up:
         _excursionTop = _excursionTop == null ? h : math.max(_excursionTop!, h);
+        if (share >= kTopShare) _resetRepHands();
         if (_phase == _Phase.up && share >= kTopShare) {
           // Back at the top without ever crossing the bottom line.
           final dip = _dipLow!;
@@ -510,6 +633,7 @@ class PushupTracker {
         // is not at the top of a push-up.
         if (_phase == _Phase.idle && seenTop && _planted && !standing) {
           _phase = _Phase.up;
+          _swung = false;
           _dipLow = share;
         }
         if (share <= kBottomShare) {
@@ -537,25 +661,39 @@ class PushupTracker {
           final quickEnough =
               lastRep == null || atMs - lastRep >= kMinRepSeconds * 1000;
           final stoodUp = standing;
-          if (_planted && quickEnough && !stoodUp) {
+          final held = _planted &&
+              _repOnPoint >= kRepHandsSeenShare * _repFrames;
+          final bend = _swingBend;
+          final onKnees = _swung && bend != null && bend < kKneeBentDegrees;
+          _swung = true;
+          if (held && quickEnough && !stoodUp && !onKnees) {
             _reps++;
             _repTimes.add(atMs - _origin);
             _repBottoms.add(_dipLow!);
             _lastRepAt = atMs;
             counted = true;
-          } else if (!_planted || stoodUp) {
+          } else if (!held || stoodUp || onKnees) {
             // A full swing that finished with a hand off the floor — standing
             // up at the end of a set, or an arm lifted to flex — or with the
-            // body on its feet, bobbing toward hands held still. Not a rep,
-            // and nothing to build the next one on.
+            // body on its feet, bobbing toward hands held still, or with the
+            // hands not held through it: a phone swung in the hand. Not a
+            // rep, and nothing to build the next one on. Or one done on the
+            // knees: not a rep either, though the hands stay where they are.
             _refusedAt.add(atMs - _origin);
           }
-          _phase = _planted && !stoodUp ? _Phase.up : _Phase.idle;
+          _phase = held && !stoodUp ? _Phase.up : _Phase.idle;
           _excursionTop = h;
           _dipLow = share;
+          _resetRepHands();
+          _swingBend = null;
         }
     }
     return _reading(counted);
+  }
+
+  void _resetRepHands() {
+    _repFrames = 0;
+    _repOnPoint = 0;
   }
 
   PushupReading _reading(bool counted) => PushupReading(

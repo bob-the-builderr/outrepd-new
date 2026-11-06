@@ -177,7 +177,7 @@ class LHi extends L {
   String get incSets => 'हर सेट और रेप काउंट';
 
   @override
-  String get incDuels => 'मुक़ाबलों का इतिहास और LP बदलाव';
+  String get incDuels => 'मुक़ाबलों का इतिहास और रेटिंग बदलाव';
 
   @override
   String get incFriends => 'दोस्त और ब्लॉक किए खाते';
@@ -347,6 +347,262 @@ class LHi extends L {
   @override
   String get couldNotSyncAvatar =>
       'आपकी फ़ोटो सेव हो गई है, पर अभी सिंक नहीं हुई';
+
+  @override
+  String get removePhoto => 'फ़ोटो हटाएँ';
+
+  @override
+  String get removePhotoTitle => 'अपनी फ़ोटो हटाएँ?';
+
+  @override
+  String get removePhotoBody =>
+      'इसकी जगह हर जगह आपका लिफ्टर दिखेगा। आप कभी भी नई फ़ोटो जोड़ सकते हैं।';
+
+  @override
+  String get removePhotoConfirm => 'हटाएँ';
+
+  @override
+  String get couldNotRemovePhoto => 'आपकी फ़ोटो नहीं हटाई जा सकी। फिर से कोशिश करें।';
+
+  @override
+  String get cropPhoto => 'क्रॉप करें';
+
+  @override
+  String get proGoTitle => 'Pro लें।';
+
+  @override
+  String get proOnboardTitle => 'आपका लिफ्टर, Pro।';
+
+  @override
+  String get proSubtitle => 'कोई विज्ञापन नहीं, और ऐसा लुक जो फ़्री ऐप में नहीं।';
+
+  @override
+  String get proFree => 'फ़्री';
+
+  @override
+  String get proYoursNow => 'अब आपका';
+
+  @override
+  String get proPerkNoAds => 'कोई विज्ञापन नहीं। कभी नहीं।';
+
+  @override
+  String get proPerkNoAdsBody => 'हर मैच, हर लेवल, बिना रुकावट।';
+
+  @override
+  String get proPerkBoard => 'हर बोर्ड पर चमक';
+
+  @override
+  String get proPerkBoardBody => 'एक होलो पंक्ति, जिससे आपका लिफ्टर बाहर निकलता है।';
+
+  @override
+  String get proPerkEntrance => 'बिजली के साथ एंट्री';
+
+  @override
+  String get proPerkEntranceBody => 'हर लाइव मैच से पहले VS स्क्रीन पर।';
+
+  @override
+  String get proPerkCovers => '13 चलते कवर';
+
+  @override
+  String get proPerkCoversBody => 'या आपकी अपनी फ़ोटो, आपकी प्रोफ़ाइल के ऊपर।';
+
+  @override
+  String get proPerkItems => '20 सिर्फ़-Pro आइटम';
+
+  @override
+  String get proPerkItemsBody => 'स्किन, कपड़े, गियर, और पलक झपकाने वाला लिफ्टर।';
+
+  @override
+  String get proGo => 'Pro लें';
+
+  @override
+  String proBuyYearly(String price) {
+    return 'Pro लें · ${price}/साल';
+  }
+
+  @override
+  String proBuyWeekly(String price) {
+    return 'Pro लें · ${price}/सप्ताह';
+  }
+
+  @override
+  String get proSettingsBody => 'कोई विज्ञापन नहीं, और Pro लुक।';
+
+  @override
+  String get proSettingsActive => 'आप Pro हैं। साथ देने के लिए धन्यवाद।';
+
+  @override
+  String get lifterMakerTitle => 'अवतार कस्टमाइज़ करें';
+
+  @override
+  String get lifterMakerFirst => 'अवतार कस्टमाइज़ करें';
+
+  @override
+  String get lifterMakerFirstBody => 'हर बोर्ड और हर मैच में यही आप हैं।';
+
+  @override
+  String get lifterTabSkin => 'स्किन';
+
+  @override
+  String get lifterTabHair => 'बाल';
+
+  @override
+  String get lifterTabFace => 'चेहरा';
+
+  @override
+  String get lifterTabBeard => 'दाढ़ी';
+
+  @override
+  String get lifterTabTop => 'कपड़े';
+
+  @override
+  String get lifterTabGear => 'गियर';
+
+  @override
+  String get lifterTabBackground => 'बैकग्राउंड';
+
+  @override
+  String get lifterTabCharacters => 'किरदार';
+
+  @override
+  String get lifterEyes => 'आँखें';
+
+  @override
+  String get lifterBrows => 'भौंहें';
+
+  @override
+  String get lifterMouth => 'मुँह';
+
+  @override
+  String get lifterMarks => 'निशान';
+
+  @override
+  String get lifterRandom => 'रैंडम';
+
+  @override
+  String get lifterTryingPro => 'एक Pro लुक।';
+
+  @override
+  String get lifterUnlockPro => 'Pro से अनलॉक करें';
+
+  @override
+  String get editLifter => 'अपना लिफ्टर बदलें';
+
+  @override
+  String lifterNeedsWorld(String world) {
+    return '${world} पूरा करें';
+  }
+
+  @override
+  String lifterNeedsTier(String tier) {
+    return '${tier} तक पहुँचें';
+  }
+
+  @override
+  String lifterNeedsLevel(String level) {
+    return 'लेवल ${level} तक पहुँचें';
+  }
+
+  @override
+  String lifterNeedsWins(String count) {
+    return '${count} मैच जीतें';
+  }
+
+  @override
+  String lifterNeedsWinStreak(String count) {
+    return 'लगातार ${count} जीतें';
+  }
+
+  @override
+  String lifterNeedsDayStreak(String count) {
+    return 'लगातार ${count} दिन ट्रेन करें';
+  }
+
+  @override
+  String get lifterNeedsMonthTop10 => 'किसी महीने को टॉप 10 में खत्म करें';
+
+  @override
+  String get lifterNeedsMonthPodium => 'किसी महीने को टॉप 3 में खत्म करें';
+
+  @override
+  String get lifterNeedsMonthChampion => 'एक महीना जीतें';
+
+  @override
+  String lifterNeedsStars(String count) {
+    return '${count} एडवेंचर लेवल पर 3 स्टार';
+  }
+
+  @override
+  String get lifterNeedsAllStars => 'एडवेंचर का हर स्टार';
+
+  @override
+  String get coverTitle => 'कवर';
+
+  @override
+  String get coverPhoto => 'आपकी फ़ोटो';
+
+  @override
+  String get coverNone => 'कोई कवर नहीं';
+
+  @override
+  String get coverUse => 'यह कवर लगाएँ';
+
+  @override
+  String get coverProLine => 'कवर Pro के लिए हैं। ये चलते हैं, और आपकी प्रोफ़ाइल खोलने वाला हर कोई इन्हें देखता है।';
+
+  @override
+  String get coverCouldNotUpload => 'आपकी फ़ोटो अपलोड नहीं हो सकी। फिर से कोशिश करें।';
+
+  @override
+  String get coverNeonCity => 'नियॉन शहर';
+
+  @override
+  String get coverIronGym => 'आयरन जिम';
+
+  @override
+  String get coverRooftopSunset => 'छत पर सूर्यास्त';
+
+  @override
+  String get coverStadiumLights => 'स्टेडियम की रोशनी';
+
+  @override
+  String get coverSilverPeaks => 'चाँदी की चोटियाँ';
+
+  @override
+  String get coverBronzeDunes => 'काँसे के टीले';
+
+  @override
+  String get coverVolcano => 'ज्वालामुखी';
+
+  @override
+  String get coverPalmBeach => 'पाम बीच';
+
+  @override
+  String get coverWinterCity => 'सर्दियों का शहर';
+
+  @override
+  String get coverFireworks => 'आतिशबाज़ी';
+
+  @override
+  String get coverFightNight => 'फ़ाइट नाइट';
+
+  @override
+  String get coverOrbit => 'कक्षा';
+
+  @override
+  String get coverChampionPodium => 'चैंपियन पोडियम';
+
+  @override
+  String get vsLiveRanked => 'लाइव · रैंक्ड';
+
+  @override
+  String get vsLiveFriendly => 'लाइव · दोस्ताना';
+
+  @override
+  String get vsSavedRanked => 'सेव्ड सेट · रैंक्ड';
+
+  @override
+  String get vsRematchFriendly => 'दोबारा मुक़ाबला · दोस्ताना';
 
   @override
   String get couldNotShareCard => 'यह कार्ड शेयर नहीं हो सका';
@@ -897,6 +1153,9 @@ class LHi extends L {
   String get forfeitBody => 'अभी निकले तो आप LP गँवा देंगे।';
 
   @override
+  String get forfeitRematchBody => 'इसे हार माना जाएगा।';
+
+  @override
   String get forfeit => 'हार मानें';
 
   @override
@@ -1250,6 +1509,55 @@ class LHi extends L {
   String get yourClimb => 'आपकी चढ़ाई';
 
   @override
+  String get yourRank => 'आपकी रैंक';
+
+  @override
+  String get whoIsNext => 'अगला कौन?';
+
+  @override
+  String get opponentFound => 'प्रतिद्वंद्वी मिल गया';
+
+  @override
+  String get obSevenTiers => 'सात टियर';
+
+  @override
+  String get obRatingPerMatch => 'हर मैच की रेटिंग';
+
+  @override
+  String get obWinLabel => 'जीत';
+
+  @override
+  String get obLossLabel => 'हार';
+
+  @override
+  String get obFloorLabel => 'न्यूनतम';
+
+  @override
+  String obWinRating(String n) {
+    return '+${n} + रेप्स का अंतर';
+  }
+
+  @override
+  String obLossRating(String n) {
+    return '−${n} − रेप्स का अंतर';
+  }
+
+  @override
+  String obNeverBelow(String n) {
+    return '${n} से नीचे कभी नहीं';
+  }
+
+  @override
+  String obDivisionLine(String division, String tier) {
+    return 'हर ${division} रेटिंग पर एक स्टेप, ${tier} पर एक टियर।';
+  }
+
+  @override
+  String ratingFloor(String n) {
+    return 'आपकी रेटिंग कभी ${n} से नीचे नहीं जाती।';
+  }
+
+  @override
   String floorKept(String tier, String rank) {
     return '$tier अब आपका है। आप $rank से नीचे नहीं जाएँगे।';
   }
@@ -1330,8 +1638,7 @@ class LHi extends L {
   String get giveUp => 'हार मानें';
 
   @override
-  String get lpMovesWithGap =>
-      'LP रेप्स के अंतर के साथ बदलते हैं — जितने ज़्यादा अंतर से जीतें, उतना ज़्यादा मिलता है';
+  String get lpMovesWithGap => 'जीत: +25 और रेप्स का अंतर। हार: −20 और रेप्स का अंतर।';
 
   @override
   String get searchingForOpponent => 'विरोधी ढूँढ रहे हैं';
@@ -1743,9 +2050,6 @@ class LHi extends L {
   }
 
   @override
-  String get paywallStart => 'विज्ञापन हटाएँ';
-
-  @override
   String get paywallRenewsPlay => 'रद्द करने तक अपने-आप रिन्यू होता है। Google Play में कभी भी रद्द करें।';
 
   @override
@@ -1791,12 +2095,6 @@ class LHi extends L {
 
   @override
   String get signOutBody => 'आपका अकाउंट वैसा ही रहेगा, अपनी रैंक, हिस्ट्री और सब्सक्रिप्शन के साथ। कभी भी उसी तरीके से फिर साइन इन करें जैसे पहले किया था।';
-
-  @override
-  String get shareVictory => 'जीत';
-
-  @override
-  String get shareRematch => 'फिर से मुकाबला?';
 
   @override
   String friendCodeInvite(String code) {
@@ -2006,49 +2304,6 @@ class LHi extends L {
   String get noticeLiveInvite => 'किसी दोस्त ने मुझे लाइव मैच में बुलाया';
 
   @override
-  String get trialToday => 'आज';
-
-  @override
-  String get trialTodayBody => 'हर मुकाबला, लाइव और रैंक्ड, अनलॉक।';
-
-  @override
-  String trialDay(String day) {
-    return 'दिन ${day}';
-  }
-
-  @override
-  String get trialReminderBody => 'ट्रायल खत्म होने से एक दिन पहले हम याद दिलाएँगे।';
-
-  @override
-  String get trialEndBody => 'आपका प्लान शुरू होता है। पहले रद्द करें और कुछ नहीं देना।';
-
-  @override
-  String trialTag(String days) {
-    return '${days} दिन मुफ़्त';
-  }
-
-  @override
-  String trialCta(String days) {
-    return 'मेरा ${days} दिन का फ़्री ट्रायल शुरू करें';
-  }
-
-  @override
-  String trialThenYearly(String price) {
-    return 'अभी कोई भुगतान नहीं · फिर ${price}/साल';
-  }
-
-  @override
-  String trialThenWeekly(String price) {
-    return 'अभी कोई भुगतान नहीं · फिर ${price}/हफ़्ता';
-  }
-
-  @override
-  String get trialEndsTitle => 'आपका फ़्री ट्रायल कल खत्म हो रहा है';
-
-  @override
-  String get trialEndsBody => 'चढ़ते रहें, या उससे पहले सब्सक्रिप्शन सेटिंग्स में रद्द करें।';
-
-  @override
   String get obIdeaTitle => '60 सेकंड। एक प्रतिद्वंद्वी।';
 
   @override
@@ -2084,7 +2339,7 @@ class LHi extends L {
 
   @override
   String monthToTop10(String lp) {
-    return 'टॉप 10 से ${lp} LP दूर';
+    return 'टॉप 10 से ${lp} अंक दूर';
   }
 
   @override
@@ -2107,7 +2362,87 @@ class LHi extends L {
   String get monthEmptyTitle => 'नया महीना';
 
   @override
-  String get monthEmptyBody => 'इस महीने अभी तक किसी ने LP नहीं जीते। पहला रैंक्ड ड्यूल जीतें और आप सबसे आगे।';
+  String get monthEmptyBody => 'इस महीने अभी तक किसी ने अंक नहीं बनाए। पहला रैंक्ड ड्यूल जीतें और आप सबसे आगे।';
+
+  @override
+  String get weekEmptyTitle => 'नया हफ़्ता';
+
+  @override
+  String get weekEmptyBody => 'इस हफ़्ते अभी तक किसी ने अंक नहीं बनाए। पहला रैंक्ड ड्यूल जीतें और आप सबसे आगे।';
+
+  @override
+  String get ratingUnit => 'रेटिंग';
+
+  @override
+  String get ptsUnit => 'अंक';
+
+  @override
+  String ptsAmount(String n) {
+    return '${n} अंक';
+  }
+
+  @override
+  String ratingAmount(String n) {
+    return '${n} रेटिंग';
+  }
+
+  @override
+  String ratingForWin(String n) {
+    return 'जीत के ${n}';
+  }
+
+  @override
+  String ratingForLoss(String n) {
+    return 'हार के ${n}';
+  }
+
+  @override
+  String ratingForReps(String n) {
+    return 'रेप्स के ${n}';
+  }
+
+  @override
+  String get boardThisWeek => 'इस हफ़्ते';
+
+  @override
+  String get boardOverall => 'कुल';
+
+  @override
+  String get howPointsWork => 'पॉइंट्स कैसे मिलते हैं';
+
+  @override
+  String streakNextTen(String n) {
+    return 'लगातार ${n} जीत: अगली जीत +10';
+  }
+
+  @override
+  String get boardRuleWin => 'जीत +5';
+
+  @override
+  String get boardRuleLoss => 'हार −2';
+
+  @override
+  String get boardRuleStreak => 'लगातार 3 जीत: +10';
+
+  @override
+  String rankNext(String rank) {
+    return 'अगला: ${rank}';
+  }
+
+  @override
+  String rankAt(String n) {
+    return '${n} पर';
+  }
+
+  @override
+  String toGo(String n) {
+    return '${n} बाकी';
+  }
+
+  @override
+  String tierStartsAt(String tier, String n) {
+    return '${tier} ${n} से शुरू';
+  }
 
   @override
   String rankedDuelsCount(String n) {
@@ -2125,6 +2460,14 @@ class LHi extends L {
 
   @override
   String get seasonPlayCta => 'नया महीना खेलें';
+
+  @override
+  String monthWinners(String month) {
+    return '${month} के विजेता';
+  }
+
+  @override
+  String get playShort => 'खेलें';
 
   @override
   String get rematchLive => 'लाइव रीमैच';
@@ -2305,7 +2648,7 @@ class LHi extends L {
 
   @override
   String weekToTop3(String n) {
-    return 'टॉप 3 तक ${n} LP';
+    return 'टॉप 3 तक ${n} अंक';
   }
 
   @override
@@ -2405,7 +2748,7 @@ class LHi extends L {
   String get placedBody => 'सब यहीं से शुरू करते हैं। सिर्फ़ जीत आपको ऊपर ले जाती है।';
 
   @override
-  String get placedHow => 'LP पाने के लिए मुक़ाबले जीतें। ऊँची रैंक वाले को हराएँ तो ज़्यादा मिलेंगे।';
+  String get placedHow => 'जीत: +25 और रेप्स का अंतर। हार: −20 और रेप्स का अंतर।';
 
   @override
   String get levelBesideName => 'आपके नाम के साथ, हर जगह';
@@ -2694,10 +3037,19 @@ class LHi extends L {
   String get obRepsBody => 'कैमरा देखता है कि आप कितना नीचे जाते हैं और कितना ऊपर वापस आते हैं।';
 
   @override
-  String get obRepsDown => 'सुनहरी लाइन से नीचे जाएँ';
+  String get obRepsDown => 'नीचे जाएँ, जब तक बार खाली न हो';
 
   @override
-  String get obRepsUp => 'ऊपर वाली लाइन से ऊपर वापस आएँ';
+  String get obRepsUp => 'ऊपर आएँ, जब तक बार भर न जाए';
+
+  @override
+  String get obBarGoingDown => 'नीचे जाते हुए';
+
+  @override
+  String get obBarComingUp => 'ऊपर आते हुए';
+
+  @override
+  String get obBarHandOff => 'हाथ ज़मीन से उठा';
 
   @override
   String get obRepsBoth => 'दोनों, हाथ ज़मीन पर रखकर। आधा रेप, रेप नहीं है — न आपके फ़ोन पर, न उनके।';
@@ -2706,7 +3058,7 @@ class LHi extends L {
   String get obClimbTitle => 'Master तक पहुँचें।';
 
   @override
-  String get obClimbBody => 'जीतकर सीढ़ी पर ऊपर बढ़ें: सात टियर, हर एक में पाँच स्टेप।';
+  String get obClimbBody => 'सात टियर, हर एक में पाँच स्टेप। जीतकर ऊपर चढ़ें; हार पर एक टियर नीचे जा सकते हैं, पर 1,000 से नीचे नहीं।';
 
   @override
   String get obGoldLine => 'सुनहरी लाइन';
@@ -2717,22 +3069,7 @@ class LHi extends L {
   }
 
   @override
-  String get proTitleTop => 'कोई विज्ञापन नहीं।';
-
-  @override
-  String get proTitleBottom => 'बस पुश-अप्स।';
-
-  @override
-  String get proBody => 'हर मैच मुफ़्त रहता है। Pro सबमें से विज्ञापन हटा देता है।';
-
-  @override
   String get proThanks => 'विज्ञापन बंद। Pro लेने के लिए धन्यवाद।';
-
-  @override
-  String get removeAds => 'विज्ञापन हटाएँ';
-
-  @override
-  String get adNotice => 'बाहर जाने पर एक विज्ञापन चलेगा';
 
   @override
   String get adAskTitle => 'विज्ञापन outrepd को मुफ़्त रखते हैं';
@@ -2742,9 +3079,6 @@ class LHi extends L {
 
   @override
   String get adAskCamera => 'आपका कैमरा इसका हिस्सा कभी नहीं होता: आप जो भी चुनें, बॉडी ट्रैकिंग इसी फ़ोन पर रहती है।';
-
-  @override
-  String get adAskRemove => 'इसके बजाय विज्ञापन हटाएँ';
 
   @override
   String get monsterIronColossus => 'लौह महाकाय';

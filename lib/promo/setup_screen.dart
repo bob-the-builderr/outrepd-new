@@ -16,6 +16,7 @@ import '../settings.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
 import '../widgets.dart';
+import '../ranking.dart';
 import 'match_screen.dart';
 import 'plan.dart';
 
@@ -167,6 +168,26 @@ class _SetupScreenState extends State<SetupScreen> {
             ),
             const SizedBox(height: 14),
             _Box(
+              title: 'This week on the board',
+              children: [
+                _Stepper(
+                  label: 'Place before the match',
+                  value: plan.weekPlace,
+                  min: 1,
+                  max: 999,
+                  onChanged: (v) => _change(() => plan.weekPlace = v),
+                ),
+                _Stepper(
+                  label: 'Points before the match',
+                  value: plan.weekPoints,
+                  min: 0,
+                  max: 999,
+                  onChanged: (v) => _change(() => plan.weekPoints = v),
+                ),
+              ],
+            ),
+            const SizedBox(height: 14),
+            _Box(
               title: "The opponent's count",
               children: [
                 SegmentedButton<OpponentMode>(
@@ -275,6 +296,16 @@ class _SetupScreenState extends State<SetupScreen> {
                   value: settings.showSkeleton,
                   onChanged: (on) =>
                       setState(() => settings.update(() => settings.showSkeleton = on)),
+                ),
+                SwitchListTile(
+                  key: const Key('vsSwitch'),
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(
+                    'VS screen before the round',
+                    style: TextStyle(color: context.colors.text, fontSize: 16),
+                  ),
+                  value: plan.showVs,
+                  onChanged: (on) => _change(() => plan.showVs = on),
                 ),
                 SwitchListTile(
                   key: const Key('film916Switch'),
@@ -642,12 +673,12 @@ class _PlayerCard extends StatelessWidget {
         if (lp case final lp?) ...[
           const SizedBox(height: 6),
           _Stepper(
-            label: 'LP before the match',
-            value: lp,
-            min: 0,
-            max: 99,
+            label: 'Rating before the match',
+            value: ratingOf(tierIdx, divIdx, lp),
+            min: ratingOf(tierIdx, divIdx, 0),
+            max: ratingOf(tierIdx, divIdx, 99),
             step: 5,
-            onChanged: onLp!,
+            onChanged: (rating) => onLp!(rating - ratingOf(tierIdx, divIdx, 0)),
           ),
         ],
         const SizedBox(height: 6),

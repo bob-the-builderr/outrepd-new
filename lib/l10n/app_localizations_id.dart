@@ -177,7 +177,7 @@ class LId extends L {
   String get incSets => 'Setiap set dan hitungan rep';
 
   @override
-  String get incDuels => 'Riwayat duel dan perubahan LP';
+  String get incDuels => 'Riwayat duel dan perubahan rating';
 
   @override
   String get incFriends => 'Teman dan akun yang diblokir';
@@ -346,6 +346,262 @@ class LId extends L {
 
   @override
   String get couldNotSyncAvatar => 'Fotomu tersimpan, tapi belum tersinkron';
+
+  @override
+  String get removePhoto => 'Hapus foto';
+
+  @override
+  String get removePhotoTitle => 'Hapus fotomu?';
+
+  @override
+  String get removePhotoBody =>
+      'Lifter-mu akan tampil sebagai gantinya, di mana pun. Kamu bisa menambahkan foto baru kapan saja.';
+
+  @override
+  String get removePhotoConfirm => 'Hapus';
+
+  @override
+  String get couldNotRemovePhoto => 'Fotomu tidak bisa dihapus. Coba lagi.';
+
+  @override
+  String get cropPhoto => 'Pangkas';
+
+  @override
+  String get proGoTitle => 'Jadi Pro.';
+
+  @override
+  String get proOnboardTitle => 'Lifter-mu, Pro.';
+
+  @override
+  String get proSubtitle => 'Tanpa iklan, dan tampilan yang tidak ada di aplikasi gratis.';
+
+  @override
+  String get proFree => 'GRATIS';
+
+  @override
+  String get proYoursNow => 'MILIKMU KINI';
+
+  @override
+  String get proPerkNoAds => 'Tanpa iklan. Selamanya.';
+
+  @override
+  String get proPerkNoAdsBody => 'Setiap pertandingan, setiap level, tanpa jeda.';
+
+  @override
+  String get proPerkBoard => 'Bersinar di setiap papan';
+
+  @override
+  String get proPerkBoardBody => 'Baris holo, dengan lifter-mu keluar darinya.';
+
+  @override
+  String get proPerkEntrance => 'Masuk dengan petir';
+
+  @override
+  String get proPerkEntranceBody => 'Di layar VS sebelum setiap pertandingan live.';
+
+  @override
+  String get proPerkCovers => '13 sampul bergerak';
+
+  @override
+  String get proPerkCoversBody => 'Atau fotomu sendiri, di atas profilmu.';
+
+  @override
+  String get proPerkItems => '20 item khusus Pro';
+
+  @override
+  String get proPerkItemsBody => 'Kulit, atasan, perlengkapan, dan lifter yang berkedip.';
+
+  @override
+  String get proGo => 'Jadi Pro';
+
+  @override
+  String proBuyYearly(String price) {
+    return 'Jadi Pro · ${price}/tahun';
+  }
+
+  @override
+  String proBuyWeekly(String price) {
+    return 'Jadi Pro · ${price}/minggu';
+  }
+
+  @override
+  String get proSettingsBody => 'Tanpa iklan, dan tampilan Pro.';
+
+  @override
+  String get proSettingsActive => 'Kamu Pro. Terima kasih atas dukunganmu.';
+
+  @override
+  String get lifterMakerTitle => 'Sesuaikan avatarmu';
+
+  @override
+  String get lifterMakerFirst => 'Sesuaikan avatarmu';
+
+  @override
+  String get lifterMakerFirstBody => 'Inilah kamu di setiap papan dan setiap pertandingan.';
+
+  @override
+  String get lifterTabSkin => 'Kulit';
+
+  @override
+  String get lifterTabHair => 'Rambut';
+
+  @override
+  String get lifterTabFace => 'Wajah';
+
+  @override
+  String get lifterTabBeard => 'Jenggot';
+
+  @override
+  String get lifterTabTop => 'Atasan';
+
+  @override
+  String get lifterTabGear => 'Perlengkapan';
+
+  @override
+  String get lifterTabBackground => 'Latar';
+
+  @override
+  String get lifterTabCharacters => 'Karakter';
+
+  @override
+  String get lifterEyes => 'Mata';
+
+  @override
+  String get lifterBrows => 'Alis';
+
+  @override
+  String get lifterMouth => 'Mulut';
+
+  @override
+  String get lifterMarks => 'Tanda';
+
+  @override
+  String get lifterRandom => 'Acak';
+
+  @override
+  String get lifterTryingPro => 'Tampilan Pro.';
+
+  @override
+  String get lifterUnlockPro => 'Buka dengan Pro';
+
+  @override
+  String get editLifter => 'Ubah lifter-mu';
+
+  @override
+  String lifterNeedsWorld(String world) {
+    return 'Selesaikan ${world}';
+  }
+
+  @override
+  String lifterNeedsTier(String tier) {
+    return 'Capai ${tier}';
+  }
+
+  @override
+  String lifterNeedsLevel(String level) {
+    return 'Capai level ${level}';
+  }
+
+  @override
+  String lifterNeedsWins(String count) {
+    return 'Menangkan ${count} pertandingan';
+  }
+
+  @override
+  String lifterNeedsWinStreak(String count) {
+    return 'Menang ${count} kali beruntun';
+  }
+
+  @override
+  String lifterNeedsDayStreak(String count) {
+    return 'Latihan ${count} hari beruntun';
+  }
+
+  @override
+  String get lifterNeedsMonthTop10 => 'Akhiri sebulan di 10 besar';
+
+  @override
+  String get lifterNeedsMonthPodium => 'Akhiri sebulan di 3 besar';
+
+  @override
+  String get lifterNeedsMonthChampion => 'Juarai satu bulan';
+
+  @override
+  String lifterNeedsStars(String count) {
+    return '3 bintang di ${count} level Petualangan';
+  }
+
+  @override
+  String get lifterNeedsAllStars => 'Semua bintang di Petualangan';
+
+  @override
+  String get coverTitle => 'Sampul';
+
+  @override
+  String get coverPhoto => 'Fotomu';
+
+  @override
+  String get coverNone => 'Tanpa sampul';
+
+  @override
+  String get coverUse => 'Pakai sampul ini';
+
+  @override
+  String get coverProLine => 'Sampul khusus Pro. Sampulnya bergerak, dan semua orang yang membuka profilmu melihatnya.';
+
+  @override
+  String get coverCouldNotUpload => 'Fotomu tidak bisa diunggah. Coba lagi.';
+
+  @override
+  String get coverNeonCity => 'Kota neon';
+
+  @override
+  String get coverIronGym => 'Gym besi';
+
+  @override
+  String get coverRooftopSunset => 'Senja di atap';
+
+  @override
+  String get coverStadiumLights => 'Lampu stadion';
+
+  @override
+  String get coverSilverPeaks => 'Puncak perak';
+
+  @override
+  String get coverBronzeDunes => 'Bukit pasir perunggu';
+
+  @override
+  String get coverVolcano => 'Gunung berapi';
+
+  @override
+  String get coverPalmBeach => 'Pantai palem';
+
+  @override
+  String get coverWinterCity => 'Kota musim dingin';
+
+  @override
+  String get coverFireworks => 'Kembang api';
+
+  @override
+  String get coverFightNight => 'Malam pertarungan';
+
+  @override
+  String get coverOrbit => 'Orbit';
+
+  @override
+  String get coverChampionPodium => 'Podium juara';
+
+  @override
+  String get vsLiveRanked => 'LIVE · PERINGKAT';
+
+  @override
+  String get vsLiveFriendly => 'LIVE · PERSAHABATAN';
+
+  @override
+  String get vsSavedRanked => 'SET TERSIMPAN · PERINGKAT';
+
+  @override
+  String get vsRematchFriendly => 'TANDING ULANG · PERSAHABATAN';
 
   @override
   String get couldNotShareCard => 'Kartu ini tidak bisa dibagikan';
@@ -895,6 +1151,9 @@ class LId extends L {
   String get forfeitBody => 'Anda akan kehilangan LP jika keluar sekarang.';
 
   @override
+  String get forfeitRematchBody => 'Ini dihitung sebagai kekalahan.';
+
+  @override
   String get forfeit => 'Mundur';
 
   @override
@@ -1247,6 +1506,55 @@ class LId extends L {
   String get yourClimb => 'Pendakianmu';
 
   @override
+  String get yourRank => 'Peringkatmu';
+
+  @override
+  String get whoIsNext => 'Siapa berikutnya?';
+
+  @override
+  String get opponentFound => 'Lawan ditemukan';
+
+  @override
+  String get obSevenTiers => 'Tujuh tingkat';
+
+  @override
+  String get obRatingPerMatch => 'Poin per pertandingan';
+
+  @override
+  String get obWinLabel => 'Menang';
+
+  @override
+  String get obLossLabel => 'Kalah';
+
+  @override
+  String get obFloorLabel => 'Batas bawah';
+
+  @override
+  String obWinRating(String n) {
+    return '+${n} + selisih';
+  }
+
+  @override
+  String obLossRating(String n) {
+    return '−${n} − selisih';
+  }
+
+  @override
+  String obNeverBelow(String n) {
+    return 'tak pernah di bawah ${n}';
+  }
+
+  @override
+  String obDivisionLine(String division, String tier) {
+    return 'Setiap ${division} poin satu anak tangga, ${tier} satu tingkat.';
+  }
+
+  @override
+  String ratingFloor(String n) {
+    return 'Rating-mu tidak pernah turun di bawah ${n}.';
+  }
+
+  @override
   String floorKept(String tier, String rank) {
     return '$tier sudah jadi milikmu. Kamu tidak akan turun di bawah $rank.';
   }
@@ -1328,8 +1636,7 @@ class LId extends L {
   String get giveUp => 'Menyerah';
 
   @override
-  String get lpMovesWithGap =>
-      'LP bergerak sesuai selisih repetisi — menang lebih banyak, dapat lebih banyak';
+  String get lpMovesWithGap => 'Menang: +25 ditambah selisih repetisi. Kalah: −20 ditambah selisihnya.';
 
   @override
   String get searchingForOpponent => 'Mencari lawan';
@@ -1742,9 +2049,6 @@ class LId extends L {
   }
 
   @override
-  String get paywallStart => 'Hapus iklan';
-
-  @override
   String get paywallRenewsPlay => 'Diperpanjang otomatis sampai kamu membatalkan. Batalkan kapan saja di Google Play.';
 
   @override
@@ -1790,12 +2094,6 @@ class LId extends L {
 
   @override
   String get signOutBody => 'Akunmu tetap seperti sekarang, dengan peringkat, riwayat, dan langganannya. Masuk lagi kapan saja dengan cara yang sama.';
-
-  @override
-  String get shareVictory => 'MENANG';
-
-  @override
-  String get shareRematch => 'TANDING ULANG?';
 
   @override
   String friendCodeInvite(String code) {
@@ -2005,49 +2303,6 @@ class LId extends L {
   String get noticeLiveInvite => 'Teman mengajakku bertanding langsung';
 
   @override
-  String get trialToday => 'Hari ini';
-
-  @override
-  String get trialTodayBody => 'Semua duel, langsung dan peringkat, terbuka.';
-
-  @override
-  String trialDay(String day) {
-    return 'Hari ${day}';
-  }
-
-  @override
-  String get trialReminderBody => 'Kami ingatkan sehari sebelum masa cobamu berakhir.';
-
-  @override
-  String get trialEndBody => 'Paketmu dimulai. Batalkan sebelumnya dan kamu tidak membayar apa pun.';
-
-  @override
-  String trialTag(String days) {
-    return 'Gratis ${days} hari';
-  }
-
-  @override
-  String trialCta(String days) {
-    return 'Mulai uji coba gratis ${days} hari';
-  }
-
-  @override
-  String trialThenYearly(String price) {
-    return 'Tanpa bayar sekarang · lalu ${price}/tahun';
-  }
-
-  @override
-  String trialThenWeekly(String price) {
-    return 'Tanpa bayar sekarang · lalu ${price}/minggu';
-  }
-
-  @override
-  String get trialEndsTitle => 'Uji coba gratismu berakhir besok';
-
-  @override
-  String get trialEndsBody => 'Terus naik, atau batalkan sebelumnya di pengaturan langganan.';
-
-  @override
   String get obIdeaTitle => '60 detik. Satu lawan.';
 
   @override
@@ -2083,7 +2338,7 @@ class LId extends L {
 
   @override
   String monthToTop10(String lp) {
-    return '${lp} LP lagi ke 10 besar';
+    return '${lp} poin lagi ke 10 besar';
   }
 
   @override
@@ -2106,7 +2361,87 @@ class LId extends L {
   String get monthEmptyTitle => 'Bulan yang baru';
 
   @override
-  String get monthEmptyBody => 'Belum ada yang menang LP bulan ini. Menangkan duel berperingkat pertama dan kamu memimpin.';
+  String get monthEmptyBody => 'Belum ada yang mencetak poin bulan ini. Menangkan duel berperingkat pertama dan kamu memimpin.';
+
+  @override
+  String get weekEmptyTitle => 'Minggu yang baru';
+
+  @override
+  String get weekEmptyBody => 'Belum ada yang mencetak poin minggu ini. Menangkan duel berperingkat pertama dan kamu memimpin.';
+
+  @override
+  String get ratingUnit => 'rating';
+
+  @override
+  String get ptsUnit => 'poin';
+
+  @override
+  String ptsAmount(String n) {
+    return '${n} poin';
+  }
+
+  @override
+  String ratingAmount(String n) {
+    return '${n} rating';
+  }
+
+  @override
+  String ratingForWin(String n) {
+    return '${n} untuk kemenangan';
+  }
+
+  @override
+  String ratingForLoss(String n) {
+    return '${n} untuk kekalahan';
+  }
+
+  @override
+  String ratingForReps(String n) {
+    return '${n} untuk repetisi';
+  }
+
+  @override
+  String get boardThisWeek => 'Minggu ini';
+
+  @override
+  String get boardOverall => 'Keseluruhan';
+
+  @override
+  String get howPointsWork => 'Cara poin dihitung';
+
+  @override
+  String streakNextTen(String n) {
+    return '${n} kemenangan beruntun: kemenangan berikutnya +10';
+  }
+
+  @override
+  String get boardRuleWin => 'Menang +5';
+
+  @override
+  String get boardRuleLoss => 'Kalah −2';
+
+  @override
+  String get boardRuleStreak => '3 menang beruntun: +10';
+
+  @override
+  String rankNext(String rank) {
+    return 'Berikutnya: ${rank}';
+  }
+
+  @override
+  String rankAt(String n) {
+    return 'di ${n}';
+  }
+
+  @override
+  String toGo(String n) {
+    return '${n} lagi';
+  }
+
+  @override
+  String tierStartsAt(String tier, String n) {
+    return '${tier} mulai di ${n}';
+  }
 
   @override
   String rankedDuelsCount(String n) {
@@ -2124,6 +2459,14 @@ class LId extends L {
 
   @override
   String get seasonPlayCta => 'Main bulan baru';
+
+  @override
+  String monthWinners(String month) {
+    return 'Pemenang ${month}';
+  }
+
+  @override
+  String get playShort => 'Main';
 
   @override
   String get rematchLive => 'Tanding ulang langsung';
@@ -2304,7 +2647,7 @@ class LId extends L {
 
   @override
   String weekToTop3(String n) {
-    return '${n} LP lagi ke 3 besar';
+    return '${n} poin lagi ke 3 besar';
   }
 
   @override
@@ -2404,7 +2747,7 @@ class LId extends L {
   String get placedBody => 'Semua mulai dari sini. Hanya kemenangan yang membawamu naik.';
 
   @override
-  String get placedHow => 'Menangkan pertandingan untuk dapat LP. Kalahkan peringkat lebih tinggi untuk dapat lebih.';
+  String get placedHow => 'Menang: +25 ditambah selisih repetisi. Kalah: −20 ditambah selisihnya.';
 
   @override
   String get levelBesideName => 'Di samping namamu, di mana saja';
@@ -2693,10 +3036,19 @@ class LId extends L {
   String get obRepsBody => 'Kamera melihat seberapa rendah kamu turun dan seberapa tinggi kamu naik lagi.';
 
   @override
-  String get obRepsDown => 'Turun melewati garis emas';
+  String get obRepsDown => 'Turun sampai bar kosong';
 
   @override
-  String get obRepsUp => 'Naik lagi melewati garis atas';
+  String get obRepsUp => 'Naik sampai penuh';
+
+  @override
+  String get obBarGoingDown => 'Turun';
+
+  @override
+  String get obBarComingUp => 'Naik';
+
+  @override
+  String get obBarHandOff => 'Tangan lepas dari lantai';
 
   @override
   String get obRepsBoth => 'Keduanya, dengan tangan di lantai. Setengah repetisi tidak dihitung — di ponselmu maupun ponsel lawan.';
@@ -2705,7 +3057,7 @@ class LId extends L {
   String get obClimbTitle => 'Naik sampai Master.';
 
   @override
-  String get obClimbBody => 'Menang untuk naik tangga: tujuh tingkat, masing-masing lima anak tangga.';
+  String get obClimbBody => 'Tujuh tingkat, masing-masing lima anak tangga. Menang untuk naik; kalah bisa turun satu tingkat, tapi tidak pernah di bawah 1.000 poin.';
 
   @override
   String get obGoldLine => 'garis emas';
@@ -2716,22 +3068,7 @@ class LId extends L {
   }
 
   @override
-  String get proTitleTop => 'Tanpa iklan.';
-
-  @override
-  String get proTitleBottom => 'Cuma push-up.';
-
-  @override
-  String get proBody => 'Semua pertandingan tetap gratis. Pro menghapus iklan dari semuanya.';
-
-  @override
   String get proThanks => 'Iklan mati. Terima kasih sudah pakai Pro.';
-
-  @override
-  String get removeAds => 'Hapus iklan';
-
-  @override
-  String get adNotice => 'Iklan diputar saat kamu keluar';
 
   @override
   String get adAskTitle => 'Iklan membuat outrepd tetap gratis';
@@ -2741,9 +3078,6 @@ class LId extends L {
 
   @override
   String get adAskCamera => 'Kameramu tidak pernah terlibat: pelacakan tubuh tetap di ponsel ini, apa pun pilihanmu.';
-
-  @override
-  String get adAskRemove => 'Hapus iklan saja';
 
   @override
   String get monsterIronColossus => 'Kolosus Besi';

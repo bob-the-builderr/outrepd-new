@@ -177,7 +177,7 @@ class LTr extends L {
   String get incSets => 'Her set ve tekrar sayısı';
 
   @override
-  String get incDuels => 'Düello geçmişi ve LP değişimleri';
+  String get incDuels => 'Düello geçmişi ve reyting değişimleri';
 
   @override
   String get incFriends => 'Arkadaşlar ve engellenenler';
@@ -347,6 +347,262 @@ class LTr extends L {
   @override
   String get couldNotSyncAvatar =>
       'Fotoğrafın kaydedildi ama henüz senkronize olmadı';
+
+  @override
+  String get removePhoto => 'Fotoğrafı kaldır';
+
+  @override
+  String get removePhotoTitle => 'Fotoğrafın kaldırılsın mı?';
+
+  @override
+  String get removePhotoBody =>
+      'Bunun yerine her yerde lifter’ın görünecek. İstediğin zaman yeni bir fotoğraf ekleyebilirsin.';
+
+  @override
+  String get removePhotoConfirm => 'Kaldır';
+
+  @override
+  String get couldNotRemovePhoto => 'Fotoğrafın kaldırılamadı. Tekrar dene.';
+
+  @override
+  String get cropPhoto => 'Kırp';
+
+  @override
+  String get proGoTitle => 'Pro\'ya geç.';
+
+  @override
+  String get proOnboardTitle => 'Lifter’ın, Pro.';
+
+  @override
+  String get proSubtitle => 'Reklamsız ve ücretsiz uygulamada olmayan bir görünüm.';
+
+  @override
+  String get proFree => 'ÜCRETSİZ';
+
+  @override
+  String get proYoursNow => 'ARTIK SENİN';
+
+  @override
+  String get proPerkNoAds => 'Reklam yok. Asla.';
+
+  @override
+  String get proPerkNoAdsBody => 'Her maç, her seviye, kesintisiz.';
+
+  @override
+  String get proPerkBoard => 'Her sıralamada parla';
+
+  @override
+  String get proPerkBoardBody => 'Lifter’ının dışına taştığı bir holo satır.';
+
+  @override
+  String get proPerkEntrance => 'Şimşekli giriş';
+
+  @override
+  String get proPerkEntranceBody => 'Her canlı maçtan önce VS ekranında.';
+
+  @override
+  String get proPerkCovers => '13 hareketli kapak';
+
+  @override
+  String get proPerkCoversBody => 'Ya da kendi fotoğrafın, profilinin en üstünde.';
+
+  @override
+  String get proPerkItems => 'Yalnızca Pro’ya özel 20 eşya';
+
+  @override
+  String get proPerkItemsBody => 'Görünümler, üstler, ekipman ve göz kırpan bir lifter.';
+
+  @override
+  String get proGo => 'Pro\'ya geç';
+
+  @override
+  String proBuyYearly(String price) {
+    return 'Pro\'ya geç · ${price}/yıl';
+  }
+
+  @override
+  String proBuyWeekly(String price) {
+    return 'Pro\'ya geç · ${price}/hafta';
+  }
+
+  @override
+  String get proSettingsBody => 'Reklamsız, üstelik Pro görünümü.';
+
+  @override
+  String get proSettingsActive => 'Pro’sun. Desteğin için teşekkürler.';
+
+  @override
+  String get lifterMakerTitle => 'Avatarını özelleştir';
+
+  @override
+  String get lifterMakerFirst => 'Avatarını özelleştir';
+
+  @override
+  String get lifterMakerFirstBody => 'Her sıralamada ve her maçta bu sensin.';
+
+  @override
+  String get lifterTabSkin => 'Ten';
+
+  @override
+  String get lifterTabHair => 'Saç';
+
+  @override
+  String get lifterTabFace => 'Yüz';
+
+  @override
+  String get lifterTabBeard => 'Sakal';
+
+  @override
+  String get lifterTabTop => 'Üst';
+
+  @override
+  String get lifterTabGear => 'Ekipman';
+
+  @override
+  String get lifterTabBackground => 'Arka plan';
+
+  @override
+  String get lifterTabCharacters => 'Karakterler';
+
+  @override
+  String get lifterEyes => 'Gözler';
+
+  @override
+  String get lifterBrows => 'Kaşlar';
+
+  @override
+  String get lifterMouth => 'Ağız';
+
+  @override
+  String get lifterMarks => 'İzler';
+
+  @override
+  String get lifterRandom => 'Rastgele';
+
+  @override
+  String get lifterTryingPro => 'Bir Pro görünümü.';
+
+  @override
+  String get lifterUnlockPro => 'Pro ile aç';
+
+  @override
+  String get editLifter => 'Lifter’ını düzenle';
+
+  @override
+  String lifterNeedsWorld(String world) {
+    return '${world} bölümünü bitir';
+  }
+
+  @override
+  String lifterNeedsTier(String tier) {
+    return '${tier} seviyesine ulaş';
+  }
+
+  @override
+  String lifterNeedsLevel(String level) {
+    return '${level}. seviyeye ulaş';
+  }
+
+  @override
+  String lifterNeedsWins(String count) {
+    return '${count} maç kazan';
+  }
+
+  @override
+  String lifterNeedsWinStreak(String count) {
+    return 'Üst üste ${count} galibiyet';
+  }
+
+  @override
+  String lifterNeedsDayStreak(String count) {
+    return '${count} gün üst üste antrenman yap';
+  }
+
+  @override
+  String get lifterNeedsMonthTop10 => 'Bir ayı ilk 10’da bitir';
+
+  @override
+  String get lifterNeedsMonthPodium => 'Bir ayı ilk 3’te bitir';
+
+  @override
+  String get lifterNeedsMonthChampion => 'Bir ayı birinci bitir';
+
+  @override
+  String lifterNeedsStars(String count) {
+    return '${count} Macera seviyesinde 3 yıldız';
+  }
+
+  @override
+  String get lifterNeedsAllStars => 'Maceradaki tüm yıldızlar';
+
+  @override
+  String get coverTitle => 'Kapak';
+
+  @override
+  String get coverPhoto => 'Fotoğrafın';
+
+  @override
+  String get coverNone => 'Kapak yok';
+
+  @override
+  String get coverUse => 'Bu kapağı kullan';
+
+  @override
+  String get coverProLine => 'Kapaklar Pro’ya özel. Hareket ederler ve profilini açan herkes onları görür.';
+
+  @override
+  String get coverCouldNotUpload => 'Fotoğrafın yüklenemedi. Tekrar dene.';
+
+  @override
+  String get coverNeonCity => 'Neon şehir';
+
+  @override
+  String get coverIronGym => 'Demir salon';
+
+  @override
+  String get coverRooftopSunset => 'Çatıda gün batımı';
+
+  @override
+  String get coverStadiumLights => 'Stadyum ışıkları';
+
+  @override
+  String get coverSilverPeaks => 'Gümüş zirveler';
+
+  @override
+  String get coverBronzeDunes => 'Bronz kum tepeleri';
+
+  @override
+  String get coverVolcano => 'Yanardağ';
+
+  @override
+  String get coverPalmBeach => 'Palmiye plajı';
+
+  @override
+  String get coverWinterCity => 'Kış şehri';
+
+  @override
+  String get coverFireworks => 'Havai fişek';
+
+  @override
+  String get coverFightNight => 'Dövüş gecesi';
+
+  @override
+  String get coverOrbit => 'Yörünge';
+
+  @override
+  String get coverChampionPodium => 'Şampiyon kürsüsü';
+
+  @override
+  String get vsLiveRanked => 'CANLI · DERECELİ';
+
+  @override
+  String get vsLiveFriendly => 'CANLI · DOSTLUK';
+
+  @override
+  String get vsSavedRanked => 'KAYITLI SET · DERECELİ';
+
+  @override
+  String get vsRematchFriendly => 'RÖVANŞ · DOSTLUK';
 
   @override
   String get couldNotShareCard => 'Bu kart paylaşılamadı';
@@ -895,6 +1151,9 @@ class LTr extends L {
   String get forfeitBody => 'Şimdi çıkarsanız LP kaybedersiniz.';
 
   @override
+  String get forfeitRematchBody => 'Bu bir yenilgi sayılır.';
+
+  @override
   String get forfeit => 'Çekil';
 
   @override
@@ -1245,6 +1504,55 @@ class LTr extends L {
   String get yourClimb => 'Tırmanışın';
 
   @override
+  String get yourRank => 'Rütben';
+
+  @override
+  String get whoIsNext => 'Sıradaki kim?';
+
+  @override
+  String get opponentFound => 'Rakip bulundu';
+
+  @override
+  String get obSevenTiers => 'Yedi kademe';
+
+  @override
+  String get obRatingPerMatch => 'Maç başına puan';
+
+  @override
+  String get obWinLabel => 'Galibiyet';
+
+  @override
+  String get obLossLabel => 'Mağlubiyet';
+
+  @override
+  String get obFloorLabel => 'Alt sınır';
+
+  @override
+  String obWinRating(String n) {
+    return '+${n} + tekrar farkı';
+  }
+
+  @override
+  String obLossRating(String n) {
+    return '−${n} − tekrar farkı';
+  }
+
+  @override
+  String obNeverBelow(String n) {
+    return 'asla ${n} altına düşmez';
+  }
+
+  @override
+  String obDivisionLine(String division, String tier) {
+    return 'Her ${division} puan bir basamak, ${tier} bir kademe.';
+  }
+
+  @override
+  String ratingFloor(String n) {
+    return 'Reytingin asla ${n} altına düşmez.';
+  }
+
+  @override
   String floorKept(String tier, String rank) {
     return '$tier artık senin. $rank altına düşmezsin.';
   }
@@ -1325,8 +1633,7 @@ class LTr extends L {
   String get giveUp => 'Pes et';
 
   @override
-  String get lpMovesWithGap =>
-      'LP, tekrar farkına göre değişir — ne kadar farklı kazanırsan o kadar çok kazanırsın';
+  String get lpMovesWithGap => 'Galibiyet: +25 ve tekrar farkı. Mağlubiyet: −20 ve tekrar farkı.';
 
   @override
   String get searchingForOpponent => 'Rakip aranıyor';
@@ -1738,9 +2045,6 @@ class LTr extends L {
   }
 
   @override
-  String get paywallStart => 'Reklamları kaldır';
-
-  @override
   String get paywallRenewsPlay => 'İptal edene kadar otomatik olarak yenilenir. Google Play\'den istediğin zaman iptal et.';
 
   @override
@@ -1786,12 +2090,6 @@ class LTr extends L {
 
   @override
   String get signOutBody => 'Hesabın derecesi, geçmişi ve aboneliğiyle olduğu gibi kalır. İstediğin zaman aynı yolla tekrar giriş yap.';
-
-  @override
-  String get shareVictory => 'ZAFER';
-
-  @override
-  String get shareRematch => 'RÖVANŞ?';
 
   @override
   String friendCodeInvite(String code) {
@@ -2001,49 +2299,6 @@ class LTr extends L {
   String get noticeLiveInvite => 'Bir arkadaşım beni canlı maça davet etti';
 
   @override
-  String get trialToday => 'Bugün';
-
-  @override
-  String get trialTodayBody => 'Tüm düellolar, canlı ve dereceli, açık.';
-
-  @override
-  String trialDay(String day) {
-    return '${day}. gün';
-  }
-
-  @override
-  String get trialReminderBody => 'Denemen bitmeden bir gün önce hatırlatırız.';
-
-  @override
-  String get trialEndBody => 'Planın başlar. Önceden iptal edersen hiçbir şey ödemezsin.';
-
-  @override
-  String trialTag(String days) {
-    return '${days} gün ücretsiz';
-  }
-
-  @override
-  String trialCta(String days) {
-    return '${days} günlük ücretsiz denememi başlat';
-  }
-
-  @override
-  String trialThenYearly(String price) {
-    return 'Şimdi ödeme yok · sonra ${price}/yıl';
-  }
-
-  @override
-  String trialThenWeekly(String price) {
-    return 'Şimdi ödeme yok · sonra ${price}/hafta';
-  }
-
-  @override
-  String get trialEndsTitle => 'Ücretsiz denemen yarın bitiyor';
-
-  @override
-  String get trialEndsBody => 'Tırmanmaya devam et ya da daha önce abonelik ayarlarından iptal et.';
-
-  @override
   String get obIdeaTitle => '60 saniye. Tek rakip.';
 
   @override
@@ -2079,7 +2334,7 @@ class LTr extends L {
 
   @override
   String monthToTop10(String lp) {
-    return 'İlk 10\'a ${lp} LP';
+    return 'İlk 10\'a ${lp} puan';
   }
 
   @override
@@ -2102,7 +2357,87 @@ class LTr extends L {
   String get monthEmptyTitle => 'Yepyeni bir ay';
 
   @override
-  String get monthEmptyBody => 'Bu ay henüz kimse LP kazanmadı. İlk dereceli düelloyu kazan, zirve senin.';
+  String get monthEmptyBody => 'Bu ay henüz kimse puan almadı. İlk dereceli düelloyu kazan, zirve senin.';
+
+  @override
+  String get weekEmptyTitle => 'Yepyeni bir hafta';
+
+  @override
+  String get weekEmptyBody => 'Bu hafta henüz kimse puan almadı. İlk dereceli düelloyu kazan, zirve senin.';
+
+  @override
+  String get ratingUnit => 'reyting';
+
+  @override
+  String get ptsUnit => 'puan';
+
+  @override
+  String ptsAmount(String n) {
+    return '${n} puan';
+  }
+
+  @override
+  String ratingAmount(String n) {
+    return '${n} reyting';
+  }
+
+  @override
+  String ratingForWin(String n) {
+    return 'galibiyet için ${n}';
+  }
+
+  @override
+  String ratingForLoss(String n) {
+    return 'mağlubiyet için ${n}';
+  }
+
+  @override
+  String ratingForReps(String n) {
+    return 'tekrar farkı için ${n}';
+  }
+
+  @override
+  String get boardThisWeek => 'Bu hafta';
+
+  @override
+  String get boardOverall => 'Genel';
+
+  @override
+  String get howPointsWork => 'Puanlar nasıl işler';
+
+  @override
+  String streakNextTen(String n) {
+    return 'Üst üste ${n} galibiyet: sonraki galibiyet +10';
+  }
+
+  @override
+  String get boardRuleWin => 'Galibiyet +5';
+
+  @override
+  String get boardRuleLoss => 'Mağlubiyet −2';
+
+  @override
+  String get boardRuleStreak => 'Üst üste 3 galibiyet: +10';
+
+  @override
+  String rankNext(String rank) {
+    return 'Sıradaki: ${rank}';
+  }
+
+  @override
+  String rankAt(String n) {
+    return 'hedef: ${n}';
+  }
+
+  @override
+  String toGo(String n) {
+    return '${n} kaldı';
+  }
+
+  @override
+  String tierStartsAt(String tier, String n) {
+    return '${tier} başlangıcı: ${n}';
+  }
 
   @override
   String rankedDuelsCount(String n) {
@@ -2120,6 +2455,14 @@ class LTr extends L {
 
   @override
   String get seasonPlayCta => 'Yeni ayı oyna';
+
+  @override
+  String monthWinners(String month) {
+    return '${month} kazananları';
+  }
+
+  @override
+  String get playShort => 'Oyna';
 
   @override
   String get rematchLive => 'Canlı rövanş';
@@ -2300,7 +2643,7 @@ class LTr extends L {
 
   @override
   String weekToTop3(String n) {
-    return 'İlk 3\'e ${n} LP';
+    return 'İlk 3\'e ${n} puan';
   }
 
   @override
@@ -2400,7 +2743,7 @@ class LTr extends L {
   String get placedBody => 'Herkes buradan başlar. Seni sadece galibiyetler yükseltir.';
 
   @override
-  String get placedHow => 'LP kazanmak için maç kazan. Daha yüksek dereceyi yenersen daha fazla alırsın.';
+  String get placedHow => 'Galibiyet: +25 ve tekrar farkı. Mağlubiyet: −20 ve tekrar farkı.';
 
   @override
   String get levelBesideName => 'Adının yanında, her yerde';
@@ -2689,10 +3032,19 @@ class LTr extends L {
   String get obRepsBody => 'Kamera ne kadar aşağı indiğini ve ne kadar geri çıktığını görür.';
 
   @override
-  String get obRepsDown => 'Altın çizginin altına in';
+  String get obRepsDown => 'Çubuk boşalana kadar in';
 
   @override
-  String get obRepsUp => 'Üst çizginin üstüne geri çık';
+  String get obRepsUp => 'Dolana kadar çık';
+
+  @override
+  String get obBarGoingDown => 'İnerken';
+
+  @override
+  String get obBarComingUp => 'Çıkarken';
+
+  @override
+  String get obBarHandOff => 'El yerden kalktı';
 
   @override
   String get obRepsBoth => 'İkisi de, eller yerdeyken. Yarım tekrar sayılmaz — ne senin telefonunda ne de rakibininkinde.';
@@ -2701,7 +3053,7 @@ class LTr extends L {
   String get obClimbTitle => 'Master’a tırman.';
 
   @override
-  String get obClimbBody => 'Kazandıkça merdivende yüksel: yedi kademe, her birinde beş basamak.';
+  String get obClimbBody => 'Yedi kademe, her birinde beş basamak. Kazanarak yüksel; mağlubiyet bir kademe düşürebilir, ama 1.000 puanın altına inmez.';
 
   @override
   String get obGoldLine => 'altın çizgi';
@@ -2712,22 +3064,7 @@ class LTr extends L {
   }
 
   @override
-  String get proTitleTop => 'Reklam yok.';
-
-  @override
-  String get proTitleBottom => 'Sadece şınav.';
-
-  @override
-  String get proBody => 'Her maç ücretsiz kalır. Pro hepsinden reklamları kaldırır.';
-
-  @override
   String get proThanks => 'Reklamlar kapandı. Pro’ya geçtiğin için teşekkürler.';
-
-  @override
-  String get removeAds => 'Reklamları kaldır';
-
-  @override
-  String get adNotice => 'Çıkınca bir reklam oynar';
 
   @override
   String get adAskTitle => 'Reklamlar outrepd’yi ücretsiz tutar';
@@ -2737,9 +3074,6 @@ class LTr extends L {
 
   @override
   String get adAskCamera => 'Kameranın bununla hiçbir ilgisi yok: ne seçersen seç, vücut takibi bu telefonda kalır.';
-
-  @override
-  String get adAskRemove => 'Bunun yerine reklamları kaldır';
 
   @override
   String get monsterIronColossus => 'Demir Dev';

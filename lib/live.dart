@@ -29,6 +29,20 @@ class LiveSession extends ChangeNotifier {
   /// Their count, as far as this phone has heard.
   int opponentReps = 0;
 
+  /// When each of their reps reached this phone, in milliseconds since the
+  /// round started here — for the result's chart. When it was heard rather
+  /// than when it was lifted, so a second or so late at worst.
+  final List<int> opponentRepTimes = [];
+
+  void _theyReached(int reps) {
+    final start = startedAt;
+    if (start == null) return;
+    final at = clock.now().difference(start).inMilliseconds;
+    while (opponentRepTimes.length < reps) {
+      opponentRepTimes.add(at);
+    }
+  }
+
   /// They pressed Give up; their count will not move again.
   bool opponentGaveUp = false;
 
@@ -70,7 +84,10 @@ class LiveSession extends ChangeNotifier {
   void _heard(LiveMessage message) {
     _lastHeard = clock.now();
     // A late message never takes the count backwards.
-    if (message.reps > opponentReps) opponentReps = message.reps;
+    if (message.reps > opponentReps) {
+      opponentReps = message.reps;
+      _theyReached(opponentReps);
+    }
     if (message.gaveUp) opponentGaveUp = true;
     notifyListeners();
   }
@@ -127,6 +144,7 @@ class LiveSession extends ChangeNotifier {
         final state = await backend.liveState(match.id);
         if (state.theirReps > opponentReps) {
           opponentReps = state.theirReps;
+          _theyReached(opponentReps);
           notifyListeners();
         }
       } on Object catch (_) {

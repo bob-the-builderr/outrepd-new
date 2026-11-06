@@ -173,7 +173,7 @@ class LKo extends L {
   String get incSets => '모든 세트와 렙 수';
 
   @override
-  String get incDuels => '대결 기록과 LP 변화';
+  String get incDuels => '대결 기록과 레이팅 변화';
 
   @override
   String get incFriends => '친구와 차단한 계정';
@@ -335,6 +335,262 @@ class LKo extends L {
 
   @override
   String get couldNotSyncAvatar => '사진은 저장됐지만 아직 동기화되지 않았어요';
+
+  @override
+  String get removePhoto => '사진 삭제';
+
+  @override
+  String get removePhotoTitle => '사진을 삭제할까요?';
+
+  @override
+  String get removePhotoBody =>
+      '대신 모든 곳에 리프터가 표시돼요. 언제든 새 사진을 추가할 수 있어요.';
+
+  @override
+  String get removePhotoConfirm => '삭제';
+
+  @override
+  String get couldNotRemovePhoto => '사진을 삭제하지 못했어요. 다시 시도해 주세요.';
+
+  @override
+  String get cropPhoto => '자르기';
+
+  @override
+  String get proGoTitle => 'Pro가 되세요.';
+
+  @override
+  String get proOnboardTitle => '당신의 리프터, Pro.';
+
+  @override
+  String get proSubtitle => '광고 없이, 무료 앱에는 없는 모습으로.';
+
+  @override
+  String get proFree => '무료';
+
+  @override
+  String get proYoursNow => '이제 내 것';
+
+  @override
+  String get proPerkNoAds => '광고 없음. 영원히.';
+
+  @override
+  String get proPerkNoAdsBody => '모든 경기, 모든 레벨을 끊김 없이.';
+
+  @override
+  String get proPerkBoard => '모든 순위표에서 빛나기';
+
+  @override
+  String get proPerkBoardBody => '홀로 줄에서 리프터가 튀어나와요.';
+
+  @override
+  String get proPerkEntrance => '번개와 함께 등장';
+
+  @override
+  String get proPerkEntranceBody => '모든 라이브 경기 전 VS 화면에서.';
+
+  @override
+  String get proPerkCovers => '움직이는 커버 13종';
+
+  @override
+  String get proPerkCoversBody => '또는 내 사진을 프로필 맨 위에.';
+
+  @override
+  String get proPerkItems => 'Pro 전용 아이템 20종';
+
+  @override
+  String get proPerkItemsBody => '스킨, 상의, 장비, 그리고 눈을 깜빡이는 리프터.';
+
+  @override
+  String get proGo => 'Pro 시작';
+
+  @override
+  String proBuyYearly(String price) {
+    return 'Pro 시작 · ${price}/년';
+  }
+
+  @override
+  String proBuyWeekly(String price) {
+    return 'Pro 시작 · ${price}/주';
+  }
+
+  @override
+  String get proSettingsBody => '광고 없이, Pro 스타일로.';
+
+  @override
+  String get proSettingsActive => 'Pro 회원이에요. 응원해 주셔서 고마워요.';
+
+  @override
+  String get lifterMakerTitle => '아바타 꾸미기';
+
+  @override
+  String get lifterMakerFirst => '아바타 꾸미기';
+
+  @override
+  String get lifterMakerFirstBody => '모든 순위표와 모든 경기에서 이게 바로 당신이에요.';
+
+  @override
+  String get lifterTabSkin => '피부';
+
+  @override
+  String get lifterTabHair => '헤어';
+
+  @override
+  String get lifterTabFace => '얼굴';
+
+  @override
+  String get lifterTabBeard => '수염';
+
+  @override
+  String get lifterTabTop => '상의';
+
+  @override
+  String get lifterTabGear => '장비';
+
+  @override
+  String get lifterTabBackground => '배경';
+
+  @override
+  String get lifterTabCharacters => '캐릭터';
+
+  @override
+  String get lifterEyes => '눈';
+
+  @override
+  String get lifterBrows => '눈썹';
+
+  @override
+  String get lifterMouth => '입';
+
+  @override
+  String get lifterMarks => '표시';
+
+  @override
+  String get lifterRandom => '랜덤';
+
+  @override
+  String get lifterTryingPro => 'Pro 스타일.';
+
+  @override
+  String get lifterUnlockPro => 'Pro로 잠금 해제';
+
+  @override
+  String get editLifter => '리프터 편집';
+
+  @override
+  String lifterNeedsWorld(String world) {
+    return '${world} 클리어';
+  }
+
+  @override
+  String lifterNeedsTier(String tier) {
+    return '${tier} 달성';
+  }
+
+  @override
+  String lifterNeedsLevel(String level) {
+    return '레벨 ${level} 달성';
+  }
+
+  @override
+  String lifterNeedsWins(String count) {
+    return '${count}경기 승리';
+  }
+
+  @override
+  String lifterNeedsWinStreak(String count) {
+    return '${count}연승';
+  }
+
+  @override
+  String lifterNeedsDayStreak(String count) {
+    return '${count}일 연속 운동';
+  }
+
+  @override
+  String get lifterNeedsMonthTop10 => '한 달을 10위 안에 마치기';
+
+  @override
+  String get lifterNeedsMonthPodium => '한 달을 3위 안에 마치기';
+
+  @override
+  String get lifterNeedsMonthChampion => '한 달 1위 하기';
+
+  @override
+  String lifterNeedsStars(String count) {
+    return '어드벤처 레벨 ${count}개에서 별 3개';
+  }
+
+  @override
+  String get lifterNeedsAllStars => '어드벤처의 모든 별';
+
+  @override
+  String get coverTitle => '커버';
+
+  @override
+  String get coverPhoto => '내 사진';
+
+  @override
+  String get coverNone => '커버 없음';
+
+  @override
+  String get coverUse => '이 커버 사용';
+
+  @override
+  String get coverProLine => '커버는 Pro 전용이에요. 움직이고, 내 프로필을 여는 모든 사람에게 보여요.';
+
+  @override
+  String get coverCouldNotUpload => '사진을 업로드할 수 없어요. 다시 시도해 주세요.';
+
+  @override
+  String get coverNeonCity => '네온 시티';
+
+  @override
+  String get coverIronGym => '아이언 짐';
+
+  @override
+  String get coverRooftopSunset => '옥상의 노을';
+
+  @override
+  String get coverStadiumLights => '경기장 조명';
+
+  @override
+  String get coverSilverPeaks => '은빛 봉우리';
+
+  @override
+  String get coverBronzeDunes => '청동 사구';
+
+  @override
+  String get coverVolcano => '화산';
+
+  @override
+  String get coverPalmBeach => '야자수 해변';
+
+  @override
+  String get coverWinterCity => '겨울 도시';
+
+  @override
+  String get coverFireworks => '불꽃놀이';
+
+  @override
+  String get coverFightNight => '파이트 나이트';
+
+  @override
+  String get coverOrbit => '궤도';
+
+  @override
+  String get coverChampionPodium => '우승 시상대';
+
+  @override
+  String get vsLiveRanked => '라이브 · 랭크';
+
+  @override
+  String get vsLiveFriendly => '라이브 · 친선';
+
+  @override
+  String get vsSavedRanked => '저장된 세트 · 랭크';
+
+  @override
+  String get vsRematchFriendly => '재대결 · 친선';
 
   @override
   String get couldNotShareCard => '이 카드를 공유할 수 없었어요';
@@ -879,6 +1135,9 @@ class LKo extends L {
   String get forfeitBody => '지금 나가면 LP를 잃습니다.';
 
   @override
+  String get forfeitRematchBody => '패배로 기록돼요.';
+
+  @override
   String get forfeit => '기권';
 
   @override
@@ -1225,6 +1484,55 @@ class LKo extends L {
   String get yourClimb => '당신의 등반';
 
   @override
+  String get yourRank => '내 랭크';
+
+  @override
+  String get whoIsNext => '다음 상대는?';
+
+  @override
+  String get opponentFound => '상대를 찾았어요';
+
+  @override
+  String get obSevenTiers => '7개의 티어';
+
+  @override
+  String get obRatingPerMatch => '경기당 레이팅';
+
+  @override
+  String get obWinLabel => '승리';
+
+  @override
+  String get obLossLabel => '패배';
+
+  @override
+  String get obFloorLabel => '하한';
+
+  @override
+  String obWinRating(String n) {
+    return '+${n} + 렙 차이';
+  }
+
+  @override
+  String obLossRating(String n) {
+    return '−${n} − 렙 차이';
+  }
+
+  @override
+  String obNeverBelow(String n) {
+    return '${n} 아래로는 안 떨어져요';
+  }
+
+  @override
+  String obDivisionLine(String division, String tier) {
+    return '${division}점마다 한 단계, ${tier}점마다 한 티어예요.';
+  }
+
+  @override
+  String ratingFloor(String n) {
+    return '레이팅은 ${n} 아래로 내려가지 않아요.';
+  }
+
+  @override
   String floorKept(String tier, String rank) {
     return '$tier은(는) 당신의 것입니다. $rank 아래로 떨어지지 않습니다.';
   }
@@ -1305,7 +1613,7 @@ class LKo extends L {
   String get giveUp => '포기';
 
   @override
-  String get lpMovesWithGap => 'LP는 렙 차이만큼 움직여요 — 더 크게 이기면 더 많이 얻어요';
+  String get lpMovesWithGap => '승리: +25와 렙 차이. 패배: −20과 렙 차이.';
 
   @override
   String get searchingForOpponent => '상대를 찾는 중';
@@ -1711,9 +2019,6 @@ class LKo extends L {
   }
 
   @override
-  String get paywallStart => '광고 제거';
-
-  @override
   String get paywallRenewsPlay => '해지할 때까지 자동으로 갱신됩니다. Google Play에서 언제든지 해지할 수 있습니다.';
 
   @override
@@ -1759,12 +2064,6 @@ class LKo extends L {
 
   @override
   String get signOutBody => '계정은 랭크, 기록, 구독까지 그대로 남아요. 언제든 처음과 같은 방법으로 다시 로그인하세요.';
-
-  @override
-  String get shareVictory => '승리';
-
-  @override
-  String get shareRematch => '재대결?';
 
   @override
   String friendCodeInvite(String code) {
@@ -1974,49 +2273,6 @@ class LKo extends L {
   String get noticeLiveInvite => '친구가 라이브 대결에 초대했어요';
 
   @override
-  String get trialToday => '오늘';
-
-  @override
-  String get trialTodayBody => '라이브와 랭크, 모든 대결이 열려요.';
-
-  @override
-  String trialDay(String day) {
-    return '${day}일째';
-  }
-
-  @override
-  String get trialReminderBody => '체험이 끝나기 하루 전에 알려 드려요.';
-
-  @override
-  String get trialEndBody => '플랜이 시작돼요. 그 전에 취소하면 결제되지 않아요.';
-
-  @override
-  String trialTag(String days) {
-    return '${days}일 무료';
-  }
-
-  @override
-  String trialCta(String days) {
-    return '${days}일 무료 체험 시작하기';
-  }
-
-  @override
-  String trialThenYearly(String price) {
-    return '지금은 결제 없음 · 이후 ${price}/년';
-  }
-
-  @override
-  String trialThenWeekly(String price) {
-    return '지금은 결제 없음 · 이후 ${price}/주';
-  }
-
-  @override
-  String get trialEndsTitle => '무료 체험이 내일 끝나요';
-
-  @override
-  String get trialEndsBody => '계속 오르거나, 그 전에 구독 설정에서 취소하세요.';
-
-  @override
   String get obIdeaTitle => '60초. 상대는 한 명.';
 
   @override
@@ -2052,7 +2308,7 @@ class LKo extends L {
 
   @override
   String monthToTop10(String lp) {
-    return '톱 10까지 ${lp} LP';
+    return '톱 10까지 ${lp}점';
   }
 
   @override
@@ -2075,7 +2331,87 @@ class LKo extends L {
   String get monthEmptyTitle => '새로운 달';
 
   @override
-  String get monthEmptyBody => '이번 달엔 아직 아무도 LP를 얻지 못했어요. 첫 랭크전을 이기면 1위예요.';
+  String get monthEmptyBody => '이번 달엔 아직 아무도 점수를 얻지 못했어요. 첫 랭크전을 이기면 1위예요.';
+
+  @override
+  String get weekEmptyTitle => '새로운 주';
+
+  @override
+  String get weekEmptyBody => '이번 주엔 아직 아무도 점수를 얻지 못했어요. 첫 랭크전을 이기면 1위예요.';
+
+  @override
+  String get ratingUnit => '레이팅';
+
+  @override
+  String get ptsUnit => '점';
+
+  @override
+  String ptsAmount(String n) {
+    return '${n}점';
+  }
+
+  @override
+  String ratingAmount(String n) {
+    return '레이팅 ${n}';
+  }
+
+  @override
+  String ratingForWin(String n) {
+    return '승리 ${n}';
+  }
+
+  @override
+  String ratingForLoss(String n) {
+    return '패배 ${n}';
+  }
+
+  @override
+  String ratingForReps(String n) {
+    return '렙 차이 ${n}';
+  }
+
+  @override
+  String get boardThisWeek => '이번 주';
+
+  @override
+  String get boardOverall => '전체';
+
+  @override
+  String get howPointsWork => '점수 규칙';
+
+  @override
+  String streakNextTen(String n) {
+    return '${n}연승 중: 다음 승리는 +10';
+  }
+
+  @override
+  String get boardRuleWin => '승리 +5';
+
+  @override
+  String get boardRuleLoss => '패배 −2';
+
+  @override
+  String get boardRuleStreak => '3연승 시 +10';
+
+  @override
+  String rankNext(String rank) {
+    return '다음: ${rank}';
+  }
+
+  @override
+  String rankAt(String n) {
+    return '${n}에서';
+  }
+
+  @override
+  String toGo(String n) {
+    return '${n} 남음';
+  }
+
+  @override
+  String tierStartsAt(String tier, String n) {
+    return '${tier} 시작 ${n}';
+  }
 
   @override
   String rankedDuelsCount(String n) {
@@ -2093,6 +2429,14 @@ class LKo extends L {
 
   @override
   String get seasonPlayCta => '새로운 달 시작';
+
+  @override
+  String monthWinners(String month) {
+    return '${month} 우승자';
+  }
+
+  @override
+  String get playShort => '플레이';
 
   @override
   String get rematchLive => '라이브 재대결';
@@ -2273,7 +2617,7 @@ class LKo extends L {
 
   @override
   String weekToTop3(String n) {
-    return '톱 3까지 ${n} LP';
+    return '톱 3까지 ${n}점';
   }
 
   @override
@@ -2373,7 +2717,7 @@ class LKo extends L {
   String get placedBody => '모두 여기서 시작해요. 이겨야만 올라갑니다.';
 
   @override
-  String get placedHow => '대결에서 이겨 LP를 얻으세요. 더 높은 랭크를 이기면 더 많이 얻어요.';
+  String get placedHow => '승리: +25와 렙 차이. 패배: −20과 렙 차이.';
 
   @override
   String get levelBesideName => '어디서나 이름 옆에';
@@ -2662,10 +3006,19 @@ class LKo extends L {
   String get obRepsBody => '카메라가 얼마나 내려가고 얼마나 다시 올라오는지 봐요.';
 
   @override
-  String get obRepsDown => '금색 선 아래로 내려가기';
+  String get obRepsDown => '바가 빌 때까지 내려가기';
 
   @override
-  String get obRepsUp => '위쪽 선 위로 다시 올라오기';
+  String get obRepsUp => '가득 찰 때까지 올라오기';
+
+  @override
+  String get obBarGoingDown => '내려갈 때';
+
+  @override
+  String get obBarComingUp => '올라올 때';
+
+  @override
+  String get obBarHandOff => '손이 바닥에서 떨어짐';
 
   @override
   String get obRepsBoth => '둘 다 손을 바닥에 댄 채로요. 반만 한 건 인정되지 않아요. 내 휴대폰에서도, 상대 휴대폰에서도요.';
@@ -2674,7 +3027,7 @@ class LKo extends L {
   String get obClimbTitle => 'Master까지 올라가세요.';
 
   @override
-  String get obClimbBody => '이겨서 사다리를 올라가세요. 7개 티어, 티어마다 5단계예요.';
+  String get obClimbBody => '7개 티어, 티어마다 5단계예요. 이기면 올라가고, 지면 한 티어 내려갈 수 있지만 1,000점 아래로는 떨어지지 않아요.';
 
   @override
   String get obGoldLine => '금색 선';
@@ -2685,22 +3038,7 @@ class LKo extends L {
   }
 
   @override
-  String get proTitleTop => '광고 없이.';
-
-  @override
-  String get proTitleBottom => '팔굽혀펴기만.';
-
-  @override
-  String get proBody => '모든 매치는 계속 무료예요. Pro는 모든 매치에서 광고를 없애요.';
-
-  @override
   String get proThanks => '광고가 꺼졌어요. Pro를 선택해 주셔서 고마워요.';
-
-  @override
-  String get removeAds => '광고 제거';
-
-  @override
-  String get adNotice => '나가면 광고가 나와요';
 
   @override
   String get adAskTitle => '광고 덕분에 outrepd는 무료예요';
@@ -2710,9 +3048,6 @@ class LKo extends L {
 
   @override
   String get adAskCamera => '카메라는 전혀 관련 없어요. 무엇을 선택하든 몸 추적은 이 휴대폰 안에서만 이뤄져요.';
-
-  @override
-  String get adAskRemove => '대신 광고 제거하기';
 
   @override
   String get monsterIronColossus => '강철 거신';
