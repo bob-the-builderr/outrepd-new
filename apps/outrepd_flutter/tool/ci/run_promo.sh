@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Public for one promo CI run, then private again whatever happened.
-#   bash apps/outrepd_flutter/tool/ci/run_promo.sh <sha7>  (the promo copy in Desktop/OUTREPD-promo)
+#   bash apps/outrepd_flutter/tool/ci/run_promo.sh <sha7>  (the promo copy in Desktop/mokhtar/OUTREPD-promo)
 # A visibility change takes a while on GitHub: until it lands, git answers
 # "repository is disabled" and a second change is refused (422), so both
 # are retried.
@@ -18,7 +18,7 @@ trap private EXIT
 "$GH" repo edit $R --visibility public --accept-visibility-change-consequences || exit 1
 pushed=""
 for i in $(seq 1 36); do
-  if git -C /c/Users/MA/Desktop/OUTREPD-promo push -q origin promo 2>/dev/null; then pushed=1; break; fi
+  if git -C /c/Users/MA/Desktop/mokhtar/OUTREPD-promo push -q origin promo 2>/dev/null; then pushed=1; break; fi
   sleep 5
 done
 [ -n "$pushed" ] || { echo "push failed"; exit 1; }
