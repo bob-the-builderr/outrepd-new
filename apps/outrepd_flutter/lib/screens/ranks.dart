@@ -869,7 +869,7 @@ class _RankRow extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
       // A sample row has no id to fetch with, so it opens a sample card.
-      onTap: () => showLifterPeek(
+      onTap: () => openLifter(
         context,
         id: entry.id,
         username: entry.username,
@@ -1649,7 +1649,7 @@ class _PodiumPlace extends StatelessWidget {
 
     return InkWell(
       borderRadius: BorderRadius.circular(12),
-      onTap: () => showLifterPeek(
+      onTap: () => openLifter(
         context,
         id: row.id,
         username: row.username,
@@ -1819,7 +1819,7 @@ class _MonthRankRow extends StatelessWidget {
 
     return InkWell(
       borderRadius: BorderRadius.circular(12),
-      onTap: () => showLifterPeek(
+      onTap: () => openLifter(
         context,
         id: row.id,
         username: row.username,

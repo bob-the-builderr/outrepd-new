@@ -376,7 +376,7 @@ const demoFriends = <Friend>[
   Friend('delt_destroyer', 3, 4, 64, false, winsVsYou: 0, lossesVsYou: 4, xp: 2900),
 ];
 
-/// The card a sample row opens, so the profile peek can be tried without a
+/// The profile a sample row opens, so it can be tried without a
 /// server. Built from whatever the sample board and friends list already say
 /// about [username]; the numbers neither of them carries are made up from
 /// those, never random, so the same row always opens the same card.

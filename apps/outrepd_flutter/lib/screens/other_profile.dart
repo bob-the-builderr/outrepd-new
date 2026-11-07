@@ -1,10 +1,10 @@
 /// Somebody else, as seen from outside.
 ///
-/// Two depths and one menu, all reading the same [LifterProfile]: a quick
-/// peek from wherever a name appears in a list, the full card one tap
-/// deeper, and the share/mute/block/report sheet either of them opens. One
-/// fetch, `backend.lifterProfile`, is the single source both depths draw
-/// from — nothing here computes a stat of its own.
+/// One screen and one menu, both reading the same [LifterProfile]: the
+/// profile a name opens, in the order and with the cards of your own (the
+/// user's pick A, 2026-11-07), and the share/mute/block/report sheet it
+/// opens. One fetch, `backend.lifterProfile`, is the single source — nothing
+/// here computes a stat of its own.
 library;
 
 import 'dart:async';
@@ -19,12 +19,11 @@ import '../motion.dart';
 import '../country_names.dart';
 import '../avatar.dart' show pictureAt;
 import '../player_avatar.dart';
-import '../rank_row.dart';
-import '../ranking.dart';
+import '../rank_card.dart';
 import '../rewards.dart';
 import '../season.dart';
+import '../stat_grid.dart';
 import '../theme.dart';
-import '../tier_badge.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
 import '../worn_title.dart';
@@ -35,75 +34,42 @@ import 'settings_privacy.dart';
 import 'share_card.dart';
 import 'shell.dart' show AppShell;
 
-/// Opens the quick-peek sheet for [username]. The one entry point every row
-/// that shows somebody's name calls, so a name means the same thing to tap
-/// wherever it appears — a friend row, a board row, anywhere.
-Future<void> showLifterPeek(
+/// Opens [username]'s profile. The one entry point every row that shows
+/// somebody's name calls, so a name means the same thing to tap wherever it
+/// appears — a friend row, a board row, anywhere. It goes straight there (the
+/// user's pick, 2026-11-07); a small card used to come first, with most of
+/// the same numbers and no way to ask a stranger to be a friend.
+Future<void> openLifter(
   BuildContext context, {
   required String id,
   required String username,
   LifterProfile? initial,
   String? avatarUrl,
-}) {
+}) async {
   // Your own name on a board is you: the server does not describe you to
   // yourself as somebody else, and the card said it could not load
   // (the user, 2026-11-04). Your own profile is the tab for that.
   final me = backend.me?.id;
   if (me != null && me.isNotEmpty && id == me && AppShell.goToProfile(context)) {
-    return Future.value();
+    return;
   }
-  return showModalBottomSheet<void>(
-    context: context,
-    isScrollControlled: true,
-    backgroundColor: context.colors.surface,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+  await Navigator.of(context).push<void>(
+    MaterialPageRoute(
+      builder: (_) => OtherProfileScreen(
+        id: id,
+        username: username,
+        initial: initial,
+        avatarUrl: avatarUrl,
+      ),
     ),
-    builder: (_) =>
-        _LifterPeekSheet(
-          id: id,
-          username: username,
-          initial: initial,
-          avatarUrl: avatarUrl,
-        ),
   );
 }
 
-// ──────────────────────────────── the fetch ───────────────────────────────
+// ──────────────────────────────── the profile ─────────────────────────────
 
-/// The loading/error/content states both the peek sheet and the full screen
-/// share, so neither has to restate what "couldn't load" looks like.
-mixin _LifterFetch<T extends StatefulWidget> on State<T> {
-  String get lifterId;
-
-  LifterProfile? profile;
-  bool loading = true;
-
-  Future<void> load() async {
-    // How they look comes from its own call, beside the card.
-    unawaited(Looks.instance.fetch([lifterId]));
-    setState(() => loading = true);
-    try {
-      final result = await backend.lifterProfile(lifterId);
-      if (!mounted) return;
-      setState(() {
-        profile = result;
-        loading = false;
-      });
-    } on Object catch (_) {
-      if (!mounted) return;
-      setState(() {
-        profile = null;
-        loading = false;
-      });
-    }
-  }
-}
-
-// ──────────────────────────────── quick peek ───────────────────────────────
-
-class _LifterPeekSheet extends StatefulWidget {
-  const _LifterPeekSheet({
+class OtherProfileScreen extends StatefulWidget {
+  const OtherProfileScreen({
+    super.key,
     required this.id,
     required this.username,
     this.initial,
@@ -118,275 +84,329 @@ class _LifterPeekSheet extends StatefulWidget {
   final LifterProfile? initial;
 
   /// Their photo, as the row that was tapped already had it: drawn at once,
-  /// before the card has been read from the server — until then the circle
-  /// showed their name's lifter (the user, 2026-11-05).
+  /// before the profile has been read from the server — until then the
+  /// circle showed their name's lifter (the user, 2026-11-05).
   final String? avatarUrl;
 
   @override
-  State<_LifterPeekSheet> createState() => _LifterPeekSheetState();
+  State<OtherProfileScreen> createState() => _OtherProfileScreenState();
 }
 
-class _LifterPeekSheetState extends State<_LifterPeekSheet>
-    with _LifterFetch<_LifterPeekSheet> {
-  @override
-  String get lifterId => widget.id;
+class _OtherProfileScreenState extends State<OtherProfileScreen> {
+  LifterProfile? _profile;
+  bool _loading = true;
+  bool _sendingRequest = false;
+
+  /// Their awards from finished months. Fetched beside the profile rather
+  /// than inside it: a card that could not get them still has everything
+  /// else to show.
+  List<SeasonAward> _awards = const [];
 
   @override
   void initState() {
     super.initState();
     if (widget.initial case final seeded?) {
-      profile = seeded;
-      loading = false;
+      _profile = seeded;
+      _loading = false;
     } else {
-      load();
+      _load();
+    }
+    _loadAwards();
+  }
+
+  Future<void> _load() async {
+    // How they look comes from its own call, beside the card.
+    unawaited(Looks.instance.fetch([widget.id]));
+    setState(() => _loading = true);
+    try {
+      final result = await backend.lifterProfile(widget.id);
+      if (!mounted) return;
+      setState(() {
+        _profile = result;
+        _loading = false;
+      });
+    } on Object catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _profile = null;
+        _loading = false;
+      });
     }
   }
 
-  void _openFullProfile() {
-    final loaded = profile;
-    Navigator.of(context).pop();
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => OtherProfileScreen(
-          id: widget.id,
-          username: widget.username,
-          initial: loaded,
-        ),
-      ),
-    );
+  Future<void> _loadAwards() async {
+    if (!backend.available || widget.id.isEmpty) return;
+    try {
+      final awards = await backend.lifterSeasonAwards(widget.id);
+      if (mounted) setState(() => _awards = awards);
+    } on Object catch (error) {
+      debugPrint('Could not read their season awards: $error');
+    }
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Future<void> _addFriend() async {
+    if (_sendingRequest) return;
     final l = L.of(context);
-    final p = profile;
-
-    return ListenableBuilder(
-      listenable: Looks.instance,
-      builder: (context, _) => _sheet(context, l, p),
-    );
+    final messenger = ScaffoldMessenger.of(context);
+    setState(() => _sendingRequest = true);
+    try {
+      final result = await backend.askFriend(widget.username);
+      if (!mounted) return;
+      final said = switch (result) {
+        AskResult.asked => l.requestSent(widget.username),
+        AskResult.friends => l.nowFriends(widget.username),
+        AskResult.noSuchLifter => l.noOneFound,
+        AskResult.thatIsYou => l.noOneFound,
+      };
+      messenger.showSnackBar(
+        SnackBar(content: Text(said), behavior: SnackBarBehavior.floating),
+      );
+      if (result == AskResult.asked || result == AskResult.friends) {
+        await _load();
+      }
+    } on Object catch (_) {
+      if (!mounted) return;
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(l.needsServer),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => _sendingRequest = false);
+    }
   }
 
-  /// A player card (the user's pick, 2026-11-03): the picture large in its
-  /// tier's frame, the name and level, the title worn, where they stand,
-  /// the rank row in its frame, and the numbers in one card. A Pro's card
-  /// wears their cover behind the top, a holo line along its edge whose
+  // Their look arrives after the profile, so all of it listens for that.
+  @override
+  Widget build(BuildContext context) => ListenableBuilder(
+    listenable: Looks.instance,
+    builder: (context, _) => _page(context),
+  );
+
+  /// A Pro wears their cover behind the top, a holo line along it whose
   /// colours drift slowly, the PRO chip, the name in the holo foil, and a
   /// soft light breathing behind the picture.
-  Widget _sheet(BuildContext context, L l, LifterProfile? p) {
+  Widget _page(BuildContext context) {
+    final l = L.of(context);
+    final p = _profile;
     final pro = Looks.instance.pro(widget.id);
-    final cover = pro ? Looks.instance.cover(widget.id) : null;
-    final tint = p != null && p.ranked
-        ? tierMetal(p.tierIdx).mid
-        : context.colors.brand;
-    final places = p == null ? '' : _placesLine(context, l, p);
 
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: Stack(
-          children: [
-            // Behind the top: a Pro's cover, or anyone else's tier as a
-            // soft light.
-            Positioned(
+    return Scaffold(
+      backgroundColor: context.colors.background,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        actions: [
+          if (pro) const Center(child: ProChip(height: 20)),
+          IconButton(
+            icon: const Icon(Icons.more_vert),
+            tooltip: l.moreOptions,
+            onPressed: () => openLifterMenu(
+              context,
+              id: widget.id,
+              username: widget.username,
+              profile: p,
+              onChanged: _load,
+            ),
+          ),
+        ],
+      ),
+      body: Stack(
+        children: [
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 0,
+            height: 320,
+            child: ProfileCover(
+              cover: pro ? Looks.instance.cover(widget.id) : null,
+            ),
+          ),
+          if (pro)
+            const Positioned(
               left: 0,
               right: 0,
               top: 0,
-              height: 230,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(20),
-                ),
-                child: cover != null
-                    ? ProfileCover(cover: cover)
-                    : DecoratedBox(
-                        decoration: BoxDecoration(
-                          gradient: RadialGradient(
-                            center: const Alignment(0, -1.1),
-                            radius: 1.1,
-                            colors: [
-                              tint.withValues(alpha: 0.2),
-                              tint.withValues(alpha: 0),
-                            ],
-                          ),
-                        ),
-                      ),
-              ),
+              height: 2.5,
+              child: _HoloLine(),
             ),
-            if (pro)
-              const Positioned(
-                left: 0,
-                right: 0,
-                top: 0,
-                height: 2.5,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                  child: _HoloLine(),
-                ),
-              ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const _SheetGrip(),
-                  Row(
-                    children: [
-                      if (pro) const ProChip(height: 20),
-                      const Spacer(),
-                      IconButton(
-                        icon: const Icon(Icons.more_vert),
-                        color: context.colors.muted,
-                        tooltip: l.moreOptions,
-                        onPressed: () => openLifterMenu(
-                          context,
-                          id: widget.id,
-                          username: widget.username,
-                          profile: p,
-                          onChanged: load,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Center(
-                    child: _ProLight(
-                      on: pro,
-                      child: PlayerAvatar(
-                        name: widget.username,
-                        tierIdx: p != null && p.ranked ? p.tierIdx : null,
-                        image: _picture(widget.id, p?.avatarUrl ?? widget.avatarUrl),
-                        alive: pro,
-                        size: 92,
-                        onBadgeTap: p != null && p.ranked
-                            ? _openFullProfile
-                            : null,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Center(
-                    child: _PeekName(
-                      name: widget.username,
-                      xp: p?.xp,
-                      pro: pro,
-                    ),
-                  ),
-                  if (titleById(p?.title) case final title?)
-                    Center(child: WornTitle(title: title)),
-                  if (places.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 2),
-                      child: Text(
-                        places,
-                        textAlign: TextAlign.center,
-                        style: context.type.label.copyWith(
-                          color: context.colors.muted,
-                        ),
-                      ),
-                    ),
-                  const SizedBox(height: 4),
-                  if (loading)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 24),
-                      child: Center(child: CircularProgressIndicator()),
-                    )
-                  else if (p == null)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Text(
-                        l.couldNotLoadProfile,
-                        textAlign: TextAlign.center,
-                        style: context.type.label.copyWith(
-                          color: context.colors.muted,
-                        ),
-                      ),
-                    )
-                  else ...[
-                    if (p.ranked)
-                      RankRow(
-                        tierIdx: p.tierIdx,
-                        divIdx: p.divIdx,
-                        lp: p.lp,
-                        onTap: _openFullProfile,
-                      )
-                    else
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: Text(
-                          l.unranked,
-                          textAlign: TextAlign.center,
-                          style: context.type.label.copyWith(
-                            color: context.colors.muted,
-                          ),
-                        ),
-                      ),
-                    _PeekStats(
-                      pro: pro,
-                      stats: [
-                        // A record between the two of you is for friends —
-                        // a stranger off the board gets their numbers, not
-                        // yours.
-                        if (p.isFriend)
-                          (
-                            l.vsYouCaption,
-                            p.hasPlayedThem
-                                ? '${localNumber(context, p.winsVsYou)}${l.winInitial} ${localNumber(context, p.lossesVsYou)}${l.lossInitial}'
-                                : '—',
-                            null,
-                          ),
-                        (
-                          l.bestSet,
-                          localNumber(context, p.bestSet),
-                          context.colors.brand,
-                        ),
-                        (
-                          l.winRate,
-                          p.wins + p.losses == 0
-                              ? '—'
-                              : '${(p.wins * 100 / (p.wins + p.losses)).round()}%',
-                          null,
-                        ),
-                      ],
-                    ),
-                    // A friend is challenged live; a stranger is not
-                    // challenged at all — the full profile is where they are
-                    // asked to be a friend first.
-                    if (p.isFriend) ...[
-                      const SizedBox(height: 14),
-                      FilledButton(
-                        key: const Key('challengeLive'),
-                        onPressed: () => _challenge(context, p),
-                        style: FilledButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                        ),
-                        child: Text(l.challenge),
-                      ),
-                    ],
-                    const SizedBox(height: 8),
-                    FilledButton(
-                      onPressed: _openFullProfile,
-                      style: FilledButton.styleFrom(
-                        backgroundColor: context.colors.surfaceRaised,
-                        foregroundColor: context.colors.brand,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                      ),
-                      child: Text(l.viewFullProfile),
-                    ),
-                  ],
-                ],
-              ),
+          Positioned.fill(
+            child: _Body(
+              id: widget.id,
+              username: widget.username,
+              avatarUrl: widget.avatarUrl,
+              pro: pro,
+              profile: p,
+              loading: _loading,
+              awards: _awards,
+              sendingRequest: _sendingRequest,
+              onChallenge: () => _challenge(context, p!),
+              onAddFriend: _addFriend,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
 
-/// The name on the card: with its level, and on a Pro's card in the holo
-/// foil.
-class _PeekName extends StatelessWidget {
-  const _PeekName({required this.name, required this.xp, required this.pro});
+class _Body extends StatelessWidget {
+  const _Body({
+    required this.id,
+    required this.username,
+    required this.avatarUrl,
+    required this.pro,
+    required this.profile,
+    required this.loading,
+    required this.awards,
+    required this.sendingRequest,
+    required this.onChallenge,
+    required this.onAddFriend,
+  });
+
+  final String id;
+  final String username;
+  final String? avatarUrl;
+  final bool pro;
+  final LifterProfile? profile;
+  final bool loading;
+  final List<SeasonAward> awards;
+  final bool sendingRequest;
+  final VoidCallback onChallenge;
+  final VoidCallback onAddFriend;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final p = profile;
+    // The picture takes the height the page has: more for a stranger, who
+    // has no head-to-head under it. Inside the app bar's height at the top,
+    // between its two buttons.
+    final share = p == null || p.isFriend ? 0.15 : 0.185;
+    final picture = (MediaQuery.sizeOf(context).height * share).clamp(92.0, 176.0);
+
+    return Column(
+      children: [
+        Expanded(
+          child: ListView(
+            padding: EdgeInsets.only(
+              top: MediaQuery.paddingOf(context).top - 32,
+              bottom: 12,
+            ),
+            children: [
+              Center(
+                child: _ProLight(
+                  on: pro,
+                  child: PlayerAvatar(
+                    name: username,
+                    tierIdx: p != null && p.ranked ? p.tierIdx : null,
+                    image: _picture(id, p?.avatarUrl ?? avatarUrl),
+                    alive: pro,
+                    size: picture,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Center(child: _Name(name: username, xp: p?.xp, pro: pro)),
+              if (titleById(p?.title) case final title?)
+                // Centred under the name like everything else here; the list
+                // stretches its children, which left it hanging at the start.
+                Center(child: WornTitle(title: title)),
+              if (awards.isNotEmpty) ...[
+                const SizedBox(height: 10),
+                SeasonAwardChips(awards: awards, alignment: WrapAlignment.center),
+              ],
+              const SizedBox(height: 12),
+              if (loading)
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 24),
+                  child: Center(child: CircularProgressIndicator()),
+                )
+              else if (p == null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 30,
+                    vertical: 20,
+                  ),
+                  child: Text(
+                    l.couldNotLoadProfile,
+                    textAlign: TextAlign.center,
+                    style: context.type.body.copyWith(
+                      color: context.colors.muted,
+                    ),
+                  ),
+                )
+              else ...[
+                if (p.ranked)
+                  // Its frame brings its own room either side for the wings.
+                  RankCard(tierIdx: p.tierIdx, divIdx: p.divIdx, lp: p.lp)
+                else
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Text(
+                      l.unranked,
+                      textAlign: TextAlign.center,
+                      style: context.type.label.copyWith(
+                        color: context.colors.muted,
+                      ),
+                    ),
+                  ),
+                const SizedBox(height: 6),
+                _Stats(profile: p),
+                // A record between the two of you is for friends — a stranger
+                // off the board gets their numbers, not yours.
+                if (p.isFriend) ...[
+                  const SizedBox(height: 12),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: _HeadToHead(profile: p, username: username),
+                  ),
+                ],
+              ],
+            ],
+          ),
+        ),
+        // Friends go live; anybody else is asked to be a friend first, and
+        // that is the one thing offered here. At the foot of the page, so it
+        // is there however short the phone is.
+        if (!loading && p != null)
+          SafeArea(
+            top: false,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+              child: SizedBox(
+                width: double.infinity,
+                child: p.isFriend
+                    ? FilledButton(
+                        key: const Key('challengeLive'),
+                        onPressed: onChallenge,
+                        style: FilledButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                        ),
+                        child: Text(l.challenge),
+                      )
+                    : FilledButton(
+                        key: const Key('addFriendButton'),
+                        onPressed: sendingRequest ? null : onAddFriend,
+                        style: FilledButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                        ),
+                        child: Text(l.addFriendButton),
+                      ),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+/// The name, with its level, and on a Pro in the holo foil.
+class _Name extends StatelessWidget {
+  const _Name({required this.name, required this.xp, required this.pro});
 
   final String name;
   final int? xp;
@@ -396,7 +416,7 @@ class _PeekName extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = context.type.heading.copyWith(
       color: pro ? Colors.white : context.colors.text,
-      fontSize: 26,
+      fontSize: 28,
       fontWeight: FontWeight.w800,
     );
     if (!pro) {
@@ -427,73 +447,182 @@ class _PeekName extends StatelessWidget {
   }
 }
 
-/// The numbers, in one card divided into columns: each value over its label.
-class _PeekStats extends StatelessWidget {
-  const _PeekStats({required this.stats, required this.pro});
+/// Their six numbers, as your own profile shows yours: where they stand, then
+/// what they have done.
+class _Stats extends StatelessWidget {
+  const _Stats({required this.profile});
 
-  final List<(String, String, Color?)> stats;
-  final bool pro;
+  final LifterProfile profile;
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
-    return Container(
-      decoration: BoxDecoration(
-        color: colors.background.withValues(alpha: 0.55),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: pro
-              ? AppColors.gold.withValues(alpha: 0.35)
-              : colors.border,
-          width: 0.8,
-        ),
-      ),
-      child: IntrinsicHeight(
-        child: Row(
-          children: [
-            for (final (i, (label, value, colour)) in stats.indexed) ...[
-              if (i > 0) VerticalDivider(width: 1, color: colors.border),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 6,
-                    vertical: 12,
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        value,
-                        maxLines: 1,
-                        style: TextStyle(
-                          color: colour ?? colors.text,
-                          fontSize: 21,
-                          fontWeight: FontWeight.w800,
-                          fontFeatures: const [FontFeature.tabularFigures()],
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        label,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: context.type.label.copyWith(
-                          color: colors.muted,
-                          fontSize: 11.5,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ],
-        ),
+    final l = L.of(context);
+    final p = profile;
+
+    // Null for good when they have no place: not placed yet, or asked to be
+    // left off the board. A dash then, rather than a number made up.
+    Widget place(String label, int? position) => StatCell(
+      label: label,
+      value: position == null
+          ? '—'
+          : l.rankPosition(localNumber(context, position)),
+      colour: position == null ? context.colors.muted : null,
+    );
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: StatGrid(
+        top: [
+          place(l.global, p.globalPlace),
+          if (p.country case final code?)
+            place(countryName(context, code), p.countryPlace)
+          else
+            StatCell(
+              label: l.winRate,
+              value: p.wins + p.losses == 0
+                  ? '—'
+                  : '${(p.wins * 100 / (p.wins + p.losses)).round()}%',
+            ),
+          StatCell(
+            label: l.bestSet,
+            value: localNumber(context, p.bestSet),
+            colour: context.colors.brand,
+          ),
+        ],
+        bottom: [
+          StatCell(label: l.totalReps, value: localNumber(context, p.totalReps)),
+          StatCell(
+            label: l.record,
+            value: localNumber(context, p.wins),
+            suffix: l.winInitial,
+            value2: localNumber(context, p.losses),
+            suffix2: l.lossInitial,
+          ),
+          StatCell(label: l.streak, value: localNumber(context, p.winStreak)),
+        ],
       ),
     );
   }
 }
 
-/// A Pro's line of holo foil along the top of their card, its colours
+class _HeadToHead extends StatelessWidget {
+  const _HeadToHead({required this.profile, required this.username});
+
+  final LifterProfile profile;
+  final String username;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final p = profile;
+    final colors = context.colors;
+    final note = TextStyle(color: colors.muted, fontSize: 13, height: 1.4);
+    TextStyle score(Color colour) => TextStyle(
+      color: colour,
+      fontSize: 30,
+      fontWeight: FontWeight.w800,
+      height: 1,
+      fontFeatures: const [FontFeature.tabularFigures()],
+    );
+
+    final card = BoxDecoration(
+      color: colors.surface,
+      borderRadius: BorderRadius.circular(16),
+    );
+
+    if (!p.hasPlayedThem) {
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
+        decoration: card,
+        child: Text(l.noHistoryWithThem(username), style: note),
+      );
+    }
+
+    final total = p.winsVsYou + p.lossesVsYou;
+
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 13, 16, 12),
+      decoration: card,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            l.headToHeadTitle,
+            style: TextStyle(
+              color: colors.muted,
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              Text(localNumber(context, p.lossesVsYou), style: score(colors.text)),
+              Text(' ${l.you}', style: note),
+              Expanded(
+                child: Text(
+                  '$username ',
+                  textAlign: TextAlign.end,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: note,
+                ),
+              ),
+              Text(localNumber(context, p.winsVsYou), style: score(colors.rival)),
+            ],
+          ),
+          const SizedBox(height: 9),
+          SizedBox(
+            height: 8,
+            width: double.infinity,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(4),
+              child: Row(
+                // A Row's default center alignment gives a flexible child
+                // only a loose cross-axis constraint, and a childless
+                // ColoredBox collapses to zero height under a loose one —
+                // stretch is what makes it actually fill the height given.
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    flex: p.lossesVsYou == 0 ? 0 : p.lossesVsYou,
+                    child: ColoredBox(color: colors.brand),
+                  ),
+                  Expanded(
+                    flex: p.winsVsYou == 0 ? 0 : p.winsVsYou,
+                    child: ColoredBox(color: colors.rival),
+                  ),
+                  if (total == 0)
+                    Expanded(child: ColoredBox(color: colors.surfaceRaised)),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            [
+              l.lastDuelScore(
+                localNumber(context, p.lastYourReps ?? 0),
+                localNumber(context, p.lastTheirReps ?? 0),
+                relativeDays(
+                  context,
+                  DateTime.now().difference(p.lastDuelAt!).inDays,
+                ),
+              ),
+              if (p.yourBestVsThem case final best?)
+                l.yourBestVsThemLine(localNumber(context, best)),
+            ].join(' '),
+            style: note,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// A Pro's line of holo foil along the top of their page, its colours
 /// drifting across it once every ten seconds. Still where the phone asks
 /// for less motion, and under tests.
 class _HoloLine extends StatefulWidget {
@@ -554,7 +683,7 @@ class _Slide extends GradientTransform {
       Matrix4.translationValues(bounds.width * t, 0, 0);
 }
 
-/// On a Pro's card, a soft gold light breathing behind the picture over six
+/// On a Pro's page, a soft gold light breathing behind the picture over six
 /// seconds. Held halfway where the phone asks for less motion, and under
 /// tests; nothing at all for anyone else.
 class _ProLight extends StatefulWidget {
@@ -624,21 +753,6 @@ class _ProLightState extends State<_ProLight>
   }
 }
 
-/// "Global #3 · Egypt #1" — built from the two board places rather than
-/// carried as one string, so either half can be missing without the other
-/// looking orphaned.
-String _placesLine(BuildContext context, L l, LifterProfile p) {
-  final parts = <String>[
-    if (p.globalPlace case final g?)
-      '${l.global} ${l.rankPosition(localNumber(context, g))}',
-    if (p.countryPlace case final c?)
-      if (p.country case final code?)
-        '${countryName(context, code)} '
-            '${l.rankPosition(localNumber(context, c))}',
-  ];
-  return parts.join(' · ');
-}
-
 /// [id]'s picture: a Pro who made a lifter is drawn from it (alive, in
 /// vectors); anybody else by their uploaded picture, or their name's lifter.
 ImageProvider? _picture(String id, String? avatarUrl) {
@@ -646,479 +760,6 @@ ImageProvider? _picture(String id, String? avatarUrl) {
   if (Looks.instance.pro(id) && made != null) return LifterPicture(made);
   return pictureAt(avatarUrl);
 }
-
-// ──────────────────────────────── full profile ────────────────────────────
-
-class OtherProfileScreen extends StatefulWidget {
-  const OtherProfileScreen({
-    super.key,
-    required this.id,
-    required this.username,
-    this.initial,
-  });
-
-  final String id;
-  final String username;
-
-  /// Already fetched, when this screen was reached from the quick peek —
-  /// the peek only just asked the same question, so asking again would be a
-  /// second round trip for an answer already in hand.
-  final LifterProfile? initial;
-
-  @override
-  State<OtherProfileScreen> createState() => _OtherProfileScreenState();
-}
-
-class _OtherProfileScreenState extends State<OtherProfileScreen>
-    with _LifterFetch<OtherProfileScreen> {
-  @override
-  String get lifterId => widget.id;
-
-  bool _sendingRequest = false;
-
-  /// Their awards from finished months. Fetched beside the profile rather
-  /// than inside it: a card that could not get them still has everything
-  /// else to show.
-  List<SeasonAward> _awards = const [];
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.initial case final seeded?) {
-      profile = seeded;
-      loading = false;
-    } else {
-      load();
-    }
-    _loadAwards();
-  }
-
-  Future<void> _loadAwards() async {
-    if (!backend.available || widget.id.isEmpty) return;
-    try {
-      final awards = await backend.lifterSeasonAwards(widget.id);
-      if (mounted) setState(() => _awards = awards);
-    } on Object catch (error) {
-      debugPrint('Could not read their season awards: $error');
-    }
-  }
-
-  Future<void> _addFriend() async {
-    if (_sendingRequest) return;
-    final l = L.of(context);
-    final messenger = ScaffoldMessenger.of(context);
-    setState(() => _sendingRequest = true);
-    try {
-      final result = await backend.askFriend(widget.username);
-      if (!mounted) return;
-      final said = switch (result) {
-        AskResult.asked => l.requestSent(widget.username),
-        AskResult.friends => l.nowFriends(widget.username),
-        AskResult.noSuchLifter => l.noOneFound,
-        AskResult.thatIsYou => l.noOneFound,
-      };
-      messenger.showSnackBar(
-        SnackBar(content: Text(said), behavior: SnackBarBehavior.floating),
-      );
-      if (result == AskResult.asked || result == AskResult.friends) {
-        await load();
-      }
-    } on Object catch (_) {
-      if (!mounted) return;
-      messenger.showSnackBar(
-        SnackBar(
-          content: Text(l.needsServer),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
-    } finally {
-      if (mounted) setState(() => _sendingRequest = false);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l = L.of(context);
-    final p = profile;
-
-    return Scaffold(
-      backgroundColor: context.colors.background,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.more_vert),
-            tooltip: l.moreOptions,
-            onPressed: () => openLifterMenu(
-              context,
-              id: widget.id,
-              username: widget.username,
-              profile: p,
-              onChanged: load,
-            ),
-          ),
-        ],
-      ),
-      body: loading
-          ? const Center(child: CircularProgressIndicator())
-          : p == null
-          ? Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Center(
-                child: Text(
-                  l.couldNotLoadProfile,
-                  textAlign: TextAlign.center,
-                  style: context.type.body.copyWith(
-                    color: context.colors.muted,
-                  ),
-                ),
-              ),
-            )
-          : _Body(
-              profile: p,
-              username: widget.username,
-              awards: _awards,
-              sendingRequest: _sendingRequest,
-              onChallenge: () => _challenge(context, p),
-              onAddFriend: _addFriend,
-            ),
-    );
-  }
-}
-
-class _Body extends StatelessWidget {
-  const _Body({
-    required this.profile,
-    required this.username,
-    required this.awards,
-    required this.sendingRequest,
-    required this.onChallenge,
-    required this.onAddFriend,
-  });
-
-  final LifterProfile profile;
-  final String username;
-  final List<SeasonAward> awards;
-  final bool sendingRequest;
-  final VoidCallback onChallenge;
-  final VoidCallback onAddFriend;
-
-  // Their cover behind the top, while they are Pro; redrawn when their
-  // look arrives.
-  @override
-  Widget build(BuildContext context) => ListenableBuilder(
-    listenable: Looks.instance,
-    builder: (context, _) => Stack(
-      children: [
-        Positioned(
-          left: 0,
-          right: 0,
-          top: 0,
-          height: 220,
-          child: ProfileCover(cover: Looks.instance.cover(profile.id)),
-        ),
-        _list(context),
-      ],
-    ),
-  );
-
-  Widget _list(BuildContext context) {
-    final l = L.of(context);
-    final p = profile;
-
-    return ListView(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 28),
-      children: [
-        Center(
-          child: PlayerAvatar(
-            name: username,
-            tierIdx: p.ranked ? p.tierIdx : null,
-            image: _picture(p.id, p.avatarUrl),
-            alive: Looks.instance.pro(p.id),
-            size: 74,
-          ),
-        ),
-        const SizedBox(height: 12),
-        Center(
-          child: NameWithLevel(
-            name: username,
-            xp: p.xp,
-            chipFontSize: 13,
-            style: context.type.title.copyWith(color: context.colors.text),
-          ),
-        ),
-        // Beside the name, the same as on your own profile.
-        if (titleById(p.title) case final title?) ...[
-          const SizedBox(height: 2),
-          // Centred under the name like everything else here; the list
-          // stretches its children, which left it hanging at the start.
-          Center(child: WornTitle(title: title)),
-        ],
-        const SizedBox(height: 3),
-        Text(
-          p.ranked
-              ? '${tierLabel(l, p.tierIdx, p.divIdx)} · ${localNumber(context, ratingOf(p.tierIdx, p.divIdx, p.lp))}'
-              : l.unranked,
-          textAlign: TextAlign.center,
-          style: context.type.label.copyWith(color: _tierColour(p.tierIdx)),
-        ),
-        if (_placesLine(context, l, p) case final places when places.isNotEmpty) ...[
-          const SizedBox(height: 4),
-          Text(
-            places,
-            textAlign: TextAlign.center,
-            style: context.type.micro.copyWith(color: context.colors.muted),
-          ),
-        ],
-        if (awards.isNotEmpty) ...[
-          const SizedBox(height: 10),
-          SeasonAwardChips(awards: awards, alignment: WrapAlignment.center),
-        ],
-
-        const SizedBox(height: 18),
-        // Friends only, same as the peek's "vs you" tile.
-        if (p.isFriend) ...[
-          _HeadToHead(profile: p, username: username),
-          const SizedBox(height: 11),
-        ],
-        GridView.count(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          crossAxisCount: 2,
-          mainAxisSpacing: 7,
-          crossAxisSpacing: 7,
-          childAspectRatio: 2.1,
-          children: [
-            _StatBox(label: l.bestSet, value: localNumber(context, p.bestSet)),
-            _StatBox(
-              label: l.winRate,
-              value: p.wins + p.losses == 0
-                  ? '—'
-                  : '${(p.wins * 100 / (p.wins + p.losses)).round()}%',
-            ),
-            _StatBox(
-              label: l.totalReps,
-              value: localNumber(context, p.totalReps),
-            ),
-            _StatBox(label: l.streak, value: localNumber(context, p.winStreak)),
-          ],
-        ),
-
-        const SizedBox(height: 20),
-        // Friends go live; anybody else is asked to be a friend first, and
-        // that is the one thing offered here.
-        if (p.isFriend) ...[
-          SizedBox(
-            width: double.infinity,
-            child: FilledButton(
-              key: const Key('challengeLive'),
-              onPressed: onChallenge,
-              style: FilledButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-              ),
-              child: Text(l.challenge),
-            ),
-          ),
-          const SizedBox(height: 10),
-          SizedBox(
-            width: double.infinity,
-            child: OutlinedButton(
-              onPressed: null,
-              style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-              ),
-              child: Text(l.alreadyFriends),
-            ),
-          ),
-        ] else
-          SizedBox(
-            width: double.infinity,
-            child: FilledButton(
-              key: const Key('addFriendButton'),
-              onPressed: sendingRequest ? null : onAddFriend,
-              style: FilledButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-              ),
-              child: Text(l.addFriendButton),
-            ),
-          ),
-      ],
-    );
-  }
-}
-
-class _HeadToHead extends StatelessWidget {
-  const _HeadToHead({required this.profile, required this.username});
-
-  final LifterProfile profile;
-  final String username;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = L.of(context);
-    final p = profile;
-
-    if (!p.hasPlayedThem) {
-      return Container(
-        padding: const EdgeInsets.all(13),
-        decoration: BoxDecoration(
-          color: context.colors.surface,
-          border: Border.all(color: context.colors.border, width: 0.5),
-          borderRadius: BorderRadius.circular(14),
-        ),
-        child: Text(
-          l.noHistoryWithThem(username),
-          style: context.type.label.copyWith(color: context.colors.muted),
-        ),
-      );
-    }
-
-    final total = p.winsVsYou + p.lossesVsYou;
-
-    return Container(
-      padding: const EdgeInsets.all(13),
-      decoration: BoxDecoration(
-        color: context.colors.surface,
-        border: Border.all(color: context.colors.rival),
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            l.headToHeadTitle.toUpperCase(),
-            style: context.type.micro.copyWith(color: context.colors.muted),
-          ),
-          const SizedBox(height: 8),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            textBaseline: TextBaseline.alphabetic,
-            children: [
-              Text(
-                localNumber(context, p.lossesVsYou),
-                style: context.type.title.copyWith(color: context.colors.text),
-              ),
-              Text(
-                ' ${l.h2hYou}',
-                style: context.type.label.copyWith(color: context.colors.muted),
-              ),
-              const Spacer(),
-              Text(
-                '${l.h2hThem} ',
-                style: context.type.label.copyWith(color: context.colors.muted),
-              ),
-              Text(
-                localNumber(context, p.winsVsYou),
-                style: context.type.title.copyWith(
-                  color: context.colors.rival,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 9),
-          SizedBox(
-            height: 9,
-            width: double.infinity,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(5),
-              child: Row(
-                // A Row's default center alignment gives a flexible child
-                // only a loose cross-axis constraint, and a childless
-                // ColoredBox collapses to zero height under a loose one —
-                // stretch is what makes it actually fill the 9px given to it.
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    flex: p.lossesVsYou == 0 ? 0 : p.lossesVsYou,
-                    child: ColoredBox(color: context.colors.brand),
-                  ),
-                  Expanded(
-                    flex: p.winsVsYou == 0 ? 0 : p.winsVsYou,
-                    child: ColoredBox(color: context.colors.rival),
-                  ),
-                  if (total == 0)
-                    Expanded(
-                      child: ColoredBox(color: context.colors.surfaceRaised),
-                    ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 9),
-          Text(
-            [
-              l.lastDuelScore(
-                localNumber(context, p.lastYourReps ?? 0),
-                localNumber(context, p.lastTheirReps ?? 0),
-                relativeDays(
-                  context,
-                  DateTime.now().difference(p.lastDuelAt!).inDays,
-                ),
-              ),
-              if (p.yourBestVsThem case final best?)
-                l.yourBestVsThemLine(localNumber(context, best)),
-            ].join(' '),
-            style: context.type.micro.copyWith(
-              color: context.colors.muted,
-              height: 1.6,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _StatBox extends StatelessWidget {
-  const _StatBox({required this.label, required this.value});
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(
-        color: context.colors.surface,
-        border: Border.all(color: context.colors.border, width: 0.5),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      // Unlike a Column left to size itself, this one is given the cell's
-      // actual height by the GridView above, so the Expanded below has real
-      // room to shrink the value into rather than reporting its natural
-      // size upward and overflowing the cell at a larger text scale.
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ShrinkText(
-            label.toUpperCase(),
-            maxLines: 1,
-            style: context.type.micro.copyWith(color: context.colors.muted),
-          ),
-          const SizedBox(height: 2),
-          Expanded(
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              alignment: AlignmentDirectional.centerStart,
-              child: Text(
-                value,
-                style: context.type.heading.copyWith(
-                  color: context.colors.text,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-Color _tierColour(int tierIdx) =>
-    kTiers[tierIdx.clamp(0, kTiers.length - 1)].color;
 
 /// Asks [profile] — a friend; nobody else is offered the button — to go
 /// live, the same invite as the Friends tab's Challenge.
@@ -1135,9 +776,7 @@ void _challenge(BuildContext context, LifterProfile profile) {
 
 // ──────────────────────────────── the menu ────────────────────────────────
 
-/// Share, mute, block, report — the same sheet from the quick peek's kebab
-/// and the full profile's, so tapping "more" means the same thing at either
-/// depth.
+/// Share, mute, block, report: the sheet the profile's kebab opens.
 Future<void> openLifterMenu(
   BuildContext context, {
   required String id,
@@ -1462,25 +1101,6 @@ class _MenuRow extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _SheetGrip extends StatelessWidget {
-  const _SheetGrip();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Container(
-        width: 38,
-        height: 4,
-        decoration: BoxDecoration(
-          color: context.colors.surfaceRaised,
-          borderRadius: BorderRadius.circular(2),
         ),
       ),
     );

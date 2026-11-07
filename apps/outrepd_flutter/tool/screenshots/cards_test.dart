@@ -1,6 +1,6 @@
-/// Screenshots of the card a name opens and the cards that are shared — a
-/// free player's and a Pro's (the user's picks, 2026-11-03) — to see what
-/// they look like without a phone. See shots.dart for how these are run and
+/// Screenshots of the profile a name opens and the cards that are shared —
+/// a free player's and a Pro's (the user's picks) — to see what they look
+/// like without a phone. See shots.dart for how these are run and
 /// published.
 library;
 
@@ -29,9 +29,10 @@ Future<void> _font(String family, String path) async {
 
 /// iron_mike, a friend at Diamond IV; Pro with the stadium cover when [pro].
 class _Server extends NoBackend {
-  _Server({required this.pro});
+  _Server({required this.pro, this.friend = true});
 
   final bool pro;
+  final bool friend;
 
   @override
   bool get available => true;
@@ -52,9 +53,14 @@ class _Server extends NoBackend {
     globalPlace: 3,
     country: 'US',
     countryPlace: 1,
-    isFriend: true,
+    isFriend: friend,
     winsVsYou: 3,
     lossesVsYou: 1,
+    yourBestVsThem: 16,
+    lastDuelAt: DateTime.now().subtract(const Duration(days: 2)),
+    lastYourReps: 14,
+    lastTheirReps: 19,
+    title: 'giant_slayer',
     xp: 40,
   );
 
@@ -131,12 +137,12 @@ void main() {
   for (final pro in [false, true]) {
     final name = pro ? 'pro' : 'free';
 
-    testWidgets('the card a name opens, $name', (tester) async {
+    testWidgets('the profile a name opens, $name', (tester) async {
       _phone(tester);
       backend = _Server(pro: pro);
       await tester.pumpWidget(
         _app(
-          (context) => showLifterPeek(
+          (context) => openLifter(
             context,
             id: 'iron_mike-$name',
             username: 'iron_mike',
@@ -145,15 +151,40 @@ void main() {
       );
       await tester.tap(find.text('open'));
       await tester.pumpAndSettle();
-      // How they look arrives after the card, as it does on a phone.
+      // How they look arrives after the profile, as it does on a phone.
       await Looks.instance.fetch(['iron_mike-$name']);
       await tester.pumpAndSettle();
 
       await expectLater(
         find.byType(MaterialApp),
-        matchesGoldenFile('goldens/peek_$name.png'),
+        matchesGoldenFile('goldens/lifter_$name.png'),
       );
     });
+
+    if (!pro) {
+      testWidgets('the profile a name opens, a stranger', (tester) async {
+        _phone(tester);
+        backend = _Server(pro: false, friend: false);
+        await tester.pumpWidget(
+          _app(
+            (context) => openLifter(
+              context,
+              id: 'iron_mike-stranger',
+              username: 'iron_mike',
+            ),
+          ),
+        );
+        await tester.tap(find.text('open'));
+        await tester.pumpAndSettle();
+        await Looks.instance.fetch(['iron_mike-stranger']);
+        await tester.pumpAndSettle();
+
+        await expectLater(
+          find.byType(MaterialApp),
+          matchesGoldenFile('goldens/lifter_stranger.png'),
+        );
+      });
+    }
 
     testWidgets('the profile card, $name', (tester) async {
       _phone(tester);

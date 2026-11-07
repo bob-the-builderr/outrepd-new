@@ -1,5 +1,5 @@
-/// Somebody else's profile: the quick peek, the full card, and the
-/// share/mute/block/report menu both of them open into.
+/// Somebody else's profile, straight from their name, and the
+/// share/mute/block/report menu it opens.
 library;
 
 import 'package:flutter/material.dart';
@@ -84,10 +84,8 @@ const _unplayed = LifterProfile(
   lossesVsYou: 0,
 );
 
-/// A screen with one button that opens the quick peek — `showModalBottomSheet`
-/// needs a `Navigator` and a page beneath it to sit over, same as the app
-/// itself always has one.
-Widget _appWithPeekButton() => MaterialApp(
+/// A screen with one button standing in for a name in a list.
+Widget _appWithName() => MaterialApp(
   theme: buildTheme(Brightness.dark),
   localizationsDelegates: const [
     L.delegate,
@@ -101,7 +99,7 @@ Widget _appWithPeekButton() => MaterialApp(
       builder: (context) => Center(
         child: ElevatedButton(
           onPressed: () =>
-              showLifterPeek(context, id: 'ayaan99-id', username: 'ayaan99'),
+              openLifter(context, id: 'ayaan99-id', username: 'ayaan99'),
           child: const Text('open'),
         ),
       ),
@@ -121,12 +119,12 @@ void main() {
   setUp(() => backend = const NoBackend());
   tearDown(() => backend = const NoBackend());
 
-  group('quick peek', () {
+  group('a name', () {
     testWidgets('shows a couldn\'t-load state with no backend', (
       tester,
     ) async {
       phone(tester);
-      await tester.pumpWidget(_appWithPeekButton());
+      await tester.pumpWidget(_appWithName());
       await tester.tap(find.text('open'));
       await tester.pumpAndSettle();
 
@@ -134,41 +132,38 @@ void main() {
       expect(find.text("Couldn't load this profile"), findsOneWidget);
     });
 
-    testWidgets('shows the record, best set and win rate once loaded', (
+    testWidgets('opens the profile itself, with no card first', (
       tester,
     ) async {
       backend = _FakeBackend(_played(isFriend: true));
       phone(tester);
-      await tester.pumpWidget(_appWithPeekButton());
+      await tester.pumpWidget(_appWithName());
       await tester.tap(find.text('open'));
       await tester.pumpAndSettle();
 
+      expect(find.byType(OtherProfileScreen), findsOneWidget);
+      expect(find.byType(BottomSheet), findsNothing);
       // The rating: 1,000 + 500 a tier + 100 a division + 72 (2026-11-02),
-      // on the rank row under the name (the player card, 2026-11-03).
+      // on the same large card as your own profile.
       expect(find.text('DIAMOND I'), findsOneWidget);
-      expect(find.textContaining('3,972', findRichText: true), findsWidgets);
-      // 3 of their wins, 1 of yours — headToHead()'s own {wins}W{losses}L
-      // order, theirs first.
-      expect(find.text('3W 1L'), findsOneWidget);
+      expect(find.text('3,972'), findsOneWidget);
       expect(find.text('31'), findsOneWidget);
-      // 41 wins of 53 total, rounded.
-      expect(find.text('77%'), findsOneWidget);
+      expect(find.text('41W 12L'), findsOneWidget);
+      expect(find.text('Head to head'), findsOneWidget);
       expect(find.text('Challenge'), findsOneWidget);
-      expect(find.text('View full profile'), findsOneWidget);
     });
 
-    testWidgets('a stranger\'s peek leaves out the record against you', (
+    testWidgets('a stranger\'s profile leaves out the record against you', (
       tester,
     ) async {
       backend = _FakeBackend(_played());
       phone(tester);
-      await tester.pumpWidget(_appWithPeekButton());
+      await tester.pumpWidget(_appWithName());
       await tester.tap(find.text('open'));
       await tester.pumpAndSettle();
 
-      expect(find.text('3W 1L'), findsNothing);
+      expect(find.text('Head to head'), findsNothing);
       expect(find.text('31'), findsOneWidget);
-      expect(find.text('77%'), findsOneWidget);
     });
 
     testWidgets('an unranked account reads unranked, not tier zero', (
@@ -193,30 +188,16 @@ void main() {
         ),
       );
       phone(tester);
-      await tester.pumpWidget(_appWithPeekButton());
+      await tester.pumpWidget(_appWithName());
       await tester.tap(find.text('open'));
       await tester.pumpAndSettle();
 
       expect(find.text('Unranked'), findsOneWidget);
     });
-
-    testWidgets('view full profile opens the full screen', (tester) async {
-      backend = _FakeBackend(_played(isFriend: true));
-      phone(tester);
-      await tester.pumpWidget(_appWithPeekButton());
-      await tester.tap(find.text('open'));
-      await tester.pumpAndSettle();
-
-      await tester.tap(find.text('View full profile'));
-      await tester.pumpAndSettle();
-
-      expect(find.byType(OtherProfileScreen), findsOneWidget);
-      expect(find.text('HEAD TO HEAD'), findsOneWidget);
-    });
   });
 
   group('sample rows', () {
-    Widget appWithSamplePeek(String username) => MaterialApp(
+    Widget appWithSampleName(String username) => MaterialApp(
       theme: buildTheme(Brightness.dark),
       localizationsDelegates: const [
         L.delegate,
@@ -229,7 +210,7 @@ void main() {
         body: Builder(
           builder: (context) => Center(
             child: ElevatedButton(
-              onPressed: () => showLifterPeek(
+              onPressed: () => openLifter(
                 context,
                 id: '',
                 username: username,
@@ -242,37 +223,37 @@ void main() {
       ),
     );
 
-    testWidgets('a sample friend opens a card with the record against you', (
+    testWidgets('a sample friend opens a profile with the record against you', (
       tester,
     ) async {
       phone(tester);
-      await tester.pumpWidget(appWithSamplePeek('iron_mike'));
+      await tester.pumpWidget(appWithSampleName('iron_mike'));
       await tester.tap(find.text('open'));
       await tester.pumpAndSettle();
 
       expect(find.text("Couldn't load this profile"), findsNothing);
-      expect(find.text('3W 1L'), findsOneWidget);
+      expect(find.text('Head to head'), findsOneWidget);
       expect(find.text('Challenge'), findsOneWidget);
     });
 
-    testWidgets('a sample stranger opens a card without one', (tester) async {
+    testWidgets('a sample stranger opens a profile without one', (tester) async {
       phone(tester);
-      await tester.pumpWidget(appWithSamplePeek('cardio_hater'));
+      await tester.pumpWidget(appWithSampleName('cardio_hater'));
       await tester.tap(find.text('open'));
       await tester.pumpAndSettle();
 
       expect(find.text("Couldn't load this profile"), findsNothing);
-      expect(find.textContaining('W '), findsNothing);
-      expect(find.text('View full profile'), findsOneWidget);
+      expect(find.text('Head to head'), findsNothing);
+      expect(find.text('Add friend'), findsOneWidget);
       // Nobody but a friend is challenged.
       expect(find.byKey(const Key('challengeLive')), findsNothing);
     });
 
-    testWidgets('challenging a sample card says it needs a server', (
+    testWidgets('challenging a sample friend says it needs a server', (
       tester,
     ) async {
       phone(tester);
-      await tester.pumpWidget(appWithSamplePeek('iron_mike'));
+      await tester.pumpWidget(appWithSampleName('iron_mike'));
       await tester.tap(find.text('open'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Challenge'));
@@ -293,7 +274,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('HEAD TO HEAD'), findsOneWidget);
+      expect(find.text('Head to head'), findsOneWidget);
       expect(find.textContaining('Last time: 14–19'), findsWidgets);
       expect(find.textContaining('Your best against them is 16'), findsWidgets);
       expect(find.text('31'), findsOneWidget); // best set
@@ -312,7 +293,7 @@ void main() {
 
     });
 
-    testWidgets('an account already friends shows Friends, not Add friend', (
+    testWidgets('a friend is offered the challenge, on screen, and nothing else', (
       tester,
     ) async {
       backend = _FakeBackend(_played(isFriend: true));
@@ -321,11 +302,11 @@ void main() {
         _appDirect(const OtherProfileScreen(id: 'ayaan99-id', username: 'ayaan99')),
       );
       await tester.pumpAndSettle();
-      await tester.drag(find.byType(ListView), const Offset(0, -300));
-      await tester.pumpAndSettle();
 
-      expect(find.text('Friends'), findsOneWidget);
       expect(find.text('Add friend'), findsNothing);
+      // Pinned to the foot: a small phone does not have to scroll for it.
+      final foot = tester.getBottomLeft(find.byKey(const Key('challengeLive')));
+      expect(foot.dy, lessThanOrEqualTo(small.height));
     });
 
     testWidgets('nobody played yet says so instead of a fake 0-0', (
@@ -353,15 +334,10 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('HEAD TO HEAD'), findsNothing);
+      expect(find.text('Head to head'), findsNothing);
       expect(find.textContaining('Last time: 14–19'), findsNothing);
       expect(find.text('31'), findsOneWidget); // best set
       expect(find.text('3,140'), findsOneWidget); // total reps
-
-      // The buttons sit below the fold on a phone-sized viewport, so the
-      // list has to be scrolled before a finder can see them at all.
-      await tester.drag(find.byType(ListView), const Offset(0, -300));
-      await tester.pumpAndSettle();
       expect(find.text('Add friend'), findsOneWidget);
       // A stranger is asked to be a friend, not challenged: live is between
       // friends, and nothing else is offered.
@@ -375,8 +351,6 @@ void main() {
       await tester.pumpWidget(
         _appDirect(const OtherProfileScreen(id: 'ayaan99-id', username: 'ayaan99')),
       );
-      await tester.pumpAndSettle();
-      await tester.drag(find.byType(ListView), const Offset(0, -300));
       await tester.pumpAndSettle();
 
       await tester.tap(find.byKey(const Key('challengeLive')));

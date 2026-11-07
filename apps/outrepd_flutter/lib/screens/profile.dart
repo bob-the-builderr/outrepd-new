@@ -30,6 +30,7 @@ import '../rank_card.dart';
 import '../rewards.dart';
 import '../player_avatar.dart';
 import '../season.dart';
+import '../stat_grid.dart';
 import '../subscription.dart';
 import '../theme.dart';
 import '../widgets.dart';
@@ -224,7 +225,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _CardLabel(L.of(context).monthlyAwards),
+                      CardLabel(L.of(context).monthlyAwards),
                       const SizedBox(height: 8),
                       SeasonAwardChips(awards: _seasonAwards),
                     ],
@@ -485,28 +486,6 @@ class _Card extends StatelessWidget {
   }
 }
 
-/// The small label a card or a number is titled with: as written, not
-/// shouted (direction B, 2026-11-02).
-class _CardLabel extends StatelessWidget {
-  const _CardLabel(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-      style: TextStyle(
-        color: context.colors.muted,
-        fontSize: 12,
-        fontWeight: FontWeight.w600,
-      ),
-    );
-  }
-}
-
 // ──────────────────────────────── the numbers ────────────────────────────────
 
 /// The six numbers in one card, a hairline between them (direction B,
@@ -527,33 +506,10 @@ class _Stats extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = L.of(context);
     final onServer = backend.available;
-    final line = context.colors.border;
-
-    // A row of three, the hairlines between them stopping short of the
-    // card's edge and meeting the one across the middle.
-    Widget row(List<Widget> cells, {required bool top}) => IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          for (final (i, cell) in cells.indexed) ...[
-            if (i > 0)
-              VerticalDivider(
-                width: 1,
-                thickness: 0.5,
-                color: line,
-                indent: top ? 14 : 0,
-                endIndent: top ? 0 : 14,
-              ),
-            Expanded(child: cell),
-          ],
-        ],
-      ),
-    );
-
     // Null while it is being fetched, and null for good when there is no
     // position to show — an account still in placements is not on the
     // board. A dash then, rather than a number made up.
-    Widget place(String label, int? position) => _Stat(
+    Widget place(String label, int? position) => StatCell(
       label: label,
       value: position == null
           ? '—'
@@ -563,123 +519,44 @@ class _Stats extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: Container(
+      child: StatGrid(
         key: const Key('profileStats'),
-        decoration: BoxDecoration(
-          color: context.colors.surface,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Column(
-          children: [
-            row(top: true, [
-              place(l.global, onServer ? global : profile.globalRank),
-              place(
-                countryName(context, profile.country),
-                onServer ? local : profile.localRank,
-              ),
-              CountUp(
-                value: profile.bestSet,
-                builder: (context, shown) => _Stat(
-                  label: l.bestSet,
-                  value: localNumber(context, shown),
-                  // The one number a single good session can move, so it is
-                  // the one wearing the colour that means "you".
-                  colour: context.colors.brand,
-                ),
-              ),
-            ]),
-            Divider(
-              height: 1,
-              thickness: 0.5,
-              color: line,
-              indent: 14,
-              endIndent: 14,
+        top: [
+          place(l.global, onServer ? global : profile.globalRank),
+          place(
+            countryName(context, profile.country),
+            onServer ? local : profile.localRank,
+          ),
+          CountUp(
+            value: profile.bestSet,
+            builder: (context, shown) => StatCell(
+              label: l.bestSet,
+              value: localNumber(context, shown),
+              // The one number a single good session can move, so it is
+              // the one wearing the colour that means "you".
+              colour: context.colors.brand,
             ),
-            row(top: false, [
-              CountUp(
-                value: profile.totalReps,
-                builder: (context, shown) => _Stat(
-                  label: l.totalReps,
-                  value: localNumber(context, shown),
-                ),
-              ),
-              _Stat(
-                label: l.record,
-                value: localNumber(context, profile.wins),
-                suffix: l.winInitial,
-                value2: localNumber(context, profile.losses),
-                suffix2: l.lossInitial,
-              ),
-              _Stat(
-                label: l.streak,
-                value: localNumber(context, profile.dayStreak),
-                suffix: l.dayInitial,
-              ),
-            ]),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// One of the six: its label, then the number.
-class _Stat extends StatelessWidget {
-  const _Stat({
-    required this.label,
-    required this.value,
-    this.suffix,
-    this.value2,
-    this.suffix2,
-    this.colour,
-  });
-
-  final String label;
-  final String value;
-
-  /// A unit worn by the number — "W", "L", "d". Set smaller and in the muted
-  /// colour, so the figure still reads as the figure.
-  final String? suffix;
-  final String? value2;
-  final String? suffix2;
-
-  final Color? colour;
-
-  @override
-  Widget build(BuildContext context) {
-    final big = TextStyle(
-      color: colour ?? context.colors.text,
-      fontSize: 22,
-      fontWeight: FontWeight.w700,
-      height: 1.2,
-      fontFeatures: const [FontFeature.tabularFigures()],
-    );
-    final small = TextStyle(color: context.colors.muted, fontSize: 13);
-
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(14, 15, 10, 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _CardLabel(label),
-          const SizedBox(height: 4),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            alignment: AlignmentDirectional.centerStart,
-            child: Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(text: value, style: big),
-                  if (suffix case final s?) TextSpan(text: s, style: small),
-                  if (value2 case final v?) ...[
-                    const TextSpan(text: ' '),
-                    TextSpan(text: v, style: big),
-                  ],
-                  if (suffix2 case final s?) TextSpan(text: s, style: small),
-                ],
-              ),
+          ),
+        ],
+        bottom: [
+          CountUp(
+            value: profile.totalReps,
+            builder: (context, shown) => StatCell(
+              label: l.totalReps,
+              value: localNumber(context, shown),
             ),
+          ),
+          StatCell(
+            label: l.record,
+            value: localNumber(context, profile.wins),
+            suffix: l.winInitial,
+            value2: localNumber(context, profile.losses),
+            suffix2: l.lossInitial,
+          ),
+          StatCell(
+            label: l.streak,
+            value: localNumber(context, profile.dayStreak),
+            suffix: l.dayInitial,
           ),
         ],
       ),

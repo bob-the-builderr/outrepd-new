@@ -976,8 +976,8 @@ class _FriendRow extends StatelessWidget {
         opacity: friend.online ? 1 : 0.6,
         child: InkWell(
           // A demo row has no real id to fetch a profile for, so it opens a
-          // sample card instead of a sheet that can only show an error.
-          onTap: () => showLifterPeek(
+          // sample profile instead of one that can only show an error.
+          onTap: () => openLifter(
             context,
             id: friend.id,
             username: friend.username,
