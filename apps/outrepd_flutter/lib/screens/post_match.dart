@@ -445,7 +445,7 @@ class _Scoreboard extends StatelessWidget {
               avatar: PlayerAvatar(
                 name: opponent.username,
                 tierIdx: opponent.tierIdx,
-                image: pictureAt(opponent.avatarUrl),
+                image: pictureAt(opponent.avatarUrl, small: true),
                 size: 58,
               ),
               name: opponent.username,

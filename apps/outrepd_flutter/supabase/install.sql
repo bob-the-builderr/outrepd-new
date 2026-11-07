@@ -1130,11 +1130,13 @@ create policy "a lifter sees their own avatar file"
   using (
     bucket_id = 'avatars'
     and name in ((select auth.uid())::text || '/photo.jpg',
+                 (select auth.uid())::text || '/thumb.jpg',
                  (select auth.uid())::text || '/cover.jpg')
   );
 
--- Two files per account, at the two paths the app writes: `<id>/photo.jpg`,
--- and for a Pro profile's own cover `<id>/cover.jpg`.
+-- Three files per account, at the paths the app writes: `<id>/photo.jpg`,
+-- its small copy for the boards `<id>/thumb.jpg` (lib/photo_thumb.dart), and
+-- for a Pro profile's own cover `<id>/cover.jpg`.
 -- The folder alone was the rule before, which let an account fill its folder
 -- with as many public files as it liked, under any names — free hosting on
 -- this project's bill and its domain.
@@ -1145,6 +1147,7 @@ create policy "a lifter uploads their own avatar"
   with check (
     bucket_id = 'avatars'
     and name in ((select auth.uid())::text || '/photo.jpg',
+                 (select auth.uid())::text || '/thumb.jpg',
                  (select auth.uid())::text || '/cover.jpg')
   );
 
@@ -1155,11 +1158,13 @@ create policy "a lifter replaces their own avatar"
   using (
     bucket_id = 'avatars'
     and name in ((select auth.uid())::text || '/photo.jpg',
+                 (select auth.uid())::text || '/thumb.jpg',
                  (select auth.uid())::text || '/cover.jpg')
   )
   with check (
     bucket_id = 'avatars'
     and name in ((select auth.uid())::text || '/photo.jpg',
+                 (select auth.uid())::text || '/thumb.jpg',
                  (select auth.uid())::text || '/cover.jpg')
   );
 

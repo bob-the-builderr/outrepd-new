@@ -18,16 +18,24 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'photo_thumb.dart';
+
 /// [url]'s photo as every screen should draw it: kept by the app on a
 /// phone, by the browser on the web (which has no dart:io to fetch with).
-ImageProvider photoAt(String url) => kIsWeb ? NetworkImage(url) : CachedPhoto(url);
+/// [small] for a circle on a board or in a list: the photo's small copy
+/// where there is one (photo_thumb.dart).
+ImageProvider photoAt(String url, {bool small = false}) =>
+    kIsWeb ? NetworkImage(url) : CachedPhoto(url, small: small);
 
 /// [url]'s photo, from the phone when it has been seen before.
 @immutable
 class CachedPhoto extends ImageProvider<CachedPhoto> {
-  const CachedPhoto(this.url);
+  const CachedPhoto(this.url, {this.small = false});
 
   final String url;
+
+  /// The small copy rather than the photo, where there is one.
+  final bool small;
 
   @override
   Future<CachedPhoto> obtainKey(ImageConfiguration configuration) =>
@@ -42,18 +50,21 @@ class CachedPhoto extends ImageProvider<CachedPhoto> {
       );
 
   static Future<ui.Codec> _codec(CachedPhoto key, ImageDecoderCallback decode) async {
-    final bytes = await PhotoBytes.instance.get(key.url);
+    final bytes = key.small
+        ? await PhotoBytes.instance.getSmall(key.url)
+        : await PhotoBytes.instance.get(key.url);
     return decode(await ui.ImmutableBuffer.fromUint8List(bytes));
   }
 
   @override
-  bool operator ==(Object other) => other is CachedPhoto && other.url == url;
+  bool operator ==(Object other) =>
+      other is CachedPhoto && other.url == url && other.small == small;
 
   @override
-  int get hashCode => url.hashCode;
+  int get hashCode => Object.hash(url, small);
 
   @override
-  String toString() => 'CachedPhoto("$url")';
+  String toString() => 'CachedPhoto("$url"${small ? ', small' : ''})';
 }
 
 /// The bytes behind [CachedPhoto]: one download per photo, shared by every
@@ -93,6 +104,24 @@ class PhotoBytes {
       return SynchronousFuture<Uint8List>(kept);
     }
     return _pending[url] ??= _fetch(url).whenComplete(() => _pending.remove(url));
+  }
+
+  /// Small copies that could not be had: a photo put up before they were
+  /// made, or whose copy did not go up. Asked for once a launch, then the
+  /// photo itself is drawn.
+  final _noSmall = <String>{};
+
+  /// [url]'s small copy where there is one (photo_thumb.dart), or else the
+  /// photo itself.
+  Future<Uint8List> getSmall(String url) async {
+    final small = thumbUrlFor(url);
+    if (small == null || _noSmall.contains(small)) return get(url);
+    try {
+      return await get(small);
+    } on Object catch (_) {
+      _noSmall.add(small);
+      return get(url);
+    }
   }
 
   /// Starts [url]'s download early, so a screen about to show it has it.

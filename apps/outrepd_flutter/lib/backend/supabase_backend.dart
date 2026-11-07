@@ -15,6 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../country_names.dart';
+import '../photo_thumb.dart';
 import 'backend.dart';
 
 /// Supplied at build time, never committed:
@@ -1110,6 +1111,25 @@ class SupabaseBackend implements Backend {
         '${_db.storage.from('avatars').getPublicUrl(path)}'
         '?v=${DateTime.now().millisecondsSinceEpoch}';
 
+    // The small copy beside it, for the boards and the lists: a few
+    // kilobytes where the photo is about a hundred. Before the link, so a
+    // phone that reads the new link finds the copy too. Without one, only
+    // bytes are lost: a phone that finds none draws the photo itself.
+    try {
+      final thumb = await makeThumb(bytes, png: contentType == 'image/png');
+      if (thumb case (final small, final type)) {
+        await _db.storage
+            .from('avatars')
+            .uploadBinary(
+              '${user.id}/thumb.jpg',
+              small,
+              fileOptions: FileOptions(upsert: true, contentType: type, cacheControl: '60'),
+            );
+      }
+    } on Object catch (error) {
+      debugPrint('Could not upload the small photo: $error');
+    }
+
     await _db.from('profiles').update({'avatar_url': url}).eq('id', user.id);
 
     final was = _me;
@@ -1141,7 +1161,9 @@ class SupabaseBackend implements Backend {
     if (was != null) _me = was.copyWith(clearAvatar: true);
 
     try {
-      await _db.storage.from('avatars').remove(['${user.id}/photo.jpg']);
+      await _db.storage
+          .from('avatars')
+          .remove(['${user.id}/photo.jpg', '${user.id}/thumb.jpg']);
     } on Object catch (error) {
       debugPrint('Could not delete the photo file: $error');
     }
@@ -1578,7 +1600,11 @@ class SupabaseBackend implements Backend {
     final id = _db.auth.currentUser?.id;
     if (id != null) {
       try {
-        await _db.storage.from('avatars').remove(['$id/photo.jpg']);
+        // Every file the account has there: its photo, the photo's small
+        // copy, and a Pro's own cover — which was left behind before.
+        await _db.storage
+            .from('avatars')
+            .remove(['$id/photo.jpg', '$id/thumb.jpg', '$id/cover.jpg']);
       } on Object catch (error) {
         // No photo to remove is the usual case, not a reason to keep an
         // account its owner asked to delete.

@@ -133,8 +133,12 @@ class _FriendsScreenState extends State<FriendsScreen> {
       _error = null;
     });
     try {
-      final friends = await backend.friends();
-      final requests = await backend.friendRequests();
+      // Both at once: neither waits on the other, and one trip's wait is
+      // shorter than two.
+      final (friends, requests) = await (
+        backend.friends(),
+        backend.friendRequests(),
+      ).wait;
       // A Pro's look on their row among the ranks.
       unawaited(Looks.instance.fetch([for (final f in friends) f.id]));
       if (!mounted) return;
@@ -647,7 +651,7 @@ class _RequestCard extends StatelessWidget {
               PlayerAvatar(
                 name: request.username,
                 tierIdx: ranked ? request.tierIdx : null,
-                image: pictureAt(photo),
+                image: pictureAt(photo, small: true),
                 size: 52,
                 textColour: context.colors.rival,
               ),
@@ -1103,16 +1107,16 @@ class _Avatar extends StatelessWidget {
           Builder(
             builder: (context) {
               final fallback = LifterCircle(name: friend.username, size: 44);
-              if (friend.avatarUrl == null) return fallback;
+              final photo = pictureAt(friend.avatarUrl, small: true);
+              if (photo == null) return fallback;
+              // As on the boards: the small copy, kept on the phone and
+              // decoded at the circle's size. It was the whole photo, read
+              // again on every launch and decoded at 800 px for 44 points.
               return ClipOval(
-                child: Image.network(
-                  friend.avatarUrl!,
-                  width: 44,
-                  height: 44,
-                  fit: BoxFit.cover,
-                  loadingBuilder: (context, child, progress) =>
-                      progress == null ? child : fallback,
-                  errorBuilder: (context, error, stack) => fallback,
+                child: PhotoOrLifter(
+                  image: decodedAt(context, photo, 44),
+                  size: 44,
+                  lifter: fallback,
                 ),
               );
             },

@@ -142,7 +142,8 @@ class Avatar extends ChangeNotifier {
 final avatar = Avatar();
 
 /// Somebody's uploaded picture, or null for the lifter their name gives.
-/// Downloaded once and kept (lib/photo_cache.dart): a row, the card a name
-/// opens and the full profile all draw the same bytes.
-ImageProvider? pictureAt(String? url) =>
-    url == null || url.isEmpty ? null : photoAt(url);
+/// Downloaded once and kept (lib/photo_cache.dart). [small] for a circle on
+/// a board or in a list, which draws the photo's small copy where there is
+/// one: a few kilobytes rather than about a hundred.
+ImageProvider? pictureAt(String? url, {bool small = false}) =>
+    url == null || url.isEmpty ? null : photoAt(url, small: small);

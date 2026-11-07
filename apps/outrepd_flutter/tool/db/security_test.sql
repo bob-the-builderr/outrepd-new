@@ -430,6 +430,12 @@ select must_fail('a file under any other name in the public bucket',
      values ('avatars', '00000000-0000-0000-0000-00000000000a/free-hosting.mp4')$q$);
 insert into storage.objects (bucket_id, name)
 values ('avatars', :'A' || '/photo.jpg');
+-- And the photo's small copy for the boards, beside it.
+insert into storage.objects (bucket_id, name)
+values ('avatars', :'A' || '/thumb.jpg');
+select must_fail('a small copy in another account''s folder',
+  $q$insert into storage.objects (bucket_id, name)
+     values ('avatars', '00000000-0000-0000-0000-00000000000b/thumb.jpg')$q$);
 reset role;
 select as_user(:'B'); set role authenticated;
 select check_that((select count(*) from storage.objects) = 0,

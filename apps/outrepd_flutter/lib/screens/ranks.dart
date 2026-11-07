@@ -1412,7 +1412,7 @@ class _Initial extends StatelessWidget {
       size: size,
       lifter: own is LifterPicture ? own.lifter : null,
     );
-    final photo = own ?? pictureAt(avatarUrl);
+    final photo = own ?? pictureAt(avatarUrl, small: true);
     if (photo == null || photo is LifterPicture) return fallback;
     return ClipOval(
       // As in PlayerAvatar: the photo, with the lifter standing in only once
