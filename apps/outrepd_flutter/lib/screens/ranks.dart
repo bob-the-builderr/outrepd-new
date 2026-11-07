@@ -1824,8 +1824,15 @@ class _PodiumPlace extends StatelessWidget {
   /// Whether the step names what the place won, under its LP.
   final bool award;
 
+  // Drawn again when the looks arrive, after the board: a Pro on the podium
+  // sat in a plain circle, where the rows below them broke out.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => ListenableBuilder(
+    listenable: Looks.instance,
+    builder: (context, _) => _place(context),
+  );
+
+  Widget _place(BuildContext context) {
     final first = row.place == 1;
     final medal = switch (row.place) {
       1 => AppColors.gold,
