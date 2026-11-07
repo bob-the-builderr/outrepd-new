@@ -1681,6 +1681,11 @@ class LKo extends L {
   String get dayInitial => '일';
 
   @override
+  String friendsRankLine(String place, String count) {
+    return '$count명 중 #$place';
+  }
+
+  @override
   String rankPosition(String n) {
     return '#$n';
   }

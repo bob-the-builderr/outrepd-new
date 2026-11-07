@@ -1,0 +1,43 @@
+*{box-sizing:border-box}
+:root{--bg:#121110;--card:#1A1918;--raised:#262421;--line:#2A2724;--text:#F4EDE4;--muted:#9B9489;--cream:#E8DCC8;--rival:#E8846B}
+html,body{margin:0;background:#0b0a0a;color:var(--text);font-family:'Noto Sans',sans-serif}
+.sec{font:800 26px Cairo,sans-serif;direction:rtl;text-align:right;padding:18px 24px 0;color:#fff}
+.sec small{display:block;font:500 15px Cairo,sans-serif;color:#c5bfb6;margin-top:2px}
+.row{display:flex;gap:24px;padding:10px 24px 20px;align-items:flex-start;justify-content:flex-end}
+.lab{font:800 18px Cairo,sans-serif;direction:rtl;text-align:right;margin-bottom:6px;color:#fff}
+.lab small{display:block;font:500 13px Cairo,sans-serif;color:#b3ada4}
+.phone{width:412px;height:915px;background:var(--bg);border-radius:22px;overflow:hidden;position:relative}
+.ttl{position:absolute;left:17px;top:11px;font:700 28px 'Noto Sans'}
+.add{position:absolute;right:18px;top:15px}
+.strip{position:absolute;left:16px;right:16px;top:62px;height:46px;background:var(--card);border-radius:16px;padding:4px;display:flex}
+.strip span{flex:1;display:flex;align-items:center;justify-content:center;border-radius:12px;font:500 16px 'Noto Sans';color:var(--muted)}
+.strip span.on{background:var(--cream);color:var(--bg);font-weight:700}
+.sl{display:flex;justify-content:space-between;align-items:baseline;padding:0 4px;margin-bottom:9px;font:600 14px 'Noto Sans';color:var(--muted)}
+.sl .r{color:var(--text)}
+.group{background:var(--card);border-radius:16px;overflow:hidden}
+.hair{height:1px;background:var(--line);margin-left:112px}
+.fr{display:flex;align-items:center;padding:0 12px 0 10px;gap:6px}
+.fr.mine{box-shadow:inset 0 0 0 1.5px var(--cream);border-radius:12px}
+.medal,.plain{width:26px;height:26px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font:700 14px 'Noto Sans';color:#121110}
+.plain{background:none;color:var(--muted);font-weight:600}
+.who{flex:1;min-width:0}
+.nm{display:flex;align-items:center;gap:5px;font:600 15px 'Noto Sans';white-space:nowrap}
+.nm span{overflow:hidden;text-overflow:ellipsis}
+.nm i{font:700 10.5px 'Noto Sans';padding:1px 5px;border-radius:6px;background:#2c2926;color:#d9d2c7;flex:none}
+.nm i.yu{background:var(--cream);color:#121110}
+.ln{font:500 12.5px 'Noto Sans';margin-top:2px;white-space:nowrap}
+.m{color:var(--muted)}.c{color:var(--cream);font-weight:800;font-size:14px}.o{color:var(--rival);font-weight:800;font-size:14px}
+.rt{text-align:right;flex:none}
+.rt b{display:block;font:800 17px 'Noto Sans'}.rt span{font:500 11.5px 'Noto Sans';color:var(--muted)}
+.all{background:var(--card);border-radius:16px;margin-top:8px;height:40px;display:flex;align-items:center;justify-content:center;gap:6px;font:600 14px 'Noto Sans';color:var(--cream)}
+.cards{position:absolute;top:202px;display:flex;gap:8px;width:900px}
+.pc{width:124px;height:166px;background:var(--card);border-radius:16px;position:relative;flex:none;text-align:center;padding:0 6px}
+.pc.mine{box-shadow:inset 0 0 0 1.5px var(--cream)}
+.pl{position:absolute;left:6px;top:6px;z-index:1}
+.pn{font:600 13.5px 'Noto Sans';margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pr{font:800 20px/1.2 'Noto Sans'}
+.ps{font:500 11.5px 'Noto Sans';margin-top:2px;white-space:nowrap}
+.ps .c,.ps .o{font-size:13px}
+.tabs{position:absolute;left:14px;right:14px;bottom:12px;height:68px;background:var(--card);border-radius:30px;display:flex;align-items:center;gap:24px;padding:0 26px;z-index:6;border:1px solid var(--line)}
+.tabs .on{flex:none;width:150px;height:50px;border-radius:24px;background:var(--cream);color:#121110;display:flex;align-items:center;justify-content:center;font:600 17px 'Noto Sans'}
+.tabs .g{flex:1;height:22px;max-width:22px;border-radius:50%;box-shadow:inset 0 0 0 2.5px #7d766c}

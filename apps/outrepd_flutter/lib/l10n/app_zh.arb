@@ -977,5 +977,6 @@
   "nextWeapon": "下一件武器",
   "opensWorld": "开启{world}",
   "weaponAtStars": "需要 {count} 颗星",
-  "topTenIn": "{country}前 10 名"
+  "topTenIn": "{country}前 10 名",
+  "friendsRankLine": "你在 {count} 人中排第 {place}"
 }

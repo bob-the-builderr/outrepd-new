@@ -1709,6 +1709,11 @@ class LIt extends L {
   String get dayInitial => 'g';
 
   @override
+  String friendsRankLine(String place, String count) {
+    return 'Sei #$place su $count';
+  }
+
+  @override
   String rankPosition(String n) {
     return '#$n';
   }

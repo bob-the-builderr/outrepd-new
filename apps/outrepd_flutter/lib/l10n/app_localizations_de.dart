@@ -1711,6 +1711,11 @@ class LDe extends L {
   String get dayInitial => 'T';
 
   @override
+  String friendsRankLine(String place, String count) {
+    return 'Du bist #$place von $count';
+  }
+
+  @override
   String rankPosition(String n) {
     return '#$n';
   }

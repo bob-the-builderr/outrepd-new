@@ -1708,6 +1708,11 @@ class LPt extends L {
   String get dayInitial => 'd';
 
   @override
+  String friendsRankLine(String place, String count) {
+    return 'Você é #$place de $count';
+  }
+
+  @override
   String rankPosition(String n) {
     return '#$n';
   }

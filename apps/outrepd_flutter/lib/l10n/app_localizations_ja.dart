@@ -1679,6 +1679,11 @@ class LJa extends L {
   String get dayInitial => '日';
 
   @override
+  String friendsRankLine(String place, String count) {
+    return '$count人中 #$place';
+  }
+
+  @override
   String rankPosition(String n) {
     return '#$n';
   }

@@ -977,5 +977,6 @@
   "nextWeapon": "Следующее оружие",
   "opensWorld": "Открывает {world}",
   "weaponAtStars": "за {count} звёзд",
-  "topTenIn": "Топ-10 в стране: {country}"
+  "topTenIn": "Топ-10 в стране: {country}",
+  "friendsRankLine": "Ты #{place} из {count}"
 }

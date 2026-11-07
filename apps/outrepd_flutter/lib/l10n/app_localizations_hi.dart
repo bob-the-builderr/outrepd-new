@@ -1706,6 +1706,11 @@ class LHi extends L {
   String get dayInitial => 'द';
 
   @override
+  String friendsRankLine(String place, String count) {
+    return 'आप $count में #$place पर हैं';
+  }
+
+  @override
   String rankPosition(String n) {
     return '#$n';
   }

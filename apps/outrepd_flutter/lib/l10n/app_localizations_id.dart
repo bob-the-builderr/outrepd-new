@@ -1704,6 +1704,11 @@ class LId extends L {
   String get dayInitial => 'h';
 
   @override
+  String friendsRankLine(String place, String count) {
+    return 'Kamu #$place dari $count';
+  }
+
+  @override
   String rankPosition(String n) {
     return '#$n';
   }

@@ -977,5 +977,6 @@
   "nextWeapon": "次の武器",
   "opensWorld": "{world}が開く",
   "weaponAtStars": "星{count}個で",
-  "topTenIn": "{country}でトップ10"
+  "topTenIn": "{country}でトップ10",
+  "friendsRankLine": "{count}人中 #{place}"
 }

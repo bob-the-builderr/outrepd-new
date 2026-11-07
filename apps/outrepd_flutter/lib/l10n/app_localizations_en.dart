@@ -1704,6 +1704,11 @@ class LEn extends L {
   String get dayInitial => 'd';
 
   @override
+  String friendsRankLine(String place, String count) {
+    return 'You\'re #$place of $count';
+  }
+
+  @override
   String rankPosition(String n) {
     return '#$n';
   }

@@ -1704,6 +1704,11 @@ class LRu extends L {
   String get dayInitial => 'д';
 
   @override
+  String friendsRankLine(String place, String count) {
+    return 'Ты #$place из $count';
+  }
+
+  @override
   String rankPosition(String n) {
     return '#$n';
   }

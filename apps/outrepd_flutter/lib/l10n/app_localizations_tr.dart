@@ -1701,6 +1701,11 @@ class LTr extends L {
   String get dayInitial => 'g';
 
   @override
+  String friendsRankLine(String place, String count) {
+    return '$count kişiden #$place. sıradasın';
+  }
+
+  @override
   String rankPosition(String n) {
     return '#$n';
   }

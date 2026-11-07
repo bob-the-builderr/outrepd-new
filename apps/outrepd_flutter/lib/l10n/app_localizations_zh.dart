@@ -1676,6 +1676,11 @@ class LZh extends L {
   String get dayInitial => '天';
 
   @override
+  String friendsRankLine(String place, String count) {
+    return '你在 $count 人中排第 $place';
+  }
+
+  @override
   String rankPosition(String n) {
     return '#$n';
   }

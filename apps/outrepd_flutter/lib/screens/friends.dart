@@ -19,8 +19,10 @@ import '../career.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../lifter/lifter_view.dart';
+import '../lifter/looks.dart';
 import '../motion.dart';
 import '../avatar.dart' show pictureAt;
+import '../pill_strip.dart';
 import '../player_avatar.dart';
 import '../theme.dart';
 import '../tier_frame.dart';
@@ -29,6 +31,7 @@ import '../widgets.dart';
 import 'bring_friend_card.dart';
 import 'live_invite.dart';
 import 'other_profile.dart';
+import 'ranks.dart' show FriendRanks;
 import 'shell.dart';
 
 /// How long the list is shown before it is read again while somebody is
@@ -62,6 +65,9 @@ class _FriendsScreenState extends State<FriendsScreen> {
   /// head-to-head on it since.
   DateTime? _fetchedAt;
   Timer? _tick;
+
+  /// Ranks among friends rather than the list (pick B, 2026-11-07).
+  bool _ranks = false;
 
   @override
   void initState() {
@@ -129,6 +135,8 @@ class _FriendsScreenState extends State<FriendsScreen> {
     try {
       final friends = await backend.friends();
       final requests = await backend.friendRequests();
+      // A Pro's look on their row among the ranks.
+      unawaited(Looks.instance.fetch([for (final f in friends) f.id]));
       if (!mounted) return;
       setState(() {
         _friends = [
@@ -144,6 +152,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
               lossesVsYou: f.lossesVsYou,
               avatarUrl: f.avatarUrl,
               xp: f.xp,
+              placementsDone: f.placementsDone,
             ),
         ];
         _requests = requests;
@@ -221,6 +230,8 @@ class _FriendsScreenState extends State<FriendsScreen> {
     final online = matching.where((f) => f.online).toList();
     final offline = matching.where((f) => !f.online).toList();
     final searching = _search.text.trim().isNotEmpty;
+    // Nobody to rank yet: there is only the list to look at.
+    final showRanks = _ranks && _friends.isNotEmpty;
 
     // At most one of these ever applies, and each one is the entire answer
     // to "what does the list look like right now" — nothing else renders
@@ -250,7 +261,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
         body: l.noFriendsBody,
         action: PillButton(label: l.addFriendAction, onTap: _openAddFriend),
       );
-    } else if (matching.isEmpty) {
+    } else if (matching.isEmpty && !showRanks) {
       // A pure filter over friends already on the list — no server search
       // hides behind this field any more, so an empty result only ever means
       // one thing.
@@ -295,23 +306,39 @@ class _FriendsScreenState extends State<FriendsScreen> {
                         ),
                       ),
                       const SizedBox(height: 14),
+                      if (_friends.isNotEmpty) ...[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: PillStrip<bool>(
+                            value: showRanks,
+                            onChanged: (ranks) => setState(() => _ranks = ranks),
+                            options: [
+                              (false, l.tabFriends, const Key('friendsViewList')),
+                              (true, l.tabRanks, const Key('friendsViewRanks')),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 9),
+                      ],
                       // A filter over the list below, and only that now —
                       // finding somebody new to add is Add Friend's job,
                       // above, so an empty result here can only ever mean
                       // one thing: nobody on the list matches.
-                      _SearchField(
-                        controller: _search,
-                        onChanged: (query) => setState(() {}),
-                      ),
-                      // Always here, not just when something is waiting: a
-                      // busy app gets requests often enough that "check for
-                      // them" needs a fixed address, not a row that only
-                      // exists once there is something to see.
-                      const SizedBox(height: 9),
-                      _RequestsRow(
-                        count: _requests.length,
-                        onTap: _openRequests,
-                      ),
+                      if (!showRanks) ...[
+                        _SearchField(
+                          controller: _search,
+                          onChanged: (query) => setState(() {}),
+                        ),
+                        // Always here, not just when something is waiting: a
+                        // busy app gets requests often enough that "check for
+                        // them" needs a fixed address, not a row that only
+                        // exists once there is something to see.
+                        const SizedBox(height: 9),
+                        _RequestsRow(
+                          count: _requests.length,
+                          onTap: _openRequests,
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -323,6 +350,11 @@ class _FriendsScreenState extends State<FriendsScreen> {
                     hasScrollBody: false,
                     child: state,
                   ),
+                )
+              else if (showRanks)
+                SliverPadding(
+                  padding: const EdgeInsets.fromLTRB(12, 0, 12, 24),
+                  sliver: FriendRanks(friends: _friends),
                 )
               else
                 SliverPadding(

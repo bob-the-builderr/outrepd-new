@@ -1709,6 +1709,11 @@ class LEs extends L {
   String get dayInitial => 'd';
 
   @override
+  String friendsRankLine(String place, String count) {
+    return 'Eres el #$place de $count';
+  }
+
+  @override
   String rankPosition(String n) {
     return '#$n';
   }

@@ -23,6 +23,7 @@ import '../lifter/lifter_view.dart';
 import '../lifter/looks.dart';
 import '../lifter/my_lifter.dart';
 import '../motion.dart';
+import '../pill_strip.dart';
 import '../player_avatar.dart' show PhotoOrLifter, decodedAt;
 import '../ranking.dart';
 import '../season.dart';
@@ -644,59 +645,17 @@ class _ScopeToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget pill(_Scope value, String label, Key key) {
-      final selected = scope == value;
-      return Expanded(
-        child: InkWell(
-          key: key,
-          onTap: () => onChanged(value),
-          borderRadius: BorderRadius.circular(11),
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 6),
-            decoration: BoxDecoration(
-              color: selected ? context.colors.brand : null,
-              borderRadius: BorderRadius.circular(11),
-            ),
-            // Three to a row, so a long name shrinks to fit rather than
-            // wrapping one pill to twice the height of its neighbours.
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                label,
-                maxLines: 1,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: selected
-                      ? context.colors.background
-                      : context.colors.muted,
-                  fontSize: 15,
-                  fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
     final l = L.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Container(
-        padding: const EdgeInsets.all(4),
-        decoration: BoxDecoration(
-          color: context.colors.surface,
-          borderRadius: BorderRadius.circular(14),
-        ),
-        child: Row(
-          children: [
-            pill(_Scope.thisWeek, l.lengthWeek, const Key('lengthWeek')),
-            const SizedBox(width: 4),
-            pill(_Scope.thisMonth, l.lengthMonth, const Key('lengthMonth')),
-            const SizedBox(width: 4),
-            pill(_Scope.topPlayers, l.boardOverall, const Key('boardOverall')),
-          ],
-        ),
+      child: PillStrip<_Scope>(
+        value: scope,
+        onChanged: onChanged,
+        options: [
+          (_Scope.thisWeek, l.lengthWeek, const Key('lengthWeek')),
+          (_Scope.thisMonth, l.lengthMonth, const Key('lengthMonth')),
+          (_Scope.topPlayers, l.boardOverall, const Key('boardOverall')),
+        ],
       ),
     );
   }
@@ -854,6 +813,223 @@ Future<void> showHowPoints(BuildContext context) {
       ),
     ),
   );
+}
+
+// ─────────────────────────── ranks among friends ─────────────────────────────
+
+/// You and your friends by rating, on the Friends tab (pick B, 2026-11-07),
+/// each with what the two of you have done against each other. A list of the
+/// page, so it scrolls with the tab's own header: a sliver. Worked out here
+/// from the list the tab already has, so it is as fresh as that list, and
+/// counts every friend, where the Friends board on Ranks leaves out anybody
+/// who has asked to be off the boards or has not been seen in a month.
+/// Nobody without a rank yet has a place: they stand at the foot.
+class FriendRanks extends StatelessWidget {
+  const FriendRanks({super.key, required this.friends});
+
+  final List<Friend> friends;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final me = demoProfile;
+    final self = Friend(
+      me.username,
+      me.tierIdx,
+      me.divIdx,
+      me.lp,
+      true,
+      id: backend.me?.id ?? '',
+      xp: me.xp,
+      placementsDone: me.placementsDone,
+    );
+    final everybody = [self, ...friends];
+    int rating(Friend f) => ratingOf(f.tierIdx, f.divIdx, f.lp);
+    final ranked = everybody.where((f) => f.ranked).toList()
+      ..sort((a, b) {
+        final by = rating(b).compareTo(rating(a));
+        return by != 0 ? by : a.username.compareTo(b.username);
+      });
+    final rows = [...ranked, ...everybody.where((f) => !f.ranked)];
+
+    return SliverList.builder(
+      itemCount: rows.length + 1,
+      itemBuilder: (context, i) {
+        if (i == 0) {
+          return Padding(
+            padding: const EdgeInsets.only(top: 14, bottom: 9, left: 4),
+            child: Text(
+              self.ranked
+                  ? l.friendsRankLine(
+                      localNumber(context, ranked.indexOf(self) + 1),
+                      localNumber(context, ranked.length),
+                    )
+                  : l.unranked,
+              style: sectionLabelStyle(context),
+            ),
+          );
+        }
+        final friend = rows[i - 1];
+        return _Slice(
+          first: i == 1,
+          last: i == rows.length,
+          child: RiseIn(
+            delay: staggered(i - 1),
+            child: ListenableBuilder(
+              listenable: Looks.instance,
+              builder: (context, _) => _FriendRankRow(
+                position: friend.ranked ? i : null,
+                friend: friend,
+                mine: identical(friend, self),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _FriendRankRow extends StatelessWidget {
+  const _FriendRankRow({
+    required this.position,
+    required this.friend,
+    required this.mine,
+  });
+
+  /// Null for somebody with no rank yet.
+  final int? position;
+  final Friend friend;
+  final bool mine;
+
+  @override
+  Widget build(BuildContext context) {
+    final pro = Looks.instance.pro(friend.id);
+    final muted = context.colors.muted;
+
+    return InkWell(
+      borderRadius: BorderRadius.circular(12),
+      onTap: mine
+          ? () => AppShell.goToProfile(context)
+          : () => openLifter(
+              context,
+              id: friend.id,
+              username: friend.username,
+              avatarUrl: friend.avatarUrl,
+              // A sample row has no id to fetch with.
+              initial: friend.id.isEmpty
+                  ? demoLifterProfile(friend.username)
+                  : null,
+            ),
+      child: _RowCard(
+        grouped: true,
+        pro: pro,
+        mine: mine,
+        child: Row(
+          children: [
+            if (position case final place?)
+              _Position(position: place)
+            else
+              const SizedBox(width: 30),
+            const SizedBox(width: 11),
+            _Initial(
+              name: friend.username,
+              size: 40,
+              fontSize: 17,
+              avatarUrl: friend.avatarUrl,
+              mine: mine,
+              frame: friend.ranked ? friend.tierIdx : null,
+              id: friend.id,
+            ),
+            const SizedBox(width: 11),
+            Expanded(
+              child: _Identity.line(
+                username: friend.username,
+                xp: friend.xp,
+                trailing: mine
+                    ? const _YouChip()
+                    : pro
+                    ? const ProChip(height: 16)
+                    : null,
+                line: mine
+                    ? Text(
+                        friend.ranked
+                            ? tierLabel(L.of(context), friend.tierIdx, friend.divIdx)
+                            : L.of(context).unranked,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: muted, fontSize: 12),
+                      )
+                    : _AgainstYou(friend: friend),
+              ),
+            ),
+            const SizedBox(width: 11),
+            if (friend.ranked)
+              _Points(
+                lp: ratingOf(friend.tierIdx, friend.divIdx, friend.lp),
+                colour: mine ? context.colors.brand : context.colors.text,
+                rating: true,
+              )
+            else
+              Text('—', style: TextStyle(color: muted, fontSize: 17)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// You and them against each other, each in their colour. Somebody you have
+/// never faced says so instead of "0 – 0".
+class _AgainstYou extends StatelessWidget {
+  const _AgainstYou({required this.friend});
+
+  final Friend friend;
+
+  /// The two words are lower case for the middle of a sentence.
+  String _capital(String word) =>
+      word.isEmpty ? word : word[0].toUpperCase() + word.substring(1);
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final colors = context.colors;
+    final words = TextStyle(color: colors.muted, fontSize: 12);
+    if (!friend.hasPlayedYou) {
+      return Text(
+        l.neverPlayedYou,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: words,
+      );
+    }
+    TextStyle score(Color colour) => TextStyle(
+      color: colour,
+      fontSize: 13,
+      fontWeight: FontWeight.w800,
+      fontFeatures: const [FontFeature.tabularFigures()],
+    );
+    return Text.rich(
+      TextSpan(
+        style: words,
+        children: [
+          TextSpan(text: '${_capital(l.h2hYou)} '),
+          TextSpan(
+            text: localNumber(context, friend.lossesVsYou),
+            style: score(colors.brand),
+          ),
+          const TextSpan(text: ' – '),
+          TextSpan(
+            text: localNumber(context, friend.winsVsYou),
+            style: score(colors.rival),
+          ),
+          TextSpan(text: ' ${_capital(l.h2hThem)}'),
+        ],
+      ),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
 }
 
 // ───────────────────────────────── the rows ──────────────────────────────────
@@ -1252,7 +1428,18 @@ class _Identity extends StatelessWidget {
     required this.losses,
     this.trailing,
     this.xp,
-  });
+  }) : line = null;
+
+  /// With [line] under the name in place of the rank and record.
+  const _Identity.line({
+    required this.username,
+    required Widget this.line,
+    this.trailing,
+    this.xp,
+  }) : tierIdx = 0,
+       divIdx = 0,
+       wins = 0,
+       losses = 0;
 
   final String username;
   final int tierIdx;
@@ -1260,6 +1447,7 @@ class _Identity extends StatelessWidget {
   final int wins;
   final int losses;
   final Widget? trailing;
+  final Widget? line;
 
   /// For the level after the name.
   final int? xp;
@@ -1287,13 +1475,14 @@ class _Identity extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 2),
-        Text(
-          '${tierLabel(L.of(context), tierIdx, divIdx)} · '
-          '${L.of(context).winLoss(localNumber(context, wins), localNumber(context, losses))}',
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(color: context.colors.muted, fontSize: 12),
-        ),
+        line ??
+            Text(
+              '${tierLabel(L.of(context), tierIdx, divIdx)} · '
+              '${L.of(context).winLoss(localNumber(context, wins), localNumber(context, losses))}',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: context.colors.muted, fontSize: 12),
+            ),
       ],
     );
   }

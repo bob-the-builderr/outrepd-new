@@ -14,6 +14,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:outrepd/backend/backend.dart';
 import 'package:outrepd/l10n/app_localizations.dart';
 import 'package:outrepd/lifter/looks.dart';
+import 'package:outrepd/screens/friends.dart';
 import 'package:outrepd/screens/other_profile.dart';
 import 'package:outrepd/screens/share_card.dart';
 import 'package:outrepd/theme.dart';
@@ -133,6 +134,26 @@ void main() {
     }
   });
   tearDown(() => backend = const NoBackend());
+
+  testWidgets('ranks among friends', (tester) async {
+    _phone(tester);
+    await tester.pumpWidget(
+      _app(
+        (context) => Navigator.of(context).push<void>(
+          MaterialPageRoute(builder: (_) => const FriendsScreen()),
+        ),
+      ),
+    );
+    await tester.tap(find.text('open'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('friendsViewRanks')));
+    await tester.pumpAndSettle();
+
+    await expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile('goldens/friends_ranks.png'),
+    );
+  });
 
   for (final pro in [false, true]) {
     final name = pro ? 'pro' : 'free';

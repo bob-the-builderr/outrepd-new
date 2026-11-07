@@ -2189,5 +2189,16 @@
         "type": "String"
       }
     }
+  },
+  "friendsRankLine": "You're #{place} of {count}",
+  "@friendsRankLine": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
   }
 }

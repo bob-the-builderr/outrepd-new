@@ -977,5 +977,6 @@
   "nextWeapon": "Próxima arma",
   "opensWorld": "Abre {world}",
   "weaponAtStars": "com {count} estrelas",
-  "topTenIn": "Top 10 em {country}"
+  "topTenIn": "Top 10 em {country}",
+  "friendsRankLine": "Você é #{place} de {count}"
 }

@@ -3227,6 +3227,12 @@ abstract class L {
   /// **'d'**
   String get dayInitial;
 
+  /// No description provided for @friendsRankLine.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re #{place} of {count}'**
+  String friendsRankLine(String place, String count);
+
   /// No description provided for @rankPosition.
   ///
   /// In en, this message translates to:

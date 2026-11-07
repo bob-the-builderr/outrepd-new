@@ -977,5 +977,6 @@
   "nextWeapon": "다음 무기",
   "opensWorld": "{world} 열림",
   "weaponAtStars": "별 {count}개에서",
-  "topTenIn": "{country} 상위 10위"
+  "topTenIn": "{country} 상위 10위",
+  "friendsRankLine": "{count}명 중 #{place}"
 }

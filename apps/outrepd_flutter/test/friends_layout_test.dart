@@ -94,6 +94,67 @@ void main() {
     expect(find.text('Invite'), findsNWidgets(offline));
   });
 
+  group('ranks among friends', () {
+    Future<void> openRanks(WidgetTester tester) async {
+      await tester.tap(find.byKey(const Key('friendsViewRanks')));
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('you stand among your friends by rating', (tester) async {
+      phone(tester);
+      await tester.pumpWidget(_app(1.0, const Locale('en')));
+      await tester.pumpAndSettle();
+      await openRanks(tester);
+
+      // iron_mike 3,788, squat_queen 3,072, delt_destroyer 2,964, you 2,764,
+      // benchgod 2,751, newbie_gains 1,821.
+      expect(find.text("You're #4 of 6"), findsOneWidget);
+      expect(find.text('3,788'), findsOneWidget);
+      expect(
+        tester.getTopLeft(find.text('iron_mike')).dy,
+        lessThan(tester.getTopLeft(find.text('squat_queen')).dy),
+      );
+      // The list's own rows have gone, and the search with them.
+      expect(find.text('Challenge'), findsNothing);
+      expect(find.byType(TextField), findsNothing);
+    });
+
+    testWidgets('each row says what you two have done, yours first', (
+      tester,
+    ) async {
+      phone(tester);
+      await tester.pumpWidget(_app(1.0, const Locale('en')));
+      await tester.pumpAndSettle();
+      await openRanks(tester);
+
+      // iron_mike has beaten you three times, and you them once.
+      expect(find.text('You 1 – 3 Them'), findsOneWidget);
+    });
+
+    testWidgets('and back to the list', (tester) async {
+      phone(tester);
+      await tester.pumpWidget(_app(1.0, const Locale('en')));
+      await tester.pumpAndSettle();
+      await openRanks(tester);
+      await tester.tap(find.byKey(const Key('friendsViewList')));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(TextField), findsOneWidget);
+    });
+
+    for (final scale in [1.0, 1.3, 1.6]) {
+      for (final code in ['en', 'de', 'hi', 'ja']) {
+        testWidgets('lays out at ${scale}x in $code', (tester) async {
+          phone(tester);
+          await tester.pumpWidget(_app(scale, Locale(code)));
+          await tester.pumpAndSettle();
+          await openRanks(tester);
+          expect(tester.takeException(), isNull);
+        });
+      }
+    }
+  });
+
   testWidgets('the search box filters the list', (tester) async {
     phone(tester);
     await tester.pumpWidget(_app(1.0, const Locale('en')));

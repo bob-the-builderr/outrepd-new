@@ -340,6 +340,7 @@ class Friend {
     this.lossesVsYou = 0,
     this.avatarUrl,
     this.xp = 0,
+    this.placementsDone = kPlacementDuels,
   });
 
   /// Empty for the sample data, which has nobody real behind it to open a
@@ -364,6 +365,11 @@ class Friend {
 
   final String? avatarUrl;
   final int xp;
+
+  /// Below the placements they have no rank yet: their tier is a placeholder.
+  final int placementsDone;
+
+  bool get ranked => placementsDone >= kPlacementDuels;
 
   bool get hasPlayedYou => winsVsYou + lossesVsYou > 0;
 }

@@ -977,5 +977,6 @@
   "nextWeapon": "Sonraki silah",
   "opensWorld": "{world} açılır",
   "weaponAtStars": "{count} yıldızda",
-  "topTenIn": "{country} içinde ilk 10"
+  "topTenIn": "{country} içinde ilk 10",
+  "friendsRankLine": "{count} kişiden #{place}. sıradasın"
 }

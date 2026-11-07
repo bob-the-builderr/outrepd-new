@@ -13,3 +13,13 @@ cutting the framed pictures from `now_other.png` and `now_me.png`, the
 `store_1320x2868_04-otherprofile` and `tab_profile` screens of `ci-results`.
 Page C also needs `now_other_data.js`, left out of git because it is only
 `now_other.png` again: `const NOW_OTHER = 'data:image/png;base64,...';`.
+
+Ranks among friends on the Friends tab, the same way:
+
+- `friends_a.html` — A, a section above the list.
+- `friends_b.html` — B, Friends and Ranks as a strip (**picked**).
+- `friends_c.html` — C, a strip of cards to swipe.
+
+`friends.js` cuts its pictures from `now_friends.png` and `now_ranks_top.png`
+(`tab_friends` and `tab_ranks_top` of `ci-results`). The tab bar in these is a
+sketch to show the room it takes; the real one is not touched.

@@ -1710,6 +1710,11 @@ class LFr extends L {
   String get dayInitial => 'j';
 
   @override
+  String friendsRankLine(String place, String count) {
+    return 'Tu es #$place sur $count';
+  }
+
+  @override
   String rankPosition(String n) {
     return '#$n';
   }

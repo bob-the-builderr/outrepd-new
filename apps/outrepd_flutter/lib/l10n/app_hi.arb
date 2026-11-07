@@ -977,5 +977,6 @@
   "nextWeapon": "अगला हथियार",
   "opensWorld": "{world} खोलता है",
   "weaponAtStars": "{count} स्टार पर",
-  "topTenIn": "{country} में टॉप 10"
+  "topTenIn": "{country} में टॉप 10",
+  "friendsRankLine": "आप {count} में #{place} पर हैं"
 }

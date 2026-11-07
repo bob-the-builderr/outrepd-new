@@ -977,5 +977,6 @@
   "nextWeapon": "Senjata berikutnya",
   "opensWorld": "Membuka {world}",
   "weaponAtStars": "di {count} bintang",
-  "topTenIn": "10 besar di {country}"
+  "topTenIn": "10 besar di {country}",
+  "friendsRankLine": "Kamu #{place} dari {count}"
 }
