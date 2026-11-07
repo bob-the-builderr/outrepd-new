@@ -286,6 +286,9 @@ class _Body extends StatelessWidget {
     // has no head-to-head under it. Inside the app bar's height at the top,
     // between its two buttons.
     final share = p == null || p.isFriend ? 0.15 : 0.185;
+    // A stranger has no head-to-head: the room it leaves goes between the
+    // parts, as on the picked mockup, rather than under the last of them.
+    final roomy = p != null && !p.isFriend;
     final picture = (MediaQuery.sizeOf(context).height * share).clamp(92.0, 176.0);
 
     return Column(
@@ -309,7 +312,7 @@ class _Body extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: roomy ? 14 : 10),
               Center(child: _Name(name: username, xp: p?.xp, pro: pro)),
               if (titleById(p?.title) case final title?)
                 // Centred under the name like everything else here; the list
@@ -319,7 +322,7 @@ class _Body extends StatelessWidget {
                 const SizedBox(height: 10),
                 SeasonAwardChips(awards: awards, alignment: WrapAlignment.center),
               ],
-              const SizedBox(height: 12),
+              SizedBox(height: roomy ? 26 : 12),
               if (loading)
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 24),
@@ -354,7 +357,7 @@ class _Body extends StatelessWidget {
                       ),
                     ),
                   ),
-                const SizedBox(height: 6),
+                SizedBox(height: roomy ? 20 : 6),
                 _Stats(profile: p),
                 // A record between the two of you is for friends — a stranger
                 // off the board gets their numbers, not yours.
@@ -563,13 +566,16 @@ class _HeadToHead extends StatelessWidget {
               Text(' ${l.you}', style: note),
               Expanded(
                 child: Text(
-                  '$username ',
+                  username,
                   textAlign: TextAlign.end,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: note,
                 ),
               ),
+              // A space at the end of the name is not drawn when it is set
+              // against the far edge: the name ran into the number.
+              const SizedBox(width: 6),
               Text(localNumber(context, p.winsVsYou), style: score(colors.rival)),
             ],
           ),

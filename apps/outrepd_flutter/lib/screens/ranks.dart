@@ -1478,7 +1478,14 @@ class _Identity extends StatelessWidget {
                 ),
               ),
             ),
-            if (trailing case final chip?) ...[const SizedBox(width: 6), chip],
+            // The chip gives way, smaller, before the row runs off its edge.
+            if (trailing case final chip?) ...[
+              const SizedBox(width: 6),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 48),
+                child: FittedBox(fit: BoxFit.scaleDown, child: chip),
+              ),
+            ],
           ],
         ),
         const SizedBox(height: 2),
@@ -1506,6 +1513,19 @@ class _Points extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Never wider than this: at a large text size the number left the name no
+    // room on a narrow phone, and the row ran off its edge (2026-11-07).
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 64),
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        alignment: AlignmentDirectional.centerEnd,
+        child: _points(context),
+      ),
+    );
+  }
+
+  Widget _points(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
