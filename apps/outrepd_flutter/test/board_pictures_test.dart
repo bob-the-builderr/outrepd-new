@@ -1,5 +1,6 @@
 /// Pictures on every board: the week's, the month's and Overall, for the world
-/// and among friends, the podium and the rows. A Pro with no photo has their
+/// and among friends, the podium and the rows. An uploaded photo shows on every
+/// one of them, the podium too, Pro or not. A Pro with no photo has their
 /// lifter out over the ring — the one they made, or the one their name gives —
 /// and a photo stays a photo. How they look arrives after the board, so each
 /// part of it has to draw again when it does.
@@ -14,6 +15,7 @@ import 'package:outrepd/backend/backend.dart';
 import 'package:outrepd/data.dart';
 import 'package:outrepd/l10n/app_localizations.dart';
 import 'package:outrepd/lifter/lifter_view.dart';
+import 'package:outrepd/player_avatar.dart';
 import 'package:outrepd/screens/ranks.dart';
 import 'package:outrepd/theme.dart';
 
@@ -143,8 +145,12 @@ void main() {
   }
 
   // The two Pros with no photo, one on the podium and one in the rows; the
-  // Pro with a photo shows it, and nobody free breaks out.
-  void twoOut() => expect(find.byType(PopOutLifter), findsNWidgets(2));
+  // Pro with a photo shows it, and nobody free breaks out. Both photos are
+  // drawn: the Pro's on the podium and the free account's in the rows.
+  void twoOut() {
+    expect(find.byType(PopOutLifter), findsNWidgets(2));
+    expect(find.byType(PhotoOrLifter), findsNWidgets(2));
+  }
 
   // The photos are asked for and given up on (there is no server in a test),
   // so no download is left waiting when the test ends.
