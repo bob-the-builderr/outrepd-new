@@ -26,6 +26,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'backend/backend.dart'
     show RemoteProfile, ServerDuel, SettledDuel, backend;
 import 'adventure/adventure.dart';
+import 'avatar.dart';
 import 'data.dart';
 import 'health_sync.dart';
 import 'lifter/my_lifter.dart';
@@ -67,6 +68,8 @@ void applyServerProfile(RemoteProfile me) {
   rememberUsername(me.username);
   // And the lifter it made, for a phone that does not have it yet.
   MyLifter.instance.adopt(me.lifter, me.id);
+  // And a photo that has not reached the account yet.
+  unawaited(avatar.sendWaiting(me.id));
 }
 
 /// What one duel did, so the screen after it can say what happened.

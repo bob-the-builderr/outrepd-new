@@ -21,6 +21,12 @@ import '../backend/backend.dart';
 import 'catalog.dart';
 import 'lifter_view.dart';
 
+/// In the parts the account keeps: false when a photo was chosen over the
+/// lifter. The parts stay for the lifter to be worn again, and a phone that
+/// took them for the picture drew the lifter over the photo for everybody
+/// else (Looks.lifter). A key the parts never had, so nothing else minds it.
+const kLifterWorn = 'worn';
+
 class MyLifter extends ChangeNotifier {
   MyLifter._();
   static final instance = MyLifter._();
@@ -102,17 +108,26 @@ class MyLifter extends ChangeNotifier {
   Future<void> upload() async {
     final lifter = _built;
     if (lifter == null || !backend.available) return;
-    try {
-      await backend.saveLifter(lifter.toJson());
-    } on Object catch (error) {
-      debugPrint('Could not save the lifter to the account: $error');
-    }
+    await _sendParts();
     if (!_isPicture) return;
     try {
       await backend.uploadAvatar(await lifterPng(lifter), contentType: 'image/png');
       avatar.serverPictureChanged();
     } on Object catch (error) {
       debugPrint('Could not upload the lifter picture: $error');
+    }
+  }
+
+  Future<void> _sendParts() async {
+    final lifter = _built;
+    if (lifter == null || !backend.available) return;
+    try {
+      await backend.saveLifter({
+        ...lifter.toJson(),
+        if (!_isPicture) kLifterWorn: false,
+      });
+    } on Object catch (error) {
+      debugPrint('Could not save the lifter to the account: $error');
     }
   }
 
@@ -124,6 +139,7 @@ class MyLifter extends ChangeNotifier {
     notifyListeners();
     final store = await SharedPreferences.getInstance();
     await store.setBool(_pictureKey, false);
+    unawaited(_sendParts());
   }
 
   /// The photo was taken down: the made lifter is the picture again, here
@@ -149,8 +165,13 @@ class MyLifter extends ChangeNotifier {
   /// wins over it.
   void adopt(Map<String, dynamic>? json, String accountId) {
     if (_built != null && _owner == accountId) {
-      // This account's own, made on this phone: sent if the server lacks it.
-      if (json == null) unawaited(upload());
+      // This account's own, made on this phone: sent if the server lacks it,
+      // or does not know a photo was chosen over it.
+      if (json == null) {
+        unawaited(upload());
+      } else if (json[kLifterWorn] != false && !_isPicture && avatar.hasPhoto) {
+        unawaited(_sendParts());
+      }
       return;
     }
     // Nothing of this account's here: the server's lifter, or none — and

@@ -4,6 +4,7 @@ library;
 import 'package:flutter/material.dart';
 
 import '../adventure/adventure.dart';
+import '../avatar.dart';
 import '../backend/backend.dart';
 import '../career.dart';
 import '../data.dart';
@@ -30,8 +31,10 @@ Future<void> leaveForWelcome(NavigatorState navigator) async {
   // The titles and streak too: the account has them (sent before signing
   // out), and the next one in should not wear these.
   await rewards.forget();
-  // The lifter is the account's, like its picture.
+  // The lifter is the account's, like its picture: the next one in wore the
+  // photo left on the phone, on its own screens.
   await MyLifter.instance.forget();
+  await avatar.clearPhoto();
   await MyCover.instance.forget();
   // And its Adventure stars: a new account opened on a level it never
   // fought (the user, 2026-11-04).

@@ -35,6 +35,8 @@ class _Server extends NoBackend {
       for (final id in ids)
         if (id == 'pro')
           id: const ProLook(id: 'pro', pro: true, lifter: {'skin': 'neon'}, cover: 'volcano')
+        else if (id == 'wears-a-photo')
+          id: const ProLook(id: 'wears-a-photo', pro: true, lifter: {'skin': 'neon', 'worn': false})
         else
           id: ProLook(id: id),
     };
@@ -81,6 +83,13 @@ void main() {
   });
 
   group('how people look', () {
+    test('a photo chosen over the lifter is what they wear', () async {
+      backend = _Server();
+      await Looks.instance.fetch(['wears-a-photo']);
+      expect(Looks.instance.pro('wears-a-photo'), isTrue);
+      expect(Looks.instance.lifter('wears-a-photo'), isNull);
+    });
+
     test('others come from the server, once in a while', () async {
       final server = _Server();
       backend = server;

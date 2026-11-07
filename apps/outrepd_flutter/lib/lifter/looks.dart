@@ -56,12 +56,18 @@ class Looks extends ChangeNotifier {
   bool pro(String id) =>
       _isMe(id) ? Subscription.instance.active : _known[id]?.pro ?? false;
 
-  /// The lifter [id] made, or null when they have not made one (or it is
-  /// not known yet).
+  /// The lifter [id] wears as their picture, or null when they have not made
+  /// one (or it is not known yet), or chose a photo over it: then their photo
+  /// is what shows, as it does on their own phone.
   Lifter? lifter(String id) {
-    if (_isMe(id)) return MyLifter.instance.built;
+    if (_isMe(id)) {
+      final mine = MyLifter.instance;
+      return mine.isPicture ? mine.built : null;
+    }
     final json = _known[id]?.lifter;
-    return json == null ? null : Lifter.fromJson(json);
+    return json == null || json[kLifterWorn] == false
+        ? null
+        : Lifter.fromJson(json);
   }
 
   /// [id]'s cover: a scene's id or a photo's URL, only ever for a Pro.

@@ -20,6 +20,13 @@ class Avatar extends ChangeNotifier {
   /// name gives.
   String? photoPath;
 
+  /// A photo chosen and not yet on the account, and the account it was chosen
+  /// on. The upload is best-effort, and was tried once: a dropped connection
+  /// left a picture that showed on this phone and to nobody else, for good.
+  static const _waitingKey = 'avatarPhotoWaiting';
+  static const _forKey = 'avatarPhotoFor';
+  bool _sending = false;
+
   bool get hasPhoto => photoPath != null && File(photoPath!).existsSync();
 
   /// This account's own picture, wherever it is drawn — the profile, the
@@ -67,6 +74,46 @@ class Avatar extends ChangeNotifier {
     notifyListeners();
     final store = await SharedPreferences.getInstance();
     await store.setString('avatarPhoto', path.split(RegExp(r'[\\/]')).last);
+    await store.setBool(_waitingKey, true);
+    if (backend.me?.id case final id?) {
+      await store.setString(_forKey, id);
+    } else {
+      await store.remove(_forKey);
+    }
+  }
+
+  /// Puts the photo on this phone on the account, for everybody else to see.
+  /// Throws when it cannot: it stays waiting, for [sendWaiting].
+  Future<void> sendPhoto() async {
+    final path = photoPath;
+    if (path == null || !backend.available) return;
+    await backend.uploadAvatar(await File(path).readAsBytes());
+    // Another may have been chosen while this one was on its way.
+    if (photoPath != path) return;
+    final store = await SharedPreferences.getInstance();
+    await store.remove(_waitingKey);
+    await store.remove(_forKey);
+  }
+
+  /// Sends a photo that has not reached [accountId] yet, whenever the account
+  /// is read. Only one chosen on that account, or before it had signed in: a
+  /// picture must never reach somebody else's account (the lifter did, on
+  /// 2026-11-05). One chosen before this was kept is left alone, for the same
+  /// reason: nothing says whose it is.
+  Future<void> sendWaiting(String accountId) async {
+    if (_sending || !hasPhoto || !backend.available) return;
+    final store = await SharedPreferences.getInstance();
+    if (store.getBool(_waitingKey) != true) return;
+    final owner = store.getString(_forKey);
+    if (owner != null && owner != accountId) return;
+    _sending = true;
+    try {
+      await sendPhoto();
+    } on Object catch (error) {
+      debugPrint('Could not send the waiting photo: $error');
+    } finally {
+      _sending = false;
+    }
   }
 
   /// Back to the lifter on this phone: the photo and the note of it go. The server's copy is the caller's to take down first
@@ -77,6 +124,8 @@ class Avatar extends ChangeNotifier {
     notifyListeners();
     final store = await SharedPreferences.getInstance();
     await store.remove('avatarPhoto');
+    await store.remove(_waitingKey);
+    await store.remove(_forKey);
     if (path == null) return;
     try {
       await File(path).delete();

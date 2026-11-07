@@ -143,7 +143,13 @@ class PhotoBytes {
     }
   }
 
-  static Future<Uint8List> _download(String url) async {
+  /// A download that hangs on a bad connection held its place in [_pending]
+  /// until the app was closed, and the lifter stood in for that photo on
+  /// every screen. Given up on, the next time it is drawn asks again.
+  static Future<Uint8List> _download(String url) =>
+      _read(url).timeout(const Duration(seconds: 20));
+
+  static Future<Uint8List> _read(String url) async {
     final request = await _client.getUrl(Uri.parse(url));
     final response = await request.close();
     if (response.statusCode != HttpStatus.ok) {

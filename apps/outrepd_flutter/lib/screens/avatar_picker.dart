@@ -81,7 +81,7 @@ class _AvatarSheetState extends State<_AvatarSheet> {
       // so a failure here is worth a quiet word, not a blocked flow.
       if (backend.available) {
         try {
-          await backend.uploadAvatar(bytes);
+          await avatar.sendPhoto();
         } on Object catch (error) {
           debugPrint('Could not upload the avatar: $error');
           if (messenger != null && message != null) {

@@ -113,7 +113,7 @@ class _VsScreenState extends State<VsScreen> with SingleTickerProviderStateMixin
     null => (lifter: lifterFor(name), photo: null),
   };
 
-  /// The opponent: the lifter they made, or their photo, or the lifter their
+  /// The opponent: the lifter they wear, or their photo, or the lifter their
   /// name gives.
   _Face _theirs() {
     final made = Looks.instance.lifter(widget.opponentId);
