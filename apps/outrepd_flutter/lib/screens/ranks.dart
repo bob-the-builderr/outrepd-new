@@ -1387,13 +1387,20 @@ class _Initial extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final looks = Looks.instance;
-    final made = looks.lifter(id);
-    final picture = id.isNotEmpty && looks.pro(id) && made != null
-        ? PopOutLifter(made, size: size)
-        : _picture(context);
+    final out = Looks.instance.poppingOut(id, name, photo: _wearsPhoto());
+    final picture = out != null ? PopOutLifter(out, size: size) : _picture(context);
     if (frame == null) return picture;
     return TierFrame(tierIdx: frame, size: size, child: picture);
+  }
+
+  /// Whether a photo is the picture: this phone's own for this account,
+  /// the uploaded one for anybody else.
+  bool _wearsPhoto() {
+    if (mine) {
+      final own = avatar.picture;
+      return own != null && own is! LifterPicture;
+    }
+    return avatarUrl?.isNotEmpty ?? false;
   }
 
   Widget _picture(BuildContext context) {

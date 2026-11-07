@@ -35,6 +35,8 @@ class _Server extends NoBackend {
       for (final id in ids)
         if (id == 'pro')
           id: const ProLook(id: 'pro', pro: true, lifter: {'skin': 'neon'}, cover: 'volcano')
+        else if (id == 'pro-made-none')
+          id: const ProLook(id: 'pro-made-none', pro: true)
         else if (id == 'wears-a-photo')
           id: const ProLook(id: 'wears-a-photo', pro: true, lifter: {'skin': 'neon', 'worn': false})
         else
@@ -83,11 +85,21 @@ void main() {
   });
 
   group('how people look', () {
+    test('a Pro who never made a lifter still has one out over the ring', () async {
+      backend = _Server();
+      await Looks.instance.fetch(['pro-made-none', 'plain-made-none']);
+      expect(Looks.instance.poppingOut('pro-made-none', 'gym_buddy', photo: false), isNotNull);
+      // A photo stays a photo, and nobody but a Pro breaks out.
+      expect(Looks.instance.poppingOut('pro-made-none', 'gym_buddy', photo: true), isNull);
+      expect(Looks.instance.poppingOut('plain-made-none', 'gym_buddy', photo: false), isNull);
+    });
+
     test('a photo chosen over the lifter is what they wear', () async {
       backend = _Server();
       await Looks.instance.fetch(['wears-a-photo']);
       expect(Looks.instance.pro('wears-a-photo'), isTrue);
       expect(Looks.instance.lifter('wears-a-photo'), isNull);
+      expect(Looks.instance.poppingOut('wears-a-photo', 'x', photo: true), isNull);
     });
 
     test('others come from the server, once in a while', () async {

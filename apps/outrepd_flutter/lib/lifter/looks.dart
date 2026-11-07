@@ -10,9 +10,11 @@ library;
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../avatar.dart';
 import '../backend/backend.dart';
 import '../subscription.dart';
 import 'catalog.dart';
+import 'lifter_view.dart';
 import 'my_lifter.dart';
 
 class Looks extends ChangeNotifier {
@@ -62,12 +64,27 @@ class Looks extends ChangeNotifier {
   Lifter? lifter(String id) {
     if (_isMe(id)) {
       final mine = MyLifter.instance;
-      return mine.isPicture ? mine.built : null;
+      if (mine.isPicture) return mine.built;
+      // Taken from the account on this phone (a new install, a second one):
+      // worn unless a photo is the picture, here or on the account.
+      if (avatar.hasPhoto) return null;
+      final kept = backend.me?.lifter;
+      return kept == null || kept[kLifterWorn] == false ? null : mine.built;
     }
     final json = _known[id]?.lifter;
     return json == null || json[kLifterWorn] == false
         ? null
         : Lifter.fromJson(json);
+  }
+
+  /// What [id] wears out over the ring on a board while they are Pro (the
+  /// user's pick, 2026-11-01): the lifter they wear, or until they make one,
+  /// the one [name] gives — a Pro who never opened the maker sat in a plain
+  /// circle like everybody else. Null for anyone not Pro, and for a [photo],
+  /// which stays a photo.
+  Lifter? poppingOut(String id, String name, {required bool photo}) {
+    if (id.isEmpty || !pro(id)) return null;
+    return lifter(id) ?? (photo ? null : lifterFor(name));
   }
 
   /// [id]'s cover: a scene's id or a photo's URL, only ever for a Pro.
