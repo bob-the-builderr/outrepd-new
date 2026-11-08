@@ -28,7 +28,11 @@ const _people = [
   ('free-1', 'free_one', false, null),
   ('free-2', 'free_two', false, 'https://example.test/b/photo.jpg?v=1'),
   ('pop-row', 'pro_row', true, null),
+  ('made-free', 'made_free', false, null),
 ];
+
+/// The one free account that made a lifter: no picture went up for it.
+const _madeLifter = {'skin': 'neon', 'hair': 'buzz'};
 
 List<MonthRow> _monthRows() => [
   for (final (i, (id, name, _, url)) in _people.indexed)
@@ -102,7 +106,8 @@ class _Boards extends NoBackend {
   @override
   Future<Map<String, ProLook>> proLooks(List<String> ids) async => {
     for (final (id, _, pro, _) in _people)
-      if (ids.contains(id)) id: ProLook(id: id, pro: pro),
+      if (ids.contains(id))
+        id: ProLook(id: id, pro: pro, lifter: id == 'made-free' ? _madeLifter : null),
   };
 }
 
@@ -150,6 +155,12 @@ void main() {
   void twoOut() {
     expect(find.byType(PopOutLifter), findsNWidgets(2));
     expect(find.byType(PhotoOrLifter), findsNWidgets(2));
+    // The free account that made a lifter wears it, drawn from its parts,
+    // though its picture never went up.
+    expect(
+      find.byWidgetPredicate((w) => w is LifterCircle && w.lifter != null),
+      findsWidgets,
+    );
   }
 
   // The photos are asked for and given up on (there is no server in a test),

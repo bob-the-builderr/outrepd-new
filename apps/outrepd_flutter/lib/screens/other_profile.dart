@@ -760,11 +760,14 @@ class _ProLightState extends State<_ProLight>
 }
 
 /// [id]'s picture: a Pro who made a lifter is drawn from it (alive, in
-/// vectors); anybody else by their uploaded picture, or their name's lifter.
+/// vectors); anybody else by their uploaded picture; with none, the lifter
+/// they made — its picture may never have gone up — or their name's.
 ImageProvider? _picture(String id, String? avatarUrl) {
   final made = Looks.instance.lifter(id);
   if (Looks.instance.pro(id) && made != null) return LifterPicture(made);
-  return pictureAt(avatarUrl);
+  final photo = pictureAt(avatarUrl);
+  if (photo == null && made != null) return LifterPicture(made);
+  return photo;
 }
 
 /// Asks [profile] — a friend; nobody else is offered the button — to go

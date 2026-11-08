@@ -124,6 +124,15 @@ class PhotoBytes {
     }
   }
 
+  /// Starts the small copies of the first [first] of [urls] at once, so the
+  /// board about to draw them has them, or nearly. Past those, a row asks as
+  /// it scrolls in: a hundred pictures nobody scrolls to are not fetched.
+  void warmSmall(Iterable<String?> urls, {int first = 24}) {
+    for (final url in urls.whereType<String>().where((u) => u.isNotEmpty).take(first)) {
+      unawaited(getSmall(url).then<void>((_) {}, onError: (Object _) {}));
+    }
+  }
+
   /// Starts [url]'s download early, so a screen about to show it has it.
   void warm(String? url) {
     if (url == null || url.isEmpty || has(url)) return;

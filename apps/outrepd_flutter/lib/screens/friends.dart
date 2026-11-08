@@ -21,6 +21,7 @@ import '../l10n/app_localizations.dart';
 import '../lifter/lifter_view.dart';
 import '../lifter/looks.dart';
 import '../motion.dart';
+import '../photo_cache.dart';
 import '../avatar.dart' show pictureAt;
 import '../pill_strip.dart';
 import '../player_avatar.dart';
@@ -139,8 +140,10 @@ class _FriendsScreenState extends State<FriendsScreen> {
         backend.friends(),
         backend.friendRequests(),
       ).wait;
-      // A Pro's look on their row among the ranks.
+      // How they look — a Pro's row, the lifter each made — and their
+      // pictures, asked for before the rows are drawn.
       unawaited(Looks.instance.fetch([for (final f in friends) f.id]));
+      PhotoBytes.instance.warmSmall([for (final f in friends) f.avatarUrl]);
       if (!mounted) return;
       setState(() {
         _friends = [
@@ -1087,14 +1090,16 @@ class _Avatar extends StatelessWidget {
 
   final Friend friend;
 
+  // Drawn again when how they look arrives: their own lifter.
   @override
-  Widget build(BuildContext context) {
-    return TierFrame(
+  Widget build(BuildContext context) => ListenableBuilder(
+    listenable: Looks.instance,
+    builder: (context, _) => TierFrame(
       tierIdx: friend.tierIdx,
       size: 44,
       child: _picture(context),
-    );
-  }
+    ),
+  );
 
   /// The circle and the online dot, which the frame goes around.
   Widget _picture(BuildContext context) {
@@ -1106,7 +1111,13 @@ class _Avatar extends StatelessWidget {
         children: [
           Builder(
             builder: (context) {
-              final fallback = LifterCircle(name: friend.username, size: 44);
+              // The lifter they made, as on the boards, standing in while
+              // their picture comes down and in place of one that never did.
+              final fallback = LifterCircle(
+                name: friend.username,
+                size: 44,
+                lifter: Looks.instance.lifter(friend.id),
+              );
               final photo = pictureAt(friend.avatarUrl, small: true);
               if (photo == null) return fallback;
               // As on the boards: the small copy, kept on the phone and

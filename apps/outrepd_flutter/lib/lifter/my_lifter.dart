@@ -169,6 +169,11 @@ class MyLifter extends ChangeNotifier {
       // or does not know a photo was chosen over it.
       if (json == null) {
         unawaited(upload());
+      } else if (_isPicture && (backend.me?.avatarUrl ?? '').isEmpty) {
+        // Worn, and its picture never went up — a dropped connection, the
+        // one try there was — so the boards on older builds drew the name's
+        // lifter in its place.
+        unawaited(upload());
       } else if (json[kLifterWorn] != false && !_isPicture && avatar.hasPhoto) {
         unawaited(_sendParts());
       }

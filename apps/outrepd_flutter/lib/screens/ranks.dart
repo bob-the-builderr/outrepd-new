@@ -23,6 +23,7 @@ import '../lifter/lifter_view.dart';
 import '../lifter/looks.dart';
 import '../lifter/my_lifter.dart';
 import '../motion.dart';
+import '../photo_cache.dart';
 import '../pill_strip.dart';
 import '../player_avatar.dart' show PhotoOrLifter, decodedAt;
 import '../ranking.dart';
@@ -218,6 +219,7 @@ class _RanksScreenState extends State<RanksScreen> {
         ).wait;
         if (stale()) return;
         unawaited(Looks.instance.fetch(rows.map((row) => row.id)));
+        PhotoBytes.instance.warmSmall([for (final row in rows) row.avatarUrl]);
         setState(() {
           _weekPlace = friends ? _amongFriends(place, rows) : place;
           _week = rows;
@@ -244,6 +246,7 @@ class _RanksScreenState extends State<RanksScreen> {
           ...rows.map((row) => row.id),
           ...?winners?.rows.map((row) => row.id),
         ]));
+        PhotoBytes.instance.warmSmall([for (final row in [...rows, ...?winners?.rows]) row.avatarUrl]);
         setState(() {
           _monthPlace = friends ? _amongFriends(place, rows) : place;
           _month = rows;
@@ -264,6 +267,7 @@ class _RanksScreenState extends State<RanksScreen> {
           : null;
       if (stale()) return;
       unawaited(Looks.instance.fetch(rows.map((row) => row.id)));
+      PhotoBytes.instance.warmSmall([for (final row in rows) row.avatarUrl]);
       setState(() {
         _boards[scope] = rows;
         _globalPlace = global;
@@ -1405,13 +1409,15 @@ class _Initial extends StatelessWidget {
 
   Widget _picture(BuildContext context) {
     final own = mine ? avatar.picture : null;
-    // No photo: the lifter. This account's own made one, drawn from here;
-    // anybody else's, the one their name gives.
-    final fallback = LifterCircle(
-      name: name,
-      size: size,
-      lifter: own is LifterPicture ? own.lifter : null,
-    );
+    // The lifter they made, drawn from its parts the moment how they look is
+    // known: nothing to download. It stands in while their picture comes
+    // down — the name's lifter did, so for a moment the row wore somebody
+    // else's face — and it is the picture when theirs never went up (an
+    // upload lost to a dropped connection). This account's own, from here.
+    final made = mine
+        ? (own is LifterPicture ? own.lifter : null)
+        : Looks.instance.lifter(id);
+    final fallback = LifterCircle(name: name, size: size, lifter: made);
     final photo = own ?? pictureAt(avatarUrl, small: true);
     if (photo == null || photo is LifterPicture) return fallback;
     return ClipOval(
