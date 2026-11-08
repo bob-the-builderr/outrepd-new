@@ -16,6 +16,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'lifter/catalog.dart';
 import 'lifter/lifter_view.dart';
 import 'lifter/my_lifter.dart';
 import 'theme.dart';
@@ -32,6 +33,7 @@ class PlayerAvatar extends StatelessWidget {
     this.onTap,
     this.onBadgeTap,
     this.alive = false,
+    this.lifter,
   });
 
   /// Whose it is. Their name gives the lifter drawn when there is no
@@ -68,10 +70,17 @@ class PlayerAvatar extends StatelessWidget {
   /// lifter; a photo stays a photo.
   final bool alive;
 
+  /// The lifter drawn when there is no [image], and in a photo's place while
+  /// it comes down: the one they made (face.dart). Null for the one [name]
+  /// gives.
+  final Lifter? lifter;
+
   @override
   Widget build(BuildContext context) {
     final picture = image;
-    final drawn = picture is LifterPicture ? picture.lifter : lifterFor(name);
+    final drawn = picture is LifterPicture
+        ? picture.lifter
+        : lifter ?? lifterFor(name);
     final fallback = Container(
       width: size,
       height: size,

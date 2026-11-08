@@ -7,6 +7,8 @@
 /// (MyLifter, MyCover, Subscription), so a change shows at once.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -50,6 +52,25 @@ class Looks extends ChangeNotifier {
         _asked.remove(id);
       }
     }
+  }
+
+  final Set<String> _wanted = {};
+  bool _asking = false;
+
+  /// Asks for [id]'s look along with everybody else wanted in the same
+  /// moment: one trip for a screenful of people, wherever they are drawn
+  /// (face.dart). Nothing for somebody already known, or this account.
+  void want(String id) {
+    if (id.isEmpty || _isMe(id) || _known.containsKey(id) || !backend.available) return;
+    _wanted.add(id);
+    if (_asking) return;
+    _asking = true;
+    scheduleMicrotask(() {
+      _asking = false;
+      final ids = _wanted.toList();
+      _wanted.clear();
+      unawaited(fetch(ids));
+    });
   }
 
   bool _isMe(String id) => id.isNotEmpty && id == backend.me?.id;

@@ -19,6 +19,7 @@ import '../avatar.dart';
 import '../backend/backend.dart';
 import '../career.dart';
 import '../data.dart';
+import '../face.dart';
 import '../subscription.dart';
 import '../rewards.dart';
 import '../lifter/looks.dart';
@@ -442,10 +443,11 @@ class _Scoreboard extends StatelessWidget {
           ),
           Expanded(
             child: _Side(
-              avatar: PlayerAvatar(
+              avatar: PersonAvatar(
+                id: opponent.id,
                 name: opponent.username,
+                avatarUrl: opponent.avatarUrl,
                 tierIdx: opponent.tierIdx,
-                image: pictureAt(opponent.avatarUrl, small: true),
                 size: 58,
               ),
               name: opponent.username,

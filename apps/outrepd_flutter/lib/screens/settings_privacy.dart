@@ -11,8 +11,8 @@ library;
 import 'package:flutter/material.dart';
 
 import '../backend/backend.dart';
+import '../face.dart';
 import '../l10n/app_localizations.dart';
-import '../lifter/lifter_view.dart';
 import '../settings.dart';
 import '../theme.dart';
 import '../widgets.dart';
@@ -268,7 +268,8 @@ class _BlockedRow extends StatelessWidget {
       ),
       child: Row(
         children: [
-          LifterCircle(name: who.username, size: 32),
+          // Their face as everywhere else (face.dart).
+          PersonAvatar(id: who.id, name: who.username, size: 32),
           const SizedBox(width: 11),
           Expanded(
             child: Column(
@@ -410,7 +411,11 @@ class _ReportScreenState extends State<ReportScreen> {
                     ),
                     child: Row(
                       children: [
-                        LifterCircle(name: name, size: 32),
+                        PersonAvatar(
+                          id: widget.aboutId ?? '',
+                          name: name,
+                          size: 32,
+                        ),
                         const SizedBox(width: 11),
                         Expanded(
                           child: Column(

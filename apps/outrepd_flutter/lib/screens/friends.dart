@@ -17,12 +17,12 @@ import 'package:flutter/material.dart';
 import '../backend/backend.dart';
 import '../career.dart';
 import '../data.dart';
+import '../face.dart';
 import '../l10n/app_localizations.dart';
 import '../lifter/lifter_view.dart';
 import '../lifter/looks.dart';
 import '../motion.dart';
 import '../photo_cache.dart';
-import '../avatar.dart' show pictureAt;
 import '../pill_strip.dart';
 import '../player_avatar.dart';
 import '../theme.dart';
@@ -651,10 +651,11 @@ class _RequestCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              PlayerAvatar(
+              PersonAvatar(
+                id: request.id,
                 name: request.username,
+                avatarUrl: photo,
                 tierIdx: ranked ? request.tierIdx : null,
-                image: pictureAt(photo, small: true),
                 size: 52,
                 textColour: context.colors.rival,
               ),
@@ -1111,14 +1112,19 @@ class _Avatar extends StatelessWidget {
         children: [
           Builder(
             builder: (context) {
-              // The lifter they made, as on the boards, standing in while
-              // their picture comes down and in place of one that never did.
+              // Their face as everywhere else (face.dart).
+              final face = faceOf(
+                id: friend.id,
+                name: friend.username,
+                avatarUrl: friend.avatarUrl,
+                small: true,
+              );
               final fallback = LifterCircle(
                 name: friend.username,
                 size: 44,
-                lifter: Looks.instance.lifter(friend.id),
+                lifter: face.lifter,
               );
-              final photo = pictureAt(friend.avatarUrl, small: true);
+              final photo = face.photo;
               if (photo == null) return fallback;
               // As on the boards: the small copy, kept on the phone and
               // decoded at the circle's size. It was the whole photo, read

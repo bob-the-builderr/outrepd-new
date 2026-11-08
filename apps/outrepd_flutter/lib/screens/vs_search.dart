@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 
 import '../avatar.dart';
 import '../data.dart';
+import '../face.dart';
 import '../l10n/app_localizations.dart';
 import '../lifter/lifter_view.dart';
 import '../lifter/my_lifter.dart';
@@ -294,10 +295,11 @@ class _SeatState extends State<_Seat> with SingleTickerProviderStateMixin {
         curve: Curves.easeOutBack,
         builder: (context, scale, child) =>
             Transform.scale(scale: scale, child: child),
-        child: PlayerAvatar(
+        child: PersonAvatar(
+          id: them.id,
           name: them.username,
+          avatarUrl: url,
           tierIdx: them.tierIdx,
-          image: pictureAt(url),
           size: _picture,
         ),
       );

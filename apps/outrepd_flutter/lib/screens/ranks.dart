@@ -13,15 +13,14 @@ import 'dart:async';
 import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 
-import '../avatar.dart';
 import '../backend/backend.dart';
 import '../career.dart';
 import '../country_names.dart';
 import '../data.dart';
+import '../face.dart';
 import '../l10n/app_localizations.dart';
 import '../lifter/lifter_view.dart';
 import '../lifter/looks.dart';
-import '../lifter/my_lifter.dart';
 import '../motion.dart';
 import '../photo_cache.dart';
 import '../pill_strip.dart';
@@ -1391,35 +1390,20 @@ class _Initial extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final out = Looks.instance.poppingOut(id, name, photo: _wearsPhoto());
-    final picture = out != null ? PopOutLifter(out, size: size) : _picture(context);
+    final face = faceOf(id: id, name: name, avatarUrl: avatarUrl, mine: mine, small: true);
+    // A Pro wearing a lifter has it out over the ring, on a board (the
+    // user's pick, 2026-11-01); a photo stays a photo.
+    final picture = face.pro && face.photo == null
+        ? PopOutLifter(face.lifter, size: size)
+        : _picture(context, face);
     if (frame == null) return picture;
     return TierFrame(tierIdx: frame, size: size, child: picture);
   }
 
-  /// Whether a photo is the picture: this phone's own for this account,
-  /// the uploaded one for anybody else.
-  bool _wearsPhoto() {
-    if (mine) {
-      final own = avatar.picture;
-      return own != null && own is! LifterPicture;
-    }
-    return avatarUrl?.isNotEmpty ?? false;
-  }
-
-  Widget _picture(BuildContext context) {
-    final own = mine ? avatar.picture : null;
-    // The lifter they made, drawn from its parts the moment how they look is
-    // known: nothing to download. It stands in while their picture comes
-    // down — the name's lifter did, so for a moment the row wore somebody
-    // else's face — and it is the picture when theirs never went up (an
-    // upload lost to a dropped connection). This account's own, from here.
-    final made = mine
-        ? (own is LifterPicture ? own.lifter : null)
-        : Looks.instance.lifter(id);
-    final fallback = LifterCircle(name: name, size: size, lifter: made);
-    final photo = own ?? pictureAt(avatarUrl, small: true);
-    if (photo == null || photo is LifterPicture) return fallback;
+  Widget _picture(BuildContext context, Face face) {
+    final fallback = LifterCircle(name: name, size: size, lifter: face.lifter);
+    final photo = face.photo;
+    if (photo == null) return fallback;
     return ClipOval(
       // As in PlayerAvatar: the photo, with the lifter standing in only once
       // it has been on its way half a second.

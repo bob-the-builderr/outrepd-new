@@ -483,7 +483,11 @@ class Opponent {
     this.divIdx, {
     this.avatarUrl,
     this.xp,
+    this.id = '',
   });
+
+  /// Who they are, for how they look (face.dart). Empty for a sample.
+  final String id;
 
   final String username;
   final int tierIdx;

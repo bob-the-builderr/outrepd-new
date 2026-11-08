@@ -12,9 +12,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../backend/backend.dart';
+import '../face.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
-import '../player_avatar.dart';
 import '../theme.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
@@ -462,8 +462,10 @@ class _FriendChoiceRow extends StatelessWidget {
           Stack(
             clipBehavior: Clip.none,
             children: [
-              PlayerAvatar(
+              PersonAvatar(
+                id: friend.id,
                 name: friend.username,
+                avatarUrl: friend.avatarUrl,
                 size: 40,
                 textColour: context.colors.rival,
               ),

@@ -18,6 +18,7 @@ import 'package:share_plus/share_plus.dart';
 import '../l10n/app_localizations.dart';
 import '../country_names.dart';
 import '../data.dart';
+import '../lifter/catalog.dart';
 import '../lifter/lifter_view.dart';
 import '../lifter/my_lifter.dart';
 import '../photo_cache.dart' show photoAt;
@@ -97,6 +98,7 @@ class ShareCardData {
     this.title,
     this.pro = false,
     this.cover,
+    this.lifter,
   });
 
   final String username;
@@ -121,6 +123,11 @@ class ShareCardData {
 
   /// The cover: a scene's id or a photo's URL, or null for none.
   final String? cover;
+
+  /// The lifter they made and wear, drawn in place of a picture, as on every
+  /// screen (face.dart); null for this account's own card, which knows it
+  /// here, and for a photo.
+  final Lifter? lifter;
 
   String get profileUrl => profilePath(username);
 }
@@ -880,6 +887,7 @@ class _StoryCard extends StatelessWidget {
                 _Framed(
                   name: data.username,
                   avatarUrl: data.avatarUrl,
+                  lifter: data.lifter,
                   tierIdx: data.tierIdx,
                   size: 116,
                 ),
@@ -947,6 +955,7 @@ class _PostCard extends StatelessWidget {
                     _Framed(
                       name: data.username,
                       avatarUrl: data.avatarUrl,
+                      lifter: data.lifter,
                       tierIdx: data.tierIdx,
                       size: 72,
                     ),
@@ -1068,6 +1077,7 @@ class _Framed extends StatelessWidget {
     required this.size,
     this.avatarUrl,
     this.textColour,
+    this.lifter,
   });
 
   final String name;
@@ -1075,6 +1085,9 @@ class _Framed extends StatelessWidget {
   final double size;
   final String? avatarUrl;
   final Color? textColour;
+
+  /// The lifter they wear, drawn in place of a picture (face.dart).
+  final Lifter? lifter;
 
   @override
   Widget build(BuildContext context) {
@@ -1086,6 +1099,7 @@ class _Framed extends StatelessWidget {
         avatarUrl: avatarUrl,
         size: size,
         textColour: textColour,
+        lifter: lifter,
       ),
     );
   }
@@ -1184,10 +1198,14 @@ class _Initial extends StatelessWidget {
     this.avatarUrl,
     this.size = 32,
     this.textColour,
+    this.lifter,
   });
   final String name;
   final String? avatarUrl;
   final double size;
+
+  /// The lifter they wear: drawn, with no picture to wait for.
+  final Lifter? lifter;
 
   /// Kept for the callers that set it; the lifter drawn when there is no
   /// photo has no letter to colour.
@@ -1195,6 +1213,9 @@ class _Initial extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (lifter case final worn?) {
+      return LifterCircle(name: name, size: size, lifter: worn);
+    }
     final fallback = LifterCircle(
       name: name,
       size: size,

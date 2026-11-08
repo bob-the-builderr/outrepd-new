@@ -14,11 +14,9 @@ import 'package:flutter/material.dart';
 import '../backend/backend.dart';
 import '../l10n/app_localizations.dart';
 import '../lifter/looks.dart';
-import '../lifter/my_lifter.dart';
 import '../motion.dart';
 import '../country_names.dart';
-import '../avatar.dart' show pictureAt;
-import '../player_avatar.dart';
+import '../face.dart';
 import '../rank_card.dart';
 import '../rewards.dart';
 import '../season.dart';
@@ -303,11 +301,11 @@ class _Body extends StatelessWidget {
               Center(
                 child: _ProLight(
                   on: pro,
-                  child: PlayerAvatar(
+                  child: PersonAvatar(
+                    id: id,
                     name: username,
+                    avatarUrl: p?.avatarUrl ?? avatarUrl,
                     tierIdx: p != null && p.ranked ? p.tierIdx : null,
-                    image: _picture(id, p?.avatarUrl ?? avatarUrl),
-                    alive: pro,
                     size: picture,
                   ),
                 ),
@@ -759,17 +757,6 @@ class _ProLightState extends State<_ProLight>
   }
 }
 
-/// [id]'s picture: a Pro who made a lifter is drawn from it (alive, in
-/// vectors); anybody else by their uploaded picture; with none, the lifter
-/// they made — its picture may never have gone up — or their name's.
-ImageProvider? _picture(String id, String? avatarUrl) {
-  final made = Looks.instance.lifter(id);
-  if (Looks.instance.pro(id) && made != null) return LifterPicture(made);
-  final photo = pictureAt(avatarUrl);
-  if (photo == null && made != null) return LifterPicture(made);
-  return photo;
-}
-
 /// Asks [profile] — a friend; nobody else is offered the button — to go
 /// live, the same invite as the Friends tab's Challenge.
 void _challenge(BuildContext context, LifterProfile profile) {
@@ -978,6 +965,7 @@ class _LifterMenuSheetState extends State<_LifterMenuSheet> {
         title: titleById(p.title),
         pro: Looks.instance.pro(widget.id),
         cover: Looks.instance.cover(widget.id),
+        lifter: Looks.instance.lifter(widget.id),
       ),
     );
   }

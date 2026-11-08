@@ -15,6 +15,7 @@ library;
 import 'package:flutter/material.dart';
 
 import '../avatar.dart';
+import '../face.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../lifter/catalog.dart';
@@ -116,11 +117,13 @@ class _VsScreenState extends State<VsScreen> with SingleTickerProviderStateMixin
   /// The opponent: the lifter they wear, or their photo, or the lifter their
   /// name gives.
   _Face _theirs() {
-    final made = Looks.instance.lifter(widget.opponentId);
-    if (made != null) return (lifter: made, photo: null);
-    final url = widget.opponentAvatarUrl;
-    if (pictureAt(url) case final photo?) return (lifter: null, photo: photo);
-    return (lifter: lifterFor(widget.opponentName), photo: null);
+    final face = faceOf(
+      id: widget.opponentId,
+      name: widget.opponentName,
+      avatarUrl: widget.opponentAvatarUrl,
+    );
+    if (face.photo case final photo?) return (lifter: null, photo: photo);
+    return (lifter: face.lifter, photo: null);
   }
 
   @override

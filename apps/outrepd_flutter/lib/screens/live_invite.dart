@@ -13,8 +13,8 @@ import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 
 import '../backend/backend.dart';
+import '../face.dart';
 import '../l10n/app_localizations.dart';
-import '../player_avatar.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'match_entry.dart';
@@ -249,8 +249,10 @@ class _LiveInviteScreenState extends State<LiveInviteScreen> {
                   width: 3,
                 ),
               ),
-              child: PlayerAvatar(
+              child: PersonAvatar(
+                id: widget.friend.id,
                 name: name,
+                avatarUrl: widget.friend.avatarUrl,
                 tierIdx: widget.friend.tierIdx,
                 size: 124,
                 textColour: context.colors.rival,
@@ -378,8 +380,10 @@ class _LiveInviteBannerState extends State<LiveInviteBanner> {
         ),
         child: Row(
           children: [
-            PlayerAvatar(
+            PersonAvatar(
+              id: from.id,
               name: from.username,
+              avatarUrl: from.avatarUrl,
               tierIdx: from.tierIdx,
               size: 44,
               textColour: context.colors.rival,

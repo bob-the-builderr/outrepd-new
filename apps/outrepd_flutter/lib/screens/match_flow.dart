@@ -19,12 +19,13 @@ import '../backend/backend.dart';
 import '../career.dart';
 import '../connection.dart';
 import '../data.dart';
+import '../face.dart';
 import '../l10n/app_localizations.dart';
 import '../live.dart';
 import '../avatar.dart';
 import '../lifter/lifter_view.dart';
 import '../lifter/looks.dart';
-import '../lifter/my_lifter.dart';
+import '../player_avatar.dart' show PhotoOrLifter, decodedAt;
 import '../ranking.dart';
 import '../reps/recording.dart';
 import '../reps/pushup_counter.dart';
@@ -188,6 +189,13 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   // opponent is found. Never left unset: practice reaches _Stage.result too,
   // by way of _ResultView's constructor, without ever calling _search.
   late Opponent _opponent;
+
+  /// [_opponent]'s face, as every screen draws it (face.dart).
+  Face get _opponentFace => faceOf(
+    id: _opponent.id,
+    name: _opponent.username,
+    avatarUrl: _opponent.avatarUrl,
+  );
 
   /// Whether [_opponent] is somebody found rather than the stand-in the
   /// screen starts with: the search's seat lands on them once it is.
@@ -386,6 +394,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           match.opponent.divIdx,
           avatarUrl: match.opponent.avatarUrl,
           xp: match.opponent.xp,
+          id: match.opponent.id,
         );
         _theirReps = 0;
       });
@@ -403,6 +412,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           widget.targetUsername!,
           widget.targetTierIdx!,
           widget.targetDivIdx!,
+          id: widget.targetId ?? '',
         );
         _theirReps = 0;
       });
@@ -430,6 +440,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
             found.divIdx,
             avatarUrl: found.avatarUrl,
             xp: found.xp,
+            id: found.profileId,
           );
           _theirReps = found.reps;
         });
@@ -464,6 +475,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
               live.opponent.divIdx,
               avatarUrl: live.opponent.avatarUrl,
               xp: live.opponent.xp,
+              id: live.opponent.id,
             );
             _theirReps = 0;
           });
@@ -482,6 +494,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
             found.divIdx,
             avatarUrl: found.avatarUrl,
             xp: found.xp,
+            id: found.profileId,
           );
             _theirReps = found.reps;
           });
@@ -578,7 +591,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
                   // Racing your own best: your own picture across from you.
                   opponentImage: _vsBest
                       ? avatar.picture
-                      : pictureAt(_opponent.avatarUrl),
+                      : imageOf(_opponentFace),
                   opponentXp: _vsBest ? demoProfile.xp : _opponent.xp,
                   rankLabel: tierLabel(
                     L.of(context),
@@ -854,7 +867,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
             opponentReps: 0,
             opponentTierIdx: _opponent.tierIdx,
             opponentDivIdx: _opponent.divIdx,
-            opponentImage: pictureAt(_opponent.avatarUrl),
+            opponentImage: imageOf(_opponentFace),
             opponentXp: _opponent.xp,
             rankLabel: live.ranked
                 ? tierLabel(l, demoProfile.tierIdx, demoProfile.divIdx)
@@ -1709,6 +1722,7 @@ class _VersusView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _Fighter(
+              mine: true,
               initial: me.username,
               name: l.you,
               tierIdx: me.tierIdx,
@@ -1731,6 +1745,8 @@ class _VersusView extends StatelessWidget {
               _Pace(best: best)
             else
               _Fighter(
+                id: opponent.id,
+                avatarUrl: opponent.avatarUrl,
                 initial: opponent.username,
                 name: opponent.username,
                 tierIdx: opponent.tierIdx,
@@ -1804,6 +1820,9 @@ class _VersusView extends StatelessWidget {
 
 class _Fighter extends StatelessWidget {
   const _Fighter({
+    this.id = '',
+    this.avatarUrl,
+    this.mine = false,
     required this.initial,
     required this.name,
     required this.tierIdx,
@@ -1811,6 +1830,12 @@ class _Fighter extends StatelessWidget {
     required this.ring,
     this.xp,
   });
+
+  /// Who they are, for their face (face.dart): this account's own when
+  /// [mine].
+  final String id;
+  final String? avatarUrl;
+  final bool mine;
 
   final String initial;
   final String name;
@@ -1827,13 +1852,39 @@ class _Fighter extends StatelessWidget {
       width: 88,
       child: Column(
         children: [
-          LifterCircle(
-            name: initial,
-            size: 62,
-            lifter: initial == demoProfile.username
-                ? MyLifter.instance.built
-                : null,
-            border: Border.all(color: ring, width: 2),
+          ListenableBuilder(
+            listenable: Looks.instance,
+            builder: (context, _) {
+              final face = faceOf(
+                id: id,
+                name: initial,
+                avatarUrl: avatarUrl,
+                mine: mine,
+              );
+              final circle = LifterCircle(
+                name: initial,
+                size: 62,
+                lifter: face.lifter,
+                border: Border.all(color: ring, width: 2),
+              );
+              final photo = face.photo;
+              if (photo == null) return circle;
+              return Container(
+                width: 62,
+                height: 62,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: ring, width: 2),
+                ),
+                child: ClipOval(
+                  child: PhotoOrLifter(
+                    image: decodedAt(context, photo, 62),
+                    size: 62,
+                    lifter: circle,
+                  ),
+                ),
+              );
+            },
           ),
           const SizedBox(height: 7),
           Text(
