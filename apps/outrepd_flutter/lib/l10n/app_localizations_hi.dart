@@ -2236,6 +2236,17 @@ class LHi extends L {
   String get joinLive => 'जुड़ें';
 
   @override
+  String get nPassedTitle => 'किसी ने आपको पीछे छोड़ दिया';
+
+  @override
+  String nPassedBody(String name) {
+    return '${name} ने अभी इस हफ़्ते की रैंकिंग में आपको पीछे छोड़ दिया। अपनी जगह वापस लें।';
+  }
+
+  @override
+  String get reminderWeekCloses => 'इस हफ़्ते की रैंकिंग 6 घंटे में बंद होगी। एक और जीत आपको ऊपर ले जा सकती है।';
+
+  @override
   String get nLiveTitle => 'लाइव न्योता';
 
   @override

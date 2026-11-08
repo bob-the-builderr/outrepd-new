@@ -2238,6 +2238,17 @@ class LPt extends L {
   String get joinLive => 'Entrar';
 
   @override
+  String get nPassedTitle => 'Passaram você';
+
+  @override
+  String nPassedBody(String name) {
+    return '${name} passou à sua frente no ranking da semana. Recupere seu lugar.';
+  }
+
+  @override
+  String get reminderWeekCloses => 'O ranking da semana fecha em 6 horas. Mais uma vitória pode te fazer subir.';
+
+  @override
   String get nLiveTitle => 'Convite ao vivo';
 
   @override

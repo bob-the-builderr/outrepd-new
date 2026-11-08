@@ -2192,6 +2192,17 @@ class LZh extends L {
   String get joinLive => '加入';
 
   @override
+  String get nPassedTitle => '你被超过了';
+
+  @override
+  String nPassedBody(String name) {
+    return '${name} 刚刚在本周排行榜上超过了你。把位置抢回来吧。';
+  }
+
+  @override
+  String get reminderWeekCloses => '本周排行榜将在6小时后结算。再赢一场就可能上升。';
+
+  @override
   String get nLiveTitle => '实时对战邀请';
 
   @override

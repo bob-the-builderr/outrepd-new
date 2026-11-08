@@ -2205,6 +2205,17 @@ class LKo extends L {
   String get joinLive => '참가';
 
   @override
+  String get nPassedTitle => '추월당했어요';
+
+  @override
+  String nPassedBody(String name) {
+    return '${name}님이 이번 주 순위에서 당신을 추월했어요. 자리를 되찾으세요.';
+  }
+
+  @override
+  String get reminderWeekCloses => '이번 주 순위가 6시간 후 마감돼요. 한 번 더 이기면 순위가 오를 수 있어요.';
+
+  @override
   String get nLiveTitle => '라이브 초대';
 
   @override

@@ -2243,6 +2243,17 @@ class LDe extends L {
   String get joinLive => 'Beitreten';
 
   @override
+  String get nPassedTitle => 'Du wurdest überholt';
+
+  @override
+  String nPassedBody(String name) {
+    return '${name} hat dich gerade in der Wochenwertung überholt. Hol dir deinen Platz zurück.';
+  }
+
+  @override
+  String get reminderWeekCloses => 'Die Wochenwertung endet in 6 Stunden. Ein Sieg mehr kann dich nach oben bringen.';
+
+  @override
   String get nLiveTitle => 'Live-Einladung';
 
   @override

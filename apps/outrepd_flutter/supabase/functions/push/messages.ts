@@ -15,7 +15,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nChallengedTitle": "Revanche",
     "nChallengedBody": "{name} möchte eine Revanche",
     "nLiveTitle": "Live-Einladung",
-    "nLiveBody": "{name} will live gegen dich antreten"
+    "nLiveBody": "{name} will live gegen dich antreten",
+    "nPassedTitle": "Du wurdest überholt",
+    "nPassedBody": "{name} hat dich gerade in der Wochenwertung überholt. Hol dir deinen Platz zurück."
   },
   "en": {
     "nRacedTitle": "Your set was raced",
@@ -28,7 +30,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nChallengedTitle": "Rematch",
     "nChallengedBody": "{name} wants a rematch",
     "nLiveTitle": "Live invite",
-    "nLiveBody": "{name} wants to go live"
+    "nLiveBody": "{name} wants to go live",
+    "nPassedTitle": "You've been passed",
+    "nPassedBody": "{name} just passed you on this week's board. Take your place back."
   },
   "es": {
     "nRacedTitle": "Retaron tu serie",
@@ -41,7 +45,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nChallengedTitle": "Revancha",
     "nChallengedBody": "{name} quiere la revancha",
     "nLiveTitle": "Invitación en vivo",
-    "nLiveBody": "{name} quiere competir en vivo"
+    "nLiveBody": "{name} quiere competir en vivo",
+    "nPassedTitle": "Te han superado",
+    "nPassedBody": "{name} acaba de superarte en la tabla semanal. Recupera tu puesto."
   },
   "fr": {
     "nRacedTitle": "Ta série a été défiée",
@@ -54,7 +60,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nChallengedTitle": "Revanche",
     "nChallengedBody": "{name} veut une revanche",
     "nLiveTitle": "Invitation en direct",
-    "nLiveBody": "{name} veut s'affronter en direct"
+    "nLiveBody": "{name} veut s'affronter en direct",
+    "nPassedTitle": "Tu t'es fait dépasser",
+    "nPassedBody": "{name} vient de te dépasser au classement de la semaine. Reprends ta place."
   },
   "hi": {
     "nRacedTitle": "आपके सेट को चुनौती मिली",
@@ -67,7 +75,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nChallengedTitle": "दोबारा मुक़ाबला",
     "nChallengedBody": "{name} दोबारा मुक़ाबला चाहता है",
     "nLiveTitle": "लाइव न्योता",
-    "nLiveBody": "{name} लाइव मुकाबला करना चाहते हैं"
+    "nLiveBody": "{name} लाइव मुकाबला करना चाहते हैं",
+    "nPassedTitle": "किसी ने आपको पीछे छोड़ दिया",
+    "nPassedBody": "{name} ने अभी इस हफ़्ते की रैंकिंग में आपको पीछे छोड़ दिया। अपनी जगह वापस लें।"
   },
   "id": {
     "nRacedTitle": "Set-mu ditantang",
@@ -80,7 +90,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nChallengedTitle": "Tanding ulang",
     "nChallengedBody": "{name} ingin tanding ulang",
     "nLiveTitle": "Undangan langsung",
-    "nLiveBody": "{name} ingin bertanding langsung"
+    "nLiveBody": "{name} ingin bertanding langsung",
+    "nPassedTitle": "Kamu disalip",
+    "nPassedBody": "{name} baru saja menyalipmu di papan minggu ini. Rebut kembali posisimu."
   },
   "it": {
     "nRacedTitle": "La tua serie è stata sfidata",
@@ -93,7 +105,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nChallengedTitle": "Rivincita",
     "nChallengedBody": "{name} vuole la rivincita",
     "nLiveTitle": "Invito live",
-    "nLiveBody": "{name} vuole sfidarti live"
+    "nLiveBody": "{name} vuole sfidarti live",
+    "nPassedTitle": "Ti hanno superato",
+    "nPassedBody": "{name} ti ha appena superato nella classifica della settimana. Riprenditi il posto."
   },
   "ja": {
     "nRacedTitle": "あなたのセットが挑まれました",
@@ -106,7 +120,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nChallengedTitle": "再戦",
     "nChallengedBody": "{name}さんが再戦を希望しています",
     "nLiveTitle": "ライブの招待",
-    "nLiveBody": "{name} がライブで対戦したがっています"
+    "nLiveBody": "{name} がライブで対戦したがっています",
+    "nPassedTitle": "抜かれました",
+    "nPassedBody": "{name}さんが今週のランキングであなたを抜きました。順位を取り返そう。"
   },
   "ko": {
     "nRacedTitle": "당신의 세트에 도전이 있었습니다",
@@ -119,7 +135,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nChallengedTitle": "재대결",
     "nChallengedBody": "{name}님이 재대결을 원합니다",
     "nLiveTitle": "라이브 초대",
-    "nLiveBody": "{name} 님이 라이브 대결을 원해요"
+    "nLiveBody": "{name} 님이 라이브 대결을 원해요",
+    "nPassedTitle": "추월당했어요",
+    "nPassedBody": "{name}님이 이번 주 순위에서 당신을 추월했어요. 자리를 되찾으세요."
   },
   "pt": {
     "nRacedTitle": "A tua série foi desafiada",
@@ -132,7 +150,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nChallengedTitle": "Desforra",
     "nChallengedBody": "{name} quer a desforra",
     "nLiveTitle": "Convite ao vivo",
-    "nLiveBody": "{name} quer competir ao vivo"
+    "nLiveBody": "{name} quer competir ao vivo",
+    "nPassedTitle": "Passaram você",
+    "nPassedBody": "{name} passou à sua frente no ranking da semana. Recupere seu lugar."
   },
   "ru": {
     "nRacedTitle": "Ваш подход приняли вызовом",
@@ -145,7 +165,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nChallengedTitle": "Реванш",
     "nChallengedBody": "{name} хочет реванш",
     "nLiveTitle": "Приглашение вживую",
-    "nLiveBody": "{name} хочет сразиться вживую"
+    "nLiveBody": "{name} хочет сразиться вживую",
+    "nPassedTitle": "Тебя обогнали",
+    "nPassedBody": "{name} теперь выше тебя в таблице недели. Верни своё место."
   },
   "tr": {
     "nRacedTitle": "Setine meydan okundu",
@@ -158,7 +180,9 @@ export const messages: Record<string, Record<string, string>> = {
     "nChallengedTitle": "Rövanş",
     "nChallengedBody": "{name} rövanş istiyor",
     "nLiveTitle": "Canlı davet",
-    "nLiveBody": "{name} canlı yarışmak istiyor"
+    "nLiveBody": "{name} canlı yarışmak istiyor",
+    "nPassedTitle": "Geçildin",
+    "nPassedBody": "{name} bu haftanın sıralamasında seni az önce geçti. Yerini geri al."
   },
   "zh": {
     "nRacedTitle": "有人挑战了你的组",
@@ -171,6 +195,8 @@ export const messages: Record<string, Record<string, string>> = {
     "nChallengedTitle": "再来一局",
     "nChallengedBody": "{name} 想再来一局",
     "nLiveTitle": "实时对战邀请",
-    "nLiveBody": "{name} 想和你实时对战"
+    "nLiveBody": "{name} 想和你实时对战",
+    "nPassedTitle": "你被超过了",
+    "nPassedBody": "{name} 刚刚在本周排行榜上超过了你。把位置抢回来吧。"
   }
 };

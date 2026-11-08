@@ -978,5 +978,8 @@
   "opensWorld": "{world} 열림",
   "weaponAtStars": "별 {count}개에서",
   "topTenIn": "{country} 상위 10위",
-  "friendsRankLine": "{count}명 중 #{place}"
+  "friendsRankLine": "{count}명 중 #{place}",
+  "nPassedTitle": "추월당했어요",
+  "nPassedBody": "{name}님이 이번 주 순위에서 당신을 추월했어요. 자리를 되찾으세요.",
+  "reminderWeekCloses": "이번 주 순위가 6시간 후 마감돼요. 한 번 더 이기면 순위가 오를 수 있어요."
 }

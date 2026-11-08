@@ -2200,5 +2200,15 @@
         "type": "String"
       }
     }
-  }
+  },
+  "nPassedTitle": "You've been passed",
+  "nPassedBody": "{name} just passed you on this week's board. Take your place back.",
+  "@nPassedBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderWeekCloses": "This week's board closes in 6 hours. One more win could move you up."
 }

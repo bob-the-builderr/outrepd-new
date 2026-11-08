@@ -49,7 +49,8 @@ type Notice = {
     | 'friend_request'
     | 'friend_accepted'
     | 'challenged'
-    | 'live_invite';
+    | 'live_invite'
+    | 'passed';
   actor_name: string;
   you_won: boolean | null;
   your_reps: number | null;
@@ -85,6 +86,8 @@ function words(notice: Notice, language: string) {
       return { title: l.nChallengedTitle, body: fill(l.nChallengedBody) };
     case 'live_invite':
       return { title: l.nLiveTitle, body: fill(l.nLiveBody) };
+    case 'passed':
+      return { title: l.nPassedTitle, body: fill(l.nPassedBody) };
   }
 }
 

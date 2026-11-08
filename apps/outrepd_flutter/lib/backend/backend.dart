@@ -620,6 +620,10 @@ enum NoticeKind {
   /// A friend asked to go live. The invite itself lasts a minute; the notice
   /// stays as a record that they asked. See [Backend.liveInvites].
   liveInvite,
+
+  /// A friend passed this account on this week's board (notify.sql,
+  /// notify_passed).
+  passed,
 }
 
 // ──────────────────────────────── live matches ────────────────────────────────

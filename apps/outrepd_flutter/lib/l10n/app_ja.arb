@@ -978,5 +978,8 @@
   "opensWorld": "{world}が開く",
   "weaponAtStars": "星{count}個で",
   "topTenIn": "{country}でトップ10",
-  "friendsRankLine": "{count}人中 #{place}"
+  "friendsRankLine": "{count}人中 #{place}",
+  "nPassedTitle": "抜かれました",
+  "nPassedBody": "{name}さんが今週のランキングであなたを抜きました。順位を取り返そう。",
+  "reminderWeekCloses": "今週のランキングはあと6時間で締め切り。あと1勝で順位が上がるかも。"
 }

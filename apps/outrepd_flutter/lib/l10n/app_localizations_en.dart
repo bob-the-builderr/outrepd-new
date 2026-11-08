@@ -2234,6 +2234,17 @@ class LEn extends L {
   String get joinLive => 'Join';
 
   @override
+  String get nPassedTitle => 'You\'ve been passed';
+
+  @override
+  String nPassedBody(String name) {
+    return '${name} just passed you on this week\'s board. Take your place back.';
+  }
+
+  @override
+  String get reminderWeekCloses => 'This week\'s board closes in 6 hours. One more win could move you up.';
+
+  @override
   String get nLiveTitle => 'Live invite';
 
   @override

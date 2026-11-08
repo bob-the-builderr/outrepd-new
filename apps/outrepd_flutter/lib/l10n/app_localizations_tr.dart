@@ -2231,6 +2231,17 @@ class LTr extends L {
   String get joinLive => 'Katıl';
 
   @override
+  String get nPassedTitle => 'Geçildin';
+
+  @override
+  String nPassedBody(String name) {
+    return '${name} bu haftanın sıralamasında seni az önce geçti. Yerini geri al.';
+  }
+
+  @override
+  String get reminderWeekCloses => 'Bu haftanın sıralaması 6 saat içinde kapanıyor. Bir galibiyet daha seni yukarı taşıyabilir.';
+
+  @override
   String get nLiveTitle => 'Canlı davet';
 
   @override

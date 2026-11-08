@@ -2241,6 +2241,17 @@ class LEs extends L {
   String get joinLive => 'Unirme';
 
   @override
+  String get nPassedTitle => 'Te han superado';
+
+  @override
+  String nPassedBody(String name) {
+    return '${name} acaba de superarte en la tabla semanal. Recupera tu puesto.';
+  }
+
+  @override
+  String get reminderWeekCloses => 'La tabla semanal cierra en 6 horas. Una victoria más puede subirte.';
+
+  @override
   String get nLiveTitle => 'Invitación en vivo';
 
   @override

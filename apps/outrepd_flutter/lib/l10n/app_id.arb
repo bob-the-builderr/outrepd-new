@@ -978,5 +978,8 @@
   "opensWorld": "Membuka {world}",
   "weaponAtStars": "di {count} bintang",
   "topTenIn": "10 besar di {country}",
-  "friendsRankLine": "Kamu #{place} dari {count}"
+  "friendsRankLine": "Kamu #{place} dari {count}",
+  "nPassedTitle": "Kamu disalip",
+  "nPassedBody": "{name} baru saja menyalipmu di papan minggu ini. Rebut kembali posisimu.",
+  "reminderWeekCloses": "Papan minggu ini ditutup 6 jam lagi. Satu kemenangan lagi bisa menaikkan posisimu."
 }

@@ -2242,6 +2242,17 @@ class LFr extends L {
   String get joinLive => 'Rejoindre';
 
   @override
+  String get nPassedTitle => 'Tu t\'es fait dépasser';
+
+  @override
+  String nPassedBody(String name) {
+    return '${name} vient de te dépasser au classement de la semaine. Reprends ta place.';
+  }
+
+  @override
+  String get reminderWeekCloses => 'Le classement de la semaine se termine dans 6 heures. Une victoire de plus peut te faire monter.';
+
+  @override
   String get nLiveTitle => 'Invitation en direct';
 
   @override

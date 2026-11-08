@@ -545,6 +545,32 @@ as $$
    limit least(greatest(limit_to, 1), 500);
 $$;
 
+-- One lifter's points this week, by the same rule as week_points: for
+-- notify_passed, which asks about a few people a duel, not the whole board.
+create or replace function week_points_of(of_profile uuid, since timestamptz)
+returns int
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select coalesce((sum(s.pts) - least(0, min(s.so_far)))::int, 0)
+    from (
+      select x.pts, sum(x.pts) over (order by x.created_at, x.id
+                                     rows unbounded preceding) as so_far
+        from (
+          select coalesce(d.pts_challenger, 0) as pts, d.created_at, d.id
+            from duels d
+           where d.ranked and d.created_at >= since and d.challenger = of_profile
+          union all
+          select coalesce(d.pts_defender, 0), d.created_at, d.id
+            from duels d
+           where d.ranked and d.created_at >= since and d.defender = of_profile
+        ) x
+    ) s;
+$$;
+revoke all on function week_points_of(uuid, timestamptz) from public, anon, authenticated;
+
 -- Where the caller stands this week, and when it ends.
 -- With a country, as the month (2026-10-29). Dropped first: it took no
 -- argument before.

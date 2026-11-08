@@ -2235,6 +2235,17 @@ class LId extends L {
   String get joinLive => 'Gabung';
 
   @override
+  String get nPassedTitle => 'Kamu disalip';
+
+  @override
+  String nPassedBody(String name) {
+    return '${name} baru saja menyalipmu di papan minggu ini. Rebut kembali posisimu.';
+  }
+
+  @override
+  String get reminderWeekCloses => 'Papan minggu ini ditutup 6 jam lagi. Satu kemenangan lagi bisa menaikkan posisimu.';
+
+  @override
   String get nLiveTitle => 'Undangan langsung';
 
   @override

@@ -2236,6 +2236,17 @@ class LRu extends L {
   String get joinLive => 'Присоединиться';
 
   @override
+  String get nPassedTitle => 'Тебя обогнали';
+
+  @override
+  String nPassedBody(String name) {
+    return '${name} теперь выше тебя в таблице недели. Верни своё место.';
+  }
+
+  @override
+  String get reminderWeekCloses => 'Таблица недели закроется через 6 часов. Ещё одна победа может поднять тебя выше.';
+
+  @override
   String get nLiveTitle => 'Приглашение вживую';
 
   @override

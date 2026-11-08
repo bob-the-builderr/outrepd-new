@@ -2241,6 +2241,17 @@ class LIt extends L {
   String get joinLive => 'Partecipa';
 
   @override
+  String get nPassedTitle => 'Ti hanno superato';
+
+  @override
+  String nPassedBody(String name) {
+    return '${name} ti ha appena superato nella classifica della settimana. Riprenditi il posto.';
+  }
+
+  @override
+  String get reminderWeekCloses => 'La classifica della settimana chiude tra 6 ore. Una vittoria in più può farti salire.';
+
+  @override
   String get nLiveTitle => 'Invito live';
 
   @override

@@ -730,7 +730,10 @@ class SupabaseBackend implements Backend {
 
   @override
   Future<List<Notice>> notices() async {
-    final rows = await _db.rpc<List<dynamic>>('my_notifications');
+    final rows = await _db.rpc<List<dynamic>>(
+      'my_notifications',
+      params: {'with_passed': true},
+    );
     return [
       for (final row in rows.cast<Map<String, dynamic>>())
         Notice(
@@ -740,6 +743,7 @@ class SupabaseBackend implements Backend {
             'friend_accepted' => NoticeKind.friendAccepted,
             'challenged' => NoticeKind.challenged,
             'live_invite' => NoticeKind.liveInvite,
+            'passed' => NoticeKind.passed,
             _ => NoticeKind.raced,
           },
           at:
@@ -800,7 +804,10 @@ class SupabaseBackend implements Backend {
 
   @override
   Future<int> unreadNotices() async =>
-      (await _db.rpc<int>('unread_notifications'));
+      (await _db.rpc<int>(
+        'unread_notifications',
+        params: {'with_passed': true},
+      ));
 
   @override
   Future<void> readNotices() async {

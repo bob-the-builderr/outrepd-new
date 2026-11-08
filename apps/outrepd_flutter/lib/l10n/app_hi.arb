@@ -978,5 +978,8 @@
   "opensWorld": "{world} खोलता है",
   "weaponAtStars": "{count} स्टार पर",
   "topTenIn": "{country} में टॉप 10",
-  "friendsRankLine": "आप {count} में #{place} पर हैं"
+  "friendsRankLine": "आप {count} में #{place} पर हैं",
+  "nPassedTitle": "किसी ने आपको पीछे छोड़ दिया",
+  "nPassedBody": "{name} ने अभी इस हफ़्ते की रैंकिंग में आपको पीछे छोड़ दिया। अपनी जगह वापस लें।",
+  "reminderWeekCloses": "इस हफ़्ते की रैंकिंग 6 घंटे में बंद होगी। एक और जीत आपको ऊपर ले जा सकती है।"
 }

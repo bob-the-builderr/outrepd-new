@@ -978,5 +978,8 @@
   "opensWorld": "开启{world}",
   "weaponAtStars": "需要 {count} 颗星",
   "topTenIn": "{country}前 10 名",
-  "friendsRankLine": "你在 {count} 人中排第 {place}"
+  "friendsRankLine": "你在 {count} 人中排第 {place}",
+  "nPassedTitle": "你被超过了",
+  "nPassedBody": "{name} 刚刚在本周排行榜上超过了你。把位置抢回来吧。",
+  "reminderWeekCloses": "本周排行榜将在6小时后结算。再赢一场就可能上升。"
 }

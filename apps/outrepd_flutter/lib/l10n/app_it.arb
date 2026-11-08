@@ -978,5 +978,8 @@
   "opensWorld": "Apre {world}",
   "weaponAtStars": "a {count} stelle",
   "topTenIn": "Top 10 in {country}",
-  "friendsRankLine": "Sei #{place} su {count}"
+  "friendsRankLine": "Sei #{place} su {count}",
+  "nPassedTitle": "Ti hanno superato",
+  "nPassedBody": "{name} ti ha appena superato nella classifica della settimana. Riprenditi il posto.",
+  "reminderWeekCloses": "La classifica della settimana chiude tra 6 ore. Una vittoria in più può farti salire."
 }

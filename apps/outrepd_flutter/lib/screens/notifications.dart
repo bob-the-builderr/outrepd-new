@@ -147,6 +147,7 @@ class _NoticeTile extends StatelessWidget {
       NoticeKind.friendAccepted => l.nFriendOkTitle,
       NoticeKind.challenged => l.nChallengedTitle,
       NoticeKind.liveInvite => l.nLiveTitle,
+      NoticeKind.passed => l.nPassedTitle,
     };
 
     final detail = switch (notice.kind) {
@@ -155,6 +156,7 @@ class _NoticeTile extends StatelessWidget {
       NoticeKind.friendAccepted => l.nFriendOkBody(notice.actorName),
       NoticeKind.challenged => l.nChallengedBody(notice.actorName),
       NoticeKind.liveInvite => l.nLiveBody(notice.actorName),
+      NoticeKind.passed => l.nPassedBody(notice.actorName),
     };
 
     // Each one opens what it is about. A challenge opens the duel it asks
@@ -208,6 +210,9 @@ class _NoticeTile extends StatelessWidget {
       NoticeKind.friendRequest => () =>
           Navigator.of(context).pop(NoticeExit.friendRequests),
       NoticeKind.friendAccepted when notice.actorId != null => () =>
+          _openProfile(context, notice),
+      // Who passed them: their profile, and from there a challenge.
+      NoticeKind.passed when notice.actorId != null => () =>
           _openProfile(context, notice),
       _ => null,
     };

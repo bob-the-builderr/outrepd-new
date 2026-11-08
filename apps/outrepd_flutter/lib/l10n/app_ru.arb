@@ -978,5 +978,8 @@
   "opensWorld": "Открывает {world}",
   "weaponAtStars": "за {count} звёзд",
   "topTenIn": "Топ-10 в стране: {country}",
-  "friendsRankLine": "Ты #{place} из {count}"
+  "friendsRankLine": "Ты #{place} из {count}",
+  "nPassedTitle": "Тебя обогнали",
+  "nPassedBody": "{name} теперь выше тебя в таблице недели. Верни своё место.",
+  "reminderWeekCloses": "Таблица недели закроется через 6 часов. Ещё одна победа может поднять тебя выше."
 }

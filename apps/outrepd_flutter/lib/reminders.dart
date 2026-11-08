@@ -19,6 +19,7 @@ import 'package:timezone/data/latest.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
 
 import 'career.dart';
+import 'data.dart';
 import 'l10n/app_localizations.dart';
 import 'push.dart';
 import 'rewards.dart';
@@ -90,6 +91,20 @@ List<ReminderSlot> reminderSlots({
   return slots;
 }
 
+/// When to say this week's board is about to close: six hours before it does,
+/// at Monday 00:00 UTC (week_start in seasons.sql). The next such moment
+/// after [now].
+DateTime weekClosingReminderAt(DateTime now) {
+  final utc = now.toUtc();
+  final monday = DateTime.utc(utc.year, utc.month, utc.day)
+      .subtract(Duration(days: utc.weekday - DateTime.monday));
+  var at = monday
+      .add(const Duration(days: 7))
+      .subtract(const Duration(hours: 6));
+  if (!at.isAfter(utc)) at = at.add(const Duration(days: 7));
+  return at;
+}
+
 class Reminders {
   Reminders._();
 
@@ -98,6 +113,9 @@ class Reminders {
   /// Ids of the week's reminders. Far from anything else the plugin shows.
   static const _firstId = 7000;
   static const _days = 7;
+
+  /// The week's last call, apart from the days' reminders.
+  static const _weekId = 7100;
 
   /// Android's notification channels. `matches` is also named in the
   /// manifest as the channel a push lands in.
@@ -174,6 +192,7 @@ class Reminders {
       for (var i = 0; i < _days; i++) {
         await _plugin.cancel(id: _firstId + i);
       }
+      await _plugin.cancel(id: _weekId);
       if (!settings.reminder) return;
 
       final l = _words;
@@ -208,6 +227,26 @@ class Reminders {
           ),
           // Inexact: a reminder a few minutes late is fine, and exact alarms
           // need a permission Google Play asks apps to justify.
+          androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        );
+      }
+      // The week's board about to close, for anybody with a place on it
+      // (the user's pick, 2026-11-09): once a week, with the reminders.
+      if (demoProfile.isRanked) {
+        await _plugin.zonedSchedule(
+          id: _weekId,
+          title: l.reminderTitle,
+          body: l.reminderWeekCloses,
+          scheduledDate: tz.TZDateTime.from(weekClosingReminderAt(DateTime.now()), tz.UTC),
+          notificationDetails: NotificationDetails(
+            android: AndroidNotificationDetails(
+              remindersChannel,
+              l.channelReminders,
+              icon: 'ic_stat_outrepd',
+              color: const Color(0xFFE8846B),
+            ),
+            iOS: const DarwinNotificationDetails(),
+          ),
           androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
         );
       }

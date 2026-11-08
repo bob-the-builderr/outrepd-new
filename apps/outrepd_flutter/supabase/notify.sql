@@ -24,7 +24,7 @@ create table if not exists notifications (
   read_at     timestamptz,
 
   kind text not null
-       check (kind in ('raced', 'friend_request', 'friend_accepted', 'challenged', 'live_invite')),
+       check (kind in ('raced', 'friend_request', 'friend_accepted', 'challenged', 'live_invite', 'passed')),
 
   -- Who caused it. The id can go — accounts get deleted — so the name is
   -- kept beside it: a notification that has forgotten who it was about is
@@ -50,7 +50,7 @@ alter table notifications add column if not exists lp_delta int;
 -- 'live_invite' (live.sql) existed.
 alter table notifications drop constraint if exists notifications_kind_check;
 alter table notifications add constraint notifications_kind_check
-  check (kind in ('raced', 'friend_request', 'friend_accepted', 'challenged', 'live_invite'));
+  check (kind in ('raced', 'friend_request', 'friend_accepted', 'challenged', 'live_invite', 'passed'));
 
 -- Everything reads "mine, newest first", and the badge counts the unread.
 create index if not exists notifications_for_profile_idx
@@ -249,6 +249,88 @@ create trigger sets_notify_challenged
   after insert on sets
   for each row execute function notify_challenged();
 
+-- ──────────────────────────── being passed ────────────────────────────────────
+
+-- A friend passed you on this week's board (the user's pick, 2026-11-09): the
+-- one moment in a race worth hearing about while away. Only between friends,
+-- where a place means something and the board is small enough to feel; never
+-- the one this duel was against, who was told it was raced; nobody who has not
+-- scored this week, for whom "passed" is not true. At most once a day for the
+-- same friend and three a day in all, or a busy circle is a phone that never
+-- stops buzzing. Muted with the races (notify_raced). Deferred to the end of
+-- the duel's transaction, like season_points_add: a live duel's points are
+-- final only then.
+create or replace function notify_passed()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  d duels;
+  since timestamptz := week_start(now());
+  side record;
+  friend record;
+  now_points int;
+  theirs int;
+  passer text;
+begin
+  select * into d from duels where id = new.id;
+  if d.id is null or not d.ranked then
+    return null;
+  end if;
+  for side in
+    select d.challenger as pid, coalesce(d.pts_challenger, 0) as gained,
+           d.defender as other
+    union all
+    select d.defender, coalesce(d.pts_defender, 0), d.challenger
+  loop
+    continue when side.gained <= 0;
+    now_points := week_points_of(side.pid, since);
+    select username into passer from profiles where id = side.pid;
+    for friend in
+      select case when f.requester = side.pid then f.addressee
+                  else f.requester end as fid
+        from friendships f
+       where f.accepted_at is not null
+         and (f.requester = side.pid or f.addressee = side.pid)
+    loop
+      continue when friend.fid = side.other;
+      continue when not exists (
+        select 1 from profiles p
+         where p.id = friend.fid and p.notify_raced and p.placements_done >= 5);
+      theirs := week_points_of(friend.fid, since);
+      -- Level or ahead before this duel, behind after it.
+      continue when theirs <= 0
+                 or theirs < now_points - side.gained
+                 or theirs >= now_points;
+      continue when exists (
+        select 1 from blocks b
+         where (b.blocker = friend.fid and b.blocked = side.pid)
+            or (b.blocker = side.pid and b.blocked = friend.fid));
+      continue when exists (
+        select 1 from notifications n
+         where n.profile_id = friend.fid and n.kind = 'passed'
+           and n.actor = side.pid
+           and n.created_at > now() - interval '20 hours');
+      continue when (
+        select count(*) from notifications n
+         where n.profile_id = friend.fid and n.kind = 'passed'
+           and n.created_at > now() - interval '24 hours') >= 3;
+      insert into notifications (profile_id, kind, actor, actor_name)
+      values (friend.fid, 'passed', side.pid, coalesce(passer, ''));
+    end loop;
+  end loop;
+  return null;
+end;
+$$;
+
+drop trigger if exists duels_notify_passed on duels;
+create constraint trigger duels_notify_passed
+  after insert on duels
+  deferrable initially deferred
+  for each row execute function notify_passed();
+
 -- ──────────────────────────────── reading ────────────────────────────────────
 
 -- Mine, newest first.
@@ -257,8 +339,14 @@ create trigger sets_notify_challenged
 -- function's column set changes shape (adding `actor` and `lp_delta` did),
 -- and fails with a "cannot change return type" error that names DROP as the
 -- fix.
+-- with_passed: an app that knows the notice of being passed asks for it; one
+-- from before would show it as a race it cannot read.
 drop function if exists my_notifications(int);
-create or replace function my_notifications(limit_to int default 50)
+drop function if exists my_notifications(int, boolean);
+create or replace function my_notifications(
+  limit_to int default 50,
+  with_passed boolean default false
+)
 returns table (
   id uuid,
   kind text,
@@ -280,19 +368,22 @@ as $$
          n.lp_delta
     from notifications n
    where n.profile_id = auth.uid()
+     and (with_passed or n.kind <> 'passed')
    order by n.created_at desc
    limit least(greatest(limit_to, 1), 200);
 $$;
 
 -- What the dot on the bell is counting.
-create or replace function unread_notifications()
+drop function if exists unread_notifications();
+create or replace function unread_notifications(with_passed boolean default false)
 returns int
 language sql
 stable
 set search_path = public
 as $$
   select count(*)::int from notifications
-   where profile_id = auth.uid() and read_at is null;
+   where profile_id = auth.uid() and read_at is null
+     and (with_passed or kind <> 'passed');
 $$;
 
 -- Marks the lot as read, which is what opening the screen means.
@@ -316,9 +407,9 @@ begin
 end;
 $$;
 
-revoke all on function my_notifications(int) from public;
-grant execute on function my_notifications(int) to authenticated;
-revoke all on function unread_notifications() from public;
-grant execute on function unread_notifications() to authenticated;
+revoke all on function my_notifications(int, boolean) from public;
+grant execute on function my_notifications(int, boolean) to authenticated;
+revoke all on function unread_notifications(boolean) from public;
+grant execute on function unread_notifications(boolean) to authenticated;
 revoke all on function read_notifications() from public;
 grant execute on function read_notifications() to authenticated;

@@ -978,5 +978,8 @@
   "opensWorld": "{world} açılır",
   "weaponAtStars": "{count} yıldızda",
   "topTenIn": "{country} içinde ilk 10",
-  "friendsRankLine": "{count} kişiden #{place}. sıradasın"
+  "friendsRankLine": "{count} kişiden #{place}. sıradasın",
+  "nPassedTitle": "Geçildin",
+  "nPassedBody": "{name} bu haftanın sıralamasında seni az önce geçti. Yerini geri al.",
+  "reminderWeekCloses": "Bu haftanın sıralaması 6 saat içinde kapanıyor. Bir galibiyet daha seni yukarı taşıyabilir."
 }

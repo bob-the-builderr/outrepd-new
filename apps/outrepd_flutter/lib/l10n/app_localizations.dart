@@ -4157,6 +4157,24 @@ abstract class L {
   /// **'Join'**
   String get joinLive;
 
+  /// No description provided for @nPassedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve been passed'**
+  String get nPassedTitle;
+
+  /// No description provided for @nPassedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} just passed you on this week\'s board. Take your place back.'**
+  String nPassedBody(String name);
+
+  /// No description provided for @reminderWeekCloses.
+  ///
+  /// In en, this message translates to:
+  /// **'This week\'s board closes in 6 hours. One more win could move you up.'**
+  String get reminderWeekCloses;
+
   /// No description provided for @nLiveTitle.
   ///
   /// In en, this message translates to:

@@ -974,6 +974,72 @@ select check_that(count(*) = 0,
      or has_table_privilege('anon', c.oid, 'update')
      or has_table_privilege('anon', c.oid, 'delete'));
 
+-- ── a friend passing you this week ────────────────────────────────────────────
+
+-- A and B are friends. B scores this week; then A wins enough to pass B. B is
+-- told, once; a second pass the same day is not told again.
+insert into friendships (requester, addressee, accepted_at)
+select :'A', :'B', now()
+ where not exists (select 1 from friendships
+                    where (requester = :'A' and addressee = :'B')
+                       or (requester = :'B' and addressee = :'A'));
+update friendships set accepted_at = coalesce(accepted_at, now())
+ where (requester = :'A' and addressee = :'B') or (requester = :'B' and addressee = :'A');
+delete from notifications where profile_id = :'B' and kind = 'passed';
+insert into sets (profile_id, reps, reps_camera, duration_ms)
+values (:'A', 30, 30, 60000), (:'B', 30, 30, 60000), (:'D', 5, 5, 60000);
+select set_config('test.gap', greatest(
+  week_points_of(:'A', week_start(now())) - week_points_of(:'B', week_start(now())) + 40,
+  1)::text, false);
+insert into duels (challenger, defender, challenger_set, defender_set,
+                   winner, ranked, lp_challenger, lp_defender,
+                   pts_challenger, pts_defender)
+values (:'B', :'D',
+        (select id from sets where profile_id = :'B' order by created_at desc limit 1),
+        (select id from sets where profile_id = :'D' order by created_at desc limit 1),
+        :'B', true, 0, 0, current_setting('test.gap')::int, 0);
+select check_that(week_points_of(:'B', week_start(now()))
+                    > week_points_of(:'A', week_start(now())),
+                  'the test could not put B ahead of A this week');
+select set_config('test.gap', (
+  week_points_of(:'B', week_start(now())) - week_points_of(:'A', week_start(now())) + 5
+)::text, false);
+insert into duels (challenger, defender, challenger_set, defender_set,
+                   winner, ranked, lp_challenger, lp_defender,
+                   pts_challenger, pts_defender)
+values (:'A', :'D',
+        (select id from sets where profile_id = :'A' order by created_at desc limit 1),
+        (select id from sets where profile_id = :'D' order by created_at desc limit 1),
+        :'A', true, 0, 0, current_setting('test.gap')::int, 0);
+select check_that(exists (select 1 from notifications
+                           where profile_id = :'B' and kind = 'passed' and actor = :'A'),
+                  'a friend passing you this week was not told');
+-- B takes it back, and A passes again: not told twice in a day.
+insert into duels (challenger, defender, challenger_set, defender_set,
+                   winner, ranked, lp_challenger, lp_defender,
+                   pts_challenger, pts_defender)
+values (:'B', :'D',
+        (select id from sets where profile_id = :'B' order by created_at desc limit 1),
+        (select id from sets where profile_id = :'D' order by created_at desc limit 1),
+        :'B', true, 0, 0, 20, 0);
+insert into duels (challenger, defender, challenger_set, defender_set,
+                   winner, ranked, lp_challenger, lp_defender,
+                   pts_challenger, pts_defender)
+values (:'A', :'D',
+        (select id from sets where profile_id = :'A' order by created_at desc limit 1),
+        (select id from sets where profile_id = :'D' order by created_at desc limit 1),
+        :'A', true, 0, 0, 40, 0);
+select check_that((select count(*) from notifications
+                    where profile_id = :'B' and kind = 'passed' and actor = :'A') = 1,
+                  'being passed by the same friend was told twice in a day');
+-- An app from before it knew the notice does not see it in its list.
+select as_user(:'B'); set role authenticated;
+select check_that(not exists (select 1 from my_notifications() where kind = 'passed'),
+                  'an older app was shown a notice it cannot read');
+select check_that(exists (select 1 from my_notifications(50, true) where kind = 'passed'),
+                  'the app that knows it was not shown being passed');
+reset role;
+
 -- And as a request would actually try it.
 select as_user(null); set role anon;
 select must_fail('signed out, a lifter''s profile',

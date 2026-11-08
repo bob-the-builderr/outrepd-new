@@ -2201,6 +2201,17 @@ class LJa extends L {
   String get joinLive => '参加';
 
   @override
+  String get nPassedTitle => '抜かれました';
+
+  @override
+  String nPassedBody(String name) {
+    return '${name}さんが今週のランキングであなたを抜きました。順位を取り返そう。';
+  }
+
+  @override
+  String get reminderWeekCloses => '今週のランキングはあと6時間で締め切り。あと1勝で順位が上がるかも。';
+
+  @override
   String get nLiveTitle => 'ライブの招待';
 
   @override
