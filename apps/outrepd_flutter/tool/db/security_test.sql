@@ -959,8 +959,10 @@ select check_that(count(*) = 0,
   join pg_namespace n on n.oid = p.pronamespace
  where n.nspname = 'public'
    and has_function_privilege('anon', p.oid, 'execute')
-   -- The share card, and this file's own helpers.
-   and p.proname not in ('public_lifter_card', 'as_user', 'must_fail', 'check_that');
+   -- The share card, the challenge card (challenge.sql), and this file's own
+   -- helpers.
+   and p.proname not in ('public_lifter_card', 'public_challenge_card',
+                         'as_user', 'must_fail', 'check_that');
 
 select check_that(count(*) = 0,
                   'signed out, these tables still allow something: '

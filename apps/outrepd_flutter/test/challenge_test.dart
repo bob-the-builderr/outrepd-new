@@ -150,6 +150,21 @@ void _tall(WidgetTester tester) {
   addTearDown(tester.view.reset);
 }
 
+/// Pumps [app] and fails with the whole report of anything that went wrong
+/// — which widget, and where — rather than its one-line message.
+Future<void> _laysOut(WidgetTester tester, Widget app) async {
+  final errors = <FlutterErrorDetails>[];
+  final old = FlutterError.onError;
+  FlutterError.onError = errors.add;
+  try {
+    await tester.pumpWidget(app);
+    await tester.pumpAndSettle();
+  } finally {
+    FlutterError.onError = old;
+  }
+  expect([for (final e in errors) e.toString()], isEmpty);
+}
+
 void main() {
   setUp(() => backend = _Server());
   tearDown(() => backend = const NoBackend());
@@ -349,17 +364,13 @@ void main() {
     for (final scale in [1.0, 1.3, 1.6]) {
       testWidgets('$name lays out at ${scale}x', (tester) async {
         _small(tester);
-        await tester.pumpWidget(_app(screen(), scale: scale));
-        await tester.pumpAndSettle();
-        expect(tester.takeException(), isNull);
+        await _laysOut(tester, _app(screen(), scale: scale));
       });
     }
     for (final code in ['hi', 'de', 'ja', 'ru', 'tr']) {
       testWidgets('$name lays out in $code', (tester) async {
         _small(tester);
-        await tester.pumpWidget(_app(screen(), scale: 1.3, locale: Locale(code)));
-        await tester.pumpAndSettle();
-        expect(tester.takeException(), isNull);
+        await _laysOut(tester, _app(screen(), scale: 1.3, locale: Locale(code)));
       });
     }
   }

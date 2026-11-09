@@ -661,10 +661,14 @@ class _TakeRow extends StatelessWidget {
           if (onTakeBack != null)
             FilledButton(
               onPressed: busy ? null : onTakeBack,
+              // A chip of a button, in the theme's own type: a style with no
+              // family of its own would fall back to another font.
               style: FilledButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 minimumSize: const Size(0, 34),
-                textStyle: const TextStyle(
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                visualDensity: VisualDensity.compact,
+                textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
                   fontSize: 13.5,
                   fontWeight: FontWeight.w700,
                 ),
@@ -1038,15 +1042,22 @@ class _BoardCaption extends StatelessWidget {
               ),
             ),
           ),
-          if (right case final text?)
-            Text(
-              text,
-              style: TextStyle(
-                color: rightColour ?? context.colors.text,
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
+          if (right case final text?) ...[
+            const SizedBox(width: 10),
+            // Room for both: a long count in a long language wraps rather
+            // than pushing the row off the screen.
+            Flexible(
+              child: Text(
+                text,
+                textAlign: TextAlign.end,
+                style: TextStyle(
+                  color: rightColour ?? context.colors.text,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
+          ],
         ],
       ),
     );
