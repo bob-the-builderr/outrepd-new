@@ -565,7 +565,7 @@ void main() {
         opponentTier: demoProfile.tierIdx,
         clean: true,
       );
-      expect(rewards.has('clean_hands'), isTrue);
+      expect(rewards.has('clean_form_1'), isTrue);
     });
   });
 

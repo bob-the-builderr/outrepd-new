@@ -151,13 +151,17 @@ class _AwardsScreenState extends State<AwardsScreen> {
                   localNumber(context, kAwardSpecials.length),
                 ),
               ),
-              GridView.count(
-                crossAxisCount: 3,
+              GridView(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                mainAxisSpacing: 8,
-                crossAxisSpacing: 8,
-                childAspectRatio: 0.82,
+                // A fixed height, and each tile's words scaled to fit it: the
+                // width is a third of the phone's, whatever the phone.
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  mainAxisExtent: 142,
+                ),
                 children: [
                   for (final f in kAwardFamilies)
                     _FamilyTile(
@@ -435,7 +439,11 @@ class _FamilyTile extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(6, 12, 6, 10),
-              child: Column(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.topCenter,
+                child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   AwardRing(
                     size: 76,
@@ -458,6 +466,7 @@ class _FamilyTile extends StatelessWidget {
                   const SizedBox(height: 4),
                   TierPips(reached: held + 1),
                 ],
+              ),
               ),
             ),
             if (family.isNew && held < 0) const Positioned(right: 7, top: 7, child: _NewChip()),
@@ -489,7 +498,11 @@ class _SpecialTile extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(6, 12, 6, 10),
-              child: Column(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.topCenter,
+                child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(
                     width: 76,
@@ -506,6 +519,7 @@ class _SpecialTile extends StatelessWidget {
                   const SizedBox(height: 4),
                   Icon(Icons.star_rounded, size: 12, color: has ? tierColour(special.tier) : colors.border),
                 ],
+              ),
               ),
             ),
             if (special.isNew && !has) const Positioned(right: 7, top: 7, child: _NewChip()),
