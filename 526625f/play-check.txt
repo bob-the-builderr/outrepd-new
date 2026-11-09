@@ -1,0 +1,25 @@
+build-tools 37.0.0
+package: name='com.outrepd.outrepd' versionCode='340' versionName='1.1.7' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'
+targetSdkVersion:'36'
+permission  com.google.android.gms.permission.AD_ID
+permission  android.permission.INTERNET
+permission  android.permission.CAMERA
+permission  android.permission.POST_NOTIFICATIONS
+permission  android.permission.RECEIVE_BOOT_COMPLETED
+permission  android.permission.WRITE_EXTERNAL_STORAGE
+permission  android.permission.READ_EXTERNAL_STORAGE
+permission  android.permission.ACCESS_NETWORK_STATE
+permission  android.permission.WAKE_LOCK
+permission  android.permission.VIBRATE
+permission  android.permission.ACCESS_ADSERVICES_TOPICS
+permission  android.permission.ACCESS_ADSERVICES_ATTRIBUTION
+permission  com.google.android.c2dm.permission.RECEIVE
+permission  com.android.vending.BILLING
+permission  android.permission.ACCESS_ADSERVICES_AD_ID
+permission  android.permission.USE_BIOMETRIC
+permission  android.permission.USE_FINGERPRINT
+permission  android.permission.FOREGROUND_SERVICE
+permission  com.outrepd.outrepd.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+-- 16 KB pages
+every arm64 and x86_64 library is aligned to 16 KB
+the APK's zip layout is 16 KB aligned
