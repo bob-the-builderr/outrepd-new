@@ -152,6 +152,8 @@ class MonthRecap {
 class RecapStore extends ChangeNotifier {
   RecapStore({DateTime Function()? clock, int Function(DateTime day)? repsOn})
     : _clock = clock ?? DateTime.now,
+      // A named parameter cannot be private, so it cannot set _repsOn itself.
+      // ignore: prefer_initializing_formals
       _repsOn = repsOn;
 
   final DateTime Function() _clock;

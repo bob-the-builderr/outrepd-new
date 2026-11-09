@@ -98,7 +98,7 @@ class _ConfettiPainter extends CustomPainter {
     final paint = Paint();
     for (var i = 0; i < count; i++) {
       final x = r.nextDouble() * size.width;
-      final endY = r.nextDouble() * size.height * 0.55;
+      final endY = r.nextDouble() * size.height * 0.4;
       final startY = endY - size.height * (0.4 + r.nextDouble() * 0.4);
       final y = startY + (endY - startY) * t;
       final w = 5 + r.nextDouble() * 7, h = 9 + r.nextDouble() * 10;
