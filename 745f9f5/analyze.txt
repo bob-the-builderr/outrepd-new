@@ -1,0 +1,5 @@
+Analyzing outrepd_flutter...                                    
+
+   info • Use an initializing formal to assign a parameter to a field. Try using an initialing formal ('this._repsOn') to initialize the field • lib/moments.dart:155:7 • prefer_initializing_formals
+
+1 issue found. (ran in 21.8s)
