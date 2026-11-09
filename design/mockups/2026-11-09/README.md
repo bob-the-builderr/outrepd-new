@@ -25,3 +25,16 @@ branch, so each person keeps one face:
 - `now_tab_match.png` is `tab_match`.
 
 The chat is an example messenger.
+
+Rewarded ads: a short video the player chooses to watch, for something that
+never touches the ranked ladder. Pro gets the reward with no video, and
+watching one means no interstitial after that match. The pages load
+`challenge.js` for its helpers.
+
+- `rewarded_a.html`: A. "Double it" on the result screen's XP card.
+- `rewarded_b.html`: B. A home card that brings back a streak the rest days
+  could not cover, once a week.
+- `rewarded_c.html`: C. A locked Pro part can be worn free for a day.
+
+Pictures come from the `result_win`, `tab_match`, `tab_profile` and
+`pro_parts_1` screens of `ci-results`.
