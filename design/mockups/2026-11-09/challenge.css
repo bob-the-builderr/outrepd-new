@@ -1,0 +1,72 @@
+*{box-sizing:border-box}
+:root{--bg:#121110;--card:#1C1B19;--raised:#262421;--line:#2A2724;--text:#F4EDE4;--muted:#9B9489;--cream:#E8DCC8;--rival:#E8846B;--gold:#D9A94A;--win:#3DBB6B}
+html,body{margin:0;background:#0b0a0a;color:var(--text);font-family:'Noto Sans',sans-serif}
+.sec{font:800 26px Cairo,sans-serif;direction:rtl;text-align:right;padding:18px 24px 0;color:#fff}
+.sec small{display:block;font:500 15px/1.6 Cairo,sans-serif;color:#c5bfb6;margin-top:2px}
+.row{display:flex;gap:24px;padding:10px 24px 20px;align-items:flex-start;justify-content:flex-end;flex-direction:row-reverse}
+.lab{font:800 18px Cairo,sans-serif;direction:rtl;text-align:right;margin-bottom:6px;color:#fff;height:52px}
+.lab small{display:block;font:500 13px Cairo,sans-serif;color:#b3ada4}
+.phone{width:412px;height:915px;background:var(--bg);border-radius:22px;overflow:hidden;position:relative}
+.abs{position:absolute}
+.face{border-radius:50%;flex:none;background-repeat:no-repeat}
+.big{font:900 120px/1 'Noto Sans';letter-spacing:-3px}
+
+/* buttons, the app's own */
+.btn{display:flex;align-items:center;justify-content:center;gap:9px;border-radius:26px;font:600 17px 'Noto Sans';height:52px}
+.btn.pri{background:var(--cream);color:#121110;font-size:18px}
+.btn.sec2{background:var(--raised);color:var(--text)}
+.btn.ch{background:#2B1E19;color:var(--text);box-shadow:inset 0 0 0 1.5px var(--rival)}
+
+/* the card that goes out, 412 x 515 like share_card's post */
+.card{width:412px;height:515px;position:relative;overflow:hidden;
+  background:radial-gradient(120% 80% at 50% 38%,#3a2d1a 0%,#1d1812 55%,#121110 100%);text-align:center}
+.card .brand{font:700 12px 'Noto Sans';letter-spacing:5px;color:#d9cfbf;padding-top:22px}
+.card .who{font:700 17px 'Noto Sans';color:var(--text)}
+.card .sub{font:500 15px 'Noto Sans';color:#cfc6b8}
+.card .beat{font:900 26px 'Noto Sans';color:var(--rival);letter-spacing:.5px}
+.card .link{display:inline-block;margin-top:14px;padding:7px 16px;border-radius:16px;background:#1b1916;box-shadow:inset 0 0 0 1px #3a352e;font:600 13.5px 'Noto Sans';color:#d9cfbf}
+.card .link.hot{background:var(--rival);color:#1a0f0b;box-shadow:none;font-weight:800}
+
+/* a chat on the friend's phone (an example messenger, dark) */
+.chat{position:absolute;inset:0;background:#0b141a}
+.chead{height:96px;background:#1f2c34;display:flex;align-items:flex-end;gap:10px;padding:0 14px 12px}
+.chead b{font:600 17px 'Noto Sans';display:block}.chead span{font:400 12.5px 'Noto Sans';color:#8fa3ad}
+.cbody{padding:14px 12px;display:flex;flex-direction:column;gap:6px}
+.bub{max-width:300px;border-radius:12px;padding:6px 8px 18px 9px;font:400 15px/1.4 'Noto Sans';position:relative;color:#e9edef}
+.bub.in{background:#1f2c34;align-self:flex-start;border-top-left-radius:2px}
+.bub.out{background:#005c4b;align-self:flex-end;border-top-right-radius:2px;padding-right:46px}
+.bub .t{position:absolute;right:8px;bottom:3px;font-size:11px;color:#8fa3ad}
+.bub a{color:#53bdeb;text-decoration:none}
+.prev{background:#17222a;border-radius:8px;overflow:hidden;margin:-2px -4px 6px}
+.prev b{display:block;font:600 13.5px 'Noto Sans';padding:7px 9px 0}
+.prev span{display:block;font:400 12px 'Noto Sans';color:#8fa3ad;padding:2px 9px 8px}
+.cin{position:absolute;left:8px;right:8px;bottom:14px;height:48px;border-radius:24px;background:#1f2c34;color:#8fa3ad;font:400 16px 'Noto Sans';display:flex;align-items:center;padding-left:18px}
+
+/* the web page */
+.url{height:92px;background:#1d1c1b;display:flex;align-items:flex-end;padding:0 14px 12px}
+.url div{flex:1;height:40px;border-radius:20px;background:#2b2927;display:flex;align-items:center;gap:8px;padding:0 16px;font:500 15px 'Noto Sans';color:#d8d1c6}
+
+/* lists */
+.box{background:var(--card);border-radius:18px}
+.lr{display:flex;align-items:center;gap:10px;height:54px;padding:0 14px}
+.lr+.lr{border-top:1px solid var(--line)}
+.lr .n{flex:1;font:600 15px 'Noto Sans';white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lr .n small{display:block;font:500 12px 'Noto Sans';color:var(--muted)}
+.lr .r{font:800 20px 'Noto Sans'}
+.lr.me{box-shadow:inset 0 0 0 1.5px var(--cream);border-radius:12px}
+.pl{width:22px;font:700 14px 'Noto Sans';color:var(--muted);text-align:center;flex:none}
+.cap{font:600 14px 'Noto Sans';color:var(--muted);display:flex;justify-content:space-between;padding:0 4px;margin-bottom:8px}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:20px;background:#1c1b19;box-shadow:inset 0 0 0 1px #34302b;font:800 14px 'Noto Sans';letter-spacing:1.2px}
+.pill i{width:9px;height:9px;border-radius:50%;background:var(--rival)}
+.mini{font:500 13.5px/1.5 'Noto Sans';color:var(--muted)}
+.tag{font:800 11px 'Noto Sans';padding:3px 7px;border-radius:7px;flex:none}
+.tag.beat{background:#3a1f17;color:var(--rival)}.tag.held{background:#20291f;color:#8fd19e}
+.go{font:700 13.5px 'Noto Sans';color:#121110;background:var(--cream);border-radius:14px;padding:6px 12px;flex:none}
+.push{position:absolute;left:10px;right:10px;top:12px;border-radius:20px;background:rgba(58,55,51,.97);padding:12px 14px;display:flex;gap:11px;box-shadow:0 10px 30px rgba(0,0,0,.6);z-index:5}
+.push .ic{width:38px;height:38px;border-radius:9px;background:#121110;display:flex;align-items:center;justify-content:center;font:900 15px 'Noto Sans';color:var(--cream);flex:none}
+.push b{font:600 14.5px 'Noto Sans'}.push p{margin:2px 0 0;font:400 14px/1.35 'Noto Sans';color:#e8e2d8}
+.push .tm{font:400 12.5px 'Noto Sans';color:#b8b0a4;float:right}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:#201f1d;border-radius:26px 26px 0 0;padding:14px 18px 22px}
+.apps{display:flex;justify-content:space-between;margin-top:14px}
+.apps div{width:72px;text-align:center;font:500 12px 'Noto Sans';color:#cfc6b8}
+.apps i{display:block;width:52px;height:52px;border-radius:50%;margin:0 auto 6px}
