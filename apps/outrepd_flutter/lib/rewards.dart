@@ -528,6 +528,33 @@ class Rewards extends ChangeNotifier {
 
   int restUsedThisWeek = 0;
 
+  /// When a broken streak was last brought back with a rewarded video: once
+  /// a week (the user's pick, 2026-11-09, B).
+  DateTime? streakSaved;
+
+  /// Whether the streak has just ended and may be brought back: there was
+  /// one, training today would no longer carry it on, and none was brought
+  /// back in the last week.
+  bool get streakRestorable {
+    if (streak <= 0 || lastSession == null || streakAlive) return false;
+    final saved = streakSaved;
+    return saved == null ||
+        DateTime.now().difference(saved) >= const Duration(days: 7);
+  }
+
+  /// Brings the streak back: the days missed are forgiven, as if the last
+  /// session were yesterday with the week's rest days spent. Today's
+  /// session then carries it on.
+  Future<void> restoreStreak() async {
+    if (!streakRestorable) return;
+    final now = DateTime.now();
+    lastSession = DateTime(now.year, now.month, now.day - 1, 12);
+    restUsedThisWeek = kRestDaysPerWeek;
+    streakSaved = now;
+    await _save();
+    notifyListeners();
+  }
+
   /// Whole days between the last session and today, or null before the first.
   int? get _daysSinceSession {
     final last = lastSession;
@@ -608,6 +635,10 @@ class Rewards extends ChangeNotifier {
     perfectDayRun = store.getInt('perfectDayRun') ?? 0;
     perfectWeeksCount = store.getInt('perfectWeeksCount') ?? 0;
     wearing = store.getString('wearingTitle');
+    final saved = store.getInt('streakSaved');
+    streakSaved = saved == null
+        ? null
+        : DateTime.fromMillisecondsSinceEpoch(saved);
 
     final stamp = store.getInt('lastSession');
     lastSession = stamp == null
@@ -794,6 +825,7 @@ class Rewards extends ChangeNotifier {
     'earned': earned.toList()..sort(),
     if (wearing != null) 'wearing': wearing,
     if (lastSession case final last?) 'lastSession': last.millisecondsSinceEpoch,
+    if (streakSaved case final saved?) 'streakSaved': saved.millisecondsSinceEpoch,
   };
 
   /// Takes in [held], the account's copy, the way the server merges: every
@@ -814,6 +846,12 @@ class Rewards extends ChangeNotifier {
     earlySessions = larger(earlySessions, number('earlySessions'));
     lateSessions = larger(lateSessions, number('lateSessions'));
     perfectWeeksCount = larger(perfectWeeksCount, number('perfectWeeks'));
+    final theirSaved = (held['streakSaved'] as num?)?.toInt();
+    if (theirSaved != null &&
+        theirSaved > (streakSaved?.millisecondsSinceEpoch ?? 0)) {
+      streakSaved = DateTime.fromMillisecondsSinceEpoch(theirSaved);
+      changed = true;
+    }
     final titles = (held['earned'] as List?)?.whereType<String>();
     for (final id in titles ?? const <String>[]) {
       if (earned.add(id)) changed = true;
@@ -932,6 +970,9 @@ class Rewards extends ChangeNotifier {
     await store.setInt('lateSessions', lateSessions);
     await store.setInt('perfectDayRun', perfectDayRun);
     await store.setInt('perfectWeeksCount', perfectWeeksCount);
+    if (streakSaved case final saved?) {
+      await store.setInt('streakSaved', saved.millisecondsSinceEpoch);
+    }
     await store.setStringList('earnedTitles', earned.toList());
 
     if (wearing == null) {

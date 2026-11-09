@@ -3391,4 +3391,44 @@ class LKo extends L {
   String nChallengeBackBody(String name, String theirs) {
     return '${name}님이 ${theirs}회를 기록하고 도전장을 돌려보냈어요.';
   }
+
+  @override
+  String get xpDoubleIt => '2배로 받기';
+
+  @override
+  String get xpDoubleNote => '짧은 영상을 보면 이번 경기 후 광고가 없어요.';
+
+  @override
+  String get xpDoubled => '×2 획득';
+
+  @override
+  String streakEnded(String days) {
+    return '${days}일 연속 기록이 끊겼어요';
+  }
+
+  @override
+  String get streakBringBack => '짧은 영상으로 되살릴 수 있어요. 일주일에 한 번.';
+
+  @override
+  String get streakBringBackPro => '되살릴 수 있어요. 일주일에 한 번.';
+
+  @override
+  String streakKeep(String days) {
+    return '${days}일 지키기';
+  }
+
+  @override
+  String get getPro => 'Pro 시작하기';
+
+  @override
+  String get proTrialBody => 'Pro 파츠는 Pro와 함께 제공돼요. 이 파츠를 하루 무료로 써 보세요. 내일까지 모두가 볼 수 있어요.';
+
+  @override
+  String get proTrialWear => '하루 무료로 착용';
+
+  @override
+  String get proTrialOn => '하루 동안 내 것이에요. 모두가 볼 수 있어요.';
+
+  @override
+  String get rewardNotEarned => '영상이 끝나지 않아 아무것도 바뀌지 않았어요.';
 }

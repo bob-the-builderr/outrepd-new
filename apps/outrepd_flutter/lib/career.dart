@@ -84,7 +84,12 @@ class DuelOutcome {
     this.todayBefore = 0,
     this.todayAfter = 0,
     this.savedToHealth,
+    this.duelId,
   });
+
+  /// The duel on the server, when it was settled there: what a rewarded
+  /// video doubles the experience of (rewarded.sql).
+  final String? duelId;
 
   final bool won;
 
@@ -424,6 +429,7 @@ class Career extends ChangeNotifier {
     await _afterSession(clean: clean);
 
     return DuelOutcome(
+      duelId: settled.duelId,
       won: settled.won,
       // No rank change while placements are still open, matching the local
       // path — even on the placement that just finished them, [recordDuel]
@@ -587,6 +593,15 @@ class Career extends ChangeNotifier {
     }
     _countReps(reps);
     await _afterSession(clean: clean);
+  }
+
+  /// A rewarded video paid a match's experience again ([xp], as the server
+  /// added it: rewarded.sql, double_duel_xp).
+  Future<void> addRewardXp(int xp) async {
+    if (xp <= 0) return;
+    demoProfile.xp += xp;
+    await save();
+    notifyListeners();
   }
 
   /// What a match pays in experience on top of its reps: twenty more for a

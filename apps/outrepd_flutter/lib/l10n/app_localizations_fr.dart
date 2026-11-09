@@ -3428,4 +3428,44 @@ class LFr extends L {
   String nChallengeBackBody(String name, String theirs) {
     return '${name} a fait ${theirs} et te défie en retour.';
   }
+
+  @override
+  String get xpDoubleIt => 'Doubler';
+
+  @override
+  String get xpDoubleNote => 'Une courte vidéo, et pas de pub après ce match.';
+
+  @override
+  String get xpDoubled => '×2 doublé';
+
+  @override
+  String streakEnded(String days) {
+    return 'Ta série de ${days} jours s\'est arrêtée';
+  }
+
+  @override
+  String get streakBringBack => 'Récupère-la avec une courte vidéo. Une fois par semaine.';
+
+  @override
+  String get streakBringBackPro => 'Récupère-la. Une fois par semaine.';
+
+  @override
+  String streakKeep(String days) {
+    return 'Garder mes ${days} jours';
+  }
+
+  @override
+  String get getPro => 'Passer à Pro';
+
+  @override
+  String get proTrialBody => 'Les éléments Pro viennent avec Pro. Essaie celui-ci gratuitement pendant un jour : tout le monde le verra sur toi jusqu\'à demain.';
+
+  @override
+  String get proTrialWear => 'La porter gratuitement un jour';
+
+  @override
+  String get proTrialOn => 'À toi pour un jour. Tout le monde le voit.';
+
+  @override
+  String get rewardNotEarned => 'La vidéo ne s\'est pas terminée, rien n\'a changé.';
 }

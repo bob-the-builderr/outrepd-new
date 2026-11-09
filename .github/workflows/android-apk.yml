@@ -15,6 +15,8 @@
 #   LEVELPLAY_ANDROID_APP_KEY         the Android app's key in Unity LevelPlay,
 #   LEVELPLAY_ANDROID_INTERSTITIAL    and its interstitial ad unit id. The
 #                                     ads' first choice (lib/ads.dart).
+#   LEVELPLAY_ANDROID_REWARDED        its rewarded ad unit (Rewarded_Android);
+#                                     without it no reward is offered.
 #   ADMOB_ANDROID_APP_ID              the Android app's id in AdMob
 #                                     (ca-app-pub-...~...), and its
 #   ADMOB_ANDROID_INTERSTITIAL        interstitial ad unit (ca-app-pub-.../...).
@@ -76,6 +78,7 @@ jobs:
       # Unity LevelPlay (lib/ads.dart): the ads' first choice.
       LEVELPLAY_ANDROID_APP_KEY: ${{ secrets.LEVELPLAY_ANDROID_APP_KEY }}
       LEVELPLAY_ANDROID_INTERSTITIAL: ${{ secrets.LEVELPLAY_ANDROID_INTERSTITIAL }}
+      LEVELPLAY_ANDROID_REWARDED: ${{ secrets.LEVELPLAY_ANDROID_REWARDED }}
       # Continue with Google: the web client id from Google Cloud. Without
       # it the Google button is not shown.
       GOOGLE_WEB_CLIENT_ID: ${{ secrets.GOOGLE_WEB_CLIENT_ID }}
@@ -122,6 +125,11 @@ jobs:
           fi
           if [ -n "$LEVELPLAY_ANDROID_APP_KEY" ] && [ -n "$LEVELPLAY_ANDROID_INTERSTITIAL" ]; then
             printf 'LEVELPLAY_ANDROID_APP_KEY=%s\nLEVELPLAY_ANDROID_INTERSTITIAL=%s\n' "$LEVELPLAY_ANDROID_APP_KEY" "$LEVELPLAY_ANDROID_INTERSTITIAL" >> supabase/keys.env
+            if [ -n "$LEVELPLAY_ANDROID_REWARDED" ]; then
+              printf 'LEVELPLAY_ANDROID_REWARDED=%s\n' "$LEVELPLAY_ANDROID_REWARDED" >> supabase/keys.env
+            else
+              echo "::warning::No LEVELPLAY_ANDROID_REWARDED secret: no rewarded videos in this build."
+            fi
           else
             echo "::warning::No LEVELPLAY_ANDROID_APP_KEY / LEVELPLAY_ANDROID_INTERSTITIAL secrets: no LevelPlay ads in this build."
           fi

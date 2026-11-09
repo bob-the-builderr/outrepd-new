@@ -71,6 +71,7 @@ jobs:
       ADMOB_IOS_INTERSTITIAL: ${{ secrets.ADMOB_IOS_INTERSTITIAL }}
       LEVELPLAY_IOS_APP_KEY: ${{ secrets.LEVELPLAY_IOS_APP_KEY }}
       LEVELPLAY_IOS_INTERSTITIAL: ${{ secrets.LEVELPLAY_IOS_INTERSTITIAL }}
+      LEVELPLAY_IOS_REWARDED: ${{ secrets.LEVELPLAY_IOS_REWARDED }}
       GOOGLE_SERVICE_INFO_PLIST: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
       # Continue with Google: the iOS and web client ids from Google Cloud.
       # Without both the Google button is not shown.
@@ -163,6 +164,11 @@ jobs:
         run: |
           if [ -n "$LEVELPLAY_IOS_APP_KEY" ] && [ -n "$LEVELPLAY_IOS_INTERSTITIAL" ]; then
             printf 'LEVELPLAY_IOS_APP_KEY=%s\nLEVELPLAY_IOS_INTERSTITIAL=%s\n' "$LEVELPLAY_IOS_APP_KEY" "$LEVELPLAY_IOS_INTERSTITIAL" >> supabase/keys.env
+            if [ -n "$LEVELPLAY_IOS_REWARDED" ]; then
+              printf 'LEVELPLAY_IOS_REWARDED=%s\n' "$LEVELPLAY_IOS_REWARDED" >> supabase/keys.env
+            else
+              echo "::warning::No LEVELPLAY_IOS_REWARDED secret: no rewarded videos in this build."
+            fi
             echo "levelplay=true" >> "$GITHUB_OUTPUT"
           else
             echo "::warning::No LEVELPLAY_IOS_APP_KEY / LEVELPLAY_IOS_INTERSTITIAL secrets: no LevelPlay ads in this build."

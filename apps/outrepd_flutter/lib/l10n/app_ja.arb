@@ -1023,5 +1023,17 @@
   "nChallengeBeaten": "{name}が{theirs}回であなたの{yours}回を突破。取り返す？",
   "nChallengeHeld": "{name}が挑戦して{theirs}回で終了。あなたの{yours}回は守られました。",
   "nChallengeBackTitle": "挑戦状が返ってきた",
-  "nChallengeBackBody": "{name}が{theirs}回を記録し、挑戦状を返してきました。"
+  "nChallengeBackBody": "{name}が{theirs}回を記録し、挑戦状を返してきました。",
+  "xpDoubleIt": "2倍にする",
+  "xpDoubleNote": "短い動画を見ると、この試合後の広告はなし。",
+  "xpDoubled": "×2 獲得",
+  "streakEnded": "{days}日連続の記録が途切れました",
+  "streakBringBack": "短い動画で取り戻せます。週に1回。",
+  "streakBringBackPro": "取り戻せます。週に1回。",
+  "streakKeep": "{days}日を守る",
+  "getPro": "Proにする",
+  "proTrialBody": "ProパーツはProで使えます。これを1日無料で試せます。明日まで全員に見えます。",
+  "proTrialWear": "1日無料で着ける",
+  "proTrialOn": "1日だけあなたのもの。みんなに見えます。",
+  "rewardNotEarned": "動画が最後まで再生されなかったため、変更はありません。"
 }

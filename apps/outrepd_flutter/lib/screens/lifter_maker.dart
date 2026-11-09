@@ -10,22 +10,26 @@
 /// picture's sheet any time after.
 library;
 
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../ads.dart';
 import '../data.dart';
 import '../l10n/app_localizations.dart';
 import '../lifter/catalog.dart';
 import '../lifter/lifter_art.dart';
 import '../lifter/lifter_view.dart';
 import '../lifter/my_lifter.dart';
+import '../lifter/pro_trial.dart';
 import '../lifter/unlocks.dart';
 import '../subscription.dart';
 import '../theme.dart';
 import '../type_scale.dart';
 import 'paywall.dart';
 import 'pro_parts.dart';
+import 'rewarded.dart';
 
 /// Opens the maker; true once a lifter was saved.
 Future<bool> openLifterMaker(BuildContext context, {bool firstTime = false}) async {
@@ -39,29 +43,40 @@ enum _Tab { skin, hair, face, beard, top, gear, background, character }
 
 /// One choice of one part: which list it is from and how it is set.
 class _Slot {
-  const _Slot(this.parts, this.read, this.write, {this.view = LifterView.head});
+  const _Slot(
+    this.parts,
+    this.read,
+    this.write, {
+    this.view = LifterView.head,
+    required this.key,
+  });
 
   final List<LifterPart> parts;
+
+  /// The lifter's own name for this part (Lifter.toJson), for a Pro part
+  /// worn for a day (pro_trial.dart).
+  final String key;
   final int Function(Lifter) read;
   final Lifter Function(Lifter, int) write;
   final LifterView view;
 }
 
-final _skin = _Slot(kSkins, (l) => l.skin, (l, i) => l.copyWith(skin: i));
-final _hair = _Slot(kHair, (l) => l.hair, (l, i) => l.copyWith(hair: i));
-final _eyes = _Slot(kEyes, (l) => l.eyes, (l, i) => l.copyWith(eyes: i));
-final _brows = _Slot(kBrows, (l) => l.brows, (l, i) => l.copyWith(brows: i));
-final _mouth = _Slot(kMouths, (l) => l.mouth, (l, i) => l.copyWith(mouth: i));
-final _marks = _Slot(kMarks, (l) => l.marks, (l, i) => l.copyWith(marks: i));
-final _beard = _Slot(kBeards, (l) => l.beard, (l, i) => l.copyWith(beard: i));
-final _top = _Slot(kTops, (l) => l.top, (l, i) => l.copyWith(top: i), view: LifterView.full);
-final _gear = _Slot(kGear, (l) => l.gear, (l, i) => l.copyWith(gear: i), view: LifterView.full);
-final _character = _Slot(kCharacters, (l) => l.character, (l, i) => l.copyWith(character: i), view: LifterView.full);
+final _skin = _Slot(kSkins, (l) => l.skin, (l, i) => l.copyWith(skin: i), key: 'skin');
+final _hair = _Slot(kHair, (l) => l.hair, (l, i) => l.copyWith(hair: i), key: 'hair');
+final _eyes = _Slot(kEyes, (l) => l.eyes, (l, i) => l.copyWith(eyes: i), key: 'eyes');
+final _brows = _Slot(kBrows, (l) => l.brows, (l, i) => l.copyWith(brows: i), key: 'brows');
+final _mouth = _Slot(kMouths, (l) => l.mouth, (l, i) => l.copyWith(mouth: i), key: 'mouth');
+final _marks = _Slot(kMarks, (l) => l.marks, (l, i) => l.copyWith(marks: i), key: 'marks');
+final _beard = _Slot(kBeards, (l) => l.beard, (l, i) => l.copyWith(beard: i), key: 'beard');
+final _top = _Slot(kTops, (l) => l.top, (l, i) => l.copyWith(top: i), view: LifterView.full, key: 'top');
+final _gear = _Slot(kGear, (l) => l.gear, (l, i) => l.copyWith(gear: i), view: LifterView.full, key: 'gear');
+final _character = _Slot(kCharacters, (l) => l.character, (l, i) => l.copyWith(character: i), view: LifterView.full, key: 'character');
 final _pattern = _Slot(
   kPatterns,
   (l) => l.pattern,
   (l, i) => l.copyWith(pattern: i),
   view: LifterView.backgroundOnly,
+  key: 'pattern',
 );
 
 class LifterMakerScreen extends StatefulWidget {
@@ -89,6 +104,9 @@ class _LifterMakerScreenState extends State<LifterMakerScreen> {
   LifterPart? _trying;
   bool _saving = false;
 
+  /// A Pro part was just put on for a day, for the line under the lifter.
+  bool _onTrial = false;
+
   @override
   void initState() {
     super.initState();
@@ -113,12 +131,59 @@ class _LifterMakerScreenState extends State<LifterMakerScreen> {
     Lifter off(Lifter l) => slot == _character || slot == _pattern ? l : l.copyWith(character: 0);
     setState(() {
       _shown = slot.write(off(_shown), i);
+      _onTrial = false;
       if (_unlocks.owns(part)) {
         _owned = slot.write(off(_owned), i);
         _trying = null;
       } else {
         _trying = part;
       }
+    });
+    // A Pro part, while a video is there to wear it for a day (the user's
+    // pick, 2026-11-09, C): the sheet with both ways to it.
+    if (part.pro &&
+        !_unlocks.owns(part) &&
+        !_unlocks.pro &&
+        Ads.instance.rewardOffered) {
+      unawaited(_offerTrial(slot, i, off));
+    }
+  }
+
+  Future<void> _offerTrial(
+    _Slot slot,
+    int i,
+    Lifter Function(Lifter) off,
+  ) async {
+    final part = slot.parts[i];
+    final l = L.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    void say(String text) => messenger.showSnackBar(
+      SnackBar(content: Text(text), behavior: SnackBarBehavior.floating),
+    );
+    final choice = await showProTrialSheet(context, lifter: _shown);
+    if (!mounted || choice == null) return;
+    if (choice == ProTrialChoice.pro) {
+      await _unlockPro();
+      return;
+    }
+    if (!await Ads.instance.watchForReward()) {
+      say(l.rewardNotEarned);
+      return;
+    }
+    final started = await ProTrial.instance.start(
+      key: slot.key,
+      part: part,
+      was: _owned.toJson()[slot.key] as String?,
+    );
+    if (!mounted) return;
+    if (!started) {
+      say(l.needsServer);
+      return;
+    }
+    setState(() {
+      _owned = slot.write(off(_owned), i);
+      _trying = null;
+      _onTrial = true;
     });
   }
 
@@ -291,6 +356,21 @@ class _LifterMakerScreenState extends State<LifterMakerScreen> {
   Widget _status(BuildContext context, L l) {
     final colors = context.colors;
     final part = _trying;
+    if (part == null && _onTrial) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Text(
+          l.proTrialOn,
+          key: const Key('makerTrialOn'),
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            color: AppColors.gold,
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
+    }
     if (part == null) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),

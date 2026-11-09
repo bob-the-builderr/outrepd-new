@@ -39,6 +39,7 @@ import 'daily_goal.dart';
 import 'level.dart';
 import 'live_rematch.dart';
 import 'race_chart.dart';
+import 'rewarded.dart';
 import 'share_card.dart';
 
 /// The current account, as [showShareCardSheet] needs it — the same shape
@@ -279,7 +280,12 @@ class DuelResultView extends StatelessWidget {
                   ],
                   if (xp case final gain?) ...[
                     const SizedBox(height: 10),
-                    XpGainCard(gain: gain),
+                    // A duel the server settled can be doubled with a
+                    // rewarded video (the user's pick, 2026-11-09, A).
+                    if (outcome?.duelId case final id?)
+                      XpDoubleCard(gain: gain, duelId: id)
+                    else
+                      XpGainCard(gain: gain),
                   ],
                   // Only on the duel that met it: the goal is a daily thing,
                   // and saying so after every match that evening would turn
@@ -1286,6 +1292,7 @@ DuelOutcome demoOutcome({
   required bool won,
   bool newBest = false,
   Future<bool>? savedToHealth,
+  String? duelId,
 }) {
   final yourReps = won ? 18 : 14;
   final theirReps = won ? 11 : 19;
@@ -1310,5 +1317,6 @@ DuelOutcome demoOutcome({
     placementsFinished: false,
     newBest: newBest,
     savedToHealth: savedToHealth,
+    duelId: duelId,
   );
 }

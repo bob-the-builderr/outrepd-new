@@ -3387,4 +3387,44 @@ class LJa extends L {
   String nChallengeBackBody(String name, String theirs) {
     return '${name}が${theirs}回を記録し、挑戦状を返してきました。';
   }
+
+  @override
+  String get xpDoubleIt => '2倍にする';
+
+  @override
+  String get xpDoubleNote => '短い動画を見ると、この試合後の広告はなし。';
+
+  @override
+  String get xpDoubled => '×2 獲得';
+
+  @override
+  String streakEnded(String days) {
+    return '${days}日連続の記録が途切れました';
+  }
+
+  @override
+  String get streakBringBack => '短い動画で取り戻せます。週に1回。';
+
+  @override
+  String get streakBringBackPro => '取り戻せます。週に1回。';
+
+  @override
+  String streakKeep(String days) {
+    return '${days}日を守る';
+  }
+
+  @override
+  String get getPro => 'Proにする';
+
+  @override
+  String get proTrialBody => 'ProパーツはProで使えます。これを1日無料で試せます。明日まで全員に見えます。';
+
+  @override
+  String get proTrialWear => '1日無料で着ける';
+
+  @override
+  String get proTrialOn => '1日だけあなたのもの。みんなに見えます。';
+
+  @override
+  String get rewardNotEarned => '動画が最後まで再生されなかったため、変更はありません。';
 }

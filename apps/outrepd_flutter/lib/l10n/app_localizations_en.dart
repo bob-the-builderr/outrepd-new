@@ -3420,4 +3420,44 @@ class LEn extends L {
   String nChallengeBackBody(String name, String theirs) {
     return '${name} did ${theirs} and challenges you back.';
   }
+
+  @override
+  String get xpDoubleIt => 'Double it';
+
+  @override
+  String get xpDoubleNote => 'A short video, and no ad after this match.';
+
+  @override
+  String get xpDoubled => '×2 doubled';
+
+  @override
+  String streakEnded(String days) {
+    return 'Your ${days}-day streak ended';
+  }
+
+  @override
+  String get streakBringBack => 'Bring it back with a short video. Once a week.';
+
+  @override
+  String get streakBringBackPro => 'Bring it back. Once a week.';
+
+  @override
+  String streakKeep(String days) {
+    return 'Keep my ${days} days';
+  }
+
+  @override
+  String get getPro => 'Get Pro';
+
+  @override
+  String get proTrialBody => 'Pro parts come with Pro. Try this one free for a day: everyone sees it on you until tomorrow.';
+
+  @override
+  String get proTrialWear => 'Wear it free for a day';
+
+  @override
+  String get proTrialOn => 'Yours for a day. Everyone sees it.';
+
+  @override
+  String get rewardNotEarned => 'The video didn\'t finish, so nothing changed.';
 }

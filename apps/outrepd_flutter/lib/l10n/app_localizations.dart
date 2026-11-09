@@ -4175,6 +4175,78 @@ abstract class L {
   /// **'This week\'s board closes in 6 hours. One more win could move you up.'**
   String get reminderWeekCloses;
 
+  /// No description provided for @xpDoubleIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Double it'**
+  String get xpDoubleIt;
+
+  /// No description provided for @xpDoubleNote.
+  ///
+  /// In en, this message translates to:
+  /// **'A short video, and no ad after this match.'**
+  String get xpDoubleNote;
+
+  /// No description provided for @xpDoubled.
+  ///
+  /// In en, this message translates to:
+  /// **'×2 doubled'**
+  String get xpDoubled;
+
+  /// No description provided for @streakEnded.
+  ///
+  /// In en, this message translates to:
+  /// **'Your {days}-day streak ended'**
+  String streakEnded(String days);
+
+  /// No description provided for @streakBringBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Bring it back with a short video. Once a week.'**
+  String get streakBringBack;
+
+  /// No description provided for @streakBringBackPro.
+  ///
+  /// In en, this message translates to:
+  /// **'Bring it back. Once a week.'**
+  String get streakBringBackPro;
+
+  /// No description provided for @streakKeep.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep my {days} days'**
+  String streakKeep(String days);
+
+  /// No description provided for @getPro.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Pro'**
+  String get getPro;
+
+  /// No description provided for @proTrialBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Pro parts come with Pro. Try this one free for a day: everyone sees it on you until tomorrow.'**
+  String get proTrialBody;
+
+  /// No description provided for @proTrialWear.
+  ///
+  /// In en, this message translates to:
+  /// **'Wear it free for a day'**
+  String get proTrialWear;
+
+  /// No description provided for @proTrialOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Yours for a day. Everyone sees it.'**
+  String get proTrialOn;
+
+  /// No description provided for @rewardNotEarned.
+  ///
+  /// In en, this message translates to:
+  /// **'The video didn\'t finish, so nothing changed.'**
+  String get rewardNotEarned;
+
   /// No description provided for @challengeAction.
   ///
   /// In en, this message translates to:

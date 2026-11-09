@@ -1023,5 +1023,17 @@
   "nChallengeBeaten": "{name} mengalahkan {yours}-mu dengan {theirs}. Rebut kembali?",
   "nChallengeHeld": "{name} menerima tantanganmu dan berhenti di {theirs}. {yours}-mu bertahan.",
   "nChallengeBackTitle": "Ditantang balik",
-  "nChallengeBackBody": "{name} mencetak {theirs} dan menantangmu balik."
+  "nChallengeBackBody": "{name} mencetak {theirs} dan menantangmu balik.",
+  "xpDoubleIt": "Gandakan",
+  "xpDoubleNote": "Video singkat, dan tanpa iklan setelah pertandingan ini.",
+  "xpDoubled": "×2 digandakan",
+  "streakEnded": "Streak {days} harimu terputus",
+  "streakBringBack": "Kembalikan dengan video singkat. Seminggu sekali.",
+  "streakBringBackPro": "Kembalikan. Seminggu sekali.",
+  "streakKeep": "Pertahankan {days} hariku",
+  "getPro": "Dapatkan Pro",
+  "proTrialBody": "Bagian Pro hadir bersama Pro. Coba yang ini gratis sehari: semua orang melihatnya padamu sampai besok.",
+  "proTrialWear": "Pakai gratis sehari",
+  "proTrialOn": "Milikmu selama sehari. Semua orang melihatnya.",
+  "rewardNotEarned": "Videonya tidak selesai, jadi tidak ada yang berubah."
 }

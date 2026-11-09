@@ -3427,4 +3427,44 @@ class LIt extends L {
   String nChallengeBackBody(String name, String theirs) {
     return '${name} ha fatto ${theirs} e ti sfida a sua volta.';
   }
+
+  @override
+  String get xpDoubleIt => 'Raddoppia';
+
+  @override
+  String get xpDoubleNote => 'Un breve video, e niente pubblicità dopo questa partita.';
+
+  @override
+  String get xpDoubled => '×2 raddoppiato';
+
+  @override
+  String streakEnded(String days) {
+    return 'La tua serie di ${days} giorni si è interrotta';
+  }
+
+  @override
+  String get streakBringBack => 'Recuperala con un breve video. Una volta a settimana.';
+
+  @override
+  String get streakBringBackPro => 'Recuperala. Una volta a settimana.';
+
+  @override
+  String streakKeep(String days) {
+    return 'Tieni i miei ${days} giorni';
+  }
+
+  @override
+  String get getPro => 'Passa a Pro';
+
+  @override
+  String get proTrialBody => 'Le parti Pro arrivano con Pro. Prova questa gratis per un giorno: tutti la vedranno su di te fino a domani.';
+
+  @override
+  String get proTrialWear => 'Indossala gratis per un giorno';
+
+  @override
+  String get proTrialOn => 'Tua per un giorno. Tutti la vedono.';
+
+  @override
+  String get rewardNotEarned => 'Il video non è finito, quindi non è cambiato nulla.';
 }

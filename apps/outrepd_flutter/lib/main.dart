@@ -21,6 +21,7 @@ import 'firebase.dart';
 import 'home_widgets.dart';
 import 'lifter/looks.dart';
 import 'lifter/my_lifter.dart';
+import 'lifter/pro_trial.dart';
 import 'reminders.dart';
 import 'rewards.dart';
 import 'screens/auth_entry.dart';
@@ -118,6 +119,9 @@ void main() async {
     await rewards.load();
     await Adventure.instance.load();
     await Ads.instance.load();
+    // A Pro part worn for a day comes off once the day is over.
+    await ProTrial.instance.load();
+    unawaited(ProTrial.instance.endIfOver());
     // After settings and rewards: the reminder's time is one, and whether
     // today is already trained is the other.
     await Reminders.instance.start();

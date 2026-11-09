@@ -3422,4 +3422,44 @@ class LHi extends L {
   String nChallengeBackBody(String name, String theirs) {
     return '${name} ने ${theirs} किए और आपको वापस चुनौती दी।';
   }
+
+  @override
+  String get xpDoubleIt => 'दोगुना करें';
+
+  @override
+  String get xpDoubleNote => 'एक छोटा वीडियो, और इस मैच के बाद कोई विज्ञापन नहीं।';
+
+  @override
+  String get xpDoubled => '×2 दोगुना';
+
+  @override
+  String streakEnded(String days) {
+    return 'आपकी ${days} दिन की स्ट्रीक टूट गई';
+  }
+
+  @override
+  String get streakBringBack => 'एक छोटे वीडियो से इसे वापस लाएँ। हफ़्ते में एक बार।';
+
+  @override
+  String get streakBringBackPro => 'इसे वापस लाएँ। हफ़्ते में एक बार।';
+
+  @override
+  String streakKeep(String days) {
+    return 'मेरे ${days} दिन बचाएँ';
+  }
+
+  @override
+  String get getPro => 'Pro लें';
+
+  @override
+  String get proTrialBody => 'Pro पार्ट्स Pro के साथ मिलते हैं। इसे एक दिन मुफ़्त आज़माएँ: कल तक सब इसे आप पर देखेंगे।';
+
+  @override
+  String get proTrialWear => 'एक दिन मुफ़्त पहनें';
+
+  @override
+  String get proTrialOn => 'एक दिन के लिए आपका। सब इसे देखते हैं।';
+
+  @override
+  String get rewardNotEarned => 'वीडियो पूरा नहीं हुआ, इसलिए कुछ नहीं बदला।';
 }

@@ -369,7 +369,10 @@ stable
 security definer
 set search_path = public
 as $$
-  select p.id, x.pro, p.lifter, case when x.pro then p.cover end
+  -- A Pro part worn for a day comes off for everybody once the day is
+  -- over (rewarded.sql, lifter_as_seen).
+  select p.id, x.pro, lifter_as_seen(p.lifter, p.pro_trial, x.pro),
+         case when x.pro then p.cover end
   from profiles p
   cross join lateral (
     select exists (

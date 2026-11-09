@@ -1023,5 +1023,17 @@
   "nChallengeBeaten": "{name}, {theirs} ile senin {yours} rekorunu geçti. Geri alır mısın?",
   "nChallengeHeld": "{name} meydan okumanı kabul etti, {theirs} tekrarda kaldı. Senin {yours} rekorun duruyor.",
   "nChallengeBackTitle": "Karşı meydan okuma",
-  "nChallengeBackBody": "{name} {theirs} tekrar yaptı ve sana karşılık meydan okuyor."
+  "nChallengeBackBody": "{name} {theirs} tekrar yaptı ve sana karşılık meydan okuyor.",
+  "xpDoubleIt": "İkiye katla",
+  "xpDoubleNote": "Kısa bir video, ve bu maçtan sonra reklam yok.",
+  "xpDoubled": "×2 katlandı",
+  "streakEnded": "{days} günlük serin bitti",
+  "streakBringBack": "Kısa bir videoyla geri getir. Haftada bir kez.",
+  "streakBringBackPro": "Geri getir. Haftada bir kez.",
+  "streakKeep": "{days} günümü koru",
+  "getPro": "Pro'ya geç",
+  "proTrialBody": "Pro parçalar Pro ile gelir. Bunu bir gün ücretsiz dene: yarına kadar herkes sende görür.",
+  "proTrialWear": "Bir gün ücretsiz giy",
+  "proTrialOn": "Bir günlüğüne senin. Herkes görür.",
+  "rewardNotEarned": "Video bitmedi, bu yüzden hiçbir şey değişmedi."
 }

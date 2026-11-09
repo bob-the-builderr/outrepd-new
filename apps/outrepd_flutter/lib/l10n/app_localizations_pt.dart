@@ -3424,4 +3424,44 @@ class LPt extends L {
   String nChallengeBackBody(String name, String theirs) {
     return '${name} fez ${theirs} e desafia você de volta.';
   }
+
+  @override
+  String get xpDoubleIt => 'Dobrar';
+
+  @override
+  String get xpDoubleNote => 'Um vídeo curto, e sem anúncio depois desta partida.';
+
+  @override
+  String get xpDoubled => '×2 dobrado';
+
+  @override
+  String streakEnded(String days) {
+    return 'Sua sequência de ${days} dias acabou';
+  }
+
+  @override
+  String get streakBringBack => 'Recupere com um vídeo curto. Uma vez por semana.';
+
+  @override
+  String get streakBringBackPro => 'Recupere. Uma vez por semana.';
+
+  @override
+  String streakKeep(String days) {
+    return 'Manter meus ${days} dias';
+  }
+
+  @override
+  String get getPro => 'Assinar o Pro';
+
+  @override
+  String get proTrialBody => 'As peças Pro vêm com o Pro. Experimente esta grátis por um dia: todos a verão em você até amanhã.';
+
+  @override
+  String get proTrialWear => 'Usar grátis por um dia';
+
+  @override
+  String get proTrialOn => 'Sua por um dia. Todos veem.';
+
+  @override
+  String get rewardNotEarned => 'O vídeo não terminou, então nada mudou.';
 }

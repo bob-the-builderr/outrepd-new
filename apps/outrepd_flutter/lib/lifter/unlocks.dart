@@ -17,6 +17,7 @@ import '../subscription.dart';
 import '../widgets.dart';
 import '../xp.dart';
 import 'catalog.dart';
+import 'pro_trial.dart';
 
 /// What the account has done, read once when the maker opens.
 class UnlockState {
@@ -90,7 +91,9 @@ class UnlockState {
 
   /// Whether [part] may be worn now.
   bool owns(LifterPart part) {
-    if (part.pro) return pro;
+    // A Pro part is the account's with Pro, or for the day a rewarded video
+    // gave it (pro_trial.dart).
+    if (part.pro) return pro || ProTrial.instance.covers(part);
     final unlock = part.unlock;
     if (unlock == null) return true;
     final n = unlock.n;

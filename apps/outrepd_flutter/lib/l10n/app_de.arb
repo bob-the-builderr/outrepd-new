@@ -1023,5 +1023,17 @@
   "nChallengeBeaten": "{name} hat deine {yours} mit {theirs} geschlagen. Holst du sie dir zurück?",
   "nChallengeHeld": "{name} hat deine Herausforderung angenommen und bei {theirs} aufgehört. Deine {yours} halten.",
   "nChallengeBackTitle": "Gegenherausforderung",
-  "nChallengeBackBody": "{name} hat {theirs} geschafft und fordert dich zurück heraus."
+  "nChallengeBackBody": "{name} hat {theirs} geschafft und fordert dich zurück heraus.",
+  "xpDoubleIt": "Verdoppeln",
+  "xpDoubleNote": "Ein kurzes Video, und nach diesem Match keine Werbung.",
+  "xpDoubled": "×2 verdoppelt",
+  "streakEnded": "Deine Serie von {days} Tagen ist gerissen",
+  "streakBringBack": "Hol sie mit einem kurzen Video zurück. Einmal pro Woche.",
+  "streakBringBackPro": "Hol sie zurück. Einmal pro Woche.",
+  "streakKeep": "Meine {days} Tage behalten",
+  "getPro": "Pro holen",
+  "proTrialBody": "Pro-Teile gibt es mit Pro. Probier dieses einen Tag gratis: Alle sehen es bis morgen an dir.",
+  "proTrialWear": "Einen Tag gratis tragen",
+  "proTrialOn": "Einen Tag lang deins. Alle sehen es.",
+  "rewardNotEarned": "Das Video lief nicht bis zum Ende, also hat sich nichts geändert."
 }

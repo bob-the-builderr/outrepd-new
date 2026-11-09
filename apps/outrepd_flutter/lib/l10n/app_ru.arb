@@ -1023,5 +1023,17 @@
   "nChallengeBeaten": "{name} побил твои {yours}: {theirs}. Вернёшь?",
   "nChallengeHeld": "{name} принял вызов и остановился на {theirs}. Твои {yours} устояли.",
   "nChallengeBackTitle": "Ответный вызов",
-  "nChallengeBackBody": "{name}: {theirs} — и ответный вызов тебе."
+  "nChallengeBackBody": "{name}: {theirs} — и ответный вызов тебе.",
+  "xpDoubleIt": "Удвоить",
+  "xpDoubleNote": "Короткое видео — и без рекламы после этого матча.",
+  "xpDoubled": "×2 удвоено",
+  "streakEnded": "Твоя серия из {days} дн. прервалась",
+  "streakBringBack": "Верни её коротким видео. Раз в неделю.",
+  "streakBringBackPro": "Верни её. Раз в неделю.",
+  "streakKeep": "Сохранить {days} дн.",
+  "getPro": "Получить Pro",
+  "proTrialBody": "Pro-детали входят в Pro. Примерь эту бесплатно на день: до завтра её увидят все.",
+  "proTrialWear": "Носить бесплатно день",
+  "proTrialOn": "Твоя на день. Её видят все.",
+  "rewardNotEarned": "Видео не досмотрено, ничего не изменилось."
 }

@@ -3417,4 +3417,44 @@ class LTr extends L {
   String nChallengeBackBody(String name, String theirs) {
     return '${name} ${theirs} tekrar yaptı ve sana karşılık meydan okuyor.';
   }
+
+  @override
+  String get xpDoubleIt => 'İkiye katla';
+
+  @override
+  String get xpDoubleNote => 'Kısa bir video, ve bu maçtan sonra reklam yok.';
+
+  @override
+  String get xpDoubled => '×2 katlandı';
+
+  @override
+  String streakEnded(String days) {
+    return '${days} günlük serin bitti';
+  }
+
+  @override
+  String get streakBringBack => 'Kısa bir videoyla geri getir. Haftada bir kez.';
+
+  @override
+  String get streakBringBackPro => 'Geri getir. Haftada bir kez.';
+
+  @override
+  String streakKeep(String days) {
+    return '${days} günümü koru';
+  }
+
+  @override
+  String get getPro => 'Pro\'ya geç';
+
+  @override
+  String get proTrialBody => 'Pro parçalar Pro ile gelir. Bunu bir gün ücretsiz dene: yarına kadar herkes sende görür.';
+
+  @override
+  String get proTrialWear => 'Bir gün ücretsiz giy';
+
+  @override
+  String get proTrialOn => 'Bir günlüğüne senin. Herkes görür.';
+
+  @override
+  String get rewardNotEarned => 'Video bitmedi, bu yüzden hiçbir şey değişmedi.';
 }

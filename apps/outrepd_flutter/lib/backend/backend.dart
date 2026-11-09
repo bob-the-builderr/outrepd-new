@@ -1729,6 +1729,14 @@ abstract interface class Backend {
 
   /// This account's challenges from the last month.
   Future<List<MyChallenge>> myChallenges();
+
+  /// A won duel's experience paid again after a rewarded video
+  /// (rewarded.sql, double_duel_xp): what was added, 0 when nothing was.
+  Future<int> doubleDuelXp(String duelId);
+
+  /// A Pro part worn for a day after a rewarded video: [key] in the
+  /// lifter's parts, the part's [id], and what it replaced. The day's end.
+  Future<DateTime> startProTrial(String key, String id, String? was);
 }
 
 /// The app with no server behind it.
@@ -2100,6 +2108,13 @@ class NoBackend implements Backend {
 
   @override
   Future<List<MyChallenge>> myChallenges() async => const [];
+
+  @override
+  Future<int> doubleDuelXp(String duelId) async => 0;
+
+  @override
+  Future<DateTime> startProTrial(String key, String id, String? was) async =>
+      DateTime.now().add(const Duration(days: 1));
 }
 
 /// The one the app uses. Replaced at startup when keys are supplied.

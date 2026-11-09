@@ -1023,5 +1023,17 @@
   "nChallengeBeaten": "{name}님이 {theirs}회로 내 {yours}회를 넘었어요. 되찾을까요?",
   "nChallengeHeld": "{name}님이 도전해서 {theirs}회에 그쳤어요. 내 {yours}회는 그대로예요.",
   "nChallengeBackTitle": "도전장이 돌아왔어요",
-  "nChallengeBackBody": "{name}님이 {theirs}회를 기록하고 도전장을 돌려보냈어요."
+  "nChallengeBackBody": "{name}님이 {theirs}회를 기록하고 도전장을 돌려보냈어요.",
+  "xpDoubleIt": "2배로 받기",
+  "xpDoubleNote": "짧은 영상을 보면 이번 경기 후 광고가 없어요.",
+  "xpDoubled": "×2 획득",
+  "streakEnded": "{days}일 연속 기록이 끊겼어요",
+  "streakBringBack": "짧은 영상으로 되살릴 수 있어요. 일주일에 한 번.",
+  "streakBringBackPro": "되살릴 수 있어요. 일주일에 한 번.",
+  "streakKeep": "{days}일 지키기",
+  "getPro": "Pro 시작하기",
+  "proTrialBody": "Pro 파츠는 Pro와 함께 제공돼요. 이 파츠를 하루 무료로 써 보세요. 내일까지 모두가 볼 수 있어요.",
+  "proTrialWear": "하루 무료로 착용",
+  "proTrialOn": "하루 동안 내 것이에요. 모두가 볼 수 있어요.",
+  "rewardNotEarned": "영상이 끝나지 않아 아무것도 바뀌지 않았어요."
 }

@@ -1023,5 +1023,17 @@
   "nChallengeBeaten": "{name} ने {theirs} के साथ आपके {yours} को हरा दिया। वापस लेंगे?",
   "nChallengeHeld": "{name} ने आपकी चुनौती ली और {theirs} पर रुक गए। आपके {yours} कायम हैं।",
   "nChallengeBackTitle": "जवाबी चुनौती",
-  "nChallengeBackBody": "{name} ने {theirs} किए और आपको वापस चुनौती दी।"
+  "nChallengeBackBody": "{name} ने {theirs} किए और आपको वापस चुनौती दी।",
+  "xpDoubleIt": "दोगुना करें",
+  "xpDoubleNote": "एक छोटा वीडियो, और इस मैच के बाद कोई विज्ञापन नहीं।",
+  "xpDoubled": "×2 दोगुना",
+  "streakEnded": "आपकी {days} दिन की स्ट्रीक टूट गई",
+  "streakBringBack": "एक छोटे वीडियो से इसे वापस लाएँ। हफ़्ते में एक बार।",
+  "streakBringBackPro": "इसे वापस लाएँ। हफ़्ते में एक बार।",
+  "streakKeep": "मेरे {days} दिन बचाएँ",
+  "getPro": "Pro लें",
+  "proTrialBody": "Pro पार्ट्स Pro के साथ मिलते हैं। इसे एक दिन मुफ़्त आज़माएँ: कल तक सब इसे आप पर देखेंगे।",
+  "proTrialWear": "एक दिन मुफ़्त पहनें",
+  "proTrialOn": "एक दिन के लिए आपका। सब इसे देखते हैं।",
+  "rewardNotEarned": "वीडियो पूरा नहीं हुआ, इसलिए कुछ नहीं बदला।"
 }

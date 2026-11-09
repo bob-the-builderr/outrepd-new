@@ -3429,4 +3429,44 @@ class LDe extends L {
   String nChallengeBackBody(String name, String theirs) {
     return '${name} hat ${theirs} geschafft und fordert dich zurück heraus.';
   }
+
+  @override
+  String get xpDoubleIt => 'Verdoppeln';
+
+  @override
+  String get xpDoubleNote => 'Ein kurzes Video, und nach diesem Match keine Werbung.';
+
+  @override
+  String get xpDoubled => '×2 verdoppelt';
+
+  @override
+  String streakEnded(String days) {
+    return 'Deine Serie von ${days} Tagen ist gerissen';
+  }
+
+  @override
+  String get streakBringBack => 'Hol sie mit einem kurzen Video zurück. Einmal pro Woche.';
+
+  @override
+  String get streakBringBackPro => 'Hol sie zurück. Einmal pro Woche.';
+
+  @override
+  String streakKeep(String days) {
+    return 'Meine ${days} Tage behalten';
+  }
+
+  @override
+  String get getPro => 'Pro holen';
+
+  @override
+  String get proTrialBody => 'Pro-Teile gibt es mit Pro. Probier dieses einen Tag gratis: Alle sehen es bis morgen an dir.';
+
+  @override
+  String get proTrialWear => 'Einen Tag gratis tragen';
+
+  @override
+  String get proTrialOn => 'Einen Tag lang deins. Alle sehen es.';
+
+  @override
+  String get rewardNotEarned => 'Das Video lief nicht bis zum Ende, also hat sich nichts geändert.';
 }

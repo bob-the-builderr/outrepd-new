@@ -1153,6 +1153,59 @@ select must_fail('a try between blocked accounts',
 reset role;
 delete from blocks where blocker = :'D' and blocked = :'A';
 
+-- ── what a rewarded video gives ──────────────────────────────────────────────
+
+-- The match's XP twice: once, for the winner's own fresh duel only.
+insert into sets (profile_id, reps, reps_camera, duration_ms)
+values (:'A', 17, 17, 60000), (:'C', 9, 9, 60000);
+insert into duels (challenger, defender, challenger_set, defender_set,
+                   winner, ranked, lp_challenger, lp_defender,
+                   pts_challenger, pts_defender)
+values (:'A', :'C',
+        (select id from sets where profile_id = :'A' order by created_at desc limit 1),
+        (select id from sets where profile_id = :'C' order by created_at desc limit 1),
+        :'A', false, 0, 0, 0, 0);
+select id as xp_duel from duels where challenger = :'A' order by created_at desc limit 1 \gset
+select xp as a_xp from profiles where id = :'A' \gset
+select as_user(:'C'); set role authenticated;
+select check_that(double_duel_xp(:'xp_duel') = 0, 'the side that was raced doubled a duel');
+reset role;
+select as_user(:'A'); set role authenticated;
+select check_that(double_duel_xp(:'xp_duel') = 37, 'a won duel did not pay its XP again');
+select check_that(double_duel_xp(:'xp_duel') = 0, 'a duel''s XP was doubled twice');
+select must_fail('writing XP straight into the profile',
+                 format('update profiles set xp = xp + 1000 where id = %L', :'A'));
+reset role;
+select check_that((select xp from profiles where id = :'A') = :a_xp + 37,
+                  'doubling did not add exactly the match''s XP');
+
+-- A Pro part for a day: worn, seen, and taken off for everybody after it.
+select as_user(:'D'); set role authenticated;
+update profiles set lifter = '{"v": 1, "hair": "flame", "skin": "tan"}'::jsonb where id = :'D';
+select check_that(start_pro_trial('hair', 'flame', 'buzz') > now(), 'a day with a Pro part did not start');
+select must_fail('a phone writing its own day with a Pro part',
+                 format('update profiles set pro_trial = ''{"key":"hair","id":"flame","until":"2999-01-01"}''::jsonb where id = %L', :'D'));
+select must_fail('a part key that is not a key', 'select start_pro_trial(''hair; drop'', ''flame'', null)');
+reset role;
+select as_user(:'A'); set role authenticated;
+select check_that((select lifter ->> 'hair' from pro_looks(array[:'D'::uuid])) = 'flame',
+                  'a Pro part worn for a day was not seen');
+reset role;
+-- As the server's own functions do: the guard lets only them write it.
+select set_config('outrepd.settling', 'on', false);
+update profiles set pro_trial = jsonb_set(pro_trial, '{until}', to_jsonb(now() - interval '1 minute'))
+ where id = :'D';
+select set_config('outrepd.settling', 'off', false);
+select as_user(:'A'); set role authenticated;
+select check_that((select lifter ->> 'hair' from pro_looks(array[:'D'::uuid])) = 'buzz',
+                  'a Pro part stayed on after its day');
+reset role;
+
+-- A streak brought back is kept as the later of the two copies.
+select check_that((rewards_merge('{"streakSaved": 100}'::jsonb, '{"streakSaved": 50}'::jsonb)
+                   ->> 'streakSaved')::bigint = 100,
+                  'when a streak was brought back was lost in the merge');
+
 -- And as a request would actually try it.
 select as_user(null); set role anon;
 select must_fail('signed out, a lifter''s profile',

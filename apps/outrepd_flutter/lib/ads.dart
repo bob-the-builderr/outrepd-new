@@ -28,6 +28,13 @@
 /// A build with neither network's ids — the tests, the web preview, a build
 /// made without them — has no ads at all, the way a build with no
 /// RevenueCat key has no paywall. A build with one of them has that one's.
+///
+/// Rewarded videos (the user's pick, 2026-11-09): a short video the player
+/// chooses to watch, for something that never touches the ladder — the
+/// match's XP again, a streak back once a week, a Pro part for a day. Pro
+/// gets each reward with no video. LevelPlay's only, no AdMob behind it;
+/// with no video loaded the offer is not shown at all ([rewardOffered]).
+/// Watching one after a match means no ad as that match is left.
 library;
 
 import 'dart:async';
@@ -47,7 +54,10 @@ import 'package:unity_levelplay_mediation/unity_levelplay_mediation.dart'
         LevelPlayInitListener,
         LevelPlayInitRequest,
         LevelPlayInterstitialAd,
-        LevelPlayInterstitialAdListener;
+        LevelPlayInterstitialAdListener,
+        LevelPlayReward,
+        LevelPlayRewardedAd,
+        LevelPlayRewardedAdListener;
 
 import 'screens/ad_ask.dart';
 import 'screens/paywall.dart';
@@ -66,6 +76,11 @@ const kLevelPlayIosInterstitial = String.fromEnvironment(
 );
 const kLevelPlayAndroidInterstitial = String.fromEnvironment(
   'LEVELPLAY_ANDROID_INTERSTITIAL',
+);
+/// LevelPlay's rewarded ad units (Rewarded_iOS, Rewarded_Android).
+const kLevelPlayIosRewarded = String.fromEnvironment('LEVELPLAY_IOS_REWARDED');
+const kLevelPlayAndroidRewarded = String.fromEnvironment(
+  'LEVELPLAY_ANDROID_REWARDED',
 );
 const kAdMobIosInterstitial = String.fromEnvironment('ADMOB_IOS_INTERSTITIAL');
 const kAdMobAndroidInterstitial = String.fromEnvironment(
@@ -113,6 +128,26 @@ class Ads extends ChangeNotifier {
   bool _loading = false;
   InterstitialAd? _ad;
 
+  /// LevelPlay's rewarded video: null until its SDK has started, and in a
+  /// build without the rewarded ad unit.
+  LevelPlayRewardedAd? _rewarded;
+  bool _rewardedLoading = false;
+  bool _rewardedReady = false;
+
+  /// Completes as the rewarded video closes, or fails to show.
+  Completer<void>? _rewardedClosing;
+
+  /// The video was watched far enough for its reward.
+  bool _rewardEarned = false;
+
+  /// A rewarded video was watched after a match: that match's ad is skipped.
+  bool _skipNextAd = false;
+
+  /// For tests and screenshots: whether a reward is on offer, and whether
+  /// watching for it earns it. Null in the app.
+  @visibleForTesting
+  static bool? debugRewarded;
+
   String _forStore({required String ios, required String android}) {
     if (kIsWeb) return '';
     return switch (defaultTargetPlatform) {
@@ -130,6 +165,10 @@ class Ads extends ChangeNotifier {
   );
   String get _unit =>
       _forStore(ios: kAdMobIosInterstitial, android: kAdMobAndroidInterstitial);
+  String get _rewardedUnit => _forStore(
+    ios: kLevelPlayIosRewarded,
+    android: kLevelPlayAndroidRewarded,
+  );
 
   bool get _hasLevelPlay => _levelPlayKey.isNotEmpty && _levelPlayUnit.isNotEmpty;
   bool get _hasAdMob => _unit.isNotEmpty;
@@ -138,6 +177,50 @@ class Ads extends ChangeNotifier {
   bool get configured => _hasLevelPlay || _hasAdMob;
 
   bool get _pro => Subscription.instance.active;
+
+  /// Whether a reward can be offered now: always to Pro, who gets it with
+  /// no video; to anybody else only while a rewarded video is loaded. A
+  /// button for a video that is not there is a button that does nothing.
+  bool get rewardOffered {
+    if (debugRewarded case final offered?) return offered;
+    if (_pro) return true;
+    return _hasLevelPlay && _rewardedUnit.isNotEmpty && _rewardedReady;
+  }
+
+  /// Whether the reward comes after a video: not for Pro.
+  bool get rewardNeedsVideo => debugRewarded != null || !_pro;
+
+  /// Plays a rewarded video, and says whether it was watched far enough to
+  /// earn its reward. Pro earns it at once. [afterMatch]: watched on a
+  /// result screen, so that match is left with no ad.
+  Future<bool> watchForReward({bool afterMatch = false}) async {
+    if (debugRewarded case final offered?) {
+      if (offered && afterMatch) _skipNextAd = true;
+      return offered;
+    }
+    if (_pro) return true;
+    final ad = _rewarded;
+    if (ad == null || !_rewardedReady) return false;
+    _rewardedReady = false;
+    notifyListeners();
+    if (!await ad.isAdReady()) {
+      _loadRewarded();
+      return false;
+    }
+    _rewardEarned = false;
+    final closed = _rewardedClosing = Completer<void>();
+    try {
+      await ad.showAd();
+    } on Object catch (error) {
+      debugPrint('The rewarded video would not show: $error');
+      _rewardedClosed();
+    }
+    await closed.future;
+    final earned = _rewardEarned;
+    if (earned && afterMatch) _skipNextAd = true;
+    _loadRewarded();
+    return earned;
+  }
 
   /// Reads what this phone has already been through. At launch; an account
   /// that has had the ask gets its consent checked and its first ad loaded.
@@ -212,6 +295,12 @@ class Ads extends ChangeNotifier {
     _sinceOffer++;
     unawaited(_save());
     if (rematch) return;
+    // A rewarded video was watched on this result screen: the promise under
+    // its button was no ad after this match, and nothing else either.
+    if (_skipNextAd) {
+      _skipNextAd = false;
+      return;
+    }
 
     if (configured) {
       if (!_asked) {
@@ -343,6 +432,10 @@ class Ads extends ChangeNotifier {
     if (_levelPlay != null) return;
     _levelPlay = LevelPlayInterstitialAd(adUnitId: _levelPlayUnit)
       ..setListener(_LevelPlayEvents(this));
+    if (_rewardedUnit.isNotEmpty) {
+      _rewarded = LevelPlayRewardedAd(adUnitId: _rewardedUnit)
+        ..setListener(_RewardedEvents(this));
+    }
     final up = _levelPlayUp;
     if (up != null && !up.isCompleted) up.complete(true);
     _load();
@@ -398,6 +491,42 @@ class Ads extends ChangeNotifier {
     _loadAdMob();
   }
 
+  void _rewardedLoaded() {
+    _rewardedLoading = false;
+    _rewardedReady = true;
+    notifyListeners();
+  }
+
+  void _rewardedFailed(LevelPlayAdError error) {
+    // Asked again after the next game, as the interstitial is: the offer
+    // stays hidden meanwhile.
+    debugPrint('No rewarded video: ${error.errorCode} ${error.errorMessage}');
+    _rewardedLoading = false;
+    _rewardedReady = false;
+    notifyListeners();
+  }
+
+  /// The rewarded video closed, or never showed. A network may say the
+  /// reward was earned a moment after it says the video closed, so the
+  /// answer waits that moment.
+  void _rewardedClosed() {
+    final closing = _rewardedClosing;
+    _rewardedClosing = null;
+    if (closing == null || closing.isCompleted) return;
+    Timer(const Duration(milliseconds: 800), () {
+      if (!closing.isCompleted) closing.complete();
+    });
+  }
+
+  void _loadRewarded() {
+    final ad = _rewarded;
+    if (!_started || _pro || ad == null || _rewardedReady || _rewardedLoading) {
+      return;
+    }
+    _rewardedLoading = true;
+    unawaited(ad.loadAd());
+  }
+
   /// LevelPlay's ad on screen closed ([shown]), or never showed.
   void _levelPlayClosed({required bool shown}) {
     final closing = _levelPlayClosing;
@@ -415,6 +544,7 @@ class Ads extends ChangeNotifier {
       unawaited(levelPlay.loadAd());
     }
     if (_levelPlayEmpty) _loadAdMob();
+    _loadRewarded();
   }
 
   void _loadAdMob() {
@@ -501,6 +631,40 @@ class _LevelPlayEvents implements LevelPlayInterstitialAdListener {
   void onAdDisplayFailed(LevelPlayAdError error, LevelPlayAdInfo adInfo) {
     debugPrint('The LevelPlay ad would not show: ${error.errorMessage}');
     _ads._levelPlayClosed(shown: false);
+  }
+
+  @override
+  void onAdDisplayed(LevelPlayAdInfo adInfo) {}
+
+  @override
+  void onAdClicked(LevelPlayAdInfo adInfo) {}
+
+  @override
+  void onAdInfoChanged(LevelPlayAdInfo adInfo) {}
+}
+
+class _RewardedEvents implements LevelPlayRewardedAdListener {
+  _RewardedEvents(this._ads);
+
+  final Ads _ads;
+
+  @override
+  void onAdLoaded(LevelPlayAdInfo adInfo) => _ads._rewardedLoaded();
+
+  @override
+  void onAdLoadFailed(LevelPlayAdError error) => _ads._rewardedFailed(error);
+
+  @override
+  void onAdRewarded(LevelPlayReward reward, LevelPlayAdInfo adInfo) =>
+      _ads._rewardEarned = true;
+
+  @override
+  void onAdClosed(LevelPlayAdInfo adInfo) => _ads._rewardedClosed();
+
+  @override
+  void onAdDisplayFailed(LevelPlayAdError error, LevelPlayAdInfo adInfo) {
+    debugPrint('The rewarded video would not show: ${error.errorMessage}');
+    _ads._rewardedClosed();
   }
 
   @override

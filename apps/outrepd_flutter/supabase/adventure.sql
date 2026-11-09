@@ -160,6 +160,9 @@ as $$
     'earlySessions', greatest(rewards_int(a, 'earlySessions'), rewards_int(b, 'earlySessions')),
     'lateSessions',  greatest(rewards_int(a, 'lateSessions'), rewards_int(b, 'lateSessions')),
     'perfectWeeks',  greatest(rewards_int(a, 'perfectWeeks'), rewards_int(b, 'perfectWeeks')),
+    -- When a streak was last brought back with a video (lib/rewards.dart):
+    -- the later, so a second phone cannot make it twice a week.
+    'streakSaved',   nullif(greatest(rewards_int(a, 'streakSaved'), rewards_int(b, 'streakSaved')), 0),
     'earned',        coalesce((select jsonb_agg(id order by id) from titles), '[]'::jsonb)
   ));
 $$;

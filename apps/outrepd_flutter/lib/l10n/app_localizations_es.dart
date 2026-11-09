@@ -3427,4 +3427,44 @@ class LEs extends L {
   String nChallengeBackBody(String name, String theirs) {
     return '${name} hizo ${theirs} y te reta de vuelta.';
   }
+
+  @override
+  String get xpDoubleIt => 'Duplicar';
+
+  @override
+  String get xpDoubleNote => 'Un video corto, y sin anuncio después de esta partida.';
+
+  @override
+  String get xpDoubled => '×2 duplicado';
+
+  @override
+  String streakEnded(String days) {
+    return 'Tu racha de ${days} días terminó';
+  }
+
+  @override
+  String get streakBringBack => 'Recupérala con un video corto. Una vez por semana.';
+
+  @override
+  String get streakBringBackPro => 'Recupérala. Una vez por semana.';
+
+  @override
+  String streakKeep(String days) {
+    return 'Conservar mis ${days} días';
+  }
+
+  @override
+  String get getPro => 'Obtener Pro';
+
+  @override
+  String get proTrialBody => 'Las piezas Pro vienen con Pro. Prueba esta gratis por un día: todos la verán en ti hasta mañana.';
+
+  @override
+  String get proTrialWear => 'Úsala gratis un día';
+
+  @override
+  String get proTrialOn => 'Tuya por un día. Todos la ven.';
+
+  @override
+  String get rewardNotEarned => 'El video no terminó, así que nada cambió.';
 }

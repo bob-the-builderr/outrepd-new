@@ -102,6 +102,20 @@ class MyLifter extends ChangeNotifier {
     await upload();
   }
 
+  /// [lifter] in place of the one made, as a day with a Pro part ends
+  /// (pro_trial.dart): saved as the picture again when the lifter is it,
+  /// kept quietly when a photo is shown instead.
+  Future<void> replaceParts(Lifter lifter) async {
+    if (isPicture) {
+      await save(lifter);
+      return;
+    }
+    _built = lifter;
+    notifyListeners();
+    final store = await SharedPreferences.getInstance();
+    await store.setString(_key, jsonEncode(lifter.toJson()));
+  }
+
   /// Sends the made lifter to the account: the parts, so another phone can
   /// edit it, and the PNG, so other people see it. Quietly does nothing it
   /// cannot do; the next save or sign-in tries again.

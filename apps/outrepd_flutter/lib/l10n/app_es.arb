@@ -1023,5 +1023,17 @@
   "nChallengeBeaten": "{name} superó tus {yours} con {theirs}. ¿Lo recuperas?",
   "nChallengeHeld": "{name} aceptó tu desafío y se quedó en {theirs}. Tus {yours} siguen en pie.",
   "nChallengeBackTitle": "Te retaron de vuelta",
-  "nChallengeBackBody": "{name} hizo {theirs} y te reta de vuelta."
+  "nChallengeBackBody": "{name} hizo {theirs} y te reta de vuelta.",
+  "xpDoubleIt": "Duplicar",
+  "xpDoubleNote": "Un video corto, y sin anuncio después de esta partida.",
+  "xpDoubled": "×2 duplicado",
+  "streakEnded": "Tu racha de {days} días terminó",
+  "streakBringBack": "Recupérala con un video corto. Una vez por semana.",
+  "streakBringBackPro": "Recupérala. Una vez por semana.",
+  "streakKeep": "Conservar mis {days} días",
+  "getPro": "Obtener Pro",
+  "proTrialBody": "Las piezas Pro vienen con Pro. Prueba esta gratis por un día: todos la verán en ti hasta mañana.",
+  "proTrialWear": "Úsala gratis un día",
+  "proTrialOn": "Tuya por un día. Todos la ven.",
+  "rewardNotEarned": "El video no terminó, así que nada cambió."
 }

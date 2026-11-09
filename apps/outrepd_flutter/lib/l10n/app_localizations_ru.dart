@@ -3422,4 +3422,44 @@ class LRu extends L {
   String nChallengeBackBody(String name, String theirs) {
     return '${name}: ${theirs} — и ответный вызов тебе.';
   }
+
+  @override
+  String get xpDoubleIt => 'Удвоить';
+
+  @override
+  String get xpDoubleNote => 'Короткое видео — и без рекламы после этого матча.';
+
+  @override
+  String get xpDoubled => '×2 удвоено';
+
+  @override
+  String streakEnded(String days) {
+    return 'Твоя серия из ${days} дн. прервалась';
+  }
+
+  @override
+  String get streakBringBack => 'Верни её коротким видео. Раз в неделю.';
+
+  @override
+  String get streakBringBackPro => 'Верни её. Раз в неделю.';
+
+  @override
+  String streakKeep(String days) {
+    return 'Сохранить ${days} дн.';
+  }
+
+  @override
+  String get getPro => 'Получить Pro';
+
+  @override
+  String get proTrialBody => 'Pro-детали входят в Pro. Примерь эту бесплатно на день: до завтра её увидят все.';
+
+  @override
+  String get proTrialWear => 'Носить бесплатно день';
+
+  @override
+  String get proTrialOn => 'Твоя на день. Её видят все.';
+
+  @override
+  String get rewardNotEarned => 'Видео не досмотрено, ничего не изменилось.';
 }

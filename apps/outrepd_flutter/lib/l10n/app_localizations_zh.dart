@@ -3378,4 +3378,44 @@ class LZh extends L {
   String nChallengeBackBody(String name, String theirs) {
     return '${name}做了${theirs}个，向你回敬挑战。';
   }
+
+  @override
+  String get xpDoubleIt => '翻倍';
+
+  @override
+  String get xpDoubleNote => '看一段短视频，本场比赛后不再有广告。';
+
+  @override
+  String get xpDoubled => '×2 已翻倍';
+
+  @override
+  String streakEnded(String days) {
+    return '你的${days}天连续记录中断了';
+  }
+
+  @override
+  String get streakBringBack => '看一段短视频即可恢复。每周一次。';
+
+  @override
+  String get streakBringBackPro => '可以恢复。每周一次。';
+
+  @override
+  String streakKeep(String days) {
+    return '保住我的${days}天';
+  }
+
+  @override
+  String get getPro => '开通 Pro';
+
+  @override
+  String get proTrialBody => 'Pro 部件随 Pro 提供。免费试用这个一天：明天之前大家都能看到你戴着它。';
+
+  @override
+  String get proTrialWear => '免费佩戴一天';
+
+  @override
+  String get proTrialOn => '这一天归你。大家都能看到。';
+
+  @override
+  String get rewardNotEarned => '视频没有播完，所以没有变化。';
 }

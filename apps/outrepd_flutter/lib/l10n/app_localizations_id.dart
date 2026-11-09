@@ -3421,4 +3421,44 @@ class LId extends L {
   String nChallengeBackBody(String name, String theirs) {
     return '${name} mencetak ${theirs} dan menantangmu balik.';
   }
+
+  @override
+  String get xpDoubleIt => 'Gandakan';
+
+  @override
+  String get xpDoubleNote => 'Video singkat, dan tanpa iklan setelah pertandingan ini.';
+
+  @override
+  String get xpDoubled => '×2 digandakan';
+
+  @override
+  String streakEnded(String days) {
+    return 'Streak ${days} harimu terputus';
+  }
+
+  @override
+  String get streakBringBack => 'Kembalikan dengan video singkat. Seminggu sekali.';
+
+  @override
+  String get streakBringBackPro => 'Kembalikan. Seminggu sekali.';
+
+  @override
+  String streakKeep(String days) {
+    return 'Pertahankan ${days} hariku';
+  }
+
+  @override
+  String get getPro => 'Dapatkan Pro';
+
+  @override
+  String get proTrialBody => 'Bagian Pro hadir bersama Pro. Coba yang ini gratis sehari: semua orang melihatnya padamu sampai besok.';
+
+  @override
+  String get proTrialWear => 'Pakai gratis sehari';
+
+  @override
+  String get proTrialOn => 'Milikmu selama sehari. Semua orang melihatnya.';
+
+  @override
+  String get rewardNotEarned => 'Videonya tidak selesai, jadi tidak ada yang berubah.';
 }

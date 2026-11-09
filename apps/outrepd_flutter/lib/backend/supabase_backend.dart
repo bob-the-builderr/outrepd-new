@@ -800,6 +800,19 @@ class SupabaseBackend implements Backend {
       );
 
   @override
+  Future<int> doubleDuelXp(String duelId) async =>
+      (await _db.rpc<int>('double_duel_xp', params: {'of_duel': duelId}));
+
+  @override
+  Future<DateTime> startProTrial(String key, String id, String? was) async {
+    final until = await _db.rpc<String>(
+      'start_pro_trial',
+      params: {'part_key': key, 'part_id': id, 'was_id': was},
+    );
+    return DateTime.parse(until);
+  }
+
+  @override
   Future<List<MyChallenge>> myChallenges() async {
     final rows = await _db.rpc<dynamic>('my_challenges');
     return [

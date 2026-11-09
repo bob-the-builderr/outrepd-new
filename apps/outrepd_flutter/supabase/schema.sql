@@ -115,6 +115,10 @@ alter table profiles add column if not exists avatar_url text;
 alter table profiles add column if not exists lifter jsonb
   constraint profiles_lifter_small
   check (lifter is null or pg_column_size(lifter) <= 2048);
+-- A Pro part worn for a day after a rewarded video (rewarded.sql,
+-- start_pro_trial): which, what it replaced, and until when. Written by the
+-- server only.
+alter table profiles add column if not exists pro_trial jsonb;
 -- The cover over a Pro profile: one of the moving scenes the app draws
 -- (lib/lifter/covers.dart), or this account's own photo at <id>/cover.jpg.
 -- Shown only while the account is Pro (pro_looks in account.sql), so a lapsed
@@ -604,6 +608,12 @@ begin
     raise exception 'friend_code is assigned by the server, not the client';
   end if;
 
+  -- A day with a Pro part is given after its video, by start_pro_trial; a
+  -- phone writing its own would be a Pro part for ever.
+  if new.pro_trial is distinct from old.pro_trial then
+    raise exception 'pro_trial is given by the server, not the client';
+  end if;
+
   new.updated_at := now();
   return new;
 end;
@@ -667,6 +677,7 @@ begin
   new.total_reps      := 0;
   new.best_set        := 0;
   new.xp              := 0;
+  new.pro_trial       := null;
   new.friend_code     := generate_friend_code();
   new.username_changed_at := null;
   new.avatar_url      := null;

@@ -14,6 +14,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../ads.dart';
 import '../app_bottom_nav.dart' show TablerIcon;
 import '../connection.dart';
 import '../backend/backend.dart';
@@ -34,6 +35,7 @@ import 'match_entry.dart';
 import 'match_flow.dart';
 import 'notifications.dart';
 import 'pro_parts.dart';
+import 'rewarded.dart';
 import 'rank_screen.dart';
 import 'shell.dart';
 
@@ -53,9 +55,15 @@ class MatchScreen extends StatelessWidget {
       body: SafeArea(
         bottom: false,
         child: ListenableBuilder(
-          listenable: Connection.instance,
+          // And a streak to bring back, while a video is there to do it.
+          listenable: Listenable.merge([
+            Connection.instance,
+            rewards,
+            Ads.instance,
+          ]),
           builder: (context, _) {
             final offline = !Connection.instance.online;
+            final streakBack = !offline && StreakBackCard.shown;
 
             // The tab as it was (the user's pick, 2026-11-03), all of it on
             // the screen at once: on a phone with room, the badge takes all
@@ -66,7 +74,10 @@ class MatchScreen extends StatelessWidget {
             return LayoutBuilder(
               builder: (context, box) {
                 final fits = MediaQuery.textScalerOf(context).scale(1) <= 1.15 &&
-                    box.maxHeight >= _restHeight(context) + 120 * _badgeCrop;
+                    box.maxHeight >=
+                        _restHeight(context) +
+                            (streakBack ? _streakBackHeight : 0) +
+                            120 * _badgeCrop;
                 final rank = !p.isRanked
                     ? (fits
                           ? Center(
@@ -98,6 +109,12 @@ class MatchScreen extends StatelessWidget {
                   children: [
                     _TopRow(profile: p),
                     _StreakLine(profile: p),
+                    // A streak that has just ended, brought back with a
+                    // video once a week (the user's pick, 2026-11-09, B).
+                    if (streakBack) ...[
+                      const SizedBox(height: 12),
+                      const StreakBackCard(),
+                    ],
                     const SizedBox(height: 4),
                     if (fits) Expanded(child: rank) else rank,
                     const SizedBox(height: 14),
@@ -145,6 +162,9 @@ class MatchScreen extends StatelessWidget {
 /// never more than 280.
 double _badgeMax(BuildContext context) =>
     math.min(MediaQuery.sizeOf(context).width * 0.62, 280.0);
+
+/// The streak card and the gap above it, measured off the built screen.
+const _streakBackHeight = 162.0;
 
 /// The badge on a phone that scrolls: still big enough to read at a glance.
 const _minBadge = 150.0;

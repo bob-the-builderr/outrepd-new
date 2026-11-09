@@ -2394,5 +2394,31 @@
         "type": "String"
       }
     }
-  }
+  },
+  "xpDoubleIt": "Double it",
+  "xpDoubleNote": "A short video, and no ad after this match.",
+  "xpDoubled": "×2 doubled",
+  "streakEnded": "Your {days}-day streak ended",
+  "@streakEnded": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "streakBringBack": "Bring it back with a short video. Once a week.",
+  "streakBringBackPro": "Bring it back. Once a week.",
+  "streakKeep": "Keep my {days} days",
+  "@streakKeep": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "getPro": "Get Pro",
+  "proTrialBody": "Pro parts come with Pro. Try this one free for a day: everyone sees it on you until tomorrow.",
+  "proTrialWear": "Wear it free for a day",
+  "proTrialOn": "Yours for a day. Everyone sees it.",
+  "rewardNotEarned": "The video didn't finish, so nothing changed."
 }

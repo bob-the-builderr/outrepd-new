@@ -1023,5 +1023,17 @@
   "nChallengeBeaten": "{name}以{theirs}个超过了你的{yours}个。要夺回来吗？",
   "nChallengeHeld": "{name}接受了你的挑战，停在{theirs}个。你的{yours}个守住了。",
   "nChallengeBackTitle": "收到回敬挑战",
-  "nChallengeBackBody": "{name}做了{theirs}个，向你回敬挑战。"
+  "nChallengeBackBody": "{name}做了{theirs}个，向你回敬挑战。",
+  "xpDoubleIt": "翻倍",
+  "xpDoubleNote": "看一段短视频，本场比赛后不再有广告。",
+  "xpDoubled": "×2 已翻倍",
+  "streakEnded": "你的{days}天连续记录中断了",
+  "streakBringBack": "看一段短视频即可恢复。每周一次。",
+  "streakBringBackPro": "可以恢复。每周一次。",
+  "streakKeep": "保住我的{days}天",
+  "getPro": "开通 Pro",
+  "proTrialBody": "Pro 部件随 Pro 提供。免费试用这个一天：明天之前大家都能看到你戴着它。",
+  "proTrialWear": "免费佩戴一天",
+  "proTrialOn": "这一天归你。大家都能看到。",
+  "rewardNotEarned": "视频没有播完，所以没有变化。"
 }
