@@ -1,4 +1,4 @@
-asked       2026-11-09 21:51 UTC
+asked       2026-11-09 22:52 UTC
 en-US    name 24  subtitle 30  keywords  98  promo 148  description 3102
 en-GB    name 24  subtitle 30  keywords  98  promo 148  description 3102
 en-AU    name 24  subtitle 30  keywords  98  promo 148  description 3102
@@ -51,62 +51,10 @@ ta-IN    name 24  subtitle 29  keywords  74  promo 153  description 1141
 te-IN    name 24  subtitle 27  keywords  75  promo 147  description 1017
 50 locales, 0 problems
 app OUTREPD: Push-up Battles (6817853725)
-made version 1.1.7
-version 1.1.7  PREPARE_FOR_SUBMISSION
+version 1.1.7  WAITING_FOR_REVIEW
 version 1.1.6  READY_FOR_SALE
 version 1.1.5  READY_FOR_SALE
 version 1.1.4  READY_FOR_SALE
 app info ff51d24e-c3f8-4ae1-92d2-7c3d8f411821  READY_FOR_SALE
-app info 0fb72abe-09af-4c23-aa56-653fe7090938  PREPARE_FOR_SUBMISSION
-support url https://www.outrepd.com/contact
-  ar-SA: verified
-  bn-BD: verified
-  ca: verified
-  cs: verified
-  da: verified
-  de-DE: verified
-  el: verified
-  en-AU: verified
-  en-CA: verified
-  en-GB: verified
-  en-US: verified
-  es-ES: verified
-  es-MX: verified
-  fi: verified
-  fr-CA: verified
-  fr-FR: verified
-  gu-IN: verified
-  he: verified
-  hi: verified
-  hr: verified
-  hu: verified
-  id: verified
-  it: verified
-  ja: verified
-  kn-IN: verified
-  ko: verified
-  ml-IN: verified
-  mr-IN: verified
-  ms: verified
-  nl-NL: verified
-  no: verified
-  or-IN: verified
-  pa-IN: verified
-  pl: verified
-  pt-BR: verified
-  pt-PT: verified
-  ro: verified
-  ru: verified
-  sk: verified
-  sl-SI: verified
-  sv: verified
-  ta-IN: verified
-  te-IN: verified
-  th: verified
-  tr: verified
-  uk: verified
-  ur-PK: verified
-  vi: verified
-  zh-Hans: verified
-  zh-Hant: verified
-50 of 50 locales verified
+app info 0fb72abe-09af-4c23-aa56-653fe7090938  WAITING_FOR_REVIEW
+version 1.1.7 is WAITING_FOR_REVIEW: not editable
