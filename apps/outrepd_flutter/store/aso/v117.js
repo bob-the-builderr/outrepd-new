@@ -26,7 +26,7 @@ const full = {
     track: 'Deine letzten zehn Ergebnisse auf einen Blick, jedes Match nach Tag, dein bester Satz und deine Serie. 73 Auszeichnungen in 14 Medaillen-Familien von Bronze bis Diamant, deine besten drei auf deinem Profil. Ein eigener Moment für jede neue Bestleistung und jeden Meilenstein und ein Rückblick auf jeden Monat.',
   },
   fr: {
-    planHead: 'BATS TOI DE LA SEMAINE DERNIÈRE',
+    planHead: 'BATS-TOI DE LA SEMAINE DERNIÈRE',
     plan: "Un plan de six semaines construit à partir de ta meilleure minute, avec des séries pour chaque jour d'entraînement. Chaque dimanche, tu affrontes ta propre meilleure minute de la semaine précédente.",
     linkHead: "DÉFIE N'IMPORTE QUI AVEC UN LIEN",
     link: "Envoie ta meilleure minute sous forme de lien. Qui l'ouvre affronte ta série, un essai chacun, et tu vois chaque résultat. Le lien reste ouvert sept jours.",
