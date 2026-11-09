@@ -624,6 +624,15 @@ enum NoticeKind {
   /// A friend passed this account on this week's board (notify.sql,
   /// notify_passed).
   passed,
+
+  /// Somebody took this account's challenge by link (challenge.sql):
+  /// [Notice.theirReps] against [Notice.yourReps], and [Notice.youWon] when
+  /// this account's count held. Opens [Notice.challengeCode].
+  challengeTaken,
+
+  /// Somebody who took this account's challenge sent one back: their minute,
+  /// [Notice.theirReps], to race at [Notice.challengeCode].
+  challengeBack,
 }
 
 // ──────────────────────────────── live matches ────────────────────────────────
@@ -862,6 +871,7 @@ class Notice {
     this.yourReps,
     this.theirReps,
     this.lpDelta,
+    this.challengeCode,
   });
 
   final String id;
@@ -887,6 +897,204 @@ class Notice {
   /// Only for [NoticeKind.raced]: what the duel did to this account's LP.
   /// Null for an unranked duel, and for notices from before it was kept.
   final int? lpDelta;
+
+  /// Only for [NoticeKind.challengeTaken] and [NoticeKind.challengeBack]:
+  /// the challenge the notice opens.
+  final String? challengeCode;
+}
+
+// ───────────────────────────── a challenge by link ────────────────────────────
+
+/// A link made for a set (challenge.sql): outrepd.com/c/<code>.
+class ChallengeLink {
+  const ChallengeLink({required this.code, required this.reps});
+
+  final String code;
+
+  /// The set's count: the number the card dares people to beat.
+  final int reps;
+
+  static ChallengeLink? fromJson(Object? json) {
+    if (json is! Map) return null;
+    final code = json['code'];
+    if (code is! String) return null;
+    return ChallengeLink(code: code, reps: (json['reps'] as num?)?.toInt() ?? 0);
+  }
+}
+
+/// One line of a challenge's board: the one who set it, or one try.
+class ChallengeEntry {
+  const ChallengeEntry({
+    required this.id,
+    required this.username,
+    required this.reps,
+    required this.at,
+    this.takeId,
+    this.avatarUrl,
+    this.owner = false,
+    this.beat = false,
+    this.canBack = false,
+  });
+
+  /// The try, for taking it back; null for the one who set it.
+  final String? takeId;
+  final String id;
+  final String username;
+  final String? avatarUrl;
+  final int reps;
+  final DateTime at;
+
+  /// The one who set the challenge.
+  final bool owner;
+
+  /// More than the challenge's count.
+  final bool beat;
+
+  /// Whether the try's own minute can be raced back: a whole one.
+  final bool canBack;
+
+  factory ChallengeEntry.fromJson(Map<String, dynamic> json) => ChallengeEntry(
+    takeId: json['take_id'] as String?,
+    id: json['id'] as String? ?? '',
+    username: json['username'] as String? ?? '',
+    avatarUrl: json['avatar_url'] as String?,
+    reps: (json['reps'] as num?)?.toInt() ?? 0,
+    at: DateTime.tryParse(json['at'] as String? ?? '')?.toLocal() ??
+        DateTime.now(),
+    owner: json['owner'] as bool? ?? false,
+    beat: json['beat'] as bool? ?? false,
+    canBack: json['can_back'] as bool? ?? false,
+  );
+}
+
+/// Who a challenge belongs to.
+class ChallengeOwner {
+  const ChallengeOwner({
+    required this.id,
+    required this.username,
+    this.avatarUrl,
+    this.tierIdx = 0,
+    this.divIdx = 0,
+    this.xp = 0,
+  });
+
+  final String id;
+  final String username;
+  final String? avatarUrl;
+  final int tierIdx;
+  final int divIdx;
+  final int xp;
+}
+
+/// A challenge as a link opens it.
+class ChallengeView {
+  const ChallengeView({
+    required this.code,
+    required this.reps,
+    required this.owner,
+    required this.expiresAt,
+    this.repTimes = const [],
+    this.open = true,
+    this.mine = false,
+    this.taken,
+    this.takeId,
+    this.board = const [],
+  });
+
+  final String code;
+  final int reps;
+
+  /// When each rep of the set landed, for the bar the taker races.
+  final List<int> repTimes;
+  final ChallengeOwner owner;
+  final DateTime expiresAt;
+
+  /// Still taking tries. A closed one still shows its board.
+  final bool open;
+
+  /// This account's own.
+  final bool mine;
+
+  /// This account's try, when it has had one.
+  final int? taken;
+  final String? takeId;
+
+  /// Everybody on it, best first.
+  final List<ChallengeEntry> board;
+
+  /// Where [id] is on the board, from 1; null when not on it.
+  int? placeOf(String id) {
+    final at = board.indexWhere((e) => e.id == id && !e.owner);
+    return at < 0 ? null : at + 1;
+  }
+
+  static ChallengeView? fromJson(Object? json) {
+    if (json is! Map) return null;
+    final owner = json['owner'] as Map? ?? const {};
+    return ChallengeView(
+      code: json['code'] as String? ?? '',
+      reps: (json['reps'] as num?)?.toInt() ?? 0,
+      repTimes: [
+        for (final t in json['rep_times'] as List? ?? const []) (t as num).toInt(),
+      ],
+      owner: ChallengeOwner(
+        id: owner['id'] as String? ?? '',
+        username: owner['username'] as String? ?? '',
+        avatarUrl: owner['avatar_url'] as String?,
+        tierIdx: (owner['tier_idx'] as num?)?.toInt() ?? 0,
+        divIdx: (owner['div_idx'] as num?)?.toInt() ?? 0,
+        xp: (owner['xp'] as num?)?.toInt() ?? 0,
+      ),
+      expiresAt:
+          DateTime.tryParse(json['expires_at'] as String? ?? '')?.toLocal() ??
+          DateTime.now(),
+      open: json['open'] as bool? ?? false,
+      mine: json['mine'] as bool? ?? false,
+      taken: (json['taken'] as num?)?.toInt(),
+      takeId: json['take_id'] as String?,
+      board: [
+        for (final row in json['board'] as List? ?? const [])
+          ChallengeEntry.fromJson(Map<String, dynamic>.from(row as Map)),
+      ],
+    );
+  }
+}
+
+/// One of this account's challenges, for the list on the profile.
+class MyChallenge {
+  const MyChallenge({
+    required this.code,
+    required this.reps,
+    required this.createdAt,
+    required this.expiresAt,
+    this.open = true,
+    this.takes = 0,
+    this.beat = 0,
+  });
+
+  final String code;
+  final int reps;
+  final DateTime createdAt;
+  final DateTime expiresAt;
+  final bool open;
+
+  /// How many took it, and how many of them beat it.
+  final int takes;
+  final int beat;
+
+  factory MyChallenge.fromJson(Map<String, dynamic> json) => MyChallenge(
+    code: json['code'] as String? ?? '',
+    reps: (json['reps'] as num?)?.toInt() ?? 0,
+    createdAt:
+        DateTime.tryParse(json['created_at'] as String? ?? '')?.toLocal() ??
+        DateTime.now(),
+    expiresAt:
+        DateTime.tryParse(json['expires_at'] as String? ?? '')?.toLocal() ??
+        DateTime.now(),
+    open: json['open'] as bool? ?? false,
+    takes: (json['takes'] as num?)?.toInt() ?? 0,
+    beat: (json['beat'] as num?)?.toInt() ?? 0,
+  );
 }
 
 /// What came of asking somebody to be friends.
@@ -1501,6 +1709,26 @@ abstract interface class Backend {
 
   /// The phone-to-phone line for a round.
   LiveLink openLiveLink(String matchId);
+
+  /// A link for one of this account's sets: [setId], or the latest whole
+  /// minute from the last day when null. Null when there is none to send.
+  Future<ChallengeLink?> makeChallenge({String? setId});
+
+  /// A link for this account's best whole minute, for the home card.
+  Future<ChallengeLink?> challengeBest();
+
+  /// What a link opens; null for a code that leads nowhere.
+  Future<ChallengeView?> openChallenge(String code);
+
+  /// This account's one try, with the set it just lifted for it.
+  Future<ChallengeView> takeChallenge(String code, String setId);
+
+  /// A challenge on one try's minute: sent back by the one who took it, or
+  /// taken back by the owner. Null when there is none to make.
+  Future<ChallengeLink?> backChallenge(String takeId);
+
+  /// This account's challenges from the last month.
+  Future<List<MyChallenge>> myChallenges();
 }
 
 /// The app with no server behind it.
@@ -1853,6 +2081,25 @@ class NoBackend implements Backend {
   @override
   LiveLink openLiveLink(String matchId) =>
       throw StateError('no server configured');
+
+  @override
+  Future<ChallengeLink?> makeChallenge({String? setId}) async => null;
+
+  @override
+  Future<ChallengeLink?> challengeBest() async => null;
+
+  @override
+  Future<ChallengeView?> openChallenge(String code) async => null;
+
+  @override
+  Future<ChallengeView> takeChallenge(String code, String setId) =>
+      throw StateError('no server configured');
+
+  @override
+  Future<ChallengeLink?> backChallenge(String takeId) async => null;
+
+  @override
+  Future<List<MyChallenge>> myChallenges() async => const [];
 }
 
 /// The one the app uses. Replaced at startup when keys are supplied.

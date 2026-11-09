@@ -3,7 +3,7 @@
 const fs = require('fs');
 const PARTS = ['subscriptions.sql', 'schema.sql', 'ladder.sql', 'social.sql',
   'duel.sql', 'notify.sql', 'push.sql', 'live.sql', 'seasons.sql',
-  'testers.sql', 'adventure.sql', 'account.sql',
+  'testers.sql', 'adventure.sql', 'challenge.sql', 'account.sql',
   'lockdown.sql'];
 const src = fs.readFileSync('tool/build_install.py', 'utf8').replace(/\r\n/g, '\n');
 const HEADER = src.split('HEADER = """')[1].split('"""')[0];

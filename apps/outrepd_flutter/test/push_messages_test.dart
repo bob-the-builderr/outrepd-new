@@ -37,7 +37,8 @@ void main() {
     // A push that says "somebody raced your set" is a push nobody opens.
     for (final MapEntry(key: language, value: words) in pushMessages().entries) {
       for (final key in ['nRacedHeld', 'nRacedBeaten', 'nFriendBody',
-          'nFriendOkBody', 'nChallengedBody', 'nLiveBody', 'nPassedBody']) {
+          'nFriendOkBody', 'nChallengedBody', 'nLiveBody', 'nPassedBody',
+          'nChallengeBeaten', 'nChallengeHeld', 'nChallengeBackBody']) {
         expect(words[key], contains('{name}'), reason: '$language $key');
       }
     }

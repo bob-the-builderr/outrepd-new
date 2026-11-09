@@ -43,6 +43,11 @@ enum MatchMode {
   /// rank), or a rematch both asked for straight after a live match (as
   /// ranked as that match was). See [MatchFlowScreen.liveMatch].
   liveFriend,
+
+  /// A challenge by link (challenge.sql): somebody's minute, raced the way a
+  /// saved set is, by anybody the link reached. Friendly; it moves no rank.
+  /// See [MatchFlowScreen.linkChallenge].
+  link,
 }
 
 /// Straight into the duel.

@@ -34,10 +34,10 @@ import '../tier_badge.dart';
 import '../type_scale.dart';
 import '../widgets.dart';
 import '../xp.dart';
+import 'challenge.dart';
 import 'daily_goal.dart';
 import 'level.dart';
 import 'live_rematch.dart';
-import 'match_flow.dart' show kDuelLength;
 import 'race_chart.dart';
 import 'share_card.dart';
 
@@ -86,40 +86,6 @@ Future<void> _shareMyCard(BuildContext context) async {
       avatarUrl: backend.me?.avatarUrl,
       xp: demoProfile.xp,
       title: rewards.worn,
-      pro: Subscription.instance.active,
-      cover: MyCover.instance.cover,
-    ),
-  );
-}
-
-/// This duel, for the card shared from its result: the count, who it was
-/// against, and what it did to the rank. The promotion screen shares the
-/// profile card instead, because a promotion is news about the rank.
-void _shareMatch(
-  BuildContext context, {
-  required bool won,
-  required int yourReps,
-  required int theirReps,
-  required Opponent opponent,
-  required DuelOutcome? outcome,
-}) {
-  final change = outcome?.rank;
-  showMatchShareSheet(
-    context,
-    data: MatchShareData(
-      username: demoProfile.username,
-      won: won,
-      yourReps: yourReps,
-      theirReps: theirReps,
-      opponent: opponent.username,
-      seconds: kDuelLength.inSeconds,
-      tierIdx: change?.after.tierIdx,
-      divIdx: change?.after.divIdx ?? 0,
-      lpDelta: change?.lpDelta,
-      newBest: outcome?.newBest ?? false,
-      avatarUrl: backend.me?.avatarUrl,
-      opponentTierIdx: opponent.tierIdx,
-      lp: change?.after.lp,
       pro: Subscription.instance.active,
       cover: MyCover.instance.cover,
     ),
@@ -355,19 +321,9 @@ class DuelResultView extends StatelessWidget {
                 const SizedBox(height: 11),
                 Row(
                   children: [
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () => _shareMatch(
-                          context,
-                          won: won,
-                          yourReps: yourReps,
-                          theirReps: theirReps,
-                          opponent: opponent,
-                          outcome: outcome,
-                        ),
-                        child: Text(l.shareAction),
-                      ),
-                    ),
+                    // Where Share was (the user's pick, 2026-11-09, B): the
+                    // set just lifted, sent as a challenge by link.
+                    const Expanded(child: ChallengeButton()),
                     const SizedBox(width: 11),
                     Expanded(
                       child: OutlinedButton(

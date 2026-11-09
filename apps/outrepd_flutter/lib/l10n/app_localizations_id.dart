@@ -3263,4 +3263,162 @@ class LId extends L {
   String topTenIn(String country) {
     return '10 besar di ${country}';
   }
+
+  @override
+  String get challengeAction => 'Tantang';
+
+  @override
+  String get challengeAFriend => 'Tantang teman';
+
+  @override
+  String challengeYourBest(String reps, String seconds) {
+    return 'Rekormu: ${reps} dalam ${seconds} detik · kirim';
+  }
+
+  @override
+  String challengesYou(String name) {
+    return '${name} menantangmu';
+  }
+
+  @override
+  String get canYouBeatIt => 'Bisa mengalahkannya?';
+
+  @override
+  String challengeInvite(String reps, String seconds) {
+    return 'Aku push-up ${reps} kali dalam ${seconds} detik. Yakin bisa mengalahkanku?';
+  }
+
+  @override
+  String get vsChallengeFriendly => 'TANTANGAN · PERSAHABATAN';
+
+  @override
+  String get challengesYouToBeat => 'menantangmu mengalahkan';
+
+  @override
+  String get onThisChallenge => 'Di tantangan ini';
+
+  @override
+  String challengeTookIt(String count) {
+    return '${count} ikut';
+  }
+
+  @override
+  String get challengeBeatTag => 'Terkalahkan';
+
+  @override
+  String get challengeSetIt => 'pembuat';
+
+  @override
+  String get challengeFriendlyNote => 'Persahabatan: rating-mu tetap. Push-up-mu dihitung untuk target hari ini.';
+
+  @override
+  String get takeTheChallenge => 'Terima tantangan';
+
+  @override
+  String get challengeClosed => 'Tantangan ini sudah ditutup.';
+
+  @override
+  String challengeYouTookIt(String reps) {
+    return 'Kamu sudah ikut: ${reps}.';
+  }
+
+  @override
+  String challengeOpenUntil(String date) {
+    return 'Terbuka sampai ${date}';
+  }
+
+  @override
+  String get youBeatIt => 'Kamu berhasil';
+
+  @override
+  String get notThisTime => 'Belum kali ini';
+
+  @override
+  String challengeMoreThan(String gap, String name) {
+    return '${gap} lebih banyak dari ${name}.';
+  }
+
+  @override
+  String challengeShortOf(String gap, String name) {
+    return 'Kurang ${gap} dari ${name}.';
+  }
+
+  @override
+  String challengeLevelWith(String name) {
+    return 'Seri dengan ${name}. Satu lagi pasti menang.';
+  }
+
+  @override
+  String challengePlace(String place, String count) {
+    return 'Kamu #${place} dari ${count}';
+  }
+
+  @override
+  String challengeResultNote(String reps) {
+    return 'Persahabatan · rating tetap · +${reps} untuk target hari ini';
+  }
+
+  @override
+  String challengeBack(String name) {
+    return 'Tantang balik ${name}';
+  }
+
+  @override
+  String get challengeSentBack => 'Terkirim';
+
+  @override
+  String get yourChallenge => 'Tantanganmu';
+
+  @override
+  String challengeBeatYou(String count) {
+    return '${count} mengalahkanmu';
+  }
+
+  @override
+  String get challengeRowBeat => 'mengalahkanmu';
+
+  @override
+  String get challengeRowHeld => 'kamu bertahan';
+
+  @override
+  String get takeItBack => 'Rebut kembali';
+
+  @override
+  String get takeItBackNote => 'Rebut kembali: lawan set mereka. Kalau menang, mereka akan tahu.';
+
+  @override
+  String get sendToMoreFriends => 'Kirim ke teman lain';
+
+  @override
+  String get challengesTitle => 'Tantangan';
+
+  @override
+  String get noChallengesYet => 'Belum ada tantangan. Kirim setelah pertandingan, atau dari layar utama.';
+
+  @override
+  String get challengeNobodyYet => 'Belum ada yang ikut.';
+
+  @override
+  String get challengeNoSet => 'Selesaikan satu menit penuh dulu, lalu kirim.';
+
+  @override
+  String get nChallengeTakenTitle => 'Tantanganmu diterima';
+
+  @override
+  String nChallengeBeaten(String name, String yours, String theirs) {
+    return '${name} mengalahkan ${yours}-mu dengan ${theirs}. Rebut kembali?';
+  }
+
+  @override
+  String nChallengeHeld(String name, String yours, String theirs) {
+    return '${name} menerima tantanganmu dan berhenti di ${theirs}. ${yours}-mu bertahan.';
+  }
+
+  @override
+  String get nChallengeBackTitle => 'Ditantang balik';
+
+  @override
+  String nChallengeBackBody(String name, String theirs) {
+    return '${name} mencetak ${theirs} dan menantangmu balik.';
+  }
 }

@@ -3264,4 +3264,162 @@ class LRu extends L {
   String topTenIn(String country) {
     return 'Топ-10 в стране: ${country}';
   }
+
+  @override
+  String get challengeAction => 'Вызов';
+
+  @override
+  String get challengeAFriend => 'Брось вызов другу';
+
+  @override
+  String challengeYourBest(String reps, String seconds) {
+    return 'Твой рекорд: ${reps} за ${seconds} секунд · отправь';
+  }
+
+  @override
+  String challengesYou(String name) {
+    return '${name} бросает тебе вызов';
+  }
+
+  @override
+  String get canYouBeatIt => 'Сможешь больше?';
+
+  @override
+  String challengeInvite(String reps, String seconds) {
+    return 'У меня ${reps} отжиманий за ${seconds} секунд. Думаешь, сможешь меня победить?';
+  }
+
+  @override
+  String get vsChallengeFriendly => 'ВЫЗОВ · ДРУЖЕСКИЙ';
+
+  @override
+  String get challengesYouToBeat => 'бросает вызов — побей';
+
+  @override
+  String get onThisChallenge => 'В этом вызове';
+
+  @override
+  String challengeTookIt(String count) {
+    return 'Приняли: ${count}';
+  }
+
+  @override
+  String get challengeBeatTag => 'Побит';
+
+  @override
+  String get challengeSetIt => 'автор';
+
+  @override
+  String get challengeFriendlyNote => 'Дружеский: рейтинг не изменится. Отжимания засчитываются в цель на сегодня.';
+
+  @override
+  String get takeTheChallenge => 'Принять вызов';
+
+  @override
+  String get challengeClosed => 'Этот вызов закрыт.';
+
+  @override
+  String challengeYouTookIt(String reps) {
+    return 'Твой результат: ${reps}.';
+  }
+
+  @override
+  String challengeOpenUntil(String date) {
+    return 'Открыт до ${date}';
+  }
+
+  @override
+  String get youBeatIt => 'Рекорд побит';
+
+  @override
+  String get notThisTime => 'Не в этот раз';
+
+  @override
+  String challengeMoreThan(String gap, String name) {
+    return 'На ${gap} больше, чем у ${name}.';
+  }
+
+  @override
+  String challengeShortOf(String gap, String name) {
+    return 'На ${gap} меньше, чем у ${name}.';
+  }
+
+  @override
+  String challengeLevelWith(String name) {
+    return 'Ничья с ${name}. Ещё одно — и победа.';
+  }
+
+  @override
+  String challengePlace(String place, String count) {
+    return 'Ты #${place} из ${count}';
+  }
+
+  @override
+  String challengeResultNote(String reps) {
+    return 'Дружеский · рейтинг без изменений · +${reps} к цели на сегодня';
+  }
+
+  @override
+  String challengeBack(String name) {
+    return 'Ответный вызов ${name}';
+  }
+
+  @override
+  String get challengeSentBack => 'Отправлено';
+
+  @override
+  String get yourChallenge => 'Твой вызов';
+
+  @override
+  String challengeBeatYou(String count) {
+    return 'Обошли: ${count}';
+  }
+
+  @override
+  String get challengeRowBeat => 'результат выше';
+
+  @override
+  String get challengeRowHeld => 'рекорд устоял';
+
+  @override
+  String get takeItBack => 'Вернуть';
+
+  @override
+  String get takeItBackNote => 'Вернуть: посоревнуйся с их подходом. Если победишь, они узнают.';
+
+  @override
+  String get sendToMoreFriends => 'Отправить другим друзьям';
+
+  @override
+  String get challengesTitle => 'Вызовы';
+
+  @override
+  String get noChallengesYet => 'Вызовов пока нет. Отправь вызов после матча или с главного экрана.';
+
+  @override
+  String get challengeNobodyYet => 'Пока никто не принял вызов.';
+
+  @override
+  String get challengeNoSet => 'Сначала сделай полную минуту, потом отправляй.';
+
+  @override
+  String get nChallengeTakenTitle => 'Твой вызов приняли';
+
+  @override
+  String nChallengeBeaten(String name, String yours, String theirs) {
+    return '${name} побил твои ${yours}: ${theirs}. Вернёшь?';
+  }
+
+  @override
+  String nChallengeHeld(String name, String yours, String theirs) {
+    return '${name} принял вызов и остановился на ${theirs}. Твои ${yours} устояли.';
+  }
+
+  @override
+  String get nChallengeBackTitle => 'Ответный вызов';
+
+  @override
+  String nChallengeBackBody(String name, String theirs) {
+    return '${name}: ${theirs} — и ответный вызов тебе.';
+  }
 }

@@ -38,6 +38,7 @@ import '../review_prompt.dart';
 import '../settings.dart';
 import 'adventure_fight.dart';
 import 'adventure_map.dart';
+import 'challenge.dart';
 import 'confirm_count.dart';
 import 'daily_goal.dart';
 import 'level.dart';
@@ -76,6 +77,9 @@ class MatchFlowScreen extends StatefulWidget {
   /// instead of a clock and a count, and its own ending.
   final AdventureLevel? adventure;
 
+  /// The challenge [MatchMode.link] races, opened from its link.
+  final ChallengeView? linkChallenge;
+
   const MatchFlowScreen({
     super.key,
     this.mode = MatchMode.ranked,
@@ -85,6 +89,7 @@ class MatchFlowScreen extends StatefulWidget {
     this.targetDivIdx,
     this.liveMatch,
     this.adventure,
+    this.linkChallenge,
   }) : assert(
          adventure == null || mode == MatchMode.practice,
          'an adventure fight is practice: it moves no rank',
@@ -104,6 +109,10 @@ class MatchFlowScreen extends StatefulWidget {
        assert(
          mode != MatchMode.challengeAccept || targetId != null,
          'accepting a challenge needs to know whose it is',
+       ),
+       assert(
+         mode != MatchMode.link || linkChallenge != null,
+         'a challenge by link needs the challenge',
        );
 
   /// Nobody on the other side. The same clock and the same counting, with
@@ -133,6 +142,9 @@ class MatchFlowScreen extends StatefulWidget {
 
   /// Live with a friend, from an accepted invite.
   bool get isLiveFriend => mode == MatchMode.liveFriend;
+
+  /// Racing a challenge by link.
+  bool get isLink => mode == MatchMode.link;
 
   bool get isAdventure => adventure != null;
 
@@ -180,6 +192,9 @@ enum _Stage {
   /// An adventure fight just earned the stars for a new weapon: shown once,
   /// after the level and before the result.
   weapon,
+
+  /// A challenge by link: the try is in, and here is how it went.
+  challengeResult,
 }
 
 class _MatchFlowScreenState extends State<MatchFlowScreen> {
@@ -224,6 +239,9 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   /// on [_Stage.sent] instead of assumed, because there is no local fallback
   /// for "tell somebody else about this" the way an ordinary duel has one.
   bool _challengeSent = false;
+
+  /// The challenge by link once this try is on it, from the server.
+  ChallengeView? _linkAfter;
 
   int _myReps = 0;
 
@@ -283,7 +301,8 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   String? get _vsOpponentId =>
       _live?.opponent.id ??
       _realOpponent?.profileId ??
-      (widget.isChallenge ? widget.targetId : null);
+      (widget.isChallenge ? widget.targetId : null) ??
+      widget.linkChallenge?.owner.id;
 
   /// Nobody real was found, so the round is raced against this lifter's own
   /// best set and moves nothing on the ladder.
@@ -303,7 +322,8 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       _live == null &&
       !widget.isLiveFriend &&
       !widget.isChallenge &&
-      !widget.isChallengeAccept;
+      !widget.isChallengeAccept &&
+      !widget.isLink;
 
   @override
   void initState() {
@@ -397,6 +417,25 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           id: match.opponent.id,
         );
         _theirReps = 0;
+      });
+      _goVersus();
+      return;
+    }
+
+    // A challenge by link: the owner's minute came with the link, so there
+    // is nobody to look for — straight to meeting them.
+    if (widget.linkChallenge case final challenge? when widget.isLink) {
+      final owner = challenge.owner;
+      setState(() {
+        _opponent = Opponent(
+          owner.username,
+          owner.tierIdx,
+          owner.divIdx,
+          avatarUrl: owner.avatarUrl,
+          xp: owner.xp,
+          id: owner.id,
+        );
+        _theirReps = challenge.reps;
       });
       _goVersus();
       return;
@@ -536,7 +575,8 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
         (quick ||
             widget.isChallenge ||
             widget.isChallengeAccept ||
-            widget.isLiveFriend)
+            widget.isLiveFriend ||
+            widget.isLink)
         ? const Duration(milliseconds: 600)
         : Duration(milliseconds: 2200 + Random().nextInt(3400));
     _timer = Timer(wait, () {
@@ -585,7 +625,10 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
                       ? L.of(context).yourBest
                       : _opponent.username,
                   opponentReps: _theirReps,
-                  opponentRepTimes: _realOpponent?.repTimes ?? const [],
+                  opponentRepTimes:
+                      _realOpponent?.repTimes ??
+                      widget.linkChallenge?.repTimes ??
+                      const [],
                   opponentTierIdx: _opponent.tierIdx,
                   opponentDivIdx: _opponent.divIdx,
                   // Racing your own best: your own picture across from you.
@@ -593,11 +636,13 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
                       ? avatar.picture
                       : imageOf(_opponentFace),
                   opponentXp: _vsBest ? demoProfile.xp : _opponent.xp,
-                  rankLabel: tierLabel(
-                    L.of(context),
-                    demoProfile.tierIdx,
-                    demoProfile.divIdx,
-                  ),
+                  rankLabel: widget.isLink
+                      ? L.of(context).friendlyNoRank
+                      : tierLabel(
+                          L.of(context),
+                          demoProfile.tierIdx,
+                          demoProfile.divIdx,
+                        ),
                 ),
         ),
       ),
@@ -633,6 +678,13 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       }
     } else {
       settled = scored?.reps ?? 0;
+    }
+
+    // A challenge by link is its own ending too: the set goes up and onto the
+    // challenge as this account's one try.
+    if (widget.linkChallenge case final challenge? when widget.isLink) {
+      await _takeLink(challenge, scored, settled);
+      return;
     }
 
     // Sending a challenge is its own ending: the set is uploaded naming the
@@ -712,6 +764,69 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       durationMs: scored?.durationMs ?? 1,
       repTimes: scored?.repTimes ?? const [],
     );
+  }
+
+  /// A try at a challenge by link: the set up as practice — friendly, and
+  /// never offered to the open pool — and onto the challenge, tried again
+  /// for a while as a duel's set is, then the reps recorded like any
+  /// practice minute's. Walked out before the round began: nothing was
+  /// lifted, so the one try is still there and the screen simply closes.
+  Future<void> _takeLink(
+    ChallengeView challenge,
+    PushupCount? scored,
+    int reps,
+  ) async {
+    if (scored == null) {
+      Navigator.of(context).pop();
+      return;
+    }
+    _myRepTimes = scored.repTimes;
+    setState(() => _stage = _Stage.saving);
+    String? setId;
+    ChallengeView? after;
+    for (var attempt = 0; attempt < 4 && mounted; attempt++) {
+      if (attempt > 0) {
+        await Future<void>.delayed(Duration(seconds: 3 * attempt));
+        if (!mounted) return;
+      }
+      try {
+        setId ??= await backend.uploadSet(
+          SetUpload(
+            reps: reps,
+            repsCamera: scored.reps,
+            depth: scored.depth,
+            confident: scored.confident,
+            durationMs: scored.durationMs,
+            gaveUp: scored.gaveUp,
+            repTimes: scored.repTimes,
+            practice: true,
+          ),
+        );
+        after = await backend.takeChallenge(challenge.code, setId);
+        break;
+      } on Object catch (error) {
+        debugPrint('Could not put the try on the challenge: $error');
+      }
+    }
+    if (!mounted) return;
+    if (after == null) {
+      setState(() => _stage = _Stage.liveFailed);
+      return;
+    }
+    final xpBefore = demoProfile.xp;
+    await Career.instance.recordPractice(
+      reps,
+      clean: scored.depth >= kCleanDepth,
+    );
+    final gain = XpGain(before: xpBefore, after: demoProfile.xp, reps: reps);
+    _xp = gain.total > 0 ? gain : null;
+    if (!mounted) return;
+    setState(() {
+      _myReps = reps;
+      _theirReps = challenge.reps;
+      _linkAfter = after;
+      _stage = _Stage.challengeResult;
+    });
   }
 
   /// Uploads the set, settles it against a real opponent if there is one,
@@ -1021,6 +1136,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     _Stage.levelUp ||
     _Stage.weapon ||
     _Stage.sent ||
+    _Stage.challengeResult ||
     _Stage.waitingResult ||
     _Stage.saving => true,
     _ => false,
@@ -1129,9 +1245,11 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
             opponentDivIdx: _opponent.divIdx,
             opponentXp: _opponent.xp,
             opponentAvatarUrl: _opponent.avatarUrl,
-            ranked: _live?.ranked ?? true,
+            ranked: _live?.ranked ?? !widget.isLink,
             kind: _live != null
                 ? VsKind.live
+                : widget.isLink
+                ? VsKind.challenge
                 : widget.isChallenge || widget.isChallengeAccept
                 ? VsKind.rematch
                 : VsKind.saved,
@@ -1294,6 +1412,14 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           onDone: () => _leave(() => Navigator.of(context).pop()),
         );
 
+      case _Stage.challengeResult:
+        return ChallengeResultView(
+          view: _linkAfter!,
+          reps: _myReps,
+          xp: _xp,
+          onDone: () => _leave(() => Navigator.of(context).pop()),
+        );
+
       case _Stage.sent:
         return _ChallengeSentView(
           sent: _challengeSent,
@@ -1310,7 +1436,11 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   /// is called off for the other phone rather than lost: the round never
   /// began.
   bool get _leavesFree =>
-      widget.practice || widget.isChallenge || _vsBest || _live != null;
+      widget.practice ||
+      widget.isChallenge ||
+      widget.isLink ||
+      _vsBest ||
+      _live != null;
 
   Future<void> _confirmQuit() async {
     // Nothing to lose: straight out, with no warning about rank points that

@@ -3262,4 +3262,162 @@ class LEn extends L {
   String topTenIn(String country) {
     return 'Top 10 in ${country}';
   }
+
+  @override
+  String get challengeAction => 'Challenge';
+
+  @override
+  String get challengeAFriend => 'Challenge a friend';
+
+  @override
+  String challengeYourBest(String reps, String seconds) {
+    return 'Your best: ${reps} in ${seconds} seconds · send it';
+  }
+
+  @override
+  String challengesYou(String name) {
+    return '${name} challenges you';
+  }
+
+  @override
+  String get canYouBeatIt => 'Can you beat it?';
+
+  @override
+  String challengeInvite(String reps, String seconds) {
+    return 'I did ${reps} push-ups in ${seconds} seconds. Think you can beat me?';
+  }
+
+  @override
+  String get vsChallengeFriendly => 'CHALLENGE · FRIENDLY';
+
+  @override
+  String get challengesYouToBeat => 'challenges you to beat';
+
+  @override
+  String get onThisChallenge => 'On this challenge';
+
+  @override
+  String challengeTookIt(String count) {
+    return '${count} took it';
+  }
+
+  @override
+  String get challengeBeatTag => 'Beat it';
+
+  @override
+  String get challengeSetIt => 'set it';
+
+  @override
+  String get challengeFriendlyNote => 'Friendly: your rating stays where it is. Your push-ups count toward today\'s goal.';
+
+  @override
+  String get takeTheChallenge => 'Take the challenge';
+
+  @override
+  String get challengeClosed => 'This challenge has closed.';
+
+  @override
+  String challengeYouTookIt(String reps) {
+    return 'You took it: ${reps}.';
+  }
+
+  @override
+  String challengeOpenUntil(String date) {
+    return 'Open until ${date}';
+  }
+
+  @override
+  String get youBeatIt => 'You beat it';
+
+  @override
+  String get notThisTime => 'Not this time';
+
+  @override
+  String challengeMoreThan(String gap, String name) {
+    return '${gap} more than ${name}.';
+  }
+
+  @override
+  String challengeShortOf(String gap, String name) {
+    return '${gap} short of ${name}.';
+  }
+
+  @override
+  String challengeLevelWith(String name) {
+    return 'Level with ${name}. One more would have done it.';
+  }
+
+  @override
+  String challengePlace(String place, String count) {
+    return 'You\'re #${place} of ${count}';
+  }
+
+  @override
+  String challengeResultNote(String reps) {
+    return 'Friendly · rating unchanged · +${reps} toward today\'s goal';
+  }
+
+  @override
+  String challengeBack(String name) {
+    return 'Challenge ${name} back';
+  }
+
+  @override
+  String get challengeSentBack => 'Sent back';
+
+  @override
+  String get yourChallenge => 'Your challenge';
+
+  @override
+  String challengeBeatYou(String count) {
+    return '${count} beat you';
+  }
+
+  @override
+  String get challengeRowBeat => 'beat you';
+
+  @override
+  String get challengeRowHeld => 'you held';
+
+  @override
+  String get takeItBack => 'Take it back';
+
+  @override
+  String get takeItBackNote => 'Take it back: race their set. Beat it and they hear about it.';
+
+  @override
+  String get sendToMoreFriends => 'Send to more friends';
+
+  @override
+  String get challengesTitle => 'Challenges';
+
+  @override
+  String get noChallengesYet => 'No challenges yet. Send one after a match, or from the home screen.';
+
+  @override
+  String get challengeNobodyYet => 'Nobody has taken it yet.';
+
+  @override
+  String get challengeNoSet => 'Lift a whole minute first, then send it.';
+
+  @override
+  String get nChallengeTakenTitle => 'Your challenge was taken';
+
+  @override
+  String nChallengeBeaten(String name, String yours, String theirs) {
+    return '${name} beat your ${yours} with ${theirs}. Take it back?';
+  }
+
+  @override
+  String nChallengeHeld(String name, String yours, String theirs) {
+    return '${name} took your challenge and stopped at ${theirs}. Your ${yours} holds.';
+  }
+
+  @override
+  String get nChallengeBackTitle => 'Challenged back';
+
+  @override
+  String nChallengeBackBody(String name, String theirs) {
+    return '${name} did ${theirs} and challenges you back.';
+  }
 }

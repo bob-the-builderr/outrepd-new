@@ -3220,4 +3220,162 @@ class LZh extends L {
   String topTenIn(String country) {
     return '${country}前 10 名';
   }
+
+  @override
+  String get challengeAction => '发起挑战';
+
+  @override
+  String get challengeAFriend => '向朋友发起挑战';
+
+  @override
+  String challengeYourBest(String reps, String seconds) {
+    return '你的最佳：${seconds}秒${reps}个 · 发出去';
+  }
+
+  @override
+  String challengesYou(String name) {
+    return '${name}向你发起挑战';
+  }
+
+  @override
+  String get canYouBeatIt => '你能超过吗？';
+
+  @override
+  String challengeInvite(String reps, String seconds) {
+    return '我${seconds}秒做了${reps}个俯卧撑。你觉得你能赢我吗？';
+  }
+
+  @override
+  String get vsChallengeFriendly => '挑战 · 友谊赛';
+
+  @override
+  String get challengesYouToBeat => '向你挑战这个成绩';
+
+  @override
+  String get onThisChallenge => '本次挑战';
+
+  @override
+  String challengeTookIt(String count) {
+    return '${count}人参与';
+  }
+
+  @override
+  String get challengeBeatTag => '已超越';
+
+  @override
+  String get challengeSetIt => '发起人';
+
+  @override
+  String get challengeFriendlyNote => '友谊赛：你的分数不变。俯卧撑会计入今天的目标。';
+
+  @override
+  String get takeTheChallenge => '接受挑战';
+
+  @override
+  String get challengeClosed => '这个挑战已结束。';
+
+  @override
+  String challengeYouTookIt(String reps) {
+    return '你的成绩：${reps}个';
+  }
+
+  @override
+  String challengeOpenUntil(String date) {
+    return '开放至${date}';
+  }
+
+  @override
+  String get youBeatIt => '你超越了';
+
+  @override
+  String get notThisTime => '这次没成功';
+
+  @override
+  String challengeMoreThan(String gap, String name) {
+    return '比${name}多${gap}个。';
+  }
+
+  @override
+  String challengeShortOf(String gap, String name) {
+    return '比${name}少${gap}个。';
+  }
+
+  @override
+  String challengeLevelWith(String name) {
+    return '与${name}持平。再多一个就赢了。';
+  }
+
+  @override
+  String challengePlace(String place, String count) {
+    return '${count}人中第${place}名';
+  }
+
+  @override
+  String challengeResultNote(String reps) {
+    return '友谊赛 · 分数不变 · 今日目标+${reps}';
+  }
+
+  @override
+  String challengeBack(String name) {
+    return '向${name}回敬挑战';
+  }
+
+  @override
+  String get challengeSentBack => '已回敬';
+
+  @override
+  String get yourChallenge => '你的挑战';
+
+  @override
+  String challengeBeatYou(String count) {
+    return '${count}人超过了你';
+  }
+
+  @override
+  String get challengeRowBeat => '超过了你';
+
+  @override
+  String get challengeRowHeld => '你守住了';
+
+  @override
+  String get takeItBack => '夺回来';
+
+  @override
+  String get takeItBackNote => '夺回来：挑战对方的成绩。超过了对方会收到通知。';
+
+  @override
+  String get sendToMoreFriends => '发给更多朋友';
+
+  @override
+  String get challengesTitle => '挑战';
+
+  @override
+  String get noChallengesYet => '还没有挑战。比赛后或在主页发起一个吧。';
+
+  @override
+  String get challengeNobodyYet => '还没有人参与。';
+
+  @override
+  String get challengeNoSet => '先完整做满一分钟，再发出去。';
+
+  @override
+  String get nChallengeTakenTitle => '有人接受了你的挑战';
+
+  @override
+  String nChallengeBeaten(String name, String yours, String theirs) {
+    return '${name}以${theirs}个超过了你的${yours}个。要夺回来吗？';
+  }
+
+  @override
+  String nChallengeHeld(String name, String yours, String theirs) {
+    return '${name}接受了你的挑战，停在${theirs}个。你的${yours}个守住了。';
+  }
+
+  @override
+  String get nChallengeBackTitle => '收到回敬挑战';
+
+  @override
+  String nChallengeBackBody(String name, String theirs) {
+    return '${name}做了${theirs}个，向你回敬挑战。';
+  }
 }

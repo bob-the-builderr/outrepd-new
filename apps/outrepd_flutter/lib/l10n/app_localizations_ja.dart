@@ -3229,4 +3229,162 @@ class LJa extends L {
   String topTenIn(String country) {
     return '${country}でトップ10';
   }
+
+  @override
+  String get challengeAction => '挑戦状';
+
+  @override
+  String get challengeAFriend => '友達に挑戦状を送る';
+
+  @override
+  String challengeYourBest(String reps, String seconds) {
+    return '自己ベスト：${seconds}秒で${reps}回 · 送る';
+  }
+
+  @override
+  String challengesYou(String name) {
+    return '${name}からの挑戦状';
+  }
+
+  @override
+  String get canYouBeatIt => '超えられる？';
+
+  @override
+  String challengeInvite(String reps, String seconds) {
+    return '${seconds}秒で腕立て伏せ${reps}回やったよ。私に勝てると思う？';
+  }
+
+  @override
+  String get vsChallengeFriendly => '挑戦状 · フレンド戦';
+
+  @override
+  String get challengesYouToBeat => 'があなたに挑戦';
+
+  @override
+  String get onThisChallenge => 'この挑戦の記録';
+
+  @override
+  String challengeTookIt(String count) {
+    return '${count}人が挑戦';
+  }
+
+  @override
+  String get challengeBeatTag => '突破';
+
+  @override
+  String get challengeSetIt => '出題者';
+
+  @override
+  String get challengeFriendlyNote => 'フレンド戦：レートは変わりません。回数は今日の目標に加算されます。';
+
+  @override
+  String get takeTheChallenge => '挑戦を受ける';
+
+  @override
+  String get challengeClosed => 'この挑戦は終了しました。';
+
+  @override
+  String challengeYouTookIt(String reps) {
+    return 'あなたの記録：${reps}回';
+  }
+
+  @override
+  String challengeOpenUntil(String date) {
+    return '${date}まで';
+  }
+
+  @override
+  String get youBeatIt => '突破';
+
+  @override
+  String get notThisTime => '今回は届かず';
+
+  @override
+  String challengeMoreThan(String gap, String name) {
+    return '${name}より${gap}回多い。';
+  }
+
+  @override
+  String challengeShortOf(String gap, String name) {
+    return '${name}まであと${gap}回。';
+  }
+
+  @override
+  String challengeLevelWith(String name) {
+    return '${name}と同点。あと1回でした。';
+  }
+
+  @override
+  String challengePlace(String place, String count) {
+    return '${count}人中${place}位';
+  }
+
+  @override
+  String challengeResultNote(String reps) {
+    return 'フレンド戦 · レート変動なし · 今日の目標に+${reps}';
+  }
+
+  @override
+  String challengeBack(String name) {
+    return '${name}に挑戦状を返す';
+  }
+
+  @override
+  String get challengeSentBack => '送りました';
+
+  @override
+  String get yourChallenge => 'あなたの挑戦状';
+
+  @override
+  String challengeBeatYou(String count) {
+    return '${count}人に抜かれた';
+  }
+
+  @override
+  String get challengeRowBeat => 'あなたを突破';
+
+  @override
+  String get challengeRowHeld => '記録を守った';
+
+  @override
+  String get takeItBack => '取り返す';
+
+  @override
+  String get takeItBackNote => '取り返す：相手のセットと勝負。勝てば相手に通知されます。';
+
+  @override
+  String get sendToMoreFriends => 'もっと友達に送る';
+
+  @override
+  String get challengesTitle => '挑戦状';
+
+  @override
+  String get noChallengesYet => 'まだ挑戦状はありません。試合後かホーム画面から送れます。';
+
+  @override
+  String get challengeNobodyYet => 'まだ誰も挑戦していません。';
+
+  @override
+  String get challengeNoSet => 'まず1分間やりきってから送りましょう。';
+
+  @override
+  String get nChallengeTakenTitle => '挑戦状が受けられました';
+
+  @override
+  String nChallengeBeaten(String name, String yours, String theirs) {
+    return '${name}が${theirs}回であなたの${yours}回を突破。取り返す？';
+  }
+
+  @override
+  String nChallengeHeld(String name, String yours, String theirs) {
+    return '${name}が挑戦して${theirs}回で終了。あなたの${yours}回は守られました。';
+  }
+
+  @override
+  String get nChallengeBackTitle => '挑戦状が返ってきた';
+
+  @override
+  String nChallengeBackBody(String name, String theirs) {
+    return '${name}が${theirs}回を記録し、挑戦状を返してきました。';
+  }
 }

@@ -24,6 +24,11 @@ const pushKeys = [
   'nLiveBody',
   'nPassedTitle',
   'nPassedBody',
+  'nChallengeTakenTitle',
+  'nChallengeBeaten',
+  'nChallengeHeld',
+  'nChallengeBackTitle',
+  'nChallengeBackBody',
 ];
 
 Map<String, Map<String, String>> pushMessages() {

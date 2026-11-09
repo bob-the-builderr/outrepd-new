@@ -36,6 +36,7 @@ import '../theme.dart';
 import '../widgets.dart';
 import '../worn_title.dart';
 import 'avatar_picker.dart';
+import 'challenge.dart';
 import 'awards.dart';
 import 'cover_parts.dart';
 import 'level.dart';
@@ -239,6 +240,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             _Recent(onViewAll: () => _open(const MatchHistoryScreen())),
             const SizedBox(height: 12),
             _AchievementsRow(onTap: () => _open(const AwardsScreen())),
+            if (backend.available) ...[
+              const SizedBox(height: 12),
+              _ChallengesRow(onTap: () => _open(const MyChallengesScreen())),
+            ],
           ],
         ),
       ),
@@ -803,6 +808,36 @@ class _Recent extends StatelessWidget {
 /// rather than a summary — and it pushed everything a lifter checks daily
 /// below the fold to do it. The count is the summary; the screen behind it is
 /// where the rest lives.
+/// This account's challenges by link (lib/screens/challenge.dart).
+class _ChallengesRow extends StatelessWidget {
+  const _ChallengesRow({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: _Card(
+        onTap: onTap,
+        child: Row(
+          children: [
+            Icon(Icons.link_rounded, size: 17, color: context.colors.rival),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                L.of(context).challengesTitle,
+                style: TextStyle(color: context.colors.text, fontSize: 14),
+              ),
+            ),
+            Icon(Icons.chevron_right, size: 14, color: context.colors.muted),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _AchievementsRow extends StatelessWidget {
   const _AchievementsRow({required this.onTap});
 

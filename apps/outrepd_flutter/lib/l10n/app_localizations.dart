@@ -4175,6 +4175,258 @@ abstract class L {
   /// **'This week\'s board closes in 6 hours. One more win could move you up.'**
   String get reminderWeekCloses;
 
+  /// No description provided for @challengeAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenge'**
+  String get challengeAction;
+
+  /// No description provided for @challengeAFriend.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenge a friend'**
+  String get challengeAFriend;
+
+  /// No description provided for @challengeYourBest.
+  ///
+  /// In en, this message translates to:
+  /// **'Your best: {reps} in {seconds} seconds · send it'**
+  String challengeYourBest(String reps, String seconds);
+
+  /// No description provided for @challengesYou.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} challenges you'**
+  String challengesYou(String name);
+
+  /// No description provided for @canYouBeatIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Can you beat it?'**
+  String get canYouBeatIt;
+
+  /// No description provided for @challengeInvite.
+  ///
+  /// In en, this message translates to:
+  /// **'I did {reps} push-ups in {seconds} seconds. Think you can beat me?'**
+  String challengeInvite(String reps, String seconds);
+
+  /// No description provided for @vsChallengeFriendly.
+  ///
+  /// In en, this message translates to:
+  /// **'CHALLENGE · FRIENDLY'**
+  String get vsChallengeFriendly;
+
+  /// No description provided for @challengesYouToBeat.
+  ///
+  /// In en, this message translates to:
+  /// **'challenges you to beat'**
+  String get challengesYouToBeat;
+
+  /// No description provided for @onThisChallenge.
+  ///
+  /// In en, this message translates to:
+  /// **'On this challenge'**
+  String get onThisChallenge;
+
+  /// No description provided for @challengeTookIt.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} took it'**
+  String challengeTookIt(String count);
+
+  /// No description provided for @challengeBeatTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Beat it'**
+  String get challengeBeatTag;
+
+  /// No description provided for @challengeSetIt.
+  ///
+  /// In en, this message translates to:
+  /// **'set it'**
+  String get challengeSetIt;
+
+  /// No description provided for @challengeFriendlyNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Friendly: your rating stays where it is. Your push-ups count toward today\'s goal.'**
+  String get challengeFriendlyNote;
+
+  /// No description provided for @takeTheChallenge.
+  ///
+  /// In en, this message translates to:
+  /// **'Take the challenge'**
+  String get takeTheChallenge;
+
+  /// No description provided for @challengeClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'This challenge has closed.'**
+  String get challengeClosed;
+
+  /// No description provided for @challengeYouTookIt.
+  ///
+  /// In en, this message translates to:
+  /// **'You took it: {reps}.'**
+  String challengeYouTookIt(String reps);
+
+  /// No description provided for @challengeOpenUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'Open until {date}'**
+  String challengeOpenUntil(String date);
+
+  /// No description provided for @youBeatIt.
+  ///
+  /// In en, this message translates to:
+  /// **'You beat it'**
+  String get youBeatIt;
+
+  /// No description provided for @notThisTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Not this time'**
+  String get notThisTime;
+
+  /// No description provided for @challengeMoreThan.
+  ///
+  /// In en, this message translates to:
+  /// **'{gap} more than {name}.'**
+  String challengeMoreThan(String gap, String name);
+
+  /// No description provided for @challengeShortOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{gap} short of {name}.'**
+  String challengeShortOf(String gap, String name);
+
+  /// No description provided for @challengeLevelWith.
+  ///
+  /// In en, this message translates to:
+  /// **'Level with {name}. One more would have done it.'**
+  String challengeLevelWith(String name);
+
+  /// No description provided for @challengePlace.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re #{place} of {count}'**
+  String challengePlace(String place, String count);
+
+  /// No description provided for @challengeResultNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Friendly · rating unchanged · +{reps} toward today\'s goal'**
+  String challengeResultNote(String reps);
+
+  /// No description provided for @challengeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenge {name} back'**
+  String challengeBack(String name);
+
+  /// No description provided for @challengeSentBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent back'**
+  String get challengeSentBack;
+
+  /// No description provided for @yourChallenge.
+  ///
+  /// In en, this message translates to:
+  /// **'Your challenge'**
+  String get yourChallenge;
+
+  /// No description provided for @challengeBeatYou.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} beat you'**
+  String challengeBeatYou(String count);
+
+  /// No description provided for @challengeRowBeat.
+  ///
+  /// In en, this message translates to:
+  /// **'beat you'**
+  String get challengeRowBeat;
+
+  /// No description provided for @challengeRowHeld.
+  ///
+  /// In en, this message translates to:
+  /// **'you held'**
+  String get challengeRowHeld;
+
+  /// No description provided for @takeItBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Take it back'**
+  String get takeItBack;
+
+  /// No description provided for @takeItBackNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Take it back: race their set. Beat it and they hear about it.'**
+  String get takeItBackNote;
+
+  /// No description provided for @sendToMoreFriends.
+  ///
+  /// In en, this message translates to:
+  /// **'Send to more friends'**
+  String get sendToMoreFriends;
+
+  /// No description provided for @challengesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenges'**
+  String get challengesTitle;
+
+  /// No description provided for @noChallengesYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No challenges yet. Send one after a match, or from the home screen.'**
+  String get noChallengesYet;
+
+  /// No description provided for @challengeNobodyYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody has taken it yet.'**
+  String get challengeNobodyYet;
+
+  /// No description provided for @challengeNoSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Lift a whole minute first, then send it.'**
+  String get challengeNoSet;
+
+  /// No description provided for @nChallengeTakenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your challenge was taken'**
+  String get nChallengeTakenTitle;
+
+  /// No description provided for @nChallengeBeaten.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} beat your {yours} with {theirs}. Take it back?'**
+  String nChallengeBeaten(String name, String yours, String theirs);
+
+  /// No description provided for @nChallengeHeld.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} took your challenge and stopped at {theirs}. Your {yours} holds.'**
+  String nChallengeHeld(String name, String yours, String theirs);
+
+  /// No description provided for @nChallengeBackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenged back'**
+  String get nChallengeBackTitle;
+
+  /// No description provided for @nChallengeBackBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} did {theirs} and challenges you back.'**
+  String nChallengeBackBody(String name, String theirs);
+
   /// No description provided for @nLiveTitle.
   ///
   /// In en, this message translates to:

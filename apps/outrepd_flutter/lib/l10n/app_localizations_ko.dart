@@ -3233,4 +3233,162 @@ class LKo extends L {
   String topTenIn(String country) {
     return '${country} 상위 10위';
   }
+
+  @override
+  String get challengeAction => '도전장';
+
+  @override
+  String get challengeAFriend => '친구에게 도전장 보내기';
+
+  @override
+  String challengeYourBest(String reps, String seconds) {
+    return '내 최고 기록: ${seconds}초에 ${reps}회 · 보내기';
+  }
+
+  @override
+  String challengesYou(String name) {
+    return '${name}님의 도전장';
+  }
+
+  @override
+  String get canYouBeatIt => '넘을 수 있을까?';
+
+  @override
+  String challengeInvite(String reps, String seconds) {
+    return '${seconds}초 동안 푸시업 ${reps}회 했어. 나를 이길 수 있을까?';
+  }
+
+  @override
+  String get vsChallengeFriendly => '도전장 · 친선';
+
+  @override
+  String get challengesYouToBeat => '님이 보낸 도전 기록';
+
+  @override
+  String get onThisChallenge => '이 도전의 기록';
+
+  @override
+  String challengeTookIt(String count) {
+    return '${count}명 도전';
+  }
+
+  @override
+  String get challengeBeatTag => '돌파';
+
+  @override
+  String get challengeSetIt => '출제자';
+
+  @override
+  String get challengeFriendlyNote => '친선: 레이팅은 그대로예요. 푸시업은 오늘 목표에 포함돼요.';
+
+  @override
+  String get takeTheChallenge => '도전 받기';
+
+  @override
+  String get challengeClosed => '이 도전은 마감됐어요.';
+
+  @override
+  String challengeYouTookIt(String reps) {
+    return '내 기록: ${reps}회';
+  }
+
+  @override
+  String challengeOpenUntil(String date) {
+    return '${date}까지';
+  }
+
+  @override
+  String get youBeatIt => '돌파';
+
+  @override
+  String get notThisTime => '이번엔 아쉽게';
+
+  @override
+  String challengeMoreThan(String gap, String name) {
+    return '${name}님보다 ${gap}회 더.';
+  }
+
+  @override
+  String challengeShortOf(String gap, String name) {
+    return '${name}님보다 ${gap}회 부족.';
+  }
+
+  @override
+  String challengeLevelWith(String name) {
+    return '${name}님과 동점. 한 번만 더 했으면!';
+  }
+
+  @override
+  String challengePlace(String place, String count) {
+    return '${count}명 중 ${place}위';
+  }
+
+  @override
+  String challengeResultNote(String reps) {
+    return '친선 · 레이팅 변동 없음 · 오늘 목표 +${reps}';
+  }
+
+  @override
+  String challengeBack(String name) {
+    return '${name}님에게 도전장 돌려주기';
+  }
+
+  @override
+  String get challengeSentBack => '보냈어요';
+
+  @override
+  String get yourChallenge => '내 도전장';
+
+  @override
+  String challengeBeatYou(String count) {
+    return '${count}명이 넘었어요';
+  }
+
+  @override
+  String get challengeRowBeat => '내 기록 돌파';
+
+  @override
+  String get challengeRowHeld => '기록 방어';
+
+  @override
+  String get takeItBack => '되찾기';
+
+  @override
+  String get takeItBackNote => '되찾기: 상대 세트와 대결해요. 이기면 상대에게 알려져요.';
+
+  @override
+  String get sendToMoreFriends => '다른 친구에게도 보내기';
+
+  @override
+  String get challengesTitle => '도전장';
+
+  @override
+  String get noChallengesYet => '아직 도전장이 없어요. 경기 후나 홈 화면에서 보낼 수 있어요.';
+
+  @override
+  String get challengeNobodyYet => '아직 도전한 사람이 없어요.';
+
+  @override
+  String get challengeNoSet => '먼저 1분을 끝까지 하고 보내세요.';
+
+  @override
+  String get nChallengeTakenTitle => '누군가 도전장을 받았어요';
+
+  @override
+  String nChallengeBeaten(String name, String yours, String theirs) {
+    return '${name}님이 ${theirs}회로 내 ${yours}회를 넘었어요. 되찾을까요?';
+  }
+
+  @override
+  String nChallengeHeld(String name, String yours, String theirs) {
+    return '${name}님이 도전해서 ${theirs}회에 그쳤어요. 내 ${yours}회는 그대로예요.';
+  }
+
+  @override
+  String get nChallengeBackTitle => '도전장이 돌아왔어요';
+
+  @override
+  String nChallengeBackBody(String name, String theirs) {
+    return '${name}님이 ${theirs}회를 기록하고 도전장을 돌려보냈어요.';
+  }
 }

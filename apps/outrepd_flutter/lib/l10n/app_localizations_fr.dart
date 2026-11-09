@@ -3270,4 +3270,162 @@ class LFr extends L {
   String topTenIn(String country) {
     return 'Top 10 en ${country}';
   }
+
+  @override
+  String get challengeAction => 'Défier';
+
+  @override
+  String get challengeAFriend => 'Défie un ami';
+
+  @override
+  String challengeYourBest(String reps, String seconds) {
+    return 'Ton record : ${reps} en ${seconds} secondes · envoie-le';
+  }
+
+  @override
+  String challengesYou(String name) {
+    return '${name} te défie';
+  }
+
+  @override
+  String get canYouBeatIt => 'Tu peux faire mieux ?';
+
+  @override
+  String challengeInvite(String reps, String seconds) {
+    return 'J\'ai fait ${reps} pompes en ${seconds} secondes. Tu crois pouvoir me battre ?';
+  }
+
+  @override
+  String get vsChallengeFriendly => 'DÉFI · AMICAL';
+
+  @override
+  String get challengesYouToBeat => 'te défie de battre';
+
+  @override
+  String get onThisChallenge => 'Sur ce défi';
+
+  @override
+  String challengeTookIt(String count) {
+    return '${count} ont relevé le défi';
+  }
+
+  @override
+  String get challengeBeatTag => 'Battu';
+
+  @override
+  String get challengeSetIt => 'l\'a lancé';
+
+  @override
+  String get challengeFriendlyNote => 'Amical : ton classement ne bouge pas. Tes pompes comptent pour l\'objectif du jour.';
+
+  @override
+  String get takeTheChallenge => 'Relever le défi';
+
+  @override
+  String get challengeClosed => 'Ce défi est terminé.';
+
+  @override
+  String challengeYouTookIt(String reps) {
+    return 'Tu l\'as relevé : ${reps}.';
+  }
+
+  @override
+  String challengeOpenUntil(String date) {
+    return 'Ouvert jusqu\'au ${date}';
+  }
+
+  @override
+  String get youBeatIt => 'Battu';
+
+  @override
+  String get notThisTime => 'Pas cette fois';
+
+  @override
+  String challengeMoreThan(String gap, String name) {
+    return '${gap} de plus que ${name}.';
+  }
+
+  @override
+  String challengeShortOf(String gap, String name) {
+    return '${gap} de moins que ${name}.';
+  }
+
+  @override
+  String challengeLevelWith(String name) {
+    return 'À égalité avec ${name}. Une de plus et c\'était bon.';
+  }
+
+  @override
+  String challengePlace(String place, String count) {
+    return 'Tu es #${place} sur ${count}';
+  }
+
+  @override
+  String challengeResultNote(String reps) {
+    return 'Amical · classement inchangé · +${reps} pour l\'objectif du jour';
+  }
+
+  @override
+  String challengeBack(String name) {
+    return 'Défier ${name} en retour';
+  }
+
+  @override
+  String get challengeSentBack => 'Envoyé';
+
+  @override
+  String get yourChallenge => 'Ton défi';
+
+  @override
+  String challengeBeatYou(String count) {
+    return '${count} t\'ont battu';
+  }
+
+  @override
+  String get challengeRowBeat => 't\'a battu';
+
+  @override
+  String get challengeRowHeld => 'tu as tenu';
+
+  @override
+  String get takeItBack => 'Reprendre';
+
+  @override
+  String get takeItBackNote => 'Reprendre : affronte leur série. Si tu la bats, ils le sauront.';
+
+  @override
+  String get sendToMoreFriends => 'Envoyer à plus d\'amis';
+
+  @override
+  String get challengesTitle => 'Défis';
+
+  @override
+  String get noChallengesYet => 'Pas encore de défi. Envoie-en un après un match ou depuis l\'accueil.';
+
+  @override
+  String get challengeNobodyYet => 'Personne ne l\'a encore relevé.';
+
+  @override
+  String get challengeNoSet => 'Fais d\'abord une minute complète, puis envoie-la.';
+
+  @override
+  String get nChallengeTakenTitle => 'Ton défi a été relevé';
+
+  @override
+  String nChallengeBeaten(String name, String yours, String theirs) {
+    return '${name} a battu tes ${yours} avec ${theirs}. Tu reprends la main ?';
+  }
+
+  @override
+  String nChallengeHeld(String name, String yours, String theirs) {
+    return '${name} a relevé ton défi et s\'est arrêté à ${theirs}. Tes ${yours} tiennent.';
+  }
+
+  @override
+  String get nChallengeBackTitle => 'Défi en retour';
+
+  @override
+  String nChallengeBackBody(String name, String theirs) {
+    return '${name} a fait ${theirs} et te défie en retour.';
+  }
 }

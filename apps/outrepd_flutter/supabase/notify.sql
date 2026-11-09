@@ -24,7 +24,8 @@ create table if not exists notifications (
   read_at     timestamptz,
 
   kind text not null
-       check (kind in ('raced', 'friend_request', 'friend_accepted', 'challenged', 'live_invite', 'passed')),
+       check (kind in ('raced', 'friend_request', 'friend_accepted', 'challenged', 'live_invite', 'passed',
+                         'challenge_taken', 'challenge_back')),
 
   -- Who caused it. The id can go — accounts get deleted — so the name is
   -- kept beside it: a notification that has forgotten who it was about is
@@ -46,11 +47,17 @@ create table if not exists notifications (
 -- which moves nothing. Added after the table, so an existing one gains it.
 alter table notifications add column if not exists lp_delta int;
 
+-- Only for 'challenge_taken' and 'challenge_back' (challenge.sql): the code
+-- of the challenge the notice opens. your_reps and their_reps are the owner's
+-- count and the taker's, and you_won whether the owner's held.
+alter table notifications add column if not exists challenge_code text;
+
 -- For a project that already has the table from before 'challenged' and
 -- 'live_invite' (live.sql) existed.
 alter table notifications drop constraint if exists notifications_kind_check;
 alter table notifications add constraint notifications_kind_check
-  check (kind in ('raced', 'friend_request', 'friend_accepted', 'challenged', 'live_invite', 'passed'));
+  check (kind in ('raced', 'friend_request', 'friend_accepted', 'challenged', 'live_invite', 'passed',
+                         'challenge_taken', 'challenge_back'));
 
 -- Everything reads "mine, newest first", and the badge counts the unread.
 create index if not exists notifications_for_profile_idx
@@ -340,12 +347,15 @@ create constraint trigger duels_notify_passed
 -- and fails with a "cannot change return type" error that names DROP as the
 -- fix.
 -- with_passed: an app that knows the notice of being passed asks for it; one
--- from before would show it as a race it cannot read.
+-- from before would show it as a race it cannot read. with_challenges, the
+-- same for a challenge by link being taken or sent back.
 drop function if exists my_notifications(int);
 drop function if exists my_notifications(int, boolean);
+drop function if exists my_notifications(int, boolean, boolean);
 create or replace function my_notifications(
   limit_to int default 50,
-  with_passed boolean default false
+  with_passed boolean default false,
+  with_challenges boolean default false
 )
 returns table (
   id uuid,
@@ -357,7 +367,8 @@ returns table (
   you_won boolean,
   your_reps int,
   their_reps int,
-  lp_delta int
+  lp_delta int,
+  challenge_code text
 )
 language sql
 stable
@@ -365,17 +376,24 @@ set search_path = public
 as $$
   select n.id, n.kind, n.created_at, n.read_at is null,
          n.actor, n.actor_name, n.you_won, n.your_reps, n.their_reps,
-         n.lp_delta
+         n.lp_delta, n.challenge_code
     from notifications n
    where n.profile_id = auth.uid()
      and (with_passed or n.kind <> 'passed')
+     and (with_challenges
+          or n.kind not in ('challenge_taken', 'challenge_back'))
    order by n.created_at desc
    limit least(greatest(limit_to, 1), 200);
 $$;
 
 -- What the dot on the bell is counting.
 drop function if exists unread_notifications();
-create or replace function unread_notifications(with_passed boolean default false)
+drop function if exists unread_notifications(boolean);
+drop function if exists unread_notifications(boolean, boolean);
+create or replace function unread_notifications(
+  with_passed boolean default false,
+  with_challenges boolean default false
+)
 returns int
 language sql
 stable
@@ -383,7 +401,9 @@ set search_path = public
 as $$
   select count(*)::int from notifications
    where profile_id = auth.uid() and read_at is null
-     and (with_passed or kind <> 'passed');
+     and (with_passed or kind <> 'passed')
+     and (with_challenges
+          or kind not in ('challenge_taken', 'challenge_back'));
 $$;
 
 -- Marks the lot as read, which is what opening the screen means.
@@ -407,9 +427,9 @@ begin
 end;
 $$;
 
-revoke all on function my_notifications(int, boolean) from public;
-grant execute on function my_notifications(int, boolean) to authenticated;
-revoke all on function unread_notifications(boolean) from public;
-grant execute on function unread_notifications(boolean) to authenticated;
+revoke all on function my_notifications(int, boolean, boolean) from public;
+grant execute on function my_notifications(int, boolean, boolean) to authenticated;
+revoke all on function unread_notifications(boolean, boolean) from public;
+grant execute on function unread_notifications(boolean, boolean) to authenticated;
 revoke all on function read_notifications() from public;
 grant execute on function read_notifications() to authenticated;

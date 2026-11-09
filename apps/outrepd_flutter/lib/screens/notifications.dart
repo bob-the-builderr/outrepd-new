@@ -23,6 +23,7 @@ import '../widgets.dart';
 import 'match_entry.dart';
 import 'live_invite.dart';
 import 'match_flow.dart';
+import 'challenge.dart';
 import 'other_profile.dart';
 import 'share_card.dart';
 import 'shell.dart';
@@ -148,6 +149,8 @@ class _NoticeTile extends StatelessWidget {
       NoticeKind.challenged => l.nChallengedTitle,
       NoticeKind.liveInvite => l.nLiveTitle,
       NoticeKind.passed => l.nPassedTitle,
+      NoticeKind.challengeTaken => l.nChallengeTakenTitle,
+      NoticeKind.challengeBack => l.nChallengeBackTitle,
     };
 
     final detail = switch (notice.kind) {
@@ -157,6 +160,11 @@ class _NoticeTile extends StatelessWidget {
       NoticeKind.challenged => l.nChallengedBody(notice.actorName),
       NoticeKind.liveInvite => l.nLiveBody(notice.actorName),
       NoticeKind.passed => l.nPassedBody(notice.actorName),
+      NoticeKind.challengeTaken => _challengeTaken(context, l),
+      NoticeKind.challengeBack => l.nChallengeBackBody(
+        notice.actorName,
+        localNumber(context, notice.theirReps ?? 0),
+      ),
     };
 
     // Each one opens what it is about. A challenge opens the duel it asks
@@ -214,6 +222,15 @@ class _NoticeTile extends StatelessWidget {
       // Who passed them: their profile, and from there a challenge.
       NoticeKind.passed when notice.actorId != null => () =>
           _openProfile(context, notice),
+      // A challenge by link: taken, it opens "Your challenge" with everybody
+      // on it; sent back, the one to take.
+      NoticeKind.challengeTaken || NoticeKind.challengeBack
+          when notice.challengeCode != null =>
+        () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => ChallengeScreen(code: notice.challengeCode!),
+              ),
+            ),
       _ => null,
     };
 
@@ -226,6 +243,15 @@ class _NoticeTile extends StatelessWidget {
       unread: notice.unread,
       onTap: onTap,
     );
+  }
+
+  /// A challenge taken: both counts, and whether this account's held.
+  String _challengeTaken(BuildContext context, L l) {
+    final yours = localNumber(context, notice.yourReps ?? 0);
+    final theirs = localNumber(context, notice.theirReps ?? 0);
+    return (notice.youWon ?? false)
+        ? l.nChallengeHeld(notice.actorName, yours, theirs)
+        : l.nChallengeBeaten(notice.actorName, yours, theirs);
   }
 
   /// Both counts, and which way it went. A result with no score is a rumour.

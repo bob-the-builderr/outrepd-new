@@ -3271,4 +3271,162 @@ class LDe extends L {
   String topTenIn(String country) {
     return 'Top 10 in ${country}';
   }
+
+  @override
+  String get challengeAction => 'Herausfordern';
+
+  @override
+  String get challengeAFriend => 'Fordere einen Freund heraus';
+
+  @override
+  String challengeYourBest(String reps, String seconds) {
+    return 'Dein Bestwert: ${reps} in ${seconds} Sekunden · verschick ihn';
+  }
+
+  @override
+  String challengesYou(String name) {
+    return '${name} fordert dich heraus';
+  }
+
+  @override
+  String get canYouBeatIt => 'Schaffst du mehr?';
+
+  @override
+  String challengeInvite(String reps, String seconds) {
+    return 'Ich habe ${reps} Liegestütze in ${seconds} Sekunden geschafft. Glaubst du, du schlägst mich?';
+  }
+
+  @override
+  String get vsChallengeFriendly => 'HERAUSFORDERUNG · FREUNDSCHAFT';
+
+  @override
+  String get challengesYouToBeat => 'fordert dich heraus, das zu schlagen';
+
+  @override
+  String get onThisChallenge => 'Bei dieser Herausforderung';
+
+  @override
+  String challengeTookIt(String count) {
+    return '${count} haben mitgemacht';
+  }
+
+  @override
+  String get challengeBeatTag => 'Geschlagen';
+
+  @override
+  String get challengeSetIt => 'hat sie gestellt';
+
+  @override
+  String get challengeFriendlyNote => 'Freundschaftlich: Deine Wertung bleibt, wie sie ist. Deine Liegestütze zählen fürs heutige Ziel.';
+
+  @override
+  String get takeTheChallenge => 'Herausforderung annehmen';
+
+  @override
+  String get challengeClosed => 'Diese Herausforderung ist beendet.';
+
+  @override
+  String challengeYouTookIt(String reps) {
+    return 'Du hast mitgemacht: ${reps}.';
+  }
+
+  @override
+  String challengeOpenUntil(String date) {
+    return 'Offen bis ${date}';
+  }
+
+  @override
+  String get youBeatIt => 'Geschafft';
+
+  @override
+  String get notThisTime => 'Diesmal nicht';
+
+  @override
+  String challengeMoreThan(String gap, String name) {
+    return '${gap} mehr als ${name}.';
+  }
+
+  @override
+  String challengeShortOf(String gap, String name) {
+    return '${gap} weniger als ${name}.';
+  }
+
+  @override
+  String challengeLevelWith(String name) {
+    return 'Gleichstand mit ${name}. Einer mehr hätte gereicht.';
+  }
+
+  @override
+  String challengePlace(String place, String count) {
+    return 'Du bist #${place} von ${count}';
+  }
+
+  @override
+  String challengeResultNote(String reps) {
+    return 'Freundschaftlich · Wertung unverändert · +${reps} fürs heutige Ziel';
+  }
+
+  @override
+  String challengeBack(String name) {
+    return '${name} zurückfordern';
+  }
+
+  @override
+  String get challengeSentBack => 'Zurückgeschickt';
+
+  @override
+  String get yourChallenge => 'Deine Herausforderung';
+
+  @override
+  String challengeBeatYou(String count) {
+    return '${count} waren besser';
+  }
+
+  @override
+  String get challengeRowBeat => 'war besser';
+
+  @override
+  String get challengeRowHeld => 'du hast gehalten';
+
+  @override
+  String get takeItBack => 'Zurückholen';
+
+  @override
+  String get takeItBackNote => 'Zurückholen: Tritt gegen ihren Satz an. Schlägst du ihn, erfahren sie es.';
+
+  @override
+  String get sendToMoreFriends => 'An mehr Freunde schicken';
+
+  @override
+  String get challengesTitle => 'Herausforderungen';
+
+  @override
+  String get noChallengesYet => 'Noch keine Herausforderungen. Schick eine nach einem Match oder vom Startbildschirm aus.';
+
+  @override
+  String get challengeNobodyYet => 'Noch hat niemand mitgemacht.';
+
+  @override
+  String get challengeNoSet => 'Mach zuerst eine ganze Minute, dann schick sie.';
+
+  @override
+  String get nChallengeTakenTitle => 'Deine Herausforderung wurde angenommen';
+
+  @override
+  String nChallengeBeaten(String name, String yours, String theirs) {
+    return '${name} hat deine ${yours} mit ${theirs} geschlagen. Holst du sie dir zurück?';
+  }
+
+  @override
+  String nChallengeHeld(String name, String yours, String theirs) {
+    return '${name} hat deine Herausforderung angenommen und bei ${theirs} aufgehört. Deine ${yours} halten.';
+  }
+
+  @override
+  String get nChallengeBackTitle => 'Gegenherausforderung';
+
+  @override
+  String nChallengeBackBody(String name, String theirs) {
+    return '${name} hat ${theirs} geschafft und fordert dich zurück heraus.';
+  }
 }

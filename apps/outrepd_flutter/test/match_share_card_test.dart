@@ -182,7 +182,10 @@ void main() {
     });
   }
 
-  testWidgets('the result screen shares the match, not the profile', (
+  // Share became Challenge (the user's pick, 2026-11-09, B): the result
+  // screen sends the set as a challenge by link (test/challenge_test.dart),
+  // and with no server it says so rather than opening an empty card.
+  testWidgets('the result screen challenges where it shared', (
     tester,
   ) async {
     phone(tester);
@@ -201,10 +204,14 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Share'));
+    expect(find.text('Share'), findsNothing);
+    await tester.tap(find.byKey(const Key('challenge')));
     await tester.pumpAndSettle();
 
-    expect(find.text('PUSH-UPS IN 60 SECONDS'), findsWidgets);
     expect(find.text('CURRENT RANK'), findsNothing);
+    expect(
+      find.text("Couldn't connect. Check your internet and try again."),
+      findsOneWidget,
+    );
   });
 }

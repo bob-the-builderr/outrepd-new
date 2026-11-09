@@ -3264,4 +3264,162 @@ class LHi extends L {
   String topTenIn(String country) {
     return '${country} में टॉप 10';
   }
+
+  @override
+  String get challengeAction => 'चुनौती दें';
+
+  @override
+  String get challengeAFriend => 'किसी दोस्त को चुनौती दें';
+
+  @override
+  String challengeYourBest(String reps, String seconds) {
+    return 'आपका बेस्ट: ${seconds} सेकंड में ${reps} · भेजें';
+  }
+
+  @override
+  String challengesYou(String name) {
+    return '${name} आपको चुनौती दे रहे हैं';
+  }
+
+  @override
+  String get canYouBeatIt => 'क्या आप इसे हरा सकते हैं?';
+
+  @override
+  String challengeInvite(String reps, String seconds) {
+    return 'मैंने ${seconds} सेकंड में ${reps} पुश-अप किए। क्या तुम मुझे हरा सकते हो?';
+  }
+
+  @override
+  String get vsChallengeFriendly => 'चुनौती · दोस्ताना';
+
+  @override
+  String get challengesYouToBeat => 'आपको यह हराने की चुनौती देते हैं';
+
+  @override
+  String get onThisChallenge => 'इस चुनौती में';
+
+  @override
+  String challengeTookIt(String count) {
+    return '${count} ने कोशिश की';
+  }
+
+  @override
+  String get challengeBeatTag => 'हराया';
+
+  @override
+  String get challengeSetIt => 'चुनौती देने वाले';
+
+  @override
+  String get challengeFriendlyNote => 'दोस्ताना: आपकी रेटिंग वैसी ही रहेगी। आपके पुश-अप आज के लक्ष्य में गिने जाएँगे।';
+
+  @override
+  String get takeTheChallenge => 'चुनौती स्वीकार करें';
+
+  @override
+  String get challengeClosed => 'यह चुनौती बंद हो गई है।';
+
+  @override
+  String challengeYouTookIt(String reps) {
+    return 'आपने कोशिश की: ${reps}।';
+  }
+
+  @override
+  String challengeOpenUntil(String date) {
+    return '${date} तक खुला';
+  }
+
+  @override
+  String get youBeatIt => 'आपने हरा दिया';
+
+  @override
+  String get notThisTime => 'इस बार नहीं';
+
+  @override
+  String challengeMoreThan(String gap, String name) {
+    return '${name} से ${gap} ज़्यादा।';
+  }
+
+  @override
+  String challengeShortOf(String gap, String name) {
+    return '${name} से ${gap} कम।';
+  }
+
+  @override
+  String challengeLevelWith(String name) {
+    return '${name} के बराबर। एक और होता तो जीत जाते।';
+  }
+
+  @override
+  String challengePlace(String place, String count) {
+    return '${count} में से आप #${place}';
+  }
+
+  @override
+  String challengeResultNote(String reps) {
+    return 'दोस्ताना · रेटिंग वही · आज के लक्ष्य में +${reps}';
+  }
+
+  @override
+  String challengeBack(String name) {
+    return '${name} को वापस चुनौती दें';
+  }
+
+  @override
+  String get challengeSentBack => 'भेज दिया';
+
+  @override
+  String get yourChallenge => 'आपकी चुनौती';
+
+  @override
+  String challengeBeatYou(String count) {
+    return '${count} ने आपको हराया';
+  }
+
+  @override
+  String get challengeRowBeat => 'आपको हराया';
+
+  @override
+  String get challengeRowHeld => 'आप आगे रहे';
+
+  @override
+  String get takeItBack => 'वापस लें';
+
+  @override
+  String get takeItBackNote => 'वापस लें: उनके सेट से मुक़ाबला करें। हरा दिया तो उन्हें पता चलेगा।';
+
+  @override
+  String get sendToMoreFriends => 'और दोस्तों को भेजें';
+
+  @override
+  String get challengesTitle => 'चुनौतियाँ';
+
+  @override
+  String get noChallengesYet => 'अभी कोई चुनौती नहीं। मैच के बाद या होम स्क्रीन से भेजें।';
+
+  @override
+  String get challengeNobodyYet => 'अभी तक किसी ने कोशिश नहीं की।';
+
+  @override
+  String get challengeNoSet => 'पहले पूरा एक मिनट करें, फिर भेजें।';
+
+  @override
+  String get nChallengeTakenTitle => 'आपकी चुनौती स्वीकार हुई';
+
+  @override
+  String nChallengeBeaten(String name, String yours, String theirs) {
+    return '${name} ने ${theirs} के साथ आपके ${yours} को हरा दिया। वापस लेंगे?';
+  }
+
+  @override
+  String nChallengeHeld(String name, String yours, String theirs) {
+    return '${name} ने आपकी चुनौती ली और ${theirs} पर रुक गए। आपके ${yours} कायम हैं।';
+  }
+
+  @override
+  String get nChallengeBackTitle => 'जवाबी चुनौती';
+
+  @override
+  String nChallengeBackBody(String name, String theirs) {
+    return '${name} ने ${theirs} किए और आपको वापस चुनौती दी।';
+  }
 }

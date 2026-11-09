@@ -62,6 +62,7 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="https" android:host="www.outrepd.com" android:pathPrefix="/u/"/>
+                <data android:scheme="https" android:host="www.outrepd.com" android:pathPrefix="/c/"/>
             </intent-filter>
             <!-- The link goes to lib/deep_links.dart, not to Flutter's own
                  routing, which would push /u/<name> as a route the app does

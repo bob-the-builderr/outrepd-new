@@ -75,6 +75,17 @@ as $$
     'rewards', (
       select r.state from rewards_progress r where r.profile_id = auth.uid()
     ),
+    'challenges', coalesce((
+      select jsonb_agg(to_jsonb(c) - 'owner' order by c.created_at)
+        from challenges c where c.owner = auth.uid()
+    ), '[]'::jsonb),
+    'challenges_taken', coalesce((
+      select jsonb_agg(jsonb_build_object(
+               'code', c.code, 'reps', t.reps, 'at', t.created_at)
+               order by t.created_at)
+        from challenge_takes t join challenges c on c.id = t.challenge_id
+       where t.taker = auth.uid()
+    ), '[]'::jsonb),
     'reports_filed', coalesce((
       select count(*) from reports r where r.reporter = auth.uid()
     ), 0)

@@ -50,7 +50,9 @@ type Notice = {
     | 'friend_accepted'
     | 'challenged'
     | 'live_invite'
-    | 'passed';
+    | 'passed'
+    | 'challenge_taken'
+    | 'challenge_back';
   actor_name: string;
   you_won: boolean | null;
   your_reps: number | null;
@@ -88,6 +90,13 @@ function words(notice: Notice, language: string) {
       return { title: l.nLiveTitle, body: fill(l.nLiveBody) };
     case 'passed':
       return { title: l.nPassedTitle, body: fill(l.nPassedBody) };
+    case 'challenge_taken':
+      return {
+        title: l.nChallengeTakenTitle,
+        body: fill(notice.you_won ? l.nChallengeHeld : l.nChallengeBeaten),
+      };
+    case 'challenge_back':
+      return { title: l.nChallengeBackTitle, body: fill(l.nChallengeBackBody) };
   }
 }
 

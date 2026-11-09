@@ -3259,4 +3259,162 @@ class LTr extends L {
   String topTenIn(String country) {
     return '${country} içinde ilk 10';
   }
+
+  @override
+  String get challengeAction => 'Meydan oku';
+
+  @override
+  String get challengeAFriend => 'Bir arkadaşına meydan oku';
+
+  @override
+  String challengeYourBest(String reps, String seconds) {
+    return 'Rekorun: ${seconds} saniyede ${reps} · gönder';
+  }
+
+  @override
+  String challengesYou(String name) {
+    return '${name} sana meydan okuyor';
+  }
+
+  @override
+  String get canYouBeatIt => 'Geçebilir misin?';
+
+  @override
+  String challengeInvite(String reps, String seconds) {
+    return '${seconds} saniyede ${reps} şınav çektim. Beni yenebileceğini mi sanıyorsun?';
+  }
+
+  @override
+  String get vsChallengeFriendly => 'MEYDAN OKUMA · DOSTLUK';
+
+  @override
+  String get challengesYouToBeat => 'seni bunu geçmeye çağırıyor';
+
+  @override
+  String get onThisChallenge => 'Bu meydan okumada';
+
+  @override
+  String challengeTookIt(String count) {
+    return '${count} kişi denedi';
+  }
+
+  @override
+  String get challengeBeatTag => 'Geçti';
+
+  @override
+  String get challengeSetIt => 'kuran';
+
+  @override
+  String get challengeFriendlyNote => 'Dostça: puanın değişmez. Şınavların bugünkü hedefe sayılır.';
+
+  @override
+  String get takeTheChallenge => 'Meydan okumayı kabul et';
+
+  @override
+  String get challengeClosed => 'Bu meydan okuma kapandı.';
+
+  @override
+  String challengeYouTookIt(String reps) {
+    return 'Denedin: ${reps}.';
+  }
+
+  @override
+  String challengeOpenUntil(String date) {
+    return '${date} tarihine kadar açık';
+  }
+
+  @override
+  String get youBeatIt => 'Geçtin';
+
+  @override
+  String get notThisTime => 'Bu sefer olmadı';
+
+  @override
+  String challengeMoreThan(String gap, String name) {
+    return '${name} adlı oyuncudan ${gap} fazla.';
+  }
+
+  @override
+  String challengeShortOf(String gap, String name) {
+    return '${name} adlı oyuncudan ${gap} eksik.';
+  }
+
+  @override
+  String challengeLevelWith(String name) {
+    return '${name} ile berabere. Bir tane daha yetecekti.';
+  }
+
+  @override
+  String challengePlace(String place, String count) {
+    return '${count} kişi içinde #${place}';
+  }
+
+  @override
+  String challengeResultNote(String reps) {
+    return 'Dostça · puan değişmedi · bugünkü hedefe +${reps}';
+  }
+
+  @override
+  String challengeBack(String name) {
+    return '${name} adlı oyuncuya meydan oku';
+  }
+
+  @override
+  String get challengeSentBack => 'Gönderildi';
+
+  @override
+  String get yourChallenge => 'Meydan okuman';
+
+  @override
+  String challengeBeatYou(String count) {
+    return '${count} kişi seni geçti';
+  }
+
+  @override
+  String get challengeRowBeat => 'seni geçti';
+
+  @override
+  String get challengeRowHeld => 'sen önde kaldın';
+
+  @override
+  String get takeItBack => 'Geri al';
+
+  @override
+  String get takeItBackNote => 'Geri al: setleriyle yarış. Geçersen haberleri olur.';
+
+  @override
+  String get sendToMoreFriends => 'Daha fazla arkadaşa gönder';
+
+  @override
+  String get challengesTitle => 'Meydan okumalar';
+
+  @override
+  String get noChallengesYet => 'Henüz meydan okuma yok. Bir maçtan sonra ya da ana ekrandan gönder.';
+
+  @override
+  String get challengeNobodyYet => 'Henüz kimse denemedi.';
+
+  @override
+  String get challengeNoSet => 'Önce tam bir dakika yap, sonra gönder.';
+
+  @override
+  String get nChallengeTakenTitle => 'Meydan okuman kabul edildi';
+
+  @override
+  String nChallengeBeaten(String name, String yours, String theirs) {
+    return '${name}, ${theirs} ile senin ${yours} rekorunu geçti. Geri alır mısın?';
+  }
+
+  @override
+  String nChallengeHeld(String name, String yours, String theirs) {
+    return '${name} meydan okumanı kabul etti, ${theirs} tekrarda kaldı. Senin ${yours} rekorun duruyor.';
+  }
+
+  @override
+  String get nChallengeBackTitle => 'Karşı meydan okuma';
+
+  @override
+  String nChallengeBackBody(String name, String theirs) {
+    return '${name} ${theirs} tekrar yaptı ve sana karşılık meydan okuyor.';
+  }
 }

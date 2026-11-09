@@ -17,7 +17,12 @@ export const messages: Record<string, Record<string, string>> = {
     "nLiveTitle": "Live-Einladung",
     "nLiveBody": "{name} will live gegen dich antreten",
     "nPassedTitle": "Du wurdest überholt",
-    "nPassedBody": "{name} hat dich gerade in der Wochenwertung überholt. Hol dir deinen Platz zurück."
+    "nPassedBody": "{name} hat dich gerade in der Wochenwertung überholt. Hol dir deinen Platz zurück.",
+    "nChallengeTakenTitle": "Deine Herausforderung wurde angenommen",
+    "nChallengeBeaten": "{name} hat deine {yours} mit {theirs} geschlagen. Holst du sie dir zurück?",
+    "nChallengeHeld": "{name} hat deine Herausforderung angenommen und bei {theirs} aufgehört. Deine {yours} halten.",
+    "nChallengeBackTitle": "Gegenherausforderung",
+    "nChallengeBackBody": "{name} hat {theirs} geschafft und fordert dich zurück heraus."
   },
   "en": {
     "nRacedTitle": "Your set was raced",
@@ -32,7 +37,12 @@ export const messages: Record<string, Record<string, string>> = {
     "nLiveTitle": "Live invite",
     "nLiveBody": "{name} wants to go live",
     "nPassedTitle": "You've been passed",
-    "nPassedBody": "{name} just passed you on this week's board. Take your place back."
+    "nPassedBody": "{name} just passed you on this week's board. Take your place back.",
+    "nChallengeTakenTitle": "Your challenge was taken",
+    "nChallengeBeaten": "{name} beat your {yours} with {theirs}. Take it back?",
+    "nChallengeHeld": "{name} took your challenge and stopped at {theirs}. Your {yours} holds.",
+    "nChallengeBackTitle": "Challenged back",
+    "nChallengeBackBody": "{name} did {theirs} and challenges you back."
   },
   "es": {
     "nRacedTitle": "Retaron tu serie",
@@ -47,7 +57,12 @@ export const messages: Record<string, Record<string, string>> = {
     "nLiveTitle": "Invitación en vivo",
     "nLiveBody": "{name} quiere competir en vivo",
     "nPassedTitle": "Te han superado",
-    "nPassedBody": "{name} acaba de superarte en la tabla semanal. Recupera tu puesto."
+    "nPassedBody": "{name} acaba de superarte en la tabla semanal. Recupera tu puesto.",
+    "nChallengeTakenTitle": "Aceptaron tu desafío",
+    "nChallengeBeaten": "{name} superó tus {yours} con {theirs}. ¿Lo recuperas?",
+    "nChallengeHeld": "{name} aceptó tu desafío y se quedó en {theirs}. Tus {yours} siguen en pie.",
+    "nChallengeBackTitle": "Te retaron de vuelta",
+    "nChallengeBackBody": "{name} hizo {theirs} y te reta de vuelta."
   },
   "fr": {
     "nRacedTitle": "Ta série a été défiée",
@@ -62,7 +77,12 @@ export const messages: Record<string, Record<string, string>> = {
     "nLiveTitle": "Invitation en direct",
     "nLiveBody": "{name} veut s'affronter en direct",
     "nPassedTitle": "Tu t'es fait dépasser",
-    "nPassedBody": "{name} vient de te dépasser au classement de la semaine. Reprends ta place."
+    "nPassedBody": "{name} vient de te dépasser au classement de la semaine. Reprends ta place.",
+    "nChallengeTakenTitle": "Ton défi a été relevé",
+    "nChallengeBeaten": "{name} a battu tes {yours} avec {theirs}. Tu reprends la main ?",
+    "nChallengeHeld": "{name} a relevé ton défi et s'est arrêté à {theirs}. Tes {yours} tiennent.",
+    "nChallengeBackTitle": "Défi en retour",
+    "nChallengeBackBody": "{name} a fait {theirs} et te défie en retour."
   },
   "hi": {
     "nRacedTitle": "आपके सेट को चुनौती मिली",
@@ -77,7 +97,12 @@ export const messages: Record<string, Record<string, string>> = {
     "nLiveTitle": "लाइव न्योता",
     "nLiveBody": "{name} लाइव मुकाबला करना चाहते हैं",
     "nPassedTitle": "किसी ने आपको पीछे छोड़ दिया",
-    "nPassedBody": "{name} ने अभी इस हफ़्ते की रैंकिंग में आपको पीछे छोड़ दिया। अपनी जगह वापस लें।"
+    "nPassedBody": "{name} ने अभी इस हफ़्ते की रैंकिंग में आपको पीछे छोड़ दिया। अपनी जगह वापस लें।",
+    "nChallengeTakenTitle": "आपकी चुनौती स्वीकार हुई",
+    "nChallengeBeaten": "{name} ने {theirs} के साथ आपके {yours} को हरा दिया। वापस लेंगे?",
+    "nChallengeHeld": "{name} ने आपकी चुनौती ली और {theirs} पर रुक गए। आपके {yours} कायम हैं।",
+    "nChallengeBackTitle": "जवाबी चुनौती",
+    "nChallengeBackBody": "{name} ने {theirs} किए और आपको वापस चुनौती दी।"
   },
   "id": {
     "nRacedTitle": "Set-mu ditantang",
@@ -92,7 +117,12 @@ export const messages: Record<string, Record<string, string>> = {
     "nLiveTitle": "Undangan langsung",
     "nLiveBody": "{name} ingin bertanding langsung",
     "nPassedTitle": "Kamu disalip",
-    "nPassedBody": "{name} baru saja menyalipmu di papan minggu ini. Rebut kembali posisimu."
+    "nPassedBody": "{name} baru saja menyalipmu di papan minggu ini. Rebut kembali posisimu.",
+    "nChallengeTakenTitle": "Tantanganmu diterima",
+    "nChallengeBeaten": "{name} mengalahkan {yours}-mu dengan {theirs}. Rebut kembali?",
+    "nChallengeHeld": "{name} menerima tantanganmu dan berhenti di {theirs}. {yours}-mu bertahan.",
+    "nChallengeBackTitle": "Ditantang balik",
+    "nChallengeBackBody": "{name} mencetak {theirs} dan menantangmu balik."
   },
   "it": {
     "nRacedTitle": "La tua serie è stata sfidata",
@@ -107,7 +137,12 @@ export const messages: Record<string, Record<string, string>> = {
     "nLiveTitle": "Invito live",
     "nLiveBody": "{name} vuole sfidarti live",
     "nPassedTitle": "Ti hanno superato",
-    "nPassedBody": "{name} ti ha appena superato nella classifica della settimana. Riprenditi il posto."
+    "nPassedBody": "{name} ti ha appena superato nella classifica della settimana. Riprenditi il posto.",
+    "nChallengeTakenTitle": "Hanno accettato la tua sfida",
+    "nChallengeBeaten": "{name} ha battuto i tuoi {yours} con {theirs}. Te la riprendi?",
+    "nChallengeHeld": "{name} ha accettato la tua sfida e si è fermato a {theirs}. I tuoi {yours} reggono.",
+    "nChallengeBackTitle": "Sfida di ritorno",
+    "nChallengeBackBody": "{name} ha fatto {theirs} e ti sfida a sua volta."
   },
   "ja": {
     "nRacedTitle": "あなたのセットが挑まれました",
@@ -122,7 +157,12 @@ export const messages: Record<string, Record<string, string>> = {
     "nLiveTitle": "ライブの招待",
     "nLiveBody": "{name} がライブで対戦したがっています",
     "nPassedTitle": "抜かれました",
-    "nPassedBody": "{name}さんが今週のランキングであなたを抜きました。順位を取り返そう。"
+    "nPassedBody": "{name}さんが今週のランキングであなたを抜きました。順位を取り返そう。",
+    "nChallengeTakenTitle": "挑戦状が受けられました",
+    "nChallengeBeaten": "{name}が{theirs}回であなたの{yours}回を突破。取り返す？",
+    "nChallengeHeld": "{name}が挑戦して{theirs}回で終了。あなたの{yours}回は守られました。",
+    "nChallengeBackTitle": "挑戦状が返ってきた",
+    "nChallengeBackBody": "{name}が{theirs}回を記録し、挑戦状を返してきました。"
   },
   "ko": {
     "nRacedTitle": "당신의 세트에 도전이 있었습니다",
@@ -137,7 +177,12 @@ export const messages: Record<string, Record<string, string>> = {
     "nLiveTitle": "라이브 초대",
     "nLiveBody": "{name} 님이 라이브 대결을 원해요",
     "nPassedTitle": "추월당했어요",
-    "nPassedBody": "{name}님이 이번 주 순위에서 당신을 추월했어요. 자리를 되찾으세요."
+    "nPassedBody": "{name}님이 이번 주 순위에서 당신을 추월했어요. 자리를 되찾으세요.",
+    "nChallengeTakenTitle": "누군가 도전장을 받았어요",
+    "nChallengeBeaten": "{name}님이 {theirs}회로 내 {yours}회를 넘었어요. 되찾을까요?",
+    "nChallengeHeld": "{name}님이 도전해서 {theirs}회에 그쳤어요. 내 {yours}회는 그대로예요.",
+    "nChallengeBackTitle": "도전장이 돌아왔어요",
+    "nChallengeBackBody": "{name}님이 {theirs}회를 기록하고 도전장을 돌려보냈어요."
   },
   "pt": {
     "nRacedTitle": "A tua série foi desafiada",
@@ -152,7 +197,12 @@ export const messages: Record<string, Record<string, string>> = {
     "nLiveTitle": "Convite ao vivo",
     "nLiveBody": "{name} quer competir ao vivo",
     "nPassedTitle": "Passaram você",
-    "nPassedBody": "{name} passou à sua frente no ranking da semana. Recupere seu lugar."
+    "nPassedBody": "{name} passou à sua frente no ranking da semana. Recupere seu lugar.",
+    "nChallengeTakenTitle": "Aceitaram seu desafio",
+    "nChallengeBeaten": "{name} superou seus {yours} com {theirs}. Vai retomar?",
+    "nChallengeHeld": "{name} aceitou seu desafio e parou em {theirs}. Seus {yours} continuam de pé.",
+    "nChallengeBackTitle": "Desafio de volta",
+    "nChallengeBackBody": "{name} fez {theirs} e desafia você de volta."
   },
   "ru": {
     "nRacedTitle": "Ваш подход приняли вызовом",
@@ -167,7 +217,12 @@ export const messages: Record<string, Record<string, string>> = {
     "nLiveTitle": "Приглашение вживую",
     "nLiveBody": "{name} хочет сразиться вживую",
     "nPassedTitle": "Тебя обогнали",
-    "nPassedBody": "{name} теперь выше тебя в таблице недели. Верни своё место."
+    "nPassedBody": "{name} теперь выше тебя в таблице недели. Верни своё место.",
+    "nChallengeTakenTitle": "Твой вызов приняли",
+    "nChallengeBeaten": "{name} побил твои {yours}: {theirs}. Вернёшь?",
+    "nChallengeHeld": "{name} принял вызов и остановился на {theirs}. Твои {yours} устояли.",
+    "nChallengeBackTitle": "Ответный вызов",
+    "nChallengeBackBody": "{name}: {theirs} — и ответный вызов тебе."
   },
   "tr": {
     "nRacedTitle": "Setine meydan okundu",
@@ -182,7 +237,12 @@ export const messages: Record<string, Record<string, string>> = {
     "nLiveTitle": "Canlı davet",
     "nLiveBody": "{name} canlı yarışmak istiyor",
     "nPassedTitle": "Geçildin",
-    "nPassedBody": "{name} bu haftanın sıralamasında seni az önce geçti. Yerini geri al."
+    "nPassedBody": "{name} bu haftanın sıralamasında seni az önce geçti. Yerini geri al.",
+    "nChallengeTakenTitle": "Meydan okuman kabul edildi",
+    "nChallengeBeaten": "{name}, {theirs} ile senin {yours} rekorunu geçti. Geri alır mısın?",
+    "nChallengeHeld": "{name} meydan okumanı kabul etti, {theirs} tekrarda kaldı. Senin {yours} rekorun duruyor.",
+    "nChallengeBackTitle": "Karşı meydan okuma",
+    "nChallengeBackBody": "{name} {theirs} tekrar yaptı ve sana karşılık meydan okuyor."
   },
   "zh": {
     "nRacedTitle": "有人挑战了你的组",
@@ -197,6 +257,11 @@ export const messages: Record<string, Record<string, string>> = {
     "nLiveTitle": "实时对战邀请",
     "nLiveBody": "{name} 想和你实时对战",
     "nPassedTitle": "你被超过了",
-    "nPassedBody": "{name} 刚刚在本周排行榜上超过了你。把位置抢回来吧。"
+    "nPassedBody": "{name} 刚刚在本周排行榜上超过了你。把位置抢回来吧。",
+    "nChallengeTakenTitle": "有人接受了你的挑战",
+    "nChallengeBeaten": "{name}以{theirs}个超过了你的{yours}个。要夺回来吗？",
+    "nChallengeHeld": "{name}接受了你的挑战，停在{theirs}个。你的{yours}个守住了。",
+    "nChallengeBackTitle": "收到回敬挑战",
+    "nChallengeBackBody": "{name}做了{theirs}个，向你回敬挑战。"
   }
 };

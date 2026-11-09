@@ -732,7 +732,7 @@ class SupabaseBackend implements Backend {
   Future<List<Notice>> notices() async {
     final rows = await _db.rpc<List<dynamic>>(
       'my_notifications',
-      params: {'with_passed': true},
+      params: {'with_passed': true, 'with_challenges': true},
     );
     return [
       for (final row in rows.cast<Map<String, dynamic>>())
@@ -744,6 +744,8 @@ class SupabaseBackend implements Backend {
             'challenged' => NoticeKind.challenged,
             'live_invite' => NoticeKind.liveInvite,
             'passed' => NoticeKind.passed,
+            'challenge_taken' => NoticeKind.challengeTaken,
+            'challenge_back' => NoticeKind.challengeBack,
             _ => NoticeKind.raced,
           },
           at:
@@ -758,7 +760,51 @@ class SupabaseBackend implements Backend {
           yourReps: (row['your_reps'] as num?)?.toInt(),
           theirReps: (row['their_reps'] as num?)?.toInt(),
           lpDelta: (row['lp_delta'] as num?)?.toInt(),
+          challengeCode: row['challenge_code'] as String?,
         ),
+    ];
+  }
+
+  @override
+  Future<ChallengeLink?> makeChallenge({String? setId}) async =>
+      ChallengeLink.fromJson(
+        await _db.rpc<dynamic>('make_challenge', params: {'of_set': setId}),
+      );
+
+  @override
+  Future<ChallengeLink?> challengeBest() async =>
+      ChallengeLink.fromJson(await _db.rpc<dynamic>('challenge_best'));
+
+  @override
+  Future<ChallengeView?> openChallenge(String code) async =>
+      ChallengeView.fromJson(
+        await _db.rpc<dynamic>('open_challenge', params: {'of_code': code}),
+      );
+
+  @override
+  Future<ChallengeView> takeChallenge(String code, String setId) async {
+    final view = ChallengeView.fromJson(
+      await _db.rpc<dynamic>(
+        'take_challenge',
+        params: {'of_code': code, 'my_set': setId},
+      ),
+    );
+    if (view == null) throw StateError('the try was not written');
+    return view;
+  }
+
+  @override
+  Future<ChallengeLink?> backChallenge(String takeId) async =>
+      ChallengeLink.fromJson(
+        await _db.rpc<dynamic>('back_challenge', params: {'of_take': takeId}),
+      );
+
+  @override
+  Future<List<MyChallenge>> myChallenges() async {
+    final rows = await _db.rpc<dynamic>('my_challenges');
+    return [
+      for (final row in rows as List? ?? const [])
+        MyChallenge.fromJson(Map<String, dynamic>.from(row as Map)),
     ];
   }
 
@@ -806,7 +852,7 @@ class SupabaseBackend implements Backend {
   Future<int> unreadNotices() async =>
       (await _db.rpc<int>(
         'unread_notifications',
-        params: {'with_passed': true},
+        params: {'with_passed': true, 'with_challenges': true},
       ));
 
   @override

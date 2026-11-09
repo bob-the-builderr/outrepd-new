@@ -3269,4 +3269,162 @@ class LEs extends L {
   String topTenIn(String country) {
     return 'Top 10 en ${country}';
   }
+
+  @override
+  String get challengeAction => 'Retar';
+
+  @override
+  String get challengeAFriend => 'Reta a un amigo';
+
+  @override
+  String challengeYourBest(String reps, String seconds) {
+    return 'Tu récord: ${reps} en ${seconds} segundos · envíalo';
+  }
+
+  @override
+  String challengesYou(String name) {
+    return '${name} te reta';
+  }
+
+  @override
+  String get canYouBeatIt => '¿Puedes superarlo?';
+
+  @override
+  String challengeInvite(String reps, String seconds) {
+    return 'Hice ${reps} flexiones en ${seconds} segundos. ¿Crees que puedes ganarme?';
+  }
+
+  @override
+  String get vsChallengeFriendly => 'DESAFÍO · AMISTOSO';
+
+  @override
+  String get challengesYouToBeat => 'te reta a superar';
+
+  @override
+  String get onThisChallenge => 'En este desafío';
+
+  @override
+  String challengeTookIt(String count) {
+    return '${count} lo intentaron';
+  }
+
+  @override
+  String get challengeBeatTag => 'Superado';
+
+  @override
+  String get challengeSetIt => 'lo puso';
+
+  @override
+  String get challengeFriendlyNote => 'Amistoso: tu puntuación no cambia. Tus flexiones cuentan para la meta de hoy.';
+
+  @override
+  String get takeTheChallenge => 'Aceptar el desafío';
+
+  @override
+  String get challengeClosed => 'Este desafío ya cerró.';
+
+  @override
+  String challengeYouTookIt(String reps) {
+    return 'Ya lo intentaste: ${reps}.';
+  }
+
+  @override
+  String challengeOpenUntil(String date) {
+    return 'Abierto hasta el ${date}';
+  }
+
+  @override
+  String get youBeatIt => 'Lo superaste';
+
+  @override
+  String get notThisTime => 'Esta vez no';
+
+  @override
+  String challengeMoreThan(String gap, String name) {
+    return '${gap} más que ${name}.';
+  }
+
+  @override
+  String challengeShortOf(String gap, String name) {
+    return '${gap} menos que ${name}.';
+  }
+
+  @override
+  String challengeLevelWith(String name) {
+    return 'Empate con ${name}. Con una más lo lograbas.';
+  }
+
+  @override
+  String challengePlace(String place, String count) {
+    return 'Eres el #${place} de ${count}';
+  }
+
+  @override
+  String challengeResultNote(String reps) {
+    return 'Amistoso · puntuación sin cambios · +${reps} a la meta de hoy';
+  }
+
+  @override
+  String challengeBack(String name) {
+    return 'Reta a ${name} de vuelta';
+  }
+
+  @override
+  String get challengeSentBack => 'Enviado';
+
+  @override
+  String get yourChallenge => 'Tu desafío';
+
+  @override
+  String challengeBeatYou(String count) {
+    return '${count} te superaron';
+  }
+
+  @override
+  String get challengeRowBeat => 'te superó';
+
+  @override
+  String get challengeRowHeld => 'resististe';
+
+  @override
+  String get takeItBack => 'Recupéralo';
+
+  @override
+  String get takeItBackNote => 'Recupéralo: compite contra su serie. Si la superas, se enterarán.';
+
+  @override
+  String get sendToMoreFriends => 'Enviar a más amigos';
+
+  @override
+  String get challengesTitle => 'Desafíos';
+
+  @override
+  String get noChallengesYet => 'Aún no hay desafíos. Envía uno después de una partida o desde la pantalla de inicio.';
+
+  @override
+  String get challengeNobodyYet => 'Nadie lo ha intentado todavía.';
+
+  @override
+  String get challengeNoSet => 'Primero completa un minuto entero y luego envíalo.';
+
+  @override
+  String get nChallengeTakenTitle => 'Aceptaron tu desafío';
+
+  @override
+  String nChallengeBeaten(String name, String yours, String theirs) {
+    return '${name} superó tus ${yours} con ${theirs}. ¿Lo recuperas?';
+  }
+
+  @override
+  String nChallengeHeld(String name, String yours, String theirs) {
+    return '${name} aceptó tu desafío y se quedó en ${theirs}. Tus ${yours} siguen en pie.';
+  }
+
+  @override
+  String get nChallengeBackTitle => 'Te retaron de vuelta';
+
+  @override
+  String nChallengeBackBody(String name, String theirs) {
+    return '${name} hizo ${theirs} y te reta de vuelta.';
+  }
 }

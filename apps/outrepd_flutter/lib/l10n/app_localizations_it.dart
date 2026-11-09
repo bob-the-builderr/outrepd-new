@@ -3269,4 +3269,162 @@ class LIt extends L {
   String topTenIn(String country) {
     return 'Top 10 in ${country}';
   }
+
+  @override
+  String get challengeAction => 'Sfida';
+
+  @override
+  String get challengeAFriend => 'Sfida un amico';
+
+  @override
+  String challengeYourBest(String reps, String seconds) {
+    return 'Il tuo record: ${reps} in ${seconds} secondi · mandalo';
+  }
+
+  @override
+  String challengesYou(String name) {
+    return '${name} ti sfida';
+  }
+
+  @override
+  String get canYouBeatIt => 'Riesci a batterlo?';
+
+  @override
+  String challengeInvite(String reps, String seconds) {
+    return 'Ho fatto ${reps} piegamenti in ${seconds} secondi. Pensi di potermi battere?';
+  }
+
+  @override
+  String get vsChallengeFriendly => 'SFIDA · AMICHEVOLE';
+
+  @override
+  String get challengesYouToBeat => 'ti sfida a battere';
+
+  @override
+  String get onThisChallenge => 'In questa sfida';
+
+  @override
+  String challengeTookIt(String count) {
+    return '${count} l\'hanno accettata';
+  }
+
+  @override
+  String get challengeBeatTag => 'Battuto';
+
+  @override
+  String get challengeSetIt => 'l\'ha lanciata';
+
+  @override
+  String get challengeFriendlyNote => 'Amichevole: il tuo punteggio resta com\'è. I piegamenti contano per l\'obiettivo di oggi.';
+
+  @override
+  String get takeTheChallenge => 'Accetta la sfida';
+
+  @override
+  String get challengeClosed => 'Questa sfida è chiusa.';
+
+  @override
+  String challengeYouTookIt(String reps) {
+    return 'L\'hai già accettata: ${reps}.';
+  }
+
+  @override
+  String challengeOpenUntil(String date) {
+    return 'Aperta fino al ${date}';
+  }
+
+  @override
+  String get youBeatIt => 'Battuto';
+
+  @override
+  String get notThisTime => 'Non stavolta';
+
+  @override
+  String challengeMoreThan(String gap, String name) {
+    return '${gap} più di ${name}.';
+  }
+
+  @override
+  String challengeShortOf(String gap, String name) {
+    return '${gap} meno di ${name}.';
+  }
+
+  @override
+  String challengeLevelWith(String name) {
+    return 'Pari con ${name}. Uno in più e ce l\'avevi fatta.';
+  }
+
+  @override
+  String challengePlace(String place, String count) {
+    return 'Sei #${place} su ${count}';
+  }
+
+  @override
+  String challengeResultNote(String reps) {
+    return 'Amichevole · punteggio invariato · +${reps} per l\'obiettivo di oggi';
+  }
+
+  @override
+  String challengeBack(String name) {
+    return 'Sfida ${name} a tua volta';
+  }
+
+  @override
+  String get challengeSentBack => 'Inviata';
+
+  @override
+  String get yourChallenge => 'La tua sfida';
+
+  @override
+  String challengeBeatYou(String count) {
+    return '${count} ti hanno battuto';
+  }
+
+  @override
+  String get challengeRowBeat => 'ti ha battuto';
+
+  @override
+  String get challengeRowHeld => 'hai tenuto';
+
+  @override
+  String get takeItBack => 'Riprenditela';
+
+  @override
+  String get takeItBackNote => 'Riprenditela: sfida la loro serie. Se la batti, lo sapranno.';
+
+  @override
+  String get sendToMoreFriends => 'Mandala ad altri amici';
+
+  @override
+  String get challengesTitle => 'Sfide';
+
+  @override
+  String get noChallengesYet => 'Ancora nessuna sfida. Mandane una dopo una partita o dalla schermata principale.';
+
+  @override
+  String get challengeNobodyYet => 'Nessuno l\'ha ancora accettata.';
+
+  @override
+  String get challengeNoSet => 'Prima fai un minuto intero, poi mandalo.';
+
+  @override
+  String get nChallengeTakenTitle => 'Hanno accettato la tua sfida';
+
+  @override
+  String nChallengeBeaten(String name, String yours, String theirs) {
+    return '${name} ha battuto i tuoi ${yours} con ${theirs}. Te la riprendi?';
+  }
+
+  @override
+  String nChallengeHeld(String name, String yours, String theirs) {
+    return '${name} ha accettato la tua sfida e si è fermato a ${theirs}. I tuoi ${yours} reggono.';
+  }
+
+  @override
+  String get nChallengeBackTitle => 'Sfida di ritorno';
+
+  @override
+  String nChallengeBackBody(String name, String theirs) {
+    return '${name} ha fatto ${theirs} e ti sfida a sua volta.';
+  }
 }

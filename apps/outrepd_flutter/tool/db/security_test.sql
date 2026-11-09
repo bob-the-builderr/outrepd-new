@@ -1040,6 +1040,117 @@ select check_that(exists (select 1 from my_notifications(50, true) where kind = 
                   'the app that knows it was not shown being passed');
 reset role;
 
+-- ── a challenge by link ───────────────────────────────────────────────────────
+
+-- A's whole minute, sent as a link, and a set given up after twenty seconds,
+-- which cannot be. Put in as the owner, past the guard's eight seconds.
+insert into sets (profile_id, reps, reps_camera, duration_ms, rep_times)
+values (:'A', 20, 20, 60000, array(select g * 2900 from generate_series(1, 20) g));
+select id as challenge_set from sets where profile_id = :'A' order by created_at desc limit 1 \gset
+insert into sets (profile_id, reps, reps_camera, duration_ms, rep_times, gave_up)
+values (:'A', 9, 9, 20000, array(select g * 2000 from generate_series(1, 9) g), true);
+select id as short_set from sets where profile_id = :'A' order by created_at desc limit 1 \gset
+select as_user(:'A'); set role authenticated;
+select check_that(make_challenge(:'short_set') is null,
+                  'a set given up after twenty seconds was sent as a challenge');
+select make_challenge(:'challenge_set')->>'code' as code \gset
+select check_that(:'code' ~ '^[2-9a-hjkmnp-z]{6}$', 'a challenge code came out in the wrong shape');
+select check_that(make_challenge(:'challenge_set')->>'code' = :'code',
+                  'the same set sent twice made two links');
+select check_that(make_challenge()->>'code' = :'code',
+                  'the set just lifted was not the one sent');
+select check_that(not exists (select 1 from challenges), 'a phone read the challenges table');
+select check_that(not exists (select 1 from challenge_takes), 'a phone read the tries table');
+select must_fail('writing a challenge straight into the table',
+                 format('insert into challenges (code, set_id, owner, reps) values (''zzzzzz'', %L, %L, 300)',
+                        :'challenge_set', :'A'));
+select must_fail('a try at your own challenge',
+                 format('select take_challenge(%L, %L)', :'code', :'short_set'));
+reset role;
+
+-- B lifts a minute for it, after it was made. B's rank before, to compare.
+select tier_idx as b_tier, div_idx as b_div, lp as b_lp, wins as b_wins,
+       losses as b_losses from profiles where id = :'B' \gset
+insert into sets (profile_id, reps, reps_camera, duration_ms, rep_times, practice)
+values (:'B', 22, 22, 60000, array(select g * 2600 from generate_series(1, 22) g), true);
+select id as b_set from sets where profile_id = :'B' order by created_at desc limit 1 \gset
+select as_user(:'A'); set role authenticated;
+select check_that(make_challenge(:'b_set') is null,
+                  'a challenge was made out of somebody else''s set');
+reset role;
+select as_user(:'B'); set role authenticated;
+select check_that((open_challenge(:'code')->>'reps')::int = 20, 'a challenge opened with the wrong number');
+select check_that(open_challenge('nope42') is null, 'a code nobody made opened something');
+select must_fail('a try with somebody else''s set',
+                 format('select take_challenge(%L, %L)', :'code', :'challenge_set'));
+select check_that((take_challenge(:'code', :'b_set')->>'taken')::int = 22, 'a try was not written');
+select must_fail('a second try at the same challenge',
+                 format('select take_challenge(%L, %L)', :'code', :'b_set'));
+select open_challenge(:'code')->>'take_id' as take_id \gset
+select check_that(jsonb_array_length(open_challenge(:'code')->'board') = 2,
+                  'the board did not show the owner and the try');
+reset role;
+select check_that((select tier_idx = :b_tier and div_idx = :b_div and lp = :b_lp
+                          and wins = :b_wins and losses = :b_losses
+                     from profiles where id = :'B'),
+                  'a challenge moved a rank or a record');
+select check_that(not exists (select 1 from duels
+                               where challenger_set = :'b_set' or defender_set = :'b_set'),
+                  'a challenge wrote a duel');
+select check_that(exists (select 1 from notifications
+                           where profile_id = :'A' and kind = 'challenge_taken'
+                             and actor = :'B' and challenge_code = :'code'
+                             and your_reps = 20 and their_reps = 22 and not you_won),
+                  'the owner was not told their challenge was beaten');
+-- An app from before challenges does not see the notice; one that knows does.
+select as_user(:'A'); set role authenticated;
+select check_that(not exists (select 1 from my_notifications(50, true) where kind = 'challenge_taken'),
+                  'an older app was shown a challenge notice it cannot read');
+select check_that(exists (select 1 from my_notifications(50, true, true) where kind = 'challenge_taken'),
+                  'the app that knows challenges was not shown one');
+select check_that(jsonb_array_length(my_challenges()) >= 1, 'the owner''s challenges did not list it');
+-- The owner takes it back: a link to B's minute, which belongs to B.
+select check_that(back_challenge(:'take_id')->>'code' is not null,
+                  'the owner could not take a try back');
+reset role;
+select as_user(:'B'); set role authenticated;
+select check_that(back_challenge(:'take_id')->>'code' is not null,
+                  'the one who took it could not send it back');
+select back_challenge(:'take_id');
+reset role;
+select check_that((select count(*) from notifications
+                    where profile_id = :'A' and kind = 'challenge_back' and actor = :'B') = 1,
+                  'sending a challenge back told the owner other than once');
+select check_that((select owner from challenges where set_id = :'b_set') = :'B',
+                  'the challenge on B''s minute did not belong to B');
+select as_user(:'C'); set role authenticated;
+select check_that(back_challenge(:'take_id') is null,
+                  'a stranger turned somebody''s try into a challenge');
+reset role;
+
+-- Closed: no try.
+insert into sets (profile_id, reps, reps_camera, duration_ms, rep_times, practice)
+values (:'C', 15, 15, 60000, array(select g * 3500 from generate_series(1, 15) g), true);
+select id as c_set from sets where profile_id = :'C' order by created_at desc limit 1 \gset
+update challenges set expires_at = now() - interval '1 second' where code = :'code';
+select as_user(:'C'); set role authenticated;
+select must_fail('a try at a closed challenge',
+                 format('select take_challenge(%L, %L)', :'code', :'c_set'));
+reset role;
+update challenges set expires_at = now() + interval '7 days' where code = :'code';
+
+-- Blocked: not opened, no try.
+insert into sets (profile_id, reps, reps_camera, duration_ms, rep_times, practice)
+values (:'D', 12, 12, 60000, array(select g * 4000 from generate_series(1, 12) g), true);
+select id as d_set from sets where profile_id = :'D' order by created_at desc limit 1 \gset
+insert into blocks (blocker, blocked) values (:'D', :'A') on conflict do nothing;
+select as_user(:'D'); set role authenticated;
+select check_that(open_challenge(:'code') is null, 'a blocked account opened the challenge');
+select must_fail('a try between blocked accounts',
+                 format('select take_challenge(%L, %L)', :'code', :'d_set'));
+reset role;
+delete from blocks where blocker = :'D' and blocked = :'A';
+
 -- And as a request would actually try it.
 select as_user(null); set role anon;
 select must_fail('signed out, a lifter''s profile',
@@ -1051,8 +1162,12 @@ select must_fail('signed out, whether a name is taken',
 select must_fail('signed out, the profiles table', 'select * from profiles');
 select must_fail('signed out, how people look',
                  format('select * from pro_looks(array[%L::uuid])', :'A'));
--- The one thing that is meant to work signed out.
+select must_fail('signed out, a challenge',
+                 format('select open_challenge(%L)', :'code'));
+select must_fail('signed out, making a challenge', 'select make_challenge()');
+-- The things that are meant to work signed out: what a shared link shows.
 select count(*) from public_lifter_card('alice_a1');
+select count(*) from public_challenge_card(:'code');
 reset role;
 
 select 'all security checks passed' as result;

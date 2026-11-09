@@ -33,7 +33,7 @@ const kVsTime = Duration(seconds: 3);
 
 /// What the other side of a VS screen is: somebody on camera now, a set they
 /// saved, or a rematch.
-enum VsKind { live, saved, rematch }
+enum VsKind { live, saved, rematch, challenge }
 
 /// What a side shows: a lifter to draw, or a photo.
 typedef _Face = ({Lifter? lifter, ImageProvider? photo});
@@ -340,6 +340,7 @@ class _VsScreenState extends State<VsScreen> with SingleTickerProviderStateMixin
                   VsKind.live => widget.ranked ? l.vsLiveRanked : l.vsLiveFriendly,
                   VsKind.saved => l.vsSavedRanked,
                   VsKind.rematch => l.vsRematchFriendly,
+                  VsKind.challenge => l.vsChallengeFriendly,
                 },
                 live: widget.kind == VsKind.live,
               ),

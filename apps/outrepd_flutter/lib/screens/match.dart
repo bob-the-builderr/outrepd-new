@@ -28,6 +28,7 @@ import '../theme.dart';
 import '../tier_badge.dart';
 import '../widgets.dart';
 import 'adventure_map.dart';
+import 'challenge.dart';
 import 'daily_goal.dart';
 import 'match_entry.dart';
 import 'match_flow.dart';
@@ -112,6 +113,12 @@ class MatchScreen extends StatelessWidget {
                       const DailyGoalCard(),
                     ] else ...[
                       const _Actions(),
+                      // This account's best, sent as a challenge by link
+                      // (the user's pick, 2026-11-09, C).
+                      if (ChallengeHomeCard.shown) ...[
+                        const SizedBox(height: 12),
+                        const ChallengeHomeCard(),
+                      ],
                       const SizedBox(height: 12),
                       const DailyGoalCard(),
                       const SizedBox(height: 12),
@@ -148,7 +155,9 @@ const _minBadge = 150.0;
 /// Measured off the built screens (2026-11-03): about 570 on a wide phone,
 /// more where the goal's line wraps on a narrow one.
 double _restHeight(BuildContext context) =>
-    588 + 160 * (MediaQuery.textScalerOf(context).scale(1) - 1);
+    588 +
+    (ChallengeHomeCard.shown ? 90 : 0) +
+    160 * (MediaQuery.textScalerOf(context).scale(1) - 1);
 
 // ─────────────────────────────── unranked ────────────────────────────────────
 

@@ -2210,5 +2210,189 @@
       }
     }
   },
-  "reminderWeekCloses": "This week's board closes in 6 hours. One more win could move you up."
+  "reminderWeekCloses": "This week's board closes in 6 hours. One more win could move you up.",
+  "challengeAction": "Challenge",
+  "challengeAFriend": "Challenge a friend",
+  "challengeYourBest": "Your best: {reps} in {seconds} seconds · send it",
+  "@challengeYourBest": {
+    "placeholders": {
+      "reps": {
+        "type": "String"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "challengesYou": "{name} challenges you",
+  "@challengesYou": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "canYouBeatIt": "Can you beat it?",
+  "challengeInvite": "I did {reps} push-ups in {seconds} seconds. Think you can beat me?",
+  "@challengeInvite": {
+    "placeholders": {
+      "reps": {
+        "type": "String"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "vsChallengeFriendly": "CHALLENGE · FRIENDLY",
+  "challengesYouToBeat": "challenges you to beat",
+  "onThisChallenge": "On this challenge",
+  "challengeTookIt": "{count} took it",
+  "@challengeTookIt": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeBeatTag": "Beat it",
+  "challengeSetIt": "set it",
+  "challengeFriendlyNote": "Friendly: your rating stays where it is. Your push-ups count toward today's goal.",
+  "takeTheChallenge": "Take the challenge",
+  "challengeClosed": "This challenge has closed.",
+  "challengeYouTookIt": "You took it: {reps}.",
+  "@challengeYouTookIt": {
+    "placeholders": {
+      "reps": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeOpenUntil": "Open until {date}",
+  "@challengeOpenUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "youBeatIt": "You beat it",
+  "notThisTime": "Not this time",
+  "challengeMoreThan": "{gap} more than {name}.",
+  "@challengeMoreThan": {
+    "placeholders": {
+      "gap": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeShortOf": "{gap} short of {name}.",
+  "@challengeShortOf": {
+    "placeholders": {
+      "gap": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeLevelWith": "Level with {name}. One more would have done it.",
+  "@challengeLevelWith": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "challengePlace": "You're #{place} of {count}",
+  "@challengePlace": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeResultNote": "Friendly · rating unchanged · +{reps} toward today's goal",
+  "@challengeResultNote": {
+    "placeholders": {
+      "reps": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeBack": "Challenge {name} back",
+  "@challengeBack": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeSentBack": "Sent back",
+  "yourChallenge": "Your challenge",
+  "challengeBeatYou": "{count} beat you",
+  "@challengeBeatYou": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeRowBeat": "beat you",
+  "challengeRowHeld": "you held",
+  "takeItBack": "Take it back",
+  "takeItBackNote": "Take it back: race their set. Beat it and they hear about it.",
+  "sendToMoreFriends": "Send to more friends",
+  "challengesTitle": "Challenges",
+  "noChallengesYet": "No challenges yet. Send one after a match, or from the home screen.",
+  "challengeNobodyYet": "Nobody has taken it yet.",
+  "challengeNoSet": "Lift a whole minute first, then send it.",
+  "nChallengeTakenTitle": "Your challenge was taken",
+  "nChallengeBeaten": "{name} beat your {yours} with {theirs}. Take it back?",
+  "@nChallengeBeaten": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "yours": {
+        "type": "String"
+      },
+      "theirs": {
+        "type": "String"
+      }
+    }
+  },
+  "nChallengeHeld": "{name} took your challenge and stopped at {theirs}. Your {yours} holds.",
+  "@nChallengeHeld": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "yours": {
+        "type": "String"
+      },
+      "theirs": {
+        "type": "String"
+      }
+    }
+  },
+  "nChallengeBackTitle": "Challenged back",
+  "nChallengeBackBody": "{name} did {theirs} and challenges you back.",
+  "@nChallengeBackBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "theirs": {
+        "type": "String"
+      }
+    }
+  }
 }

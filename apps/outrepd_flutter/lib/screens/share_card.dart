@@ -78,6 +78,10 @@ String shareLink(String profileUrl) => 'https://www.$profileUrl';
 String profilePath(String username) =>
     '$kShareSite/u/${Uri.encodeComponent(username)}';
 
+/// Where a challenge link points (lib/screens/challenge.dart): the
+/// challenge in the app when it is installed, the site's page when not.
+String challengePath(String code) => '$kShareSite/c/$code';
+
 /// Everything a share card needs, whether it is drawing your own or
 /// somebody else's — both read the same shape.
 class ShareCardData {
@@ -228,6 +232,56 @@ Future<void> showMatchShareSheet(
   );
 }
 
+/// A challenge by link, for the card it is sent with: whose it is, the
+/// number to beat, and the link.
+class ChallengeShareData {
+  const ChallengeShareData({
+    required this.username,
+    required this.code,
+    required this.reps,
+    required this.seconds,
+    this.avatarUrl,
+    this.tierIdx,
+    this.lifter,
+  });
+
+  final String username;
+  final String code;
+  final int reps;
+  final int seconds;
+
+  /// Their photo, when it is a photo they show; null draws [lifter], or the
+  /// lifter their name gives.
+  final String? avatarUrl;
+  final int? tierIdx;
+
+  /// The lifter they wear (face.dart), drawn in place of a picture.
+  final Lifter? lifter;
+
+  String get path => challengePath(code);
+}
+
+/// The same sheet, with a challenge on the card: one number and one
+/// question, and the link that opens it.
+Future<void> showChallengeShareSheet(
+  BuildContext context, {
+  required ChallengeShareData data,
+}) {
+  return showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (_) => _ShareCardSheet(
+      username: data.username,
+      profileUrl: data.path,
+      story: _ChallengeCard(data: data, story: true),
+      post: _ChallengeCard(data: data, story: false),
+      invite: (L l) => l.challengeInvite('${data.reps}', '${data.seconds}'),
+      startOnPost: true,
+    ),
+  );
+}
+
 enum _CardShape { story, post }
 
 class _ShareCardSheet extends StatefulWidget {
@@ -237,12 +291,16 @@ class _ShareCardSheet extends StatefulWidget {
     required this.story,
     required this.post,
     this.invite,
+    this.startOnPost = false,
   });
 
   final String username;
   final String profileUrl;
   final Widget story;
   final Widget post;
+
+  /// Opens on the post rather than the story: the shape a chat shows best.
+  final bool startOnPost;
 
   /// The line sent with the image. Null is the usual "Duel me on outrepd".
   final String Function(L l)? invite;
@@ -252,7 +310,9 @@ class _ShareCardSheet extends StatefulWidget {
 }
 
 class _ShareCardSheetState extends State<_ShareCardSheet> {
-  _CardShape _shape = _CardShape.story;
+  late _CardShape _shape = widget.startOnPost
+      ? _CardShape.post
+      : _CardShape.story;
   final _storyKey = GlobalKey();
   final _postKey = GlobalKey();
   bool _busy = false;
@@ -1236,6 +1296,111 @@ class _Initial extends StatelessWidget {
         frameBuilder: (context, child, frame, synchronous) =>
             frame == null ? fallback : child,
         errorBuilder: (context, error, stack) => fallback,
+      ),
+    );
+  }
+}
+
+// ───────────────────────────── the challenge card ───────────────────────────
+
+/// A challenge, for a chat (the user's pick, 2026-11-09, B): the sender in
+/// their frame, "challenges you", the number large, the minute it was done
+/// in, the question in the rival's colour, and the link on a pill of it.
+class _ChallengeCard extends StatelessWidget {
+  const _ChallengeCard({required this.data, required this.story});
+
+  final ChallengeShareData data;
+  final bool story;
+
+  @override
+  Widget build(BuildContext context) {
+    return _CardTheme(
+      child: Builder(
+        builder: (context) {
+          final l = L.of(context);
+          final rival = context.colors.rival;
+          return _Backdrop(
+            height: story ? _storyHeight : _postHeight,
+            glow: _tierGlow(data.tierIdx),
+            centre: Alignment(0, story ? -0.4 : -0.3),
+            padding: story
+                ? const EdgeInsets.fromLTRB(22, 26, 22, 28)
+                : const EdgeInsets.fromLTRB(18, 20, 18, 20),
+            child: Column(
+              children: [
+                const _Brand(),
+                const Spacer(flex: 2),
+                _Framed(
+                  name: data.username,
+                  avatarUrl: data.avatarUrl,
+                  tierIdx: data.tierIdx,
+                  size: story ? 150 : 100,
+                  lifter: data.lifter,
+                ),
+                SizedBox(height: story ? 16 : 10),
+                ShrinkText(
+                  l.challengesYou(data.username),
+                  maxLines: 1,
+                  style: TextStyle(
+                    color: context.colors.text,
+                    fontSize: story ? 22 : 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                Text(
+                  localNumber(context, data.reps),
+                  style: TextStyle(
+                    color: context.colors.text,
+                    fontSize: story ? 168 : 108,
+                    fontWeight: FontWeight.w900,
+                    height: 1.02,
+                    letterSpacing: -3,
+                    fontFeatures: const [FontFeature.tabularFigures()],
+                  ),
+                ),
+                ShrinkText(
+                  l.pushUpsInSeconds(localNumber(context, data.seconds)),
+                  maxLines: 1,
+                  style: TextStyle(
+                    color: context.colors.text.withValues(alpha: 0.8),
+                    fontSize: story ? 18 : 15,
+                  ),
+                ),
+                const Spacer(flex: 2),
+                ShrinkText(
+                  l.canYouBeatIt.toUpperCase(),
+                  maxLines: 1,
+                  style: TextStyle(
+                    color: rival,
+                    fontSize: story ? 32 : 25,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                SizedBox(height: story ? 14 : 10),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 7,
+                  ),
+                  decoration: BoxDecoration(
+                    color: rival,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: ShrinkText(
+                    data.path,
+                    maxLines: 1,
+                    style: _CardType.label.copyWith(
+                      color: context.colors.background,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 0.3,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

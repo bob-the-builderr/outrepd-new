@@ -25,6 +25,7 @@
 revoke execute on all functions in schema public from public, anon;
 alter default privileges in schema public revoke execute on functions from anon;
 grant execute on function public_lifter_card(text) to anon;
+grant execute on function public_challenge_card(text) to anon;
 
 -- The tables, the same way. Every one has row level security and no policy
 -- names anon, so anon already read and wrote nothing; this takes the
