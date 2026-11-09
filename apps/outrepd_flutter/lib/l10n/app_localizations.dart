@@ -4247,6 +4247,18 @@ abstract class L {
   /// **'The video didn\'t finish, so nothing changed.'**
   String get rewardNotEarned;
 
+  /// No description provided for @momentJustHit.
+  ///
+  /// In en, this message translates to:
+  /// **'You just hit'**
+  String get momentJustHit;
+
+  /// No description provided for @momentClub.
+  ///
+  /// In en, this message translates to:
+  /// **'{mark} club'**
+  String momentClub(String mark);
+
   /// No description provided for @momentShare.
   ///
   /// In en, this message translates to:

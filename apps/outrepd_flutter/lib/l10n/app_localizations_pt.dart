@@ -3786,4 +3786,12 @@ class LPt extends L {
 
   @override
   String get recapShareButton => 'Compartilhar meu mês';
+
+  @override
+  String get momentJustHit => 'Você acabou de chegar a';
+
+  @override
+  String momentClub(String mark) {
+    return 'Clube ${mark}';
+  }
 }

@@ -3753,4 +3753,12 @@ class LKo extends L {
 
   @override
   String get recapShareButton => '내 한 달 공유하기';
+
+  @override
+  String get momentJustHit => '방금 달성';
+
+  @override
+  String momentClub(String mark) {
+    return '${mark} 클럽';
+  }
 }

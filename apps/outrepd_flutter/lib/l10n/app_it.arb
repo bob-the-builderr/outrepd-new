@@ -1123,5 +1123,7 @@
   "recapByDay": "Il tuo mese, giorno per giorno",
   "recapTopDay": "Giorno {day}: {reps}",
   "recapShare": "Il mio {month} su OUTREPD: {reps} flessioni, ognuna contata dalla fotocamera. {link}",
-  "recapShareButton": "Condividi il mio mese"
+  "recapShareButton": "Condividi il mio mese",
+  "momentJustHit": "Hai appena raggiunto",
+  "momentClub": "Club {mark}"
 }

@@ -3789,4 +3789,12 @@ class LEs extends L {
 
   @override
   String get recapShareButton => 'Compartir mi mes';
+
+  @override
+  String get momentJustHit => 'Acabas de llegar a';
+
+  @override
+  String momentClub(String mark) {
+    return 'Club ${mark}';
+  }
 }

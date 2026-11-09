@@ -1123,5 +1123,7 @@
   "recapByDay": "Dein Monat, Tag für Tag",
   "recapTopDay": "Tag {day}: {reps}",
   "recapShare": "Mein {month} bei OUTREPD: {reps} Liegestütze, jeder von der Kamera gezählt. {link}",
-  "recapShareButton": "Meinen Monat teilen"
+  "recapShareButton": "Meinen Monat teilen",
+  "momentJustHit": "Geschafft",
+  "momentClub": "{mark}-Club"
 }

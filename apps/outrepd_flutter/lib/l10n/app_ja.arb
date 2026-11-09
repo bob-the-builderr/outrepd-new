@@ -1123,5 +1123,7 @@
   "recapByDay": "1か月の毎日",
   "recapTopDay": "{day}日：{reps}",
   "recapShare": "OUTREPDでの私の{month}：腕立て{reps}回、すべてカメラでカウント。{link}",
-  "recapShareButton": "今月をシェア"
+  "recapShareButton": "今月をシェア",
+  "momentJustHit": "達成",
+  "momentClub": "{mark}クラブ"
 }

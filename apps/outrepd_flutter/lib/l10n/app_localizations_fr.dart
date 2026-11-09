@@ -3790,4 +3790,12 @@ class LFr extends L {
 
   @override
   String get recapShareButton => 'Partager mon mois';
+
+  @override
+  String get momentJustHit => 'Tu viens d’atteindre';
+
+  @override
+  String momentClub(String mark) {
+    return 'Club ${mark}';
+  }
 }

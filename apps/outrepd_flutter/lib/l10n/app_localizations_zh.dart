@@ -3740,4 +3740,12 @@ class LZh extends L {
 
   @override
   String get recapShareButton => '分享我的这个月';
+
+  @override
+  String get momentJustHit => '你刚刚达成';
+
+  @override
+  String momentClub(String mark) {
+    return '${mark}俱乐部';
+  }
 }

@@ -2759,5 +2759,14 @@
       }
     }
   },
-  "recapShareButton": "Share my month"
+  "recapShareButton": "Share my month",
+  "momentJustHit": "You just hit",
+  "momentClub": "{mark} club",
+  "@momentClub": {
+    "placeholders": {
+      "mark": {
+        "type": "String"
+      }
+    }
+  }
 }

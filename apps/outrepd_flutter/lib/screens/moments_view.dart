@@ -145,6 +145,8 @@ class _MomentFrame extends StatelessWidget {
     required this.share,
     required this.onContinue,
     this.seed = 7,
+    this.confetti = 46,
+    this.background,
   });
 
   final String keyName;
@@ -152,6 +154,10 @@ class _MomentFrame extends StatelessWidget {
   final String share;
   final VoidCallback onContinue;
   final int seed;
+  final int confetti;
+
+  /// Drawn under everything in place of the plain gold glow.
+  final Widget? background;
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +175,8 @@ class _MomentFrame extends StatelessWidget {
             ),
           ),
         ),
-        Positioned.fill(child: Confetti(seed: seed)),
+        if (background case final b?) Positioned.fill(child: b),
+        Positioned.fill(child: Confetti(seed: seed, count: confetti)),
         SafeArea(
           child: Column(
             children: [
@@ -322,43 +329,116 @@ class PersonalBestView extends StatelessWidget {
   }
 }
 
-class MilestoneView extends StatelessWidget {
+/// A milestone (the user's pick, 2026-11-09, A): the count rolls up to the
+/// mark on flip tiles like a scoreboard, then the club's stamp lands, over
+/// slowly turning rays.
+class MilestoneView extends StatefulWidget {
   const MilestoneView({super.key, required this.mark, required this.onContinue});
 
   final Milestone mark;
   final VoidCallback onContinue;
 
-  /// 100, 1K, 5K: the mark as the medal writes it.
+  /// 100, 1K, 5K: the mark as the stamp writes it.
   static String short(int mark) => mark >= 1000 ? '${mark ~/ 1000}K' : '$mark';
+
+  @override
+  State<MilestoneView> createState() => _MilestoneViewState();
+}
+
+class _MilestoneViewState extends State<MilestoneView> with TickerProviderStateMixin {
+  /// The digits rolling, then the stamp.
+  late final AnimationController _roll = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 2200),
+  );
+
+  /// The rays turning, for as long as the screen is up.
+  late final AnimationController _spin = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 40),
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_roll.isAnimating || _roll.isCompleted) return;
+    if (reduceMotion(context)) {
+      _roll.value = 1;
+    } else {
+      _roll.forward();
+      _spin.repeat();
+    }
+  }
+
+  @override
+  void dispose() {
+    _roll.dispose();
+    _spin.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final l = L.of(context);
     final colors = context.colors;
+    final mark = widget.mark;
     final next = mark.next;
+    final stamp = CurvedAnimation(parent: _roll, curve: const Interval(0.72, 0.9, curve: Curves.easeOutBack));
     return _MomentFrame(
       keyName: 'milestone',
       seed: 19,
-      share: l.momentMilestoneShare(localNumber(context, mark.mark), _link()),
-      onContinue: onContinue,
-      children: [
-        _eyebrow(context, l.momentMilestoneTitle),
-        const SizedBox(height: 22),
-        PopIn(from: 0.6, child: _Medal(text: short(mark.mark), under: l.momentPushUps.toUpperCase())),
-        const SizedBox(height: 22),
-        Text(
-          l.momentMilestoneCount(localNumber(context, mark.mark)),
-          textAlign: TextAlign.center,
-          style: TextStyle(color: colors.text, fontSize: 32, fontWeight: FontWeight.w900),
+      confetti: 24,
+      background: AnimatedBuilder(
+        animation: _spin,
+        builder: (context, _) => CustomPaint(
+          size: Size.infinite,
+          painter: _RaysPainter(turn: _spin.value, colour: _gold.withValues(alpha: 0.13)),
         ),
-        const SizedBox(height: 6),
+      ),
+      share: l.momentMilestoneShare(localNumber(context, mark.mark), _link()),
+      onContinue: widget.onContinue,
+      children: [
+        _eyebrow(context, l.momentJustHit),
+        const SizedBox(height: 22),
+        AnimatedBuilder(
+          animation: _roll,
+          builder: (context, _) => _FlipCount(
+            text: localNumber(context, mark.mark),
+            t: Curves.easeOut.transform((_roll.value / 0.7).clamp(0.0, 1.0)),
+          ),
+        ),
+        const SizedBox(height: 18),
         Text(
-          l.momentMilestoneLine,
+          l.momentPushUps.toUpperCase(),
           textAlign: TextAlign.center,
-          style: TextStyle(color: colors.muted, fontSize: 15),
+          style: TextStyle(color: colors.text, fontSize: 22, fontWeight: FontWeight.w800, letterSpacing: 4),
+        ),
+        const SizedBox(height: 26),
+        AnimatedBuilder(
+          animation: stamp,
+          builder: (context, child) => Opacity(
+            opacity: stamp.value.clamp(0.0, 1.0),
+            child: Transform.rotate(
+              angle: -0.14,
+              child: Transform.scale(scale: 1.7 - 0.7 * stamp.value, child: child),
+            ),
+          ),
+          child: Container(
+            key: const Key('milestoneStamp'),
+            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: _gold, width: 4),
+              boxShadow: [BoxShadow(color: _gold.withValues(alpha: 0.35), blurRadius: 30)],
+            ),
+            child: Text(
+              l.momentClub(MilestoneView.short(mark.mark)).toUpperCase(),
+              style: const TextStyle(color: _gold, fontSize: 30, fontWeight: FontWeight.w900, letterSpacing: 3),
+            ),
+          ),
         ),
         if (next != null) ...[
-          const SizedBox(height: 22),
+          const SizedBox(height: 34),
           Container(
             padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
             decoration: BoxDecoration(color: colors.surface, borderRadius: BorderRadius.circular(18)),
@@ -389,33 +469,8 @@ class MilestoneView extends StatelessWidget {
                     backgroundColor: colors.surfaceRaised,
                   ),
                 ),
-                const SizedBox(height: 14),
-                Row(
-                  children: [
-                    for (final m in kMilestones.take(5)) ...[
-                      if (m != kMilestones.first) const SizedBox(width: 8),
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 6),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: m <= mark.total ? const Color(0xFF2A2214) : colors.surfaceRaised,
-                            borderRadius: BorderRadius.circular(10),
-                            border: m <= mark.total ? Border.all(color: _gold, width: 1.5) : null,
-                          ),
-                          child: Text(
-                            short(m),
-                            style: TextStyle(
-                              color: m <= mark.total ? _goldLight : colors.muted,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
+                const SizedBox(height: 10),
+                Text(l.momentMilestoneLine, style: TextStyle(color: colors.muted, fontSize: 13.5)),
               ],
             ),
           ),
@@ -425,81 +480,114 @@ class MilestoneView extends StatelessWidget {
   }
 }
 
-/// A gold sunburst medal with the mark in it.
-class _Medal extends StatelessWidget {
-  const _Medal({required this.text, required this.under});
+/// The count on flip tiles, each digit rolling through 0–9 and settling on
+/// its own a little after the one to its left. [t] runs 0 to 1; separators
+/// (and digits a language writes in other figures) are drawn as they are.
+class _FlipCount extends StatelessWidget {
+  const _FlipCount({required this.text, required this.t});
 
   final String text;
-  final String under;
+  final double t;
 
   @override
-  Widget build(BuildContext context) => SizedBox(
-    width: 224,
-    height: 224,
-    child: CustomPaint(
-      painter: const _MedalPainter(),
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              text,
-              style: const TextStyle(color: _goldLight, fontSize: 62, fontWeight: FontWeight.w900, height: 1),
-            ),
-            Text(
-              under,
-              style: TextStyle(
-                color: context.colors.muted,
-                fontSize: 11.5,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 3,
-              ),
-            ),
-          ],
-        ),
+  Widget build(BuildContext context) {
+    final chars = text.characters.toList();
+    final digits = chars.where((c) => RegExp(r'^[0-9]$').hasMatch(c)).length;
+    var seen = 0;
+    final tiles = <Widget>[];
+    for (final c in chars) {
+      if (!RegExp(r'^[0-9]$').hasMatch(c)) {
+        tiles.add(
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 2),
+            child: Text(c, style: const TextStyle(color: _goldLight, fontSize: 56, fontWeight: FontWeight.w900)),
+          ),
+        );
+        continue;
+      }
+      // Each digit settles at its own point: left to right, the last at 1.
+      final settle = digits <= 1 ? 1.0 : 0.55 + 0.45 * seen / (digits - 1);
+      seen++;
+      final shown = t >= settle ? c : '${((t / settle) * 30 + seen * 3).floor() % 10}';
+      tiles.add(_Tile(digit: shown));
+    }
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Row(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.end, children: tiles),
+    );
+  }
+}
+
+class _Tile extends StatelessWidget {
+  const _Tile({required this.digit});
+
+  final String digit;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    width: 64,
+    height: 96,
+    margin: const EdgeInsets.symmetric(horizontal: 3),
+    alignment: Alignment.center,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(12),
+      gradient: const LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [Color(0xFF2A2622), Color(0xFF2A2622), Color(0xFF1C1A18), Color(0xFF1C1A18)],
+        stops: [0, 0.49, 0.51, 1],
       ),
+      border: Border.all(color: const Color(0xFF3A3631)),
+      boxShadow: const [BoxShadow(color: Color(0x80000000), blurRadius: 24, offset: Offset(0, 10))],
+    ),
+    child: Stack(
+      alignment: Alignment.center,
+      children: [
+        Text(
+          digit,
+          style: const TextStyle(color: _goldLight, fontSize: 70, fontWeight: FontWeight.w900, height: 1),
+        ),
+        Positioned(
+          left: 0,
+          right: 0,
+          top: 47,
+          height: 2,
+          child: ColoredBox(color: context.colors.background),
+        ),
+      ],
     ),
   );
 }
 
-class _MedalPainter extends CustomPainter {
-  const _MedalPainter();
+/// Gold wedges turning slowly round a point a third of the way down.
+class _RaysPainter extends CustomPainter {
+  const _RaysPainter({required this.turn, required this.colour});
+
+  final double turn;
+  final Color colour;
 
   @override
   void paint(Canvas canvas, Size size) {
-    final c = size.center(Offset.zero);
-    final outer = size.width / 2, inner = outer * 0.84;
-    final star = Path();
-    const points = 20;
-    for (var i = 0; i < points * 2; i++) {
-      final r = i.isEven ? outer : inner;
-      final a = -math.pi / 2 + i * math.pi / points;
-      final p = c + Offset(math.cos(a) * r, math.sin(a) * r);
-      i == 0 ? star.moveTo(p.dx, p.dy) : star.lineTo(p.dx, p.dy);
+    final c = Offset(size.width / 2, size.height * 0.32);
+    final r = size.longestSide * 1.2;
+    const n = 18;
+    final paint = Paint()..color = colour;
+    for (var i = 0; i < n; i++) {
+      final a = turn * 2 * math.pi + i * 2 * math.pi / n;
+      final b = a + math.pi / n / 1.4;
+      canvas.drawPath(
+        Path()
+          ..moveTo(c.dx, c.dy)
+          ..lineTo(c.dx + math.cos(a) * r, c.dy + math.sin(a) * r)
+          ..lineTo(c.dx + math.cos(b) * r, c.dy + math.sin(b) * r)
+          ..close(),
+        paint,
+      );
     }
-    star.close();
-    canvas.drawPath(
-      star,
-      Paint()
-        ..shader = const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFFF7DE8E), Color(0xFFD9A94A), Color(0xFF8F6A22)],
-        ).createShader(Offset.zero & size),
-    );
-    canvas.drawCircle(c, outer * 0.62, Paint()..color = const Color(0xFF1B1712));
-    canvas.drawCircle(
-      c,
-      outer * 0.62,
-      Paint()
-        ..color = _goldLight
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 3,
-    );
   }
 
   @override
-  bool shouldRepaint(_MedalPainter old) => false;
+  bool shouldRepaint(_RaysPainter old) => old.turn != turn || old.colour != colour;
 }
 
 // ──────────────────────────────── the month ───────────────────────────────────

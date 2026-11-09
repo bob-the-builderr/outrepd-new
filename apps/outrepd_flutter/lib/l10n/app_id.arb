@@ -1123,5 +1123,7 @@
   "recapByDay": "Bulanmu, hari demi hari",
   "recapTopDay": "Hari {day}: {reps}",
   "recapShare": "{month}-ku di OUTREPD: {reps} push-up, semuanya dihitung kamera. {link}",
-  "recapShareButton": "Bagikan bulanku"
+  "recapShareButton": "Bagikan bulanku",
+  "momentJustHit": "Kamu baru mencapai",
+  "momentClub": "Klub {mark}"
 }

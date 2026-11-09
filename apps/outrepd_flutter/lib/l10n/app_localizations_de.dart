@@ -3791,4 +3791,12 @@ class LDe extends L {
 
   @override
   String get recapShareButton => 'Meinen Monat teilen';
+
+  @override
+  String get momentJustHit => 'Geschafft';
+
+  @override
+  String momentClub(String mark) {
+    return '${mark}-Club';
+  }
 }

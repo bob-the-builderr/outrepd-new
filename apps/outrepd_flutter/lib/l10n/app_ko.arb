@@ -1123,5 +1123,7 @@
   "recapByDay": "하루하루의 한 달",
   "recapTopDay": "{day}일: {reps}",
   "recapShare": "OUTREPD에서의 나의 {month}: 팔굽혀펴기 {reps}회, 모두 카메라로 센 기록. {link}",
-  "recapShareButton": "내 한 달 공유하기"
+  "recapShareButton": "내 한 달 공유하기",
+  "momentJustHit": "방금 달성",
+  "momentClub": "{mark} 클럽"
 }

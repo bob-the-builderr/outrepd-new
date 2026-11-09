@@ -3782,4 +3782,12 @@ class LEn extends L {
 
   @override
   String get recapShareButton => 'Share my month';
+
+  @override
+  String get momentJustHit => 'You just hit';
+
+  @override
+  String momentClub(String mark) {
+    return '${mark} club';
+  }
 }

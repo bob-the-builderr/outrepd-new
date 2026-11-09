@@ -3749,4 +3749,12 @@ class LJa extends L {
 
   @override
   String get recapShareButton => '今月をシェア';
+
+  @override
+  String get momentJustHit => '達成';
+
+  @override
+  String momentClub(String mark) {
+    return '${mark}クラブ';
+  }
 }

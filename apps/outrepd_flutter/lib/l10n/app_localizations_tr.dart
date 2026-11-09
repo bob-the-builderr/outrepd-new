@@ -3779,4 +3779,12 @@ class LTr extends L {
 
   @override
   String get recapShareButton => 'Ayımı paylaş';
+
+  @override
+  String get momentJustHit => 'Az önce ulaştın';
+
+  @override
+  String momentClub(String mark) {
+    return '${mark} Kulübü';
+  }
 }

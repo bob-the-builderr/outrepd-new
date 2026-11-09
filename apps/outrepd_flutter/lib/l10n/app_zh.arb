@@ -1123,5 +1123,7 @@
   "recapByDay": "你的这个月，逐日",
   "recapTopDay": "{day}日：{reps}",
   "recapShare": "我在 OUTREPD 的{month}：{reps} 个俯卧撑，每一个都由摄像头计数。{link}",
-  "recapShareButton": "分享我的这个月"
+  "recapShareButton": "分享我的这个月",
+  "momentJustHit": "你刚刚达成",
+  "momentClub": "{mark}俱乐部"
 }

@@ -1123,5 +1123,7 @@
   "recapByDay": "Ayın, gün gün",
   "recapTopDay": "{day}. gün: {reps}",
   "recapShare": "OUTREPD’de {month} ayım: {reps} şınav, hepsi kamerayla sayıldı. {link}",
-  "recapShareButton": "Ayımı paylaş"
+  "recapShareButton": "Ayımı paylaş",
+  "momentJustHit": "Az önce ulaştın",
+  "momentClub": "{mark} Kulübü"
 }

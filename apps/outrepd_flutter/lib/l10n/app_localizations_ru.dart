@@ -3784,4 +3784,12 @@ class LRu extends L {
 
   @override
   String get recapShareButton => 'Поделиться месяцем';
+
+  @override
+  String get momentJustHit => 'Ты только что достиг';
+
+  @override
+  String momentClub(String mark) {
+    return 'Клуб ${mark}';
+  }
 }

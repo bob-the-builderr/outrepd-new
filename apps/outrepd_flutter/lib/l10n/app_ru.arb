@@ -1123,5 +1123,7 @@
   "recapByDay": "Твой месяц по дням",
   "recapTopDay": "День {day}: {reps}",
   "recapShare": "Мой {month} в OUTREPD: {reps} отжиманий, каждое засчитано камерой. {link}",
-  "recapShareButton": "Поделиться месяцем"
+  "recapShareButton": "Поделиться месяцем",
+  "momentJustHit": "Ты только что достиг",
+  "momentClub": "Клуб {mark}"
 }

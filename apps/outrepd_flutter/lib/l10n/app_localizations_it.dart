@@ -3789,4 +3789,12 @@ class LIt extends L {
 
   @override
   String get recapShareButton => 'Condividi il mio mese';
+
+  @override
+  String get momentJustHit => 'Hai appena raggiunto';
+
+  @override
+  String momentClub(String mark) {
+    return 'Club ${mark}';
+  }
 }

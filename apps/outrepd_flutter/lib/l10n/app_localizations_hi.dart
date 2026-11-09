@@ -3784,4 +3784,12 @@ class LHi extends L {
 
   @override
   String get recapShareButton => 'मेरा महीना शेयर करो';
+
+  @override
+  String get momentJustHit => 'तुम पहुँच गए';
+
+  @override
+  String momentClub(String mark) {
+    return '${mark} क्लब';
+  }
 }

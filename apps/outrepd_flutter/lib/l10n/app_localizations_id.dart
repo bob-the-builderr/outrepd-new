@@ -3783,4 +3783,12 @@ class LId extends L {
 
   @override
   String get recapShareButton => 'Bagikan bulanku';
+
+  @override
+  String get momentJustHit => 'Kamu baru mencapai';
+
+  @override
+  String momentClub(String mark) {
+    return 'Klub ${mark}';
+  }
 }

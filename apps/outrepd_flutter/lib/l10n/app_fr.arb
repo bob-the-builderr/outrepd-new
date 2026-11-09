@@ -1123,5 +1123,7 @@
   "recapByDay": "Ton mois, jour par jour",
   "recapTopDay": "Jour {day} : {reps}",
   "recapShare": "Mon mois de {month} sur OUTREPD : {reps} pompes, chacune comptée par la caméra. {link}",
-  "recapShareButton": "Partager mon mois"
+  "recapShareButton": "Partager mon mois",
+  "momentJustHit": "Tu viens d’atteindre",
+  "momentClub": "Club {mark}"
 }

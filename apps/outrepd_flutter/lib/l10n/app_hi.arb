@@ -1123,5 +1123,7 @@
   "recapByDay": "तुम्हारा महीना, दिन-ब-दिन",
   "recapTopDay": "दिन {day}: {reps}",
   "recapShare": "OUTREPD पर मेरा {month}: {reps} पुश-अप्स, हर एक कैमरे पर गिना गया। {link}",
-  "recapShareButton": "मेरा महीना शेयर करो"
+  "recapShareButton": "मेरा महीना शेयर करो",
+  "momentJustHit": "तुम पहुँच गए",
+  "momentClub": "{mark} क्लब"
 }
