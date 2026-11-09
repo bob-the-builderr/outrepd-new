@@ -1,0 +1,25 @@
+*{box-sizing:border-box;margin:0}
+:root{--ink:#121110;--card:#1C1A18;--raised:#262320;--line:#2C2926;--text:#F5EFE4;--soft:#CFC7BB;--muted:#9A928A;--cream:#E8DCC8;--rival:#E8846B;--gold:#E0B145;--green:#4CC38A;
+  --display:'Archivo','Helvetica Neue',Arial,sans-serif;--body:'Manrope',system-ui,sans-serif}
+body{background:#070606;color:var(--text);font-family:var(--body)}
+.sec{font:800 26px Cairo,sans-serif;direction:rtl;text-align:right;padding:18px 24px 0;color:#fff}
+.sec small{display:block;font:500 15px/1.6 Cairo,sans-serif;color:#c5bfb6;margin-top:2px}
+.row{display:flex;gap:24px;padding:12px 24px 24px;align-items:flex-start}
+.lab{font:800 17px Cairo,sans-serif;direction:rtl;text-align:right;margin-bottom:6px;color:#fff}
+.desk{width:1280px;height:820px;position:relative;overflow:hidden;background:var(--ink);border-radius:14px}
+.mob{width:412px;height:880px;position:relative;overflow:hidden;background:var(--ink);border-radius:22px}
+.abs{position:absolute}
+.display{font-family:var(--display);font-stretch:125%;font-weight:900;text-transform:uppercase;letter-spacing:-.02em;line-height:.88}
+.kicker{font:800 12px var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--rival)}
+.lead{color:var(--soft);font-size:17px;line-height:1.6}
+.nav{position:absolute;left:0;right:0;top:0;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;z-index:9}
+.brand{font-family:var(--display);font-stretch:125%;font-weight:900;letter-spacing:.06em;font-size:17px}
+.links{display:flex;gap:28px;font:600 14px var(--body);color:var(--soft)}
+.dl{background:var(--cream);color:#121110;font:800 14px var(--body);padding:10px 18px;border-radius:999px}
+.badges{display:flex;gap:12px}
+.badge{height:46px;border-radius:10px;background:#000;border:1px solid #444;display:flex;align-items:center;gap:8px;padding:0 14px;color:#fff;font:600 11px var(--body);line-height:1.1}
+.badge b{display:block;font:700 17px var(--body)}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:rgba(18,17,16,.75);border:1px solid #3a3631;font:800 12px var(--body);letter-spacing:.14em;text-transform:uppercase}
+.pill i{width:8px;height:8px;border-radius:50%;background:#ff4d4d;box-shadow:0 0 10px #ff4d4d}
+.card{background:rgba(28,26,24,.92);border:1px solid var(--line);border-radius:18px;box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.note{font:600 13px Cairo,sans-serif;direction:rtl;color:#e0b145;margin-top:8px;text-align:right}
