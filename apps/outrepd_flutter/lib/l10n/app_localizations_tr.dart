@@ -3686,4 +3686,97 @@ class LTr extends L {
 
   @override
   String get planOfferSub => 'Antrenman günlerinde kısa setler, her pazar geçen haftaki seninle bir yarış.';
+
+  @override
+  String get momentShare => 'Paylaş';
+
+  @override
+  String get momentBestTitle => 'Yeni kişisel rekor';
+
+  @override
+  String get momentBestUnit => 'bir sette şınav';
+
+  @override
+  String get momentBestFrom => 'Önceki';
+
+  @override
+  String get momentBestLine => 'Kamera her birini saydı.';
+
+  @override
+  String momentBestShare(String reps, String link) {
+    return 'OUTREPD’de yeni kişisel rekor: bir sette ${reps} şınav. ${link}';
+  }
+
+  @override
+  String get momentMilestoneTitle => 'Kilometre taşı';
+
+  @override
+  String get momentPushUps => 'şınav';
+
+  @override
+  String momentMilestoneCount(String count) {
+    return '${count} şınav';
+  }
+
+  @override
+  String get momentMilestoneLine => 'Her biri kamerayla sayıldı.';
+
+  @override
+  String momentMilestoneShare(String count, String link) {
+    return 'OUTREPD’de ${count} şınav, hepsi kamerayla sayıldı. ${link}';
+  }
+
+  @override
+  String momentNext(String count) {
+    return 'Sıradaki: ${count}';
+  }
+
+  @override
+  String momentToGo(String count) {
+    return '${count} kaldı';
+  }
+
+  @override
+  String recapCardTitle(String month) {
+    return '${month} özetin hazır';
+  }
+
+  @override
+  String get recapCardLine => 'Şınavların, rekorun ve galibiyetlerin';
+
+  @override
+  String recapTitle(String month) {
+    return 'Senin ${month}';
+  }
+
+  @override
+  String get recapPushUps => 'bu ayki şınav';
+
+  @override
+  String get recapBest => 'en iyi dakika';
+
+  @override
+  String get recapWins => 'galibiyet – mağlubiyet';
+
+  @override
+  String get recapRun => 'üst üste gün, en uzun serin';
+
+  @override
+  String get recapDays => 'şınav yapılan gün';
+
+  @override
+  String get recapByDay => 'Ayın, gün gün';
+
+  @override
+  String recapTopDay(String day, String reps) {
+    return '${day}. gün: ${reps}';
+  }
+
+  @override
+  String recapShare(String month, String reps, String link) {
+    return 'OUTREPD’de ${month} ayım: ${reps} şınav, hepsi kamerayla sayıldı. ${link}';
+  }
+
+  @override
+  String get recapShareButton => 'Ayımı paylaş';
 }

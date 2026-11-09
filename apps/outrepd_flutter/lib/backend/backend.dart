@@ -932,6 +932,42 @@ class BestMinute {
   }
 }
 
+/// A month of this account's, as the server keeps it (moments.sql,
+/// my_month_recap): every set and duel of it, from whichever phone.
+class MonthNumbers {
+  const MonthNumbers({
+    this.reps = 0,
+    this.sets = 0,
+    this.best = 0,
+    this.bestBefore = 0,
+    this.wins = 0,
+    this.losses = 0,
+  });
+
+  final int reps;
+  final int sets;
+
+  /// The month's best whole minute, and the best there was before it.
+  final int best;
+  final int bestBefore;
+
+  final int wins;
+  final int losses;
+
+  static MonthNumbers? fromJson(Object? json) {
+    if (json is! Map) return null;
+    int n(String k) => (json[k] as num?)?.toInt() ?? 0;
+    return MonthNumbers(
+      reps: n('reps'),
+      sets: n('sets'),
+      best: n('best'),
+      bestBefore: n('best_before'),
+      wins: n('wins'),
+      losses: n('losses'),
+    );
+  }
+}
+
 /// A link made for a set (challenge.sql): outrepd.com/c/<code>.
 class ChallengeLink {
   const ChallengeLink({required this.code, required this.reps});
@@ -1776,6 +1812,9 @@ abstract interface class Backend {
   /// This account's best whole minute lifted from [since] up to [before],
   /// with its pace. Null when there is none.
   Future<BestMinute?> myBestMinute(DateTime since, DateTime before);
+
+  /// This account's month from [since] up to [before] (moments.sql).
+  Future<MonthNumbers?> myMonthRecap(DateTime since, DateTime before);
 }
 
 /// The app with no server behind it.
@@ -2164,6 +2203,10 @@ class NoBackend implements Backend {
 
   @override
   Future<BestMinute?> myBestMinute(DateTime since, DateTime before) async =>
+      null;
+
+  @override
+  Future<MonthNumbers?> myMonthRecap(DateTime since, DateTime before) async =>
       null;
 }
 

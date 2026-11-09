@@ -4247,6 +4247,156 @@ abstract class L {
   /// **'The video didn\'t finish, so nothing changed.'**
   String get rewardNotEarned;
 
+  /// No description provided for @momentShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share it'**
+  String get momentShare;
+
+  /// No description provided for @momentBestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New personal best'**
+  String get momentBestTitle;
+
+  /// No description provided for @momentBestUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'push-ups in one set'**
+  String get momentBestUnit;
+
+  /// No description provided for @momentBestFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Up from'**
+  String get momentBestFrom;
+
+  /// No description provided for @momentBestLine.
+  ///
+  /// In en, this message translates to:
+  /// **'The camera counted every one.'**
+  String get momentBestLine;
+
+  /// No description provided for @momentBestShare.
+  ///
+  /// In en, this message translates to:
+  /// **'New personal best on OUTREPD: {reps} push-ups in one set. {link}'**
+  String momentBestShare(String reps, String link);
+
+  /// No description provided for @momentMilestoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Milestone'**
+  String get momentMilestoneTitle;
+
+  /// No description provided for @momentPushUps.
+  ///
+  /// In en, this message translates to:
+  /// **'push-ups'**
+  String get momentPushUps;
+
+  /// No description provided for @momentMilestoneCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} push-ups'**
+  String momentMilestoneCount(String count);
+
+  /// No description provided for @momentMilestoneLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Every one counted on camera.'**
+  String get momentMilestoneLine;
+
+  /// No description provided for @momentMilestoneShare.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} push-ups on OUTREPD, every one counted on camera. {link}'**
+  String momentMilestoneShare(String count, String link);
+
+  /// No description provided for @momentNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {count}'**
+  String momentNext(String count);
+
+  /// No description provided for @momentToGo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} to go'**
+  String momentToGo(String count);
+
+  /// No description provided for @recapCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your {month} is in'**
+  String recapCardTitle(String month);
+
+  /// No description provided for @recapCardLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Your push-ups, your best and your wins'**
+  String get recapCardLine;
+
+  /// No description provided for @recapTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your {month}'**
+  String recapTitle(String month);
+
+  /// No description provided for @recapPushUps.
+  ///
+  /// In en, this message translates to:
+  /// **'push-ups this month'**
+  String get recapPushUps;
+
+  /// No description provided for @recapBest.
+  ///
+  /// In en, this message translates to:
+  /// **'best minute'**
+  String get recapBest;
+
+  /// No description provided for @recapWins.
+  ///
+  /// In en, this message translates to:
+  /// **'wins – losses'**
+  String get recapWins;
+
+  /// No description provided for @recapRun.
+  ///
+  /// In en, this message translates to:
+  /// **'days in a row, your longest'**
+  String get recapRun;
+
+  /// No description provided for @recapDays.
+  ///
+  /// In en, this message translates to:
+  /// **'days with push-ups'**
+  String get recapDays;
+
+  /// No description provided for @recapByDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Your month, day by day'**
+  String get recapByDay;
+
+  /// No description provided for @recapTopDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Day {day}: {reps}'**
+  String recapTopDay(String day, String reps);
+
+  /// No description provided for @recapShare.
+  ///
+  /// In en, this message translates to:
+  /// **'My {month} on OUTREPD: {reps} push-ups, every one counted on camera. {link}'**
+  String recapShare(String month, String reps, String link);
+
+  /// No description provided for @recapShareButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Share my month'**
+  String get recapShareButton;
+
   /// No description provided for @planSetupTitle.
   ///
   /// In en, this message translates to:

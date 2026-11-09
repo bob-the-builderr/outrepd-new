@@ -1240,6 +1240,23 @@ select save_plan(null);
 select check_that(my_plan() is null, 'a stopped plan stayed');
 reset role;
 
+-- ── the month's recap ────────────────────────────────────────────────────────
+
+-- The caller's own month: their sets and their duels, nobody else's.
+select as_user(:'A'); set role authenticated;
+select check_that((my_month_recap(now() - interval '14 days', now() + interval '1 minute') ->> 'reps')::int
+                    >= 27 + 31,
+                  'the month left out the caller''s own sets');
+select check_that((my_month_recap(now() - interval '14 days', now() + interval '1 minute') ->> 'best')::int >= 27,
+                  'the month''s best minute was missing');
+select check_that((my_month_recap(now() - interval '7 days', now() + interval '1 minute') ->> 'best_before')::int >= 27,
+                  'the best before the month was missing');
+reset role;
+select as_user(:'B'); set role authenticated;
+select check_that((my_month_recap(now() - interval '9 days', now() - interval '7 days') ->> 'reps')::int = 40,
+                  'one account''s month held another''s sets');
+reset role;
+
 -- And as a request would actually try it.
 select as_user(null); set role anon;
 select must_fail('signed out, a lifter''s profile',
@@ -1256,6 +1273,7 @@ select must_fail('signed out, a challenge',
 select must_fail('signed out, making a challenge', 'select make_challenge()');
 select must_fail('signed out, a plan', 'select my_plan()');
 select must_fail('signed out, a best minute', 'select my_best_minute(now() - interval ''7 days'', now())');
+select must_fail('signed out, a month', 'select my_month_recap(now() - interval ''30 days'', now())');
 -- The things that are meant to work signed out: what a shared link shows.
 select count(*) from public_lifter_card('alice_a1');
 select count(*) from public_challenge_card(:'code');

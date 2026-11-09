@@ -3697,4 +3697,97 @@ class LFr extends L {
 
   @override
   String get planOfferSub => 'Des séries courtes les jours d’entraînement, et chaque dimanche une course contre toi de la semaine dernière.';
+
+  @override
+  String get momentShare => 'Partager';
+
+  @override
+  String get momentBestTitle => 'Nouveau record perso';
+
+  @override
+  String get momentBestUnit => 'pompes en une série';
+
+  @override
+  String get momentBestFrom => 'Avant';
+
+  @override
+  String get momentBestLine => 'La caméra les a toutes comptées.';
+
+  @override
+  String momentBestShare(String reps, String link) {
+    return 'Nouveau record perso sur OUTREPD : ${reps} pompes en une série. ${link}';
+  }
+
+  @override
+  String get momentMilestoneTitle => 'Cap franchi';
+
+  @override
+  String get momentPushUps => 'pompes';
+
+  @override
+  String momentMilestoneCount(String count) {
+    return '${count} pompes';
+  }
+
+  @override
+  String get momentMilestoneLine => 'Chacune comptée par la caméra.';
+
+  @override
+  String momentMilestoneShare(String count, String link) {
+    return '${count} pompes sur OUTREPD, chacune comptée par la caméra. ${link}';
+  }
+
+  @override
+  String momentNext(String count) {
+    return 'Prochain : ${count}';
+  }
+
+  @override
+  String momentToGo(String count) {
+    return 'encore ${count}';
+  }
+
+  @override
+  String recapCardTitle(String month) {
+    return 'Ton mois de ${month} est là';
+  }
+
+  @override
+  String get recapCardLine => 'Tes pompes, ton record et tes victoires';
+
+  @override
+  String recapTitle(String month) {
+    return 'Ton ${month}';
+  }
+
+  @override
+  String get recapPushUps => 'pompes ce mois-ci';
+
+  @override
+  String get recapBest => 'meilleure minute';
+
+  @override
+  String get recapWins => 'victoires – défaites';
+
+  @override
+  String get recapRun => 'jours d’affilée, ta meilleure série';
+
+  @override
+  String get recapDays => 'jours avec des pompes';
+
+  @override
+  String get recapByDay => 'Ton mois, jour par jour';
+
+  @override
+  String recapTopDay(String day, String reps) {
+    return 'Jour ${day} : ${reps}';
+  }
+
+  @override
+  String recapShare(String month, String reps, String link) {
+    return 'Mon mois de ${month} sur OUTREPD : ${reps} pompes, chacune comptée par la caméra. ${link}';
+  }
+
+  @override
+  String get recapShareButton => 'Partager mon mois';
 }

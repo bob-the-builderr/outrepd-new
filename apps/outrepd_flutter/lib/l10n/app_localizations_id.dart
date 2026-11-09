@@ -3690,4 +3690,97 @@ class LId extends L {
 
   @override
   String get planOfferSub => 'Set pendek di hari latihan, dan tiap Minggu balapan melawan dirimu minggu lalu.';
+
+  @override
+  String get momentShare => 'Bagikan';
+
+  @override
+  String get momentBestTitle => 'Rekor pribadi baru';
+
+  @override
+  String get momentBestUnit => 'push-up dalam satu set';
+
+  @override
+  String get momentBestFrom => 'Sebelumnya';
+
+  @override
+  String get momentBestLine => 'Kamera menghitung setiap satunya.';
+
+  @override
+  String momentBestShare(String reps, String link) {
+    return 'Rekor pribadi baru di OUTREPD: ${reps} push-up dalam satu set. ${link}';
+  }
+
+  @override
+  String get momentMilestoneTitle => 'Pencapaian';
+
+  @override
+  String get momentPushUps => 'push-up';
+
+  @override
+  String momentMilestoneCount(String count) {
+    return '${count} push-up';
+  }
+
+  @override
+  String get momentMilestoneLine => 'Setiap satunya dihitung kamera.';
+
+  @override
+  String momentMilestoneShare(String count, String link) {
+    return '${count} push-up di OUTREPD, semuanya dihitung kamera. ${link}';
+  }
+
+  @override
+  String momentNext(String count) {
+    return 'Berikutnya: ${count}';
+  }
+
+  @override
+  String momentToGo(String count) {
+    return '${count} lagi';
+  }
+
+  @override
+  String recapCardTitle(String month) {
+    return '${month}-mu sudah siap';
+  }
+
+  @override
+  String get recapCardLine => 'Push-up, rekor, dan kemenanganmu';
+
+  @override
+  String recapTitle(String month) {
+    return '${month}-mu';
+  }
+
+  @override
+  String get recapPushUps => 'push-up bulan ini';
+
+  @override
+  String get recapBest => 'menit terbaik';
+
+  @override
+  String get recapWins => 'menang – kalah';
+
+  @override
+  String get recapRun => 'hari berturut-turut, terpanjang';
+
+  @override
+  String get recapDays => 'hari dengan push-up';
+
+  @override
+  String get recapByDay => 'Bulanmu, hari demi hari';
+
+  @override
+  String recapTopDay(String day, String reps) {
+    return 'Hari ${day}: ${reps}';
+  }
+
+  @override
+  String recapShare(String month, String reps, String link) {
+    return '${month}-ku di OUTREPD: ${reps} push-up, semuanya dihitung kamera. ${link}';
+  }
+
+  @override
+  String get recapShareButton => 'Bagikan bulanku';
 }

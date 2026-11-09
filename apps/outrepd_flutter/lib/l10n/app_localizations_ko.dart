@@ -3660,4 +3660,97 @@ class LKo extends L {
 
   @override
   String get planOfferSub => '훈련일엔 짧은 세트, 매주 일요일엔 지난주의 나와 레이스.';
+
+  @override
+  String get momentShare => '공유하기';
+
+  @override
+  String get momentBestTitle => '개인 최고 기록 경신';
+
+  @override
+  String get momentBestUnit => '한 세트 팔굽혀펴기';
+
+  @override
+  String get momentBestFrom => '이전';
+
+  @override
+  String get momentBestLine => '카메라가 하나하나 다 셌어요.';
+
+  @override
+  String momentBestShare(String reps, String link) {
+    return 'OUTREPD 개인 최고 기록: 한 세트 팔굽혀펴기 ${reps}회. ${link}';
+  }
+
+  @override
+  String get momentMilestoneTitle => '마일스톤';
+
+  @override
+  String get momentPushUps => '팔굽혀펴기';
+
+  @override
+  String momentMilestoneCount(String count) {
+    return '팔굽혀펴기 ${count}회';
+  }
+
+  @override
+  String get momentMilestoneLine => '하나하나 카메라가 센 기록이에요.';
+
+  @override
+  String momentMilestoneShare(String count, String link) {
+    return 'OUTREPD 팔굽혀펴기 ${count}회, 모두 카메라로 센 기록. ${link}';
+  }
+
+  @override
+  String momentNext(String count) {
+    return '다음: ${count}';
+  }
+
+  @override
+  String momentToGo(String count) {
+    return '${count} 남음';
+  }
+
+  @override
+  String recapCardTitle(String month) {
+    return '나의 ${month} 정리 도착';
+  }
+
+  @override
+  String get recapCardLine => '팔굽혀펴기, 최고 기록, 승리까지';
+
+  @override
+  String recapTitle(String month) {
+    return '나의 ${month}';
+  }
+
+  @override
+  String get recapPushUps => '이번 달 팔굽혀펴기';
+
+  @override
+  String get recapBest => '최고의 1분';
+
+  @override
+  String get recapWins => '승 – 패';
+
+  @override
+  String get recapRun => '연속 일수, 최장 기록';
+
+  @override
+  String get recapDays => '팔굽혀펴기 한 날';
+
+  @override
+  String get recapByDay => '하루하루의 한 달';
+
+  @override
+  String recapTopDay(String day, String reps) {
+    return '${day}일: ${reps}';
+  }
+
+  @override
+  String recapShare(String month, String reps, String link) {
+    return 'OUTREPD에서의 나의 ${month}: 팔굽혀펴기 ${reps}회, 모두 카메라로 센 기록. ${link}';
+  }
+
+  @override
+  String get recapShareButton => '내 한 달 공유하기';
 }

@@ -22,6 +22,7 @@ import 'home_widgets.dart';
 import 'lifter/looks.dart';
 import 'lifter/my_lifter.dart';
 import 'lifter/pro_trial.dart';
+import 'moments.dart';
 import 'plan.dart';
 import 'reminders.dart';
 import 'rewards.dart';
@@ -119,6 +120,9 @@ void main() async {
     await avatar.load();
     await rewards.load();
     await trainingPlan.load();
+    // Last month's recap reads the day log the career keeps.
+    recaps.repsOn = Career.instance.repsOn;
+    await recaps.load();
     await Adventure.instance.load();
     await Ads.instance.load();
     // A Pro part worn for a day comes off once the day is over.

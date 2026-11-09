@@ -3689,4 +3689,97 @@ class LEn extends L {
 
   @override
   String get planOfferSub => 'Short sets on training days, and each Sunday a race against last week’s you.';
+
+  @override
+  String get momentShare => 'Share it';
+
+  @override
+  String get momentBestTitle => 'New personal best';
+
+  @override
+  String get momentBestUnit => 'push-ups in one set';
+
+  @override
+  String get momentBestFrom => 'Up from';
+
+  @override
+  String get momentBestLine => 'The camera counted every one.';
+
+  @override
+  String momentBestShare(String reps, String link) {
+    return 'New personal best on OUTREPD: ${reps} push-ups in one set. ${link}';
+  }
+
+  @override
+  String get momentMilestoneTitle => 'Milestone';
+
+  @override
+  String get momentPushUps => 'push-ups';
+
+  @override
+  String momentMilestoneCount(String count) {
+    return '${count} push-ups';
+  }
+
+  @override
+  String get momentMilestoneLine => 'Every one counted on camera.';
+
+  @override
+  String momentMilestoneShare(String count, String link) {
+    return '${count} push-ups on OUTREPD, every one counted on camera. ${link}';
+  }
+
+  @override
+  String momentNext(String count) {
+    return 'Next: ${count}';
+  }
+
+  @override
+  String momentToGo(String count) {
+    return '${count} to go';
+  }
+
+  @override
+  String recapCardTitle(String month) {
+    return 'Your ${month} is in';
+  }
+
+  @override
+  String get recapCardLine => 'Your push-ups, your best and your wins';
+
+  @override
+  String recapTitle(String month) {
+    return 'Your ${month}';
+  }
+
+  @override
+  String get recapPushUps => 'push-ups this month';
+
+  @override
+  String get recapBest => 'best minute';
+
+  @override
+  String get recapWins => 'wins – losses';
+
+  @override
+  String get recapRun => 'days in a row, your longest';
+
+  @override
+  String get recapDays => 'days with push-ups';
+
+  @override
+  String get recapByDay => 'Your month, day by day';
+
+  @override
+  String recapTopDay(String day, String reps) {
+    return 'Day ${day}: ${reps}';
+  }
+
+  @override
+  String recapShare(String month, String reps, String link) {
+    return 'My ${month} on OUTREPD: ${reps} push-ups, every one counted on camera. ${link}';
+  }
+
+  @override
+  String get recapShareButton => 'Share my month';
 }

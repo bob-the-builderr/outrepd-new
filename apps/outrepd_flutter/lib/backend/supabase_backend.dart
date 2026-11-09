@@ -831,6 +831,18 @@ class SupabaseBackend implements Backend {
       );
 
   @override
+  Future<MonthNumbers?> myMonthRecap(DateTime since, DateTime before) async =>
+      MonthNumbers.fromJson(
+        await _db.rpc<dynamic>(
+          'my_month_recap',
+          params: {
+            'since': since.toUtc().toIso8601String(),
+            'before': before.toUtc().toIso8601String(),
+          },
+        ),
+      );
+
+  @override
   Future<DateTime> startProTrial(String key, String id, String? was) async {
     final until = await _db.rpc<String>(
       'start_pro_trial',

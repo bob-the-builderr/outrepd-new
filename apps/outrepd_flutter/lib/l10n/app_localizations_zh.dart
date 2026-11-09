@@ -3647,4 +3647,97 @@ class LZh extends L {
 
   @override
   String get planOfferSub => '训练日做短组，每周日和上周的你比赛。';
+
+  @override
+  String get momentShare => '分享';
+
+  @override
+  String get momentBestTitle => '新的个人最佳';
+
+  @override
+  String get momentBestUnit => '一组俯卧撑';
+
+  @override
+  String get momentBestFrom => '之前';
+
+  @override
+  String get momentBestLine => '摄像头数了每一个。';
+
+  @override
+  String momentBestShare(String reps, String link) {
+    return '在 OUTREPD 刷新个人最佳：一组 ${reps} 个俯卧撑。${link}';
+  }
+
+  @override
+  String get momentMilestoneTitle => '里程碑';
+
+  @override
+  String get momentPushUps => '俯卧撑';
+
+  @override
+  String momentMilestoneCount(String count) {
+    return '${count} 个俯卧撑';
+  }
+
+  @override
+  String get momentMilestoneLine => '每一个都由摄像头计数。';
+
+  @override
+  String momentMilestoneShare(String count, String link) {
+    return '在 OUTREPD 完成 ${count} 个俯卧撑，每一个都由摄像头计数。${link}';
+  }
+
+  @override
+  String momentNext(String count) {
+    return '下一个：${count}';
+  }
+
+  @override
+  String momentToGo(String count) {
+    return '还差 ${count}';
+  }
+
+  @override
+  String recapCardTitle(String month) {
+    return '你的${month}总结来了';
+  }
+
+  @override
+  String get recapCardLine => '你的俯卧撑、最佳和胜场';
+
+  @override
+  String recapTitle(String month) {
+    return '你的${month}';
+  }
+
+  @override
+  String get recapPushUps => '本月俯卧撑';
+
+  @override
+  String get recapBest => '最佳一分钟';
+
+  @override
+  String get recapWins => '胜 – 负';
+
+  @override
+  String get recapRun => '连续天数（最长）';
+
+  @override
+  String get recapDays => '做俯卧撑的天数';
+
+  @override
+  String get recapByDay => '你的这个月，逐日';
+
+  @override
+  String recapTopDay(String day, String reps) {
+    return '${day}日：${reps}';
+  }
+
+  @override
+  String recapShare(String month, String reps, String link) {
+    return '我在 OUTREPD 的${month}：${reps} 个俯卧撑，每一个都由摄像头计数。${link}';
+  }
+
+  @override
+  String get recapShareButton => '分享我的这个月';
 }

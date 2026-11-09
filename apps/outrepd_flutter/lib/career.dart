@@ -30,6 +30,7 @@ import 'avatar.dart';
 import 'data.dart';
 import 'health_sync.dart';
 import 'lifter/my_lifter.dart';
+import 'moments.dart';
 import 'plan.dart';
 import 'ranking.dart';
 import 'rewards.dart';
@@ -190,6 +191,9 @@ class Career extends ChangeNotifier {
   }
 
   int get repsToday => _days[_key(DateTime.now())] ?? 0;
+
+  /// Push-ups on [day], from this phone's log of the last month or so.
+  int repsOn(DateTime day) => _days[_key(day)] ?? 0;
 
   Rank get rank => Rank(
     tierIdx: demoProfile.tierIdx,
@@ -619,6 +623,12 @@ class Career extends ChangeNotifier {
 
   void _countReps(int reps) {
     final p = demoProfile;
+    // A new best, a milestone: the match screen shows what this set brought.
+    Moments.instance.notice(
+      reps: reps,
+      bestBefore: p.bestSet,
+      totalBefore: p.totalReps,
+    );
     p.totalReps += reps;
     p.xp += reps;
     if (reps > p.bestSet) p.bestSet = reps;

@@ -24,6 +24,7 @@ import '../l10n/app_localizations.dart';
 import '../motion.dart';
 import '../push.dart';
 import '../ranking.dart';
+import '../moments.dart';
 import '../rewards.dart';
 import '../theme.dart';
 import '../tier_badge.dart';
@@ -33,6 +34,7 @@ import 'challenge.dart';
 import 'daily_goal.dart';
 import 'match_entry.dart';
 import 'match_flow.dart';
+import 'moments_view.dart';
 import 'notifications.dart';
 import 'pro_parts.dart';
 import 'rewarded.dart';
@@ -60,10 +62,14 @@ class MatchScreen extends StatelessWidget {
             Connection.instance,
             rewards,
             Ads.instance,
+            recaps,
+            Career.instance,
           ]),
           builder: (context, _) {
             final offline = !Connection.instance.online;
             final streakBack = !offline && StreakBackCard.shown;
+            // Last month, in the first week of this one (lib/moments.dart).
+            final recapDue = recaps.due;
 
             // The tab as it was (the user's pick, 2026-11-03), all of it on
             // the screen at once: on a phone with room, the badge takes all
@@ -77,6 +83,7 @@ class MatchScreen extends StatelessWidget {
                     box.maxHeight >=
                         _restHeight(context) +
                             (streakBack ? _streakBackHeight : 0) +
+                            (recapDue ? _recapCardHeight : 0) +
                             120 * _badgeCrop;
                 final rank = !p.isRanked
                     ? (fits
@@ -111,6 +118,10 @@ class MatchScreen extends StatelessWidget {
                     _StreakLine(profile: p),
                     // A streak that has just ended, brought back with a
                     // video once a week (the user's pick, 2026-11-09, B).
+                    if (recapDue) ...[
+                      const SizedBox(height: 12),
+                      const MonthRecapCard(),
+                    ],
                     if (streakBack) ...[
                       const SizedBox(height: 12),
                       const StreakBackCard(),
@@ -165,6 +176,9 @@ double _badgeMax(BuildContext context) =>
 
 /// The streak card and the gap above it, measured off the built screen.
 const _streakBackHeight = 162.0;
+
+/// The month's recap card and the space above it.
+const _recapCardHeight = 96.0;
 
 /// The badge on a phone that scrolls: still big enough to read at a glance.
 const _minBadge = 150.0;

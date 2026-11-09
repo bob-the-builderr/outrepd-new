@@ -22,6 +22,7 @@ import '../data.dart';
 import '../face.dart';
 import '../l10n/app_localizations.dart';
 import '../live.dart';
+import '../moments.dart';
 import '../plan.dart';
 import '../avatar.dart';
 import '../lifter/lifter_view.dart';
@@ -45,6 +46,7 @@ import 'daily_goal.dart';
 import 'level.dart';
 import 'vs_screen.dart';
 import 'match_entry.dart';
+import 'moments_view.dart';
 import 'plan_screen.dart';
 import 'post_match.dart';
 import 'trainer.dart';
@@ -216,6 +218,10 @@ enum _Stage {
 
   /// The week's race against last week's you, and the road so far.
   pastSelfResult,
+
+  /// A new personal best or a milestone this match's set made, each on a
+  /// screen of its own before the result (lib/moments.dart).
+  moment,
 }
 
 class _MatchFlowScreenState extends State<MatchFlowScreen> {
@@ -351,6 +357,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
   @override
   void initState() {
     super.initState();
+    Moments.instance.clear();
     final me = demoProfile;
     _opponent = Opponent(me.username, me.tierIdx, me.divIdx);
     _theirReps = 0;
@@ -870,7 +877,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     setState(() {
       _myReps = reps;
       _theirReps = past.reps;
-      _stage = _Stage.pastSelfResult;
+      _stage = _withMoments(_Stage.pastSelfResult);
     });
   }
 
@@ -933,7 +940,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       _myReps = reps;
       _theirReps = challenge.reps;
       _linkAfter = after;
-      _stage = _Stage.challengeResult;
+      _stage = _withMoments(_Stage.challengeResult);
     });
   }
 
@@ -1205,7 +1212,18 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       (_xp?.leveledUp ?? false) ? _Stage.levelUp : _afterLevel;
 
   /// After the level: a weapon the fight unlocked, then the result.
-  _Stage get _afterLevel => _unlocked != null ? _Stage.weapon : _Stage.result;
+  _Stage get _afterLevel =>
+      _unlocked != null ? _Stage.weapon : _withMoments(_Stage.result);
+
+  /// Where the moments go on to once they have all been seen.
+  _Stage _afterMoment = _Stage.result;
+
+  /// [next], or first whatever moments this match's set made.
+  _Stage _withMoments(_Stage next) {
+    if (Moments.instance.next == null) return next;
+    _afterMoment = next;
+    return _Stage.moment;
+  }
 
   /// Where this account stands on the week's board, or null when there is
   /// no answer: read before the duel and after it, so the result can say
@@ -1248,6 +1266,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     _Stage.sent ||
     _Stage.challengeResult ||
     _Stage.pastSelfResult ||
+    _Stage.moment ||
     _Stage.waitingResult ||
     _Stage.saving => true,
     _ => false,
@@ -1464,7 +1483,19 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
         return WeaponUnlockedView(
           weapon: _unlocked ?? Adventure.instance.weapon,
           previous: _weapon,
-          onContinue: () => setState(() => _stage = _Stage.result),
+          onContinue: () => setState(() => _stage = _withMoments(_Stage.result)),
+        );
+
+      case _Stage.moment:
+        final moment = Moments.instance.next;
+        if (moment == null) return const SizedBox.shrink();
+        return MomentView(
+          key: ObjectKey(moment),
+          moment: moment,
+          onContinue: () {
+            Moments.instance.done();
+            setState(() => _stage = Moments.instance.next != null ? _Stage.moment : _afterMoment);
+          },
         );
 
       case _Stage.result:

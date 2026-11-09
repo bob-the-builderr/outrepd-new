@@ -2656,5 +2656,108 @@
     }
   },
   "planOffer": "A six-week plan instead",
-  "planOfferSub": "Short sets on training days, and each Sunday a race against last week’s you."
+  "planOfferSub": "Short sets on training days, and each Sunday a race against last week’s you.",
+  "momentShare": "Share it",
+  "momentBestTitle": "New personal best",
+  "momentBestUnit": "push-ups in one set",
+  "momentBestFrom": "Up from",
+  "momentBestLine": "The camera counted every one.",
+  "momentBestShare": "New personal best on OUTREPD: {reps} push-ups in one set. {link}",
+  "@momentBestShare": {
+    "placeholders": {
+      "reps": {
+        "type": "String"
+      },
+      "link": {
+        "type": "String"
+      }
+    }
+  },
+  "momentMilestoneTitle": "Milestone",
+  "momentPushUps": "push-ups",
+  "momentMilestoneCount": "{count} push-ups",
+  "@momentMilestoneCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "momentMilestoneLine": "Every one counted on camera.",
+  "momentMilestoneShare": "{count} push-ups on OUTREPD, every one counted on camera. {link}",
+  "@momentMilestoneShare": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "link": {
+        "type": "String"
+      }
+    }
+  },
+  "momentNext": "Next: {count}",
+  "@momentNext": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "momentToGo": "{count} to go",
+  "@momentToGo": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "recapCardTitle": "Your {month} is in",
+  "@recapCardTitle": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "recapCardLine": "Your push-ups, your best and your wins",
+  "recapTitle": "Your {month}",
+  "@recapTitle": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "recapPushUps": "push-ups this month",
+  "recapBest": "best minute",
+  "recapWins": "wins – losses",
+  "recapRun": "days in a row, your longest",
+  "recapDays": "days with push-ups",
+  "recapByDay": "Your month, day by day",
+  "recapTopDay": "Day {day}: {reps}",
+  "@recapTopDay": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "reps": {
+        "type": "String"
+      }
+    }
+  },
+  "recapShare": "My {month} on OUTREPD: {reps} push-ups, every one counted on camera. {link}",
+  "@recapShare": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "reps": {
+        "type": "String"
+      },
+      "link": {
+        "type": "String"
+      }
+    }
+  },
+  "recapShareButton": "Share my month"
 }

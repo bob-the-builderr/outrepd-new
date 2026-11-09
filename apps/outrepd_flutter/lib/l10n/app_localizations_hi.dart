@@ -3691,4 +3691,97 @@ class LHi extends L {
 
   @override
   String get planOfferSub => 'ट्रेनिंग वाले दिनों में छोटे सेट, और हर रविवार पिछले हफ़्ते वाले खुद से रेस।';
+
+  @override
+  String get momentShare => 'शेयर करो';
+
+  @override
+  String get momentBestTitle => 'नया पर्सनल बेस्ट';
+
+  @override
+  String get momentBestUnit => 'एक सेट में पुश-अप्स';
+
+  @override
+  String get momentBestFrom => 'पहले';
+
+  @override
+  String get momentBestLine => 'कैमरे ने हर एक को गिना।';
+
+  @override
+  String momentBestShare(String reps, String link) {
+    return 'OUTREPD पर नया पर्सनल बेस्ट: एक सेट में ${reps} पुश-अप्स। ${link}';
+  }
+
+  @override
+  String get momentMilestoneTitle => 'माइलस्टोन';
+
+  @override
+  String get momentPushUps => 'पुश-अप्स';
+
+  @override
+  String momentMilestoneCount(String count) {
+    return '${count} पुश-अप्स';
+  }
+
+  @override
+  String get momentMilestoneLine => 'हर एक कैमरे पर गिना गया।';
+
+  @override
+  String momentMilestoneShare(String count, String link) {
+    return 'OUTREPD पर ${count} पुश-अप्स, हर एक कैमरे पर गिना गया। ${link}';
+  }
+
+  @override
+  String momentNext(String count) {
+    return 'अगला: ${count}';
+  }
+
+  @override
+  String momentToGo(String count) {
+    return '${count} बाकी';
+  }
+
+  @override
+  String recapCardTitle(String month) {
+    return 'तुम्हारा ${month} तैयार है';
+  }
+
+  @override
+  String get recapCardLine => 'तुम्हारे पुश-अप्स, बेस्ट और जीतें';
+
+  @override
+  String recapTitle(String month) {
+    return 'तुम्हारा ${month}';
+  }
+
+  @override
+  String get recapPushUps => 'इस महीने के पुश-अप्स';
+
+  @override
+  String get recapBest => 'बेस्ट मिनट';
+
+  @override
+  String get recapWins => 'जीत – हार';
+
+  @override
+  String get recapRun => 'लगातार दिन, सबसे लंबा';
+
+  @override
+  String get recapDays => 'पुश-अप्स वाले दिन';
+
+  @override
+  String get recapByDay => 'तुम्हारा महीना, दिन-ब-दिन';
+
+  @override
+  String recapTopDay(String day, String reps) {
+    return 'दिन ${day}: ${reps}';
+  }
+
+  @override
+  String recapShare(String month, String reps, String link) {
+    return 'OUTREPD पर मेरा ${month}: ${reps} पुश-अप्स, हर एक कैमरे पर गिना गया। ${link}';
+  }
+
+  @override
+  String get recapShareButton => 'मेरा महीना शेयर करो';
 }

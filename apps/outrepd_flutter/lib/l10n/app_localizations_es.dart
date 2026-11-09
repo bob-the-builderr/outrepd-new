@@ -3696,4 +3696,97 @@ class LEs extends L {
 
   @override
   String get planOfferSub => 'Series cortas los días de entreno y cada domingo una carrera contra tu yo de la semana pasada.';
+
+  @override
+  String get momentShare => 'Compartir';
+
+  @override
+  String get momentBestTitle => 'Nuevo récord personal';
+
+  @override
+  String get momentBestUnit => 'flexiones en una serie';
+
+  @override
+  String get momentBestFrom => 'Antes';
+
+  @override
+  String get momentBestLine => 'La cámara contó cada una.';
+
+  @override
+  String momentBestShare(String reps, String link) {
+    return 'Nuevo récord personal en OUTREPD: ${reps} flexiones en una serie. ${link}';
+  }
+
+  @override
+  String get momentMilestoneTitle => 'Hito';
+
+  @override
+  String get momentPushUps => 'flexiones';
+
+  @override
+  String momentMilestoneCount(String count) {
+    return '${count} flexiones';
+  }
+
+  @override
+  String get momentMilestoneLine => 'Cada una contada por la cámara.';
+
+  @override
+  String momentMilestoneShare(String count, String link) {
+    return '${count} flexiones en OUTREPD, cada una contada por la cámara. ${link}';
+  }
+
+  @override
+  String momentNext(String count) {
+    return 'Siguiente: ${count}';
+  }
+
+  @override
+  String momentToGo(String count) {
+    return 'faltan ${count}';
+  }
+
+  @override
+  String recapCardTitle(String month) {
+    return 'Tu ${month} ya está aquí';
+  }
+
+  @override
+  String get recapCardLine => 'Tus flexiones, tu récord y tus victorias';
+
+  @override
+  String recapTitle(String month) {
+    return 'Tu ${month}';
+  }
+
+  @override
+  String get recapPushUps => 'flexiones este mes';
+
+  @override
+  String get recapBest => 'mejor minuto';
+
+  @override
+  String get recapWins => 'victorias – derrotas';
+
+  @override
+  String get recapRun => 'días seguidos, tu mejor racha';
+
+  @override
+  String get recapDays => 'días con flexiones';
+
+  @override
+  String get recapByDay => 'Tu mes, día a día';
+
+  @override
+  String recapTopDay(String day, String reps) {
+    return 'Día ${day}: ${reps}';
+  }
+
+  @override
+  String recapShare(String month, String reps, String link) {
+    return 'Mi ${month} en OUTREPD: ${reps} flexiones, cada una contada por la cámara. ${link}';
+  }
+
+  @override
+  String get recapShareButton => 'Compartir mi mes';
 }

@@ -3691,4 +3691,97 @@ class LRu extends L {
 
   @override
   String get planOfferSub => 'Короткие подходы в дни тренировок и каждое воскресенье гонка с собой прошлой недели.';
+
+  @override
+  String get momentShare => 'Поделиться';
+
+  @override
+  String get momentBestTitle => 'Новый личный рекорд';
+
+  @override
+  String get momentBestUnit => 'отжиманий за подход';
+
+  @override
+  String get momentBestFrom => 'Было';
+
+  @override
+  String get momentBestLine => 'Камера засчитала каждое.';
+
+  @override
+  String momentBestShare(String reps, String link) {
+    return 'Новый личный рекорд в OUTREPD: ${reps} отжиманий за подход. ${link}';
+  }
+
+  @override
+  String get momentMilestoneTitle => 'Рубеж';
+
+  @override
+  String get momentPushUps => 'отжиманий';
+
+  @override
+  String momentMilestoneCount(String count) {
+    return '${count} отжиманий';
+  }
+
+  @override
+  String get momentMilestoneLine => 'Каждое засчитано камерой.';
+
+  @override
+  String momentMilestoneShare(String count, String link) {
+    return '${count} отжиманий в OUTREPD, каждое засчитано камерой. ${link}';
+  }
+
+  @override
+  String momentNext(String count) {
+    return 'Следующий: ${count}';
+  }
+
+  @override
+  String momentToGo(String count) {
+    return 'осталось ${count}';
+  }
+
+  @override
+  String recapCardTitle(String month) {
+    return 'Твой ${month} готов';
+  }
+
+  @override
+  String get recapCardLine => 'Твои отжимания, рекорд и победы';
+
+  @override
+  String recapTitle(String month) {
+    return 'Твой ${month}';
+  }
+
+  @override
+  String get recapPushUps => 'отжиманий за месяц';
+
+  @override
+  String get recapBest => 'лучшая минута';
+
+  @override
+  String get recapWins => 'победы – поражения';
+
+  @override
+  String get recapRun => 'дней подряд, лучшая серия';
+
+  @override
+  String get recapDays => 'дней с отжиманиями';
+
+  @override
+  String get recapByDay => 'Твой месяц по дням';
+
+  @override
+  String recapTopDay(String day, String reps) {
+    return 'День ${day}: ${reps}';
+  }
+
+  @override
+  String recapShare(String month, String reps, String link) {
+    return 'Мой ${month} в OUTREPD: ${reps} отжиманий, каждое засчитано камерой. ${link}';
+  }
+
+  @override
+  String get recapShareButton => 'Поделиться месяцем';
 }

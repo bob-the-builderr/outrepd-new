@@ -3696,4 +3696,97 @@ class LIt extends L {
 
   @override
   String get planOfferSub => 'Serie brevi nei giorni di allenamento e ogni domenica una sfida contro il te della settimana scorsa.';
+
+  @override
+  String get momentShare => 'Condividi';
+
+  @override
+  String get momentBestTitle => 'Nuovo record personale';
+
+  @override
+  String get momentBestUnit => 'flessioni in una serie';
+
+  @override
+  String get momentBestFrom => 'Prima';
+
+  @override
+  String get momentBestLine => 'La fotocamera le ha contate tutte.';
+
+  @override
+  String momentBestShare(String reps, String link) {
+    return 'Nuovo record personale su OUTREPD: ${reps} flessioni in una serie. ${link}';
+  }
+
+  @override
+  String get momentMilestoneTitle => 'Traguardo';
+
+  @override
+  String get momentPushUps => 'flessioni';
+
+  @override
+  String momentMilestoneCount(String count) {
+    return '${count} flessioni';
+  }
+
+  @override
+  String get momentMilestoneLine => 'Ognuna contata dalla fotocamera.';
+
+  @override
+  String momentMilestoneShare(String count, String link) {
+    return '${count} flessioni su OUTREPD, ognuna contata dalla fotocamera. ${link}';
+  }
+
+  @override
+  String momentNext(String count) {
+    return 'Prossimo: ${count}';
+  }
+
+  @override
+  String momentToGo(String count) {
+    return 'ne mancano ${count}';
+  }
+
+  @override
+  String recapCardTitle(String month) {
+    return 'Il tuo ${month} è pronto';
+  }
+
+  @override
+  String get recapCardLine => 'Le tue flessioni, il tuo record e le vittorie';
+
+  @override
+  String recapTitle(String month) {
+    return 'Il tuo ${month}';
+  }
+
+  @override
+  String get recapPushUps => 'flessioni questo mese';
+
+  @override
+  String get recapBest => 'minuto migliore';
+
+  @override
+  String get recapWins => 'vittorie – sconfitte';
+
+  @override
+  String get recapRun => 'giorni di fila, la serie più lunga';
+
+  @override
+  String get recapDays => 'giorni con flessioni';
+
+  @override
+  String get recapByDay => 'Il tuo mese, giorno per giorno';
+
+  @override
+  String recapTopDay(String day, String reps) {
+    return 'Giorno ${day}: ${reps}';
+  }
+
+  @override
+  String recapShare(String month, String reps, String link) {
+    return 'Il mio ${month} su OUTREPD: ${reps} flessioni, ognuna contata dalla fotocamera. ${link}';
+  }
+
+  @override
+  String get recapShareButton => 'Condividi il mio mese';
 }

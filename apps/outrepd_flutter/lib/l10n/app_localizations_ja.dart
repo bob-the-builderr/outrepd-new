@@ -3656,4 +3656,97 @@ class LJa extends L {
 
   @override
   String get planOfferSub => 'トレーニング日は短いセット、毎週日曜日は先週の自分とレース。';
+
+  @override
+  String get momentShare => 'シェアする';
+
+  @override
+  String get momentBestTitle => '自己ベスト更新';
+
+  @override
+  String get momentBestUnit => '1セットの腕立て';
+
+  @override
+  String get momentBestFrom => '前回';
+
+  @override
+  String get momentBestLine => 'カメラが1回ずつ数えました。';
+
+  @override
+  String momentBestShare(String reps, String link) {
+    return 'OUTREPDで自己ベスト更新：1セットで腕立て${reps}回。${link}';
+  }
+
+  @override
+  String get momentMilestoneTitle => 'マイルストーン';
+
+  @override
+  String get momentPushUps => '腕立て';
+
+  @override
+  String momentMilestoneCount(String count) {
+    return '腕立て${count}回';
+  }
+
+  @override
+  String get momentMilestoneLine => 'すべてカメラが数えた回数です。';
+
+  @override
+  String momentMilestoneShare(String count, String link) {
+    return 'OUTREPDで腕立て${count}回、すべてカメラでカウント。${link}';
+  }
+
+  @override
+  String momentNext(String count) {
+    return '次は${count}';
+  }
+
+  @override
+  String momentToGo(String count) {
+    return 'あと${count}';
+  }
+
+  @override
+  String recapCardTitle(String month) {
+    return 'あなたの${month}がまとまりました';
+  }
+
+  @override
+  String get recapCardLine => '腕立て、ベスト、勝利をまとめて';
+
+  @override
+  String recapTitle(String month) {
+    return 'あなたの${month}';
+  }
+
+  @override
+  String get recapPushUps => '今月の腕立て';
+
+  @override
+  String get recapBest => 'ベストの1分';
+
+  @override
+  String get recapWins => '勝ち – 負け';
+
+  @override
+  String get recapRun => '連続日数（最長）';
+
+  @override
+  String get recapDays => '腕立てをした日';
+
+  @override
+  String get recapByDay => '1か月の毎日';
+
+  @override
+  String recapTopDay(String day, String reps) {
+    return '${day}日：${reps}';
+  }
+
+  @override
+  String recapShare(String month, String reps, String link) {
+    return 'OUTREPDでの私の${month}：腕立て${reps}回、すべてカメラでカウント。${link}';
+  }
+
+  @override
+  String get recapShareButton => '今月をシェア';
 }
