@@ -1,0 +1,7 @@
+commit   5d59dda23f9c9b0839c7da5edce03f41294b1c04
+branch   camera-rep-counter
+analyze  failure
+test     failure
+shots    failure
+server   success
+run      https://github.com/bob-the-builderr/outrepd-new/actions/runs/42688560640

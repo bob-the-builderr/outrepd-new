@@ -1,2 +1,6 @@
 Analyzing outrepd_flutter...                                    
-No issues found! (ran in 21.1s)
+
+  error • The name 'awardName' is defined in the libraries 'package:outrepd/awards/award_text.dart' and 'package:outrepd/season.dart'. Try using 'as prefix' for one of the import directives, or hiding the name from all but one of the imports • lib/screens/other_profile.dart:1136:59 • ambiguous_import
+  error • The name 'awardName' is defined in the libraries 'package:outrepd/awards/award_text.dart' and 'package:outrepd/season.dart'. Try using 'as prefix' for one of the import directives, or hiding the name from all but one of the imports • lib/screens/other_profile.dart:1166:23 • ambiguous_import
+
+2 issues found. (ran in 22.9s)
