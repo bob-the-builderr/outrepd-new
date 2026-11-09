@@ -30,6 +30,7 @@ import 'avatar.dart';
 import 'data.dart';
 import 'health_sync.dart';
 import 'lifter/my_lifter.dart';
+import 'plan.dart';
 import 'ranking.dart';
 import 'rewards.dart';
 import 'xp.dart';
@@ -880,6 +881,8 @@ class Career extends ChangeNotifier {
     await Adventure.instance.adopt();
     // And its titles and streak, the same way.
     await rewards.adopt();
+    // And its plan.
+    await trainingPlan.adopt();
     takeStreak();
   }
 

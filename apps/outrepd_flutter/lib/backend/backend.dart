@@ -905,6 +905,33 @@ class Notice {
 
 // ───────────────────────────── a challenge by link ────────────────────────────
 
+/// A whole minute of this account's own, with the times of its reps
+/// (plan.sql, my_best_minute): what "last week's you" lifted, and how.
+class BestMinute {
+  const BestMinute({required this.reps, required this.repTimes, this.at});
+
+  final int reps;
+
+  /// When each rep landed, in milliseconds from the start of the minute.
+  final List<int> repTimes;
+
+  final DateTime? at;
+
+  static BestMinute? fromJson(Object? json) {
+    if (json is! Map) return null;
+    final reps = (json['reps'] as num?)?.toInt() ?? 0;
+    if (reps <= 0) return null;
+    return BestMinute(
+      reps: reps,
+      repTimes: [
+        for (final t in json['rep_times'] as List? ?? const [])
+          if (t is num) t.toInt(),
+      ],
+      at: DateTime.tryParse(json['at'] as String? ?? '')?.toLocal(),
+    );
+  }
+}
+
 /// A link made for a set (challenge.sql): outrepd.com/c/<code>.
 class ChallengeLink {
   const ChallengeLink({required this.code, required this.reps});
@@ -1737,6 +1764,18 @@ abstract interface class Backend {
   /// A Pro part worn for a day after a rewarded video: [key] in the
   /// lifter's parts, the part's [id], and what it replaced. The day's end.
   Future<DateTime> startProTrial(String key, String id, String? was);
+
+  /// This account's six-week plan as the account keeps it (plan.sql), or
+  /// null when it is on none.
+  Future<Map<String, dynamic>?> myPlan();
+
+  /// Keeps [plan] as this account's plan, or stops it when null. What was
+  /// kept, cleaned the server's way.
+  Future<Map<String, dynamic>?> savePlan(Map<String, Object?>? plan);
+
+  /// This account's best whole minute lifted from [since] up to [before],
+  /// with its pace. Null when there is none.
+  Future<BestMinute?> myBestMinute(DateTime since, DateTime before);
 }
 
 /// The app with no server behind it.
@@ -2115,6 +2154,17 @@ class NoBackend implements Backend {
   @override
   Future<DateTime> startProTrial(String key, String id, String? was) async =>
       DateTime.now().add(const Duration(days: 1));
+
+  @override
+  Future<Map<String, dynamic>?> myPlan() async => null;
+
+  @override
+  Future<Map<String, dynamic>?> savePlan(Map<String, Object?>? plan) async =>
+      plan == null ? null : Map<String, dynamic>.from(plan);
+
+  @override
+  Future<BestMinute?> myBestMinute(DateTime since, DateTime before) async =>
+      null;
 }
 
 /// The one the app uses. Replaced at startup when keys are supplied.

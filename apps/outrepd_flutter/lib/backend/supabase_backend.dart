@@ -804,6 +804,33 @@ class SupabaseBackend implements Backend {
       (await _db.rpc<int>('double_duel_xp', params: {'of_duel': duelId}));
 
   @override
+  Future<Map<String, dynamic>?> myPlan() async {
+    final value = await _db.rpc<dynamic>('my_plan');
+    return value is Map ? Map<String, dynamic>.from(value) : null;
+  }
+
+  @override
+  Future<Map<String, dynamic>?> savePlan(Map<String, Object?>? plan) async {
+    final value = await _db.rpc<dynamic>(
+      'save_plan',
+      params: {'new_plan': plan},
+    );
+    return value is Map ? Map<String, dynamic>.from(value) : null;
+  }
+
+  @override
+  Future<BestMinute?> myBestMinute(DateTime since, DateTime before) async =>
+      BestMinute.fromJson(
+        await _db.rpc<dynamic>(
+          'my_best_minute',
+          params: {
+            'since': since.toUtc().toIso8601String(),
+            'before': before.toUtc().toIso8601String(),
+          },
+        ),
+      );
+
+  @override
   Future<DateTime> startProTrial(String key, String id, String? was) async {
     final until = await _db.rpc<String>(
       'start_pro_trial',

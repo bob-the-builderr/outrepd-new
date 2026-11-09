@@ -3462,4 +3462,233 @@ class LRu extends L {
 
   @override
   String get rewardNotEarned => 'Видео не досмотрено, ничего не изменилось.';
+
+  @override
+  String get planSetupTitle => 'Стань сильнее';
+
+  @override
+  String get planSetupSub => 'Шестинедельный план от твоей лучшей минуты.';
+
+  @override
+  String get planYourBest => 'Твой рекорд';
+
+  @override
+  String get planInSixty => 'за 60 секунд';
+
+  @override
+  String get planNeedBest => 'Сначала сделай одну минуту, чтобы план знал, с чего ты начинаешь.';
+
+  @override
+  String get planGoalCaption => 'Твоя цель через 6 недель';
+
+  @override
+  String get planSteady => 'Спокойно';
+
+  @override
+  String get planRecommended => 'Рекомендуем';
+
+  @override
+  String get planHard => 'Сложно';
+
+  @override
+  String get planDaysCaption => 'Дней в неделю';
+
+  @override
+  String get planDaysUnit => 'дня';
+
+  @override
+  String get planHowDays => 'Каждый день тренировки: три коротких подхода, их считает камера.';
+
+  @override
+  String get planHowRace => 'Каждое воскресенье: гонка с собой прошлой недели, в том темпе, в каком ты реально делал.';
+
+  @override
+  String get planDoASet => 'Сделать подход';
+
+  @override
+  String get planStart => 'Начать план';
+
+  @override
+  String get planStopAsk => 'Остановить этот план?';
+
+  @override
+  String get planStopBody => 'Твои подходы и гонки останутся в истории. Новый план можно начать сразу.';
+
+  @override
+  String get planStopYes => 'Остановить';
+
+  @override
+  String get planTitle => 'Твой план';
+
+  @override
+  String get planAnother => 'Начать новый план';
+
+  @override
+  String get planChange => 'Изменить план';
+
+  @override
+  String get planShare => 'Поделиться прогрессом';
+
+  @override
+  String planStartSet(String n, String total) {
+    return 'Начать подход ${n} из ${total}';
+  }
+
+  @override
+  String get planExtraSet => 'Сделать доп. подход';
+
+  @override
+  String planRoadTo(String goal) {
+    return 'Путь к ${goal}';
+  }
+
+  @override
+  String planDone(String start, String best) {
+    return 'План выполнен: ${start} → ${best}';
+  }
+
+  @override
+  String planWeekOf(String week, String weeks) {
+    return 'Неделя ${week} из ${weeks}';
+  }
+
+  @override
+  String planStartedAt(String start) {
+    return 'старт с ${start}';
+  }
+
+  @override
+  String get planThisWeek => 'Эта неделя';
+
+  @override
+  String planDaysDone(String done, String total) {
+    return '${done} из ${total} дней';
+  }
+
+  @override
+  String planRaced(String reps) {
+    return 'Пройдено: ${reps}';
+  }
+
+  @override
+  String planToBeat(String reps) {
+    return 'Побить ${reps}';
+  }
+
+  @override
+  String planToBeatSunday(String reps) {
+    return 'Побить ${reps} · в воскресенье';
+  }
+
+  @override
+  String get planRaceTitle => 'Гонка с собой прошлой недели';
+
+  @override
+  String get planRest => 'отдых';
+
+  @override
+  String get planRaceToday => 'Сегодня: гонка с собой прошлой недели';
+
+  @override
+  String planTodaySets(String sets, String reps) {
+    return 'Сегодня: ${sets} подхода по ${reps}';
+  }
+
+  @override
+  String get planRestToday => 'Сегодня: отдых';
+
+  @override
+  String get planStartShort => 'Старт';
+
+  @override
+  String planWeekShort(String week) {
+    return 'Н${week}';
+  }
+
+  @override
+  String planShareText(String start, String best, String goal, String link) {
+    return 'С ${start} до ${best} отжиманий за минуту в OUTREPD, на пути к ${goal}. ${link}';
+  }
+
+  @override
+  String get planToday => 'План на сегодня';
+
+  @override
+  String planCardDone(String week) {
+    return 'Неделя ${week} · подходы на сегодня сделаны';
+  }
+
+  @override
+  String planCardSets(String week, String sets, String reps, String done) {
+    return 'Неделя ${week} · ${sets} подхода по ${reps} · сделано ${done}';
+  }
+
+  @override
+  String planCardRest(String week) {
+    return 'Неделя ${week} · день отдыха';
+  }
+
+  @override
+  String planCardRaced(String reps) {
+    return 'Гонка этой недели: ${reps}';
+  }
+
+  @override
+  String get planCardRaceSunday => 'Воскресенье: гонка с собой прошлой недели';
+
+  @override
+  String get planReached => 'Цель достигнута.';
+
+  @override
+  String planToGo(String left) {
+    return 'До цели осталось ${left}.';
+  }
+
+  @override
+  String get planOnTrack => 'По плану';
+
+  @override
+  String get planBehind => 'Немного отстаёшь';
+
+  @override
+  String get planBeatTitle => 'Ты победил себя прошлой недели';
+
+  @override
+  String get planTieTitle => 'Ровно';
+
+  @override
+  String get planLostTitle => 'Победил ты прошлой недели';
+
+  @override
+  String get planLevel => 'Столько же, сколько неделю назад.';
+
+  @override
+  String planMoreThan(String gap) {
+    return 'На ${gap} больше, чем неделю назад.';
+  }
+
+  @override
+  String planShortOf(String gap) {
+    return 'На ${gap} меньше, чем неделю назад.';
+  }
+
+  @override
+  String get planYouNow => 'Ты сейчас';
+
+  @override
+  String get planLastWeek => 'Прошлая неделя';
+
+  @override
+  String get planLastWeeksYou => 'Ты прошлой недели';
+
+  @override
+  String vsYouVsYou(String week) {
+    return 'ТЫ VS ТЫ · НЕДЕЛЯ ${week}';
+  }
+
+  @override
+  String get planOffer => 'Вместо этого — план на шесть недель';
+
+  @override
+  String get planOfferSub => 'Короткие подходы в дни тренировок и каждое воскресенье гонка с собой прошлой недели.';
 }

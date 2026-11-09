@@ -3467,4 +3467,233 @@ class LIt extends L {
 
   @override
   String get rewardNotEarned => 'Il video non è finito, quindi non è cambiato nulla.';
+
+  @override
+  String get planSetupTitle => 'Diventa più forte';
+
+  @override
+  String get planSetupSub => 'Un piano di sei settimane dal tuo minuto migliore.';
+
+  @override
+  String get planYourBest => 'Il tuo record';
+
+  @override
+  String get planInSixty => 'in 60 secondi';
+
+  @override
+  String get planNeedBest => 'Fai prima un minuto, così il piano sa da dove parti.';
+
+  @override
+  String get planGoalCaption => 'Il tuo obiettivo in 6 settimane';
+
+  @override
+  String get planSteady => 'Tranquillo';
+
+  @override
+  String get planRecommended => 'Consigliato';
+
+  @override
+  String get planHard => 'Difficile';
+
+  @override
+  String get planDaysCaption => 'Giorni a settimana';
+
+  @override
+  String get planDaysUnit => 'giorni';
+
+  @override
+  String get planHowDays => 'Ogni giorno di allenamento: tre serie brevi contate dalla fotocamera.';
+
+  @override
+  String get planHowRace => 'Ogni domenica: sfida il te della settimana scorsa, al ritmo che hai tenuto davvero.';
+
+  @override
+  String get planDoASet => 'Fai una serie';
+
+  @override
+  String get planStart => 'Inizia il piano';
+
+  @override
+  String get planStopAsk => 'Interrompere questo piano?';
+
+  @override
+  String get planStopBody => 'Le tue serie e le tue sfide restano nella cronologia. Puoi iniziare subito un nuovo piano.';
+
+  @override
+  String get planStopYes => 'Interrompi';
+
+  @override
+  String get planTitle => 'Il tuo piano';
+
+  @override
+  String get planAnother => 'Inizia un altro piano';
+
+  @override
+  String get planChange => 'Cambia il piano';
+
+  @override
+  String get planShare => 'Condividi i miei progressi';
+
+  @override
+  String planStartSet(String n, String total) {
+    return 'Inizia la serie ${n} di ${total}';
+  }
+
+  @override
+  String get planExtraSet => 'Fai una serie in più';
+
+  @override
+  String planRoadTo(String goal) {
+    return 'Verso ${goal}';
+  }
+
+  @override
+  String planDone(String start, String best) {
+    return 'Piano completato: ${start} → ${best}';
+  }
+
+  @override
+  String planWeekOf(String week, String weeks) {
+    return 'Settimana ${week} di ${weeks}';
+  }
+
+  @override
+  String planStartedAt(String start) {
+    return 'sei partito da ${start}';
+  }
+
+  @override
+  String get planThisWeek => 'Questa settimana';
+
+  @override
+  String planDaysDone(String done, String total) {
+    return '${done} giorni su ${total}';
+  }
+
+  @override
+  String planRaced(String reps) {
+    return 'Fatto: ${reps}';
+  }
+
+  @override
+  String planToBeat(String reps) {
+    return '${reps} da battere';
+  }
+
+  @override
+  String planToBeatSunday(String reps) {
+    return '${reps} da battere · domenica';
+  }
+
+  @override
+  String get planRaceTitle => 'Sfida il te della settimana scorsa';
+
+  @override
+  String get planRest => 'riposo';
+
+  @override
+  String get planRaceToday => 'Oggi: sfida il te della settimana scorsa';
+
+  @override
+  String planTodaySets(String sets, String reps) {
+    return 'Oggi: ${sets} serie da ${reps}';
+  }
+
+  @override
+  String get planRestToday => 'Oggi: riposo';
+
+  @override
+  String get planStartShort => 'Inizio';
+
+  @override
+  String planWeekShort(String week) {
+    return 'S${week}';
+  }
+
+  @override
+  String planShareText(String start, String best, String goal, String link) {
+    return 'Da ${start} a ${best} flessioni in un minuto su OUTREPD, verso ${goal}. ${link}';
+  }
+
+  @override
+  String get planToday => 'Piano di oggi';
+
+  @override
+  String planCardDone(String week) {
+    return 'Settimana ${week} · serie di oggi fatte';
+  }
+
+  @override
+  String planCardSets(String week, String sets, String reps, String done) {
+    return 'Settimana ${week} · ${sets} serie da ${reps} · ${done} fatte';
+  }
+
+  @override
+  String planCardRest(String week) {
+    return 'Settimana ${week} · giorno di riposo';
+  }
+
+  @override
+  String planCardRaced(String reps) {
+    return 'Sfida di questa settimana: ${reps}';
+  }
+
+  @override
+  String get planCardRaceSunday => 'Domenica: sfida il te della settimana scorsa';
+
+  @override
+  String get planReached => 'Obiettivo raggiunto.';
+
+  @override
+  String planToGo(String left) {
+    return 'Ne mancano ${left} al tuo obiettivo.';
+  }
+
+  @override
+  String get planOnTrack => 'In linea';
+
+  @override
+  String get planBehind => 'Un po’ indietro';
+
+  @override
+  String get planBeatTitle => 'Hai battuto il te della settimana scorsa';
+
+  @override
+  String get planTieTitle => 'Pari esatto';
+
+  @override
+  String get planLostTitle => 'Ha vinto il te della settimana scorsa';
+
+  @override
+  String get planLevel => 'Gli stessi di una settimana fa.';
+
+  @override
+  String planMoreThan(String gap) {
+    return '${gap} in più di una settimana fa.';
+  }
+
+  @override
+  String planShortOf(String gap) {
+    return '${gap} in meno di una settimana fa.';
+  }
+
+  @override
+  String get planYouNow => 'Tu adesso';
+
+  @override
+  String get planLastWeek => 'Settimana scorsa';
+
+  @override
+  String get planLastWeeksYou => 'Il te della settimana scorsa';
+
+  @override
+  String vsYouVsYou(String week) {
+    return 'TU VS TU · SETTIMANA ${week}';
+  }
+
+  @override
+  String get planOffer => 'Invece, un piano di sei settimane';
+
+  @override
+  String get planOfferSub => 'Serie brevi nei giorni di allenamento e ogni domenica una sfida contro il te della settimana scorsa.';
 }

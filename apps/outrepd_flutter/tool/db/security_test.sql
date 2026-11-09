@@ -1206,6 +1206,40 @@ select check_that((rewards_merge('{"streakSaved": 100}'::jsonb, '{"streakSaved":
                    ->> 'streakSaved')::bigint = 100,
                   'when a streak was brought back was lost in the merge');
 
+-- ── beat your past self ──────────────────────────────────────────────────────
+
+-- A plan is kept as the phone sent it, cleaned to what a plan is.
+select as_user(:'A'); set role authenticated;
+select check_that((save_plan('{"start": 24, "goal": 36, "days": 3, "began": 20400, "sets": {"20401": 3, "x": 9}, "races": {"1": 26, "9": 5}}'::jsonb) -> 'sets')
+                    = '{"20401": 3}'::jsonb,
+                  'a plan kept a day that is not a day');
+select check_that((my_plan() -> 'races') = '{"1": 26}'::jsonb, 'a plan kept a week that is not a week');
+select must_fail('a goal under the start',
+                 'select save_plan(''{"start": 24, "goal": 20, "days": 3, "began": 20400}''::jsonb)');
+select must_fail('seven training days a week',
+                 'select save_plan(''{"start": 24, "goal": 36, "days": 7, "began": 20400}''::jsonb)');
+select check_that(not exists (select 1 from training_plans), 'a phone read the plans table');
+select must_fail('writing a plan straight into the table',
+                 format('insert into training_plans (profile_id, plan) values (%L, ''{}''::jsonb)', :'A'));
+reset role;
+
+-- Last week's you: the caller's own best whole minute in the week, with its pace.
+insert into sets (profile_id, reps, reps_camera, duration_ms, rep_times, practice, created_at)
+values (:'A', 27, 27, 60000, array(select g * 2000 from generate_series(1, 27) g), true, now() - interval '8 days'),
+       (:'A', 31, 31, 60000, '{}', true, now() - interval '9 days'),
+       (:'B', 40, 40, 60000, array(select g * 1400 from generate_series(1, 40) g), true, now() - interval '8 days');
+select as_user(:'A'); set role authenticated;
+select check_that((my_best_minute(now() - interval '14 days', now() - interval '7 days') ->> 'reps')::int = 27,
+                  'last week''s best minute was not the caller''s own, with its pace');
+select check_that(jsonb_array_length(my_best_minute(now() - interval '14 days', now() - interval '7 days') -> 'rep_times') = 27,
+                  'last week''s best minute came without its pace');
+select check_that(my_best_minute(now() - interval '6 days', now()) is null
+                    or (my_best_minute(now() - interval '6 days', now()) ->> 'reps')::int <> 27,
+                  'a minute from before the week was handed back as the week''s');
+select save_plan(null);
+select check_that(my_plan() is null, 'a stopped plan stayed');
+reset role;
+
 -- And as a request would actually try it.
 select as_user(null); set role anon;
 select must_fail('signed out, a lifter''s profile',
@@ -1220,6 +1254,8 @@ select must_fail('signed out, how people look',
 select must_fail('signed out, a challenge',
                  format('select open_challenge(%L)', :'code'));
 select must_fail('signed out, making a challenge', 'select make_challenge()');
+select must_fail('signed out, a plan', 'select my_plan()');
+select must_fail('signed out, a best minute', 'select my_best_minute(now() - interval ''7 days'', now())');
 -- The things that are meant to work signed out: what a shared link shows.
 select count(*) from public_lifter_card('alice_a1');
 select count(*) from public_challenge_card(:'code');

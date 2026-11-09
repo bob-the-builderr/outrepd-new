@@ -3431,4 +3431,233 @@ class LKo extends L {
 
   @override
   String get rewardNotEarned => '영상이 끝나지 않아 아무것도 바뀌지 않았어요.';
+
+  @override
+  String get planSetupTitle => '더 강해지기';
+
+  @override
+  String get planSetupSub => '최고의 1분에서 시작하는 6주 플랜.';
+
+  @override
+  String get planYourBest => '나의 최고 기록';
+
+  @override
+  String get planInSixty => '60초 동안';
+
+  @override
+  String get planNeedBest => '먼저 1분을 해서 플랜이 시작점을 알 수 있게 하세요.';
+
+  @override
+  String get planGoalCaption => '6주 후 목표';
+
+  @override
+  String get planSteady => '꾸준히';
+
+  @override
+  String get planRecommended => '추천';
+
+  @override
+  String get planHard => '어렵게';
+
+  @override
+  String get planDaysCaption => '주당 일수';
+
+  @override
+  String get planDaysUnit => '일';
+
+  @override
+  String get planHowDays => '훈련하는 날마다: 카메라가 세는 짧은 세트 세 개.';
+
+  @override
+  String get planHowRace => '매주 일요일: 지난주의 나와 실제 속도 그대로 대결.';
+
+  @override
+  String get planDoASet => '한 세트 하기';
+
+  @override
+  String get planStart => '플랜 시작';
+
+  @override
+  String get planStopAsk => '이 플랜을 그만할까요?';
+
+  @override
+  String get planStopBody => '세트와 레이스 기록은 그대로 남아요. 바로 새 플랜을 시작할 수 있어요.';
+
+  @override
+  String get planStopYes => '그만하기';
+
+  @override
+  String get planTitle => '나의 플랜';
+
+  @override
+  String get planAnother => '다른 플랜 시작';
+
+  @override
+  String get planChange => '플랜 바꾸기';
+
+  @override
+  String get planShare => '내 성장 공유';
+
+  @override
+  String planStartSet(String n, String total) {
+    return '${total}세트 중 ${n}세트 시작';
+  }
+
+  @override
+  String get planExtraSet => '추가 세트 하기';
+
+  @override
+  String planRoadTo(String goal) {
+    return '${goal}까지의 길';
+  }
+
+  @override
+  String planDone(String start, String best) {
+    return '플랜 완료: ${start} → ${best}';
+  }
+
+  @override
+  String planWeekOf(String week, String weeks) {
+    return '${weeks}주 중 ${week}주차';
+  }
+
+  @override
+  String planStartedAt(String start) {
+    return '시작은 ${start}';
+  }
+
+  @override
+  String get planThisWeek => '이번 주';
+
+  @override
+  String planDaysDone(String done, String total) {
+    return '${total}일 중 ${done}일';
+  }
+
+  @override
+  String planRaced(String reps) {
+    return '완료: ${reps}';
+  }
+
+  @override
+  String planToBeat(String reps) {
+    return '이겨야 할 기록 ${reps}';
+  }
+
+  @override
+  String planToBeatSunday(String reps) {
+    return '이겨야 할 기록 ${reps} · 일요일에';
+  }
+
+  @override
+  String get planRaceTitle => '지난주의 나와 대결';
+
+  @override
+  String get planRest => '휴식';
+
+  @override
+  String get planRaceToday => '오늘: 지난주의 나와 대결';
+
+  @override
+  String planTodaySets(String sets, String reps) {
+    return '오늘: ${reps}회 × ${sets}세트';
+  }
+
+  @override
+  String get planRestToday => '오늘: 휴식';
+
+  @override
+  String get planStartShort => '시작';
+
+  @override
+  String planWeekShort(String week) {
+    return '${week}주';
+  }
+
+  @override
+  String planShareText(String start, String best, String goal, String link) {
+    return 'OUTREPD에서 1분 팔굽혀펴기 ${start}회 → ${best}회, 목표는 ${goal}회. ${link}';
+  }
+
+  @override
+  String get planToday => '오늘의 플랜';
+
+  @override
+  String planCardDone(String week) {
+    return '${week}주차 · 오늘 세트 완료';
+  }
+
+  @override
+  String planCardSets(String week, String sets, String reps, String done) {
+    return '${week}주차 · ${reps}회 × ${sets}세트 · ${done} 완료';
+  }
+
+  @override
+  String planCardRest(String week) {
+    return '${week}주차 · 휴식일';
+  }
+
+  @override
+  String planCardRaced(String reps) {
+    return '이번 주 레이스: ${reps}';
+  }
+
+  @override
+  String get planCardRaceSunday => '일요일: 지난주의 나와 대결';
+
+  @override
+  String get planReached => '목표 달성.';
+
+  @override
+  String planToGo(String left) {
+    return '목표까지 ${left} 남았어요.';
+  }
+
+  @override
+  String get planOnTrack => '순조로워요';
+
+  @override
+  String get planBehind => '조금 뒤처졌어요';
+
+  @override
+  String get planBeatTitle => '지난주의 나를 이겼다';
+
+  @override
+  String get planTieTitle => '완전히 동점';
+
+  @override
+  String get planLostTitle => '지난주의 내가 이겼다';
+
+  @override
+  String get planLevel => '일주일 전과 같아요.';
+
+  @override
+  String planMoreThan(String gap) {
+    return '일주일 전보다 ${gap}회 더.';
+  }
+
+  @override
+  String planShortOf(String gap) {
+    return '일주일 전보다 ${gap}회 부족.';
+  }
+
+  @override
+  String get planYouNow => '지금의 나';
+
+  @override
+  String get planLastWeek => '지난주';
+
+  @override
+  String get planLastWeeksYou => '지난주의 나';
+
+  @override
+  String vsYouVsYou(String week) {
+    return '나 VS 나 · ${week}주차';
+  }
+
+  @override
+  String get planOffer => '대신 6주 플랜';
+
+  @override
+  String get planOfferSub => '훈련일엔 짧은 세트, 매주 일요일엔 지난주의 나와 레이스.';
 }

@@ -48,6 +48,11 @@ enum MatchMode {
   /// saved set is, by anybody the link reached. Friendly; it moves no rank.
   /// See [MatchFlowScreen.linkChallenge].
   link,
+
+  /// The week's race on a six-week plan (lib/plan.dart): this lifter against
+  /// their own best minute of the week before, at its pace. Friendly; it
+  /// moves no rank. See [MatchFlowScreen.pastSelf].
+  pastSelf,
 }
 
 /// Straight into the duel.

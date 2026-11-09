@@ -10,6 +10,7 @@ import '../career.dart';
 import '../data.dart';
 import '../lifter/looks.dart';
 import '../lifter/my_lifter.dart';
+import '../plan.dart';
 import '../rewards.dart';
 import '../subscription.dart';
 import 'onboarding.dart';
@@ -31,6 +32,8 @@ Future<void> leaveForWelcome(NavigatorState navigator) async {
   // The titles and streak too: the account has them (sent before signing
   // out), and the next one in should not wear these.
   await rewards.forget();
+  // And the plan: the account keeps it.
+  await trainingPlan.forget();
   // The lifter is the account's, like its picture: the next one in wore the
   // photo left on the phone, on its own screens.
   await MyLifter.instance.forget();

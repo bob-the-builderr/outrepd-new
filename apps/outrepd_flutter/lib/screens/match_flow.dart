@@ -22,6 +22,7 @@ import '../data.dart';
 import '../face.dart';
 import '../l10n/app_localizations.dart';
 import '../live.dart';
+import '../plan.dart';
 import '../avatar.dart';
 import '../lifter/lifter_view.dart';
 import '../lifter/looks.dart';
@@ -44,6 +45,7 @@ import 'daily_goal.dart';
 import 'level.dart';
 import 'vs_screen.dart';
 import 'match_entry.dart';
+import 'plan_screen.dart';
 import 'post_match.dart';
 import 'trainer.dart';
 import 'vs_search.dart';
@@ -80,6 +82,13 @@ class MatchFlowScreen extends StatefulWidget {
   /// The challenge [MatchMode.link] races, opened from its link.
   final ChallengeView? linkChallenge;
 
+  /// Last week's you, whom [MatchMode.pastSelf] races.
+  final PastSelf? pastSelf;
+
+  /// A practice set that is one of the day's sets on the plan: counted onto
+  /// it when it reaches the day's number.
+  final bool planSet;
+
   const MatchFlowScreen({
     super.key,
     this.mode = MatchMode.ranked,
@@ -90,6 +99,8 @@ class MatchFlowScreen extends StatefulWidget {
     this.liveMatch,
     this.adventure,
     this.linkChallenge,
+    this.pastSelf,
+    this.planSet = false,
   }) : assert(
          adventure == null || mode == MatchMode.practice,
          'an adventure fight is practice: it moves no rank',
@@ -113,6 +124,10 @@ class MatchFlowScreen extends StatefulWidget {
        assert(
          mode != MatchMode.link || linkChallenge != null,
          'a challenge by link needs the challenge',
+       ),
+       assert(
+         mode != MatchMode.pastSelf || pastSelf != null,
+         'racing last week\'s you needs last week\'s minute',
        );
 
   /// Nobody on the other side. The same clock and the same counting, with
@@ -145,6 +160,9 @@ class MatchFlowScreen extends StatefulWidget {
 
   /// Racing a challenge by link.
   bool get isLink => mode == MatchMode.link;
+
+  /// The week's race against last week's you.
+  bool get isPastSelf => mode == MatchMode.pastSelf;
 
   bool get isAdventure => adventure != null;
 
@@ -195,6 +213,9 @@ enum _Stage {
 
   /// A challenge by link: the try is in, and here is how it went.
   challengeResult,
+
+  /// The week's race against last week's you, and the road so far.
+  pastSelfResult,
 }
 
 class _MatchFlowScreenState extends State<MatchFlowScreen> {
@@ -302,7 +323,8 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       _live?.opponent.id ??
       _realOpponent?.profileId ??
       (widget.isChallenge ? widget.targetId : null) ??
-      widget.linkChallenge?.owner.id;
+      widget.linkChallenge?.owner.id ??
+      (widget.isPastSelf ? (backend.me?.id ?? 'me') : null);
 
   /// Nobody real was found, so the round is raced against this lifter's own
   /// best set and moves nothing on the ladder.
@@ -323,7 +345,8 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       !widget.isLiveFriend &&
       !widget.isChallenge &&
       !widget.isChallengeAccept &&
-      !widget.isLink;
+      !widget.isLink &&
+      !widget.isPastSelf;
 
   @override
   void initState() {
@@ -436,6 +459,24 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           id: owner.id,
         );
         _theirReps = challenge.reps;
+      });
+      _goVersus();
+      return;
+    }
+
+    // Last week's you: the minute came with the plan, so there is nobody to
+    // look for either — this lifter, across from themself.
+    if (widget.pastSelf case final past? when widget.isPastSelf) {
+      final me = demoProfile;
+      setState(() {
+        _opponent = Opponent(
+          me.username,
+          me.tierIdx,
+          me.divIdx,
+          xp: me.xp,
+          id: backend.me?.id ?? '',
+        );
+        _theirReps = past.reps;
       });
       _goVersus();
       return;
@@ -576,7 +617,8 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
             widget.isChallenge ||
             widget.isChallengeAccept ||
             widget.isLiveFriend ||
-            widget.isLink)
+            widget.isLink ||
+            widget.isPastSelf)
         ? const Duration(milliseconds: 600)
         : Duration(milliseconds: 2200 + Random().nextInt(3400));
     _timer = Timer(wait, () {
@@ -621,22 +663,27 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
                   (_vsBest && _theirReps == 0))
               ? null
               : DuelContext(
-                  opponentName: _vsBest
+                  opponentName: widget.isPastSelf
+                      ? L.of(context).planLastWeeksYou
+                      : _vsBest
                       ? L.of(context).yourBest
                       : _opponent.username,
                   opponentReps: _theirReps,
                   opponentRepTimes:
                       _realOpponent?.repTimes ??
                       widget.linkChallenge?.repTimes ??
+                      widget.pastSelf?.repTimes ??
                       const [],
                   opponentTierIdx: _opponent.tierIdx,
                   opponentDivIdx: _opponent.divIdx,
                   // Racing your own best: your own picture across from you.
-                  opponentImage: _vsBest
+                  opponentImage: _vsBest || widget.isPastSelf
                       ? avatar.picture
                       : imageOf(_opponentFace),
-                  opponentXp: _vsBest ? demoProfile.xp : _opponent.xp,
-                  rankLabel: widget.isLink
+                  opponentXp: _vsBest || widget.isPastSelf
+                      ? demoProfile.xp
+                      : _opponent.xp,
+                  rankLabel: widget.isLink || widget.isPastSelf
                       ? L.of(context).friendlyNoRank
                       : tierLabel(
                           L.of(context),
@@ -684,6 +731,13 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     // challenge as this account's one try.
     if (widget.linkChallenge case final challenge? when widget.isLink) {
       await _takeLink(challenge, scored, settled);
+      return;
+    }
+
+    // The week's race: kept on the plan, the set stored as practice so it
+    // can be next week's you.
+    if (widget.pastSelf case final past? when widget.isPastSelf) {
+      await _racePast(past, scored, settled);
       return;
     }
 
@@ -764,6 +818,60 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       durationMs: scored?.durationMs ?? 1,
       repTimes: scored?.repTimes ?? const [],
     );
+  }
+
+  /// The week's race against last week's you: the set up as practice, so
+  /// next week races it in turn, then onto the plan and recorded like any
+  /// practice minute. The race is the plan's, not the server's: a set that
+  /// could not be stored still counts on this phone. Walked out before the
+  /// round began: nothing was lifted, and the screen simply closes.
+  Future<void> _racePast(PastSelf past, PushupCount? scored, int reps) async {
+    if (scored == null) {
+      Navigator.of(context).pop();
+      return;
+    }
+    _myRepTimes = scored.repTimes;
+    setState(() => _stage = _Stage.saving);
+    if (backend.available && backend.me != null) {
+      for (var attempt = 0; attempt < 3 && mounted; attempt++) {
+        if (attempt > 0) {
+          await Future<void>.delayed(Duration(seconds: 2 * attempt));
+          if (!mounted) return;
+        }
+        try {
+          await backend.uploadSet(
+            SetUpload(
+              reps: reps,
+              repsCamera: scored.reps,
+              depth: scored.depth,
+              confident: scored.confident,
+              durationMs: scored.durationMs,
+              gaveUp: scored.gaveUp,
+              repTimes: scored.repTimes,
+              practice: true,
+            ),
+          );
+          break;
+        } on Object catch (error) {
+          debugPrint('Could not store the race against last week: $error');
+        }
+      }
+    }
+    if (!mounted) return;
+    await trainingPlan.recordRace(reps);
+    final xpBefore = demoProfile.xp;
+    await Career.instance.recordPractice(
+      reps,
+      clean: scored.depth >= kCleanDepth,
+    );
+    final gain = XpGain(before: xpBefore, after: demoProfile.xp, reps: reps);
+    _xp = gain.total > 0 ? gain : null;
+    if (!mounted) return;
+    setState(() {
+      _myReps = reps;
+      _theirReps = past.reps;
+      _stage = _Stage.pastSelfResult;
+    });
   }
 
   /// A try at a challenge by link: the set up as practice — friendly, and
@@ -920,6 +1028,8 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     final xpBefore = demoProfile.xp;
     if (widget.practice || _vsBest) {
       await Career.instance.recordPractice(reps, clean: depth >= kCleanDepth);
+      // One of the day's sets on the plan, when it reached the number.
+      if (widget.planSet) await trainingPlan.recordSet(reps);
     } else if (settledDuel case final settledResult?) {
       // A real opponent, settled by the server. Nothing here is guessed —
       // see recordSettledDuel for why.
@@ -1137,6 +1247,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     _Stage.weapon ||
     _Stage.sent ||
     _Stage.challengeResult ||
+    _Stage.pastSelfResult ||
     _Stage.waitingResult ||
     _Stage.saving => true,
     _ => false,
@@ -1245,9 +1356,14 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
             opponentDivIdx: _opponent.divIdx,
             opponentXp: _opponent.xp,
             opponentAvatarUrl: _opponent.avatarUrl,
-            ranked: _live?.ranked ?? !widget.isLink,
+            ranked: _live?.ranked ?? !(widget.isLink || widget.isPastSelf),
+            pastReps: widget.isPastSelf ? _theirReps : null,
+            pastAt: widget.pastSelf?.at,
+            week: trainingPlan.plan?.weekOf(trainingPlan.today),
             kind: _live != null
                 ? VsKind.live
+                : widget.isPastSelf
+                ? VsKind.pastSelf
                 : widget.isLink
                 ? VsKind.challenge
                 : widget.isChallenge || widget.isChallengeAccept
@@ -1412,6 +1528,14 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
           onDone: () => _leave(() => Navigator.of(context).pop()),
         );
 
+      case _Stage.pastSelfResult:
+        return PastSelfResultView(
+          mine: _myReps,
+          theirs: _theirReps,
+          xp: _xp,
+          onDone: () => _leave(() => Navigator.of(context).pop()),
+        );
+
       case _Stage.challengeResult:
         return ChallengeResultView(
           view: _linkAfter!,
@@ -1439,6 +1563,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       widget.practice ||
       widget.isChallenge ||
       widget.isLink ||
+      widget.isPastSelf ||
       _vsBest ||
       _live != null;
 

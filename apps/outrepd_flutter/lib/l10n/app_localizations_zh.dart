@@ -3418,4 +3418,233 @@ class LZh extends L {
 
   @override
   String get rewardNotEarned => '视频没有播完，所以没有变化。';
+
+  @override
+  String get planSetupTitle => '变得更强';
+
+  @override
+  String get planSetupSub => '从你最好的一分钟开始的六周计划。';
+
+  @override
+  String get planYourBest => '你的最佳';
+
+  @override
+  String get planInSixty => '60秒内';
+
+  @override
+  String get planNeedBest => '先做一分钟，让计划知道你的起点。';
+
+  @override
+  String get planGoalCaption => '6周后的目标';
+
+  @override
+  String get planSteady => '稳步';
+
+  @override
+  String get planRecommended => '推荐';
+
+  @override
+  String get planHard => '困难';
+
+  @override
+  String get planDaysCaption => '每周天数';
+
+  @override
+  String get planDaysUnit => '天';
+
+  @override
+  String get planHowDays => '每个训练日：三组由摄像头计数的短组。';
+
+  @override
+  String get planHowRace => '每周日：和上周的你比赛，按你当时真实的节奏。';
+
+  @override
+  String get planDoASet => '做一组';
+
+  @override
+  String get planStart => '开始计划';
+
+  @override
+  String get planStopAsk => '停止这个计划？';
+
+  @override
+  String get planStopBody => '你的训练组和比赛会保留在记录里。你可以马上开始新计划。';
+
+  @override
+  String get planStopYes => '停止';
+
+  @override
+  String get planTitle => '你的计划';
+
+  @override
+  String get planAnother => '开始新计划';
+
+  @override
+  String get planChange => '更改计划';
+
+  @override
+  String get planShare => '分享我的进步';
+
+  @override
+  String planStartSet(String n, String total) {
+    return '开始第 ${n}/${total} 组';
+  }
+
+  @override
+  String get planExtraSet => '再做一组';
+
+  @override
+  String planRoadTo(String goal) {
+    return '迈向 ${goal}';
+  }
+
+  @override
+  String planDone(String start, String best) {
+    return '计划完成：${start} → ${best}';
+  }
+
+  @override
+  String planWeekOf(String week, String weeks) {
+    return '第 ${week}/${weeks} 周';
+  }
+
+  @override
+  String planStartedAt(String start) {
+    return '起点 ${start}';
+  }
+
+  @override
+  String get planThisWeek => '本周';
+
+  @override
+  String planDaysDone(String done, String total) {
+    return '${done}/${total} 天';
+  }
+
+  @override
+  String planRaced(String reps) {
+    return '已比赛：${reps}';
+  }
+
+  @override
+  String planToBeat(String reps) {
+    return '要超越 ${reps}';
+  }
+
+  @override
+  String planToBeatSunday(String reps) {
+    return '要超越 ${reps} · 周日开放';
+  }
+
+  @override
+  String get planRaceTitle => '挑战上周的你';
+
+  @override
+  String get planRest => '休息';
+
+  @override
+  String get planRaceToday => '今天：挑战上周的你';
+
+  @override
+  String planTodaySets(String sets, String reps) {
+    return '今天：${sets} 组，每组 ${reps}';
+  }
+
+  @override
+  String get planRestToday => '今天：休息';
+
+  @override
+  String get planStartShort => '起点';
+
+  @override
+  String planWeekShort(String week) {
+    return '第${week}周';
+  }
+
+  @override
+  String planShareText(String start, String best, String goal, String link) {
+    return '在 OUTREPD 一分钟俯卧撑从 ${start} 到 ${best}，目标 ${goal}。${link}';
+  }
+
+  @override
+  String get planToday => '今日计划';
+
+  @override
+  String planCardDone(String week) {
+    return '第 ${week} 周 · 今天的组已完成';
+  }
+
+  @override
+  String planCardSets(String week, String sets, String reps, String done) {
+    return '第 ${week} 周 · ${sets} 组 × ${reps} · 已完成 ${done}';
+  }
+
+  @override
+  String planCardRest(String week) {
+    return '第 ${week} 周 · 休息日';
+  }
+
+  @override
+  String planCardRaced(String reps) {
+    return '本周比赛：${reps}';
+  }
+
+  @override
+  String get planCardRaceSunday => '周日：挑战上周的你';
+
+  @override
+  String get planReached => '目标达成。';
+
+  @override
+  String planToGo(String left) {
+    return '距离目标还差 ${left}。';
+  }
+
+  @override
+  String get planOnTrack => '进度正常';
+
+  @override
+  String get planBehind => '稍微落后';
+
+  @override
+  String get planBeatTitle => '你战胜了上周的你';
+
+  @override
+  String get planTieTitle => '平手';
+
+  @override
+  String get planLostTitle => '上周的你赢了';
+
+  @override
+  String get planLevel => '和一周前一样。';
+
+  @override
+  String planMoreThan(String gap) {
+    return '比一周前多 ${gap} 个。';
+  }
+
+  @override
+  String planShortOf(String gap) {
+    return '比一周前少 ${gap} 个。';
+  }
+
+  @override
+  String get planYouNow => '现在的你';
+
+  @override
+  String get planLastWeek => '上周';
+
+  @override
+  String get planLastWeeksYou => '上周的你';
+
+  @override
+  String vsYouVsYou(String week) {
+    return '你 VS 你 · 第 ${week} 周';
+  }
+
+  @override
+  String get planOffer => '改用六周计划';
+
+  @override
+  String get planOfferSub => '训练日做短组，每周日和上周的你比赛。';
 }

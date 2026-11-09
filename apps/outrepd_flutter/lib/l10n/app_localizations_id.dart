@@ -3461,4 +3461,233 @@ class LId extends L {
 
   @override
   String get rewardNotEarned => 'Videonya tidak selesai, jadi tidak ada yang berubah.';
+
+  @override
+  String get planSetupTitle => 'Jadi lebih kuat';
+
+  @override
+  String get planSetupSub => 'Rencana enam minggu dari menit terbaikmu.';
+
+  @override
+  String get planYourBest => 'Terbaikmu';
+
+  @override
+  String get planInSixty => 'dalam 60 detik';
+
+  @override
+  String get planNeedBest => 'Lakukan satu menit dulu, supaya rencananya tahu dari mana kamu mulai.';
+
+  @override
+  String get planGoalCaption => 'Targetmu dalam 6 minggu';
+
+  @override
+  String get planSteady => 'Santai';
+
+  @override
+  String get planRecommended => 'Disarankan';
+
+  @override
+  String get planHard => 'Berat';
+
+  @override
+  String get planDaysCaption => 'Hari per minggu';
+
+  @override
+  String get planDaysUnit => 'hari';
+
+  @override
+  String get planHowDays => 'Setiap hari latihan: tiga set pendek yang dihitung kamera.';
+
+  @override
+  String get planHowRace => 'Setiap Minggu: balapan melawan dirimu minggu lalu, dengan kecepatan aslimu.';
+
+  @override
+  String get planDoASet => 'Lakukan satu set';
+
+  @override
+  String get planStart => 'Mulai rencana';
+
+  @override
+  String get planStopAsk => 'Hentikan rencana ini?';
+
+  @override
+  String get planStopBody => 'Set dan balapanmu tetap ada di riwayat. Kamu bisa langsung mulai rencana baru.';
+
+  @override
+  String get planStopYes => 'Hentikan';
+
+  @override
+  String get planTitle => 'Rencanamu';
+
+  @override
+  String get planAnother => 'Mulai rencana lain';
+
+  @override
+  String get planChange => 'Ubah rencana';
+
+  @override
+  String get planShare => 'Bagikan progresku';
+
+  @override
+  String planStartSet(String n, String total) {
+    return 'Mulai set ${n} dari ${total}';
+  }
+
+  @override
+  String get planExtraSet => 'Lakukan set tambahan';
+
+  @override
+  String planRoadTo(String goal) {
+    return 'Menuju ${goal}';
+  }
+
+  @override
+  String planDone(String start, String best) {
+    return 'Rencana selesai: ${start} → ${best}';
+  }
+
+  @override
+  String planWeekOf(String week, String weeks) {
+    return 'Minggu ${week} dari ${weeks}';
+  }
+
+  @override
+  String planStartedAt(String start) {
+    return 'mulai dari ${start}';
+  }
+
+  @override
+  String get planThisWeek => 'Minggu ini';
+
+  @override
+  String planDaysDone(String done, String total) {
+    return '${done} dari ${total} hari';
+  }
+
+  @override
+  String planRaced(String reps) {
+    return 'Selesai: ${reps}';
+  }
+
+  @override
+  String planToBeat(String reps) {
+    return '${reps} untuk dikalahkan';
+  }
+
+  @override
+  String planToBeatSunday(String reps) {
+    return '${reps} untuk dikalahkan · hari Minggu';
+  }
+
+  @override
+  String get planRaceTitle => 'Lawan dirimu minggu lalu';
+
+  @override
+  String get planRest => 'libur';
+
+  @override
+  String get planRaceToday => 'Hari ini: lawan dirimu minggu lalu';
+
+  @override
+  String planTodaySets(String sets, String reps) {
+    return 'Hari ini: ${sets} set × ${reps}';
+  }
+
+  @override
+  String get planRestToday => 'Hari ini: libur';
+
+  @override
+  String get planStartShort => 'Awal';
+
+  @override
+  String planWeekShort(String week) {
+    return 'M${week}';
+  }
+
+  @override
+  String planShareText(String start, String best, String goal, String link) {
+    return 'Dari ${start} ke ${best} push-up dalam semenit di OUTREPD, menuju ${goal}. ${link}';
+  }
+
+  @override
+  String get planToday => 'Rencana hari ini';
+
+  @override
+  String planCardDone(String week) {
+    return 'Minggu ${week} · set hari ini selesai';
+  }
+
+  @override
+  String planCardSets(String week, String sets, String reps, String done) {
+    return 'Minggu ${week} · ${sets} set × ${reps} · ${done} selesai';
+  }
+
+  @override
+  String planCardRest(String week) {
+    return 'Minggu ${week} · hari libur';
+  }
+
+  @override
+  String planCardRaced(String reps) {
+    return 'Balapan minggu ini: ${reps}';
+  }
+
+  @override
+  String get planCardRaceSunday => 'Minggu: lawan dirimu minggu lalu';
+
+  @override
+  String get planReached => 'Target tercapai.';
+
+  @override
+  String planToGo(String left) {
+    return '${left} lagi menuju targetmu.';
+  }
+
+  @override
+  String get planOnTrack => 'Sesuai rencana';
+
+  @override
+  String get planBehind => 'Sedikit tertinggal';
+
+  @override
+  String get planBeatTitle => 'Kamu mengalahkan dirimu minggu lalu';
+
+  @override
+  String get planTieTitle => 'Imbang';
+
+  @override
+  String get planLostTitle => 'Dirimu minggu lalu menang';
+
+  @override
+  String get planLevel => 'Sama seperti seminggu lalu.';
+
+  @override
+  String planMoreThan(String gap) {
+    return '${gap} lebih banyak dari seminggu lalu.';
+  }
+
+  @override
+  String planShortOf(String gap) {
+    return '${gap} lebih sedikit dari seminggu lalu.';
+  }
+
+  @override
+  String get planYouNow => 'Kamu sekarang';
+
+  @override
+  String get planLastWeek => 'Minggu lalu';
+
+  @override
+  String get planLastWeeksYou => 'Dirimu minggu lalu';
+
+  @override
+  String vsYouVsYou(String week) {
+    return 'KAMU VS KAMU · MINGGU ${week}';
+  }
+
+  @override
+  String get planOffer => 'Atau rencana enam minggu';
+
+  @override
+  String get planOfferSub => 'Set pendek di hari latihan, dan tiap Minggu balapan melawan dirimu minggu lalu.';
 }

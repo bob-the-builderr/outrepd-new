@@ -12,12 +12,17 @@ import 'package:flutter/material.dart';
 import '../career.dart';
 import '../l10n/app_localizations.dart';
 import '../motion.dart';
+import '../plan.dart';
 import '../settings.dart';
 import '../theme.dart';
 import '../widgets.dart';
+import 'plan_screen.dart';
 
 /// The goals there are to pick from.
 const kDailyGoals = [25, 50, 100];
+
+/// What the sheet hands back for the six-week plan instead of a number.
+const _plan = -1;
 
 class DailyGoalCard extends StatelessWidget {
   const DailyGoalCard({super.key});
@@ -57,11 +62,36 @@ class DailyGoalCard extends StatelessWidget {
                       : null,
                   onTap: () => Navigator.of(sheet).pop(goal),
                 ),
+              // Or a plan instead of a number (the user's pick, 2026-11-09):
+              // the goal becomes the day's sets, and a race each Sunday.
+              const Divider(height: 20),
+              ListTile(
+                key: const Key('goalPlan'),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 4),
+                leading: Icon(Icons.trending_up_rounded, color: context.colors.brand),
+                title: Text(
+                  l.planOffer,
+                  style: TextStyle(
+                    color: context.colors.text,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                subtitle: Text(
+                  l.planOfferSub,
+                  style: TextStyle(color: context.colors.muted, fontSize: 13.5),
+                ),
+                onTap: () => Navigator.of(sheet).pop(_plan),
+              ),
             ],
           ),
         ),
       ),
     );
+    if (picked == _plan) {
+      if (context.mounted) await openPlan(context);
+      return;
+    }
     if (picked != null) settings.update(() => settings.dailyGoal = picked);
   }
 
@@ -71,8 +101,11 @@ class DailyGoalCard extends StatelessWidget {
     // The reps as well as the goal: listening to settings alone left the card
     // on the count from before a match until something else redrew it.
     return ListenableBuilder(
-      listenable: Listenable.merge([settings, Career.instance]),
+      listenable: Listenable.merge([settings, Career.instance, trainingPlan]),
       builder: (context, _) {
+        // On a plan, today's goal is today's plan (the user's pick,
+        // 2026-11-09, A): the day's sets, the week, and the race.
+        if (trainingPlan.active) return const PlanHomeCard();
         final goal = settings.dailyGoal;
         final done = Career.instance.repsToday;
         final complete = done >= goal;

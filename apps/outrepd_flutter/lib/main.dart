@@ -22,6 +22,7 @@ import 'home_widgets.dart';
 import 'lifter/looks.dart';
 import 'lifter/my_lifter.dart';
 import 'lifter/pro_trial.dart';
+import 'plan.dart';
 import 'reminders.dart';
 import 'rewards.dart';
 import 'screens/auth_entry.dart';
@@ -117,6 +118,7 @@ void main() async {
     unawaited(MyCover.instance.adopt());
     await avatar.load();
     await rewards.load();
+    await trainingPlan.load();
     await Adventure.instance.load();
     await Ads.instance.load();
     // A Pro part worn for a day comes off once the day is over.

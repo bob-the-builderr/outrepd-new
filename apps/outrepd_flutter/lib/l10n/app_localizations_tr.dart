@@ -3457,4 +3457,233 @@ class LTr extends L {
 
   @override
   String get rewardNotEarned => 'Video bitmedi, bu yüzden hiçbir şey değişmedi.';
+
+  @override
+  String get planSetupTitle => 'Daha güçlü ol';
+
+  @override
+  String get planSetupSub => 'En iyi dakikandan başlayan altı haftalık plan.';
+
+  @override
+  String get planYourBest => 'En iyin';
+
+  @override
+  String get planInSixty => '60 saniyede';
+
+  @override
+  String get planNeedBest => 'Önce bir dakika yap ki plan nereden başladığını bilsin.';
+
+  @override
+  String get planGoalCaption => '6 haftada hedefin';
+
+  @override
+  String get planSteady => 'Sakin';
+
+  @override
+  String get planRecommended => 'Önerilen';
+
+  @override
+  String get planHard => 'Zor';
+
+  @override
+  String get planDaysCaption => 'Haftada gün';
+
+  @override
+  String get planDaysUnit => 'gün';
+
+  @override
+  String get planHowDays => 'Her antrenman günü: kameranın saydığı üç kısa set.';
+
+  @override
+  String get planHowRace => 'Her pazar: geçen haftaki seninle, gerçekte yaptığın tempoda yarış.';
+
+  @override
+  String get planDoASet => 'Bir set yap';
+
+  @override
+  String get planStart => 'Planı başlat';
+
+  @override
+  String get planStopAsk => 'Bu planı bırakmak mı?';
+
+  @override
+  String get planStopBody => 'Setlerin ve yarışların geçmişinde kalır. Hemen yeni bir plana başlayabilirsin.';
+
+  @override
+  String get planStopYes => 'Bırak';
+
+  @override
+  String get planTitle => 'Planın';
+
+  @override
+  String get planAnother => 'Başka bir plan başlat';
+
+  @override
+  String get planChange => 'Planı değiştir';
+
+  @override
+  String get planShare => 'İlerlememi paylaş';
+
+  @override
+  String planStartSet(String n, String total) {
+    return '${total} setten ${n}. seti başlat';
+  }
+
+  @override
+  String get planExtraSet => 'Ekstra bir set yap';
+
+  @override
+  String planRoadTo(String goal) {
+    return '${goal} yolunda';
+  }
+
+  @override
+  String planDone(String start, String best) {
+    return 'Plan bitti: ${start} → ${best}';
+  }
+
+  @override
+  String planWeekOf(String week, String weeks) {
+    return '${weeks} haftanın ${week}. haftası';
+  }
+
+  @override
+  String planStartedAt(String start) {
+    return '${start} ile başladın';
+  }
+
+  @override
+  String get planThisWeek => 'Bu hafta';
+
+  @override
+  String planDaysDone(String done, String total) {
+    return '${total} günün ${done} günü';
+  }
+
+  @override
+  String planRaced(String reps) {
+    return 'Yarışıldı: ${reps}';
+  }
+
+  @override
+  String planToBeat(String reps) {
+    return 'Geçilecek ${reps}';
+  }
+
+  @override
+  String planToBeatSunday(String reps) {
+    return 'Geçilecek ${reps} · pazar günü';
+  }
+
+  @override
+  String get planRaceTitle => 'Geçen haftaki seninle yarış';
+
+  @override
+  String get planRest => 'dinlen';
+
+  @override
+  String get planRaceToday => 'Bugün: geçen haftaki seninle yarış';
+
+  @override
+  String planTodaySets(String sets, String reps) {
+    return 'Bugün: ${sets} set × ${reps}';
+  }
+
+  @override
+  String get planRestToday => 'Bugün: dinlenme';
+
+  @override
+  String get planStartShort => 'Başlangıç';
+
+  @override
+  String planWeekShort(String week) {
+    return 'H${week}';
+  }
+
+  @override
+  String planShareText(String start, String best, String goal, String link) {
+    return 'OUTREPD’de bir dakikada ${start} şınavdan ${best} şınava, hedef ${goal}. ${link}';
+  }
+
+  @override
+  String get planToday => 'Bugünün planı';
+
+  @override
+  String planCardDone(String week) {
+    return '${week}. hafta · bugünün setleri tamam';
+  }
+
+  @override
+  String planCardSets(String week, String sets, String reps, String done) {
+    return '${week}. hafta · ${sets} set × ${reps} · ${done} tamam';
+  }
+
+  @override
+  String planCardRest(String week) {
+    return '${week}. hafta · dinlenme günü';
+  }
+
+  @override
+  String planCardRaced(String reps) {
+    return 'Bu haftanın yarışı: ${reps}';
+  }
+
+  @override
+  String get planCardRaceSunday => 'Pazar: geçen haftaki seninle yarış';
+
+  @override
+  String get planReached => 'Hedefe ulaştın.';
+
+  @override
+  String planToGo(String left) {
+    return 'Hedefine ${left} kaldı.';
+  }
+
+  @override
+  String get planOnTrack => 'Planda';
+
+  @override
+  String get planBehind => 'Biraz geride';
+
+  @override
+  String get planBeatTitle => 'Geçen haftaki seni yendin';
+
+  @override
+  String get planTieTitle => 'Tam berabere';
+
+  @override
+  String get planLostTitle => 'Geçen haftaki sen kazandı';
+
+  @override
+  String get planLevel => 'Bir hafta öncekiyle aynı.';
+
+  @override
+  String planMoreThan(String gap) {
+    return 'Bir hafta öncesinden ${gap} fazla.';
+  }
+
+  @override
+  String planShortOf(String gap) {
+    return 'Bir hafta öncesinden ${gap} eksik.';
+  }
+
+  @override
+  String get planYouNow => 'Şimdiki sen';
+
+  @override
+  String get planLastWeek => 'Geçen hafta';
+
+  @override
+  String get planLastWeeksYou => 'Geçen haftaki sen';
+
+  @override
+  String vsYouVsYou(String week) {
+    return 'SEN VS SEN · ${week}. HAFTA';
+  }
+
+  @override
+  String get planOffer => 'Bunun yerine altı haftalık plan';
+
+  @override
+  String get planOfferSub => 'Antrenman günlerinde kısa setler, her pazar geçen haftaki seninle bir yarış.';
 }

@@ -4247,6 +4247,384 @@ abstract class L {
   /// **'The video didn\'t finish, so nothing changed.'**
   String get rewardNotEarned;
 
+  /// No description provided for @planSetupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Get stronger'**
+  String get planSetupTitle;
+
+  /// No description provided for @planSetupSub.
+  ///
+  /// In en, this message translates to:
+  /// **'A six-week plan from your best minute.'**
+  String get planSetupSub;
+
+  /// No description provided for @planYourBest.
+  ///
+  /// In en, this message translates to:
+  /// **'Your best'**
+  String get planYourBest;
+
+  /// No description provided for @planInSixty.
+  ///
+  /// In en, this message translates to:
+  /// **'in 60 seconds'**
+  String get planInSixty;
+
+  /// No description provided for @planNeedBest.
+  ///
+  /// In en, this message translates to:
+  /// **'Do one minute first, so the plan knows where you start.'**
+  String get planNeedBest;
+
+  /// No description provided for @planGoalCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Your goal in 6 weeks'**
+  String get planGoalCaption;
+
+  /// No description provided for @planSteady.
+  ///
+  /// In en, this message translates to:
+  /// **'Steady'**
+  String get planSteady;
+
+  /// No description provided for @planRecommended.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended'**
+  String get planRecommended;
+
+  /// No description provided for @planHard.
+  ///
+  /// In en, this message translates to:
+  /// **'Hard'**
+  String get planHard;
+
+  /// No description provided for @planDaysCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Days a week'**
+  String get planDaysCaption;
+
+  /// No description provided for @planDaysUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'days'**
+  String get planDaysUnit;
+
+  /// No description provided for @planHowDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Each training day: three short sets the camera counts.'**
+  String get planHowDays;
+
+  /// No description provided for @planHowRace.
+  ///
+  /// In en, this message translates to:
+  /// **'Each Sunday: race last week’s you, at the pace you really did it.'**
+  String get planHowRace;
+
+  /// No description provided for @planDoASet.
+  ///
+  /// In en, this message translates to:
+  /// **'Do a set'**
+  String get planDoASet;
+
+  /// No description provided for @planStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start the plan'**
+  String get planStart;
+
+  /// No description provided for @planStopAsk.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop this plan?'**
+  String get planStopAsk;
+
+  /// No description provided for @planStopBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your sets and races stay in your history. You can start a new plan right away.'**
+  String get planStopBody;
+
+  /// No description provided for @planStopYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop it'**
+  String get planStopYes;
+
+  /// No description provided for @planTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your plan'**
+  String get planTitle;
+
+  /// No description provided for @planAnother.
+  ///
+  /// In en, this message translates to:
+  /// **'Start another plan'**
+  String get planAnother;
+
+  /// No description provided for @planChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change the plan'**
+  String get planChange;
+
+  /// No description provided for @planShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share my progress'**
+  String get planShare;
+
+  /// No description provided for @planStartSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Start set {n} of {total}'**
+  String planStartSet(String n, String total);
+
+  /// No description provided for @planExtraSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Do an extra set'**
+  String get planExtraSet;
+
+  /// No description provided for @planRoadTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Road to {goal}'**
+  String planRoadTo(String goal);
+
+  /// No description provided for @planDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan done: {start} → {best}'**
+  String planDone(String start, String best);
+
+  /// No description provided for @planWeekOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Week {week} of {weeks}'**
+  String planWeekOf(String week, String weeks);
+
+  /// No description provided for @planStartedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'you started at {start}'**
+  String planStartedAt(String start);
+
+  /// No description provided for @planThisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get planThisWeek;
+
+  /// No description provided for @planDaysDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} days'**
+  String planDaysDone(String done, String total);
+
+  /// No description provided for @planRaced.
+  ///
+  /// In en, this message translates to:
+  /// **'Raced: {reps}'**
+  String planRaced(String reps);
+
+  /// No description provided for @planToBeat.
+  ///
+  /// In en, this message translates to:
+  /// **'{reps} to beat'**
+  String planToBeat(String reps);
+
+  /// No description provided for @planToBeatSunday.
+  ///
+  /// In en, this message translates to:
+  /// **'{reps} to beat · opens Sunday'**
+  String planToBeatSunday(String reps);
+
+  /// No description provided for @planRaceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Race last week’s you'**
+  String get planRaceTitle;
+
+  /// No description provided for @planRest.
+  ///
+  /// In en, this message translates to:
+  /// **'rest'**
+  String get planRest;
+
+  /// No description provided for @planRaceToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today: race last week’s you'**
+  String get planRaceToday;
+
+  /// No description provided for @planTodaySets.
+  ///
+  /// In en, this message translates to:
+  /// **'Today: {sets} sets of {reps}'**
+  String planTodaySets(String sets, String reps);
+
+  /// No description provided for @planRestToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today: rest'**
+  String get planRestToday;
+
+  /// No description provided for @planStartShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get planStartShort;
+
+  /// No description provided for @planWeekShort.
+  ///
+  /// In en, this message translates to:
+  /// **'W{week}'**
+  String planWeekShort(String week);
+
+  /// No description provided for @planShareText.
+  ///
+  /// In en, this message translates to:
+  /// **'From {start} to {best} push-ups in a minute on OUTREPD, on the road to {goal}. {link}'**
+  String planShareText(String start, String best, String goal, String link);
+
+  /// No description provided for @planToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today’s plan'**
+  String get planToday;
+
+  /// No description provided for @planCardDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Week {week} · today’s sets done'**
+  String planCardDone(String week);
+
+  /// No description provided for @planCardSets.
+  ///
+  /// In en, this message translates to:
+  /// **'Week {week} · {sets} sets of {reps} · {done} done'**
+  String planCardSets(String week, String sets, String reps, String done);
+
+  /// No description provided for @planCardRest.
+  ///
+  /// In en, this message translates to:
+  /// **'Week {week} · rest day'**
+  String planCardRest(String week);
+
+  /// No description provided for @planCardRaced.
+  ///
+  /// In en, this message translates to:
+  /// **'This week’s race: {reps}'**
+  String planCardRaced(String reps);
+
+  /// No description provided for @planCardRaceSunday.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunday: race last week’s you'**
+  String get planCardRaceSunday;
+
+  /// No description provided for @planReached.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal reached.'**
+  String get planReached;
+
+  /// No description provided for @planToGo.
+  ///
+  /// In en, this message translates to:
+  /// **'{left} to go to your goal.'**
+  String planToGo(String left);
+
+  /// No description provided for @planOnTrack.
+  ///
+  /// In en, this message translates to:
+  /// **'On track'**
+  String get planOnTrack;
+
+  /// No description provided for @planBehind.
+  ///
+  /// In en, this message translates to:
+  /// **'A little behind'**
+  String get planBehind;
+
+  /// No description provided for @planBeatTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You beat last week’s you'**
+  String get planBeatTitle;
+
+  /// No description provided for @planTieTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Dead even'**
+  String get planTieTitle;
+
+  /// No description provided for @planLostTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Last week’s you won'**
+  String get planLostTitle;
+
+  /// No description provided for @planLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'The same as a week ago.'**
+  String get planLevel;
+
+  /// No description provided for @planMoreThan.
+  ///
+  /// In en, this message translates to:
+  /// **'{gap} more than a week ago.'**
+  String planMoreThan(String gap);
+
+  /// No description provided for @planShortOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{gap} short of a week ago.'**
+  String planShortOf(String gap);
+
+  /// No description provided for @planYouNow.
+  ///
+  /// In en, this message translates to:
+  /// **'You now'**
+  String get planYouNow;
+
+  /// No description provided for @planLastWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Last week'**
+  String get planLastWeek;
+
+  /// No description provided for @planLastWeeksYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Last week’s you'**
+  String get planLastWeeksYou;
+
+  /// No description provided for @vsYouVsYou.
+  ///
+  /// In en, this message translates to:
+  /// **'YOU VS YOU · WEEK {week}'**
+  String vsYouVsYou(String week);
+
+  /// No description provided for @planOffer.
+  ///
+  /// In en, this message translates to:
+  /// **'A six-week plan instead'**
+  String get planOffer;
+
+  /// No description provided for @planOfferSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Short sets on training days, and each Sunday a race against last week’s you.'**
+  String get planOfferSub;
+
   /// No description provided for @challengeAction.
   ///
   /// In en, this message translates to:

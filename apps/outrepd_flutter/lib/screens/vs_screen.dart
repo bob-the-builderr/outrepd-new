@@ -32,8 +32,17 @@ import 'pro_parts.dart';
 const kVsTime = Duration(seconds: 3);
 
 /// What the other side of a VS screen is: somebody on camera now, a set they
-/// saved, or a rematch.
-enum VsKind { live, saved, rematch, challenge }
+/// saved, a rematch, a challenge by link — or this lifter a week ago, the
+/// plan's race (lib/plan.dart), drawn in grey above them.
+enum VsKind { live, saved, rematch, challenge, pastSelf }
+
+/// Grey: last week's you, a memory rather than a person.
+const _grey = ColorFilter.matrix([
+  0.2126, 0.7152, 0.0722, 0, 0,
+  0.2126, 0.7152, 0.0722, 0, 0,
+  0.2126, 0.7152, 0.0722, 0, 0,
+  0, 0, 0, 0.85, 0,
+]);
 
 /// What a side shows: a lifter to draw, or a photo.
 typedef _Face = ({Lifter? lifter, ImageProvider? photo});
@@ -49,6 +58,9 @@ class VsScreen extends StatefulWidget {
     this.opponentAvatarUrl,
     this.ranked = true,
     this.kind = VsKind.live,
+    this.pastReps,
+    this.pastAt,
+    this.week,
   });
 
   final String opponentId;
@@ -66,6 +78,12 @@ class VsScreen extends StatefulWidget {
   /// and the screen must not say it is (the user's pick, 2026-11-04: the
   /// same tag with a grey dot).
   final VsKind kind;
+
+  /// [VsKind.pastSelf]: last week's count, when it was lifted, and the
+  /// plan's week.
+  final int? pastReps;
+  final DateTime? pastAt;
+  final int? week;
 
   @override
   State<VsScreen> createState() => _VsScreenState();
@@ -138,7 +156,8 @@ class _VsScreenState extends State<VsScreen> with SingleTickerProviderStateMixin
     final w = box.maxWidth, h = box.maxHeight;
     final me = demoProfile;
     final mePro = Subscription.instance.active;
-    final themPro = Looks.instance.pro(widget.opponentId);
+    final past = widget.kind == VsKind.pastSelf;
+    final themPro = !past && Looks.instance.pro(widget.opponentId);
     final anyPro = mePro || themPro;
 
     // The design's measures, as shares of the screen (drawn at 824 × 1830).
@@ -161,9 +180,58 @@ class _VsScreenState extends State<VsScreen> with SingleTickerProviderStateMixin
       required double fadeTo,
       required bool pro,
       required double from,
+      bool grey = false,
     }) {
       final lifter = face.lifter;
       final photo = face.photo;
+      final content = Stack(
+        children: [
+          if (photo != null)
+            // A photo fills its half, faces kept a little above the middle.
+            Positioned(
+              left: 0,
+              right: 0,
+              top: photoTop,
+              bottom: h - photoBottom,
+              child: Image(
+                image: photo,
+                fit: BoxFit.cover,
+                alignment: const Alignment(0, -0.3),
+                errorBuilder: (context, error, stack) => const SizedBox.shrink(),
+              ),
+            )
+          else if (lifter != null)
+            Positioned(
+              left: -w * 0.0485,
+              top: y,
+              width: art,
+              height: art,
+              child: pro
+                  ? AliveLifter(
+                      lifter: lifter,
+                      builder: (context, shown, breath) =>
+                          breathing(breath, LifterImage(shown, size: art)),
+                    )
+                  : LifterImage(lifter, size: art),
+            ),
+          Positioned(
+            left: 0,
+            right: 0,
+            top: fadeFrom,
+            height: fadeTo - fadeFrom,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [colors.background.withValues(alpha: 0), colors.background.withValues(alpha: 0.96)],
+                ),
+              ),
+            ),
+          ),
+          if (pro) const Positioned.fill(child: ShineBand(strength: 0.22, child: SizedBox.expand())),
+        ],
+      );
       return AnimatedBuilder(
         animation: halves,
         builder: (context, child) => Transform.translate(
@@ -172,54 +240,7 @@ class _VsScreenState extends State<VsScreen> with SingleTickerProviderStateMixin
         ),
         child: ClipPath(
           clipper: _PathClip(shape),
-          child: Stack(
-            children: [
-              if (photo != null)
-                // A photo fills its half, faces kept a little above the middle.
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  top: photoTop,
-                  bottom: h - photoBottom,
-                  child: Image(
-                    image: photo,
-                    fit: BoxFit.cover,
-                    alignment: const Alignment(0, -0.3),
-                    errorBuilder: (context, error, stack) => const SizedBox.shrink(),
-                  ),
-                )
-              else if (lifter != null)
-                Positioned(
-                  left: -w * 0.0485,
-                  top: y,
-                  width: art,
-                  height: art,
-                  child: pro
-                      ? AliveLifter(
-                          lifter: lifter,
-                          builder: (context, shown, breath) =>
-                              breathing(breath, LifterImage(shown, size: art)),
-                        )
-                      : LifterImage(lifter, size: art),
-                ),
-              Positioned(
-                left: 0,
-                right: 0,
-                top: fadeFrom,
-                height: fadeTo - fadeFrom,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [colors.background.withValues(alpha: 0), colors.background.withValues(alpha: 0.96)],
-                    ),
-                  ),
-                ),
-              ),
-              if (pro) const Positioned.fill(child: ShineBand(strength: 0.22, child: SizedBox.expand())),
-            ],
-          ),
+          child: grey ? ColorFiltered(colorFilter: _grey, child: content) : content,
         ),
       );
     }
@@ -286,7 +307,8 @@ class _VsScreenState extends State<VsScreen> with SingleTickerProviderStateMixin
                 ..lineTo(s.width, split.right)
                 ..lineTo(0, split.left)
                 ..close(),
-              face: _theirs(),
+              face: past ? _mine(me.username) : _theirs(),
+              grey: past,
               y: h * 0.0164,
               photoTop: top,
               photoBottom: split.left,
@@ -341,6 +363,7 @@ class _VsScreenState extends State<VsScreen> with SingleTickerProviderStateMixin
                   VsKind.saved => l.vsSavedRanked,
                   VsKind.rematch => l.vsRematchFriendly,
                   VsKind.challenge => l.vsChallengeFriendly,
+                  VsKind.pastSelf => l.vsYouVsYou(localNumber(context, widget.week ?? 1)),
                 },
                 live: widget.kind == VsKind.live,
               ),
@@ -351,9 +374,11 @@ class _VsScreenState extends State<VsScreen> with SingleTickerProviderStateMixin
             right: 20,
             top: split.left - h * 0.105,
             child: name(
-              text: widget.opponentName,
-              line: '${tierLabel(l, widget.opponentTierIdx, widget.opponentDivIdx)}${level(widget.opponentXp)}',
-              bar: colors.rival,
+              text: past ? l.planLastWeeksYou : widget.opponentName,
+              line: past
+                  ? l.planToBeat(localNumber(context, widget.pastReps ?? 0))
+                  : '${tierLabel(l, widget.opponentTierIdx, widget.opponentDivIdx)}${level(widget.opponentXp)}',
+              bar: past ? colors.muted : colors.rival,
               lineColour: colors.muted,
               pro: themPro,
               end: false,

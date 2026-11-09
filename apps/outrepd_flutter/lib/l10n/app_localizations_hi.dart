@@ -3462,4 +3462,233 @@ class LHi extends L {
 
   @override
   String get rewardNotEarned => 'वीडियो पूरा नहीं हुआ, इसलिए कुछ नहीं बदला।';
+
+  @override
+  String get planSetupTitle => 'और मज़बूत बनो';
+
+  @override
+  String get planSetupSub => 'तुम्हारे सबसे अच्छे मिनट से छह हफ़्ते का प्लान।';
+
+  @override
+  String get planYourBest => 'तुम्हारा बेस्ट';
+
+  @override
+  String get planInSixty => '60 सेकंड में';
+
+  @override
+  String get planNeedBest => 'पहले एक मिनट करो, ताकि प्लान को पता चले कि तुम कहाँ से शुरू कर रहे हो।';
+
+  @override
+  String get planGoalCaption => '6 हफ़्ते में तुम्हारा लक्ष्य';
+
+  @override
+  String get planSteady => 'आराम से';
+
+  @override
+  String get planRecommended => 'सुझाया गया';
+
+  @override
+  String get planHard => 'कठिन';
+
+  @override
+  String get planDaysCaption => 'हफ़्ते में दिन';
+
+  @override
+  String get planDaysUnit => 'दिन';
+
+  @override
+  String get planHowDays => 'हर ट्रेनिंग वाले दिन: तीन छोटे सेट, जिन्हें कैमरा गिनता है।';
+
+  @override
+  String get planHowRace => 'हर रविवार: पिछले हफ़्ते वाले खुद से रेस, उसी रफ़्तार से जिससे तुमने सच में किया था।';
+
+  @override
+  String get planDoASet => 'एक सेट करो';
+
+  @override
+  String get planStart => 'प्लान शुरू करो';
+
+  @override
+  String get planStopAsk => 'यह प्लान बंद करें?';
+
+  @override
+  String get planStopBody => 'तुम्हारे सेट और रेस तुम्हारी हिस्ट्री में रहेंगे। तुम तुरंत नया प्लान शुरू कर सकते हो।';
+
+  @override
+  String get planStopYes => 'बंद करो';
+
+  @override
+  String get planTitle => 'तुम्हारा प्लान';
+
+  @override
+  String get planAnother => 'दूसरा प्लान शुरू करो';
+
+  @override
+  String get planChange => 'प्लान बदलो';
+
+  @override
+  String get planShare => 'मेरी प्रगति शेयर करो';
+
+  @override
+  String planStartSet(String n, String total) {
+    return 'सेट ${n} / ${total} शुरू करो';
+  }
+
+  @override
+  String get planExtraSet => 'एक एक्स्ट्रा सेट करो';
+
+  @override
+  String planRoadTo(String goal) {
+    return '${goal} तक का सफ़र';
+  }
+
+  @override
+  String planDone(String start, String best) {
+    return 'प्लान पूरा: ${start} → ${best}';
+  }
+
+  @override
+  String planWeekOf(String week, String weeks) {
+    return 'हफ़्ता ${week} / ${weeks}';
+  }
+
+  @override
+  String planStartedAt(String start) {
+    return 'शुरुआत ${start} से';
+  }
+
+  @override
+  String get planThisWeek => 'इस हफ़्ते';
+
+  @override
+  String planDaysDone(String done, String total) {
+    return '${total} में से ${done} दिन';
+  }
+
+  @override
+  String planRaced(String reps) {
+    return 'रेस हो गई: ${reps}';
+  }
+
+  @override
+  String planToBeat(String reps) {
+    return 'हराने के लिए ${reps}';
+  }
+
+  @override
+  String planToBeatSunday(String reps) {
+    return 'हराने के लिए ${reps} · रविवार को';
+  }
+
+  @override
+  String get planRaceTitle => 'पिछले हफ़्ते वाले खुद से रेस';
+
+  @override
+  String get planRest => 'आराम';
+
+  @override
+  String get planRaceToday => 'आज: पिछले हफ़्ते वाले खुद से रेस';
+
+  @override
+  String planTodaySets(String sets, String reps) {
+    return 'आज: ${reps} के ${sets} सेट';
+  }
+
+  @override
+  String get planRestToday => 'आज: आराम';
+
+  @override
+  String get planStartShort => 'शुरू';
+
+  @override
+  String planWeekShort(String week) {
+    return 'ह${week}';
+  }
+
+  @override
+  String planShareText(String start, String best, String goal, String link) {
+    return 'OUTREPD पर एक मिनट में ${start} से ${best} पुश-अप्स, ${goal} की ओर। ${link}';
+  }
+
+  @override
+  String get planToday => 'आज का प्लान';
+
+  @override
+  String planCardDone(String week) {
+    return 'हफ़्ता ${week} · आज के सेट पूरे';
+  }
+
+  @override
+  String planCardSets(String week, String sets, String reps, String done) {
+    return 'हफ़्ता ${week} · ${reps} के ${sets} सेट · ${done} पूरे';
+  }
+
+  @override
+  String planCardRest(String week) {
+    return 'हफ़्ता ${week} · आराम का दिन';
+  }
+
+  @override
+  String planCardRaced(String reps) {
+    return 'इस हफ़्ते की रेस: ${reps}';
+  }
+
+  @override
+  String get planCardRaceSunday => 'रविवार: पिछले हफ़्ते वाले खुद से रेस';
+
+  @override
+  String get planReached => 'लक्ष्य पूरा।';
+
+  @override
+  String planToGo(String left) {
+    return 'लक्ष्य तक ${left} बाकी।';
+  }
+
+  @override
+  String get planOnTrack => 'सही रास्ते पर';
+
+  @override
+  String get planBehind => 'थोड़ा पीछे';
+
+  @override
+  String get planBeatTitle => 'तुमने पिछले हफ़्ते वाले खुद को हरा दिया';
+
+  @override
+  String get planTieTitle => 'बिल्कुल बराबर';
+
+  @override
+  String get planLostTitle => 'पिछले हफ़्ते वाले तुम जीत गए';
+
+  @override
+  String get planLevel => 'एक हफ़्ते पहले जितने ही।';
+
+  @override
+  String planMoreThan(String gap) {
+    return 'एक हफ़्ते पहले से ${gap} ज़्यादा।';
+  }
+
+  @override
+  String planShortOf(String gap) {
+    return 'एक हफ़्ते पहले से ${gap} कम।';
+  }
+
+  @override
+  String get planYouNow => 'अभी के तुम';
+
+  @override
+  String get planLastWeek => 'पिछला हफ़्ता';
+
+  @override
+  String get planLastWeeksYou => 'पिछले हफ़्ते वाले तुम';
+
+  @override
+  String vsYouVsYou(String week) {
+    return 'तुम बनाम तुम · हफ़्ता ${week}';
+  }
+
+  @override
+  String get planOffer => 'इसकी जगह छह हफ़्ते का प्लान';
+
+  @override
+  String get planOfferSub => 'ट्रेनिंग वाले दिनों में छोटे सेट, और हर रविवार पिछले हफ़्ते वाले खुद से रेस।';
 }

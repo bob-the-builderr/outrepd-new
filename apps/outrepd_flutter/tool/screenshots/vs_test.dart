@@ -65,6 +65,8 @@ void main() {
             opponentDivIdx: 2,
             opponentXp: 900,
             kind: kind,
+            pastReps: kind == VsKind.pastSelf ? 26 : null,
+            week: 2,
           ),
         ),
       );

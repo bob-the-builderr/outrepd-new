@@ -2420,5 +2420,241 @@
   "proTrialBody": "Pro parts come with Pro. Try this one free for a day: everyone sees it on you until tomorrow.",
   "proTrialWear": "Wear it free for a day",
   "proTrialOn": "Yours for a day. Everyone sees it.",
-  "rewardNotEarned": "The video didn't finish, so nothing changed."
+  "rewardNotEarned": "The video didn't finish, so nothing changed.",
+  "planSetupTitle": "Get stronger",
+  "planSetupSub": "A six-week plan from your best minute.",
+  "planYourBest": "Your best",
+  "planInSixty": "in 60 seconds",
+  "planNeedBest": "Do one minute first, so the plan knows where you start.",
+  "planGoalCaption": "Your goal in 6 weeks",
+  "planSteady": "Steady",
+  "planRecommended": "Recommended",
+  "planHard": "Hard",
+  "planDaysCaption": "Days a week",
+  "planDaysUnit": "days",
+  "planHowDays": "Each training day: three short sets the camera counts.",
+  "planHowRace": "Each Sunday: race last week’s you, at the pace you really did it.",
+  "planDoASet": "Do a set",
+  "planStart": "Start the plan",
+  "planStopAsk": "Stop this plan?",
+  "planStopBody": "Your sets and races stay in your history. You can start a new plan right away.",
+  "planStopYes": "Stop it",
+  "planTitle": "Your plan",
+  "planAnother": "Start another plan",
+  "planChange": "Change the plan",
+  "planShare": "Share my progress",
+  "planStartSet": "Start set {n} of {total}",
+  "@planStartSet": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "planExtraSet": "Do an extra set",
+  "planRoadTo": "Road to {goal}",
+  "@planRoadTo": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      }
+    }
+  },
+  "planDone": "Plan done: {start} → {best}",
+  "@planDone": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "best": {
+        "type": "String"
+      }
+    }
+  },
+  "planWeekOf": "Week {week} of {weeks}",
+  "@planWeekOf": {
+    "placeholders": {
+      "week": {
+        "type": "String"
+      },
+      "weeks": {
+        "type": "String"
+      }
+    }
+  },
+  "planStartedAt": "you started at {start}",
+  "@planStartedAt": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      }
+    }
+  },
+  "planThisWeek": "This week",
+  "planDaysDone": "{done} of {total} days",
+  "@planDaysDone": {
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "planRaced": "Raced: {reps}",
+  "@planRaced": {
+    "placeholders": {
+      "reps": {
+        "type": "String"
+      }
+    }
+  },
+  "planToBeat": "{reps} to beat",
+  "@planToBeat": {
+    "placeholders": {
+      "reps": {
+        "type": "String"
+      }
+    }
+  },
+  "planToBeatSunday": "{reps} to beat · opens Sunday",
+  "@planToBeatSunday": {
+    "placeholders": {
+      "reps": {
+        "type": "String"
+      }
+    }
+  },
+  "planRaceTitle": "Race last week’s you",
+  "planRest": "rest",
+  "planRaceToday": "Today: race last week’s you",
+  "planTodaySets": "Today: {sets} sets of {reps}",
+  "@planTodaySets": {
+    "placeholders": {
+      "sets": {
+        "type": "String"
+      },
+      "reps": {
+        "type": "String"
+      }
+    }
+  },
+  "planRestToday": "Today: rest",
+  "planStartShort": "Start",
+  "planWeekShort": "W{week}",
+  "@planWeekShort": {
+    "placeholders": {
+      "week": {
+        "type": "String"
+      }
+    }
+  },
+  "planShareText": "From {start} to {best} push-ups in a minute on OUTREPD, on the road to {goal}. {link}",
+  "@planShareText": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "best": {
+        "type": "String"
+      },
+      "goal": {
+        "type": "String"
+      },
+      "link": {
+        "type": "String"
+      }
+    }
+  },
+  "planToday": "Today’s plan",
+  "planCardDone": "Week {week} · today’s sets done",
+  "@planCardDone": {
+    "placeholders": {
+      "week": {
+        "type": "String"
+      }
+    }
+  },
+  "planCardSets": "Week {week} · {sets} sets of {reps} · {done} done",
+  "@planCardSets": {
+    "placeholders": {
+      "week": {
+        "type": "String"
+      },
+      "sets": {
+        "type": "String"
+      },
+      "reps": {
+        "type": "String"
+      },
+      "done": {
+        "type": "String"
+      }
+    }
+  },
+  "planCardRest": "Week {week} · rest day",
+  "@planCardRest": {
+    "placeholders": {
+      "week": {
+        "type": "String"
+      }
+    }
+  },
+  "planCardRaced": "This week’s race: {reps}",
+  "@planCardRaced": {
+    "placeholders": {
+      "reps": {
+        "type": "String"
+      }
+    }
+  },
+  "planCardRaceSunday": "Sunday: race last week’s you",
+  "planReached": "Goal reached.",
+  "planToGo": "{left} to go to your goal.",
+  "@planToGo": {
+    "placeholders": {
+      "left": {
+        "type": "String"
+      }
+    }
+  },
+  "planOnTrack": "On track",
+  "planBehind": "A little behind",
+  "planBeatTitle": "You beat last week’s you",
+  "planTieTitle": "Dead even",
+  "planLostTitle": "Last week’s you won",
+  "planLevel": "The same as a week ago.",
+  "planMoreThan": "{gap} more than a week ago.",
+  "@planMoreThan": {
+    "placeholders": {
+      "gap": {
+        "type": "String"
+      }
+    }
+  },
+  "planShortOf": "{gap} short of a week ago.",
+  "@planShortOf": {
+    "placeholders": {
+      "gap": {
+        "type": "String"
+      }
+    }
+  },
+  "planYouNow": "You now",
+  "planLastWeek": "Last week",
+  "planLastWeeksYou": "Last week’s you",
+  "vsYouVsYou": "YOU VS YOU · WEEK {week}",
+  "@vsYouVsYou": {
+    "placeholders": {
+      "week": {
+        "type": "String"
+      }
+    }
+  },
+  "planOffer": "A six-week plan instead",
+  "planOfferSub": "Short sets on training days, and each Sunday a race against last week’s you."
 }

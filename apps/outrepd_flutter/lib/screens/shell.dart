@@ -17,6 +17,7 @@ import 'friends.dart';
 import 'live_invite.dart';
 import 'match.dart';
 import 'notifications.dart';
+import '../plan.dart';
 import 'profile.dart';
 import 'ranks.dart';
 import 'season_over.dart';
@@ -126,6 +127,8 @@ class _AppShellState extends State<AppShell> {
     unawaited(Career.instance.syncDays());
     // And its titles and streak, kept on the account too.
     unawaited(rewards.sync().then((_) => Career.instance.takeStreak()));
+    // And the six-week plan, if there is one (lib/plan.dart).
+    unawaited(trainingPlan.sync());
     // And the ads' ask, once, the first time this screen opens: the first
     // game's ad is loaded by the time that game ends (lib/ads.dart).
     WidgetsBinding.instance.addPostFrameCallback((_) {

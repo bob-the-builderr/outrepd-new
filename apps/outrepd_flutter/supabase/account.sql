@@ -86,6 +86,9 @@ as $$
         from challenge_takes t join challenges c on c.id = t.challenge_id
        where t.taker = auth.uid()
     ), '[]'::jsonb),
+    'training_plan', (
+      select t.plan from training_plans t where t.profile_id = auth.uid()
+    ),
     'reports_filed', coalesce((
       select count(*) from reports r where r.reporter = auth.uid()
     ), 0)
