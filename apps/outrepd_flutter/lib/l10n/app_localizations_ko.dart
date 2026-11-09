@@ -3761,4 +3761,188 @@ class LKo extends L {
   String momentClub(String mark) {
     return '${mark} 클럽';
   }
+
+  @override
+  String get awGrinder => '그라인더';
+
+  @override
+  String get awIronWill => '강철 의지';
+
+  @override
+  String get awChampion => '챔피언';
+
+  @override
+  String get awOnFire => '불붙은';
+
+  @override
+  String get awPersonalBest => '개인 최고';
+
+  @override
+  String get awGiantSlayer => '자이언트 킬러';
+
+  @override
+  String get awCleanForm => '클린 폼';
+
+  @override
+  String get awChallenger => '도전자';
+
+  @override
+  String get awPastSelf => '과거의 나';
+
+  @override
+  String get awAdventurer => '모험가';
+
+  @override
+  String get awDailyGoal => '오늘의 목표';
+
+  @override
+  String get awEarlyBird => '얼리버드';
+
+  @override
+  String get awNightOwl => '올빼미';
+
+  @override
+  String get awCrew => '크루';
+
+  @override
+  String get awPhotoFinish => '사진 판정';
+
+  @override
+  String get awBuzzerBeater => '버저비터';
+
+  @override
+  String get awMonthChampion => '이달의 챔피언';
+
+  @override
+  String awDoReps(String n) {
+    return '팔굽혀펴기: ${n}';
+  }
+
+  @override
+  String awDoStreak(String n) {
+    return '연속 일수: ${n}';
+  }
+
+  @override
+  String awDoWins(String n) {
+    return '승리: ${n}';
+  }
+
+  @override
+  String awDoWinRun(String n) {
+    return '연승: ${n}';
+  }
+
+  @override
+  String awDoBest(String n) {
+    return '최고 세트: ${n}';
+  }
+
+  @override
+  String awDoGiant(String n) {
+    return '상위 티어 상대 승리: ${n}';
+  }
+
+  @override
+  String awDoClean(String n) {
+    return '클린 세트: ${n}';
+  }
+
+  @override
+  String awDoChallengers(String n) {
+    return '내 링크에 도전한 사람: ${n}';
+  }
+
+  @override
+  String awDoPastSelf(String n) {
+    return '지난주의 나를 이긴 주: ${n}';
+  }
+
+  @override
+  String awDoWorlds(String n) {
+    return '클리어한 모험 월드: ${n}';
+  }
+
+  @override
+  String awDoGoal(String n) {
+    return '목표 달성한 날: ${n}';
+  }
+
+  @override
+  String awDoEarly(String n) {
+    return '오전 7시 전 세션: ${n}';
+  }
+
+  @override
+  String awDoLate(String n) {
+    return '오후 10시 후 세션: ${n}';
+  }
+
+  @override
+  String awDoFriends(String n) {
+    return '친구: ${n}';
+  }
+
+  @override
+  String get awDoPhotoFinish => '정확히 1회 차이로 승리';
+
+  @override
+  String get awDoBuzzer => '마지막 5초에 역전해 승리';
+
+  @override
+  String get awDoMonthChampion => '한 달을 1위로 마치기';
+
+  @override
+  String get awShowcase => '쇼케이스';
+
+  @override
+  String get awShowcaseSub => '프로필에 표시';
+
+  @override
+  String get awEdit => '편집';
+
+  @override
+  String get awAll => '모든 어워드';
+
+  @override
+  String awFamilies(String f, String s) {
+    return '${f}개 계열 · 특별 ${s}';
+  }
+
+  @override
+  String get awNew => 'NEW';
+
+  @override
+  String awHeldBy(String p) {
+    return '${p}%의 선수가 보유';
+  }
+
+  @override
+  String get awHeldRare => '보유자 1% 미만';
+
+  @override
+  String get awAllTiers => '모든 단계 달성';
+
+  @override
+  String get awNewAward => '새 어워드';
+
+  @override
+  String get awPick => '프로필에 최대 3개 고정';
+
+  @override
+  String get awShowcaseEmpty => '최고의 어워드를 여기에 고정';
+
+  @override
+  String awShareText(String title, String what, String link) {
+    return 'OUTREPD ${title}: ${what}. ${link}';
+  }
+
+  @override
+  String get awWearing => '착용 중';
+
+  @override
+  String get awLocked => '아직 획득 전';
+
+  @override
+  String get awOldTitles => '이전 칭호';
 }

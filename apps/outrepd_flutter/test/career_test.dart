@@ -495,6 +495,7 @@ void main() {
     Future<void> placeCleanly() async {
       await place(wins: 3);
       rewards.earned.clear();
+      rewards.giantWins = 0;
       matchHistory.clear();
     }
 
@@ -506,10 +507,11 @@ void main() {
         opponent: 'giant',
         opponentTier: demoProfile.tierIdx + 2,
       );
-      expect(rewards.has('giant_slayer'), isTrue);
+      expect(rewards.giantWins, 1);
+      expect(rewards.has('giant_slayer_1'), isTrue);
     });
 
-    test('beating someone one tier up does not', () async {
+    test('beating someone one tier up counts too', () async {
       await placeCleanly();
       await career.recordDuel(
         yourReps: 25,
@@ -517,7 +519,7 @@ void main() {
         opponent: 'a_bit_higher',
         opponentTier: demoProfile.tierIdx + 1,
       );
-      expect(rewards.has('giant_slayer'), isFalse);
+      expect(rewards.has('giant_slayer_1'), isTrue);
     });
 
     test('losing to someone above you is not a Giant Slayer moment',
@@ -529,86 +531,29 @@ void main() {
         opponent: 'giant',
         opponentTier: demoProfile.tierIdx + 2,
       );
-      expect(rewards.has('giant_slayer'), isFalse);
+      expect(rewards.has('giant_slayer_1'), isFalse);
     });
 
-    test('a win straight after three losses unlocks Comeback', () async {
+    test('a win by exactly one rep is a Photo Finish', () async {
       await placeCleanly();
-      for (var i = 0; i < 3; i++) {
-        await career.recordDuel(
-          yourReps: 5,
-          theirReps: 25,
-          opponent: 'a',
-          opponentTier: demoProfile.tierIdx,
-        );
-      }
-      expect(rewards.has('comeback'), isFalse, reason: 'three losses, no win yet');
-
       await career.recordDuel(
-        yourReps: 25,
-        theirReps: 5,
-        opponent: 'b',
+        yourReps: 12,
+        theirReps: 11,
+        opponent: 'close',
         opponentTier: demoProfile.tierIdx,
       );
-      expect(rewards.has('comeback'), isTrue);
+      expect(rewards.has('photo_finish'), isTrue);
     });
 
-    test('a win after only two losses does not unlock Comeback', () async {
+    test('a win by two is not', () async {
       await placeCleanly();
-      for (var i = 0; i < 2; i++) {
-        await career.recordDuel(
-          yourReps: 5,
-          theirReps: 25,
-          opponent: 'a',
-          opponentTier: demoProfile.tierIdx,
-        );
-      }
       await career.recordDuel(
-        yourReps: 25,
-        theirReps: 5,
-        opponent: 'b',
+        yourReps: 13,
+        theirReps: 11,
+        opponent: 'close',
         opponentTier: demoProfile.tierIdx,
       );
-      expect(rewards.has('comeback'), isFalse);
-    });
-
-    test('beating the same lifter five times unlocks Nemesis', () async {
-      await placeCleanly();
-      for (var i = 0; i < 5; i++) {
-        await career.recordDuel(
-          yourReps: 25,
-          theirReps: 10,
-          opponent: 'rival',
-          opponentTier: demoProfile.tierIdx,
-        );
-      }
-      expect(rewards.has('nemesis'), isTrue);
-    });
-
-    test('four wins against the same lifter is not Nemesis yet', () async {
-      await placeCleanly();
-      for (var i = 0; i < 4; i++) {
-        await career.recordDuel(
-          yourReps: 25,
-          theirReps: 10,
-          opponent: 'rival',
-          opponentTier: demoProfile.tierIdx,
-        );
-      }
-      expect(rewards.has('nemesis'), isFalse);
-    });
-
-    test('five wins spread across different lifters is not Nemesis', () async {
-      await placeCleanly();
-      for (var i = 0; i < 5; i++) {
-        await career.recordDuel(
-          yourReps: 25,
-          theirReps: 10,
-          opponent: 'rival_$i',
-          opponentTier: demoProfile.tierIdx,
-        );
-      }
-      expect(rewards.has('nemesis'), isFalse);
+      expect(rewards.has('photo_finish'), isFalse);
     });
 
     test('a clean set threads through to the clean-set tally', () async {

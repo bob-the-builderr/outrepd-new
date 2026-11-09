@@ -3792,4 +3792,188 @@ class LRu extends L {
   String momentClub(String mark) {
     return 'Клуб ${mark}';
   }
+
+  @override
+  String get awGrinder => 'Работяга';
+
+  @override
+  String get awIronWill => 'Железная воля';
+
+  @override
+  String get awChampion => 'Чемпион';
+
+  @override
+  String get awOnFire => 'В ударе';
+
+  @override
+  String get awPersonalBest => 'Личный рекорд';
+
+  @override
+  String get awGiantSlayer => 'Убийца великанов';
+
+  @override
+  String get awCleanForm => 'Чистая техника';
+
+  @override
+  String get awChallenger => 'Претендент';
+
+  @override
+  String get awPastSelf => 'Прошлый я';
+
+  @override
+  String get awAdventurer => 'Искатель приключений';
+
+  @override
+  String get awDailyGoal => 'Цель дня';
+
+  @override
+  String get awEarlyBird => 'Жаворонок';
+
+  @override
+  String get awNightOwl => 'Сова';
+
+  @override
+  String get awCrew => 'Команда';
+
+  @override
+  String get awPhotoFinish => 'Фотофиниш';
+
+  @override
+  String get awBuzzerBeater => 'На последней секунде';
+
+  @override
+  String get awMonthChampion => 'Чемпион месяца';
+
+  @override
+  String awDoReps(String n) {
+    return 'Отжиманий: ${n}';
+  }
+
+  @override
+  String awDoStreak(String n) {
+    return 'Дней подряд: ${n}';
+  }
+
+  @override
+  String awDoWins(String n) {
+    return 'Побед: ${n}';
+  }
+
+  @override
+  String awDoWinRun(String n) {
+    return 'Побед подряд: ${n}';
+  }
+
+  @override
+  String awDoBest(String n) {
+    return 'Лучший подход: ${n}';
+  }
+
+  @override
+  String awDoGiant(String n) {
+    return 'Побед над старшими рангами: ${n}';
+  }
+
+  @override
+  String awDoClean(String n) {
+    return 'Чистых подходов: ${n}';
+  }
+
+  @override
+  String awDoChallengers(String n) {
+    return 'Принявших твою ссылку: ${n}';
+  }
+
+  @override
+  String awDoPastSelf(String n) {
+    return 'Недель, когда ты победил себя: ${n}';
+  }
+
+  @override
+  String awDoWorlds(String n) {
+    return 'Пройдено миров: ${n}';
+  }
+
+  @override
+  String awDoGoal(String n) {
+    return 'Дней с выполненной целью: ${n}';
+  }
+
+  @override
+  String awDoEarly(String n) {
+    return 'Тренировок до 7 утра: ${n}';
+  }
+
+  @override
+  String awDoLate(String n) {
+    return 'Тренировок после 22:00: ${n}';
+  }
+
+  @override
+  String awDoFriends(String n) {
+    return 'Друзей: ${n}';
+  }
+
+  @override
+  String get awDoPhotoFinish => 'Выиграй ровно на одно повторение';
+
+  @override
+  String get awDoBuzzer => 'Выйди вперёд в последние 5 секунд и победи';
+
+  @override
+  String get awDoMonthChampion => 'Закончи месяц на первом месте';
+
+  @override
+  String get awShowcase => 'Витрина';
+
+  @override
+  String get awShowcaseSub => 'в твоём профиле';
+
+  @override
+  String get awEdit => 'Изменить';
+
+  @override
+  String get awAll => 'Все награды';
+
+  @override
+  String awFamilies(String f, String s) {
+    return '${f} семейств · ${s} особых';
+  }
+
+  @override
+  String get awNew => 'НОВОЕ';
+
+  @override
+  String awHeldBy(String p) {
+    return 'Есть у ${p}% атлетов';
+  }
+
+  @override
+  String get awHeldRare => 'Есть менее чем у 1% атлетов';
+
+  @override
+  String get awAllTiers => 'Все уровни получены';
+
+  @override
+  String get awNewAward => 'Новая награда';
+
+  @override
+  String get awPick => 'Закрепи до трёх в профиле';
+
+  @override
+  String get awShowcaseEmpty => 'Закрепи здесь лучшие награды';
+
+  @override
+  String awShareText(String title, String what, String link) {
+    return '${title} в OUTREPD: ${what}. ${link}';
+  }
+
+  @override
+  String get awWearing => 'Надето';
+
+  @override
+  String get awLocked => 'Ещё не получено';
+
+  @override
+  String get awOldTitles => 'Прежние титулы';
 }

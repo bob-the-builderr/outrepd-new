@@ -163,7 +163,10 @@ void main() async {
       try {
         await rewards.syncWithProfile(
           matches: demoProfile.totalMatches,
-          wins: demoProfile.bestStreak,
+          wins: demoProfile.wins,
+          winRun: demoProfile.bestStreak,
+          bestSet: demoProfile.bestSet,
+          worlds: Adventure.instance.worldsCleared,
           // The real count, not a guess divided out of a weight total. Reps
           // are what this app actually records, so a rep title is now the
           // only kind that can be earned honestly.

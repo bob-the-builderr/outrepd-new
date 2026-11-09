@@ -4247,6 +4247,306 @@ abstract class L {
   /// **'The video didn\'t finish, so nothing changed.'**
   String get rewardNotEarned;
 
+  /// No description provided for @awGrinder.
+  ///
+  /// In en, this message translates to:
+  /// **'Grinder'**
+  String get awGrinder;
+
+  /// No description provided for @awIronWill.
+  ///
+  /// In en, this message translates to:
+  /// **'Iron Will'**
+  String get awIronWill;
+
+  /// No description provided for @awChampion.
+  ///
+  /// In en, this message translates to:
+  /// **'Champion'**
+  String get awChampion;
+
+  /// No description provided for @awOnFire.
+  ///
+  /// In en, this message translates to:
+  /// **'On Fire'**
+  String get awOnFire;
+
+  /// No description provided for @awPersonalBest.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Best'**
+  String get awPersonalBest;
+
+  /// No description provided for @awGiantSlayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Giant Slayer'**
+  String get awGiantSlayer;
+
+  /// No description provided for @awCleanForm.
+  ///
+  /// In en, this message translates to:
+  /// **'Clean Form'**
+  String get awCleanForm;
+
+  /// No description provided for @awChallenger.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenger'**
+  String get awChallenger;
+
+  /// No description provided for @awPastSelf.
+  ///
+  /// In en, this message translates to:
+  /// **'Past Self'**
+  String get awPastSelf;
+
+  /// No description provided for @awAdventurer.
+  ///
+  /// In en, this message translates to:
+  /// **'Adventurer'**
+  String get awAdventurer;
+
+  /// No description provided for @awDailyGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Goal'**
+  String get awDailyGoal;
+
+  /// No description provided for @awEarlyBird.
+  ///
+  /// In en, this message translates to:
+  /// **'Early Bird'**
+  String get awEarlyBird;
+
+  /// No description provided for @awNightOwl.
+  ///
+  /// In en, this message translates to:
+  /// **'Night Owl'**
+  String get awNightOwl;
+
+  /// No description provided for @awCrew.
+  ///
+  /// In en, this message translates to:
+  /// **'Crew'**
+  String get awCrew;
+
+  /// No description provided for @awPhotoFinish.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo Finish'**
+  String get awPhotoFinish;
+
+  /// No description provided for @awBuzzerBeater.
+  ///
+  /// In en, this message translates to:
+  /// **'Buzzer Beater'**
+  String get awBuzzerBeater;
+
+  /// No description provided for @awMonthChampion.
+  ///
+  /// In en, this message translates to:
+  /// **'Month Champion'**
+  String get awMonthChampion;
+
+  /// No description provided for @awDoReps.
+  ///
+  /// In en, this message translates to:
+  /// **'Push-ups: {n}'**
+  String awDoReps(String n);
+
+  /// No description provided for @awDoStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Day streak: {n}'**
+  String awDoStreak(String n);
+
+  /// No description provided for @awDoWins.
+  ///
+  /// In en, this message translates to:
+  /// **'Wins: {n}'**
+  String awDoWins(String n);
+
+  /// No description provided for @awDoWinRun.
+  ///
+  /// In en, this message translates to:
+  /// **'Wins in a row: {n}'**
+  String awDoWinRun(String n);
+
+  /// No description provided for @awDoBest.
+  ///
+  /// In en, this message translates to:
+  /// **'Best set: {n}'**
+  String awDoBest(String n);
+
+  /// No description provided for @awDoGiant.
+  ///
+  /// In en, this message translates to:
+  /// **'Wins over a higher tier: {n}'**
+  String awDoGiant(String n);
+
+  /// No description provided for @awDoClean.
+  ///
+  /// In en, this message translates to:
+  /// **'Clean sets: {n}'**
+  String awDoClean(String n);
+
+  /// No description provided for @awDoChallengers.
+  ///
+  /// In en, this message translates to:
+  /// **'People who took your link: {n}'**
+  String awDoChallengers(String n);
+
+  /// No description provided for @awDoPastSelf.
+  ///
+  /// In en, this message translates to:
+  /// **'Weeks you beat last week’s you: {n}'**
+  String awDoPastSelf(String n);
+
+  /// No description provided for @awDoWorlds.
+  ///
+  /// In en, this message translates to:
+  /// **'Adventure worlds cleared: {n}'**
+  String awDoWorlds(String n);
+
+  /// No description provided for @awDoGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Days your daily goal was hit: {n}'**
+  String awDoGoal(String n);
+
+  /// No description provided for @awDoEarly.
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions before 7 am: {n}'**
+  String awDoEarly(String n);
+
+  /// No description provided for @awDoLate.
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions after 10 pm: {n}'**
+  String awDoLate(String n);
+
+  /// No description provided for @awDoFriends.
+  ///
+  /// In en, this message translates to:
+  /// **'Friends: {n}'**
+  String awDoFriends(String n);
+
+  /// No description provided for @awDoPhotoFinish.
+  ///
+  /// In en, this message translates to:
+  /// **'Win a match by exactly one rep'**
+  String get awDoPhotoFinish;
+
+  /// No description provided for @awDoBuzzer.
+  ///
+  /// In en, this message translates to:
+  /// **'Take the lead in the last 5 seconds and win'**
+  String get awDoBuzzer;
+
+  /// No description provided for @awDoMonthChampion.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish a month in first place'**
+  String get awDoMonthChampion;
+
+  /// No description provided for @awShowcase.
+  ///
+  /// In en, this message translates to:
+  /// **'Showcase'**
+  String get awShowcase;
+
+  /// No description provided for @awShowcaseSub.
+  ///
+  /// In en, this message translates to:
+  /// **'on your profile'**
+  String get awShowcaseSub;
+
+  /// No description provided for @awEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get awEdit;
+
+  /// No description provided for @awAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All awards'**
+  String get awAll;
+
+  /// No description provided for @awFamilies.
+  ///
+  /// In en, this message translates to:
+  /// **'{f} families · {s} special'**
+  String awFamilies(String f, String s);
+
+  /// No description provided for @awNew.
+  ///
+  /// In en, this message translates to:
+  /// **'NEW'**
+  String get awNew;
+
+  /// No description provided for @awHeldBy.
+  ///
+  /// In en, this message translates to:
+  /// **'{p}% of lifters have it'**
+  String awHeldBy(String p);
+
+  /// No description provided for @awHeldRare.
+  ///
+  /// In en, this message translates to:
+  /// **'Fewer than 1% of lifters have it'**
+  String get awHeldRare;
+
+  /// No description provided for @awAllTiers.
+  ///
+  /// In en, this message translates to:
+  /// **'Every tier earned'**
+  String get awAllTiers;
+
+  /// No description provided for @awNewAward.
+  ///
+  /// In en, this message translates to:
+  /// **'New award'**
+  String get awNewAward;
+
+  /// No description provided for @awPick.
+  ///
+  /// In en, this message translates to:
+  /// **'Pin up to three to your profile'**
+  String get awPick;
+
+  /// No description provided for @awShowcaseEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Pin your best awards here'**
+  String get awShowcaseEmpty;
+
+  /// No description provided for @awShareText.
+  ///
+  /// In en, this message translates to:
+  /// **'{title} on OUTREPD: {what}. {link}'**
+  String awShareText(String title, String what, String link);
+
+  /// No description provided for @awWearing.
+  ///
+  /// In en, this message translates to:
+  /// **'Wearing'**
+  String get awWearing;
+
+  /// No description provided for @awLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Not earned yet'**
+  String get awLocked;
+
+  /// No description provided for @awOldTitles.
+  ///
+  /// In en, this message translates to:
+  /// **'Titles from before'**
+  String get awOldTitles;
+
   /// No description provided for @momentJustHit.
   ///
   /// In en, this message translates to:

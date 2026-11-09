@@ -3792,4 +3792,188 @@ class LHi extends L {
   String momentClub(String mark) {
     return '${mark} क्लब';
   }
+
+  @override
+  String get awGrinder => 'मेहनती';
+
+  @override
+  String get awIronWill => 'लौह इच्छा';
+
+  @override
+  String get awChampion => 'चैंपियन';
+
+  @override
+  String get awOnFire => 'आग पर';
+
+  @override
+  String get awPersonalBest => 'पर्सनल बेस्ट';
+
+  @override
+  String get awGiantSlayer => 'दानव संहारक';
+
+  @override
+  String get awCleanForm => 'साफ़ फ़ॉर्म';
+
+  @override
+  String get awChallenger => 'चैलेंजर';
+
+  @override
+  String get awPastSelf => 'बीता हुआ मैं';
+
+  @override
+  String get awAdventurer => 'साहसी';
+
+  @override
+  String get awDailyGoal => 'रोज़ का लक्ष्य';
+
+  @override
+  String get awEarlyBird => 'सुबह का पंछी';
+
+  @override
+  String get awNightOwl => 'रात का उल्लू';
+
+  @override
+  String get awCrew => 'टोली';
+
+  @override
+  String get awPhotoFinish => 'फ़ोटो फ़िनिश';
+
+  @override
+  String get awBuzzerBeater => 'आख़िरी पल';
+
+  @override
+  String get awMonthChampion => 'महीने का चैंपियन';
+
+  @override
+  String awDoReps(String n) {
+    return 'पुश-अप्स: ${n}';
+  }
+
+  @override
+  String awDoStreak(String n) {
+    return 'लगातार दिन: ${n}';
+  }
+
+  @override
+  String awDoWins(String n) {
+    return 'जीत: ${n}';
+  }
+
+  @override
+  String awDoWinRun(String n) {
+    return 'लगातार जीत: ${n}';
+  }
+
+  @override
+  String awDoBest(String n) {
+    return 'बेस्ट सेट: ${n}';
+  }
+
+  @override
+  String awDoGiant(String n) {
+    return 'ऊँचे टियर पर जीत: ${n}';
+  }
+
+  @override
+  String awDoClean(String n) {
+    return 'साफ़ सेट: ${n}';
+  }
+
+  @override
+  String awDoChallengers(String n) {
+    return 'तुम्हारा लिंक लेने वाले: ${n}';
+  }
+
+  @override
+  String awDoPastSelf(String n) {
+    return 'हफ़्ते जब खुद को हराया: ${n}';
+  }
+
+  @override
+  String awDoWorlds(String n) {
+    return 'पूरी हुई एडवेंचर दुनिया: ${n}';
+  }
+
+  @override
+  String awDoGoal(String n) {
+    return 'लक्ष्य पूरा हुए दिन: ${n}';
+  }
+
+  @override
+  String awDoEarly(String n) {
+    return 'सुबह 7 से पहले के सेशन: ${n}';
+  }
+
+  @override
+  String awDoLate(String n) {
+    return 'रात 10 के बाद के सेशन: ${n}';
+  }
+
+  @override
+  String awDoFriends(String n) {
+    return 'दोस्त: ${n}';
+  }
+
+  @override
+  String get awDoPhotoFinish => 'ठीक एक रेप से मैच जीतो';
+
+  @override
+  String get awDoBuzzer => 'आख़िरी 5 सेकंड में आगे निकलकर जीतो';
+
+  @override
+  String get awDoMonthChampion => 'किसी महीने पहले नंबर पर रहो';
+
+  @override
+  String get awShowcase => 'शोकेस';
+
+  @override
+  String get awShowcaseSub => 'तुम्हारे प्रोफ़ाइल पर';
+
+  @override
+  String get awEdit => 'बदलो';
+
+  @override
+  String get awAll => 'सभी अवॉर्ड';
+
+  @override
+  String awFamilies(String f, String s) {
+    return '${f} परिवार · ${s} ख़ास';
+  }
+
+  @override
+  String get awNew => 'नया';
+
+  @override
+  String awHeldBy(String p) {
+    return '${p}% खिलाड़ियों के पास है';
+  }
+
+  @override
+  String get awHeldRare => '1% से कम खिलाड़ियों के पास है';
+
+  @override
+  String get awAllTiers => 'सारे टियर पूरे';
+
+  @override
+  String get awNewAward => 'नया अवॉर्ड';
+
+  @override
+  String get awPick => 'प्रोफ़ाइल पर तीन तक लगाओ';
+
+  @override
+  String get awShowcaseEmpty => 'अपने बेहतरीन अवॉर्ड यहाँ लगाओ';
+
+  @override
+  String awShareText(String title, String what, String link) {
+    return 'OUTREPD पर ${title}: ${what}। ${link}';
+  }
+
+  @override
+  String get awWearing => 'पहना है';
+
+  @override
+  String get awLocked => 'अभी नहीं मिला';
+
+  @override
+  String get awOldTitles => 'पहले के टाइटल';
 }

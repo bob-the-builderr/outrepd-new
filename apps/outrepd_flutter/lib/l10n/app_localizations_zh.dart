@@ -3748,4 +3748,188 @@ class LZh extends L {
   String momentClub(String mark) {
     return '${mark}俱乐部';
   }
+
+  @override
+  String get awGrinder => '苦练者';
+
+  @override
+  String get awIronWill => '钢铁意志';
+
+  @override
+  String get awChampion => '冠军';
+
+  @override
+  String get awOnFire => '火力全开';
+
+  @override
+  String get awPersonalBest => '个人最佳';
+
+  @override
+  String get awGiantSlayer => '巨人杀手';
+
+  @override
+  String get awCleanForm => '标准动作';
+
+  @override
+  String get awChallenger => '挑战者';
+
+  @override
+  String get awPastSelf => '过去的自己';
+
+  @override
+  String get awAdventurer => '冒险家';
+
+  @override
+  String get awDailyGoal => '每日目标';
+
+  @override
+  String get awEarlyBird => '早起鸟';
+
+  @override
+  String get awNightOwl => '夜猫子';
+
+  @override
+  String get awCrew => '团队';
+
+  @override
+  String get awPhotoFinish => '毫厘之胜';
+
+  @override
+  String get awBuzzerBeater => '绝杀';
+
+  @override
+  String get awMonthChampion => '月度冠军';
+
+  @override
+  String awDoReps(String n) {
+    return '俯卧撑：${n}';
+  }
+
+  @override
+  String awDoStreak(String n) {
+    return '连续天数：${n}';
+  }
+
+  @override
+  String awDoWins(String n) {
+    return '胜场：${n}';
+  }
+
+  @override
+  String awDoWinRun(String n) {
+    return '连胜：${n}';
+  }
+
+  @override
+  String awDoBest(String n) {
+    return '最佳一组：${n}';
+  }
+
+  @override
+  String awDoGiant(String n) {
+    return '击败更高段位：${n}';
+  }
+
+  @override
+  String awDoClean(String n) {
+    return '标准组：${n}';
+  }
+
+  @override
+  String awDoChallengers(String n) {
+    return '接受你链接的人：${n}';
+  }
+
+  @override
+  String awDoPastSelf(String n) {
+    return '战胜上周自己的周数：${n}';
+  }
+
+  @override
+  String awDoWorlds(String n) {
+    return '通关冒险世界：${n}';
+  }
+
+  @override
+  String awDoGoal(String n) {
+    return '完成目标的天数：${n}';
+  }
+
+  @override
+  String awDoEarly(String n) {
+    return '早上7点前训练：${n}';
+  }
+
+  @override
+  String awDoLate(String n) {
+    return '晚上10点后训练：${n}';
+  }
+
+  @override
+  String awDoFriends(String n) {
+    return '好友：${n}';
+  }
+
+  @override
+  String get awDoPhotoFinish => '恰好多一个赢下比赛';
+
+  @override
+  String get awDoBuzzer => '最后5秒反超并获胜';
+
+  @override
+  String get awDoMonthChampion => '以第一名结束一个月';
+
+  @override
+  String get awShowcase => '展示柜';
+
+  @override
+  String get awShowcaseSub => '在你的资料页';
+
+  @override
+  String get awEdit => '编辑';
+
+  @override
+  String get awAll => '全部奖章';
+
+  @override
+  String awFamilies(String f, String s) {
+    return '${f} 个系列 · ${s} 个特别';
+  }
+
+  @override
+  String get awNew => '新';
+
+  @override
+  String awHeldBy(String p) {
+    return '${p}% 的玩家拥有';
+  }
+
+  @override
+  String get awHeldRare => '不到 1% 的玩家拥有';
+
+  @override
+  String get awAllTiers => '全部等级已获得';
+
+  @override
+  String get awNewAward => '新奖章';
+
+  @override
+  String get awPick => '最多选三个展示在资料页';
+
+  @override
+  String get awShowcaseEmpty => '把最好的奖章放在这里';
+
+  @override
+  String awShareText(String title, String what, String link) {
+    return '在 OUTREPD 获得 ${title}：${what}。${link}';
+  }
+
+  @override
+  String get awWearing => '佩戴中';
+
+  @override
+  String get awLocked => '尚未获得';
+
+  @override
+  String get awOldTitles => '以前的称号';
 }

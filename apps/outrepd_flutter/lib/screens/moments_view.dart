@@ -9,13 +9,18 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../awards/award_text.dart';
+import '../awards/families.dart';
+import '../awards/medal.dart';
 import '../backend/backend.dart';
 import '../data.dart';
 import '../face.dart';
 import '../l10n/app_localizations.dart';
 import '../moments.dart';
+import '../rewards.dart';
 import '../motion.dart';
 import '../season.dart';
+import 'awards.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -133,6 +138,7 @@ class MomentView extends StatelessWidget {
   Widget build(BuildContext context) => switch (moment) {
     final PersonalBest best => PersonalBestView(best: best, onContinue: onContinue),
     final Milestone mark => MilestoneView(mark: mark, onContinue: onContinue),
+    final AwardMoment award => AwardUnlockView(title: award.title, onContinue: onContinue),
   };
 }
 
@@ -588,6 +594,83 @@ class _RaysPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_RaysPainter old) => old.turn != turn || old.colour != colour;
+}
+
+/// A new award tier or special, after the match that earned it (the user's
+/// pick, 2026-11-09): the medal in its metal, its name, and how rare it is.
+class AwardUnlockView extends StatelessWidget {
+  const AwardUnlockView({super.key, required this.title, required this.onContinue});
+
+  final EarnedTitle title;
+  final VoidCallback onContinue;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = L.of(context);
+    final colors = context.colors;
+    final held = familyTierOf(title.id);
+    final special = specialOf(title.id);
+    final tier = held?.tier ?? special?.tier ?? 2;
+    final glyph = held?.family.glyph ?? special?.glyph ?? AwardGlyph.crown;
+    final colour = tierColour(tier);
+    final rarity = awardRarity[title.id];
+    return _MomentFrame(
+      keyName: 'awardUnlock',
+      seed: 23,
+      confetti: 20,
+      background: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: RadialGradient(
+            center: const Alignment(0, -0.3),
+            radius: 0.8,
+            colors: [colour.withValues(alpha: 0.28), Colors.transparent],
+          ),
+        ),
+      ),
+      share: l.awShareText(title.name(l), title.hintText(l), _link()),
+      onContinue: onContinue,
+      children: [
+        Text(
+          l.awNewAward.toUpperCase(),
+          textAlign: TextAlign.center,
+          style: TextStyle(color: colour, fontSize: 15, fontWeight: FontWeight.w800, letterSpacing: 6),
+        ),
+        const SizedBox(height: 24),
+        PopIn(from: 0.4, child: Medal(tier: tier, glyph: glyph, size: 220)),
+        const SizedBox(height: 24),
+        if (held != null)
+          Text(
+            tierWord(l, tier).toUpperCase(),
+            style: TextStyle(color: colour, fontSize: 12, fontWeight: FontWeight.w800, letterSpacing: 3),
+          ),
+        Text(
+          title.name(l),
+          textAlign: TextAlign.center,
+          style: TextStyle(color: colors.text, fontSize: 32, fontWeight: FontWeight.w900),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          title.hintText(l),
+          textAlign: TextAlign.center,
+          style: TextStyle(color: colors.muted, fontSize: 15),
+        ),
+        if (rarity != null) ...[
+          const SizedBox(height: 14),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: colour.withValues(alpha: 0.14),
+              borderRadius: BorderRadius.circular(999),
+            ),
+            child: Text(
+              rarity < 1 ? l.awHeldRare : l.awHeldBy('$rarity'),
+              style: TextStyle(color: colour, fontSize: 13, fontWeight: FontWeight.w700),
+            ),
+          ),
+        ],
+      ],
+    );
+  }
 }
 
 // ──────────────────────────────── the month ───────────────────────────────────

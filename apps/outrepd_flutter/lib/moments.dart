@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'backend/backend.dart';
+import 'rewards.dart';
 
 /// Totals worth stopping for.
 const kMilestones = [100, 1000, 5000, 10000, 25000, 50000, 100000];
@@ -69,6 +70,13 @@ List<Moment> momentsOf({
   return out;
 }
 
+/// An award tier or a special, earned by this match's set (2026-11-09).
+class AwardMoment extends Moment {
+  const AwardMoment(this.title);
+
+  final EarnedTitle title;
+}
+
 /// The moments waiting to be shown, oldest first.
 class Moments {
   Moments._();
@@ -87,6 +95,12 @@ class Moments {
   }) => _pending.addAll(
     momentsOf(reps: reps, bestBefore: bestBefore, totalBefore: totalBefore),
   );
+
+  /// An award this match earned, once.
+  void addAward(EarnedTitle title) {
+    if (_pending.any((m) => m is AwardMoment && m.title.id == title.id)) return;
+    _pending.add(AwardMoment(title));
+  }
 
   /// The one shown has been seen.
   void done() {

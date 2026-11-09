@@ -831,6 +831,22 @@ class SupabaseBackend implements Backend {
       );
 
   @override
+  Future<Map<String, int>> awardRarity() async {
+    final value = await _db.rpc<dynamic>('award_rarity');
+    return {
+      if (value is Map)
+        for (final e in value.entries)
+          if (e.value is num) '${e.key}': (e.value as num).toInt(),
+    };
+  }
+
+  @override
+  Future<List<String>> lifterShowcase(String theirId) async {
+    final value = await _db.rpc<dynamic>('lifter_showcase', params: {'their_id': theirId});
+    return [if (value is List) ...value.whereType<String>()];
+  }
+
+  @override
   Future<MonthNumbers?> myMonthRecap(DateTime since, DateTime before) async =>
       MonthNumbers.fromJson(
         await _db.rpc<dynamic>(

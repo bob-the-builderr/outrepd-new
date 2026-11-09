@@ -11,6 +11,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'awards/award_text.dart';
+import 'awards/families.dart';
 import 'backend/backend.dart';
 
 import 'l10n/app_localizations.dart';
@@ -31,6 +33,12 @@ enum TitleKind {
   nightOwl,
   friends,
   perfectWeek,
+
+  /// A tier of one of the award families (lib/awards/families.dart).
+  family,
+
+  /// One of the specials.
+  special,
 }
 
 class EarnedTitle {
@@ -91,10 +99,40 @@ EarnedTitle? titleById(String? id) {
   for (final title in kTitles) {
     if (title.id == id) return title;
   }
+  for (final title in kLegacyTitles) {
+    if (title.id == id) return title;
+  }
   return null;
 }
 
-const kTitles = <EarnedTitle>[
+/// Everything there is to earn now (the user's picks, 2026-11-09): each tier
+/// of each award family, and the specials.
+final kTitles = <EarnedTitle>[
+  for (final f in kAwardFamilies)
+    for (var t = 0; t < 5; t++)
+      EarnedTitle(
+        id: f.idOf(t),
+        title: awardTitle(f, t),
+        hint: '',
+        kind: TitleKind.family,
+        threshold: f.tiers[t],
+        icon: Icons.military_tech,
+      ),
+  for (final s in kAwardSpecials)
+    EarnedTitle(
+      id: s.id,
+      title: s.name,
+      hint: '',
+      kind: TitleKind.special,
+      threshold: 1,
+      icon: Icons.military_tech,
+    ),
+];
+
+/// The titles of before. Whoever earned one keeps it and can still wear it;
+/// those with an award family count as its tier (kLegacyToFamily). Nobody
+/// earns them new.
+const kLegacyTitles = <EarnedTitle>[
   // ---- getting started -------------------------------------------------
   T.of(
     'first_blood',
@@ -602,6 +640,23 @@ class Rewards extends ChangeNotifier {
   final Set<String> earned = {};
   String? wearing;
 
+  /// Wins over somebody in a higher tier — Giant Slayer's tally.
+  int giantWins = 0;
+
+  /// The most people who took this account's challenge links — Challenger's.
+  int challengeTakers = 0;
+
+  /// Weeks the plan's race beat last week's you — Past Self's.
+  int pastBeats = 0;
+
+  /// Days the daily goal was met — Daily Goal's — and the last of them, by
+  /// day number, so a day counts once however many sets go over it.
+  int goalDays = 0;
+  int goalDay = 0;
+
+  /// Up to three awards pinned to the profile, in order.
+  final List<String> showcase = [];
+
   EarnedTitle? get worn => titleById(wearing);
 
   /// What [wearing] the server last heard. Kept so every save does not turn
@@ -635,6 +690,14 @@ class Rewards extends ChangeNotifier {
     perfectDayRun = store.getInt('perfectDayRun') ?? 0;
     perfectWeeksCount = store.getInt('perfectWeeksCount') ?? 0;
     wearing = store.getString('wearingTitle');
+    giantWins = store.getInt('giantWins') ?? 0;
+    challengeTakers = store.getInt('challengeTakers') ?? 0;
+    pastBeats = store.getInt('pastBeats') ?? 0;
+    goalDays = store.getInt('goalDays') ?? 0;
+    goalDay = store.getInt('goalDay') ?? 0;
+    showcase
+      ..clear()
+      ..addAll(store.getStringList('showcase') ?? const []);
     final saved = store.getInt('streakSaved');
     streakSaved = saved == null
         ? null
@@ -664,13 +727,17 @@ class Rewards extends ChangeNotifier {
     required int reps,
     int tierIdx = 0,
     int friends = 0,
+    int winRun = 0,
+    int bestSet = 0,
+    int worlds = 0,
   }) async {
     final unlocked = _check(
-      matches: matches,
       wins: wins,
       reps: reps,
-      tierIdx: tierIdx,
       friends: friends,
+      winRun: winRun,
+      bestSet: bestSet,
+      worlds: worlds,
     );
     if (unlocked.isNotEmpty) await _save();
     return unlocked;
@@ -694,6 +761,9 @@ class Rewards extends ChangeNotifier {
     int friends = 0,
     bool clean = false,
     DateTime? at,
+    int winRun = 0,
+    int bestSet = 0,
+    int worlds = 0,
   }) async {
     final today = at ?? DateTime.now();
     final last = lastSession;
@@ -740,50 +810,58 @@ class Rewards extends ChangeNotifier {
     if (today.hour >= 22) lateSessions++;
 
     final unlocked = _check(
-      matches: matches,
       wins: wins,
       reps: reps,
-      tierIdx: tierIdx,
       friends: friends,
+      winRun: winRun,
+      bestSet: bestSet,
+      worlds: worlds,
     );
     await _save();
     notifyListeners();
     return unlocked;
   }
 
+  /// Every family tier the numbers reach, and the tiers the titles of
+  /// before stand for. What is new here comes back, highest last, so the
+  /// match screen can show it; the old titles' tiers are given quietly.
   List<EarnedTitle> _check({
-    required int matches,
     required int wins,
     required int reps,
-    int tierIdx = 0,
     int friends = 0,
+    int winRun = 0,
+    int bestSet = 0,
+    int worlds = 0,
   }) {
+    for (final old in earned.toList()) {
+      final to = kLegacyToFamily[old];
+      final held = to == null ? null : familyTierOf(to);
+      if (held == null) continue;
+      for (var t = 0; t <= held.tier; t++) {
+        earned.add(held.family.idOf(t));
+      }
+    }
+
     final unlocked = <EarnedTitle>[];
-
-    for (final title in kTitles) {
-      if (earned.contains(title.id)) continue;
-
-      final reached = switch (title.kind) {
-        TitleKind.matches => matches >= title.threshold,
-        TitleKind.wins => wins >= title.threshold,
-        TitleKind.reps => reps >= title.threshold,
-        TitleKind.streakDays => streak >= title.threshold,
-        TitleKind.tier => tierIdx >= title.threshold,
-        TitleKind.friends => friends >= title.threshold,
-        TitleKind.cleanSet => cleanSets >= title.threshold,
-        TitleKind.earlyBird => earlySessions >= title.threshold,
-        TitleKind.nightOwl => lateSessions >= title.threshold,
-        TitleKind.perfectWeek => perfectWeeksCount >= title.threshold,
-        // Beating someone well above you, or straight after three losses, or
-        // the same lifter five times over — each reads a single duel's own
-        // history rather than a tally kept here, so only the thing that
-        // watched it happen can report it, through award().
-        TitleKind.giantSlayer || TitleKind.comeback => false,
+    for (final family in kAwardFamilies) {
+      final value = switch (family.kind) {
+        AwardKind.reps => reps,
+        AwardKind.streak => streak > bestStreak ? streak : bestStreak,
+        AwardKind.wins => wins,
+        AwardKind.winRun => winRun,
+        AwardKind.best => bestSet,
+        AwardKind.giant => giantWins,
+        AwardKind.clean => cleanSets,
+        AwardKind.challengers => challengeTakers,
+        AwardKind.pastSelf => pastBeats,
+        AwardKind.worlds => worlds,
+        AwardKind.goalDays => goalDays,
+        AwardKind.early => earlySessions,
+        AwardKind.late => lateSessions,
+        AwardKind.friends => friends,
       };
-
-      if (reached) {
-        earned.add(title.id);
-        unlocked.add(title);
+      for (final id in tiersReached(family, value)) {
+        if (earned.add(id)) unlocked.add(titleById(id)!);
       }
     }
 
@@ -791,6 +869,47 @@ class Rewards extends ChangeNotifier {
     if (wearing == null && earned.isNotEmpty) wearing = earned.first;
 
     return unlocked;
+  }
+
+  /// A win over somebody in a higher tier.
+  Future<void> countGiantWin() async {
+    giantWins++;
+    await _save();
+    notifyListeners();
+  }
+
+  /// The week's race beat last week's you.
+  Future<void> countPastBeat() async {
+    pastBeats++;
+    await _save();
+    notifyListeners();
+  }
+
+  /// The daily goal met on [day] (a day number): once a day.
+  Future<void> countGoalDay(int day) async {
+    if (goalDay == day) return;
+    goalDay = day;
+    goalDays++;
+    await _save();
+    notifyListeners();
+  }
+
+  /// How many people have taken this account's challenge links, as the
+  /// server last said: kept at its largest.
+  Future<void> noteChallengeTakers(int count) async {
+    if (count <= challengeTakers) return;
+    challengeTakers = count;
+    await _save();
+    notifyListeners();
+  }
+
+  /// Pins [ids] to the profile, up to three, earned ones only.
+  Future<void> setShowcase(List<String> ids) async {
+    showcase
+      ..clear()
+      ..addAll(ids.where(earned.contains).take(3));
+    await _save();
+    notifyListeners();
   }
 
   /// Unlocks a title that only a match or a set can judge.
@@ -826,6 +945,12 @@ class Rewards extends ChangeNotifier {
     if (wearing != null) 'wearing': wearing,
     if (lastSession case final last?) 'lastSession': last.millisecondsSinceEpoch,
     if (streakSaved case final saved?) 'streakSaved': saved.millisecondsSinceEpoch,
+    'giantWins': giantWins,
+    'challengeTakers': challengeTakers,
+    'pastBeats': pastBeats,
+    'goalDays': goalDays,
+    'goalDay': goalDay,
+    'showcase': showcase,
   };
 
   /// Takes in [held], the account's copy, the way the server merges: every
@@ -846,6 +971,11 @@ class Rewards extends ChangeNotifier {
     earlySessions = larger(earlySessions, number('earlySessions'));
     lateSessions = larger(lateSessions, number('lateSessions'));
     perfectWeeksCount = larger(perfectWeeksCount, number('perfectWeeks'));
+    giantWins = larger(giantWins, number('giantWins'));
+    challengeTakers = larger(challengeTakers, number('challengeTakers'));
+    pastBeats = larger(pastBeats, number('pastBeats'));
+    goalDays = larger(goalDays, number('goalDays'));
+    goalDay = larger(goalDay, number('goalDay'));
     final theirSaved = (held['streakSaved'] as num?)?.toInt();
     if (theirSaved != null &&
         theirSaved > (streakSaved?.millisecondsSinceEpoch ?? 0)) {
@@ -865,6 +995,11 @@ class Rewards extends ChangeNotifier {
       perfectDayRun = number('perfectDayRun');
       lastSession = DateTime.fromMillisecondsSinceEpoch(theirLast);
       if (held['wearing'] case final String id) wearing = id;
+      if (held['showcase'] case final List pins) {
+        showcase
+          ..clear()
+          ..addAll(pins.whereType<String>().take(3));
+      }
       changed = true;
     } else if (wearing == null && held['wearing'] is String) {
       wearing = held['wearing'] as String;
@@ -942,6 +1077,12 @@ class Rewards extends ChangeNotifier {
     lateSessions = 0;
     perfectDayRun = 0;
     perfectWeeksCount = 0;
+    giantWins = 0;
+    challengeTakers = 0;
+    pastBeats = 0;
+    goalDays = 0;
+    goalDay = 0;
+    showcase.clear();
     lastSession = null;
     earned.clear();
     wearing = null;
@@ -974,6 +1115,12 @@ class Rewards extends ChangeNotifier {
       await store.setInt('streakSaved', saved.millisecondsSinceEpoch);
     }
     await store.setStringList('earnedTitles', earned.toList());
+    await store.setInt('giantWins', giantWins);
+    await store.setInt('challengeTakers', challengeTakers);
+    await store.setInt('pastBeats', pastBeats);
+    await store.setInt('goalDays', goalDays);
+    await store.setInt('goalDay', goalDay);
+    await store.setStringList('showcase', showcase);
 
     if (wearing == null) {
       await store.remove('wearingTitle');
@@ -1048,7 +1195,7 @@ extension EarnedTitleText on EarnedTitle {
     'not_alone' => l.ttl_not_alone,
     'well_connected' => l.ttl_well_connected,
     'the_gym_knows' => l.ttl_the_gym_knows,
-    _ => title,
+    _ => awardName(l, id) ?? title,
   };
 
   /// What you have to do to earn it.
@@ -1107,6 +1254,6 @@ extension EarnedTitleText on EarnedTitle {
     'not_alone' => l.tdesc_not_alone,
     'well_connected' => l.tdesc_well_connected,
     'the_gym_knows' => l.tdesc_the_gym_knows,
-    _ => hint,
+    _ => awardLine(l, id) ?? hint,
   };
 }

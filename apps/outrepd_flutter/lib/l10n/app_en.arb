@@ -2768,5 +2768,183 @@
         "type": "String"
       }
     }
-  }
+  },
+  "awGrinder": "Grinder",
+  "awIronWill": "Iron Will",
+  "awChampion": "Champion",
+  "awOnFire": "On Fire",
+  "awPersonalBest": "Personal Best",
+  "awGiantSlayer": "Giant Slayer",
+  "awCleanForm": "Clean Form",
+  "awChallenger": "Challenger",
+  "awPastSelf": "Past Self",
+  "awAdventurer": "Adventurer",
+  "awDailyGoal": "Daily Goal",
+  "awEarlyBird": "Early Bird",
+  "awNightOwl": "Night Owl",
+  "awCrew": "Crew",
+  "awPhotoFinish": "Photo Finish",
+  "awBuzzerBeater": "Buzzer Beater",
+  "awMonthChampion": "Month Champion",
+  "awDoReps": "Push-ups: {n}",
+  "@awDoReps": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "awDoStreak": "Day streak: {n}",
+  "@awDoStreak": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "awDoWins": "Wins: {n}",
+  "@awDoWins": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "awDoWinRun": "Wins in a row: {n}",
+  "@awDoWinRun": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "awDoBest": "Best set: {n}",
+  "@awDoBest": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "awDoGiant": "Wins over a higher tier: {n}",
+  "@awDoGiant": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "awDoClean": "Clean sets: {n}",
+  "@awDoClean": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "awDoChallengers": "People who took your link: {n}",
+  "@awDoChallengers": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "awDoPastSelf": "Weeks you beat last week’s you: {n}",
+  "@awDoPastSelf": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "awDoWorlds": "Adventure worlds cleared: {n}",
+  "@awDoWorlds": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "awDoGoal": "Days your daily goal was hit: {n}",
+  "@awDoGoal": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "awDoEarly": "Sessions before 7 am: {n}",
+  "@awDoEarly": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "awDoLate": "Sessions after 10 pm: {n}",
+  "@awDoLate": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "awDoFriends": "Friends: {n}",
+  "@awDoFriends": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "awDoPhotoFinish": "Win a match by exactly one rep",
+  "awDoBuzzer": "Take the lead in the last 5 seconds and win",
+  "awDoMonthChampion": "Finish a month in first place",
+  "awShowcase": "Showcase",
+  "awShowcaseSub": "on your profile",
+  "awEdit": "Edit",
+  "awAll": "All awards",
+  "awFamilies": "{f} families · {s} special",
+  "@awFamilies": {
+    "placeholders": {
+      "f": {
+        "type": "String"
+      },
+      "s": {
+        "type": "String"
+      }
+    }
+  },
+  "awNew": "NEW",
+  "awHeldBy": "{p}% of lifters have it",
+  "@awHeldBy": {
+    "placeholders": {
+      "p": {
+        "type": "String"
+      }
+    }
+  },
+  "awHeldRare": "Fewer than 1% of lifters have it",
+  "awAllTiers": "Every tier earned",
+  "awNewAward": "New award",
+  "awPick": "Pin up to three to your profile",
+  "awShowcaseEmpty": "Pin your best awards here",
+  "awShareText": "{title} on OUTREPD: {what}. {link}",
+  "@awShareText": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "what": {
+        "type": "String"
+      },
+      "link": {
+        "type": "String"
+      }
+    }
+  },
+  "awWearing": "Wearing",
+  "awLocked": "Not earned yet",
+  "awOldTitles": "Titles from before"
 }

@@ -26,6 +26,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'backend/backend.dart'
     show RemoteProfile, ServerDuel, SettledDuel, backend;
 import 'adventure/adventure.dart';
+import 'awards/families.dart';
 import 'avatar.dart';
 import 'data.dart';
 import 'health_sync.dart';
@@ -34,6 +35,7 @@ import 'moments.dart';
 import 'plan.dart';
 import 'ranking.dart';
 import 'rewards.dart';
+import 'settings.dart';
 import 'xp.dart';
 
 /// Overwrites this account's ladder identity with the server's.
@@ -629,6 +631,12 @@ class Career extends ChangeNotifier {
       bestBefore: p.bestSet,
       totalBefore: p.totalReps,
     );
+    // The daily goal, the first set of the day that reaches it.
+    final dayKey = _key(DateTime.now());
+    final before = _days[dayKey] ?? 0;
+    if (before < settings.dailyGoal && before + reps >= settings.dailyGoal) {
+      unawaited(rewards.countGoalDay(dayNumber(DateTime.now())));
+    }
     p.totalReps += reps;
     p.xp += reps;
     if (reps > p.bestSet) p.bestSet = reps;
@@ -657,20 +665,17 @@ class Career extends ChangeNotifier {
   }) async {
     if (!won) return;
 
-    if (opponentTier - myTierBefore >= 2) {
-      await rewards.award('giant_slayer');
-    }
+    // Any tier above counts toward Giant Slayer (2026-11-09).
+    if (opponentTier > myTierBefore) await rewards.countGiantWin();
 
-    // The three matches right before this one — [matchHistory] already holds
-    // this one at index 0, so the streak being asked about starts at 1.
-    if (matchHistory.length >= 4 &&
-        matchHistory.skip(1).take(3).every((m) => !m.won)) {
-      await rewards.award('comeback');
+    // Won by exactly one rep: a special (2026-11-09). [matchHistory] holds
+    // this match first.
+    if (matchHistory.isNotEmpty &&
+        matchHistory.first.userReps - matchHistory.first.opponentReps == 1 &&
+        !rewards.has(kPhotoFinish)) {
+      await rewards.award(kPhotoFinish);
+      if (titleById(kPhotoFinish) case final t?) Moments.instance.addAward(t);
     }
-
-    final winsAgainst =
-        matchHistory.where((m) => m.opponent == opponent && m.won).length;
-    if (winsAgainst >= 5) await rewards.award('nemesis');
   }
 
   /// The bookkeeping every session shares: the day streak, the titles it may
@@ -681,14 +686,25 @@ class Career extends ChangeNotifier {
   Future<void> _afterSession({bool clean = false}) async {
     final p = demoProfile;
 
-    await rewards.recordSession(
+    final unlocked = await rewards.recordSession(
       matches: p.totalMatches,
       wins: p.wins,
       reps: p.totalReps,
       tierIdx: p.tierIdx,
       friends: await currentFriendCount(),
       clean: clean,
+      winRun: p.bestStreak,
+      bestSet: p.bestSet,
+      worlds: Adventure.instance.worldsCleared,
     );
+    // The match screen shows what this session earned: each family's
+    // highest new tier.
+    final top = <String, EarnedTitle>{};
+    for (final title in unlocked) {
+      final held = familyTierOf(title.id);
+      top[held?.family.id ?? title.id] = title;
+    }
+    top.values.forEach(Moments.instance.addAward);
     // One streak, one owner. The profile's card and the home screen's pill
     // both read this field, and `rewards` is what actually understands rest
     // days — so it is the source and this is a copy, not a second opinion.

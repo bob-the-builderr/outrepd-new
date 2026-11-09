@@ -3797,4 +3797,188 @@ class LIt extends L {
   String momentClub(String mark) {
     return 'Club ${mark}';
   }
+
+  @override
+  String get awGrinder => 'Instancabile';
+
+  @override
+  String get awIronWill => 'Volontà di Ferro';
+
+  @override
+  String get awChampion => 'Campione';
+
+  @override
+  String get awOnFire => 'In Fiamme';
+
+  @override
+  String get awPersonalBest => 'Record Personale';
+
+  @override
+  String get awGiantSlayer => 'Ammazzagiganti';
+
+  @override
+  String get awCleanForm => 'Forma Pulita';
+
+  @override
+  String get awChallenger => 'Sfidante';
+
+  @override
+  String get awPastSelf => 'Te Stesso';
+
+  @override
+  String get awAdventurer => 'Avventuriero';
+
+  @override
+  String get awDailyGoal => 'Obiettivo del Giorno';
+
+  @override
+  String get awEarlyBird => 'Mattiniero';
+
+  @override
+  String get awNightOwl => 'Nottambulo';
+
+  @override
+  String get awCrew => 'Squadra';
+
+  @override
+  String get awPhotoFinish => 'Al Fotofinish';
+
+  @override
+  String get awBuzzerBeater => 'Sulla Sirena';
+
+  @override
+  String get awMonthChampion => 'Campione del Mese';
+
+  @override
+  String awDoReps(String n) {
+    return 'Flessioni: ${n}';
+  }
+
+  @override
+  String awDoStreak(String n) {
+    return 'Giorni di fila: ${n}';
+  }
+
+  @override
+  String awDoWins(String n) {
+    return 'Vittorie: ${n}';
+  }
+
+  @override
+  String awDoWinRun(String n) {
+    return 'Vittorie di fila: ${n}';
+  }
+
+  @override
+  String awDoBest(String n) {
+    return 'Serie migliore: ${n}';
+  }
+
+  @override
+  String awDoGiant(String n) {
+    return 'Vittorie su fasce più alte: ${n}';
+  }
+
+  @override
+  String awDoClean(String n) {
+    return 'Serie pulite: ${n}';
+  }
+
+  @override
+  String awDoChallengers(String n) {
+    return 'Persone che hanno accettato il tuo link: ${n}';
+  }
+
+  @override
+  String awDoPastSelf(String n) {
+    return 'Settimane in cui hai battuto te stesso: ${n}';
+  }
+
+  @override
+  String awDoWorlds(String n) {
+    return 'Mondi Avventura completati: ${n}';
+  }
+
+  @override
+  String awDoGoal(String n) {
+    return 'Giorni con obiettivo raggiunto: ${n}';
+  }
+
+  @override
+  String awDoEarly(String n) {
+    return 'Sessioni prima delle 7: ${n}';
+  }
+
+  @override
+  String awDoLate(String n) {
+    return 'Sessioni dopo le 22: ${n}';
+  }
+
+  @override
+  String awDoFriends(String n) {
+    return 'Amici: ${n}';
+  }
+
+  @override
+  String get awDoPhotoFinish => 'Vinci una sfida per una sola ripetizione';
+
+  @override
+  String get awDoBuzzer => 'Passa in testa negli ultimi 5 secondi e vinci';
+
+  @override
+  String get awDoMonthChampion => 'Chiudi un mese al primo posto';
+
+  @override
+  String get awShowcase => 'Vetrina';
+
+  @override
+  String get awShowcaseSub => 'sul tuo profilo';
+
+  @override
+  String get awEdit => 'Modifica';
+
+  @override
+  String get awAll => 'Tutti i premi';
+
+  @override
+  String awFamilies(String f, String s) {
+    return '${f} famiglie · ${s} speciali';
+  }
+
+  @override
+  String get awNew => 'NUOVO';
+
+  @override
+  String awHeldBy(String p) {
+    return 'Ce l’ha il ${p}% degli atleti';
+  }
+
+  @override
+  String get awHeldRare => 'Ce l’ha meno dell’1% degli atleti';
+
+  @override
+  String get awAllTiers => 'Tutti i livelli ottenuti';
+
+  @override
+  String get awNewAward => 'Nuovo premio';
+
+  @override
+  String get awPick => 'Fissa fino a tre sul profilo';
+
+  @override
+  String get awShowcaseEmpty => 'Fissa qui i tuoi premi migliori';
+
+  @override
+  String awShareText(String title, String what, String link) {
+    return '${title} su OUTREPD: ${what}. ${link}';
+  }
+
+  @override
+  String get awWearing => 'Indossato';
+
+  @override
+  String get awLocked => 'Non ancora ottenuto';
+
+  @override
+  String get awOldTitles => 'Titoli di prima';
 }

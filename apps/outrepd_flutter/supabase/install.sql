@@ -5684,6 +5684,20 @@ as $$
     'lastSession',   nullif((select rewards_int(s, 'lastSession') from later), 0),
     'wearing',       (select case when (s ->> 'wearing') ~ '^[a-z0-9_]{1,40}$'
                                   then s ->> 'wearing' end from later),
+    -- Up to three awards pinned to the profile, from whichever side trained
+    -- last, like the title worn (the user's pick, 2026-11-09).
+    'showcase',      (select coalesce(jsonb_agg(e), '[]'::jsonb)
+                        from (select e
+                                from later,
+                                     jsonb_array_elements(case when jsonb_typeof(s -> 'showcase') = 'array'
+                                                               then s -> 'showcase' else '[]'::jsonb end) e
+                               where jsonb_typeof(e) = 'string' and (e #>> '{}') ~ '^[a-z0-9_]{1,40}$'
+                               limit 3) pins),
+    'giantWins',     greatest(rewards_int(a, 'giantWins'), rewards_int(b, 'giantWins')),
+    'challengeTakers', greatest(rewards_int(a, 'challengeTakers'), rewards_int(b, 'challengeTakers')),
+    'pastBeats',     greatest(rewards_int(a, 'pastBeats'), rewards_int(b, 'pastBeats')),
+    'goalDays',      greatest(rewards_int(a, 'goalDays'), rewards_int(b, 'goalDays')),
+    'goalDay',       greatest(rewards_int(a, 'goalDay'), rewards_int(b, 'goalDay')),
     'bestStreak',    greatest(rewards_int(a, 'bestStreak'), rewards_int(b, 'bestStreak')),
     'cleanSets',     greatest(rewards_int(a, 'cleanSets'), rewards_int(b, 'cleanSets')),
     'earlySessions', greatest(rewards_int(a, 'earlySessions'), rewards_int(b, 'earlySessions')),
@@ -6669,6 +6683,68 @@ $$;
 
 revoke all on function my_month_recap(timestamptz, timestamptz) from public;
 grant execute on function my_month_recap(timestamptz, timestamptz) to authenticated;
+
+-- ========================================================================
+-- awards.sql
+-- ========================================================================
+
+-- OUTREPD — awards (the user's picks, 2026-11-09): how rare each one is, and
+-- the three a lifter pins to their profile. What each account has earned is
+-- its rewards copy (adventure.sql, rewards_progress.state -> 'earned').
+
+-- How many of the lifters who keep awards hold each one, in whole percent:
+-- {"grinder_1": 64, "photo_finish": 3, ...}. Only award ids, never who.
+create or replace function award_rarity()
+returns jsonb
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  with everyone as (
+    select greatest(count(*), 1)::numeric as n from rewards_progress
+  ),
+  held as (
+    select e #>> '{}' as id, count(*) as c
+      from rewards_progress r,
+           jsonb_array_elements(case when jsonb_typeof(r.state -> 'earned') = 'array'
+                                     then r.state -> 'earned' else '[]'::jsonb end) e
+     where jsonb_typeof(e) = 'string'
+     group by 1
+  )
+  select coalesce(jsonb_object_agg(held.id, round(100 * held.c / everyone.n)::int), '{}'::jsonb)
+    from held, everyone
+   where auth.uid() is not null and held.id ~ '^[a-z0-9_]{1,40}$';
+$$;
+
+-- The awards [their_id] pinned to their profile, up to three; none between
+-- two people who are blocked, as nothing else is shown between them.
+create or replace function lifter_showcase(their_id uuid)
+returns text[]
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select coalesce(array(
+    select e #>> '{}'
+      from rewards_progress r,
+           jsonb_array_elements(case when jsonb_typeof(r.state -> 'showcase') = 'array'
+                                     then r.state -> 'showcase' else '[]'::jsonb end) e
+     where r.profile_id = their_id
+       and jsonb_typeof(e) = 'string'
+       and (e #>> '{}') ~ '^[a-z0-9_]{1,40}$'
+       and auth.uid() is not null
+       and not exists (select 1 from blocks b
+                        where (b.blocker = auth.uid() and b.blocked = their_id)
+                           or (b.blocker = their_id and b.blocked = auth.uid()))
+     limit 3), '{}');
+$$;
+
+revoke all on function award_rarity() from public;
+grant execute on function award_rarity() to authenticated;
+revoke all on function lifter_showcase(uuid) from public;
+grant execute on function lifter_showcase(uuid) to authenticated;
 
 -- ========================================================================
 -- account.sql

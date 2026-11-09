@@ -23,6 +23,8 @@ import '../face.dart';
 import '../l10n/app_localizations.dart';
 import '../live.dart';
 import '../moments.dart';
+import '../awards/families.dart';
+import '../rewards.dart';
 import '../plan.dart';
 import '../avatar.dart';
 import '../lifter/lifter_view.dart';
@@ -866,6 +868,8 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     }
     if (!mounted) return;
     await trainingPlan.recordRace(reps);
+    // Past Self counts the weeks last week's you was beaten.
+    if (reps > past.reps) await rewards.countPastBeat();
     final xpBefore = demoProfile.xp;
     await Career.instance.recordPractice(
       reps,
@@ -1069,6 +1073,7 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
     final gain = XpGain(before: xpBefore, after: demoProfile.xp, reps: reps);
     // A lost match pays no experience, and the result does not dwell on it.
     _xp = gain.total > 0 ? gain : null;
+    await _judgeBuzzer(_realOpponent?.repTimes ?? const []);
     if (!mounted) return;
 
     setState(() {
@@ -1181,9 +1186,18 @@ class _MatchFlowScreenState extends State<MatchFlowScreen> {
       reps: scored.reps,
     );
     _xp = gain.total > 0 ? gain : null;
+    await _judgeBuzzer(_session?.opponentRepTimes ?? const []);
     if (!mounted) return;
     setState(() => _stage = _afterRecorded);
     unawaited(_afterWeekPlace());
+  }
+
+  /// Buzzer Beater: a won duel whose lead came in its last five seconds.
+  Future<void> _judgeBuzzer(List<int> theirs) async {
+    if (!(_outcome?.won ?? false) || rewards.has(kBuzzerBeater)) return;
+    if (!tookLeadLate(_myRepTimes, theirs, length: kDuelLength.inMilliseconds)) return;
+    await rewards.award(kBuzzerBeater);
+    if (titleById(kBuzzerBeater) case final t?) Moments.instance.addAward(t);
   }
 
   /// A win, a new level or a new best, with the result in front of them: the

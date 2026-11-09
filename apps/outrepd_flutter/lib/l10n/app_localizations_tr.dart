@@ -3787,4 +3787,188 @@ class LTr extends L {
   String momentClub(String mark) {
     return '${mark} Kulübü';
   }
+
+  @override
+  String get awGrinder => 'Çalışkan';
+
+  @override
+  String get awIronWill => 'Demir İrade';
+
+  @override
+  String get awChampion => 'Şampiyon';
+
+  @override
+  String get awOnFire => 'Alev Alev';
+
+  @override
+  String get awPersonalBest => 'Kişisel Rekor';
+
+  @override
+  String get awGiantSlayer => 'Dev Avcısı';
+
+  @override
+  String get awCleanForm => 'Temiz Form';
+
+  @override
+  String get awChallenger => 'Meydan Okuyan';
+
+  @override
+  String get awPastSelf => 'Eski Ben';
+
+  @override
+  String get awAdventurer => 'Maceracı';
+
+  @override
+  String get awDailyGoal => 'Günlük Hedef';
+
+  @override
+  String get awEarlyBird => 'Erkenci';
+
+  @override
+  String get awNightOwl => 'Gece Kuşu';
+
+  @override
+  String get awCrew => 'Ekip';
+
+  @override
+  String get awPhotoFinish => 'Foto Finiş';
+
+  @override
+  String get awBuzzerBeater => 'Son Saniye';
+
+  @override
+  String get awMonthChampion => 'Ayın Şampiyonu';
+
+  @override
+  String awDoReps(String n) {
+    return 'Şınav: ${n}';
+  }
+
+  @override
+  String awDoStreak(String n) {
+    return 'Gün serisi: ${n}';
+  }
+
+  @override
+  String awDoWins(String n) {
+    return 'Galibiyet: ${n}';
+  }
+
+  @override
+  String awDoWinRun(String n) {
+    return 'Üst üste galibiyet: ${n}';
+  }
+
+  @override
+  String awDoBest(String n) {
+    return 'En iyi set: ${n}';
+  }
+
+  @override
+  String awDoGiant(String n) {
+    return 'Üst lige karşı galibiyet: ${n}';
+  }
+
+  @override
+  String awDoClean(String n) {
+    return 'Temiz set: ${n}';
+  }
+
+  @override
+  String awDoChallengers(String n) {
+    return 'Bağlantını kabul eden: ${n}';
+  }
+
+  @override
+  String awDoPastSelf(String n) {
+    return 'Kendini yendiğin hafta: ${n}';
+  }
+
+  @override
+  String awDoWorlds(String n) {
+    return 'Bitirilen macera dünyası: ${n}';
+  }
+
+  @override
+  String awDoGoal(String n) {
+    return 'Hedefe ulaşılan gün: ${n}';
+  }
+
+  @override
+  String awDoEarly(String n) {
+    return 'Sabah 7’den önce seans: ${n}';
+  }
+
+  @override
+  String awDoLate(String n) {
+    return 'Gece 10’dan sonra seans: ${n}';
+  }
+
+  @override
+  String awDoFriends(String n) {
+    return 'Arkadaş: ${n}';
+  }
+
+  @override
+  String get awDoPhotoFinish => 'Tam bir tekrarla kazan';
+
+  @override
+  String get awDoBuzzer => 'Son 5 saniyede öne geç ve kazan';
+
+  @override
+  String get awDoMonthChampion => 'Bir ayı birinci bitir';
+
+  @override
+  String get awShowcase => 'Vitrin';
+
+  @override
+  String get awShowcaseSub => 'profilinde';
+
+  @override
+  String get awEdit => 'Düzenle';
+
+  @override
+  String get awAll => 'Tüm ödüller';
+
+  @override
+  String awFamilies(String f, String s) {
+    return '${f} aile · ${s} özel';
+  }
+
+  @override
+  String get awNew => 'YENİ';
+
+  @override
+  String awHeldBy(String p) {
+    return 'Sporcuların %${p}’inde var';
+  }
+
+  @override
+  String get awHeldRare => 'Sporcuların %1’inden azında var';
+
+  @override
+  String get awAllTiers => 'Tüm kademeler alındı';
+
+  @override
+  String get awNewAward => 'Yeni ödül';
+
+  @override
+  String get awPick => 'Profiline en fazla üç tane sabitle';
+
+  @override
+  String get awShowcaseEmpty => 'En iyi ödüllerini buraya sabitle';
+
+  @override
+  String awShareText(String title, String what, String link) {
+    return 'OUTREPD’de ${title}: ${what}. ${link}';
+  }
+
+  @override
+  String get awWearing => 'Takılı';
+
+  @override
+  String get awLocked => 'Henüz alınmadı';
+
+  @override
+  String get awOldTitles => 'Önceki unvanlar';
 }

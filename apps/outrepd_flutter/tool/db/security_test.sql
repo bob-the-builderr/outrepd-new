@@ -1240,6 +1240,33 @@ select save_plan(null);
 select check_that(my_plan() is null, 'a stopped plan stayed');
 reset role;
 
+-- ── awards ───────────────────────────────────────────────────────────────────
+
+-- The new tallies and the showcase survive the merge; a showcase holds three.
+select check_that((rewards_merge('{"giantWins": 4, "lastSession": 1}'::jsonb,
+                                 '{"giantWins": 2, "lastSession": 2}'::jsonb) ->> 'giantWins')::int = 4,
+                  'the merge lost a Giant Slayer tally');
+select check_that(jsonb_array_length(rewards_merge('{}'::jsonb,
+                    '{"showcase": ["a_1", "b_2", "c_3", "d_4"], "lastSession": 5}'::jsonb) -> 'showcase') = 3,
+                  'a showcase held more than three');
+select check_that(rewards_merge('{}'::jsonb, '{"showcase": ["Bad Id"], "lastSession": 5}'::jsonb) -> 'showcase'
+                    = '[]'::jsonb,
+                  'a showcase kept an id that is not an award');
+-- A's pins, seen by C; not by a blocked D.
+insert into rewards_progress (profile_id, state)
+values (:'A', '{"earned": ["grinder_1", "photo_finish"], "showcase": ["photo_finish"]}'::jsonb)
+on conflict (profile_id) do update set state = excluded.state;
+select as_user(:'C'); set role authenticated;
+select check_that(lifter_showcase(:'A') = array['photo_finish'], 'another lifter''s showcase was not shown');
+select check_that((award_rarity() ->> 'photo_finish')::int > 0, 'how rare an award is came back empty');
+select check_that(not exists (select 1 from rewards_progress), 'a phone read the rewards table');
+reset role;
+insert into blocks (blocker, blocked) values (:'D', :'A') on conflict do nothing;
+select as_user(:'D'); set role authenticated;
+select check_that(cardinality(lifter_showcase(:'A')) = 0, 'a blocked account saw the showcase');
+reset role;
+delete from blocks where blocker = :'D' and blocked = :'A';
+
 -- ── the month's recap ────────────────────────────────────────────────────────
 
 -- The caller's own month: their sets and their duels, nobody else's.
@@ -1274,6 +1301,7 @@ select must_fail('signed out, making a challenge', 'select make_challenge()');
 select must_fail('signed out, a plan', 'select my_plan()');
 select must_fail('signed out, a best minute', 'select my_best_minute(now() - interval ''7 days'', now())');
 select must_fail('signed out, a month', 'select my_month_recap(now() - interval ''30 days'', now())');
+select must_fail('signed out, how rare awards are', 'select award_rarity()');
 -- The things that are meant to work signed out: what a shared link shows.
 select count(*) from public_lifter_card('alice_a1');
 select count(*) from public_challenge_card(:'code');

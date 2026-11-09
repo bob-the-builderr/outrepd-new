@@ -38,7 +38,7 @@ void main() {
     test('a session with no clean set does not move the tally', () async {
       await rewards.recordSession(matches: 1, wins: 0, reps: 20, clean: false);
       expect(rewards.cleanSets, 0);
-      expect(rewards.has('clean_hands'), isFalse);
+      expect(rewards.has('clean_form_1'), isFalse);
     });
 
     test('one clean set unlocks Clean Hands', () async {
@@ -49,10 +49,10 @@ void main() {
         clean: true,
       );
       expect(rewards.cleanSets, 1);
-      expect(rewards.has('clean_hands'), isTrue);
-      expect(unlocked.map((t) => t.id), contains('clean_hands'));
+      expect(rewards.has('clean_form_1'), isTrue);
+      expect(unlocked.map((t) => t.id), contains('clean_form_1'));
       // Spotless asks for ten — one is not ten.
-      expect(rewards.has('spotless'), isFalse);
+      expect(rewards.has('clean_form_2'), isFalse);
     });
 
     test('ten clean sets unlocks Spotless too', () async {
@@ -66,9 +66,9 @@ void main() {
         );
       }
       expect(rewards.cleanSets, 10);
-      expect(rewards.has('clean_hands'), isTrue);
-      expect(rewards.has('spotless'), isTrue);
-      expect(rewards.has('textbook'), isFalse);
+      expect(rewards.has('clean_form_1'), isTrue);
+      expect(rewards.has('clean_form_2'), isTrue);
+      expect(rewards.has('clean_form_3'), isFalse);
     });
   });
 
@@ -94,8 +94,8 @@ void main() {
         );
       }
       expect(rewards.earlySessions, 10);
-      expect(rewards.has('early_bird'), isTrue);
-      expect(rewards.has('sunrise_club'), isFalse);
+      expect(rewards.has('early_bird_1'), isTrue);
+      expect(rewards.has('early_bird_2'), isFalse);
     });
 
     test('ten sessions after ten at night unlocks Night Shift', () async {
@@ -108,7 +108,7 @@ void main() {
         );
       }
       expect(rewards.lateSessions, 10);
-      expect(rewards.has('night_owl'), isTrue);
+      expect(rewards.has('night_owl_1'), isTrue);
     });
 
     test('seven in the morning itself is neither early nor late', () async {
@@ -143,8 +143,8 @@ void main() {
       }
       expect(rewards.perfectDayRun, 7);
       expect(rewards.perfectWeeksCount, 1);
-      expect(rewards.has('perfect_week'), isTrue);
-      expect(rewards.has('perfect_month'), isFalse);
+      // A tally still kept; the titles of before are no longer handed out.
+      expect(rewards.perfectWeeksCount, 1);
     });
 
     test('a single rest day breaks it, even though the forgiving streak '
@@ -178,7 +178,7 @@ void main() {
         );
       }
       expect(rewards.perfectWeeksCount, 4);
-      expect(rewards.has('perfect_month'), isTrue);
+      expect(rewards.perfectWeeksCount, 4);
     });
   });
 
@@ -221,7 +221,7 @@ void main() {
       expect(reloaded.perfectDayRun, rewards.perfectDayRun);
       expect(reloaded.perfectWeeksCount, rewards.perfectWeeksCount);
       expect(reloaded.has('giant_slayer'), isTrue);
-      expect(reloaded.has('clean_hands'), isTrue);
+      expect(reloaded.has('clean_form_1'), isTrue);
     });
   });
 }

@@ -216,6 +216,16 @@ class Adventure extends ChangeNotifier {
 
   int get clearedCount => _stars.where((s) => s > 0).length;
 
+  /// Worlds whose every level is won — the Adventurer award's count.
+  int get worldsCleared {
+    var n = 0;
+    for (var w = 0; w < kWorlds; w++) {
+      final first = w * kLevelsPerWorld + 1;
+      if (List.generate(kLevelsPerWorld, (i) => first + i).every(cleared)) n++;
+    }
+    return n;
+  }
+
   /// The first level not yet won: the one the map opens on and the Match tab
   /// offers. The last one again once every level is won.
   int get current {

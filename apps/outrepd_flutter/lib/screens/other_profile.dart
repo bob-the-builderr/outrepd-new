@@ -11,6 +11,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../awards/award_text.dart';
+import '../awards/medal.dart';
 import '../backend/backend.dart';
 import '../l10n/app_localizations.dart';
 import '../lifter/looks.dart';
@@ -27,6 +29,7 @@ import '../widgets.dart';
 import '../worn_title.dart';
 import 'cover_parts.dart';
 import 'live_invite.dart';
+import 'awards.dart' show AwardMedal;
 import 'pro_parts.dart';
 import 'settings_privacy.dart';
 import 'share_card.dart';
@@ -357,6 +360,8 @@ class _Body extends StatelessWidget {
                   ),
                 SizedBox(height: roomy ? 20 : 6),
                 _Stats(profile: p),
+                // The awards they pinned (the user's pick, 2026-11-09).
+                _TheirShowcase(id: id),
                 // A record between the two of you is for friends — a stranger
                 // off the board gets their numbers, not yours.
                 if (p.isFriend) ...[
@@ -1097,6 +1102,75 @@ class _MenuRow extends StatelessWidget {
                 ],
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// The awards another lifter pinned to their profile: nothing at all when
+/// they pinned none, or the server cannot say.
+class _TheirShowcase extends StatefulWidget {
+  const _TheirShowcase({required this.id});
+
+  final String id;
+
+  @override
+  State<_TheirShowcase> createState() => _TheirShowcaseState();
+}
+
+class _TheirShowcaseState extends State<_TheirShowcase> {
+  List<String> _ids = const [];
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    if (!backend.available || backend.me == null || widget.id.isEmpty) return;
+    try {
+      final ids = await backend.lifterShowcase(widget.id);
+      if (mounted) setState(() => _ids = ids.where((i) => awardName(L.of(context), i) != null).toList());
+    } on Object catch (error) {
+      debugPrint('Could not read their showcase: $error');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_ids.isEmpty) return const SizedBox.shrink();
+    final l = L.of(context);
+    final colors = context.colors;
+    return Padding(
+      padding: const EdgeInsets.only(top: 12),
+      child: Container(
+        key: const Key('theirShowcase'),
+        padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          gradient: LinearGradient(colors: [const Color(0xFF2A2214), colors.surface], stops: const [0, 0.6]),
+          border: Border.all(color: tierColour(2), width: 1.5),
+        ),
+        child: Row(
+          children: [
+            for (final id in _ids)
+              Expanded(
+                child: Column(
+                  children: [
+                    AwardMedal(id: id, size: 64),
+                    const SizedBox(height: 4),
+                    Text(
+                      awardName(l, id)!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: colors.text, fontSize: 12, fontWeight: FontWeight.w700),
+                    ),
+                  ],
+                ),
+              ),
           ],
         ),
       ),

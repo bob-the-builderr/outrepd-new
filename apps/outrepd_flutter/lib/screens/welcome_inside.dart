@@ -57,7 +57,8 @@ class WelcomeInsideScreen extends StatelessWidget {
                           spacing: 6,
                           runSpacing: 6,
                           children: [
-                            for (final t in kTitles.take(6))
+                            // The first tier of the first six families.
+                            for (final t in [for (var i = 0; i < 30; i += 5) kTitles[i]])
                               Container(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 10,

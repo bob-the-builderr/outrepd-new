@@ -155,6 +155,20 @@ as $$
     'lastSession',   nullif((select rewards_int(s, 'lastSession') from later), 0),
     'wearing',       (select case when (s ->> 'wearing') ~ '^[a-z0-9_]{1,40}$'
                                   then s ->> 'wearing' end from later),
+    -- Up to three awards pinned to the profile, from whichever side trained
+    -- last, like the title worn (the user's pick, 2026-11-09).
+    'showcase',      (select coalesce(jsonb_agg(e), '[]'::jsonb)
+                        from (select e
+                                from later,
+                                     jsonb_array_elements(case when jsonb_typeof(s -> 'showcase') = 'array'
+                                                               then s -> 'showcase' else '[]'::jsonb end) e
+                               where jsonb_typeof(e) = 'string' and (e #>> '{}') ~ '^[a-z0-9_]{1,40}$'
+                               limit 3) pins),
+    'giantWins',     greatest(rewards_int(a, 'giantWins'), rewards_int(b, 'giantWins')),
+    'challengeTakers', greatest(rewards_int(a, 'challengeTakers'), rewards_int(b, 'challengeTakers')),
+    'pastBeats',     greatest(rewards_int(a, 'pastBeats'), rewards_int(b, 'pastBeats')),
+    'goalDays',      greatest(rewards_int(a, 'goalDays'), rewards_int(b, 'goalDays')),
+    'goalDay',       greatest(rewards_int(a, 'goalDay'), rewards_int(b, 'goalDay')),
     'bestStreak',    greatest(rewards_int(a, 'bestStreak'), rewards_int(b, 'bestStreak')),
     'cleanSets',     greatest(rewards_int(a, 'cleanSets'), rewards_int(b, 'cleanSets')),
     'earlySessions', greatest(rewards_int(a, 'earlySessions'), rewards_int(b, 'earlySessions')),

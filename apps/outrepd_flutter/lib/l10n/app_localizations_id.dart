@@ -3791,4 +3791,188 @@ class LId extends L {
   String momentClub(String mark) {
     return 'Klub ${mark}';
   }
+
+  @override
+  String get awGrinder => 'Pekerja Keras';
+
+  @override
+  String get awIronWill => 'Tekad Besi';
+
+  @override
+  String get awChampion => 'Juara';
+
+  @override
+  String get awOnFire => 'Membara';
+
+  @override
+  String get awPersonalBest => 'Rekor Pribadi';
+
+  @override
+  String get awGiantSlayer => 'Pembunuh Raksasa';
+
+  @override
+  String get awCleanForm => 'Form Bersih';
+
+  @override
+  String get awChallenger => 'Penantang';
+
+  @override
+  String get awPastSelf => 'Diri Lama';
+
+  @override
+  String get awAdventurer => 'Petualang';
+
+  @override
+  String get awDailyGoal => 'Target Harian';
+
+  @override
+  String get awEarlyBird => 'Burung Pagi';
+
+  @override
+  String get awNightOwl => 'Burung Hantu';
+
+  @override
+  String get awCrew => 'Kru';
+
+  @override
+  String get awPhotoFinish => 'Foto Finis';
+
+  @override
+  String get awBuzzerBeater => 'Detik Terakhir';
+
+  @override
+  String get awMonthChampion => 'Juara Bulanan';
+
+  @override
+  String awDoReps(String n) {
+    return 'Push-up: ${n}';
+  }
+
+  @override
+  String awDoStreak(String n) {
+    return 'Hari berturut-turut: ${n}';
+  }
+
+  @override
+  String awDoWins(String n) {
+    return 'Kemenangan: ${n}';
+  }
+
+  @override
+  String awDoWinRun(String n) {
+    return 'Menang beruntun: ${n}';
+  }
+
+  @override
+  String awDoBest(String n) {
+    return 'Set terbaik: ${n}';
+  }
+
+  @override
+  String awDoGiant(String n) {
+    return 'Menang atas tier lebih tinggi: ${n}';
+  }
+
+  @override
+  String awDoClean(String n) {
+    return 'Set bersih: ${n}';
+  }
+
+  @override
+  String awDoChallengers(String n) {
+    return 'Orang yang menerima linkmu: ${n}';
+  }
+
+  @override
+  String awDoPastSelf(String n) {
+    return 'Minggu kamu kalahkan dirimu: ${n}';
+  }
+
+  @override
+  String awDoWorlds(String n) {
+    return 'Dunia Petualangan selesai: ${n}';
+  }
+
+  @override
+  String awDoGoal(String n) {
+    return 'Hari target tercapai: ${n}';
+  }
+
+  @override
+  String awDoEarly(String n) {
+    return 'Sesi sebelum jam 7: ${n}';
+  }
+
+  @override
+  String awDoLate(String n) {
+    return 'Sesi setelah jam 10 malam: ${n}';
+  }
+
+  @override
+  String awDoFriends(String n) {
+    return 'Teman: ${n}';
+  }
+
+  @override
+  String get awDoPhotoFinish => 'Menang tepat selisih satu repetisi';
+
+  @override
+  String get awDoBuzzer => 'Ambil alih di 5 detik terakhir dan menang';
+
+  @override
+  String get awDoMonthChampion => 'Akhiri sebulan di posisi pertama';
+
+  @override
+  String get awShowcase => 'Etalase';
+
+  @override
+  String get awShowcaseSub => 'di profilmu';
+
+  @override
+  String get awEdit => 'Ubah';
+
+  @override
+  String get awAll => 'Semua penghargaan';
+
+  @override
+  String awFamilies(String f, String s) {
+    return '${f} keluarga · ${s} spesial';
+  }
+
+  @override
+  String get awNew => 'BARU';
+
+  @override
+  String awHeldBy(String p) {
+    return '${p}% pemain memilikinya';
+  }
+
+  @override
+  String get awHeldRare => 'Kurang dari 1% pemain memilikinya';
+
+  @override
+  String get awAllTiers => 'Semua tingkat diraih';
+
+  @override
+  String get awNewAward => 'Penghargaan baru';
+
+  @override
+  String get awPick => 'Sematkan hingga tiga di profilmu';
+
+  @override
+  String get awShowcaseEmpty => 'Sematkan penghargaan terbaikmu di sini';
+
+  @override
+  String awShareText(String title, String what, String link) {
+    return '${title} di OUTREPD: ${what}. ${link}';
+  }
+
+  @override
+  String get awWearing => 'Dipakai';
+
+  @override
+  String get awLocked => 'Belum diraih';
+
+  @override
+  String get awOldTitles => 'Gelar sebelumnya';
 }

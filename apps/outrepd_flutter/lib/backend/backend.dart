@@ -1815,6 +1815,12 @@ abstract interface class Backend {
 
   /// This account's month from [since] up to [before] (moments.sql).
   Future<MonthNumbers?> myMonthRecap(DateTime since, DateTime before);
+
+  /// How many lifters hold each award, in whole percent (awards.sql).
+  Future<Map<String, int>> awardRarity();
+
+  /// The awards [theirId] pinned to their profile, up to three.
+  Future<List<String>> lifterShowcase(String theirId);
 }
 
 /// The app with no server behind it.
@@ -2208,6 +2214,12 @@ class NoBackend implements Backend {
   @override
   Future<MonthNumbers?> myMonthRecap(DateTime since, DateTime before) async =>
       null;
+
+  @override
+  Future<Map<String, int>> awardRarity() async => const {};
+
+  @override
+  Future<List<String>> lifterShowcase(String theirId) async => const [];
 }
 
 /// The one the app uses. Replaced at startup when keys are supplied.

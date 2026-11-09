@@ -3757,4 +3757,188 @@ class LJa extends L {
   String momentClub(String mark) {
     return '${mark}クラブ';
   }
+
+  @override
+  String get awGrinder => 'グラインダー';
+
+  @override
+  String get awIronWill => '鉄の意志';
+
+  @override
+  String get awChampion => 'チャンピオン';
+
+  @override
+  String get awOnFire => '絶好調';
+
+  @override
+  String get awPersonalBest => '自己ベスト';
+
+  @override
+  String get awGiantSlayer => 'ジャイアントキラー';
+
+  @override
+  String get awCleanForm => 'クリーンフォーム';
+
+  @override
+  String get awChallenger => 'チャレンジャー';
+
+  @override
+  String get awPastSelf => '過去の自分';
+
+  @override
+  String get awAdventurer => '冒険者';
+
+  @override
+  String get awDailyGoal => 'デイリー目標';
+
+  @override
+  String get awEarlyBird => '早起き';
+
+  @override
+  String get awNightOwl => '夜ふかし';
+
+  @override
+  String get awCrew => 'クルー';
+
+  @override
+  String get awPhotoFinish => '写真判定';
+
+  @override
+  String get awBuzzerBeater => 'ブザービーター';
+
+  @override
+  String get awMonthChampion => '月間チャンピオン';
+
+  @override
+  String awDoReps(String n) {
+    return '腕立て：${n}';
+  }
+
+  @override
+  String awDoStreak(String n) {
+    return '連続日数：${n}';
+  }
+
+  @override
+  String awDoWins(String n) {
+    return '勝利数：${n}';
+  }
+
+  @override
+  String awDoWinRun(String n) {
+    return '連勝：${n}';
+  }
+
+  @override
+  String awDoBest(String n) {
+    return 'ベストセット：${n}';
+  }
+
+  @override
+  String awDoGiant(String n) {
+    return '格上への勝利：${n}';
+  }
+
+  @override
+  String awDoClean(String n) {
+    return 'クリーンセット：${n}';
+  }
+
+  @override
+  String awDoChallengers(String n) {
+    return 'リンクに挑んだ人：${n}';
+  }
+
+  @override
+  String awDoPastSelf(String n) {
+    return '先週の自分に勝った週：${n}';
+  }
+
+  @override
+  String awDoWorlds(String n) {
+    return 'クリアした冒険ワールド：${n}';
+  }
+
+  @override
+  String awDoGoal(String n) {
+    return '目標を達成した日：${n}';
+  }
+
+  @override
+  String awDoEarly(String n) {
+    return '朝7時前のセッション：${n}';
+  }
+
+  @override
+  String awDoLate(String n) {
+    return '夜10時以降のセッション：${n}';
+  }
+
+  @override
+  String awDoFriends(String n) {
+    return 'フレンド：${n}';
+  }
+
+  @override
+  String get awDoPhotoFinish => 'ちょうど1回差で勝つ';
+
+  @override
+  String get awDoBuzzer => '残り5秒で逆転して勝つ';
+
+  @override
+  String get awDoMonthChampion => '月間1位で終える';
+
+  @override
+  String get awShowcase => 'ショーケース';
+
+  @override
+  String get awShowcaseSub => 'プロフィールに表示';
+
+  @override
+  String get awEdit => '編集';
+
+  @override
+  String get awAll => 'すべてのアワード';
+
+  @override
+  String awFamilies(String f, String s) {
+    return '${f}系統・特別${s}';
+  }
+
+  @override
+  String get awNew => 'NEW';
+
+  @override
+  String awHeldBy(String p) {
+    return '${p}%のリフターが保持';
+  }
+
+  @override
+  String get awHeldRare => '保持者は1%未満';
+
+  @override
+  String get awAllTiers => '全ティア獲得';
+
+  @override
+  String get awNewAward => '新しいアワード';
+
+  @override
+  String get awPick => 'プロフィールに3つまで固定';
+
+  @override
+  String get awShowcaseEmpty => 'ベストのアワードをここに固定';
+
+  @override
+  String awShareText(String title, String what, String link) {
+    return 'OUTREPDで${title}：${what}。${link}';
+  }
+
+  @override
+  String get awWearing => '着用中';
+
+  @override
+  String get awLocked => '未獲得';
+
+  @override
+  String get awOldTitles => '以前の称号';
 }
