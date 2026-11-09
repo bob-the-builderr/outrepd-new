@@ -14,6 +14,9 @@ Ton premier match te place au classement, en Fer V. Ensuite, monte de Fer à Bro
 AVENTURE
 140 combats de pompes dans sept mondes, de Fer à Maître. Chaque répétition frappe le monstre, et les monstres évoluent au fil du jeu. Gagne des étoiles pour débloquer l’arme qu’exige chaque nouveau monde. Aucun rang en jeu, et ça marche hors ligne.
 
+BATS TOI DE LA SEMAINE DERNIÈRE
+Un plan de six semaines construit à partir de ta meilleure minute, avec des séries pour chaque jour d'entraînement. Chaque dimanche, tu affrontes ta propre meilleure minute de la semaine précédente.
+
 MONTE DE NIVEAU À CHAQUE RÉPÉTITION
 Chaque pompe rapporte de l'XP, et chaque victoire 20 de plus ; un match perdu ne rapporte rien. Ton niveau s'affiche partout à côté de ton nom et ne baisse jamais.
 
@@ -23,8 +26,11 @@ Un nouveau classement chaque lundi, et une course mensuelle avec des récompense
 DÉFIE TES AMIS
 Ajoute des amis avec un code ami, vois qui est en ligne et défie-les en duel direct. Ton bilan contre chaque ami est gardé : il y a toujours une revanche à prendre.
 
+DÉFIE N'IMPORTE QUI AVEC UN LIEN
+Envoie ta meilleure minute sous forme de lien. Qui l'ouvre affronte ta série, un essai chacun, et tu vois chaque résultat. Le lien reste ouvert sept jours.
+
 SUIS TA PROGRESSION
-Tes dix derniers résultats d'un coup d'œil, chaque match par jour, ta meilleure série, ta série de jours et 46 titres à débloquer.
+Tes dix derniers résultats d'un coup d'œil, chaque match par jour, ta meilleure série et ta série de jours. 73 récompenses en 14 familles de médailles, du Bronze au Diamant, et tes trois meilleures sur ton profil. Un écran pour chaque record perso et chaque cap, et un bilan de chaque mois.
 
 TES DONNÉES T'APPARTIENNENT
 Télécharge tout ce que l'app garde sur toi, ou supprime ton compte et toutes tes données depuis l'app.

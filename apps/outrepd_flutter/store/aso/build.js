@@ -13,6 +13,8 @@ const locales = {
 };
 // 1.1.5: free to play with ads, Pro removes them, and Adventure (ads_adventure.js).
 require('./ads_adventure.js').apply(locales);
+// 1.1.7: awards, the plan and the challenge link in the full descriptions (v117.js).
+require('./v117.js').apply(locales);
 
 // What's New for the version being prepared, per locale (notes.js).
 const notes = fs.existsSync(path.join(__dirname, 'notes.js')) ? require('./notes.js') : {};

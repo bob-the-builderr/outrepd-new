@@ -14,6 +14,9 @@ La tua prima partita ti mette in classifica, a Ferro V. Poi sali da Ferro a Bron
 AVVENTURA
 140 combattimenti a flessioni in sette mondi, da Ferro a Maestro. Ogni ripetizione colpisce il mostro, e i mostri si evolvono man mano che avanzi. Guadagna stelle per sbloccare l’arma che serve a ogni nuovo mondo. Nessun grado in gioco, e funziona offline.
 
+BATTI IL TE DELLA SETTIMANA SCORSA
+Un piano di sei settimane costruito sul tuo minuto migliore, con le serie per ogni giorno di allenamento. Ogni domenica sfidi il tuo minuto migliore della settimana prima.
+
 SALI DI LIVELLO A OGNI RIPETIZIONE
 Ogni flessione dà XP e ogni vittoria 20 in più; una partita persa non dà niente. Il tuo livello appare accanto al tuo nome ovunque e non scende mai.
 
@@ -23,8 +26,11 @@ Una nuova classifica ogni lunedì, e una gara mensile con premi per la top 10.
 SFIDA I TUOI AMICI
 Aggiungi amici con un codice amico, vedi chi è online e sfidali in un duello dal vivo. Il tuo bilancio contro ogni amico viene salvato: c'è sempre un conto da regolare.
 
+SFIDA CHIUNQUE CON UN LINK
+Manda il tuo minuto migliore come link. Chi lo apre affronta la tua serie, un tentativo a testa, e vedi ogni risultato. Il link resta aperto sette giorni.
+
 SEGUI I TUOI PROGRESSI
-I tuoi ultimi dieci risultati a colpo d'occhio, ogni partita per giorno, la tua serie migliore, la tua striscia e 46 titoli da sbloccare.
+I tuoi ultimi dieci risultati a colpo d'occhio, ogni partita per giorno, la tua serie migliore e la tua striscia. 73 premi in 14 famiglie di medaglie dal Bronzo al Diamante, con le tue tre migliori sul profilo. Una schermata per ogni record personale e ogni traguardo, e un riepilogo di ogni mese.
 
 I TUOI DATI SONO TUOI
 Scarica tutto ciò che l'app conserva su di te, o elimina l'account e tutti i dati direttamente dall'app.
