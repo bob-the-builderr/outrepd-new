@@ -90,8 +90,8 @@ void main() {
     for (final locale in L.supportedLocales) {
       final l = await L.delegate.load(locale);
       for (final t in kTitles) {
-        expect(awardName(l, t.id), isNotEmpty, reason: '${t.id} in $locale');
-        expect(awardLine(l, t.id), isNotEmpty, reason: '${t.id} in $locale');
+        expect(awardNameOf(l, t.id), isNotEmpty, reason: '${t.id} in $locale');
+        expect(awardLineOf(l, t.id), isNotEmpty, reason: '${t.id} in $locale');
       }
     }
   });

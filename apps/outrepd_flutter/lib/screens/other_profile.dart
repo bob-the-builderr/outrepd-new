@@ -1133,7 +1133,7 @@ class _TheirShowcaseState extends State<_TheirShowcase> {
     if (!backend.available || backend.me == null || widget.id.isEmpty) return;
     try {
       final ids = await backend.lifterShowcase(widget.id);
-      if (mounted) setState(() => _ids = ids.where((i) => awardName(L.of(context), i) != null).toList());
+      if (mounted) setState(() => _ids = ids.where((i) => awardNameOf(L.of(context), i) != null).toList());
     } on Object catch (error) {
       debugPrint('Could not read their showcase: $error');
     }
@@ -1163,7 +1163,7 @@ class _TheirShowcaseState extends State<_TheirShowcase> {
                     AwardMedal(id: id, size: 64),
                     const SizedBox(height: 4),
                     Text(
-                      awardName(l, id)!,
+                      awardNameOf(l, id)!,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(color: colors.text, fontSize: 12, fontWeight: FontWeight.w700),

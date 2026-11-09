@@ -1195,7 +1195,7 @@ extension EarnedTitleText on EarnedTitle {
     'not_alone' => l.ttl_not_alone,
     'well_connected' => l.ttl_well_connected,
     'the_gym_knows' => l.ttl_the_gym_knows,
-    _ => awardName(l, id) ?? title,
+    _ => awardNameOf(l, id) ?? title,
   };
 
   /// What you have to do to earn it.
@@ -1254,6 +1254,6 @@ extension EarnedTitleText on EarnedTitle {
     'not_alone' => l.tdesc_not_alone,
     'well_connected' => l.tdesc_well_connected,
     'the_gym_knows' => l.tdesc_the_gym_knows,
-    _ => awardLine(l, id) ?? hint,
+    _ => awardLineOf(l, id) ?? hint,
   };
 }

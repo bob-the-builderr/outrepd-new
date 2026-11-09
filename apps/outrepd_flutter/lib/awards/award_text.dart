@@ -73,7 +73,7 @@ const _numerals = ['I', 'II', 'III', 'IV', 'V'];
 
 /// An award's title in the reader's language, or null for an id that is not
 /// one of the awards.
-String? awardName(L l, String id) {
+String? awardNameOf(L l, String id) {
   if (familyTierOf(id) case final held?) {
     return '${familyName(l, held.family)} ${_numerals[held.tier]}';
   }
@@ -82,7 +82,7 @@ String? awardName(L l, String id) {
 }
 
 /// What an award asks, or null for an id that is not one of the awards.
-String? awardLine(L l, String id) {
+String? awardLineOf(L l, String id) {
   if (familyTierOf(id) case final held?) {
     return familyLine(l, held.family, held.family.tiers[held.tier]);
   }

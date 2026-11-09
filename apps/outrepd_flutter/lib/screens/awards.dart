@@ -250,7 +250,7 @@ class _AwardsScreenState extends State<AwardsScreen> {
                                   AwardMedal(id: id, size: 52),
                                   const SizedBox(height: 4),
                                   Text(
-                                    awardName(L.of(sheet), id) ?? id,
+                                    awardNameOf(L.of(sheet), id) ?? id,
                                     maxLines: 2,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(color: sheet.colors.text, fontSize: 11),
@@ -381,7 +381,7 @@ class _Showcase extends StatelessWidget {
                         AwardMedal(id: id, size: 84),
                         const SizedBox(height: 6),
                         Text(
-                          awardName(l, id) ?? id,
+                          awardNameOf(l, id) ?? id,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(color: colors.text, fontSize: 12.5, fontWeight: FontWeight.w700),
@@ -533,7 +533,7 @@ Future<void> showFamilySheet(BuildContext context, AwardFamily family, int value
     context,
     id: held >= 0 ? id : null,
     medal: Medal(tier: shown, glyph: family.glyph, size: 170, locked: held < 0),
-    eyebrow: held >= 0 ? '${tierWord(l, held).toUpperCase()} · ${awardName(l, id)!.toUpperCase()}' : l.awLocked.toUpperCase(),
+    eyebrow: held >= 0 ? '${tierWord(l, held).toUpperCase()} · ${awardNameOf(l, id)!.toUpperCase()}' : l.awLocked.toUpperCase(),
     colour: tierColour(shown),
     title: familyLine(l, family, family.tiers[shown]),
     tiers: [
@@ -662,8 +662,8 @@ Future<void> _awardSheet(
                       onPressed: () => SharePlus.instance.share(
                         ShareParams(
                           text: l.awShareText(
-                            awardName(l, id) ?? id,
-                            awardLine(l, id) ?? '',
+                            awardNameOf(l, id) ?? id,
+                            awardLineOf(l, id) ?? '',
                             'https://outrepd.com/u/${demoProfile.username}',
                           ),
                         ),
