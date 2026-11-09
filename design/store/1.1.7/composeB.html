@@ -1,0 +1,75 @@
+<!doctype html><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;900&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0}
+body{font-family:Inter,Arial,sans-serif;overflow:hidden}
+.s{position:relative;overflow:hidden;background:radial-gradient(var(--gw) var(--gh) at 50% 8%,#4a2418 0%,#121110 70%)}
+h1{position:absolute;left:var(--side);right:var(--side);top:var(--top);margin:0;color:#f4ede4;font-weight:900;font-size:var(--h1);line-height:.95;letter-spacing:-.03em;text-transform:uppercase;white-space:nowrap}
+h1 em{font-style:normal;color:#e8735a}
+p{position:absolute;left:var(--side);right:var(--side);top:var(--ptop);margin:0;color:#f4ede4cc;font-weight:500;font-size:var(--p);line-height:1.25}
+.ph{position:absolute;left:50%;transform:translateX(-50%);top:var(--ftop);border-radius:var(--r);border:var(--b) solid #2f2a26;overflow:hidden;background:#121110;box-shadow:0 0 var(--glow) #e8735a55}
+.bar{position:absolute;left:0;right:0;top:0}
+.ph img{position:absolute;left:0;display:block;width:100%}
+.fade{position:absolute;left:0;right:0;bottom:0;height:var(--fade);background:linear-gradient(to bottom,#12111000 0%,#121110d9 62%,#121110 100%)}
+.chip{position:absolute;right:var(--cr);background:#e8735a;color:#121110;font-weight:900;font-size:var(--cf);border-radius:var(--crad);padding:var(--cpy) var(--cpx);box-shadow:0 var(--csh) calc(var(--csh) * 2.6) #0009;white-space:nowrap}
+</style>
+<div class="s" id="s"><h1 id="h"></h1><p id="p"></p><div class="ph" id="ph"><img id="img"><div class="bar" id="bar"></div></div><div class="fade"></div><div class="chip" id="chip"></div></div>
+<script>
+// One store screenshot in style A: a two-line headline, a line under it, the
+// app's own screen in a large frame running off the bottom, and one number
+// lifted out of that screen as a chip.
+// Every screen sits the same way: one frame width per size, the same status
+// strip on top, and a soft fade where the frame leaves the picture, so no
+// button is ever sliced in half at the edge.
+// ?w=&h=&img=&h1=&p=&chip=
+//  &pad=1    the screen was drawn without a status bar: add one, painted
+//            with the screen's own top colours (barbg, a CSS background)
+//  &drop=N   the screen has its own status inset: drop N rows of it
+//  &crow=N   the chip's middle sits at row N of the screen
+const q = new URLSearchParams(location.search);
+const W = +q.get('w'), H = +q.get('h'), k = W / 1320;
+const tall = H / W > 2;
+const v = {
+  side: 80 * k, top: (tall ? 150 : 96) * k, h1: (tall ? 138 : 118) * k,
+  ptop: (tall ? 470 : 360) * k, p: (tall ? 58 : 52) * k,
+  ftop: (tall ? 760 : 560) * k, r: 90 * k, b: 12 * k, glow: 160 * k,
+  gw: 1400 * k, gh: 1100 * k, fade: (tall ? 330 : 230) * k,
+  cr: 70 * k, cf: (tall ? 90 : 80) * k, crad: 40 * k,
+  cpy: 26 * k, cpx: 46 * k, csh: 30 * k,
+};
+const s = document.getElementById('s');
+s.style.width = W + 'px'; s.style.height = H + 'px';
+for (const [n, x] of Object.entries(v)) s.style.setProperty('--' + n, x + 'px');
+document.getElementById('h').innerHTML = q.get('h1');
+document.getElementById('p').textContent = q.get('p');
+const chip = document.getElementById('chip');
+if (q.get('chip')) chip.textContent = q.get('chip'); else chip.remove();
+const img = document.getElementById('img');
+img.onload = () => {
+  const ph = document.getElementById('ph'), bar = document.getElementById('bar');
+  // The same width for every screen of a size, whatever shape it was drawn at.
+  const fw = (tall ? 1060 : 860) * k;
+  const fh = tall ? 2300 * k : H - v.ftop + 80 * k;
+  const scale = fw / img.naturalWidth;
+  const barH = q.get('pad') === '1' ? fw * 0.087 : 0;
+  const drop = +(q.get('drop') || 0);
+  ph.style.width = fw + 'px';
+  ph.style.height = fh + 'px';
+  img.style.top = (barH - drop * scale) + 'px';
+  bar.style.height = barH + 'px';
+  // soft=1: the screen's art reaches its top edge (confetti), so the strip
+  // melts into it instead of slicing it on a line.
+  if (barH && q.get('soft') === '1') {
+    const over = 70 * k;
+    bar.style.height = (barH + over) + 'px';
+    bar.style.webkitMaskImage = bar.style.maskImage = 'linear-gradient(#000 ' + (barH / (barH + over) * 100) + '%, transparent)';
+  }
+  if (barH) bar.style.background = q.get('barbg') || '#121110'; else bar.remove();
+  if (q.get('chip')) {
+    const mid = v.ftop + v.b + barH + (+q.get('crow') - drop) * scale;
+    chip.style.top = (mid - chip.offsetHeight / 2) + 'px';
+  }
+  document.title = 'done';
+};
+img.src = q.get('img');
+</script>
