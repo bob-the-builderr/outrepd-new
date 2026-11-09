@@ -1030,9 +1030,12 @@ class _BoardCaption extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(4, 0, 4, 8),
+      // Each side as wide as its words, the count at the far end; two long
+      // ones share the row and wrap.
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
+          Flexible(
             child: Text(
               left,
               style: TextStyle(
