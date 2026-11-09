@@ -96,9 +96,10 @@ android {
             // The mapping travels inside the App Bundle for Play, and to
             // Crashlytics, so crash reports still read.
             isMinifyEnabled = true
-            // Resources stay: some are looked up by name from Dart (the
-            // notification icon), which the resource shrinker cannot see.
-            isShrinkResources = false
+            // Unused resources go too (Play asked for it on 1.1.7). The one
+            // looked up by name from Dart, the notification icon, is listed
+            // in res/raw/keep.xml: the shrinker cannot see Dart.
+            isShrinkResources = true
 
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -120,6 +121,9 @@ flutter {
 
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+    // enableEdgeToEdge() in MainActivity; the version the build already
+    // resolves to through Flutter's FragmentActivity.
+    implementation("androidx.activity:activity:1.12.4")
     // Unity Ads bidding for LevelPlay's ads (lib/ads.dart): the adapter for
     // LevelPlay 9.x, and the Unity Ads SDK it was made for.
     implementation("com.unity3d.ads-mediation:unityads-adapter:5.14.0")

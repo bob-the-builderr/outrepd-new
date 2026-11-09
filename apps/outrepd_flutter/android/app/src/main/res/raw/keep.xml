@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Resources the shrinker must keep although no Java, Kotlin or XML names
+     them: Dart looks them up by name (lib/reminders.dart gives the
+     notification icon to flutter_local_notifications as 'ic_stat_outrepd'). -->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:shrinkMode="safe"
+    tools:keep="@drawable/ic_stat_outrepd" />

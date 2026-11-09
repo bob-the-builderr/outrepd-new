@@ -19,6 +19,7 @@ import 'data.dart';
 import 'deep_links.dart';
 import 'firebase.dart';
 import 'home_widgets.dart';
+import 'launch_self_test.dart';
 import 'lifter/looks.dart';
 import 'lifter/my_lifter.dart';
 import 'lifter/pro_trial.dart';
@@ -52,6 +53,9 @@ import 'theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Only when CI asks for it (lib/launch_self_test.dart): nothing on a
+  // normal launch.
+  unawaited(runLaunchSelfTest());
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   registerIconLicences();
   // First, so a crash anywhere after it is reported. Quick — it reads config

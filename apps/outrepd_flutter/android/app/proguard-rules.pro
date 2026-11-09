@@ -1,9 +1,12 @@
-# ML Kit loads its detectors and its bundled pose model by reflection, so the
-# shrinker cannot see those classes being used and strips them. The app then
-# dies while registering plugins — before any of our code runs, which makes it
-# look like the app simply will not open.
--keep class com.google.mlkit.** { *; }
--keep class com.google.android.gms.internal.mlkit_** { *; }
+# ML Kit carries its own rules for what it finds by name (its JNI classes, its
+# protobuf fields, anything marked @UsedByNative / @UsedByReflection), so it is
+# shrunk and renamed like the rest: keeping all of it whole was 2,400 classes,
+# a quarter of everything R8 left untouched (Play: 47% optimised, 1.1.7 build
+# 340). Its components are found by name from the manifest. CI's launch check
+# runs the pose detector in the release APK (lib/launch_self_test.dart), so a
+# class ML Kit needs and R8 took out fails the run.
+-keep class * implements com.google.firebase.components.ComponentRegistrar { <init>(); }
+-keepclasseswithmembernames,includedescriptorclasses class * { native <methods>; }
 -dontwarn com.google.mlkit.**
 
 # The vision libraries reference optional Play Services pieces that are not
@@ -13,10 +16,14 @@
 # ML Kit drags in WorkManager, and WorkManager builds its Room database by
 # looking up a generated class by name. Rename it and the app dies during
 # content-provider startup, before any of our code runs — which reads on the
-# phone as "the app will not open". This was the actual crash.
+# phone as "the app will not open". This was the actual crash. Only the
+# database class itself is kept whole: WorkManager's own rules keep its
+# workers and input mergers by name, and androidx.startup's keep the
+# initialisers its provider reads from the manifest. All of androidx.work.impl
+# (292 classes) is shrunk and renamed now; CI's launch check opens the release
+# APK, which builds this database at startup.
 -keep class * extends androidx.room.RoomDatabase { *; }
--keep class androidx.work.impl.** { *; }
--keep class androidx.startup.** { *; }
+-keep class * extends androidx.startup.Initializer { <init>(); }
 -dontwarn androidx.work.**
 
 # Flutter's engine refers to Play Core for deferred components, which this app
