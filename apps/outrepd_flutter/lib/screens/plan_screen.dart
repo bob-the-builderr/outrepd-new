@@ -797,6 +797,8 @@ class RoadChart extends StatelessWidget {
             l.planWeekShort(localNumber(context, w)),
         ],
         number: (n) => localNumber(context, n),
+        // The app's own type, as every Text around it has.
+        base: DefaultTextStyle.of(context).style,
         line: context.colors.text,
         muted: context.colors.muted,
         faint: context.colors.border,
@@ -815,6 +817,7 @@ class _RoadPainter extends CustomPainter {
     required this.races,
     required this.labels,
     required this.number,
+    required this.base,
     required this.line,
     required this.muted,
     required this.faint,
@@ -828,6 +831,7 @@ class _RoadPainter extends CustomPainter {
   final Map<int, int> races;
   final List<String> labels;
   final String Function(int) number;
+  final TextStyle base;
   final Color line;
   final Color muted;
   final Color faint;
@@ -839,7 +843,7 @@ class _RoadPainter extends CustomPainter {
     final tp = TextPainter(
       text: TextSpan(
         text: s,
-        style: TextStyle(color: colour, fontSize: size, fontWeight: weight),
+        style: base.copyWith(color: colour, fontSize: size, fontWeight: weight),
       ),
       textDirection: direction,
     )..layout();

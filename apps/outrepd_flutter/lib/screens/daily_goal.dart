@@ -33,8 +33,12 @@ class DailyGoalCard extends StatelessWidget {
       context: context,
       backgroundColor: context.colors.surface,
       showDragHandle: true,
+      // As tall as it needs, and scrolling on a short screen: the plan below
+      // the three goals made it taller than a sheet's usual share.
+      isScrollControlled: true,
       builder: (sheet) => SafeArea(
-        child: Padding(
+        child: SingleChildScrollView(
+          child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -85,6 +89,7 @@ class DailyGoalCard extends StatelessWidget {
               ),
             ],
           ),
+        ),
         ),
       ),
     );
