@@ -119,6 +119,16 @@ flutter {
     source = "../.."
 }
 
+// The pose plugin brings both of ML Kit's models; the app runs the base one
+// only (PoseDetectorOptions' default, lib/reps/pose_source_camera.dart), and
+// the accurate one is about 26 MB of every install. The plugin names its
+// options class in a branch the base model never takes; R8 is told not to
+// mind (proguard-rules.pro, -dontwarn com.google.mlkit.**), and CI's
+// launch-check runs the detector in the release APK to prove it.
+configurations.all {
+    exclude(group = "com.google.mlkit", module = "pose-detection-accurate")
+}
+
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
     // enableEdgeToEdge() in MainActivity; the version the build already

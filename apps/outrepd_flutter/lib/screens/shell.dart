@@ -235,7 +235,17 @@ class _TabStackState extends State<_TabStack>
           begin: const Offset(0, 0.015),
           end: Offset.zero,
         ).animate(_eased),
-        child: IndexedStack(index: widget.index, children: widget.children),
+        child: IndexedStack(
+          index: widget.index,
+          children: [
+            // A hidden tab's animations stop. An IndexedStack keeps them
+            // running: the floating badge, a moving cover, the boards and
+            // every living lifter went on asking for frames behind the tab
+            // on screen, all the time the app was open.
+            for (final (i, child) in widget.children.indexed)
+              TickerMode(enabled: i == widget.index, child: child),
+          ],
+        ),
       ),
     );
   }

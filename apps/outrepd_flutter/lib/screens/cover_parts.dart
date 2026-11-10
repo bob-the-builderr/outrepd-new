@@ -15,6 +15,7 @@ import 'package:image_picker/image_picker.dart';
 import '../l10n/app_localizations.dart';
 import '../lifter/covers.dart';
 import '../lifter/looks.dart';
+import '../photo_cache.dart';
 import '../subscription.dart';
 import '../theme.dart';
 import '../type_scale.dart';
@@ -57,8 +58,16 @@ class _CoverArt extends StatelessWidget {
   @override
   Widget build(BuildContext context) => isScene(cover)
       ? CoverScene(cover, moving: moving)
-      : Image.network(
-          cover,
+      : Image(
+          // Kept on the phone after its first download (lib/photo_cache.dart)
+          // and decoded at the screen's width: a photo cover was fetched
+          // again on every launch, the profile opening bare until it came.
+          image: ResizeImage.resizeIfNeeded(
+            (MediaQuery.sizeOf(context).width * MediaQuery.devicePixelRatioOf(context)).ceil(),
+            null,
+            photoAt(cover),
+          ),
+          gaplessPlayback: true,
           fit: BoxFit.cover,
           width: double.infinity,
           height: double.infinity,
