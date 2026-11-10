@@ -5,6 +5,8 @@ everything pushed to `bob-the-builderr/outrepd-new`.
 
 ## Versions
 
+- **2026-11-10, "make it better" pass (in progress):** ae0645a signing back in brings the cover back and wears the lifter as the account wears it (kLifterWorn); 7ebeb69 Android leaves out ML Kit's accurate pose model (about 26 MB; the app runs the base one), hidden tabs stop their animations (TickerMode in the shell's IndexedStack), a photo cover is drawn from the kept copy. Next ideas, not done: the same model cut on iOS (the plugin's podspec pulls GoogleMLKit/PoseDetectionAccurate); the launch's sequential loads in main.dart (each is quick; mind the order comments); match_flow.dart, onboarding.dart, ranks.dart are 2,200 to 2,600 lines each.
+
 - **1.1.5** is live on Google Play and the App Store (since 2026-10-31).
 - **1.1.6** (`1.1.6+1` in `pubspec.yaml` and `kAppVersion`): **the user sent it to both
   stores on 2026-11-05 (Android 319, iOS 334); the review results are not
