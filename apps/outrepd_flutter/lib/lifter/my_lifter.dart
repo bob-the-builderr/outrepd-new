@@ -196,7 +196,10 @@ class MyLifter extends ChangeNotifier {
     // Nothing of this account's here: the server's lifter, or none — and
     // then the account's picture on the server is what shows (Avatar).
     _built = json == null ? null : Lifter.fromJson(json);
-    _isPicture = false;
+    // Worn, unless the account chose a photo over it (kLifterWorn): signing
+    // back in drew the old picture on the server in its place, an older
+    // lifter than the one made (the user, 2026-11-10).
+    _isPicture = json != null && json[kLifterWorn] != false;
     if (json != null) _asked = true;
     _owner = accountId;
     notifyListeners();
@@ -213,6 +216,7 @@ class MyLifter extends ChangeNotifier {
       return;
     }
     await store.setString(_key, jsonEncode(lifter.toJson()));
+    await store.setBool(_pictureKey, _isPicture);
     await store.setBool(_askedKey, true);
   }
 

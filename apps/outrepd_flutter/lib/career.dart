@@ -30,6 +30,7 @@ import 'awards/families.dart';
 import 'avatar.dart';
 import 'data.dart';
 import 'health_sync.dart';
+import 'lifter/looks.dart' show MyCover;
 import 'lifter/my_lifter.dart';
 import 'moments.dart';
 import 'plan.dart';
@@ -72,6 +73,9 @@ void applyServerProfile(RemoteProfile me) {
   rememberUsername(me.username);
   // And the lifter it made, for a phone that does not have it yet.
   MyLifter.instance.adopt(me.lifter, me.id);
+  // And its cover: read at launch only, so signing out and back in left the
+  // profile without it (the user, 2026-11-10).
+  unawaited(MyCover.instance.adopt());
   // And a photo that has not reached the account yet.
   unawaited(avatar.sendWaiting(me.id));
 }
