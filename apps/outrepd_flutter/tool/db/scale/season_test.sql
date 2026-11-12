@@ -49,6 +49,10 @@ select 'live match  — totals vs duels differing: ' || count(*) as result from 
   (select * from season_points_from_duels(season_of(now())) except select profile_id, points, wins, played from season_points where season = season_of(now()))
   union all
   (select profile_id, points, wins, played from season_points where season = season_of(now()) except select * from season_points_from_duels(season_of(now())))) x;
+select 'raced + live — week totals vs duels differing: ' || count(*) as result from (
+  (select * from week_points(week_start(now())) except select profile_id, points, wins, played from week_totals where week = week_of(now()))
+  union all
+  (select profile_id, points, wins, played from week_totals where week = week_of(now()) except select * from week_points(week_start(now())))) x;
 
 -- 3. An unranked duel changes nothing.
 create temp table before_unranked as select * from season_points;
@@ -76,3 +80,10 @@ select 'deleted     — totals vs duels differing after refresh: ' || count(*) a
   union all
   (select profile_id, points, wins, played from season_points where season = season_of(now()) except select * from season_points_from_duels(season_of(now())))) x;
 select 'deleted     — months stale after refresh: ' || count(*) as result from season_points_stale;
+select 'deleted     — weeks stale: ' || count(*) as result from week_totals_stale;
+select week_totals_refresh();
+select 'deleted     — week totals vs duels differing: ' || count(*) as result from (
+  (select * from week_points(week_start(now())) except select profile_id, points, wins, played from week_totals where week = week_of(now()))
+  union all
+  (select profile_id, points, wins, played from week_totals where week = week_of(now()) except select * from week_points(week_start(now())))) x;
+

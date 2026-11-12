@@ -623,6 +623,33 @@ select must_fail('reading week_points directly',
   'select * from week_points(now() - interval ''7 days'')');
 reset role;
 
+-- The week's running totals (week_totals) are what the week's duels add up
+-- to when added up again from scratch, for everybody; the board reads them
+-- in order; and nobody calling from the app reads or rebuilds them.
+select week_totals_refresh();
+select check_that(not exists (
+  (select profile_id, points, wins, played from week_points(week_start(now())) w
+    where exists (select 1 from profiles p where p.id = w.profile_id)
+   except select profile_id, points, wins, played from week_totals where week = week_of(now()))
+  union all
+  (select profile_id, points, wins, played from week_totals where week = week_of(now())
+   except select profile_id, points, wins, played from week_points(week_start(now())))),
+  'this week''s totals are not what this week''s duels add up to');
+select set_config('test.week_pts', coalesce((
+  select points from week_points(week_start(now())) where profile_id = :'A'), 0)::text, false);
+select as_user(:'A'); set role authenticated;
+select check_that(
+  (select points from my_week_place()) = current_setting('test.week_pts')::int,
+  'the week''s place reads other points than the week''s duels');
+select check_that(not exists (
+  select 1 from (select points, lag(points) over (order by place) as before
+                   from week_board()) b
+   where b.before < b.points), 'the weekly board is out of order');
+select check_that(not exists (select 1 from week_totals), 'a lifter read the week''s totals table');
+select must_fail('a lifter rebuilding the week', 'select week_totals_rebuild(current_date)');
+select must_fail('a lifter refreshing the week', 'select week_totals_refresh()');
+reset role;
+
 -- ── the boards among friends ──────────────────────────────────────────────────
 
 -- A and B are friends; D, whom A has duelled all day, is not, nor is C.
@@ -1306,5 +1333,57 @@ select must_fail('signed out, how rare awards are', 'select award_rarity()');
 select count(*) from public_lifter_card('alice_a1');
 select count(*) from public_challenge_card(:'code');
 reset role;
+
+-- ── the week's totals after every duel above ─────────────────────────────────
+
+-- Added to one duel at a time by the trigger since the week was last worked
+-- out, and still what the week's duels add up to from scratch (unless a
+-- deletion has left the week to be worked out again on its next read).
+select check_that(exists (select 1 from week_totals_stale) or not exists (
+  (select profile_id, points, wins, played from week_points(week_start(now())) w
+    where exists (select 1 from profiles p where p.id = w.profile_id)
+   except select profile_id, points, wins, played from week_totals where week = week_of(now()))
+  union all
+  (select profile_id, points, wins, played from week_totals where week = week_of(now())
+   except select profile_id, points, wins, played from week_points(week_start(now())))),
+  'the week''s running totals drifted from its duels');
+
+-- ── tidying up (tidy.sql) ────────────────────────────────────────────────────
+
+-- Nobody calling from the app runs it: it deletes across every account.
+select as_user(:'A'); set role authenticated;
+select must_fail('a lifter tidying the server', 'select tidy_old_rows()');
+reset role;
+select as_user(null); set role anon;
+select must_fail('signed out, tidying the server', 'select tidy_old_rows()');
+reset role;
+
+-- Old read notices and never-played invites go; new ones, unread recent
+-- ones and played matches stay.
+insert into notifications (profile_id, created_at, read_at, kind, actor_name)
+values (:'A', now() - interval '61 days', now() - interval '60 days', 'raced', 'tidy-old-read'),
+       (:'A', now() - interval '61 days', null, 'raced', 'tidy-old-unread'),
+       (:'A', now() - interval '121 days', null, 'raced', 'tidy-ancient'),
+       (:'A', now() - interval '1 day', now(), 'raced', 'tidy-new');
+insert into live_matches (created_at, ranked, a, b, status, expires_at)
+values (now() - interval '31 days', false, :'A', :'B', 'expired', now() - interval '31 days'),
+       (now() - interval '1 day', false, :'A', :'B', 'expired', now() - interval '1 day');
+create temp table tidy_done as select count(*) as n from live_matches where status = 'done';
+create temp table tidy_duels as select count(*) as n from duels;
+select tidy_old_rows();
+select check_that(not exists (select 1 from notifications where actor_name in ('tidy-old-read', 'tidy-ancient')),
+                  'old notices were not tidied');
+select check_that((select count(*) from notifications where actor_name in ('tidy-old-unread', 'tidy-new')) = 2,
+                  'tidying took notices it should have kept');
+select check_that((select count(*) from live_matches
+                    where status = 'expired' and created_at < now() - interval '30 days') = 0,
+                  'an old invite was not tidied');
+select check_that((select count(*) from live_matches
+                    where status = 'expired' and created_at > now() - interval '2 days') >= 1,
+                  'tidying took a recent invite');
+select check_that((select count(*) from live_matches where status = 'done') = (select n from tidy_done),
+                  'tidying took a played match');
+select check_that((select count(*) from duels) = (select n from tidy_duels),
+                  'tidying took a duel');
 
 select 'all security checks passed' as result;

@@ -617,10 +617,14 @@ begin
   return query
     select m.status, m.ranked, p.id, p.username, p.tier_idx, p.div_idx,
            case when i_am_a then m.b_ready else m.a_ready end,
+           -- Held within an int: a match from weeks ago is further away in
+           -- milliseconds than one holds (the 100,000-lifter run, 2026-11-12).
            case when m.starts_at is null then null
-                else (extract(epoch from m.starts_at - now()) * 1000)::int end,
+                else greatest(-2000000000, least(2000000000,
+                       extract(epoch from m.starts_at - now()) * 1000))::int end,
            case when m.expires_at is null then null
-                else greatest(0, (extract(epoch from m.expires_at - now()) * 1000)::int) end,
+                else greatest(0, least(2000000000,
+                       extract(epoch from m.expires_at - now()) * 1000))::int end,
            case when i_am_a then m.b_reps else m.a_reps end,
            p.avatar_url, p.xp
       from profiles p

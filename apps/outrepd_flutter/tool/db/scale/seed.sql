@@ -153,12 +153,14 @@ select c.id, t.id, s.id, s.reps, c.created_at + interval '1 hour'
 
 set session_replication_role = origin;
 
--- The month's and last month's board totals, as the duels have them; then
+-- This week's, this month's and the months before's board totals, as the
+-- duels have them (the seed wrote the duels with the triggers off); then
 -- last month closed (its awards given), timed, as the first call of a new
 -- month would close it.
 select season_points_rebuild(season_of(now()));
 select season_points_rebuild(season_of(now() - interval '1 month'));
 select season_points_rebuild(season_of(now() - interval '2 months'));
+select week_totals_rebuild(week_of(now()));
 select close_finished_seasons();
 \timing off
 analyze;

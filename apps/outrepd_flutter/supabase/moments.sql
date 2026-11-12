@@ -17,32 +17,40 @@ stable
 security definer
 set search_path = public
 as $$
-  with me as (select auth.uid() as id),
-  lifted as (
+  -- auth.uid() itself in each part, not joined in from a one-row list: the
+  -- planner then reads the lifter's own rows by their index (sets_profile_idx,
+  -- duels_for_profile_idx and duels_against_profile_idx) instead of every
+  -- set and duel there is — eight seconds at 100,000 lifters (2026-11-12).
+  with lifted as (
     select coalesce(sum(s.reps), 0)::int as reps, count(*)::int as sets
-      from sets s, me
-     where s.profile_id = me.id and s.created_at >= since and s.created_at < before
+      from sets s
+     where s.profile_id = auth.uid() and s.created_at >= since and s.created_at < before
        and not s.gave_up
   ),
   best as (
     select coalesce(max(s.reps), 0)::int as best
-      from sets s, me
-     where s.profile_id = me.id and s.created_at >= since and s.created_at < before
+      from sets s
+     where s.profile_id = auth.uid() and s.created_at >= since and s.created_at < before
        and challenge_set_ok(s)
   ),
   earlier as (
     select coalesce(max(s.reps), 0)::int as best
-      from sets s, me
-     where s.profile_id = me.id and s.created_at < since and challenge_set_ok(s)
+      from sets s
+     where s.profile_id = auth.uid() and s.created_at < since and challenge_set_ok(s)
+  ),
+  sides as (
+    select d.winner from duels d
+     where d.challenger = auth.uid() and d.created_at >= since and d.created_at < before
+    union all
+    select d.winner from duels d
+     where d.defender = auth.uid() and d.created_at >= since and d.created_at < before
   ),
   played as (
-    select count(*) filter (where d.winner = me.id)::int as wins,
-           count(*) filter (where d.winner is not null and d.winner <> me.id)::int as losses
-      from duels d, me
-     where (d.challenger = me.id or d.defender = me.id)
-       and d.created_at >= since and d.created_at < before
+    select count(*) filter (where x.winner = auth.uid())::int as wins,
+           count(*) filter (where x.winner is not null and x.winner <> auth.uid())::int as losses
+      from sides x
   )
-  select case when (select id from me) is null then null else
+  select case when auth.uid() is null then null else
     jsonb_build_object(
       'reps', (select reps from lifted), 'sets', (select sets from lifted),
       'best', (select best from best), 'best_before', (select best from earlier),

@@ -316,6 +316,13 @@ alter table sets add column if not exists practice boolean not null default fals
 create index if not exists sets_open_idx
   on sets (profile_id, created_at desc)
   where claimed_by is null;
+-- Every set of one lifter, newest first: their days, their best minute,
+-- their month, the checks on each set they send. Only the open ones had an
+-- index, so each of those read every set there is — a third of a second
+-- each at two million sets, and eight for the month's recap, which reads
+-- them three times (the 100,000-lifter run, 2026-11-12).
+create index if not exists sets_profile_idx
+  on sets (profile_id, created_at desc);
 
 -- Every foreign key has an index on the side that points. Deleting an
 -- account deletes or clears each row that points at it, and with no index

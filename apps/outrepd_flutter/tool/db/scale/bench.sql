@@ -46,6 +46,11 @@ select set_config('bench.code',
 select set_config('bench.match',
   coalesce((select m.id::text from live_matches m
              where m.a = current_setting('request.jwt.claim.sub')::uuid limit 1), ''), false) as result;
+-- And the lowest placed lifter on the rating, whose place on it counts
+-- everybody above them.
+select set_config('bench.low',
+  (select id::text from profiles where placements_done >= 5
+    order by tier_idx, div_idx, lp, wins limit 1), false) as result;
 set role authenticated;
 
 \echo
@@ -73,6 +78,7 @@ select bench('my_season_awards', 'select * from my_season_awards()') as result;
 select bench('award_rarity', 'select * from award_rarity()') as result;
 select bench('my_account_summary', 'select * from my_account_summary()') as result;
 select bench('lifter_profile', 'select * from lifter_profile(current_setting(''bench.other'')::uuid)') as result;
+select bench('lifter_profile (lowest placed)', 'select * from lifter_profile(current_setting(''bench.low'')::uuid)') as result;
 select bench('lifter_showcase', 'select * from lifter_showcase(current_setting(''bench.other'')::uuid)') as result;
 select bench('lifter_season_awards', 'select * from lifter_season_awards(current_setting(''bench.other'')::uuid)') as result;
 

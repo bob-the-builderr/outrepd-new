@@ -187,6 +187,7 @@ declare
   d duels;
   defender_played boolean;
   this_season date;
+  this_week date;
 begin
   select * into d from duels where id = new.id;
   if d.id is null or not d.ranked then
@@ -211,6 +212,23 @@ begin
     set points = greatest(sp.points + coalesce(d.pts_defender, d.lp_defender, 0), 0),
         wins = sp.wins + excluded.wins,
         played = sp.played + excluded.played;
+  -- And to its week (week_totals below), by week_points' rule: the points
+  -- the duel carries, nought for one from before them.
+  this_week := week_of(d.created_at);
+  insert into week_totals as wt (week, profile_id, points, wins, played)
+  values (this_week, d.challenger, greatest(coalesce(d.pts_challenger, 0), 0),
+          coalesce((d.winner = d.challenger)::int, 0), 1)
+  on conflict (week, profile_id) do update
+    set points = greatest(wt.points + coalesce(d.pts_challenger, 0), 0),
+        wins = wt.wins + excluded.wins,
+        played = wt.played + excluded.played;
+  insert into week_totals as wt (week, profile_id, points, wins, played)
+  values (this_week, d.defender, greatest(coalesce(d.pts_defender, 0), 0),
+          coalesce((d.winner = d.defender)::int, 0), defender_played::int)
+  on conflict (week, profile_id) do update
+    set points = greatest(wt.points + coalesce(d.pts_defender, 0), 0),
+        wins = wt.wins + excluded.wins,
+        played = wt.played + excluded.played;
   return null;
 end;
 $$;
@@ -234,6 +252,8 @@ begin
   if old.ranked then
     insert into season_points_stale (season) values (season_of(old.created_at))
     on conflict (season) do nothing;
+    insert into week_totals_stale (week) values (week_of(old.created_at))
+    on conflict (week) do nothing;
   end if;
   return null;
 end;
@@ -468,9 +488,11 @@ $$;
 --
 -- The month's board, a week at a time: the same points (board_points,
 -- floored at nought as they go), the same order, starting again every
--- Monday at 00:00 UTC. A shorter race more people can win. Nothing is kept for it and no
--- award is named at its end: it is added up from the week's duels, which the
--- ranked-duel index on created_at finds without reading the rest.
+-- Monday at 00:00 UTC. A shorter race more people can win. No award is
+-- named at its end. Read from running totals (week_totals), the way the
+-- month is: adding up the week's duels on every read took half a second at
+-- a hundred thousand lifters, five to eleven with ten or twenty reading at
+-- once, and ran the server out of memory at fifty (2026-11-12).
 
 create or replace function week_start(at timestamptz)
 returns timestamptz
@@ -480,6 +502,40 @@ set search_path = public
 as $$
   select date_trunc('week', at at time zone 'UTC') at time zone 'UTC'
 $$;
+
+-- The week [at] falls in, named by its Monday (UTC).
+create or replace function week_of(at timestamptz)
+returns date
+language sql
+immutable
+set search_path = public
+as $$
+  select (date_trunc('week', at at time zone 'UTC'))::date
+$$;
+
+-- What each lifter did in one week, kept as it happens (season_points_add
+-- adds each ranked duel to its week too). Every row can be worked out again
+-- from the duels (week_totals_rebuild), and is, whenever a duel is deleted
+-- from under it. Only this week's is read; tidy_old_rows clears the rest.
+create table if not exists week_totals (
+  week       date not null,
+  profile_id uuid not null references profiles on delete cascade,
+  points     int not null default 0,
+  wins       int not null default 0,
+  played     int not null default 0,
+  primary key (week, profile_id)
+);
+alter table week_totals enable row level security;
+create index if not exists week_totals_profile_idx on week_totals (profile_id);
+-- The board's order, best first: its top hundred is a hundred-odd rows.
+create index if not exists week_totals_board_idx
+  on week_totals (week, points desc, wins desc);
+
+-- Weeks whose totals no longer match their duels.
+create table if not exists week_totals_stale (
+  week date primary key
+);
+alter table week_totals_stale enable row level security;
 
 -- Each lifter's week: both sides of every ranked duel since Monday, the side
 -- that was raced counted as played only when it was there, live.
@@ -514,6 +570,58 @@ as $$
    group by r.pid;
 $$;
 
+-- One week's totals worked out again from its duels. Only this week is
+-- ever read, so an older one is simply let go.
+create or replace function week_totals_rebuild(of_week date)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  delete from week_totals wt where wt.week = of_week;
+  if of_week = week_of(now()) then
+    insert into week_totals (week, profile_id, points, wins, played)
+    select of_week, w.profile_id, w.points, w.wins, w.played
+      from week_points(of_week::timestamp at time zone 'UTC') w
+      -- A side whose account is already gone.
+      join profiles p on p.id = w.profile_id;
+  end if;
+  delete from week_totals_stale st where st.week = of_week;
+end;
+$$;
+
+-- Every week that needs it, worked out again before the totals are read;
+-- nearly always there is nothing to do.
+create or replace function week_totals_refresh()
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  stale date;
+begin
+  if not exists (select 1 from week_totals_stale) then
+    return;
+  end if;
+  perform pg_advisory_xact_lock(hashtext('outrepd.week_totals'));
+  for stale in select st.week from week_totals_stale st loop
+    perform week_totals_rebuild(stale);
+  end loop;
+end;
+$$;
+
+-- The first install of the table: this week is worked out from its duels the
+-- first time it is read.
+do $$
+begin
+  if not exists (select 1 from week_totals) then
+    insert into week_totals_stale (week) values (week_of(now()))
+    on conflict (week) do nothing;
+  end if;
+end $$;
+
 drop function if exists week_board(text, int);
 create or replace function week_board(in_country text default null, limit_to int default 100)
 returns table (
@@ -528,21 +636,27 @@ returns table (
   avatar_url text,
   xp int
 )
-language sql
-stable
+language plpgsql
 security definer
 set search_path = public
 as $$
+begin
+  perform week_totals_refresh();
+  -- As month_board: the order spelled out, so the limit reaches it and it
+  -- stops at the last place shown (week_totals_board_idx).
+  return query
   select (row_number() over (order by w.points desc, w.wins desc, p.username))::int,
          p.id, p.username, p.tier_idx, p.div_idx, w.points, w.wins, w.played,
          p.avatar_url, p.xp
-    from week_points(week_start(now())) w
+    from week_totals w
     join profiles p on p.id = w.profile_id
-   where p.placements_done >= 5
+   where w.week = week_of(now())
+     and p.placements_done >= 5
      and p.show_on_board
      and (in_country is null or (p.country = in_country and p.show_country))
    order by w.points desc, w.wins desc, p.username
    limit least(greatest(limit_to, 1), 500);
+end;
 $$;
 
 -- One lifter's points this week, by the same rule as week_points: for
@@ -585,37 +699,54 @@ returns table (
   wins int,
   played int
 )
-language sql
-stable
+language plpgsql
 security definer
 set search_path = public
 as $$
-  with board as (
-    select w.*, p.username
-      from week_points(week_start(now())) w
-      join profiles p on p.id = w.profile_id
-     where p.placements_done >= 5
-       and p.show_on_board
-       and (in_country is null
-            or (p.country = in_country and p.show_country))
-  ),
-  mine as (select * from board where profile_id = auth.uid())
-  select (week_start(now()) at time zone 'UTC')::date,
+declare
+  this_week date := week_of(now());
+  mine week_totals;
+  me profiles;
+begin
+  perform week_totals_refresh();
+  select * into mine from week_totals wt
+   where wt.week = this_week and wt.profile_id = auth.uid();
+  select * into me from profiles p where p.id = auth.uid();
+  -- As my_month_place: the place counted from those ahead, not by ranking
+  -- everybody. Null off the board: no ranked duel this week, still in
+  -- placements, or asked to be left off.
+  return query
+  select this_week,
          week_start(now()) + interval '7 days',
-         -- Null off the board: no ranked duel this week, still in
-         -- placements, or asked to be left off.
-         case when exists (select 1 from mine) then
-           (select count(*)::int + 1
-              from board b, mine m
-             where b.points > m.points
-                or (b.points = m.points and b.wins > m.wins)
-                or (b.points = m.points and b.wins = m.wins
-                    and b.username < m.username))
-         end,
-         (select count(*)::int from board),
-         coalesce((select m.points from mine m), 0),
-         coalesce((select m.wins from mine m), 0),
-         coalesce((select m.played from mine m), 0);
+         case when mine.profile_id is not null
+                   and me.placements_done >= 5 and me.show_on_board
+                   and (in_country is null
+                        or (me.country = in_country and me.show_country)) then (
+           select count(*)::int + 1
+             from week_totals w
+             join profiles p on p.id = w.profile_id
+            where w.week = this_week
+              and p.placements_done >= 5
+              and p.show_on_board
+              and (in_country is null
+                   or (p.country = in_country and p.show_country))
+              and (w.points > mine.points
+                or (w.points = mine.points and w.wins > mine.wins)
+                or (w.points = mine.points and w.wins = mine.wins
+                    and p.username < me.username))
+         ) end,
+         (select count(*)::int
+            from week_totals w
+            join profiles p on p.id = w.profile_id
+           where w.week = this_week
+             and p.placements_done >= 5
+             and p.show_on_board
+             and (in_country is null
+                  or (p.country = in_country and p.show_country))),
+         coalesce(mine.points, 0),
+         coalesce(mine.wins, 0),
+         coalesce(mine.played, 0);
+end;
 $$;
 
 -- ── closing a month ───────────────────────────────────────────────────────────
@@ -833,6 +964,7 @@ begin
        and p.show_on_board
      order by 1;
   else
+    perform week_totals_refresh();
     return query
     select (row_number() over (order by coalesce(w.points, 0) desc,
                                         coalesce(w.wins, 0) desc,
@@ -841,7 +973,7 @@ begin
            coalesce(w.points, 0), coalesce(w.wins, 0),
            coalesce(w.played, 0), p.avatar_url, p.xp
       from profiles p
-      left join week_points(week_start(now())) w on w.profile_id = p.id
+      left join week_totals w on w.profile_id = p.id and w.week = week_of(now())
      where p.id in (select c from my_circle() c)
        and p.placements_done >= 5
        and p.show_on_board
@@ -894,6 +1026,8 @@ grant execute on function month_board(text, int) to authenticated;
 revoke all on function my_month_place(text) from public, anon;
 grant execute on function my_month_place(text) to authenticated;
 revoke all on function week_points(timestamptz) from public, anon, authenticated;
+revoke all on function week_totals_rebuild(date) from public, anon, authenticated;
+revoke all on function week_totals_refresh() from public, anon, authenticated;
 revoke all on function week_board(text, int) from public, anon;
 grant execute on function week_board(text, int) to authenticated;
 revoke all on function my_week_place(text) from public, anon;
