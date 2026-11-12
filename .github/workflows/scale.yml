@@ -65,12 +65,13 @@ jobs:
             -c "alter system set maintenance_work_mem = '256MB'" \
             -c "alter system set random_page_cost = 1.1" \
             -c "alter system set max_connections = 100" \
-            -c "alter system set shared_preload_libraries = 'pg_stat_statements'" \
-            -c "alter system set pg_stat_statements.track = 'all'"
+            -c "alter system set shared_preload_libraries = 'pg_stat_statements'"
           docker update --cpus "${{ inputs.cpus }}" --memory "${{ inputs.memory }}" \
             --memory-swap "${{ inputs.memory }}" "$id"
           docker restart "$id"
           for i in $(seq 1 60); do pg_isready -q -h localhost -p 5432 && break; sleep 2; done
+          # Known only once the library is loaded: statements inside functions too.
+          psql "$DB" -q -c "alter system set pg_stat_statements.track = 'all'" -c "select pg_reload_conf()"
           {
             echo "Server at scale — ${{ inputs.lifters }} lifters, ${{ inputs.cpus }} cores, ${{ inputs.memory }}"
             echo "commit $(git rev-parse --short=7 HEAD), $(date -u +'%Y-%m-%d %H:%M UTC')"
