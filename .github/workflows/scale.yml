@@ -1,0 +1,151 @@
+# The server at a size it is being readied for: a bare Postgres held to the
+# cores and memory of a Supabase compute size, the installer run into it,
+# that many lifters seeded (tool/db/scale/seed.sql), each call the app makes
+# timed (bench.sql), the board totals checked against their duels
+# (season_test.sql), then the app's mix of calls from many phones at once
+# (tool/db/scale/load, pgbench) with the heaviest statements listed.
+# Never the real project. The answer lands on ci-builds, in
+# scale/<lifters>.txt.
+#
+# Run by hand: tool/ci/run_scale.sh [lifters] [cpus] [memory]
+
+name: Server at scale
+
+on:
+  workflow_dispatch:
+    inputs:
+      lifters:
+        description: how many lifters to seed
+        required: true
+        default: '100000'
+      cpus:
+        description: cores the database may use (a Supabase Small has 2)
+        required: true
+        default: '2'
+      memory:
+        description: memory the database may use (a Supabase Small has 2 GB)
+        required: true
+        default: '2g'
+
+defaults:
+  run:
+    working-directory: apps/outrepd_flutter
+
+jobs:
+  scale:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ['5432:5432']
+        options: >-
+          --shm-size 1g
+          --health-cmd pg_isready --health-interval 5s
+          --health-timeout 5s --health-retries 12
+    env:
+      DB: postgresql://postgres:postgres@localhost:5432/postgres
+      OUT: /tmp/scale.txt
+    steps:
+      - uses: actions/checkout@v4
+
+      # Settings near Supabase's for a 2 GB compute; the cores and memory
+      # are the container's own limits.
+      - name: Held to the compute size
+        run: |
+          id=${{ job.services.postgres.id }}
+          psql "$DB" -q \
+            -c "alter system set shared_buffers = '512MB'" \
+            -c "alter system set effective_cache_size = '1536MB'" \
+            -c "alter system set work_mem = '5MB'" \
+            -c "alter system set maintenance_work_mem = '256MB'" \
+            -c "alter system set random_page_cost = 1.1" \
+            -c "alter system set max_connections = 100" \
+            -c "alter system set shared_preload_libraries = 'pg_stat_statements'" \
+            -c "alter system set pg_stat_statements.track = 'all'"
+          docker update --cpus "${{ inputs.cpus }}" --memory "${{ inputs.memory }}" \
+            --memory-swap "${{ inputs.memory }}" "$id"
+          docker restart "$id"
+          for i in $(seq 1 60); do pg_isready -q -h localhost -p 5432 && break; sleep 2; done
+          {
+            echo "Server at scale — ${{ inputs.lifters }} lifters, ${{ inputs.cpus }} cores, ${{ inputs.memory }}"
+            echo "commit $(git rev-parse --short=7 HEAD), $(date -u +'%Y-%m-%d %H:%M UTC')"
+            psql "$DB" -At -c "select version()"
+          } | tee "$OUT"
+
+      - name: Install and seed
+        run: |
+          set -o pipefail
+          sed '/create extension if not exists pg_net/d' supabase/install.sql > "$RUNNER_TEMP/install.sql"
+          psql "$DB" -v ON_ERROR_STOP=1 -q -f tool/db/stubs.sql
+          psql "$DB" -v ON_ERROR_STOP=1 -q -f "$RUNNER_TEMP/install.sql"
+          { echo; echo "=== seed (each step timed; the last three are the month totals and closing last month)";
+            psql "$DB" -v ON_ERROR_STOP=1 -v n=${{ inputs.lifters }} -f tool/db/scale/seed.sql; } 2>&1 | tee -a "$OUT"
+
+      - name: Each call, one at a time
+        if: always()
+        run: |
+          { echo; echo "=== each call as one signed-in lifter (20 runs unless said)";
+            psql "$DB" -At -f tool/db/scale/bench.sql; } 2>&1 | tee -a "$OUT"
+
+      - name: Board totals against their duels
+        if: always()
+        run: |
+          { echo; echo "=== board totals (every count should be 0, stale 1 then 0)";
+            psql "$DB" -At -f tool/db/scale/season_test.sql; } 2>&1 | tee -a "$OUT"
+
+      - name: Many phones at once
+        if: always()
+        run: |
+          PGB=$(ls /usr/lib/postgresql/*/bin/pgbench 2>/dev/null | sort -V | tail -1)
+          [ -n "$PGB" ] || PGB=$(command -v pgbench || true)
+          if [ -z "$PGB" ]; then
+            sudo apt-get install -y -q postgresql-client >/dev/null && PGB=$(command -v pgbench)
+          fi
+          psql "$DB" -q -f tool/db/scale/load/setup.sql
+          cd tool/db/scale/load
+          # The API keeps a pool of connections to the database (about 10 to
+          # 20 on the small sizes): more phones than that wait their turn
+          # there, so 10 and 20 at once is what the database itself sees.
+          for c in 10 20 50; do
+            { echo; echo "=== $c at once for 60 s: polls 60%, home 10%, boards 10%, live search 10%, profiles 10%";
+              PGPASSWORD=postgres "$PGB" -h localhost -U postgres -n -c $c -j 2 -T 60 -r \
+                -D n=${{ inputs.lifters }} \
+                -f poll.sql@60 -f home.sql@10 -f board.sql@10 -f search.sql@10 -f profile.sql@10 \
+                postgres 2>&1 | grep -v "^pgbench: client .* executing\|^progress:"; } | tee -a "$OUT"
+          done
+          { echo; echo "=== heaviest statements over the load (inside functions too)";
+            psql "$DB" -A -F ' | ' -c "
+              select round(total_exec_time)::bigint as total_ms, calls,
+                     round(mean_exec_time::numeric, 2) as mean_ms,
+                     round(max_exec_time::numeric, 1) as max_ms,
+                     left(regexp_replace(query, '\s+', ' ', 'g'), 150) as query
+                from pg_stat_statements
+               where query !~* '^(set|reset|select set_config|begin|commit)'
+               order by total_exec_time desc limit 30"; } 2>&1 | tee -a "$OUT"
+
+      - name: Publish to the ci-builds branch
+        if: always()
+        working-directory: .
+        run: |
+          git config user.name "ci"
+          git config user.email "ci@users.noreply.github.com"
+          work="$RUNNER_TEMP/builds"
+          for attempt in 1 2 3 4 5; do
+            rm -rf "$work"
+            git fetch --depth 1 origin ci-builds
+            git worktree add -f "$work" FETCH_HEAD
+            git -C "$work" checkout -B ci-builds
+            mkdir -p "$work/scale"
+            cp "$OUT" "$work/scale/${{ inputs.lifters }}.txt"
+            cp "$OUT" "$work/scale/latest.txt"
+            git -C "$work" add -A
+            git -C "$work" commit -q -m "Server at scale: ${{ inputs.lifters }}" || true
+            if git -C "$work" push -q origin ci-builds; then break; fi
+            git worktree remove -f "$work" || true
+            sleep $((attempt * 5))
+          done
