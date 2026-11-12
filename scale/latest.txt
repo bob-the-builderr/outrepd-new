@@ -1,0 +1,256 @@
+
+=== each call as one signed-in lifter (20 runs unless said)
+psql:tool/db/scale/bench.sql:9: ERROR:  relation "profiles" does not exist
+LINE 1: select (select count(*) from profiles) || ' profiles, ' || (...
+                                     ^
+CREATE FUNCTION
+psql:tool/db/scale/bench.sql:35: ERROR:  role "authenticated" does not exist
+psql:tool/db/scale/bench.sql:40: ERROR:  relation "profiles" does not exist
+LINE 2:   (select id::text from profiles where username = 'lifter_' ...
+                                ^
+psql:tool/db/scale/bench.sql:42: ERROR:  relation "profiles" does not exist
+LINE 2:   (select id::text from profiles where username = 'lifter_' ...
+                                ^
+psql:tool/db/scale/bench.sql:45: ERROR:  relation "challenges" does not exist
+LINE 2:   coalesce((select c.code from challenges c join profiles p ...
+                                       ^
+psql:tool/db/scale/bench.sql:48: ERROR:  relation "live_matches" does not exist
+LINE 2:   coalesce((select m.id::text from live_matches m
+                                           ^
+psql:tool/db/scale/bench.sql:49: ERROR:  role "authenticated" does not exist
+
+-- Polled while the app is open
+my_live_invites (every 5 s)          error: function my_live_invites() does not exist
+live_online (every 3 s searching)    error: function live_online() does not exist
+find_live_opponent (every 3 s)       error: function find_live_opponent() does not exist
+live_match_state (every 3 s live)    error: function live_match_state(uuid) does not exist
+
+-- Home and profile
+own profile row                      error: relation "profiles" does not exist
+unread_notifications                 error: function unread_notifications() does not exist
+my_notifications                     error: function my_notifications() does not exist
+my_challenges                        error: function my_challenges() does not exist
+challenge_best                       error: function challenge_best() does not exist
+my_plan                              error: function my_plan() does not exist
+my_rewards                           error: function my_rewards() does not exist
+my_adventure                         error: function my_adventure() does not exist
+my_best_minute (week)                error: function my_best_minute(timestamp with time zone, timestamp with time zone) does not exist
+my_days (60)                         error: function my_days(integer, integer) does not exist
+my_duels                             error: function my_duels() does not exist
+my_month_recap                       error: function my_month_recap(timestamp with time zone, timestamp with time zone) does not exist
+my_season_awards                     error: function my_season_awards() does not exist
+award_rarity                         error: function award_rarity() does not exist
+my_account_summary                   error: function my_account_summary() does not exist
+lifter_profile                       error: function lifter_profile(uuid) does not exist
+lifter_showcase                      error: function lifter_showcase(uuid) does not exist
+lifter_season_awards                 error: function lifter_season_awards(uuid) does not exist
+
+-- Friends
+my_friends                           error: function my_friends() does not exist
+friend_requests                      error: function friend_requests() does not exist
+friends_board (week)                 error: function friends_board(boolean) does not exist
+friends_board (month)                error: function friends_board(boolean) does not exist
+friends_leaderboard                  error: function friends_leaderboard() does not exist
+my_blocks                            error: function my_blocks() does not exist
+my_mutes                             error: function my_mutes() does not exist
+find_lifters                         error: function find_lifters(unknown) does not exist
+
+-- Boards
+week_board (everyone)                error: function week_board(unknown, integer) does not exist
+week_board (country)                 error: function week_board(unknown, integer) does not exist
+my_week_place (everyone)             error: function my_week_place(unknown) does not exist
+my_week_place (country)              error: function my_week_place(unknown) does not exist
+month_board                          error: function month_board() does not exist
+my_month_place                       error: function my_month_place() does not exist
+last_month_winners                   error: function last_month_winners() does not exist
+leaderboard (top players)            error: function leaderboard(unknown, integer) does not exist
+leaderboard (country)                error: function leaderboard(unknown, integer) does not exist
+leaderboard (your tier)              error: function leaderboard(unknown, integer, integer, integer) does not exist
+my_board_place (global)              error: function my_board_place(unknown) does not exist
+my_board_place (country)             error: function my_board_place(unknown) does not exist
+pro_looks (a board of 100)           error: relation "profiles" does not exist
+
+-- Matches
+find_opponent_set                    error: function find_opponent_set() does not exist
+open_challenge (a link)              error: function open_challenge(text) does not exist
+
+-- Rare
+my_data (export)                     error: function my_data() does not exist
+RESET
+
+-- The website, signed out
+psql:tool/db/scale/bench.sql:118: ERROR:  role "anon" does not exist
+public_lifter_card (u/<name>)        error: function public_lifter_card(unknown) does not exist
+RESET
+
+=== board totals (every count should be 0, stale 1 then 0)
+psql:tool/db/scale/season_test.sql:25: ERROR:  type "season_points" does not exist
+LINE 6:   before_a season_points; after_a season_points;
+                   ^
+psql:tool/db/scale/season_test.sql:28: ERROR:  function season_test() does not exist
+LINE 1: select season_test() as result;
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:tool/db/scale/season_test.sql:29: ERROR:  relation "season_points" does not exist
+LINE 1: ...1 as select profile_id, points, wins, played from season_poi...
+                                                             ^
+psql:tool/db/scale/season_test.sql:33: ERROR:  function season_of(timestamp with time zone) does not exist
+LINE 2:   (select * from season_points_from_duels(season_of(now())) ...
+                                                  ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:tool/db/scale/season_test.sql:47: ERROR:  relation "profiles" does not exist
+LINE 1: select id        from profiles where username = 'lifter_400'
+                              ^
+QUERY:  select id        from profiles where username = 'lifter_400'
+CONTEXT:  PL/pgSQL function inline_code_block line 4 at SQL statement
+psql:tool/db/scale/season_test.sql:51: ERROR:  function season_of(timestamp with time zone) does not exist
+LINE 2:   (select * from season_points_from_duels(season_of(now())) ...
+                                                  ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:tool/db/scale/season_test.sql:54: ERROR:  relation "season_points" does not exist
+LINE 1: ...reate temp table before_unranked as select * from season_poi...
+                                                             ^
+psql:tool/db/scale/season_test.sql:64: ERROR:  relation "profiles" does not exist
+LINE 1: select id        from profiles where username = 'lifter_600'
+                              ^
+QUERY:  select id        from profiles where username = 'lifter_600'
+CONTEXT:  PL/pgSQL function inline_code_block line 4 at SQL statement
+psql:tool/db/scale/season_test.sql:67: ERROR:  relation "season_points" does not exist
+LINE 2:   (select * from season_points except select * from before_u...
+                         ^
+psql:tool/db/scale/season_test.sql:71: ERROR:  relation "auth.users" does not exist
+LINE 1: delete from auth.users where id = (select id from profiles w...
+                    ^
+psql:tool/db/scale/season_test.sql:72: ERROR:  relation "season_points_stale" does not exist
+LINE 1: ...     — months stale: ' || count(*) as result from season_poi...
+                                                             ^
+psql:tool/db/scale/season_test.sql:73: ERROR:  function season_points_refresh() does not exist
+LINE 1: select season_points_refresh();
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:tool/db/scale/season_test.sql:77: ERROR:  function season_of(timestamp with time zone) does not exist
+LINE 2:   (select * from season_points_from_duels(season_of(now())) ...
+                                                  ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+psql:tool/db/scale/season_test.sql:78: ERROR:  relation "season_points_stale" does not exist
+LINE 1: ...stale after refresh: ' || count(*) as result from season_poi...
+                                                             ^
+
+=== 10 at once for 60 s: polls 60%, home 10%, boards 10%, live search 10%, profiles 10%
+pgbench (18.6 (Ubuntu 18.6-1.pgdg26.04+2), server 16.15 (Debian 16.15-1.pgdg13+2))
+pgbench: error: client 0 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 3 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 7 script 2 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 5 script 2 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 8 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 1 script 1 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 2 script 4 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 4 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 9 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 6 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+transaction type: multiple scripts
+scaling factor: 1
+query mode: simple
+number of clients: 10
+number of threads: 2
+maximum number of tries: 1
+duration: 60 s
+number of transactions actually processed: 0
+pgbench: error: Run was aborted; the above results are incomplete.
+
+=== 20 at once for 60 s: polls 60%, home 10%, boards 10%, live search 10%, profiles 10%
+pgbench (18.6 (Ubuntu 18.6-1.pgdg26.04+2), server 16.15 (Debian 16.15-1.pgdg13+2))
+pgbench: error: client 18 script 4 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 19 script 1 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 12 script 2 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 1 script 1 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 11 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 13 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 16 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 10 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 0 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 3 script 3 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 6 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 9 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 15 script 4 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 4 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 8 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 17 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 2 script 2 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 14 script 1 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 5 script 4 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 7 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+transaction type: multiple scripts
+scaling factor: 1
+query mode: simple
+number of clients: 20
+number of threads: 2
+maximum number of tries: 1
+duration: 60 s
+number of transactions actually processed: 0
+pgbench: error: Run was aborted; the above results are incomplete.
+
+=== 50 at once for 60 s: polls 60%, home 10%, boards 10%, live search 10%, profiles 10%
+pgbench (18.6 (Ubuntu 18.6-1.pgdg26.04+2), server 16.15 (Debian 16.15-1.pgdg13+2))
+pgbench: error: client 35 script 3 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 34 script 1 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 37 script 2 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 40 script 3 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 45 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 27 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 47 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 26 script 1 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 24 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 23 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 31 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 46 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 36 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 4 script 4 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 30 script 4 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 28 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 41 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 5 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 32 script 3 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 0 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 1 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 3 script 2 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 8 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 14 script 4 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 38 script 1 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 39 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 42 script 3 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 44 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 9 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 48 script 1 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 25 script 3 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 12 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 29 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 33 script 3 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 43 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 49 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 2 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 21 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 18 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 7 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 10 script 4 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 11 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 13 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 15 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 16 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 17 script 3 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 19 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 20 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 6 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+pgbench: error: client 22 script 1 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+transaction type: multiple scripts
+scaling factor: 1
+query mode: simple
+number of clients: 50
+number of threads: 2
+maximum number of tries: 1
+duration: 60 s
+number of transactions actually processed: 0
+pgbench: error: Run was aborted; the above results are incomplete.
+
+=== heaviest statements over the load (inside functions too)
+ERROR:  pg_stat_statements must be loaded via shared_preload_libraries
