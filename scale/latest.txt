@@ -1,155 +1,168 @@
 Server at scale — 100000 lifters, 2 cores, 2g
-commit 2f7e479, 2026-11-12 02:38 UTC
+commit a1aa412, 2026-11-12 02:55 UTC
 PostgreSQL 16.15 (Debian 16.15-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
 
 === seed (each step timed; the last three are the month totals and closing last month)
 Timing is on.
 SET
-Time: 0.359 ms
+Time: 0.371 ms
  setseed 
 ---------
  
 (1 row)
 
-Time: 0.490 ms
+Time: 0.417 ms
 INSERT 0 100000
-Time: 262.581 ms
+Time: 259.721 ms
 INSERT 0 100000
-Time: 1673.087 ms (00:01.673)
+Time: 1630.208 ms (00:01.630)
 INSERT 0 2000000
-Time: 24698.235 ms (00:24.698)
+Time: 25352.005 ms (00:25.352)
 INSERT 0 900000
-Time: 20983.446 ms (00:20.983)
+Time: 18860.372 ms (00:18.860)
 INSERT 0 500000
-Time: 3690.399 ms (00:03.690)
+Time: 3743.447 ms (00:03.743)
 INSERT 0 1500000
-Time: 12991.974 ms (00:12.992)
+Time: 12352.193 ms (00:12.352)
 INSERT 0 400000
-Time: 3871.142 ms (00:03.871)
+Time: 3701.339 ms (00:03.701)
 INSERT 0 30006
-Time: 75.919 ms
+Time: 70.533 ms
 UPDATE 40
 Time: 1.013 ms
 INSERT 0 20000
-Time: 1881.216 ms (00:01.881)
+Time: 1398.047 ms (00:01.398)
 INSERT 0 60000
-Time: 2557.907 ms (00:02.558)
+Time: 3536.519 ms (00:03.537)
 SET
-Time: 0.320 ms
+Time: 0.491 ms
  season_points_rebuild 
 -----------------------
  
 (1 row)
 
-Time: 1277.460 ms (00:01.277)
+Time: 1244.093 ms (00:01.244)
  season_points_rebuild 
 -----------------------
  
 (1 row)
 
-Time: 3601.811 ms (00:03.602)
+Time: 2457.942 ms (00:02.458)
  season_points_rebuild 
 -----------------------
  
 (1 row)
 
-Time: 1999.015 ms (00:01.999)
+Time: 2122.047 ms (00:02.122)
+ week_totals_rebuild 
+---------------------
+ 
+(1 row)
+
+Time: 1083.721 ms (00:01.084)
  close_finished_seasons 
 ------------------------
  
 (1 row)
 
-Time: 955.027 ms
+Time: 900.735 ms
 Timing is off.
 ANALYZE
  profiles |  sets   | duels  | friendships | notifications | live_matches | live_queue | challenges | awards |  size   
 ----------+---------+--------+-------------+---------------+--------------+------------+------------+--------+---------
-   100000 | 2000000 | 900000 |      500000 |       1500000 |       400000 |      30006 |      20000 |     20 | 1542 MB
+   100000 | 2000000 | 900000 |      500000 |       1500000 |       400000 |      30006 |      20000 |     20 | 1631 MB
 (1 row)
 
 
+=== server checks (security test, upgrade rehearsal)
+ all security checks passed
+server checks: passed
+
 === each call as one signed-in lifter (20 runs unless said)
-100000 profiles, 2000000 sets, 900000 duels, 500000 friendships, 1500000 notifications, 400000 live matches, 30006 in queue, 20000 challenges, 1542 MB
+100000 profiles, 2000000 sets, 900000 duels, 500000 friendships, 1500000 notifications, 400000 live matches, 30006 in queue, 20000 challenges, 1631 MB
 CREATE FUNCTION
 GRANT
 00000000-0000-4000-8000-00000000c350
 00000000-0000-4000-8000-00000000c351
 x2q322
-d7f300bd-eb3a-4e2c-b495-37b666982bfe
+167edc5a-1879-4789-842a-725dbc0843ae
+00000000-0000-4000-8000-00000000f80e
 SET
 
 -- Polled while the app is open
-my_live_invites (every 5 s)               0.37 ms avg      2.02 ms worst      0 rows
-live_online (every 3 s searching)         6.09 ms avg      9.31 ms worst      1 rows
-find_live_opponent (every 3 s)            3.51 ms avg     19.41 ms worst      0 rows
-live_match_state (every 3 s live)    error: integer out of range
+my_live_invites (every 5 s)               0.39 ms avg      2.59 ms worst      0 rows
+live_online (every 3 s searching)         3.74 ms avg      6.92 ms worst      1 rows
+find_live_opponent (every 3 s)            3.25 ms avg     18.11 ms worst      0 rows
+live_match_state (every 3 s live)         0.18 ms avg      0.83 ms worst      1 rows
 
 -- Home and profile
-own profile row                           0.15 ms avg      0.27 ms worst      1 rows
-unread_notifications                      0.02 ms avg      0.15 ms worst      1 rows
-my_notifications                          0.27 ms avg      0.73 ms worst     15 rows
-my_challenges                             0.27 ms avg      1.22 ms worst      1 rows
-challenge_best                          213.63 ms avg    292.13 ms worst      1 rows
-my_plan                                   0.12 ms avg      0.65 ms worst      1 rows
-my_rewards                                0.13 ms avg      0.61 ms worst      1 rows
-my_adventure                              0.13 ms avg      0.50 ms worst      1 rows
-my_best_minute (week)                   340.28 ms avg    358.96 ms worst      1 rows
-my_days (60)                           1222.58 ms avg   1271.81 ms worst     20 rows
-my_duels                                  1.12 ms avg      6.96 ms worst     18 rows
-my_month_recap                         8374.69 ms avg   8529.43 ms worst      1 rows
-my_season_awards                          0.16 ms avg      1.42 ms worst      0 rows
-award_rarity                              0.26 ms avg      0.72 ms worst      1 rows
-my_account_summary                        0.34 ms avg      1.16 ms worst      1 rows
-lifter_profile                            1.66 ms avg      3.83 ms worst      1 rows
-lifter_showcase                           0.27 ms avg      0.51 ms worst      1 rows
-lifter_season_awards                      0.21 ms avg      0.32 ms worst      0 rows
+own profile row                           0.14 ms avg      0.29 ms worst      1 rows
+unread_notifications                      0.02 ms avg      0.14 ms worst      1 rows
+my_notifications                          0.29 ms avg      1.11 ms worst     15 rows
+my_challenges                             0.27 ms avg      1.34 ms worst      1 rows
+challenge_best                            0.43 ms avg      3.82 ms worst      1 rows
+my_plan                                   0.11 ms avg      0.48 ms worst      1 rows
+my_rewards                                0.13 ms avg      0.44 ms worst      1 rows
+my_adventure                              0.13 ms avg      0.47 ms worst      1 rows
+my_best_minute (week)                     0.27 ms avg      0.45 ms worst      1 rows
+my_days (60)                              0.25 ms avg      0.62 ms worst     20 rows
+my_duels                                  1.15 ms avg      4.30 ms worst     18 rows
+my_month_recap                            1.00 ms avg      1.49 ms worst      1 rows
+my_season_awards                          0.14 ms avg      1.13 ms worst      0 rows
+award_rarity                              0.25 ms avg      0.68 ms worst      1 rows
+my_account_summary                        0.34 ms avg      1.00 ms worst      1 rows
+lifter_profile                            1.71 ms avg      4.55 ms worst      1 rows
+lifter_profile (lowest placed)           54.41 ms avg     59.47 ms worst      1 rows
+lifter_showcase                           0.28 ms avg      0.55 ms worst      1 rows
+lifter_season_awards                      0.21 ms avg      0.34 ms worst      0 rows
 
 -- Friends
-my_friends                                1.65 ms avg     16.28 ms worst      8 rows
-friend_requests                           0.26 ms avg      0.43 ms worst      1 rows
-friends_board (week)                    170.79 ms avg    178.22 ms worst      9 rows
-friends_board (month)                     0.47 ms avg      1.43 ms worst      9 rows
-friends_leaderboard                       0.46 ms avg      0.58 ms worst      9 rows
-my_blocks                                 0.18 ms avg      0.33 ms worst      0 rows
-my_mutes                                  0.18 ms avg      0.30 ms worst      0 rows
-find_lifters                              2.80 ms avg     14.17 ms worst     10 rows
+my_friends                                1.47 ms avg     12.91 ms worst      8 rows
+friend_requests                           0.25 ms avg      0.43 ms worst      1 rows
+friends_board (week)                      0.44 ms avg      1.43 ms worst      9 rows
+friends_board (month)                     0.44 ms avg      1.12 ms worst      9 rows
+friends_leaderboard                       0.48 ms avg      0.71 ms worst      9 rows
+my_blocks                                 0.18 ms avg      0.34 ms worst      0 rows
+my_mutes                                  0.19 ms avg      0.36 ms worst      0 rows
+find_lifters                              2.24 ms avg      3.46 ms worst     10 rows
 
 -- Boards
-week_board (everyone)                   521.15 ms avg    562.10 ms worst    100 rows
-week_board (country)                    279.00 ms avg    286.63 ms worst    100 rows
-my_week_place (everyone)                344.22 ms avg    362.08 ms worst      1 rows
-my_week_place (country)                 272.84 ms avg    279.56 ms worst      1 rows
-month_board                              50.45 ms avg     54.30 ms worst    100 rows
-my_month_place                           94.82 ms avg     97.97 ms worst      1 rows
+week_board (everyone)                   221.70 ms avg    257.67 ms worst    100 rows
+week_board (country)                     37.31 ms avg     42.45 ms worst    100 rows
+my_week_place (everyone)                 94.39 ms avg    100.25 ms worst      1 rows
+my_week_place (country)                  55.70 ms avg     62.20 ms worst      1 rows
+month_board                              45.84 ms avg     56.03 ms worst    100 rows
+my_month_place                           83.38 ms avg     92.29 ms worst      1 rows
 last_month_winners                        0.16 ms avg      0.78 ms worst     10 rows
-leaderboard (top players)                 0.39 ms avg      0.61 ms worst    100 rows
-leaderboard (country)                     1.51 ms avg      2.36 ms worst    100 rows
-leaderboard (your tier)                  16.15 ms avg     16.92 ms worst    100 rows
+leaderboard (top players)                 0.39 ms avg      0.58 ms worst    100 rows
+leaderboard (country)                     1.58 ms avg      2.30 ms worst    100 rows
+leaderboard (your tier)                  14.05 ms avg     16.52 ms worst    100 rows
 my_board_place (global)                   0.02 ms avg      0.16 ms worst      1 rows
 my_board_place (country)                  0.02 ms avg      0.05 ms worst      1 rows
-pro_looks (a board of 100)                0.41 ms avg      0.75 ms worst      1 rows
+pro_looks (a board of 100)                0.40 ms avg      0.71 ms worst      1 rows
 
 -- Matches
-find_opponent_set                         1.28 ms avg      3.07 ms worst      1 rows
-open_challenge (a link)                   0.64 ms avg      2.25 ms worst      1 rows
+find_opponent_set                         1.39 ms avg      3.64 ms worst      1 rows
+open_challenge (a link)                   0.62 ms avg      2.08 ms worst      1 rows
 
 -- Rare
-my_data (export)                          0.06 ms avg      0.09 ms worst      1 rows
+my_data (export)                          0.05 ms avg      0.10 ms worst      1 rows
 RESET
 
 -- The website, signed out
 SET
-public_lifter_card (u/<name>)             1.46 ms avg      2.20 ms worst      1 rows
+public_lifter_card (u/<name>)             1.42 ms avg      2.07 ms worst      1 rows
 RESET
 
 === board totals (every count should be 0, stale 1 then 0)
 CREATE FUNCTION
-cfdb8d46-6499-4c70-89df-843367b1d2e8
-SELECT 91159
+b8280818-b1d2-474f-8ddd-d0045d1f7098
+SELECT 91220
 raced set   — totals vs duels differing: 0
 DO
 live match  — totals vs duels differing: 0
-SELECT 291151
+raced + live — week totals vs duels differing: 0
+SELECT 291212
 DO
 unranked    — rows changed: 0
 DELETE 1
@@ -157,6 +170,9 @@ deleted     — months stale: 3
 
 deleted     — totals vs duels differing after refresh: 0
 deleted     — months stale after refresh: 0
+deleted     — weeks stale: 8
+
+deleted     — week totals vs duels differing: 0
 
 === 10 at once for 60 s: polls 60%, home 10%, boards 10%, live search 10%, profiles 10%
 pgbench (18.6 (Ubuntu 18.6-1.pgdg26.04+2), server 16.15 (Debian 16.15-1.pgdg13+2))
@@ -167,85 +183,85 @@ number of clients: 10
 number of threads: 2
 maximum number of tries: 1
 duration: 60 s
-number of transactions actually processed: 683
+number of transactions actually processed: 1938
 number of failed transactions: 0 (0.000%)
-latency average = 946.688 ms
-initial connection time = 38.792 ms
-tps = 10.563137 (without initial connection time)
+latency average = 314.118 ms
+initial connection time = 53.697 ms
+tps = 31.835171 (without initial connection time)
 SQL script 1: poll.sql
  - weight: 60 (targets 60.0% of total)
- - 411 transactions (60.2% of total)
- - number of transactions actually processed: 411 (tps = 6.356441)
+ - 1160 transactions (59.9% of total)
+ - number of transactions actually processed: 1160 (tps = 19.055108)
  - number of failed transactions: 0 (0.000%)
- - latency average = 9.791 ms
- - latency stddev = 16.073 ms
+ - latency average = 14.944 ms
+ - latency stddev = 19.880 ms
  - statement latencies in milliseconds and failures:
-         0.002           0 \set u random(1, :n)
-         2.324           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
-         2.439           0 set role authenticated;
-         3.698           0 select count(*) from my_live_invites();
-         1.329           0 reset role;
+         0.001           0 \set u random(1, :n)
+         3.252           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         3.229           0 set role authenticated;
+         5.181           0 select count(*) from my_live_invites();
+         3.281           0 reset role;
 SQL script 2: home.sql
  - weight: 10 (targets 10.0% of total)
- - 66 transactions (9.7% of total)
- - number of transactions actually processed: 66 (tps = 1.020742)
+ - 210 transactions (10.8% of total)
+ - number of transactions actually processed: 210 (tps = 3.449632)
  - number of failed transactions: 0 (0.000%)
- - latency average = 18.086 ms
- - latency stddev = 20.226 ms
+ - latency average = 33.490 ms
+ - latency stddev = 27.932 ms
  - statement latencies in milliseconds and failures:
-         0.002           0 \set u random(1, :n)
-         0.796           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
-         0.802           0 set role authenticated;
-         1.113           0 select * from profiles where id = auth.uid();
-         4.929           0 select unread_notifications();
-         1.554           0 select count(*) from my_challenges();
-         2.216           0 select count(*) from my_plan();
-         2.895           0 select count(*) from my_rewards();
-         3.778           0 reset role;
+         0.001           0 \set u random(1, :n)
+         5.520           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         3.387           0 set role authenticated;
+         3.540           0 select * from profiles where id = auth.uid();
+         6.248           0 select unread_notifications();
+         3.730           0 select count(*) from my_challenges();
+         2.365           0 select count(*) from my_plan();
+         4.129           0 select count(*) from my_rewards();
+         4.570           0 reset role;
 SQL script 3: board.sql
  - weight: 10 (targets 10.0% of total)
- - 60 transactions (8.8% of total)
- - number of transactions actually processed: 60 (tps = 0.927948)
+ - 171 transactions (8.8% of total)
+ - number of transactions actually processed: 171 (tps = 2.808986)
  - number of failed transactions: 0 (0.000%)
- - latency average = 9678.956 ms
- - latency stddev = 2194.479 ms
+ - latency average = 2749.515 ms
+ - latency stddev = 1079.921 ms
  - statement latencies in milliseconds and failures:
-         0.002           0 \set u random(1, :n)
-         1.971           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
-         1.982           0 set role authenticated;
-      5289.189           0 select count(*) from week_board(null, 100);
-      2943.385           0 select count(*) from my_week_place(null);
-      1439.487           0 select count(*) from friends_board(false);
-         2.941           0 reset role;
+         0.001           0 \set u random(1, :n)
+         2.975           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         2.897           0 set role authenticated;
+      2046.116           0 select count(*) from week_board(null, 100);
+       684.490           0 select count(*) from my_week_place(null);
+         9.441           0 select count(*) from friends_board(false);
+         3.594           0 reset role;
 SQL script 4: search.sql
  - weight: 10 (targets 10.0% of total)
- - 66 transactions (9.7% of total)
- - number of transactions actually processed: 66 (tps = 1.020742)
+ - 196 transactions (10.1% of total)
+ - number of transactions actually processed: 196 (tps = 3.219656)
  - number of failed transactions: 0 (0.000%)
- - latency average = 25.131 ms
- - latency stddev = 24.110 ms
+ - latency average = 31.894 ms
+ - latency stddev = 26.780 ms
  - statement latencies in milliseconds and failures:
-         0.002           0 \set u random(1, :n)
-         2.495           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
-         0.894           0 set role authenticated;
-         2.287           0 select count(*) from live_online();
-        16.725           0 select load_try('select count(*) from find_live_opponent()');
-         2.728           0 reset role;
+         0.001           0 \set u random(1, :n)
+         3.048           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         4.446           0 set role authenticated;
+         4.784           0 select count(*) from live_online();
+        16.400           0 select load_try('select count(*) from find_live_opponent()');
+         3.215           0 reset role;
 SQL script 5: profile.sql
  - weight: 10 (targets 10.0% of total)
- - 80 transactions (11.7% of total)
- - number of transactions actually processed: 80 (tps = 1.237264)
+ - 201 transactions (10.4% of total)
+ - number of transactions actually processed: 201 (tps = 3.301790)
  - number of failed transactions: 0 (0.000%)
- - latency average = 569.417 ms
- - latency stddev = 301.835 ms
+ - latency average = 516.240 ms
+ - latency stddev = 257.274 ms
  - statement latencies in milliseconds and failures:
-         0.002           0 \set u random(1, :n)
-         2.375           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
-         1.741           0 set role authenticated;
+         0.001           0 \set u random(1, :n)
+         3.110           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         3.022           0 set role authenticated;
          0.001           0 \set o random(1, :n)
-       558.416           0 select count(*) from lifter_profile(('00000000-0000-4000-8000-' || lpad(to_hex(:o), 12, '0'))::uuid);
-         4.479           0 select count(*) from lifter_showcase(('00000000-0000-4000-8000-' || lpad(to_hex(:o), 12, '0'))::uuid);
-         2.403           0 reset role;
+       504.724           0 select count(*) from lifter_profile(('00000000-0000-4000-8000-' || lpad(to_hex(:o), 12, '0'))::uuid);
+         2.641           0 select count(*) from lifter_showcase(('00000000-0000-4000-8000-' || lpad(to_hex(:o), 12, '0'))::uuid);
+         2.741           0 reset role;
 
 === 20 at once for 60 s: polls 60%, home 10%, boards 10%, live search 10%, profiles 10%
 pgbench (18.6 (Ubuntu 18.6-1.pgdg26.04+2), server 16.15 (Debian 16.15-1.pgdg13+2))
@@ -256,285 +272,88 @@ number of clients: 20
 number of threads: 2
 maximum number of tries: 1
 duration: 60 s
-number of transactions actually processed: 438
+number of transactions actually processed: 2113
 number of failed transactions: 0 (0.000%)
-latency average = 3300.785 ms
-initial connection time = 75.303 ms
-tps = 6.059166 (without initial connection time)
+latency average = 580.994 ms
+initial connection time = 69.783 ms
+tps = 34.423767 (without initial connection time)
 SQL script 1: poll.sql
  - weight: 60 (targets 60.0% of total)
- - 262 transactions (59.8% of total)
- - number of transactions actually processed: 262 (tps = 3.624432)
+ - 1292 transactions (61.1% of total)
+ - number of transactions actually processed: 1292 (tps = 21.048512)
  - number of failed transactions: 0 (0.000%)
- - latency average = 18.892 ms
- - latency stddev = 21.247 ms
+ - latency average = 18.094 ms
+ - latency stddev = 22.045 ms
  - statement latencies in milliseconds and failures:
-         0.002           0 \set u random(1, :n)
-         3.797           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
-         5.052           0 set role authenticated;
-         6.067           0 select count(*) from my_live_invites();
-         3.991           0 reset role;
+         0.001           0 \set u random(1, :n)
+         4.848           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         3.919           0 set role authenticated;
+         4.372           0 select count(*) from my_live_invites();
+         4.946           0 reset role;
 SQL script 2: home.sql
  - weight: 10 (targets 10.0% of total)
- - 38 transactions (8.7% of total)
- - number of transactions actually processed: 38 (tps = 0.525681)
+ - 209 transactions (9.9% of total)
+ - number of transactions actually processed: 209 (tps = 3.404906)
  - number of failed transactions: 0 (0.000%)
- - latency average = 52.446 ms
- - latency stddev = 34.725 ms
+ - latency average = 39.320 ms
+ - latency stddev = 29.741 ms
  - statement latencies in milliseconds and failures:
-         0.002           0 \set u random(1, :n)
-         3.092           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
-         3.960           0 set role authenticated;
-         7.039           0 select * from profiles where id = auth.uid();
-         8.544           0 select unread_notifications();
-         7.217           0 select count(*) from my_challenges();
-        13.433           0 select count(*) from my_plan();
-         2.491           0 select count(*) from my_rewards();
-         6.668           0 reset role;
+         0.001           0 \set u random(1, :n)
+         3.394           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         4.109           0 set role authenticated;
+         4.507           0 select * from profiles where id = auth.uid();
+         7.246           0 select unread_notifications();
+         4.436           0 select count(*) from my_challenges();
+         6.211           0 select count(*) from my_plan();
+         4.963           0 select count(*) from my_rewards();
+         4.452           0 reset role;
 SQL script 3: board.sql
  - weight: 10 (targets 10.0% of total)
- - 54 transactions (12.3% of total)
- - number of transactions actually processed: 54 (tps = 0.747020)
+ - 192 transactions (9.1% of total)
+ - number of transactions actually processed: 192 (tps = 3.127952)
  - number of failed transactions: 0 (0.000%)
- - latency average = 24094.402 ms
- - latency stddev = 4940.314 ms
+ - latency average = 5062.024 ms
+ - latency stddev = 1841.012 ms
  - statement latencies in milliseconds and failures:
-         0.002           0 \set u random(1, :n)
-         1.711           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
-         5.152           0 set role authenticated;
-     11691.378           0 select count(*) from week_board(null, 100);
-      7762.263           0 select count(*) from my_week_place(null);
-      4626.044           0 select count(*) from friends_board(false);
-         7.852           0 reset role;
+         0.001           0 \set u random(1, :n)
+         4.119           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         3.788           0 set role authenticated;
+      3882.930           0 select count(*) from week_board(null, 100);
+      1148.519           0 select count(*) from my_week_place(null);
+        15.942           0 select count(*) from friends_board(false);
+         6.724           0 reset role;
 SQL script 4: search.sql
  - weight: 10 (targets 10.0% of total)
- - 49 transactions (11.2% of total)
- - number of transactions actually processed: 49 (tps = 0.677852)
+ - 206 transactions (9.7% of total)
+ - number of transactions actually processed: 206 (tps = 3.356032)
  - number of failed transactions: 0 (0.000%)
- - latency average = 116.441 ms
- - latency stddev = 114.075 ms
+ - latency average = 48.082 ms
+ - latency stddev = 42.988 ms
  - statement latencies in milliseconds and failures:
-         0.002           0 \set u random(1, :n)
-         1.713           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
-         3.274           0 set role authenticated;
-         7.804           0 select count(*) from live_online();
-        96.650           0 select load_try('select count(*) from find_live_opponent()');
-         6.999           0 reset role;
+         0.001           0 \set u random(1, :n)
+         3.262           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         4.722           0 set role authenticated;
+         4.451           0 select count(*) from live_online();
+        31.242           0 select load_try('select count(*) from find_live_opponent()');
+         4.403           0 reset role;
 SQL script 5: profile.sql
  - weight: 10 (targets 10.0% of total)
- - 35 transactions (8.0% of total)
- - number of transactions actually processed: 35 (tps = 0.484180)
+ - 214 transactions (10.1% of total)
+ - number of transactions actually processed: 214 (tps = 3.486364)
  - number of failed transactions: 0 (0.000%)
- - latency average = 1305.082 ms
- - latency stddev = 418.642 ms
+ - latency average = 922.241 ms
+ - latency stddev = 538.255 ms
  - statement latencies in milliseconds and failures:
-         0.002           0 \set u random(1, :n)
-         3.235           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
-         3.551           0 set role authenticated;
-         0.002           0 \set o random(1, :n)
-      1290.340           0 select count(*) from lifter_profile(('00000000-0000-4000-8000-' || lpad(to_hex(:o), 12, '0'))::uuid);
-         2.856           0 select count(*) from lifter_showcase(('00000000-0000-4000-8000-' || lpad(to_hex(:o), 12, '0'))::uuid);
-         5.096           0 reset role;
+         0.001           0 \set u random(1, :n)
+         3.917           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         3.167           0 set role authenticated;
+         0.001           0 \set o random(1, :n)
+       904.789           0 select count(*) from lifter_profile(('00000000-0000-4000-8000-' || lpad(to_hex(:o), 12, '0'))::uuid);
+         4.618           0 select count(*) from lifter_showcase(('00000000-0000-4000-8000-' || lpad(to_hex(:o), 12, '0'))::uuid);
+         5.764           0 reset role;
 
 === 50 at once for 60 s: polls 60%, home 10%, boards 10%, live search 10%, profiles 10%
 pgbench (18.6 (Ubuntu 18.6-1.pgdg26.04+2), server 16.15 (Debian 16.15-1.pgdg13+2))
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-pgbench: error: client 49 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 40 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 44 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 31 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 6 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 17 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 37 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 10 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 2 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 43 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 42 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-pgbench: error: client 33 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-pgbench: error: client 16 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 32 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 36 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 27 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 11 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 46 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 23 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 38 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 45 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 48 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 26 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 14 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 28 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 3 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 18 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 21 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 1 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-WARNING:  terminating connection because of crash of another server process
-DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
-HINT:  In a moment you should be able to reconnect to the database and repeat your command.
-pgbench: error: client 35 aborted in command 4 (SQL) of script 4; perhaps the backend died while processing
-pgbench: error: client 41 aborted in command 4 (SQL) of script 4; perhaps the backend died while processing
-pgbench: error: client 4 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 7 aborted in command 4 (SQL) of script 4; perhaps the backend died while processing
-pgbench: error: client 0 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 9 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 19 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 24 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 8 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 25 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 12 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 20 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 22 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 13 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 29 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 30 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 39 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 47 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 5 aborted in command 4 (SQL) of script 4; perhaps the backend died while processing
-pgbench: error: client 34 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
-pgbench: error: client 15 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
 transaction type: multiple scripts
 scaling factor: 1
 query mode: simple
@@ -542,82 +361,116 @@ number of clients: 50
 number of threads: 2
 maximum number of tries: 1
 duration: 60 s
-number of transactions actually processed: 494
+number of transactions actually processed: 2254
 number of failed transactions: 0 (0.000%)
-latency average = 1824.172 ms
-initial connection time = 203.934 ms
-tps = 27.409703 (without initial connection time)
+latency average = 1453.173 ms
+initial connection time = 184.755 ms
+tps = 34.407475 (without initial connection time)
 SQL script 1: poll.sql
  - weight: 60 (targets 60.0% of total)
- - 331 transactions (67.0% of total)
- - number of transactions actually processed: 331 (tps = 18.365610)
+ - 1349 transactions (59.8% of total)
+ - number of transactions actually processed: 1349 (tps = 20.592584)
  - number of failed transactions: 0 (0.000%)
- - latency average = 42.118 ms
- - latency stddev = 37.657 ms
+ - latency average = 34.367 ms
+ - latency stddev = 39.304 ms
  - statement latencies in milliseconds and failures:
-         0.002           0 \set u random(1, :n)
-         6.079           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
-         6.531           0 set role authenticated;
-        19.861           0 select count(*) from my_live_invites();
-         9.665           0 reset role;
+         0.001           0 \set u random(1, :n)
+         6.743           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         7.099           0 set role authenticated;
+         9.522           0 select count(*) from my_live_invites();
+        11.002           0 reset role;
 SQL script 2: home.sql
  - weight: 10 (targets 10.0% of total)
- - 61 transactions (12.3% of total)
- - number of transactions actually processed: 61 (tps = 3.384599)
+ - 192 transactions (8.5% of total)
+ - number of transactions actually processed: 192 (tps = 2.930894)
  - number of failed transactions: 0 (0.000%)
- - latency average = 96.847 ms
- - latency stddev = 54.335 ms
+ - latency average = 84.304 ms
+ - latency stddev = 56.549 ms
  - statement latencies in milliseconds and failures:
          0.002           0 \set u random(1, :n)
-         3.816           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
-         3.145           0 set role authenticated;
-         5.236           0 select * from profiles where id = auth.uid();
-        29.521           0 select unread_notifications();
-        17.284           0 select count(*) from my_challenges();
-        17.318           0 select count(*) from my_plan();
-        10.317           0 select count(*) from my_rewards();
-        10.208           0 reset role;
+         8.147           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         6.310           0 set role authenticated;
+         6.037           0 select * from profiles where id = auth.uid();
+        15.579           0 select unread_notifications();
+        13.258           0 select count(*) from my_challenges();
+        12.919           0 select count(*) from my_plan();
+        11.898           0 select count(*) from my_rewards();
+        10.154           0 reset role;
 SQL script 3: board.sql
  - weight: 10 (targets 10.0% of total)
- - 0 transactions (0.0% of total)
+ - 221 transactions (9.8% of total)
+ - number of transactions actually processed: 221 (tps = 3.373581)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 10887.500 ms
+ - latency stddev = 3416.979 ms
  - statement latencies in milliseconds and failures:
-         0.002           0 \set u random(1, :n)
-         6.195           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
-         7.238           0 set role authenticated;
-         0.000           0 select count(*) from week_board(null, 100);
-         0.000           0 select count(*) from my_week_place(null);
-         0.000           0 select count(*) from friends_board(false);
-         0.000           0 reset role;
+         0.001           0 \set u random(1, :n)
+         7.534           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         7.926           0 set role authenticated;
+      7615.472           0 select count(*) from week_board(null, 100);
+      3205.506           0 select count(*) from my_week_place(null);
+        38.000           0 select count(*) from friends_board(false);
+        13.060           0 reset role;
 SQL script 4: search.sql
  - weight: 10 (targets 10.0% of total)
- - 52 transactions (10.5% of total)
- - number of transactions actually processed: 52 (tps = 2.885232)
+ - 237 transactions (10.5% of total)
+ - number of transactions actually processed: 237 (tps = 3.617822)
  - number of failed transactions: 0 (0.000%)
- - latency average = 398.775 ms
- - latency stddev = 311.564 ms
+ - latency average = 185.117 ms
+ - latency stddev = 268.959 ms
  - statement latencies in milliseconds and failures:
-         0.002           0 \set u random(1, :n)
-         4.470           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
-         9.052           0 set role authenticated;
-         7.745           0 select count(*) from live_online();
-       366.847           0 select load_try('select count(*) from find_live_opponent()');
-        10.832           0 reset role;
+         0.001           0 \set u random(1, :n)
+         6.241           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         7.002           0 set role authenticated;
+         7.201           0 select count(*) from live_online();
+       147.977           0 select load_try('select count(*) from find_live_opponent()');
+        16.694           0 reset role;
 SQL script 5: profile.sql
  - weight: 10 (targets 10.0% of total)
- - 50 transactions (10.1% of total)
- - number of transactions actually processed: 50 (tps = 2.774261)
+ - 255 transactions (11.3% of total)
+ - number of transactions actually processed: 255 (tps = 3.892594)
  - number of failed transactions: 0 (0.000%)
- - latency average = 2466.816 ms
- - latency stddev = 1342.202 ms
+ - latency average = 2493.960 ms
+ - latency stddev = 1254.607 ms
  - statement latencies in milliseconds and failures:
-         0.002           0 \set u random(1, :n)
-         4.336           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
-         3.230           0 set role authenticated;
-         0.002           0 \set o random(1, :n)
-      2434.994           0 select count(*) from lifter_profile(('00000000-0000-4000-8000-' || lpad(to_hex(:o), 12, '0'))::uuid);
-         6.109           0 select count(*) from lifter_showcase(('00000000-0000-4000-8000-' || lpad(to_hex(:o), 12, '0'))::uuid);
-        17.905           0 reset role;
-pgbench: error: Run was aborted; the above results are incomplete.
+         0.001           0 \set u random(1, :n)
+         6.226           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         6.188           0 set role authenticated;
+         0.001           0 \set o random(1, :n)
+      2463.263           0 select count(*) from lifter_profile(('00000000-0000-4000-8000-' || lpad(to_hex(:o), 12, '0'))::uuid);
+         5.149           0 select count(*) from lifter_showcase(('00000000-0000-4000-8000-' || lpad(to_hex(:o), 12, '0'))::uuid);
+        13.132           0 reset role;
 
 === heaviest statements over the load (inside functions too)
-psql: error: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is in recovery mode
+total_ms | calls | mean_ms | max_ms | query
+2774861 | 584 | 4751.47 | 13314.6 | select count(*) from week_board($1, $2)
+2767101 | 584 | 4738.19 | 13285.3 | select (row_number() over (order by w.points desc, w.wins desc, p.username))::int, p.id, p.username, p.tier_idx, p.div_idx, w.points, w.wins, w.played
+1037396 | 584 | 1776.36 | 7419.0 | select count(*) from my_week_place($1)
+1027939 | 584 | 1760.17 | 7299.6 | select this_week, week_start(now()) + interval $23, case when mine.profile_id is not null and me.placements_done >= $24 and me.show_on_board and (in_c
+919389 | 670 | 1372.22 | 4736.6 | select count(*) from lifter_profile(($1 || lpad(to_hex($2), $3, $4))::uuid)
+916794 | 670 | 1368.35 | 4735.9 | with h2h as ( select d.created_at, case when d.challenger = me then cs.reps else ds.reps end as your_reps, case when d.challenger = me then ds.reps el
+874203 | 1340 | 652.39 | 2913.6 | select case when not exists ( select $3 from profiles who where who.id = for_id and who.placements_done >= $4 and who.show_on_board and who.last_seen 
+33679 | 639 | 52.71 | 1381.0 | select load_try($1)
+33497 | 639 | 52.42 | 1380.7 | select count(*) from find_live_opponent()
+22288 | 639 | 34.88 | 1283.5 | SELECT pg_advisory_xact_lock(hashtext($1))
+8320 | 3801 | 2.19 | 259.4 | select count(*) from my_live_invites()
+6283 | 584 | 10.76 | 262.2 | select count(*) from friends_board($1)
+6143 | 584 | 10.52 | 262.1 | select (row_number() over (order by coalesce(w.points, 0) desc, coalesce(w.wins, 0) desc, p.username))::int, p.id, p.username, p.tier_idx, p.div_idx, 
+5234 | 584 | 8.96 | 261.6 | select auth.uid() union select case when f.requester = auth.uid() then f.addressee else f.requester end from friendships f where f.accepted_at is not 
+4223 | 304 | 13.89 | 98.3 | insert into live_matches (ranked, a, b, status, ready_by) values ($21, me.id, waiting.profile_id, $22, now() + interval $23) returning *
+3832 | 3801 | 1.01 | 94.7 | select lm.id, p.id, p.username, p.tier_idx, p.div_idx, greatest($1, (extract($2 from lm.expires_at - now()) * $3)::int), lm.ranked, p.avatar_url, p.xp
+2883 | 611 | 4.72 | 160.0 | select unread_notifications()
+2654 | 611 | 4.34 | 159.8 | select count(*)::int from notifications where profile_id = auth.uid() and read_at is null and (with_passed or kind <> $3) and (with_challenges or kind
+1125 | 611 | 1.84 | 78.2 | select count(*) from my_challenges()
+947 | 639 | 1.48 | 75.2 | select * from live_matches lm where lm.b = me.id and lm.ranked and lm.status = $18 and lm.created_at > now() - interval $19 order by lm.created_at des
+579 | 639 | 0.91 | 51.2 | select count(*) from live_online()
+492 | 611 | 0.81 | 77.2 | coalesce(( select jsonb_agg(item order by item->>$3 desc) from ( select jsonb_build_object( $4, c.code, $5, c.reps, $6, c.created_at, $7, c.expires_at
+405 | 639 | 0.63 | 65.9 | SELECT require_pro()
+373 | 639 | 0.58 | 84.1 | select q.* from live_queue q join profiles p on p.id = q.profile_id where q.profile_id <> me.id and q.seen_at > now() - interval $18 -- Close in level
+341 | 670 | 0.51 | 13.1 | select count(*) from lifter_showcase(($1 || lpad(to_hex($2), $3, $4))::uuid)
+208 | 639 | 0.33 | 50.7 | select (select count(*)::int from live_queue q where q.seen_at > now() - interval $1 and q.profile_id <> auth.uid()), (select count(*)::int from profi
+190 | 335 | 0.57 | 52.3 | insert into live_queue (profile_id, level) values (me.id, my_level) on conflict (profile_id) do update set seen_at = now(), level = excluded.level
+181 | 639 | 0.28 | 51.7 | select not paywall_enforced() or exists ( select $2 from subscriptions s where s.user_id = uid and s.active and (s.expires_at is null or s.expires_at 
+145 | 1752 | 0.08 | 51.8 | SELECT week_totals_refresh()
+122 | 611 | 0.20 | 10.5 | select count(*) from my_plan()
+(30 rows)
