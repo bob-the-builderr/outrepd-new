@@ -1,153 +1,165 @@
+Server at scale — 100000 lifters, 2 cores, 2g
+commit 2f7e479, 2026-11-12 02:38 UTC
+PostgreSQL 16.15 (Debian 16.15-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+
+=== seed (each step timed; the last three are the month totals and closing last month)
+Timing is on.
+SET
+Time: 0.359 ms
+ setseed 
+---------
+ 
+(1 row)
+
+Time: 0.490 ms
+INSERT 0 100000
+Time: 262.581 ms
+INSERT 0 100000
+Time: 1673.087 ms (00:01.673)
+INSERT 0 2000000
+Time: 24698.235 ms (00:24.698)
+INSERT 0 900000
+Time: 20983.446 ms (00:20.983)
+INSERT 0 500000
+Time: 3690.399 ms (00:03.690)
+INSERT 0 1500000
+Time: 12991.974 ms (00:12.992)
+INSERT 0 400000
+Time: 3871.142 ms (00:03.871)
+INSERT 0 30006
+Time: 75.919 ms
+UPDATE 40
+Time: 1.013 ms
+INSERT 0 20000
+Time: 1881.216 ms (00:01.881)
+INSERT 0 60000
+Time: 2557.907 ms (00:02.558)
+SET
+Time: 0.320 ms
+ season_points_rebuild 
+-----------------------
+ 
+(1 row)
+
+Time: 1277.460 ms (00:01.277)
+ season_points_rebuild 
+-----------------------
+ 
+(1 row)
+
+Time: 3601.811 ms (00:03.602)
+ season_points_rebuild 
+-----------------------
+ 
+(1 row)
+
+Time: 1999.015 ms (00:01.999)
+ close_finished_seasons 
+------------------------
+ 
+(1 row)
+
+Time: 955.027 ms
+Timing is off.
+ANALYZE
+ profiles |  sets   | duels  | friendships | notifications | live_matches | live_queue | challenges | awards |  size   
+----------+---------+--------+-------------+---------------+--------------+------------+------------+--------+---------
+   100000 | 2000000 | 900000 |      500000 |       1500000 |       400000 |      30006 |      20000 |     20 | 1542 MB
+(1 row)
+
 
 === each call as one signed-in lifter (20 runs unless said)
-psql:tool/db/scale/bench.sql:9: ERROR:  relation "profiles" does not exist
-LINE 1: select (select count(*) from profiles) || ' profiles, ' || (...
-                                     ^
+100000 profiles, 2000000 sets, 900000 duels, 500000 friendships, 1500000 notifications, 400000 live matches, 30006 in queue, 20000 challenges, 1542 MB
 CREATE FUNCTION
-psql:tool/db/scale/bench.sql:35: ERROR:  role "authenticated" does not exist
-psql:tool/db/scale/bench.sql:40: ERROR:  relation "profiles" does not exist
-LINE 2:   (select id::text from profiles where username = 'lifter_' ...
-                                ^
-psql:tool/db/scale/bench.sql:42: ERROR:  relation "profiles" does not exist
-LINE 2:   (select id::text from profiles where username = 'lifter_' ...
-                                ^
-psql:tool/db/scale/bench.sql:45: ERROR:  relation "challenges" does not exist
-LINE 2:   coalesce((select c.code from challenges c join profiles p ...
-                                       ^
-psql:tool/db/scale/bench.sql:48: ERROR:  relation "live_matches" does not exist
-LINE 2:   coalesce((select m.id::text from live_matches m
-                                           ^
-psql:tool/db/scale/bench.sql:49: ERROR:  role "authenticated" does not exist
+GRANT
+00000000-0000-4000-8000-00000000c350
+00000000-0000-4000-8000-00000000c351
+x2q322
+d7f300bd-eb3a-4e2c-b495-37b666982bfe
+SET
 
 -- Polled while the app is open
-my_live_invites (every 5 s)          error: function my_live_invites() does not exist
-live_online (every 3 s searching)    error: function live_online() does not exist
-find_live_opponent (every 3 s)       error: function find_live_opponent() does not exist
-live_match_state (every 3 s live)    error: function live_match_state(uuid) does not exist
+my_live_invites (every 5 s)               0.37 ms avg      2.02 ms worst      0 rows
+live_online (every 3 s searching)         6.09 ms avg      9.31 ms worst      1 rows
+find_live_opponent (every 3 s)            3.51 ms avg     19.41 ms worst      0 rows
+live_match_state (every 3 s live)    error: integer out of range
 
 -- Home and profile
-own profile row                      error: relation "profiles" does not exist
-unread_notifications                 error: function unread_notifications() does not exist
-my_notifications                     error: function my_notifications() does not exist
-my_challenges                        error: function my_challenges() does not exist
-challenge_best                       error: function challenge_best() does not exist
-my_plan                              error: function my_plan() does not exist
-my_rewards                           error: function my_rewards() does not exist
-my_adventure                         error: function my_adventure() does not exist
-my_best_minute (week)                error: function my_best_minute(timestamp with time zone, timestamp with time zone) does not exist
-my_days (60)                         error: function my_days(integer, integer) does not exist
-my_duels                             error: function my_duels() does not exist
-my_month_recap                       error: function my_month_recap(timestamp with time zone, timestamp with time zone) does not exist
-my_season_awards                     error: function my_season_awards() does not exist
-award_rarity                         error: function award_rarity() does not exist
-my_account_summary                   error: function my_account_summary() does not exist
-lifter_profile                       error: function lifter_profile(uuid) does not exist
-lifter_showcase                      error: function lifter_showcase(uuid) does not exist
-lifter_season_awards                 error: function lifter_season_awards(uuid) does not exist
+own profile row                           0.15 ms avg      0.27 ms worst      1 rows
+unread_notifications                      0.02 ms avg      0.15 ms worst      1 rows
+my_notifications                          0.27 ms avg      0.73 ms worst     15 rows
+my_challenges                             0.27 ms avg      1.22 ms worst      1 rows
+challenge_best                          213.63 ms avg    292.13 ms worst      1 rows
+my_plan                                   0.12 ms avg      0.65 ms worst      1 rows
+my_rewards                                0.13 ms avg      0.61 ms worst      1 rows
+my_adventure                              0.13 ms avg      0.50 ms worst      1 rows
+my_best_minute (week)                   340.28 ms avg    358.96 ms worst      1 rows
+my_days (60)                           1222.58 ms avg   1271.81 ms worst     20 rows
+my_duels                                  1.12 ms avg      6.96 ms worst     18 rows
+my_month_recap                         8374.69 ms avg   8529.43 ms worst      1 rows
+my_season_awards                          0.16 ms avg      1.42 ms worst      0 rows
+award_rarity                              0.26 ms avg      0.72 ms worst      1 rows
+my_account_summary                        0.34 ms avg      1.16 ms worst      1 rows
+lifter_profile                            1.66 ms avg      3.83 ms worst      1 rows
+lifter_showcase                           0.27 ms avg      0.51 ms worst      1 rows
+lifter_season_awards                      0.21 ms avg      0.32 ms worst      0 rows
 
 -- Friends
-my_friends                           error: function my_friends() does not exist
-friend_requests                      error: function friend_requests() does not exist
-friends_board (week)                 error: function friends_board(boolean) does not exist
-friends_board (month)                error: function friends_board(boolean) does not exist
-friends_leaderboard                  error: function friends_leaderboard() does not exist
-my_blocks                            error: function my_blocks() does not exist
-my_mutes                             error: function my_mutes() does not exist
-find_lifters                         error: function find_lifters(unknown) does not exist
+my_friends                                1.65 ms avg     16.28 ms worst      8 rows
+friend_requests                           0.26 ms avg      0.43 ms worst      1 rows
+friends_board (week)                    170.79 ms avg    178.22 ms worst      9 rows
+friends_board (month)                     0.47 ms avg      1.43 ms worst      9 rows
+friends_leaderboard                       0.46 ms avg      0.58 ms worst      9 rows
+my_blocks                                 0.18 ms avg      0.33 ms worst      0 rows
+my_mutes                                  0.18 ms avg      0.30 ms worst      0 rows
+find_lifters                              2.80 ms avg     14.17 ms worst     10 rows
 
 -- Boards
-week_board (everyone)                error: function week_board(unknown, integer) does not exist
-week_board (country)                 error: function week_board(unknown, integer) does not exist
-my_week_place (everyone)             error: function my_week_place(unknown) does not exist
-my_week_place (country)              error: function my_week_place(unknown) does not exist
-month_board                          error: function month_board() does not exist
-my_month_place                       error: function my_month_place() does not exist
-last_month_winners                   error: function last_month_winners() does not exist
-leaderboard (top players)            error: function leaderboard(unknown, integer) does not exist
-leaderboard (country)                error: function leaderboard(unknown, integer) does not exist
-leaderboard (your tier)              error: function leaderboard(unknown, integer, integer, integer) does not exist
-my_board_place (global)              error: function my_board_place(unknown) does not exist
-my_board_place (country)             error: function my_board_place(unknown) does not exist
-pro_looks (a board of 100)           error: relation "profiles" does not exist
+week_board (everyone)                   521.15 ms avg    562.10 ms worst    100 rows
+week_board (country)                    279.00 ms avg    286.63 ms worst    100 rows
+my_week_place (everyone)                344.22 ms avg    362.08 ms worst      1 rows
+my_week_place (country)                 272.84 ms avg    279.56 ms worst      1 rows
+month_board                              50.45 ms avg     54.30 ms worst    100 rows
+my_month_place                           94.82 ms avg     97.97 ms worst      1 rows
+last_month_winners                        0.16 ms avg      0.78 ms worst     10 rows
+leaderboard (top players)                 0.39 ms avg      0.61 ms worst    100 rows
+leaderboard (country)                     1.51 ms avg      2.36 ms worst    100 rows
+leaderboard (your tier)                  16.15 ms avg     16.92 ms worst    100 rows
+my_board_place (global)                   0.02 ms avg      0.16 ms worst      1 rows
+my_board_place (country)                  0.02 ms avg      0.05 ms worst      1 rows
+pro_looks (a board of 100)                0.41 ms avg      0.75 ms worst      1 rows
 
 -- Matches
-find_opponent_set                    error: function find_opponent_set() does not exist
-open_challenge (a link)              error: function open_challenge(text) does not exist
+find_opponent_set                         1.28 ms avg      3.07 ms worst      1 rows
+open_challenge (a link)                   0.64 ms avg      2.25 ms worst      1 rows
 
 -- Rare
-my_data (export)                     error: function my_data() does not exist
+my_data (export)                          0.06 ms avg      0.09 ms worst      1 rows
 RESET
 
 -- The website, signed out
-psql:tool/db/scale/bench.sql:118: ERROR:  role "anon" does not exist
-public_lifter_card (u/<name>)        error: function public_lifter_card(unknown) does not exist
+SET
+public_lifter_card (u/<name>)             1.46 ms avg      2.20 ms worst      1 rows
 RESET
 
 === board totals (every count should be 0, stale 1 then 0)
-psql:tool/db/scale/season_test.sql:25: ERROR:  type "season_points" does not exist
-LINE 6:   before_a season_points; after_a season_points;
-                   ^
-psql:tool/db/scale/season_test.sql:28: ERROR:  function season_test() does not exist
-LINE 1: select season_test() as result;
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:tool/db/scale/season_test.sql:29: ERROR:  relation "season_points" does not exist
-LINE 1: ...1 as select profile_id, points, wins, played from season_poi...
-                                                             ^
-psql:tool/db/scale/season_test.sql:33: ERROR:  function season_of(timestamp with time zone) does not exist
-LINE 2:   (select * from season_points_from_duels(season_of(now())) ...
-                                                  ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:tool/db/scale/season_test.sql:47: ERROR:  relation "profiles" does not exist
-LINE 1: select id        from profiles where username = 'lifter_400'
-                              ^
-QUERY:  select id        from profiles where username = 'lifter_400'
-CONTEXT:  PL/pgSQL function inline_code_block line 4 at SQL statement
-psql:tool/db/scale/season_test.sql:51: ERROR:  function season_of(timestamp with time zone) does not exist
-LINE 2:   (select * from season_points_from_duels(season_of(now())) ...
-                                                  ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:tool/db/scale/season_test.sql:54: ERROR:  relation "season_points" does not exist
-LINE 1: ...reate temp table before_unranked as select * from season_poi...
-                                                             ^
-psql:tool/db/scale/season_test.sql:64: ERROR:  relation "profiles" does not exist
-LINE 1: select id        from profiles where username = 'lifter_600'
-                              ^
-QUERY:  select id        from profiles where username = 'lifter_600'
-CONTEXT:  PL/pgSQL function inline_code_block line 4 at SQL statement
-psql:tool/db/scale/season_test.sql:67: ERROR:  relation "season_points" does not exist
-LINE 2:   (select * from season_points except select * from before_u...
-                         ^
-psql:tool/db/scale/season_test.sql:71: ERROR:  relation "auth.users" does not exist
-LINE 1: delete from auth.users where id = (select id from profiles w...
-                    ^
-psql:tool/db/scale/season_test.sql:72: ERROR:  relation "season_points_stale" does not exist
-LINE 1: ...     — months stale: ' || count(*) as result from season_poi...
-                                                             ^
-psql:tool/db/scale/season_test.sql:73: ERROR:  function season_points_refresh() does not exist
-LINE 1: select season_points_refresh();
-               ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:tool/db/scale/season_test.sql:77: ERROR:  function season_of(timestamp with time zone) does not exist
-LINE 2:   (select * from season_points_from_duels(season_of(now())) ...
-                                                  ^
-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
-psql:tool/db/scale/season_test.sql:78: ERROR:  relation "season_points_stale" does not exist
-LINE 1: ...stale after refresh: ' || count(*) as result from season_poi...
-                                                             ^
+CREATE FUNCTION
+cfdb8d46-6499-4c70-89df-843367b1d2e8
+SELECT 91159
+raced set   — totals vs duels differing: 0
+DO
+live match  — totals vs duels differing: 0
+SELECT 291151
+DO
+unranked    — rows changed: 0
+DELETE 1
+deleted     — months stale: 3
+
+deleted     — totals vs duels differing after refresh: 0
+deleted     — months stale after refresh: 0
 
 === 10 at once for 60 s: polls 60%, home 10%, boards 10%, live search 10%, profiles 10%
 pgbench (18.6 (Ubuntu 18.6-1.pgdg26.04+2), server 16.15 (Debian 16.15-1.pgdg13+2))
-pgbench: error: client 0 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 3 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 7 script 2 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 5 script 2 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 8 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 1 script 1 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 2 script 4 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 4 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 9 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 6 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
 transaction type: multiple scripts
 scaling factor: 1
 query mode: simple
@@ -155,31 +167,88 @@ number of clients: 10
 number of threads: 2
 maximum number of tries: 1
 duration: 60 s
-number of transactions actually processed: 0
-pgbench: error: Run was aborted; the above results are incomplete.
+number of transactions actually processed: 683
+number of failed transactions: 0 (0.000%)
+latency average = 946.688 ms
+initial connection time = 38.792 ms
+tps = 10.563137 (without initial connection time)
+SQL script 1: poll.sql
+ - weight: 60 (targets 60.0% of total)
+ - 411 transactions (60.2% of total)
+ - number of transactions actually processed: 411 (tps = 6.356441)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 9.791 ms
+ - latency stddev = 16.073 ms
+ - statement latencies in milliseconds and failures:
+         0.002           0 \set u random(1, :n)
+         2.324           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         2.439           0 set role authenticated;
+         3.698           0 select count(*) from my_live_invites();
+         1.329           0 reset role;
+SQL script 2: home.sql
+ - weight: 10 (targets 10.0% of total)
+ - 66 transactions (9.7% of total)
+ - number of transactions actually processed: 66 (tps = 1.020742)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 18.086 ms
+ - latency stddev = 20.226 ms
+ - statement latencies in milliseconds and failures:
+         0.002           0 \set u random(1, :n)
+         0.796           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         0.802           0 set role authenticated;
+         1.113           0 select * from profiles where id = auth.uid();
+         4.929           0 select unread_notifications();
+         1.554           0 select count(*) from my_challenges();
+         2.216           0 select count(*) from my_plan();
+         2.895           0 select count(*) from my_rewards();
+         3.778           0 reset role;
+SQL script 3: board.sql
+ - weight: 10 (targets 10.0% of total)
+ - 60 transactions (8.8% of total)
+ - number of transactions actually processed: 60 (tps = 0.927948)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 9678.956 ms
+ - latency stddev = 2194.479 ms
+ - statement latencies in milliseconds and failures:
+         0.002           0 \set u random(1, :n)
+         1.971           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         1.982           0 set role authenticated;
+      5289.189           0 select count(*) from week_board(null, 100);
+      2943.385           0 select count(*) from my_week_place(null);
+      1439.487           0 select count(*) from friends_board(false);
+         2.941           0 reset role;
+SQL script 4: search.sql
+ - weight: 10 (targets 10.0% of total)
+ - 66 transactions (9.7% of total)
+ - number of transactions actually processed: 66 (tps = 1.020742)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 25.131 ms
+ - latency stddev = 24.110 ms
+ - statement latencies in milliseconds and failures:
+         0.002           0 \set u random(1, :n)
+         2.495           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         0.894           0 set role authenticated;
+         2.287           0 select count(*) from live_online();
+        16.725           0 select load_try('select count(*) from find_live_opponent()');
+         2.728           0 reset role;
+SQL script 5: profile.sql
+ - weight: 10 (targets 10.0% of total)
+ - 80 transactions (11.7% of total)
+ - number of transactions actually processed: 80 (tps = 1.237264)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 569.417 ms
+ - latency stddev = 301.835 ms
+ - statement latencies in milliseconds and failures:
+         0.002           0 \set u random(1, :n)
+         2.375           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         1.741           0 set role authenticated;
+         0.001           0 \set o random(1, :n)
+       558.416           0 select count(*) from lifter_profile(('00000000-0000-4000-8000-' || lpad(to_hex(:o), 12, '0'))::uuid);
+         4.479           0 select count(*) from lifter_showcase(('00000000-0000-4000-8000-' || lpad(to_hex(:o), 12, '0'))::uuid);
+         2.403           0 reset role;
 
 === 20 at once for 60 s: polls 60%, home 10%, boards 10%, live search 10%, profiles 10%
 pgbench (18.6 (Ubuntu 18.6-1.pgdg26.04+2), server 16.15 (Debian 16.15-1.pgdg13+2))
-pgbench: error: client 18 script 4 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 19 script 1 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 12 script 2 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 1 script 1 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 11 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 13 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 16 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 10 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 0 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 3 script 3 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 6 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 9 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 15 script 4 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 4 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 8 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 17 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 2 script 2 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 14 script 1 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 5 script 4 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 7 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
 transaction type: multiple scripts
 scaling factor: 1
 query mode: simple
@@ -187,61 +256,285 @@ number of clients: 20
 number of threads: 2
 maximum number of tries: 1
 duration: 60 s
-number of transactions actually processed: 0
-pgbench: error: Run was aborted; the above results are incomplete.
+number of transactions actually processed: 438
+number of failed transactions: 0 (0.000%)
+latency average = 3300.785 ms
+initial connection time = 75.303 ms
+tps = 6.059166 (without initial connection time)
+SQL script 1: poll.sql
+ - weight: 60 (targets 60.0% of total)
+ - 262 transactions (59.8% of total)
+ - number of transactions actually processed: 262 (tps = 3.624432)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 18.892 ms
+ - latency stddev = 21.247 ms
+ - statement latencies in milliseconds and failures:
+         0.002           0 \set u random(1, :n)
+         3.797           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         5.052           0 set role authenticated;
+         6.067           0 select count(*) from my_live_invites();
+         3.991           0 reset role;
+SQL script 2: home.sql
+ - weight: 10 (targets 10.0% of total)
+ - 38 transactions (8.7% of total)
+ - number of transactions actually processed: 38 (tps = 0.525681)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 52.446 ms
+ - latency stddev = 34.725 ms
+ - statement latencies in milliseconds and failures:
+         0.002           0 \set u random(1, :n)
+         3.092           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         3.960           0 set role authenticated;
+         7.039           0 select * from profiles where id = auth.uid();
+         8.544           0 select unread_notifications();
+         7.217           0 select count(*) from my_challenges();
+        13.433           0 select count(*) from my_plan();
+         2.491           0 select count(*) from my_rewards();
+         6.668           0 reset role;
+SQL script 3: board.sql
+ - weight: 10 (targets 10.0% of total)
+ - 54 transactions (12.3% of total)
+ - number of transactions actually processed: 54 (tps = 0.747020)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 24094.402 ms
+ - latency stddev = 4940.314 ms
+ - statement latencies in milliseconds and failures:
+         0.002           0 \set u random(1, :n)
+         1.711           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         5.152           0 set role authenticated;
+     11691.378           0 select count(*) from week_board(null, 100);
+      7762.263           0 select count(*) from my_week_place(null);
+      4626.044           0 select count(*) from friends_board(false);
+         7.852           0 reset role;
+SQL script 4: search.sql
+ - weight: 10 (targets 10.0% of total)
+ - 49 transactions (11.2% of total)
+ - number of transactions actually processed: 49 (tps = 0.677852)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 116.441 ms
+ - latency stddev = 114.075 ms
+ - statement latencies in milliseconds and failures:
+         0.002           0 \set u random(1, :n)
+         1.713           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         3.274           0 set role authenticated;
+         7.804           0 select count(*) from live_online();
+        96.650           0 select load_try('select count(*) from find_live_opponent()');
+         6.999           0 reset role;
+SQL script 5: profile.sql
+ - weight: 10 (targets 10.0% of total)
+ - 35 transactions (8.0% of total)
+ - number of transactions actually processed: 35 (tps = 0.484180)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 1305.082 ms
+ - latency stddev = 418.642 ms
+ - statement latencies in milliseconds and failures:
+         0.002           0 \set u random(1, :n)
+         3.235           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         3.551           0 set role authenticated;
+         0.002           0 \set o random(1, :n)
+      1290.340           0 select count(*) from lifter_profile(('00000000-0000-4000-8000-' || lpad(to_hex(:o), 12, '0'))::uuid);
+         2.856           0 select count(*) from lifter_showcase(('00000000-0000-4000-8000-' || lpad(to_hex(:o), 12, '0'))::uuid);
+         5.096           0 reset role;
 
 === 50 at once for 60 s: polls 60%, home 10%, boards 10%, live search 10%, profiles 10%
 pgbench (18.6 (Ubuntu 18.6-1.pgdg26.04+2), server 16.15 (Debian 16.15-1.pgdg13+2))
-pgbench: error: client 35 script 3 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 34 script 1 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 37 script 2 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 40 script 3 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 45 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 27 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 47 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 26 script 1 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 24 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 23 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 31 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 46 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 36 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 4 script 4 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 30 script 4 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 28 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 41 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 5 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 32 script 3 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 0 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 1 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 3 script 2 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 8 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 14 script 4 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 38 script 1 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 39 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 42 script 3 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 44 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 9 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 48 script 1 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 25 script 3 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 12 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 29 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 33 script 3 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 43 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 49 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 2 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 21 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 18 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 7 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 10 script 4 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 11 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 13 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 15 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 16 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 17 script 3 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 19 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 20 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 6 script 0 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
-pgbench: error: client 22 script 1 aborted in command 2 query 0: ERROR:  role "authenticated" does not exist
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+pgbench: error: client 49 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 40 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 44 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 31 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 6 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 17 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 37 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 10 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 2 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 43 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 42 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+pgbench: error: client 33 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+pgbench: error: client 16 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 32 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 36 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 27 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 11 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 46 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 23 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 38 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 45 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 48 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 26 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 14 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 28 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 3 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 18 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 21 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 1 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+pgbench: error: client 35 aborted in command 4 (SQL) of script 4; perhaps the backend died while processing
+pgbench: error: client 41 aborted in command 4 (SQL) of script 4; perhaps the backend died while processing
+pgbench: error: client 4 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 7 aborted in command 4 (SQL) of script 4; perhaps the backend died while processing
+pgbench: error: client 0 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 9 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 19 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 24 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 8 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 25 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 12 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 20 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 22 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 13 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 29 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 30 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 39 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 47 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 5 aborted in command 4 (SQL) of script 4; perhaps the backend died while processing
+pgbench: error: client 34 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
+pgbench: error: client 15 aborted in command 3 (SQL) of script 2; perhaps the backend died while processing
 transaction type: multiple scripts
 scaling factor: 1
 query mode: simple
@@ -249,8 +542,82 @@ number of clients: 50
 number of threads: 2
 maximum number of tries: 1
 duration: 60 s
-number of transactions actually processed: 0
+number of transactions actually processed: 494
+number of failed transactions: 0 (0.000%)
+latency average = 1824.172 ms
+initial connection time = 203.934 ms
+tps = 27.409703 (without initial connection time)
+SQL script 1: poll.sql
+ - weight: 60 (targets 60.0% of total)
+ - 331 transactions (67.0% of total)
+ - number of transactions actually processed: 331 (tps = 18.365610)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 42.118 ms
+ - latency stddev = 37.657 ms
+ - statement latencies in milliseconds and failures:
+         0.002           0 \set u random(1, :n)
+         6.079           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         6.531           0 set role authenticated;
+        19.861           0 select count(*) from my_live_invites();
+         9.665           0 reset role;
+SQL script 2: home.sql
+ - weight: 10 (targets 10.0% of total)
+ - 61 transactions (12.3% of total)
+ - number of transactions actually processed: 61 (tps = 3.384599)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 96.847 ms
+ - latency stddev = 54.335 ms
+ - statement latencies in milliseconds and failures:
+         0.002           0 \set u random(1, :n)
+         3.816           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         3.145           0 set role authenticated;
+         5.236           0 select * from profiles where id = auth.uid();
+        29.521           0 select unread_notifications();
+        17.284           0 select count(*) from my_challenges();
+        17.318           0 select count(*) from my_plan();
+        10.317           0 select count(*) from my_rewards();
+        10.208           0 reset role;
+SQL script 3: board.sql
+ - weight: 10 (targets 10.0% of total)
+ - 0 transactions (0.0% of total)
+ - statement latencies in milliseconds and failures:
+         0.002           0 \set u random(1, :n)
+         6.195           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         7.238           0 set role authenticated;
+         0.000           0 select count(*) from week_board(null, 100);
+         0.000           0 select count(*) from my_week_place(null);
+         0.000           0 select count(*) from friends_board(false);
+         0.000           0 reset role;
+SQL script 4: search.sql
+ - weight: 10 (targets 10.0% of total)
+ - 52 transactions (10.5% of total)
+ - number of transactions actually processed: 52 (tps = 2.885232)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 398.775 ms
+ - latency stddev = 311.564 ms
+ - statement latencies in milliseconds and failures:
+         0.002           0 \set u random(1, :n)
+         4.470           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         9.052           0 set role authenticated;
+         7.745           0 select count(*) from live_online();
+       366.847           0 select load_try('select count(*) from find_live_opponent()');
+        10.832           0 reset role;
+SQL script 5: profile.sql
+ - weight: 10 (targets 10.0% of total)
+ - 50 transactions (10.1% of total)
+ - number of transactions actually processed: 50 (tps = 2.774261)
+ - number of failed transactions: 0 (0.000%)
+ - latency average = 2466.816 ms
+ - latency stddev = 1342.202 ms
+ - statement latencies in milliseconds and failures:
+         0.002           0 \set u random(1, :n)
+         4.336           0 select set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-' || lpad(to_hex(:u), 12, '0'), false);
+         3.230           0 set role authenticated;
+         0.002           0 \set o random(1, :n)
+      2434.994           0 select count(*) from lifter_profile(('00000000-0000-4000-8000-' || lpad(to_hex(:o), 12, '0'))::uuid);
+         6.109           0 select count(*) from lifter_showcase(('00000000-0000-4000-8000-' || lpad(to_hex(:o), 12, '0'))::uuid);
+        17.905           0 reset role;
 pgbench: error: Run was aborted; the above results are incomplete.
 
 === heaviest statements over the load (inside functions too)
-ERROR:  pg_stat_statements must be loaded via shared_preload_libraries
+psql: error: connection to server at "localhost" (::1), port 5432 failed: FATAL:  the database system is in recovery mode
